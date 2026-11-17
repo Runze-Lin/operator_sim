@@ -1,0 +1,738 @@
+{
+  "binary": "build/smoke/extension_moe",
+  "source": "smoke/extension_moe.cpp",
+  "cases": [
+    {
+      "id": "moe_cal_e1_chain_r3",
+      "op": "moe_ffn",
+      "shape": [
+        2,
+        64,
+        64,
+        1
+      ],
+      "attrs": {
+        "expert_counts": [
+          2
+        ]
+      },
+      "arguments": [
+        "moe_ffn",
+        "2",
+        "64",
+        "64",
+        "1",
+        "2"
+      ],
+      "components": [
+        "grouped_matmul_swiglu_quant_v2",
+        "gmm2"
+      ],
+      "split": "calibration",
+      "timeout_seconds": 180,
+      "correctness_groups": 3,
+      "purpose": "ownership fix complete-chain probe before restoring remaining calibration/holdout"
+    },
+    {
+      "id": "moe_cal_e2_skew_chain_r3",
+      "op": "moe_ffn",
+      "shape": [
+        4,
+        128,
+        64,
+        2
+      ],
+      "attrs": {
+        "expert_counts": [
+          1,
+          3
+        ]
+      },
+      "arguments": [
+        "moe_ffn",
+        "4",
+        "128",
+        "64",
+        "2",
+        "1,3"
+      ],
+      "components": [
+        "grouped_matmul_swiglu_quant_v2",
+        "gmm2"
+      ],
+      "split": "calibration",
+      "timeout_seconds": 180,
+      "correctness_groups": 3
+    },
+    {
+      "id": "moe_cal_e1_f128_chain_r3",
+      "op": "moe_ffn",
+      "shape": [
+        2,
+        64,
+        128,
+        1
+      ],
+      "attrs": {
+        "expert_counts": [
+          2
+        ]
+      },
+      "arguments": [
+        "moe_ffn",
+        "2",
+        "64",
+        "128",
+        "1",
+        "2"
+      ],
+      "components": [
+        "grouped_matmul_swiglu_quant_v2",
+        "gmm2"
+      ],
+      "split": "calibration",
+      "timeout_seconds": 180,
+      "correctness_groups": 3
+    },
+    {
+      "id": "moe_holdout_e2_wide_chain_r3",
+      "op": "moe_ffn",
+      "shape": [
+        6,
+        128,
+        128,
+        2
+      ],
+      "attrs": {
+        "expert_counts": [
+          1,
+          5
+        ]
+      },
+      "arguments": [
+        "moe_ffn",
+        "6",
+        "128",
+        "128",
+        "2",
+        "1,5"
+      ],
+      "components": [
+        "grouped_matmul_swiglu_quant_v2",
+        "gmm2"
+      ],
+      "split": "holdout",
+      "timeout_seconds": 180,
+      "correctness_groups": 3
+    }
+  ],
+  "retired_chain_cases": [
+    {
+      "id": "moe_cal_e1",
+      "op": "moe_ffn",
+      "shape": [
+        2,
+        64,
+        64,
+        1
+      ],
+      "attrs": {
+        "expert_counts": [
+          2
+        ]
+      },
+      "arguments": [
+        "moe_ffn",
+        "2",
+        "64",
+        "64",
+        "1",
+        "2"
+      ],
+      "components": [
+        "grouped_matmul_swiglu_quant_v2",
+        "gmm2"
+      ],
+      "split": "calibration",
+      "timeout_seconds": 180,
+      "correctness_groups": 3,
+      "plan_status": "failed_export_after_numeric_pass",
+      "reason": "Separate per-primitive capture avoids same-process second-launch helper shutdown hang; chain numeric correctness retained separately"
+    },
+    {
+      "id": "moe_cal_e2_skew",
+      "op": "moe_ffn",
+      "shape": [
+        4,
+        128,
+        64,
+        2
+      ],
+      "attrs": {
+        "expert_counts": [
+          1,
+          3
+        ]
+      },
+      "arguments": [
+        "moe_ffn",
+        "4",
+        "128",
+        "64",
+        "2",
+        "1,3"
+      ],
+      "components": [
+        "grouped_matmul_swiglu_quant_v2",
+        "gmm2"
+      ],
+      "split": "calibration",
+      "timeout_seconds": 180,
+      "correctness_groups": 3,
+      "plan_status": "superseded_before_execution",
+      "reason": "Separate per-primitive capture avoids same-process second-launch helper shutdown hang; chain numeric correctness retained separately"
+    },
+    {
+      "id": "moe_cal_e1_f128",
+      "op": "moe_ffn",
+      "shape": [
+        2,
+        64,
+        128,
+        1
+      ],
+      "attrs": {
+        "expert_counts": [
+          2
+        ]
+      },
+      "arguments": [
+        "moe_ffn",
+        "2",
+        "64",
+        "128",
+        "1",
+        "2"
+      ],
+      "components": [
+        "grouped_matmul_swiglu_quant_v2",
+        "gmm2"
+      ],
+      "split": "calibration",
+      "timeout_seconds": 180,
+      "correctness_groups": 3,
+      "plan_status": "superseded_before_execution",
+      "reason": "Separate per-primitive capture avoids same-process second-launch helper shutdown hang; chain numeric correctness retained separately"
+    },
+    {
+      "id": "moe_holdout_e2_wide",
+      "op": "moe_ffn",
+      "shape": [
+        6,
+        128,
+        128,
+        2
+      ],
+      "attrs": {
+        "expert_counts": [
+          1,
+          5
+        ]
+      },
+      "arguments": [
+        "moe_ffn",
+        "6",
+        "128",
+        "128",
+        "2",
+        "1,5"
+      ],
+      "components": [
+        "grouped_matmul_swiglu_quant_v2",
+        "gmm2"
+      ],
+      "split": "holdout",
+      "timeout_seconds": 180,
+      "correctness_groups": 3,
+      "plan_status": "superseded_before_execution",
+      "reason": "Separate per-primitive capture avoids same-process second-launch helper shutdown hang; chain numeric correctness retained separately"
+    }
+  ],
+  "composition_scope": "Complete synchronized two-API chain; report each kernel cross-core instruction span and their sum, excluding host/inter-launch idle. Runtime (stream_id,task_id) plus helper launch ordinal attributes stages.",
+  "retired_primitive_cases": [
+    {
+      "id": "moe_cal_e1_gmm1_r2",
+      "op": "grouped_matmul_swiglu_quant_v2",
+      "shape": [
+        2,
+        64,
+        64,
+        1
+      ],
+      "attrs": {
+        "expert_counts": [
+          2
+        ]
+      },
+      "arguments": [
+        "grouped_matmul_swiglu_quant_v2",
+        "2",
+        "64",
+        "64",
+        "1",
+        "2"
+      ],
+      "split": "calibration",
+      "timeout_seconds": 180,
+      "correctness_groups": 2,
+      "composition_case_id": "moe_cal_e1",
+      "plan_status": "failed_cleanup",
+      "reason": "TensorList also owns member aclTensor metadata; old caller destroyed it twice. r3 transfers ownership and adds cleanup markers."
+    },
+    {
+      "id": "moe_cal_e1_gmm2_r2",
+      "op": "gmm2",
+      "shape": [
+        2,
+        64,
+        64,
+        1
+      ],
+      "attrs": {
+        "expert_counts": [
+          2
+        ]
+      },
+      "arguments": [
+        "gmm2",
+        "2",
+        "64",
+        "64",
+        "1",
+        "2"
+      ],
+      "split": "calibration",
+      "timeout_seconds": 180,
+      "correctness_groups": 1,
+      "composition_case_id": "moe_cal_e1",
+      "plan_status": "manually_aborted_known_cleanup_bug",
+      "reason": "TensorList also owns member aclTensor metadata; old caller destroyed it twice. r3 transfers ownership and adds cleanup markers."
+    },
+    {
+      "id": "moe_cal_e2_skew_gmm1_r2",
+      "op": "grouped_matmul_swiglu_quant_v2",
+      "shape": [
+        4,
+        128,
+        64,
+        2
+      ],
+      "attrs": {
+        "expert_counts": [
+          1,
+          3
+        ]
+      },
+      "arguments": [
+        "grouped_matmul_swiglu_quant_v2",
+        "4",
+        "128",
+        "64",
+        "2",
+        "1,3"
+      ],
+      "split": "calibration",
+      "timeout_seconds": 180,
+      "correctness_groups": 2,
+      "composition_case_id": "moe_cal_e2_skew",
+      "plan_status": "superseded_before_execution",
+      "reason": "TensorList also owns member aclTensor metadata; old caller destroyed it twice. r3 transfers ownership and adds cleanup markers."
+    },
+    {
+      "id": "moe_cal_e2_skew_gmm2_r2",
+      "op": "gmm2",
+      "shape": [
+        4,
+        128,
+        64,
+        2
+      ],
+      "attrs": {
+        "expert_counts": [
+          1,
+          3
+        ]
+      },
+      "arguments": [
+        "gmm2",
+        "4",
+        "128",
+        "64",
+        "2",
+        "1,3"
+      ],
+      "split": "calibration",
+      "timeout_seconds": 180,
+      "correctness_groups": 1,
+      "composition_case_id": "moe_cal_e2_skew",
+      "plan_status": "superseded_before_execution",
+      "reason": "TensorList also owns member aclTensor metadata; old caller destroyed it twice. r3 transfers ownership and adds cleanup markers."
+    },
+    {
+      "id": "moe_cal_e1_f128_gmm1_r2",
+      "op": "grouped_matmul_swiglu_quant_v2",
+      "shape": [
+        2,
+        64,
+        128,
+        1
+      ],
+      "attrs": {
+        "expert_counts": [
+          2
+        ]
+      },
+      "arguments": [
+        "grouped_matmul_swiglu_quant_v2",
+        "2",
+        "64",
+        "128",
+        "1",
+        "2"
+      ],
+      "split": "calibration",
+      "timeout_seconds": 180,
+      "correctness_groups": 2,
+      "composition_case_id": "moe_cal_e1_f128",
+      "plan_status": "superseded_before_execution",
+      "reason": "TensorList also owns member aclTensor metadata; old caller destroyed it twice. r3 transfers ownership and adds cleanup markers."
+    },
+    {
+      "id": "moe_cal_e1_f128_gmm2_r2",
+      "op": "gmm2",
+      "shape": [
+        2,
+        64,
+        128,
+        1
+      ],
+      "attrs": {
+        "expert_counts": [
+          2
+        ]
+      },
+      "arguments": [
+        "gmm2",
+        "2",
+        "64",
+        "128",
+        "1",
+        "2"
+      ],
+      "split": "calibration",
+      "timeout_seconds": 180,
+      "correctness_groups": 1,
+      "composition_case_id": "moe_cal_e1_f128",
+      "plan_status": "superseded_before_execution",
+      "reason": "TensorList also owns member aclTensor metadata; old caller destroyed it twice. r3 transfers ownership and adds cleanup markers."
+    },
+    {
+      "id": "moe_holdout_e2_wide_gmm1_r2",
+      "op": "grouped_matmul_swiglu_quant_v2",
+      "shape": [
+        6,
+        128,
+        128,
+        2
+      ],
+      "attrs": {
+        "expert_counts": [
+          1,
+          5
+        ]
+      },
+      "arguments": [
+        "grouped_matmul_swiglu_quant_v2",
+        "6",
+        "128",
+        "128",
+        "2",
+        "1,5"
+      ],
+      "split": "holdout",
+      "timeout_seconds": 180,
+      "correctness_groups": 2,
+      "composition_case_id": "moe_holdout_e2_wide",
+      "plan_status": "superseded_before_execution",
+      "reason": "TensorList also owns member aclTensor metadata; old caller destroyed it twice. r3 transfers ownership and adds cleanup markers."
+    },
+    {
+      "id": "moe_holdout_e2_wide_gmm2_r2",
+      "op": "gmm2",
+      "shape": [
+        6,
+        128,
+        128,
+        2
+      ],
+      "attrs": {
+        "expert_counts": [
+          1,
+          5
+        ]
+      },
+      "arguments": [
+        "gmm2",
+        "6",
+        "128",
+        "128",
+        "2",
+        "1,5"
+      ],
+      "split": "holdout",
+      "timeout_seconds": 180,
+      "correctness_groups": 1,
+      "composition_case_id": "moe_holdout_e2_wide",
+      "plan_status": "superseded_before_execution",
+      "reason": "TensorList also owns member aclTensor metadata; old caller destroyed it twice. r3 transfers ownership and adds cleanup markers."
+    }
+  ],
+  "fallback_primitive_cases": [
+    {
+      "id": "moe_cal_e1_gmm1_r3",
+      "op": "grouped_matmul_swiglu_quant_v2",
+      "shape": [
+        2,
+        64,
+        64,
+        1
+      ],
+      "attrs": {
+        "expert_counts": [
+          2
+        ]
+      },
+      "arguments": [
+        "grouped_matmul_swiglu_quant_v2",
+        "2",
+        "64",
+        "64",
+        "1",
+        "2"
+      ],
+      "split": "calibration",
+      "timeout_seconds": 180,
+      "correctness_groups": 2,
+      "composition_case_id": "moe_cal_e1",
+      "plan_status": "superseded_before_execution",
+      "reason": "ownership-fixed chain captures both full kernel DBs successfully; avoid duplicate primitive CA"
+    },
+    {
+      "id": "moe_cal_e1_gmm2_r3",
+      "op": "gmm2",
+      "shape": [
+        2,
+        64,
+        64,
+        1
+      ],
+      "attrs": {
+        "expert_counts": [
+          2
+        ]
+      },
+      "arguments": [
+        "gmm2",
+        "2",
+        "64",
+        "64",
+        "1",
+        "2"
+      ],
+      "split": "calibration",
+      "timeout_seconds": 180,
+      "correctness_groups": 1,
+      "composition_case_id": "moe_cal_e1",
+      "plan_status": "superseded_before_execution",
+      "reason": "ownership-fixed chain captures both full kernel DBs successfully; avoid duplicate primitive CA"
+    },
+    {
+      "id": "moe_cal_e2_skew_gmm1_r3",
+      "op": "grouped_matmul_swiglu_quant_v2",
+      "shape": [
+        4,
+        128,
+        64,
+        2
+      ],
+      "attrs": {
+        "expert_counts": [
+          1,
+          3
+        ]
+      },
+      "arguments": [
+        "grouped_matmul_swiglu_quant_v2",
+        "4",
+        "128",
+        "64",
+        "2",
+        "1,3"
+      ],
+      "split": "calibration",
+      "timeout_seconds": 180,
+      "correctness_groups": 2,
+      "composition_case_id": "moe_cal_e2_skew",
+      "plan_status": "superseded_before_execution",
+      "reason": "ownership-fixed chain captures both full kernel DBs successfully; avoid duplicate primitive CA"
+    },
+    {
+      "id": "moe_cal_e2_skew_gmm2_r3",
+      "op": "gmm2",
+      "shape": [
+        4,
+        128,
+        64,
+        2
+      ],
+      "attrs": {
+        "expert_counts": [
+          1,
+          3
+        ]
+      },
+      "arguments": [
+        "gmm2",
+        "4",
+        "128",
+        "64",
+        "2",
+        "1,3"
+      ],
+      "split": "calibration",
+      "timeout_seconds": 180,
+      "correctness_groups": 1,
+      "composition_case_id": "moe_cal_e2_skew",
+      "plan_status": "superseded_before_execution",
+      "reason": "ownership-fixed chain captures both full kernel DBs successfully; avoid duplicate primitive CA"
+    },
+    {
+      "id": "moe_cal_e1_f128_gmm1_r3",
+      "op": "grouped_matmul_swiglu_quant_v2",
+      "shape": [
+        2,
+        64,
+        128,
+        1
+      ],
+      "attrs": {
+        "expert_counts": [
+          2
+        ]
+      },
+      "arguments": [
+        "grouped_matmul_swiglu_quant_v2",
+        "2",
+        "64",
+        "128",
+        "1",
+        "2"
+      ],
+      "split": "calibration",
+      "timeout_seconds": 180,
+      "correctness_groups": 2,
+      "composition_case_id": "moe_cal_e1_f128",
+      "plan_status": "superseded_before_execution",
+      "reason": "ownership-fixed chain captures both full kernel DBs successfully; avoid duplicate primitive CA"
+    },
+    {
+      "id": "moe_cal_e1_f128_gmm2_r3",
+      "op": "gmm2",
+      "shape": [
+        2,
+        64,
+        128,
+        1
+      ],
+      "attrs": {
+        "expert_counts": [
+          2
+        ]
+      },
+      "arguments": [
+        "gmm2",
+        "2",
+        "64",
+        "128",
+        "1",
+        "2"
+      ],
+      "split": "calibration",
+      "timeout_seconds": 180,
+      "correctness_groups": 1,
+      "composition_case_id": "moe_cal_e1_f128",
+      "plan_status": "superseded_before_execution",
+      "reason": "ownership-fixed chain captures both full kernel DBs successfully; avoid duplicate primitive CA"
+    },
+    {
+      "id": "moe_holdout_e2_wide_gmm1_r3",
+      "op": "grouped_matmul_swiglu_quant_v2",
+      "shape": [
+        6,
+        128,
+        128,
+        2
+      ],
+      "attrs": {
+        "expert_counts": [
+          1,
+          5
+        ]
+      },
+      "arguments": [
+        "grouped_matmul_swiglu_quant_v2",
+        "6",
+        "128",
+        "128",
+        "2",
+        "1,5"
+      ],
+      "split": "holdout",
+      "timeout_seconds": 180,
+      "correctness_groups": 2,
+      "composition_case_id": "moe_holdout_e2_wide",
+      "plan_status": "superseded_before_execution",
+      "reason": "ownership-fixed chain captures both full kernel DBs successfully; avoid duplicate primitive CA"
+    },
+    {
+      "id": "moe_holdout_e2_wide_gmm2_r3",
+      "op": "gmm2",
+      "shape": [
+        6,
+        128,
+        128,
+        2
+      ],
+      "attrs": {
+        "expert_counts": [
+          1,
+          5
+        ]
+      },
+      "arguments": [
+        "gmm2",
+        "6",
+        "128",
+        "128",
+        "2",
+        "1,5"
+      ],
+      "split": "holdout",
+      "timeout_seconds": 180,
+      "correctness_groups": 1,
+      "composition_case_id": "moe_holdout_e2_wide",
+      "plan_status": "superseded_before_execution",
+      "reason": "ownership-fixed chain captures both full kernel DBs successfully; avoid duplicate primitive CA"
+    }
+  ]
+}

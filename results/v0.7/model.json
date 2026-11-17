@@ -1,0 +1,1198 @@
+{
+  "schema_version": 7,
+  "version": "v0.7",
+  "base_v6": {
+    "schema_version": 6,
+    "version": "0.6.0",
+    "soc_version": "Ascend950DT_9582",
+    "base_v5_model": {
+      "schema_version": 5,
+      "version": "0.5.0",
+      "soc_version": "Ascend950DT_9582",
+      "base_v4_model": {
+        "schema_version": 4,
+        "version": "0.4.0",
+        "soc_version": "Ascend950DT_9582",
+        "base_v3_model": {
+          "schema_version": 3,
+          "version": "0.3.0",
+          "soc_version": "Ascend950DT_9582",
+          "base_v2_model": {
+            "schema_version": 2,
+            "version": "0.2.0",
+            "soc_version": "Ascend950DT_9582",
+            "manifest_sha256": "8712952f9531ec2865dfa52de1b6ecb98098f260d88d5f3c6de237d5c4f11a26",
+            "operators": {
+              "quant": {
+                "stage_costs": {
+                  "read": {
+                    "intercept_us": 1.1192802905390147,
+                    "slope_us_per_unit": 0.007809068343743654
+                  },
+                  "vector": {
+                    "intercept_us": 0.06473547212932762,
+                    "slope_us_per_unit": 0.007135635792069166
+                  },
+                  "cube": {
+                    "intercept_us": 0.0,
+                    "slope_us_per_unit": 0.0
+                  },
+                  "fix": {
+                    "intercept_us": 0.0,
+                    "slope_us_per_unit": 0.0
+                  },
+                  "write": {
+                    "intercept_us": 0.9175378799554892,
+                    "slope_us_per_unit": 0.0
+                  }
+                },
+                "total_weights": [
+                  2.487736430838396,
+                  0.7932675060357894,
+                  0.23857164404726572
+                ],
+                "branches": {
+                  "slice256": {
+                    "count": 4,
+                    "offset_us": 0.13313396335838087,
+                    "kernels": [
+                      "DynamicMxQuant_bf16toe4m3_high_performance_33_mix_aiv"
+                    ]
+                  },
+                  "slice512": {
+                    "count": 3,
+                    "offset_us": -0.1607697412061933,
+                    "kernels": [
+                      "DynamicMxQuant_bf16toe4m3_high_performance_33_mix_aiv"
+                    ]
+                  },
+                  "ub_loop": {
+                    "count": 1,
+                    "offset_us": 0.0016816427894728037,
+                    "kernels": [
+                      "DynamicMxQuant_bf16toe4m3_high_performance_33_mix_aiv"
+                    ]
+                  }
+                },
+                "opcode_weights": [
+                  59.996346941410046,
+                  43.99977167215754,
+                  32.004109842298256
+                ],
+                "constant_baseline_us": 5.518939557485282,
+                "shape_ranges": [
+                  [
+                    1,
+                    1024
+                  ],
+                  [
+                    64,
+                    4096
+                  ]
+                ],
+                "effective_work_per_us": 521208.10561013006,
+                "effective_bytes_per_us": 1579912.0701307068,
+                "mapping_checks": [
+                  {
+                    "id": "q2_cal_tiny",
+                    "predicted": [
+                      0,
+                      1
+                    ],
+                    "observed": [
+                      0,
+                      1
+                    ]
+                  },
+                  {
+                    "id": "q2_cal_saturation",
+                    "predicted": [
+                      0,
+                      33
+                    ],
+                    "observed": [
+                      0,
+                      33
+                    ]
+                  },
+                  {
+                    "id": "q2_cal_ub_loop",
+                    "predicted": [
+                      0,
+                      64
+                    ],
+                    "observed": [
+                      0,
+                      64
+                    ]
+                  },
+                  {
+                    "id": "import_v1_q_test_wave",
+                    "predicted": [
+                      0,
+                      34
+                    ],
+                    "observed": [
+                      0,
+                      34
+                    ]
+                  },
+                  {
+                    "id": "import_v1_q_cal_small",
+                    "predicted": [
+                      0,
+                      4
+                    ],
+                    "observed": [
+                      0,
+                      4
+                    ]
+                  },
+                  {
+                    "id": "import_v1_q_cal_decode",
+                    "predicted": [
+                      0,
+                      34
+                    ],
+                    "observed": [
+                      0,
+                      34
+                    ]
+                  },
+                  {
+                    "id": "import_v1_q_test_tail",
+                    "predicted": [
+                      0,
+                      16
+                    ],
+                    "observed": [
+                      0,
+                      16
+                    ]
+                  },
+                  {
+                    "id": "import_v1_q_cal_prefill",
+                    "predicted": [
+                      0,
+                      64
+                    ],
+                    "observed": [
+                      0,
+                      64
+                    ]
+                  }
+                ]
+              },
+              "matmul": {
+                "stage_costs": {
+                  "read": {
+                    "intercept_us": 0.7940960728422234,
+                    "slope_us_per_unit": 0.010015806776921241
+                  },
+                  "vector": {
+                    "intercept_us": 0.0,
+                    "slope_us_per_unit": 0.0
+                  },
+                  "cube": {
+                    "intercept_us": 0.1305260249198441,
+                    "slope_us_per_unit": 0.0055577185544845135
+                  },
+                  "fix": {
+                    "intercept_us": 1.5225158351270573,
+                    "slope_us_per_unit": 0.046051710384869875
+                  },
+                  "write": {
+                    "intercept_us": 0.0,
+                    "slope_us_per_unit": 0.0
+                  }
+                },
+                "total_weights": [
+                  0.6287592306564482,
+                  1.0132485298985998,
+                  0.04140990618043408
+                ],
+                "branches": {
+                  "gemv": {
+                    "count": 2,
+                    "offset_us": 0.02499165762029354,
+                    "kernels": [
+                      "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2"
+                    ]
+                  },
+                  "k_tail": {
+                    "count": 1,
+                    "offset_us": 0.0418689826410068,
+                    "kernels": [
+                      "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2"
+                    ]
+                  },
+                  "coarse_tile": {
+                    "count": 1,
+                    "offset_us": -0.06213097088726075,
+                    "kernels": [
+                      "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2"
+                    ]
+                  },
+                  "dense": {
+                    "count": 4,
+                    "offset_us": -0.006530110852275284,
+                    "kernels": [
+                      "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2"
+                    ]
+                  }
+                },
+                "opcode_weights": [
+                  0.9999999994482758
+                ],
+                "constant_baseline_us": 3.853484906256199,
+                "shape_ranges": [
+                  [
+                    1,
+                    128
+                  ],
+                  [
+                    64,
+                    512
+                  ],
+                  [
+                    64,
+                    1024
+                  ]
+                ],
+                "effective_work_per_us": 15315300.935589952,
+                "effective_bytes_per_us": 179476.18283894475,
+                "mapping_checks": [
+                  {
+                    "id": "m2_cal_skinny_k",
+                    "predicted": [
+                      4,
+                      0
+                    ],
+                    "observed": [
+                      4,
+                      0
+                    ]
+                  },
+                  {
+                    "id": "m2_cal_k_tail",
+                    "predicted": [
+                      10,
+                      0
+                    ],
+                    "observed": [
+                      10,
+                      0
+                    ]
+                  },
+                  {
+                    "id": "m2_cal_full",
+                    "predicted": [
+                      32,
+                      0
+                    ],
+                    "observed": [
+                      32,
+                      0
+                    ]
+                  },
+                  {
+                    "id": "import_v1_m_cal_prefill",
+                    "predicted": [
+                      32,
+                      0
+                    ],
+                    "observed": [
+                      32,
+                      0
+                    ]
+                  },
+                  {
+                    "id": "import_v1_m_cal_decode",
+                    "predicted": [
+                      2,
+                      0
+                    ],
+                    "observed": [
+                      2,
+                      0
+                    ]
+                  },
+                  {
+                    "id": "import_v1_m_cal_small",
+                    "predicted": [
+                      2,
+                      0
+                    ],
+                    "observed": [
+                      2,
+                      0
+                    ]
+                  },
+                  {
+                    "id": "import_v1_m_test_prefill",
+                    "predicted": [
+                      6,
+                      0
+                    ],
+                    "observed": [
+                      6,
+                      0
+                    ]
+                  },
+                  {
+                    "id": "import_v1_m_test_tail",
+                    "predicted": [
+                      4,
+                      0
+                    ],
+                    "observed": [
+                      4,
+                      0
+                    ]
+                  }
+                ]
+              },
+              "fa": {
+                "stage_costs": {
+                  "read": {
+                    "intercept_us": 0.9533634304341849,
+                    "slope_us_per_unit": 0.002908671608764097
+                  },
+                  "vector": {
+                    "intercept_us": 0.2510972691607799,
+                    "slope_us_per_unit": 0.004456407164365578
+                  },
+                  "cube": {
+                    "intercept_us": 0.09377933285855994,
+                    "slope_us_per_unit": 0.008430679874216774
+                  },
+                  "fix": {
+                    "intercept_us": 0.06521044217143074,
+                    "slope_us_per_unit": 0.003613194796208634
+                  },
+                  "write": {
+                    "intercept_us": 0.4059447898107391,
+                    "slope_us_per_unit": 0.009818075313263015
+                  }
+                },
+                "total_weights": [
+                  7.173997224063239,
+                  0.709561101627441,
+                  0.1034756789776515
+                ],
+                "branches": {
+                  "d64_kv256": {
+                    "count": 2,
+                    "offset_us": 0.16107421005820477,
+                    "kernels": [
+                      "FlashAttentionScore_50348df09d0b3ee451d3693a6b2ab3f5_2328361008425337376_mix_aic",
+                      "FlashAttentionScore_50348df09d0b3ee451d3693a6b2ab3f5_2328361008425599520_mix_aic"
+                    ]
+                  },
+                  "d64_kv128": {
+                    "count": 6,
+                    "offset_us": -0.059146775642336724,
+                    "kernels": [
+                      "FlashAttentionScore_50348df09d0b3ee451d3693a6b2ab3f5_2328361008425337376_mix_aic"
+                    ]
+                  },
+                  "d128_kv128": {
+                    "count": 1,
+                    "offset_us": -0.057040875973377446,
+                    "kernels": [
+                      "FlashAttentionScore_50348df09d0b3ee451d3693a6b2ab3f5_2328361009230643744_mix_aic"
+                    ]
+                  }
+                },
+                "opcode_weights": [
+                  1.5128205118507552
+                ],
+                "constant_baseline_us": 9.39649842068967,
+                "shape_ranges": [
+                  [
+                    1,
+                    128
+                  ],
+                  [
+                    64,
+                    1025
+                  ],
+                  [
+                    64,
+                    128
+                  ],
+                  [
+                    1,
+                    1
+                  ],
+                  [
+                    1,
+                    4
+                  ]
+                ],
+                "effective_work_per_us": 445771.43537371064,
+                "effective_bytes_per_us": 21518.95840173631,
+                "mapping_checks": [
+                  {
+                    "id": "f2_cal_q128",
+                    "predicted": [
+                      2,
+                      4
+                    ],
+                    "observed": [
+                      2,
+                      4
+                    ]
+                  },
+                  {
+                    "id": "f2_cal_longkv",
+                    "predicted": [
+                      1,
+                      2
+                    ],
+                    "observed": [
+                      1,
+                      2
+                    ]
+                  },
+                  {
+                    "id": "f2_cal_heads4",
+                    "predicted": [
+                      4,
+                      8
+                    ],
+                    "observed": [
+                      4,
+                      8
+                    ]
+                  },
+                  {
+                    "id": "f2_cal_d128",
+                    "predicted": [
+                      1,
+                      2
+                    ],
+                    "observed": [
+                      1,
+                      2
+                    ]
+                  },
+                  {
+                    "id": "import_v1_f_test_verify",
+                    "predicted": [
+                      1,
+                      2
+                    ],
+                    "observed": [
+                      1,
+                      2
+                    ]
+                  },
+                  {
+                    "id": "import_v1_f_cal_small",
+                    "predicted": [
+                      1,
+                      2
+                    ],
+                    "observed": [
+                      1,
+                      2
+                    ]
+                  },
+                  {
+                    "id": "import_v1_f_test_context",
+                    "predicted": [
+                      1,
+                      2
+                    ],
+                    "observed": [
+                      1,
+                      2
+                    ]
+                  },
+                  {
+                    "id": "import_v1_f_cal_prefill",
+                    "predicted": [
+                      1,
+                      2
+                    ],
+                    "observed": [
+                      1,
+                      2
+                    ]
+                  },
+                  {
+                    "id": "import_v1_f_cal_decode",
+                    "predicted": [
+                      1,
+                      2
+                    ],
+                    "observed": [
+                      1,
+                      2
+                    ]
+                  }
+                ]
+              }
+            },
+            "training_keys": [
+              "3a4415403b798b0cd35b",
+              "3413641058d8996a2ec3",
+              "9f8b37a8b53e76b433e0",
+              "9203150a7160ba43fd37",
+              "7a700a74759b0125f3b9",
+              "003593d6435923b7b77e",
+              "0c83506e94d3e4c0db20",
+              "a85d42154f4699dc8f67",
+              "887417a21b470bd7b4c7",
+              "6aba5b5188dabbc940d8",
+              "b09a21b731e38d212114",
+              "6ffa2c42dd4c4e989d66",
+              "f7696203693eca5790ef",
+              "8bb1a30858260f422947",
+              "436035e368b70c3de0b9",
+              "63a20614904952630aff",
+              "9888f0f294670b4df4c5",
+              "ed8e760f8d7164780e59",
+              "9a4f4cb753d142cab880",
+              "5dbd41b5636d4cff500e",
+              "4fb1f9aeda3db14e026a",
+              "5a0ab07afef8a2dc4d0f",
+              "b0d35194c8e0b7aadd66",
+              "144016dca99c23983e54",
+              "a6ce5257cff1bbb4f7eb"
+            ],
+            "qualification": "pooled CA stage costs plus shrunk regime offsets; unverified regimes remain provisional",
+            "fit_utc": "2026-11-17T04:19:08.345905+00:00",
+            "implementation_sha256": "2787965e6c7acf40adbf2f46e2f9d53a30041db2a6715e314b6e3fe66c799b8a",
+            "shared_implementation_sha256": "14d432302e3b6f43e3b6546ac150df2fa33a560fbd606fd02e8aac4682407500"
+          },
+          "training_keys": [
+            "3a4415403b798b0cd35b",
+            "3413641058d8996a2ec3",
+            "9f8b37a8b53e76b433e0",
+            "9203150a7160ba43fd37",
+            "7a700a74759b0125f3b9",
+            "003593d6435923b7b77e",
+            "0c83506e94d3e4c0db20",
+            "a85d42154f4699dc8f67",
+            "887417a21b470bd7b4c7",
+            "6aba5b5188dabbc940d8",
+            "f3f1870ad4bbecda5b50",
+            "e3f27823fb0bf6404957",
+            "e80bf67c9dc849e17a05",
+            "c72ce82e9835670936ac",
+            "f68763e825e3bacb470c",
+            "6fa4b1f3bd2df30d2b25",
+            "9edb81e27e78c389069d",
+            "b09a21b731e38d212114",
+            "6ffa2c42dd4c4e989d66",
+            "f7696203693eca5790ef",
+            "8bb1a30858260f422947",
+            "436035e368b70c3de0b9",
+            "63a20614904952630aff",
+            "9888f0f294670b4df4c5",
+            "ed8e760f8d7164780e59",
+            "9a4f4cb753d142cab880",
+            "5dbd41b5636d4cff500e",
+            "4fb1f9aeda3db14e026a",
+            "5a0ab07afef8a2dc4d0f",
+            "b0d35194c8e0b7aadd66",
+            "144016dca99c23983e54",
+            "a6ce5257cff1bbb4f7eb"
+          ],
+          "quant": {
+            "costs": {
+              "prefix": {
+                "intercept_us": 2.8078312927854694,
+                "slope_us_per_unit": 0.09296420419811911
+              },
+              "first_read": {
+                "intercept_us": 0.5663142057171042,
+                "slope_us_per_unit": 0.019856258717905303
+              },
+              "vector": {
+                "intercept_us": 0.06471393650716017,
+                "slope_us_per_unit": 0.007136647172092111
+              },
+              "read_interval": {
+                "intercept_us": 0.440908819437027,
+                "slope_us_per_unit": 0.0
+              },
+              "control_floor": {
+                "intercept_us": 4.228565895206944,
+                "slope_us_per_unit": 0.2422551617600799
+              },
+              "write_drain_us": 0.3545449674129486,
+              "suffix_us": 0.009696903638541698
+            },
+            "opcode_weights": [
+              59.999636308918454,
+              43.999976442328474,
+              32.00042953608487
+            ],
+            "calibration_count": 10,
+            "multi_ub_calibration_count": 2,
+            "small_control_count": 8,
+            "assumptions": [
+              "DMA intervals include CA queueing; not hardware peak bandwidth",
+              "control floor is a pooled small-workload latency path, not measured pure scalar execution",
+              "post-first read interval and write drain have only two multi-UB calibration shapes"
+            ]
+          },
+          "constant_baselines": {
+            "quant": 5.6055152444168925,
+            "matmul": 3.9233940184116363,
+            "fa": 9.324293061935654
+          },
+          "qualification": "trace-derived quant phases; FA Q64 non-Dn MMAD decomposition; v0.2 matmul/FA timing retained",
+          "fit_utc": "2026-11-17T06:17:28.056932+00:00",
+          "manifest_sha256": "68b3a533f4c577fd84113c3ddc89d28a31e1b351ce229f51ae56434230f32333"
+        },
+        "training_keys": [
+          "af161df0e83accfc5b2d",
+          "e376a4d0b2996f5f21fe",
+          "1ca0dc2d8af1bc34b09c",
+          "9a35b22f615790325223",
+          "84624f65b4281cb529b4",
+          "8db4cbd1d8c3034f6182",
+          "3a4415403b798b0cd35b",
+          "3413641058d8996a2ec3",
+          "9f8b37a8b53e76b433e0",
+          "9203150a7160ba43fd37",
+          "7a700a74759b0125f3b9",
+          "003593d6435923b7b77e",
+          "0c83506e94d3e4c0db20",
+          "a85d42154f4699dc8f67",
+          "887417a21b470bd7b4c7",
+          "6aba5b5188dabbc940d8",
+          "f3f1870ad4bbecda5b50",
+          "e3f27823fb0bf6404957",
+          "e80bf67c9dc849e17a05",
+          "c72ce82e9835670936ac",
+          "f68763e825e3bacb470c",
+          "6fa4b1f3bd2df30d2b25",
+          "9edb81e27e78c389069d",
+          "b09a21b731e38d212114",
+          "6ffa2c42dd4c4e989d66",
+          "f7696203693eca5790ef",
+          "8bb1a30858260f422947",
+          "436035e368b70c3de0b9",
+          "63a20614904952630aff",
+          "9888f0f294670b4df4c5",
+          "ed8e760f8d7164780e59",
+          "9a4f4cb753d142cab880",
+          "5dbd41b5636d4cff500e",
+          "4fb1f9aeda3db14e026a",
+          "5a0ab07afef8a2dc4d0f",
+          "b0d35194c8e0b7aadd66",
+          "144016dca99c23983e54",
+          "a6ce5257cff1bbb4f7eb"
+        ],
+        "quant": {
+          "costs": {
+            "prefix": {
+              "intercept_us": 2.7845700908046163,
+              "slope_us_per_unit": 0.10118133209530805
+            },
+            "first_read": {
+              "intercept_us": 0.5894105485206343,
+              "slope_us_per_unit": 0.01721754675362108
+            },
+            "vector": {
+              "intercept_us": 0.06542502259423788,
+              "slope_us_per_unit": 0.007099290917857564
+            },
+            "read_interval": {
+              "intercept_us": 0.34565625588099164,
+              "slope_us_per_unit": 0.0
+            },
+            "control_floor": {
+              "intercept_us": 3.830949328964736,
+              "slope_us_per_unit": 0.3997084190758864
+            },
+            "write_drain_us": 0.34484800696372986,
+            "suffix_us": 0.009696963243186474
+          },
+          "opcode_weights": [
+            59.99977347489562,
+            43.99998434836568,
+            32.00028329279328
+          ],
+          "calibration_count": 13,
+          "multi_ub_calibration_count": 3,
+          "small_control_count": 9,
+          "assumptions": [
+            "DMA intervals include CA queueing; not hardware peak bandwidth",
+            "control floor is a pooled small-workload latency path, not measured pure scalar execution",
+            "post-first read interval and write drain have only two multi-UB calibration shapes"
+          ]
+        },
+        "control_log2_cap": 4.0,
+        "constant_baselines": {
+          "quant": 5.80107234353916,
+          "matmul": 3.9233940184116363,
+          "fa": 9.538626484510798
+        },
+        "qualification": "Saturated empirical control path; quant phases refit on 13 old traces; FA/matmul timing frozen v0.3; expanded shapes unvalidated extrapolation",
+        "fit_utc": "2026-11-17T06:57:29.681576+00:00",
+        "manifest_sha256": "40930fd889c48d35234ab011d0f6926e41a6141da8bc41331b79f9ccc9766a38"
+      },
+      "fa_long": {
+        "costs": {
+          "prefix_us": 6.56,
+          "first_k_latency_us": 0.8496969696969705,
+          "first_v_start_lag_us": 1.0666666666666673,
+          "first_v_latency_us": 0.745454545454546,
+          "compute_fill_us": 1.7781818181818174,
+          "drain_us": 0.3472727272727383,
+          "k_initiation_interval_us": 0.5171089866443849,
+          "v_initiation_interval_us": 0.5172149778786946,
+          "cube_service_per_tile_us": 0.21593276515151516,
+          "vector_service_per_tile_us": 0.22098484848484848,
+          "mte1_service_per_tile_us": 0.28101325757575757,
+          "fix_service_per_tile_us": 0.10789772727272727
+        },
+        "domain": {
+          "q": 9,
+          "d": 64,
+          "b": 1,
+          "h": 1,
+          "kv_min": 4096
+        },
+        "calibration_shape": [
+          9,
+          32768,
+          64,
+          1,
+          1
+        ],
+        "calibration_db_sha256": "9220bb8932f4f4464a75c005fdc9dd1fd485928938c1be3d2bc916dd37f0c220"
+      },
+      "fit_utc": "2026-11-17T08:47:59.165672+00:00",
+      "qualification": "Separated fill latency and effective initiation interval; one long training shape; no peak-throughput claim"
+    },
+    "quant_vf_gap": {
+      "coefficients": [
+        0.11987486887649926,
+        0.6213462046069332
+      ],
+      "calibration_count": 19,
+      "guard": "single UB tile and cols_per_core>=1024",
+      "meaning": "Observed VF window minus same-core SIMD interval union; scheduling residual, not ISA service or independent peak",
+      "fit_features": [
+        "1",
+        "active_aiv/64 for singleUB, else0"
+      ]
+    },
+    "fit_utc": "2026-11-17T09:42:21.133207+00:00"
+  },
+  "routes": {
+    "addmm": {
+      "parameters": {
+        "startup_us": 2.961818181818182,
+        "service_us_per_work": 0.030303030303030304,
+        "work_identifiable": true,
+        "constant_us": 3.2193939393939397
+      },
+      "attrs": {
+        "self_shape": [
+          "N"
+        ],
+        "alpha": 1,
+        "beta": 1
+      },
+      "feature": "critical_work",
+      "scope": "cross-core instruction makespan",
+      "domain": [
+        [
+          2,
+          16
+        ],
+        [
+          16,
+          64
+        ],
+        [
+          16,
+          256
+        ]
+      ],
+      "calibration_ids": [
+        "a7_cal_k256",
+        "reused_addmm"
+      ],
+      "calibration_work_min": 1,
+      "calibration_work_max": 16
+    },
+    "gmm2": {
+      "parameters": {
+        "startup_us": 3.409090909090909,
+        "service_us_per_work": 0.06818181818181812,
+        "work_identifiable": true,
+        "constant_us": 3.5
+      },
+      "attrs": {},
+      "feature": "critical_work",
+      "scope": "cross-core instruction makespan",
+      "domain": [
+        [
+          2,
+          6
+        ],
+        [
+          64,
+          128
+        ],
+        [
+          64,
+          128
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "calibration_ids": [
+        "moe_cal_e1_chain_r3__gmm2",
+        "moe_cal_e1_f128_chain_r3__gmm2",
+        "moe_cal_e2_skew_chain_r3__gmm2"
+      ],
+      "calibration_work_min": 1,
+      "calibration_work_max": 2
+    },
+    "grouped_matmul_swiglu_quant_v2": {
+      "parameters": {
+        "startup_us": 6.921212121212122,
+        "service_us_per_work": 0.22121212121212078,
+        "work_identifiable": true,
+        "constant_us": 7.216161616161616
+      },
+      "attrs": {},
+      "feature": "critical_work",
+      "scope": "cross-core instruction makespan",
+      "domain": [
+        [
+          2,
+          6
+        ],
+        [
+          64,
+          128
+        ],
+        [
+          64,
+          128
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "calibration_ids": [
+        "moe_cal_e1_chain_r3__grouped_matmul_swiglu_quant_v2",
+        "moe_cal_e1_f128_chain_r3__grouped_matmul_swiglu_quant_v2",
+        "moe_cal_e2_skew_chain_r3__grouped_matmul_swiglu_quant_v2"
+      ],
+      "calibration_work_min": 1,
+      "calibration_work_max": 2
+    },
+    "kda_recurrent": {
+      "parameters": {
+        "startup_us": 11.971515151515149,
+        "service_us_per_work": 3.24787878787879,
+        "work_identifiable": true,
+        "constant_us": 16.843333333333334
+      },
+      "attrs": {
+        "layout": "BSND",
+        "dtype": "BF16",
+        "gate_dtype": "FP32",
+        "state_dtype": "FP32",
+        "state_v_first": false,
+        "use_gate_in_kernel": false,
+        "chunk_size": null,
+        "output_final_state": true,
+        "export_gk": false
+      },
+      "feature": "critical_work",
+      "scope": "cross-core instruction makespan",
+      "domain": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          128,
+          128
+        ],
+        [
+          128,
+          128
+        ]
+      ],
+      "calibration_ids": [
+        "kda_recurrent_b1_s1_h1_k128_v128",
+        "kda_recurrent_b1_s2_h1_k128_v128"
+      ],
+      "calibration_work_min": 1,
+      "calibration_work_max": 2
+    },
+    "lightning_indexer": {
+      "parameters": {
+        "startup_us": 5.445454545454547,
+        "service_us_per_work": 0.08098484848484844,
+        "work_identifiable": true,
+        "constant_us": 6.417272727272728
+      },
+      "attrs": {
+        "dtype": "bf16",
+        "layout": "BSND",
+        "sparse_count": 512,
+        "sparse_mode": 3,
+        "return_values": false
+      },
+      "feature": "critical_work",
+      "scope": "cross-core instruction makespan",
+      "domain": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          512,
+          1024
+        ],
+        [
+          8,
+          8
+        ],
+        [
+          128,
+          128
+        ]
+      ],
+      "calibration_ids": [
+        "lightning_indexer_v7_1",
+        "lightning_indexer_v7_2"
+      ],
+      "calibration_work_min": 8,
+      "calibration_work_max": 16
+    },
+    "mhc": {
+      "parameters": {
+        "startup_us": 16.38060606060606,
+        "service_us_per_work": 0.0,
+        "work_identifiable": false,
+        "constant_us": 16.38060606060606
+      },
+      "attrs": {
+        "dtype": "bf16",
+        "implementation": "split",
+        "num_iters": 20
+      },
+      "feature": "critical_work",
+      "scope": "serial kernel instruction sum (inter-launch gaps excluded)",
+      "domain": [
+        [
+          1,
+          8
+        ],
+        [
+          4,
+          4
+        ],
+        [
+          128,
+          128
+        ]
+      ],
+      "calibration_ids": [
+        "mhc_v7_1",
+        "mhc_v7_2"
+      ],
+      "calibration_work_min": 416.0,
+      "calibration_work_max": 416.0
+    },
+    "mhc_post": {
+      "parameters": {
+        "startup_us": 4.027272727272727,
+        "service_us_per_work": 0.0,
+        "work_identifiable": true,
+        "constant_us": 4.027272727272727
+      },
+      "attrs": {
+        "dtype": "bf16",
+        "has_h_res": true
+      },
+      "feature": "activation_log2",
+      "scope": "cross-core instruction makespan",
+      "domain": [
+        [
+          1,
+          32
+        ],
+        [
+          4,
+          4
+        ],
+        [
+          128,
+          128
+        ]
+      ],
+      "calibration_ids": [
+        "mhc_post_v7_1",
+        "mhc_post_v7_2"
+      ],
+      "calibration_work_min": 1.0,
+      "calibration_work_max": 5.044394119358453
+    },
+    "mhc_pre": {
+      "parameters": {
+        "startup_us": 8.406666666666666,
+        "service_us_per_work": 0.0,
+        "work_identifiable": false,
+        "constant_us": 8.406666666666666
+      },
+      "attrs": {
+        "dtype": "bf16",
+        "alpha_count": 3,
+        "has_gamma": false,
+        "return_intermediates": true
+      },
+      "feature": "critical_work",
+      "scope": "cross-core instruction makespan",
+      "domain": [
+        [
+          1,
+          8
+        ],
+        [
+          4,
+          4
+        ],
+        [
+          128,
+          128
+        ]
+      ],
+      "calibration_ids": [
+        "mhc_pre_v7_1",
+        "mhc_pre_v7_2"
+      ],
+      "calibration_work_min": 96.0,
+      "calibration_work_max": 96.0
+    },
+    "mhc_pre_sinkhorn": {
+      "parameters": {
+        "startup_us": 9.82,
+        "service_us_per_work": 0.0,
+        "work_identifiable": false,
+        "constant_us": 9.82
+      },
+      "attrs": {
+        "dtype": "bf16",
+        "num_iters": 20,
+        "need_backward": false
+      },
+      "feature": "critical_work",
+      "scope": "cross-core instruction makespan",
+      "domain": [
+        [
+          1,
+          4
+        ],
+        [
+          4,
+          4
+        ],
+        [
+          4096,
+          4096
+        ]
+      ],
+      "calibration_ids": [
+        "mhc_pre_sinkhorn_v7_1_r3",
+        "mhc_pre_sinkhorn_v7_2_r3"
+      ],
+      "calibration_work_min": 3392.0,
+      "calibration_work_max": 3392.0
+    },
+    "mhc_sinkhorn": {
+      "parameters": {
+        "startup_us": 6.037280237924226,
+        "service_us_per_work": 0.25908339843941053,
+        "work_identifiable": true,
+        "constant_us": 6.946969696969697
+      },
+      "attrs": {
+        "dtype": "fp32",
+        "num_iters": 20,
+        "return_intermediates": false
+      },
+      "feature": "activation_log2",
+      "scope": "cross-core instruction makespan",
+      "domain": [
+        [
+          1,
+          64
+        ],
+        [
+          4,
+          4
+        ]
+      ],
+      "calibration_ids": [
+        "mhc_sinkhorn_v7_1",
+        "mhc_sinkhorn_v7_2"
+      ],
+      "calibration_work_min": 1.0,
+      "calibration_work_max": 6.022367813028454
+    },
+    "rmsnorm": {
+      "parameters": {
+        "startup_us": 3.4351048951048955,
+        "service_us_per_work": 0.01883449883449883,
+        "work_identifiable": true,
+        "constant_us": 3.8212121212121213
+      },
+      "attrs": {},
+      "feature": "critical_work",
+      "scope": "cross-core instruction makespan",
+      "domain": [
+        [
+          1,
+          36
+        ],
+        [
+          128,
+          7168
+        ]
+      ],
+      "calibration_ids": [
+        "r7_cal_wide",
+        "reused_rmsnorm"
+      ],
+      "calibration_work_min": 1,
+      "calibration_work_max": 40
+    }
+  },
+  "scope": "DIAGNOSTIC BASELINES ONLY for new routes; base_v6 retains legacy mechanism models. General models use mechanism.py and explicit hardware profile."
+}

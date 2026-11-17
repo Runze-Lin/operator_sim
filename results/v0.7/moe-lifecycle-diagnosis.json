@@ -1,0 +1,30 @@
+{
+  "observed_pid": 4092446,
+  "observed_stage": "main returned; process exit TLS destructors",
+  "main_thread_backtrace": [
+    "libc free",
+    "op::internal::BlockCache::~BlockCache()",
+    "__call_tls_dtors",
+    "exit"
+  ],
+  "library": "toolchains/cann/9.2.1/cann-9.2.1/lib64/libnnopbase.so",
+  "binary_evidence": {
+    "aclCreateTensorList_constructor": "aclTensorList::aclTensorList at 0x140218; memcpy_s copies pointers, no tensor cloning",
+    "aclDestroyTensorList": "0xff320 loop fetches member pointer; 0xff330 calls aclDestroyTensor"
+  },
+  "diagnosis": "caller double destruction of aclTensor metadata owned by TensorList and Tensor RAII; causes BlockCache corruption at thread teardown",
+  "fix": "TensorList(aclTensor*& t) transfers ownership and sets t=nullptr after successful list construction; Buffer lifetime remains separately owned",
+  "cpu_selftest": {
+    "iterations": 1000,
+    "device_allocations": 0,
+    "output": "METADATA_SELFTEST_PASS transferred=1000 device_allocations=0",
+    "exit_code": 0,
+    "CA_started": false
+  },
+  "gmm1_r2_database": {
+    "KernelInfo_rows": 0,
+    "ExecutedInstructions_rows": 0,
+    "accepted_for_timing": false
+  },
+  "next_action": "fresh r3 CA with unchanged numerics/tolerance and added cleanup markers; no timeout increase"
+}

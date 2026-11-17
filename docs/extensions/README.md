@@ -4,20 +4,20 @@
 
 已加入RMSNorm、Addmm、LightningIndexer、mHC、KDA、GMM1–SwiGLU–量化及后续GMM2组成链的**结构建模入口**：核对真实950库接口，计算有依据的数学工作量、张量shape、依赖和部分源码tiling候选。它们还没有通用时延校准，所有 `predicted_us` / 利用率为 `null`；不能与v0.5 FA的准确率混算。
 
-RMSNorm和Addmm另有真实ACLNN调用器，主线程各安排一个极小CA case验证正确性和dispatch，结果及成本见 [调用验证记录](smoke-950dt.json)。一个实测点只是后续校准的起点，不构成一个泛化时延模型。其他族本轮不新增CA。
+v0.7已为全部列出族增加真实ACLNN调用器与少量CA测试。完整成功/失败、逐shape数值与指令证据统一见[总误差报告](../error-analysis.md)，总方法开头说明[通用建模思想](../modeling-strategy.md)。小shape局部拟合单列为诊断对照，不填充通用机制时延；KDA chunk同步资格问题等失败如实保留。
 
 | 族 / 入口 | shape约定 | 真实库及接口 | 当前可返回 / 主要边界 |
 |---|---|---|---|
 | `rmsnorm` | R,C | ops-nn / aclnnRmsNorm | 归约/乘法/rsqrt工作、UB与分核候选；不把归约算成一次普通乘加 |
 | `addmm` | M,N,K | ops-nn / aclnnAddmm | self广播、alpha/beta和融合候选；不能直接取Matmul时延 |
-| `lightning_indexer` | B,Q,L,G,D | ops-transformer / aclnnLightningIndexer | QK→ReLU→head加权归约→TopK；TopK算法和tiling未测 |
+| `lightning_indexer` | B,Q,L,G,D | ops-transformer / aclnnLightningIndexer | QK→ReLU→head加权归约→TopK；已采集实际entry/核数/指令；完整TopK/tiling尚未移植 |
 | `mhc_pre`, `mhc_pre_sinkhorn`, `mhc_post` | T,N,D | ops-transformer / 对应aclnnMhc* | 投影、归一化、混合、后处理工作；融合与拆分路径互斥 |
 | `mhc_sinkhorn` | T,N | ops-transformer / aclnnMhcSinkhorn | FP32归一化迭代；VectorCore，不能当Cube矩阵乘 |
 | `mhc` | T,N,D | 上述接口组合 | `implementation=fused/split`；不包含外部Attention/MLP主体耗时 |
 | `kda_recurrent` | B,S,Hq,Hv,K,V | ops-transformer / aclnnRecurrentKda | 有状态递推链；单序列S≤8，主模型Q=9返回unsupported |
-| `kda_chunk` | B,S,Hq,Hv,K,V | ops-transformer / aclnnChunkKdaFwd | chunk及state链；5阶段在同一kernel内部，不计5次launch |
+| `kda_chunk` | B,S,Hq,Hv,K,V | ops-transformer / aclnnChunkKdaFwd | chunk及state链；主kernel五阶段；实测另有辅助kernel，保留完整调用链 |
 | `grouped_matmul_swiglu_quant_v2` | M,K,F,E | ops-transformer / aclnnGroupedMatmulSwigluQuantV2 | GMM1→dequant→SwiGLU→MX quant；只覆盖第一融合 |
-| `groupedmatmulswiglugmm` / `moe_ffn` | M,K,F,E | 上述融合 + aclnnGroupedMatmulV5候选 | 第二GMM数学工作；quant-scale ABI串联未验证，非一个同名单kernel |
+| `groupedmatmulswiglugmm` / `moe_ffn` | M,K,F,E | 上述融合 + aclnnGroupedMatmulV5 | 第二GMM数学工作；实际quant-scale ABI已串联并检查全部有效输出，非一个同名单kernel |
 
 KDA的Hq是Q/K heads，Hv是value heads；MoE的F是SwiGLU之后的宽度，E是本rank专家数，**不是EP大小**。MoE必须给出本rank实际token分配直方图，不能只从batch和EP直接算出专家负载。
 
@@ -48,6 +48,8 @@ assert result['predicted_us'] is None
 字典shape也可通过 `--shape-json` 提供给Indexer/mHC/KDA/MoE，键名严格遵循文档。调用器与模型接口分离；纯结构查询不启动CANN或CA。
 
 ## 三组详细方法、证据和限制
+
+v0.7调用合同与修复证据：[Indexer/mHC](indexer-mhc-v7.md)、[KDA](kda-v7.md)、[MoE](moe-v7.md)。
 
 - [RMSNorm / Addmm](norm-addmm.md)：公式、源码分核/UB、广播和融合门控、真实库smoke。
 - [LightningIndexer / mHC](indexer-mhc.md)：头数/稀疏模式、TopK未知部分、Pre/Sinkhorn/Post两条组成路径和Vector实现。

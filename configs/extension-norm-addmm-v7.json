@@ -1,0 +1,11 @@
+{
+  "binary":"build/smoke/extension_norm_addmm",
+  "source":"smoke/extension_norm_addmm.cpp",
+  "cases":[
+    {"id":"r7_cal_wide","op":"rmsnorm","shape":[9,5120],"attrs":{},"arguments":["rmsnorm","9","5120"],"split":"calibration","timeout_seconds":120,"correctness_groups":2},
+    {"id":"r7_hold_batch4","op":"rmsnorm","shape":[36,7168],"attrs":{},"arguments":["rmsnorm","36","7168"],"split":"holdout","timeout_seconds":150,"correctness_groups":2},
+    {"id":"a7_cal_k256","op":"addmm","shape":[16,64,256],"attrs":{"self_shape":[64],"alpha":1,"beta":1},"arguments":["addmm","16","64","256","bias"],"split":"calibration","timeout_seconds":120,"correctness_groups":1},
+    {"id":"a7_hold_q9","op":"addmm","shape":[9,64,128],"attrs":{"self_shape":[64],"alpha":1,"beta":1},"arguments":["addmm","9","64","128","bias"],"split":"holdout","timeout_seconds":120,"correctness_groups":1}
+  ],
+  "reused_calibration":"docs/extensions/smoke-950dt.json"
+}

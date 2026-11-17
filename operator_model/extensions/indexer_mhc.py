@@ -245,6 +245,8 @@ def _mhc_tensor(op, dims, axes, attrs):
                      'hin_multiplications': t*n*d, 'hin_reduction_additions': t*(n-1)*d,
                      'logical_tensor_bytes': bytes_in+bytes_out})
     if fused:
+        # The fused public API flattens N*N; standalone Pre returns [T,N,N].
+        out['output_shapes']['h_res'] = [t,n*n]
         sink = _sinkhorn((t,n), ('T','N'), {'num_iters': iters, 'eps': a['hc_eps']})
         out['work']['sinkhorn_logical_work'] = {k:v for k,v in sink['work'].items() if k != 'logical_tensor_bytes'}
         out['composition'] = {'fused_stages': ['mhc_pre', 'mhc_sinkhorn'], 'aclnn_calls': 1,
