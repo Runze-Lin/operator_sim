@@ -1,0 +1,1064 @@
+{
+  "frozen_utc": "2026-11-17T03:47:21.040682+00:00",
+  "model_sha256": "caada63cb14158cbcd68d89739d88c40645173ff662d477b9b4f03fe30128cc2",
+  "manifest_sha256": "3ba4daeee4b6018e054db96a205f90965cd1eb3921ffeeef71eb50ef2c679d35",
+  "implementation_sha256": "14d432302e3b6f43e3b6546ac150df2fa33a560fbd606fd02e8aac4682407500",
+  "predictions": [
+    {
+      "id": "q_cal_small",
+      "op": "quant",
+      "shape": [
+        4,
+        256
+      ],
+      "split": "calibration",
+      "prediction": {
+        "op": "quant",
+        "shape": [
+          4,
+          256
+        ],
+        "predicted_us": 5.189393999986351,
+        "reference_scope": "cross-core instruction makespan",
+        "soc_version": "Ascend950DT_9582",
+        "coverage": "within_calibration_box",
+        "kernel_selection_verified": false,
+        "plan": {
+          "active_aiv": 4,
+          "rows_per_core": 1,
+          "cols_per_core": 256,
+          "slice_cols": 256,
+          "active_aic": 0,
+          "waves": 1,
+          "iterations": 1,
+          "units": {
+            "read": 0.5,
+            "vector": 1.0,
+            "write": 0.2578125,
+            "cube": 0.0,
+            "fix": 0.0
+          },
+          "work_per_core": 256,
+          "useful_work": 1024,
+          "logical_bytes": 3104.0,
+          "mapping": "source-derived tail-axis block32 two-dimensional split"
+        },
+        "stage_services_us": {
+          "read": 1.0760605987161398,
+          "vector": 0.07878738630097358,
+          "write": 0.9230303096895417,
+          "cube": 0.0,
+          "fix": 0.0
+        },
+        "scheduled_body_us": 2.077878294706655,
+        "fixed_overhead_us": 2.130818274288818,
+        "body_scale": 1.4719705834019159,
+        "constant_baseline_us": 5.30343453368793,
+        "empirical_roofline_us": 0.08642993126704823,
+        "uncorrected_schedule_us": 2.077878294706655,
+        "ideal_compute_efficiency": null,
+        "efficiency_unavailable_reason": "No independently validated 950DT per-opcode issue/peak model in v0.1"
+      }
+    },
+    {
+      "id": "q_cal_decode",
+      "op": "quant",
+      "shape": [
+        17,
+        512
+      ],
+      "split": "calibration",
+      "prediction": {
+        "op": "quant",
+        "shape": [
+          17,
+          512
+        ],
+        "predicted_us": 5.189393999986351,
+        "reference_scope": "cross-core instruction makespan",
+        "soc_version": "Ascend950DT_9582",
+        "coverage": "within_calibration_box",
+        "kernel_selection_verified": false,
+        "plan": {
+          "active_aiv": 34,
+          "rows_per_core": 1,
+          "cols_per_core": 256,
+          "slice_cols": 256,
+          "active_aic": 0,
+          "waves": 1,
+          "iterations": 1,
+          "units": {
+            "read": 0.5,
+            "vector": 1.0,
+            "write": 0.2578125,
+            "cube": 0.0,
+            "fix": 0.0
+          },
+          "work_per_core": 256,
+          "useful_work": 8704,
+          "logical_bytes": 26384.0,
+          "mapping": "source-derived tail-axis block32 two-dimensional split"
+        },
+        "stage_services_us": {
+          "read": 1.0760605987161398,
+          "vector": 0.07878738630097358,
+          "write": 0.9230303096895417,
+          "cube": 0.0,
+          "fix": 0.0
+        },
+        "scheduled_body_us": 2.077878294706655,
+        "fixed_overhead_us": 2.130818274288818,
+        "body_scale": 1.4719705834019159,
+        "constant_baseline_us": 5.30343453368793,
+        "empirical_roofline_us": 0.73465441576991,
+        "uncorrected_schedule_us": 2.077878294706655,
+        "ideal_compute_efficiency": null,
+        "efficiency_unavailable_reason": "No independently validated 950DT per-opcode issue/peak model in v0.1"
+      }
+    },
+    {
+      "id": "q_cal_prefill",
+      "op": "quant",
+      "shape": [
+        64,
+        1024
+      ],
+      "split": "calibration",
+      "prediction": {
+        "op": "quant",
+        "shape": [
+          64,
+          1024
+        ],
+        "predicted_us": 5.531515601091088,
+        "reference_scope": "cross-core instruction makespan",
+        "soc_version": "Ascend950DT_9582",
+        "coverage": "within_calibration_box",
+        "kernel_selection_verified": false,
+        "plan": {
+          "active_aiv": 64,
+          "rows_per_core": 1,
+          "cols_per_core": 1024,
+          "slice_cols": 512,
+          "active_aic": 0,
+          "waves": 1,
+          "iterations": 1,
+          "units": {
+            "read": 2.0,
+            "vector": 4.0,
+            "write": 1.03125,
+            "cube": 0.0,
+            "fix": 0.0
+          },
+          "work_per_core": 1024,
+          "useful_work": 65536,
+          "logical_bytes": 198656.0,
+          "mapping": "source-derived tail-axis block32 two-dimensional split"
+        },
+        "stage_services_us": {
+          "read": 1.2860605772584677,
+          "vector": 0.10121161851566284,
+          "write": 0.9230303096895417,
+          "cube": 0.0,
+          "fix": 0.0
+        },
+        "scheduled_body_us": 2.3103025054636723,
+        "fixed_overhead_us": 2.130818274288818,
+        "body_scale": 1.4719705834019159,
+        "constant_baseline_us": 5.30343453368793,
+        "empirical_roofline_us": 5.531515601091087,
+        "uncorrected_schedule_us": 2.3103025054636723,
+        "ideal_compute_efficiency": null,
+        "efficiency_unavailable_reason": "No independently validated 950DT per-opcode issue/peak model in v0.1"
+      }
+    },
+    {
+      "id": "m_cal_small",
+      "op": "matmul",
+      "shape": [
+        32,
+        64,
+        64
+      ],
+      "split": "calibration",
+      "prediction": {
+        "op": "matmul",
+        "shape": [
+          32,
+          64,
+          64
+        ],
+        "predicted_us": 3.246314288571824,
+        "reference_scope": "cross-core instruction makespan",
+        "soc_version": "Ascend950DT_9582",
+        "coverage": "within_calibration_box",
+        "kernel_selection_verified": false,
+        "plan": {
+          "active_aic": 2,
+          "active_aiv": 0,
+          "waves": 1,
+          "iterations": 1,
+          "tile": [
+            16,
+            64,
+            64
+          ],
+          "units": {
+            "read": 10.0,
+            "cube": 1.0,
+            "fix": 2.0,
+            "write": 0.0,
+            "vector": 0.0
+          },
+          "work_per_core": 131072,
+          "useful_work": 262144,
+          "logical_bytes": 16384,
+          "mapping": "16x64 elementary-work tiling hypothesis; compare observed mapping"
+        },
+        "stage_services_us": {
+          "read": 0.8414658285287578,
+          "cube": 0.06505987827861032,
+          "fix": 1.4640404383341472,
+          "write": 0.0,
+          "vector": 0.0
+        },
+        "scheduled_body_us": 2.3705661451415154,
+        "fixed_overhead_us": 0.6297099519257237,
+        "body_scale": 1.1037887898672818,
+        "constant_baseline_us": 3.6804039676984153,
+        "empirical_roofline_us": 0.15690475702285767,
+        "uncorrected_schedule_us": 2.3705661451415154,
+        "ideal_compute_efficiency": null,
+        "efficiency_unavailable_reason": "No independently validated 950DT per-opcode issue/peak model in v0.1"
+      }
+    },
+    {
+      "id": "m_cal_decode",
+      "op": "matmul",
+      "shape": [
+        1,
+        128,
+        128
+      ],
+      "split": "calibration",
+      "prediction": {
+        "op": "matmul",
+        "shape": [
+          1,
+          128,
+          128
+        ],
+        "predicted_us": 3.4090979182442958,
+        "reference_scope": "cross-core instruction makespan",
+        "soc_version": "Ascend950DT_9582",
+        "coverage": "within_calibration_box",
+        "kernel_selection_verified": false,
+        "plan": {
+          "active_aic": 2,
+          "active_aiv": 0,
+          "waves": 1,
+          "iterations": 1,
+          "tile": [
+            16,
+            64,
+            128
+          ],
+          "units": {
+            "read": 20.0,
+            "cube": 2.0,
+            "fix": 2.0,
+            "write": 0.0,
+            "vector": 0.0
+          },
+          "work_per_core": 262144,
+          "useful_work": 32768,
+          "logical_bytes": 33280,
+          "mapping": "16x64 elementary-work tiling hypothesis; compare observed mapping"
+        },
+        "stage_services_us": {
+          "read": 0.9697040248185744,
+          "cube": 0.08429883628390557,
+          "fix": 1.4640404383341472,
+          "write": 0.0,
+          "vector": 0.0
+        },
+        "scheduled_body_us": 2.518043299436627,
+        "fixed_overhead_us": 0.6297099519257237,
+        "body_scale": 1.1037887898672818,
+        "constant_baseline_us": 3.6804039676984153,
+        "empirical_roofline_us": 0.31871278770267963,
+        "uncorrected_schedule_us": 2.518043299436627,
+        "ideal_compute_efficiency": null,
+        "efficiency_unavailable_reason": "No independently validated 950DT per-opcode issue/peak model in v0.1"
+      }
+    },
+    {
+      "id": "m_cal_prefill",
+      "op": "matmul",
+      "shape": [
+        128,
+        256,
+        512
+      ],
+      "split": "calibration",
+      "prediction": {
+        "op": "matmul",
+        "shape": [
+          128,
+          256,
+          512
+        ],
+        "predicted_us": 4.385799696279127,
+        "reference_scope": "cross-core instruction makespan",
+        "soc_version": "Ascend950DT_9582",
+        "coverage": "within_calibration_box",
+        "kernel_selection_verified": false,
+        "plan": {
+          "active_aic": 32,
+          "active_aiv": 0,
+          "waves": 1,
+          "iterations": 1,
+          "tile": [
+            16,
+            64,
+            512
+          ],
+          "units": {
+            "read": 80.0,
+            "cube": 8.0,
+            "fix": 2.0,
+            "write": 0.0,
+            "vector": 0.0
+          },
+          "work_per_core": 1048576,
+          "useful_work": 33554432,
+          "logical_bytes": 458752,
+          "mapping": "16x64 elementary-work tiling hypothesis; compare observed mapping"
+        },
+        "stage_services_us": {
+          "read": 1.739133202557474,
+          "cube": 0.19973258431567703,
+          "fix": 1.4640404383341472,
+          "write": 0.0,
+          "vector": 0.0
+        },
+        "scheduled_body_us": 3.402906225207298,
+        "fixed_overhead_us": 0.6297099519257237,
+        "body_scale": 1.1037887898672818,
+        "constant_baseline_us": 3.6804039676984153,
+        "empirical_roofline_us": 4.393333196640015,
+        "uncorrected_schedule_us": 3.402906225207298,
+        "ideal_compute_efficiency": null,
+        "efficiency_unavailable_reason": "No independently validated 950DT per-opcode issue/peak model in v0.1"
+      }
+    },
+    {
+      "id": "f_cal_small",
+      "op": "fa",
+      "shape": [
+        16,
+        64,
+        64
+      ],
+      "split": "calibration",
+      "prediction": {
+        "op": "fa",
+        "shape": [
+          16,
+          64,
+          64
+        ],
+        "predicted_us": 8.913299912375173,
+        "reference_scope": "cross-core instruction makespan",
+        "soc_version": "Ascend950DT_9582",
+        "coverage": "within_calibration_box",
+        "kernel_selection_verified": false,
+        "plan": {
+          "active_aic": 1,
+          "active_aiv": 2,
+          "waves": 1,
+          "iterations": 1,
+          "tile": [
+            16,
+            64,
+            64
+          ],
+          "units": {
+            "read": 18.0,
+            "cube": 2.0,
+            "vector": 2.0,
+            "fix": 4.0,
+            "write": 2.0
+          },
+          "work_per_core": 262144,
+          "useful_work": 262144,
+          "logical_bytes": 20480,
+          "mapping": "source-informed Q64/KV128 mixed pipeline; no split-KV or sparse attention"
+        },
+        "stage_services_us": {
+          "read": 0.969494971834744,
+          "cube": 0.10195911225191383,
+          "vector": 0.33806900109359345,
+          "fix": 0.07335447465329496,
+          "write": 0.445050398974369
+        },
+        "scheduled_body_us": 1.9279279588079152,
+        "fixed_overhead_us": 8.126858917851468,
+        "body_scale": 0.4079203224014557,
+        "constant_baseline_us": 9.08181825466454,
+        "empirical_roofline_us": 2.3522727496456355,
+        "uncorrected_schedule_us": 1.9279279588079152,
+        "ideal_compute_efficiency": null,
+        "efficiency_unavailable_reason": "No independently validated 950DT per-opcode issue/peak model in v0.1"
+      }
+    },
+    {
+      "id": "f_cal_decode",
+      "op": "fa",
+      "shape": [
+        1,
+        128,
+        64
+      ],
+      "split": "calibration",
+      "prediction": {
+        "op": "fa",
+        "shape": [
+          1,
+          128,
+          64
+        ],
+        "predicted_us": 8.927059703049009,
+        "reference_scope": "cross-core instruction makespan",
+        "soc_version": "Ascend950DT_9582",
+        "coverage": "within_calibration_box",
+        "kernel_selection_verified": false,
+        "plan": {
+          "active_aic": 1,
+          "active_aiv": 2,
+          "waves": 1,
+          "iterations": 1,
+          "tile": [
+            16,
+            128,
+            64
+          ],
+          "units": {
+            "read": 34.0,
+            "cube": 4.0,
+            "vector": 4.0,
+            "fix": 8.0,
+            "write": 2.0
+          },
+          "work_per_core": 524288,
+          "useful_work": 32768,
+          "logical_bytes": 33024,
+          "mapping": "source-informed Q64/KV128 mixed pipeline; no split-KV or sparse attention"
+        },
+        "stage_services_us": {
+          "read": 0.969494971834744,
+          "cube": 0.11842143812844919,
+          "vector": 0.33992950639925723,
+          "fix": 0.08876320799043792,
+          "write": 0.445050398974369
+        },
+        "scheduled_body_us": 1.9616595233272573,
+        "fixed_overhead_us": 8.126858917851468,
+        "body_scale": 0.4079203224014557,
+        "constant_baseline_us": 9.08181825466454,
+        "empirical_roofline_us": 3.793039808803587,
+        "uncorrected_schedule_us": 1.9616595233272573,
+        "ideal_compute_efficiency": null,
+        "efficiency_unavailable_reason": "No independently validated 950DT per-opcode issue/peak model in v0.1"
+      }
+    },
+    {
+      "id": "f_cal_prefill",
+      "op": "fa",
+      "shape": [
+        64,
+        256,
+        64
+      ],
+      "split": "calibration",
+      "prediction": {
+        "op": "fa",
+        "shape": [
+          64,
+          256,
+          64
+        ],
+        "predicted_us": 9.40509514856944,
+        "reference_scope": "cross-core instruction makespan",
+        "soc_version": "Ascend950DT_9582",
+        "coverage": "within_calibration_box",
+        "kernel_selection_verified": false,
+        "plan": {
+          "active_aic": 1,
+          "active_aiv": 2,
+          "waves": 1,
+          "iterations": 2,
+          "tile": [
+            64,
+            128,
+            64
+          ],
+          "units": {
+            "read": 40.0,
+            "cube": 16.0,
+            "vector": 16.0,
+            "fix": 32.0,
+            "write": 8.0
+          },
+          "work_per_core": 4194304,
+          "useful_work": 4194304,
+          "logical_bytes": 81920,
+          "mapping": "source-informed Q64/KV128 mixed pipeline; no split-KV or sparse attention"
+        },
+        "stage_services_us": {
+          "read": 0.969494971834744,
+          "cube": 0.21719539338766142,
+          "vector": 0.35109253823324,
+          "fix": 0.18121560801329567,
+          "write": 0.445050398974369
+        },
+        "scheduled_body_us": 3.1335438822780537,
+        "fixed_overhead_us": 8.126858917851468,
+        "body_scale": 0.4079203224014557,
+        "constant_baseline_us": 9.08181825466454,
+        "empirical_roofline_us": 9.409090998582542,
+        "uncorrected_schedule_us": 3.1335438822780537,
+        "ideal_compute_efficiency": null,
+        "efficiency_unavailable_reason": "No independently validated 950DT per-opcode issue/peak model in v0.1"
+      }
+    },
+    {
+      "id": "q_test_tail",
+      "op": "quant",
+      "shape": [
+        8,
+        384
+      ],
+      "split": "holdout",
+      "prediction": {
+        "op": "quant",
+        "shape": [
+          8,
+          384
+        ],
+        "predicted_us": 5.189393999986351,
+        "reference_scope": "cross-core instruction makespan",
+        "soc_version": "Ascend950DT_9582",
+        "coverage": "within_calibration_box",
+        "kernel_selection_verified": false,
+        "plan": {
+          "active_aiv": 16,
+          "rows_per_core": 1,
+          "cols_per_core": 256,
+          "slice_cols": 256,
+          "active_aic": 0,
+          "waves": 1,
+          "iterations": 1,
+          "units": {
+            "read": 0.5,
+            "vector": 1.0,
+            "write": 0.2578125,
+            "cube": 0.0,
+            "fix": 0.0
+          },
+          "work_per_core": 256,
+          "useful_work": 3072,
+          "logical_bytes": 9312.0,
+          "mapping": "source-derived tail-axis block32 two-dimensional split"
+        },
+        "stage_services_us": {
+          "read": 1.0760605987161398,
+          "vector": 0.07878738630097358,
+          "write": 0.9230303096895417,
+          "cube": 0.0,
+          "fix": 0.0
+        },
+        "scheduled_body_us": 2.077878294706655,
+        "fixed_overhead_us": 2.130818274288818,
+        "body_scale": 1.4719705834019159,
+        "constant_baseline_us": 5.30343453368793,
+        "empirical_roofline_us": 0.2592897938011447,
+        "uncorrected_schedule_us": 2.077878294706655,
+        "ideal_compute_efficiency": null,
+        "efficiency_unavailable_reason": "No independently validated 950DT per-opcode issue/peak model in v0.1"
+      }
+    },
+    {
+      "id": "q_test_wave",
+      "op": "quant",
+      "shape": [
+        33,
+        768
+      ],
+      "split": "holdout",
+      "prediction": {
+        "op": "quant",
+        "shape": [
+          33,
+          768
+        ],
+        "predicted_us": 5.531515601091088,
+        "reference_scope": "cross-core instruction makespan",
+        "soc_version": "Ascend950DT_9582",
+        "coverage": "within_calibration_box",
+        "kernel_selection_verified": false,
+        "plan": {
+          "active_aiv": 34,
+          "rows_per_core": 2,
+          "cols_per_core": 512,
+          "slice_cols": 512,
+          "active_aic": 0,
+          "waves": 1,
+          "iterations": 1,
+          "units": {
+            "read": 2.0,
+            "vector": 4.0,
+            "write": 1.03125,
+            "cube": 0.0,
+            "fix": 0.0
+          },
+          "work_per_core": 1024,
+          "useful_work": 25344,
+          "logical_bytes": 76824.0,
+          "mapping": "source-derived tail-axis block32 two-dimensional split"
+        },
+        "stage_services_us": {
+          "read": 1.2860605772584677,
+          "vector": 0.10121161851566284,
+          "write": 0.9230303096895417,
+          "cube": 0.0,
+          "fix": 0.0
+        },
+        "scheduled_body_us": 2.3103025054636723,
+        "fixed_overhead_us": 2.130818274288818,
+        "body_scale": 1.4719705834019159,
+        "constant_baseline_us": 5.30343453368793,
+        "empirical_roofline_us": 2.1391407988594437,
+        "uncorrected_schedule_us": 2.3103025054636723,
+        "ideal_compute_efficiency": null,
+        "efficiency_unavailable_reason": "No independently validated 950DT per-opcode issue/peak model in v0.1"
+      }
+    },
+    {
+      "id": "m_test_tail",
+      "op": "matmul",
+      "shape": [
+        17,
+        96,
+        128
+      ],
+      "split": "holdout",
+      "prediction": {
+        "op": "matmul",
+        "shape": [
+          17,
+          96,
+          128
+        ],
+        "predicted_us": 3.4090979182442958,
+        "reference_scope": "cross-core instruction makespan",
+        "soc_version": "Ascend950DT_9582",
+        "coverage": "within_calibration_box",
+        "kernel_selection_verified": false,
+        "plan": {
+          "active_aic": 4,
+          "active_aiv": 0,
+          "waves": 1,
+          "iterations": 1,
+          "tile": [
+            16,
+            64,
+            128
+          ],
+          "units": {
+            "read": 20.0,
+            "cube": 2.0,
+            "fix": 2.0,
+            "write": 0.0,
+            "vector": 0.0
+          },
+          "work_per_core": 262144,
+          "useful_work": 417792,
+          "logical_bytes": 32192,
+          "mapping": "16x64 elementary-work tiling hypothesis; compare observed mapping"
+        },
+        "stage_services_us": {
+          "read": 0.9697040248185744,
+          "cube": 0.08429883628390557,
+          "fix": 1.4640404383341472,
+          "write": 0.0,
+          "vector": 0.0
+        },
+        "scheduled_body_us": 2.518043299436627,
+        "fixed_overhead_us": 0.6297099519257237,
+        "body_scale": 1.1037887898672818,
+        "constant_baseline_us": 3.6804039676984153,
+        "empirical_roofline_us": 0.3082933311816305,
+        "uncorrected_schedule_us": 2.518043299436627,
+        "ideal_compute_efficiency": null,
+        "efficiency_unavailable_reason": "No independently validated 950DT per-opcode issue/peak model in v0.1"
+      }
+    },
+    {
+      "id": "m_test_prefill",
+      "op": "matmul",
+      "shape": [
+        48,
+        128,
+        192
+      ],
+      "split": "holdout",
+      "prediction": {
+        "op": "matmul",
+        "shape": [
+          48,
+          128,
+          192
+        ],
+        "predicted_us": 3.571881547916768,
+        "reference_scope": "cross-core instruction makespan",
+        "soc_version": "Ascend950DT_9582",
+        "coverage": "within_calibration_box",
+        "kernel_selection_verified": false,
+        "plan": {
+          "active_aic": 6,
+          "active_aiv": 0,
+          "waves": 1,
+          "iterations": 1,
+          "tile": [
+            16,
+            64,
+            192
+          ],
+          "units": {
+            "read": 30.0,
+            "cube": 3.0,
+            "fix": 2.0,
+            "write": 0.0,
+            "vector": 0.0
+          },
+          "work_per_core": 393216,
+          "useful_work": 2359296,
+          "logical_bytes": 79872,
+          "mapping": "16x64 elementary-work tiling hypothesis; compare observed mapping"
+        },
+        "stage_services_us": {
+          "read": 1.097942221108391,
+          "cube": 0.10353779428920082,
+          "fix": 1.4640404383341472,
+          "write": 0.0,
+          "vector": 0.0
+        },
+        "scheduled_body_us": 2.665520453731739,
+        "fixed_overhead_us": 0.6297099519257237,
+        "body_scale": 1.1037887898672818,
+        "constant_baseline_us": 3.6804039676984153,
+        "empirical_roofline_us": 0.7649106904864311,
+        "uncorrected_schedule_us": 2.665520453731739,
+        "ideal_compute_efficiency": null,
+        "efficiency_unavailable_reason": "No independently validated 950DT per-opcode issue/peak model in v0.1"
+      }
+    },
+    {
+      "id": "f_test_verify",
+      "op": "fa",
+      "shape": [
+        17,
+        96,
+        64
+      ],
+      "split": "holdout",
+      "prediction": {
+        "op": "fa",
+        "shape": [
+          17,
+          96,
+          64
+        ],
+        "predicted_us": 8.940819493722845,
+        "reference_scope": "cross-core instruction makespan",
+        "soc_version": "Ascend950DT_9582",
+        "coverage": "within_calibration_box",
+        "kernel_selection_verified": false,
+        "plan": {
+          "active_aic": 1,
+          "active_aiv": 2,
+          "waves": 1,
+          "iterations": 1,
+          "tile": [
+            32,
+            96,
+            64
+          ],
+          "units": {
+            "read": 28.0,
+            "cube": 6.0,
+            "vector": 6.0,
+            "fix": 12.0,
+            "write": 4.0
+          },
+          "work_per_core": 786432,
+          "useful_work": 417792,
+          "logical_bytes": 28928,
+          "mapping": "source-informed Q64/KV128 mixed pipeline; no split-KV or sparse attention"
+        },
+        "stage_services_us": {
+          "read": 0.969494971834744,
+          "cube": 0.13488376400498456,
+          "vector": 0.341790011704921,
+          "fix": 0.10417194132758087,
+          "write": 0.445050398974369
+        },
+        "scheduled_body_us": 1.9953910878465995,
+        "fixed_overhead_us": 8.126858917851468,
+        "body_scale": 0.4079203224014557,
+        "constant_baseline_us": 9.08181825466454,
+        "empirical_roofline_us": 3.3225852588744598,
+        "uncorrected_schedule_us": 1.9953910878465995,
+        "ideal_compute_efficiency": null,
+        "efficiency_unavailable_reason": "No independently validated 950DT per-opcode issue/peak model in v0.1"
+      }
+    },
+    {
+      "id": "f_test_context",
+      "op": "fa",
+      "shape": [
+        8,
+        192,
+        64
+      ],
+      "split": "holdout",
+      "prediction": {
+        "op": "fa",
+        "shape": [
+          8,
+          192,
+          64
+        ],
+        "predicted_us": 9.322536404526428,
+        "reference_scope": "cross-core instruction makespan",
+        "soc_version": "Ascend950DT_9582",
+        "coverage": "within_calibration_box",
+        "kernel_selection_verified": false,
+        "plan": {
+          "active_aic": 1,
+          "active_aiv": 2,
+          "waves": 1,
+          "iterations": 2,
+          "tile": [
+            16,
+            128,
+            64
+          ],
+          "units": {
+            "read": 34.0,
+            "cube": 4.0,
+            "vector": 4.0,
+            "fix": 8.0,
+            "write": 2.0
+          },
+          "work_per_core": 1048576,
+          "useful_work": 393216,
+          "logical_bytes": 51200,
+          "mapping": "source-informed Q64/KV128 mixed pipeline; no split-KV or sparse attention"
+        },
+        "stage_services_us": {
+          "read": 0.969494971834744,
+          "cube": 0.11842143812844919,
+          "vector": 0.33992950639925723,
+          "fix": 0.08876320799043792,
+          "write": 0.445050398974369
+        },
+        "scheduled_body_us": 2.931154495162001,
+        "fixed_overhead_us": 8.126858917851468,
+        "body_scale": 0.4079203224014557,
+        "constant_baseline_us": 9.08181825466454,
+        "empirical_roofline_us": 5.880681874114089,
+        "uncorrected_schedule_us": 2.931154495162001,
+        "ideal_compute_efficiency": null,
+        "efficiency_unavailable_reason": "No independently validated 950DT per-opcode issue/peak model in v0.1"
+      }
+    },
+    {
+      "id": "q_repeat_small",
+      "op": "quant",
+      "shape": [
+        4,
+        256
+      ],
+      "split": "repeat",
+      "prediction": {
+        "op": "quant",
+        "shape": [
+          4,
+          256
+        ],
+        "predicted_us": 5.189393999986351,
+        "reference_scope": "cross-core instruction makespan",
+        "soc_version": "Ascend950DT_9582",
+        "coverage": "within_calibration_box",
+        "kernel_selection_verified": false,
+        "plan": {
+          "active_aiv": 4,
+          "rows_per_core": 1,
+          "cols_per_core": 256,
+          "slice_cols": 256,
+          "active_aic": 0,
+          "waves": 1,
+          "iterations": 1,
+          "units": {
+            "read": 0.5,
+            "vector": 1.0,
+            "write": 0.2578125,
+            "cube": 0.0,
+            "fix": 0.0
+          },
+          "work_per_core": 256,
+          "useful_work": 1024,
+          "logical_bytes": 3104.0,
+          "mapping": "source-derived tail-axis block32 two-dimensional split"
+        },
+        "stage_services_us": {
+          "read": 1.0760605987161398,
+          "vector": 0.07878738630097358,
+          "write": 0.9230303096895417,
+          "cube": 0.0,
+          "fix": 0.0
+        },
+        "scheduled_body_us": 2.077878294706655,
+        "fixed_overhead_us": 2.130818274288818,
+        "body_scale": 1.4719705834019159,
+        "constant_baseline_us": 5.30343453368793,
+        "empirical_roofline_us": 0.08642993126704823,
+        "uncorrected_schedule_us": 2.077878294706655,
+        "ideal_compute_efficiency": null,
+        "efficiency_unavailable_reason": "No independently validated 950DT per-opcode issue/peak model in v0.1"
+      }
+    },
+    {
+      "id": "m_repeat_small",
+      "op": "matmul",
+      "shape": [
+        32,
+        64,
+        64
+      ],
+      "split": "repeat",
+      "prediction": {
+        "op": "matmul",
+        "shape": [
+          32,
+          64,
+          64
+        ],
+        "predicted_us": 3.246314288571824,
+        "reference_scope": "cross-core instruction makespan",
+        "soc_version": "Ascend950DT_9582",
+        "coverage": "within_calibration_box",
+        "kernel_selection_verified": false,
+        "plan": {
+          "active_aic": 2,
+          "active_aiv": 0,
+          "waves": 1,
+          "iterations": 1,
+          "tile": [
+            16,
+            64,
+            64
+          ],
+          "units": {
+            "read": 10.0,
+            "cube": 1.0,
+            "fix": 2.0,
+            "write": 0.0,
+            "vector": 0.0
+          },
+          "work_per_core": 131072,
+          "useful_work": 262144,
+          "logical_bytes": 16384,
+          "mapping": "16x64 elementary-work tiling hypothesis; compare observed mapping"
+        },
+        "stage_services_us": {
+          "read": 0.8414658285287578,
+          "cube": 0.06505987827861032,
+          "fix": 1.4640404383341472,
+          "write": 0.0,
+          "vector": 0.0
+        },
+        "scheduled_body_us": 2.3705661451415154,
+        "fixed_overhead_us": 0.6297099519257237,
+        "body_scale": 1.1037887898672818,
+        "constant_baseline_us": 3.6804039676984153,
+        "empirical_roofline_us": 0.15690475702285767,
+        "uncorrected_schedule_us": 2.3705661451415154,
+        "ideal_compute_efficiency": null,
+        "efficiency_unavailable_reason": "No independently validated 950DT per-opcode issue/peak model in v0.1"
+      }
+    },
+    {
+      "id": "f_repeat_small",
+      "op": "fa",
+      "shape": [
+        16,
+        64,
+        64
+      ],
+      "split": "repeat",
+      "prediction": {
+        "op": "fa",
+        "shape": [
+          16,
+          64,
+          64
+        ],
+        "predicted_us": 8.913299912375173,
+        "reference_scope": "cross-core instruction makespan",
+        "soc_version": "Ascend950DT_9582",
+        "coverage": "within_calibration_box",
+        "kernel_selection_verified": false,
+        "plan": {
+          "active_aic": 1,
+          "active_aiv": 2,
+          "waves": 1,
+          "iterations": 1,
+          "tile": [
+            16,
+            64,
+            64
+          ],
+          "units": {
+            "read": 18.0,
+            "cube": 2.0,
+            "vector": 2.0,
+            "fix": 4.0,
+            "write": 2.0
+          },
+          "work_per_core": 262144,
+          "useful_work": 262144,
+          "logical_bytes": 20480,
+          "mapping": "source-informed Q64/KV128 mixed pipeline; no split-KV or sparse attention"
+        },
+        "stage_services_us": {
+          "read": 0.969494971834744,
+          "cube": 0.10195911225191383,
+          "vector": 0.33806900109359345,
+          "fix": 0.07335447465329496,
+          "write": 0.445050398974369
+        },
+        "scheduled_body_us": 1.9279279588079152,
+        "fixed_overhead_us": 8.126858917851468,
+        "body_scale": 0.4079203224014557,
+        "constant_baseline_us": 9.08181825466454,
+        "empirical_roofline_us": 2.3522727496456355,
+        "uncorrected_schedule_us": 1.9279279588079152,
+        "ideal_compute_efficiency": null,
+        "efficiency_unavailable_reason": "No independently validated 950DT per-opcode issue/peak model in v0.1"
+      }
+    }
+  ]
+}

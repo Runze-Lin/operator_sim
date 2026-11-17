@@ -1,0 +1,223 @@
+{
+  "schema_version": 1,
+  "soc_version": "Ascend950DT_9582",
+  "cann_version": "9.2.1",
+  "reference_scope": "cross-core instruction makespan; excludes host enqueue and device dispatch outside captured instructions",
+  "attributes": {
+    "quant": {
+      "input_dtype": "BF16",
+      "output_dtype": "E4M3FN",
+      "scale_dtype": "E8M0",
+      "axis": -1,
+      "blocksize": 32,
+      "round": "rint",
+      "scale_alg": 0
+    },
+    "matmul": {
+      "dtype": "BF16",
+      "layout": "ND",
+      "transpose_a": false,
+      "transpose_b": false,
+      "cube_math_type": 0
+    },
+    "fa": {
+      "dtype": "BF16",
+      "layout": "SBH",
+      "B": 1,
+      "H": 1,
+      "causal": false,
+      "dropout": false
+    }
+  },
+  "budget": {
+    "wall_seconds": 7200,
+    "cpu_seconds": 28800,
+    "raw_bytes": 10737418240,
+    "case_timeout_seconds": 360,
+    "profiler_timeout_minutes": 2,
+    "max_attempts": 18
+  },
+  "acceptance": {
+    "holdout_wape": 0.1,
+    "holdout_p90_ape": 0.2,
+    "uncached_p95_us": 1000,
+    "cached_p95_us": 10
+  },
+  "cases": [
+    {
+      "id": "q_cal_small",
+      "op": "quant",
+      "shape": [
+        4,
+        256
+      ],
+      "split": "calibration"
+    },
+    {
+      "id": "q_cal_decode",
+      "op": "quant",
+      "shape": [
+        17,
+        512
+      ],
+      "split": "calibration"
+    },
+    {
+      "id": "q_cal_prefill",
+      "op": "quant",
+      "shape": [
+        64,
+        1024
+      ],
+      "split": "calibration"
+    },
+    {
+      "id": "m_cal_small",
+      "op": "matmul",
+      "shape": [
+        32,
+        64,
+        64
+      ],
+      "split": "calibration"
+    },
+    {
+      "id": "m_cal_decode",
+      "op": "matmul",
+      "shape": [
+        1,
+        128,
+        128
+      ],
+      "split": "calibration"
+    },
+    {
+      "id": "m_cal_prefill",
+      "op": "matmul",
+      "shape": [
+        128,
+        256,
+        512
+      ],
+      "split": "calibration"
+    },
+    {
+      "id": "f_cal_small",
+      "op": "fa",
+      "shape": [
+        16,
+        64,
+        64
+      ],
+      "split": "calibration"
+    },
+    {
+      "id": "f_cal_decode",
+      "op": "fa",
+      "shape": [
+        1,
+        128,
+        64
+      ],
+      "split": "calibration"
+    },
+    {
+      "id": "f_cal_prefill",
+      "op": "fa",
+      "shape": [
+        64,
+        256,
+        64
+      ],
+      "split": "calibration"
+    },
+    {
+      "id": "q_test_tail",
+      "op": "quant",
+      "shape": [
+        8,
+        384
+      ],
+      "split": "holdout"
+    },
+    {
+      "id": "q_test_wave",
+      "op": "quant",
+      "shape": [
+        33,
+        768
+      ],
+      "split": "holdout"
+    },
+    {
+      "id": "m_test_tail",
+      "op": "matmul",
+      "shape": [
+        17,
+        96,
+        128
+      ],
+      "split": "holdout"
+    },
+    {
+      "id": "m_test_prefill",
+      "op": "matmul",
+      "shape": [
+        48,
+        128,
+        192
+      ],
+      "split": "holdout"
+    },
+    {
+      "id": "f_test_verify",
+      "op": "fa",
+      "shape": [
+        17,
+        96,
+        64
+      ],
+      "split": "holdout"
+    },
+    {
+      "id": "f_test_context",
+      "op": "fa",
+      "shape": [
+        8,
+        192,
+        64
+      ],
+      "split": "holdout"
+    },
+    {
+      "id": "q_repeat_small",
+      "op": "quant",
+      "shape": [
+        4,
+        256
+      ],
+      "split": "repeat"
+    },
+    {
+      "id": "m_repeat_small",
+      "op": "matmul",
+      "shape": [
+        32,
+        64,
+        64
+      ],
+      "split": "repeat"
+    },
+    {
+      "id": "f_repeat_small",
+      "op": "fa",
+      "shape": [
+        16,
+        64,
+        64
+      ],
+      "split": "repeat"
+    }
+  ],
+  "policy": "Freeze all predictions and model SHA256 before holdout collection. No holdout-based parameter updates in this version. Uniform weights; not a deployment frequency distribution."
+}
