@@ -5,6 +5,9 @@
 已实现 v0.4 建模闭环：dynamicMXquant、matmul、FA 的分核与流水预测、CA 校准、冻结留出评估、误差诊断与查询开销测试。本版为 quant 增加饱和控制耗时回退，移除未缓存路径中的重复预测，并加入实际 batch/长上下文的组件覆盖清单。项目内安装 CANN 9.2.1 和独立 Conda 环境，目标为 `Ascend950DT_9582`；在线预测仅依赖 Python 标准库。
 
 - [v0.4 实现与使用](docs/model-v4.md)
+- [当前建模策略与公式](results/long-fa/modeling-strategy.md)
+- [当前逐 shape 误差、库内核身份与长 FA 验证](results/long-fa/error-analysis.md)
+- [轻量采集复现与证据](docs/fa-compact-capture.md)
 - [最新独立校验报告及图表](results/v0.4/report.md)
 - [冻结模型](results/v0.4/model.json) / [逐点结果与查询开销](results/v0.4/evaluation.json)
 - [场景映射与覆盖](results/v0.4/workload-coverage.json)
@@ -13,6 +16,8 @@
 - [历史 v0.1 实现](docs/model-v1.md) / [历史小 shape 结果](results/v0.1/report.md)
 
 本轮6个新 quant 留出点：v0.4 WAPE **5.54%**，同集 v0.3 冻结公式 **6.46%**，固定均值基线 **17.91%**；最大单点误差仍约12.8%。新 FA/长 KV 探针、失败记录和仿真成本全部计入报告。宽度5120/7168、B>1与长KV在旧版本输入域外，v0.3比较值仅绕过输入guard，公式与参数未改变。普通FA代理不是三个模型实际 MLA/KDA/压缩注意力的整网验证。
+
+后续长 FA 采集迭代已完成 `[9,32768,64,1,1]`：CA **75.98 µs**，冻结 v0.4 预测 **111.99 µs**，误差 **47.4%**；核数与512条MMAD匹配。压缩数据库减少保留产物，但CA执行仍昂贵，32k完整采集需222秒。128k–512k仍是**未验证外推**，不能沿用小shape准确率。每轮固定交付上述两份独立文档，不改写历史验收结果。
 
 - [建模方案](docs/modeling-design.md)
 - [环境核查](docs/environment-audit.json)

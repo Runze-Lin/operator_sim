@@ -1,0 +1,98 @@
+{
+  "platform": "950 / Ascend950DT_9582",
+  "cann_version": "9.2.1",
+  "knowledge_commit": "92dc260756e91e72e6dcd60f3996a4d54f43c8f5",
+  "knowledge_card": {
+    "path": "third_party/cannbot-knowledge/knowledge/ops/catlass-dsl/guides/profiling/simulator_analysis.md",
+    "sha256": "828fcf1c1fc6d01db44128383a38f0b2da9d2681b740c7fa7480a88eff723cf1",
+    "read_scope": "complete 193-line card"
+  },
+  "knowledge_audit": {
+    "knowledge-search.json": {
+      "path": "runs/long-fa/knowledge-search.json",
+      "sha256": "6dacb31b79da2a1e4492953669203fdce4c2844b92943f89a33e7e8ccc27ed63"
+    },
+    "retrieval-state.json": {
+      "path": "runs/long-fa/retrieval-state.json",
+      "sha256": "c93295c0d52a51b5d4198aec6b4f2f053dd5a2b109322faf99907ce63eca65ca"
+    },
+    "retrieval-ready.json": {
+      "path": "runs/long-fa/retrieval-ready.json",
+      "sha256": "b3a9c21c4c7d1c3a4f8d74f2b284c8764b20397e8ef4b6be471cd8be8f1a6829"
+    },
+    "retrieval-outcome.json": {
+      "path": "runs/long-fa/retrieval-outcome.json",
+      "sha256": "8e26c9026ad07939e90244dfbbe2941bde040f6966983a4bbab4ac5f342a543d"
+    },
+    "retrieval-complete.json": {
+      "path": "runs/long-fa/retrieval-complete.json",
+      "sha256": "1f603c4cc623ab8bc4c3164ee2cdd851785451bbf994bd6f608a1da183f0abcd"
+    }
+  },
+  "local_sdk_evidence": [
+    {
+      "path": "toolchains/cann/9.2.1/cann-9.2.1/python/site-packages/cannsim/core/record/runtime.py",
+      "sha256": "3504f81953e2fb5a668bc873a225ca7e434f36b9c7f4fe8d2a2a7509701b1e79",
+      "read_scope": "complete"
+    },
+    {
+      "path": "toolchains/cann/9.2.1/cann-9.2.1/python/site-packages/cannsim/core/record/paths.py",
+      "sha256": "ca9eb28c59c63f9594318fdb844a152eb493efa3e8d905a62c84c814d193ff1d",
+      "read_scope": "complete"
+    },
+    {
+      "path": "toolchains/cann/9.2.1/cann-9.2.1/python/site-packages/cannsim/core/record/record.py",
+      "sha256": "ecddfdf166ea0406abdc284992fda26ed2b0150822096e96be56ee3128b31100",
+      "read_scope": "record orchestration lines 250-350"
+    },
+    {
+      "path": "toolchains/cann/9.2.1/cann-9.2.1/python/site-packages/cannsim/prof/src/common/utils.py",
+      "sha256": "3aa8702788175bfa16f7707227cade75f4f5d0f9be52ef319fdaa604d1b71eab",
+      "read_scope": "get_tick_to_us_coeff"
+    }
+  ],
+  "runtime_artifacts": [
+    {
+      "path": "capture/sim_soc_adapter.cpp",
+      "sha256": "151b4e296f48b8be18432bf5086e55b7d66815b5cfa17fa3957634fbdb4b1ac7"
+    },
+    {
+      "path": "build/capture/libsim_soc_adapter.so",
+      "sha256": "3f78dfb3c88665800c04d4da932255df356f1492a50d8b358933701b66f1c186"
+    },
+    {
+      "path": "build/smoke/three_ops",
+      "sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8"
+    },
+    {
+      "path": "toolchains/cann/9.2.1/cann-9.2.1/tools/simulator/bin/libcannsim_helper.so",
+      "sha256": "fc189afce2f1d6cf777c0faf0762e8eea83e9980ad6e61d1b16b5d14fe1aafab"
+    },
+    {
+      "path": "toolchains/cann/9.2.1/cann-9.2.1/tools/simulator/dav_3510/camodel/camodel_v100.json",
+      "sha256": "dcc4e26e5cee5220526cbf8733ad2299d6edd9b067c969455900ff21cca88e5b"
+    },
+    {
+      "path": "toolchains/cann/9.2.1/cann-9.2.1/tools/simulator/dav_3510/lib/config.json",
+      "sha256": "c31bad3d6d4057cb11f69fbbff119dff13b372a1c66c427f83ed954778febcda"
+    }
+  ],
+  "summary_dual_evidence": {
+    "path": "runs/long-fa/bridge-1153-native-dual/log_ca/core0_summary_log",
+    "sha256": "c994d2d8f09fb8bf777e68dd9daa4c6bf45d3a9a444c5d8cf01d696b05e1721d"
+  },
+  "scope_limits": [
+    "Knowledge card covers collection semantics, not custom SKU adapter correctness or new modeling claims.",
+    "Runtime SDK and actual CA evidence separately justify compact DB extraction.",
+    "The installed lib/config.json cache_enable value does not establish that full-SoC camodel uses the core-wrapper cache setting.",
+    "No source commit to packaged binary equivalence claim.",
+    "Correct-SKU compact paths have bridge evidence only; no exported kernel ELF.",
+    "32k complete independent holdout; 128k-512k not yet completely simulated."
+  ],
+  "verification": {
+    "unit_tests": 42,
+    "result": "passed",
+    "new_ca_runs_for_tests": 0,
+    "models_refit": false
+  }
+}
