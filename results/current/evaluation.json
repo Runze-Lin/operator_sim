@@ -1,0 +1,4008 @@
+{
+  "model_version": "v0.6",
+  "model_sha256": "bad9ec3eb0fb313b6e16d37487433d626c008331d4aabdf8a4dc37751e28cf23",
+  "model_path": "results/v0.6/model.json",
+  "scope": "Cumulative unique completed op/shape with explicit role; not pooled independent validation",
+  "rows": [
+    {
+      "id": "q4_test_tiny",
+      "op": "quant",
+      "shape": [
+        1,
+        128
+      ],
+      "role": "development_replay",
+      "source": "results/v0.4/dataset.json",
+      "source_sha256": "fd76d3e054c7fde2ddf79db776de8482e0a13cd59c47e5fd2db2ed2c47e6c3c7",
+      "reference_us": 4.324848177842796,
+      "predicted_us": 4.230657748040622,
+      "previous_v05_us": 4.230657748040622,
+      "constant_us": 5.80107234353916,
+      "ape": 0.021778898571453473,
+      "signed_error_us": -0.09419042980217363,
+      "api": "aclnnDynamicMxQuant",
+      "library": "ops-nn",
+      "kernel": "DynamicMxQuant_bf16toe4m3_high_performance_33_mix_aiv",
+      "runtime_binary_sha256": "17d48c749a27b6d68751ec25f76dc1e9feba37df2052be7b53a7cbd36e86a661",
+      "trace_or_db_sha256": "1a6f11b9069bc316afb250a69bb663e9f0b15416f75b01a4c243c5ac4017a079",
+      "reference_scope": "cross-core instruction makespan",
+      "observed_cores": [
+        0,
+        1
+      ],
+      "predicted_cores": [
+        0,
+        1
+      ],
+      "predicted_selected_opcode_count": 136.00004111605458,
+      "observed_selected_opcode_count": 136,
+      "opcode_ape": 3.023239307003009e-07,
+      "opcode_comparison_scope": "same legacy CSV event-count convention",
+      "correctness": [
+        "correctness quant_elements=128 scale_elements=4 bad=0 comparison=exact_bytes"
+      ],
+      "identity": {
+        "soc_version": "Ascend950DT_9582",
+        "cann_version": "9.2.1",
+        "host_binary_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+        "package_manifest_sha256": "960b9f1a472d0c8d9439cbdd84ebb6ffbbd54935759f32afec4fdab0ce7df47d",
+        "platform_sha256": "b8e7d61780056889e795639504530ecacb2b759ad1602e929b863d837fdf0099",
+        "sim_config_sha256": "c31bad3d6d4057cb11f69fbbff119dff13b372a1c66c427f83ed954778febcda",
+        "capture": {
+          "dump": true,
+          "launch_count": 10
+        },
+        "input_pattern": "deterministic-bf16-v1"
+      },
+      "cost": {},
+      "prediction_coverage": "unchanged_v04_quant_route",
+      "tiling": {
+        "active_aiv": 1,
+        "active_aic": 0,
+        "waves": 1,
+        "iterations": 1,
+        "branch": "slice256",
+        "tile": [
+          1,
+          128
+        ]
+      }
+    },
+    {
+      "id": "q4_test_small",
+      "op": "quant",
+      "shape": [
+        36,
+        512
+      ],
+      "role": "development_replay",
+      "source": "results/v0.4/dataset.json",
+      "source_sha256": "fd76d3e054c7fde2ddf79db776de8482e0a13cd59c47e5fd2db2ed2c47e6c3c7",
+      "reference_us": 5.646060469560325,
+      "predicted_us": 5.429783005268281,
+      "previous_v05_us": 5.429783005268281,
+      "constant_us": 5.80107234353916,
+      "ape": 0.03830590647373741,
+      "signed_error_us": -0.21627746429204375,
+      "api": "aclnnDynamicMxQuant",
+      "library": "ops-nn",
+      "kernel": "DynamicMxQuant_bf16toe4m3_high_performance_33_mix_aiv",
+      "runtime_binary_sha256": "17d48c749a27b6d68751ec25f76dc1e9feba37df2052be7b53a7cbd36e86a661",
+      "trace_or_db_sha256": "7f3efd90e47fc17690622f1b61c76bf016661776add8f45cb25748f9ae0583c6",
+      "reference_scope": "cross-core instruction makespan",
+      "observed_cores": [
+        0,
+        36
+      ],
+      "predicted_cores": [
+        0,
+        36
+      ],
+      "predicted_selected_opcode_count": 180.00002546442025,
+      "observed_selected_opcode_count": 180,
+      "opcode_ape": 1.4146900137272193e-07,
+      "opcode_comparison_scope": "same legacy CSV event-count convention",
+      "correctness": [
+        "correctness quant_elements=18432 scale_elements=576 bad=0 comparison=exact_bytes"
+      ],
+      "identity": {
+        "soc_version": "Ascend950DT_9582",
+        "cann_version": "9.2.1",
+        "host_binary_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+        "package_manifest_sha256": "960b9f1a472d0c8d9439cbdd84ebb6ffbbd54935759f32afec4fdab0ce7df47d",
+        "platform_sha256": "b8e7d61780056889e795639504530ecacb2b759ad1602e929b863d837fdf0099",
+        "sim_config_sha256": "c31bad3d6d4057cb11f69fbbff119dff13b372a1c66c427f83ed954778febcda",
+        "capture": {
+          "dump": true,
+          "launch_count": 10
+        },
+        "input_pattern": "deterministic-bf16-v1"
+      },
+      "cost": {},
+      "prediction_coverage": "unchanged_v04_quant_route",
+      "tiling": {
+        "active_aiv": 36,
+        "active_aic": 0,
+        "waves": 1,
+        "iterations": 1,
+        "branch": "slice256",
+        "tile": [
+          2,
+          256
+        ]
+      }
+    },
+    {
+      "id": "q4_test_flash_decode",
+      "op": "quant",
+      "shape": [
+        9,
+        5120
+      ],
+      "role": "development_replay",
+      "source": "results/v0.4/dataset.json",
+      "source_sha256": "fd76d3e054c7fde2ddf79db776de8482e0a13cd59c47e5fd2db2ed2c47e6c3c7",
+      "reference_us": 4.867272856645286,
+      "predicted_us": 4.979522455838499,
+      "previous_v05_us": 5.429783005268281,
+      "constant_us": 5.80107234353916,
+      "ape": 0.023062113528309454,
+      "signed_error_us": 0.11224959919321265,
+      "api": "aclnnDynamicMxQuant",
+      "library": "ops-nn",
+      "kernel": "DynamicMxQuant_bf16toe4m3_high_performance_33_mix_aiv",
+      "runtime_binary_sha256": "17d48c749a27b6d68751ec25f76dc1e9feba37df2052be7b53a7cbd36e86a661",
+      "trace_or_db_sha256": "6438411436f36bef4d4b9660e8befc269a467bbff45cfcd5f92a02bc05bc1b8b",
+      "reference_scope": "cross-core instruction makespan",
+      "observed_cores": [
+        0,
+        45
+      ],
+      "predicted_cores": [
+        0,
+        45
+      ],
+      "predicted_selected_opcode_count": 267.9999941611516,
+      "observed_selected_opcode_count": 268,
+      "opcode_ape": 2.1786747689516027e-08,
+      "opcode_comparison_scope": "same legacy CSV event-count convention",
+      "correctness": [
+        "correctness quant_elements=46080 scale_elements=1440 bad=0 comparison=exact_bytes"
+      ],
+      "identity": {
+        "soc_version": "Ascend950DT_9582",
+        "cann_version": "9.2.1",
+        "host_binary_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+        "package_manifest_sha256": "960b9f1a472d0c8d9439cbdd84ebb6ffbbd54935759f32afec4fdab0ce7df47d",
+        "platform_sha256": "b8e7d61780056889e795639504530ecacb2b759ad1602e929b863d837fdf0099",
+        "sim_config_sha256": "c31bad3d6d4057cb11f69fbbff119dff13b372a1c66c427f83ed954778febcda",
+        "capture": {
+          "dump": true,
+          "launch_count": 10
+        },
+        "input_pattern": "deterministic-bf16-v1"
+      },
+      "cost": {},
+      "prediction_coverage": "provisional_single_ub_vf_envelope",
+      "tiling": {
+        "active_aiv": 45,
+        "active_aic": 0,
+        "waves": 1,
+        "iterations": 1,
+        "branch": "slice512",
+        "tile": [
+          1,
+          1024
+        ]
+      }
+    },
+    {
+      "id": "q4_test_pro_decode",
+      "op": "quant",
+      "shape": [
+        144,
+        7168
+      ],
+      "role": "development_replay",
+      "source": "results/v0.4/dataset.json",
+      "source_sha256": "fd76d3e054c7fde2ddf79db776de8482e0a13cd59c47e5fd2db2ed2c47e6c3c7",
+      "reference_us": 6.331514838151634,
+      "predicted_us": 6.207195114119629,
+      "previous_v05_us": 5.524225247318096,
+      "constant_us": 5.80107234353916,
+      "ape": 0.019635067943439846,
+      "signed_error_us": -0.12431972403200486,
+      "api": "aclnnDynamicMxQuant",
+      "library": "ops-nn",
+      "kernel": "DynamicMxQuant_bf16toe4m3_high_performance_33_mix_aiv",
+      "runtime_binary_sha256": "17d48c749a27b6d68751ec25f76dc1e9feba37df2052be7b53a7cbd36e86a661",
+      "trace_or_db_sha256": "a964b5449b59bc0ed9d04919510e7599e30c1ec3aa87eadeeb4c750aaed78fcb",
+      "reference_scope": "cross-core instruction makespan",
+      "observed_cores": [
+        0,
+        58
+      ],
+      "predicted_cores": [
+        0,
+        58
+      ],
+      "predicted_selected_opcode_count": 3300.0000943244595,
+      "observed_selected_opcode_count": 3300,
+      "opcode_ape": 2.858316954436966e-08,
+      "opcode_comparison_scope": "same legacy CSV event-count convention",
+      "correctness": [
+        "correctness quant_elements=1032192 scale_elements=32256 bad=0 comparison=exact_bytes"
+      ],
+      "identity": {
+        "soc_version": "Ascend950DT_9582",
+        "cann_version": "9.2.1",
+        "host_binary_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+        "package_manifest_sha256": "960b9f1a472d0c8d9439cbdd84ebb6ffbbd54935759f32afec4fdab0ce7df47d",
+        "platform_sha256": "b8e7d61780056889e795639504530ecacb2b759ad1602e929b863d837fdf0099",
+        "sim_config_sha256": "c31bad3d6d4057cb11f69fbbff119dff13b372a1c66c427f83ed954778febcda",
+        "capture": {
+          "dump": true,
+          "launch_count": 10
+        },
+        "input_pattern": "deterministic-bf16-v1"
+      },
+      "cost": {},
+      "prediction_coverage": "provisional_single_ub_vf_envelope",
+      "tiling": {
+        "active_aiv": 58,
+        "active_aic": 0,
+        "waves": 1,
+        "iterations": 1,
+        "branch": "slice512",
+        "tile": [
+          5,
+          3584
+        ]
+      }
+    },
+    {
+      "id": "q4_test_prefill",
+      "op": "quant",
+      "shape": [
+        512,
+        5120
+      ],
+      "role": "development_replay",
+      "source": "results/v0.4/dataset.json",
+      "source_sha256": "fd76d3e054c7fde2ddf79db776de8482e0a13cd59c47e5fd2db2ed2c47e6c3c7",
+      "reference_us": 6.298788073472679,
+      "predicted_us": 6.364308178591398,
+      "previous_v05_us": 6.364308178591398,
+      "constant_us": 5.80107234353916,
+      "ape": 0.010402017714273794,
+      "signed_error_us": 0.06552010511871931,
+      "api": "aclnnDynamicMxQuant",
+      "library": "ops-nn",
+      "kernel": "DynamicMxQuant_bf16toe4m3_high_performance_33_mix_aiv",
+      "runtime_binary_sha256": "17d48c749a27b6d68751ec25f76dc1e9feba37df2052be7b53a7cbd36e86a661",
+      "trace_or_db_sha256": "25c24f660610696bea14e099e65c7dfc8afe04da475f7a480ad2ec9a6c1efd85",
+      "reference_scope": "cross-core instruction makespan",
+      "observed_cores": [
+        0,
+        64
+      ],
+      "predicted_cores": [
+        0,
+        64
+      ],
+      "predicted_selected_opcode_count": 7479.999875616232,
+      "observed_selected_opcode_count": 7480,
+      "opcode_ape": 1.6628845962239764e-08,
+      "opcode_comparison_scope": "same legacy CSV event-count convention",
+      "correctness": [
+        "correctness quant_elements=2621440 scale_elements=81920 bad=0 comparison=exact_bytes"
+      ],
+      "identity": {
+        "soc_version": "Ascend950DT_9582",
+        "cann_version": "9.2.1",
+        "host_binary_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+        "package_manifest_sha256": "960b9f1a472d0c8d9439cbdd84ebb6ffbbd54935759f32afec4fdab0ce7df47d",
+        "platform_sha256": "b8e7d61780056889e795639504530ecacb2b759ad1602e929b863d837fdf0099",
+        "sim_config_sha256": "c31bad3d6d4057cb11f69fbbff119dff13b372a1c66c427f83ed954778febcda",
+        "capture": {
+          "dump": true,
+          "launch_count": 10
+        },
+        "input_pattern": "deterministic-bf16-v1"
+      },
+      "cost": {},
+      "prediction_coverage": "unchanged_v04_quant_route",
+      "tiling": {
+        "active_aiv": 64,
+        "active_aic": 0,
+        "waves": 1,
+        "iterations": 2,
+        "branch": "ub_loop",
+        "tile": [
+          4,
+          5120
+        ]
+      }
+    },
+    {
+      "id": "q4_test_batch128",
+      "op": "quant",
+      "shape": [
+        1152,
+        5120
+      ],
+      "role": "development_replay",
+      "source": "results/v0.4/dataset.json",
+      "source_sha256": "fd76d3e054c7fde2ddf79db776de8482e0a13cd59c47e5fd2db2ed2c47e6c3c7",
+      "reference_us": 8.683636191301048,
+      "predicted_us": 8.94166148633747,
+      "previous_v05_us": 8.94166148633747,
+      "constant_us": 5.80107234353916,
+      "ape": 0.029713968820446704,
+      "signed_error_us": 0.2580252950364219,
+      "api": "aclnnDynamicMxQuant",
+      "library": "ops-nn",
+      "kernel": "DynamicMxQuant_bf16toe4m3_high_performance_33_mix_aiv",
+      "runtime_binary_sha256": "17d48c749a27b6d68751ec25f76dc1e9feba37df2052be7b53a7cbd36e86a661",
+      "trace_or_db_sha256": "9688f30626ece2a4924e02c55cd37a445b392a12d8a7b1713521abfe9000e516",
+      "reference_scope": "cross-core instruction makespan",
+      "observed_cores": [
+        0,
+        64
+      ],
+      "predicted_cores": [
+        0,
+        64
+      ],
+      "predicted_selected_opcode_count": 16788.00048486337,
+      "observed_selected_opcode_count": 16788,
+      "opcode_ape": 2.8881544490751567e-08,
+      "opcode_comparison_scope": "same legacy CSV event-count convention",
+      "correctness": [
+        "correctness quant_elements=5898240 scale_elements=184320 bad=0 comparison=exact_bytes"
+      ],
+      "identity": {
+        "soc_version": "Ascend950DT_9582",
+        "cann_version": "9.2.1",
+        "host_binary_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+        "package_manifest_sha256": "960b9f1a472d0c8d9439cbdd84ebb6ffbbd54935759f32afec4fdab0ce7df47d",
+        "platform_sha256": "b8e7d61780056889e795639504530ecacb2b759ad1602e929b863d837fdf0099",
+        "sim_config_sha256": "c31bad3d6d4057cb11f69fbbff119dff13b372a1c66c427f83ed954778febcda",
+        "capture": {
+          "dump": true,
+          "launch_count": 10
+        },
+        "input_pattern": "deterministic-bf16-v1"
+      },
+      "cost": {},
+      "prediction_coverage": "unchanged_v04_quant_route",
+      "tiling": {
+        "active_aiv": 64,
+        "active_aic": 0,
+        "waves": 1,
+        "iterations": 3,
+        "branch": "ub_loop",
+        "tile": [
+          6,
+          5120
+        ]
+      }
+    },
+    {
+      "id": "f4_test_batch4",
+      "op": "fa",
+      "shape": [
+        9,
+        256,
+        128,
+        4,
+        1
+      ],
+      "role": "retained_frozen_holdout",
+      "source": "results/v0.4/dataset.json",
+      "source_sha256": "fd76d3e054c7fde2ddf79db776de8482e0a13cd59c47e5fd2db2ed2c47e6c3c7",
+      "reference_us": 9.690302851609886,
+      "predicted_us": 9.766535431851255,
+      "previous_v05_us": 9.766535431851255,
+      "constant_us": 9.538626484510798,
+      "ape": 0.00786689347162189,
+      "signed_error_us": 0.07623258024136881,
+      "api": "aclnnFlashAttentionScoreV2",
+      "library": "ops-transformer",
+      "kernel": "FlashAttentionScore_50348df09d0b3ee451d3693a6b2ab3f5_2328361009230643744_mix_aic",
+      "runtime_binary_sha256": "ac006aee669c8696aeab3bb3fe64fc29e5f3c8e2d172bf75f46db7176a2d4580",
+      "trace_or_db_sha256": "8873a7b52cc94122ba3693611cc00e4c9e7004fa8eb9a568c38b0eac4697aa74",
+      "reference_scope": "cross-core instruction makespan",
+      "observed_cores": [
+        4,
+        8
+      ],
+      "predicted_cores": [
+        4,
+        8
+      ],
+      "predicted_selected_opcode_count": 4,
+      "observed_selected_opcode_count": 4,
+      "opcode_ape": 0.0,
+      "opcode_comparison_scope": "same legacy CSV event-count convention",
+      "correctness": [
+        "correctness elements=4608 bad=0 max_abs_error=8.45420004e-05 atol=0.002 rtol=0.01"
+      ],
+      "identity": {
+        "soc_version": "Ascend950DT_9582",
+        "cann_version": "9.2.1",
+        "host_binary_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+        "package_manifest_sha256": "960b9f1a472d0c8d9439cbdd84ebb6ffbbd54935759f32afec4fdab0ce7df47d",
+        "platform_sha256": "b8e7d61780056889e795639504530ecacb2b759ad1602e929b863d837fdf0099",
+        "sim_config_sha256": "c31bad3d6d4057cb11f69fbbff119dff13b372a1c66c427f83ed954778febcda",
+        "capture": {
+          "dump": true,
+          "launch_count": 10
+        },
+        "input_pattern": "deterministic-bf16-v1"
+      },
+      "cost": {},
+      "prediction_coverage": "extrapolation",
+      "tiling": {
+        "active_aic": 4,
+        "active_aiv": 8,
+        "waves": 1,
+        "iterations": 2,
+        "branch": "d128_kv128",
+        "tile": [
+          9,
+          128,
+          128
+        ]
+      }
+    },
+    {
+      "id": "q3_test_small",
+      "op": "quant",
+      "shape": [
+        512,
+        256
+      ],
+      "role": "development_replay",
+      "source": "results/v0.4/dataset.json",
+      "source_sha256": "fd76d3e054c7fde2ddf79db776de8482e0a13cd59c47e5fd2db2ed2c47e6c3c7",
+      "reference_us": 5.207878592424095,
+      "predicted_us": 5.429783005268281,
+      "previous_v05_us": 5.429783005268281,
+      "constant_us": 5.80107234353916,
+      "ape": 0.04260936750080757,
+      "signed_error_us": 0.22190441284418672,
+      "api": "aclnnDynamicMxQuant",
+      "library": "ops-nn",
+      "kernel": "DynamicMxQuant_bf16toe4m3_high_performance_33_mix_aiv",
+      "runtime_binary_sha256": "17d48c749a27b6d68751ec25f76dc1e9feba37df2052be7b53a7cbd36e86a661",
+      "trace_or_db_sha256": "d083b899d40a3628f4736640c1a11e2665b268944f6ecce9a3d0f98838736262",
+      "reference_scope": "cross-core instruction makespan",
+      "observed_cores": [
+        0,
+        64
+      ],
+      "predicted_cores": [
+        0,
+        64
+      ],
+      "predicted_selected_opcode_count": 443.9999315546143,
+      "observed_selected_opcode_count": 444,
+      "opcode_ape": 1.5415627408422118e-07,
+      "opcode_comparison_scope": "same legacy CSV event-count convention",
+      "correctness": [
+        "correctness quant_elements=131072 scale_elements=4096 bad=0 comparison=exact_bytes"
+      ],
+      "identity": {
+        "soc_version": "Ascend950DT_9582",
+        "cann_version": "9.2.1",
+        "host_binary_sha256": "7c195f84111ba8b9f2c5bebc47fadd4839190dd18bcd0b9e2675e8e2ef6cb267",
+        "package_manifest_sha256": "960b9f1a472d0c8d9439cbdd84ebb6ffbbd54935759f32afec4fdab0ce7df47d",
+        "platform_sha256": "b8e7d61780056889e795639504530ecacb2b759ad1602e929b863d837fdf0099",
+        "sim_config_sha256": "c31bad3d6d4057cb11f69fbbff119dff13b372a1c66c427f83ed954778febcda",
+        "capture": {
+          "dump": true,
+          "launch_count": 10
+        },
+        "input_pattern": "deterministic-bf16-v1"
+      },
+      "cost": {},
+      "prediction_coverage": "unchanged_v04_quant_route",
+      "tiling": {
+        "active_aiv": 64,
+        "active_aic": 0,
+        "waves": 1,
+        "iterations": 1,
+        "branch": "slice512",
+        "tile": [
+          8,
+          256
+        ]
+      }
+    },
+    {
+      "id": "f3_test_short_tail",
+      "op": "fa",
+      "shape": [
+        32,
+        129,
+        64,
+        1,
+        4
+      ],
+      "role": "development_replay",
+      "source": "results/v0.4/dataset.json",
+      "source_sha256": "fd76d3e054c7fde2ddf79db776de8482e0a13cd59c47e5fd2db2ed2c47e6c3c7",
+      "reference_us": 9.150303366594017,
+      "predicted_us": 9.720359018827418,
+      "previous_v05_us": 9.720359018827418,
+      "constant_us": 9.538626484510798,
+      "ape": 0.062299098663172646,
+      "signed_error_us": 0.5700556522334015,
+      "api": "aclnnFlashAttentionScoreV2",
+      "library": "ops-transformer",
+      "kernel": "FlashAttentionScore_50348df09d0b3ee451d3693a6b2ab3f5_2328361008425337376_mix_aic",
+      "runtime_binary_sha256": "ac006aee669c8696aeab3bb3fe64fc29e5f3c8e2d172bf75f46db7176a2d4580",
+      "trace_or_db_sha256": "24793ce83b214b370657add7a0faea5069dd0ab04ecd26f060bfc1c376c41863",
+      "reference_scope": "cross-core instruction makespan",
+      "observed_cores": [
+        4,
+        8
+      ],
+      "predicted_cores": [
+        4,
+        8
+      ],
+      "predicted_selected_opcode_count": 4,
+      "observed_selected_opcode_count": 4,
+      "opcode_ape": 0.0,
+      "opcode_comparison_scope": "same legacy CSV event-count convention",
+      "correctness": [
+        "correctness elements=8192 bad=0 max_abs_error=0.000165152005 atol=0.002 rtol=0.01"
+      ],
+      "identity": {
+        "soc_version": "Ascend950DT_9582",
+        "cann_version": "9.2.1",
+        "host_binary_sha256": "7c195f84111ba8b9f2c5bebc47fadd4839190dd18bcd0b9e2675e8e2ef6cb267",
+        "package_manifest_sha256": "960b9f1a472d0c8d9439cbdd84ebb6ffbbd54935759f32afec4fdab0ce7df47d",
+        "platform_sha256": "b8e7d61780056889e795639504530ecacb2b759ad1602e929b863d837fdf0099",
+        "sim_config_sha256": "c31bad3d6d4057cb11f69fbbff119dff13b372a1c66c427f83ed954778febcda",
+        "capture": {
+          "dump": true,
+          "launch_count": 10
+        },
+        "input_pattern": "deterministic-bf16-v1"
+      },
+      "cost": {},
+      "prediction_coverage": "within_calibration_box",
+      "tiling": {
+        "active_aic": 4,
+        "active_aiv": 8,
+        "waves": 1,
+        "iterations": 2,
+        "branch": "d64_kv128",
+        "tile": [
+          32,
+          128,
+          64
+        ]
+      }
+    },
+    {
+      "id": "f3_test_d128_tail",
+      "op": "fa",
+      "shape": [
+        17,
+        257,
+        128,
+        1,
+        1
+      ],
+      "role": "development_replay",
+      "source": "results/v0.4/dataset.json",
+      "source_sha256": "fd76d3e054c7fde2ddf79db776de8482e0a13cd59c47e5fd2db2ed2c47e6c3c7",
+      "reference_us": 9.550909521989524,
+      "predicted_us": 10.470606925035069,
+      "previous_v05_us": 10.470606925035069,
+      "constant_us": 9.538626484510798,
+      "ape": 0.09629422212911562,
+      "signed_error_us": 0.9196974030455447,
+      "api": "aclnnFlashAttentionScoreV2",
+      "library": "ops-transformer",
+      "kernel": "FlashAttentionScore_50348df09d0b3ee451d3693a6b2ab3f5_2328361009230643744_mix_aic",
+      "runtime_binary_sha256": "ac006aee669c8696aeab3bb3fe64fc29e5f3c8e2d172bf75f46db7176a2d4580",
+      "trace_or_db_sha256": "27d101e6566e377cc4f3faa00d9c2153d979feb898a83ecf19eaea409631f7e8",
+      "reference_scope": "cross-core instruction makespan",
+      "observed_cores": [
+        1,
+        2
+      ],
+      "predicted_cores": [
+        1,
+        2
+      ],
+      "predicted_selected_opcode_count": 6,
+      "observed_selected_opcode_count": 6,
+      "opcode_ape": 0.0,
+      "opcode_comparison_scope": "same legacy CSV event-count convention",
+      "correctness": [
+        "correctness elements=2176 bad=0 max_abs_error=6.89647513e-05 atol=0.002 rtol=0.01"
+      ],
+      "identity": {
+        "soc_version": "Ascend950DT_9582",
+        "cann_version": "9.2.1",
+        "host_binary_sha256": "7c195f84111ba8b9f2c5bebc47fadd4839190dd18bcd0b9e2675e8e2ef6cb267",
+        "package_manifest_sha256": "960b9f1a472d0c8d9439cbdd84ebb6ffbbd54935759f32afec4fdab0ce7df47d",
+        "platform_sha256": "b8e7d61780056889e795639504530ecacb2b759ad1602e929b863d837fdf0099",
+        "sim_config_sha256": "c31bad3d6d4057cb11f69fbbff119dff13b372a1c66c427f83ed954778febcda",
+        "capture": {
+          "dump": true,
+          "launch_count": 10
+        },
+        "input_pattern": "deterministic-bf16-v1"
+      },
+      "cost": {},
+      "prediction_coverage": "provisional_regime",
+      "tiling": {
+        "active_aic": 1,
+        "active_aiv": 2,
+        "waves": 1,
+        "iterations": 3,
+        "branch": "d128_kv128",
+        "tile": [
+          17,
+          128,
+          128
+        ]
+      }
+    },
+    {
+      "id": "f3_test_longkv",
+      "op": "fa",
+      "shape": [
+        17,
+        1153,
+        64,
+        1,
+        1
+      ],
+      "role": "development_replay",
+      "source": "results/v0.4/dataset.json",
+      "source_sha256": "fd76d3e054c7fde2ddf79db776de8482e0a13cd59c47e5fd2db2ed2c47e6c3c7",
+      "reference_us": 12.486667635850608,
+      "predicted_us": 12.321879329911912,
+      "previous_v05_us": 12.321879329911912,
+      "constant_us": 9.538626484510798,
+      "ape": 0.01319714040162091,
+      "signed_error_us": -0.1647883059386963,
+      "api": "aclnnFlashAttentionScoreV2",
+      "library": "ops-transformer",
+      "kernel": "FlashAttentionScore_50348df09d0b3ee451d3693a6b2ab3f5_2328361008425599520_mix_aic",
+      "runtime_binary_sha256": "ac006aee669c8696aeab3bb3fe64fc29e5f3c8e2d172bf75f46db7176a2d4580",
+      "trace_or_db_sha256": "fc39175969367c4a3fd87ce279d181679f8badac5654d9c03137133a16439c49",
+      "reference_scope": "cross-core instruction makespan",
+      "observed_cores": [
+        1,
+        2
+      ],
+      "predicted_cores": [
+        1,
+        2
+      ],
+      "predicted_selected_opcode_count": 20,
+      "observed_selected_opcode_count": 20,
+      "opcode_ape": 0.0,
+      "opcode_comparison_scope": "same legacy CSV event-count convention",
+      "correctness": [
+        "correctness elements=1088 bad=0 max_abs_error=1.85941898e-05 atol=0.002 rtol=0.01"
+      ],
+      "identity": {
+        "soc_version": "Ascend950DT_9582",
+        "cann_version": "9.2.1",
+        "host_binary_sha256": "7c195f84111ba8b9f2c5bebc47fadd4839190dd18bcd0b9e2675e8e2ef6cb267",
+        "package_manifest_sha256": "960b9f1a472d0c8d9439cbdd84ebb6ffbbd54935759f32afec4fdab0ce7df47d",
+        "platform_sha256": "b8e7d61780056889e795639504530ecacb2b759ad1602e929b863d837fdf0099",
+        "sim_config_sha256": "c31bad3d6d4057cb11f69fbbff119dff13b372a1c66c427f83ed954778febcda",
+        "capture": {
+          "dump": true,
+          "launch_count": 10
+        },
+        "input_pattern": "deterministic-bf16-v1"
+      },
+      "cost": {},
+      "prediction_coverage": "provisional_regime",
+      "tiling": {
+        "active_aic": 1,
+        "active_aiv": 2,
+        "waves": 1,
+        "iterations": 5,
+        "branch": "d64_kv256",
+        "tile": [
+          17,
+          256,
+          64
+        ]
+      }
+    },
+    {
+      "id": "q3_test_one_ub",
+      "op": "quant",
+      "shape": [
+        576,
+        4096
+      ],
+      "role": "development_replay",
+      "source": "results/v0.4/dataset.json",
+      "source_sha256": "fd76d3e054c7fde2ddf79db776de8482e0a13cd59c47e5fd2db2ed2c47e6c3c7",
+      "reference_us": 6.948485377244651,
+      "predicted_us": 7.470377779992888,
+      "previous_v05_us": 6.729156706509456,
+      "constant_us": 5.80107234353916,
+      "ape": 0.07510880061104593,
+      "signed_error_us": 0.5218924027482368,
+      "api": "aclnnDynamicMxQuant",
+      "library": "ops-nn",
+      "kernel": "DynamicMxQuant_bf16toe4m3_high_performance_33_mix_aiv",
+      "runtime_binary_sha256": "17d48c749a27b6d68751ec25f76dc1e9feba37df2052be7b53a7cbd36e86a661",
+      "trace_or_db_sha256": "b14575b50f4967d7fd973bdb4cda7946fad7078fd578252d15ce653f24a65d1d",
+      "reference_scope": "cross-core instruction makespan",
+      "observed_cores": [
+        0,
+        64
+      ],
+      "predicted_cores": [
+        0,
+        64
+      ],
+      "predicted_selected_opcode_count": 6684.000069274693,
+      "observed_selected_opcode_count": 6684,
+      "opcode_ape": 1.0364256818954516e-08,
+      "opcode_comparison_scope": "same legacy CSV event-count convention",
+      "correctness": [
+        "correctness quant_elements=2359296 scale_elements=73728 bad=0 comparison=exact_bytes"
+      ],
+      "identity": {
+        "soc_version": "Ascend950DT_9582",
+        "cann_version": "9.2.1",
+        "host_binary_sha256": "7c195f84111ba8b9f2c5bebc47fadd4839190dd18bcd0b9e2675e8e2ef6cb267",
+        "package_manifest_sha256": "960b9f1a472d0c8d9439cbdd84ebb6ffbbd54935759f32afec4fdab0ce7df47d",
+        "platform_sha256": "b8e7d61780056889e795639504530ecacb2b759ad1602e929b863d837fdf0099",
+        "sim_config_sha256": "c31bad3d6d4057cb11f69fbbff119dff13b372a1c66c427f83ed954778febcda",
+        "capture": {
+          "dump": true,
+          "launch_count": 10
+        },
+        "input_pattern": "deterministic-bf16-v1"
+      },
+      "cost": {},
+      "prediction_coverage": "provisional_single_ub_vf_envelope",
+      "tiling": {
+        "active_aiv": 64,
+        "active_aic": 0,
+        "waves": 1,
+        "iterations": 1,
+        "branch": "slice512",
+        "tile": [
+          9,
+          4096
+        ]
+      }
+    },
+    {
+      "id": "q3_test_two_ub",
+      "op": "quant",
+      "shape": [
+        768,
+        4096
+      ],
+      "role": "development_replay",
+      "source": "results/v0.4/dataset.json",
+      "source_sha256": "fd76d3e054c7fde2ddf79db776de8482e0a13cd59c47e5fd2db2ed2c47e6c3c7",
+      "reference_us": 7.202424052171409,
+      "predicted_us": 6.743424443827524,
+      "previous_v05_us": 6.743424443827524,
+      "constant_us": 5.80107234353916,
+      "ape": 0.06372848988327817,
+      "signed_error_us": -0.458999608343885,
+      "api": "aclnnDynamicMxQuant",
+      "library": "ops-nn",
+      "kernel": "DynamicMxQuant_bf16toe4m3_high_performance_33_mix_aiv",
+      "runtime_binary_sha256": "17d48c749a27b6d68751ec25f76dc1e9feba37df2052be7b53a7cbd36e86a661",
+      "trace_or_db_sha256": "5783842a28e7e7c3d2bc9208f35790eade883d00b6be46911150c328786ea592",
+      "reference_scope": "cross-core instruction makespan",
+      "observed_cores": [
+        0,
+        64
+      ],
+      "predicted_cores": [
+        0,
+        64
+      ],
+      "predicted_selected_opcode_count": 8951.99994134952,
+      "observed_selected_opcode_count": 8952,
+      "opcode_ape": 6.5516621237539566e-09,
+      "opcode_comparison_scope": "same legacy CSV event-count convention",
+      "correctness": [
+        "correctness quant_elements=3145728 scale_elements=98304 bad=0 comparison=exact_bytes"
+      ],
+      "identity": {
+        "soc_version": "Ascend950DT_9582",
+        "cann_version": "9.2.1",
+        "host_binary_sha256": "7c195f84111ba8b9f2c5bebc47fadd4839190dd18bcd0b9e2675e8e2ef6cb267",
+        "package_manifest_sha256": "960b9f1a472d0c8d9439cbdd84ebb6ffbbd54935759f32afec4fdab0ce7df47d",
+        "platform_sha256": "b8e7d61780056889e795639504530ecacb2b759ad1602e929b863d837fdf0099",
+        "sim_config_sha256": "c31bad3d6d4057cb11f69fbbff119dff13b372a1c66c427f83ed954778febcda",
+        "capture": {
+          "dump": true,
+          "launch_count": 10
+        },
+        "input_pattern": "deterministic-bf16-v1"
+      },
+      "cost": {},
+      "prediction_coverage": "unchanged_v04_quant_route",
+      "tiling": {
+        "active_aiv": 64,
+        "active_aic": 0,
+        "waves": 1,
+        "iterations": 2,
+        "branch": "ub_loop",
+        "tile": [
+          6,
+          4096
+        ]
+      }
+    },
+    {
+      "id": "q2_cal_tiny",
+      "op": "quant",
+      "shape": [
+        1,
+        64
+      ],
+      "role": "development_replay",
+      "source": "results/v0.4/dataset.json",
+      "source_sha256": "fd76d3e054c7fde2ddf79db776de8482e0a13cd59c47e5fd2db2ed2c47e6c3c7",
+      "reference_us": 4.326060774736106,
+      "predicted_us": 4.230657748040622,
+      "previous_v05_us": 4.230657748040622,
+      "constant_us": 5.80107234353916,
+      "ape": 0.02205309441157905,
+      "signed_error_us": -0.09540302669548417,
+      "api": "aclnnDynamicMxQuant",
+      "library": "ops-nn",
+      "kernel": "DynamicMxQuant_bf16toe4m3_high_performance_33_mix_aiv",
+      "runtime_binary_sha256": "17d48c749a27b6d68751ec25f76dc1e9feba37df2052be7b53a7cbd36e86a661",
+      "trace_or_db_sha256": "04b158ae9579564c3073968d6714ddc482cc8b89e466bb90a34d4d343908bcd3",
+      "reference_scope": "cross-core instruction makespan",
+      "observed_cores": [
+        0,
+        1
+      ],
+      "predicted_cores": [
+        0,
+        1
+      ],
+      "predicted_selected_opcode_count": 136.00004111605458,
+      "observed_selected_opcode_count": 136,
+      "opcode_ape": 3.023239307003009e-07,
+      "opcode_comparison_scope": "same legacy CSV event-count convention",
+      "correctness": [
+        "correctness quant_elements=64 scale_elements=2 bad=0 comparison=exact_bytes"
+      ],
+      "identity": {
+        "soc_version": "Ascend950DT_9582",
+        "cann_version": "9.2.1",
+        "host_binary_sha256": "7c195f84111ba8b9f2c5bebc47fadd4839190dd18bcd0b9e2675e8e2ef6cb267",
+        "package_manifest_sha256": "960b9f1a472d0c8d9439cbdd84ebb6ffbbd54935759f32afec4fdab0ce7df47d",
+        "platform_sha256": "b8e7d61780056889e795639504530ecacb2b759ad1602e929b863d837fdf0099",
+        "sim_config_sha256": "c31bad3d6d4057cb11f69fbbff119dff13b372a1c66c427f83ed954778febcda",
+        "capture": {
+          "dump": true,
+          "launch_count": 10
+        },
+        "input_pattern": "deterministic-bf16-v1"
+      },
+      "cost": {},
+      "prediction_coverage": "unchanged_v04_quant_route",
+      "tiling": {
+        "active_aiv": 1,
+        "active_aic": 0,
+        "waves": 1,
+        "iterations": 1,
+        "branch": "slice256",
+        "tile": [
+          1,
+          64
+        ]
+      }
+    },
+    {
+      "id": "q2_cal_saturation",
+      "op": "quant",
+      "shape": [
+        65,
+        256
+      ],
+      "role": "development_replay",
+      "source": "results/v0.4/dataset.json",
+      "source_sha256": "fd76d3e054c7fde2ddf79db776de8482e0a13cd59c47e5fd2db2ed2c47e6c3c7",
+      "reference_us": 4.898181918077171,
+      "predicted_us": 5.429783005268281,
+      "previous_v05_us": 5.429783005268281,
+      "constant_us": 5.80107234353916,
+      "ape": 0.10853028655983356,
+      "signed_error_us": 0.5316010871911105,
+      "api": "aclnnDynamicMxQuant",
+      "library": "ops-nn",
+      "kernel": "DynamicMxQuant_bf16toe4m3_high_performance_33_mix_aiv",
+      "runtime_binary_sha256": "17d48c749a27b6d68751ec25f76dc1e9feba37df2052be7b53a7cbd36e86a661",
+      "trace_or_db_sha256": "fbd9aefb299e5180d18deed36c48740cd937ae5df05783f43e915b02985de449",
+      "reference_scope": "cross-core instruction makespan",
+      "observed_cores": [
+        0,
+        33
+      ],
+      "predicted_cores": [
+        0,
+        33
+      ],
+      "predicted_selected_opcode_count": 180.00002546442025,
+      "observed_selected_opcode_count": 180,
+      "opcode_ape": 1.4146900137272193e-07,
+      "opcode_comparison_scope": "same legacy CSV event-count convention",
+      "correctness": [
+        "correctness quant_elements=16640 scale_elements=520 bad=0 comparison=exact_bytes"
+      ],
+      "identity": {
+        "soc_version": "Ascend950DT_9582",
+        "cann_version": "9.2.1",
+        "host_binary_sha256": "7c195f84111ba8b9f2c5bebc47fadd4839190dd18bcd0b9e2675e8e2ef6cb267",
+        "package_manifest_sha256": "960b9f1a472d0c8d9439cbdd84ebb6ffbbd54935759f32afec4fdab0ce7df47d",
+        "platform_sha256": "b8e7d61780056889e795639504530ecacb2b759ad1602e929b863d837fdf0099",
+        "sim_config_sha256": "c31bad3d6d4057cb11f69fbbff119dff13b372a1c66c427f83ed954778febcda",
+        "capture": {
+          "dump": true,
+          "launch_count": 10
+        },
+        "input_pattern": "deterministic-bf16-v1"
+      },
+      "cost": {},
+      "prediction_coverage": "unchanged_v04_quant_route",
+      "tiling": {
+        "active_aiv": 33,
+        "active_aic": 0,
+        "waves": 1,
+        "iterations": 1,
+        "branch": "slice512",
+        "tile": [
+          2,
+          256
+        ]
+      }
+    },
+    {
+      "id": "q2_cal_ub_loop",
+      "op": "quant",
+      "shape": [
+        1024,
+        4096
+      ],
+      "role": "development_replay",
+      "source": "results/v0.4/dataset.json",
+      "source_sha256": "fd76d3e054c7fde2ddf79db776de8482e0a13cd59c47e5fd2db2ed2c47e6c3c7",
+      "reference_us": 8.047273161821067,
+      "predicted_us": 7.501656974299776,
+      "previous_v05_us": 7.501656974299776,
+      "constant_us": 5.80107234353916,
+      "ape": 0.06780137526707504,
+      "signed_error_us": -0.5456161875212917,
+      "api": "aclnnDynamicMxQuant",
+      "library": "ops-nn",
+      "kernel": "DynamicMxQuant_bf16toe4m3_high_performance_33_mix_aiv",
+      "runtime_binary_sha256": "17d48c749a27b6d68751ec25f76dc1e9feba37df2052be7b53a7cbd36e86a661",
+      "trace_or_db_sha256": "b0c6541e17f3249f58bc99d85925b142d0ec2efa545fa19f2fecc969cea207fa",
+      "reference_scope": "cross-core instruction makespan",
+      "observed_cores": [
+        0,
+        64
+      ],
+      "predicted_cores": [
+        0,
+        64
+      ],
+      "predicted_selected_opcode_count": 11896.000072816098,
+      "observed_selected_opcode_count": 11896,
+      "opcode_ape": 6.121057296534183e-09,
+      "opcode_comparison_scope": "same legacy CSV event-count convention",
+      "correctness": [
+        "correctness quant_elements=4194304 scale_elements=131072 bad=0 comparison=exact_bytes"
+      ],
+      "identity": {
+        "soc_version": "Ascend950DT_9582",
+        "cann_version": "9.2.1",
+        "host_binary_sha256": "7c195f84111ba8b9f2c5bebc47fadd4839190dd18bcd0b9e2675e8e2ef6cb267",
+        "package_manifest_sha256": "960b9f1a472d0c8d9439cbdd84ebb6ffbbd54935759f32afec4fdab0ce7df47d",
+        "platform_sha256": "b8e7d61780056889e795639504530ecacb2b759ad1602e929b863d837fdf0099",
+        "sim_config_sha256": "c31bad3d6d4057cb11f69fbbff119dff13b372a1c66c427f83ed954778febcda",
+        "capture": {
+          "dump": true,
+          "launch_count": 10
+        },
+        "input_pattern": "deterministic-bf16-v1"
+      },
+      "cost": {},
+      "prediction_coverage": "unchanged_v04_quant_route",
+      "tiling": {
+        "active_aiv": 64,
+        "active_aic": 0,
+        "waves": 1,
+        "iterations": 2,
+        "branch": "ub_loop",
+        "tile": [
+          8,
+          4096
+        ]
+      }
+    },
+    {
+      "id": "m2_cal_skinny_k",
+      "op": "matmul",
+      "shape": [
+        1,
+        256,
+        1024
+      ],
+      "role": "development_replay",
+      "source": "results/v0.4/dataset.json",
+      "source_sha256": "fd76d3e054c7fde2ddf79db776de8482e0a13cd59c47e5fd2db2ed2c47e6c3c7",
+      "reference_us": 4.624242544174194,
+      "predicted_us": 4.560229898458819,
+      "previous_v05_us": 4.560229898458819,
+      "constant_us": 3.9233940184116363,
+      "ape": 0.013842839146926028,
+      "signed_error_us": -0.06401264571537535,
+      "api": "aclnnMatmul → MatMulV3",
+      "library": "ops-nn",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "runtime_binary_sha256": "e6899fbaa2659b7778bee81deb00b64b009dafcb7ad350f06576767fdeba2bf7",
+      "trace_or_db_sha256": "a00d37638bacccd423af301be229e584dd2b20a0442050752a4f4f285d5e1b6b",
+      "reference_scope": "cross-core instruction makespan",
+      "observed_cores": [
+        4,
+        0
+      ],
+      "predicted_cores": [
+        4,
+        0
+      ],
+      "predicted_selected_opcode_count": 3.999999997793103,
+      "observed_selected_opcode_count": 4,
+      "opcode_ape": 5.517242218644469e-10,
+      "opcode_comparison_scope": "same legacy CSV event-count convention",
+      "correctness": [
+        "correctness elements=256 bad=0 max_abs_error=0.015625 atol=0.01 rtol=0.005"
+      ],
+      "identity": {
+        "soc_version": "Ascend950DT_9582",
+        "cann_version": "9.2.1",
+        "host_binary_sha256": "7c195f84111ba8b9f2c5bebc47fadd4839190dd18bcd0b9e2675e8e2ef6cb267",
+        "package_manifest_sha256": "960b9f1a472d0c8d9439cbdd84ebb6ffbbd54935759f32afec4fdab0ce7df47d",
+        "platform_sha256": "b8e7d61780056889e795639504530ecacb2b759ad1602e929b863d837fdf0099",
+        "sim_config_sha256": "c31bad3d6d4057cb11f69fbbff119dff13b372a1c66c427f83ed954778febcda",
+        "capture": {
+          "dump": true,
+          "launch_count": 10
+        },
+        "input_pattern": "deterministic-bf16-v1"
+      },
+      "cost": {},
+      "prediction_coverage": "provisional_regime",
+      "tiling": {
+        "active_aic": 4,
+        "active_aiv": 0,
+        "waves": 1,
+        "iterations": 1,
+        "branch": "gemv",
+        "tile": [
+          16,
+          64,
+          256
+        ]
+      }
+    },
+    {
+      "id": "m2_cal_k_tail",
+      "op": "matmul",
+      "shape": [
+        65,
+        128,
+        129
+      ],
+      "role": "development_replay",
+      "source": "results/v0.4/dataset.json",
+      "source_sha256": "fd76d3e054c7fde2ddf79db776de8482e0a13cd59c47e5fd2db2ed2c47e6c3c7",
+      "reference_us": 3.7115153074264526,
+      "predicted_us": 3.627777342144439,
+      "previous_v05_us": 3.627777342144439,
+      "constant_us": 3.9233940184116363,
+      "ape": 0.0225616650736858,
+      "signed_error_us": -0.0837379652820136,
+      "api": "aclnnMatmul → MatMulV3",
+      "library": "ops-nn",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "runtime_binary_sha256": "e6899fbaa2659b7778bee81deb00b64b009dafcb7ad350f06576767fdeba2bf7",
+      "trace_or_db_sha256": "8c0980c6d8125ec76fc31bd870a5096a46bfe8981068e6fa384ba2ee11a8f4de",
+      "reference_scope": "cross-core instruction makespan",
+      "observed_cores": [
+        10,
+        0
+      ],
+      "predicted_cores": [
+        10,
+        0
+      ],
+      "predicted_selected_opcode_count": 0.9999999994482758,
+      "observed_selected_opcode_count": 1,
+      "opcode_ape": 5.517242218644469e-10,
+      "opcode_comparison_scope": "same legacy CSV event-count convention",
+      "correctness": [
+        "correctness elements=8320 bad=0 max_abs_error=0.015625 atol=0.01 rtol=0.005"
+      ],
+      "identity": {
+        "soc_version": "Ascend950DT_9582",
+        "cann_version": "9.2.1",
+        "host_binary_sha256": "7c195f84111ba8b9f2c5bebc47fadd4839190dd18bcd0b9e2675e8e2ef6cb267",
+        "package_manifest_sha256": "960b9f1a472d0c8d9439cbdd84ebb6ffbbd54935759f32afec4fdab0ce7df47d",
+        "platform_sha256": "b8e7d61780056889e795639504530ecacb2b759ad1602e929b863d837fdf0099",
+        "sim_config_sha256": "c31bad3d6d4057cb11f69fbbff119dff13b372a1c66c427f83ed954778febcda",
+        "capture": {
+          "dump": true,
+          "launch_count": 10
+        },
+        "input_pattern": "deterministic-bf16-v1"
+      },
+      "cost": {},
+      "prediction_coverage": "provisional_regime",
+      "tiling": {
+        "active_aic": 10,
+        "active_aiv": 0,
+        "waves": 1,
+        "iterations": 1,
+        "branch": "k_tail",
+        "tile": [
+          16,
+          64,
+          256
+        ]
+      }
+    },
+    {
+      "id": "m2_cal_full",
+      "op": "matmul",
+      "shape": [
+        128,
+        512,
+        512
+      ],
+      "role": "development_replay",
+      "source": "results/v0.4/dataset.json",
+      "source_sha256": "fd76d3e054c7fde2ddf79db776de8482e0a13cd59c47e5fd2db2ed2c47e6c3c7",
+      "reference_us": 4.381818175315857,
+      "predicted_us": 4.506080117090379,
+      "previous_v05_us": 4.506080117090379,
+      "constant_us": 3.9233940184116363,
+      "ape": 0.028358534471952357,
+      "signed_error_us": 0.1242619417745221,
+      "api": "aclnnMatmul → MatMulV3",
+      "library": "ops-nn",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "runtime_binary_sha256": "e6899fbaa2659b7778bee81deb00b64b009dafcb7ad350f06576767fdeba2bf7",
+      "trace_or_db_sha256": "20eff520ec15be218ba112579feeeb7800946a10324486a56fcad4e52d38c33f",
+      "reference_scope": "cross-core instruction makespan",
+      "observed_cores": [
+        32,
+        0
+      ],
+      "predicted_cores": [
+        32,
+        0
+      ],
+      "predicted_selected_opcode_count": 1.9999999988965516,
+      "observed_selected_opcode_count": 2,
+      "opcode_ape": 5.517242218644469e-10,
+      "opcode_comparison_scope": "same legacy CSV event-count convention",
+      "correctness": [
+        "correctness elements=65536 bad=0 max_abs_error=0.03125 atol=0.01 rtol=0.005"
+      ],
+      "identity": {
+        "soc_version": "Ascend950DT_9582",
+        "cann_version": "9.2.1",
+        "host_binary_sha256": "7c195f84111ba8b9f2c5bebc47fadd4839190dd18bcd0b9e2675e8e2ef6cb267",
+        "package_manifest_sha256": "960b9f1a472d0c8d9439cbdd84ebb6ffbbd54935759f32afec4fdab0ce7df47d",
+        "platform_sha256": "b8e7d61780056889e795639504530ecacb2b759ad1602e929b863d837fdf0099",
+        "sim_config_sha256": "c31bad3d6d4057cb11f69fbbff119dff13b372a1c66c427f83ed954778febcda",
+        "capture": {
+          "dump": true,
+          "launch_count": 10
+        },
+        "input_pattern": "deterministic-bf16-v1"
+      },
+      "cost": {},
+      "prediction_coverage": "provisional_regime",
+      "tiling": {
+        "active_aic": 32,
+        "active_aiv": 0,
+        "waves": 1,
+        "iterations": 1,
+        "branch": "coarse_tile",
+        "tile": [
+          32,
+          64,
+          256
+        ]
+      }
+    },
+    {
+      "id": "f2_cal_q128",
+      "op": "fa",
+      "shape": [
+        128,
+        128,
+        64,
+        1,
+        1
+      ],
+      "role": "development_replay",
+      "source": "results/v0.4/dataset.json",
+      "source_sha256": "fd76d3e054c7fde2ddf79db776de8482e0a13cd59c47e5fd2db2ed2c47e6c3c7",
+      "reference_us": 9.498182299546897,
+      "predicted_us": 9.247693697954178,
+      "previous_v05_us": 9.247693697954178,
+      "constant_us": 9.538626484510798,
+      "ape": 0.026372267207870795,
+      "signed_error_us": -0.25048860159271946,
+      "api": "aclnnFlashAttentionScoreV2",
+      "library": "ops-transformer",
+      "kernel": "FlashAttentionScore_50348df09d0b3ee451d3693a6b2ab3f5_2328361008425337376_mix_aic",
+      "runtime_binary_sha256": "ac006aee669c8696aeab3bb3fe64fc29e5f3c8e2d172bf75f46db7176a2d4580",
+      "trace_or_db_sha256": "090c6f608f5abb73e208a6c73f9383a5842bd1aa8e5a164e7ac58811e101d5a9",
+      "reference_scope": "cross-core instruction makespan",
+      "observed_cores": [
+        2,
+        4
+      ],
+      "predicted_cores": [
+        2,
+        4
+      ],
+      "predicted_selected_opcode_count": 2,
+      "observed_selected_opcode_count": 2,
+      "opcode_ape": 0.0,
+      "opcode_comparison_scope": "same legacy CSV event-count convention",
+      "correctness": [
+        "correctness elements=8192 bad=0 max_abs_error=0.000181533805 atol=0.002 rtol=0.01"
+      ],
+      "identity": {
+        "soc_version": "Ascend950DT_9582",
+        "cann_version": "9.2.1",
+        "host_binary_sha256": "7c195f84111ba8b9f2c5bebc47fadd4839190dd18bcd0b9e2675e8e2ef6cb267",
+        "package_manifest_sha256": "960b9f1a472d0c8d9439cbdd84ebb6ffbbd54935759f32afec4fdab0ce7df47d",
+        "platform_sha256": "b8e7d61780056889e795639504530ecacb2b759ad1602e929b863d837fdf0099",
+        "sim_config_sha256": "c31bad3d6d4057cb11f69fbbff119dff13b372a1c66c427f83ed954778febcda",
+        "capture": {
+          "dump": true,
+          "launch_count": 10
+        },
+        "input_pattern": "deterministic-bf16-v1"
+      },
+      "cost": {},
+      "prediction_coverage": "provisional_regime",
+      "tiling": {
+        "active_aic": 2,
+        "active_aiv": 4,
+        "waves": 1,
+        "iterations": 1,
+        "branch": "d64_kv256",
+        "tile": [
+          64,
+          128,
+          64
+        ]
+      }
+    },
+    {
+      "id": "f2_cal_longkv",
+      "op": "fa",
+      "shape": [
+        16,
+        1025,
+        64,
+        1,
+        1
+      ],
+      "role": "development_replay",
+      "source": "results/v0.4/dataset.json",
+      "source_sha256": "fd76d3e054c7fde2ddf79db776de8482e0a13cd59c47e5fd2db2ed2c47e6c3c7",
+      "reference_us": 12.384242537431419,
+      "predicted_us": 12.312582718907729,
+      "previous_v05_us": 12.312582718907729,
+      "constant_us": 9.538626484510798,
+      "ape": 0.005786370729344004,
+      "signed_error_us": -0.07165981852369008,
+      "api": "aclnnFlashAttentionScoreV2",
+      "library": "ops-transformer",
+      "kernel": "FlashAttentionScore_50348df09d0b3ee451d3693a6b2ab3f5_2328361008425599520_mix_aic",
+      "runtime_binary_sha256": "ac006aee669c8696aeab3bb3fe64fc29e5f3c8e2d172bf75f46db7176a2d4580",
+      "trace_or_db_sha256": "e5bf411eb977ce36e24facea984aee26fdff26430a968e720248aa7ae5c2abf2",
+      "reference_scope": "cross-core instruction makespan",
+      "observed_cores": [
+        1,
+        2
+      ],
+      "predicted_cores": [
+        1,
+        2
+      ],
+      "predicted_selected_opcode_count": 18,
+      "observed_selected_opcode_count": 18,
+      "opcode_ape": 0.0,
+      "opcode_comparison_scope": "same legacy CSV event-count convention",
+      "correctness": [
+        "correctness elements=1024 bad=0 max_abs_error=2.02875434e-05 atol=0.002 rtol=0.01"
+      ],
+      "identity": {
+        "soc_version": "Ascend950DT_9582",
+        "cann_version": "9.2.1",
+        "host_binary_sha256": "7c195f84111ba8b9f2c5bebc47fadd4839190dd18bcd0b9e2675e8e2ef6cb267",
+        "package_manifest_sha256": "960b9f1a472d0c8d9439cbdd84ebb6ffbbd54935759f32afec4fdab0ce7df47d",
+        "platform_sha256": "b8e7d61780056889e795639504530ecacb2b759ad1602e929b863d837fdf0099",
+        "sim_config_sha256": "c31bad3d6d4057cb11f69fbbff119dff13b372a1c66c427f83ed954778febcda",
+        "capture": {
+          "dump": true,
+          "launch_count": 10
+        },
+        "input_pattern": "deterministic-bf16-v1"
+      },
+      "cost": {},
+      "prediction_coverage": "provisional_regime",
+      "tiling": {
+        "active_aic": 1,
+        "active_aiv": 2,
+        "waves": 1,
+        "iterations": 5,
+        "branch": "d64_kv256",
+        "tile": [
+          16,
+          256,
+          64
+        ]
+      }
+    },
+    {
+      "id": "f2_cal_heads4",
+      "op": "fa",
+      "shape": [
+        16,
+        128,
+        64,
+        1,
+        4
+      ],
+      "role": "development_replay",
+      "source": "results/v0.4/dataset.json",
+      "source_sha256": "fd76d3e054c7fde2ddf79db776de8482e0a13cd59c47e5fd2db2ed2c47e6c3c7",
+      "reference_us": 8.758182051591575,
+      "predicted_us": 8.894441952886032,
+      "previous_v05_us": 8.894441952886032,
+      "constant_us": 9.538626484510798,
+      "ape": 0.015558011981458527,
+      "signed_error_us": 0.13625990129445675,
+      "api": "aclnnFlashAttentionScoreV2",
+      "library": "ops-transformer",
+      "kernel": "FlashAttentionScore_50348df09d0b3ee451d3693a6b2ab3f5_2328361008425337376_mix_aic",
+      "runtime_binary_sha256": "ac006aee669c8696aeab3bb3fe64fc29e5f3c8e2d172bf75f46db7176a2d4580",
+      "trace_or_db_sha256": "4b64bcddd4748baa5a9892f69a9a2893a9f0a4cb71cec8802be8fa04b5836553",
+      "reference_scope": "cross-core instruction makespan",
+      "observed_cores": [
+        4,
+        8
+      ],
+      "predicted_cores": [
+        4,
+        8
+      ],
+      "predicted_selected_opcode_count": 2,
+      "observed_selected_opcode_count": 2,
+      "opcode_ape": 0.0,
+      "opcode_comparison_scope": "same legacy CSV event-count convention",
+      "correctness": [
+        "correctness elements=4096 bad=0 max_abs_error=0.000166487626 atol=0.002 rtol=0.01"
+      ],
+      "identity": {
+        "soc_version": "Ascend950DT_9582",
+        "cann_version": "9.2.1",
+        "host_binary_sha256": "7c195f84111ba8b9f2c5bebc47fadd4839190dd18bcd0b9e2675e8e2ef6cb267",
+        "package_manifest_sha256": "960b9f1a472d0c8d9439cbdd84ebb6ffbbd54935759f32afec4fdab0ce7df47d",
+        "platform_sha256": "b8e7d61780056889e795639504530ecacb2b759ad1602e929b863d837fdf0099",
+        "sim_config_sha256": "c31bad3d6d4057cb11f69fbbff119dff13b372a1c66c427f83ed954778febcda",
+        "capture": {
+          "dump": true,
+          "launch_count": 10
+        },
+        "input_pattern": "deterministic-bf16-v1"
+      },
+      "cost": {},
+      "prediction_coverage": "within_calibration_box",
+      "tiling": {
+        "active_aic": 4,
+        "active_aiv": 8,
+        "waves": 1,
+        "iterations": 1,
+        "branch": "d64_kv128",
+        "tile": [
+          16,
+          128,
+          64
+        ]
+      }
+    },
+    {
+      "id": "f2_cal_d128",
+      "op": "fa",
+      "shape": [
+        16,
+        128,
+        128,
+        1,
+        1
+      ],
+      "role": "development_replay",
+      "source": "results/v0.4/dataset.json",
+      "source_sha256": "fd76d3e054c7fde2ddf79db776de8482e0a13cd59c47e5fd2db2ed2c47e6c3c7",
+      "reference_us": 8.714545252732933,
+      "predicted_us": 8.828627004679687,
+      "previous_v05_us": 8.828627004679687,
+      "constant_us": 9.538626484510798,
+      "ape": 0.01309095869471532,
+      "signed_error_us": 0.1140817519467543,
+      "api": "aclnnFlashAttentionScoreV2",
+      "library": "ops-transformer",
+      "kernel": "FlashAttentionScore_50348df09d0b3ee451d3693a6b2ab3f5_2328361009230643744_mix_aic",
+      "runtime_binary_sha256": "ac006aee669c8696aeab3bb3fe64fc29e5f3c8e2d172bf75f46db7176a2d4580",
+      "trace_or_db_sha256": "485b80fc3c1f7e0b951f7d37bfd71523b6fe4fc5632b94d4ceab1f9eac787f8c",
+      "reference_scope": "cross-core instruction makespan",
+      "observed_cores": [
+        1,
+        2
+      ],
+      "predicted_cores": [
+        1,
+        2
+      ],
+      "predicted_selected_opcode_count": 2,
+      "observed_selected_opcode_count": 2,
+      "opcode_ape": 0.0,
+      "opcode_comparison_scope": "same legacy CSV event-count convention",
+      "correctness": [
+        "correctness elements=2048 bad=0 max_abs_error=0.000138708808 atol=0.002 rtol=0.01"
+      ],
+      "identity": {
+        "soc_version": "Ascend950DT_9582",
+        "cann_version": "9.2.1",
+        "host_binary_sha256": "7c195f84111ba8b9f2c5bebc47fadd4839190dd18bcd0b9e2675e8e2ef6cb267",
+        "package_manifest_sha256": "960b9f1a472d0c8d9439cbdd84ebb6ffbbd54935759f32afec4fdab0ce7df47d",
+        "platform_sha256": "b8e7d61780056889e795639504530ecacb2b759ad1602e929b863d837fdf0099",
+        "sim_config_sha256": "c31bad3d6d4057cb11f69fbbff119dff13b372a1c66c427f83ed954778febcda",
+        "capture": {
+          "dump": true,
+          "launch_count": 10
+        },
+        "input_pattern": "deterministic-bf16-v1"
+      },
+      "cost": {},
+      "prediction_coverage": "provisional_regime",
+      "tiling": {
+        "active_aic": 1,
+        "active_aiv": 2,
+        "waves": 1,
+        "iterations": 1,
+        "branch": "d128_kv128",
+        "tile": [
+          16,
+          128,
+          128
+        ]
+      }
+    },
+    {
+      "id": "q2_test_wide",
+      "op": "quant",
+      "shape": [
+        1,
+        4096
+      ],
+      "role": "development_replay",
+      "source": "results/v0.4/dataset.json",
+      "source_sha256": "fd76d3e054c7fde2ddf79db776de8482e0a13cd59c47e5fd2db2ed2c47e6c3c7",
+      "reference_us": 5.6860604314133525,
+      "predicted_us": 5.429783005268281,
+      "previous_v05_us": 5.429783005268281,
+      "constant_us": 5.80107234353916,
+      "ape": 0.04507117524274529,
+      "signed_error_us": -0.2562774261450711,
+      "api": "aclnnDynamicMxQuant",
+      "library": "ops-nn",
+      "kernel": "DynamicMxQuant_bf16toe4m3_high_performance_33_mix_aiv",
+      "runtime_binary_sha256": "17d48c749a27b6d68751ec25f76dc1e9feba37df2052be7b53a7cbd36e86a661",
+      "trace_or_db_sha256": "5f53c3afe7623ac54df82c022939e9293ca54ed11124d10617d9a0e08612bcf3",
+      "reference_scope": "cross-core instruction makespan",
+      "observed_cores": [
+        0,
+        16
+      ],
+      "predicted_cores": [
+        0,
+        16
+      ],
+      "predicted_selected_opcode_count": 136.00004111605458,
+      "observed_selected_opcode_count": 136,
+      "opcode_ape": 3.023239307003009e-07,
+      "opcode_comparison_scope": "same legacy CSV event-count convention",
+      "correctness": [
+        "correctness quant_elements=4096 scale_elements=128 bad=0 comparison=exact_bytes"
+      ],
+      "identity": {
+        "soc_version": "Ascend950DT_9582",
+        "cann_version": "9.2.1",
+        "host_binary_sha256": "7c195f84111ba8b9f2c5bebc47fadd4839190dd18bcd0b9e2675e8e2ef6cb267",
+        "package_manifest_sha256": "960b9f1a472d0c8d9439cbdd84ebb6ffbbd54935759f32afec4fdab0ce7df47d",
+        "platform_sha256": "b8e7d61780056889e795639504530ecacb2b759ad1602e929b863d837fdf0099",
+        "sim_config_sha256": "c31bad3d6d4057cb11f69fbbff119dff13b372a1c66c427f83ed954778febcda",
+        "capture": {
+          "dump": true,
+          "launch_count": 10
+        },
+        "input_pattern": "deterministic-bf16-v1"
+      },
+      "cost": {},
+      "prediction_coverage": "unchanged_v04_quant_route",
+      "tiling": {
+        "active_aiv": 16,
+        "active_aic": 0,
+        "waves": 1,
+        "iterations": 1,
+        "branch": "slice256",
+        "tile": [
+          1,
+          256
+        ]
+      }
+    },
+    {
+      "id": "m2_test_m_tail",
+      "op": "matmul",
+      "shape": [
+        129,
+        256,
+        256
+      ],
+      "role": "development_replay",
+      "source": "results/v0.4/dataset.json",
+      "source_sha256": "fd76d3e054c7fde2ddf79db776de8482e0a13cd59c47e5fd2db2ed2c47e6c3c7",
+      "reference_us": 3.6642425060272217,
+      "predicted_us": 3.9468988093849275,
+      "previous_v05_us": 3.9468988093849275,
+      "constant_us": 3.9233940184116363,
+      "ape": 0.07713908205932646,
+      "signed_error_us": 0.28265630335770586,
+      "api": "aclnnMatmul → MatMulV3",
+      "library": "ops-nn",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "runtime_binary_sha256": "e6899fbaa2659b7778bee81deb00b64b009dafcb7ad350f06576767fdeba2bf7",
+      "trace_or_db_sha256": "abd6159bf8d28ad6cef5ad443b3f7e6bfac92fb346e912d0c6b18d73ae935b12",
+      "reference_scope": "cross-core instruction makespan",
+      "observed_cores": [
+        20,
+        0
+      ],
+      "predicted_cores": [
+        20,
+        0
+      ],
+      "predicted_selected_opcode_count": 0.9999999994482758,
+      "observed_selected_opcode_count": 1,
+      "opcode_ape": 5.517242218644469e-10,
+      "opcode_comparison_scope": "same legacy CSV event-count convention",
+      "correctness": [
+        "correctness elements=33024 bad=0 max_abs_error=0.015625 atol=0.01 rtol=0.005"
+      ],
+      "identity": {
+        "soc_version": "Ascend950DT_9582",
+        "cann_version": "9.2.1",
+        "host_binary_sha256": "7c195f84111ba8b9f2c5bebc47fadd4839190dd18bcd0b9e2675e8e2ef6cb267",
+        "package_manifest_sha256": "960b9f1a472d0c8d9439cbdd84ebb6ffbbd54935759f32afec4fdab0ce7df47d",
+        "platform_sha256": "b8e7d61780056889e795639504530ecacb2b759ad1602e929b863d837fdf0099",
+        "sim_config_sha256": "c31bad3d6d4057cb11f69fbbff119dff13b372a1c66c427f83ed954778febcda",
+        "capture": {
+          "dump": true,
+          "launch_count": 10
+        },
+        "input_pattern": "deterministic-bf16-v1"
+      },
+      "cost": {},
+      "prediction_coverage": "provisional_regime",
+      "tiling": {
+        "active_aic": 20,
+        "active_aiv": 0,
+        "waves": 1,
+        "iterations": 1,
+        "branch": "coarse_tile",
+        "tile": [
+          32,
+          64,
+          256
+        ]
+      }
+    },
+    {
+      "id": "m2_test_k_work",
+      "op": "matmul",
+      "shape": [
+        17,
+        256,
+        1024
+      ],
+      "role": "development_replay",
+      "source": "results/v0.4/dataset.json",
+      "source_sha256": "fd76d3e054c7fde2ddf79db776de8482e0a13cd59c47e5fd2db2ed2c47e6c3c7",
+      "reference_us": 4.741818428039551,
+      "predicted_us": 5.040239826638453,
+      "previous_v05_us": 5.040239826638453,
+      "constant_us": 3.9233940184116363,
+      "ape": 0.06293395732621535,
+      "signed_error_us": 0.2984213985989026,
+      "api": "aclnnMatmul → MatMulV3",
+      "library": "ops-nn",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "runtime_binary_sha256": "e6899fbaa2659b7778bee81deb00b64b009dafcb7ad350f06576767fdeba2bf7",
+      "trace_or_db_sha256": "de5799bbb96e976bd07d9cb2d8968595ae5991e30080cc79a522b89baa1cdb91",
+      "reference_scope": "cross-core instruction makespan",
+      "observed_cores": [
+        8,
+        0
+      ],
+      "predicted_cores": [
+        8,
+        0
+      ],
+      "predicted_selected_opcode_count": 3.999999997793103,
+      "observed_selected_opcode_count": 4,
+      "opcode_ape": 5.517242218644469e-10,
+      "opcode_comparison_scope": "same legacy CSV event-count convention",
+      "correctness": [
+        "correctness elements=4352 bad=0 max_abs_error=0.015625 atol=0.01 rtol=0.005"
+      ],
+      "identity": {
+        "soc_version": "Ascend950DT_9582",
+        "cann_version": "9.2.1",
+        "host_binary_sha256": "7c195f84111ba8b9f2c5bebc47fadd4839190dd18bcd0b9e2675e8e2ef6cb267",
+        "package_manifest_sha256": "960b9f1a472d0c8d9439cbdd84ebb6ffbbd54935759f32afec4fdab0ce7df47d",
+        "platform_sha256": "b8e7d61780056889e795639504530ecacb2b759ad1602e929b863d837fdf0099",
+        "sim_config_sha256": "c31bad3d6d4057cb11f69fbbff119dff13b372a1c66c427f83ed954778febcda",
+        "capture": {
+          "dump": true,
+          "launch_count": 10
+        },
+        "input_pattern": "deterministic-bf16-v1"
+      },
+      "cost": {},
+      "prediction_coverage": "within_calibration_box",
+      "tiling": {
+        "active_aic": 8,
+        "active_aiv": 0,
+        "waves": 1,
+        "iterations": 1,
+        "branch": "dense",
+        "tile": [
+          16,
+          64,
+          256
+        ]
+      }
+    },
+    {
+      "id": "f2_test_q129",
+      "op": "fa",
+      "shape": [
+        129,
+        128,
+        64,
+        1,
+        1
+      ],
+      "role": "development_replay",
+      "source": "results/v0.4/dataset.json",
+      "source_sha256": "fd76d3e054c7fde2ddf79db776de8482e0a13cd59c47e5fd2db2ed2c47e6c3c7",
+      "reference_us": 8.870909693650901,
+      "predicted_us": 9.080718520695882,
+      "previous_v05_us": 9.080718520695882,
+      "constant_us": 9.538626484510798,
+      "ape": 0.023651331632329135,
+      "signed_error_us": 0.20980882704498072,
+      "api": "aclnnFlashAttentionScoreV2",
+      "library": "ops-transformer",
+      "kernel": "FlashAttentionScore_50348df09d0b3ee451d3693a6b2ab3f5_2328361008425337376_mix_aic",
+      "runtime_binary_sha256": "ac006aee669c8696aeab3bb3fe64fc29e5f3c8e2d172bf75f46db7176a2d4580",
+      "trace_or_db_sha256": "50d6d8587b9076c1f3dad4bcf23f3100703f8cc6102139fa18ada2354e94fc21",
+      "reference_scope": "cross-core instruction makespan",
+      "observed_cores": [
+        3,
+        6
+      ],
+      "predicted_cores": [
+        3,
+        6
+      ],
+      "predicted_selected_opcode_count": 2,
+      "observed_selected_opcode_count": 2,
+      "opcode_ape": 0.0,
+      "opcode_comparison_scope": "same legacy CSV event-count convention",
+      "correctness": [
+        "correctness elements=8256 bad=0 max_abs_error=0.000181533805 atol=0.002 rtol=0.01"
+      ],
+      "identity": {
+        "soc_version": "Ascend950DT_9582",
+        "cann_version": "9.2.1",
+        "host_binary_sha256": "7c195f84111ba8b9f2c5bebc47fadd4839190dd18bcd0b9e2675e8e2ef6cb267",
+        "package_manifest_sha256": "960b9f1a472d0c8d9439cbdd84ebb6ffbbd54935759f32afec4fdab0ce7df47d",
+        "platform_sha256": "b8e7d61780056889e795639504530ecacb2b759ad1602e929b863d837fdf0099",
+        "sim_config_sha256": "c31bad3d6d4057cb11f69fbbff119dff13b372a1c66c427f83ed954778febcda",
+        "capture": {
+          "dump": true,
+          "launch_count": 10
+        },
+        "input_pattern": "deterministic-bf16-v1"
+      },
+      "cost": {},
+      "prediction_coverage": "extrapolation",
+      "tiling": {
+        "active_aic": 3,
+        "active_aiv": 6,
+        "waves": 1,
+        "iterations": 1,
+        "branch": "d64_kv128",
+        "tile": [
+          64,
+          128,
+          64
+        ]
+      }
+    },
+    {
+      "id": "f2_test_heads8",
+      "op": "fa",
+      "shape": [
+        16,
+        128,
+        64,
+        1,
+        8
+      ],
+      "role": "development_replay",
+      "source": "results/v0.4/dataset.json",
+      "source_sha256": "fd76d3e054c7fde2ddf79db776de8482e0a13cd59c47e5fd2db2ed2c47e6c3c7",
+      "reference_us": 9.401818278245628,
+      "predicted_us": 8.992062612847022,
+      "previous_v05_us": 8.992062612847022,
+      "constant_us": 9.538626484510798,
+      "ape": 0.043582597883934655,
+      "signed_error_us": -0.4097556653986061,
+      "api": "aclnnFlashAttentionScoreV2",
+      "library": "ops-transformer",
+      "kernel": "FlashAttentionScore_50348df09d0b3ee451d3693a6b2ab3f5_2328361008425337376_mix_aic",
+      "runtime_binary_sha256": "ac006aee669c8696aeab3bb3fe64fc29e5f3c8e2d172bf75f46db7176a2d4580",
+      "trace_or_db_sha256": "6c216df61c866ec82c18cd847bd5774a408dc746ffe481cde77a5afdddf05496",
+      "reference_scope": "cross-core instruction makespan",
+      "observed_cores": [
+        8,
+        16
+      ],
+      "predicted_cores": [
+        8,
+        16
+      ],
+      "predicted_selected_opcode_count": 2,
+      "observed_selected_opcode_count": 2,
+      "opcode_ape": 0.0,
+      "opcode_comparison_scope": "same legacy CSV event-count convention",
+      "correctness": [
+        "correctness elements=8192 bad=0 max_abs_error=0.000158893929 atol=0.002 rtol=0.01"
+      ],
+      "identity": {
+        "soc_version": "Ascend950DT_9582",
+        "cann_version": "9.2.1",
+        "host_binary_sha256": "7c195f84111ba8b9f2c5bebc47fadd4839190dd18bcd0b9e2675e8e2ef6cb267",
+        "package_manifest_sha256": "960b9f1a472d0c8d9439cbdd84ebb6ffbbd54935759f32afec4fdab0ce7df47d",
+        "platform_sha256": "b8e7d61780056889e795639504530ecacb2b759ad1602e929b863d837fdf0099",
+        "sim_config_sha256": "c31bad3d6d4057cb11f69fbbff119dff13b372a1c66c427f83ed954778febcda",
+        "capture": {
+          "dump": true,
+          "launch_count": 10
+        },
+        "input_pattern": "deterministic-bf16-v1"
+      },
+      "cost": {},
+      "prediction_coverage": "extrapolation",
+      "tiling": {
+        "active_aic": 8,
+        "active_aiv": 16,
+        "waves": 1,
+        "iterations": 1,
+        "branch": "d64_kv128",
+        "tile": [
+          16,
+          128,
+          64
+        ]
+      }
+    },
+    {
+      "id": "f2_test_d128",
+      "op": "fa",
+      "shape": [
+        17,
+        192,
+        128,
+        1,
+        1
+      ],
+      "role": "development_replay",
+      "source": "results/v0.4/dataset.json",
+      "source_sha256": "fd76d3e054c7fde2ddf79db776de8482e0a13cd59c47e5fd2db2ed2c47e6c3c7",
+      "reference_us": 9.05030298512429,
+      "predicted_us": 9.653277493320003,
+      "previous_v05_us": 9.653277493320003,
+      "constant_us": 9.538626484510798,
+      "ape": 0.06662478694766394,
+      "signed_error_us": 0.6029745081957127,
+      "api": "aclnnFlashAttentionScoreV2",
+      "library": "ops-transformer",
+      "kernel": "FlashAttentionScore_50348df09d0b3ee451d3693a6b2ab3f5_2328361009230643744_mix_aic",
+      "runtime_binary_sha256": "ac006aee669c8696aeab3bb3fe64fc29e5f3c8e2d172bf75f46db7176a2d4580",
+      "trace_or_db_sha256": "233e88541e2915c1781d5683a03eb0fc46b8d570008e8360af4292e734619b09",
+      "reference_scope": "cross-core instruction makespan",
+      "observed_cores": [
+        1,
+        2
+      ],
+      "predicted_cores": [
+        1,
+        2
+      ],
+      "predicted_selected_opcode_count": 4,
+      "observed_selected_opcode_count": 4,
+      "opcode_ape": 0.0,
+      "opcode_comparison_scope": "same legacy CSV event-count convention",
+      "correctness": [
+        "correctness elements=2176 bad=0 max_abs_error=8.42484365e-05 atol=0.002 rtol=0.01"
+      ],
+      "identity": {
+        "soc_version": "Ascend950DT_9582",
+        "cann_version": "9.2.1",
+        "host_binary_sha256": "7c195f84111ba8b9f2c5bebc47fadd4839190dd18bcd0b9e2675e8e2ef6cb267",
+        "package_manifest_sha256": "960b9f1a472d0c8d9439cbdd84ebb6ffbbd54935759f32afec4fdab0ce7df47d",
+        "platform_sha256": "b8e7d61780056889e795639504530ecacb2b759ad1602e929b863d837fdf0099",
+        "sim_config_sha256": "c31bad3d6d4057cb11f69fbbff119dff13b372a1c66c427f83ed954778febcda",
+        "capture": {
+          "dump": true,
+          "launch_count": 10
+        },
+        "input_pattern": "deterministic-bf16-v1"
+      },
+      "cost": {},
+      "prediction_coverage": "provisional_regime",
+      "tiling": {
+        "active_aic": 1,
+        "active_aiv": 2,
+        "waves": 1,
+        "iterations": 2,
+        "branch": "d128_kv128",
+        "tile": [
+          17,
+          128,
+          128
+        ]
+      }
+    },
+    {
+      "id": "q2_test_ub_loop",
+      "op": "quant",
+      "shape": [
+        640,
+        4096
+      ],
+      "role": "development_replay",
+      "source": "results/v0.4/dataset.json",
+      "source_sha256": "fd76d3e054c7fde2ddf79db776de8482e0a13cd59c47e5fd2db2ed2c47e6c3c7",
+      "reference_us": 6.217575552873313,
+      "predicted_us": 6.364308178591398,
+      "previous_v05_us": 6.364308178591398,
+      "constant_us": 5.80107234353916,
+      "ape": 0.023599653027179597,
+      "signed_error_us": 0.14673262571808454,
+      "api": "aclnnDynamicMxQuant",
+      "library": "ops-nn",
+      "kernel": "DynamicMxQuant_bf16toe4m3_high_performance_33_mix_aiv",
+      "runtime_binary_sha256": "17d48c749a27b6d68751ec25f76dc1e9feba37df2052be7b53a7cbd36e86a661",
+      "trace_or_db_sha256": "997c3db4b3a304366ba0d379ea08fe7593d014df876a155038fad791153c59f3",
+      "reference_scope": "cross-core instruction makespan",
+      "observed_cores": [
+        0,
+        64
+      ],
+      "predicted_cores": [
+        0,
+        64
+      ],
+      "predicted_selected_opcode_count": 7479.999875616232,
+      "observed_selected_opcode_count": 7480,
+      "opcode_ape": 1.6628845962239764e-08,
+      "opcode_comparison_scope": "same legacy CSV event-count convention",
+      "correctness": [
+        "correctness quant_elements=2621440 scale_elements=81920 bad=0 comparison=exact_bytes"
+      ],
+      "identity": {
+        "soc_version": "Ascend950DT_9582",
+        "cann_version": "9.2.1",
+        "host_binary_sha256": "7c195f84111ba8b9f2c5bebc47fadd4839190dd18bcd0b9e2675e8e2ef6cb267",
+        "package_manifest_sha256": "960b9f1a472d0c8d9439cbdd84ebb6ffbbd54935759f32afec4fdab0ce7df47d",
+        "platform_sha256": "b8e7d61780056889e795639504530ecacb2b759ad1602e929b863d837fdf0099",
+        "sim_config_sha256": "c31bad3d6d4057cb11f69fbbff119dff13b372a1c66c427f83ed954778febcda",
+        "capture": {
+          "dump": true,
+          "launch_count": 10
+        },
+        "input_pattern": "deterministic-bf16-v1"
+      },
+      "cost": {},
+      "prediction_coverage": "unchanged_v04_quant_route",
+      "tiling": {
+        "active_aiv": 64,
+        "active_aic": 0,
+        "waves": 1,
+        "iterations": 2,
+        "branch": "ub_loop",
+        "tile": [
+          5,
+          4096
+        ]
+      }
+    },
+    {
+      "id": "import_v1_q_test_wave",
+      "op": "quant",
+      "shape": [
+        33,
+        768
+      ],
+      "role": "development_replay",
+      "source": "results/v0.4/dataset.json",
+      "source_sha256": "fd76d3e054c7fde2ddf79db776de8482e0a13cd59c47e5fd2db2ed2c47e6c3c7",
+      "reference_us": 5.209697249345481,
+      "predicted_us": 5.429783005268281,
+      "previous_v05_us": 5.429783005268281,
+      "constant_us": 5.80107234353916,
+      "ape": 0.042245402254507285,
+      "signed_error_us": 0.2200857559228,
+      "api": "aclnnDynamicMxQuant",
+      "library": "ops-nn",
+      "kernel": "DynamicMxQuant_bf16toe4m3_high_performance_33_mix_aiv",
+      "runtime_binary_sha256": "17d48c749a27b6d68751ec25f76dc1e9feba37df2052be7b53a7cbd36e86a661",
+      "trace_or_db_sha256": "01a023a25495ecec2b0f202fdbecd83140acd60c1da71072ceeef572ed0b8b96",
+      "reference_scope": "cross-core instruction makespan",
+      "observed_cores": [
+        0,
+        34
+      ],
+      "predicted_cores": [
+        0,
+        34
+      ],
+      "predicted_selected_opcode_count": 267.9999941611516,
+      "observed_selected_opcode_count": 268,
+      "opcode_ape": 2.1786747689516027e-08,
+      "opcode_comparison_scope": "same legacy CSV event-count convention",
+      "correctness": [
+        "correctness quant_elements=25344 scale_elements=792 bad=0 comparison=exact_bytes"
+      ],
+      "identity": {
+        "soc_version": "Ascend950DT_9582",
+        "cann_version": "9.2.1",
+        "host_binary_sha256": "1af1e391eb74ec9713bcfe08db910326f18e126f5e2dd5cf50199f868897fcaa",
+        "package_manifest_sha256": "960b9f1a472d0c8d9439cbdd84ebb6ffbbd54935759f32afec4fdab0ce7df47d",
+        "platform_sha256": "b8e7d61780056889e795639504530ecacb2b759ad1602e929b863d837fdf0099",
+        "sim_config_sha256": "c31bad3d6d4057cb11f69fbbff119dff13b372a1c66c427f83ed954778febcda",
+        "capture": {
+          "dump": true,
+          "launch_count": 10
+        },
+        "input_pattern": "deterministic-bf16-v1"
+      },
+      "cost": {},
+      "prediction_coverage": "unchanged_v04_quant_route",
+      "tiling": {
+        "active_aiv": 34,
+        "active_aic": 0,
+        "waves": 1,
+        "iterations": 1,
+        "branch": "slice512",
+        "tile": [
+          2,
+          512
+        ]
+      }
+    },
+    {
+      "id": "import_v1_m_cal_prefill",
+      "op": "matmul",
+      "shape": [
+        128,
+        256,
+        512
+      ],
+      "role": "development_replay",
+      "source": "results/v0.4/dataset.json",
+      "source_sha256": "fd76d3e054c7fde2ddf79db776de8482e0a13cd59c47e5fd2db2ed2c47e6c3c7",
+      "reference_us": 4.393333196640015,
+      "predicted_us": 4.260930496312998,
+      "previous_v05_us": 4.260930496312998,
+      "constant_us": 3.9233940184116363,
+      "ape": 0.03013718614110062,
+      "signed_error_us": -0.13240270032701673,
+      "api": "aclnnMatmul → MatMulV3",
+      "library": "ops-nn",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "runtime_binary_sha256": "e6899fbaa2659b7778bee81deb00b64b009dafcb7ad350f06576767fdeba2bf7",
+      "trace_or_db_sha256": "296b53296a9d02ca50e10b342254dc322b444fcc94a17a8bee0b586b377a9a0e",
+      "reference_scope": "cross-core instruction makespan",
+      "observed_cores": [
+        32,
+        0
+      ],
+      "predicted_cores": [
+        32,
+        0
+      ],
+      "predicted_selected_opcode_count": 1.9999999988965516,
+      "observed_selected_opcode_count": 2,
+      "opcode_ape": 5.517242218644469e-10,
+      "opcode_comparison_scope": "same legacy CSV event-count convention",
+      "correctness": [
+        "correctness elements=32768 bad=0 max_abs_error=0.015625 atol=0.01 rtol=0.005"
+      ],
+      "identity": {
+        "soc_version": "Ascend950DT_9582",
+        "cann_version": "9.2.1",
+        "host_binary_sha256": "1af1e391eb74ec9713bcfe08db910326f18e126f5e2dd5cf50199f868897fcaa",
+        "package_manifest_sha256": "960b9f1a472d0c8d9439cbdd84ebb6ffbbd54935759f32afec4fdab0ce7df47d",
+        "platform_sha256": "b8e7d61780056889e795639504530ecacb2b759ad1602e929b863d837fdf0099",
+        "sim_config_sha256": "c31bad3d6d4057cb11f69fbbff119dff13b372a1c66c427f83ed954778febcda",
+        "capture": {
+          "dump": true,
+          "launch_count": 10
+        },
+        "input_pattern": "deterministic-bf16-v1"
+      },
+      "cost": {},
+      "prediction_coverage": "within_calibration_box",
+      "tiling": {
+        "active_aic": 32,
+        "active_aiv": 0,
+        "waves": 1,
+        "iterations": 1,
+        "branch": "dense",
+        "tile": [
+          16,
+          64,
+          256
+        ]
+      }
+    },
+    {
+      "id": "import_v1_f_test_verify",
+      "op": "fa",
+      "shape": [
+        17,
+        96,
+        64,
+        1,
+        1
+      ],
+      "role": "development_replay",
+      "source": "results/v0.4/dataset.json",
+      "source_sha256": "fd76d3e054c7fde2ddf79db776de8482e0a13cd59c47e5fd2db2ed2c47e6c3c7",
+      "reference_us": 9.16242456715554,
+      "predicted_us": 8.691509767947057,
+      "previous_v05_us": 8.691509767947057,
+      "constant_us": 9.538626484510798,
+      "ape": 0.051396308450556524,
+      "signed_error_us": -0.470914799208483,
+      "api": "aclnnFlashAttentionScoreV2",
+      "library": "ops-transformer",
+      "kernel": "FlashAttentionScore_50348df09d0b3ee451d3693a6b2ab3f5_2328361008425337376_mix_aic",
+      "runtime_binary_sha256": "ac006aee669c8696aeab3bb3fe64fc29e5f3c8e2d172bf75f46db7176a2d4580",
+      "trace_or_db_sha256": "d4ca1639a81706cecee9d5bb697498ad528158e0bdb47dbd34739c18e7edc281",
+      "reference_scope": "cross-core instruction makespan",
+      "observed_cores": [
+        1,
+        2
+      ],
+      "predicted_cores": [
+        1,
+        2
+      ],
+      "predicted_selected_opcode_count": 2,
+      "observed_selected_opcode_count": 2,
+      "opcode_ape": 0.0,
+      "opcode_comparison_scope": "same legacy CSV event-count convention",
+      "correctness": [
+        "correctness elements=1088 bad=0 max_abs_error=0.000245860856 atol=0.002 rtol=0.01"
+      ],
+      "identity": {
+        "soc_version": "Ascend950DT_9582",
+        "cann_version": "9.2.1",
+        "host_binary_sha256": "1af1e391eb74ec9713bcfe08db910326f18e126f5e2dd5cf50199f868897fcaa",
+        "package_manifest_sha256": "960b9f1a472d0c8d9439cbdd84ebb6ffbbd54935759f32afec4fdab0ce7df47d",
+        "platform_sha256": "b8e7d61780056889e795639504530ecacb2b759ad1602e929b863d837fdf0099",
+        "sim_config_sha256": "c31bad3d6d4057cb11f69fbbff119dff13b372a1c66c427f83ed954778febcda",
+        "capture": {
+          "dump": true,
+          "launch_count": 10
+        },
+        "input_pattern": "deterministic-bf16-v1"
+      },
+      "cost": {},
+      "prediction_coverage": "within_calibration_box",
+      "tiling": {
+        "active_aic": 1,
+        "active_aiv": 2,
+        "waves": 1,
+        "iterations": 1,
+        "branch": "d64_kv128",
+        "tile": [
+          17,
+          96,
+          64
+        ]
+      }
+    },
+    {
+      "id": "import_v1_q_cal_small",
+      "op": "quant",
+      "shape": [
+        4,
+        256
+      ],
+      "role": "development_replay",
+      "source": "results/v0.4/dataset.json",
+      "source_sha256": "fd76d3e054c7fde2ddf79db776de8482e0a13cd59c47e5fd2db2ed2c47e6c3c7",
+      "reference_us": 4.588485243730247,
+      "predicted_us": 4.759043536980048,
+      "previous_v05_us": 4.759043536980048,
+      "constant_us": 5.80107234353916,
+      "ape": 0.03717093641803767,
+      "signed_error_us": 0.1705582932498011,
+      "api": "aclnnDynamicMxQuant",
+      "library": "ops-nn",
+      "kernel": "DynamicMxQuant_bf16toe4m3_high_performance_33_mix_aiv",
+      "runtime_binary_sha256": "17d48c749a27b6d68751ec25f76dc1e9feba37df2052be7b53a7cbd36e86a661",
+      "trace_or_db_sha256": "624d1d077cc802d35f4cba1ffb939d129bfd14b3e45bc2bf939f1538e30801c3",
+      "reference_scope": "cross-core instruction makespan",
+      "observed_cores": [
+        0,
+        4
+      ],
+      "predicted_cores": [
+        0,
+        4
+      ],
+      "predicted_selected_opcode_count": 136.00004111605458,
+      "observed_selected_opcode_count": 136,
+      "opcode_ape": 3.023239307003009e-07,
+      "opcode_comparison_scope": "same legacy CSV event-count convention",
+      "correctness": [
+        "correctness quant_elements=1024 scale_elements=32 bad=0 comparison=exact_bytes"
+      ],
+      "identity": {
+        "soc_version": "Ascend950DT_9582",
+        "cann_version": "9.2.1",
+        "host_binary_sha256": "1af1e391eb74ec9713bcfe08db910326f18e126f5e2dd5cf50199f868897fcaa",
+        "package_manifest_sha256": "960b9f1a472d0c8d9439cbdd84ebb6ffbbd54935759f32afec4fdab0ce7df47d",
+        "platform_sha256": "b8e7d61780056889e795639504530ecacb2b759ad1602e929b863d837fdf0099",
+        "sim_config_sha256": "c31bad3d6d4057cb11f69fbbff119dff13b372a1c66c427f83ed954778febcda",
+        "capture": {
+          "dump": true,
+          "launch_count": 10
+        },
+        "input_pattern": "deterministic-bf16-v1"
+      },
+      "cost": {},
+      "prediction_coverage": "unchanged_v04_quant_route",
+      "tiling": {
+        "active_aiv": 4,
+        "active_aic": 0,
+        "waves": 1,
+        "iterations": 1,
+        "branch": "slice256",
+        "tile": [
+          1,
+          256
+        ]
+      }
+    },
+    {
+      "id": "import_v1_f_cal_small",
+      "op": "fa",
+      "shape": [
+        16,
+        64,
+        64,
+        1,
+        1
+      ],
+      "role": "development_replay",
+      "source": "results/v0.4/dataset.json",
+      "source_sha256": "fd76d3e054c7fde2ddf79db776de8482e0a13cd59c47e5fd2db2ed2c47e6c3c7",
+      "reference_us": 9.052121642045677,
+      "predicted_us": 8.656922233523323,
+      "previous_v05_us": 8.656922233523323,
+      "constant_us": 9.538626484510798,
+      "ape": 0.04365820789313244,
+      "signed_error_us": -0.3951994085223536,
+      "api": "aclnnFlashAttentionScoreV2",
+      "library": "ops-transformer",
+      "kernel": "FlashAttentionScore_50348df09d0b3ee451d3693a6b2ab3f5_2328361008425337376_mix_aic",
+      "runtime_binary_sha256": "ac006aee669c8696aeab3bb3fe64fc29e5f3c8e2d172bf75f46db7176a2d4580",
+      "trace_or_db_sha256": "2ed78a97c32fee64acbfe0acf924f7c6c87807ef2c14bbba2c9c882569e2d143",
+      "reference_scope": "cross-core instruction makespan",
+      "observed_cores": [
+        1,
+        2
+      ],
+      "predicted_cores": [
+        1,
+        2
+      ],
+      "predicted_selected_opcode_count": 2,
+      "observed_selected_opcode_count": 2,
+      "opcode_ape": 0.0,
+      "opcode_comparison_scope": "same legacy CSV event-count convention",
+      "correctness": [
+        "correctness elements=1024 bad=0 max_abs_error=0.000380432538 atol=0.002 rtol=0.01"
+      ],
+      "identity": {
+        "soc_version": "Ascend950DT_9582",
+        "cann_version": "9.2.1",
+        "host_binary_sha256": "1af1e391eb74ec9713bcfe08db910326f18e126f5e2dd5cf50199f868897fcaa",
+        "package_manifest_sha256": "960b9f1a472d0c8d9439cbdd84ebb6ffbbd54935759f32afec4fdab0ce7df47d",
+        "platform_sha256": "b8e7d61780056889e795639504530ecacb2b759ad1602e929b863d837fdf0099",
+        "sim_config_sha256": "c31bad3d6d4057cb11f69fbbff119dff13b372a1c66c427f83ed954778febcda",
+        "capture": {
+          "dump": true,
+          "launch_count": 10
+        },
+        "input_pattern": "deterministic-bf16-v1"
+      },
+      "cost": {},
+      "prediction_coverage": "within_calibration_box",
+      "tiling": {
+        "active_aic": 1,
+        "active_aiv": 2,
+        "waves": 1,
+        "iterations": 1,
+        "branch": "d64_kv128",
+        "tile": [
+          16,
+          64,
+          64
+        ]
+      }
+    },
+    {
+      "id": "import_v1_q_cal_decode",
+      "op": "quant",
+      "shape": [
+        17,
+        512
+      ],
+      "role": "development_replay",
+      "source": "results/v0.4/dataset.json",
+      "source_sha256": "fd76d3e054c7fde2ddf79db776de8482e0a13cd59c47e5fd2db2ed2c47e6c3c7",
+      "reference_us": 5.790302756242454,
+      "predicted_us": 5.429783005268281,
+      "previous_v05_us": 5.429783005268281,
+      "constant_us": 5.80107234353916,
+      "ape": 0.062262677126079594,
+      "signed_error_us": -0.36051975097417266,
+      "api": "aclnnDynamicMxQuant",
+      "library": "ops-nn",
+      "kernel": "DynamicMxQuant_bf16toe4m3_high_performance_33_mix_aiv",
+      "runtime_binary_sha256": "17d48c749a27b6d68751ec25f76dc1e9feba37df2052be7b53a7cbd36e86a661",
+      "trace_or_db_sha256": "50d49db1f983a565f018717147caef1a7c2b0d374d5b5443aff0cc1058f655b7",
+      "reference_scope": "cross-core instruction makespan",
+      "observed_cores": [
+        0,
+        34
+      ],
+      "predicted_cores": [
+        0,
+        34
+      ],
+      "predicted_selected_opcode_count": 136.00004111605458,
+      "observed_selected_opcode_count": 136,
+      "opcode_ape": 3.023239307003009e-07,
+      "opcode_comparison_scope": "same legacy CSV event-count convention",
+      "correctness": [
+        "correctness quant_elements=8704 scale_elements=272 bad=0 comparison=exact_bytes"
+      ],
+      "identity": {
+        "soc_version": "Ascend950DT_9582",
+        "cann_version": "9.2.1",
+        "host_binary_sha256": "1af1e391eb74ec9713bcfe08db910326f18e126f5e2dd5cf50199f868897fcaa",
+        "package_manifest_sha256": "960b9f1a472d0c8d9439cbdd84ebb6ffbbd54935759f32afec4fdab0ce7df47d",
+        "platform_sha256": "b8e7d61780056889e795639504530ecacb2b759ad1602e929b863d837fdf0099",
+        "sim_config_sha256": "c31bad3d6d4057cb11f69fbbff119dff13b372a1c66c427f83ed954778febcda",
+        "capture": {
+          "dump": true,
+          "launch_count": 10
+        },
+        "input_pattern": "deterministic-bf16-v1"
+      },
+      "cost": {},
+      "prediction_coverage": "unchanged_v04_quant_route",
+      "tiling": {
+        "active_aiv": 34,
+        "active_aic": 0,
+        "waves": 1,
+        "iterations": 1,
+        "branch": "slice256",
+        "tile": [
+          1,
+          256
+        ]
+      }
+    },
+    {
+      "id": "import_v1_m_cal_decode",
+      "op": "matmul",
+      "shape": [
+        1,
+        128,
+        128
+      ],
+      "role": "development_replay",
+      "source": "results/v0.4/dataset.json",
+      "source_sha256": "fd76d3e054c7fde2ddf79db776de8482e0a13cd59c47e5fd2db2ed2c47e6c3c7",
+      "reference_us": 3.3563634157180786,
+      "predicted_us": 3.3703927461928664,
+      "previous_v05_us": 3.3703927461928664,
+      "constant_us": 3.9233940184116363,
+      "ape": 0.004179919972041024,
+      "signed_error_us": 0.014029330474787827,
+      "api": "aclnnMatmul → MatMulV3",
+      "library": "ops-nn",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "runtime_binary_sha256": "e6899fbaa2659b7778bee81deb00b64b009dafcb7ad350f06576767fdeba2bf7",
+      "trace_or_db_sha256": "828432bad7bbb134d1f17a190fbfb22db3843dd00a7b9178d3b5292858045c87",
+      "reference_scope": "cross-core instruction makespan",
+      "observed_cores": [
+        2,
+        0
+      ],
+      "predicted_cores": [
+        2,
+        0
+      ],
+      "predicted_selected_opcode_count": 0.9999999994482758,
+      "observed_selected_opcode_count": 1,
+      "opcode_ape": 5.517242218644469e-10,
+      "opcode_comparison_scope": "same legacy CSV event-count convention",
+      "correctness": [
+        "correctness elements=128 bad=0 max_abs_error=0 atol=0.01 rtol=0.005"
+      ],
+      "identity": {
+        "soc_version": "Ascend950DT_9582",
+        "cann_version": "9.2.1",
+        "host_binary_sha256": "1af1e391eb74ec9713bcfe08db910326f18e126f5e2dd5cf50199f868897fcaa",
+        "package_manifest_sha256": "960b9f1a472d0c8d9439cbdd84ebb6ffbbd54935759f32afec4fdab0ce7df47d",
+        "platform_sha256": "b8e7d61780056889e795639504530ecacb2b759ad1602e929b863d837fdf0099",
+        "sim_config_sha256": "c31bad3d6d4057cb11f69fbbff119dff13b372a1c66c427f83ed954778febcda",
+        "capture": {
+          "dump": true,
+          "launch_count": 10
+        },
+        "input_pattern": "deterministic-bf16-v1"
+      },
+      "cost": {},
+      "prediction_coverage": "provisional_regime",
+      "tiling": {
+        "active_aic": 2,
+        "active_aiv": 0,
+        "waves": 1,
+        "iterations": 1,
+        "branch": "gemv",
+        "tile": [
+          16,
+          64,
+          256
+        ]
+      }
+    },
+    {
+      "id": "import_v1_m_cal_small",
+      "op": "matmul",
+      "shape": [
+        32,
+        64,
+        64
+      ],
+      "role": "development_replay",
+      "source": "results/v0.4/dataset.json",
+      "source_sha256": "fd76d3e054c7fde2ddf79db776de8482e0a13cd59c47e5fd2db2ed2c47e6c3c7",
+      "reference_us": 3.291515290737152,
+      "predicted_us": 3.367861201990678,
+      "previous_v05_us": 3.367861201990678,
+      "constant_us": 3.9233940184116363,
+      "ape": 0.02319476122999501,
+      "signed_error_us": 0.07634591125352586,
+      "api": "aclnnMatmul → MatMulV3",
+      "library": "ops-nn",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "runtime_binary_sha256": "e6899fbaa2659b7778bee81deb00b64b009dafcb7ad350f06576767fdeba2bf7",
+      "trace_or_db_sha256": "3d5e25291d60f21324179a9de4ef4e0e07bf3188be9163f0c74174597356bbe3",
+      "reference_scope": "cross-core instruction makespan",
+      "observed_cores": [
+        2,
+        0
+      ],
+      "predicted_cores": [
+        2,
+        0
+      ],
+      "predicted_selected_opcode_count": 0.9999999994482758,
+      "observed_selected_opcode_count": 1,
+      "opcode_ape": 5.517242218644469e-10,
+      "opcode_comparison_scope": "same legacy CSV event-count convention",
+      "correctness": [
+        "correctness elements=2048 bad=0 max_abs_error=0.015625 atol=0.01 rtol=0.005"
+      ],
+      "identity": {
+        "soc_version": "Ascend950DT_9582",
+        "cann_version": "9.2.1",
+        "host_binary_sha256": "1af1e391eb74ec9713bcfe08db910326f18e126f5e2dd5cf50199f868897fcaa",
+        "package_manifest_sha256": "960b9f1a472d0c8d9439cbdd84ebb6ffbbd54935759f32afec4fdab0ce7df47d",
+        "platform_sha256": "b8e7d61780056889e795639504530ecacb2b759ad1602e929b863d837fdf0099",
+        "sim_config_sha256": "c31bad3d6d4057cb11f69fbbff119dff13b372a1c66c427f83ed954778febcda",
+        "capture": {
+          "dump": true,
+          "launch_count": 10
+        },
+        "input_pattern": "deterministic-bf16-v1"
+      },
+      "cost": {},
+      "prediction_coverage": "within_calibration_box",
+      "tiling": {
+        "active_aic": 2,
+        "active_aiv": 0,
+        "waves": 1,
+        "iterations": 1,
+        "branch": "dense",
+        "tile": [
+          16,
+          64,
+          256
+        ]
+      }
+    },
+    {
+      "id": "import_v1_f_test_context",
+      "op": "fa",
+      "shape": [
+        8,
+        192,
+        64,
+        1,
+        1
+      ],
+      "role": "development_replay",
+      "source": "results/v0.4/dataset.json",
+      "source_sha256": "fd76d3e054c7fde2ddf79db776de8482e0a13cd59c47e5fd2db2ed2c47e6c3c7",
+      "reference_us": 8.805454313755035,
+      "predicted_us": 9.42549156622576,
+      "previous_v05_us": 9.42549156622576,
+      "constant_us": 9.538626484510798,
+      "ape": 0.0704151347991395,
+      "signed_error_us": 0.6200372524707252,
+      "api": "aclnnFlashAttentionScoreV2",
+      "library": "ops-transformer",
+      "kernel": "FlashAttentionScore_50348df09d0b3ee451d3693a6b2ab3f5_2328361008425337376_mix_aic",
+      "runtime_binary_sha256": "ac006aee669c8696aeab3bb3fe64fc29e5f3c8e2d172bf75f46db7176a2d4580",
+      "trace_or_db_sha256": "71de992c26a5e68ffe0bec446fa9359df2a3b60f2a220bc9c22a069135319703",
+      "reference_scope": "cross-core instruction makespan",
+      "observed_cores": [
+        1,
+        2
+      ],
+      "predicted_cores": [
+        1,
+        2
+      ],
+      "predicted_selected_opcode_count": 4,
+      "observed_selected_opcode_count": 4,
+      "opcode_ape": 0.0,
+      "opcode_comparison_scope": "same legacy CSV event-count convention",
+      "correctness": [
+        "correctness elements=512 bad=0 max_abs_error=7.81671582e-05 atol=0.002 rtol=0.01"
+      ],
+      "identity": {
+        "soc_version": "Ascend950DT_9582",
+        "cann_version": "9.2.1",
+        "host_binary_sha256": "1af1e391eb74ec9713bcfe08db910326f18e126f5e2dd5cf50199f868897fcaa",
+        "package_manifest_sha256": "960b9f1a472d0c8d9439cbdd84ebb6ffbbd54935759f32afec4fdab0ce7df47d",
+        "platform_sha256": "b8e7d61780056889e795639504530ecacb2b759ad1602e929b863d837fdf0099",
+        "sim_config_sha256": "c31bad3d6d4057cb11f69fbbff119dff13b372a1c66c427f83ed954778febcda",
+        "capture": {
+          "dump": true,
+          "launch_count": 10
+        },
+        "input_pattern": "deterministic-bf16-v1"
+      },
+      "cost": {},
+      "prediction_coverage": "within_calibration_box",
+      "tiling": {
+        "active_aic": 1,
+        "active_aiv": 2,
+        "waves": 1,
+        "iterations": 2,
+        "branch": "d64_kv128",
+        "tile": [
+          8,
+          128,
+          64
+        ]
+      }
+    },
+    {
+      "id": "import_v1_f_cal_prefill",
+      "op": "fa",
+      "shape": [
+        64,
+        256,
+        64,
+        1,
+        1
+      ],
+      "role": "development_replay",
+      "source": "results/v0.4/dataset.json",
+      "source_sha256": "fd76d3e054c7fde2ddf79db776de8482e0a13cd59c47e5fd2db2ed2c47e6c3c7",
+      "reference_us": 9.409090998582542,
+      "predicted_us": 9.702955928707459,
+      "previous_v05_us": 9.702955928707459,
+      "constant_us": 9.538626484510798,
+      "ape": 0.031232021262116272,
+      "signed_error_us": 0.29386493012491677,
+      "api": "aclnnFlashAttentionScoreV2",
+      "library": "ops-transformer",
+      "kernel": "FlashAttentionScore_50348df09d0b3ee451d3693a6b2ab3f5_2328361008425337376_mix_aic",
+      "runtime_binary_sha256": "ac006aee669c8696aeab3bb3fe64fc29e5f3c8e2d172bf75f46db7176a2d4580",
+      "trace_or_db_sha256": "0d81e63d513d99a2984d2141054cd79667186227409d130b6dd3ca030a94b062",
+      "reference_scope": "cross-core instruction makespan",
+      "observed_cores": [
+        1,
+        2
+      ],
+      "predicted_cores": [
+        1,
+        2
+      ],
+      "predicted_selected_opcode_count": 4,
+      "observed_selected_opcode_count": 4,
+      "opcode_ape": 0.0,
+      "opcode_comparison_scope": "same legacy CSV event-count convention",
+      "correctness": [
+        "correctness elements=4096 bad=0 max_abs_error=8.81786764e-05 atol=0.002 rtol=0.01"
+      ],
+      "identity": {
+        "soc_version": "Ascend950DT_9582",
+        "cann_version": "9.2.1",
+        "host_binary_sha256": "1af1e391eb74ec9713bcfe08db910326f18e126f5e2dd5cf50199f868897fcaa",
+        "package_manifest_sha256": "960b9f1a472d0c8d9439cbdd84ebb6ffbbd54935759f32afec4fdab0ce7df47d",
+        "platform_sha256": "b8e7d61780056889e795639504530ecacb2b759ad1602e929b863d837fdf0099",
+        "sim_config_sha256": "c31bad3d6d4057cb11f69fbbff119dff13b372a1c66c427f83ed954778febcda",
+        "capture": {
+          "dump": true,
+          "launch_count": 10
+        },
+        "input_pattern": "deterministic-bf16-v1"
+      },
+      "cost": {},
+      "prediction_coverage": "within_calibration_box",
+      "tiling": {
+        "active_aic": 1,
+        "active_aiv": 2,
+        "waves": 1,
+        "iterations": 2,
+        "branch": "d64_kv128",
+        "tile": [
+          64,
+          128,
+          64
+        ]
+      }
+    },
+    {
+      "id": "import_v1_q_test_tail",
+      "op": "quant",
+      "shape": [
+        8,
+        384
+      ],
+      "role": "development_replay",
+      "source": "results/v0.4/dataset.json",
+      "source_sha256": "fd76d3e054c7fde2ddf79db776de8482e0a13cd59c47e5fd2db2ed2c47e6c3c7",
+      "reference_us": 5.7599997548386455,
+      "predicted_us": 5.429783005268281,
+      "previous_v05_us": 5.429783005268281,
+      "constant_us": 5.80107234353916,
+      "ape": 0.05732929924050221,
+      "signed_error_us": -0.33021674957036407,
+      "api": "aclnnDynamicMxQuant",
+      "library": "ops-nn",
+      "kernel": "DynamicMxQuant_bf16toe4m3_high_performance_33_mix_aiv",
+      "runtime_binary_sha256": "17d48c749a27b6d68751ec25f76dc1e9feba37df2052be7b53a7cbd36e86a661",
+      "trace_or_db_sha256": "a5e98b6f195adfcf686ed66da474a338cd5e1c2c891629852c5dc690f219eab3",
+      "reference_scope": "cross-core instruction makespan",
+      "observed_cores": [
+        0,
+        16
+      ],
+      "predicted_cores": [
+        0,
+        16
+      ],
+      "predicted_selected_opcode_count": 136.00004111605458,
+      "observed_selected_opcode_count": 136,
+      "opcode_ape": 3.023239307003009e-07,
+      "opcode_comparison_scope": "same legacy CSV event-count convention",
+      "correctness": [
+        "correctness quant_elements=3072 scale_elements=96 bad=0 comparison=exact_bytes"
+      ],
+      "identity": {
+        "soc_version": "Ascend950DT_9582",
+        "cann_version": "9.2.1",
+        "host_binary_sha256": "1af1e391eb74ec9713bcfe08db910326f18e126f5e2dd5cf50199f868897fcaa",
+        "package_manifest_sha256": "960b9f1a472d0c8d9439cbdd84ebb6ffbbd54935759f32afec4fdab0ce7df47d",
+        "platform_sha256": "b8e7d61780056889e795639504530ecacb2b759ad1602e929b863d837fdf0099",
+        "sim_config_sha256": "c31bad3d6d4057cb11f69fbbff119dff13b372a1c66c427f83ed954778febcda",
+        "capture": {
+          "dump": true,
+          "launch_count": 10
+        },
+        "input_pattern": "deterministic-bf16-v1"
+      },
+      "cost": {},
+      "prediction_coverage": "unchanged_v04_quant_route",
+      "tiling": {
+        "active_aiv": 16,
+        "active_aic": 0,
+        "waves": 1,
+        "iterations": 1,
+        "branch": "slice256",
+        "tile": [
+          1,
+          256
+        ]
+      }
+    },
+    {
+      "id": "import_v1_f_cal_decode",
+      "op": "fa",
+      "shape": [
+        1,
+        128,
+        64,
+        1,
+        1
+      ],
+      "role": "development_replay",
+      "source": "results/v0.4/dataset.json",
+      "source_sha256": "fd76d3e054c7fde2ddf79db776de8482e0a13cd59c47e5fd2db2ed2c47e6c3c7",
+      "reference_us": 8.784242123365402,
+      "predicted_us": 8.718487798490816,
+      "previous_v05_us": 8.718487798490816,
+      "constant_us": 9.538626484510798,
+      "ape": 0.007485486391556146,
+      "signed_error_us": -0.06575432487458599,
+      "api": "aclnnFlashAttentionScoreV2",
+      "library": "ops-transformer",
+      "kernel": "FlashAttentionScore_50348df09d0b3ee451d3693a6b2ab3f5_2328361008425337376_mix_aic",
+      "runtime_binary_sha256": "ac006aee669c8696aeab3bb3fe64fc29e5f3c8e2d172bf75f46db7176a2d4580",
+      "trace_or_db_sha256": "026d74c860f58bcbf63b54188a246fd418d892e8e2f9f08fa13f5afb1529b79b",
+      "reference_scope": "cross-core instruction makespan",
+      "observed_cores": [
+        1,
+        2
+      ],
+      "predicted_cores": [
+        1,
+        2
+      ],
+      "predicted_selected_opcode_count": 2,
+      "observed_selected_opcode_count": 2,
+      "opcode_ape": 0.0,
+      "opcode_comparison_scope": "same legacy CSV event-count convention",
+      "correctness": [
+        "correctness elements=64 bad=0 max_abs_error=0.000131970225 atol=0.002 rtol=0.01"
+      ],
+      "identity": {
+        "soc_version": "Ascend950DT_9582",
+        "cann_version": "9.2.1",
+        "host_binary_sha256": "1af1e391eb74ec9713bcfe08db910326f18e126f5e2dd5cf50199f868897fcaa",
+        "package_manifest_sha256": "960b9f1a472d0c8d9439cbdd84ebb6ffbbd54935759f32afec4fdab0ce7df47d",
+        "platform_sha256": "b8e7d61780056889e795639504530ecacb2b759ad1602e929b863d837fdf0099",
+        "sim_config_sha256": "c31bad3d6d4057cb11f69fbbff119dff13b372a1c66c427f83ed954778febcda",
+        "capture": {
+          "dump": true,
+          "launch_count": 10
+        },
+        "input_pattern": "deterministic-bf16-v1"
+      },
+      "cost": {},
+      "prediction_coverage": "within_calibration_box",
+      "tiling": {
+        "active_aic": 1,
+        "active_aiv": 2,
+        "waves": 1,
+        "iterations": 1,
+        "branch": "d64_kv128",
+        "tile": [
+          16,
+          128,
+          64
+        ]
+      }
+    },
+    {
+      "id": "import_v1_q_cal_prefill",
+      "op": "quant",
+      "shape": [
+        64,
+        1024
+      ],
+      "role": "development_replay",
+      "source": "results/v0.4/dataset.json",
+      "source_sha256": "fd76d3e054c7fde2ddf79db776de8482e0a13cd59c47e5fd2db2ed2c47e6c3c7",
+      "reference_us": 5.531515601091087,
+      "predicted_us": 5.214454451396493,
+      "previous_v05_us": 5.429783005268281,
+      "constant_us": 5.80107234353916,
+      "ape": 0.0573190374139148,
+      "signed_error_us": -0.3170611496945934,
+      "api": "aclnnDynamicMxQuant",
+      "library": "ops-nn",
+      "kernel": "DynamicMxQuant_bf16toe4m3_high_performance_33_mix_aiv",
+      "runtime_binary_sha256": "17d48c749a27b6d68751ec25f76dc1e9feba37df2052be7b53a7cbd36e86a661",
+      "trace_or_db_sha256": "4208b2c1638b8d079c87ccbee28b57c71147ac743cd329765341c8799fe4bbf0",
+      "reference_scope": "cross-core instruction makespan",
+      "observed_cores": [
+        0,
+        64
+      ],
+      "predicted_cores": [
+        0,
+        64
+      ],
+      "predicted_selected_opcode_count": 267.9999941611516,
+      "observed_selected_opcode_count": 268,
+      "opcode_ape": 2.1786747689516027e-08,
+      "opcode_comparison_scope": "same legacy CSV event-count convention",
+      "correctness": [
+        "correctness quant_elements=65536 scale_elements=2048 bad=0 comparison=exact_bytes"
+      ],
+      "identity": {
+        "soc_version": "Ascend950DT_9582",
+        "cann_version": "9.2.1",
+        "host_binary_sha256": "1af1e391eb74ec9713bcfe08db910326f18e126f5e2dd5cf50199f868897fcaa",
+        "package_manifest_sha256": "960b9f1a472d0c8d9439cbdd84ebb6ffbbd54935759f32afec4fdab0ce7df47d",
+        "platform_sha256": "b8e7d61780056889e795639504530ecacb2b759ad1602e929b863d837fdf0099",
+        "sim_config_sha256": "c31bad3d6d4057cb11f69fbbff119dff13b372a1c66c427f83ed954778febcda",
+        "capture": {
+          "dump": true,
+          "launch_count": 10
+        },
+        "input_pattern": "deterministic-bf16-v1"
+      },
+      "cost": {},
+      "prediction_coverage": "provisional_single_ub_vf_envelope",
+      "tiling": {
+        "active_aiv": 64,
+        "active_aic": 0,
+        "waves": 1,
+        "iterations": 1,
+        "branch": "slice512",
+        "tile": [
+          1,
+          1024
+        ]
+      }
+    },
+    {
+      "id": "import_v1_m_test_prefill",
+      "op": "matmul",
+      "shape": [
+        48,
+        128,
+        192
+      ],
+      "role": "development_replay",
+      "source": "results/v0.4/dataset.json",
+      "source_sha256": "fd76d3e054c7fde2ddf79db776de8482e0a13cd59c47e5fd2db2ed2c47e6c3c7",
+      "reference_us": 3.5751516819000244,
+      "predicted_us": 3.6327130876330145,
+      "previous_v05_us": 3.6327130876330145,
+      "constant_us": 3.9233940184116363,
+      "ape": 0.016100409396448013,
+      "signed_error_us": 0.05756140573299007,
+      "api": "aclnnMatmul → MatMulV3",
+      "library": "ops-nn",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "runtime_binary_sha256": "e6899fbaa2659b7778bee81deb00b64b009dafcb7ad350f06576767fdeba2bf7",
+      "trace_or_db_sha256": "2c9071ddfbfd3a5e779f2873d8d733c45a9c10ea3dc233277740d90b4f11f0c2",
+      "reference_scope": "cross-core instruction makespan",
+      "observed_cores": [
+        6,
+        0
+      ],
+      "predicted_cores": [
+        6,
+        0
+      ],
+      "predicted_selected_opcode_count": 0.9999999994482758,
+      "observed_selected_opcode_count": 1,
+      "opcode_ape": 5.517242218644469e-10,
+      "opcode_comparison_scope": "same legacy CSV event-count convention",
+      "correctness": [
+        "correctness elements=6144 bad=0 max_abs_error=0.015625 atol=0.01 rtol=0.005"
+      ],
+      "identity": {
+        "soc_version": "Ascend950DT_9582",
+        "cann_version": "9.2.1",
+        "host_binary_sha256": "1af1e391eb74ec9713bcfe08db910326f18e126f5e2dd5cf50199f868897fcaa",
+        "package_manifest_sha256": "960b9f1a472d0c8d9439cbdd84ebb6ffbbd54935759f32afec4fdab0ce7df47d",
+        "platform_sha256": "b8e7d61780056889e795639504530ecacb2b759ad1602e929b863d837fdf0099",
+        "sim_config_sha256": "c31bad3d6d4057cb11f69fbbff119dff13b372a1c66c427f83ed954778febcda",
+        "capture": {
+          "dump": true,
+          "launch_count": 10
+        },
+        "input_pattern": "deterministic-bf16-v1"
+      },
+      "cost": {},
+      "prediction_coverage": "within_calibration_box",
+      "tiling": {
+        "active_aic": 6,
+        "active_aiv": 0,
+        "waves": 1,
+        "iterations": 1,
+        "branch": "dense",
+        "tile": [
+          16,
+          64,
+          256
+        ]
+      }
+    },
+    {
+      "id": "import_v1_m_test_tail",
+      "op": "matmul",
+      "shape": [
+        17,
+        96,
+        128
+      ],
+      "role": "development_replay",
+      "source": "results/v0.4/dataset.json",
+      "source_sha256": "fd76d3e054c7fde2ddf79db776de8482e0a13cd59c47e5fd2db2ed2c47e6c3c7",
+      "reference_us": 3.4939396381378174,
+      "predicted_us": 3.5054952431828683,
+      "previous_v05_us": 3.5054952431828683,
+      "constant_us": 3.9233940184116363,
+      "ape": 0.0033073281859012827,
+      "signed_error_us": 0.011555605045050932,
+      "api": "aclnnMatmul → MatMulV3",
+      "library": "ops-nn",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "runtime_binary_sha256": "e6899fbaa2659b7778bee81deb00b64b009dafcb7ad350f06576767fdeba2bf7",
+      "trace_or_db_sha256": "6d0c0e2f370dcd065878251cb814d2a70f047cf4b1b73c9edd6742da2fcae9b5",
+      "reference_scope": "cross-core instruction makespan",
+      "observed_cores": [
+        4,
+        0
+      ],
+      "predicted_cores": [
+        4,
+        0
+      ],
+      "predicted_selected_opcode_count": 0.9999999994482758,
+      "observed_selected_opcode_count": 1,
+      "opcode_ape": 5.517242218644469e-10,
+      "opcode_comparison_scope": "same legacy CSV event-count convention",
+      "correctness": [
+        "correctness elements=1632 bad=0 max_abs_error=0.015625 atol=0.01 rtol=0.005"
+      ],
+      "identity": {
+        "soc_version": "Ascend950DT_9582",
+        "cann_version": "9.2.1",
+        "host_binary_sha256": "1af1e391eb74ec9713bcfe08db910326f18e126f5e2dd5cf50199f868897fcaa",
+        "package_manifest_sha256": "960b9f1a472d0c8d9439cbdd84ebb6ffbbd54935759f32afec4fdab0ce7df47d",
+        "platform_sha256": "b8e7d61780056889e795639504530ecacb2b759ad1602e929b863d837fdf0099",
+        "sim_config_sha256": "c31bad3d6d4057cb11f69fbbff119dff13b372a1c66c427f83ed954778febcda",
+        "capture": {
+          "dump": true,
+          "launch_count": 10
+        },
+        "input_pattern": "deterministic-bf16-v1"
+      },
+      "cost": {},
+      "prediction_coverage": "within_calibration_box",
+      "tiling": {
+        "active_aic": 4,
+        "active_aiv": 0,
+        "waves": 1,
+        "iterations": 1,
+        "branch": "dense",
+        "tile": [
+          16,
+          64,
+          256
+        ]
+      }
+    },
+    {
+      "id": "kv32k-compact-complete",
+      "op": "fa",
+      "shape": [
+        9,
+        32768,
+        64,
+        1,
+        1
+      ],
+      "role": "development_replay",
+      "source": "results/long-fa/evaluation.json",
+      "source_sha256": "b50bfab683053ad940c69f50eb97d5db6b1ea5307665be8c914a7bf58b8340ac",
+      "reference_us": 75.98,
+      "predicted_us": 76.18387794817,
+      "previous_v05_us": 76.18387794817,
+      "constant_us": 9.538626484510798,
+      "ape": 0.002683310715582904,
+      "signed_error_us": 0.20387794816998905,
+      "api": "aclnnFlashAttentionScoreV2",
+      "library": "ops-transformer",
+      "kernel": "entry_kernel_2050000040140220",
+      "runtime_binary_sha256": null,
+      "trace_or_db_sha256": "9220bb8932f4f4464a75c005fdc9dd1fd485928938c1be3d2bc916dd37f0c220",
+      "reference_scope": "cross-core instruction makespan",
+      "observed_cores": [
+        1,
+        2
+      ],
+      "predicted_cores": [
+        1,
+        2
+      ],
+      "predicted_selected_opcode_count": 512,
+      "observed_selected_opcode_count": 512,
+      "opcode_ape": 0.0,
+      "opcode_comparison_scope": "same legacy CSV event-count convention",
+      "correctness": [
+        "correctness elements=576 bad=0 max_abs_error=3.51277034e-07 atol=0.002 rtol=0.01"
+      ],
+      "identity": {},
+      "cost": {},
+      "prediction_coverage": "single_shape_calibrated_route; length extrapolation",
+      "tiling": {
+        "active_aic": 1,
+        "active_aiv": 2,
+        "waves": 1,
+        "iterations": 128,
+        "branch": "d64_kv256",
+        "tile": [
+          9,
+          256,
+          64
+        ]
+      }
+    },
+    {
+      "id": "f5_holdout_128k",
+      "op": "fa",
+      "shape": [
+        9,
+        131072,
+        64,
+        1,
+        1
+      ],
+      "role": "retained_frozen_holdout",
+      "source": "results/v0.5/dataset.json",
+      "source_sha256": "5fd01bdaa887ee07286224e30e1148a4443389da2dce9676928e7d0357931a58",
+      "reference_us": 274.8212121212121,
+      "predicted_us": 274.7944294535887,
+      "previous_v05_us": 274.7944294535887,
+      "constant_us": 9.538626484510798,
+      "ape": 9.745487772468405e-05,
+      "signed_error_us": -0.026782667623422185,
+      "api": "aclnnFlashAttentionScoreV2",
+      "library": "ops-transformer",
+      "kernel": "entry_kernel_2050000040140220",
+      "runtime_binary_sha256": null,
+      "trace_or_db_sha256": "4633540ddcae28e4bfb7ced11bff2eaecb1cc65be0219ee1bcc375a1d4f4b6ff",
+      "reference_scope": "cross-core instruction makespan",
+      "observed_cores": [
+        1,
+        2
+      ],
+      "predicted_cores": [
+        1,
+        2
+      ],
+      "predicted_selected_opcode_count": 2048,
+      "observed_selected_opcode_count": 2048,
+      "opcode_ape": 0.0,
+      "opcode_comparison_scope": "same legacy CSV event-count convention",
+      "correctness": [
+        "correctness elements=576 bad=0 max_abs_error=1.26169927e-07 atol=0.002 rtol=0.01"
+      ],
+      "identity": {
+        "soc_version": "Ascend950DT_9582",
+        "cann_version": "9.2.1",
+        "model_sha256": "31c46acdd62d6058bf59f73bdd41803bbdddce98f666bc70d7c4475f44272d6a",
+        "frozen_predictions_sha256": "f2c67385a3f3d8e91248d5c3e041ab4502b16c5704647569aba6945325a01d93",
+        "host_binary_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+        "sku_adapter_sha256": "3f78dfb3c88665800c04d4da932255df356f1492a50d8b358933701b66f1c186"
+      },
+      "cost": {
+        "wall_seconds": 794.5318651699927,
+        "cpu_seconds": 24983.952964,
+        "raw_bytes": 435186346
+      },
+      "prediction_coverage": "single_shape_calibrated_route; length extrapolation",
+      "tiling": {
+        "active_aic": 1,
+        "active_aiv": 2,
+        "waves": 1,
+        "iterations": 512,
+        "branch": "d64_kv256",
+        "tile": [
+          9,
+          256,
+          64
+        ]
+      }
+    },
+    {
+      "id": "f5_holdout_tail16k",
+      "op": "fa",
+      "shape": [
+        9,
+        16385,
+        64,
+        1,
+        1
+      ],
+      "role": "retained_frozen_holdout",
+      "source": "results/v0.5/dataset.json",
+      "source_sha256": "5fd01bdaa887ee07286224e30e1148a4443389da2dce9676928e7d0357931a58",
+      "reference_us": 43.21878787878788,
+      "predicted_us": 43.599334341812224,
+      "previous_v05_us": 43.599334341812224,
+      "constant_us": 9.538626484510798,
+      "ape": 0.00880511651765042,
+      "signed_error_us": 0.3805464630243449,
+      "api": "aclnnFlashAttentionScoreV2",
+      "library": "ops-transformer",
+      "kernel": "entry_kernel_2050000040140220",
+      "runtime_binary_sha256": null,
+      "trace_or_db_sha256": "499fb83e1cc6c3d56b44293bedec55edbd46afb0e8a4c8e55752f4ab836a4862",
+      "reference_scope": "cross-core instruction makespan",
+      "observed_cores": [
+        1,
+        2
+      ],
+      "predicted_cores": [
+        1,
+        2
+      ],
+      "predicted_selected_opcode_count": 258,
+      "observed_selected_opcode_count": 258,
+      "opcode_ape": 0.0,
+      "opcode_comparison_scope": "same legacy CSV event-count convention",
+      "correctness": [
+        "correctness elements=576 bad=0 max_abs_error=1.05939405e-06 atol=0.002 rtol=0.01"
+      ],
+      "identity": {
+        "soc_version": "Ascend950DT_9582",
+        "cann_version": "9.2.1",
+        "model_sha256": "31c46acdd62d6058bf59f73bdd41803bbdddce98f666bc70d7c4475f44272d6a",
+        "frozen_predictions_sha256": "f2c67385a3f3d8e91248d5c3e041ab4502b16c5704647569aba6945325a01d93",
+        "host_binary_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+        "sku_adapter_sha256": "3f78dfb3c88665800c04d4da932255df356f1492a50d8b358933701b66f1c186"
+      },
+      "cost": {
+        "wall_seconds": 148.09553435002454,
+        "cpu_seconds": 3966.598126,
+        "raw_bytes": 57101587
+      },
+      "prediction_coverage": "single_shape_calibrated_route; length extrapolation",
+      "tiling": {
+        "active_aic": 1,
+        "active_aiv": 2,
+        "waves": 1,
+        "iterations": 65,
+        "branch": "d64_kv256",
+        "tile": [
+          9,
+          256,
+          64
+        ]
+      }
+    },
+    {
+      "id": "q6_verify_batch4",
+      "op": "quant",
+      "shape": [
+        36,
+        5120
+      ],
+      "role": "new_frozen_holdout",
+      "source": "results/v0.6/dataset.json",
+      "source_sha256": "cc125c1fdd83ba6da93f028fea5c045c5a12201f4315302e0f5b39f78b564591",
+      "reference_us": 5.583636363636364,
+      "predicted_us": 5.292013534397773,
+      "previous_v05_us": 5.429783005268281,
+      "constant_us": 5.80107234353916,
+      "ape": 0.05222811985712309,
+      "signed_error_us": -0.29162282923859095,
+      "api": "aclnnDynamicMxQuant",
+      "library": "ops-nn",
+      "kernel": "entry_kernel_21",
+      "runtime_binary_sha256": null,
+      "trace_or_db_sha256": "b346f9a38c98c19b81a874a0158a197a2599960b79dd8bbcdd14e5ae273655f4",
+      "reference_scope": "cross-core instruction makespan",
+      "observed_cores": [
+        0,
+        60
+      ],
+      "predicted_cores": [
+        0,
+        60
+      ],
+      "predicted_selected_opcode_count": 619.999868948077,
+      "observed_selected_opcode_count": 310,
+      "opcode_ape": null,
+      "opcode_comparison_scope": "helper ExecutedInstructions records; historical CSV used paired log events",
+      "correctness": [
+        "correctness quant_elements=184320 scale_elements=5760 bad=0 comparison=exact_bytes"
+      ],
+      "identity": {
+        "soc_version": "Ascend950DT_9582",
+        "cann_version": "9.2.1",
+        "model_sha256": "bad9ec3eb0fb313b6e16d37487433d626c008331d4aabdf8a4dc37751e28cf23",
+        "frozen_predictions_sha256": "4c1da3d56069bb530d81730889b800e0758c41ceb5f3be7290927fe3c1954fba",
+        "host_binary_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+        "sku_adapter_sha256": "3f78dfb3c88665800c04d4da932255df356f1492a50d8b358933701b66f1c186"
+      },
+      "cost": {
+        "wall_seconds": 50.090025409823284,
+        "cpu_seconds": 684.406963,
+        "raw_bytes": 27665293
+      },
+      "prediction_coverage": "provisional_single_ub_vf_envelope",
+      "tiling": {
+        "active_aiv": 60,
+        "active_aic": 0,
+        "waves": 1,
+        "iterations": 1,
+        "branch": "slice512",
+        "tile": [
+          3,
+          1024
+        ]
+      }
+    },
+    {
+      "id": "q6_verify_batch32",
+      "op": "quant",
+      "shape": [
+        288,
+        7168
+      ],
+      "role": "new_frozen_holdout",
+      "source": "results/v0.6/dataset.json",
+      "source_sha256": "cc125c1fdd83ba6da93f028fea5c045c5a12201f4315302e0f5b39f78b564591",
+      "reference_us": 6.876363636363636,
+      "predicted_us": 7.180533331771004,
+      "previous_v05_us": 6.439312258287572,
+      "constant_us": 5.80107234353916,
+      "ape": 0.0442340910825099,
+      "signed_error_us": 0.30416969540736805,
+      "api": "aclnnDynamicMxQuant",
+      "library": "ops-nn",
+      "kernel": "entry_kernel_21",
+      "runtime_binary_sha256": null,
+      "trace_or_db_sha256": "132401f1554474e22e20e02d0c31a6324270489a25243142b8a5aee5ee772110",
+      "reference_scope": "cross-core instruction makespan",
+      "observed_cores": [
+        0,
+        64
+      ],
+      "predicted_cores": [
+        0,
+        64
+      ],
+      "predicted_selected_opcode_count": 5860.000067711318,
+      "observed_selected_opcode_count": 2930,
+      "opcode_ape": null,
+      "opcode_comparison_scope": "helper ExecutedInstructions records; historical CSV used paired log events",
+      "correctness": [
+        "correctness quant_elements=2064384 scale_elements=64512 bad=0 comparison=exact_bytes"
+      ],
+      "identity": {
+        "soc_version": "Ascend950DT_9582",
+        "cann_version": "9.2.1",
+        "model_sha256": "bad9ec3eb0fb313b6e16d37487433d626c008331d4aabdf8a4dc37751e28cf23",
+        "frozen_predictions_sha256": "4c1da3d56069bb530d81730889b800e0758c41ceb5f3be7290927fe3c1954fba",
+        "host_binary_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+        "sku_adapter_sha256": "3f78dfb3c88665800c04d4da932255df356f1492a50d8b358933701b66f1c186"
+      },
+      "cost": {
+        "wall_seconds": 66.12593156006187,
+        "cpu_seconds": 1055.11735,
+        "raw_bytes": 88070959
+      },
+      "prediction_coverage": "provisional_single_ub_vf_envelope",
+      "tiling": {
+        "active_aiv": 64,
+        "active_aic": 0,
+        "waves": 1,
+        "iterations": 1,
+        "branch": "slice512",
+        "tile": [
+          9,
+          3584
+        ]
+      }
+    },
+    {
+      "id": "q6_prefill_ub",
+      "op": "quant",
+      "shape": [
+        1024,
+        7168
+      ],
+      "role": "new_frozen_holdout",
+      "source": "results/v0.6/dataset.json",
+      "source_sha256": "cc125c1fdd83ba6da93f028fea5c045c5a12201f4315302e0f5b39f78b564591",
+      "reference_us": 9.331515151515152,
+      "predicted_us": 9.586374517606354,
+      "previous_v05_us": 9.586374517606354,
+      "constant_us": 5.80107234353916,
+      "ape": 0.027311681109987822,
+      "signed_error_us": 0.2548593660912015,
+      "api": "aclnnDynamicMxQuant",
+      "library": "ops-nn",
+      "kernel": "entry_kernel_21",
+      "runtime_binary_sha256": null,
+      "trace_or_db_sha256": "a446f47b325a5278de46b181adc7792960b3fb1afe184ab148605f93d99fbe15",
+      "reference_scope": "cross-core instruction makespan",
+      "observed_cores": [
+        0,
+        64
+      ],
+      "predicted_cores": [
+        0,
+        64
+      ],
+      "predicted_selected_opcode_count": 20848.00001416562,
+      "observed_selected_opcode_count": 10424,
+      "opcode_ape": null,
+      "opcode_comparison_scope": "helper ExecutedInstructions records; historical CSV used paired log events",
+      "correctness": [
+        "correctness quant_elements=7340032 scale_elements=229376 bad=0 comparison=exact_bytes"
+      ],
+      "identity": {
+        "soc_version": "Ascend950DT_9582",
+        "cann_version": "9.2.1",
+        "model_sha256": "bad9ec3eb0fb313b6e16d37487433d626c008331d4aabdf8a4dc37751e28cf23",
+        "frozen_predictions_sha256": "4c1da3d56069bb530d81730889b800e0758c41ceb5f3be7290927fe3c1954fba",
+        "host_binary_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+        "sku_adapter_sha256": "3f78dfb3c88665800c04d4da932255df356f1492a50d8b358933701b66f1c186"
+      },
+      "cost": {
+        "wall_seconds": 132.21544067002833,
+        "cpu_seconds": 2227.062977,
+        "raw_bytes": 282292365
+      },
+      "prediction_coverage": "unchanged_v04_quant_route",
+      "tiling": {
+        "active_aiv": 64,
+        "active_aic": 0,
+        "waves": 1,
+        "iterations": 4,
+        "branch": "ub_loop",
+        "tile": [
+          4,
+          7168
+        ]
+      }
+    },
+    {
+      "id": "invocation_rmsnorm",
+      "op": "rmsnorm",
+      "shape": [
+        1,
+        128
+      ],
+      "role": "invocation_only",
+      "source": "docs/extensions/smoke-950dt.json",
+      "source_sha256": "515090f0676037c09c8e40872723da3130140038f4fa24e707884a67efef64c4",
+      "reference_us": 3.453939393939394,
+      "predicted_us": null,
+      "previous_v05_us": null,
+      "constant_us": null,
+      "ape": null,
+      "signed_error_us": null,
+      "api": "aclnnRmsNorm",
+      "library": "ops-nn",
+      "kernel": "entry_kernel_1388",
+      "runtime_binary_sha256": null,
+      "trace_or_db_sha256": "d61d09bee61de005d39d67914a9526c378167243187ffb3f749b760a2c2f37b9",
+      "reference_scope": "cross-core instruction makespan",
+      "observed_cores": [
+        0,
+        1
+      ],
+      "predicted_cores": null,
+      "predicted_selected_opcode_count": null,
+      "observed_selected_opcode_count": 0,
+      "opcode_ape": null,
+      "correctness": [
+        "correctness count=128 bad=0 max_abs_error=0.00135139 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness count=1 bad=0 max_abs_error=9.23429e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ],
+      "identity": {
+        "soc_version": "Ascend950DT_9582",
+        "cann_version": "9.2.1",
+        "host_binary_sha256": "6bbb68803743f607002b47dad03e93aee5cbf030335f9d3e8ad1ca3950b53561",
+        "host_source_sha256": "5743be7d0465ee08e346d91787b5478dadf04ef9a0ea7e5abf45834d45b34375",
+        "sku_adapter_sha256": "3f78dfb3c88665800c04d4da932255df356f1492a50d8b358933701b66f1c186"
+      },
+      "cost": {
+        "wall_seconds": 40.738973550032824,
+        "cpu_seconds": 409.677237,
+        "raw_bytes": 460330
+      },
+      "attributes": {
+        "dtype": "bf16",
+        "epsilon": 1e-06
+      }
+    },
+    {
+      "id": "invocation_addmm",
+      "op": "addmm",
+      "shape": [
+        2,
+        16,
+        16
+      ],
+      "role": "invocation_only",
+      "source": "docs/extensions/smoke-950dt.json",
+      "source_sha256": "515090f0676037c09c8e40872723da3130140038f4fa24e707884a67efef64c4",
+      "reference_us": 2.992121212121212,
+      "predicted_us": null,
+      "previous_v05_us": null,
+      "constant_us": null,
+      "ape": null,
+      "signed_error_us": null,
+      "api": "aclnnAddmm",
+      "library": "ops-nn",
+      "kernel": "entry_kernel_2",
+      "runtime_binary_sha256": null,
+      "trace_or_db_sha256": "94b166d69ab0c8e6e2e8974d4a0ba905b85ea55430133f7ddf141d019d201800",
+      "reference_scope": "cross-core instruction makespan",
+      "observed_cores": [
+        1,
+        0
+      ],
+      "predicted_cores": null,
+      "predicted_selected_opcode_count": null,
+      "observed_selected_opcode_count": 1,
+      "opcode_ape": null,
+      "correctness": [
+        "correctness count=32 bad=0 max_abs_error=0.00390625 atol=0.015625 rtol=0.015625 hard_limit=1"
+      ],
+      "identity": {
+        "soc_version": "Ascend950DT_9582",
+        "cann_version": "9.2.1",
+        "host_binary_sha256": "6bbb68803743f607002b47dad03e93aee5cbf030335f9d3e8ad1ca3950b53561",
+        "host_source_sha256": "5743be7d0465ee08e346d91787b5478dadf04ef9a0ea7e5abf45834d45b34375",
+        "sku_adapter_sha256": "3f78dfb3c88665800c04d4da932255df356f1492a50d8b358933701b66f1c186"
+      },
+      "cost": {
+        "wall_seconds": 38.797195019898936,
+        "cpu_seconds": 369.76559799999995,
+        "raw_bytes": 386345
+      },
+      "attributes": {
+        "dtype": "bf16",
+        "self_shape": [
+          16
+        ],
+        "alpha": 1,
+        "beta": 1,
+        "cube_math_type": 0
+      }
+    }
+  ],
+  "operator_summary": [
+    {
+      "op": "quant",
+      "name": "dynamicMXquant",
+      "library": "ops-nn",
+      "api": "aclnnDynamicMxQuant",
+      "complete_unique_shapes": 22,
+      "development": {
+        "n": 19,
+        "wape": 0.04524181498880543,
+        "max_ape": 0.10853028655983356,
+        "mae_us": 0.26565532074177145
+      },
+      "independent": {
+        "n": 3,
+        "wape": 0.039035922230401456,
+        "max_ape": 0.05222811985712309,
+        "mae_us": 0.2835506302457202
+      },
+      "independent_previous_v05": {
+        "n": 3,
+        "wape": 0.03881162446276906,
+        "max_ape": 0.06355850289313465,
+        "mae_us": 0.2819213675117827
+      },
+      "independent_constant": {
+        "n": 3,
+        "wape": 0.22133247950718613,
+        "max_ape": 0.37833543113336277,
+        "mae_us": 1.6077233602344212
+      },
+      "status": "calibrated_provisional"
+    },
+    {
+      "op": "matmul",
+      "name": "Matmul",
+      "library": "ops-nn",
+      "api": "aclnnMatmul → MatMulV3",
+      "complete_unique_shapes": 10,
+      "development": {
+        "n": 10,
+        "wape": 0.029183538594103064,
+        "max_ape": 0.07713908205932646,
+        "mae_us": 0.11449852075618909
+      },
+      "independent": null,
+      "independent_previous_v05": null,
+      "independent_constant": null,
+      "status": "calibrated_provisional"
+    },
+    {
+      "op": "fa",
+      "name": "FA",
+      "library": "ops-transformer",
+      "api": "aclnnFlashAttentionScoreV2",
+      "complete_unique_shapes": 19,
+      "development": {
+        "n": 16,
+        "wape": 0.025103780833772165,
+        "max_ape": 0.09629422212911562,
+        "mae_us": 0.343701193661601
+      },
+      "independent": {
+        "n": 3,
+        "wape": 0.001475486723936186,
+        "max_ape": 0.00880511651765042,
+        "mae_us": 0.1611872369630453
+      },
+      "independent_previous_v05": {
+        "n": 3,
+        "wape": 0.001475486723936186,
+        "max_ape": 0.00880511651765042,
+        "mae_us": 0.1611872369630453
+      },
+      "independent_constant": {
+        "n": 3,
+        "wape": 0.9126846702775326,
+        "max_ape": 0.9652915202182293,
+        "mae_us": 99.70480779935916
+      },
+      "status": "calibrated_provisional"
+    },
+    {
+      "op": "rmsnorm",
+      "name": "RMSNorm",
+      "library": "ops-nn",
+      "api": "aclnnRmsNorm",
+      "complete_unique_shapes": 1,
+      "development": null,
+      "independent": null,
+      "independent_previous_v05": null,
+      "independent_constant": null,
+      "status": "invocation_only_uncalibrated"
+    },
+    {
+      "op": "addmm",
+      "name": "Addmm",
+      "library": "ops-nn",
+      "api": "aclnnAddmm",
+      "complete_unique_shapes": 1,
+      "development": null,
+      "independent": null,
+      "independent_previous_v05": null,
+      "independent_constant": null,
+      "status": "invocation_only_uncalibrated"
+    },
+    {
+      "op": "lightning_indexer",
+      "name": "Lightning Indexer",
+      "library": "ops-transformer",
+      "api": "aclnnLightningIndexer",
+      "complete_unique_shapes": 0,
+      "development": null,
+      "independent": null,
+      "independent_previous_v05": null,
+      "independent_constant": null,
+      "status": "结构模型；TopK、实际tiling及耗时未验证"
+    },
+    {
+      "op": "mhc_pre",
+      "name": "mHC Pre",
+      "library": "ops-transformer",
+      "api": "aclnnMhcPre",
+      "complete_unique_shapes": 0,
+      "development": null,
+      "independent": null,
+      "independent_previous_v05": null,
+      "independent_constant": null,
+      "status": "结构模型；投影/混合及分核未校准"
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "name": "mHC Sinkhorn",
+      "library": "ops-transformer",
+      "api": "aclnnMhcSinkhorn",
+      "complete_unique_shapes": 0,
+      "development": null,
+      "independent": null,
+      "independent_previous_v05": null,
+      "independent_constant": null,
+      "status": "结构模型；FP32迭代归一化未校准"
+    },
+    {
+      "op": "mhc_pre_sinkhorn",
+      "name": "mHC PreSinkhorn",
+      "library": "ops-transformer",
+      "api": "aclnnMhcPreSinkhorn",
+      "complete_unique_shapes": 0,
+      "development": null,
+      "independent": null,
+      "independent_previous_v05": null,
+      "independent_constant": null,
+      "status": "结构模型；融合路径不能与拆分路径重复计时"
+    },
+    {
+      "op": "mhc_post",
+      "name": "mHC Post",
+      "library": "ops-transformer",
+      "api": "aclnnMhcPost",
+      "complete_unique_shapes": 0,
+      "development": null,
+      "independent": null,
+      "independent_previous_v05": null,
+      "independent_constant": null,
+      "status": "结构模型；Vector路径未校准"
+    },
+    {
+      "op": "mhc",
+      "name": "mHC组合",
+      "library": "ops-transformer",
+      "api": "上述Mhc接口组合",
+      "complete_unique_shapes": 0,
+      "development": null,
+      "independent": null,
+      "independent_previous_v05": null,
+      "independent_constant": null,
+      "status": "结构模型；不含外部Attention/MLP主体"
+    },
+    {
+      "op": "kda_recurrent",
+      "name": "KDA recurrent",
+      "library": "ops-transformer",
+      "api": "aclnnRecurrentKda",
+      "complete_unique_shapes": 0,
+      "development": null,
+      "independent": null,
+      "independent_previous_v05": null,
+      "independent_constant": null,
+      "status": "结构模型；S≤8，Q9路由未解决"
+    },
+    {
+      "op": "kda_chunk",
+      "name": "KDA chunk",
+      "library": "ops-transformer",
+      "api": "aclnnChunkKdaFwd",
+      "complete_unique_shapes": 0,
+      "development": null,
+      "independent": null,
+      "independent_previous_v05": null,
+      "independent_constant": null,
+      "status": "结构模型；内部阶段不等于多次公开launch"
+    },
+    {
+      "op": "grouped_matmul_swiglu_quant_v2",
+      "name": "GMM1–SwiGLU–MX量化",
+      "library": "ops-transformer",
+      "api": "aclnnGroupedMatmulSwigluQuantV2",
+      "complete_unique_shapes": 0,
+      "development": null,
+      "independent": null,
+      "independent_previous_v05": null,
+      "independent_constant": null,
+      "status": "结构模型；需本rank专家token直方图"
+    },
+    {
+      "op": "gmm2",
+      "name": "MoE GMM2",
+      "library": "ops-transformer",
+      "api": "aclnnGroupedMatmulV5（候选）",
+      "complete_unique_shapes": 0,
+      "development": null,
+      "independent": null,
+      "independent_previous_v05": null,
+      "independent_constant": null,
+      "status": "仅数学工作及候选API；量化scale ABI尚未串联"
+    },
+    {
+      "op": "moe_ffn",
+      "name": "MoE FFN组合",
+      "library": "ops-transformer",
+      "api": "GMM1融合 + GMM2候选",
+      "complete_unique_shapes": 0,
+      "development": null,
+      "independent": null,
+      "independent_previous_v05": null,
+      "independent_constant": null,
+      "status": "组合工作量；路由/通信/第二GMM未验证，不是单一kernel"
+    }
+  ],
+  "failed_or_unqualified": [
+    {
+      "id": "f4_test_batch16",
+      "op": "fa",
+      "shape": [
+        9,
+        4096,
+        64,
+        16,
+        1
+      ],
+      "status": "failed",
+      "reference_us": null,
+      "error": "Incomplete/incorrect CA run: inspect run.log",
+      "wall_seconds": 156.09719592984766,
+      "source": "results/v0.4/dataset.json"
+    },
+    {
+      "id": "f4_test_32k",
+      "op": "fa",
+      "shape": [
+        9,
+        32768,
+        64,
+        1,
+        1
+      ],
+      "status": "failed",
+      "reference_us": null,
+      "error": "Incomplete/incorrect CA run: inspect run.log",
+      "wall_seconds": 132.142418759875,
+      "source": "results/v0.4/dataset.json"
+    },
+    {
+      "id": "f4_test_512k_end",
+      "op": "fa",
+      "shape": [
+        9,
+        525312,
+        64,
+        1,
+        1
+      ],
+      "status": "failed",
+      "reference_us": null,
+      "error": "Incomplete/incorrect CA run: inspect run.log",
+      "wall_seconds": 131.7598391699139,
+      "source": "results/v0.4/dataset.json"
+    },
+    {
+      "id": "bridge-1153-native",
+      "op": "fa",
+      "shape": [
+        17,
+        1153,
+        64,
+        1,
+        1
+      ],
+      "status": "failed",
+      "reference_us": null,
+      "error": "Capture or identity qualification did not pass",
+      "wall_seconds": 12.63428150000982,
+      "source": "results/long-fa/capture-attempts.json"
+    },
+    {
+      "id": "bridge-1153-native-dirs",
+      "op": "fa",
+      "shape": [
+        17,
+        1153,
+        64,
+        1,
+        1
+      ],
+      "status": "correctness_only",
+      "reference_us": null,
+      "error": "Capture or identity qualification did not pass",
+      "wall_seconds": 61.50253789010458,
+      "source": "results/long-fa/capture-attempts.json"
+    },
+    {
+      "id": "bridge-1153-npusim",
+      "op": "fa",
+      "shape": [
+        17,
+        1153,
+        64,
+        1,
+        1
+      ],
+      "status": "failed",
+      "reference_us": null,
+      "error": "Capture or identity qualification did not pass",
+      "wall_seconds": 70.99487641989253,
+      "source": "results/long-fa/capture-attempts.json"
+    },
+    {
+      "id": "bridge-1153-npusim-adapter",
+      "op": "fa",
+      "shape": [
+        17,
+        1153,
+        64,
+        1,
+        1
+      ],
+      "status": "failed",
+      "reference_us": null,
+      "error": "Capture or identity qualification did not pass",
+      "wall_seconds": 0.033767699962481856,
+      "source": "results/long-fa/capture-attempts.json"
+    },
+    {
+      "id": "bridge-1153-npusim-adapter-env",
+      "op": "fa",
+      "shape": [
+        17,
+        1153,
+        64,
+        1,
+        1
+      ],
+      "status": "failed",
+      "reference_us": null,
+      "error": "Capture or identity qualification did not pass",
+      "wall_seconds": 77.75773108983412,
+      "source": "results/long-fa/capture-attempts.json"
+    },
+    {
+      "id": "bridge-1153-npusim-dt",
+      "op": "fa",
+      "shape": [
+        17,
+        1153,
+        64,
+        1,
+        1
+      ],
+      "status": "failed",
+      "reference_us": null,
+      "error": "Capture or identity qualification did not pass",
+      "wall_seconds": 72.39965099981055,
+      "source": "results/long-fa/capture-attempts.json"
+    },
+    {
+      "id": "bridge-1153-thread1",
+      "op": "fa",
+      "shape": [
+        17,
+        1153,
+        64,
+        1,
+        1
+      ],
+      "status": "failed",
+      "reference_us": null,
+      "error": "Incomplete/incorrect CA run: inspect run.log",
+      "wall_seconds": 126.20824822015129,
+      "source": "results/long-fa/capture-attempts.json"
+    },
+    {
+      "id": "kv32k-no-raw",
+      "op": "fa",
+      "shape": [
+        9,
+        32768,
+        64,
+        1,
+        1
+      ],
+      "status": "failed",
+      "reference_us": null,
+      "error": "Incomplete/incorrect CA run: inspect run.log",
+      "wall_seconds": 130.89170348015614,
+      "source": "results/long-fa/capture-attempts.json"
+    },
+    {
+      "id": "kv32k-npusim",
+      "op": "fa",
+      "shape": [
+        9,
+        32768,
+        64,
+        1,
+        1
+      ],
+      "status": "failed",
+      "reference_us": null,
+      "error": "Capture or identity qualification did not pass",
+      "wall_seconds": 120.01903818990104,
+      "source": "results/long-fa/capture-attempts.json"
+    }
+  ],
+  "collection_cost_by_round": [
+    {
+      "round": "v0.1",
+      "source": "results/v0.1/evaluation.json",
+      "attempts": 18,
+      "successful": 18,
+      "wall_seconds": 1067.2419019000372,
+      "cpu_seconds": 14805.502968,
+      "raw_bytes": 1083118542
+    },
+    {
+      "round": "v0.2",
+      "source": "results/v0.2/evaluation.json",
+      "attempts": 18,
+      "successful_attempts": 17,
+      "reused_v01_shapes": 15,
+      "wall_seconds": 1381.1184037001804,
+      "cpu_seconds": 26691.184741,
+      "raw_bytes": 5170519403
+    },
+    {
+      "round": "v0.3",
+      "source": "results/v0.3/evaluation.json",
+      "attempts": 6,
+      "successful_attempts": 6,
+      "wall_seconds": 557.4690708799753,
+      "cpu_seconds": 12357.737249,
+      "raw_bytes": 2706376604,
+      "reused_shapes": 32
+    },
+    {
+      "round": "v0.4",
+      "source": "results/v0.4/evaluation.json",
+      "wall_seconds": 1099.8617477191146,
+      "cpu_seconds": 26345.714706,
+      "raw_bytes": 6077660193,
+      "attempts": 10,
+      "successful_attempts": 7,
+      "reused_shapes": 38,
+      "reused_quant_traces": 13
+    },
+    {
+      "round": "long-fa",
+      "source": "results/long-fa/evaluation.json",
+      "attempts": 14,
+      "wall_seconds": 1229.7415122198872,
+      "recorded_cpu_seconds_lower_bound": 20881.113753999998,
+      "retained_raw_bytes": 793850543
+    },
+    {
+      "round": "v0.5",
+      "source": "results/v0.5/evaluation.json",
+      "attempts": 2,
+      "new_calibration_ca": 0,
+      "wall_seconds": 942.6273995200172,
+      "cpu_seconds": 28950.55109,
+      "cpu_is_lower_bound": false,
+      "raw_bytes": 492287933,
+      "extraction_seconds": 6.903401309857145
+    },
+    {
+      "round": "v0.6",
+      "source": "results/v0.6/evaluation.json",
+      "attempts": 3,
+      "new_calibration_ca": 0,
+      "wall_seconds": 248.43139763991348,
+      "cpu_seconds": 3966.58729,
+      "raw_bytes": 398028617,
+      "extraction_seconds": 7.09744307002984
+    },
+    {
+      "round": "extension_invocations",
+      "source": "docs/extensions/smoke-950dt.json",
+      "attempts": 2,
+      "wall_seconds": 79.53616856993176,
+      "cpu_seconds": 779.442835,
+      "raw_bytes": 846675
+    }
+  ],
+  "benchmark": {
+    "uncached_scalar": {
+      "v06": {
+        "median_us": 33.245000000000005,
+        "p95_us": 57.28
+      },
+      "v05": {
+        "median_us": 44.54,
+        "p95_us": 66.48
+      }
+    },
+    "uncached_full": {
+      "v06": {
+        "median_us": 97.625,
+        "p95_us": 133.72
+      },
+      "v05": {
+        "median_us": 92.56,
+        "p95_us": 133.09
+      }
+    },
+    "cached_full": {
+      "v06": {
+        "median_us": 2.41,
+        "p95_us": 2.51
+      },
+      "v05": {
+        "median_us": 2.4,
+        "p95_us": 2.49
+      }
+    }
+  },
+  "role_counts": {
+    "development_replay": 45,
+    "retained_frozen_holdout": 3,
+    "new_frozen_holdout": 3,
+    "invocation_only": 2
+  }
+}
