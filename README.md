@@ -1,12 +1,15 @@
 # 昇腾算子性能建模
 
-面向模型系统仿真的低开销算子性能模型。以 A5 的 CA Model 为首阶段参考，通过 tile、硬件流水、依赖和分核调度预测耗时，并输出明确定义的利用率；A7、A8 采用显式硬件假设进行外推。
+面向模型系统仿真的低开销算子性能模型。以 A5 的 CA Model 为首阶段参考，通过 tile、硬件流水、依赖和分核调度预测耗时，区分流水占用、核覆盖率与算力利用率。A7、A8 外推是后续目标。
 
-已实现 v0.1 建模闭环：dynamicMXquant、matmul、FA 的 shape 预测、少量 CA 校准、冻结留出评估、误差诊断与查询开销测试。项目内安装 CANN 9.2.1 和独立 Conda 环境，目标为 `Ascend950DT_9582`；在线预测仅依赖 Python 标准库。
+已实现 v0.2 建模闭环：dynamicMXquant、matmul、FA 的分核与流水预测、CA 校准、冻结留出评估、误差诊断与查询开销测试；扩展 UB 循环、tile/K 尾块、多 head 和 D=128 分支。项目内安装 CANN 9.2.1 和独立 Conda 环境，目标为 `Ascend950DT_9582`；在线预测仅依赖 Python 标准库。
 
-- [v0.1 实现与使用](docs/model-v1.md)
-- [CA 留出误差与开销报告](results/v0.1/report.md)
-- [冻结的模型](results/v0.1/model.json) / [逐点结果](results/v0.1/evaluation.json)
+- [v0.2 实现、使用与采样预算](docs/model-v2.md)
+- [最新 CA 留出误差与开销报告](results/v0.2/report.md)
+- [冻结的模型](results/v0.2/model.json) / [逐点结果](results/v0.2/evaluation.json)
+- [历史 v0.1 实现](docs/model-v1.md) / [历史小 shape 结果](results/v0.1/report.md)
+
+当前新留出 WAPE：quant **13.85%（未达标）**、matmul **6.91%**、FA **4.47%**；核数 7/7 匹配。FA 指令次数仍有 51.28% WAPE，固定耗时基线在 quant/FA 上仍更好。详见 [误差归因与后续验证](docs/error-analysis-v2.md)，不能将这一版作为已验证的通用缩放或跨代模型。
 
 - [建模方案](docs/modeling-design.md)
 - [环境核查](docs/environment-audit.json)
@@ -20,10 +23,11 @@
 
 A5 平台固定为 `Ascend950DT_9582`；配套 CANN 9.2.1 的目标配置为 32 Cube / 64 Vector、1.65 GHz。MTP 草拟长度覆盖 0–16，主模型每请求校验长度覆盖 1–17，prefill/decode 和用户指定的并行组合均纳入计划。三个模型的官方 config 已固定 revision 并下载；本阶段不依赖权重。
 
-长期建模方案为 v0.2，首个代码实现版本为 v0.1.0，两者版本号独立。首轮只覆盖少量标准 BF16/FP8 小 shape，不代表整网算子覆盖；未验证 A7/A8 外推。使用 `bash scripts/cann-run.sh COMMAND ...` 启动 CANN 环境；在线预测无需加载 CANN。
+代码版本为 v0.2.0，长期方案版本号独立。两轮选择 32 个不同输入，本轮用 25 个校准点、7 个全新留出点，优先覆盖实现机制变化；仍不代表整网算子或所有算法覆盖。尚未校准独立 ISA 峰值利用率，也未验证 A7/A8 外推。使用 `bash scripts/cann-run.sh COMMAND ...` 启动 CANN 环境；在线预测无需加载 CANN。
 
 ```bash
 python3 -m operator_model --op matmul --shape 17 96 128
+python3 -m operator_model --op fa --shape 16 128 64 1 8
 python3 -m unittest discover -s tests -v
 ```
 

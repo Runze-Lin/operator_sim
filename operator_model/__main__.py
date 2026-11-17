@@ -5,7 +5,7 @@ from .model import Case, Predictor
 
 def main():
     parser = argparse.ArgumentParser(description='Predict without CANN or CA installed')
-    parser.add_argument('--model', default='results/v0.1/model.json')
+    parser.add_argument('--model', default='results/v0.2/model.json')
     parser.add_argument('--op', required=True, choices=['quant','matmul','fa'])
     parser.add_argument('--shape', required=True, type=int, nargs='+')
     parser.add_argument('--instruction-counts', action='store_true')

@@ -1,0 +1,43 @@
+{
+  "date": "2026-11-17",
+  "platform": "950 / Ascend950DT_9582",
+  "previous_evidence": "docs/evidence-v1.json",
+  "source_observations": [
+    {
+      "path": "third_party/ops-nn/quant/dynamic_mx_quant/op_host/arch35/dynamic_mx_quant_tail_axis_tiling_arch35.cpp",
+      "commit": "602e4ad985da00aad28c16432841e9c5069e10de",
+      "sha256": "028e589f01716828de91b93522df6265768ee9b68eeeffdd4c76ef4c9016fbe8",
+      "read_range": "complete file"
+    },
+    {
+      "path": "third_party/ops-transformer/attention/flash_attention_score/op_host/arch35/flash_attention_score_tiling_basic.cpp",
+      "commit": "14d022b1a4c3df263bf697534e3c25c7c992ff5d",
+      "sha256": "bf2ccc032ec4146d1c743139eda656dd72dc1feba5408addd3694d1772e808ae",
+      "read_range": "lines 20-135: Q and KV block selection"
+    },
+    {
+      "path": "third_party/ops-nn/quant/dynamic_mx_quant/op_kernel/arch35/dynamic_mx_quant_tail_axis_fp8.h",
+      "commit": "602e4ad985da00aad28c16432841e9c5069e10de",
+      "sha256": "0804180698e746422f175b4e27637442749b610d0986a01cc279c585fa4b461a",
+      "read_range": "GetUbParams lines 174–213; Compute lines 890–944; relevant VF bodies inspected during implementation"
+    },
+    {
+      "path": "third_party/ops-nn/matmul/mat_mul_v3/op_host/op_tiling/arch35/matmul_v3_to_mul_tiling.cpp",
+      "commit": "602e4ad985da00aad28c16432841e9c5069e10de",
+      "sha256": "db1188387807974cb59b6bd11d499042dbce1b0e506c7076c416f93dbe0e7258",
+      "read_range": "IsCapable lines 29–48"
+    }
+  ],
+  "decisions": [
+    "Quant UB iterations and VF loop work follow reference source formulas for the fixed default attributes.",
+    "Matmul greedy tile growth is an explicit approximation, checked against installed kernel MMAD dimensions and observed core counts.",
+    "FA head dimension 128 is separately calibrated after observing a different installed kernel identifier.",
+    "Old validation cases become calibration only; all new validation predictions are frozen before CA capture.",
+    "A single explicit slow-case retry and a smaller two-UB-iteration holdout bound collection cost."
+  ],
+  "limitations": [
+    "Reference source commits are not asserted to match CANN 9.2.1 binaries exactly.",
+    "Model branch names are mechanism groupings, not decoded CANN tiling keys.",
+    "ISA peak-throughput efficiency and cross-generation extrapolation remain uncalibrated."
+  ]
+}
