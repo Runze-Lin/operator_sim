@@ -2,15 +2,17 @@
 
 面向模型系统仿真的低开销算子性能模型。以 A5 的 CA Model 为首阶段参考，通过 tile、硬件流水、依赖和分核调度预测耗时，区分流水占用、核覆盖率与算力利用率。A7、A8 外推是后续目标。
 
-已实现 v0.3 建模闭环：dynamicMXquant、matmul、FA 的分核与流水预测、CA 校准、冻结留出评估、误差诊断与查询开销测试。本版复用已有 trace 修正 quant 双缓冲 UB 关键路径，以及 FA 外层 KV tile 与内部 MMAD 分段。项目内安装 CANN 9.2.1 和独立 Conda 环境，目标为 `Ascend950DT_9582`；在线预测仅依赖 Python 标准库。
+已实现 v0.4 建模闭环：dynamicMXquant、matmul、FA 的分核与流水预测、CA 校准、冻结留出评估、误差诊断与查询开销测试。本版为 quant 增加饱和控制耗时回退，移除未缓存路径中的重复预测，并加入实际 batch/长上下文的组件覆盖清单。项目内安装 CANN 9.2.1 和独立 Conda 环境，目标为 `Ascend950DT_9582`；在线预测仅依赖 Python 标准库。
 
-- [v0.3 实现、使用与固定基线分析](docs/model-v3.md)
-- [最新 CA 留出误差与开销报告](results/v0.3/report.md)
-- [冻结的模型](results/v0.3/model.json) / [逐点结果](results/v0.3/evaluation.json)
+- [v0.4 实现与使用](docs/model-v4.md)
+- [最新独立校验报告及图表](results/v0.4/report.md)
+- [冻结模型](results/v0.4/model.json) / [逐点结果与查询开销](results/v0.4/evaluation.json)
+- [场景映射与覆盖](results/v0.4/workload-coverage.json)
+- [历史 v0.3 方法](docs/model-v3.md) / [报告](results/v0.3/report.md)
 - [历史 v0.2 方法](docs/model-v2.md) / [结果与已知问题](docs/error-analysis-v2.md)
 - [历史 v0.1 实现](docs/model-v1.md) / [历史小 shape 结果](results/v0.1/report.md)
 
-本轮 6 个新留出点：quant 时延 WAPE **4.70%**，FA MMAD 次数 **3/3 精确匹配**，核数 **6/6 匹配**；新增 CA 采集 **9.29 分钟**，无重试。相同新集上旧 quant 模型为 4.93%、更新固定均值基线为 17.24%；两个大 UB 点改善，但小工作量点回退，整体提升有限。FA 时延未修改，新集 WAPE 5.31%。仍不能作为全范围或跨代准确性保证。
+本轮6个新 quant 留出点：v0.4 WAPE **5.54%**，同集 v0.3 冻结公式 **6.46%**，固定均值基线 **17.91%**；最大单点误差仍约12.8%。新 FA/长 KV 探针、失败记录和仿真成本全部计入报告。宽度5120/7168、B>1与长KV在旧版本输入域外，v0.3比较值仅绕过输入guard，公式与参数未改变。普通FA代理不是三个模型实际 MLA/KDA/压缩注意力的整网验证。
 
 - [建模方案](docs/modeling-design.md)
 - [环境核查](docs/environment-audit.json)
@@ -24,9 +26,10 @@
 
 A5 平台固定为 `Ascend950DT_9582`；配套 CANN 9.2.1 的目标配置为 32 Cube / 64 Vector、1.65 GHz。MTP 草拟长度覆盖 0–16，主模型每请求校验长度覆盖 1–17，prefill/decode 和用户指定的并行组合均纳入计划。三个模型的官方 config 已固定 revision 并下载；本阶段不依赖权重。
 
-代码版本为 v0.3.0，长期方案版本号独立。累计 38 个不同输入；本轮复用旧 32 个作为校准，只新增 6 个独立留出点。在线未缓存查询 P95 约 104 μs、缓存约 0.99 μs；未缓存开销增加，建议复用 Predictor 和 shape 缓存。尚未校准独立 ISA 峰值利用率，也未验证 A7/A8 外推。使用 `bash scripts/cann-run.sh COMMAND ...` 启动 CANN 环境；在线预测无需加载 CANN。
+代码版本为 v0.4.0，长期方案版本号独立。本轮复用38个历史输入、13个quant trace，只安排10个新独立留出点，无自动重试。场景覆盖 prefill 单卡batch=1/4/16，decode=1/4/16/32/128/256，输入32k/128k/256k/512k与输出1k，推测8个时主模型校验Q=9；生成360条场景映射，但仅代表点有CA实测。尚未校准独立 ISA 峰值利用率，也未验证 A7/A8 外推。使用 `bash scripts/cann-run.sh COMMAND ...` 启动 CANN 环境；在线预测无需加载 CANN。
 
 ```bash
+python3 -m operator_model --op quant --shape 9 5120
 python3 -m operator_model --op matmul --shape 17 96 128
 python3 -m operator_model --op fa --shape 16 128 64 1 8
 python3 -m unittest discover -s tests -v
