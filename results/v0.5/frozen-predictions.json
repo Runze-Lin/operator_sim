@@ -1,0 +1,320 @@
+{
+  "frozen_utc": "2026-11-17T08:49:07.661789+00:00",
+  "model_sha256": "31c46acdd62d6058bf59f73bdd41803bbdddce98f666bc70d7c4475f44272d6a",
+  "artifact_sha256": {
+    "operator_model/model_v5.py": "a4c30335bb723f7938e18bf3cc0cec0c924205523df9eee9452750888790fe51",
+    "operator_model/model_v4.py": "d3d9bba8a22d445efa739b5e3f87f5d2f98d468b094da06420cdb052864e4d07",
+    "operator_model/model_v3.py": "fe9f2fc7bcdcfc3aeb1a2024297cbbbd3d8337c096c53a36e0e947dd3626cf69",
+    "operator_model/model_v2.py": "2787965e6c7acf40adbf2f46e2f9d53a30041db2a6715e314b6e3fe66c799b8a",
+    "operator_model/model.py": "14d432302e3b6f43e3b6546ac150df2fa33a560fbd606fd02e8aac4682407500",
+    "operator_model/npusim.py": "0575d640b45097f29f3407eb29cdce08b54fac80c1149748e5ec14a7397e0bb0",
+    "operator_model/ca.py": "150e55d09622a2ae1a96f2dceeb0cd95909124c1655876a976db863388e584ee",
+    "scripts/fit-v5.py": "aeb3650e2a2a561adac5864d8b9e0c32987bcc285dbf8547ee08743795637c7d",
+    "scripts/collect-v5.py": "1b4f2e303372dde17214bdf8966f029a7320bbf013c40396d6af49ccb7a044ca",
+    "configs/sampling-v5.json": "9d952edc54f4fc677d3f1015a0db93088112915fd4a042353f3a9cc777e5ba41",
+    "results/v0.5/trace-analysis.json": "d3a8724edbf866c6ed6c27614c988b452486dc927b6396908714377d2765c3eb",
+    "results/v0.4/model.json": "1b7a116c234d07fed008634e7874b41f73e930426a42833944769367f03c02d0",
+    "smoke/three_ops.cpp": "8cb30ce4d1099871194ac57aba39e343cfcd8bdbafed3f2bab106fdb50e4abd5",
+    "build/smoke/three_ops": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+    "capture/sim_soc_adapter.cpp": "151b4e296f48b8be18432bf5086e55b7d66815b5cfa17fa3957634fbdb4b1ac7",
+    "build/capture/libsim_soc_adapter.so": "3f78dfb3c88665800c04d4da932255df356f1492a50d8b358933701b66f1c186",
+    "scripts/cann-run.sh": "d529513abc0bc340a56c91365a9e72d5e434d2cb4841be1692930294cd0624df"
+  },
+  "predictions": [
+    {
+      "id": "f5_holdout_128k",
+      "op": "fa",
+      "shape": [
+        9,
+        131072,
+        64,
+        1,
+        1
+      ],
+      "split": "holdout",
+      "timeout_seconds": 960,
+      "reason": "Priority: 4x length beyond existing 32k calibration",
+      "prediction": {
+        "op": "fa",
+        "shape": [
+          9,
+          131072,
+          64,
+          1,
+          1
+        ],
+        "soc_version": "Ascend950DT_9582",
+        "model_version": "0.5.0",
+        "predicted_us": 274.7944294535887,
+        "plan": {
+          "active_aic": 1,
+          "active_aiv": 2,
+          "waves": 1,
+          "iterations": 512,
+          "branch": "d64_kv256",
+          "tile": [
+            9,
+            256,
+            64
+          ],
+          "q_tile_capacity": 64,
+          "kv_tile_capacity": 256,
+          "units": {
+            "read": 65.125,
+            "cube": 4.5,
+            "vector": 4.5,
+            "fix": 9.0,
+            "write": 1.125
+          },
+          "opcode_features": [
+            1024
+          ],
+          "useful_work": 301989888,
+          "logical_bytes": 33556736,
+          "work_per_core": 301989888
+        },
+        "phase_schedule": {
+          "predicted_us": 274.7944294535887,
+          "iterations": 512,
+          "prefix_us": 6.56,
+          "read_fill_us": 1.8121212121212134,
+          "compute_fill_us": 1.7781818181818174,
+          "steady_interval_us": 0.5172149778786946,
+          "steady_total_us": 264.29685369601293,
+          "drain_us": 0.3472727272727383,
+          "tail_tokens": 0,
+          "tail_policy": "charge a full 256-token tile; independently check tail dispatch"
+        },
+        "coverage": "single_shape_calibrated_route; length extrapolation",
+        "reference_scope": "cross-core instruction makespan",
+        "constant_baseline_us": 9.538626484510798,
+        "estimated_max_core_selected_opcode_count": 2048,
+        "instruction_count_coverage": "structural_q64_d64",
+        "expected_kernel_candidates": [
+          "entry_kernel_2050000040140220"
+        ],
+        "kernel_selection_verified": false,
+        "calibration_shape_count": 1,
+        "ideal_compute_efficiency": null,
+        "efficiency_unavailable_reason": "Effective initiation interval includes scheduling; not independent ISA peak"
+      },
+      "v04_prediction": {
+        "op": "fa",
+        "shape": [
+          9,
+          131072,
+          64,
+          1,
+          1
+        ],
+        "predicted_us": 423.36356808044724,
+        "soc_version": "Ascend950DT_9582",
+        "reference_scope": "cross-core instruction makespan",
+        "coverage": "extrapolation",
+        "plan": {
+          "active_aic": 1,
+          "active_aiv": 2,
+          "waves": 1,
+          "iterations": 512,
+          "branch": "d64_kv256",
+          "tile": [
+            9,
+            256,
+            64
+          ],
+          "q_tile_capacity": 64,
+          "kv_tile_capacity": 256,
+          "units": {
+            "read": 65.125,
+            "cube": 4.5,
+            "vector": 4.5,
+            "fix": 9.0,
+            "write": 1.125
+          },
+          "opcode_features": [
+            1024
+          ],
+          "useful_work": 301989888,
+          "logical_bytes": 33556736,
+          "work_per_core": 301989888
+        },
+        "stage_services_us": {
+          "read": 1.1427906689549467,
+          "cube": 0.13171739229253543,
+          "vector": 0.271151101400425,
+          "fix": 0.09772919533730845,
+          "write": 0.41699012453816
+        },
+        "scheduled_body_us": 586.0264103185012,
+        "uncorrected_schedule_us": 586.0264103185012,
+        "constant_baseline_us": 9.538626484510798,
+        "empirical_roofline_us": 1559.403358356434,
+        "calibration_regime_count": 2,
+        "expected_kernel_candidates": [
+          "FlashAttentionScore_50348df09d0b3ee451d3693a6b2ab3f5_2328361008425337376_mix_aic",
+          "FlashAttentionScore_50348df09d0b3ee451d3693a6b2ab3f5_2328361008425599520_mix_aic"
+        ],
+        "kernel_selection_verified": false,
+        "estimated_max_core_selected_opcode_count": 2048,
+        "ideal_compute_efficiency": null,
+        "efficiency_unavailable_reason": "Independent ISA issue/throughput model is not calibrated",
+        "previous_v02_us": 423.36356808044724,
+        "previous_constant_baseline_us": 9.39649842068967,
+        "instruction_count_coverage": "structural_q64_d64_d128",
+        "instruction_decomposition": {
+          "qk_per_q_tile": 1024,
+          "pv_per_q_tile": 1024,
+          "max_q_tiles_per_core": 1
+        }
+      }
+    },
+    {
+      "id": "f5_holdout_tail16k",
+      "op": "fa",
+      "shape": [
+        9,
+        16385,
+        64,
+        1,
+        1
+      ],
+      "split": "holdout",
+      "timeout_seconds": 240,
+      "reason": "New nonmultiple-of-256 tail; fewer loop iterations at lower CA cost",
+      "prediction": {
+        "op": "fa",
+        "shape": [
+          9,
+          16385,
+          64,
+          1,
+          1
+        ],
+        "soc_version": "Ascend950DT_9582",
+        "model_version": "0.5.0",
+        "predicted_us": 43.599334341812224,
+        "plan": {
+          "active_aic": 1,
+          "active_aiv": 2,
+          "waves": 1,
+          "iterations": 65,
+          "branch": "d64_kv256",
+          "tile": [
+            9,
+            256,
+            64
+          ],
+          "q_tile_capacity": 64,
+          "kv_tile_capacity": 256,
+          "units": {
+            "read": 65.125,
+            "cube": 4.5,
+            "vector": 4.5,
+            "fix": 9.0,
+            "write": 1.125
+          },
+          "opcode_features": [
+            130
+          ],
+          "useful_work": 37751040,
+          "logical_bytes": 4196864,
+          "work_per_core": 38338560
+        },
+        "phase_schedule": {
+          "predicted_us": 43.599334341812224,
+          "iterations": 65,
+          "prefix_us": 6.56,
+          "read_fill_us": 1.8121212121212134,
+          "compute_fill_us": 1.7781818181818174,
+          "steady_interval_us": 0.5172149778786946,
+          "steady_total_us": 33.10175858423646,
+          "drain_us": 0.3472727272727383,
+          "tail_tokens": 1,
+          "tail_policy": "charge a full 256-token tile; independently check tail dispatch"
+        },
+        "coverage": "single_shape_calibrated_route; length extrapolation",
+        "reference_scope": "cross-core instruction makespan",
+        "constant_baseline_us": 9.538626484510798,
+        "estimated_max_core_selected_opcode_count": 258,
+        "instruction_count_coverage": "structural_q64_d64",
+        "expected_kernel_candidates": [
+          "entry_kernel_2050000040140220"
+        ],
+        "kernel_selection_verified": false,
+        "calibration_shape_count": 1,
+        "ideal_compute_efficiency": null,
+        "efficiency_unavailable_reason": "Effective initiation interval includes scheduling; not independent ISA peak"
+      },
+      "v04_prediction": {
+        "op": "fa",
+        "shape": [
+          9,
+          16385,
+          64,
+          1,
+          1
+        ],
+        "predicted_us": 60.90029480147237,
+        "soc_version": "Ascend950DT_9582",
+        "reference_scope": "cross-core instruction makespan",
+        "coverage": "extrapolation",
+        "plan": {
+          "active_aic": 1,
+          "active_aiv": 2,
+          "waves": 1,
+          "iterations": 65,
+          "branch": "d64_kv256",
+          "tile": [
+            9,
+            256,
+            64
+          ],
+          "q_tile_capacity": 64,
+          "kv_tile_capacity": 256,
+          "units": {
+            "read": 65.125,
+            "cube": 4.5,
+            "vector": 4.5,
+            "fix": 9.0,
+            "write": 1.125
+          },
+          "opcode_features": [
+            130
+          ],
+          "useful_work": 37751040,
+          "logical_bytes": 4196864,
+          "work_per_core": 38338560
+        },
+        "stage_services_us": {
+          "read": 1.1427906689549467,
+          "cube": 0.13171739229253543,
+          "vector": 0.271151101400425,
+          "fix": 0.09772919533730845,
+          "write": 0.41699012453816
+        },
+        "scheduled_body_us": 75.19898129563997,
+        "uncorrected_schedule_us": 75.19898129563997,
+        "constant_baseline_us": 9.538626484510798,
+        "empirical_roofline_us": 195.03100111301697,
+        "calibration_regime_count": 2,
+        "expected_kernel_candidates": [
+          "FlashAttentionScore_50348df09d0b3ee451d3693a6b2ab3f5_2328361008425337376_mix_aic",
+          "FlashAttentionScore_50348df09d0b3ee451d3693a6b2ab3f5_2328361008425599520_mix_aic"
+        ],
+        "kernel_selection_verified": false,
+        "estimated_max_core_selected_opcode_count": 258,
+        "ideal_compute_efficiency": null,
+        "efficiency_unavailable_reason": "Independent ISA issue/throughput model is not calibrated",
+        "previous_v02_us": 60.90029480147237,
+        "previous_constant_baseline_us": 9.39649842068967,
+        "instruction_count_coverage": "structural_q64_d64_d128",
+        "instruction_decomposition": {
+          "qk_per_q_tile": 129,
+          "pv_per_q_tile": 129,
+          "max_q_tiles_per_core": 1
+        }
+      }
+    }
+  ],
+  "pre_capture_note": "Collector handles npusim temporary-file cleanup races; frozen before any v0.5 holdout launch."
+}
