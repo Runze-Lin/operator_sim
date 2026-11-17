@@ -10,7 +10,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 root=Path(__file__).resolve().parents[1]
-parser=argparse.ArgumentParser();parser.add_argument('--version',default='0.1',choices=['0.1','0.2'])
+parser=argparse.ArgumentParser();parser.add_argument('--version',default='0.1',choices=['0.1','0.2','0.3'])
 args=parser.parse_args()
 out=root/'results'/('v'+args.version)
 data=json.loads((out/'evaluation.json').read_text())
@@ -22,6 +22,7 @@ axes[0].fill_between([0,limit],[0,.9*limit],[0,1.1*limit],color='#e8edf2',label=
 axes[0].plot([0,limit],[0,limit],color='#8895a7',lw=1)
 for op,color in colors.items():
     selected=[r for r in rows if r['op']==op]
+    if not selected:continue
     axes[0].scatter([r['reference_us'] for r in selected],[r['predicted_us'] for r in selected],label=op,color=color,s=55)
 axes[0].set(xlabel='CA instruction makespan (us)',ylabel='Frozen prediction (us)',title=f'{len(rows)} untouched holdout shapes',xlim=(0,limit),ylim=(0,limit))
 axes[0].legend(frameon=False)

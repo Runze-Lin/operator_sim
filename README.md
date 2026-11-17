@@ -2,14 +2,15 @@
 
 面向模型系统仿真的低开销算子性能模型。以 A5 的 CA Model 为首阶段参考，通过 tile、硬件流水、依赖和分核调度预测耗时，区分流水占用、核覆盖率与算力利用率。A7、A8 外推是后续目标。
 
-已实现 v0.2 建模闭环：dynamicMXquant、matmul、FA 的分核与流水预测、CA 校准、冻结留出评估、误差诊断与查询开销测试；扩展 UB 循环、tile/K 尾块、多 head 和 D=128 分支。项目内安装 CANN 9.2.1 和独立 Conda 环境，目标为 `Ascend950DT_9582`；在线预测仅依赖 Python 标准库。
+已实现 v0.3 建模闭环：dynamicMXquant、matmul、FA 的分核与流水预测、CA 校准、冻结留出评估、误差诊断与查询开销测试。本版复用已有 trace 修正 quant 双缓冲 UB 关键路径，以及 FA 外层 KV tile 与内部 MMAD 分段。项目内安装 CANN 9.2.1 和独立 Conda 环境，目标为 `Ascend950DT_9582`；在线预测仅依赖 Python 标准库。
 
-- [v0.2 实现、使用与采样预算](docs/model-v2.md)
-- [最新 CA 留出误差与开销报告](results/v0.2/report.md)
-- [冻结的模型](results/v0.2/model.json) / [逐点结果](results/v0.2/evaluation.json)
+- [v0.3 实现、使用与固定基线分析](docs/model-v3.md)
+- [最新 CA 留出误差与开销报告](results/v0.3/report.md)
+- [冻结的模型](results/v0.3/model.json) / [逐点结果](results/v0.3/evaluation.json)
+- [历史 v0.2 方法](docs/model-v2.md) / [结果与已知问题](docs/error-analysis-v2.md)
 - [历史 v0.1 实现](docs/model-v1.md) / [历史小 shape 结果](results/v0.1/report.md)
 
-当前新留出 WAPE：quant **13.85%（未达标）**、matmul **6.91%**、FA **4.47%**；核数 7/7 匹配。FA 指令次数仍有 51.28% WAPE，固定耗时基线在 quant/FA 上仍更好。详见 [误差归因与后续验证](docs/error-analysis-v2.md)，不能将这一版作为已验证的通用缩放或跨代模型。
+本轮 6 个新留出点：quant 时延 WAPE **4.70%**，FA MMAD 次数 **3/3 精确匹配**，核数 **6/6 匹配**；新增 CA 采集 **9.29 分钟**，无重试。相同新集上旧 quant 模型为 4.93%、更新固定均值基线为 17.24%；两个大 UB 点改善，但小工作量点回退，整体提升有限。FA 时延未修改，新集 WAPE 5.31%。仍不能作为全范围或跨代准确性保证。
 
 - [建模方案](docs/modeling-design.md)
 - [环境核查](docs/environment-audit.json)
@@ -23,7 +24,7 @@
 
 A5 平台固定为 `Ascend950DT_9582`；配套 CANN 9.2.1 的目标配置为 32 Cube / 64 Vector、1.65 GHz。MTP 草拟长度覆盖 0–16，主模型每请求校验长度覆盖 1–17，prefill/decode 和用户指定的并行组合均纳入计划。三个模型的官方 config 已固定 revision 并下载；本阶段不依赖权重。
 
-代码版本为 v0.2.0，长期方案版本号独立。两轮选择 32 个不同输入，本轮用 25 个校准点、7 个全新留出点，优先覆盖实现机制变化；仍不代表整网算子或所有算法覆盖。尚未校准独立 ISA 峰值利用率，也未验证 A7/A8 外推。使用 `bash scripts/cann-run.sh COMMAND ...` 启动 CANN 环境；在线预测无需加载 CANN。
+代码版本为 v0.3.0，长期方案版本号独立。累计 38 个不同输入；本轮复用旧 32 个作为校准，只新增 6 个独立留出点。在线未缓存查询 P95 约 104 μs、缓存约 0.99 μs；未缓存开销增加，建议复用 Predictor 和 shape 缓存。尚未校准独立 ISA 峰值利用率，也未验证 A7/A8 外推。使用 `bash scripts/cann-run.sh COMMAND ...` 启动 CANN 环境；在线预测无需加载 CANN。
 
 ```bash
 python3 -m operator_model --op matmul --shape 17 96 128
