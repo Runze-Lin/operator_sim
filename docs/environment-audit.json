@@ -1,0 +1,42 @@
+{
+  "audit_date": "2026-11-16",
+  "timezone": "Asia/Shanghai",
+  "machine": {
+    "architecture": "aarch64",
+    "os": "openEuler 22.03 LTS",
+    "python": "3.9.9",
+    "docker_binary": "/usr/bin/docker",
+    "docker_daemon_checked": false
+  },
+  "installed_cann": {
+    "version": "8.5.0",
+    "path": "/usr/local/Ascend/cann-8.5.0",
+    "explicit_950_simulator_directory_found": false,
+    "internal_simulator_aliases_resolved": false,
+    "a5_smoke_test_passed": false
+  },
+  "npu_probe": {
+    "command": "npu-smi info",
+    "result": "dcmi module initialize failed. ret is -8005",
+    "physical_hardware_presence": "unknown from this execution environment"
+  },
+  "candidate_a5": {
+    "product": "Ascend 950DT",
+    "vllm_build_soc_version": "ascend950dt_9582",
+    "isa_architecture": "dav-3510",
+    "simulator_soc_version": null,
+    "candidate_base_image": "quay.io/ascend/cann:9.2.1-950-ubuntu22.04-py3.12",
+    "candidate_image_verified_locally": false,
+    "source": "https://github.com/vllm-project/vllm-ascend/blob/main/Dockerfile.a5",
+    "source_commit": null,
+    "note": "Live source observation only; pin commit, image digest, SoC mapping and tool compatibility before experiments. dv120 mapping is unverified."
+  },
+  "project": {
+    "git_initialized": true,
+    "branch": "main",
+    "remote_created": false,
+    "new_cann_installed": false,
+    "ca_measurements_performed": false,
+    "model_checkpoints_and_deployment_configs_fixed": false
+  }
+}

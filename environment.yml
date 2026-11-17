@@ -1,0 +1,13 @@
+name: cann-9.2.1
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12
+  - pip
+  - cmake
+  - ninja
+  - pip:
+      - -r configs/python-cann-requirements.txt
+# Exact aarch64 Conda artifacts: configs/conda-linux-aarch64.lock.txt
+# CANN itself is installed separately under toolchains/cann/9.2.1.
+# Use scripts/cann-run.sh so the selected CANN libraries and Python are paired.
