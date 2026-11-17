@@ -34,12 +34,12 @@ def main():
     parser.add_argument('--attempt', type=int, default=1)
     parser.add_argument('--case-timeout', type=int)
     parser.add_argument('--profiler-timeout', type=int)
-    parser.add_argument('--version', choices=['0.1','0.2'], default='0.1')
+    parser.add_argument('--version', choices=['0.1','0.2','0.3'], default='0.1')
     args = parser.parse_args()
-    generation = 'v1' if args.version == '0.1' else 'v2'
+    generation = 'v' + args.version.split('.')[-1]
     spec_path = ROOT / ('configs/sampling-' + generation + '.json')
     out = ROOT / 'results' / ('v' + args.version)
-    implementation = ROOT / 'operator_model' / ('model.py' if args.version == '0.1' else 'model_v2.py')
+    implementation = ROOT / 'operator_model' / ('model.py' if args.version == '0.1' else 'model_' + generation + '.py')
     spec = json.loads(spec_path.read_text())
     if args.case and not any(c['id']==args.case and c['split']==args.split for c in spec['cases']):
         raise SystemExit('Requested case is not in this split')
@@ -67,6 +67,8 @@ def main():
             raise SystemExit('Predictor implementation changed after prediction freeze')
         if 'shared_implementation_sha256' in freeze and freeze['shared_implementation_sha256'] != sha256(ROOT/'operator_model/model.py'):
             raise SystemExit('Shared predictor implementation changed after prediction freeze')
+        for path,expected in freeze.get('artifact_sha256',{}).items():
+            if sha256(ROOT/path)!=expected:raise SystemExit('Frozen artifact changed: '+path)
     budget = dict(spec['budget'])
     if args.attempt < 1 or (args.attempt > 1 and not args.case):
         raise SystemExit('Retries require an explicit --case and positive --attempt')
