@@ -15,7 +15,7 @@
 
 每例 CA 外部预算 180 秒，由主采集器串行执行；先校准两例，冻结模型与 holdout 预测，再执行第三例。原K=V16/S32泛化分支在180秒预算内未完成：只有辅助kernel `entry_kernel_2710` 的DB完整，主kernel `entry_kernel_1` 的DB无KernelInfo，并出现重复set_flag告警，不能计入完整耗时/精度。K16/S64与S48计划撤销并保存在manifest的retired_cases；改为最多先试K=V128/S16的arch35 key2尾块候选分支，预算仍180秒，首例失败则不继续该分支。
 
-原六个预设 shape 不是广覆盖验证（chunk分支已在第二次预算失败后终止，仅recurrent保持活动），只建立这两条路径的最小闭环。模型不能据此声称覆盖更多 chunk key2执行组合/长度、多 batch/head、GVA、TND、state slot 或 raw-gate 分支。投机 8 对应 Q=9，**超过当前 RecurrentKda 的 S≤8 限制**；caller 明确拒绝，不能静默拆成 8+1。
+原六个预设 shape 不是广覆盖验证（chunk分支已在第二次预算失败后终止，仅recurrent保持活动），recurrent建立了最小数值/局部回归验证闭环，chunk仅完成失败边界诊断。模型不能据此声称覆盖更多 chunk key2执行组合/长度、多 batch/head、GVA、TND、state slot 或 raw-gate 分支。投机 8 对应 Q=9，**超过当前 RecurrentKda 的 S≤8 限制**；caller 明确拒绝，不能静默拆成 8+1。
 
 ## 数值公式及每个参数的含义
 
@@ -92,4 +92,4 @@ bash scripts/build-extension-kda.sh
 
 固定参考设计 `attention/chunk_kda_fwd/docs/ChunkKdaFwd_design.md` §5.2–5.4 说明：tiling key2只检查C=64、K=V=128，不限制tail；dense FwdH另需BF16/dense/S%64=0，内联Gate另需raw FP32+A_log+useGateInKernel+safeGate，Prepare/Post-WU融合另需safeGate、dense-aligned、Hv偶数。本caller的S16/Hv1/预激活gate并不满足这些执行组合。r2实际出现`0001_entry_kernel_2.db`，和原K16的`entry_kernel_1`不同，但未获得完整主kernel DB/数值输出前不能宣称快路径验证成功。安装源码`arch35/chunk_kda_fwd_impl.h`也明确在useDenseFwdH=false时转RunGenericBackEnd；不能只按K/V命名fast。同步告警的具体根因未证实，不据此擅自修改库内核。
 
-最终r2 S16候选同样在180.55秒达到墙钟预算，主kernel未完成、无六组完整数值检查，时延校准/验证均N/A。按预算停止本轮chunk分支；S32校准和S24留出没有执行，记录于manifest的retired_cases，不能算独立验证。Recurrent两条校准已完整通过，独立S4等待冻结后由主流程执行。
+最终r2 S16候选同样在180.55秒达到墙钟预算，主kernel未完成、无六组完整数值检查，时延校准/验证均N/A。按预算停止本轮chunk分支；S32校准和S24留出没有执行，记录于manifest的retired_cases，不能算独立验证。Recurrent两条校准与冻结后独立S4均已完整通过；S4局部回归对照误差约1.84%，固定耗时基线约33.77%。这不是通用机制时延已验证；通用资源参数仍缺证据。

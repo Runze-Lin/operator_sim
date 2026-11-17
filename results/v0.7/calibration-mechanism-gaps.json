@@ -1,0 +1,328 @@
+{
+  "purpose": "Post-freeze diagnostic of calibration evidence only; not used to change frozen parameters",
+  "rows": [
+    {
+      "case": {
+        "id": "mhc_post_v7_1",
+        "op": "mhc_post",
+        "shape": [
+          1,
+          4,
+          128
+        ],
+        "attrs": {
+          "dtype": "bf16",
+          "has_h_res": true
+        },
+        "arguments": [
+          "mhc_post",
+          "1",
+          "4",
+          "128"
+        ],
+        "split": "calibration",
+        "timeout_seconds": 120,
+        "correctness_groups": 1,
+        "call_contract": {
+          "dtype": "bf16",
+          "hres": true
+        }
+      },
+      "source": "runs/model-v7/mhc_post_v7_1/result.json",
+      "source_sha256": "252db43111a7715ca0915ccbe4a57c23ca8ad863ae5cbf15fcc5851204382811",
+      "kernel": "entry_kernel_5",
+      "db_sha256": "9f9eb61a7a4340be2a6b759ea3a989ba42b77fdce5f551e6f8193e32a81d7d8a",
+      "reference_us": 4.6460606060606064,
+      "active_aic": 0,
+      "active_aiv": 1,
+      "latest_finishing_core": {
+        "core_id": 0,
+        "core_type_id": 2,
+        "instruction_records": 2037,
+        "start_ticks": 0,
+        "end_ticks": 7666,
+        "span_us": 4.6460606060606064,
+        "mmad_count": 0,
+        "rv_count": 396,
+        "pipeline_union_us": {
+          "SCALAR": 3.429090909090909,
+          "SIMD": 1.1945454545454546,
+          "MTE2": 1.2418181818181817,
+          "MTE3": 0.4915151515151515
+        }
+      }
+    },
+    {
+      "case": {
+        "id": "mhc_post_v7_2",
+        "op": "mhc_post",
+        "shape": [
+          32,
+          4,
+          128
+        ],
+        "attrs": {
+          "dtype": "bf16",
+          "has_h_res": true
+        },
+        "arguments": [
+          "mhc_post",
+          "32",
+          "4",
+          "128"
+        ],
+        "split": "calibration",
+        "timeout_seconds": 120,
+        "correctness_groups": 1,
+        "call_contract": {
+          "dtype": "bf16",
+          "hres": true
+        }
+      },
+      "source": "runs/model-v7/mhc_post_v7_2/result.json",
+      "source_sha256": "5f27cbde3648f6c08099779144da394a50dd1db2c7151fc3c6a158b5553c2f12",
+      "kernel": "entry_kernel_6",
+      "db_sha256": "7fa42503232460a636f40c6ac5ed70bf464c7da5ab75288b38815cb6be433ffb",
+      "reference_us": 3.4084848484848487,
+      "active_aic": 0,
+      "active_aiv": 32,
+      "latest_finishing_core": {
+        "core_id": 17,
+        "core_type_id": 3,
+        "instruction_records": 1341,
+        "start_ticks": 830,
+        "end_ticks": 5624,
+        "span_us": 2.9054545454545453,
+        "mmad_count": 0,
+        "rv_count": 208,
+        "pipeline_union_us": {
+          "SCALAR": 2.267878787878788,
+          "SIMD": 0.1315151515151515,
+          "MTE2": 1.0563636363636364,
+          "MTE3": 0.20484848484848484
+        }
+      }
+    },
+    {
+      "case": {
+        "id": "mhc_pre_v7_1",
+        "op": "mhc_pre",
+        "shape": [
+          1,
+          4,
+          128
+        ],
+        "attrs": {
+          "dtype": "bf16",
+          "alpha_count": 3,
+          "has_gamma": false,
+          "return_intermediates": true
+        },
+        "arguments": [
+          "mhc_pre",
+          "1",
+          "4",
+          "128"
+        ],
+        "split": "calibration",
+        "timeout_seconds": 120,
+        "correctness_groups": 6,
+        "call_contract": {
+          "dtype": "bf16",
+          "phi_dtype": "fp32",
+          "alpha_length": 3,
+          "gamma": false,
+          "optional_outputs": true
+        }
+      },
+      "source": "runs/model-v7/mhc_pre_v7_1/result.json",
+      "source_sha256": "36c40af8e5b2a103055c6d678c9e3b9e4e1c186b6128d1ca0239bcfe1eb72eb0",
+      "kernel": "entry_kernel_2",
+      "db_sha256": "f70940d8b9a8dad30671a613ca216b0688d8bc3f91e75f55b203a5efb3b540d9",
+      "reference_us": 8.270909090909091,
+      "active_aic": 32,
+      "active_aiv": 64,
+      "latest_finishing_core": {
+        "core_id": 0,
+        "core_type_id": 2,
+        "instruction_records": 3229,
+        "start_ticks": 399,
+        "end_ticks": 13647,
+        "span_us": 8.02909090909091,
+        "mmad_count": 0,
+        "rv_count": 339,
+        "pipeline_union_us": {
+          "SCALAR": 4.696363636363636,
+          "MTE2": 1.7127272727272727,
+          "SIMD": 1.0957575757575757,
+          "MTE3": 0.8981818181818182
+        }
+      }
+    },
+    {
+      "case": {
+        "id": "mhc_pre_v7_2",
+        "op": "mhc_pre",
+        "shape": [
+          8,
+          4,
+          128
+        ],
+        "attrs": {
+          "dtype": "bf16",
+          "alpha_count": 3,
+          "has_gamma": false,
+          "return_intermediates": true
+        },
+        "arguments": [
+          "mhc_pre",
+          "8",
+          "4",
+          "128"
+        ],
+        "split": "calibration",
+        "timeout_seconds": 120,
+        "correctness_groups": 6,
+        "call_contract": {
+          "dtype": "bf16",
+          "phi_dtype": "fp32",
+          "alpha_length": 3,
+          "gamma": false,
+          "optional_outputs": true
+        }
+      },
+      "source": "runs/model-v7/mhc_pre_v7_2/result.json",
+      "source_sha256": "9d4dd88440c3dcdc2c8d6412e29206dfd21574181fbc2904c5f13c0a83e8cbe3",
+      "kernel": "entry_kernel_2",
+      "db_sha256": "95d15be2e3a3b6c64b030c2fd1bb5a8c610bf693c09fc261e825683c1f35cdda",
+      "reference_us": 8.542424242424243,
+      "active_aic": 32,
+      "active_aiv": 64,
+      "latest_finishing_core": {
+        "core_id": 0,
+        "core_type_id": 2,
+        "instruction_records": 3469,
+        "start_ticks": 388,
+        "end_ticks": 14095,
+        "span_us": 8.307272727272727,
+        "mmad_count": 0,
+        "rv_count": 579,
+        "pipeline_union_us": {
+          "SCALAR": 4.412121212121212,
+          "MTE2": 1.8466666666666667,
+          "SIMD": 1.0375757575757576,
+          "MTE3": 1.6654545454545455
+        }
+      }
+    },
+    {
+      "case": {
+        "id": "mhc_sinkhorn_v7_1",
+        "op": "mhc_sinkhorn",
+        "shape": [
+          1,
+          4
+        ],
+        "attrs": {
+          "dtype": "fp32",
+          "num_iters": 20,
+          "return_intermediates": false
+        },
+        "arguments": [
+          "mhc_sinkhorn",
+          "1",
+          "4",
+          "20"
+        ],
+        "split": "calibration",
+        "timeout_seconds": 120,
+        "correctness_groups": 1,
+        "call_contract": {
+          "dtype": "fp32",
+          "backward_outputs": false,
+          "iterations": 20
+        }
+      },
+      "source": "runs/model-v7/mhc_sinkhorn_v7_1/result.json",
+      "source_sha256": "61285a63324e984f19281afd9f7ffa5c8e622d937a24651c9affaf709823318c",
+      "kernel": "entry_kernel_0",
+      "db_sha256": "fa1da2112ba080516991e9aa989465a5b1104ef4c836bd035a78dfbf99aa9551",
+      "reference_us": 6.296363636363636,
+      "active_aic": 0,
+      "active_aiv": 1,
+      "latest_finishing_core": {
+        "core_id": 0,
+        "core_type_id": 2,
+        "instruction_records": 6593,
+        "start_ticks": 0,
+        "end_ticks": 10389,
+        "span_us": 6.296363636363636,
+        "mmad_count": 0,
+        "rv_count": 1903,
+        "pipeline_union_us": {
+          "SCALAR": 4.44,
+          "SIMD": 3.826060606060606,
+          "MTE2": 1.056969696969697,
+          "MTE3": 0.09575757575757576
+        }
+      }
+    },
+    {
+      "case": {
+        "id": "mhc_sinkhorn_v7_2",
+        "op": "mhc_sinkhorn",
+        "shape": [
+          64,
+          4
+        ],
+        "attrs": {
+          "dtype": "fp32",
+          "num_iters": 20,
+          "return_intermediates": false
+        },
+        "arguments": [
+          "mhc_sinkhorn",
+          "64",
+          "4",
+          "20"
+        ],
+        "split": "calibration",
+        "timeout_seconds": 120,
+        "correctness_groups": 1,
+        "call_contract": {
+          "dtype": "fp32",
+          "backward_outputs": false,
+          "iterations": 20
+        }
+      },
+      "source": "runs/model-v7/mhc_sinkhorn_v7_2/result.json",
+      "source_sha256": "3679b80e94b96de23718f3d062e40722f579344c13995e99586f0ce185ed1a5e",
+      "kernel": "entry_kernel_0",
+      "db_sha256": "aefa4c4775dbbf47476a4b6040fc3a8bc62ce94b6b262d1009fa0c5e0fe1d045",
+      "reference_us": 7.597575757575758,
+      "active_aic": 0,
+      "active_aiv": 64,
+      "latest_finishing_core": {
+        "core_id": 19,
+        "core_type_id": 3,
+        "instruction_records": 6589,
+        "start_ticks": 320,
+        "end_ticks": 12536,
+        "span_us": 7.403636363636363,
+        "mmad_count": 0,
+        "rv_count": 1903,
+        "pipeline_union_us": {
+          "SCALAR": 4.558181818181819,
+          "SIMD": 4.758181818181818,
+          "MTE2": 0.8684848484848485,
+          "MTE3": 0.2193939393939394
+        }
+      }
+    }
+  ],
+  "findings": [
+    "Post: same logical one-row-per-core proxy does not imply same executed RV record population. Entry name alone does not identify the entire execution branch.",
+    "Sinkhorn: identical RV record count does not imply identical SIMD interval union; pipeline/resource effects remain unisolated.",
+    "RV records include vector-family controls and memory instructions; these are not pure arithmetic instruction counts."
+  ]
+}

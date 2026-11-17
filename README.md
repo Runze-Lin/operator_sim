@@ -13,7 +13,7 @@
 - [历史v0.5 FA误差](results/v0.5/error-analysis.md) / [历史32k诊断](results/long-fa/error-analysis.md)
 - [历史v0.4](results/v0.4/report.md) / [v0.3](results/v0.3/report.md) / [v0.2](results/v0.2/report.md) / [v0.1](results/v0.1/report.md)
 
-本轮复用已有quant/matmul/FA测量，并为RMSNorm、Addmm、Indexer、mHC、KDA、MoE建立真实库验证。逐算子Summary分别报告机制预测、局部对照和固定均值的误差，失败/超时不纳入准确率。KDA chunk的CA同步资格尚未通过；完整范围、成本与限制见总报告。
+本轮复用已有quant/matmul/FA测量，并为RMSNorm、Addmm、Indexer、mHC、KDA、MoE建立真实库验证。新增36次CA尝试（29次完整成功，含10个冻结留出），总墙钟43.28分钟，包含失败与修复成本。逐算子Summary分别报告机制预测、局部对照和固定均值的误差，失败/超时不纳入准确率。KDA chunk的CA同步资格尚未通过；完整范围、成本与限制见总报告。
 
 FA保留v0.5：128k/16k+1两点WAPE0.13%，但只覆盖普通非因果Q9/D64/B1/H1；256k/512k仍是未实测外推。matmul本轮无新增独立验证。当前模型不能代表所有真实模型专用注意力或全部TP/EP/量化分支。
 
