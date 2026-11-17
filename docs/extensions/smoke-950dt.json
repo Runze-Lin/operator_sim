@@ -1,0 +1,218 @@
+{
+  "purpose": "Two tiny invocation checks; not latency calibration",
+  "records": [
+    {
+      "op": "rmsnorm",
+      "arguments": [
+        "rmsnorm",
+        "1",
+        "128"
+      ],
+      "purpose": "library invocation / full-output correctness / dispatch discovery; not latency calibration",
+      "soc_version": "Ascend950DT_9582",
+      "cann_version": "9.2.1",
+      "started_utc": "2026-11-17T09:09:24.146276+00:00",
+      "host_binary_sha256": "6bbb68803743f607002b47dad03e93aee5cbf030335f9d3e8ad1ca3950b53561",
+      "host_source_sha256": "5743be7d0465ee08e346d91787b5478dadf04ef9a0ea7e5abf45834d45b34375",
+      "sku_adapter_sha256": "3f78dfb3c88665800c04d4da932255df356f1492a50d8b358933701b66f1c186",
+      "command": [
+        "bash",
+        "/home/l00925865/operator_sim/scripts/cann-run.sh",
+        "env",
+        "LD_PRELOAD=/home/l00925865/operator_sim/build/capture/libsim_soc_adapter.so",
+        "OPERATOR_SIM_TARGET_SOC=Ascend950DT_9582",
+        "npusim",
+        "record",
+        "/home/l00925865/operator_sim/build/smoke/extension_norm_addmm",
+        "-s",
+        "Ascend950DT",
+        "-o",
+        "/home/l00925865/operator_sim/runs/extensions/smoke950/rmsnorm/profile",
+        "-u",
+        "rmsnorm 1 128"
+      ],
+      "timeout_seconds": 120,
+      "status": "complete_single_kernel",
+      "returncode": 0,
+      "timed_out": false,
+      "wall_seconds": 40.738973550032824,
+      "cpu_seconds": 409.677237,
+      "cpu_accounting": "reaped_child_processes",
+      "correctness": [
+        "correctness count=128 bad=0 max_abs_error=0.00135139 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness count=1 bad=0 max_abs_error=9.23429e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ],
+      "log_sha256": "e0f2385692f795d05ef7797e7e39b8981fcd805b98e4a8f903bb7a343e650220",
+      "kernel_db_count": 1,
+      "measurement": {
+        "reference_us": 3.453939393939394,
+        "reference_scope": "cross-core instruction makespan",
+        "kernel": "entry_kernel_1388",
+        "frequency_ghz": 1.65,
+        "block_dim": 1,
+        "helper_info": {
+          "helper_version": "0.8.0",
+          "instr_whitelist_version": "7",
+          "contract_version": 7,
+          "name": "entry_kernel_1388",
+          "instr_num": 1122,
+          "instrs_exec_num": 1138,
+          "exec_time_ticks": 5699,
+          "exec_time_ns": 3453.939393939394,
+          "instrs_time_sum": 64604,
+          "start_pc": 618488991232,
+          "arch": "v100",
+          "ai_core_active": 1,
+          "frequency_ghz": 1.65,
+          "object_path": "",
+          "launch_id": 0,
+          "block_dim": 1
+        },
+        "cores": [
+          {
+            "core_id": 0,
+            "core_type_id": 2,
+            "name": "core0.veccore0",
+            "instruction_records": 1138,
+            "start_ticks": 0,
+            "span_ticks": 5699,
+            "span_us": 3.453939393939394,
+            "mmad_count": 0,
+            "nonexcluded_instruction_union_us_by_queue": {
+              "SCALAR": 2.432121212121212,
+              "MTE2": 0.9684848484848485,
+              "SIMD": 0.39454545454545453,
+              "MTE3": 0.26484848484848483
+            }
+          }
+        ],
+        "active_aic": 0,
+        "active_aiv": 1,
+        "max_core_mmad": 0,
+        "db_sha256": "d61d09bee61de005d39d67914a9526c378167243187ffb3f749b760a2c2f37b9",
+        "db_bytes": 425984,
+        "db_path": "/home/l00925865/operator_sim/runs/extensions/smoke950/rmsnorm/profile/npusim_20261117170924_extension_norm_addmm/record/0000_entry_kernel_1388.db",
+        "correctness": [
+          "correctness count=128 bad=0 max_abs_error=0.00135139 atol=0.015625 rtol=0.015625 hard_limit=1",
+          "correctness count=1 bad=0 max_abs_error=9.23429e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+        ],
+        "kernel_binary_sha256": null,
+        "kernel_identity_limit": "helper DB identifies entry name and blockDim; runtime kernel object was not exported",
+        "capture_scope": "full instruction DB, aggregate-only SQL; no new JSON trace",
+        "pipeline_scope": "Union of helper non-duration-excluded instruction intervals per queue; not independent ISA efficiency"
+      },
+      "raw_bytes": 460330,
+      "finished_utc": "2026-11-17T09:10:04.894320+00:00"
+    },
+    {
+      "op": "addmm",
+      "arguments": [
+        "addmm",
+        "2",
+        "16",
+        "16",
+        "bias"
+      ],
+      "purpose": "library invocation / full-output correctness / dispatch discovery; not latency calibration",
+      "soc_version": "Ascend950DT_9582",
+      "cann_version": "9.2.1",
+      "started_utc": "2026-11-17T09:10:54.527212+00:00",
+      "host_binary_sha256": "6bbb68803743f607002b47dad03e93aee5cbf030335f9d3e8ad1ca3950b53561",
+      "host_source_sha256": "5743be7d0465ee08e346d91787b5478dadf04ef9a0ea7e5abf45834d45b34375",
+      "sku_adapter_sha256": "3f78dfb3c88665800c04d4da932255df356f1492a50d8b358933701b66f1c186",
+      "command": [
+        "bash",
+        "/home/l00925865/operator_sim/scripts/cann-run.sh",
+        "env",
+        "LD_PRELOAD=/home/l00925865/operator_sim/build/capture/libsim_soc_adapter.so",
+        "OPERATOR_SIM_TARGET_SOC=Ascend950DT_9582",
+        "npusim",
+        "record",
+        "/home/l00925865/operator_sim/build/smoke/extension_norm_addmm",
+        "-s",
+        "Ascend950DT",
+        "-o",
+        "/home/l00925865/operator_sim/runs/extensions/smoke950/addmm/profile",
+        "-u",
+        "addmm 2 16 16 bias"
+      ],
+      "timeout_seconds": 120,
+      "status": "complete_single_kernel",
+      "returncode": 0,
+      "timed_out": false,
+      "wall_seconds": 38.797195019898936,
+      "cpu_seconds": 369.76559799999995,
+      "cpu_accounting": "reaped_child_processes",
+      "correctness": [
+        "correctness count=32 bad=0 max_abs_error=0.00390625 atol=0.015625 rtol=0.015625 hard_limit=1"
+      ],
+      "log_sha256": "57c30e7c4f831d40f4814bbb0fec7c6909b439e4c7352530db0259868727e89a",
+      "kernel_db_count": 1,
+      "measurement": {
+        "reference_us": 2.992121212121212,
+        "reference_scope": "cross-core instruction makespan",
+        "kernel": "entry_kernel_2",
+        "frequency_ghz": 1.65,
+        "block_dim": 1,
+        "helper_info": {
+          "helper_version": "0.8.0",
+          "instr_whitelist_version": "7",
+          "contract_version": 7,
+          "name": "entry_kernel_2",
+          "instr_num": 892,
+          "instrs_exec_num": 902,
+          "exec_time_ticks": 4937,
+          "exec_time_ns": 2992.1212121212125,
+          "instrs_time_sum": 47075,
+          "start_pc": 618489056024,
+          "arch": "v100",
+          "ai_core_active": 1,
+          "frequency_ghz": 1.65,
+          "object_path": "",
+          "launch_id": 0,
+          "block_dim": 1
+        },
+        "cores": [
+          {
+            "core_id": 0,
+            "core_type_id": 1,
+            "name": "core0.cubecore0",
+            "instruction_records": 902,
+            "start_ticks": 0,
+            "span_ticks": 4937,
+            "span_us": 2.992121212121212,
+            "mmad_count": 1,
+            "nonexcluded_instruction_union_us_by_queue": {
+              "SCALAR": 2.209090909090909,
+              "MTE1": 0.02484848484848485,
+              "MTE2": 0.7496969696969698,
+              "FIXP": 0.7957575757575758,
+              "CUBE": 0.06545454545454546
+            }
+          }
+        ],
+        "active_aic": 1,
+        "active_aiv": 0,
+        "max_core_mmad": 1,
+        "db_sha256": "94b166d69ab0c8e6e2e8974d4a0ba905b85ea55430133f7ddf141d019d201800",
+        "db_bytes": 352256,
+        "db_path": "/home/l00925865/operator_sim/runs/extensions/smoke950/addmm/profile/npusim_20261117171055_extension_norm_addmm/record/0000_entry_kernel_2.db",
+        "correctness": [
+          "correctness count=32 bad=0 max_abs_error=0.00390625 atol=0.015625 rtol=0.015625 hard_limit=1"
+        ],
+        "kernel_binary_sha256": null,
+        "kernel_identity_limit": "helper DB identifies entry name and blockDim; runtime kernel object was not exported",
+        "capture_scope": "full instruction DB, aggregate-only SQL; no new JSON trace",
+        "pipeline_scope": "Union of helper non-duration-excluded instruction intervals per queue; not independent ISA efficiency"
+      },
+      "raw_bytes": 386345,
+      "finished_utc": "2026-11-17T09:11:33.332570+00:00"
+    }
+  ],
+  "cost": {
+    "attempts": 2,
+    "wall_seconds": 79.53616856993176,
+    "cpu_seconds": 779.442835,
+    "raw_bytes": 846675
+  }
+}

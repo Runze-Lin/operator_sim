@@ -1,0 +1,288 @@
+{
+  "records": [
+    {
+      "case": {
+        "id": "f5_holdout_128k",
+        "op": "fa",
+        "shape": [
+          9,
+          131072,
+          64,
+          1,
+          1
+        ],
+        "split": "holdout",
+        "timeout_seconds": 960,
+        "reason": "Priority: 4x length beyond existing 32k calibration"
+      },
+      "identity": {
+        "soc_version": "Ascend950DT_9582",
+        "cann_version": "9.2.1",
+        "model_sha256": "31c46acdd62d6058bf59f73bdd41803bbdddce98f666bc70d7c4475f44272d6a",
+        "frozen_predictions_sha256": "f2c67385a3f3d8e91248d5c3e041ab4502b16c5704647569aba6945325a01d93",
+        "host_binary_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+        "sku_adapter_sha256": "3f78dfb3c88665800c04d4da932255df356f1492a50d8b358933701b66f1c186"
+      },
+      "command": [
+        "bash",
+        "/home/l00925865/operator_sim/scripts/cann-run.sh",
+        "env",
+        "LD_PRELOAD=/home/l00925865/operator_sim/build/capture/libsim_soc_adapter.so",
+        "OPERATOR_SIM_TARGET_SOC=Ascend950DT_9582",
+        "npusim",
+        "record",
+        "/home/l00925865/operator_sim/build/smoke/three_ops",
+        "-s",
+        "Ascend950DT",
+        "-o",
+        "/home/l00925865/operator_sim/runs/model-v5/f5_holdout_128k/profile",
+        "-u",
+        "fa 9 131072 64 1 1"
+      ],
+      "started_utc": "2026-11-17T08:49:51.462638+00:00",
+      "timeout_seconds": 960,
+      "returncode": 0,
+      "status": "ok",
+      "timed_out": false,
+      "stop_reason": null,
+      "wall_seconds": 794.5318651699927,
+      "cpu_seconds": 24983.952964,
+      "cpu_accounting": "reaped_child_processes",
+      "finished_utc": "2026-11-17T09:03:05.995428+00:00",
+      "log_sha256": "ef6558adddad50b52c6de3f5e79806939194fae89fe72ee679da1b647fac7653",
+      "measurement": {
+        "reference_us": 274.8212121212121,
+        "reference_scope": "cross-core instruction makespan",
+        "kernel": "entry_kernel_2050000040140220",
+        "frequency_ghz": 1.65,
+        "block_dim": 1,
+        "helper_info": {
+          "helper_version": "0.8.0",
+          "instr_whitelist_version": "7",
+          "contract_version": 7,
+          "name": "entry_kernel_2050000040140220",
+          "instr_num": 6027,
+          "instrs_exec_num": 1239488,
+          "exec_time_ticks": 453455,
+          "exec_time_ns": 274821.21212121216,
+          "instrs_time_sum": 11771902,
+          "start_pc": 624247068152,
+          "arch": "v100",
+          "ai_core_active": 3,
+          "frequency_ghz": 1.65,
+          "object_path": "",
+          "launch_id": 0,
+          "block_dim": 1
+        },
+        "cores": [
+          {
+            "core_id": 0,
+            "core_type_id": 1,
+            "name": "core0.cubecore0",
+            "instruction_records": 502245,
+            "start_ticks": 0,
+            "span_ticks": 453006,
+            "span_us": 274.5490909090909,
+            "mmad_count": 2048,
+            "nonexcluded_instruction_union_us_by_queue": {
+              "SCALAR": 255.6769696969697,
+              "MTE1": 147.5690909090909,
+              "MTE2": 267.11333333333334,
+              "CUBE": 113.03151515151515,
+              "FIXP": 55.2169696969697
+            }
+          },
+          {
+            "core_id": 0,
+            "core_type_id": 2,
+            "name": "core0.veccore0",
+            "instruction_records": 380173,
+            "start_ticks": 370,
+            "span_ticks": 453058,
+            "span_us": 274.58060606060604,
+            "mmad_count": 0,
+            "nonexcluded_instruction_union_us_by_queue": {
+              "SCALAR": 161.88848484848484,
+              "MTE2": 0.5339393939393939,
+              "SIMD": 109.22242424242424,
+              "MTE3": 21.36060606060606
+            }
+          },
+          {
+            "core_id": 0,
+            "core_type_id": 3,
+            "name": "core0.veccore1",
+            "instruction_records": 357070,
+            "start_ticks": 422,
+            "span_ticks": 453033,
+            "span_us": 274.56545454545454,
+            "mmad_count": 0,
+            "nonexcluded_instruction_union_us_by_queue": {
+              "SCALAR": 161.85272727272726,
+              "MTE2": 0.5763636363636364,
+              "SIMD": 112.26666666666667,
+              "MTE3": 22.993333333333332
+            }
+          }
+        ],
+        "active_aic": 1,
+        "active_aiv": 2,
+        "max_core_mmad": 2048,
+        "db_sha256": "4633540ddcae28e4bfb7ced11bff2eaecb1cc65be0219ee1bcc375a1d4f4b6ff",
+        "db_bytes": 435142656,
+        "db_path": "/home/l00925865/operator_sim/runs/model-v5/f5_holdout_128k/profile/npusim_20261117164952_three_ops/record/0000_entry_kernel_2050000040140220.db",
+        "correctness": [
+          "correctness elements=576 bad=0 max_abs_error=1.26169927e-07 atol=0.002 rtol=0.01"
+        ],
+        "kernel_binary_sha256": null,
+        "kernel_identity_limit": "helper DB identifies entry name and blockDim; runtime kernel object was not exported",
+        "capture_scope": "full instruction DB, aggregate-only SQL; no new JSON trace",
+        "pipeline_scope": "Union of helper non-duration-excluded instruction intervals per queue; not independent ISA efficiency"
+      },
+      "extraction_seconds": 6.106269409880042,
+      "raw_bytes": 435186346
+    },
+    {
+      "case": {
+        "id": "f5_holdout_tail16k",
+        "op": "fa",
+        "shape": [
+          9,
+          16385,
+          64,
+          1,
+          1
+        ],
+        "split": "holdout",
+        "timeout_seconds": 240,
+        "reason": "New nonmultiple-of-256 tail; fewer loop iterations at lower CA cost"
+      },
+      "identity": {
+        "soc_version": "Ascend950DT_9582",
+        "cann_version": "9.2.1",
+        "model_sha256": "31c46acdd62d6058bf59f73bdd41803bbdddce98f666bc70d7c4475f44272d6a",
+        "frozen_predictions_sha256": "f2c67385a3f3d8e91248d5c3e041ab4502b16c5704647569aba6945325a01d93",
+        "host_binary_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+        "sku_adapter_sha256": "3f78dfb3c88665800c04d4da932255df356f1492a50d8b358933701b66f1c186"
+      },
+      "command": [
+        "bash",
+        "/home/l00925865/operator_sim/scripts/cann-run.sh",
+        "env",
+        "LD_PRELOAD=/home/l00925865/operator_sim/build/capture/libsim_soc_adapter.so",
+        "OPERATOR_SIM_TARGET_SOC=Ascend950DT_9582",
+        "npusim",
+        "record",
+        "/home/l00925865/operator_sim/build/smoke/three_ops",
+        "-s",
+        "Ascend950DT",
+        "-o",
+        "/home/l00925865/operator_sim/runs/model-v5/f5_holdout_tail16k/profile",
+        "-u",
+        "fa 9 16385 64 1 1"
+      ],
+      "started_utc": "2026-11-17T09:04:41.712228+00:00",
+      "timeout_seconds": 240,
+      "returncode": 0,
+      "status": "ok",
+      "timed_out": false,
+      "stop_reason": null,
+      "wall_seconds": 148.09553435002454,
+      "cpu_seconds": 3966.598126,
+      "cpu_accounting": "reaped_child_processes",
+      "finished_utc": "2026-11-17T09:07:09.808654+00:00",
+      "log_sha256": "025e14bbbb9f5ec728e0ffecee551b61f4932b291952646c5a83bd80b5c9cc78",
+      "measurement": {
+        "reference_us": 43.21878787878788,
+        "reference_scope": "cross-core instruction makespan",
+        "kernel": "entry_kernel_2050000040140220",
+        "frequency_ghz": 1.65,
+        "block_dim": 1,
+        "helper_info": {
+          "helper_version": "0.8.0",
+          "instr_whitelist_version": "7",
+          "contract_version": 7,
+          "name": "entry_kernel_2050000040140220",
+          "instr_num": 6373,
+          "instrs_exec_num": 163758,
+          "exec_time_ticks": 71311,
+          "exec_time_ns": 43218.78787878788,
+          "instrs_time_sum": 2405235,
+          "start_pc": 624217708024,
+          "arch": "v100",
+          "ai_core_active": 3,
+          "frequency_ghz": 1.65,
+          "object_path": "",
+          "launch_id": 0,
+          "block_dim": 1
+        },
+        "cores": [
+          {
+            "core_id": 0,
+            "core_type_id": 1,
+            "name": "core0.cubecore0",
+            "instruction_records": 65580,
+            "start_ticks": 0,
+            "span_ticks": 71293,
+            "span_us": 43.20787878787879,
+            "mmad_count": 258,
+            "nonexcluded_instruction_union_us_by_queue": {
+              "SCALAR": 37.449090909090906,
+              "MTE1": 18.03272727272727,
+              "MTE2": 35.192727272727275,
+              "CUBE": 13.621212121212121,
+              "FIXP": 6.96969696969697
+            }
+          },
+          {
+            "core_id": 0,
+            "core_type_id": 2,
+            "name": "core0.veccore0",
+            "instruction_records": 50570,
+            "start_ticks": 244,
+            "span_ticks": 71042,
+            "span_us": 43.055757575757575,
+            "mmad_count": 0,
+            "nonexcluded_instruction_union_us_by_queue": {
+              "SCALAR": 27.923636363636362,
+              "MTE2": 0.5393939393939394,
+              "SIMD": 14.204242424242425,
+              "MTE3": 3.203030303030303
+            }
+          },
+          {
+            "core_id": 0,
+            "core_type_id": 3,
+            "name": "core0.veccore1",
+            "instruction_records": 47608,
+            "start_ticks": 315,
+            "span_ticks": 70996,
+            "span_us": 43.02787878787879,
+            "mmad_count": 0,
+            "nonexcluded_instruction_union_us_by_queue": {
+              "SCALAR": 27.907272727272726,
+              "MTE2": 0.5951515151515151,
+              "SIMD": 14.494545454545454,
+              "MTE3": 3.1933333333333334
+            }
+          }
+        ],
+        "active_aic": 1,
+        "active_aiv": 2,
+        "max_core_mmad": 258,
+        "db_sha256": "499fb83e1cc6c3d56b44293bedec55edbd46afb0e8a4c8e55752f4ab836a4862",
+        "db_bytes": 57065472,
+        "db_path": "/home/l00925865/operator_sim/runs/model-v5/f5_holdout_tail16k/profile/npusim_20261117170442_three_ops/record/0000_entry_kernel_2050000040140220.db",
+        "correctness": [
+          "correctness elements=576 bad=0 max_abs_error=1.05939405e-06 atol=0.002 rtol=0.01"
+        ],
+        "kernel_binary_sha256": null,
+        "kernel_identity_limit": "helper DB identifies entry name and blockDim; runtime kernel object was not exported",
+        "capture_scope": "full instruction DB, aggregate-only SQL; no new JSON trace",
+        "pipeline_scope": "Union of helper non-duration-excluded instruction intervals per queue; not independent ISA efficiency"
+      },
+      "extraction_seconds": 0.7971318999771029,
+      "raw_bytes": 57101587
+    }
+  ]
+}

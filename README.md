@@ -2,22 +2,23 @@
 
 面向模型系统仿真的低开销算子性能模型。以 A5 的 CA Model 为首阶段参考，通过 tile、硬件流水、依赖和分核调度预测耗时，区分流水占用、核覆盖率与算力利用率。A7、A8 外推是后续目标。
 
-已实现 v0.4 建模闭环：dynamicMXquant、matmul、FA 的分核与流水预测、CA 校准、冻结留出评估、误差诊断与查询开销测试。本版为 quant 增加饱和控制耗时回退，移除未缓存路径中的重复预测，并加入实际 batch/长上下文的组件覆盖清单。项目内安装 CANN 9.2.1 和独立 Conda 环境，目标为 `Ascend950DT_9582`；在线预测仅依赖 Python 标准库。
+已实现 v0.5 建模闭环：保留 dynamicMXquant、matmul 的分核与流水模型，用已有32k数据库将FA读延迟与稳态发起间隔分开；冻结后通过128k与16k+1两个新shape验证。新增 Lightning Indexer、mHC、RMSNorm、KDA、Addmm、MoE 融合链的结构模型与库接口证据，未完成时延校准的入口明确返回 `null`。项目内安装 CANN 9.2.1 和独立 Conda 环境，目标为 `Ascend950DT_9582`；在线预测仅依赖 Python 标准库。
 
-- [v0.4 实现与使用](docs/model-v4.md)
-- [当前建模策略与公式](results/long-fa/modeling-strategy.md)
-- [当前逐 shape 误差、库内核身份与长 FA 验证](results/long-fa/error-analysis.md)
+- [当前建模策略、公式及解释](results/v0.5/modeling-strategy.md)
+- [当前误差分析：Summary、逐shape、库身份及图表](results/v0.5/error-analysis.md)
+- [冻结模型](results/v0.5/model.json) / [独立验证与查询成本](results/v0.5/evaluation.json)
+- [新增六类算子：公式、API与校准状态](docs/extensions/README.md)
 - [轻量采集复现与证据](docs/fa-compact-capture.md)
-- [最新独立校验报告及图表](results/v0.4/report.md)
-- [冻结模型](results/v0.4/model.json) / [逐点结果与查询开销](results/v0.4/evaluation.json)
+- [历史32k采集与47.4%误差](results/long-fa/error-analysis.md)
+- [历史v0.4实现与使用](docs/model-v4.md) / [报告](results/v0.4/report.md)
 - [场景映射与覆盖](results/v0.4/workload-coverage.json)
-- [历史 v0.3 方法](docs/model-v3.md) / [报告](results/v0.3/report.md)
-- [历史 v0.2 方法](docs/model-v2.md) / [结果与已知问题](docs/error-analysis-v2.md)
-- [历史 v0.1 实现](docs/model-v1.md) / [历史小 shape 结果](results/v0.1/report.md)
+- [历史v0.3方法](docs/model-v3.md) / [报告](results/v0.3/report.md)
+- [历史v0.2方法](docs/model-v2.md) / [结果](docs/error-analysis-v2.md)
+- [历史v0.1实现](docs/model-v1.md) / [结果](results/v0.1/report.md)
 
-本轮6个新 quant 留出点：v0.4 WAPE **5.54%**，同集 v0.3 冻结公式 **6.46%**，固定均值基线 **17.91%**；最大单点误差仍约12.8%。新 FA/长 KV 探针、失败记录和仿真成本全部计入报告。宽度5120/7168、B>1与长KV在旧版本输入域外，v0.3比较值仅绕过输入guard，公式与参数未改变。普通FA代理不是三个模型实际 MLA/KDA/压缩注意力的整网验证。
+v0.5 两个新FA留出点：WAPE **0.13%**，同集冻结v0.4 **52.27%**，固定均值 **94.00%**；128k与16k+1单点误差分别 **0.01% / 0.88%**。仅验证普通非因果FA的 Q9/D64/B1/H1 路径，样本少且每点采集一次。32k已用于本轮校准，不再计为独立验证；256k/512k仍是**未实测外推**。FA两点共15.71分钟，另加RMSNorm/Addmm两个极小调用验证共79.54秒；后两者通过完整数值检查，但尚无泛化时延模型。
 
-后续长 FA 采集迭代已完成 `[9,32768,64,1,1]`：CA **75.98 µs**，冻结 v0.4 预测 **111.99 µs**，误差 **47.4%**；核数与512条MMAD匹配。压缩数据库减少保留产物，但CA执行仍昂贵，32k完整采集需222秒。128k–512k仍是**未验证外推**，不能沿用小shape准确率。每轮固定交付上述两份独立文档，不改写历史验收结果。
+quant和matmul保持v0.4，45个旧记录预测未变；历史6个quant留出点的v0.4 WAPE仍为5.54%，不能把新FA准确率用于quant或新增族。普通FA代理不是三个模型实际MLA/KDA/压缩注意力的整网验证。每轮固定交付策略与误差两份独立文档，保留历史结果。
 
 - [建模方案](docs/modeling-design.md)
 - [环境核查](docs/environment-audit.json)
@@ -31,12 +32,13 @@
 
 A5 平台固定为 `Ascend950DT_9582`；配套 CANN 9.2.1 的目标配置为 32 Cube / 64 Vector、1.65 GHz。MTP 草拟长度覆盖 0–16，主模型每请求校验长度覆盖 1–17，prefill/decode 和用户指定的并行组合均纳入计划。三个模型的官方 config 已固定 revision 并下载；本阶段不依赖权重。
 
-代码版本为 v0.4.0，长期方案版本号独立。本轮复用38个历史输入、13个quant trace，只安排10个新独立留出点，无自动重试。场景覆盖 prefill 单卡batch=1/4/16，decode=1/4/16/32/128/256，输入32k/128k/256k/512k与输出1k，推测8个时主模型校验Q=9；生成360条场景映射，但仅代表点有CA实测。尚未校准独立 ISA 峰值利用率，也未验证 A7/A8 外推。使用 `bash scripts/cann-run.sh COMMAND ...` 启动 CANN 环境；在线预测无需加载 CANN。
+代码版本为 v0.5.0，长期方案版本号独立。本轮复用32k完整DB校准，先提交冻结模型再采集两个新FA独立留出点，无自动重试。场景覆盖 prefill 单卡batch=1/4/16，decode=1/4/16/32/128/256，输入32k/128k/256k/512k与输出1k，推测8个时主模型校验Q=9；生成360条场景映射，但仅代表点有CA实测。尚未校准独立 ISA 峰值利用率，也未验证 A7/A8 外推。使用 `bash scripts/cann-run.sh COMMAND ...` 启动 CANN 环境；在线预测无需加载 CANN。
 
 ```bash
 python3 -m operator_model --op quant --shape 9 5120
 python3 -m operator_model --op matmul --shape 17 96 128
-python3 -m operator_model --op fa --shape 16 128 64 1 8
+python3 -m operator_model --op fa --shape 9 131072 64 1 1
+python3 -m operator_model.extensions --op rmsnorm --shape 9 7168
 python3 -m unittest discover -s tests -v
 ```
 

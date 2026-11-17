@@ -1,0 +1,475 @@
+[
+  {
+    "op": "rmsnorm",
+    "shape": [
+      1,
+      5120
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "gamma_dtype": "bf16",
+      "epsilon": 1e-06
+    },
+    "soc_version": "Ascend950DT_9582",
+    "status": "uncalibrated",
+    "predicted_us": null,
+    "ideal_compute_efficiency": null,
+    "api": "aclnnRmsNorm",
+    "library_family": "ops-nn",
+    "kernel_selection_verified": false,
+    "calibration_measurements": 0,
+    "invocation_validation_report": "docs/extensions/smoke-950dt.json",
+    "tiling": {
+      "status": "source_candidate_unverified",
+      "route": "REGBASE_NORMAL",
+      "source_tiling_key": 5000,
+      "active_aic": 0,
+      "active_aiv": 1,
+      "max_rows_per_core": 1,
+      "last_core_rows": 1,
+      "tile_rows": 1,
+      "aligned_cols": 5120,
+      "max_ub_iterations": 1,
+      "column_fold_point": 4096,
+      "ub_bytes": 253952,
+      "host_reserved_bytes": 1024,
+      "arch35_reserved_bytes": 2048,
+      "vector_fp32_lanes": 64,
+      "input_output_double_buffer": true
+    },
+    "work": {
+      "rows": 1,
+      "reduction_length": 5120,
+      "multiplications": 15361,
+      "additions": 5120,
+      "rsqrt": 1,
+      "flops_excluding_rsqrt": 20481,
+      "logical_tensor_bytes": 30724,
+      "traffic_scope": "x read + y write + one logical gamma read + FP32 rstd write; cache/reloads/padding excluded"
+    },
+    "output_shapes": {
+      "y": [
+        1,
+        5120
+      ],
+      "rstd": [
+        1,
+        1
+      ]
+    },
+    "kernel_package_path": "opp/built-in/op_impl/ai_core/tbe/kernel/ascend950/ops_nn/rms_norm/",
+    "stage_dag": [
+      "read x/gamma",
+      "square + row reduction",
+      "scale + epsilon + rsqrt",
+      "multiply x and gamma",
+      "write y/rstd"
+    ],
+    "limitations": [
+      "No latency calibration; tiny invocation evidence is separate from generic dispatch qualification.",
+      "Tiling is a port of one fixed-source branch, not proof that packaged CANN dispatches identically.",
+      "Counts are mathematical scalar operations, not vector ISA instruction counts.",
+      "Logical bytes are not per-core or HBM traffic."
+    ]
+  },
+  {
+    "op": "rmsnorm",
+    "shape": [
+      9,
+      5120
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "gamma_dtype": "bf16",
+      "epsilon": 1e-06
+    },
+    "soc_version": "Ascend950DT_9582",
+    "status": "uncalibrated",
+    "predicted_us": null,
+    "ideal_compute_efficiency": null,
+    "api": "aclnnRmsNorm",
+    "library_family": "ops-nn",
+    "kernel_selection_verified": false,
+    "calibration_measurements": 0,
+    "invocation_validation_report": "docs/extensions/smoke-950dt.json",
+    "tiling": {
+      "status": "source_candidate_unverified",
+      "route": "REGBASE_NORMAL",
+      "source_tiling_key": 5000,
+      "active_aic": 0,
+      "active_aiv": 9,
+      "max_rows_per_core": 1,
+      "last_core_rows": 1,
+      "tile_rows": 1,
+      "aligned_cols": 5120,
+      "max_ub_iterations": 1,
+      "column_fold_point": 4096,
+      "ub_bytes": 253952,
+      "host_reserved_bytes": 1024,
+      "arch35_reserved_bytes": 2048,
+      "vector_fp32_lanes": 64,
+      "input_output_double_buffer": true
+    },
+    "work": {
+      "rows": 9,
+      "reduction_length": 5120,
+      "multiplications": 138249,
+      "additions": 46080,
+      "rsqrt": 9,
+      "flops_excluding_rsqrt": 184329,
+      "logical_tensor_bytes": 194596,
+      "traffic_scope": "x read + y write + one logical gamma read + FP32 rstd write; cache/reloads/padding excluded"
+    },
+    "output_shapes": {
+      "y": [
+        9,
+        5120
+      ],
+      "rstd": [
+        9,
+        1
+      ]
+    },
+    "kernel_package_path": "opp/built-in/op_impl/ai_core/tbe/kernel/ascend950/ops_nn/rms_norm/",
+    "stage_dag": [
+      "read x/gamma",
+      "square + row reduction",
+      "scale + epsilon + rsqrt",
+      "multiply x and gamma",
+      "write y/rstd"
+    ],
+    "limitations": [
+      "No latency calibration; tiny invocation evidence is separate from generic dispatch qualification.",
+      "Tiling is a port of one fixed-source branch, not proof that packaged CANN dispatches identically.",
+      "Counts are mathematical scalar operations, not vector ISA instruction counts.",
+      "Logical bytes are not per-core or HBM traffic."
+    ]
+  },
+  {
+    "op": "rmsnorm",
+    "shape": [
+      65,
+      5120
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "gamma_dtype": "bf16",
+      "epsilon": 1e-06
+    },
+    "soc_version": "Ascend950DT_9582",
+    "status": "uncalibrated",
+    "predicted_us": null,
+    "ideal_compute_efficiency": null,
+    "api": "aclnnRmsNorm",
+    "library_family": "ops-nn",
+    "kernel_selection_verified": false,
+    "calibration_measurements": 0,
+    "invocation_validation_report": "docs/extensions/smoke-950dt.json",
+    "tiling": {
+      "status": "source_candidate_unverified",
+      "route": "REGBASE_NORMAL",
+      "source_tiling_key": 5000,
+      "active_aic": 0,
+      "active_aiv": 33,
+      "max_rows_per_core": 2,
+      "last_core_rows": 1,
+      "tile_rows": 2,
+      "aligned_cols": 5120,
+      "max_ub_iterations": 1,
+      "column_fold_point": 4096,
+      "ub_bytes": 253952,
+      "host_reserved_bytes": 1024,
+      "arch35_reserved_bytes": 2048,
+      "vector_fp32_lanes": 64,
+      "input_output_double_buffer": true
+    },
+    "work": {
+      "rows": 65,
+      "reduction_length": 5120,
+      "multiplications": 998465,
+      "additions": 332800,
+      "rsqrt": 65,
+      "flops_excluding_rsqrt": 1331265,
+      "logical_tensor_bytes": 1341700,
+      "traffic_scope": "x read + y write + one logical gamma read + FP32 rstd write; cache/reloads/padding excluded"
+    },
+    "output_shapes": {
+      "y": [
+        65,
+        5120
+      ],
+      "rstd": [
+        65,
+        1
+      ]
+    },
+    "kernel_package_path": "opp/built-in/op_impl/ai_core/tbe/kernel/ascend950/ops_nn/rms_norm/",
+    "stage_dag": [
+      "read x/gamma",
+      "square + row reduction",
+      "scale + epsilon + rsqrt",
+      "multiply x and gamma",
+      "write y/rstd"
+    ],
+    "limitations": [
+      "No latency calibration; tiny invocation evidence is separate from generic dispatch qualification.",
+      "Tiling is a port of one fixed-source branch, not proof that packaged CANN dispatches identically.",
+      "Counts are mathematical scalar operations, not vector ISA instruction counts.",
+      "Logical bytes are not per-core or HBM traffic."
+    ]
+  },
+  {
+    "op": "rmsnorm",
+    "shape": [
+      128,
+      7168
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "gamma_dtype": "bf16",
+      "epsilon": 1e-06
+    },
+    "soc_version": "Ascend950DT_9582",
+    "status": "uncalibrated",
+    "predicted_us": null,
+    "ideal_compute_efficiency": null,
+    "api": "aclnnRmsNorm",
+    "library_family": "ops-nn",
+    "kernel_selection_verified": false,
+    "calibration_measurements": 0,
+    "invocation_validation_report": "docs/extensions/smoke-950dt.json",
+    "tiling": {
+      "status": "source_candidate_unverified",
+      "route": "REGBASE_NORMAL",
+      "source_tiling_key": 5000,
+      "active_aic": 0,
+      "active_aiv": 64,
+      "max_rows_per_core": 2,
+      "last_core_rows": 2,
+      "tile_rows": 2,
+      "aligned_cols": 7168,
+      "max_ub_iterations": 1,
+      "column_fold_point": 4096,
+      "ub_bytes": 253952,
+      "host_reserved_bytes": 1024,
+      "arch35_reserved_bytes": 2048,
+      "vector_fp32_lanes": 64,
+      "input_output_double_buffer": true
+    },
+    "work": {
+      "rows": 128,
+      "reduction_length": 7168,
+      "multiplications": 2752640,
+      "additions": 917504,
+      "rsqrt": 128,
+      "flops_excluding_rsqrt": 3670144,
+      "logical_tensor_bytes": 3684864,
+      "traffic_scope": "x read + y write + one logical gamma read + FP32 rstd write; cache/reloads/padding excluded"
+    },
+    "output_shapes": {
+      "y": [
+        128,
+        7168
+      ],
+      "rstd": [
+        128,
+        1
+      ]
+    },
+    "kernel_package_path": "opp/built-in/op_impl/ai_core/tbe/kernel/ascend950/ops_nn/rms_norm/",
+    "stage_dag": [
+      "read x/gamma",
+      "square + row reduction",
+      "scale + epsilon + rsqrt",
+      "multiply x and gamma",
+      "write y/rstd"
+    ],
+    "limitations": [
+      "No latency calibration; tiny invocation evidence is separate from generic dispatch qualification.",
+      "Tiling is a port of one fixed-source branch, not proof that packaged CANN dispatches identically.",
+      "Counts are mathematical scalar operations, not vector ISA instruction counts.",
+      "Logical bytes are not per-core or HBM traffic."
+    ]
+  },
+  {
+    "op": "addmm",
+    "shape": [
+      9,
+      128,
+      64
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "self_shape": [
+        128
+      ],
+      "alpha": 1.0,
+      "beta": 1.0,
+      "cube_math_type": 0
+    },
+    "soc_version": "Ascend950DT_9582",
+    "status": "uncalibrated",
+    "predicted_us": null,
+    "ideal_compute_efficiency": null,
+    "api": "aclnnAddmm",
+    "library_family": "ops-nn",
+    "kernel_selection_verified": false,
+    "calibration_measurements": 0,
+    "invocation_validation_report": "docs/extensions/smoke-950dt.json",
+    "work": {
+      "matmul_flops": 147456,
+      "combine_additions": 1152,
+      "nonunit_scale_multiplications": 0,
+      "logical_tensor_bytes": 20096,
+      "traffic_scope": "distinct A/B/self reads and output write; intermediates, cache and repeated tiles excluded",
+      "zero_coefficient_policy": "Dense algebraic upper-work plan; alpha/beta=0 dispatch simplifications are not modeled"
+    },
+    "tiling": {
+      "status": "unresolved_dispatch",
+      "active_aic": null,
+      "active_aiv": null,
+      "matmul_only_candidate": {
+        "active_aic": 2,
+        "active_aiv": 0,
+        "waves": 1,
+        "iterations": 1,
+        "branch": "dense",
+        "tile": [
+          16,
+          64,
+          256
+        ],
+        "units": {
+          "read": 9.125,
+          "cube": 0.5625,
+          "fix": 1.125,
+          "vector": 0.0,
+          "write": 0.0
+        },
+        "opcode_features": [
+          1
+        ],
+        "useful_work": 147456,
+        "logical_bytes": 19840,
+        "work_per_core": 73728
+      },
+      "candidate_is_actual_addmm_mapping": false,
+      "fused_add_source_predicates_match": false,
+      "source_dispatch_precedence": [
+        "empty and zero coefficients",
+        "NeedToConvertBias",
+        "inplace FP32 GemmV3",
+        "DAV_3510 FusedMatMul(add)",
+        "Matmul + Muls/Add/Axpy fallback"
+      ],
+      "source_match_is_actual_packaged_dispatch": false
+    },
+    "stage_dag": [
+      "mat1 @ mat2",
+      "scale by alpha; broadcast self and scale by beta",
+      "combine and write output"
+    ],
+    "kernel_package_path": null,
+    "kernel_candidates": [
+      "MatMulV3 or fused matmul family, with optional separate scale/add/copy kernels"
+    ],
+    "limitations": [
+      "Generic dispatch is unqualified; the tiny invocation record only identifies its own shape.",
+      "Fusion and launch count depend on attributes, dtype, layouts and broadcasting.",
+      "A single-kernel CA parser may reject this API if it dispatches multiple kernels; preserve the entire call chain.",
+      "Do not reuse Matmul latency as total Addmm latency.",
+      "No CA calibration or vector/Cube utilization claim."
+    ]
+  },
+  {
+    "op": "addmm",
+    "shape": [
+      9,
+      128,
+      64
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "self_shape": [
+        9,
+        128
+      ],
+      "alpha": 1.0,
+      "beta": 1.0,
+      "cube_math_type": 0
+    },
+    "soc_version": "Ascend950DT_9582",
+    "status": "uncalibrated",
+    "predicted_us": null,
+    "ideal_compute_efficiency": null,
+    "api": "aclnnAddmm",
+    "library_family": "ops-nn",
+    "kernel_selection_verified": false,
+    "calibration_measurements": 0,
+    "invocation_validation_report": "docs/extensions/smoke-950dt.json",
+    "work": {
+      "matmul_flops": 147456,
+      "combine_additions": 1152,
+      "nonunit_scale_multiplications": 0,
+      "logical_tensor_bytes": 22144,
+      "traffic_scope": "distinct A/B/self reads and output write; intermediates, cache and repeated tiles excluded",
+      "zero_coefficient_policy": "Dense algebraic upper-work plan; alpha/beta=0 dispatch simplifications are not modeled"
+    },
+    "tiling": {
+      "status": "unresolved_dispatch",
+      "active_aic": null,
+      "active_aiv": null,
+      "matmul_only_candidate": {
+        "active_aic": 2,
+        "active_aiv": 0,
+        "waves": 1,
+        "iterations": 1,
+        "branch": "dense",
+        "tile": [
+          16,
+          64,
+          256
+        ],
+        "units": {
+          "read": 9.125,
+          "cube": 0.5625,
+          "fix": 1.125,
+          "vector": 0.0,
+          "write": 0.0
+        },
+        "opcode_features": [
+          1
+        ],
+        "useful_work": 147456,
+        "logical_bytes": 19840,
+        "work_per_core": 73728
+      },
+      "candidate_is_actual_addmm_mapping": false,
+      "fused_add_source_predicates_match": true,
+      "source_dispatch_precedence": [
+        "empty and zero coefficients",
+        "NeedToConvertBias",
+        "inplace FP32 GemmV3",
+        "DAV_3510 FusedMatMul(add)",
+        "Matmul + Muls/Add/Axpy fallback"
+      ],
+      "source_match_is_actual_packaged_dispatch": false
+    },
+    "stage_dag": [
+      "mat1 @ mat2",
+      "scale by alpha; broadcast self and scale by beta",
+      "combine and write output"
+    ],
+    "kernel_package_path": null,
+    "kernel_candidates": [
+      "MatMulV3 or fused matmul family, with optional separate scale/add/copy kernels"
+    ],
+    "limitations": [
+      "Generic dispatch is unqualified; the tiny invocation record only identifies its own shape.",
+      "Fusion and launch count depend on attributes, dtype, layouts and broadcasting.",
+      "A single-kernel CA parser may reject this API if it dispatches multiple kernels; preserve the entire call chain.",
+      "Do not reuse Matmul latency as total Addmm latency.",
+      "No CA calibration or vector/Cube utilization claim."
+    ]
+  }
+]
