@@ -1,0 +1,1682 @@
+{
+  "frozen_utc": "2026-11-17T06:57:29.688043+00:00",
+  "model_sha256": "1b7a116c234d07fed008634e7874b41f73e930426a42833944769367f03c02d0",
+  "manifest_sha256": "40930fd889c48d35234ab011d0f6926e41a6141da8bc41331b79f9ccc9766a38",
+  "implementation_sha256": "d3d9bba8a22d445efa739b5e3f87f5d2f98d468b094da06420cdb052864e4d07",
+  "shared_implementation_sha256": "14d432302e3b6f43e3b6546ac150df2fa33a560fbd606fd02e8aac4682407500",
+  "artifact_sha256": {
+    "operator_model/model_v4.py": "d3d9bba8a22d445efa739b5e3f87f5d2f98d468b094da06420cdb052864e4d07",
+    "operator_model/model_v3.py": "fe9f2fc7bcdcfc3aeb1a2024297cbbbd3d8337c096c53a36e0e947dd3626cf69",
+    "operator_model/model_v2.py": "2787965e6c7acf40adbf2f46e2f9d53a30041db2a6715e314b6e3fe66c799b8a",
+    "operator_model/model.py": "14d432302e3b6f43e3b6546ac150df2fa33a560fbd606fd02e8aac4682407500",
+    "operator_model/ca.py": "150e55d09622a2ae1a96f2dceeb0cd95909124c1655876a976db863388e584ee",
+    "results/v0.3/model.json": "8135e5d994a21651f5fb58315b7a01ef0343cc5c39c374b9d46ef59dd24a5883",
+    "results/v0.4/imported-calibration.json": "f33be8343a06badac074d8145c9c4ca32df8f1054e70e1c46739a773f9099c83",
+    "results/v0.4/trace-analysis.json": "b4362610cfb00fcab4da67a67742a505a0c7534d143ddbbcd46c19b211a23848",
+    "results/v0.4/calibration-diagnostics.json": "cd312e906419b4826b09f548e23c07d0741d67ba13510ed2a0d37ddf87276516",
+    "scripts/fit-v4.py": "071c8854efb5f0377a612274940e39225c0d98d2c6a13a292c0df3576224918d",
+    "scripts/collect-v1.py": "96876bfcbc717d33d5c192b2f583eb3e1e90aa35e0d0dbc6096871e808f2e230",
+    "smoke/three_ops.cpp": "8cb30ce4d1099871194ac57aba39e343cfcd8bdbafed3f2bab106fdb50e4abd5",
+    "build/smoke/three_ops": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8"
+  },
+  "predictions": [
+    {
+      "id": "q4_test_tiny",
+      "op": "quant",
+      "shape": [
+        1,
+        128
+      ],
+      "split": "holdout",
+      "selection_reason": "Independent low-core startup fallback",
+      "prediction": {
+        "op": "quant",
+        "shape": [
+          1,
+          128
+        ],
+        "soc_version": "Ascend950DT_9582",
+        "predicted_us": 4.230657748040622,
+        "reference_scope": "cross-core instruction makespan",
+        "coverage": "provisional_saturated_control",
+        "plan": {
+          "active_aiv": 1,
+          "rows_per_core": 1,
+          "cols_per_core": 128,
+          "slice_cols": 256,
+          "active_aic": 0,
+          "waves": 1,
+          "iterations": 1,
+          "branch": "slice256",
+          "tile": [
+            1,
+            128
+          ],
+          "units": {
+            "read": 0.25,
+            "write": 0.12890625,
+            "vector": 2,
+            "cube": 0.0,
+            "fix": 0.0
+          },
+          "opcode_features": [
+            1,
+            1,
+            1
+          ],
+          "useful_work": 128,
+          "logical_bytes": 388.0,
+          "work_per_core": 128,
+          "ub_tiles": [
+            {
+              "rows": 1,
+              "cols": 128,
+              "read_kib": 0.25,
+              "write_kib": 0.12890625,
+              "main_loops": 1,
+              "scale_loops": 1
+            }
+          ]
+        },
+        "phase_schedule": {
+          "pipeline_us": 3.9136349327458335,
+          "control_floor_us": 4.230657748040622,
+          "predicted_us": 4.230657748040622,
+          "read_ready_us": [
+            3.479466358108964
+          ],
+          "vector_finish_us": [
+            3.559089962538917
+          ],
+          "write_finish_us": [
+            3.903937969502647
+          ],
+          "prefix_us": 2.8857514228999244,
+          "control_dominant": true,
+          "control_log2_cap": 4.0
+        },
+        "constant_baseline_us": 5.80107234353916,
+        "calibration_regime_count": 9,
+        "expected_kernel_candidates": [],
+        "kernel_selection_verified": false,
+        "estimated_max_core_selected_opcode_count": 136.00004111605458,
+        "ideal_compute_efficiency": null,
+        "efficiency_unavailable_reason": "Independent ISA throughput is not calibrated"
+      },
+      "v03_prediction": {
+        "op": "quant",
+        "shape": [
+          1,
+          128
+        ],
+        "predicted_us": 4.470821056967024,
+        "soc_version": "Ascend950DT_9582",
+        "reference_scope": "cross-core instruction makespan",
+        "coverage": "provisional_phase_model",
+        "plan": {
+          "active_aiv": 1,
+          "rows_per_core": 1,
+          "cols_per_core": 128,
+          "slice_cols": 256,
+          "active_aic": 0,
+          "waves": 1,
+          "iterations": 1,
+          "branch": "slice256",
+          "tile": [
+            1,
+            128
+          ],
+          "units": {
+            "read": 0.25,
+            "write": 0.12890625,
+            "vector": 2,
+            "cube": 0.0,
+            "fix": 0.0
+          },
+          "opcode_features": [
+            1,
+            1,
+            1
+          ],
+          "useful_work": 128,
+          "logical_bytes": 388.0,
+          "work_per_core": 128,
+          "ub_tiles": [
+            {
+              "rows": 1,
+              "cols": 128,
+              "read_kib": 0.25,
+              "write_kib": 0.12890625,
+              "main_loops": 1,
+              "scale_loops": 1
+            }
+          ]
+        },
+        "constant_baseline_us": 5.6055152444168925,
+        "empirical_roofline_us": 0.0002455832874090902,
+        "calibration_regime_count": 8,
+        "expected_kernel_candidates": [
+          "DynamicMxQuant_bf16toe4m3_high_performance_33_mix_aiv"
+        ],
+        "kernel_selection_verified": false,
+        "estimated_max_core_selected_opcode_count": 136.0000422873318,
+        "ideal_compute_efficiency": null,
+        "efficiency_unavailable_reason": "Independent ISA issue/throughput model is not calibrated",
+        "previous_v02_us": 4.539405861188563,
+        "previous_constant_baseline_us": 5.518939557485282,
+        "phase_schedule": {
+          "pipeline_us": 3.915302869283004,
+          "control_floor_us": 4.470821056967024,
+          "predicted_us": 4.470821056967024,
+          "read_ready_us": [
+            3.472073767380169
+          ],
+          "vector_finish_us": [
+            3.5510609982315136
+          ],
+          "write_finish_us": [
+            3.905605965644462
+          ],
+          "prefix_us": 2.9007954969835885,
+          "control_dominant": true
+        }
+      },
+      "v03_domain_extension": false
+    },
+    {
+      "id": "q4_test_small",
+      "op": "quant",
+      "shape": [
+        36,
+        512
+      ],
+      "split": "holdout",
+      "selection_reason": "Batch4 verify9, high-core small per-core work",
+      "prediction": {
+        "op": "quant",
+        "shape": [
+          36,
+          512
+        ],
+        "soc_version": "Ascend950DT_9582",
+        "predicted_us": 5.429783005268281,
+        "reference_scope": "cross-core instruction makespan",
+        "coverage": "provisional_saturated_control",
+        "plan": {
+          "active_aiv": 36,
+          "rows_per_core": 2,
+          "cols_per_core": 256,
+          "slice_cols": 256,
+          "active_aic": 0,
+          "waves": 1,
+          "iterations": 1,
+          "branch": "slice256",
+          "tile": [
+            2,
+            256
+          ],
+          "units": {
+            "read": 1.0,
+            "write": 0.515625,
+            "vector": 3,
+            "cube": 0.0,
+            "fix": 0.0
+          },
+          "opcode_features": [
+            1,
+            2,
+            1
+          ],
+          "useful_work": 18432,
+          "logical_bytes": 55872.0,
+          "work_per_core": 512,
+          "ub_tiles": [
+            {
+              "rows": 2,
+              "cols": 256,
+              "read_kib": 1.0,
+              "write_kib": 0.515625,
+              "main_loops": 2,
+              "scale_loops": 1
+            }
+          ]
+        },
+        "phase_schedule": {
+          "pipeline_us": 4.359565482656322,
+          "control_floor_us": 5.429783005268281,
+          "predicted_us": 5.429783005268281,
+          "read_ready_us": [
+            3.9182976171015946
+          ],
+          "vector_finish_us": [
+            4.005020512449406
+          ],
+          "write_finish_us": [
+            4.3498685194131355
+          ],
+          "prefix_us": 3.3116695218273393,
+          "control_dominant": true,
+          "control_log2_cap": 4.0
+        },
+        "constant_baseline_us": 5.80107234353916,
+        "calibration_regime_count": 9,
+        "expected_kernel_candidates": [],
+        "kernel_selection_verified": false,
+        "estimated_max_core_selected_opcode_count": 180.00002546442025,
+        "ideal_compute_efficiency": null,
+        "efficiency_unavailable_reason": "Independent ISA throughput is not calibrated"
+      },
+      "v03_prediction": {
+        "op": "quant",
+        "shape": [
+          36,
+          512
+        ],
+        "predicted_us": 5.490582862978978,
+        "soc_version": "Ascend950DT_9582",
+        "reference_scope": "cross-core instruction makespan",
+        "coverage": "provisional_phase_model",
+        "plan": {
+          "active_aiv": 36,
+          "rows_per_core": 2,
+          "cols_per_core": 256,
+          "slice_cols": 256,
+          "active_aic": 0,
+          "waves": 1,
+          "iterations": 1,
+          "branch": "slice256",
+          "tile": [
+            2,
+            256
+          ],
+          "units": {
+            "read": 1.0,
+            "write": 0.515625,
+            "vector": 3,
+            "cube": 0.0,
+            "fix": 0.0
+          },
+          "opcode_features": [
+            1,
+            2,
+            1
+          ],
+          "useful_work": 18432,
+          "logical_bytes": 55872.0,
+          "work_per_core": 512,
+          "ub_tiles": [
+            {
+              "rows": 2,
+              "cols": 256,
+              "read_kib": 1.0,
+              "write_kib": 0.515625,
+              "main_loops": 2,
+              "scale_loops": 1
+            }
+          ]
+        },
+        "constant_baseline_us": 5.6055152444168925,
+        "empirical_roofline_us": 0.03536399338690899,
+        "calibration_regime_count": 8,
+        "expected_kernel_candidates": [
+          "DynamicMxQuant_bf16toe4m3_high_performance_33_mix_aiv"
+        ],
+        "kernel_selection_verified": false,
+        "estimated_max_core_selected_opcode_count": 180.00001872966027,
+        "ideal_compute_efficiency": null,
+        "efficiency_unavailable_reason": "Independent ISA issue/throughput model is not calibrated",
+        "previous_v02_us": 5.55396854930284,
+        "previous_constant_baseline_us": 5.518939557485282,
+        "phase_schedule": {
+          "pipeline_us": 4.328660192738314,
+          "control_floor_us": 5.490582862978978,
+          "predicted_us": 5.490582862978978,
+          "read_ready_us": [
+            3.8782944436633877
+          ],
+          "vector_finish_us": [
+            3.964418321686824
+          ],
+          "write_finish_us": [
+            4.318963289099773
+          ],
+          "prefix_us": 3.292123979228378,
+          "control_dominant": true
+        }
+      },
+      "v03_domain_extension": false
+    },
+    {
+      "id": "q4_test_flash_decode",
+      "op": "quant",
+      "shape": [
+        9,
+        5120
+      ],
+      "split": "holdout",
+      "selection_reason": "Flash hidden width; batch1 verify9",
+      "prediction": {
+        "op": "quant",
+        "shape": [
+          9,
+          5120
+        ],
+        "soc_version": "Ascend950DT_9582",
+        "predicted_us": 5.429783005268281,
+        "reference_scope": "cross-core instruction makespan",
+        "coverage": "extrapolation",
+        "plan": {
+          "active_aiv": 45,
+          "rows_per_core": 1,
+          "cols_per_core": 1024,
+          "slice_cols": 512,
+          "active_aic": 0,
+          "waves": 1,
+          "iterations": 1,
+          "branch": "slice512",
+          "tile": [
+            1,
+            1024
+          ],
+          "units": {
+            "read": 2.0,
+            "write": 1.03125,
+            "vector": 5,
+            "cube": 0.0,
+            "fix": 0.0
+          },
+          "opcode_features": [
+            1,
+            4,
+            1
+          ],
+          "useful_work": 46080,
+          "logical_bytes": 139680.0,
+          "work_per_core": 1024,
+          "ub_tiles": [
+            {
+              "rows": 1,
+              "cols": 1024,
+              "read_kib": 2.0,
+              "write_kib": 1.03125,
+              "main_loops": 4,
+              "scale_loops": 1
+            }
+          ]
+        },
+        "phase_schedule": {
+          "pipeline_us": 4.422763536847749,
+          "control_floor_us": 5.429783005268281,
+          "predicted_us": 5.429783005268281,
+          "read_ready_us": [
+            3.9672970894573067
+          ],
+          "vector_finish_us": [
+            4.068218566640833
+          ],
+          "write_finish_us": [
+            4.413066573604563
+          ],
+          "prefix_us": 3.3434514474294303,
+          "control_dominant": true,
+          "control_log2_cap": 4.0
+        },
+        "constant_baseline_us": 5.80107234353916,
+        "calibration_regime_count": 9,
+        "expected_kernel_candidates": [],
+        "kernel_selection_verified": false,
+        "estimated_max_core_selected_opcode_count": 267.9999941611516,
+        "ideal_compute_efficiency": null,
+        "efficiency_unavailable_reason": "Independent ISA throughput is not calibrated"
+      },
+      "v03_prediction": {
+        "op": "quant",
+        "shape": [
+          9,
+          5120
+        ],
+        "predicted_us": 5.566677290363359,
+        "soc_version": "Ascend950DT_9582",
+        "reference_scope": "cross-core instruction makespan",
+        "coverage": "provisional_phase_model",
+        "plan": {
+          "active_aiv": 45,
+          "rows_per_core": 1,
+          "cols_per_core": 1024,
+          "slice_cols": 512,
+          "active_aic": 0,
+          "waves": 1,
+          "iterations": 1,
+          "branch": "slice512",
+          "tile": [
+            1,
+            1024
+          ],
+          "units": {
+            "read": 2.0,
+            "write": 1.03125,
+            "vector": 5,
+            "cube": 0.0,
+            "fix": 0.0
+          },
+          "opcode_features": [
+            1,
+            4,
+            1
+          ],
+          "useful_work": 46080,
+          "logical_bytes": 139680.0,
+          "work_per_core": 1024,
+          "ub_tiles": [
+            {
+              "rows": 1,
+              "cols": 1024,
+              "read_kib": 2.0,
+              "write_kib": 1.03125,
+              "main_loops": 4,
+              "scale_loops": 1
+            }
+          ]
+        },
+        "constant_baseline_us": 5.6055152444168925,
+        "empirical_roofline_us": 0.08840998346727247,
+        "calibration_regime_count": 8,
+        "expected_kernel_candidates": [
+          "DynamicMxQuant_bf16toe4m3_high_performance_33_mix_aiv"
+        ],
+        "kernel_selection_verified": false,
+        "estimated_max_core_selected_opcode_count": 267.99997161431725,
+        "ideal_compute_efficiency": null,
+        "efficiency_unavailable_reason": "Independent ISA issue/throughput model is not calibrated",
+        "previous_v02_us": 5.352517863753072,
+        "previous_constant_baseline_us": 5.518939557485282,
+        "phase_schedule": {
+          "pipeline_us": 4.391990600941342,
+          "control_floor_us": 5.566677290363359,
+          "predicted_us": 5.566677290363359,
+          "read_ready_us": [
+            3.9273515575222304
+          ],
+          "vector_finish_us": [
+            4.0277487298898516
+          ],
+          "write_finish_us": [
+            4.3822936973028
+          ],
+          "prefix_us": 3.3213248343693156,
+          "control_dominant": true
+        }
+      },
+      "v03_domain_extension": true
+    },
+    {
+      "id": "q4_test_pro_decode",
+      "op": "quant",
+      "shape": [
+        144,
+        7168
+      ],
+      "split": "holdout",
+      "selection_reason": "Pro/Kimi hidden width; batch16 verify9",
+      "prediction": {
+        "op": "quant",
+        "shape": [
+          144,
+          7168
+        ],
+        "soc_version": "Ascend950DT_9582",
+        "predicted_us": 5.524225247318096,
+        "reference_scope": "cross-core instruction makespan",
+        "coverage": "extrapolation",
+        "plan": {
+          "active_aiv": 58,
+          "rows_per_core": 5,
+          "cols_per_core": 3584,
+          "slice_cols": 512,
+          "active_aic": 0,
+          "waves": 1,
+          "iterations": 1,
+          "branch": "slice512",
+          "tile": [
+            5,
+            3584
+          ],
+          "units": {
+            "read": 35.0,
+            "write": 18.046875,
+            "vector": 75,
+            "cube": 0.0,
+            "fix": 0.0
+          },
+          "opcode_features": [
+            1,
+            70,
+            5
+          ],
+          "useful_work": 1032192,
+          "logical_bytes": 3128832.0,
+          "work_per_core": 17920,
+          "ub_tiles": [
+            {
+              "rows": 5,
+              "cols": 3584,
+              "read_kib": 35.0,
+              "write_kib": 18.046875,
+              "main_loops": 70,
+              "scale_loops": 5
+            }
+          ]
+        },
+        "phase_schedule": {
+          "pipeline_us": 5.524225247318096,
+          "control_floor_us": 5.429783005268281,
+          "predicted_us": 5.524225247318096,
+          "read_ready_us": [
+            4.5718084356776245
+          ],
+          "vector_finish_us": [
+            5.16968027711118
+          ],
+          "write_finish_us": [
+            5.51452828407491
+          ],
+          "prefix_us": 3.3797837507802524,
+          "control_dominant": false,
+          "control_log2_cap": 4.0
+        },
+        "constant_baseline_us": 5.80107234353916,
+        "calibration_regime_count": 9,
+        "expected_kernel_candidates": [],
+        "kernel_selection_verified": false,
+        "estimated_max_core_selected_opcode_count": 3300.00009432446,
+        "ideal_compute_efficiency": null,
+        "efficiency_unavailable_reason": "Independent ISA throughput is not calibrated"
+      },
+      "v03_prediction": {
+        "op": "quant",
+        "shape": [
+          144,
+          7168
+        ],
+        "predicted_us": 5.653666538706906,
+        "soc_version": "Ascend950DT_9582",
+        "reference_scope": "cross-core instruction makespan",
+        "coverage": "provisional_phase_model",
+        "plan": {
+          "active_aiv": 58,
+          "rows_per_core": 5,
+          "cols_per_core": 3584,
+          "slice_cols": 512,
+          "active_aic": 0,
+          "waves": 1,
+          "iterations": 1,
+          "branch": "slice512",
+          "tile": [
+            5,
+            3584
+          ],
+          "units": {
+            "read": 35.0,
+            "write": 18.046875,
+            "vector": 75,
+            "cube": 0.0,
+            "fix": 0.0
+          },
+          "opcode_features": [
+            1,
+            70,
+            5
+          ],
+          "useful_work": 1032192,
+          "logical_bytes": 3128832.0,
+          "work_per_core": 17920,
+          "ub_tiles": [
+            {
+              "rows": 5,
+              "cols": 3584,
+              "read_kib": 35.0,
+              "write_kib": 18.046875,
+              "main_loops": 70,
+              "scale_loops": 5
+            }
+          ]
+        },
+        "constant_baseline_us": 5.6055152444168925,
+        "empirical_roofline_us": 1.9803836296669033,
+        "calibration_regime_count": 8,
+        "expected_kernel_candidates": [
+          "DynamicMxQuant_bf16toe4m3_high_performance_33_mix_aiv"
+        ],
+        "kernel_selection_verified": false,
+        "estimated_max_core_selected_opcode_count": 3300.0001349523363,
+        "ideal_compute_efficiency": null,
+        "efficiency_unavailable_reason": "Independent ISA issue/throughput model is not calibrated",
+        "previous_v02_us": 6.038841636735555,
+        "previous_constant_baseline_us": 5.518939557485282,
+        "phase_schedule": {
+          "pipeline_us": 5.580194128760338,
+          "control_floor_us": 5.653666538706906,
+          "predicted_us": 5.653666538706906,
+          "read_ready_us": [
+            4.615989783294779
+          ],
+          "vector_finish_us": [
+            5.215952257708848
+          ],
+          "write_finish_us": [
+            5.570497225121796
+          ],
+          "prefix_us": 3.3547065224509898,
+          "control_dominant": true
+        }
+      },
+      "v03_domain_extension": true
+    },
+    {
+      "id": "q4_test_prefill",
+      "op": "quant",
+      "shape": [
+        512,
+        5120
+      ],
+      "split": "holdout",
+      "selection_reason": "Batch1 per-request prefill chunk512",
+      "prediction": {
+        "op": "quant",
+        "shape": [
+          512,
+          5120
+        ],
+        "soc_version": "Ascend950DT_9582",
+        "predicted_us": 6.364308178591398,
+        "reference_scope": "cross-core instruction makespan",
+        "coverage": "extrapolation",
+        "plan": {
+          "active_aiv": 64,
+          "rows_per_core": 8,
+          "cols_per_core": 5120,
+          "slice_cols": 512,
+          "active_aic": 0,
+          "waves": 1,
+          "iterations": 2,
+          "branch": "ub_loop",
+          "tile": [
+            4,
+            5120
+          ],
+          "units": {
+            "read": 40.0,
+            "write": 20.625,
+            "vector": 85,
+            "cube": 0.0,
+            "fix": 0.0
+          },
+          "opcode_features": [
+            2,
+            160,
+            10
+          ],
+          "useful_work": 2621440,
+          "logical_bytes": 7946240.0,
+          "work_per_core": 40960,
+          "ub_tiles": [
+            {
+              "rows": 4,
+              "cols": 5120,
+              "read_kib": 40.0,
+              "write_kib": 20.625,
+              "main_loops": 80,
+              "scale_loops": 5
+            },
+            {
+              "rows": 4,
+              "cols": 5120,
+              "read_kib": 40.0,
+              "write_kib": 20.625,
+              "main_loops": 80,
+              "scale_loops": 5
+            }
+          ]
+        },
+        "phase_schedule": {
+          "pipeline_us": 6.364308178591398,
+          "control_floor_us": 5.429783005268281,
+          "predicted_us": 6.364308178591398,
+          "read_ready_us": [
+            4.67203370716022,
+            5.017689963041212
+          ],
+          "vector_finish_us": [
+            5.340898457772351,
+            6.009763208384482
+          ],
+          "write_finish_us": [
+            5.685746464736081,
+            6.3546112153482115
+          ],
+          "prefix_us": 3.3939212884947425,
+          "control_dominant": false,
+          "control_log2_cap": 4.0
+        },
+        "constant_baseline_us": 5.80107234353916,
+        "calibration_regime_count": 3,
+        "expected_kernel_candidates": [],
+        "kernel_selection_verified": false,
+        "estimated_max_core_selected_opcode_count": 7479.999875616232,
+        "ideal_compute_efficiency": null,
+        "efficiency_unavailable_reason": "Independent ISA throughput is not calibrated"
+      },
+      "v03_prediction": {
+        "op": "quant",
+        "shape": [
+          512,
+          5120
+        ],
+        "predicted_us": 6.4351602416668126,
+        "soc_version": "Ascend950DT_9582",
+        "reference_scope": "cross-core instruction makespan",
+        "coverage": "provisional_phase_model",
+        "plan": {
+          "active_aiv": 64,
+          "rows_per_core": 8,
+          "cols_per_core": 5120,
+          "slice_cols": 512,
+          "active_aic": 0,
+          "waves": 1,
+          "iterations": 2,
+          "branch": "ub_loop",
+          "tile": [
+            4,
+            5120
+          ],
+          "units": {
+            "read": 40.0,
+            "write": 20.625,
+            "vector": 85,
+            "cube": 0.0,
+            "fix": 0.0
+          },
+          "opcode_features": [
+            2,
+            160,
+            10
+          ],
+          "useful_work": 2621440,
+          "logical_bytes": 7946240.0,
+          "work_per_core": 40960,
+          "ub_tiles": [
+            {
+              "rows": 4,
+              "cols": 5120,
+              "read_kib": 40.0,
+              "write_kib": 20.625,
+              "main_loops": 80,
+              "scale_loops": 5
+            },
+            {
+              "rows": 4,
+              "cols": 5120,
+              "read_kib": 40.0,
+              "write_kib": 20.625,
+              "main_loops": 80,
+              "scale_loops": 5
+            }
+          ]
+        },
+        "constant_baseline_us": 5.6055152444168925,
+        "empirical_roofline_us": 5.029545726138167,
+        "calibration_regime_count": 2,
+        "expected_kernel_candidates": [
+          "DynamicMxQuant_bf16toe4m3_high_performance_33_mix_aiv"
+        ],
+        "kernel_selection_verified": false,
+        "estimated_max_core_selected_opcode_count": 7479.999798751242,
+        "ideal_compute_efficiency": null,
+        "efficiency_unavailable_reason": "Independent ISA issue/throughput model is not calibrated",
+        "previous_v02_us": 7.457881359659428,
+        "previous_constant_baseline_us": 5.518939557485282,
+        "phase_schedule": {
+          "pipeline_us": 6.4351602416668126,
+          "control_floor_us": 5.687515583930851,
+          "predicted_us": 6.4351602416668126,
+          "read_ready_us": [
+            4.728260478345343,
+            5.1691692977823696
+          ],
+          "vector_finish_us": [
+            5.399589424480332,
+            6.070918370615322
+          ],
+          "write_finish_us": [
+            5.754134391893281,
+            6.425463338028271
+          ],
+          "prefix_us": 3.3676959239120268,
+          "control_dominant": false
+        }
+      },
+      "v03_domain_extension": true
+    },
+    {
+      "id": "q4_test_batch128",
+      "op": "quant",
+      "shape": [
+        1152,
+        5120
+      ],
+      "split": "holdout",
+      "selection_reason": "Batch128 verify9, multiple UB iterations",
+      "prediction": {
+        "op": "quant",
+        "shape": [
+          1152,
+          5120
+        ],
+        "soc_version": "Ascend950DT_9582",
+        "predicted_us": 8.94166148633747,
+        "reference_scope": "cross-core instruction makespan",
+        "coverage": "extrapolation",
+        "plan": {
+          "active_aiv": 64,
+          "rows_per_core": 18,
+          "cols_per_core": 5120,
+          "slice_cols": 512,
+          "active_aic": 0,
+          "waves": 1,
+          "iterations": 3,
+          "branch": "ub_loop",
+          "tile": [
+            6,
+            5120
+          ],
+          "units": {
+            "read": 60.0,
+            "write": 30.9375,
+            "vector": 128,
+            "cube": 0.0,
+            "fix": 0.0
+          },
+          "opcode_features": [
+            3,
+            360,
+            24
+          ],
+          "useful_work": 5898240,
+          "logical_bytes": 17879040.0,
+          "work_per_core": 92160,
+          "ub_tiles": [
+            {
+              "rows": 6,
+              "cols": 5120,
+              "read_kib": 60.0,
+              "write_kib": 30.9375,
+              "main_loops": 120,
+              "scale_loops": 8
+            },
+            {
+              "rows": 6,
+              "cols": 5120,
+              "read_kib": 60.0,
+              "write_kib": 30.9375,
+              "main_loops": 120,
+              "scale_loops": 8
+            },
+            {
+              "rows": 6,
+              "cols": 5120,
+              "read_kib": 60.0,
+              "write_kib": 30.9375,
+              "main_loops": 120,
+              "scale_loops": 8
+            }
+          ]
+        },
+        "phase_schedule": {
+          "pipeline_us": 8.94166148633747,
+          "control_floor_us": 5.429783005268281,
+          "predicted_us": 8.94166148633747,
+          "read_ready_us": [
+            5.016384642232642,
+            5.362040898113634,
+            7.612982256050547
+          ],
+          "vector_finish_us": [
+            5.9905189023126475,
+            6.964653162392653,
+            8.587116516130553
+          ],
+          "write_finish_us": [
+            6.335366909276377,
+            7.309501169356383,
+            8.931964523094283
+          ],
+          "prefix_us": 3.3939212884947425,
+          "control_dominant": false,
+          "control_log2_cap": 4.0
+        },
+        "constant_baseline_us": 5.80107234353916,
+        "calibration_regime_count": 3,
+        "expected_kernel_candidates": [],
+        "kernel_selection_verified": false,
+        "estimated_max_core_selected_opcode_count": 16788.000484863373,
+        "ideal_compute_efficiency": null,
+        "efficiency_unavailable_reason": "Independent ISA throughput is not calibrated"
+      },
+      "v03_prediction": {
+        "op": "quant",
+        "shape": [
+          1152,
+          5120
+        ],
+        "predicted_us": 9.203726801616263,
+        "soc_version": "Ascend950DT_9582",
+        "reference_scope": "cross-core instruction makespan",
+        "coverage": "provisional_phase_model",
+        "plan": {
+          "active_aiv": 64,
+          "rows_per_core": 18,
+          "cols_per_core": 5120,
+          "slice_cols": 512,
+          "active_aic": 0,
+          "waves": 1,
+          "iterations": 3,
+          "branch": "ub_loop",
+          "tile": [
+            6,
+            5120
+          ],
+          "units": {
+            "read": 60.0,
+            "write": 30.9375,
+            "vector": 128,
+            "cube": 0.0,
+            "fix": 0.0
+          },
+          "opcode_features": [
+            3,
+            360,
+            24
+          ],
+          "useful_work": 5898240,
+          "logical_bytes": 17879040.0,
+          "work_per_core": 92160,
+          "ub_tiles": [
+            {
+              "rows": 6,
+              "cols": 5120,
+              "read_kib": 60.0,
+              "write_kib": 30.9375,
+              "main_loops": 120,
+              "scale_loops": 8
+            },
+            {
+              "rows": 6,
+              "cols": 5120,
+              "read_kib": 60.0,
+              "write_kib": 30.9375,
+              "main_loops": 120,
+              "scale_loops": 8
+            },
+            {
+              "rows": 6,
+              "cols": 5120,
+              "read_kib": 60.0,
+              "write_kib": 30.9375,
+              "main_loops": 120,
+              "scale_loops": 8
+            }
+          ]
+        },
+        "constant_baseline_us": 5.6055152444168925,
+        "empirical_roofline_us": 11.316477883810876,
+        "calibration_regime_count": 2,
+        "expected_kernel_candidates": [
+          "DynamicMxQuant_bf16toe4m3_high_performance_33_mix_aiv"
+        ],
+        "kernel_selection_verified": false,
+        "estimated_max_core_selected_opcode_count": 16788.00073703104,
+        "ideal_compute_efficiency": null,
+        "efficiency_unavailable_reason": "Independent ISA issue/throughput model is not calibrated",
+        "previous_v02_us": 9.208638185617222,
+        "previous_constant_baseline_us": 5.518939557485282,
+        "phase_schedule": {
+          "pipeline_us": 9.203726801616263,
+          "control_floor_us": 5.687515583930851,
+          "predicted_us": 9.203726801616263,
+          "read_ready_us": [
+            5.125385652703449,
+            5.566294472140476,
+            7.861280156029823
+          ],
+          "vector_finish_us": [
+            6.1035904272384,
+            7.0817952017733505,
+            8.839484930564772
+          ],
+          "write_finish_us": [
+            6.4581353946513484,
+            7.436340169186299,
+            9.194029897977721
+          ],
+          "prefix_us": 3.3676959239120268,
+          "control_dominant": false
+        }
+      },
+      "v03_domain_extension": true
+    },
+    {
+      "id": "f4_test_batch4",
+      "op": "fa",
+      "shape": [
+        9,
+        256,
+        128,
+        4,
+        1
+      ],
+      "split": "holdout",
+      "selection_reason": "Batch4 interface and mapping, compressed-length proxy 32k/128",
+      "timeout_seconds": 180,
+      "profiler_timeout_minutes": 2,
+      "prediction": {
+        "op": "fa",
+        "shape": [
+          9,
+          256,
+          128,
+          4,
+          1
+        ],
+        "predicted_us": 9.766535431851255,
+        "soc_version": "Ascend950DT_9582",
+        "reference_scope": "cross-core instruction makespan",
+        "coverage": "extrapolation",
+        "plan": {
+          "active_aic": 4,
+          "active_aiv": 8,
+          "waves": 1,
+          "iterations": 2,
+          "branch": "d128_kv128",
+          "tile": [
+            9,
+            128,
+            128
+          ],
+          "q_tile_capacity": 64,
+          "kv_tile_capacity": 128,
+          "units": {
+            "read": 66.25,
+            "cube": 4.5,
+            "vector": 2.25,
+            "fix": 4.5,
+            "write": 2.25
+          },
+          "opcode_features": [
+            4
+          ],
+          "useful_work": 4718592,
+          "logical_bytes": 542720,
+          "work_per_core": 1179648
+        },
+        "stage_services_us": {
+          "read": 1.1460629245148064,
+          "cube": 0.13171739229253543,
+          "vector": 0.26112418528060244,
+          "fix": 0.0814698187543696,
+          "write": 0.4280354592655809
+        },
+        "scheduled_body_us": 3.1944727046227013,
+        "uncorrected_schedule_us": 3.1944727046227013,
+        "constant_baseline_us": 9.538626484510798,
+        "empirical_roofline_us": 25.220551565182138,
+        "calibration_regime_count": 1,
+        "expected_kernel_candidates": [
+          "FlashAttentionScore_50348df09d0b3ee451d3693a6b2ab3f5_2328361009230643744_mix_aic"
+        ],
+        "kernel_selection_verified": false,
+        "estimated_max_core_selected_opcode_count": 4,
+        "ideal_compute_efficiency": null,
+        "efficiency_unavailable_reason": "Independent ISA issue/throughput model is not calibrated",
+        "previous_v02_us": 9.766535431851255,
+        "previous_constant_baseline_us": 9.39649842068967,
+        "instruction_count_coverage": "structural_q64_d64_d128",
+        "instruction_decomposition": {
+          "qk_per_q_tile": 2,
+          "pv_per_q_tile": 2,
+          "max_q_tiles_per_core": 1
+        }
+      },
+      "v03_prediction": {
+        "op": "fa",
+        "shape": [
+          9,
+          256,
+          128,
+          4,
+          1
+        ],
+        "predicted_us": 9.766535431851255,
+        "soc_version": "Ascend950DT_9582",
+        "reference_scope": "cross-core instruction makespan",
+        "coverage": "provisional_regime",
+        "plan": {
+          "active_aic": 4,
+          "active_aiv": 8,
+          "waves": 1,
+          "iterations": 2,
+          "branch": "d128_kv128",
+          "tile": [
+            9,
+            128,
+            128
+          ],
+          "q_tile_capacity": 64,
+          "kv_tile_capacity": 128,
+          "units": {
+            "read": 66.25,
+            "cube": 4.5,
+            "vector": 2.25,
+            "fix": 4.5,
+            "write": 2.25
+          },
+          "opcode_features": [
+            4
+          ],
+          "useful_work": 4718592,
+          "logical_bytes": 542720,
+          "work_per_core": 1179648
+        },
+        "stage_services_us": {
+          "read": 1.1460629245148064,
+          "cube": 0.13171739229253543,
+          "vector": 0.26112418528060244,
+          "fix": 0.0814698187543696,
+          "write": 0.4280354592655809
+        },
+        "scheduled_body_us": 3.1944727046227013,
+        "uncorrected_schedule_us": 3.1944727046227013,
+        "constant_baseline_us": 9.324293061935654,
+        "empirical_roofline_us": 25.220551565182138,
+        "calibration_regime_count": 1,
+        "expected_kernel_candidates": [
+          "FlashAttentionScore_50348df09d0b3ee451d3693a6b2ab3f5_2328361009230643744_mix_aic"
+        ],
+        "kernel_selection_verified": false,
+        "estimated_max_core_selected_opcode_count": 4,
+        "ideal_compute_efficiency": null,
+        "efficiency_unavailable_reason": "Independent ISA issue/throughput model is not calibrated",
+        "previous_v02_us": 9.766535431851255,
+        "previous_constant_baseline_us": 9.39649842068967,
+        "instruction_count_coverage": "structural_q64_d64_d128",
+        "instruction_decomposition": {
+          "qk_per_q_tile": 2,
+          "pv_per_q_tile": 2,
+          "max_q_tiles_per_core": 1
+        }
+      },
+      "v03_domain_extension": true
+    },
+    {
+      "id": "f4_test_batch16",
+      "op": "fa",
+      "shape": [
+        9,
+        4096,
+        64,
+        16,
+        1
+      ],
+      "split": "holdout",
+      "selection_reason": "Batch16 saturation, compressed-length proxy 512k/128",
+      "timeout_seconds": 180,
+      "profiler_timeout_minutes": 2,
+      "prediction": {
+        "op": "fa",
+        "shape": [
+          9,
+          4096,
+          64,
+          16,
+          1
+        ],
+        "predicted_us": 21.541218863231016,
+        "soc_version": "Ascend950DT_9582",
+        "reference_scope": "cross-core instruction makespan",
+        "coverage": "extrapolation",
+        "plan": {
+          "active_aic": 16,
+          "active_aiv": 32,
+          "waves": 1,
+          "iterations": 16,
+          "branch": "d64_kv256",
+          "tile": [
+            9,
+            256,
+            64
+          ],
+          "q_tile_capacity": 64,
+          "kv_tile_capacity": 256,
+          "units": {
+            "read": 65.125,
+            "cube": 4.5,
+            "vector": 4.5,
+            "fix": 9.0,
+            "write": 1.125
+          },
+          "opcode_features": [
+            32
+          ],
+          "useful_work": 150994944,
+          "logical_bytes": 16814080,
+          "work_per_core": 9437184
+        },
+        "stage_services_us": {
+          "read": 1.1427906689549467,
+          "cube": 0.13171739229253543,
+          "vector": 0.271151101400425,
+          "fix": 0.09772919533730845,
+          "write": 0.41699012453816
+        },
+        "scheduled_body_us": 19.202238516847576,
+        "uncorrected_schedule_us": 19.202238516847576,
+        "constant_baseline_us": 9.538626484510798,
+        "empirical_roofline_us": 781.3612390571523,
+        "calibration_regime_count": 2,
+        "expected_kernel_candidates": [
+          "FlashAttentionScore_50348df09d0b3ee451d3693a6b2ab3f5_2328361008425337376_mix_aic",
+          "FlashAttentionScore_50348df09d0b3ee451d3693a6b2ab3f5_2328361008425599520_mix_aic"
+        ],
+        "kernel_selection_verified": false,
+        "estimated_max_core_selected_opcode_count": 64,
+        "ideal_compute_efficiency": null,
+        "efficiency_unavailable_reason": "Independent ISA issue/throughput model is not calibrated",
+        "previous_v02_us": 21.541218863231016,
+        "previous_constant_baseline_us": 9.39649842068967,
+        "instruction_count_coverage": "structural_q64_d64_d128",
+        "instruction_decomposition": {
+          "qk_per_q_tile": 32,
+          "pv_per_q_tile": 32,
+          "max_q_tiles_per_core": 1
+        }
+      },
+      "v03_prediction": {
+        "op": "fa",
+        "shape": [
+          9,
+          4096,
+          64,
+          16,
+          1
+        ],
+        "predicted_us": 21.541218863231016,
+        "soc_version": "Ascend950DT_9582",
+        "reference_scope": "cross-core instruction makespan",
+        "coverage": "provisional_regime",
+        "plan": {
+          "active_aic": 16,
+          "active_aiv": 32,
+          "waves": 1,
+          "iterations": 16,
+          "branch": "d64_kv256",
+          "tile": [
+            9,
+            256,
+            64
+          ],
+          "q_tile_capacity": 64,
+          "kv_tile_capacity": 256,
+          "units": {
+            "read": 65.125,
+            "cube": 4.5,
+            "vector": 4.5,
+            "fix": 9.0,
+            "write": 1.125
+          },
+          "opcode_features": [
+            32
+          ],
+          "useful_work": 150994944,
+          "logical_bytes": 16814080,
+          "work_per_core": 9437184
+        },
+        "stage_services_us": {
+          "read": 1.1427906689549467,
+          "cube": 0.13171739229253543,
+          "vector": 0.271151101400425,
+          "fix": 0.09772919533730845,
+          "write": 0.41699012453816
+        },
+        "scheduled_body_us": 19.202238516847576,
+        "uncorrected_schedule_us": 19.202238516847576,
+        "constant_baseline_us": 9.324293061935654,
+        "empirical_roofline_us": 781.3612390571523,
+        "calibration_regime_count": 2,
+        "expected_kernel_candidates": [
+          "FlashAttentionScore_50348df09d0b3ee451d3693a6b2ab3f5_2328361008425337376_mix_aic",
+          "FlashAttentionScore_50348df09d0b3ee451d3693a6b2ab3f5_2328361008425599520_mix_aic"
+        ],
+        "kernel_selection_verified": false,
+        "estimated_max_core_selected_opcode_count": 64,
+        "ideal_compute_efficiency": null,
+        "efficiency_unavailable_reason": "Independent ISA issue/throughput model is not calibrated",
+        "previous_v02_us": 21.541218863231016,
+        "previous_constant_baseline_us": 9.39649842068967,
+        "instruction_count_coverage": "structural_q64_d64_d128",
+        "instruction_decomposition": {
+          "qk_per_q_tile": 32,
+          "pv_per_q_tile": 32,
+          "max_q_tiles_per_core": 1
+        }
+      },
+      "v03_domain_extension": true
+    },
+    {
+      "id": "f4_test_32k",
+      "op": "fa",
+      "shape": [
+        9,
+        32768,
+        64,
+        1,
+        1
+      ],
+      "split": "holdout",
+      "selection_reason": "Direct dense per-head 32k prompt verify9; one head, not full card",
+      "timeout_seconds": 180,
+      "profiler_timeout_minutes": 2,
+      "prediction": {
+        "op": "fa",
+        "shape": [
+          9,
+          32768,
+          64,
+          1,
+          1
+        ],
+        "predicted_us": 111.985722579046,
+        "soc_version": "Ascend950DT_9582",
+        "reference_scope": "cross-core instruction makespan",
+        "coverage": "extrapolation",
+        "plan": {
+          "active_aic": 1,
+          "active_aiv": 2,
+          "waves": 1,
+          "iterations": 128,
+          "branch": "d64_kv256",
+          "tile": [
+            9,
+            256,
+            64
+          ],
+          "q_tile_capacity": 64,
+          "kv_tile_capacity": 256,
+          "units": {
+            "read": 65.125,
+            "cube": 4.5,
+            "vector": 4.5,
+            "fix": 9.0,
+            "write": 1.125
+          },
+          "opcode_features": [
+            256
+          ],
+          "useful_work": 75497472,
+          "logical_bytes": 8390912,
+          "work_per_core": 75497472
+        },
+        "stage_services_us": {
+          "read": 1.1427906689549467,
+          "cube": 0.13171739229253543,
+          "vector": 0.271151101400425,
+          "fix": 0.09772919533730845,
+          "write": 0.41699012453816
+        },
+        "scheduled_body_us": 147.1947934398016,
+        "uncorrected_schedule_us": 147.1947934398016,
+        "constant_baseline_us": 9.538626484510798,
+        "empirical_roofline_us": 389.9311408735731,
+        "calibration_regime_count": 2,
+        "expected_kernel_candidates": [
+          "FlashAttentionScore_50348df09d0b3ee451d3693a6b2ab3f5_2328361008425337376_mix_aic",
+          "FlashAttentionScore_50348df09d0b3ee451d3693a6b2ab3f5_2328361008425599520_mix_aic"
+        ],
+        "kernel_selection_verified": false,
+        "estimated_max_core_selected_opcode_count": 512,
+        "ideal_compute_efficiency": null,
+        "efficiency_unavailable_reason": "Independent ISA issue/throughput model is not calibrated",
+        "previous_v02_us": 111.985722579046,
+        "previous_constant_baseline_us": 9.39649842068967,
+        "instruction_count_coverage": "structural_q64_d64_d128",
+        "instruction_decomposition": {
+          "qk_per_q_tile": 256,
+          "pv_per_q_tile": 256,
+          "max_q_tiles_per_core": 1
+        }
+      },
+      "v03_prediction": {
+        "op": "fa",
+        "shape": [
+          9,
+          32768,
+          64,
+          1,
+          1
+        ],
+        "predicted_us": 111.985722579046,
+        "soc_version": "Ascend950DT_9582",
+        "reference_scope": "cross-core instruction makespan",
+        "coverage": "provisional_regime",
+        "plan": {
+          "active_aic": 1,
+          "active_aiv": 2,
+          "waves": 1,
+          "iterations": 128,
+          "branch": "d64_kv256",
+          "tile": [
+            9,
+            256,
+            64
+          ],
+          "q_tile_capacity": 64,
+          "kv_tile_capacity": 256,
+          "units": {
+            "read": 65.125,
+            "cube": 4.5,
+            "vector": 4.5,
+            "fix": 9.0,
+            "write": 1.125
+          },
+          "opcode_features": [
+            256
+          ],
+          "useful_work": 75497472,
+          "logical_bytes": 8390912,
+          "work_per_core": 75497472
+        },
+        "stage_services_us": {
+          "read": 1.1427906689549467,
+          "cube": 0.13171739229253543,
+          "vector": 0.271151101400425,
+          "fix": 0.09772919533730845,
+          "write": 0.41699012453816
+        },
+        "scheduled_body_us": 147.1947934398016,
+        "uncorrected_schedule_us": 147.1947934398016,
+        "constant_baseline_us": 9.324293061935654,
+        "empirical_roofline_us": 389.9311408735731,
+        "calibration_regime_count": 2,
+        "expected_kernel_candidates": [
+          "FlashAttentionScore_50348df09d0b3ee451d3693a6b2ab3f5_2328361008425337376_mix_aic",
+          "FlashAttentionScore_50348df09d0b3ee451d3693a6b2ab3f5_2328361008425599520_mix_aic"
+        ],
+        "kernel_selection_verified": false,
+        "estimated_max_core_selected_opcode_count": 512,
+        "ideal_compute_efficiency": null,
+        "efficiency_unavailable_reason": "Independent ISA issue/throughput model is not calibrated",
+        "previous_v02_us": 111.985722579046,
+        "previous_constant_baseline_us": 9.39649842068967,
+        "instruction_count_coverage": "structural_q64_d64_d128",
+        "instruction_decomposition": {
+          "qk_per_q_tile": 256,
+          "pv_per_q_tile": 256,
+          "max_q_tiles_per_core": 1
+        }
+      },
+      "v03_domain_extension": true
+    },
+    {
+      "id": "f4_test_512k_end",
+      "op": "fa",
+      "shape": [
+        9,
+        525312,
+        64,
+        1,
+        1
+      ],
+      "split": "holdout",
+      "selection_reason": "Direct dense per-head 512k+1k KV endpoint; bounded feasibility probe",
+      "timeout_seconds": 180,
+      "profiler_timeout_minutes": 2,
+      "prediction": {
+        "op": "fa",
+        "shape": [
+          9,
+          525312,
+          64,
+          1,
+          1
+        ],
+        "predicted_us": 1672.118469310025,
+        "soc_version": "Ascend950DT_9582",
+        "reference_scope": "cross-core instruction makespan",
+        "coverage": "extrapolation",
+        "plan": {
+          "active_aic": 1,
+          "active_aiv": 2,
+          "waves": 1,
+          "iterations": 2052,
+          "branch": "d64_kv256",
+          "tile": [
+            9,
+            256,
+            64
+          ],
+          "q_tile_capacity": 64,
+          "kv_tile_capacity": 256,
+          "units": {
+            "read": 65.125,
+            "cube": 4.5,
+            "vector": 4.5,
+            "fix": 9.0,
+            "write": 1.125
+          },
+          "opcode_features": [
+            4104
+          ],
+          "useful_work": 1210318848,
+          "logical_bytes": 134482176,
+          "work_per_core": 1210318848
+        },
+        "stage_services_us": {
+          "read": 1.1427906689549467,
+          "cube": 0.13171739229253543,
+          "vector": 0.271151101400425,
+          "fix": 0.09772919533730845,
+          "write": 0.41699012453816
+        },
+        "scheduled_body_us": 2345.924040509119,
+        "uncorrected_schedule_us": 2345.924040509119,
+        "constant_baseline_us": 9.538626484510798,
+        "empirical_roofline_us": 6249.474230553324,
+        "calibration_regime_count": 2,
+        "expected_kernel_candidates": [
+          "FlashAttentionScore_50348df09d0b3ee451d3693a6b2ab3f5_2328361008425337376_mix_aic",
+          "FlashAttentionScore_50348df09d0b3ee451d3693a6b2ab3f5_2328361008425599520_mix_aic"
+        ],
+        "kernel_selection_verified": false,
+        "estimated_max_core_selected_opcode_count": 8208,
+        "ideal_compute_efficiency": null,
+        "efficiency_unavailable_reason": "Independent ISA issue/throughput model is not calibrated",
+        "previous_v02_us": 1672.118469310025,
+        "previous_constant_baseline_us": 9.39649842068967,
+        "instruction_count_coverage": "structural_q64_d64_d128",
+        "instruction_decomposition": {
+          "qk_per_q_tile": 4104,
+          "pv_per_q_tile": 4104,
+          "max_q_tiles_per_core": 1
+        }
+      },
+      "v03_prediction": {
+        "op": "fa",
+        "shape": [
+          9,
+          525312,
+          64,
+          1,
+          1
+        ],
+        "predicted_us": 1672.118469310025,
+        "soc_version": "Ascend950DT_9582",
+        "reference_scope": "cross-core instruction makespan",
+        "coverage": "provisional_regime",
+        "plan": {
+          "active_aic": 1,
+          "active_aiv": 2,
+          "waves": 1,
+          "iterations": 2052,
+          "branch": "d64_kv256",
+          "tile": [
+            9,
+            256,
+            64
+          ],
+          "q_tile_capacity": 64,
+          "kv_tile_capacity": 256,
+          "units": {
+            "read": 65.125,
+            "cube": 4.5,
+            "vector": 4.5,
+            "fix": 9.0,
+            "write": 1.125
+          },
+          "opcode_features": [
+            4104
+          ],
+          "useful_work": 1210318848,
+          "logical_bytes": 134482176,
+          "work_per_core": 1210318848
+        },
+        "stage_services_us": {
+          "read": 1.1427906689549467,
+          "cube": 0.13171739229253543,
+          "vector": 0.271151101400425,
+          "fix": 0.09772919533730845,
+          "write": 0.41699012453816
+        },
+        "scheduled_body_us": 2345.924040509119,
+        "uncorrected_schedule_us": 2345.924040509119,
+        "constant_baseline_us": 9.324293061935654,
+        "empirical_roofline_us": 6249.474230553324,
+        "calibration_regime_count": 2,
+        "expected_kernel_candidates": [
+          "FlashAttentionScore_50348df09d0b3ee451d3693a6b2ab3f5_2328361008425337376_mix_aic",
+          "FlashAttentionScore_50348df09d0b3ee451d3693a6b2ab3f5_2328361008425599520_mix_aic"
+        ],
+        "kernel_selection_verified": false,
+        "estimated_max_core_selected_opcode_count": 8208,
+        "ideal_compute_efficiency": null,
+        "efficiency_unavailable_reason": "Independent ISA issue/throughput model is not calibrated",
+        "previous_v02_us": 1672.118469310025,
+        "previous_constant_baseline_us": 9.39649842068967,
+        "instruction_count_coverage": "structural_q64_d64_d128",
+        "instruction_decomposition": {
+          "qk_per_q_tile": 4104,
+          "pv_per_q_tile": 4104,
+          "max_q_tiles_per_core": 1
+        }
+      },
+      "v03_domain_extension": true
+    }
+  ]
+}

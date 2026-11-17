@@ -1,0 +1,1247 @@
+{
+  "source_dataset_sha256": "e8098cd600723d4b5b79d67cde0d7a138b7e0fe5aced9c7b6f5111cbf776439e",
+  "quant": [
+    {
+      "id": "q2_cal_tiny",
+      "shape": [
+        1,
+        64
+      ],
+      "trace_sha256": "04b158ae9579564c3073968d6714ddc482cc8b89e466bb90a34d4d343908bcd3",
+      "core": "core0.veccore0",
+      "reference_us": 4.326060774736106,
+      "iterations": [
+        {
+          "read": {
+            "pipe": "MTE2",
+            "name": "MOV_SRC_TO_DST_ALIGNv2",
+            "start_us": 3.0236363410949707,
+            "end_us": 3.7618181705474854,
+            "bytes": 128,
+            "src_addr": 624191526912,
+            "dst_addr": 0
+          },
+          "vf": [
+            {
+              "pipe": "PUSHQ",
+              "name": "VF",
+              "start_us": 3.7648487091064453,
+              "end_us": 4.024848699569702,
+              "bytes": null,
+              "src_addr": null,
+              "dst_addr": null
+            },
+            {
+              "pipe": "PUSHQ",
+              "name": "VF",
+              "start_us": 4.001212120056152,
+              "end_us": 4.084848485887051,
+              "bytes": null,
+              "src_addr": null,
+              "dst_addr": null
+            },
+            {
+              "pipe": "PUSHQ",
+              "name": "VF",
+              "start_us": 4.061212539672852,
+              "end_us": 4.117576174438,
+              "bytes": null,
+              "src_addr": null,
+              "dst_addr": null
+            }
+          ],
+          "writes": [
+            {
+              "pipe": "MTE3",
+              "name": "MOV_SRC_TO_DST_ALIGNv2",
+              "start_us": 4.124242782592773,
+              "end_us": 4.217576116323471,
+              "bytes": 64,
+              "src_addr": 158720,
+              "dst_addr": 624191527424
+            },
+            {
+              "pipe": "MTE3",
+              "name": "MOV_SRC_TO_DST_ALIGNv2",
+              "start_us": 4.133939743041992,
+              "end_us": 4.316363990306854,
+              "bytes": 2,
+              "src_addr": 238080,
+              "dst_addr": 624191527936
+            }
+          ],
+          "vf_span_us": 0.3527274653315544,
+          "write_drain_us": 0.1921212077140808,
+          "vector_ready_gap_us": 0.003030538558959961
+        }
+      ],
+      "prefix_us": 3.0236363410949707,
+      "suffix_us": 0.009696784429252148,
+      "first_read_us": 0.7381818294525146,
+      "pre_vector_fraction": 0.8702718027201327,
+      "flow_event_count": 1,
+      "causality_scope": "explicit phase order from source; trace overlap alone does not establish a flag dependency"
+    },
+    {
+      "id": "q2_cal_saturation",
+      "shape": [
+        65,
+        256
+      ],
+      "trace_sha256": "fbd9aefb299e5180d18deed36c48740cd937ae5df05783f43e915b02985de449",
+      "core": "core17.veccore0",
+      "reference_us": 4.898181918077171,
+      "iterations": [
+        {
+          "read": {
+            "pipe": "MTE2",
+            "name": "MOV_SRC_TO_DST_ALIGNv2",
+            "start_us": 3.207879066467285,
+            "end_us": 3.7054548263549805,
+            "bytes": 1024,
+            "src_addr": 624191546368,
+            "dst_addr": 0
+          },
+          "vf": [
+            {
+              "pipe": "PUSHQ",
+              "name": "VF",
+              "start_us": 3.7084851264953613,
+              "end_us": 4.329091191291809,
+              "bytes": null,
+              "src_addr": null,
+              "dst_addr": null
+            },
+            {
+              "pipe": "PUSHQ",
+              "name": "VF",
+              "start_us": 4.30242395401001,
+              "end_us": 4.359999712556601,
+              "bytes": null,
+              "src_addr": null,
+              "dst_addr": null
+            },
+            {
+              "pipe": "PUSHQ",
+              "name": "VF",
+              "start_us": 4.33696985244751,
+              "end_us": 4.396969851106405,
+              "bytes": null,
+              "src_addr": null,
+              "dst_addr": null
+            }
+          ],
+          "writes": [
+            {
+              "pipe": "MTE3",
+              "name": "MOV_SRC_TO_DST_ALIGNv2",
+              "start_us": 4.400606632232666,
+              "end_us": 4.597576335072517,
+              "bytes": 512,
+              "src_addr": 158720,
+              "dst_addr": 624191569920
+            },
+            {
+              "pipe": "MTE3",
+              "name": "MOV_SRC_TO_DST_ALIGNv2",
+              "start_us": 4.401212215423584,
+              "end_us": 4.888484954833984,
+              "bytes": 16,
+              "src_addr": 238080,
+              "dst_addr": 624191577392
+            }
+          ],
+          "vf_span_us": 0.6884847246110439,
+          "write_drain_us": 0.48787832260131836,
+          "vector_ready_gap_us": 0.0030303001403808594
+        }
+      ],
+      "prefix_us": 3.207879066467285,
+      "suffix_us": 0.009696963243186474,
+      "first_read_us": 0.4975757598876953,
+      "pre_vector_fraction": 0.75711461691712,
+      "flow_event_count": 33,
+      "causality_scope": "explicit phase order from source; trace overlap alone does not establish a flag dependency"
+    },
+    {
+      "id": "q2_cal_ub_loop",
+      "shape": [
+        1024,
+        4096
+      ],
+      "trace_sha256": "b0c6541e17f3249f58bc99d85925b142d0ec2efa545fa19f2fecc969cea207fa",
+      "core": "core27.veccore1",
+      "reference_us": 8.047273161821067,
+      "iterations": [
+        {
+          "read": {
+            "pipe": "MTE2",
+            "name": "MOV_SRC_TO_DST_ALIGNv2",
+            "start_us": 3.630303382873535,
+            "end_us": 5.565454840660095,
+            "bytes": 65536,
+            "src_addr": 624198735872,
+            "dst_addr": 0
+          },
+          "vf": [
+            {
+              "pipe": "PUSHQ",
+              "name": "VF",
+              "start_us": 5.568485260009766,
+              "end_us": 5.829091310501099,
+              "bytes": null,
+              "src_addr": null,
+              "dst_addr": null
+            },
+            {
+              "pipe": "PUSHQ",
+              "name": "VF",
+              "start_us": 5.78969669342041,
+              "end_us": 5.892726995050907,
+              "bytes": null,
+              "src_addr": null,
+              "dst_addr": null
+            },
+            {
+              "pipe": "PUSHQ",
+              "name": "VF",
+              "start_us": 5.855151176452637,
+              "end_us": 6.630302667617798,
+              "bytes": null,
+              "src_addr": null,
+              "dst_addr": null
+            }
+          ],
+          "writes": [
+            {
+              "pipe": "MTE3",
+              "name": "MOV_SRC_TO_DST_ALIGNv2",
+              "start_us": 6.633939743041992,
+              "end_us": 6.946667015552521,
+              "bytes": 32768,
+              "src_addr": 158720,
+              "dst_addr": 624203520000
+            },
+            {
+              "pipe": "MTE3",
+              "name": "MOV_SRC_TO_DST_ALIGNv2",
+              "start_us": 6.63454532623291,
+              "end_us": 6.987878650426865,
+              "bytes": 1024,
+              "src_addr": 238080,
+              "dst_addr": 624204222464
+            }
+          ],
+          "vf_span_us": 1.0618174076080322,
+          "write_drain_us": 0.35393890738487244,
+          "vector_ready_gap_us": 0.00303041934967041
+        },
+        {
+          "read": {
+            "pipe": "MTE2",
+            "name": "MOV_SRC_TO_DST_ALIGNv2",
+            "start_us": 4.206666946411133,
+            "end_us": 5.825454831123352,
+            "bytes": 65536,
+            "src_addr": 624198801408,
+            "dst_addr": 79360
+          },
+          "vf": [
+            {
+              "pipe": "PUSHQ",
+              "name": "VF",
+              "start_us": 6.595151901245117,
+              "end_us": 6.878788262605667,
+              "bytes": null,
+              "src_addr": null,
+              "dst_addr": null
+            },
+            {
+              "pipe": "PUSHQ",
+              "name": "VF",
+              "start_us": 6.839393615722656,
+              "end_us": 6.941817857325077,
+              "bytes": null,
+              "src_addr": null,
+              "dst_addr": null
+            },
+            {
+              "pipe": "PUSHQ",
+              "name": "VF",
+              "start_us": 6.905454635620117,
+              "end_us": 7.67878794670105,
+              "bytes": null,
+              "src_addr": null,
+              "dst_addr": null
+            }
+          ],
+          "writes": [
+            {
+              "pipe": "MTE3",
+              "name": "MOV_SRC_TO_DST_ALIGNv2",
+              "start_us": 7.682424545288086,
+              "end_us": 7.94121241569519,
+              "bytes": 32768,
+              "src_addr": 198400,
+              "dst_addr": 624203552768
+            },
+            {
+              "pipe": "MTE3",
+              "name": "MOV_SRC_TO_DST_ALIGNv2",
+              "start_us": 7.683030128479004,
+              "end_us": 8.03757557272911,
+              "bytes": 1024,
+              "src_addr": 239360,
+              "dst_addr": 624204223488
+            }
+          ],
+          "vf_span_us": 1.0836360454559326,
+          "write_drain_us": 0.3551510274410248,
+          "vector_ready_gap_us": 0.7696970701217651
+        }
+      ],
+      "prefix_us": 3.630303382873535,
+      "suffix_us": 0.009697589091956615,
+      "first_read_us": 1.93515145778656,
+      "pre_vector_fraction": 0.6919716962546402,
+      "flow_event_count": 64,
+      "causality_scope": "explicit phase order from source; trace overlap alone does not establish a flag dependency"
+    },
+    {
+      "id": "q2_test_wide",
+      "shape": [
+        1,
+        4096
+      ],
+      "trace_sha256": "5f53c3afe7623ac54df82c022939e9293ca54ed11124d10617d9a0e08612bcf3",
+      "core": "core19.veccore0",
+      "reference_us": 5.6860604314133525,
+      "iterations": [
+        {
+          "read": {
+            "pipe": "MTE2",
+            "name": "MOV_SRC_TO_DST_ALIGNv2",
+            "start_us": 3.2345452308654785,
+            "end_us": 3.687878578901291,
+            "bytes": 512,
+            "src_addr": 624191534080,
+            "dst_addr": 0
+          },
+          "vf": [
+            {
+              "pipe": "PUSHQ",
+              "name": "VF",
+              "start_us": 3.6909093856811523,
+              "end_us": 3.963636666536331,
+              "bytes": null,
+              "src_addr": null,
+              "dst_addr": null
+            },
+            {
+              "pipe": "PUSHQ",
+              "name": "VF",
+              "start_us": 3.939999580383301,
+              "end_us": 4.008484430611134,
+              "bytes": null,
+              "src_addr": null,
+              "dst_addr": null
+            },
+            {
+              "pipe": "PUSHQ",
+              "name": "VF",
+              "start_us": 3.9848480224609375,
+              "end_us": 4.041211657226086,
+              "bytes": null,
+              "src_addr": null,
+              "dst_addr": null
+            }
+          ],
+          "writes": [
+            {
+              "pipe": "MTE3",
+              "name": "MOV_SRC_TO_DST_ALIGNv2",
+              "start_us": 4.044848442077637,
+              "end_us": 4.136363595724106,
+              "bytes": 256,
+              "src_addr": 158720,
+              "dst_addr": 624191538688
+            },
+            {
+              "pipe": "MTE3",
+              "name": "MOV_SRC_TO_DST_ALIGNv2",
+              "start_us": 4.049696922302246,
+              "end_us": 5.676363587379456,
+              "bytes": 8,
+              "src_addr": 238080,
+              "dst_addr": 624191539312
+            }
+          ],
+          "vf_span_us": 0.3503022715449333,
+          "write_drain_us": 1.6315151453018188,
+          "vector_ready_gap_us": 0.00303080677986145
+        }
+      ],
+      "prefix_us": 3.2345452308654785,
+      "suffix_us": 0.009696844033896923,
+      "first_read_us": 0.4533333480358124,
+      "pre_vector_fraction": 0.6491153990010837,
+      "flow_event_count": 16,
+      "causality_scope": "explicit phase order from source; trace overlap alone does not establish a flag dependency"
+    },
+    {
+      "id": "q2_test_ub_loop",
+      "shape": [
+        640,
+        4096
+      ],
+      "trace_sha256": "997c3db4b3a304366ba0d379ea08fe7593d014df876a155038fad791153c59f3",
+      "core": "core17.veccore0",
+      "reference_us": 6.217575552873313,
+      "iterations": [
+        {
+          "read": {
+            "pipe": "MTE2",
+            "name": "MOV_SRC_TO_DST_ALIGNv2",
+            "start_us": 3.326666831970215,
+            "end_us": 4.5333335399627686,
+            "bytes": 40960,
+            "src_addr": 624194312192,
+            "dst_addr": 0
+          },
+          "vf": [
+            {
+              "pipe": "PUSHQ",
+              "name": "VF",
+              "start_us": 4.53636360168457,
+              "end_us": 4.715151473879814,
+              "bytes": null,
+              "src_addr": null,
+              "dst_addr": null
+            },
+            {
+              "pipe": "PUSHQ",
+              "name": "VF",
+              "start_us": 4.680000305175781,
+              "end_us": 4.764242731034756,
+              "bytes": null,
+              "src_addr": null,
+              "dst_addr": null
+            },
+            {
+              "pipe": "PUSHQ",
+              "name": "VF",
+              "start_us": 4.729090690612793,
+              "end_us": 5.232120990753174,
+              "bytes": null,
+              "src_addr": null,
+              "dst_addr": null
+            }
+          ],
+          "writes": [
+            {
+              "pipe": "MTE3",
+              "name": "MOV_SRC_TO_DST_ALIGNv2",
+              "start_us": 5.235757827758789,
+              "end_us": 5.581212371587753,
+              "bytes": 20480,
+              "src_addr": 158720,
+              "dst_addr": 624198162432
+            },
+            {
+              "pipe": "MTE3",
+              "name": "MOV_SRC_TO_DST_ALIGNv2",
+              "start_us": 5.236363410949707,
+              "end_us": 5.601817965507507,
+              "bytes": 640,
+              "src_addr": 238080,
+              "dst_addr": 624199434752
+            }
+          ],
+          "vf_span_us": 0.6957573890686035,
+          "write_drain_us": 0.36606013774871826,
+          "vector_ready_gap_us": 0.003030061721801758
+        },
+        {
+          "read": {
+            "pipe": "MTE2",
+            "name": "MOV_SRC_TO_DST_ALIGNv2",
+            "start_us": 4.318787574768066,
+            "end_us": 5.155151188373566,
+            "bytes": 40960,
+            "src_addr": 624194353152,
+            "dst_addr": 79360
+          },
+          "vf": [
+            {
+              "pipe": "PUSHQ",
+              "name": "VF",
+              "start_us": 5.197575569152832,
+              "end_us": 5.398787692189217,
+              "bytes": null,
+              "src_addr": null,
+              "dst_addr": null
+            },
+            {
+              "pipe": "PUSHQ",
+              "name": "VF",
+              "start_us": 5.363636016845703,
+              "end_us": 5.448484502732754,
+              "bytes": null,
+              "src_addr": null,
+              "dst_addr": null
+            },
+            {
+              "pipe": "PUSHQ",
+              "name": "VF",
+              "start_us": 5.412727355957031,
+              "end_us": 5.919394016265869,
+              "bytes": null,
+              "src_addr": null,
+              "dst_addr": null
+            }
+          ],
+          "writes": [
+            {
+              "pipe": "MTE3",
+              "name": "MOV_SRC_TO_DST_ALIGNv2",
+              "start_us": 5.923029899597168,
+              "end_us": 6.149696573615074,
+              "bytes": 20480,
+              "src_addr": 198400,
+              "dst_addr": 624198182912
+            },
+            {
+              "pipe": "MTE3",
+              "name": "MOV_SRC_TO_DST_ALIGNv2",
+              "start_us": 5.923636436462402,
+              "end_us": 6.207878857851028,
+              "bytes": 640,
+              "src_addr": 239360,
+              "dst_addr": 624199435392
+            }
+          ],
+          "vf_span_us": 0.7218184471130371,
+          "write_drain_us": 0.2848489582538605,
+          "vector_ready_gap_us": 0.04242438077926636
+        }
+      ],
+      "prefix_us": 3.326666831970215,
+      "suffix_us": 0.009696695022284985,
+      "first_read_us": 1.2066667079925537,
+      "pre_vector_fraction": 0.7296032936163022,
+      "flow_event_count": 64,
+      "causality_scope": "explicit phase order from source; trace overlap alone does not establish a flag dependency"
+    },
+    {
+      "id": "import_v1_q_test_wave",
+      "shape": [
+        33,
+        768
+      ],
+      "trace_sha256": "01a023a25495ecec2b0f202fdbecd83140acd60c1da71072ceeef572ed0b8b96",
+      "core": "core17.veccore0",
+      "reference_us": 5.209697249345481,
+      "iterations": [
+        {
+          "read": {
+            "pipe": "MTE2",
+            "name": "MOV_SRC_TO_DST_ALIGNv2",
+            "start_us": 3.010909080505371,
+            "end_us": 3.5078787803649902,
+            "bytes": 1024,
+            "src_addr": 624191555584,
+            "dst_addr": 0
+          },
+          "vf": [
+            {
+              "pipe": "PUSHQ",
+              "name": "VF",
+              "start_us": 3.510909080505371,
+              "end_us": 4.1515151262283325,
+              "bytes": null,
+              "src_addr": null,
+              "dst_addr": null
+            },
+            {
+              "pipe": "PUSHQ",
+              "name": "VF",
+              "start_us": 4.124848365783691,
+              "end_us": 4.182424124330282,
+              "bytes": null,
+              "src_addr": null,
+              "dst_addr": null
+            },
+            {
+              "pipe": "PUSHQ",
+              "name": "VF",
+              "start_us": 4.159394264221191,
+              "end_us": 4.219394262880087,
+              "bytes": null,
+              "src_addr": null,
+              "dst_addr": null
+            }
+          ],
+          "writes": [
+            {
+              "pipe": "MTE3",
+              "name": "MOV_SRC_TO_DST_ALIGNv2",
+              "start_us": 4.223030090332031,
+              "end_us": 4.404242217540741,
+              "bytes": 512,
+              "src_addr": 158720,
+              "dst_addr": 624191591936
+            },
+            {
+              "pipe": "MTE3",
+              "name": "MOV_SRC_TO_DST_ALIGNv2",
+              "start_us": 4.223636627197266,
+              "end_us": 5.200000286102295,
+              "bytes": 16,
+              "src_addr": 238080,
+              "dst_addr": 624191603648
+            }
+          ],
+          "vf_span_us": 0.7084851823747158,
+          "write_drain_us": 0.9769701957702637,
+          "vector_ready_gap_us": 0.0030303001403808594
+        }
+      ],
+      "prefix_us": 3.010909080505371,
+      "suffix_us": 0.009696963243186474,
+      "first_read_us": 0.49696969985961914,
+      "pre_vector_fraction": 0.6739180632706561,
+      "flow_event_count": 34,
+      "causality_scope": "explicit phase order from source; trace overlap alone does not establish a flag dependency"
+    },
+    {
+      "id": "import_v1_q_cal_small",
+      "shape": [
+        4,
+        256
+      ],
+      "trace_sha256": "624d1d077cc802d35f4cba1ffb939d129bfd14b3e45bc2bf939f1538e30801c3",
+      "core": "core0.veccore0",
+      "reference_us": 4.588485243730247,
+      "iterations": [
+        {
+          "read": {
+            "pipe": "MTE2",
+            "name": "MOV_SRC_TO_DST_ALIGNv2",
+            "start_us": 3.074545383453369,
+            "end_us": 3.759393870830536,
+            "bytes": 512,
+            "src_addr": 624191526912,
+            "dst_addr": 0
+          },
+          "vf": [
+            {
+              "pipe": "PUSHQ",
+              "name": "VF",
+              "start_us": 3.7624244689941406,
+              "end_us": 3.936363860964775,
+              "bytes": null,
+              "src_addr": null,
+              "dst_addr": null
+            },
+            {
+              "pipe": "PUSHQ",
+              "name": "VF",
+              "start_us": 3.9127273559570312,
+              "end_us": 3.967878870666027,
+              "bytes": null,
+              "src_addr": null,
+              "dst_addr": null
+            },
+            {
+              "pipe": "PUSHQ",
+              "name": "VF",
+              "start_us": 3.944242477416992,
+              "end_us": 4.00060611218214,
+              "bytes": null,
+              "src_addr": null,
+              "dst_addr": null
+            }
+          ],
+          "writes": [
+            {
+              "pipe": "MTE3",
+              "name": "MOV_SRC_TO_DST_ALIGNv2",
+              "start_us": 4.004241943359375,
+              "end_us": 4.1951510310173035,
+              "bytes": 256,
+              "src_addr": 158720,
+              "dst_addr": 624191528960
+            },
+            {
+              "pipe": "MTE3",
+              "name": "MOV_SRC_TO_DST_ALIGNv2",
+              "start_us": 4.004848480224609,
+              "end_us": 4.578787863254547,
+              "bytes": 8,
+              "src_addr": 238080,
+              "dst_addr": 624191529984
+            }
+          ],
+          "vf_span_us": 0.23818164318799973,
+          "write_drain_us": 0.5745459198951721,
+          "vector_ready_gap_us": 0.0030305981636047363
+        }
+      ],
+      "prefix_us": 3.074545383453369,
+      "suffix_us": 0.009697380475699902,
+      "first_read_us": 0.6848484873771667,
+      "pre_vector_fraction": 0.8199709204982528,
+      "flow_event_count": 4,
+      "causality_scope": "explicit phase order from source; trace overlap alone does not establish a flag dependency"
+    },
+    {
+      "id": "import_v1_q_cal_decode",
+      "shape": [
+        17,
+        512
+      ],
+      "trace_sha256": "50d49db1f983a565f018717147caef1a7c2b0d374d5b5443aff0cc1058f655b7",
+      "core": "core17.veccore1",
+      "reference_us": 5.790302756242454,
+      "iterations": [
+        {
+          "read": {
+            "pipe": "MTE2",
+            "name": "MOV_SRC_TO_DST_ALIGNv2",
+            "start_us": 3.1872730255126953,
+            "end_us": 3.6369699835777283,
+            "bytes": 512,
+            "src_addr": 624191537152,
+            "dst_addr": 0
+          },
+          "vf": [
+            {
+              "pipe": "PUSHQ",
+              "name": "VF",
+              "start_us": 3.640000343322754,
+              "end_us": 4.020000338554382,
+              "bytes": null,
+              "src_addr": null,
+              "dst_addr": null
+            },
+            {
+              "pipe": "PUSHQ",
+              "name": "VF",
+              "start_us": 3.996363639831543,
+              "end_us": 4.051515154540539,
+              "bytes": null,
+              "src_addr": null,
+              "dst_addr": null
+            },
+            {
+              "pipe": "PUSHQ",
+              "name": "VF",
+              "start_us": 4.027878761291504,
+              "end_us": 4.084242396056652,
+              "bytes": null,
+              "src_addr": null,
+              "dst_addr": null
+            }
+          ],
+          "writes": [
+            {
+              "pipe": "MTE3",
+              "name": "MOV_SRC_TO_DST_ALIGNv2",
+              "start_us": 4.087879180908203,
+              "end_us": 4.269091308116913,
+              "bytes": 256,
+              "src_addr": 158720,
+              "dst_addr": 624191549440
+            },
+            {
+              "pipe": "MTE3",
+              "name": "MOV_SRC_TO_DST_ALIGNv2",
+              "start_us": 4.088484764099121,
+              "end_us": 5.780606031417847,
+              "bytes": 8,
+              "src_addr": 238080,
+              "dst_addr": 624191553184
+            }
+          ],
+          "vf_span_us": 0.44424205273389816,
+          "write_drain_us": 1.6927268505096436,
+          "vector_ready_gap_us": 0.0030303597450256348
+        }
+      ],
+      "prefix_us": 3.1872730255126953,
+      "suffix_us": 0.009696724824607372,
+      "first_read_us": 0.44969695806503296,
+      "pre_vector_fraction": 0.6286373090592741,
+      "flow_event_count": 34,
+      "causality_scope": "explicit phase order from source; trace overlap alone does not establish a flag dependency"
+    },
+    {
+      "id": "import_v1_q_test_tail",
+      "shape": [
+        8,
+        384
+      ],
+      "trace_sha256": "a5e98b6f195adfcf686ed66da474a338cd5e1c2c891629852c5dc690f219eab3",
+      "core": "core1.veccore1",
+      "reference_us": 5.7599997548386455,
+      "iterations": [
+        {
+          "read": {
+            "pipe": "MTE2",
+            "name": "MOV_SRC_TO_DST_ALIGNv2",
+            "start_us": 2.9315152168273926,
+            "end_us": 3.6751515865325928,
+            "bytes": 256,
+            "src_addr": 624191528192,
+            "dst_addr": 0
+          },
+          "vf": [
+            {
+              "pipe": "PUSHQ",
+              "name": "VF",
+              "start_us": 3.6781816482543945,
+              "end_us": 3.718787707388401,
+              "bytes": null,
+              "src_addr": null,
+              "dst_addr": null
+            },
+            {
+              "pipe": "PUSHQ",
+              "name": "VF",
+              "start_us": 3.6951513290405273,
+              "end_us": 3.8212119340896606,
+              "bytes": null,
+              "src_addr": null,
+              "dst_addr": null
+            },
+            {
+              "pipe": "PUSHQ",
+              "name": "VF",
+              "start_us": 3.7975759506225586,
+              "end_us": 3.8539395853877068,
+              "bytes": null,
+              "src_addr": null,
+              "dst_addr": null
+            }
+          ],
+          "writes": [
+            {
+              "pipe": "MTE3",
+              "name": "MOV_SRC_TO_DST_ALIGNv2",
+              "start_us": 3.8575754165649414,
+              "end_us": 3.9412117823958397,
+              "bytes": 128,
+              "src_addr": 158720,
+              "dst_addr": 624191533696
+            },
+            {
+              "pipe": "MTE3",
+              "name": "MOV_SRC_TO_DST_ALIGNv2",
+              "start_us": 3.858181953430176,
+              "end_us": 5.750303149223328,
+              "bytes": 4,
+              "src_addr": 238080,
+              "dst_addr": 624191536148
+            }
+          ],
+          "vf_span_us": 0.17575793713331223,
+          "write_drain_us": 1.8927277326583862,
+          "vector_ready_gap_us": 0.003030061721801758
+        }
+      ],
+      "prefix_us": 2.9315152168273926,
+      "suffix_us": 0.009696605615317822,
+      "first_read_us": 0.7436363697052002,
+      "pre_vector_fraction": 0.6385732300013668,
+      "flow_event_count": 16,
+      "causality_scope": "explicit phase order from source; trace overlap alone does not establish a flag dependency"
+    },
+    {
+      "id": "import_v1_q_cal_prefill",
+      "shape": [
+        64,
+        1024
+      ],
+      "trace_sha256": "4208b2c1638b8d079c87ccbee28b57c71147ac743cd329765341c8799fe4bbf0",
+      "core": "core16.veccore0",
+      "reference_us": 5.531515601091087,
+      "iterations": [
+        {
+          "read": {
+            "pipe": "MTE2",
+            "name": "MOV_SRC_TO_DST_ALIGNv2",
+            "start_us": 3.6260604858398438,
+            "end_us": 4.264848351478577,
+            "bytes": 2048,
+            "src_addr": 624191592448,
+            "dst_addr": 0
+          },
+          "vf": [
+            {
+              "pipe": "PUSHQ",
+              "name": "VF",
+              "start_us": 4.267878532409668,
+              "end_us": 5.251514911651611,
+              "bytes": null,
+              "src_addr": null,
+              "dst_addr": null
+            },
+            {
+              "pipe": "PUSHQ",
+              "name": "VF",
+              "start_us": 5.222424507141113,
+              "end_us": 5.282424505800009,
+              "bytes": null,
+              "src_addr": null,
+              "dst_addr": null
+            },
+            {
+              "pipe": "PUSHQ",
+              "name": "VF",
+              "start_us": 5.259393692016602,
+              "end_us": 5.331514902412891,
+              "bytes": null,
+              "src_addr": null,
+              "dst_addr": null
+            }
+          ],
+          "writes": [
+            {
+              "pipe": "MTE3",
+              "name": "MOV_SRC_TO_DST_ALIGNv2",
+              "start_us": 5.335151672363281,
+              "end_us": 5.520606219768524,
+              "bytes": 1024,
+              "src_addr": 158720,
+              "dst_addr": 624191690752
+            },
+            {
+              "pipe": "MTE3",
+              "name": "MOV_SRC_TO_DST_ALIGNv2",
+              "start_us": 5.335757255554199,
+              "end_us": 5.521817862987518,
+              "bytes": 32,
+              "src_addr": 238080,
+              "dst_addr": 624191724544
+            }
+          ],
+          "vf_span_us": 1.0636363700032234,
+          "write_drain_us": 0.18666619062423706,
+          "vector_ready_gap_us": 0.0030301809310913086
+        }
+      ],
+      "prefix_us": 3.6260604858398438,
+      "suffix_us": 0.009697738103568554,
+      "first_read_us": 0.6387878656387329,
+      "pre_vector_fraction": 0.771556810138587,
+      "flow_event_count": 64,
+      "causality_scope": "explicit phase order from source; trace overlap alone does not establish a flag dependency"
+    },
+    {
+      "id": "q3_test_small",
+      "shape": [
+        512,
+        256
+      ],
+      "trace_sha256": "d083b899d40a3628f4736640c1a11e2665b268944f6ecce9a3d0f98838736262",
+      "core": "core27.veccore0",
+      "reference_us": 5.207878592424095,
+      "iterations": [
+        {
+          "read": {
+            "pipe": "MTE2",
+            "name": "MOV_SRC_TO_DST_ALIGNv2",
+            "start_us": 3.306060791015625,
+            "end_us": 4.012121379375458,
+            "bytes": 4096,
+            "src_addr": 624191748096,
+            "dst_addr": 0
+          },
+          "vf": [
+            {
+              "pipe": "PUSHQ",
+              "name": "VF",
+              "start_us": 4.015151023864746,
+              "end_us": 4.853332817554474,
+              "bytes": null,
+              "src_addr": null,
+              "dst_addr": null
+            },
+            {
+              "pipe": "PUSHQ",
+              "name": "VF",
+              "start_us": 4.821211814880371,
+              "end_us": 4.884242117404938,
+              "bytes": null,
+              "src_addr": null,
+              "dst_addr": null
+            },
+            {
+              "pipe": "PUSHQ",
+              "name": "VF",
+              "start_us": 4.861211776733398,
+              "end_us": 4.955151170492172,
+              "bytes": null,
+              "src_addr": null,
+              "dst_addr": null
+            }
+          ],
+          "writes": [
+            {
+              "pipe": "MTE3",
+              "name": "MOV_SRC_TO_DST_ALIGNv2",
+              "start_us": 4.95878791809082,
+              "end_us": 5.160606101155281,
+              "bytes": 2048,
+              "src_addr": 158720,
+              "dst_addr": 624191899648
+            },
+            {
+              "pipe": "MTE3",
+              "name": "MOV_SRC_TO_DST_ALIGNv2",
+              "start_us": 4.959393501281738,
+              "end_us": 5.198181375861168,
+              "bytes": 64,
+              "src_addr": 238080,
+              "dst_addr": 624191923584
+            }
+          ],
+          "vf_span_us": 0.9400001466274261,
+          "write_drain_us": 0.2393934577703476,
+          "vector_ready_gap_us": 0.00302964448928833
+        }
+      ],
+      "prefix_us": 3.306060791015625,
+      "suffix_us": 0.00969721656292677,
+      "first_read_us": 0.7060605883598328,
+      "pre_vector_fraction": 0.7709763107199906,
+      "flow_event_count": 64,
+      "causality_scope": "explicit phase order from source; trace overlap alone does not establish a flag dependency"
+    },
+    {
+      "id": "q3_test_one_ub",
+      "shape": [
+        576,
+        4096
+      ],
+      "trace_sha256": "b14575b50f4967d7fd973bdb4cda7946fad7078fd578252d15ce653f24a65d1d",
+      "core": "core20.veccore0",
+      "reference_us": 6.948485377244651,
+      "iterations": [
+        {
+          "read": {
+            "pipe": "MTE2",
+            "name": "MOV_SRC_TO_DST_ALIGNv2",
+            "start_us": 3.3981823921203613,
+            "end_us": 4.911515712738037,
+            "bytes": 73728,
+            "src_addr": 624194476032,
+            "dst_addr": 0
+          },
+          "vf": [
+            {
+              "pipe": "PUSHQ",
+              "name": "VF",
+              "start_us": 4.91454553604126,
+              "end_us": 5.436969757080078,
+              "bytes": null,
+              "src_addr": null,
+              "dst_addr": null
+            },
+            {
+              "pipe": "PUSHQ",
+              "name": "VF",
+              "start_us": 5.401818752288818,
+              "end_us": 5.504242993891239,
+              "bytes": null,
+              "src_addr": null,
+              "dst_addr": null
+            },
+            {
+              "pipe": "PUSHQ",
+              "name": "VF",
+              "start_us": 5.467273235321045,
+              "end_us": 6.320606589317322,
+              "bytes": null,
+              "src_addr": null,
+              "dst_addr": null
+            }
+          ],
+          "writes": [
+            {
+              "pipe": "MTE3",
+              "name": "MOV_SRC_TO_DST_ALIGNv2",
+              "start_us": 6.324242115020752,
+              "end_us": 6.907272398471832,
+              "bytes": 36864,
+              "src_addr": 158720,
+              "dst_addr": 624197720064
+            },
+            {
+              "pipe": "MTE3",
+              "name": "MOV_SRC_TO_DST_ALIGNv2",
+              "start_us": 6.324848651885986,
+              "end_us": 6.938788056373596,
+              "bytes": 1152,
+              "src_addr": 238080,
+              "dst_addr": 624198650880
+            }
+          ],
+          "vf_span_us": 1.406061053276062,
+          "write_drain_us": 0.6145459413528442,
+          "vector_ready_gap_us": 0.0030298233032226562
+        }
+      ],
+      "prefix_us": 3.3981823921203613,
+      "suffix_us": 0.009697320871055126,
+      "first_read_us": 1.5133333206176758,
+      "pre_vector_fraction": 0.7072829932312632,
+      "flow_event_count": 64,
+      "causality_scope": "explicit phase order from source; trace overlap alone does not establish a flag dependency"
+    },
+    {
+      "id": "q3_test_two_ub",
+      "shape": [
+        768,
+        4096
+      ],
+      "trace_sha256": "5783842a28e7e7c3d2bc9208f35790eade883d00b6be46911150c328786ea592",
+      "core": "core25.veccore0",
+      "reference_us": 7.202424052171409,
+      "iterations": [
+        {
+          "read": {
+            "pipe": "MTE2",
+            "name": "MOV_SRC_TO_DST_ALIGNv2",
+            "start_us": 3.6139397621154785,
+            "end_us": 5.2387882471084595,
+            "bytes": 49152,
+            "src_addr": 624196442112,
+            "dst_addr": 0
+          },
+          "vf": [
+            {
+              "pipe": "PUSHQ",
+              "name": "VF",
+              "start_us": 5.241817951202393,
+              "end_us": 5.446060374379158,
+              "bytes": null,
+              "src_addr": null,
+              "dst_addr": null
+            },
+            {
+              "pipe": "PUSHQ",
+              "name": "VF",
+              "start_us": 5.410909175872803,
+              "end_us": 5.500606141984463,
+              "bytes": null,
+              "src_addr": null,
+              "dst_addr": null
+            },
+            {
+              "pipe": "PUSHQ",
+              "name": "VF",
+              "start_us": 5.464242458343506,
+              "end_us": 6.061818242073059,
+              "bytes": null,
+              "src_addr": null,
+              "dst_addr": null
+            }
+          ],
+          "writes": [
+            {
+              "pipe": "MTE3",
+              "name": "MOV_SRC_TO_DST_ALIGNv2",
+              "start_us": 6.065454959869385,
+              "end_us": 6.337576180696487,
+              "bytes": 24576,
+              "src_addr": 158720,
+              "dst_addr": 624200275968
+            },
+            {
+              "pipe": "MTE3",
+              "name": "MOV_SRC_TO_DST_ALIGNv2",
+              "start_us": 6.066060543060303,
+              "end_us": 6.401212066411972,
+              "bytes": 768,
+              "src_addr": 238080,
+              "dst_addr": 624201040896
+            }
+          ],
+          "vf_span_us": 0.8200002908706665,
+          "write_drain_us": 0.3357571065425873,
+          "vector_ready_gap_us": 0.0030297040939331055
+        },
+        {
+          "read": {
+            "pipe": "MTE2",
+            "name": "MOV_SRC_TO_DST_ALIGNv2",
+            "start_us": 4.068484783172607,
+            "end_us": 5.39393937587738,
+            "bytes": 49152,
+            "src_addr": 624196491264,
+            "dst_addr": 79360
+          },
+          "vf": [
+            {
+              "pipe": "PUSHQ",
+              "name": "VF",
+              "start_us": 6.02666711807251,
+              "end_us": 6.253939852118492,
+              "bytes": null,
+              "src_addr": null,
+              "dst_addr": null
+            },
+            {
+              "pipe": "PUSHQ",
+              "name": "VF",
+              "start_us": 6.218787670135498,
+              "end_us": 6.310302823781967,
+              "bytes": null,
+              "src_addr": null,
+              "dst_addr": null
+            },
+            {
+              "pipe": "PUSHQ",
+              "name": "VF",
+              "start_us": 6.272120952606201,
+              "end_us": 6.870908856391907,
+              "bytes": null,
+              "src_addr": null,
+              "dst_addr": null
+            }
+          ],
+          "writes": [
+            {
+              "pipe": "MTE3",
+              "name": "MOV_SRC_TO_DST_ALIGNv2",
+              "start_us": 6.874545574188232,
+              "end_us": 7.122424364089966,
+              "bytes": 24576,
+              "src_addr": 198400,
+              "dst_addr": 624200300544
+            },
+            {
+              "pipe": "MTE3",
+              "name": "MOV_SRC_TO_DST_ALIGNv2",
+              "start_us": 6.875152111053467,
+              "end_us": 7.192727863788605,
+              "bytes": 768,
+              "src_addr": 239360,
+              "dst_addr": 624201041664
+            }
+          ],
+          "vf_span_us": 0.844241738319397,
+          "write_drain_us": 0.3181822896003723,
+          "vector_ready_gap_us": 0.6327277421951294
+        }
+      ],
+      "prefix_us": 3.6139397621154785,
+      "suffix_us": 0.009696188382804394,
+      "first_read_us": 1.624848484992981,
+      "pre_vector_fraction": 0.7277852446943989,
+      "flow_event_count": 64,
+      "causality_scope": "explicit phase order from source; trace overlap alone does not establish a flag dependency"
+    }
+  ]
+}

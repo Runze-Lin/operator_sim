@@ -34,7 +34,7 @@ def main():
     parser.add_argument('--attempt', type=int, default=1)
     parser.add_argument('--case-timeout', type=int)
     parser.add_argument('--profiler-timeout', type=int)
-    parser.add_argument('--version', choices=['0.1','0.2','0.3'], default='0.1')
+    parser.add_argument('--version', choices=['0.1','0.2','0.3','0.4'], default='0.1')
     args = parser.parse_args()
     generation = 'v' + args.version.split('.')[-1]
     spec_path = ROOT / ('configs/sampling-' + generation + '.json')

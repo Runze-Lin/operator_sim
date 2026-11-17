@@ -179,17 +179,21 @@ int main(int argc,char** argv) {
             for (size_t i=0;i<dims.size();++i) {
                 std::string arg=argv[i+2];size_t used=0;
                 dims[i]=std::stoi(arg,&used);
-                if(used!=arg.size() || dims[i]<1 || dims[i]>4096) throw std::runtime_error("Dimension outside [1,4096]");
+                if(used!=arg.size() || dims[i]<1 || dims[i]>1048576) throw std::runtime_error("Dimension outside [1,1048576]");
             }
         }
         if (name=="quant" && dims[1]%64) throw std::runtime_error("This quant golden requires cols divisible by 64");
+        const int64_t work_limit = (name=="fa" ? 512LL : 64LL)*1024*1024;
         int64_t work=1;
         for(auto dimension:dims) {
-            if(work>64*1024*1024/dimension) throw std::runtime_error("Small-case work budget exceeded");
+            if(work>work_limit/dimension) throw std::runtime_error("Bounded-case work budget exceeded");
             work*=dimension;
         }
-        if (name!="quant" && work>64*1024*1024)
-            throw std::runtime_error("CPU golden work exceeds small-case budget");
+        if (name=="fa") {
+            int64_t bh = dims.size()==5 ? int64_t(dims[3])*dims[4] : 1;
+            if (int64_t(std::max(dims[0],dims[1]))*dims[2]*bh > 64LL*1024*1024)
+                throw std::runtime_error("FA input allocation exceeds 64M elements per tensor");
+        }
         ACL_CHECK(aclInit(nullptr));initialized=true;
         ACL_CHECK(aclrtSetDevice(0));device=true;
         const char* soc=aclrtGetSocName();
