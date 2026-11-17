@@ -33,8 +33,8 @@ def metrics(rows,field):
             'signed_bias_us':statistics.mean(errors)}
 
 
-def benchmark(model_path,cases):
-    start=time.perf_counter_ns();predictor=Predictor(model_path)
+def benchmark(model_path,cases,predictor_class=Predictor,case_class=Case,cold_module='operator_model.model'):
+    start=time.perf_counter_ns();predictor=predictor_class(model_path)
     load_us=(time.perf_counter_ns()-start)/1000
     # Warm interpreter and use shape diversity. Uncached means full plan,
     # cost evaluation and immutable result construction, not a different API.
@@ -51,15 +51,15 @@ def benchmark(model_path,cases):
     begin=time.perf_counter_ns();predictor.predict_many(batch)
     batch_ns=time.perf_counter_ns()-begin
     tracemalloc.start()
-    cache=Predictor(model_path,cache_size=4096)
-    for i in range(4096):cache.predict(Case('quant',(i+1,256)))
+    cache=predictor_class(model_path,cache_size=4096)
+    for i in range(4096):cache.predict(case_class('quant',(i+1,256)))
     current,peak=tracemalloc.get_traced_memory();tracemalloc.stop()
     # Pure Python cold process, including interpreter/import/JSON load/one prediction.
     cold=[]
     for _ in range(5):
         begin=time.perf_counter()
         subprocess.run([sys.executable,'-c',
-            "from operator_model.model import Predictor,Case; Predictor('results/v0.1/model.json').predict(Case('quant',(4,256)))"],
+            f"from {cold_module} import Predictor,Case; Predictor({str(model_path)!r}).predict(Case('quant',(4,256)))"],
             cwd=ROOT,check=True,stdout=subprocess.DEVNULL)
         cold.append((time.perf_counter()-begin)*1000)
     return {'python':sys.version,'model_load_us':load_us,**samples,
@@ -77,9 +77,16 @@ def main():
     if sha256(ROOT/'configs/sampling-v1.json')!=frozen['manifest_sha256']:
         raise SystemExit('Frozen sampling manifest changed')
     data=json.loads((out/'dataset.json').read_text())
+    if len({r['case']['id'] for r in data['records']})!=len(data['records']):
+        raise SystemExit('Duplicate case IDs: choose a single versioned experiment')
     records={r['case']['id']:r for r in data['records']}
     spec=json.loads((ROOT/'configs/sampling-v1.json').read_text())
     predictor=Predictor(out/'model.json')
+    for r in data['records']:
+        if json.dumps(r['identity'],sort_keys=True)!=json.dumps(predictor.model['identity'],sort_keys=True):
+            raise SystemExit('Measurement identity differs from calibrated model')
+    if {r['cache_key'] for r in data['records'] if r['case']['split']=='calibration'}!=set(predictor.model['training_keys']):
+        raise SystemExit('Training records changed after freezing')
     rows=[];incomplete=[]
     for item in frozen['predictions']:
         r=records.get(item['id'])
@@ -103,8 +110,9 @@ def main():
                     'predicted_cores':[p['plan']['active_aic'],p['plan']['active_aiv']],
                     'observed_cores':[measurement['active_aic'],measurement['active_aiv']],
                     'kernel_seen_in_calibration':measurement['kernel'] in predictor.model['operators'][item['op']]['kernels'],
-                    'predicted_max_core_compute_opcodes':expected_count,
-                    'observed_max_core_compute_opcodes':observed_count,
+                    'instruction_family':'RV_* including load/store/control' if item['op']=='quant' else 'MMAD',
+                    'predicted_max_core_selected_opcode_count':expected_count,
+                    'observed_max_core_selected_opcode_count':observed_count,
                     'ca_wall_seconds':r['wall_seconds'],'ca_cpu_seconds':r['cpu_seconds'],'raw_bytes':r['raw_bytes']})
         row['mapping_matches']=row['predicted_cores']==row['observed_cores']
         rows.append(row)
@@ -135,6 +143,9 @@ def main():
                 'cpu_seconds':sum(r['cpu_seconds'] for r in records.values()),
                 'raw_bytes':sum(r['raw_bytes'] for r in records.values())},
             'scope':'uniform-weight small synthetic holdouts; no full-model, true hardware or cross-generation validation'}
+    for r in data['records']:
+        if r['case']['split']=='holdout' and datetime.fromisoformat(r['finished_utc'])<=datetime.fromisoformat(frozen['frozen_utc']):
+            raise SystemExit('Holdout measurement predates frozen predictions')
     (out/'evaluation.json').write_text(json.dumps(result,indent=2)+'\n')
     lines=['# v0.1 CA 校准与留出误差报告','',
         '预测在采集留出集前冻结；下表均对比跨核指令时间窗，不含 host enqueue 或指令窗外的设备调度。',
@@ -160,7 +171,7 @@ def main():
     lines+=['','每个基准仅复测一次，不能据此给出统计置信区间。','',
         '## 限制与诊断','',
         '- 正确性、采集失败与超时不当作延迟样本；未完成项：'+json.dumps(incomplete,ensure_ascii=False),
-        '- `evaluation.json` 逐点记录分核偏差、kernel 是否在校准集出现、计算指令计数偏差；这些是诊断线索，不把相关性写成确定根因。',
+        '- `evaluation.json` 逐点记录分核偏差、kernel 是否在校准集出现、选定指令族计数偏差（quant 为 RV_*，含 load/store/control；matmul/FA 为 MMAD）；这些是诊断线索，不把相关性写成确定根因。',
         '- 校准成本包含 CA 中的延迟/等待影响；busy 区间并集不是执行吞吐峰值。v0.1 不输出未经独立校验的 ideal/CA 效率。',
         '- 本轮不根据留出结果重新调参。未达标的分支应新增校准点并使用新的留出集验收下一版。','']
     (out/'report.md').write_text('\n'.join(lines))

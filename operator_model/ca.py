@@ -65,6 +65,7 @@ def extract(directory, log_path):
             raise ValueError(f'{name}: timeline units/scope do not match profiler duration')
         intervals = defaultdict(list)
         counts = Counter()
+        matrix_shapes = Counter()
         cube_flops = 0
         for e in core_events:
             counts[e['tid']] += 1
@@ -73,6 +74,7 @@ def extract(directory, log_path):
                 intervals[e['tid']].append((e['ts'], e['ts'] + e['dur']))
             if e['name'] == 'MMAD' and all(k in detail for k in ('m', 'n', 'k')):
                 cube_flops += 2 * detail['m'] * detail['n'] * detail['k']
+                matrix_shapes[(detail['m'],detail['n'],detail['k'])] += 1
         path = report / 'simulator' / name / (name + '_instr_exe.csv')
         opcodes, pipe_counts = Counter(), Counter()
         with path.open() as stream:
@@ -92,6 +94,7 @@ def extract(directory, log_path):
             'busy_fraction_by_pipe': {p: t / (end - begin) for p, t in busy.items()},
             'dynamic_opcodes': dict(opcodes), 'dynamic_calls_by_pipe': dict(pipe_counts),
             'timeline_event_counts': dict(counts), 'executed_cube_flops': cube_flops,
+            'matrix_instruction_shapes': [{'m':m,'n':n,'k':k,'count':count} for (m,n,k),count in sorted(matrix_shapes.items())],
         })
     return {
         'reference_us': end - begin, 'reference_scope': 'cross-core instruction makespan',

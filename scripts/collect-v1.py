@@ -31,9 +31,19 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--split', choices=['calibration', 'holdout', 'repeat'], required=True)
     parser.add_argument('--case')
+    parser.add_argument('--attempt', type=int, default=1)
+    parser.add_argument('--case-timeout', type=int)
+    parser.add_argument('--profiler-timeout', type=int)
+    parser.add_argument('--version', choices=['0.1','0.2'], default='0.1')
     args = parser.parse_args()
-    spec = json.loads((ROOT / 'configs/sampling-v1.json').read_text())
-    run_root = ROOT / 'runs/model-v1'
+    generation = 'v1' if args.version == '0.1' else 'v2'
+    spec_path = ROOT / ('configs/sampling-' + generation + '.json')
+    out = ROOT / 'results' / ('v' + args.version)
+    implementation = ROOT / 'operator_model' / ('model.py' if args.version == '0.1' else 'model_v2.py')
+    spec = json.loads(spec_path.read_text())
+    if args.case and not any(c['id']==args.case and c['split']==args.split for c in spec['cases']):
+        raise SystemExit('Requested case is not in this split')
+    run_root = ROOT / 'runs' / ('model-' + generation)
     run_root.mkdir(parents=True, exist_ok=True)
     ledger_path = run_root / 'ledger.json'
     ledger = json.loads(ledger_path.read_text()) if ledger_path.exists() else []
@@ -48,20 +58,34 @@ def main():
         'input_pattern': 'deterministic-bf16-v1',
     }
     if args.split == 'holdout':
-        freeze = json.loads((ROOT / 'results/v0.1/frozen-predictions.json').read_text())
-        if freeze['model_sha256'] != sha256(ROOT / 'results/v0.1/model.json'):
+        freeze = json.loads((out / 'frozen-predictions.json').read_text())
+        if freeze['model_sha256'] != sha256(out / 'model.json'):
             raise SystemExit('Model changed after prediction freeze')
-        if freeze['manifest_sha256'] != sha256(ROOT / 'configs/sampling-v1.json'):
+        if freeze['manifest_sha256'] != sha256(spec_path):
             raise SystemExit('Sampling manifest changed after prediction freeze')
-        if freeze['implementation_sha256'] != sha256(ROOT / 'operator_model/model.py'):
+        if freeze['implementation_sha256'] != sha256(implementation):
             raise SystemExit('Predictor implementation changed after prediction freeze')
-    budget = spec['budget']
+        if 'shared_implementation_sha256' in freeze and freeze['shared_implementation_sha256'] != sha256(ROOT/'operator_model/model.py'):
+            raise SystemExit('Shared predictor implementation changed after prediction freeze')
+    budget = dict(spec['budget'])
+    if args.attempt < 1 or (args.attempt > 1 and not args.case):
+        raise SystemExit('Retries require an explicit --case and positive --attempt')
+    if args.case_timeout:
+        if not 1 <= args.case_timeout <= 600: raise SystemExit('Timeout must be within 600 seconds')
+        budget['case_timeout_seconds'] = args.case_timeout
+    if args.profiler_timeout:
+        if not 1 <= args.profiler_timeout <= 9: raise SystemExit('Profiler timeout must be within 9 minutes')
+        budget['profiler_timeout_minutes'] = args.profiler_timeout
     for case in spec['cases']:
         if case['split'] != args.split or (args.case and args.case != case['id']):
             continue
+        case_timeout = args.case_timeout or case.get('timeout_seconds',budget['case_timeout_seconds'])
+        profiler_timeout = args.profiler_timeout or case.get('profiler_timeout_minutes',budget['profiler_timeout_minutes'])
+        if not 1 <= case_timeout <= 600 or not 1 <= profiler_timeout <= 9:
+            raise SystemExit('Per-case timeout outside bounded slow-case policy')
         key_input = {'identity': identity, 'op': case['op'], 'shape': case['shape'], 'attrs': spec['attributes'][case['op']]}
         key = hashlib.sha256(json.dumps(key_input, sort_keys=True).encode()).hexdigest()[:20]
-        folder = run_root / (case['id'] + '-' + key)
+        folder = run_root / (case['id'] + '-' + key + ('' if args.attempt == 1 else '-attempt' + str(args.attempt)))
         result_path = folder / 'result.json'
         if result_path.exists():
             previous = json.loads(result_path.read_text())
@@ -76,7 +100,7 @@ def main():
             continue
         used_wall = sum(x['wall_seconds'] for x in ledger)
         used_cpu = sum(x['cpu_seconds'] for x in ledger)
-        if (used_wall + budget['case_timeout_seconds'] > budget['wall_seconds'] or
+        if (used_wall + case_timeout > budget['wall_seconds'] or
                 used_cpu >= budget['cpu_seconds'] or tree_size(run_root) >= budget['raw_bytes'] or
                 len(ledger) >= budget['max_attempts']):
             print('BUDGET_STOP', flush=True)
@@ -87,7 +111,7 @@ def main():
         save(folder / 'input.json', key_input)
         cmd = ['bash', str(ROOT / 'scripts/cann-run.sh'), 'msopprof', 'simulator',
                '--soc-version=' + spec['soc_version'], '--dump=true', '--launch-count=10',
-               '--timeout=' + str(budget['profiler_timeout_minutes']), '--output=' + str(folder / 'profile'),
+               '--timeout=' + str(profiler_timeout), '--output=' + str(folder / 'profile'),
                str(ROOT / 'build/smoke/three_ops'), case['op'], *map(str, case['shape'])]
         start = time.perf_counter()
         before = resource.getrusage(resource.RUSAGE_CHILDREN)
@@ -96,7 +120,7 @@ def main():
         with (folder / 'run.log').open('w') as log:
             process = subprocess.Popen(cmd, cwd=folder, stdout=log, stderr=subprocess.STDOUT, start_new_session=True)
             try:
-                code = process.wait(timeout=budget['case_timeout_seconds'])
+                code = process.wait(timeout=case_timeout)
             except subprocess.TimeoutExpired:
                 timed_out = True
                 os.killpg(process.pid, signal.SIGTERM)
@@ -108,7 +132,7 @@ def main():
                 code = 124
         after = resource.getrusage(resource.RUSAGE_CHILDREN)
         result = {
-            'case': case, 'cache_key': key, 'identity': identity, 'command': cmd,
+            'case': case, 'cache_key': key, 'identity': identity, 'command': cmd, 'attempt':args.attempt,
             'finished_utc': datetime.now(timezone.utc).isoformat(),
             'wall_seconds': time.perf_counter() - start,
             'cpu_seconds': after.ru_utime + after.ru_stime - before.ru_utime - before.ru_stime,
@@ -126,8 +150,15 @@ def main():
         save(ledger_path, ledger)
         print('DONE', case['id'], result['status'], round(result['wall_seconds'], 2), 'seconds', flush=True)
     # Publish compact records, never raw traces or installation assets.
-    records = [json.loads(p.read_text()) for p in run_root.glob('*/result.json')]
-    save(ROOT / 'results/v0.1/dataset.json', {'manifest_sha256': sha256(ROOT / 'configs/sampling-v1.json'), 'records': records})
+    attempts = [json.loads(p.read_text()) for p in run_root.glob('*/result.json')]
+    selected = {}
+    for record in sorted(attempts, key=lambda r:r['finished_utc']):
+        selected[record['case']['id']] = record
+    records = list(selected.values())
+    import_path = out / 'imported-calibration.json'
+    if import_path.exists():
+        records += json.loads(import_path.read_text())['records']
+    save(out / 'dataset.json', {'manifest_sha256': sha256(spec_path), 'records': records, 'attempts':[{k:r.get(k) for k in ('case','attempt','status','returncode','error','wall_seconds','cpu_seconds','raw_bytes','finished_utc')} for r in attempts]})
 
 
 if __name__ == '__main__':

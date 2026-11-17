@@ -10,11 +10,16 @@ def main():
     parser.add_argument('--shape', required=True, type=int, nargs='+')
     parser.add_argument('--instruction-counts', action='store_true')
     args = parser.parse_args()
-    predictor = Predictor(args.model)
-    case = Case(args.op, tuple(args.shape))
+    model=json.loads(open(args.model).read())
+    if model['schema_version']==2:
+        from .model_v2 import Case as SelectedCase, Predictor as SelectedPredictor
+    else:
+        SelectedCase,SelectedPredictor=Case,Predictor
+    predictor = SelectedPredictor(model)
+    case = SelectedCase(args.op, tuple(args.shape))
     output = predictor.predict(case)
     if args.instruction_counts:
-        output = {**output, 'estimated_max_core_opcode_counts':predictor.instruction_counts(case)}
+        output = {**output, 'instruction_count_diagnostics':predictor.instruction_counts(case)}
     print(json.dumps(output, indent=2))
 
 

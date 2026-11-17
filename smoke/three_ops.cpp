@@ -124,37 +124,39 @@ static void matmul(aclrtStream stream, int m, int n, int k) {
     compare(y.read(),golden,0.01,0.005);
 }
 
-static void fa(aclrtStream stream, int sq, int sk, int d) {
-    std::vector<uint16_t> q(sq*d), k(sk*d), v(sk*d);
-    for(int i=0;i<sq*d;++i) q[i]=bf16(float((i*7+3)%17-8)/16);
-    for(int i=0;i<sk*d;++i) {
-        k[i]=bf16(float((i*11+1)%19-9)/16);
-        v[i]=bf16(float((i*13+5)%23-11)/8);
+static void fa(aclrtStream stream, int sq, int sk, int d, int batch, int heads) {
+    const int hidden=heads*d;
+    auto index=[=](int s,int b,int h,int t) {return ((s*batch+b)*heads+h)*d+t;};
+    std::vector<uint16_t> q(sq*batch*hidden), k(sk*batch*hidden), v(sk*batch*hidden);
+    for(size_t i=0;i<q.size();++i) q[i]=bf16(float((int(i)*7+3)%17-8)/16);
+    for(size_t i=0;i<k.size();++i) {
+        k[i]=bf16(float((int(i)*11+1)%19-9)/16);
+        v[i]=bf16(float((int(i)*13+5)%23-11)/8);
     }
-    std::vector<double> golden(sq*d,0), scores(sk);
+    std::vector<double> golden(q.size(),0), scores(sk);
     double scale=1/std::sqrt(double(d));
-    for(int i=0;i<sq;++i) {
+    for(int b=0;b<batch;++b) for(int h=0;h<heads;++h) for(int i=0;i<sq;++i) {
         for(int j=0;j<sk;++j) {
             double dot=0;
-            for(int t=0;t<d;++t) dot+=double(fp32(q[i*d+t]))*fp32(k[j*d+t]);
+            for(int t=0;t<d;++t) dot+=double(fp32(q[index(i,b,h,t)]))*fp32(k[index(j,b,h,t)]);
             scores[j]=dot*scale;
         }
         double mx=*std::max_element(scores.begin(),scores.end()),sum=0;
         for(auto& s:scores) {s=std::exp(s-mx);sum+=s;}
-        for(int t=0;t<d;++t) for(int j=0;j<sk;++j) golden[i*d+t]+=scores[j]/sum*fp32(v[j*d+t]);
+        for(int t=0;t<d;++t) for(int j=0;j<sk;++j) golden[index(i,b,h,t)]+=scores[j]/sum*fp32(v[index(j,b,h,t)]);
     }
-    Tensor<uint16_t> qt({sq,1,d},ACL_BF16,q),kt({sk,1,d},ACL_BF16,k),vt({sk,1,d},ACL_BF16,v);
-    Tensor<uint16_t> out({sq,1,d},ACL_BF16,std::vector<uint16_t>(sq*d,0x7fc0));
-    Tensor<float> mx({1,1,sq,8},ACL_FLOAT,std::vector<float>(sq*8,0));
-    Tensor<float> sum({1,1,sq,8},ACL_FLOAT,std::vector<float>(sq*8,0));
+    Tensor<uint16_t> qt({sq,batch,hidden},ACL_BF16,q),kt({sk,batch,hidden},ACL_BF16,k),vt({sk,batch,hidden},ACL_BF16,v);
+    Tensor<uint16_t> out({sq,batch,hidden},ACL_BF16,std::vector<uint16_t>(q.size(),0x7fc0));
+    Tensor<float> mx({batch,heads,sq,8},ACL_FLOAT,std::vector<float>(batch*heads*sq*8,0));
+    Tensor<float> sum({batch,heads,sq,8},ACL_FLOAT,std::vector<float>(batch*heads*sq*8,0));
     uint64_t bytes=0;aclOpExecutor* executor=nullptr;char layout[]="SBH";
     ACL_CHECK(aclnnFlashAttentionScoreV2GetWorkspaceSize(qt.tensor,kt.tensor,vt.tensor,
         nullptr,nullptr,nullptr,nullptr,nullptr,nullptr,nullptr,
-        scale,1.0,2147483647,2147483647,1,layout,0,0,1,
+        scale,1.0,2147483647,2147483647,heads,layout,0,0,1,
         mx.tensor,sum.tensor,nullptr,out.tensor,&bytes,&executor));
     Buffer workspace(bytes);
-    std::printf("case=fa B=1 H=1 Q=%d KV=%d D=%d dtype=BF16 layout=SBH causal=false workspace=%llu\n",
-                sq,sk,d,static_cast<unsigned long long>(bytes));
+    std::printf("case=fa B=%d H=%d Q=%d KV=%d D=%d dtype=BF16 layout=SBH causal=false workspace=%llu\n",
+                batch,heads,sq,sk,d,static_cast<unsigned long long>(bytes));
     ACL_CHECK(aclnnFlashAttentionScoreV2(workspace.ptr,bytes,executor,stream));
     ACL_CHECK(aclrtSynchronizeStream(stream));
     compare(out.read(),golden,0.002,0.01);
@@ -163,7 +165,7 @@ static void fa(aclrtStream stream, int sq, int sk, int d) {
 int main(int argc,char** argv) {
     std::setvbuf(stdout,nullptr,_IOLBF,0);
     if(argc<2 || (std::string(argv[1])!="quant" && std::string(argv[1])!="matmul" && std::string(argv[1])!="fa")) {
-        std::fprintf(stderr,"Usage: %s quant [rows cols] | matmul [M N K] | fa [Q KV D]\n",argv[0]);return 2;
+        std::fprintf(stderr,"Usage: %s quant [rows cols] | matmul [M N K] | fa [Q KV D [B H]]\n",argv[0]);return 2;
     }
     aclrtStream stream=nullptr;bool initialized=false,device=false;
     int result=0;
@@ -171,6 +173,7 @@ int main(int argc,char** argv) {
         std::string name=argv[1];
         std::vector<int> dims = name=="quant" ? std::vector<int>{4,256} :
                                 name=="matmul" ? std::vector<int>{32,64,64} : std::vector<int>{16,64,64};
+        if(name=="fa" && argc==7) {dims.push_back(1);dims.push_back(1);}
         if (argc!=2) {
             if (argc!=int(dims.size())+2) throw std::runtime_error("Wrong number of dimensions");
             for (size_t i=0;i<dims.size();++i) {
@@ -180,7 +183,12 @@ int main(int argc,char** argv) {
             }
         }
         if (name=="quant" && dims[1]%64) throw std::runtime_error("This quant golden requires cols divisible by 64");
-        if (name!="quant" && int64_t(dims[0])*dims[1]*dims[2]>64*1024*1024)
+        int64_t work=1;
+        for(auto dimension:dims) {
+            if(work>64*1024*1024/dimension) throw std::runtime_error("Small-case work budget exceeded");
+            work*=dimension;
+        }
+        if (name!="quant" && work>64*1024*1024)
             throw std::runtime_error("CPU golden work exceeds small-case budget");
         ACL_CHECK(aclInit(nullptr));initialized=true;
         ACL_CHECK(aclrtSetDevice(0));device=true;
@@ -189,7 +197,7 @@ int main(int argc,char** argv) {
         ACL_CHECK(aclrtCreateStream(&stream));
         if(name=="quant") quant(stream,dims[0],dims[1]);
         else if(name=="matmul") matmul(stream,dims[0],dims[1],dims[2]);
-        else fa(stream,dims[0],dims[1],dims[2]);
+        else fa(stream,dims[0],dims[1],dims[2],dims.size()==5?dims[3]:1,dims.size()==5?dims[4]:1);
         std::puts("SMOKE_PASS");
     } catch(const std::exception& e) {std::fprintf(stderr,"SMOKE_FAIL: %s\n",e.what());result=1;}
     if(stream) aclrtDestroyStream(stream);

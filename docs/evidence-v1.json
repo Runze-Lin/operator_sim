@@ -1,0 +1,36 @@
+{
+  "date": "2026-11-17",
+  "platform": "950 / Ascend950DT_9582",
+  "knowledge_commit": "92dc260756e91e72e6dcd60f3996a4d54f43c8f5",
+  "read_card": {
+    "path": "ops/ascendc/operators/aclnn/nn/quant/dynamic_mx_quant_950",
+    "sha256": "af141c5c23e33c922d74f9f0fdc35d6712c291f6790da5dcbd3a40d57119c926",
+    "read_range": "all 1001 lines",
+    "version": "CANN 9.1.0 / V2 source description; V1 default attributes and installed 9.2.1 validated separately"
+  },
+  "source_observations": [
+    {
+      "path": "third_party/ops-nn/quant/dynamic_mx_quant/op_host/arch35/dynamic_mx_quant_tail_axis_tiling_arch35.cpp",
+      "commit": "602e4ad985da00aad28c16432841e9c5069e10de",
+      "sha256": "028e589f01716828de91b93522df6265768ee9b68eeeffdd4c76ef4c9016fbe8",
+      "read_range": "complete file"
+    },
+    {
+      "path": "third_party/ops-transformer/attention/flash_attention_score/op_host/arch35/flash_attention_score_tiling_basic.cpp",
+      "commit": "14d022b1a4c3df263bf697534e3c25c7c992ff5d",
+      "sha256": "bf2ccc032ec4146d1c743139eda656dd72dc1feba5408addd3694d1772e808ae",
+      "read_range": "lines 20-135: Q and KV block selection"
+    }
+  ],
+  "limitations": [
+    "OpModel wheel was unavailable during setup; no claim to use its runtime. The existing lightweight custom modeling path is retained.",
+    "Current upstream source commits are reference evidence, not asserted to reproduce CANN 9.2.1 binaries.",
+    "Matmul 16x64 work units are an explicit approximation, not a full tiling implementation."
+  ],
+  "retrieval_audit": {
+    "state": "runs/model-v1/retrieval-state.json",
+    "ready": "runs/model-v1/retrieval-ready.json",
+    "outcome": "runs/model-v1/retrieval-outcome.json",
+    "result": "ready and outcome complete; limited to quant partition evidence"
+  }
+}
