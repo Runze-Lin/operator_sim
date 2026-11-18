@@ -1,44 +1,32 @@
-# 当前整套算子建模方法
+# 算子建模
 
-本文是项目持续维护的**完整方法说明**，覆盖所有已接入的算子族；不是某一轮的修改记录。逐算子准确率、每个 shape 的实际库调用和仿真成本由配套总误差报告维护，版本目录保存冻结参数和历史验收结果。本文说明当前实际执行的公式，不能将“计划建立”的时延模型误作已经可用的能力。
+系统仿真器输入每卡 shape、dtype、布局和算子属性，预测一次设备指令窗口的微秒数。v0.8 按 **Vector、Cube、Cube + Vector（CV）** 三类选择方法。算法给出工作量与依赖，库实现决定分块、分核和缓冲复用，硬件配置与校准给出阶段服务时间。在线调用只做分块计算和流水调度。单次模型查询墙钟预算为 **1 秒**，预测出来的设备时间和离线 CA 采集成本分别记录。
 
-当前 v0.7 保留 v0.6 的三条耗时主模型：dynamicMXquant 的分核/UB 双缓冲及受限VF调度残差模型、matmul 的分块流水模型、普通 FA 的通用路径与 Q9 长循环专用路径。RMSNorm、Addmm、LightningIndexer、mHC、KDA 和 MoE 增加真实库调用、完整数值检查、通用机制图接口以及受限的小 shape 时延对照。新族的参数只由校准点拟合，冻结后留出点不参与调参；属性不匹配、超出本地支持域或数值检查未通过时返回 `predicted_us=null`。结构工作量不是指令数，两三个校准点也不足以代表全部算法/tiling分支；第11节给出实际执行的局部公式和边界。
+### Vector 算子怎样建模
 
-## 0. 通用建模思想：算法与硬件分离，不拟合950DT答案表
+1. 先找可以并行的维度。逐行归约可以把行分给多个 AIV，KDA recurrent 的同一条状态链则要依次处理 token。根据库的分核规则算出最忙核承担的行数、列片数和尾块，再用 UB 容量决定每轮读入多少数据。
+2. 写出一轮的读、算、写。读写以实际 dtype 字节和对齐块计，向量计算以有效向量分组和归约轮次计。对已知双缓冲实现，让下一轮预读与本轮计算重叠，同时约束同一个缓冲槽在上一次使用完成后才能写入。源码无法还原完整指令依赖的路径，采用临界 AIV 的分段时间模板，按每核工作量缩放。
+3. 校准时分别读取 MTE2、SIMD、MTE3 和控制流水的指令区间。流水可同时繁忙。对已知调度用开始和完成时刻求关键路径，对时间模板把每个重叠区间归属一次。两种实施都要检查最慢核、尾轮和首尾开销。
 
-**本项目要建立可复用的算子执行模型：从shape、算法、实现策略和硬件约束推导时间，再用CA检查推导哪里不对。目标不是记住950DT上各个shape的耗时。** 同一种方法可以用于其他shape和代际，但硬件参数、实际库算法和tiling必须按目标平台重新实例化；“方法可迁移”不等于“950DT参数直接缩放即可准确预测A7/A8”。
+以 dynamicMXquant 的 BF16 输入 `[1024,7168]` 为例，分核规则给出 64 个 AIV，最忙核处理 16 行，UB 每轮处理 4 行，共 4 轮。每轮读取 \(4×7168×2=57344\) 字节，按每 32 个元素一组得到 896 个量化组。读第一块要等完整读延迟，后续块可按发起间隔推进，第三块还要等第一块释放输入槽。因此把单块时间直接乘 4 会丢掉双缓冲效果。RMSNorm 同属 Vector，单行数据要先完成平方和归约才能得到缩放因子，其依赖和动态量化不同。第 3 节给出量化的逐轮递推，第 6 节及第 11 节给出新增 Vector 路由的可执行公式。
 
-建模分为四层，参数不能相互冒充：
+### Cube 算子怎样建模
 
-1. **算法层**：输入shape/dtype/属性决定数学工作、数据依赖和必须读写的数据。描述归约、矩阵乘、非线性、TopK、状态更新等基本过程。此层不填950DT实测总时延。
-2. **实现策略层**：明确库采用哪个算法分支，怎样切tile、分核、处理尾块、复用UB/L1、安排双缓冲及同步。策略是受容量约束的规则；已确认源码规则、候选规则和未知dispatch分开标记，不能用目标shape的实测核数作为预测输入。
-3. **硬件成本层**：按资源/指令类别描述每周期吞吐、结果延迟、发起间隔、带宽、核数和缓冲容量。优先用小微基准或可隔离的trace片段校准；每个参数保留单位、来源和适用条件。不同指令类别成本不同，不把所有Vector FLOPs除以同一个峰值。
-4. **调度层**：把分块后的工作组成有依赖的任务图，计算资源竞争、缓冲占用和最慢核尾轮；以关键路径完成时间预测算子耗时。迭代次数很大时压缩重复子图，用稳态间隔计算，不逐token、逐条指令在线仿真。
+1. 按安装包的矩阵布局、dtype 和分支选择输出 tile，再把每个 tile 的 K 方向分成归约段。输出块之间可以并行，同一输出块的累加需要按归约段推进。M/N 尾块、K 补齐、专家之间不能拼接的边界都改变任务数。
+2. 将输出块映射到 AIC，计算每核最多几轮。对代表块估算 A/B 读入量、矩阵乘加工作和输出字节，分别求读、Cube 和写出阶段服务时间。校准时检查 MMAD 指令数、块数、活跃 AIC 和阶段区间。
+3. 对规则整块流水可用 \(T=H+R+C+F+(w-1)\max(R,C,F)\)。这里 \(R,C,F\) 分别为一轮读取、矩阵计算和写出的微秒数，\(H\) 为未被阶段覆盖的控制时间，\(w\) 为最忙核的轮数。首轮先填满流水，后续轮次受最慢阶段限制。对有尾块或其他库分支的实现再使用该路径的规则。
 
-统一形式为
+例如 BF16 Addmm 的 `[M,N,K]=[9,128,256]` 配合 `self=[128]` 与单位系数。按 16×64 候选输出块，列方向有两块，两核一轮可以完成。每块读取 9×256 个 A 元素、256×64 个 B 元素和 64 个 bias 元素，算出 9×64 个输出。K 增大主要延长归约，M 或 N 增大可能增加并行块或尾波。同样的总 FLOPs 可以得到不同耗时。专家 GMM2 还要对每个专家单独向上取整，再合并专家块调度。
 
-\[
-G=\mathcal L(\text{shape},\text{attrs};\pi,\mathcal H),\qquad
-\widehat T=\operatorname{Schedule}(G,\mathcal H,\theta).
-\]
+### CV 融合算子怎样建模
 
-G是带资源与依赖的任务图；L是从算子算法展开任务图的过程；shape是张量维度，attrs是dtype/mask/layout等属性，pi是实现策略，H是硬件结构配置，theta是资源成本参数；Schedule表示调度计算，结果T_hat以微秒表示。算法工作和实现策略给出“要做什么、怎么分”，硬件参数给出“每一步多快、哪些步骤能重叠”。任何无法区分的成本都要报告不可辨识，不能靠添加shape专属系数吸收。
+1. 从实现列出 Cube、Vector、搬运和同步的生产者、消费者。例如 FA 的一块 K/V 先做 QK，交给 Vector 做 softmax 更新，随后 PV 再使用 Cube。核内缓冲深度决定下一块最早何时可以开始。
+2. 在每个阶段使用 \(s=\max(e_{dep},a_{res},a_{buf})\)、\(e=s+t\)。\(s,e,t\) 为阶段开始、结束、服务时间，单位都是微秒。\(e_{dep}\) 是最晚前驱完成时刻，\(a_{res}\) 是设备可再次接受工作的时刻，\(a_{buf}\) 是缓冲槽可用时刻。长循环压缩为首轮填充、稳态间隔和尾部排空。运行时难以完整恢复调度的融合路径，保留开发 trace 中各流水同时活跃的区间模板，按目标 tile 的 Cube、Vector、搬运工作分别缩放，在每段重叠区间取最长服务。
+3. 用独立 shape 检查瓶颈是否真的随工作量移动，包括长 KV、尾块、专家偏斜及不同核数。多 kernel 串行链分别估每段，再求净窗口之和。外部通信、host launch 和两次 launch 之间的空闲需在系统层计入。
 
-不同类算子使用适合的机制：
+例如普通 FA 的 `Q=9,L=32768,D=64,B=H=1`。该路径预测 1 个 AIC、2 个 AIV，每个 KV tile 256 token，共 128 轮。已校准的首轮及首尾固定部分合计 10.498 µs，每增加一轮约 0.5172 µs，故预测约 \(10.498+127×0.5172=76.18\) µs。这个例子中延迟和发起间隔分别由 32k 的开发 trace 识别，其他布局和因果属性需要各自的分支。MoE 的 GMM1–SwiGLU–量化同样采用 CV 方法，利用本 rank 专家 token 直方图计算各资源的块数。
 
-| 类别 | 重点建模机制 | 典型算子 |
-|---|---|---|
-| 逐元素/归约Vector | 指令类别、向量有效宽度、归约树、UB容量、读算写与双缓冲 | dynamicMXquant、RMSNorm、mHC Post/Sinkhorn |
-| Cube矩阵计算 | 输出tile、K循环、搬运与矩阵指令、尾块、跨核轮次 | Matmul、Addmm、专家GMM |
-| Cube+Vector融合 | 两类任务间依赖、交接、共享缓冲与反压；不能只取两段总忙时max | FA、Indexer、mHC Pre/PreSinkhorn、GMM1–SwiGLU–Quant |
-| 递推/分块算法 | 并行任务与串行状态链分开；算法切换建立独立图 | KDA recurrent/chunk |
-| 多kernel组成 | 每个子图及实际调用边界；避免融合项重复计算 | mHC split、MoE FFN |
-
-**校准不是任意拟合总耗时。** 用于校准的shape应覆盖机制变化（循环数、尾块、核数、算法分界），不是只增加相邻样本。共享资源成本尽量跨shape复用；实现专有的指令模板可以存在，但必须能解释循环和操作次数。先冻结代码/参数，再在未见shape上验证，并比较简单固定耗时基线；若简单基线更好，检查是否启动开销主导或机制尚未辨识，而不是自动加高次拟合项。
-
-**当前成熟度也必须如实区分。** quant/FA等已经实现部分分块与流水机制，但仍有950DT局部校准残差和分支限制，并非完成了跨代验证。v0.7新增族的少量CA用于建立调用/正确性/指令证据，`a+bW`仅保留为**局部诊断对照**，不是通用模型的验收依据，不能拿它在两个校准点上的低误差证明泛化。通用资源图引擎与局部对照分别输出，缺少指令展开、共享资源成本或完整依赖时，通用预测标未校准/不完整，不把局部拟合值填入通用准确率栏。后文同时说明当前已经执行的机制与仍需补齐的证据。
-
-通俗地说，我们要知道一条生产线每个工序做多少次、需要哪些设备、能否同时做，再换设备参数估时间；不能只记下几批产品的交付时间画一条曲线。这也是后续外推A7/A8能够成立的前提。
+硬件改变时重新计算可用核数、分块、带宽、各阶段服务和重叠条件。950DT 实测得到的有效服务成本包含当时的资源竞争。当前独立验证只针对 950DT，A7/A8 的参数与库策略仍待校准。
 
 ## 1. 目标、输入和实际库算子
 
@@ -49,11 +37,11 @@ G是带资源与依赖的任务图；L是从算子算法展开任务图的过程
 | dynamicMXquant | `(R,C)`，BF16→E4M3FN，block32 | ops-nn / `aclnnDynamicMxQuant` | 时延、分核、UB循环、选定指令计数 |
 | matmul | `(M,N,K)`，BF16 ND，不转置 | ops-nn / `aclnnMatmul`，已测 MatMulV3 | 时延、启发式tile/分核、MMAD计数 |
 | FA | `(Q,L,D,B,H)`，BF16 SBH，非因果，无mask/dropout | ops-transformer / `aclnnFlashAttentionScoreV2` | 时延、分核、流水；Q64路径MMAD计数 |
-| RMSNorm | `(R,C)`、dtype、gamma_dtype、epsilon | ops-nn / `aclnnRmsNorm` | 结构模型＋局部时延校准/独立验证 |
-| Addmm | `(M,N,K)`、self_shape、alpha/beta | ops-nn / `aclnnAddmm` | 结构模型＋局部时延校准/独立验证 |
-| LightningIndexer | `(B,Q,L,G,D)`、sparse_count/mode | ops-transformer / `aclnnLightningIndexer` | 打分/TopK结构＋局部时延模型 |
+| RMSNorm | `(R,C)`、dtype、gamma_dtype、epsilon | ops-nn / `aclnnRmsNorm` | 实测校准阶段成本、独立 shape 验证 |
+| Addmm | `(M,N,K)`、self_shape、alpha/beta | ops-nn / `aclnnAddmm` | 实测校准阶段成本、独立 shape 验证 |
+| LightningIndexer | `(B,Q,L,G,D)`、sparse_count/mode | ops-transformer / `aclnnLightningIndexer` | 打分/TopK 工作量与流水重叠模板 |
 | mHC | `(T,N,D)`；Sinkhorn为`(T,N)` | ops-transformer / `aclnnMhcPre`、`aclnnMhcSinkhorn`、`aclnnMhcPreSinkhorn`、`aclnnMhcPost` | 各组件与拆分链分别采集、受限校准 |
-| KDA | `(B,S,Hq,Hv,K,V)`、recurrent/chunk | ops-transformer / `aclnnRecurrentKda`、`aclnnChunkKdaFwd` | recurrent/chunk分别校准和验证 |
+| KDA | `(B,S,Hq,Hv,K,V)`、recurrent/chunk | ops-transformer / `aclnnRecurrentKda`、`aclnnChunkKdaFwd` | recurrent 预测与独立验证，chunk 的 CA 同步资格待解决 |
 | MoE融合链 | `(M,K,F,E)`及本rank专家token直方图 | ops-transformer / `aclnnGroupedMatmulSwigluQuantV2`，后续`aclnnGroupedMatmulV5` | 真实GMM1→MX→GMM2链；组件与链分别预测 |
 
 CA 调用器使用安装包的真实 ACLNN 接口。参考源码来自固定版本的 ops-nn/ops-transformer，用来解释候选分支；它们不被宣称与安装包逐字同源。库文件存在只是“候选实现”，只有实际调用的 entry、tiling、核数和指令证据才能确定某个 shape 的执行路径。compact 数据库没有导出 ELF 时，运行时二进制 SHA 保持空值，不用安装文件 SHA 冒充。
@@ -238,7 +226,7 @@ T_{pipe}+a_g+b_g AIV/64,&n_{tile}=1\land c_c\ge1024,\\
 
 `cols_per_core>=1024` 表示block32语义下每行片段至少产生32个scale字节，是当前保守的模型分支限制；**不能由此证明cacheline对齐、没有写冲突或真实库必然切换实现**。19点中的旧留出数据现已用于开发，角色已重分类。leave-one-out诊断只重拟合新增残差，而冻结的base已经见过部分点，所以它仅是**开发选择诊断**，不是独立交叉验证准确率。旧 `[576,4096]`、`[64,1024]` 两点误差反而增大，保留在总误差报告，不从汇总中删去。
 
-当前版本先冻结公式/参数，再新增 `[36,5120]`、`[288,7168]`、`[1024,7168]` 三个未见shape验证；总CA预算450秒，分别检查宽行片段、decode候选聚合行数和多UB不变路径。成功/失败、正确性、实际dispatch、误差和成本以配套误差报告为准，不把冻结预测写成实测结果。
+v0.6 先冻结公式/参数，再新增 `[36,5120]`、`[288,7168]`、`[1024,7168]` 三个未见shape验证；总CA预算450秒，分别检查宽行片段、decode候选聚合行数和多UB不变路径。成功/失败、正确性、实际dispatch、误差和成本以配套误差报告为准，不把冻结预测写成实测结果。
 
 ### 3.5 标量预测开销
 
@@ -248,7 +236,7 @@ T_{pipe}+a_g+b_g AIV/64,&n_{tile}=1\land c_c\ge1024,\\
 T_{pipe}=P_q+L_{read}(x_0)+S_{vec}(m_0+z_0)+D_{write}+D_{suffix}.
 \]
 
-v0.6的 `predict_us(case,use_cache=False)` 直接计算这条等价式，再应用同一guard和残差/回退；无需UB tile列表、逐阶段数组、递归冻结或缓存插入。它仍使用相同分核规则和系数，减少的是Python对象构造，不是省略硬件成本。公开标量查询入口 `operator_model.fast_query.Predictor` 对多UB也保持原递推，仅保存前两轮状态，临时内存从O(tile数)降为O(1)，并复用一次分核规划；完整 `predict()` 仍保留诊断字段，**不承诺完整诊断接口也更快**。标量/完整接口数值一致性由测试约束；性能应按两种接口分别报告。
+统一查询入口用这条等价式计算单 UB 点，并按第 3.3 和 3.4 节的规则选择回退或残差。多 UB 点只保存推进所需的前两轮状态。对相同 tile 的长循环，v0.8 用第 11 节的矩阵合成把遍历次数从 O(n) 降到 O(log n)。这里 n 指最忙核上重复的 UB tile 数；阶段服务和资源约束均保留。
 
 ## 4. matmul：输出tile、核轮次和阶段成本
 
@@ -405,7 +393,7 @@ J是当前路径的有效发起间隔，包含buffer复用、同步和反压，*
 
 对应数值简式为 \(10.497575758+(\lceil L/256\rceil-1)\cdot0.517214978\) µs。尾块暂按完整256处理，MMAD计数仍按128分段。该简式是阶段模型结果，不是从新留出总时间反拟合直线。32k已经作为开发数据；128k和16k+1是冻结后的独立验证。256k/512k仍未实测，也不能把这组参数缩放到其他Q/D、B/H、因果mask或A7/A8。
 
-## 6. RMSNorm和Addmm：结构模型与调用边界
+## 6. RMSNorm和Addmm 的算法与调用边界
 
 ### 6.1 RMSNorm
 
@@ -441,7 +429,7 @@ Y=\beta\operatorname{broadcast}(S)+\alpha AB,\qquad F_{mm}=2MNK.
 
 self可为标量、[N]、[1,N]、[M,1]、[M,N]等合法广播。源码候选按空tensor/零系数、bias转换、inplace FP32 GemmV3、DAV_3510 FusedMatMul(add)、一般Matmul+Muls/Add/Axpy分支处理。FusedMatMul(add)要求完整矩阵self、alpha/beta≈1和其他dtype/layout条件；[N] bias不满足此特定分支。FP32融合候选还要求cubeMathType=3。
 
-Addmm不能直接继承Matmul的总耗时或分核。已测 `[2,16,16]`、self `[16]` 仅观察到一个kernel，其他属性可能产生多kernel。两族局部时延模型见第11节；APE使用同属性校准/冻结验证分别报告，理论峰值利用率仍未校准。
+Addmm不能直接继承Matmul的总耗时或分核。已测 `[2,16,16]`、self `[16]` 仅观察到一个kernel，其他属性可能产生多kernel。两族分阶段时延模型见第11节；APE使用同属性校准/冻结验证分别报告，理论峰值利用率仍未校准。
 
 ## 7. LightningIndexer：打分、head归约和TopK
 
@@ -458,7 +446,7 @@ s_{qk}=\sum_gW_{qg}\max(0,a_{qgk}),\quad indices_q=TopK_k(s_{qk}).
 v=\begin{cases}QL,&mode=0,\\Q(L-Q)+Q(Q+1)/2,&mode=3,Q\le L,\\L(L+1)/2,&mode=3,Q>L.\end{cases}
 \]
 
-mode3为右下对齐因果，\(P=Bv\)。工作量分别为点积 \(2PGD\)、ReLU PG次、weight乘法PG次、head归约 \(P(G-1)\) 次。实际padding/mask可能执行更多，另保留稠密 \(2BQLGD\) 作为参照。TopK比较、分块选取与合并的完整安装包算法尚未移植；时延先采用第11节局部代理，不宣称已恢复逐指令成本。不能用topk/L减少前面必须完成的打分工作。
+mode3为右下对齐因果，\(P=Bv\)。工作量分别为点积 \(2PGD\)、ReLU PG次、weight乘法PG次、head归约 \(P(G-1)\) 次。实际padding/mask可能执行更多，另保留稠密 \(2BQLGD\) 作为参照。TopK比较、分块选取与合并的完整安装包算法尚未移植；时延先采用第11节融合流水模板，不宣称已恢复逐指令成本。不能用topk/L减少前面必须完成的打分工作。
 
 输入输出唯一字节下界为
 
@@ -504,7 +492,7 @@ Y_{tid}=h^{out}_{td}h^{post}_{ti}+\sum_jX_{tjd}H_{tji}.
 
 有residual矩阵时混合乘法TN²D次、归约加法TN(N−1)D次，再加各TND次post乘法与合并加法；无H时直接残差X。包内Post、Sinkhorn标记VectorCore，不能因为公式可写成矩阵乘就除以Cube峰值。
 
-拆分链是Pre→Sinkhorn及外部Attention/MLP→Post；融合链以PreSinkhorn替换前两项，两条路线互斥，不能重复计数。外部Attention/MLP主体不包含在mHC wrapper工作里。单独Pre支持N=4/6/8、D≤16384且16对齐；融合PreSinkhorn当前仅N4、I20、D4096/7168、epsilon1e−6；独立Sinkhorn为FP32、N4/6/8、I1..100。融合投影涉及HF32，不能复用BF16 Matmul参数。v0.7分别测Pre、Sinkhorn、PreSinkhorn、Post和split链。split链保留Pre辅助输出并用恒等外部层连接hIn到hOut，测得的链不包含Attention/MLP；与无辅助输出的推理模式不是相同合同。时延代理见第11节。
+拆分链是Pre→Sinkhorn及外部Attention/MLP→Post；融合链以PreSinkhorn替换前两项，两条路线互斥，不能重复计数。外部Attention/MLP主体不包含在mHC wrapper工作里。单独Pre支持N=4/6/8、D≤16384且16对齐；融合 PreSinkhorn 的源码候选为 N4、I20、D4096/7168、epsilon1e−6，本版时延入口仅校准 D4096；独立Sinkhorn为FP32、N4/6/8、I1..100。融合投影涉及HF32，不能复用BF16 Matmul参数。v0.7分别测Pre、Sinkhorn、PreSinkhorn、Post和split链。split链保留Pre辅助输出并用恒等外部层连接hIn到hOut，测得的链不包含Attention/MLP；与无辅助输出的推理模式不是相同合同。时延估计见第11节。
 
 参数解释：T是token数，N是残差流数量，D是每流隐藏宽度，M=N²+2N是投影输出宽度；t/n/d/i/j为索引。x是展平后的输入，gamma是可选逐元素权重，Phi是投影矩阵，z是未归一化投影，r_t是倒数RMS，w是归一化投影；alpha_0/1/2和b是三段缩放与bias，sigma是sigmoid，epsilon_n/h和epsilon是对应数值稳定常数。h_pre/h_post是混合权重，H′是未归一化残差混合矩阵，H是Sinkhorn结果，h_in/h_out是外部层输入/输出。I为Sinkhorn迭代数；N_exp/N_div/N_reduceAdd是标量exp/div/归约加法次数，不是硬件指令次数。
 
@@ -564,11 +552,11 @@ O=scale\cdot q_gh_{prev}+A_{qk}V_{new}.
 
 chunk式中C为最大chunk长度，c_j为第j块有效长度，gamma为累计gate，gamma_last是该块末尾累计gate；q_g/k_g是gate调整后的向量，L_tri为严格下三角关联项，I在矩阵逆式中是单位矩阵；A_kk为三角逆，A_qk为因果QK关联，W_0/U_0为逆变换前的key/value项，W/U为变换后项。h_prev/h_next是chunk前后的状态，V_new是更新残差，O是输出，scale是query缩放；n_chunk为chunk数。P是有效因果token对数，P_-去掉对角，D_c是各块完整平方尺寸之和，均为计数。阶段表为数学工作量，不是安装包五个独立kernel。
 
-通俗地说，recurrent每一步都依赖上一步状态，所以短序列也有不能并行的链；chunk把块内运算改为矩阵计算，但跨chunk的状态仍需顺序传递。v0.7耗时分别按固定状态尺寸下的序列长度校准，不能从S≤8递推公式猜出Q9实现。
+通俗地说，recurrent每一步都依赖上一步状态，所以短序列也有不能并行的链；chunk把块内运算改为矩阵计算，但跨chunk的状态仍需顺序传递。v0.8 recurrent 把状态大小和序列长度代入各阶段，chunk 保留分块工作图与 CA 同步问题记录，不能从S≤8递推公式猜出Q9实现。
 
 ## 10. MoE：专家负载与GMM–SwiGLU–GMM组成
 
-当前shape=(M,K,F,E)，M为本rank dispatch后行容量，F为SwiGLU后宽度，E是本rank专家数，**不是EP数**。必须输入 \(m_e\) 直方图或带明确语义的group_list，允许空专家，\(T=\sum_e m_e\le M\)。EP只约束全局到rank的映射，不能唯一确定本地直方图。
+当前shape=(M,K,F,E)，M为本rank dispatch后行容量，F为SwiGLU后宽度，E是本rank专家数，**不是EP数**。必须输入 \(m_e\) 直方图或带明确语义的group_list，结构描述允许空专家与行填充，\(T=\sum_e m_e\le M\)。当前时延入口要求所有行均有效，即 T=M。EP只约束全局到rank的映射，不能唯一确定本地直方图。
 
 \[
 C_e=dequant(X_eW_{1,e}),\quad Z_e=SiLU(A_e)\odot G_e,
@@ -595,57 +583,70 @@ O是最终输出宽度。相同T但不同 \(m_e\) 的FLOPs一致，实际tile尾
 
 ## 11. 校准、独立验证和仿真效率
 
-### 11.1 v0.7局部诊断对照公式（不作为通用模型）
+### Vector 实施例：临界 AIV 的读、算、写与控制
 
-原有quant/matmul/FA使用第3—5节；新增族的局部对照使用
+每个已有完整 DB 选最后结束的 AIV，提取其指令起止 tick 和流水类别。先记录该核相对最早发起核的起始偏移。沿临界核时间轴扫描所有未排除的指令区间，以 SIMD、MTE3、MTE2、SCALAR 的顺序给重叠区间唯一归属，剩余区间归入 other。六项之和以 1650 tick/µs 换算，应等于 DB 中的跨核指令窗口。本实现检查这一恒等式。优先级属于统计约定，所得分项是**扣除重叠后的可见时间**。观察到的 MTE3 区间不能独立确定物理写带宽，改变重叠顺序也会改变分项。
 
-\[
-\widehat T_o=a_o+b_o W_o,\quad a_o\ge0,\ b_o\ge0.
-\]
+对每条实现模板和阶段 \(p\)，用三个旧 shape 的可见阶段时间分别估计非负截距 \(a_p\) 和服务成本 \(b_p\)，推理为 \(\hat t=\sum_p(a_p+b_p x_p)\)。\(a_p\) 单位是微秒，\(b_p\) 单位是微秒/相应工作单位，\(x_p\) 是由算法分块计算的工作量。全部系数和开发 DB 哈希见 profile.json。在线只做整数取整和固定六个阶段的算术运算。平台校准使用旧 shape，冻结后40个新 shape 单独采集。三个旧样本同时受行数、带宽和宽度影响，系数表示此平台的有效成本，尚不足以分解成独立 ISA 峰值或迁移到另一代硬件。
 
-其中o为算子及固定属性路径；T_hat是预测净指令窗口（微秒），a是拟合启动/控制截距（微秒），b是每单位代理工作的有效成本（微秒/工作单位），W为下面的无量纲工作量。a/b只用该族校准样本做非负最小二乘，**不是已独立识别的硬件启动或ISA吞吐参数**。设校准样本的W完全相同，b不可辨识，固定b=0、a=校准耗时均值；它就是明确标记的常量回退。若不同W的拟合斜率为负，比较非负解边界后取最小平方误差解。固定耗时对照也只用校准均值，不看留出。
-
-| 路径 | 当前W代理 | 解释与限制 |
+| Vector 路由 | 在途 AIV 数 A 与每核任务轮数 w | 单核逻辑工作 U |
 |---|---|---|
-| RMSNorm | ceil(R/64)×ceil(C/128) | 行波次数×128列工作片；64是AIV总数，128只是代理分组，不宣称真实VF宽度 |
-| Addmm | ceil(ceil(M/16)ceil(N/64)/32)×ceil(K/16) | 输出tile波数×归约片数；16/64是本地代理分块，32是AIC总数，不作为预测MMAD次数 |
-| Indexer | ceil(BQ/32)×ceil(L/512)×G×ceil(D/128) | query波数、key分片与head工作；不能从该代理推断实际只启动BQ个核 |
-| mHC Pre | ceil(T/64)×ND(N²+2N)/128 | 每波投影工作；小T增加核数时W不增加 |
-| mHC Sinkhorn | ceil(T/64)×I×N² | 每波矩阵归一化工作；并未恢复VF中多矩阵打包细节 |
-| mHC PreSinkhorn | ceil(T/32)×[ND(N²+2N)/128+IN²] | 融合路径单独校准，不复用拆分链参数 |
-| mHC Post | ceil(T/64)×N(N+1)×ceil(D/64) | 每波残差混合工作 |
-| mHC split | ceil(T/64)×[ND(N²+2N)/128+IN²] | 直接对真实链的净时间校准；外部层恒等，Pre写辅助输出 |
-| KDA recurrent / chunk | S | 固定B/H/K/V/C/flags的各自局部模型，分别拟合；不能跨两种算法共享系数 |
-| GMM1融合 | ceil(J×ceil(2F/128)/32)×ceil(K/64) | J=sum_e ceil(m_e/16)，输出任务波数×归约片数；参数在真实MX路径拟合 |
-| GMM2 | ceil(J×ceil(K/128)/32)×ceil(F/64) | 第二层归约长度是F，输出宽度是K，不能写反 |
-| MoE FFN | T_hat_GMM1+T_hat_GMM2 | 对已同步串联链求净时间；排除router、dispatch/combine及TP通信 |
+| RMSNorm，BF16 输入、FP32 rstd | A=min(R,64)，w=ceil(R/A) | w·ceil(C/128)，R/C 是行数和列数，128列为服务分组。固定全行归约候选 |
+| mHC Post，N=4，BF16 | 按 D 二分切片 J：片宽大于256，且 T·J≤32 或片宽≥UB/24 时翻倍J。A=min(T·J,64)，w=ceil(T·J/A) | w·ceil(D/(64J))·N(N+1)。T 是token数，D为流宽，N(N+1)是每个通道的残差和投影混合工作。参考旧分块规则，安装包的所有分支尚未移植 |
+| mHC Sinkhorn，FP32 | 一项任务处理一个token，A=min(T,64)，w=ceil(T/A) | w·I·N²。I 为行/列交替归一化轮数，N=4。每个token内各轮串行 |
+| KDA recurrent，BF16、FP32 state | B=Hq=Hv=1，一条state链，A=w=1 | S·K·V/16384。S为串行更新步数，K/V分别为状态矩阵两维。K=128，V=128/256，分母取一个128²状态块 |
 
-对mHC Sinkhorn/Post，若校准DB确认每token一个AIV且小T只改变活跃核，则局部对照另用 W=log2(1+min(T,64)) 描述启动/核间尾差；a、b仍仅是局部统计系数，不能解释成单核服务吞吐。该选择和校准参数在freeze前固定；负斜率依然退回非负边界，不靠加项拟合下降趋势。
+计算/控制阶段的 \(x_p=U\)；发起偏移的 \(x_p=\log_2 A\)。搬运阶段使用 \(U\log_2(1+A)\)，作为多个活跃核同时请求读写的经验代理。Sinkhorn迭代重用已读入的矩阵，其搬运量用 \(w\log_2(1+A)\)。这些有效参数还受指令模板、核内填充/排空、共享资源竞争和厂商实现分支影响。比如 RMSNorm [36,5120] 有36个活跃候选核，每核一行40个列分组；[128,1024] 对应64核、每核两行8组。两者应分别代入单核工作和核间竞争项。KDA [1,3,1,1,128,256] 对应六个128²状态工作单位，仍只有一条串行链。
 
-表中ceil为向上取整；R/C、M/N/K、B/Q/L/G/D、T/N/D、S、m_e/E/F已在对应章节逐一定义。J是专家输出行tile的逻辑数量，单位为任务；表中32/64是当前平台核心数，其他分组常数是本地特征定义，并非已经证实的全部库tiling。在线模型不使用待预测shape实测核数或trace，避免把答案作为输入。实际entry/核数用于离线诊断；之后扩大规模需移植更准确调度或新增少量边界点。
+开发样本来自单次调用进程。验证采用按序批处理，首发与后续调用的缓存/控制状态可能不同；该数据反映连续调用口径，目前没有逐例冷态配对实验。每种算子的十个验证点共用一次初始化并串行同步，每次调用记录完整输出对照、单独的有序launch ID和 DB。验证需要正常退出、正确的SKU、每次调用数值检查全通过并成功导出全部数据库。此设计降低离线CA启动开销；预测器本身不加载CANN。
 
-通俗地说，先估算“最忙的一轮要做多少活”，再用少量测量确定启动和每单位工作成本。若两个小shape每核都只做一行，两点不能告诉我们多做一行要花多久，常量回退比强行画一条斜线诚实。该对照用于检验新增数据和识别缺失机制，不代表通用建模闭环已验收；核心模型必须采用第0节机制分层，并分别报告覆盖缺口。
+**验证中发现的分支差异。** Post 的旧开发点 [1,4,128] 和 [32,4,128] 实际入口分别为 entry_kernel_5 / entry_kernel_6；v0.7文字诊断曾将两者写成同一入口。新 [32,4,512] 的模板估计64个AIV，实际entry_kernel_6运行32核。RMSNorm [65,128] 预测64核，实测33核，对应按 ceil(65/64)=2 行分配后只需 ceil(65/2)=33 核。这些是已确认的任务调度偏差，留出结果仍按冻结模型计算。
 
-支持域保存在model.json的routes.domain，属性合同保存在routes.attrs。域包围预先选定的校准和留出shape，不意味着包围盒内所有形状已测。可变维度越界或dtype/layout/辅助输出不匹配，预测为null；expert_counts必须完整且总和等于当前有效行数。代码会返回work_identifiable及特征范围外推标记。失败算子不会用其他算子的时间填补。
+### Cube 方法在 Matmul 和 Addmm 的实例
 
-### 11.2 通用资源图引擎的当前实现与证据缺口
+输入采用连续 BF16 ND 的 A[M,K]、B[K,N] 和输出 Y[M,N]。Addmm 的 self 是 BF16 `[N]`，alpha=beta=1，cubeMathType=0。A5 已有三个 Addmm 小 shape 在单个 AIC 入口 `entry_kernel_2` 完成。预测假设每个输出 tile 在这条路径内读取并广播对应列 bias。属性或广播模式改变时需要重新识别实际调用链。
 
-`operator_model/mechanism.py`独立于局部对照。每个宏任务包含资源类别、总工作量、并行任务数、串行步数和前驱；硬件profile按资源给核数、时钟、每周期服务量、结果延迟和发起间隔，不接受op/shape专属系数。当前聚合调度用
+1. 用实现的切块规则求输出任务。初始块为 16×64，当任务数超过32时，在加倍行块或列块的候选中选择任务数最接近32的划分，每维上限256。令 `m_t,n_t` 为所选行列块尺寸和真实行列宽度取小值，`K_a=16 ceil(K/16)` 是计算对齐长度。总任务数 `P=ceil(M/t_m)ceil(N/t_n)`，波数 `w=ceil(P/32)`。这一步给出临界核任务量的估计。
+2. 基本输入搬运工作为 `R=2(m_t+n_t)K_a/1024` KiB，BF16的2是每元素字节数。Addmm再加 `2 n_t/1024` KiB。Cube工作 `C=2m_t n_t K_a/131072`，单位为131072 FLOPs。FIXP输出工作 `F=2m_t n_t/1024` KiB。每个阶段 `s_j=a_j+b_j x_j`，x依次取R、C或F，a是该阶段固定微秒数，b是每工作单位的微秒数。这三组系数沿用v0.2 BF16 Matmul阶段数据。把各阶段工作分别代入，可检验跨算子复用的误差。
+3. 首波填充 `D=s_R+s_C+s_F`，稳态间隔 `J=max(s_R,s_C,s_F)`。总流水时间 `B=D+(w-1)J`。Matmul继续使用已冻结的v0.6预测，对B、活跃核数及算法分支作原有控制校正。Addmm取 `T=H+B`，H是旧单tile Addmm trace内不被任何搬运/Cube/FIXP有效区间覆盖的时间。具体选取两个完整旧样本，将服务队列区间取并后从跨核总窗口扣除，H取中位数2.07636µs。曾用于v0.7验证的 `[9,64,128]` 在v0.8转为开发数据。H也包含未归因等待，各队列服务成本仍可能含共享资源效应。跨资源实际部分重叠和多核尾差会影响估计。
 
-\[
-q=\frac{W}{PSvf},\quad L=\max(\ell/f,q),\quad
-J=\begin{cases}L,&\text{依赖前步状态},\\\max(i/f,q),&\text{可流水发起},\end{cases}
-\]
-\[
-d=\lceil P/C\rceil[L+(S-1)J],\quad
-s=\max(e_{pred},e_{resource}),\quad e=s+d.
-\]
+以 `[9,128,256]` 为例，输出按列分成两个16×64块，在两个核上同一波并行，每个核计算9×64有效输出。Matmul和Addmm都读取9×256的A片和256×64的B片。Addmm每块额外读64个bias，按128字节计入搬运，用同一块的输出列广播后写回。增加K会改变单块搬运/计算服务，增加M或N可能改变核数、块大小或轮次，这两种shape变化对耗时的影响不同。
 
-W为此宏任务跨所有并行任务/串行步骤的工作总量，P为独立任务数，S为每任务串行步数；v是每资源单元每周期的工作量，f是每微秒周期数（GHz×1000），ell和i分别为结果延迟/发起间隔的周期数，C是该资源可用单元数。q/L/J/d/s/e单位均为微秒，分别表示每步服务时间、首步时间、后续间隔、整个宏任务跨度、开始与结束时刻；e_pred为所有前驱最晚完成时刻，e_resource为共享资源可用时刻。相同资源池的阶段互斥，不同资源仅在依赖允许时并行。这个聚合式不是完整逐tile实现，任务负载不均匀时必须显式拆分（例如按专家），不能只用平均值掩盖尾部。
+验证先固定模型、二进制、调用合同与10个未见shape。每个case只使用shape和attrs得到预测，测量未命中预测路径的单次墙钟开销。CA计时取完整跨核指令窗口，单独检查全部输出与CPU参考、SoC身份和DB完整性。工作量从512到67,108,864个乘加项，覆盖列/归约尾块、单token、Q9、粗tile和大矩阵。KDA chunk由状态依赖和Cube/Vector协作驱动，独立运行完整64-token块验证其CA计时资格。
 
-通俗地说，一段工作要同时满足“输入已准备好”和“设备空闲”才能开始；递推步骤还必须等上一步状态。只计算Cube/Vector忙时的最大值会漏掉这些等待。引擎支持把逻辑工作按有来源的模板展开为ISA计数；未展开的数学量不会冒充实际指令数。
+KDA chunk另测具有不同源码执行条件的两条路径。普通整块样例为 `[1,64,1,1,128,128]`，在预激活gate下复现CA重复set_flag错误。随后用独立调用器验证 `[1,64,2,2,128,128]`。BF16、FP32 raw gate、A_log、safeGate及useGateInKernel为真、偶数value heads、S按64对齐且关闭qg/v_new/h导出，对应固定参考源码的内联Gate和Post-WU/FwdH融合候选。CPU按每个head单独计算 `gamma=lowerBound/(1+exp(-exp(A_log)*g))`，并以gamma驱动串行状态递推和chunk内三角矩阵求逆，检查全部请求的O、最终状态、gk、Aqk、Akk与输入状态完整性。此次CA在117.8秒发出三个重复set_flag错误，主kernel没有完整时间线，因此缺少该实现的可信时延。两个合同各预设10形状，先行样例的失败保留，其余未运行。冻结样例及接口参数见`safe-chunk-freeze.json`。实际已编译分支的源码映射仍待tid/tiling/PC证据核实。
 
-当前`configs/hardware-950dt-v7.json`**没有填造出来的资源速率**。复用已有完整数据库得到opcode执行duration分布（`results/v0.7/shared-opcode-evidence.json`），但duration可能包含操作数长度、排队和依赖，不能直接倒数当吞吐或II。因此新扩展族的通用`predicted_us`仍会返回null并列出缺项；可插入具有独立证据的resource profile进行调度试验，合成测试参数不属于950DT实测。下一步需要按实际实现模板补指令/搬运展开，再用资源可分离的片段或小微基准识别L/II，沿用现有CA数据检验跨shape机制。这是尚未完成的校准工作，不能通过更多总耗时拟合掩盖。
+KDA chunk的可执行结构入口为`operator_model.cube_v8_chunk.predict('kda_chunk',shape,attrs)`。设单个序列切成长度为c_i的块，块上限C，块数n=ceil(S/C)，并行状态链数U=B×Hv。对单条链，有效因果元素对数P=Σc_i(c_i+1)/2，块矩阵稠密大小D=Σc_i²。QK与严格下三角KK工作分别为2KP与2K(P-S)，Post-WU为2(K+V)D，FwdH为4SKV次FLOPs和nKV次状态衰减乘法，Finalize为2SKV+2VD；全算子乘U。K/V是每头key/value宽度。FwdH在同一链内按块顺序推进，QK/KK/Finalize可按不同块和头分核。该入口返回各阶段工作、依赖、分块、适用属性与尚缺的三角求解/资源成本。上述两次v0.8实测均遇同步错误，故可执行结构模型的时延字段为null。
+
+独立留出中，Addmm `[512,512,256]` 预测6.4022 µs、参考4.4788 µs。最后结束核的搬运、Cube、FIXP实测区间并长2.1206 µs；该核MTE2单独占1.2648 µs、FIXP占1.9545 µs，两者存在重叠。模型填充段把三项服务串加为4.3258 µs。窗口内未被这些资源覆盖的实测时间为2.1067 µs，与控制项2.0764 µs接近。该shape的主要待修正项为首tile内的阶段重叠及实际分块。观测来源及阶段明细见[临界核诊断](../results/v0.8/cube/worst-addmm.json)。
+
+### Chunk KDA 的十组独立结构核对
+
+从两份已冻结清单选取十个不同 shape，B=1，S 从 1 到 256，Hq=Hv 取 1、2、4、8，K=V 取 16 或 128，C=64。CPU 核查器枚举每个头、块、有效 token 和有序 token 对，检查六个阶段的逻辑工作量、工作为零的阶段、DAG 顺序、任务数、串行步数和状态字节。S=1 时严格下三角为空，KK 工作为零，该节点在 DAG 中省略。用非零初始状态和每头一个活跃 K/V 通道，进一步对照块内三角求解和逐 token 递推的输出、各块末状态；已激活 gate 和 raw-safe gate 均覆盖。十组均通过，FP64 运算的最大差值为 9.72×10⁻¹⁷。该结果限于逻辑计数与稀疏数学恒等式。安装包 CA 耗时仍为 0/10，BF16 全输出、内部融合与物理吞吐待验证。逐项结果见 [chunk-structure-validation.json](../results/v0.8/cube/chunk-structure-validation.json)，可运行 `python3 scripts/cube-v8-chunk-structure.py` 复现。
+
+### 融合算子的流水区间模型
+
+1. **还原工作。** 按代码中的tile与归约方向，把每次shape换成各队列的工作单位。Indexer对长KV按128个key为一段执行点积，按512个key为一段估计TopK归并；mHC按并行token波次计算投影、读写与归约；MoE从本rank的专家token直方图分别划分各专家的输出矩阵，只对非空专家分配任务。输出列和归约维交换时改变GMM2的工作单位。上述分块是950DT的实现代理，执行分支和真实库tiling仍需按shape核对。
+2. **从开发trace提取流水重叠。** 每个kernel、每种核类型取最晚完成的核，按指令开始/结束tick把时间轴切成若干段。每段记录同时工作的流水集合，例如SCALAR+MTE2和SIMD+MTE3。等待、启动和首核错峰归在空闲段，计入真实关键路径。每种集合只累计一次时长，解决同一时间读、算、写重复相加的问题。所有v0.7有效shape在本版转入开发集。
+3. **在新shape重算。** 设参考shape为r，新shape为s，每个资源q的工作量为W(q,s)。流水集合A的时间估为其参考占用时长t(A,r)乘以集合中最大的工作量比例。最忙核的总时间和多个模板的稳健估计为
+
+   $T(s)=\mathrm{median}_{r}\left[\max_{h}\sum_A t_{h,A,r}\max_{q\in A}\{W(q,s)/W(q,r)\}\right]$。
+
+   h是核类型，A是同时占用的资源，t用微秒，W是下面的逻辑块数，比例无单位。对空闲区间采用波次比例。该式假设同一实现路径能够保留参考trace的重叠顺序；跨算法切换、KV尾部归约方式、在用核数变化或专家碎片会破坏这一假设。库端同步出现多个kernel时，分别应用公式，按实际串行依赖相加。组合mHC只含Pre、Sinkhorn及Post，MoE只含两次GMM链，不包含路由通信或host开销。
+
+| 路径 | 波次与工作单位 |
+|---|---|
+| Indexer (B=1,G=8,D=128) | 波次p=ceil(Q/32)；CUBE/MTE1工作=p·ceil(L/128)·ceil(G/16)，MTE2=p·ceil(L/128)，SIMD/MTE3=p·ceil(L/512)。Q为查询长度，L为key长度，G为head数，D为head宽度。 |
+| mHC Pre / PreSinkhorn / 拆分链 | T为token数，N=4为残差流数，D为隐藏宽度。投影波次p=ceil(T/32)，CUBE/MTE1为p·ceil(ND/128)，向量/读写工作为p·ceil(D/128)。拆分链中Sinkhorn/Post按64核重算p。Sinkhorn固定20次，工作单位为p，Post按D区段计数。 |
+| MoE | 记每专家有效行为m_e，输出宽度o，归约宽度k，p=ceil[(Σ_e ceil(m_e/16))·ceil(o/128)/32]。Cube和读工作=p·ceil(k/64)，向量工作=ceil[Σ_e ceil(m_e·F/256)/64]。第一层o=2F、k=K，第二层o=K、k=F。F/K分别为激活后宽度和输入隐藏宽度。SCALAR、FIXP和等待项以p计。 |
+
+例如MoE输入有1行与31行分给两个专家时，先产生1+2个行块，再与输出列块相乘。即使总行数相同，不同专家分布也可能改变波次。对Indexer的 Q=1、L从1024增至2048的同一路径，点积段数8增至16、TopK段数2增至4；控制部分仍是一波。重叠的读/算按较慢队列完成时间伸缩，整个kernel不直接乘2。
+
+参考区间描述的是950DT上给定库路线的有效服务时间。更换SoC需替换核数、单资源服务成本和tiling，并重新验证区间重叠；库专有的控制/等待尚未独立识别为硬件参数。在线查询仅巡访开发模板的有限集合，MoE另需一次遍历专家直方图。输入dtype、输出与布局合同见model.json的contracts；分项实现与冻结清单见本目录model.json及freeze.json。
+
+**验证与采集。** 冻结清单保留40个新调用的shape、属性、调用参数、超时/空间预算和各组件预测。Indexer的L覆盖640至8192；PreSinkhorn的T覆盖3至32且D=4096；拆分mHC的D覆盖64至1024，T覆盖1至32；MoE从1行单专家至64行四专家，包含[1,31]偏斜分布。每个完成的拆分mHC调用同时提供单独Pre的CA证据，同一进程串行执行三个真实库API并在各自产生输出后同步/校验，每次MoE调用提供两个组件和组合的观察。组件共享采集并产生相关误差。原始目录在runs/v8cv，离线摘要保留实际entry、核数、正确性组、数据库SHA和软件开销。调用器采用固定输入种子与推理属性，不覆盖所有真实整网dispatch。预测查询时延按已加载模型的完整返回测量，每个实测shape记录10次单线程墙钟的最大值与中位数。
+
+本轮有一例独立仿真因为共用可执行文件父目录下的log目录冲突而失败。保留失败成本，同时把相同SHA的调用器复制到每个case的私有目录，按相同冻结预测重试。mHC Pre不同shape可改变entry；遇到实际入口变化时，按真实Pre同步后的6组输出、Sinkhorn与Post的完成顺序、独立launch ID和每阶段原始TASK_DONE核对归属。未经归属校验的DB不用于组件误差。高负载下超时的投影或其他部分trace保留为失败证据。
 
 ### 11.3 数据、冻结和成本规则
 
@@ -653,11 +654,11 @@ W为此宏任务跨所有并行任务/串行步骤的工作总量，P为独立�
 
 1. 先复用现有源码、配置、entry、核数和指令/流水证据；只在证据不足时添加可区分机制的小shape。UB分界、尾块、分核饱和、算法切换比密集笛卡尔积更有价值。
 2. 原始trace按环境/属性/shape/调用器身份缓存。已有数据用于拟合后，角色转为开发，不能继续作为该版独立留出。相同trace的112个tile也不是112个独立shape。
-3. 新模型、代码、环境身份、待测shape与预测先冻结并提交，再采集新留出；不看结果回调该版参数。失败/超时也记录成本，不自动重试，不把部分trace纳入误差。
+3. 新模型、代码、环境身份、待测shape与预测先生成带时间与哈希的冻结记录，再采集新留出；不看结果回调该版参数。失败/超时也记录成本，合格重试保持原模型及预测，部分 trace 另计。
 4. compact完整指令DB优先用SQL归约，避免生成巨大的重复JSON。减少产物不保证减少CA执行计算量，所以同时限制每case时间、总墙钟、CPU和磁盘，而非只延长超时。
 5. 完整输出与CPU golden做数值检查后，才接纳周期；同时比对实际entry、核数和选定指令。性能模型只能解释已正确执行的路线。
 
-低成本查询实现使用一次加载的冻结模型、不可变输出、最多4096项LRU。长FA、通用FA、matmul为有界算术/有限tiling搜索；quant完整诊断为O(UB tile数)，单UB未缓存标量路径采用上面的等价求和，多UB标量路径仍为O(tile数)时间、O(1)临时空间；Indexer/KDA为O(1)，MoE为O(E)。原quant/matmul/FA只需要时延的调用可从 `operator_model.fast_query` 导入 `Predictor` 并使用 `predict_us(case,use_cache=False)`，避免构造完整诊断对象；新增族通用资源图请使用 `operator_model.mechanism.predict_case`，局部对照才使用 `operator_model.model_v7.Predictor`。缓存命中、未缓存完整预测、标量预测、模型加载/Python启动应分别计时，不能混成一个“仿真开销”。
+默认入口在进程内复用参数，每次从请求的 shape 和属性重新计算时间。quant 对少于 256 个 UB tile 的请求使用原递推，对更长的循环保存五个时刻（当前读、算、写完成，以及上一个 tile 的算、写完成）。每个依赖是“某个前驱的完成时间加阶段成本”，多个前驱取最大值，因此相同 tile 的更新可用 max-plus 矩阵的重复平方合并。完整行组与尾行/尾列分别处理，参数与逐 tile 算法相同。重复次数为 n 时只需 O(log n) 次固定大小的矩阵合成。FA 长 KV 采用首轮加稳态间隔，MoE 只遍历专家直方图。1 秒验收以统一入口单次墙钟计算，默认报告每个验证 shape 的多次查询最大值。
 
 作为已记录的成本参照，v0.5两点长FA共15.71分钟CA墙钟、8.04CPU小时、约469.48MiB保留数据；额外RMSNorm/Addmm两点调用共79.54秒。模型已加载后的长FA完整预测中位开销约28.81µs，缓存约1.59µs，取决于评估主机和负载；不是整网系统仿真吞吐。后续迭代应报告当前结果并保留同口径旧版对照。
 
@@ -670,7 +671,7 @@ WAPE=\sum_i|\widehat T_i-T_i|/\sum_iT_i.
 
 其中i为成功实测shape索引，T_i是CA参考微秒值，T_hat_i是冻结预测微秒值；APE/WAPE均为无量纲比率，报告时乘100显示百分比。通俗地说，APE看单例相差多少，WAPE看同族总绝对偏差占总参考时间的比例，较慢样本权重更大。
 
-每个算子分别报告开发/历史验证/新独立验证数量、WAPE、最大误差、覆盖shape和缺口；未校准族写N/A而不是0%。不同算子/机制混合后的低WAPE可能被大耗时FA主导，不能代替逐算子表。固定耗时均值保持冻结，用同一组成功新留出比较；小shape固定控制开销主导时它可能优于复杂模型，长单核循环增长时则无法缩放。
+每个算子报告开发与独立验证数量、独立验证 WAPE 与最大误差、覆盖 shape 和缺口。未校准族写N/A而不是0%。不同算子/机制混合后的低WAPE可能被大耗时FA主导，不能代替逐算子表。v0.8 总表按算子提供一套模型的独立验证误差。历史对照可从版本归档查阅。
 
 ## 12. 场景映射与跨代边界
 
@@ -682,13 +683,4 @@ A7/A8目前只保留架构假设，不能直接把A5总时延乘频率比或CV�
 
 ## 13. 实现与证据入口
 
-当前通用资源图入口为 `operator_model/mechanism.py`；`operator_model/model_v7.py`嵌入冻结v0.6模型并为新增族保留局部对照；原核心入口为 `operator_model/model_v6.py`（quant受限VF残差及单UB标量化简），继承 `model_v3.py`（quant UB流水）、`model_v4.py`（小shape回退）、`model_v2.py`（基础分块与校准）、`model_v5.py`（长FA）；基础分核/调度在 `model.py`。扩展入口是 `operator_model/extensions/`。参数取自冻结版本文件，本文数值仅便于审阅，完整精度以JSON为准。
-
-- [当前v0.7参数](../results/v0.7/model.json)、[冻结预测](../results/v0.7/frozen-predictions.json)、[全族评估](../results/v0.7/evaluation.json)。
-- [保留的v0.6参数](../results/v0.6/model.json)、[quant残差trace归约](../results/v0.6/trace-analysis.json)、[开发诊断](../results/v0.6/calibration-diagnostics.json)。
-- [保留的v0.5参数](../results/v0.5/model.json)、[32k原始归约证据](../results/v0.5/trace-analysis.json)、[实际库身份](../results/v0.5/evidence.json)。
-- [RMSNorm/Addmm详细证据](extensions/norm-addmm.md)、[最小调用记录](extensions/smoke-950dt.json)。
-- [Indexer/mHC接口与来源](extensions/indexer-mhc.md)、[KDA/MoE接口与来源](extensions/kda-moe.md)。
-- [采集方法复现](fa-compact-capture.md)、[真实工作负载候选映射](../results/v0.4/workload-coverage.json)。
-
-本总文档随当前实现更新；每轮的模型变化和同集误差变化另写短记录，历史模型和验收报告不覆盖。
+统一入口为 `operator_model.predictor.predict(op, shape, attrs)`。程序默认选择当前版本的一种实现。Vector 阶段参数、Cube 控制开销、CV 时间模板与各自冻结记录保存在 [本轮结果目录](../results/v0.8)。动态量化、Matmul 与普通 FA 沿用已验证分块与流水参数。完整的逐算子样例、误差与测得的单次最大预测墙钟见[当前验证报告](error-analysis.md)。

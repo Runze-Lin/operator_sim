@@ -1,0 +1,122 @@
+{
+  "op": "fa",
+  "shape": [
+    4,
+    256,
+    128,
+    1,
+    1
+  ],
+  "id": "fa_4_256_128_1_1",
+  "predicted_us": 9.55139614254106,
+  "query_s": 0.0001292999368160963,
+  "status": "ok",
+  "freeze_sha256": "e18d5acd21deccfec1c94954ac88f38c38783f7bc364b72ff00a15f2bb30a2ce",
+  "command": [
+    "bash",
+    "/home/l00925865/operator_sim/scripts/cann-run.sh",
+    "env",
+    "LD_PRELOAD=/home/l00925865/operator_sim/build/capture/libsim_soc_adapter.so",
+    "OPERATOR_SIM_TARGET_SOC=Ascend950DT_9582",
+    "npusim",
+    "record",
+    "/home/l00925865/operator_sim/build/smoke/three_ops",
+    "-s",
+    "Ascend950DT",
+    "-o",
+    "/home/l00925865/operator_sim/runs/v8core/fa_4_256_128_1_1/profile",
+    "-u",
+    "fa 4 256 128 1 1"
+  ],
+  "started": "2026-11-18T01:54:27.367213+00:00",
+  "wall_seconds": 108.35436051990837,
+  "measurement": {
+    "reference_us": 9.367272727272727,
+    "reference_scope": "cross-core instruction makespan",
+    "kernel": "entry_kernel_2050000070100220",
+    "frequency_ghz": 1.65,
+    "block_dim": 1,
+    "helper_info": {
+      "helper_version": "0.8.0",
+      "instr_whitelist_version": "7",
+      "contract_version": 7,
+      "name": "entry_kernel_2050000070100220",
+      "instr_num": 5776,
+      "instrs_exec_num": 11424,
+      "exec_time_ticks": 15456,
+      "exec_time_ns": 9367.272727272728,
+      "instrs_time_sum": 1088658,
+      "start_pc": 624211773176,
+      "arch": "v100",
+      "ai_core_active": 3,
+      "frequency_ghz": 1.65,
+      "object_path": "",
+      "launch_id": 0,
+      "block_dim": 1
+    },
+    "cores": [
+      {
+        "core_id": 0,
+        "core_type_id": 1,
+        "instruction_records": 3813,
+        "start_ticks": 0,
+        "end_ticks": 15032,
+        "span_us": 9.11030303030303,
+        "mmad_count": 4,
+        "rv_count": 0,
+        "pipeline_union_us": {
+          "SCALAR": 6.753333333333333,
+          "MTE1": 0.48545454545454547,
+          "MTE2": 1.846060606060606,
+          "CUBE": 0.32242424242424245,
+          "FIXP": 0.16242424242424242
+        }
+      },
+      {
+        "core_id": 0,
+        "core_type_id": 2,
+        "instruction_records": 3837,
+        "start_ticks": 90,
+        "end_ticks": 15456,
+        "span_us": 9.312727272727273,
+        "mmad_count": 0,
+        "rv_count": 201,
+        "pipeline_union_us": {
+          "SCALAR": 8.525454545454545,
+          "MTE2": 0.58,
+          "SIMD": 0.6593939393939394,
+          "MTE3": 0.5793939393939394
+        }
+      },
+      {
+        "core_id": 0,
+        "core_type_id": 3,
+        "instruction_records": 3774,
+        "start_ticks": 166,
+        "end_ticks": 15330,
+        "span_us": 9.19030303030303,
+        "mmad_count": 0,
+        "rv_count": 201,
+        "pipeline_union_us": {
+          "SCALAR": 8.48121212121212,
+          "MTE2": 0.5327272727272727,
+          "SIMD": 0.7472727272727273,
+          "MTE3": 0.5351515151515152
+        }
+      }
+    ],
+    "active_aic": 1,
+    "active_aiv": 2,
+    "max_core_mmad": 4,
+    "max_core_rv_count": 201,
+    "rv_count_scope": "helper ExecutedInstructions records; not historical msopprof paired log events",
+    "db_path": "/home/l00925865/operator_sim/runs/v8core/fa_4_256_128_1_1/profile/npusim_20261118095427_three_ops/record/0000_entry_kernel_2050000070100220.db",
+    "db_sha256": "8a807e706f33c0ea46bc1c6f8cffd5f277cde0f6f33d6b2cc7d3bfd096de22e3",
+    "db_bytes": 3923968,
+    "kernel_binary_sha256": null
+  },
+  "reference_us": 9.367272727272727,
+  "correctness": [
+    "elements=512 bad=0 max_abs_error=5.3258869e-05 atol=0.002 rtol=0.01"
+  ]
+}

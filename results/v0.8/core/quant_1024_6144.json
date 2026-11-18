@@ -1,0 +1,1094 @@
+{
+  "op": "quant",
+  "shape": [
+    1024,
+    6144
+  ],
+  "id": "quant_1024_6144",
+  "predicted_us": 8.93456219541961,
+  "query_s": 5.761999636888504e-05,
+  "status": "ok",
+  "freeze_sha256": "e18d5acd21deccfec1c94954ac88f38c38783f7bc364b72ff00a15f2bb30a2ce",
+  "command": [
+    "bash",
+    "/home/l00925865/operator_sim/scripts/cann-run.sh",
+    "env",
+    "LD_PRELOAD=/home/l00925865/operator_sim/build/capture/libsim_soc_adapter.so",
+    "OPERATOR_SIM_TARGET_SOC=Ascend950DT_9582",
+    "npusim",
+    "record",
+    "/home/l00925865/operator_sim/build/smoke/three_ops",
+    "-s",
+    "Ascend950DT",
+    "-o",
+    "/home/l00925865/operator_sim/runs/v8core/quant_1024_6144/profile",
+    "-u",
+    "quant 1024 6144"
+  ],
+  "started": "2026-11-18T01:50:34.807750+00:00",
+  "wall_seconds": 164.5390209699981,
+  "measurement": {
+    "reference_us": 8.703636363636363,
+    "reference_scope": "cross-core instruction makespan",
+    "kernel": "entry_kernel_21",
+    "frequency_ghz": 1.65,
+    "block_dim": 64,
+    "helper_info": {
+      "helper_version": "0.8.0",
+      "instr_whitelist_version": "7",
+      "contract_version": 7,
+      "name": "entry_kernel_21",
+      "instr_num": 1536,
+      "instrs_exec_num": 688896,
+      "exec_time_ticks": 14361,
+      "exec_time_ns": 8703.636363636364,
+      "instrs_time_sum": 12927423,
+      "start_pc": 618489305856,
+      "arch": "v100",
+      "ai_core_active": 64,
+      "frequency_ghz": 1.65,
+      "object_path": "",
+      "launch_id": 0,
+      "block_dim": 64
+    },
+    "cores": [
+      {
+        "core_id": 0,
+        "core_type_id": 2,
+        "instruction_records": 10764,
+        "start_ticks": 0,
+        "end_ticks": 12742,
+        "span_us": 7.722424242424243,
+        "mmad_count": 0,
+        "rv_count": 8922,
+        "pipeline_union_us": {
+          "SCALAR": 2.5915151515151513,
+          "MTE2": 4.336969696969697,
+          "SIMD": 3.169090909090909,
+          "MTE3": 1.2563636363636363
+        }
+      },
+      {
+        "core_id": 0,
+        "core_type_id": 3,
+        "instruction_records": 10764,
+        "start_ticks": 102,
+        "end_ticks": 12478,
+        "span_us": 7.500606060606061,
+        "mmad_count": 0,
+        "rv_count": 8922,
+        "pipeline_union_us": {
+          "SCALAR": 2.5975757575757576,
+          "MTE2": 4.153333333333333,
+          "SIMD": 3.181212121212121,
+          "MTE3": 1.2806060606060605
+        }
+      },
+      {
+        "core_id": 1,
+        "core_type_id": 2,
+        "instruction_records": 10764,
+        "start_ticks": 157,
+        "end_ticks": 12502,
+        "span_us": 7.4818181818181815,
+        "mmad_count": 0,
+        "rv_count": 8922,
+        "pipeline_union_us": {
+          "SCALAR": 2.355151515151515,
+          "MTE2": 4.421212121212121,
+          "SIMD": 3.181212121212121,
+          "MTE3": 1.2933333333333332
+        }
+      },
+      {
+        "core_id": 1,
+        "core_type_id": 3,
+        "instruction_records": 10764,
+        "start_ticks": 191,
+        "end_ticks": 12579,
+        "span_us": 7.507878787878788,
+        "mmad_count": 0,
+        "rv_count": 8922,
+        "pipeline_union_us": {
+          "SCALAR": 2.3315151515151515,
+          "MTE2": 4.586666666666667,
+          "SIMD": 3.169090909090909,
+          "MTE3": 1.3296969696969696
+        }
+      },
+      {
+        "core_id": 2,
+        "core_type_id": 2,
+        "instruction_records": 10764,
+        "start_ticks": 384,
+        "end_ticks": 12855,
+        "span_us": 7.558181818181819,
+        "mmad_count": 0,
+        "rv_count": 8922,
+        "pipeline_union_us": {
+          "SCALAR": 2.5472727272727274,
+          "MTE2": 4.318787878787878,
+          "SIMD": 3.169090909090909,
+          "MTE3": 1.4793939393939395
+        }
+      },
+      {
+        "core_id": 2,
+        "core_type_id": 3,
+        "instruction_records": 10764,
+        "start_ticks": 395,
+        "end_ticks": 12792,
+        "span_us": 7.513333333333334,
+        "mmad_count": 0,
+        "rv_count": 8922,
+        "pipeline_union_us": {
+          "SCALAR": 2.596363636363636,
+          "MTE2": 4.147272727272727,
+          "SIMD": 3.181212121212121,
+          "MTE3": 1.3333333333333333
+        }
+      },
+      {
+        "core_id": 3,
+        "core_type_id": 2,
+        "instruction_records": 10764,
+        "start_ticks": 119,
+        "end_ticks": 12460,
+        "span_us": 7.4793939393939395,
+        "mmad_count": 0,
+        "rv_count": 8922,
+        "pipeline_union_us": {
+          "SCALAR": 2.452121212121212,
+          "MTE2": 4.210909090909091,
+          "SIMD": 3.169090909090909,
+          "MTE3": 1.2181818181818183
+        }
+      },
+      {
+        "core_id": 3,
+        "core_type_id": 3,
+        "instruction_records": 10764,
+        "start_ticks": 129,
+        "end_ticks": 12544,
+        "span_us": 7.524242424242424,
+        "mmad_count": 0,
+        "rv_count": 8922,
+        "pipeline_union_us": {
+          "SCALAR": 2.486060606060606,
+          "MTE2": 4.345454545454546,
+          "SIMD": 3.169090909090909,
+          "MTE3": 1.3066666666666666
+        }
+      },
+      {
+        "core_id": 4,
+        "core_type_id": 2,
+        "instruction_records": 10764,
+        "start_ticks": 661,
+        "end_ticks": 13285,
+        "span_us": 7.650909090909091,
+        "mmad_count": 0,
+        "rv_count": 8922,
+        "pipeline_union_us": {
+          "SCALAR": 2.5842424242424245,
+          "MTE2": 4.172121212121212,
+          "SIMD": 3.169090909090909,
+          "MTE3": 1.183030303030303
+        }
+      },
+      {
+        "core_id": 4,
+        "core_type_id": 3,
+        "instruction_records": 10764,
+        "start_ticks": 692,
+        "end_ticks": 13112,
+        "span_us": 7.527272727272727,
+        "mmad_count": 0,
+        "rv_count": 8922,
+        "pipeline_union_us": {
+          "SCALAR": 2.589090909090909,
+          "MTE2": 4.1048484848484845,
+          "SIMD": 3.181212121212121,
+          "MTE3": 1.2266666666666666
+        }
+      },
+      {
+        "core_id": 5,
+        "core_type_id": 2,
+        "instruction_records": 10764,
+        "start_ticks": 233,
+        "end_ticks": 12365,
+        "span_us": 7.352727272727273,
+        "mmad_count": 0,
+        "rv_count": 8922,
+        "pipeline_union_us": {
+          "SCALAR": 2.112727272727273,
+          "MTE2": 4.389090909090909,
+          "SIMD": 3.1715151515151514,
+          "MTE3": 1.2084848484848485
+        }
+      },
+      {
+        "core_id": 5,
+        "core_type_id": 3,
+        "instruction_records": 10764,
+        "start_ticks": 282,
+        "end_ticks": 12614,
+        "span_us": 7.473939393939394,
+        "mmad_count": 0,
+        "rv_count": 8922,
+        "pipeline_union_us": {
+          "SCALAR": 2.4393939393939394,
+          "MTE2": 4.255757575757576,
+          "SIMD": 3.169090909090909,
+          "MTE3": 1.170909090909091
+        }
+      },
+      {
+        "core_id": 6,
+        "core_type_id": 2,
+        "instruction_records": 10764,
+        "start_ticks": 444,
+        "end_ticks": 13164,
+        "span_us": 7.709090909090909,
+        "mmad_count": 0,
+        "rv_count": 8922,
+        "pipeline_union_us": {
+          "SCALAR": 2.6806060606060607,
+          "MTE2": 4.181818181818182,
+          "SIMD": 3.181212121212121,
+          "MTE3": 1.2236363636363636
+        }
+      },
+      {
+        "core_id": 6,
+        "core_type_id": 3,
+        "instruction_records": 10764,
+        "start_ticks": 455,
+        "end_ticks": 13254,
+        "span_us": 7.756969696969697,
+        "mmad_count": 0,
+        "rv_count": 8922,
+        "pipeline_union_us": {
+          "SCALAR": 2.713939393939394,
+          "MTE2": 4.418181818181818,
+          "SIMD": 3.1836363636363636,
+          "MTE3": 1.3806060606060606
+        }
+      },
+      {
+        "core_id": 7,
+        "core_type_id": 2,
+        "instruction_records": 10764,
+        "start_ticks": 556,
+        "end_ticks": 13085,
+        "span_us": 7.593333333333334,
+        "mmad_count": 0,
+        "rv_count": 8922,
+        "pipeline_union_us": {
+          "SCALAR": 2.6145454545454547,
+          "MTE2": 4.113939393939394,
+          "SIMD": 3.181212121212121,
+          "MTE3": 1.2139393939393939
+        }
+      },
+      {
+        "core_id": 7,
+        "core_type_id": 3,
+        "instruction_records": 10764,
+        "start_ticks": 570,
+        "end_ticks": 13165,
+        "span_us": 7.633333333333334,
+        "mmad_count": 0,
+        "rv_count": 8922,
+        "pipeline_union_us": {
+          "SCALAR": 2.5866666666666664,
+          "MTE2": 4.263030303030303,
+          "SIMD": 3.181212121212121,
+          "MTE3": 1.3218181818181818
+        }
+      },
+      {
+        "core_id": 8,
+        "core_type_id": 2,
+        "instruction_records": 10764,
+        "start_ticks": 162,
+        "end_ticks": 12659,
+        "span_us": 7.573939393939394,
+        "mmad_count": 0,
+        "rv_count": 8922,
+        "pipeline_union_us": {
+          "SCALAR": 2.6175757575757577,
+          "MTE2": 4.252121212121212,
+          "SIMD": 3.181212121212121,
+          "MTE3": 1.206060606060606
+        }
+      },
+      {
+        "core_id": 8,
+        "core_type_id": 3,
+        "instruction_records": 10764,
+        "start_ticks": 183,
+        "end_ticks": 12726,
+        "span_us": 7.601818181818182,
+        "mmad_count": 0,
+        "rv_count": 8922,
+        "pipeline_union_us": {
+          "SCALAR": 2.6145454545454547,
+          "MTE2": 4.183030303030303,
+          "SIMD": 3.169090909090909,
+          "MTE3": 1.3466666666666667
+        }
+      },
+      {
+        "core_id": 9,
+        "core_type_id": 2,
+        "instruction_records": 10764,
+        "start_ticks": 336,
+        "end_ticks": 12375,
+        "span_us": 7.296363636363636,
+        "mmad_count": 0,
+        "rv_count": 8922,
+        "pipeline_union_us": {
+          "SCALAR": 2.4157575757575755,
+          "MTE2": 4.334545454545455,
+          "SIMD": 3.181212121212121,
+          "MTE3": 1.372121212121212
+        }
+      },
+      {
+        "core_id": 9,
+        "core_type_id": 3,
+        "instruction_records": 10764,
+        "start_ticks": 350,
+        "end_ticks": 12468,
+        "span_us": 7.344242424242425,
+        "mmad_count": 0,
+        "rv_count": 8922,
+        "pipeline_union_us": {
+          "SCALAR": 2.413939393939394,
+          "MTE2": 4.2284848484848485,
+          "SIMD": 3.181212121212121,
+          "MTE3": 1.3006060606060605
+        }
+      },
+      {
+        "core_id": 10,
+        "core_type_id": 2,
+        "instruction_records": 10764,
+        "start_ticks": 202,
+        "end_ticks": 12472,
+        "span_us": 7.4363636363636365,
+        "mmad_count": 0,
+        "rv_count": 8922,
+        "pipeline_union_us": {
+          "SCALAR": 2.6054545454545455,
+          "MTE2": 4.300606060606061,
+          "SIMD": 3.170909090909091,
+          "MTE3": 1.3745454545454545
+        }
+      },
+      {
+        "core_id": 10,
+        "core_type_id": 3,
+        "instruction_records": 10764,
+        "start_ticks": 218,
+        "end_ticks": 12748,
+        "span_us": 7.593939393939394,
+        "mmad_count": 0,
+        "rv_count": 8922,
+        "pipeline_union_us": {
+          "SCALAR": 2.644848484848485,
+          "MTE2": 4.205454545454545,
+          "SIMD": 3.181212121212121,
+          "MTE3": 1.2672727272727273
+        }
+      },
+      {
+        "core_id": 11,
+        "core_type_id": 2,
+        "instruction_records": 10764,
+        "start_ticks": 299,
+        "end_ticks": 12507,
+        "span_us": 7.3987878787878785,
+        "mmad_count": 0,
+        "rv_count": 8922,
+        "pipeline_union_us": {
+          "SCALAR": 2.521212121212121,
+          "MTE2": 4.2684848484848485,
+          "SIMD": 3.169090909090909,
+          "MTE3": 1.2593939393939393
+        }
+      },
+      {
+        "core_id": 11,
+        "core_type_id": 3,
+        "instruction_records": 10764,
+        "start_ticks": 313,
+        "end_ticks": 12384,
+        "span_us": 7.3157575757575755,
+        "mmad_count": 0,
+        "rv_count": 8922,
+        "pipeline_union_us": {
+          "SCALAR": 2.48,
+          "MTE2": 4.0606060606060606,
+          "SIMD": 3.181212121212121,
+          "MTE3": 1.1939393939393939
+        }
+      },
+      {
+        "core_id": 12,
+        "core_type_id": 2,
+        "instruction_records": 10764,
+        "start_ticks": 528,
+        "end_ticks": 13489,
+        "span_us": 7.855151515151515,
+        "mmad_count": 0,
+        "rv_count": 8922,
+        "pipeline_union_us": {
+          "SCALAR": 2.5739393939393937,
+          "MTE2": 4.4751515151515155,
+          "SIMD": 3.181212121212121,
+          "MTE3": 1.316969696969697
+        }
+      },
+      {
+        "core_id": 12,
+        "core_type_id": 3,
+        "instruction_records": 10764,
+        "start_ticks": 542,
+        "end_ticks": 13410,
+        "span_us": 7.798787878787879,
+        "mmad_count": 0,
+        "rv_count": 8922,
+        "pipeline_union_us": {
+          "SCALAR": 2.6418181818181816,
+          "MTE2": 4.405454545454545,
+          "SIMD": 3.181212121212121,
+          "MTE3": 1.3424242424242425
+        }
+      },
+      {
+        "core_id": 13,
+        "core_type_id": 2,
+        "instruction_records": 10764,
+        "start_ticks": 460,
+        "end_ticks": 12854,
+        "span_us": 7.511515151515152,
+        "mmad_count": 0,
+        "rv_count": 8922,
+        "pipeline_union_us": {
+          "SCALAR": 2.4575757575757575,
+          "MTE2": 4.276363636363636,
+          "SIMD": 3.184848484848485,
+          "MTE3": 1.3393939393939394
+        }
+      },
+      {
+        "core_id": 13,
+        "core_type_id": 3,
+        "instruction_records": 10764,
+        "start_ticks": 488,
+        "end_ticks": 12778,
+        "span_us": 7.448484848484848,
+        "mmad_count": 0,
+        "rv_count": 8922,
+        "pipeline_union_us": {
+          "SCALAR": 2.4715151515151517,
+          "MTE2": 4.350303030303031,
+          "SIMD": 3.1769696969696968,
+          "MTE3": 1.3842424242424243
+        }
+      },
+      {
+        "core_id": 14,
+        "core_type_id": 2,
+        "instruction_records": 10764,
+        "start_ticks": 628,
+        "end_ticks": 12728,
+        "span_us": 7.333333333333333,
+        "mmad_count": 0,
+        "rv_count": 8922,
+        "pipeline_union_us": {
+          "SCALAR": 2.5872727272727274,
+          "MTE2": 3.8781818181818184,
+          "SIMD": 3.181212121212121,
+          "MTE3": 1.2272727272727273
+        }
+      },
+      {
+        "core_id": 14,
+        "core_type_id": 3,
+        "instruction_records": 10764,
+        "start_ticks": 647,
+        "end_ticks": 12825,
+        "span_us": 7.380606060606061,
+        "mmad_count": 0,
+        "rv_count": 8922,
+        "pipeline_union_us": {
+          "SCALAR": 2.6066666666666665,
+          "MTE2": 3.9375757575757575,
+          "SIMD": 3.169090909090909,
+          "MTE3": 1.201818181818182
+        }
+      },
+      {
+        "core_id": 15,
+        "core_type_id": 2,
+        "instruction_records": 10764,
+        "start_ticks": 576,
+        "end_ticks": 12711,
+        "span_us": 7.3545454545454545,
+        "mmad_count": 0,
+        "rv_count": 8922,
+        "pipeline_union_us": {
+          "SCALAR": 2.295151515151515,
+          "MTE2": 4.206060606060606,
+          "SIMD": 3.169090909090909,
+          "MTE3": 1.1890909090909092
+        }
+      },
+      {
+        "core_id": 15,
+        "core_type_id": 3,
+        "instruction_records": 10764,
+        "start_ticks": 608,
+        "end_ticks": 13074,
+        "span_us": 7.555151515151515,
+        "mmad_count": 0,
+        "rv_count": 8922,
+        "pipeline_union_us": {
+          "SCALAR": 2.3496969696969696,
+          "MTE2": 4.303030303030303,
+          "SIMD": 3.169090909090909,
+          "MTE3": 1.1375757575757577
+        }
+      },
+      {
+        "core_id": 16,
+        "core_type_id": 2,
+        "instruction_records": 10764,
+        "start_ticks": 394,
+        "end_ticks": 13326,
+        "span_us": 7.837575757575758,
+        "mmad_count": 0,
+        "rv_count": 8922,
+        "pipeline_union_us": {
+          "SCALAR": 2.763030303030303,
+          "MTE2": 3.955151515151515,
+          "SIMD": 3.169090909090909,
+          "MTE3": 1.1072727272727272
+        }
+      },
+      {
+        "core_id": 16,
+        "core_type_id": 3,
+        "instruction_records": 10764,
+        "start_ticks": 424,
+        "end_ticks": 13027,
+        "span_us": 7.638181818181818,
+        "mmad_count": 0,
+        "rv_count": 8922,
+        "pipeline_union_us": {
+          "SCALAR": 2.732121212121212,
+          "MTE2": 4.121212121212121,
+          "SIMD": 3.169090909090909,
+          "MTE3": 1.1503030303030304
+        }
+      },
+      {
+        "core_id": 17,
+        "core_type_id": 2,
+        "instruction_records": 10764,
+        "start_ticks": 675,
+        "end_ticks": 13868,
+        "span_us": 7.995757575757576,
+        "mmad_count": 0,
+        "rv_count": 8922,
+        "pipeline_union_us": {
+          "SCALAR": 3.0442424242424244,
+          "MTE2": 3.6824242424242426,
+          "SIMD": 3.1763636363636363,
+          "MTE3": 1.1672727272727272
+        }
+      },
+      {
+        "core_id": 17,
+        "core_type_id": 3,
+        "instruction_records": 10764,
+        "start_ticks": 698,
+        "end_ticks": 14361,
+        "span_us": 8.280606060606061,
+        "mmad_count": 0,
+        "rv_count": 8922,
+        "pipeline_union_us": {
+          "SCALAR": 3.0866666666666664,
+          "MTE2": 3.8563636363636364,
+          "SIMD": 3.1763636363636363,
+          "MTE3": 1.1115151515151516
+        }
+      },
+      {
+        "core_id": 18,
+        "core_type_id": 2,
+        "instruction_records": 10764,
+        "start_ticks": 611,
+        "end_ticks": 13887,
+        "span_us": 8.046060606060607,
+        "mmad_count": 0,
+        "rv_count": 8922,
+        "pipeline_union_us": {
+          "SCALAR": 2.7466666666666666,
+          "MTE2": 4.071515151515151,
+          "SIMD": 3.1763636363636363,
+          "MTE3": 1.1684848484848485
+        }
+      },
+      {
+        "core_id": 18,
+        "core_type_id": 3,
+        "instruction_records": 10764,
+        "start_ticks": 626,
+        "end_ticks": 13641,
+        "span_us": 7.887878787878788,
+        "mmad_count": 0,
+        "rv_count": 8922,
+        "pipeline_union_us": {
+          "SCALAR": 2.747272727272727,
+          "MTE2": 4.044848484848485,
+          "SIMD": 3.1763636363636363,
+          "MTE3": 1.209090909090909
+        }
+      },
+      {
+        "core_id": 19,
+        "core_type_id": 2,
+        "instruction_records": 10764,
+        "start_ticks": 285,
+        "end_ticks": 14180,
+        "span_us": 8.421212121212122,
+        "mmad_count": 0,
+        "rv_count": 8922,
+        "pipeline_union_us": {
+          "SCALAR": 3.0375757575757576,
+          "MTE2": 4.2309090909090905,
+          "SIMD": 3.1763636363636363,
+          "MTE3": 1.3975757575757575
+        }
+      },
+      {
+        "core_id": 19,
+        "core_type_id": 3,
+        "instruction_records": 10764,
+        "start_ticks": 311,
+        "end_ticks": 14225,
+        "span_us": 8.432727272727274,
+        "mmad_count": 0,
+        "rv_count": 8922,
+        "pipeline_union_us": {
+          "SCALAR": 3.0472727272727274,
+          "MTE2": 4.297575757575758,
+          "SIMD": 3.1836363636363636,
+          "MTE3": 1.4763636363636363
+        }
+      },
+      {
+        "core_id": 20,
+        "core_type_id": 2,
+        "instruction_records": 10764,
+        "start_ticks": 258,
+        "end_ticks": 13196,
+        "span_us": 7.841212121212121,
+        "mmad_count": 0,
+        "rv_count": 8922,
+        "pipeline_union_us": {
+          "SCALAR": 2.795757575757576,
+          "MTE2": 4.224242424242425,
+          "SIMD": 3.169090909090909,
+          "MTE3": 1.3624242424242423
+        }
+      },
+      {
+        "core_id": 20,
+        "core_type_id": 3,
+        "instruction_records": 10764,
+        "start_ticks": 267,
+        "end_ticks": 13120,
+        "span_us": 7.78969696969697,
+        "mmad_count": 0,
+        "rv_count": 8922,
+        "pipeline_union_us": {
+          "SCALAR": 2.7666666666666666,
+          "MTE2": 4.3145454545454545,
+          "SIMD": 3.169090909090909,
+          "MTE3": 1.2315151515151515
+        }
+      },
+      {
+        "core_id": 21,
+        "core_type_id": 2,
+        "instruction_records": 10764,
+        "start_ticks": 495,
+        "end_ticks": 13863,
+        "span_us": 8.101818181818182,
+        "mmad_count": 0,
+        "rv_count": 8922,
+        "pipeline_union_us": {
+          "SCALAR": 2.9909090909090907,
+          "MTE2": 4.0248484848484845,
+          "SIMD": 3.1763636363636363,
+          "MTE3": 1.2242424242424241
+        }
+      },
+      {
+        "core_id": 21,
+        "core_type_id": 3,
+        "instruction_records": 10764,
+        "start_ticks": 509,
+        "end_ticks": 13942,
+        "span_us": 8.14121212121212,
+        "mmad_count": 0,
+        "rv_count": 8922,
+        "pipeline_union_us": {
+          "SCALAR": 2.975151515151515,
+          "MTE2": 4.121818181818182,
+          "SIMD": 3.1763636363636363,
+          "MTE3": 1.3351515151515152
+        }
+      },
+      {
+        "core_id": 22,
+        "core_type_id": 2,
+        "instruction_records": 10764,
+        "start_ticks": 444,
+        "end_ticks": 13117,
+        "span_us": 7.680606060606061,
+        "mmad_count": 0,
+        "rv_count": 8922,
+        "pipeline_union_us": {
+          "SCALAR": 2.704848484848485,
+          "MTE2": 4.076969696969697,
+          "SIMD": 3.169090909090909,
+          "MTE3": 1.1575757575757575
+        }
+      },
+      {
+        "core_id": 22,
+        "core_type_id": 3,
+        "instruction_records": 10764,
+        "start_ticks": 474,
+        "end_ticks": 13472,
+        "span_us": 7.877575757575758,
+        "mmad_count": 0,
+        "rv_count": 8922,
+        "pipeline_union_us": {
+          "SCALAR": 2.7381818181818183,
+          "MTE2": 3.9296969696969697,
+          "SIMD": 3.1763636363636363,
+          "MTE3": 1.084848484848485
+        }
+      },
+      {
+        "core_id": 23,
+        "core_type_id": 2,
+        "instruction_records": 10764,
+        "start_ticks": 376,
+        "end_ticks": 13909,
+        "span_us": 8.201818181818181,
+        "mmad_count": 0,
+        "rv_count": 8922,
+        "pipeline_union_us": {
+          "SCALAR": 2.9896969696969697,
+          "MTE2": 4.301818181818182,
+          "SIMD": 3.1763636363636363,
+          "MTE3": 1.1963636363636363
+        }
+      },
+      {
+        "core_id": 23,
+        "core_type_id": 3,
+        "instruction_records": 10764,
+        "start_ticks": 422,
+        "end_ticks": 14124,
+        "span_us": 8.304242424242425,
+        "mmad_count": 0,
+        "rv_count": 8922,
+        "pipeline_union_us": {
+          "SCALAR": 2.953939393939394,
+          "MTE2": 4.356363636363636,
+          "SIMD": 3.1763636363636363,
+          "MTE3": 1.2242424242424241
+        }
+      },
+      {
+        "core_id": 24,
+        "core_type_id": 2,
+        "instruction_records": 10764,
+        "start_ticks": 707,
+        "end_ticks": 13269,
+        "span_us": 7.613333333333333,
+        "mmad_count": 0,
+        "rv_count": 8922,
+        "pipeline_union_us": {
+          "SCALAR": 2.673939393939394,
+          "MTE2": 4.096363636363637,
+          "SIMD": 3.169090909090909,
+          "MTE3": 1.2696969696969698
+        }
+      },
+      {
+        "core_id": 24,
+        "core_type_id": 3,
+        "instruction_records": 10764,
+        "start_ticks": 721,
+        "end_ticks": 13320,
+        "span_us": 7.635757575757576,
+        "mmad_count": 0,
+        "rv_count": 8922,
+        "pipeline_union_us": {
+          "SCALAR": 2.667878787878788,
+          "MTE2": 4.24,
+          "SIMD": 3.169090909090909,
+          "MTE3": 1.3642424242424243
+        }
+      },
+      {
+        "core_id": 25,
+        "core_type_id": 2,
+        "instruction_records": 10764,
+        "start_ticks": 578,
+        "end_ticks": 13796,
+        "span_us": 8.010909090909092,
+        "mmad_count": 0,
+        "rv_count": 8922,
+        "pipeline_union_us": {
+          "SCALAR": 2.9915151515151517,
+          "MTE2": 3.9454545454545453,
+          "SIMD": 3.1763636363636363,
+          "MTE3": 1.1745454545454546
+        }
+      },
+      {
+        "core_id": 25,
+        "core_type_id": 3,
+        "instruction_records": 10764,
+        "start_ticks": 610,
+        "end_ticks": 14262,
+        "span_us": 8.273939393939393,
+        "mmad_count": 0,
+        "rv_count": 8922,
+        "pipeline_union_us": {
+          "SCALAR": 3.001212121212121,
+          "MTE2": 4.053939393939394,
+          "SIMD": 3.1763636363636363,
+          "MTE3": 1.0854545454545454
+        }
+      },
+      {
+        "core_id": 26,
+        "core_type_id": 2,
+        "instruction_records": 10764,
+        "start_ticks": 120,
+        "end_ticks": 12794,
+        "span_us": 7.681212121212122,
+        "mmad_count": 0,
+        "rv_count": 8922,
+        "pipeline_union_us": {
+          "SCALAR": 2.8333333333333335,
+          "MTE2": 4.008484848484849,
+          "SIMD": 3.169090909090909,
+          "MTE3": 1.0727272727272728
+        }
+      },
+      {
+        "core_id": 26,
+        "core_type_id": 3,
+        "instruction_records": 10764,
+        "start_ticks": 665,
+        "end_ticks": 13396,
+        "span_us": 7.715757575757576,
+        "mmad_count": 0,
+        "rv_count": 8922,
+        "pipeline_union_us": {
+          "SCALAR": 2.5921212121212123,
+          "MTE2": 4.068484848484848,
+          "SIMD": 3.169090909090909,
+          "MTE3": 1.0678787878787879
+        }
+      },
+      {
+        "core_id": 27,
+        "core_type_id": 2,
+        "instruction_records": 10764,
+        "start_ticks": 202,
+        "end_ticks": 13555,
+        "span_us": 8.092727272727272,
+        "mmad_count": 0,
+        "rv_count": 8922,
+        "pipeline_union_us": {
+          "SCALAR": 3.0787878787878786,
+          "MTE2": 3.9745454545454546,
+          "SIMD": 3.169090909090909,
+          "MTE3": 1.2606060606060605
+        }
+      },
+      {
+        "core_id": 27,
+        "core_type_id": 3,
+        "instruction_records": 10764,
+        "start_ticks": 216,
+        "end_ticks": 13400,
+        "span_us": 7.99030303030303,
+        "mmad_count": 0,
+        "rv_count": 8922,
+        "pipeline_union_us": {
+          "SCALAR": 3.0775757575757576,
+          "MTE2": 3.9260606060606063,
+          "SIMD": 3.169090909090909,
+          "MTE3": 1.1957575757575758
+        }
+      },
+      {
+        "core_id": 28,
+        "core_type_id": 2,
+        "instruction_records": 10764,
+        "start_ticks": 534,
+        "end_ticks": 13260,
+        "span_us": 7.712727272727273,
+        "mmad_count": 0,
+        "rv_count": 8922,
+        "pipeline_union_us": {
+          "SCALAR": 2.713939393939394,
+          "MTE2": 4.305454545454546,
+          "SIMD": 3.169090909090909,
+          "MTE3": 1.4212121212121211
+        }
+      },
+      {
+        "core_id": 28,
+        "core_type_id": 3,
+        "instruction_records": 10764,
+        "start_ticks": 544,
+        "end_ticks": 13172,
+        "span_us": 7.653333333333333,
+        "mmad_count": 0,
+        "rv_count": 8922,
+        "pipeline_union_us": {
+          "SCALAR": 2.6684848484848485,
+          "MTE2": 4.079393939393939,
+          "SIMD": 3.169090909090909,
+          "MTE3": 1.324848484848485
+        }
+      },
+      {
+        "core_id": 29,
+        "core_type_id": 2,
+        "instruction_records": 10764,
+        "start_ticks": 357,
+        "end_ticks": 13812,
+        "span_us": 8.154545454545454,
+        "mmad_count": 0,
+        "rv_count": 8922,
+        "pipeline_union_us": {
+          "SCALAR": 3.035151515151515,
+          "MTE2": 4.359393939393939,
+          "SIMD": 3.1763636363636363,
+          "MTE3": 1.4224242424242424
+        }
+      },
+      {
+        "core_id": 29,
+        "core_type_id": 3,
+        "instruction_records": 10764,
+        "start_ticks": 370,
+        "end_ticks": 13750,
+        "span_us": 8.10909090909091,
+        "mmad_count": 0,
+        "rv_count": 8922,
+        "pipeline_union_us": {
+          "SCALAR": 3.0345454545454547,
+          "MTE2": 4.283636363636363,
+          "SIMD": 3.1763636363636363,
+          "MTE3": 1.2084848484848485
+        }
+      },
+      {
+        "core_id": 30,
+        "core_type_id": 2,
+        "instruction_records": 10764,
+        "start_ticks": 767,
+        "end_ticks": 13440,
+        "span_us": 7.680606060606061,
+        "mmad_count": 0,
+        "rv_count": 8922,
+        "pipeline_union_us": {
+          "SCALAR": 2.672727272727273,
+          "MTE2": 4.1909090909090905,
+          "SIMD": 3.1763636363636363,
+          "MTE3": 1.2503030303030302
+        }
+      },
+      {
+        "core_id": 30,
+        "core_type_id": 3,
+        "instruction_records": 10764,
+        "start_ticks": 777,
+        "end_ticks": 13515,
+        "span_us": 7.72,
+        "mmad_count": 0,
+        "rv_count": 8922,
+        "pipeline_union_us": {
+          "SCALAR": 2.687878787878788,
+          "MTE2": 4.206060606060606,
+          "SIMD": 3.1763636363636363,
+          "MTE3": 1.4175757575757575
+        }
+      },
+      {
+        "core_id": 31,
+        "core_type_id": 2,
+        "instruction_records": 10764,
+        "start_ticks": 186,
+        "end_ticks": 13527,
+        "span_us": 8.085454545454546,
+        "mmad_count": 0,
+        "rv_count": 8922,
+        "pipeline_union_us": {
+          "SCALAR": 3.0824242424242425,
+          "MTE2": 4.0236363636363635,
+          "SIMD": 3.169090909090909,
+          "MTE3": 1.2078787878787878
+        }
+      },
+      {
+        "core_id": 31,
+        "core_type_id": 3,
+        "instruction_records": 10764,
+        "start_ticks": 201,
+        "end_ticks": 13654,
+        "span_us": 8.153333333333334,
+        "mmad_count": 0,
+        "rv_count": 8922,
+        "pipeline_union_us": {
+          "SCALAR": 3.110909090909091,
+          "MTE2": 3.930909090909091,
+          "SIMD": 3.1763636363636363,
+          "MTE3": 1.3
+        }
+      }
+    ],
+    "active_aic": 0,
+    "active_aiv": 64,
+    "max_core_mmad": 0,
+    "max_core_rv_count": 8922,
+    "rv_count_scope": "helper ExecutedInstructions records; not historical msopprof paired log events",
+    "db_path": "/home/l00925865/operator_sim/runs/v8core/quant_1024_6144/profile/npusim_20261118095035_three_ops/record/0000_entry_kernel_21.db",
+    "db_sha256": "ae73a5fd14b7801fb44a902a951579d3ba0dd7235b0760e9b349e547dda0770c",
+    "db_bytes": 240209920,
+    "kernel_binary_sha256": null
+  },
+  "reference_us": 8.703636363636363,
+  "correctness": [
+    "quant_elements=6291456 scale_elements=196608 bad=0 comparison=exact_bytes"
+  ]
+}

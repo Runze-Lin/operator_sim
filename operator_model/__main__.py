@@ -5,15 +5,25 @@ from .model import Case, Predictor
 
 def main():
     parser = argparse.ArgumentParser(description='Predict without CANN or CA installed')
-    parser.add_argument('--model', default='results/v0.7/model.json')
+    parser.add_argument('--model', default=None)
     parser.add_argument('--op', required=True, help='quant, matmul, fa, or an extension operator')
     parser.add_argument('--shape', required=True, type=int, nargs='+')
     parser.add_argument('--instruction-counts', action='store_true')
     parser.add_argument('--attrs-json',default='{}',help='Operator attributes as JSON')
     parser.add_argument('--local-proxy',action='store_true',help='Opt in to a local diagnostic baseline, not the general mechanism model')
-    parser.add_argument('--hardware-profile',default='configs/hardware-950dt-v7.json')
+    parser.add_argument('--hardware-profile',default=None)
     args = parser.parse_args()
     attrs=json.loads(args.attrs_json)
+    if args.model is None and not args.local_proxy and args.hardware_profile is None:
+        from .predictor import predict
+        output = predict(args.op,args.shape,attrs)
+        if args.instruction_counts and output['predicted_us'] is not None and args.op in ('quant','matmul','fa'):
+            from .predictor import _legacy, Case as LegacyCase
+            output['instruction_count_diagnostics'] = _legacy().instruction_counts(LegacyCase(args.op,tuple(args.shape)))
+        print(json.dumps(output,indent=2))
+        return
+    args.model = args.model or 'results/v0.7/model.json'
+    args.hardware_profile = args.hardware_profile or 'configs/hardware-950dt-v7.json'
     if args.op in ('quant','matmul','fa') and attrs:
         parser.error('Legacy quant/matmul/fa models have fixed attributes; attrs-json is for extension contracts')
     if args.op not in ('quant','matmul','fa') and not args.local_proxy:

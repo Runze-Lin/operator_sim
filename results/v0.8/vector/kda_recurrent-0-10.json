@@ -1,0 +1,612 @@
+[
+  {
+    "id": "kda_recurrent_0",
+    "op": "kda_recurrent",
+    "shape": [
+      1,
+      3,
+      1,
+      1,
+      128,
+      128
+    ],
+    "attrs": {
+      "layout": "BSND",
+      "dtype": "BF16",
+      "gate_dtype": "FP32",
+      "state_dtype": "FP32",
+      "state_v_first": false,
+      "use_gate_in_kernel": false,
+      "chunk_size": null,
+      "output_final_state": true,
+      "export_gk": false
+    },
+    "args": [
+      3,
+      128,
+      0
+    ],
+    "kind": "KDA",
+    "groups": 3,
+    "prediction": {
+      "status": "A5_vector_stage_template",
+      "predicted_us": 22.022395382393448,
+      "stages_us": {
+        "arrival": 0.0,
+        "SIMD": 13.114632034630262,
+        "MTE3": 1.5858874458874435,
+        "MTE2": 1.4929004329004274,
+        "SCALAR": 4.30311688311673,
+        "other": 1.5258585858585858
+      },
+      "predicted_active_aiv": 1,
+      "waves": 1,
+      "scope": "cross-core instruction makespan"
+    },
+    "role": "validation",
+    "reference_us": 21.932121212121213,
+    "predicted_us": 22.022395382393448,
+    "kernel": "entry_kernel_0",
+    "active_aic": 0,
+    "active_aiv": 1,
+    "source": "runs/v8vec/kda_recurrent-0-10/profile/npusim_20261118095455_KDA/record/0000_entry_kernel_0.db",
+    "correctness": [
+      "correctness name=attn_out count=384 bad=0 max_abs_error=1.886e-07 atol=2e-06 rtol=0.015625 hard_limit=1",
+      "correctness name=final_state count=16384 bad=0 max_abs_error=2.89419e-10 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=initial_state_unchanged count=16384 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "97f511ee97d45fb9b050b7ccdcf8c2ea5af0aa14a9d22400c734e0f3c9f7d5de",
+    "batch_wall_s": 1119.742610289948,
+    "batch": "kda_recurrent-0-10",
+    "max_core_rv_count": 10614
+  },
+  {
+    "id": "kda_recurrent_1",
+    "op": "kda_recurrent",
+    "shape": [
+      1,
+      5,
+      1,
+      1,
+      128,
+      128
+    ],
+    "attrs": {
+      "layout": "BSND",
+      "dtype": "BF16",
+      "gate_dtype": "FP32",
+      "state_dtype": "FP32",
+      "state_v_first": false,
+      "use_gate_in_kernel": false,
+      "chunk_size": null,
+      "output_final_state": true,
+      "export_gk": false
+    },
+    "args": [
+      5,
+      128,
+      0
+    ],
+    "kind": "KDA",
+    "groups": 3,
+    "prediction": {
+      "status": "A5_vector_stage_template",
+      "predicted_us": 28.973217893213118,
+      "stages_us": {
+        "arrival": 0.0,
+        "SIMD": 18.989437229432607,
+        "MTE3": 2.4823376623376574,
+        "MTE2": 1.544935064935053,
+        "SCALAR": 4.430649350649216,
+        "other": 1.5258585858585858
+      },
+      "predicted_active_aiv": 1,
+      "waves": 1,
+      "scope": "cross-core instruction makespan"
+    },
+    "role": "validation",
+    "reference_us": 24.64848484848485,
+    "predicted_us": 28.973217893213118,
+    "kernel": "entry_kernel_0",
+    "active_aic": 0,
+    "active_aiv": 1,
+    "source": "runs/v8vec/kda_recurrent-0-10/profile/npusim_20261118095455_KDA/record/0001_entry_kernel_0.db",
+    "correctness": [
+      "correctness name=attn_out count=640 bad=0 max_abs_error=1.886e-07 atol=2e-06 rtol=0.015625 hard_limit=1",
+      "correctness name=final_state count=16384 bad=0 max_abs_error=3.51191e-10 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=initial_state_unchanged count=16384 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "d31676d71118ef428423bbb8d2196b13ae3a5b85d9becdf4ca81a1c38d3d83bc",
+    "batch_wall_s": 1119.742610289948,
+    "batch": "kda_recurrent-0-10",
+    "max_core_rv_count": 16970
+  },
+  {
+    "id": "kda_recurrent_2",
+    "op": "kda_recurrent",
+    "shape": [
+      1,
+      6,
+      1,
+      1,
+      128,
+      128
+    ],
+    "attrs": {
+      "layout": "BSND",
+      "dtype": "BF16",
+      "gate_dtype": "FP32",
+      "state_dtype": "FP32",
+      "state_v_first": false,
+      "use_gate_in_kernel": false,
+      "chunk_size": null,
+      "output_final_state": true,
+      "export_gk": false
+    },
+    "args": [
+      6,
+      128,
+      0
+    ],
+    "kind": "KDA",
+    "groups": 3,
+    "prediction": {
+      "status": "A5_vector_stage_template",
+      "predicted_us": 32.448629148622956,
+      "stages_us": {
+        "arrival": 0.0,
+        "SIMD": 21.92683982683378,
+        "MTE3": 2.930562770562764,
+        "MTE2": 1.5709523809523658,
+        "SCALAR": 4.494415584415459,
+        "other": 1.5258585858585858
+      },
+      "predicted_active_aiv": 1,
+      "waves": 1,
+      "scope": "cross-core instruction makespan"
+    },
+    "role": "validation",
+    "reference_us": 28.44121212121212,
+    "predicted_us": 32.448629148622956,
+    "kernel": "entry_kernel_0",
+    "active_aic": 0,
+    "active_aiv": 1,
+    "source": "runs/v8vec/kda_recurrent-0-10/profile/npusim_20261118095455_KDA/record/0002_entry_kernel_0.db",
+    "correctness": [
+      "correctness name=attn_out count=768 bad=0 max_abs_error=2.13588e-07 atol=2e-06 rtol=0.015625 hard_limit=1",
+      "correctness name=final_state count=16384 bad=0 max_abs_error=3.7543e-10 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=initial_state_unchanged count=16384 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "13312e0bafd67537cc5e4f826072a5a55543f62a35648e3e3cd5e75ff34cfabe",
+    "batch_wall_s": 1119.742610289948,
+    "batch": "kda_recurrent-0-10",
+    "max_core_rv_count": 20148
+  },
+  {
+    "id": "kda_recurrent_3",
+    "op": "kda_recurrent",
+    "shape": [
+      1,
+      7,
+      1,
+      1,
+      128,
+      128
+    ],
+    "attrs": {
+      "layout": "BSND",
+      "dtype": "BF16",
+      "gate_dtype": "FP32",
+      "state_dtype": "FP32",
+      "state_v_first": false,
+      "use_gate_in_kernel": false,
+      "chunk_size": null,
+      "output_final_state": true,
+      "export_gk": false
+    },
+    "args": [
+      7,
+      128,
+      0
+    ],
+    "kind": "KDA",
+    "groups": 3,
+    "prediction": {
+      "status": "A5_vector_stage_template",
+      "predicted_us": 35.924040404032795,
+      "stages_us": {
+        "arrival": 0.0,
+        "SIMD": 24.864242424234952,
+        "MTE3": 3.378787878787871,
+        "MTE2": 1.5969696969696785,
+        "SCALAR": 4.558181818181702,
+        "other": 1.5258585858585858
+      },
+      "predicted_active_aiv": 1,
+      "waves": 1,
+      "scope": "cross-core instruction makespan"
+    },
+    "role": "validation",
+    "reference_us": 31.194545454545455,
+    "predicted_us": 35.924040404032795,
+    "kernel": "entry_kernel_0",
+    "active_aic": 0,
+    "active_aiv": 1,
+    "source": "runs/v8vec/kda_recurrent-0-10/profile/npusim_20261118095455_KDA/record/0003_entry_kernel_0.db",
+    "correctness": [
+      "correctness name=attn_out count=896 bad=0 max_abs_error=2.13588e-07 atol=2e-06 rtol=0.015625 hard_limit=1",
+      "correctness name=final_state count=16384 bad=0 max_abs_error=4.05693e-10 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=initial_state_unchanged count=16384 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "a63dc00e7ff5a1913d08f3f56774a7e92d92beb0ad2ce5dc44fa4591618fd792",
+    "batch_wall_s": 1119.742610289948,
+    "batch": "kda_recurrent-0-10",
+    "max_core_rv_count": 23326
+  },
+  {
+    "id": "kda_recurrent_4",
+    "op": "kda_recurrent",
+    "shape": [
+      1,
+      8,
+      1,
+      1,
+      128,
+      128
+    ],
+    "attrs": {
+      "layout": "BSND",
+      "dtype": "BF16",
+      "gate_dtype": "FP32",
+      "state_dtype": "FP32",
+      "state_v_first": false,
+      "use_gate_in_kernel": false,
+      "chunk_size": null,
+      "output_final_state": true,
+      "export_gk": false
+    },
+    "args": [
+      8,
+      128,
+      0
+    ],
+    "kind": "KDA",
+    "groups": 3,
+    "prediction": {
+      "status": "A5_vector_stage_template",
+      "predicted_us": 39.399451659442626,
+      "stages_us": {
+        "arrival": 0.0,
+        "SIMD": 27.801645021636126,
+        "MTE3": 3.827012987012978,
+        "MTE2": 1.6229870129869912,
+        "SCALAR": 4.621948051947944,
+        "other": 1.5258585858585858
+      },
+      "predicted_active_aiv": 1,
+      "waves": 1,
+      "scope": "cross-core instruction makespan"
+    },
+    "role": "validation",
+    "reference_us": 35.39575757575758,
+    "predicted_us": 39.399451659442626,
+    "kernel": "entry_kernel_0",
+    "active_aic": 0,
+    "active_aiv": 1,
+    "source": "runs/v8vec/kda_recurrent-0-10/profile/npusim_20261118095455_KDA/record/0004_entry_kernel_0.db",
+    "correctness": [
+      "correctness name=attn_out count=1024 bad=0 max_abs_error=2.13588e-07 atol=2e-06 rtol=0.015625 hard_limit=1",
+      "correctness name=final_state count=16384 bad=0 max_abs_error=4.11635e-10 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=initial_state_unchanged count=16384 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "de6cd8c5d30654148c422ebcfeb03fcca9b34c240d594a77865906b8139b5e1e",
+    "batch_wall_s": 1119.742610289948,
+    "batch": "kda_recurrent-0-10",
+    "max_core_rv_count": 26504
+  },
+  {
+    "id": "kda_recurrent_5",
+    "op": "kda_recurrent",
+    "shape": [
+      1,
+      1,
+      1,
+      1,
+      128,
+      256
+    ],
+    "attrs": {
+      "layout": "BSND",
+      "dtype": "BF16",
+      "gate_dtype": "FP32",
+      "state_dtype": "FP32",
+      "state_v_first": false,
+      "use_gate_in_kernel": false,
+      "chunk_size": null,
+      "output_final_state": true,
+      "export_gk": false
+    },
+    "args": [
+      1,
+      256,
+      0
+    ],
+    "kind": "KDA",
+    "groups": 3,
+    "prediction": {
+      "status": "A5_vector_stage_template",
+      "predicted_us": 18.54698412698361,
+      "stages_us": {
+        "arrival": 0.0,
+        "SIMD": 10.177229437229087,
+        "MTE3": 1.1376623376623367,
+        "MTE2": 1.4668831168831147,
+        "SCALAR": 4.239350649350487,
+        "other": 1.5258585858585858
+      },
+      "predicted_active_aiv": 1,
+      "waves": 1,
+      "scope": "cross-core instruction makespan"
+    },
+    "role": "validation",
+    "reference_us": 17.433939393939394,
+    "predicted_us": 18.54698412698361,
+    "kernel": "entry_kernel_0",
+    "active_aic": 0,
+    "active_aiv": 1,
+    "source": "runs/v8vec/kda_recurrent-0-10/profile/npusim_20261118095455_KDA/record/0005_entry_kernel_0.db",
+    "correctness": [
+      "correctness name=attn_out count=256 bad=0 max_abs_error=2.32197e-07 atol=2e-06 rtol=0.015625 hard_limit=1",
+      "correctness name=final_state count=32768 bad=0 max_abs_error=1.19536e-10 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=initial_state_unchanged count=32768 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "e61a9b61831a1266b380b3c994c8487e8dcdc945f544fa1342abd67af6dd6685",
+    "batch_wall_s": 1119.742610289948,
+    "batch": "kda_recurrent-0-10",
+    "max_core_rv_count": 8426
+  },
+  {
+    "id": "kda_recurrent_6",
+    "op": "kda_recurrent",
+    "shape": [
+      1,
+      2,
+      1,
+      1,
+      128,
+      256
+    ],
+    "attrs": {
+      "layout": "BSND",
+      "dtype": "BF16",
+      "gate_dtype": "FP32",
+      "state_dtype": "FP32",
+      "state_v_first": false,
+      "use_gate_in_kernel": false,
+      "chunk_size": null,
+      "output_final_state": true,
+      "export_gk": false
+    },
+    "args": [
+      2,
+      256,
+      0
+    ],
+    "kind": "KDA",
+    "groups": 3,
+    "prediction": {
+      "status": "A5_vector_stage_template",
+      "predicted_us": 25.497806637803283,
+      "stages_us": {
+        "arrival": 0.0,
+        "SIMD": 16.052034632031432,
+        "MTE3": 2.0341125541125504,
+        "MTE2": 1.5189177489177401,
+        "SCALAR": 4.366883116882973,
+        "other": 1.5258585858585858
+      },
+      "predicted_active_aiv": 1,
+      "waves": 1,
+      "scope": "cross-core instruction makespan"
+    },
+    "role": "validation",
+    "reference_us": 22.683636363636364,
+    "predicted_us": 25.497806637803283,
+    "kernel": "entry_kernel_0",
+    "active_aic": 0,
+    "active_aiv": 1,
+    "source": "runs/v8vec/kda_recurrent-0-10/profile/npusim_20261118095455_KDA/record/0006_entry_kernel_0.db",
+    "correctness": [
+      "correctness name=attn_out count=512 bad=0 max_abs_error=2.32197e-07 atol=2e-06 rtol=0.015625 hard_limit=1",
+      "correctness name=final_state count=32768 bad=0 max_abs_error=2.18611e-10 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=initial_state_unchanged count=32768 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "4c868cf5cc3ffb6ee77ba02312d810c7aeb0c894a427dcef48108f2e7a5afb90",
+    "batch_wall_s": 1119.742610289948,
+    "batch": "kda_recurrent-0-10",
+    "max_core_rv_count": 14738
+  },
+  {
+    "id": "kda_recurrent_7",
+    "op": "kda_recurrent",
+    "shape": [
+      1,
+      3,
+      1,
+      1,
+      128,
+      256
+    ],
+    "attrs": {
+      "layout": "BSND",
+      "dtype": "BF16",
+      "gate_dtype": "FP32",
+      "state_dtype": "FP32",
+      "state_v_first": false,
+      "use_gate_in_kernel": false,
+      "chunk_size": null,
+      "output_final_state": true,
+      "export_gk": false
+    },
+    "args": [
+      3,
+      256,
+      0
+    ],
+    "kind": "KDA",
+    "groups": 3,
+    "prediction": {
+      "status": "A5_vector_stage_template",
+      "predicted_us": 32.448629148622956,
+      "stages_us": {
+        "arrival": 0.0,
+        "SIMD": 21.92683982683378,
+        "MTE3": 2.930562770562764,
+        "MTE2": 1.5709523809523658,
+        "SCALAR": 4.494415584415459,
+        "other": 1.5258585858585858
+      },
+      "predicted_active_aiv": 1,
+      "waves": 1,
+      "scope": "cross-core instruction makespan"
+    },
+    "role": "validation",
+    "reference_us": 31.07090909090909,
+    "predicted_us": 32.448629148622956,
+    "kernel": "entry_kernel_0",
+    "active_aic": 0,
+    "active_aiv": 1,
+    "source": "runs/v8vec/kda_recurrent-0-10/profile/npusim_20261118095455_KDA/record/0007_entry_kernel_0.db",
+    "correctness": [
+      "correctness name=attn_out count=768 bad=0 max_abs_error=2.34424e-07 atol=2e-06 rtol=0.015625 hard_limit=1",
+      "correctness name=final_state count=32768 bad=0 max_abs_error=2.90971e-10 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=initial_state_unchanged count=32768 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "e2190d8edc07628ded4ea28db23cffa2d5b492e0b8e73c8bd6cc372e68f5e4fa",
+    "batch_wall_s": 1119.742610289948,
+    "batch": "kda_recurrent-0-10",
+    "max_core_rv_count": 21050
+  },
+  {
+    "id": "kda_recurrent_8",
+    "op": "kda_recurrent",
+    "shape": [
+      1,
+      4,
+      1,
+      1,
+      128,
+      256
+    ],
+    "attrs": {
+      "layout": "BSND",
+      "dtype": "BF16",
+      "gate_dtype": "FP32",
+      "state_dtype": "FP32",
+      "state_v_first": false,
+      "use_gate_in_kernel": false,
+      "chunk_size": null,
+      "output_final_state": true,
+      "export_gk": false
+    },
+    "args": [
+      4,
+      256,
+      0
+    ],
+    "kind": "KDA",
+    "groups": 3,
+    "prediction": {
+      "status": "A5_vector_stage_template",
+      "predicted_us": 39.399451659442626,
+      "stages_us": {
+        "arrival": 0.0,
+        "SIMD": 27.801645021636126,
+        "MTE3": 3.827012987012978,
+        "MTE2": 1.6229870129869912,
+        "SCALAR": 4.621948051947944,
+        "other": 1.5258585858585858
+      },
+      "predicted_active_aiv": 1,
+      "waves": 1,
+      "scope": "cross-core instruction makespan"
+    },
+    "role": "validation",
+    "reference_us": 38.341818181818184,
+    "predicted_us": 39.399451659442626,
+    "kernel": "entry_kernel_0",
+    "active_aic": 0,
+    "active_aiv": 1,
+    "source": "runs/v8vec/kda_recurrent-0-10/profile/npusim_20261118095455_KDA/record/0008_entry_kernel_0.db",
+    "correctness": [
+      "correctness name=attn_out count=1024 bad=0 max_abs_error=2.34424e-07 atol=2e-06 rtol=0.015625 hard_limit=1",
+      "correctness name=final_state count=32768 bad=0 max_abs_error=3.02583e-10 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=initial_state_unchanged count=32768 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "f159de39f0e3b2cb600bc4a33ddc35ae21ec4fd495a3ebfb66e514875a9d59fe",
+    "batch_wall_s": 1119.742610289948,
+    "batch": "kda_recurrent-0-10",
+    "max_core_rv_count": 27362
+  },
+  {
+    "id": "kda_recurrent_9",
+    "op": "kda_recurrent",
+    "shape": [
+      1,
+      6,
+      1,
+      1,
+      128,
+      256
+    ],
+    "attrs": {
+      "layout": "BSND",
+      "dtype": "BF16",
+      "gate_dtype": "FP32",
+      "state_dtype": "FP32",
+      "state_v_first": false,
+      "use_gate_in_kernel": false,
+      "chunk_size": null,
+      "output_final_state": true,
+      "export_gk": false
+    },
+    "args": [
+      6,
+      256,
+      0
+    ],
+    "kind": "KDA",
+    "groups": 3,
+    "prediction": {
+      "status": "A5_vector_stage_template",
+      "predicted_us": 53.301096681081965,
+      "stages_us": {
+        "arrival": 0.0,
+        "SIMD": 39.55125541124082,
+        "MTE3": 5.619913419913405,
+        "MTE2": 1.727056277056242,
+        "SCALAR": 4.877012987012916,
+        "other": 1.5258585858585858
+      },
+      "predicted_active_aiv": 1,
+      "waves": 1,
+      "scope": "cross-core instruction makespan"
+    },
+    "role": "validation",
+    "reference_us": 52.69090909090909,
+    "predicted_us": 53.301096681081965,
+    "kernel": "entry_kernel_0",
+    "active_aic": 0,
+    "active_aiv": 1,
+    "source": "runs/v8vec/kda_recurrent-0-10/profile/npusim_20261118095455_KDA/record/0009_entry_kernel_0.db",
+    "correctness": [
+      "correctness name=attn_out count=1536 bad=0 max_abs_error=2.34424e-07 atol=2e-06 rtol=0.015625 hard_limit=1",
+      "correctness name=final_state count=32768 bad=0 max_abs_error=3.72915e-10 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=initial_state_unchanged count=32768 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "f79542b1e07a053456d41a23ed8ba54c2fd0175bee4d4bb8f2fda8a118a5434d",
+    "batch_wall_s": 1119.742610289948,
+    "batch": "kda_recurrent-0-10",
+    "max_core_rv_count": 39986
+  }
+]

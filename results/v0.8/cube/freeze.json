@@ -1,0 +1,1556 @@
+{
+  "utc": "2026-11-18T01:47:21.426533+00:00",
+  "cases": [
+    {
+      "id": "matmul_1_32_16",
+      "op": "matmul",
+      "shape": [
+        1,
+        32,
+        16
+      ],
+      "attrs": {},
+      "prediction": {
+        "op": "matmul",
+        "shape": [
+          1,
+          32,
+          16
+        ],
+        "predicted_us": 3.188145708743793,
+        "soc_version": "Ascend950DT_9582",
+        "reference_scope": "cross-core instruction makespan",
+        "coverage": "provisional_regime",
+        "plan": {
+          "active_aic": 1,
+          "active_aiv": 0,
+          "waves": 1,
+          "iterations": 1,
+          "branch": "gemv",
+          "tile": [
+            16,
+            64,
+            256
+          ],
+          "units": {
+            "read": 1.03125,
+            "cube": 0.0078125,
+            "fix": 0.0625,
+            "vector": 0.0,
+            "write": 0.0
+          },
+          "opcode_features": [
+            1
+          ],
+          "useful_work": 1024,
+          "logical_bytes": 1120,
+          "work_per_core": 1024
+        },
+        "stage_services_us": {
+          "read": 0.8044248735809234,
+          "cube": 0.13056944459605102,
+          "fix": 1.5253940670261117,
+          "vector": 0.0,
+          "write": 0.0
+        },
+        "scheduled_body_us": 2.4603883852030863,
+        "uncorrected_schedule_us": 2.4603883852030863,
+        "constant_baseline_us": 3.9233940184116363,
+        "empirical_roofline_us": 0.0062403823297548415,
+        "calibration_regime_count": 2,
+        "expected_kernel_candidates": [
+          "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2"
+        ],
+        "kernel_selection_verified": false,
+        "estimated_max_core_selected_opcode_count": 0.9999999994482758,
+        "ideal_compute_efficiency": null,
+        "efficiency_unavailable_reason": "Independent ISA issue/throughput model is not calibrated",
+        "previous_v02_us": 3.188145708743793,
+        "previous_constant_baseline_us": 3.853484906256199
+      },
+      "query_seconds": 0.00319308,
+      "timeout_s": 240
+    },
+    {
+      "id": "addmm_1_32_16",
+      "op": "addmm",
+      "shape": [
+        1,
+        32,
+        16
+      ],
+      "attrs": {
+        "self_shape": [
+          32
+        ],
+        "alpha": 1,
+        "beta": 1
+      },
+      "prediction": {
+        "op": "addmm",
+        "shape": [
+          1,
+          32,
+          16
+        ],
+        "predicted_us": 4.53737800949028,
+        "plan": {
+          "active_aic": 1,
+          "active_aiv": 0,
+          "waves": 1,
+          "iterations": 1,
+          "branch": "gemv",
+          "tile": [
+            16,
+            64,
+            256
+          ],
+          "units": {
+            "read": 1.09375,
+            "cube": 0.0078125,
+            "fix": 0.0625,
+            "vector": 0.0,
+            "write": 0.0
+          },
+          "opcode_features": [
+            1
+          ],
+          "useful_work": 1024,
+          "logical_bytes": 1120,
+          "work_per_core": 1024
+        },
+        "stage_services_us": {
+          "read": 0.805050861504481,
+          "cube": 0.13056944459605102,
+          "fix": 1.5253940670261117,
+          "vector": 0.0,
+          "write": 0.0
+        },
+        "control_us": 2.076363636363636,
+        "status": "A5 BF16 bias-fused Cube candidate"
+      },
+      "query_seconds": 0.00015044,
+      "timeout_s": 240
+    },
+    {
+      "id": "matmul_4_80_48",
+      "op": "matmul",
+      "shape": [
+        4,
+        80,
+        48
+      ],
+      "attrs": {},
+      "prediction": {
+        "op": "matmul",
+        "shape": [
+          4,
+          80,
+          48
+        ],
+        "predicted_us": 3.256504670309444,
+        "soc_version": "Ascend950DT_9582",
+        "reference_scope": "cross-core instruction makespan",
+        "coverage": "extrapolation",
+        "plan": {
+          "active_aic": 2,
+          "active_aiv": 0,
+          "waves": 1,
+          "iterations": 1,
+          "branch": "dense",
+          "tile": [
+            16,
+            64,
+            256
+          ],
+          "units": {
+            "read": 6.375,
+            "cube": 0.1875,
+            "fix": 0.5,
+            "vector": 0.0,
+            "write": 0.0
+          },
+          "opcode_features": [
+            1
+          ],
+          "useful_work": 30720,
+          "logical_bytes": 8704,
+          "work_per_core": 24576
+        },
+        "stage_services_us": {
+          "read": 0.8579468410450963,
+          "cube": 0.13156809714880996,
+          "fix": 1.5455416903194923,
+          "vector": 0.0,
+          "write": 0.0
+        },
+        "scheduled_body_us": 2.5350566285133986,
+        "uncorrected_schedule_us": 2.5350566285133986,
+        "constant_baseline_us": 3.9233940184116363,
+        "empirical_roofline_us": 0.04849668553409477,
+        "calibration_regime_count": 4,
+        "expected_kernel_candidates": [
+          "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2"
+        ],
+        "kernel_selection_verified": false,
+        "estimated_max_core_selected_opcode_count": 0.9999999994482758,
+        "ideal_compute_efficiency": null,
+        "efficiency_unavailable_reason": "Independent ISA issue/throughput model is not calibrated",
+        "previous_v02_us": 3.256504670309444,
+        "previous_constant_baseline_us": 3.853484906256199
+      },
+      "query_seconds": 0.00012677,
+      "timeout_s": 240
+    },
+    {
+      "id": "addmm_4_80_48",
+      "op": "addmm",
+      "shape": [
+        4,
+        80,
+        48
+      ],
+      "attrs": {
+        "self_shape": [
+          80
+        ],
+        "alpha": 1,
+        "beta": 1
+      },
+      "prediction": {
+        "op": "addmm",
+        "shape": [
+          4,
+          80,
+          48
+        ],
+        "predicted_us": 4.61267224072415,
+        "plan": {
+          "active_aic": 2,
+          "active_aiv": 0,
+          "waves": 1,
+          "iterations": 1,
+          "branch": "dense",
+          "tile": [
+            16,
+            64,
+            256
+          ],
+          "units": {
+            "read": 6.5,
+            "cube": 0.1875,
+            "fix": 0.5,
+            "vector": 0.0,
+            "write": 0.0
+          },
+          "opcode_features": [
+            1
+          ],
+          "useful_work": 30720,
+          "logical_bytes": 8704,
+          "work_per_core": 24576
+        },
+        "stage_services_us": {
+          "read": 0.8591988168922114,
+          "cube": 0.13156809714880996,
+          "fix": 1.5455416903194923,
+          "vector": 0.0,
+          "write": 0.0
+        },
+        "control_us": 2.076363636363636,
+        "status": "A5 BF16 bias-fused Cube candidate"
+      },
+      "query_seconds": 2.87e-05,
+      "timeout_s": 240
+    },
+    {
+      "id": "matmul_9_128_256",
+      "op": "matmul",
+      "shape": [
+        9,
+        128,
+        256
+      ],
+      "attrs": {},
+      "prediction": {
+        "op": "matmul",
+        "shape": [
+          9,
+          128,
+          256
+        ],
+        "predicted_us": 3.603006579868685,
+        "soc_version": "Ascend950DT_9582",
+        "reference_scope": "cross-core instruction makespan",
+        "coverage": "within_calibration_box",
+        "plan": {
+          "active_aic": 2,
+          "active_aiv": 0,
+          "waves": 1,
+          "iterations": 1,
+          "branch": "dense",
+          "tile": [
+            16,
+            64,
+            256
+          ],
+          "units": {
+            "read": 36.5,
+            "cube": 2.25,
+            "fix": 1.125,
+            "vector": 0.0,
+            "write": 0.0
+          },
+          "opcode_features": [
+            1
+          ],
+          "useful_work": 589824,
+          "logical_bytes": 72448,
+          "work_per_core": 294912
+        },
+        "stage_services_us": {
+          "read": 1.1596730201998486,
+          "cube": 0.14303089166743427,
+          "fix": 1.574324009310036,
+          "vector": 0.0,
+          "write": 0.0
+        },
+        "scheduled_body_us": 2.877027921177319,
+        "uncorrected_schedule_us": 2.877027921177319,
+        "constant_baseline_us": 3.9233940184116363,
+        "empirical_roofline_us": 0.40366358841614175,
+        "calibration_regime_count": 4,
+        "expected_kernel_candidates": [
+          "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2"
+        ],
+        "kernel_selection_verified": false,
+        "estimated_max_core_selected_opcode_count": 0.9999999994482758,
+        "ideal_compute_efficiency": null,
+        "efficiency_unavailable_reason": "Independent ISA issue/throughput model is not calibrated",
+        "previous_v02_us": 3.603006579868685,
+        "previous_constant_baseline_us": 3.853484906256199
+      },
+      "query_seconds": 0.00011142,
+      "timeout_s": 240
+    },
+    {
+      "id": "addmm_9_128_256",
+      "op": "addmm",
+      "shape": [
+        9,
+        128,
+        256
+      ],
+      "attrs": {
+        "self_shape": [
+          128
+        ],
+        "alpha": 1,
+        "beta": 1
+      },
+      "prediction": {
+        "op": "addmm",
+        "shape": [
+          9,
+          128,
+          256
+        ],
+        "predicted_us": 4.9546435333880705,
+        "plan": {
+          "active_aic": 2,
+          "active_aiv": 0,
+          "waves": 1,
+          "iterations": 1,
+          "branch": "dense",
+          "tile": [
+            16,
+            64,
+            256
+          ],
+          "units": {
+            "read": 36.625,
+            "cube": 2.25,
+            "fix": 1.125,
+            "vector": 0.0,
+            "write": 0.0
+          },
+          "opcode_features": [
+            1
+          ],
+          "useful_work": 589824,
+          "logical_bytes": 72448,
+          "work_per_core": 294912
+        },
+        "stage_services_us": {
+          "read": 1.1609249960469639,
+          "cube": 0.14303089166743427,
+          "fix": 1.574324009310036,
+          "vector": 0.0,
+          "write": 0.0
+        },
+        "control_us": 2.076363636363636,
+        "status": "A5 BF16 bias-fused Cube candidate"
+      },
+      "query_seconds": 2.628e-05,
+      "timeout_s": 240
+    },
+    {
+      "id": "matmul_16_192_384",
+      "op": "matmul",
+      "shape": [
+        16,
+        192,
+        384
+      ],
+      "attrs": {},
+      "prediction": {
+        "op": "matmul",
+        "shape": [
+          16,
+          192,
+          384
+        ],
+        "predicted_us": 3.9206296912949785,
+        "soc_version": "Ascend950DT_9582",
+        "reference_scope": "cross-core instruction makespan",
+        "coverage": "within_calibration_box",
+        "plan": {
+          "active_aic": 3,
+          "active_aiv": 0,
+          "waves": 1,
+          "iterations": 1,
+          "branch": "dense",
+          "tile": [
+            16,
+            64,
+            256
+          ],
+          "units": {
+            "read": 60.0,
+            "cube": 6.0,
+            "fix": 2.0,
+            "vector": 0.0,
+            "write": 0.0
+          },
+          "opcode_features": [
+            2
+          ],
+          "useful_work": 2359296,
+          "logical_bytes": 165888,
+          "work_per_core": 786432
+        },
+        "stage_services_us": {
+          "read": 1.3950444794574979,
+          "cube": 0.16387233624675118,
+          "fix": 1.6146192558967971,
+          "vector": 0.0,
+          "write": 0.0
+        },
+        "scheduled_body_us": 3.1735360716010463,
+        "uncorrected_schedule_us": 3.1735360716010463,
+        "constant_baseline_us": 3.9233940184116363,
+        "empirical_roofline_us": 0.9242897713556886,
+        "calibration_regime_count": 4,
+        "expected_kernel_candidates": [
+          "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2"
+        ],
+        "kernel_selection_verified": false,
+        "estimated_max_core_selected_opcode_count": 1.9999999988965516,
+        "ideal_compute_efficiency": null,
+        "efficiency_unavailable_reason": "Independent ISA issue/throughput model is not calibrated",
+        "previous_v02_us": 3.9206296912949785,
+        "previous_constant_baseline_us": 3.853484906256199
+      },
+      "query_seconds": 0.00010978,
+      "timeout_s": 240
+    },
+    {
+      "id": "addmm_16_192_384",
+      "op": "addmm",
+      "shape": [
+        16,
+        192,
+        384
+      ],
+      "attrs": {
+        "self_shape": [
+          192
+        ],
+        "alpha": 1,
+        "beta": 1
+      },
+      "prediction": {
+        "op": "addmm",
+        "shape": [
+          16,
+          192,
+          384
+        ],
+        "predicted_us": 5.2511516838117975,
+        "plan": {
+          "active_aic": 3,
+          "active_aiv": 0,
+          "waves": 1,
+          "iterations": 1,
+          "branch": "dense",
+          "tile": [
+            16,
+            64,
+            256
+          ],
+          "units": {
+            "read": 60.125,
+            "cube": 6.0,
+            "fix": 2.0,
+            "vector": 0.0,
+            "write": 0.0
+          },
+          "opcode_features": [
+            2
+          ],
+          "useful_work": 2359296,
+          "logical_bytes": 165888,
+          "work_per_core": 786432
+        },
+        "stage_services_us": {
+          "read": 1.396296455304613,
+          "cube": 0.16387233624675118,
+          "fix": 1.6146192558967971,
+          "vector": 0.0,
+          "write": 0.0
+        },
+        "control_us": 2.076363636363636,
+        "status": "A5 BF16 bias-fused Cube candidate"
+      },
+      "query_seconds": 2.588e-05,
+      "timeout_s": 240
+    },
+    {
+      "id": "matmul_31_64_257",
+      "op": "matmul",
+      "shape": [
+        31,
+        64,
+        257
+      ],
+      "attrs": {},
+      "prediction": {
+        "op": "matmul",
+        "shape": [
+          31,
+          64,
+          257
+        ],
+        "predicted_us": 3.7643884819925315,
+        "soc_version": "Ascend950DT_9582",
+        "reference_scope": "cross-core instruction makespan",
+        "coverage": "provisional_regime",
+        "plan": {
+          "active_aic": 2,
+          "active_aiv": 0,
+          "waves": 1,
+          "iterations": 1,
+          "branch": "k_tail",
+          "tile": [
+            16,
+            64,
+            256
+          ],
+          "units": {
+            "read": 42.5,
+            "cube": 4.25,
+            "fix": 2.0,
+            "vector": 0.0,
+            "write": 0.0
+          },
+          "opcode_features": [
+            2
+          ],
+          "useful_work": 1019776,
+          "logical_bytes": 52798,
+          "work_per_core": 557056
+        },
+        "stage_services_us": {
+          "read": 1.219767860861376,
+          "cube": 0.1541463287764033,
+          "fix": 1.6146192558967971,
+          "vector": 0.0,
+          "write": 0.0
+        },
+        "scheduled_body_us": 2.9885334455345767,
+        "uncorrected_schedule_us": 2.9885334455345767,
+        "constant_baseline_us": 3.9233940184116363,
+        "empirical_roofline_us": 0.29417830914856796,
+        "calibration_regime_count": 1,
+        "expected_kernel_candidates": [
+          "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2"
+        ],
+        "kernel_selection_verified": false,
+        "estimated_max_core_selected_opcode_count": 1.9999999988965516,
+        "ideal_compute_efficiency": null,
+        "efficiency_unavailable_reason": "Independent ISA issue/throughput model is not calibrated",
+        "previous_v02_us": 3.7643884819925315,
+        "previous_constant_baseline_us": 3.853484906256199
+      },
+      "query_seconds": 0.00010763,
+      "timeout_s": 240
+    },
+    {
+      "id": "addmm_31_64_257",
+      "op": "addmm",
+      "shape": [
+        31,
+        64,
+        257
+      ],
+      "attrs": {
+        "self_shape": [
+          64
+        ],
+        "alpha": 1,
+        "beta": 1
+      },
+      "prediction": {
+        "op": "addmm",
+        "shape": [
+          31,
+          64,
+          257
+        ],
+        "predicted_us": 5.066149057745328,
+        "plan": {
+          "active_aic": 2,
+          "active_aiv": 0,
+          "waves": 1,
+          "iterations": 1,
+          "branch": "k_tail",
+          "tile": [
+            16,
+            64,
+            256
+          ],
+          "units": {
+            "read": 42.625,
+            "cube": 4.25,
+            "fix": 2.0,
+            "vector": 0.0,
+            "write": 0.0
+          },
+          "opcode_features": [
+            2
+          ],
+          "useful_work": 1019776,
+          "logical_bytes": 52798,
+          "work_per_core": 557056
+        },
+        "stage_services_us": {
+          "read": 1.2210198367084912,
+          "cube": 0.1541463287764033,
+          "fix": 1.6146192558967971,
+          "vector": 0.0,
+          "write": 0.0
+        },
+        "control_us": 2.076363636363636,
+        "status": "A5 BF16 bias-fused Cube candidate"
+      },
+      "query_seconds": 2.68e-05,
+      "timeout_s": 240
+    },
+    {
+      "id": "matmul_64_128_512",
+      "op": "matmul",
+      "shape": [
+        64,
+        128,
+        512
+      ],
+      "attrs": {},
+      "prediction": {
+        "op": "matmul",
+        "shape": [
+          64,
+          128,
+          512
+        ],
+        "predicted_us": 4.18330890600197,
+        "soc_version": "Ascend950DT_9582",
+        "reference_scope": "cross-core instruction makespan",
+        "coverage": "within_calibration_box",
+        "plan": {
+          "active_aic": 8,
+          "active_aiv": 0,
+          "waves": 1,
+          "iterations": 1,
+          "branch": "dense",
+          "tile": [
+            16,
+            64,
+            256
+          ],
+          "units": {
+            "read": 80.0,
+            "cube": 8.0,
+            "fix": 2.0,
+            "vector": 0.0,
+            "write": 0.0
+          },
+          "opcode_features": [
+            2
+          ],
+          "useful_work": 8388608,
+          "logical_bytes": 212992,
+          "work_per_core": 1048576
+        },
+        "stage_services_us": {
+          "read": 1.5953606149959225,
+          "cube": 0.17498777335572022,
+          "fix": 1.6146192558967971,
+          "vector": 0.0,
+          "write": 0.0
+        },
+        "scheduled_body_us": 3.38496764424844,
+        "uncorrected_schedule_us": 3.38496764424844,
+        "constant_baseline_us": 3.9233940184116363,
+        "empirical_roofline_us": 1.1867424224813778,
+        "calibration_regime_count": 4,
+        "expected_kernel_candidates": [
+          "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2"
+        ],
+        "kernel_selection_verified": false,
+        "estimated_max_core_selected_opcode_count": 1.9999999988965516,
+        "ideal_compute_efficiency": null,
+        "efficiency_unavailable_reason": "Independent ISA issue/throughput model is not calibrated",
+        "previous_v02_us": 4.18330890600197,
+        "previous_constant_baseline_us": 3.853484906256199
+      },
+      "query_seconds": 0.00011771,
+      "timeout_s": 240
+    },
+    {
+      "id": "addmm_64_128_512",
+      "op": "addmm",
+      "shape": [
+        64,
+        128,
+        512
+      ],
+      "attrs": {
+        "self_shape": [
+          128
+        ],
+        "alpha": 1,
+        "beta": 1
+      },
+      "prediction": {
+        "op": "addmm",
+        "shape": [
+          64,
+          128,
+          512
+        ],
+        "predicted_us": 5.462583256459191,
+        "plan": {
+          "active_aic": 8,
+          "active_aiv": 0,
+          "waves": 1,
+          "iterations": 1,
+          "branch": "dense",
+          "tile": [
+            16,
+            64,
+            256
+          ],
+          "units": {
+            "read": 80.125,
+            "cube": 8.0,
+            "fix": 2.0,
+            "vector": 0.0,
+            "write": 0.0
+          },
+          "opcode_features": [
+            2
+          ],
+          "useful_work": 8388608,
+          "logical_bytes": 212992,
+          "work_per_core": 1048576
+        },
+        "stage_services_us": {
+          "read": 1.596612590843038,
+          "cube": 0.17498777335572022,
+          "fix": 1.6146192558967971,
+          "vector": 0.0,
+          "write": 0.0
+        },
+        "control_us": 2.076363636363636,
+        "status": "A5 BF16 bias-fused Cube candidate"
+      },
+      "query_seconds": 2.536e-05,
+      "timeout_s": 240
+    },
+    {
+      "id": "matmul_128_192_256",
+      "op": "matmul",
+      "shape": [
+        128,
+        192,
+        256
+      ],
+      "attrs": {},
+      "prediction": {
+        "op": "matmul",
+        "shape": [
+          128,
+          192,
+          256
+        ],
+        "predicted_us": 3.815878797908989,
+        "soc_version": "Ascend950DT_9582",
+        "reference_scope": "cross-core instruction makespan",
+        "coverage": "within_calibration_box",
+        "plan": {
+          "active_aic": 24,
+          "active_aiv": 0,
+          "waves": 1,
+          "iterations": 1,
+          "branch": "dense",
+          "tile": [
+            16,
+            64,
+            256
+          ],
+          "units": {
+            "read": 40.0,
+            "cube": 4.0,
+            "fix": 2.0,
+            "vector": 0.0,
+            "write": 0.0
+          },
+          "opcode_features": [
+            1
+          ],
+          "useful_work": 12582912,
+          "logical_bytes": 212992,
+          "work_per_core": 524288
+        },
+        "stage_services_us": {
+          "read": 1.194728343919073,
+          "cube": 0.15275689913778218,
+          "fix": 1.6146192558967971,
+          "vector": 0.0,
+          "write": 0.0
+        },
+        "scheduled_body_us": 2.9621044989536522,
+        "uncorrected_schedule_us": 2.9621044989536522,
+        "constant_baseline_us": 3.9233940184116363,
+        "empirical_roofline_us": 1.1867424224813778,
+        "calibration_regime_count": 4,
+        "expected_kernel_candidates": [
+          "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2"
+        ],
+        "kernel_selection_verified": false,
+        "estimated_max_core_selected_opcode_count": 0.9999999994482758,
+        "ideal_compute_efficiency": null,
+        "efficiency_unavailable_reason": "Independent ISA issue/throughput model is not calibrated",
+        "previous_v02_us": 3.815878797908989,
+        "previous_constant_baseline_us": 3.853484906256199
+      },
+      "query_seconds": 0.00010675,
+      "timeout_s": 240
+    },
+    {
+      "id": "addmm_128_192_256",
+      "op": "addmm",
+      "shape": [
+        128,
+        192,
+        256
+      ],
+      "attrs": {
+        "self_shape": [
+          192
+        ],
+        "alpha": 1,
+        "beta": 1
+      },
+      "prediction": {
+        "op": "addmm",
+        "shape": [
+          128,
+          192,
+          256
+        ],
+        "predicted_us": 5.039720111164404,
+        "plan": {
+          "active_aic": 24,
+          "active_aiv": 0,
+          "waves": 1,
+          "iterations": 1,
+          "branch": "dense",
+          "tile": [
+            16,
+            64,
+            256
+          ],
+          "units": {
+            "read": 40.125,
+            "cube": 4.0,
+            "fix": 2.0,
+            "vector": 0.0,
+            "write": 0.0
+          },
+          "opcode_features": [
+            1
+          ],
+          "useful_work": 12582912,
+          "logical_bytes": 212992,
+          "work_per_core": 524288
+        },
+        "stage_services_us": {
+          "read": 1.1959803197661882,
+          "cube": 0.15275689913778218,
+          "fix": 1.6146192558967971,
+          "vector": 0.0,
+          "write": 0.0
+        },
+        "control_us": 2.076363636363636,
+        "status": "A5 BF16 bias-fused Cube candidate"
+      },
+      "query_seconds": 2.474e-05,
+      "timeout_s": 240
+    },
+    {
+      "id": "matmul_192_384_256",
+      "op": "matmul",
+      "shape": [
+        192,
+        384,
+        256
+      ],
+      "attrs": {},
+      "prediction": {
+        "op": "matmul",
+        "shape": [
+          192,
+          384,
+          256
+        ],
+        "predicted_us": 4.3349937732918935,
+        "soc_version": "Ascend950DT_9582",
+        "reference_scope": "cross-core instruction makespan",
+        "coverage": "provisional_regime",
+        "plan": {
+          "active_aic": 18,
+          "active_aiv": 0,
+          "waves": 1,
+          "iterations": 1,
+          "branch": "coarse_tile",
+          "tile": [
+            64,
+            64,
+            256
+          ],
+          "units": {
+            "read": 64.0,
+            "cube": 16.0,
+            "fix": 8.0,
+            "vector": 0.0,
+            "write": 0.0
+          },
+          "opcode_features": [
+            1
+          ],
+          "useful_work": 37748736,
+          "logical_bytes": 442368,
+          "work_per_core": 2097152
+        },
+        "stage_services_us": {
+          "read": 1.4351077065651827,
+          "cube": 0.21944952179159632,
+          "fix": 1.8909295182060164,
+          "vector": 0.0,
+          "write": 0.0
+        },
+        "scheduled_body_us": 3.5454867465627955,
+        "uncorrected_schedule_us": 3.5454867465627955,
+        "constant_baseline_us": 3.9233940184116363,
+        "empirical_roofline_us": 2.4647727236151695,
+        "calibration_regime_count": 1,
+        "expected_kernel_candidates": [
+          "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2"
+        ],
+        "kernel_selection_verified": false,
+        "estimated_max_core_selected_opcode_count": 0.9999999994482758,
+        "ideal_compute_efficiency": null,
+        "efficiency_unavailable_reason": "Independent ISA issue/throughput model is not calibrated",
+        "previous_v02_us": 4.3349937732918935,
+        "previous_constant_baseline_us": 3.853484906256199
+      },
+      "query_seconds": 0.00012111,
+      "timeout_s": 240
+    },
+    {
+      "id": "addmm_192_384_256",
+      "op": "addmm",
+      "shape": [
+        192,
+        384,
+        256
+      ],
+      "attrs": {
+        "self_shape": [
+          384
+        ],
+        "alpha": 1,
+        "beta": 1
+      },
+      "prediction": {
+        "op": "addmm",
+        "shape": [
+          192,
+          384,
+          256
+        ],
+        "predicted_us": 5.623102358773547,
+        "plan": {
+          "active_aic": 18,
+          "active_aiv": 0,
+          "waves": 1,
+          "iterations": 1,
+          "branch": "coarse_tile",
+          "tile": [
+            64,
+            64,
+            256
+          ],
+          "units": {
+            "read": 64.125,
+            "cube": 16.0,
+            "fix": 8.0,
+            "vector": 0.0,
+            "write": 0.0
+          },
+          "opcode_features": [
+            1
+          ],
+          "useful_work": 37748736,
+          "logical_bytes": 442368,
+          "work_per_core": 2097152
+        },
+        "stage_services_us": {
+          "read": 1.436359682412298,
+          "cube": 0.21944952179159632,
+          "fix": 1.8909295182060164,
+          "vector": 0.0,
+          "write": 0.0
+        },
+        "control_us": 2.076363636363636,
+        "status": "A5 BF16 bias-fused Cube candidate"
+      },
+      "query_seconds": 3.568e-05,
+      "timeout_s": 240
+    },
+    {
+      "id": "matmul_256_512_256",
+      "op": "matmul",
+      "shape": [
+        256,
+        512,
+        256
+      ],
+      "attrs": {},
+      "prediction": {
+        "op": "matmul",
+        "shape": [
+          256,
+          512,
+          256
+        ],
+        "predicted_us": 4.3679753807186765,
+        "soc_version": "Ascend950DT_9582",
+        "reference_scope": "cross-core instruction makespan",
+        "coverage": "provisional_regime",
+        "plan": {
+          "active_aic": 32,
+          "active_aiv": 0,
+          "waves": 1,
+          "iterations": 1,
+          "branch": "coarse_tile",
+          "tile": [
+            64,
+            64,
+            256
+          ],
+          "units": {
+            "read": 64.0,
+            "cube": 16.0,
+            "fix": 8.0,
+            "vector": 0.0,
+            "write": 0.0
+          },
+          "opcode_features": [
+            1
+          ],
+          "useful_work": 67108864,
+          "logical_bytes": 655360,
+          "work_per_core": 2097152
+        },
+        "stage_services_us": {
+          "read": 1.4351077065651827,
+          "cube": 0.21944952179159632,
+          "fix": 1.8909295182060164,
+          "vector": 0.0,
+          "write": 0.0
+        },
+        "scheduled_body_us": 3.5454867465627955,
+        "uncorrected_schedule_us": 3.5454867465627955,
+        "constant_baseline_us": 3.9233940184116363,
+        "empirical_roofline_us": 4.381818175315857,
+        "calibration_regime_count": 1,
+        "expected_kernel_candidates": [
+          "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2"
+        ],
+        "kernel_selection_verified": false,
+        "estimated_max_core_selected_opcode_count": 0.9999999994482758,
+        "ideal_compute_efficiency": null,
+        "efficiency_unavailable_reason": "Independent ISA issue/throughput model is not calibrated",
+        "previous_v02_us": 4.3679753807186765,
+        "previous_constant_baseline_us": 3.853484906256199
+      },
+      "query_seconds": 0.00011908,
+      "timeout_s": 240
+    },
+    {
+      "id": "addmm_256_512_256",
+      "op": "addmm",
+      "shape": [
+        256,
+        512,
+        256
+      ],
+      "attrs": {
+        "self_shape": [
+          512
+        ],
+        "alpha": 1,
+        "beta": 1
+      },
+      "prediction": {
+        "op": "addmm",
+        "shape": [
+          256,
+          512,
+          256
+        ],
+        "predicted_us": 5.623102358773547,
+        "plan": {
+          "active_aic": 32,
+          "active_aiv": 0,
+          "waves": 1,
+          "iterations": 1,
+          "branch": "coarse_tile",
+          "tile": [
+            64,
+            64,
+            256
+          ],
+          "units": {
+            "read": 64.125,
+            "cube": 16.0,
+            "fix": 8.0,
+            "vector": 0.0,
+            "write": 0.0
+          },
+          "opcode_features": [
+            1
+          ],
+          "useful_work": 67108864,
+          "logical_bytes": 655360,
+          "work_per_core": 2097152
+        },
+        "stage_services_us": {
+          "read": 1.436359682412298,
+          "cube": 0.21944952179159632,
+          "fix": 1.8909295182060164,
+          "vector": 0.0,
+          "write": 0.0
+        },
+        "control_us": 2.076363636363636,
+        "status": "A5 BF16 bias-fused Cube candidate"
+      },
+      "query_seconds": 3.568e-05,
+      "timeout_s": 240
+    },
+    {
+      "id": "matmul_512_512_256",
+      "op": "matmul",
+      "shape": [
+        512,
+        512,
+        256
+      ],
+      "attrs": {},
+      "prediction": {
+        "op": "matmul",
+        "shape": [
+          512,
+          512,
+          256
+        ],
+        "predicted_us": 5.156123653730549,
+        "soc_version": "Ascend950DT_9582",
+        "reference_scope": "cross-core instruction makespan",
+        "coverage": "provisional_regime",
+        "plan": {
+          "active_aic": 32,
+          "active_aiv": 0,
+          "waves": 1,
+          "iterations": 1,
+          "branch": "coarse_tile",
+          "tile": [
+            64,
+            128,
+            256
+          ],
+          "units": {
+            "read": 96.0,
+            "cube": 32.0,
+            "fix": 16.0,
+            "vector": 0.0,
+            "write": 0.0
+          },
+          "opcode_features": [
+            1
+          ],
+          "useful_work": 134217728,
+          "logical_bytes": 1048576,
+          "work_per_core": 4194304
+        },
+        "stage_services_us": {
+          "read": 1.7556135234266625,
+          "cube": 0.30837301866334854,
+          "fix": 2.2593432012849752,
+          "vector": 0.0,
+          "write": 0.0
+        },
+        "scheduled_body_us": 4.323329743374986,
+        "uncorrected_schedule_us": 4.323329743374986,
+        "constant_baseline_us": 3.9233940184116363,
+        "empirical_roofline_us": 8.763636350631714,
+        "calibration_regime_count": 1,
+        "expected_kernel_candidates": [
+          "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2"
+        ],
+        "kernel_selection_verified": false,
+        "estimated_max_core_selected_opcode_count": 0.9999999994482758,
+        "ideal_compute_efficiency": null,
+        "efficiency_unavailable_reason": "Independent ISA issue/throughput model is not calibrated",
+        "previous_v02_us": 5.156123653730549,
+        "previous_constant_baseline_us": 3.853484906256199
+      },
+      "query_seconds": 0.00012675,
+      "timeout_s": 240
+    },
+    {
+      "id": "addmm_512_512_256",
+      "op": "addmm",
+      "shape": [
+        512,
+        512,
+        256
+      ],
+      "attrs": {
+        "self_shape": [
+          512
+        ],
+        "alpha": 1,
+        "beta": 1
+      },
+      "prediction": {
+        "op": "addmm",
+        "shape": [
+          512,
+          512,
+          256
+        ],
+        "predicted_us": 6.402197331432853,
+        "plan": {
+          "active_aic": 32,
+          "active_aiv": 0,
+          "waves": 1,
+          "iterations": 1,
+          "branch": "coarse_tile",
+          "tile": [
+            64,
+            128,
+            256
+          ],
+          "units": {
+            "read": 96.25,
+            "cube": 32.0,
+            "fix": 16.0,
+            "vector": 0.0,
+            "write": 0.0
+          },
+          "opcode_features": [
+            1
+          ],
+          "useful_work": 134217728,
+          "logical_bytes": 1048576,
+          "work_per_core": 4194304
+        },
+        "stage_services_us": {
+          "read": 1.7581174751208928,
+          "cube": 0.30837301866334854,
+          "fix": 2.2593432012849752,
+          "vector": 0.0,
+          "write": 0.0
+        },
+        "control_us": 2.076363636363636,
+        "status": "A5 BF16 bias-fused Cube candidate"
+      },
+      "query_seconds": 4.064e-05,
+      "timeout_s": 240
+    },
+    {
+      "id": "kda_chunk_1_64_1_1_128_128",
+      "op": "kda_chunk",
+      "shape": [
+        1,
+        64,
+        1,
+        1,
+        128,
+        128
+      ],
+      "attrs": {
+        "chunk_size": 64,
+        "export_gk": true
+      },
+      "prediction": {
+        "predicted_us": null,
+        "status": "CA timing unqualified"
+      },
+      "query_seconds": 7.3e-07,
+      "timeout_s": 240
+    },
+    {
+      "id": "kda_chunk_1_1_1_1_16_16",
+      "op": "kda_chunk",
+      "shape": [
+        1,
+        1,
+        1,
+        1,
+        16,
+        16
+      ],
+      "attrs": {
+        "chunk_size": 64,
+        "export_gk": true
+      },
+      "prediction": {
+        "predicted_us": null,
+        "status": "CA timing unqualified"
+      },
+      "query_seconds": 5.8e-07,
+      "timeout_s": 240
+    },
+    {
+      "id": "kda_chunk_1_8_1_1_16_16",
+      "op": "kda_chunk",
+      "shape": [
+        1,
+        8,
+        1,
+        1,
+        16,
+        16
+      ],
+      "attrs": {
+        "chunk_size": 64,
+        "export_gk": true
+      },
+      "prediction": {
+        "predicted_us": null,
+        "status": "CA timing unqualified"
+      },
+      "query_seconds": 5.1e-07,
+      "timeout_s": 240
+    },
+    {
+      "id": "kda_chunk_1_16_1_1_16_16",
+      "op": "kda_chunk",
+      "shape": [
+        1,
+        16,
+        1,
+        1,
+        16,
+        16
+      ],
+      "attrs": {
+        "chunk_size": 64,
+        "export_gk": true
+      },
+      "prediction": {
+        "predicted_us": null,
+        "status": "CA timing unqualified"
+      },
+      "query_seconds": 4.8e-07,
+      "timeout_s": 240
+    },
+    {
+      "id": "kda_chunk_1_63_1_1_16_16",
+      "op": "kda_chunk",
+      "shape": [
+        1,
+        63,
+        1,
+        1,
+        16,
+        16
+      ],
+      "attrs": {
+        "chunk_size": 64,
+        "export_gk": true
+      },
+      "prediction": {
+        "predicted_us": null,
+        "status": "CA timing unqualified"
+      },
+      "query_seconds": 4.7e-07,
+      "timeout_s": 240
+    },
+    {
+      "id": "kda_chunk_1_64_1_1_16_16",
+      "op": "kda_chunk",
+      "shape": [
+        1,
+        64,
+        1,
+        1,
+        16,
+        16
+      ],
+      "attrs": {
+        "chunk_size": 64,
+        "export_gk": true
+      },
+      "prediction": {
+        "predicted_us": null,
+        "status": "CA timing unqualified"
+      },
+      "query_seconds": 4.8e-07,
+      "timeout_s": 240
+    },
+    {
+      "id": "kda_chunk_1_65_1_1_16_16",
+      "op": "kda_chunk",
+      "shape": [
+        1,
+        65,
+        1,
+        1,
+        16,
+        16
+      ],
+      "attrs": {
+        "chunk_size": 64,
+        "export_gk": true
+      },
+      "prediction": {
+        "predicted_us": null,
+        "status": "CA timing unqualified"
+      },
+      "query_seconds": 6.3e-07,
+      "timeout_s": 240
+    },
+    {
+      "id": "kda_chunk_1_96_1_1_128_128",
+      "op": "kda_chunk",
+      "shape": [
+        1,
+        96,
+        1,
+        1,
+        128,
+        128
+      ],
+      "attrs": {
+        "chunk_size": 64,
+        "export_gk": true
+      },
+      "prediction": {
+        "predicted_us": null,
+        "status": "CA timing unqualified"
+      },
+      "query_seconds": 5.8e-07,
+      "timeout_s": 240
+    },
+    {
+      "id": "kda_chunk_1_127_1_1_128_128",
+      "op": "kda_chunk",
+      "shape": [
+        1,
+        127,
+        1,
+        1,
+        128,
+        128
+      ],
+      "attrs": {
+        "chunk_size": 64,
+        "export_gk": true
+      },
+      "prediction": {
+        "predicted_us": null,
+        "status": "CA timing unqualified"
+      },
+      "query_seconds": 5.8e-07,
+      "timeout_s": 240
+    },
+    {
+      "id": "kda_chunk_1_128_1_1_128_128",
+      "op": "kda_chunk",
+      "shape": [
+        1,
+        128,
+        1,
+        1,
+        128,
+        128
+      ],
+      "attrs": {
+        "chunk_size": 64,
+        "export_gk": true
+      },
+      "prediction": {
+        "predicted_us": null,
+        "status": "CA timing unqualified"
+      },
+      "query_seconds": 5.1e-07,
+      "timeout_s": 240
+    }
+  ],
+  "artifact_sha256": {
+    "operator_model/cube_v8.py": "c9594e4c86943cd437698261221979e4b953342dfcc556289f84fb6795dd9dc1",
+    "operator_model/model.py": "14d432302e3b6f43e3b6546ac150df2fa33a560fbd606fd02e8aac4682407500",
+    "operator_model/model_v2.py": "2787965e6c7acf40adbf2f46e2f9d53a30041db2a6715e314b6e3fe66c799b8a",
+    "operator_model/model_v3.py": "fe9f2fc7bcdcfc3aeb1a2024297cbbbd3d8337c096c53a36e0e947dd3626cf69",
+    "operator_model/model_v4.py": "d3d9bba8a22d445efa739b5e3f87f5d2f98d468b094da06420cdb052864e4d07",
+    "operator_model/model_v5.py": "a4c30335bb723f7938e18bf3cc0cec0c924205523df9eee9452750888790fe51",
+    "operator_model/model_v6.py": "36350794a002fee6650baf9ca270240dc99391aa9d5397d81d074124cb9b89c6",
+    "operator_model/fast_query.py": "e885a4fc425be7f15254d11517745dbf22591188dbe879c8877d321cccb07a07",
+    "operator_model/npusim_v7.py": "a86cccf40dabd0c395c8e0978e2e81d0a14ca753cfca79a5e50495cdff877943",
+    "results/v0.2/model.json": "3760fa88897e80bc9008ed40936f3bb08e9a780827aba22c137a131cdb06ed2f",
+    "results/v0.6/model.json": "bad9ec3eb0fb313b6e16d37487433d626c008331d4aabdf8a4dc37751e28cf23",
+    "results/v0.8/cube/control.json": "dc93c95eaea1d7eac8216764ffcec5f4a338f708dbe0432ab214baa89505dfff",
+    "scripts/cube-v8-freeze.py": "5f79daac6bd1d360578218784e4da9cc16cd43531f1766fcebeff5ad456d96de",
+    "scripts/cube-v8-collect.py": "09dbe477df279f2ca2ba507af9bd892b754f995b6c5bb21c05300b86e0253804",
+    "build/smoke/three_ops": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+    "build/smoke/extension_kda": "f0f3a23c17fc3fb2726077e96ecca26c7e73ba8ea81e269fb653184ffe3b41f5",
+    "build/smoke/extension_norm_addmm": "6bbb68803743f607002b47dad03e93aee5cbf030335f9d3e8ad1ca3950b53561",
+    "scripts/cann-run.sh": "d529513abc0bc340a56c91365a9e72d5e434d2cb4841be1692930294cd0624df",
+    "build/capture/libsim_soc_adapter.so": "3f78dfb3c88665800c04d4da932255df356f1492a50d8b358933701b66f1c186"
+  }
+}

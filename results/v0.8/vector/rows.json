@@ -1,0 +1,2407 @@
+[
+  {
+    "id": "r7_cal_wide",
+    "op": "rmsnorm",
+    "shape": [
+      9,
+      5120
+    ],
+    "reference_us": 4.1884848484848485,
+    "correctness": [
+      "correctness count=46080 bad=0 max_abs_error=0.00157092 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness count=9 bad=0 max_abs_error=1.29276e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "kernel": "entry_kernel_1388",
+    "source": "runs/model-v7/r7_cal_wide/result.json",
+    "attrs": {},
+    "role": "development",
+    "predicted_us": 4.713360138415026,
+    "active_aiv": 9,
+    "active_aic": 0,
+    "query_max_us": 54.17
+  },
+  {
+    "id": "r7_hold_batch4",
+    "op": "rmsnorm",
+    "shape": [
+      36,
+      7168
+    ],
+    "reference_us": 6.613939393939394,
+    "correctness": [
+      "correctness count=258048 bad=0 max_abs_error=0.00141852 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness count=36 bad=0 max_abs_error=1.93012e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "kernel": "entry_kernel_1388",
+    "source": "runs/model-v7/r7_hold_batch4/result.json",
+    "attrs": {},
+    "role": "development",
+    "predicted_us": 6.397163072352809,
+    "active_aiv": 36,
+    "active_aic": 0,
+    "query_max_us": 12.11
+  },
+  {
+    "id": "reused_rmsnorm",
+    "op": "rmsnorm",
+    "shape": [
+      1,
+      128
+    ],
+    "reference_us": 3.453939393939394,
+    "correctness": [
+      "correctness count=128 bad=0 max_abs_error=0.00135139 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness count=1 bad=0 max_abs_error=9.23429e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "kernel": "entry_kernel_1388",
+    "source": "docs/extensions/smoke-950dt.json",
+    "attrs": {},
+    "role": "development",
+    "predicted_us": 3.1922602768795847,
+    "active_aiv": 1,
+    "active_aic": 0,
+    "query_max_us": 11.15
+  },
+  {
+    "id": "mhc_post_v7_1",
+    "op": "mhc_post",
+    "shape": [
+      1,
+      4,
+      128
+    ],
+    "reference_us": 4.6460606060606064,
+    "correctness": [
+      "correctness name=output count=512 bad=0 max_abs_error=0 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "kernel": "entry_kernel_5",
+    "source": "runs/model-v7/mhc_post_v7_1/result.json",
+    "attrs": {
+      "dtype": "bf16",
+      "has_h_res": true
+    },
+    "role": "development",
+    "predicted_us": 4.051349612348854,
+    "active_aiv": 1,
+    "active_aic": 0,
+    "query_max_us": 17.11
+  },
+  {
+    "id": "mhc_post_v7_2",
+    "op": "mhc_post",
+    "shape": [
+      32,
+      4,
+      128
+    ],
+    "reference_us": 3.4084848484848487,
+    "correctness": [
+      "correctness name=output count=16384 bad=0 max_abs_error=0 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "kernel": "entry_kernel_6",
+    "source": "runs/model-v7/mhc_post_v7_2/result.json",
+    "attrs": {
+      "dtype": "bf16",
+      "has_h_res": true
+    },
+    "role": "development",
+    "predicted_us": 4.417021331158223,
+    "active_aiv": 32,
+    "active_aic": 0,
+    "query_max_us": 13.36
+  },
+  {
+    "id": "mhc_post_v7_3",
+    "op": "mhc_post",
+    "shape": [
+      9,
+      4,
+      128
+    ],
+    "reference_us": 4.613333333333333,
+    "correctness": [
+      "correctness name=output count=4608 bad=0 max_abs_error=0 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "kernel": "entry_kernel_5",
+    "source": "runs/model-v7/mhc_post_v7_3/result.json",
+    "attrs": {
+      "dtype": "bf16",
+      "has_h_res": true
+    },
+    "role": "development",
+    "predicted_us": 4.2827692086712625,
+    "active_aiv": 9,
+    "active_aic": 0,
+    "query_max_us": 14.23
+  },
+  {
+    "id": "mhc_sinkhorn_v7_1",
+    "op": "mhc_sinkhorn",
+    "shape": [
+      1,
+      4
+    ],
+    "reference_us": 6.296363636363636,
+    "correctness": [
+      "correctness name=output count=16 bad=0 max_abs_error=1.15814e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "kernel": "entry_kernel_0",
+    "source": "runs/model-v7/mhc_sinkhorn_v7_1/result.json",
+    "attrs": {
+      "dtype": "fp32",
+      "num_iters": 20,
+      "return_intermediates": false
+    },
+    "role": "development",
+    "predicted_us": 6.605485513759837,
+    "active_aiv": 1,
+    "active_aic": 0,
+    "query_max_us": 17.35
+  },
+  {
+    "id": "mhc_sinkhorn_v7_2",
+    "op": "mhc_sinkhorn",
+    "shape": [
+      64,
+      4
+    ],
+    "reference_us": 7.597575757575758,
+    "correctness": [
+      "correctness name=output count=1024 bad=0 max_abs_error=4.97686e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "kernel": "entry_kernel_0",
+    "source": "runs/model-v7/mhc_sinkhorn_v7_2/result.json",
+    "attrs": {
+      "dtype": "fp32",
+      "num_iters": 20,
+      "return_intermediates": false
+    },
+    "role": "development",
+    "predicted_us": 6.973155728323764,
+    "active_aiv": 64,
+    "active_aic": 0,
+    "query_max_us": 14.07
+  },
+  {
+    "id": "mhc_sinkhorn_v7_3",
+    "op": "mhc_sinkhorn",
+    "shape": [
+      17,
+      4
+    ],
+    "reference_us": 6.532121212121212,
+    "correctness": [
+      "correctness name=output count=272 bad=0 max_abs_error=4.78737e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "kernel": "entry_kernel_0",
+    "source": "runs/model-v7/mhc_sinkhorn_v7_3/result.json",
+    "attrs": {
+      "dtype": "fp32",
+      "num_iters": 20,
+      "return_intermediates": false
+    },
+    "role": "development",
+    "predicted_us": 6.847419363975979,
+    "active_aiv": 17,
+    "active_aic": 0,
+    "query_max_us": 13.74
+  },
+  {
+    "id": "kda_recurrent_b1_s1_h1_k128_v128",
+    "op": "kda_recurrent",
+    "shape": [
+      1,
+      1,
+      1,
+      1,
+      128,
+      128
+    ],
+    "reference_us": 15.219393939393939,
+    "correctness": [
+      "correctness name=attn_out count=128 bad=0 max_abs_error=1.886e-07 atol=2e-06 rtol=0.015625 hard_limit=1",
+      "correctness name=final_state count=16384 bad=0 max_abs_error=1.16933e-10 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=initial_state_unchanged count=16384 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "kernel": "entry_kernel_0",
+    "source": "runs/model-v7/kda_recurrent_b1_s1_h1_k128_v128/result.json",
+    "attrs": {
+      "layout": "BSND",
+      "dtype": "BF16",
+      "gate_dtype": "FP32",
+      "state_dtype": "FP32",
+      "state_v_first": false,
+      "use_gate_in_kernel": false,
+      "chunk_size": null,
+      "output_final_state": true,
+      "export_gk": false
+    },
+    "role": "development",
+    "predicted_us": 15.071572871573778,
+    "active_aiv": 1,
+    "active_aic": 0,
+    "query_max_us": 20.81
+  },
+  {
+    "id": "kda_recurrent_b1_s2_h1_k128_v128",
+    "op": "kda_recurrent",
+    "shape": [
+      1,
+      2,
+      1,
+      1,
+      128,
+      128
+    ],
+    "reference_us": 18.46727272727273,
+    "correctness": [
+      "correctness name=attn_out count=256 bad=0 max_abs_error=1.886e-07 atol=2e-06 rtol=0.015625 hard_limit=1",
+      "correctness name=final_state count=16384 bad=0 max_abs_error=2.23318e-10 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=initial_state_unchanged count=16384 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "kernel": "entry_kernel_0",
+    "source": "runs/model-v7/kda_recurrent_b1_s2_h1_k128_v128/result.json",
+    "attrs": {
+      "layout": "BSND",
+      "dtype": "BF16",
+      "gate_dtype": "FP32",
+      "state_dtype": "FP32",
+      "state_v_first": false,
+      "use_gate_in_kernel": false,
+      "chunk_size": null,
+      "output_final_state": true,
+      "export_gk": false
+    },
+    "role": "development",
+    "predicted_us": 18.54698412698361,
+    "active_aiv": 1,
+    "active_aic": 0,
+    "query_max_us": 16.69
+  },
+  {
+    "id": "kda_recurrent_b1_s4_h1_k128_v128",
+    "op": "kda_recurrent",
+    "shape": [
+      1,
+      4,
+      1,
+      1,
+      128,
+      128
+    ],
+    "reference_us": 25.42969696969697,
+    "correctness": [
+      "correctness name=attn_out count=512 bad=0 max_abs_error=1.886e-07 atol=2e-06 rtol=0.015625 hard_limit=1",
+      "correctness name=final_state count=16384 bad=0 max_abs_error=3.33501e-10 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=initial_state_unchanged count=16384 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "kernel": "entry_kernel_0",
+    "source": "runs/model-v7/kda_recurrent_b1_s4_h1_k128_v128/result.json",
+    "attrs": {
+      "layout": "BSND",
+      "dtype": "BF16",
+      "gate_dtype": "FP32",
+      "state_dtype": "FP32",
+      "state_v_first": false,
+      "use_gate_in_kernel": false,
+      "chunk_size": null,
+      "output_final_state": true,
+      "export_gk": false
+    },
+    "role": "development",
+    "predicted_us": 25.497806637803283,
+    "active_aiv": 1,
+    "active_aic": 0,
+    "query_max_us": 15.06
+  },
+  {
+    "id": "kda_recurrent_0",
+    "op": "kda_recurrent",
+    "shape": [
+      1,
+      3,
+      1,
+      1,
+      128,
+      128
+    ],
+    "attrs": {
+      "layout": "BSND",
+      "dtype": "BF16",
+      "gate_dtype": "FP32",
+      "state_dtype": "FP32",
+      "state_v_first": false,
+      "use_gate_in_kernel": false,
+      "chunk_size": null,
+      "output_final_state": true,
+      "export_gk": false
+    },
+    "args": [
+      3,
+      128,
+      0
+    ],
+    "kind": "KDA",
+    "groups": 3,
+    "prediction": {
+      "status": "A5_vector_stage_template",
+      "predicted_us": 22.022395382393448,
+      "stages_us": {
+        "arrival": 0.0,
+        "SIMD": 13.114632034630262,
+        "MTE3": 1.5858874458874435,
+        "MTE2": 1.4929004329004274,
+        "SCALAR": 4.30311688311673,
+        "other": 1.5258585858585858
+      },
+      "predicted_active_aiv": 1,
+      "waves": 1,
+      "scope": "cross-core instruction makespan"
+    },
+    "role": "validation",
+    "reference_us": 21.932121212121213,
+    "predicted_us": 22.022395382393448,
+    "kernel": "entry_kernel_0",
+    "active_aic": 0,
+    "active_aiv": 1,
+    "source": "runs/v8vec/kda_recurrent-0-10/profile/npusim_20261118095455_KDA/record/0000_entry_kernel_0.db",
+    "correctness": [
+      "correctness name=attn_out count=384 bad=0 max_abs_error=1.886e-07 atol=2e-06 rtol=0.015625 hard_limit=1",
+      "correctness name=final_state count=16384 bad=0 max_abs_error=2.89419e-10 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=initial_state_unchanged count=16384 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "97f511ee97d45fb9b050b7ccdcf8c2ea5af0aa14a9d22400c734e0f3c9f7d5de",
+    "batch_wall_s": 1119.742610289948,
+    "batch": "kda_recurrent-0-10",
+    "max_core_rv_count": 10614,
+    "query_max_us": 14.75
+  },
+  {
+    "id": "kda_recurrent_1",
+    "op": "kda_recurrent",
+    "shape": [
+      1,
+      5,
+      1,
+      1,
+      128,
+      128
+    ],
+    "attrs": {
+      "layout": "BSND",
+      "dtype": "BF16",
+      "gate_dtype": "FP32",
+      "state_dtype": "FP32",
+      "state_v_first": false,
+      "use_gate_in_kernel": false,
+      "chunk_size": null,
+      "output_final_state": true,
+      "export_gk": false
+    },
+    "args": [
+      5,
+      128,
+      0
+    ],
+    "kind": "KDA",
+    "groups": 3,
+    "prediction": {
+      "status": "A5_vector_stage_template",
+      "predicted_us": 28.973217893213118,
+      "stages_us": {
+        "arrival": 0.0,
+        "SIMD": 18.989437229432607,
+        "MTE3": 2.4823376623376574,
+        "MTE2": 1.544935064935053,
+        "SCALAR": 4.430649350649216,
+        "other": 1.5258585858585858
+      },
+      "predicted_active_aiv": 1,
+      "waves": 1,
+      "scope": "cross-core instruction makespan"
+    },
+    "role": "validation",
+    "reference_us": 24.64848484848485,
+    "predicted_us": 28.973217893213118,
+    "kernel": "entry_kernel_0",
+    "active_aic": 0,
+    "active_aiv": 1,
+    "source": "runs/v8vec/kda_recurrent-0-10/profile/npusim_20261118095455_KDA/record/0001_entry_kernel_0.db",
+    "correctness": [
+      "correctness name=attn_out count=640 bad=0 max_abs_error=1.886e-07 atol=2e-06 rtol=0.015625 hard_limit=1",
+      "correctness name=final_state count=16384 bad=0 max_abs_error=3.51191e-10 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=initial_state_unchanged count=16384 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "d31676d71118ef428423bbb8d2196b13ae3a5b85d9becdf4ca81a1c38d3d83bc",
+    "batch_wall_s": 1119.742610289948,
+    "batch": "kda_recurrent-0-10",
+    "max_core_rv_count": 16970,
+    "query_max_us": 15.6
+  },
+  {
+    "id": "kda_recurrent_2",
+    "op": "kda_recurrent",
+    "shape": [
+      1,
+      6,
+      1,
+      1,
+      128,
+      128
+    ],
+    "attrs": {
+      "layout": "BSND",
+      "dtype": "BF16",
+      "gate_dtype": "FP32",
+      "state_dtype": "FP32",
+      "state_v_first": false,
+      "use_gate_in_kernel": false,
+      "chunk_size": null,
+      "output_final_state": true,
+      "export_gk": false
+    },
+    "args": [
+      6,
+      128,
+      0
+    ],
+    "kind": "KDA",
+    "groups": 3,
+    "prediction": {
+      "status": "A5_vector_stage_template",
+      "predicted_us": 32.448629148622956,
+      "stages_us": {
+        "arrival": 0.0,
+        "SIMD": 21.92683982683378,
+        "MTE3": 2.930562770562764,
+        "MTE2": 1.5709523809523658,
+        "SCALAR": 4.494415584415459,
+        "other": 1.5258585858585858
+      },
+      "predicted_active_aiv": 1,
+      "waves": 1,
+      "scope": "cross-core instruction makespan"
+    },
+    "role": "validation",
+    "reference_us": 28.44121212121212,
+    "predicted_us": 32.448629148622956,
+    "kernel": "entry_kernel_0",
+    "active_aic": 0,
+    "active_aiv": 1,
+    "source": "runs/v8vec/kda_recurrent-0-10/profile/npusim_20261118095455_KDA/record/0002_entry_kernel_0.db",
+    "correctness": [
+      "correctness name=attn_out count=768 bad=0 max_abs_error=2.13588e-07 atol=2e-06 rtol=0.015625 hard_limit=1",
+      "correctness name=final_state count=16384 bad=0 max_abs_error=3.7543e-10 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=initial_state_unchanged count=16384 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "13312e0bafd67537cc5e4f826072a5a55543f62a35648e3e3cd5e75ff34cfabe",
+    "batch_wall_s": 1119.742610289948,
+    "batch": "kda_recurrent-0-10",
+    "max_core_rv_count": 20148,
+    "query_max_us": 14.36
+  },
+  {
+    "id": "kda_recurrent_3",
+    "op": "kda_recurrent",
+    "shape": [
+      1,
+      7,
+      1,
+      1,
+      128,
+      128
+    ],
+    "attrs": {
+      "layout": "BSND",
+      "dtype": "BF16",
+      "gate_dtype": "FP32",
+      "state_dtype": "FP32",
+      "state_v_first": false,
+      "use_gate_in_kernel": false,
+      "chunk_size": null,
+      "output_final_state": true,
+      "export_gk": false
+    },
+    "args": [
+      7,
+      128,
+      0
+    ],
+    "kind": "KDA",
+    "groups": 3,
+    "prediction": {
+      "status": "A5_vector_stage_template",
+      "predicted_us": 35.924040404032795,
+      "stages_us": {
+        "arrival": 0.0,
+        "SIMD": 24.864242424234952,
+        "MTE3": 3.378787878787871,
+        "MTE2": 1.5969696969696785,
+        "SCALAR": 4.558181818181702,
+        "other": 1.5258585858585858
+      },
+      "predicted_active_aiv": 1,
+      "waves": 1,
+      "scope": "cross-core instruction makespan"
+    },
+    "role": "validation",
+    "reference_us": 31.194545454545455,
+    "predicted_us": 35.924040404032795,
+    "kernel": "entry_kernel_0",
+    "active_aic": 0,
+    "active_aiv": 1,
+    "source": "runs/v8vec/kda_recurrent-0-10/profile/npusim_20261118095455_KDA/record/0003_entry_kernel_0.db",
+    "correctness": [
+      "correctness name=attn_out count=896 bad=0 max_abs_error=2.13588e-07 atol=2e-06 rtol=0.015625 hard_limit=1",
+      "correctness name=final_state count=16384 bad=0 max_abs_error=4.05693e-10 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=initial_state_unchanged count=16384 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "a63dc00e7ff5a1913d08f3f56774a7e92d92beb0ad2ce5dc44fa4591618fd792",
+    "batch_wall_s": 1119.742610289948,
+    "batch": "kda_recurrent-0-10",
+    "max_core_rv_count": 23326,
+    "query_max_us": 14.42
+  },
+  {
+    "id": "kda_recurrent_4",
+    "op": "kda_recurrent",
+    "shape": [
+      1,
+      8,
+      1,
+      1,
+      128,
+      128
+    ],
+    "attrs": {
+      "layout": "BSND",
+      "dtype": "BF16",
+      "gate_dtype": "FP32",
+      "state_dtype": "FP32",
+      "state_v_first": false,
+      "use_gate_in_kernel": false,
+      "chunk_size": null,
+      "output_final_state": true,
+      "export_gk": false
+    },
+    "args": [
+      8,
+      128,
+      0
+    ],
+    "kind": "KDA",
+    "groups": 3,
+    "prediction": {
+      "status": "A5_vector_stage_template",
+      "predicted_us": 39.399451659442626,
+      "stages_us": {
+        "arrival": 0.0,
+        "SIMD": 27.801645021636126,
+        "MTE3": 3.827012987012978,
+        "MTE2": 1.6229870129869912,
+        "SCALAR": 4.621948051947944,
+        "other": 1.5258585858585858
+      },
+      "predicted_active_aiv": 1,
+      "waves": 1,
+      "scope": "cross-core instruction makespan"
+    },
+    "role": "validation",
+    "reference_us": 35.39575757575758,
+    "predicted_us": 39.399451659442626,
+    "kernel": "entry_kernel_0",
+    "active_aic": 0,
+    "active_aiv": 1,
+    "source": "runs/v8vec/kda_recurrent-0-10/profile/npusim_20261118095455_KDA/record/0004_entry_kernel_0.db",
+    "correctness": [
+      "correctness name=attn_out count=1024 bad=0 max_abs_error=2.13588e-07 atol=2e-06 rtol=0.015625 hard_limit=1",
+      "correctness name=final_state count=16384 bad=0 max_abs_error=4.11635e-10 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=initial_state_unchanged count=16384 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "de6cd8c5d30654148c422ebcfeb03fcca9b34c240d594a77865906b8139b5e1e",
+    "batch_wall_s": 1119.742610289948,
+    "batch": "kda_recurrent-0-10",
+    "max_core_rv_count": 26504,
+    "query_max_us": 13.97
+  },
+  {
+    "id": "kda_recurrent_5",
+    "op": "kda_recurrent",
+    "shape": [
+      1,
+      1,
+      1,
+      1,
+      128,
+      256
+    ],
+    "attrs": {
+      "layout": "BSND",
+      "dtype": "BF16",
+      "gate_dtype": "FP32",
+      "state_dtype": "FP32",
+      "state_v_first": false,
+      "use_gate_in_kernel": false,
+      "chunk_size": null,
+      "output_final_state": true,
+      "export_gk": false
+    },
+    "args": [
+      1,
+      256,
+      0
+    ],
+    "kind": "KDA",
+    "groups": 3,
+    "prediction": {
+      "status": "A5_vector_stage_template",
+      "predicted_us": 18.54698412698361,
+      "stages_us": {
+        "arrival": 0.0,
+        "SIMD": 10.177229437229087,
+        "MTE3": 1.1376623376623367,
+        "MTE2": 1.4668831168831147,
+        "SCALAR": 4.239350649350487,
+        "other": 1.5258585858585858
+      },
+      "predicted_active_aiv": 1,
+      "waves": 1,
+      "scope": "cross-core instruction makespan"
+    },
+    "role": "validation",
+    "reference_us": 17.433939393939394,
+    "predicted_us": 18.54698412698361,
+    "kernel": "entry_kernel_0",
+    "active_aic": 0,
+    "active_aiv": 1,
+    "source": "runs/v8vec/kda_recurrent-0-10/profile/npusim_20261118095455_KDA/record/0005_entry_kernel_0.db",
+    "correctness": [
+      "correctness name=attn_out count=256 bad=0 max_abs_error=2.32197e-07 atol=2e-06 rtol=0.015625 hard_limit=1",
+      "correctness name=final_state count=32768 bad=0 max_abs_error=1.19536e-10 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=initial_state_unchanged count=32768 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "e61a9b61831a1266b380b3c994c8487e8dcdc945f544fa1342abd67af6dd6685",
+    "batch_wall_s": 1119.742610289948,
+    "batch": "kda_recurrent-0-10",
+    "max_core_rv_count": 8426,
+    "query_max_us": 19.61
+  },
+  {
+    "id": "kda_recurrent_6",
+    "op": "kda_recurrent",
+    "shape": [
+      1,
+      2,
+      1,
+      1,
+      128,
+      256
+    ],
+    "attrs": {
+      "layout": "BSND",
+      "dtype": "BF16",
+      "gate_dtype": "FP32",
+      "state_dtype": "FP32",
+      "state_v_first": false,
+      "use_gate_in_kernel": false,
+      "chunk_size": null,
+      "output_final_state": true,
+      "export_gk": false
+    },
+    "args": [
+      2,
+      256,
+      0
+    ],
+    "kind": "KDA",
+    "groups": 3,
+    "prediction": {
+      "status": "A5_vector_stage_template",
+      "predicted_us": 25.497806637803283,
+      "stages_us": {
+        "arrival": 0.0,
+        "SIMD": 16.052034632031432,
+        "MTE3": 2.0341125541125504,
+        "MTE2": 1.5189177489177401,
+        "SCALAR": 4.366883116882973,
+        "other": 1.5258585858585858
+      },
+      "predicted_active_aiv": 1,
+      "waves": 1,
+      "scope": "cross-core instruction makespan"
+    },
+    "role": "validation",
+    "reference_us": 22.683636363636364,
+    "predicted_us": 25.497806637803283,
+    "kernel": "entry_kernel_0",
+    "active_aic": 0,
+    "active_aiv": 1,
+    "source": "runs/v8vec/kda_recurrent-0-10/profile/npusim_20261118095455_KDA/record/0006_entry_kernel_0.db",
+    "correctness": [
+      "correctness name=attn_out count=512 bad=0 max_abs_error=2.32197e-07 atol=2e-06 rtol=0.015625 hard_limit=1",
+      "correctness name=final_state count=32768 bad=0 max_abs_error=2.18611e-10 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=initial_state_unchanged count=32768 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "4c868cf5cc3ffb6ee77ba02312d810c7aeb0c894a427dcef48108f2e7a5afb90",
+    "batch_wall_s": 1119.742610289948,
+    "batch": "kda_recurrent-0-10",
+    "max_core_rv_count": 14738,
+    "query_max_us": 15.47
+  },
+  {
+    "id": "kda_recurrent_7",
+    "op": "kda_recurrent",
+    "shape": [
+      1,
+      3,
+      1,
+      1,
+      128,
+      256
+    ],
+    "attrs": {
+      "layout": "BSND",
+      "dtype": "BF16",
+      "gate_dtype": "FP32",
+      "state_dtype": "FP32",
+      "state_v_first": false,
+      "use_gate_in_kernel": false,
+      "chunk_size": null,
+      "output_final_state": true,
+      "export_gk": false
+    },
+    "args": [
+      3,
+      256,
+      0
+    ],
+    "kind": "KDA",
+    "groups": 3,
+    "prediction": {
+      "status": "A5_vector_stage_template",
+      "predicted_us": 32.448629148622956,
+      "stages_us": {
+        "arrival": 0.0,
+        "SIMD": 21.92683982683378,
+        "MTE3": 2.930562770562764,
+        "MTE2": 1.5709523809523658,
+        "SCALAR": 4.494415584415459,
+        "other": 1.5258585858585858
+      },
+      "predicted_active_aiv": 1,
+      "waves": 1,
+      "scope": "cross-core instruction makespan"
+    },
+    "role": "validation",
+    "reference_us": 31.07090909090909,
+    "predicted_us": 32.448629148622956,
+    "kernel": "entry_kernel_0",
+    "active_aic": 0,
+    "active_aiv": 1,
+    "source": "runs/v8vec/kda_recurrent-0-10/profile/npusim_20261118095455_KDA/record/0007_entry_kernel_0.db",
+    "correctness": [
+      "correctness name=attn_out count=768 bad=0 max_abs_error=2.34424e-07 atol=2e-06 rtol=0.015625 hard_limit=1",
+      "correctness name=final_state count=32768 bad=0 max_abs_error=2.90971e-10 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=initial_state_unchanged count=32768 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "e2190d8edc07628ded4ea28db23cffa2d5b492e0b8e73c8bd6cc372e68f5e4fa",
+    "batch_wall_s": 1119.742610289948,
+    "batch": "kda_recurrent-0-10",
+    "max_core_rv_count": 21050,
+    "query_max_us": 42.2
+  },
+  {
+    "id": "kda_recurrent_8",
+    "op": "kda_recurrent",
+    "shape": [
+      1,
+      4,
+      1,
+      1,
+      128,
+      256
+    ],
+    "attrs": {
+      "layout": "BSND",
+      "dtype": "BF16",
+      "gate_dtype": "FP32",
+      "state_dtype": "FP32",
+      "state_v_first": false,
+      "use_gate_in_kernel": false,
+      "chunk_size": null,
+      "output_final_state": true,
+      "export_gk": false
+    },
+    "args": [
+      4,
+      256,
+      0
+    ],
+    "kind": "KDA",
+    "groups": 3,
+    "prediction": {
+      "status": "A5_vector_stage_template",
+      "predicted_us": 39.399451659442626,
+      "stages_us": {
+        "arrival": 0.0,
+        "SIMD": 27.801645021636126,
+        "MTE3": 3.827012987012978,
+        "MTE2": 1.6229870129869912,
+        "SCALAR": 4.621948051947944,
+        "other": 1.5258585858585858
+      },
+      "predicted_active_aiv": 1,
+      "waves": 1,
+      "scope": "cross-core instruction makespan"
+    },
+    "role": "validation",
+    "reference_us": 38.341818181818184,
+    "predicted_us": 39.399451659442626,
+    "kernel": "entry_kernel_0",
+    "active_aic": 0,
+    "active_aiv": 1,
+    "source": "runs/v8vec/kda_recurrent-0-10/profile/npusim_20261118095455_KDA/record/0008_entry_kernel_0.db",
+    "correctness": [
+      "correctness name=attn_out count=1024 bad=0 max_abs_error=2.34424e-07 atol=2e-06 rtol=0.015625 hard_limit=1",
+      "correctness name=final_state count=32768 bad=0 max_abs_error=3.02583e-10 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=initial_state_unchanged count=32768 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "f159de39f0e3b2cb600bc4a33ddc35ae21ec4fd495a3ebfb66e514875a9d59fe",
+    "batch_wall_s": 1119.742610289948,
+    "batch": "kda_recurrent-0-10",
+    "max_core_rv_count": 27362,
+    "query_max_us": 14.47
+  },
+  {
+    "id": "kda_recurrent_9",
+    "op": "kda_recurrent",
+    "shape": [
+      1,
+      6,
+      1,
+      1,
+      128,
+      256
+    ],
+    "attrs": {
+      "layout": "BSND",
+      "dtype": "BF16",
+      "gate_dtype": "FP32",
+      "state_dtype": "FP32",
+      "state_v_first": false,
+      "use_gate_in_kernel": false,
+      "chunk_size": null,
+      "output_final_state": true,
+      "export_gk": false
+    },
+    "args": [
+      6,
+      256,
+      0
+    ],
+    "kind": "KDA",
+    "groups": 3,
+    "prediction": {
+      "status": "A5_vector_stage_template",
+      "predicted_us": 53.301096681081965,
+      "stages_us": {
+        "arrival": 0.0,
+        "SIMD": 39.55125541124082,
+        "MTE3": 5.619913419913405,
+        "MTE2": 1.727056277056242,
+        "SCALAR": 4.877012987012916,
+        "other": 1.5258585858585858
+      },
+      "predicted_active_aiv": 1,
+      "waves": 1,
+      "scope": "cross-core instruction makespan"
+    },
+    "role": "validation",
+    "reference_us": 52.69090909090909,
+    "predicted_us": 53.301096681081965,
+    "kernel": "entry_kernel_0",
+    "active_aic": 0,
+    "active_aiv": 1,
+    "source": "runs/v8vec/kda_recurrent-0-10/profile/npusim_20261118095455_KDA/record/0009_entry_kernel_0.db",
+    "correctness": [
+      "correctness name=attn_out count=1536 bad=0 max_abs_error=2.34424e-07 atol=2e-06 rtol=0.015625 hard_limit=1",
+      "correctness name=final_state count=32768 bad=0 max_abs_error=3.72915e-10 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=initial_state_unchanged count=32768 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "f79542b1e07a053456d41a23ed8ba54c2fd0175bee4d4bb8f2fda8a118a5434d",
+    "batch_wall_s": 1119.742610289948,
+    "batch": "kda_recurrent-0-10",
+    "max_core_rv_count": 39986,
+    "query_max_us": 13.6
+  },
+  {
+    "id": "mhc_post_0",
+    "op": "mhc_post",
+    "shape": [
+      1,
+      4,
+      64
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "has_h_res": true
+    },
+    "args": [
+      1,
+      4,
+      64
+    ],
+    "kind": "MHC",
+    "groups": 1,
+    "prediction": {
+      "status": "A5_vector_stage_template",
+      "predicted_us": 4.050501426580181,
+      "stages_us": {
+        "arrival": 0.0,
+        "SIMD": 0.7987878787878749,
+        "MTE3": 0.17373374981253617,
+        "MTE2": 1.1549494949494898,
+        "SCALAR": 1.9183838383838154,
+        "other": 0.004646464646464647
+      },
+      "predicted_active_aiv": 1,
+      "waves": 1,
+      "scope": "cross-core instruction makespan"
+    },
+    "role": "validation",
+    "reference_us": 4.587878787878788,
+    "predicted_us": 4.050501426580181,
+    "kernel": "entry_kernel_5",
+    "active_aic": 0,
+    "active_aiv": 1,
+    "source": "runs/v8vec/mhc_post-0-10/profile/npusim_20261118094947_MHC/record/0000_entry_kernel_5.db",
+    "correctness": [
+      "correctness name=output count=256 bad=0 max_abs_error=0 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "db_sha256": "6c68c8918d733f17ebf5c1b4684c2e44bac8e729948552b4c941cc1a4ba12b92",
+    "batch_wall_s": 164.21183203998953,
+    "batch": "mhc_post-0-10",
+    "max_core_rv_count": 264,
+    "query_max_us": 19.33
+  },
+  {
+    "id": "mhc_post_1",
+    "op": "mhc_post",
+    "shape": [
+      2,
+      4,
+      256
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "has_h_res": true
+    },
+    "args": [
+      2,
+      4,
+      256
+    ],
+    "kind": "MHC",
+    "groups": 1,
+    "prediction": {
+      "status": "A5_vector_stage_template",
+      "predicted_us": 4.126792796107374,
+      "stages_us": {
+        "arrival": 0.07176218474789521,
+        "SIMD": 0.7987878787878749,
+        "MTE3": 0.17826293459183368,
+        "MTE2": 1.1549494949494898,
+        "SCALAR": 1.9183838383838154,
+        "other": 0.004646464646464647
+      },
+      "predicted_active_aiv": 2,
+      "waves": 1,
+      "scope": "cross-core instruction makespan"
+    },
+    "role": "validation",
+    "reference_us": 5.276363636363636,
+    "predicted_us": 4.126792796107374,
+    "kernel": "entry_kernel_5",
+    "active_aic": 0,
+    "active_aiv": 2,
+    "source": "runs/v8vec/mhc_post-0-10/profile/npusim_20261118094947_MHC/record/0001_entry_kernel_5.db",
+    "correctness": [
+      "correctness name=output count=2048 bad=0 max_abs_error=0 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "db_sha256": "3b015b1a2bb9e4e089e3f7d2631f34455fbdaa0a4786822951a363265dc03404",
+    "batch_wall_s": 164.21183203998953,
+    "batch": "mhc_post-0-10",
+    "max_core_rv_count": 660,
+    "query_max_us": 13.54
+  },
+  {
+    "id": "mhc_post_2",
+    "op": "mhc_post",
+    "shape": [
+      4,
+      4,
+      512
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "has_h_res": true
+    },
+    "args": [
+      4,
+      4,
+      512
+    ],
+    "kind": "MHC",
+    "groups": 1,
+    "prediction": {
+      "status": "A5_vector_stage_template",
+      "predicted_us": 4.275694536151135,
+      "stages_us": {
+        "arrival": 0.21528655424368565,
+        "SIMD": 0.7987878787878749,
+        "MTE3": 0.18364030513980462,
+        "MTE2": 1.1549494949494898,
+        "SCALAR": 1.9183838383838154,
+        "other": 0.004646464646464647
+      },
+      "predicted_active_aiv": 8,
+      "waves": 1,
+      "scope": "cross-core instruction makespan"
+    },
+    "role": "validation",
+    "reference_us": 4.1078787878787875,
+    "predicted_us": 4.275694536151135,
+    "kernel": "entry_kernel_5",
+    "active_aic": 0,
+    "active_aiv": 8,
+    "source": "runs/v8vec/mhc_post-0-10/profile/npusim_20261118094947_MHC/record/0002_entry_kernel_5.db",
+    "correctness": [
+      "correctness name=output count=8192 bad=0 max_abs_error=0 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "db_sha256": "851b9d337b09e0aa499767673b717f069e320b248e8da80ea91c649db9589f1b",
+    "batch_wall_s": 164.21183203998953,
+    "batch": "mhc_post-0-10",
+    "max_core_rv_count": 660,
+    "query_max_us": 15.56
+  },
+  {
+    "id": "mhc_post_3",
+    "op": "mhc_post",
+    "shape": [
+      9,
+      4,
+      1024
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "has_h_res": true
+    },
+    "args": [
+      9,
+      4,
+      1024
+    ],
+    "kind": "MHC",
+    "groups": 1,
+    "prediction": {
+      "status": "A5_vector_stage_template",
+      "predicted_us": 4.43833269072695,
+      "stages_us": {
+        "arrival": 0.3710051130862656,
+        "SIMD": 0.7987878787878749,
+        "MTE3": 0.19055990087304023,
+        "MTE2": 1.1549494949494898,
+        "SCALAR": 1.9183838383838154,
+        "other": 0.004646464646464647
+      },
+      "predicted_active_aiv": 36,
+      "waves": 1,
+      "scope": "cross-core instruction makespan"
+    },
+    "role": "validation",
+    "reference_us": 3.966060606060606,
+    "predicted_us": 4.43833269072695,
+    "kernel": "entry_kernel_5",
+    "active_aic": 0,
+    "active_aiv": 36,
+    "source": "runs/v8vec/mhc_post-0-10/profile/npusim_20261118094947_MHC/record/0003_entry_kernel_5.db",
+    "correctness": [
+      "correctness name=output count=36864 bad=0 max_abs_error=0 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "db_sha256": "295bef1c22979acc3f9c8d63b80acbc52df747419ca3bbe71e980ecd164a342f",
+    "batch_wall_s": 164.21183203998953,
+    "batch": "mhc_post-0-10",
+    "max_core_rv_count": 660,
+    "query_max_us": 13.23
+  },
+  {
+    "id": "mhc_post_4",
+    "op": "mhc_post",
+    "shape": [
+      16,
+      4,
+      256
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "has_h_res": true
+    },
+    "args": [
+      16,
+      4,
+      256
+    ],
+    "kind": "MHC",
+    "groups": 1,
+    "prediction": {
+      "status": "A5_vector_stage_template",
+      "predicted_us": 4.350569691050809,
+      "stages_us": {
+        "arrival": 0.28704873899158084,
+        "SIMD": 0.7987878787878749,
+        "MTE3": 0.18675327529158273,
+        "MTE2": 1.1549494949494898,
+        "SCALAR": 1.9183838383838154,
+        "other": 0.004646464646464647
+      },
+      "predicted_active_aiv": 16,
+      "waves": 1,
+      "scope": "cross-core instruction makespan"
+    },
+    "role": "validation",
+    "reference_us": 2.213939393939394,
+    "predicted_us": 4.350569691050809,
+    "kernel": "entry_kernel_5",
+    "active_aic": 0,
+    "active_aiv": 16,
+    "source": "runs/v8vec/mhc_post-0-10/profile/npusim_20261118094947_MHC/record/0004_entry_kernel_5.db",
+    "correctness": [
+      "correctness name=output count=16384 bad=0 max_abs_error=0 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "db_sha256": "62f4916a2db3d2285e3460dd1e945157962b3e7b9a17de5f4f0f6efe7a368db1",
+    "batch_wall_s": 164.21183203998953,
+    "batch": "mhc_post-0-10",
+    "max_core_rv_count": 660,
+    "query_max_us": 13.49
+  },
+  {
+    "id": "mhc_post_5",
+    "op": "mhc_post",
+    "shape": [
+      32,
+      4,
+      512
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "has_h_res": true
+    },
+    "args": [
+      32,
+      4,
+      512
+    ],
+    "kind": "MHC",
+    "groups": 1,
+    "prediction": {
+      "status": "A5_vector_stage_template",
+      "predicted_us": 4.500658695989789,
+      "stages_us": {
+        "arrival": 0.4305731084873713,
+        "SIMD": 0.7987878787878749,
+        "MTE3": 0.19331791073477336,
+        "MTE2": 1.1549494949494898,
+        "SCALAR": 1.9183838383838154,
+        "other": 0.004646464646464647
+      },
+      "predicted_active_aiv": 64,
+      "waves": 1,
+      "scope": "cross-core instruction makespan"
+    },
+    "role": "validation",
+    "reference_us": 2.3884848484848487,
+    "predicted_us": 4.500658695989789,
+    "kernel": "entry_kernel_6",
+    "active_aic": 0,
+    "active_aiv": 32,
+    "source": "runs/v8vec/mhc_post-0-10/profile/npusim_20261118094947_MHC/record/0005_entry_kernel_6.db",
+    "correctness": [
+      "correctness name=output count=65536 bad=0 max_abs_error=0 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "db_sha256": "20b5d75609a91c22d6b9140816807785f6295367aeb01f8a1bb1c4787995fce4",
+    "batch_wall_s": 164.21183203998953,
+    "batch": "mhc_post-0-10",
+    "max_core_rv_count": 712,
+    "query_max_us": 14.53
+  },
+  {
+    "id": "mhc_post_6",
+    "op": "mhc_post",
+    "shape": [
+      36,
+      4,
+      128
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "has_h_res": true
+    },
+    "args": [
+      36,
+      4,
+      128
+    ],
+    "kind": "MHC",
+    "groups": 1,
+    "prediction": {
+      "status": "A5_vector_stage_template",
+      "predicted_us": 4.4294955223123615,
+      "stages_us": {
+        "arrival": 0.3710051130862656,
+        "SIMD": 0.7987878787878749,
+        "MTE3": 0.1817227324584515,
+        "MTE2": 1.1549494949494898,
+        "SCALAR": 1.9183838383838154,
+        "other": 0.004646464646464647
+      },
+      "predicted_active_aiv": 36,
+      "waves": 1,
+      "scope": "cross-core instruction makespan"
+    },
+    "role": "validation",
+    "reference_us": 1.7715151515151515,
+    "predicted_us": 4.4294955223123615,
+    "kernel": "entry_kernel_6",
+    "active_aic": 0,
+    "active_aiv": 36,
+    "source": "runs/v8vec/mhc_post-0-10/profile/npusim_20261118094947_MHC/record/0006_entry_kernel_6.db",
+    "correctness": [
+      "correctness name=output count=18432 bad=0 max_abs_error=0 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "db_sha256": "79f083825931182fe40b9b419a247fe527a333d65370dcee1e37fcf8dc9742e3",
+    "batch_wall_s": 164.21183203998953,
+    "batch": "mhc_post-0-10",
+    "max_core_rv_count": 208,
+    "query_max_us": 13.41
+  },
+  {
+    "id": "mhc_post_7",
+    "op": "mhc_post",
+    "shape": [
+      64,
+      4,
+      256
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "has_h_res": true
+    },
+    "args": [
+      64,
+      4,
+      256
+    ],
+    "kind": "MHC",
+    "groups": 1,
+    "prediction": {
+      "status": "A5_vector_stage_template",
+      "predicted_us": 4.500658695989789,
+      "stages_us": {
+        "arrival": 0.4305731084873713,
+        "SIMD": 0.7987878787878749,
+        "MTE3": 0.19331791073477336,
+        "MTE2": 1.1549494949494898,
+        "SCALAR": 1.9183838383838154,
+        "other": 0.004646464646464647
+      },
+      "predicted_active_aiv": 64,
+      "waves": 1,
+      "scope": "cross-core instruction makespan"
+    },
+    "role": "validation",
+    "reference_us": 3.006666666666667,
+    "predicted_us": 4.500658695989789,
+    "kernel": "entry_kernel_6",
+    "active_aic": 0,
+    "active_aiv": 64,
+    "source": "runs/v8vec/mhc_post-0-10/profile/npusim_20261118094947_MHC/record/0007_entry_kernel_6.db",
+    "correctness": [
+      "correctness name=output count=65536 bad=0 max_abs_error=0 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "db_sha256": "76b9dcdf6c11d3aa316b5b453db37fd89eef94cdefc049ef3a7d2f601aae8459",
+    "batch_wall_s": 164.21183203998953,
+    "batch": "mhc_post-0-10",
+    "max_core_rv_count": 376,
+    "query_max_us": 12.96
+  },
+  {
+    "id": "mhc_post_8",
+    "op": "mhc_post",
+    "shape": [
+      65,
+      4,
+      128
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "has_h_res": true
+    },
+    "args": [
+      65,
+      4,
+      128
+    ],
+    "kind": "MHC",
+    "groups": 1,
+    "prediction": {
+      "status": "A5_vector_stage_template",
+      "predicted_us": 4.500658695989789,
+      "stages_us": {
+        "arrival": 0.4305731084873713,
+        "SIMD": 0.7987878787878749,
+        "MTE3": 0.19331791073477336,
+        "MTE2": 1.1549494949494898,
+        "SCALAR": 1.9183838383838154,
+        "other": 0.004646464646464647
+      },
+      "predicted_active_aiv": 64,
+      "waves": 2,
+      "scope": "cross-core instruction makespan"
+    },
+    "role": "validation",
+    "reference_us": 2.10969696969697,
+    "predicted_us": 4.500658695989789,
+    "kernel": "entry_kernel_6",
+    "active_aic": 0,
+    "active_aiv": 33,
+    "source": "runs/v8vec/mhc_post-0-10/profile/npusim_20261118094947_MHC/record/0008_entry_kernel_6.db",
+    "correctness": [
+      "correctness name=output count=33280 bad=0 max_abs_error=0 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "db_sha256": "929c49d1f23679123b9dfddf7b28a1c548cf41ae26b5de8f5ee1862a87d02eea",
+    "batch_wall_s": 164.21183203998953,
+    "batch": "mhc_post-0-10",
+    "max_core_rv_count": 416,
+    "query_max_us": 13.4
+  },
+  {
+    "id": "mhc_post_9",
+    "op": "mhc_post",
+    "shape": [
+      1,
+      4,
+      7168
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "has_h_res": true
+    },
+    "args": [
+      1,
+      4,
+      7168
+    ],
+    "kind": "MHC",
+    "groups": 1,
+    "prediction": {
+      "status": "A5_vector_stage_template",
+      "predicted_us": 4.425578497765462,
+      "stages_us": {
+        "arrival": 0.35881092373947604,
+        "SIMD": 0.7987878787878749,
+        "MTE3": 0.18999989725834185,
+        "MTE2": 1.1549494949494898,
+        "SCALAR": 1.9183838383838154,
+        "other": 0.004646464646464647
+      },
+      "predicted_active_aiv": 32,
+      "waves": 1,
+      "scope": "cross-core instruction makespan"
+    },
+    "role": "validation",
+    "reference_us": 2.4296969696969697,
+    "predicted_us": 4.425578497765462,
+    "kernel": "entry_kernel_5",
+    "active_aic": 0,
+    "active_aiv": 32,
+    "source": "runs/v8vec/mhc_post-0-10/profile/npusim_20261118094947_MHC/record/0009_entry_kernel_5.db",
+    "correctness": [
+      "correctness name=output count=28672 bad=0 max_abs_error=0 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "db_sha256": "d51205479e6e8d2e36abd5c65c746bb8dc3e434fbf24bff3cce40c6b3b5f141d",
+    "batch_wall_s": 164.21183203998953,
+    "batch": "mhc_post-0-10",
+    "max_core_rv_count": 652,
+    "query_max_us": 16.57
+  },
+  {
+    "id": "mhc_sinkhorn_0",
+    "op": "mhc_sinkhorn",
+    "shape": [
+      2,
+      4
+    ],
+    "attrs": {
+      "dtype": "fp32",
+      "return_intermediates": false,
+      "num_iters": 2
+    },
+    "args": [
+      2,
+      4,
+      2
+    ],
+    "kind": "MHC",
+    "groups": 1,
+    "prediction": {
+      "status": "A5_vector_stage_template",
+      "predicted_us": 6.658205433082106,
+      "stages_us": {
+        "arrival": 0.03569927569955589,
+        "SIMD": 4.1503030303027195,
+        "MTE3": 0.1204168830131852,
+        "MTE2": 0.6715842238646577,
+        "SCALAR": 1.6733333333333007,
+        "other": 0.006868686868686868
+      },
+      "predicted_active_aiv": 2,
+      "waves": 1,
+      "scope": "cross-core instruction makespan"
+    },
+    "role": "validation",
+    "reference_us": 3.5927272727272728,
+    "predicted_us": 6.658205433082106,
+    "kernel": "entry_kernel_0",
+    "active_aic": 0,
+    "active_aiv": 2,
+    "source": "runs/v8vec/mhc_sinkhorn-0-10/profile/npusim_20261118095436_MHC/record/0000_entry_kernel_0.db",
+    "correctness": [
+      "correctness name=output count=32 bad=0 max_abs_error=1.15811e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "21b2a30cd07da7d9d09ab01940e651d921b9a6e8a27eeb4ada24c633a8bf58a2",
+    "batch_wall_s": 598.9491908799391,
+    "batch": "mhc_sinkhorn-0-10",
+    "max_core_rv_count": 463,
+    "query_max_us": 19.94
+  },
+  {
+    "id": "mhc_sinkhorn_1",
+    "op": "mhc_sinkhorn",
+    "shape": [
+      4,
+      4
+    ],
+    "attrs": {
+      "dtype": "fp32",
+      "return_intermediates": false,
+      "num_iters": 5
+    },
+    "args": [
+      4,
+      4,
+      5
+    ],
+    "kind": "MHC",
+    "groups": 1,
+    "prediction": {
+      "status": "A5_vector_stage_template",
+      "predicted_us": 6.716085673805792,
+      "stages_us": {
+        "arrival": 0.06856042476206649,
+        "SIMD": 4.1503030303027195,
+        "MTE3": 0.13983968278293912,
+        "MTE2": 0.6771805157560794,
+        "SCALAR": 1.6733333333333007,
+        "other": 0.006868686868686868
+      },
+      "predicted_active_aiv": 4,
+      "waves": 1,
+      "scope": "cross-core instruction makespan"
+    },
+    "role": "validation",
+    "reference_us": 2.9454545454545453,
+    "predicted_us": 6.716085673805792,
+    "kernel": "entry_kernel_0",
+    "active_aic": 0,
+    "active_aiv": 4,
+    "source": "runs/v8vec/mhc_sinkhorn-0-10/profile/npusim_20261118095436_MHC/record/0001_entry_kernel_0.db",
+    "correctness": [
+      "correctness name=output count=64 bad=0 max_abs_error=3.22625e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "c0370067e4000775011ff19aefc442916310eb0d32301460f7878468fb70076d",
+    "batch_wall_s": 598.9491908799391,
+    "batch": "mhc_sinkhorn-0-10",
+    "max_core_rv_count": 703,
+    "query_max_us": 12.34
+  },
+  {
+    "id": "mhc_sinkhorn_2",
+    "op": "mhc_sinkhorn",
+    "shape": [
+      8,
+      4
+    ],
+    "attrs": {
+      "dtype": "fp32",
+      "return_intermediates": false,
+      "num_iters": 10
+    },
+    "args": [
+      8,
+      4,
+      10
+    ],
+    "kind": "MHC",
+    "groups": 1,
+    "prediction": {
+      "status": "A5_vector_stage_template",
+      "predicted_us": 6.777735293458298,
+      "stages_us": {
+        "arrival": 0.10142157382457709,
+        "SIMD": 4.1503030303027195,
+        "MTE3": 0.1621887235682447,
+        "MTE2": 0.6836199455607683,
+        "SCALAR": 1.6733333333333007,
+        "other": 0.006868686868686868
+      },
+      "predicted_active_aiv": 8,
+      "waves": 1,
+      "scope": "cross-core instruction makespan"
+    },
+    "role": "validation",
+    "reference_us": 4.995151515151515,
+    "predicted_us": 6.777735293458298,
+    "kernel": "entry_kernel_0",
+    "active_aic": 0,
+    "active_aiv": 8,
+    "source": "runs/v8vec/mhc_sinkhorn-0-10/profile/npusim_20261118095436_MHC/record/0002_entry_kernel_0.db",
+    "correctness": [
+      "correctness name=output count=128 bad=0 max_abs_error=3.6923e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "cc1e0303f1c057e56d1435ff5df14e15097c793e4540adf483fe9d6ea4af2b8e",
+    "batch_wall_s": 598.9491908799391,
+    "batch": "mhc_sinkhorn-0-10",
+    "max_core_rv_count": 1103,
+    "query_max_us": 13.66
+  },
+  {
+    "id": "mhc_sinkhorn_3",
+    "op": "mhc_sinkhorn",
+    "shape": [
+      9,
+      4
+    ],
+    "attrs": {
+      "dtype": "fp32",
+      "return_intermediates": false,
+      "num_iters": 20
+    },
+    "args": [
+      9,
+      4,
+      20
+    ],
+    "kind": "MHC",
+    "groups": 1,
+    "prediction": {
+      "status": "A5_vector_stage_template",
+      "predicted_us": 6.788479545661558,
+      "stages_us": {
+        "arrival": 0.10700550462642024,
+        "SIMD": 4.1503030303027195,
+        "MTE3": 0.16619477985056905,
+        "MTE2": 0.6847742106798611,
+        "SCALAR": 1.6733333333333007,
+        "other": 0.006868686868686868
+      },
+      "predicted_active_aiv": 9,
+      "waves": 1,
+      "scope": "cross-core instruction makespan"
+    },
+    "role": "validation",
+    "reference_us": 6.212121212121212,
+    "predicted_us": 6.788479545661558,
+    "kernel": "entry_kernel_0",
+    "active_aic": 0,
+    "active_aiv": 9,
+    "source": "runs/v8vec/mhc_sinkhorn-0-10/profile/npusim_20261118095436_MHC/record/0003_entry_kernel_0.db",
+    "correctness": [
+      "correctness name=output count=144 bad=0 max_abs_error=4.78737e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "70d9af3a057b19a536b25d815c26b367360a29bec03c38fdb94745408b25b1a5",
+    "batch_wall_s": 598.9491908799391,
+    "batch": "mhc_sinkhorn-0-10",
+    "max_core_rv_count": 1903,
+    "query_max_us": 13.25
+  },
+  {
+    "id": "mhc_sinkhorn_4",
+    "op": "mhc_sinkhorn",
+    "shape": [
+      16,
+      4
+    ],
+    "attrs": {
+      "dtype": "fp32",
+      "return_intermediates": false,
+      "num_iters": 32
+    },
+    "args": [
+      16,
+      4,
+      32
+    ],
+    "kind": "MHC",
+    "groups": 1,
+    "prediction": {
+      "status": "A5_vector_stage_template",
+      "predicted_us": 6.8417457437887,
+      "stages_us": {
+        "arrival": 0.1342827228870877,
+        "SIMD": 4.1503030303027195,
+        "MTE3": 0.18637052239960875,
+        "MTE2": 0.6905874479972961,
+        "SCALAR": 1.6733333333333007,
+        "other": 0.006868686868686868
+      },
+      "predicted_active_aiv": 16,
+      "waves": 1,
+      "scope": "cross-core instruction makespan"
+    },
+    "role": "validation",
+    "reference_us": 8.156363636363636,
+    "predicted_us": 6.8417457437887,
+    "kernel": "entry_kernel_0",
+    "active_aic": 0,
+    "active_aiv": 16,
+    "source": "runs/v8vec/mhc_sinkhorn-0-10/profile/npusim_20261118095436_MHC/record/0004_entry_kernel_0.db",
+    "correctness": [
+      "correctness name=output count=256 bad=0 max_abs_error=6.26493e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "8d40ee3047406a732f8dfe7e17ec29e4576c5c841d1a3f90ad59871f16c6c697",
+    "batch_wall_s": 598.9491908799391,
+    "batch": "mhc_sinkhorn-0-10",
+    "max_core_rv_count": 2863,
+    "query_max_us": 13.14
+  },
+  {
+    "id": "mhc_sinkhorn_5",
+    "op": "mhc_sinkhorn",
+    "shape": [
+      31,
+      4
+    ],
+    "attrs": {
+      "dtype": "fp32",
+      "return_intermediates": false,
+      "num_iters": 20
+    },
+    "args": [
+      31,
+      4,
+      20
+    ],
+    "kind": "MHC",
+    "groups": 1,
+    "prediction": {
+      "status": "A5_vector_stage_template",
+      "predicted_us": 6.904081265166047,
+      "stages_us": {
+        "arrival": 0.16563871007760844,
+        "SIMD": 4.1503030303027195,
+        "MTE3": 0.21042052779627526,
+        "MTE2": 0.6975169767874556,
+        "SCALAR": 1.6733333333333007,
+        "other": 0.006868686868686868
+      },
+      "predicted_active_aiv": 31,
+      "waves": 1,
+      "scope": "cross-core instruction makespan"
+    },
+    "role": "validation",
+    "reference_us": 6.332727272727273,
+    "predicted_us": 6.904081265166047,
+    "kernel": "entry_kernel_0",
+    "active_aic": 0,
+    "active_aiv": 31,
+    "source": "runs/v8vec/mhc_sinkhorn-0-10/profile/npusim_20261118095436_MHC/record/0005_entry_kernel_0.db",
+    "correctness": [
+      "correctness name=output count=496 bad=0 max_abs_error=4.97686e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "55446a6fcdce7e9c2636ef18a7597e3ddeb43ec769ce6b067b6ad0113b8e453e",
+    "batch_wall_s": 598.9491908799391,
+    "batch": "mhc_sinkhorn-0-10",
+    "max_core_rv_count": 1903,
+    "query_max_us": 12.18
+  },
+  {
+    "id": "mhc_sinkhorn_6",
+    "op": "mhc_sinkhorn",
+    "shape": [
+      32,
+      4
+    ],
+    "attrs": {
+      "dtype": "fp32",
+      "return_intermediates": false,
+      "num_iters": 20
+    },
+    "args": [
+      32,
+      4,
+      20
+    ],
+    "kind": "MHC",
+    "groups": 1,
+    "prediction": {
+      "status": "A5_vector_stage_template",
+      "predicted_us": 6.907093553761778,
+      "stages_us": {
+        "arrival": 0.1671438719495983,
+        "SIMD": 4.1503030303027195,
+        "MTE3": 0.21159053912119927,
+        "MTE2": 0.6978540921862737,
+        "SCALAR": 1.6733333333333007,
+        "other": 0.006868686868686868
+      },
+      "predicted_active_aiv": 32,
+      "waves": 1,
+      "scope": "cross-core instruction makespan"
+    },
+    "role": "validation",
+    "reference_us": 5.336363636363636,
+    "predicted_us": 6.907093553761778,
+    "kernel": "entry_kernel_0",
+    "active_aic": 0,
+    "active_aiv": 32,
+    "source": "runs/v8vec/mhc_sinkhorn-0-10/profile/npusim_20261118095436_MHC/record/0006_entry_kernel_0.db",
+    "correctness": [
+      "correctness name=output count=512 bad=0 max_abs_error=4.97686e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "98a38e131bd458f612223bd4b021a93f8b6e3cdb613672a01720023d8d953eda",
+    "batch_wall_s": 598.9491908799391,
+    "batch": "mhc_sinkhorn-0-10",
+    "max_core_rv_count": 1903,
+    "query_max_us": 27.8
+  },
+  {
+    "id": "mhc_sinkhorn_7",
+    "op": "mhc_sinkhorn",
+    "shape": [
+      63,
+      4
+    ],
+    "attrs": {
+      "dtype": "fp32",
+      "return_intermediates": false,
+      "num_iters": 5
+    },
+    "args": [
+      63,
+      4,
+      5
+    ],
+    "kind": "MHC",
+    "groups": 1,
+    "prediction": {
+      "status": "A5_vector_stage_template",
+      "predicted_us": 6.971649760271378,
+      "stages_us": {
+        "arrival": 0.19925841319152798,
+        "SIMD": 4.1503030303027195,
+        "MTE3": 0.2367756248639052,
+        "MTE2": 0.7051106717112373,
+        "SCALAR": 1.6733333333333007,
+        "other": 0.006868686868686868
+      },
+      "predicted_active_aiv": 63,
+      "waves": 1,
+      "scope": "cross-core instruction makespan"
+    },
+    "role": "validation",
+    "reference_us": 4.1012121212121215,
+    "predicted_us": 6.971649760271378,
+    "kernel": "entry_kernel_0",
+    "active_aic": 0,
+    "active_aiv": 63,
+    "source": "runs/v8vec/mhc_sinkhorn-0-10/profile/npusim_20261118095436_MHC/record/0007_entry_kernel_0.db",
+    "correctness": [
+      "correctness name=output count=1008 bad=0 max_abs_error=8.04453e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "1b9f30f149a3884dff0c21c4cab4c4e16029d78a8810d0950385b6a1558cd092",
+    "batch_wall_s": 598.9491908799391,
+    "batch": "mhc_sinkhorn-0-10",
+    "max_core_rv_count": 703,
+    "query_max_us": 13.64
+  },
+  {
+    "id": "mhc_sinkhorn_8",
+    "op": "mhc_sinkhorn",
+    "shape": [
+      65,
+      4
+    ],
+    "attrs": {
+      "dtype": "fp32",
+      "return_intermediates": false,
+      "num_iters": 10
+    },
+    "args": [
+      65,
+      4,
+      10
+    ],
+    "kind": "MHC",
+    "groups": 1,
+    "prediction": {
+      "status": "A5_vector_stage_template",
+      "predicted_us": 7.177607840504041,
+      "stages_us": {
+        "arrival": 0.20000502101210887,
+        "SIMD": 4.1503030303027195,
+        "MTE3": 0.3960852190367957,
+        "MTE2": 0.7510125499504281,
+        "SCALAR": 1.6733333333333007,
+        "other": 0.006868686868686868
+      },
+      "predicted_active_aiv": 64,
+      "waves": 2,
+      "scope": "cross-core instruction makespan"
+    },
+    "role": "validation",
+    "reference_us": 3.2581818181818183,
+    "predicted_us": 7.177607840504041,
+    "kernel": "entry_kernel_0",
+    "active_aic": 0,
+    "active_aiv": 33,
+    "source": "runs/v8vec/mhc_sinkhorn-0-10/profile/npusim_20261118095436_MHC/record/0008_entry_kernel_0.db",
+    "correctness": [
+      "correctness name=output count=1040 bad=0 max_abs_error=4.96274e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "003f4278fdfa0c281d57c90ec91c973e9f1558d7db2f27fbcfe0ea55106d81fd",
+    "batch_wall_s": 598.9491908799391,
+    "batch": "mhc_sinkhorn-0-10",
+    "max_core_rv_count": 1103,
+    "query_max_us": 12.07
+  },
+  {
+    "id": "mhc_sinkhorn_9",
+    "op": "mhc_sinkhorn",
+    "shape": [
+      128,
+      4
+    ],
+    "attrs": {
+      "dtype": "fp32",
+      "return_intermediates": false,
+      "num_iters": 20
+    },
+    "args": [
+      128,
+      4,
+      20
+    ],
+    "kind": "MHC",
+    "groups": 1,
+    "prediction": {
+      "status": "A5_vector_stage_template",
+      "predicted_us": 7.177607840504041,
+      "stages_us": {
+        "arrival": 0.20000502101210887,
+        "SIMD": 4.1503030303027195,
+        "MTE3": 0.3960852190367957,
+        "MTE2": 0.7510125499504281,
+        "SCALAR": 1.6733333333333007,
+        "other": 0.006868686868686868
+      },
+      "predicted_active_aiv": 64,
+      "waves": 2,
+      "scope": "cross-core instruction makespan"
+    },
+    "role": "validation",
+    "reference_us": 5.474545454545455,
+    "predicted_us": 7.177607840504041,
+    "kernel": "entry_kernel_0",
+    "active_aic": 0,
+    "active_aiv": 64,
+    "source": "runs/v8vec/mhc_sinkhorn-0-10/profile/npusim_20261118095436_MHC/record/0009_entry_kernel_0.db",
+    "correctness": [
+      "correctness name=output count=2048 bad=0 max_abs_error=4.97686e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "5ab92e17e491660ebd1b922e0708b17ad5d7da3bc28ff8a007bbe4862836c6ce",
+    "batch_wall_s": 598.9491908799391,
+    "batch": "mhc_sinkhorn-0-10",
+    "max_core_rv_count": 1903,
+    "query_max_us": 13.44
+  },
+  {
+    "id": "rmsnorm_0",
+    "op": "rmsnorm",
+    "shape": [
+      1,
+      256
+    ],
+    "attrs": {},
+    "args": [
+      1,
+      256,
+      0
+    ],
+    "kind": "NORM",
+    "groups": 2,
+    "prediction": {
+      "status": "A5_vector_stage_template",
+      "predicted_us": 3.2060530225252792,
+      "stages_us": {
+        "arrival": 0.023449072948348706,
+        "SIMD": 0.3858247194981892,
+        "MTE3": 0.01757091123470777,
+        "MTE2": 0.8339231051915033,
+        "SCALAR": 1.9400326884000052,
+        "other": 0.005252525252525252
+      },
+      "predicted_active_aiv": 1,
+      "waves": 1,
+      "scope": "cross-core instruction makespan"
+    },
+    "role": "validation",
+    "reference_us": 3.636969696969697,
+    "predicted_us": 3.2060530225252792,
+    "kernel": "entry_kernel_1388",
+    "active_aic": 0,
+    "active_aiv": 1,
+    "source": "runs/v8vec/rmsnorm-0-10/profile/npusim_20261118094931_NORM/record/0000_entry_kernel_1388.db",
+    "correctness": [
+      "correctness count=256 bad=0 max_abs_error=0.00189815 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness count=1 bad=0 max_abs_error=2.59363e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "6cde0b2a87b217c2520f21ab5c6dade89b0739a955137d2fe38ec607cb126080",
+    "batch_wall_s": 196.24290900002234,
+    "batch": "rmsnorm-0-10",
+    "max_core_rv_count": 119,
+    "query_max_us": 16.8
+  },
+  {
+    "id": "rmsnorm_1",
+    "op": "rmsnorm",
+    "shape": [
+      4,
+      512
+    ],
+    "attrs": {},
+    "args": [
+      4,
+      512,
+      0
+    ],
+    "kind": "NORM",
+    "groups": 2,
+    "prediction": {
+      "status": "A5_vector_stage_template",
+      "predicted_us": 3.3206768746758994,
+      "stages_us": {
+        "arrival": 0.05759358485994893,
+        "SIMD": 0.39216727878535496,
+        "MTE3": 0.08159678489727992,
+        "MTE2": 0.8427974065211475,
+        "SCALAR": 1.941269294359643,
+        "other": 0.005252525252525252
+      },
+      "predicted_active_aiv": 4,
+      "waves": 1,
+      "scope": "cross-core instruction makespan"
+    },
+    "role": "validation",
+    "reference_us": 4.292121212121212,
+    "predicted_us": 3.3206768746758994,
+    "kernel": "entry_kernel_1388",
+    "active_aic": 0,
+    "active_aiv": 4,
+    "source": "runs/v8vec/rmsnorm-0-10/profile/npusim_20261118094931_NORM/record/0001_entry_kernel_1388.db",
+    "correctness": [
+      "correctness count=2048 bad=0 max_abs_error=0.00151996 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness count=4 bad=0 max_abs_error=1.30929e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "20f2990c9529ab15f96e5d3b42247b80c07d0c9629db6e0e16da1092708316fd",
+    "batch_wall_s": 196.24290900002234,
+    "batch": "rmsnorm-0-10",
+    "max_core_rv_count": 175,
+    "query_max_us": 11.98
+  },
+  {
+    "id": "rmsnorm_2",
+    "op": "rmsnorm",
+    "shape": [
+      16,
+      1024
+    ],
+    "attrs": {},
+    "args": [
+      16,
+      1024,
+      0
+    ],
+    "kind": "NORM",
+    "groups": 2,
+    "prediction": {
+      "status": "A5_vector_stage_template",
+      "predicted_us": 3.6041736732330434,
+      "stages_us": {
+        "arrival": 0.09173809677154915,
+        "SIMD": 0.4048523973596866,
+        "MTE3": 0.2872817870351045,
+        "MTE2": 0.8713063605352593,
+        "SCALAR": 1.9437425062789189,
+        "other": 0.005252525252525252
+      },
+      "predicted_active_aiv": 16,
+      "waves": 1,
+      "scope": "cross-core instruction makespan"
+    },
+    "role": "validation",
+    "reference_us": 3.8145454545454545,
+    "predicted_us": 3.6041736732330434,
+    "kernel": "entry_kernel_1388",
+    "active_aic": 0,
+    "active_aiv": 16,
+    "source": "runs/v8vec/rmsnorm-0-10/profile/npusim_20261118094931_NORM/record/0002_entry_kernel_1388.db",
+    "correctness": [
+      "correctness count=16384 bad=0 max_abs_error=0.00188154 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness count=16 bad=0 max_abs_error=1.30929e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "76a3235d9f7843cbb9c63dff842958a58fd94a50a8a1fa00a91dca438c53c8ab",
+    "batch_wall_s": 196.24290900002234,
+    "batch": "rmsnorm-0-10",
+    "max_core_rv_count": 287,
+    "query_max_us": 13.09
+  },
+  {
+    "id": "rmsnorm_3",
+    "op": "rmsnorm",
+    "shape": [
+      9,
+      7168
+    ],
+    "attrs": {},
+    "args": [
+      9,
+      7168,
+      0
+    ],
+    "kind": "NORM",
+    "groups": 2,
+    "prediction": {
+      "status": "A5_vector_stage_template",
+      "predicted_us": 5.305670072893355,
+      "stages_us": {
+        "arrival": 0.0775668439336619,
+        "SIMD": 0.5570738202516657,
+        "MTE3": 1.6343405031337364,
+        "MTE2": 1.0580153310115379,
+        "SCALAR": 1.9734210493102273,
+        "other": 0.005252525252525252
+      },
+      "predicted_active_aiv": 9,
+      "waves": 1,
+      "scope": "cross-core instruction makespan"
+    },
+    "role": "validation",
+    "reference_us": 2.7903030303030305,
+    "predicted_us": 5.305670072893355,
+    "kernel": "entry_kernel_1388",
+    "active_aic": 0,
+    "active_aiv": 9,
+    "source": "runs/v8vec/rmsnorm-0-10/profile/npusim_20261118094931_NORM/record/0003_entry_kernel_1388.db",
+    "correctness": [
+      "correctness count=64512 bad=0 max_abs_error=0.00141852 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness count=9 bad=0 max_abs_error=1.93012e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "ee3bcb0f5e2c3256dda67621b905d767611c8c5c35bdabe6cf8033abc59d378a",
+    "batch_wall_s": 196.24290900002234,
+    "batch": "rmsnorm-0-10",
+    "max_core_rv_count": 1631,
+    "query_max_us": 13.4
+  },
+  {
+    "id": "rmsnorm_4",
+    "op": "rmsnorm",
+    "shape": [
+      36,
+      5120
+    ],
+    "attrs": {},
+    "args": [
+      36,
+      5120,
+      0
+    ],
+    "kind": "NORM",
+    "groups": 2,
+    "prediction": {
+      "status": "A5_vector_stage_template",
+      "predicted_us": 5.502753570003665,
+      "stages_us": {
+        "arrival": 0.11171135584526212,
+        "SIMD": 0.5063333459543393,
+        "MTE3": 1.8306968533763184,
+        "MTE2": 1.0852312879420951,
+        "SCALAR": 1.9635282016331244,
+        "other": 0.005252525252525252
+      },
+      "predicted_active_aiv": 36,
+      "waves": 1,
+      "scope": "cross-core instruction makespan"
+    },
+    "role": "validation",
+    "reference_us": 5.289090909090909,
+    "predicted_us": 5.502753570003665,
+    "kernel": "entry_kernel_1388",
+    "active_aic": 0,
+    "active_aiv": 36,
+    "source": "runs/v8vec/rmsnorm-0-10/profile/npusim_20261118094931_NORM/record/0004_entry_kernel_1388.db",
+    "correctness": [
+      "correctness count=184320 bad=0 max_abs_error=0.00162899 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness count=36 bad=0 max_abs_error=1.29276e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "77423bec5c8bec003cd1196d7eee5ee711f17fa4acab9c7225d362d7e5679e70",
+    "batch_wall_s": 196.24290900002234,
+    "batch": "rmsnorm-0-10",
+    "max_core_rv_count": 1183,
+    "query_max_us": 13.13
+  },
+  {
+    "id": "rmsnorm_5",
+    "op": "rmsnorm",
+    "shape": [
+      32,
+      4096
+    ],
+    "attrs": {},
+    "args": [
+      32,
+      4096,
+      0
+    ],
+    "kind": "NORM",
+    "groups": 2,
+    "prediction": {
+      "status": "A5_vector_stage_template",
+      "predicted_us": 4.9998121501502,
+      "stages_us": {
+        "arrival": 0.10881035272734926,
+        "SIMD": 0.48096310880567616,
+        "MTE3": 1.4181536208660679,
+        "MTE2": 1.0280507647040085,
+        "SCALAR": 1.958581777794573,
+        "other": 0.005252525252525252
+      },
+      "predicted_active_aiv": 32,
+      "waves": 1,
+      "scope": "cross-core instruction makespan"
+    },
+    "role": "validation",
+    "reference_us": 4.580606060606061,
+    "predicted_us": 4.9998121501502,
+    "kernel": "entry_kernel_1388",
+    "active_aic": 0,
+    "active_aiv": 32,
+    "source": "runs/v8vec/rmsnorm-0-10/profile/npusim_20261118094931_NORM/record/0005_entry_kernel_1388.db",
+    "correctness": [
+      "correctness count=131072 bad=0 max_abs_error=0.00146301 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness count=32 bad=0 max_abs_error=1.27822e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "6134ec3919870d7d2666dff18f50c23b2b91c30f5ad82da0a715ce44da990d92",
+    "batch_wall_s": 196.24290900002234,
+    "batch": "rmsnorm-0-10",
+    "max_core_rv_count": 959,
+    "query_max_us": 11.56
+  },
+  {
+    "id": "rmsnorm_6",
+    "op": "rmsnorm",
+    "shape": [
+      64,
+      2048
+    ],
+    "attrs": {},
+    "args": [
+      64,
+      2048,
+      0
+    ],
+    "kind": "NORM",
+    "groups": 2,
+    "prediction": {
+      "status": "A5_vector_stage_template",
+      "predicted_us": 4.3054180211660675,
+      "stages_us": {
+        "arrival": 0.12588260868314938,
+        "SIMD": 0.43022263450834974,
+        "MTE3": 0.846547922123873,
+        "MTE2": 0.9488234004806997,
+        "SCALAR": 1.9486889301174701,
+        "other": 0.005252525252525252
+      },
+      "predicted_active_aiv": 64,
+      "waves": 1,
+      "scope": "cross-core instruction makespan"
+    },
+    "role": "validation",
+    "reference_us": 4.3521212121212125,
+    "predicted_us": 4.3054180211660675,
+    "kernel": "entry_kernel_1388",
+    "active_aic": 0,
+    "active_aiv": 64,
+    "source": "runs/v8vec/rmsnorm-0-10/profile/npusim_20261118094931_NORM/record/0006_entry_kernel_1388.db",
+    "correctness": [
+      "correctness count=131072 bad=0 max_abs_error=0.00179999 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness count=64 bad=0 max_abs_error=1.44554e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "5e8f2515de36c1e5ba4536e2976508489a1488cac3af541feb6a2eadb8b33c8c",
+    "batch_wall_s": 196.24290900002234,
+    "batch": "rmsnorm-0-10",
+    "max_core_rv_count": 511,
+    "query_max_us": 11.59
+  },
+  {
+    "id": "rmsnorm_7",
+    "op": "rmsnorm",
+    "shape": [
+      65,
+      128
+    ],
+    "attrs": {},
+    "args": [
+      65,
+      128,
+      0
+    ],
+    "kind": "NORM",
+    "groups": 2,
+    "prediction": {
+      "status": "A5_vector_stage_template",
+      "predicted_us": 3.4089656862433624,
+      "stages_us": {
+        "arrival": 0.12588260868314938,
+        "SIMD": 0.3858247194981892,
+        "MTE3": 0.10581849026548412,
+        "MTE2": 0.8461546541440093,
+        "SCALAR": 1.9400326884000052,
+        "other": 0.005252525252525252
+      },
+      "predicted_active_aiv": 64,
+      "waves": 2,
+      "scope": "cross-core instruction makespan"
+    },
+    "role": "validation",
+    "reference_us": 3.0836363636363635,
+    "predicted_us": 3.4089656862433624,
+    "kernel": "entry_kernel_1388",
+    "active_aic": 0,
+    "active_aiv": 33,
+    "source": "runs/v8vec/rmsnorm-0-10/profile/npusim_20261118094931_NORM/record/0007_entry_kernel_1388.db",
+    "correctness": [
+      "correctness count=8320 bad=0 max_abs_error=0.00179598 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness count=65 bad=0 max_abs_error=1.29262e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "909586ef6746ca0c0d2fc87cc84162f2d7978c61febfffcc8764b64cbe3c91f9",
+    "batch_wall_s": 196.24290900002234,
+    "batch": "rmsnorm-0-10",
+    "max_core_rv_count": 111,
+    "query_max_us": 11.12
+  },
+  {
+    "id": "rmsnorm_8",
+    "op": "rmsnorm",
+    "shape": [
+      128,
+      1024
+    ],
+    "attrs": {},
+    "args": [
+      128,
+      1024,
+      0
+    ],
+    "kind": "NORM",
+    "groups": 2,
+    "prediction": {
+      "status": "A5_vector_stage_template",
+      "predicted_us": 4.3054180211660675,
+      "stages_us": {
+        "arrival": 0.12588260868314938,
+        "SIMD": 0.43022263450834974,
+        "MTE3": 0.846547922123873,
+        "MTE2": 0.9488234004806997,
+        "SCALAR": 1.9486889301174701,
+        "other": 0.005252525252525252
+      },
+      "predicted_active_aiv": 64,
+      "waves": 2,
+      "scope": "cross-core instruction makespan"
+    },
+    "role": "validation",
+    "reference_us": 3.08969696969697,
+    "predicted_us": 4.3054180211660675,
+    "kernel": "entry_kernel_1388",
+    "active_aic": 0,
+    "active_aiv": 64,
+    "source": "runs/v8vec/rmsnorm-0-10/profile/npusim_20261118094931_NORM/record/0008_entry_kernel_1388.db",
+    "correctness": [
+      "correctness count=131072 bad=0 max_abs_error=0.00188154 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness count=128 bad=0 max_abs_error=1.30929e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "55d7812a38b941f648929f50a10b89a3f04d2c860e3c83338c401eb76417808c",
+    "batch_wall_s": 196.24290900002234,
+    "batch": "rmsnorm-0-10",
+    "max_core_rv_count": 522,
+    "query_max_us": 11.72
+  },
+  {
+    "id": "rmsnorm_9",
+    "op": "rmsnorm",
+    "shape": [
+      1,
+      8192
+    ],
+    "attrs": {},
+    "args": [
+      1,
+      8192,
+      0
+    ],
+    "kind": "NORM",
+    "groups": 2,
+    "prediction": {
+      "status": "A5_vector_stage_template",
+      "predicted_us": 4.0612032525583635,
+      "stages_us": {
+        "arrival": 0.023449072948348706,
+        "SIMD": 0.5824440574003289,
+        "MTE3": 0.5622691595106486,
+        "MTE2": 0.909420964297733,
+        "SCALAR": 1.9783674731487786,
+        "other": 0.005252525252525252
+      },
+      "predicted_active_aiv": 1,
+      "waves": 1,
+      "scope": "cross-core instruction makespan"
+    },
+    "role": "validation",
+    "reference_us": 2.055151515151515,
+    "predicted_us": 4.0612032525583635,
+    "kernel": "entry_kernel_1388",
+    "active_aic": 0,
+    "active_aiv": 1,
+    "source": "runs/v8vec/rmsnorm-0-10/profile/npusim_20261118094931_NORM/record/0009_entry_kernel_1388.db",
+    "correctness": [
+      "correctness count=8192 bad=0 max_abs_error=0.00132673 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness count=1 bad=0 max_abs_error=1.46446e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "065c1e56fd0248e28307321a654f56ad03261a1a9fcec3abb75c5ee436cdbefb",
+    "batch_wall_s": 196.24290900002234,
+    "batch": "rmsnorm-0-10",
+    "max_core_rv_count": 1855,
+    "query_max_us": 12.65
+  }
+]

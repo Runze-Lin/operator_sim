@@ -1,0 +1,305 @@
+[
+  {
+    "id": "r7_cal_wide",
+    "op": "rmsnorm",
+    "shape": [
+      9,
+      5120
+    ],
+    "reference_us": 4.1884848484848485,
+    "correctness": [
+      "correctness count=46080 bad=0 max_abs_error=0.00157092 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness count=9 bad=0 max_abs_error=1.29276e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "kernel": "entry_kernel_1388",
+    "source": "runs/model-v7/r7_cal_wide/result.json",
+    "attrs": {},
+    "role": "development",
+    "predicted_us": 4.713360138415026,
+    "active_aiv": 9,
+    "active_aic": 0
+  },
+  {
+    "id": "r7_hold_batch4",
+    "op": "rmsnorm",
+    "shape": [
+      36,
+      7168
+    ],
+    "reference_us": 6.613939393939394,
+    "correctness": [
+      "correctness count=258048 bad=0 max_abs_error=0.00141852 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness count=36 bad=0 max_abs_error=1.93012e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "kernel": "entry_kernel_1388",
+    "source": "runs/model-v7/r7_hold_batch4/result.json",
+    "attrs": {},
+    "role": "development",
+    "predicted_us": 6.397163072352809,
+    "active_aiv": 36,
+    "active_aic": 0
+  },
+  {
+    "id": "reused_rmsnorm",
+    "op": "rmsnorm",
+    "shape": [
+      1,
+      128
+    ],
+    "reference_us": 3.453939393939394,
+    "correctness": [
+      "correctness count=128 bad=0 max_abs_error=0.00135139 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness count=1 bad=0 max_abs_error=9.23429e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "kernel": "entry_kernel_1388",
+    "source": "docs/extensions/smoke-950dt.json",
+    "attrs": {},
+    "role": "development",
+    "predicted_us": 3.1922602768795847,
+    "active_aiv": 1,
+    "active_aic": 0
+  },
+  {
+    "id": "mhc_post_v7_1",
+    "op": "mhc_post",
+    "shape": [
+      1,
+      4,
+      128
+    ],
+    "reference_us": 4.6460606060606064,
+    "correctness": [
+      "correctness name=output count=512 bad=0 max_abs_error=0 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "kernel": "entry_kernel_5",
+    "source": "runs/model-v7/mhc_post_v7_1/result.json",
+    "attrs": {
+      "dtype": "bf16",
+      "has_h_res": true
+    },
+    "role": "development",
+    "predicted_us": 4.051349612348854,
+    "active_aiv": 1,
+    "active_aic": 0
+  },
+  {
+    "id": "mhc_post_v7_2",
+    "op": "mhc_post",
+    "shape": [
+      32,
+      4,
+      128
+    ],
+    "reference_us": 3.4084848484848487,
+    "correctness": [
+      "correctness name=output count=16384 bad=0 max_abs_error=0 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "kernel": "entry_kernel_6",
+    "source": "runs/model-v7/mhc_post_v7_2/result.json",
+    "attrs": {
+      "dtype": "bf16",
+      "has_h_res": true
+    },
+    "role": "development",
+    "predicted_us": 4.417021331158223,
+    "active_aiv": 32,
+    "active_aic": 0
+  },
+  {
+    "id": "mhc_post_v7_3",
+    "op": "mhc_post",
+    "shape": [
+      9,
+      4,
+      128
+    ],
+    "reference_us": 4.613333333333333,
+    "correctness": [
+      "correctness name=output count=4608 bad=0 max_abs_error=0 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "kernel": "entry_kernel_5",
+    "source": "runs/model-v7/mhc_post_v7_3/result.json",
+    "attrs": {
+      "dtype": "bf16",
+      "has_h_res": true
+    },
+    "role": "development",
+    "predicted_us": 4.2827692086712625,
+    "active_aiv": 9,
+    "active_aic": 0
+  },
+  {
+    "id": "mhc_sinkhorn_v7_1",
+    "op": "mhc_sinkhorn",
+    "shape": [
+      1,
+      4
+    ],
+    "reference_us": 6.296363636363636,
+    "correctness": [
+      "correctness name=output count=16 bad=0 max_abs_error=1.15814e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "kernel": "entry_kernel_0",
+    "source": "runs/model-v7/mhc_sinkhorn_v7_1/result.json",
+    "attrs": {
+      "dtype": "fp32",
+      "num_iters": 20,
+      "return_intermediates": false
+    },
+    "role": "development",
+    "predicted_us": 6.605485513759837,
+    "active_aiv": 1,
+    "active_aic": 0
+  },
+  {
+    "id": "mhc_sinkhorn_v7_2",
+    "op": "mhc_sinkhorn",
+    "shape": [
+      64,
+      4
+    ],
+    "reference_us": 7.597575757575758,
+    "correctness": [
+      "correctness name=output count=1024 bad=0 max_abs_error=4.97686e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "kernel": "entry_kernel_0",
+    "source": "runs/model-v7/mhc_sinkhorn_v7_2/result.json",
+    "attrs": {
+      "dtype": "fp32",
+      "num_iters": 20,
+      "return_intermediates": false
+    },
+    "role": "development",
+    "predicted_us": 6.973155728323764,
+    "active_aiv": 64,
+    "active_aic": 0
+  },
+  {
+    "id": "mhc_sinkhorn_v7_3",
+    "op": "mhc_sinkhorn",
+    "shape": [
+      17,
+      4
+    ],
+    "reference_us": 6.532121212121212,
+    "correctness": [
+      "correctness name=output count=272 bad=0 max_abs_error=4.78737e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "kernel": "entry_kernel_0",
+    "source": "runs/model-v7/mhc_sinkhorn_v7_3/result.json",
+    "attrs": {
+      "dtype": "fp32",
+      "num_iters": 20,
+      "return_intermediates": false
+    },
+    "role": "development",
+    "predicted_us": 6.847419363975979,
+    "active_aiv": 17,
+    "active_aic": 0
+  },
+  {
+    "id": "kda_recurrent_b1_s1_h1_k128_v128",
+    "op": "kda_recurrent",
+    "shape": [
+      1,
+      1,
+      1,
+      1,
+      128,
+      128
+    ],
+    "reference_us": 15.219393939393939,
+    "correctness": [
+      "correctness name=attn_out count=128 bad=0 max_abs_error=1.886e-07 atol=2e-06 rtol=0.015625 hard_limit=1",
+      "correctness name=final_state count=16384 bad=0 max_abs_error=1.16933e-10 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=initial_state_unchanged count=16384 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "kernel": "entry_kernel_0",
+    "source": "runs/model-v7/kda_recurrent_b1_s1_h1_k128_v128/result.json",
+    "attrs": {
+      "layout": "BSND",
+      "dtype": "BF16",
+      "gate_dtype": "FP32",
+      "state_dtype": "FP32",
+      "state_v_first": false,
+      "use_gate_in_kernel": false,
+      "chunk_size": null,
+      "output_final_state": true,
+      "export_gk": false
+    },
+    "role": "development",
+    "predicted_us": 15.071572871573778,
+    "active_aiv": 1,
+    "active_aic": 0
+  },
+  {
+    "id": "kda_recurrent_b1_s2_h1_k128_v128",
+    "op": "kda_recurrent",
+    "shape": [
+      1,
+      2,
+      1,
+      1,
+      128,
+      128
+    ],
+    "reference_us": 18.46727272727273,
+    "correctness": [
+      "correctness name=attn_out count=256 bad=0 max_abs_error=1.886e-07 atol=2e-06 rtol=0.015625 hard_limit=1",
+      "correctness name=final_state count=16384 bad=0 max_abs_error=2.23318e-10 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=initial_state_unchanged count=16384 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "kernel": "entry_kernel_0",
+    "source": "runs/model-v7/kda_recurrent_b1_s2_h1_k128_v128/result.json",
+    "attrs": {
+      "layout": "BSND",
+      "dtype": "BF16",
+      "gate_dtype": "FP32",
+      "state_dtype": "FP32",
+      "state_v_first": false,
+      "use_gate_in_kernel": false,
+      "chunk_size": null,
+      "output_final_state": true,
+      "export_gk": false
+    },
+    "role": "development",
+    "predicted_us": 18.54698412698361,
+    "active_aiv": 1,
+    "active_aic": 0
+  },
+  {
+    "id": "kda_recurrent_b1_s4_h1_k128_v128",
+    "op": "kda_recurrent",
+    "shape": [
+      1,
+      4,
+      1,
+      1,
+      128,
+      128
+    ],
+    "reference_us": 25.42969696969697,
+    "correctness": [
+      "correctness name=attn_out count=512 bad=0 max_abs_error=1.886e-07 atol=2e-06 rtol=0.015625 hard_limit=1",
+      "correctness name=final_state count=16384 bad=0 max_abs_error=3.33501e-10 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=initial_state_unchanged count=16384 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "kernel": "entry_kernel_0",
+    "source": "runs/model-v7/kda_recurrent_b1_s4_h1_k128_v128/result.json",
+    "attrs": {
+      "layout": "BSND",
+      "dtype": "BF16",
+      "gate_dtype": "FP32",
+      "state_dtype": "FP32",
+      "state_v_first": false,
+      "use_gate_in_kernel": false,
+      "chunk_size": null,
+      "output_final_state": true,
+      "export_gk": false
+    },
+    "role": "development",
+    "predicted_us": 25.497806637803283,
+    "active_aiv": 1,
+    "active_aic": 0
+  }
+]

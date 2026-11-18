@@ -1,0 +1,6483 @@
+[
+  {
+    "op": "lightning_indexer",
+    "shape": [
+      1,
+      1,
+      512,
+      8,
+      128
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "layout": "BSND",
+      "sparse_count": 512,
+      "sparse_mode": 3,
+      "return_values": false
+    },
+    "role": "development",
+    "predicted_us": 5.771212121212121,
+    "reference_us": 6.093333333333334,
+    "api": "aclnnLightningIndexer",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_31b1b",
+        "launch_id": 0,
+        "reference_us": 6.093333333333334,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 840,
+        "max_core_mmad": 4,
+        "critical_pipeline_us": {
+          "SCALAR": 4.6012121212121215,
+          "SIMD": 1.0006060606060605,
+          "MTE2": 0.9854545454545455,
+          "MTE3": 0.7333333333333333
+        }
+      }
+    ],
+    "kernel": "entry_kernel_31b1b",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=topk_set count=512 bad=0 exact_integer_set=true all_indices_checked=true"
+    ],
+    "source": "runs/model-v7/lightning_indexer_v7_1/result.json",
+    "db_sha256": [
+      "ca20856c04c930a67b3ba5c79541ec1bb4116a11a13f2a4c7c6ae650762a0889"
+    ],
+    "query_us_max": 275.87,
+    "query_us_median": 252.39999999999998,
+    "stages_us": {
+      "lightning_indexer": 5.771212121212121
+    }
+  },
+  {
+    "op": "lightning_indexer",
+    "shape": [
+      1,
+      1,
+      1024,
+      8,
+      128
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "layout": "BSND",
+      "sparse_count": 512,
+      "sparse_mode": 3,
+      "return_values": false
+    },
+    "role": "development",
+    "predicted_us": 6.755151515151514,
+    "reference_us": 6.741212121212121,
+    "api": "aclnnLightningIndexer",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_31b1b",
+        "launch_id": 0,
+        "reference_us": 6.741212121212121,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 1402,
+        "max_core_mmad": 8,
+        "critical_pipeline_us": {
+          "SCALAR": 4.785454545454545,
+          "SIMD": 1.3806060606060606,
+          "MTE2": 1.716969696969697,
+          "MTE3": 1.147878787878788
+        }
+      }
+    ],
+    "kernel": "entry_kernel_31b1b",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=topk_set count=512 bad=0 exact_integer_set=true all_indices_checked=true"
+    ],
+    "source": "runs/model-v7/lightning_indexer_v7_2/result.json",
+    "db_sha256": [
+      "eb58dd4e7557a9313c424f75c497517f7b8680c7886ffdbacb7e2f1d75ef98cc"
+    ],
+    "query_us_max": 276.79,
+    "query_us_median": 251.31,
+    "stages_us": {
+      "lightning_indexer": 6.755151515151514
+    }
+  },
+  {
+    "op": "lightning_indexer",
+    "shape": [
+      1,
+      2,
+      768,
+      8,
+      128
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "layout": "BSND",
+      "sparse_count": 512,
+      "sparse_mode": 3,
+      "return_values": false
+    },
+    "role": "development",
+    "predicted_us": 6.68151515151515,
+    "reference_us": 6.365454545454545,
+    "api": "aclnnLightningIndexer",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_31b1b",
+        "launch_id": 0,
+        "reference_us": 6.365454545454545,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 1129,
+        "max_core_mmad": 6,
+        "critical_pipeline_us": {
+          "SCALAR": 4.6460606060606064,
+          "SIMD": 1.1836363636363636,
+          "MTE2": 1.1690909090909092,
+          "MTE3": 1.0551515151515152
+        }
+      }
+    ],
+    "kernel": "entry_kernel_31b1b",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=topk_set count=1024 bad=0 exact_integer_set=true all_indices_checked=true"
+    ],
+    "source": "runs/model-v7/lightning_indexer_v7_3/result.json",
+    "db_sha256": [
+      "7c872260a8de395dde1a4cdd7db2535ee1b3a0d6059ad8bd1cd607d8c3d7f920"
+    ],
+    "query_us_max": 273.41,
+    "query_us_median": 251.235,
+    "stages_us": {
+      "lightning_indexer": 6.68151515151515
+    }
+  },
+  {
+    "op": "mhc_pre_sinkhorn",
+    "shape": [
+      1,
+      4,
+      4096
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "num_iters": 20,
+      "need_backward": false
+    },
+    "role": "development",
+    "predicted_us": 9.939393939393941,
+    "reference_us": 9.700606060606061,
+    "api": "aclnnMhcPreSinkhorn",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_3e8",
+        "launch_id": 0,
+        "reference_us": 9.700606060606061,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 2418,
+        "max_core_mmad": 2,
+        "critical_pipeline_us": {
+          "SCALAR": 3.904848484848485,
+          "SIMD": 2.1272727272727274,
+          "MTE2": 1.6066666666666667,
+          "MTE3": 0.4406060606060606
+        }
+      }
+    ],
+    "kernel": "entry_kernel_3e8",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=hin count=4096 bad=0 max_abs_error=0.00180695 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=4 bad=0 max_abs_error=7.47497e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=16 bad=0 max_abs_error=1.00993e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "source": "runs/model-v7/mhc_pre_sinkhorn_v7_1_r3/result.json",
+    "db_sha256": [
+      "fef139c03eefc1f27f703c353a89914302f574767d17a2a2e2a1bc0be5e8fd40"
+    ],
+    "query_us_max": 208.39,
+    "query_us_median": 186.055,
+    "stages_us": {
+      "mhc_pre_sinkhorn": 9.939393939393941
+    }
+  },
+  {
+    "op": "mhc_pre_sinkhorn",
+    "shape": [
+      4,
+      4,
+      4096
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "num_iters": 20,
+      "need_backward": false
+    },
+    "role": "development",
+    "predicted_us": 9.939393939393941,
+    "reference_us": 9.93939393939394,
+    "api": "aclnnMhcPreSinkhorn",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_3e8",
+        "launch_id": 0,
+        "reference_us": 9.93939393939394,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 2659,
+        "max_core_mmad": 2,
+        "critical_pipeline_us": {
+          "SCALAR": 4.096969696969697,
+          "SIMD": 1.8515151515151516,
+          "MTE2": 2.5424242424242425,
+          "MTE3": 0.8751515151515151
+        }
+      }
+    ],
+    "kernel": "entry_kernel_3e8",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=hin count=16384 bad=0 max_abs_error=0.00275226 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=16 bad=0 max_abs_error=1.39029e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=64 bad=0 max_abs_error=1.00993e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "source": "runs/model-v7/mhc_pre_sinkhorn_v7_2_r3/result.json",
+    "db_sha256": [
+      "75824a4e69e0ce9911607e0788d024ec5af913d17d9892b6e29e3d6b9bcad0a9"
+    ],
+    "query_us_max": 210.95,
+    "query_us_median": 186.06,
+    "stages_us": {
+      "mhc_pre_sinkhorn": 9.939393939393941
+    }
+  },
+  {
+    "op": "mhc_pre_sinkhorn",
+    "shape": [
+      2,
+      4,
+      4096
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "num_iters": 20,
+      "need_backward": false
+    },
+    "role": "development",
+    "predicted_us": 9.939393939393941,
+    "reference_us": 10.648484848484848,
+    "api": "aclnnMhcPreSinkhorn",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_3e8",
+        "launch_id": 0,
+        "reference_us": 10.648484848484848,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 2605,
+        "max_core_mmad": 2,
+        "critical_pipeline_us": {
+          "SCALAR": 4.117575757575757,
+          "SIMD": 1.8412121212121213,
+          "MTE2": 2.9915151515151517,
+          "MTE3": 1.8375757575757576
+        }
+      }
+    ],
+    "kernel": "entry_kernel_3e8",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=hin count=8192 bad=0 max_abs_error=0.00186385 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=8 bad=0 max_abs_error=7.47497e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=32 bad=0 max_abs_error=1.00993e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "source": "runs/model-v7/mhc_pre_sinkhorn_v7_3/result.json",
+    "db_sha256": [
+      "22de1f91593a01931f9414c7d269dd1b276e949a92c54e4e0b916dbe2ad2e62f"
+    ],
+    "query_us_max": 189.1,
+    "query_us_median": 185.54500000000002,
+    "stages_us": {
+      "mhc_pre_sinkhorn": 9.939393939393941
+    }
+  },
+  {
+    "op": "mhc_pre",
+    "shape": [
+      1,
+      4,
+      128
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "alpha_count": 3,
+      "has_gamma": false,
+      "return_intermediates": true
+    },
+    "role": "development",
+    "predicted_us": 8.31212121212121,
+    "reference_us": 8.270909090909091,
+    "api": "aclnnMhcPre",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_2",
+        "launch_id": 0,
+        "reference_us": 8.270909090909091,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 339,
+        "max_core_mmad": 8,
+        "critical_pipeline_us": {
+          "SCALAR": 4.696363636363636,
+          "MTE2": 1.7127272727272727,
+          "SIMD": 1.0957575757575757,
+          "MTE3": 0.8981818181818182
+        }
+      }
+    ],
+    "kernel": "entry_kernel_2",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=hin count=128 bad=0 max_abs_error=0.000922135 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=4 bad=0 max_abs_error=3.73175e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=16 bad=0 max_abs_error=4.16239e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=1 bad=0 max_abs_error=1.93959e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=24 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=4 bad=0 max_abs_error=2.90029e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "source": "runs/model-v7/mhc_pre_v7_1/result.json",
+    "db_sha256": [
+      "f70940d8b9a8dad30671a613ca216b0688d8bc3f91e75f55b203a5efb3b540d9"
+    ],
+    "query_us_max": 178.82,
+    "query_us_median": 173.51999999999998,
+    "stages_us": {
+      "mhc_pre": 8.31212121212121
+    }
+  },
+  {
+    "op": "mhc_pre",
+    "shape": [
+      8,
+      4,
+      128
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "alpha_count": 3,
+      "has_gamma": false,
+      "return_intermediates": true
+    },
+    "role": "development",
+    "predicted_us": 8.31212121212121,
+    "reference_us": 8.542424242424243,
+    "api": "aclnnMhcPre",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_2",
+        "launch_id": 0,
+        "reference_us": 8.542424242424243,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 579,
+        "max_core_mmad": 8,
+        "critical_pipeline_us": {
+          "SCALAR": 4.412121212121212,
+          "MTE2": 1.8466666666666667,
+          "SIMD": 1.0375757575757576,
+          "MTE3": 1.6654545454545455
+        }
+      }
+    ],
+    "kernel": "entry_kernel_2",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=hin count=1024 bad=0 max_abs_error=0.000929246 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=32 bad=0 max_abs_error=9.30212e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=128 bad=0 max_abs_error=4.16239e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=8 bad=0 max_abs_error=2.33421e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=192 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=32 bad=0 max_abs_error=5.93675e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "source": "runs/model-v7/mhc_pre_v7_2/result.json",
+    "db_sha256": [
+      "95d15be2e3a3b6c64b030c2fd1bb5a8c610bf693c09fc261e825683c1f35cdda"
+    ],
+    "query_us_max": 198.91,
+    "query_us_median": 176.235,
+    "stages_us": {
+      "mhc_pre": 8.31212121212121
+    }
+  },
+  {
+    "op": "mhc_pre",
+    "shape": [
+      3,
+      4,
+      128
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "alpha_count": 3,
+      "has_gamma": false,
+      "return_intermediates": true
+    },
+    "role": "development",
+    "predicted_us": 8.31212121212121,
+    "reference_us": 8.312121212121212,
+    "api": "aclnnMhcPre",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_2",
+        "launch_id": 0,
+        "reference_us": 8.312121212121212,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 509,
+        "max_core_mmad": 8,
+        "critical_pipeline_us": {
+          "SCALAR": 4.258787878787879,
+          "MTE2": 1.876969696969697,
+          "SIMD": 1.112121212121212,
+          "MTE3": 1.2387878787878788
+        }
+      }
+    ],
+    "kernel": "entry_kernel_2",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=hin count=384 bad=0 max_abs_error=0.000922135 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=12 bad=0 max_abs_error=8.43412e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=48 bad=0 max_abs_error=4.16239e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=3 bad=0 max_abs_error=2.33421e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=72 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=12 bad=0 max_abs_error=3.73303e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "source": "runs/model-v7/mhc_pre_v7_3/result.json",
+    "db_sha256": [
+      "104a2c5b00e22434cfba75f5ccd099fd3a0fa9fd0ef42ba2afd9bd9a196fb674"
+    ],
+    "query_us_max": 182.2,
+    "query_us_median": 173.75,
+    "stages_us": {
+      "mhc_pre": 8.31212121212121
+    }
+  },
+  {
+    "op": "mhc",
+    "shape": [
+      1,
+      4,
+      128
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "implementation": "split",
+      "num_iters": 20
+    },
+    "role": "development",
+    "predicted_us": 16.70181818181818,
+    "reference_us": 15.97030303030303,
+    "api": "aclnnMhcPre + aclnnMhcSinkhorn + aclnnMhcPost",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_2",
+        "launch_id": 0,
+        "reference_us": 8.078181818181818,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 339,
+        "max_core_mmad": 8,
+        "critical_pipeline_us": {
+          "SCALAR": 4.59030303030303,
+          "MTE2": 1.9218181818181819,
+          "SIMD": 1.0909090909090908,
+          "MTE3": 0.8909090909090909
+        }
+      },
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 1,
+        "reference_us": 5.222424242424243,
+        "block_dim": 1,
+        "active_aic": 0,
+        "active_aiv": 1,
+        "max_core_rv_count": 1903,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 3.421818181818182,
+          "SIMD": 3.978787878787879,
+          "MTE2": 0.21333333333333335,
+          "MTE3": 0.23575757575757575
+        }
+      },
+      {
+        "kernel": "entry_kernel_5",
+        "launch_id": 2,
+        "reference_us": 2.66969696969697,
+        "block_dim": 1,
+        "active_aic": 0,
+        "active_aiv": 1,
+        "max_core_rv_count": 396,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 1.6127272727272728,
+          "SIMD": 1.018181818181818,
+          "MTE2": 0.3333333333333333,
+          "MTE3": 0.4381818181818182
+        }
+      }
+    ],
+    "kernel": "entry_kernel_2+entry_kernel_0+entry_kernel_5",
+    "active_aic": [
+      32,
+      0,
+      0
+    ],
+    "active_aiv": [
+      64,
+      1,
+      1
+    ],
+    "correctness": [
+      "correctness name=hin count=128 bad=0 max_abs_error=0.000922135 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=4 bad=0 max_abs_error=3.73175e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=16 bad=0 max_abs_error=4.16239e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=1 bad=0 max_abs_error=1.93959e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=24 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=4 bad=0 max_abs_error=2.90029e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=16 bad=0 max_abs_error=4.6103e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=512 bad=0 max_abs_error=0.00188338 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=512 bad=0 max_abs_error=0.00188338 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/model-v7/mhc_v7_1/result.json",
+    "db_sha256": [
+      "a4e242bd67ba1b41f0643e59d3a000e6216cfe9615196eb9821f80cf8ff7dd78",
+      "7311488d4b3593ed4554020dd26452cd9c636d5ae7d795236dde3f70e0dc4ffb",
+      "ed4f0db1b65dc67e60563a82ee79f40454e3755d348adcb24c9dc53e3d5d50ab"
+    ],
+    "query_us_max": 383.95,
+    "query_us_median": 358.54,
+    "stages_us": {
+      "mhc_pre": 8.31212121212121,
+      "split_sink": 5.349090909090909,
+      "split_post": 3.04060606060606
+    }
+  },
+  {
+    "op": "mhc",
+    "shape": [
+      8,
+      4,
+      128
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "implementation": "split",
+      "num_iters": 20
+    },
+    "role": "development",
+    "predicted_us": 16.70181818181818,
+    "reference_us": 16.79090909090909,
+    "api": "aclnnMhcPre + aclnnMhcSinkhorn + aclnnMhcPost",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_2",
+        "launch_id": 0,
+        "reference_us": 8.255757575757576,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 579,
+        "max_core_mmad": 8,
+        "critical_pipeline_us": {
+          "SCALAR": 4.420606060606061,
+          "MTE2": 1.7387878787878788,
+          "SIMD": 0.9715151515151516,
+          "MTE3": 1.5418181818181818
+        }
+      },
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 1,
+        "reference_us": 5.449696969696969,
+        "block_dim": 8,
+        "active_aic": 0,
+        "active_aiv": 8,
+        "max_core_rv_count": 1903,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 3.4472727272727273,
+          "SIMD": 3.666060606060606,
+          "MTE2": 0.5127272727272727,
+          "MTE3": 0.35515151515151516
+        }
+      },
+      {
+        "kernel": "entry_kernel_5",
+        "launch_id": 2,
+        "reference_us": 3.0854545454545454,
+        "block_dim": 8,
+        "active_aic": 0,
+        "active_aiv": 8,
+        "max_core_rv_count": 396,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 1.96,
+          "SIMD": 1.2993939393939393,
+          "MTE2": 0.5757575757575758,
+          "MTE3": 0.5236363636363637
+        }
+      }
+    ],
+    "kernel": "entry_kernel_2+entry_kernel_0+entry_kernel_5",
+    "active_aic": [
+      32,
+      0,
+      0
+    ],
+    "active_aiv": [
+      64,
+      8,
+      8
+    ],
+    "correctness": [
+      "correctness name=hin count=1024 bad=0 max_abs_error=0.000929246 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=32 bad=0 max_abs_error=9.30212e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=128 bad=0 max_abs_error=4.16239e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=8 bad=0 max_abs_error=2.33421e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=192 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=32 bad=0 max_abs_error=5.93675e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=128 bad=0 max_abs_error=7.51358e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=4096 bad=0 max_abs_error=0.00194787 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=4096 bad=0 max_abs_error=0.00194788 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/model-v7/mhc_v7_2/result.json",
+    "db_sha256": [
+      "4649cd37ef3d5880805753c83dc4617c57909db6ce519cf2750533fb60c78b5b",
+      "eaf381f6073982620ed8a83472b49dd84bd925ca1aaddaffe467071ac8a58610",
+      "ca684e6aeb75fd45dbb3aaff637820d9f5fb2aa44dd70b5a8502d00a29395884"
+    ],
+    "query_us_max": 381.34,
+    "query_us_median": 357.455,
+    "stages_us": {
+      "mhc_pre": 8.31212121212121,
+      "split_sink": 5.349090909090909,
+      "split_post": 3.04060606060606
+    }
+  },
+  {
+    "op": "mhc",
+    "shape": [
+      3,
+      4,
+      128
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "implementation": "split",
+      "num_iters": 20
+    },
+    "role": "development",
+    "predicted_us": 16.70181818181818,
+    "reference_us": 16.834545454545452,
+    "api": "aclnnMhcPre + aclnnMhcSinkhorn + aclnnMhcPost",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_2",
+        "launch_id": 0,
+        "reference_us": 8.444848484848485,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 509,
+        "max_core_mmad": 8,
+        "critical_pipeline_us": {
+          "SCALAR": 4.718181818181818,
+          "MTE2": 1.5793939393939394,
+          "SIMD": 1.1012121212121213,
+          "MTE3": 1.1157575757575757
+        }
+      },
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 1,
+        "reference_us": 5.349090909090909,
+        "block_dim": 3,
+        "active_aic": 0,
+        "active_aiv": 3,
+        "max_core_rv_count": 1903,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 3.48,
+          "SIMD": 3.953333333333333,
+          "MTE2": 0.21393939393939393,
+          "MTE3": 0.3284848484848485
+        }
+      },
+      {
+        "kernel": "entry_kernel_5",
+        "launch_id": 2,
+        "reference_us": 3.0406060606060605,
+        "block_dim": 3,
+        "active_aic": 0,
+        "active_aiv": 3,
+        "max_core_rv_count": 396,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 1.876969696969697,
+          "SIMD": 1.3175757575757576,
+          "MTE2": 0.5357575757575758,
+          "MTE3": 0.5278787878787878
+        }
+      }
+    ],
+    "kernel": "entry_kernel_2+entry_kernel_0+entry_kernel_5",
+    "active_aic": [
+      32,
+      0,
+      0
+    ],
+    "active_aiv": [
+      64,
+      3,
+      3
+    ],
+    "correctness": [
+      "correctness name=hin count=384 bad=0 max_abs_error=0.000922135 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=12 bad=0 max_abs_error=8.43412e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=48 bad=0 max_abs_error=4.16239e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=3 bad=0 max_abs_error=2.33421e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=72 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=12 bad=0 max_abs_error=3.73303e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=48 bad=0 max_abs_error=7.51358e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=1536 bad=0 max_abs_error=0.00194585 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=1536 bad=0 max_abs_error=0.00194589 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/model-v7/mhc_v7_3/result.json",
+    "db_sha256": [
+      "3ab64c13fbd18d57bf8533349519d3315edce432ea0081c283da16404fedebd6",
+      "ddf0b82c1c4c69375defb1381bd7dd68dc376fc5787cc2906fb4a93b024f3abc",
+      "82b479a18ad88a28ab1a8e60f79367836ae2e1eac01ad1509d45c92b979b8bb7"
+    ],
+    "query_us_max": 365.84,
+    "query_us_median": 359.04499999999996,
+    "stages_us": {
+      "mhc_pre": 8.31212121212121,
+      "split_sink": 5.349090909090909,
+      "split_post": 3.04060606060606
+    }
+  },
+  {
+    "op": "moe_ffn",
+    "shape": [
+      2,
+      64,
+      64,
+      1
+    ],
+    "attrs": {
+      "expert_counts": [
+        2
+      ]
+    },
+    "role": "development",
+    "predicted_us": 10.681818181818183,
+    "reference_us": 10.252727272727274,
+    "api": "aclnnGroupedMatmulSwigluQuantV2 + aclnnGroupedMatmulV5",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 0,
+        "reference_us": 7.004848484848485,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 147,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 6.636969696969697,
+          "MTE1": 0.07272727272727272,
+          "MTE2": 1.16,
+          "CUBE": 0.09090909090909091,
+          "FIXP": 0.06909090909090909
+        }
+      },
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 1,
+        "reference_us": 3.247878787878788,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 0,
+        "max_core_rv_count": 0,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 2.5357575757575757,
+          "MTE1": 0.03151515151515152,
+          "MTE2": 0.3563636363636364,
+          "CUBE": 0.06,
+          "FIXP": 0.37272727272727274
+        }
+      }
+    ],
+    "kernel": "entry_kernel_0+entry_kernel_0",
+    "active_aic": [
+      32,
+      32
+    ],
+    "active_aiv": [
+      64,
+      0
+    ],
+    "correctness": [
+      "correctness name=gmm1_output count=128 bad=0 max_abs_error=0 atol=0.0625 rtol=0.25 hard_limit=4",
+      "correctness name=gmm1_mx_scale count=4 bad=0 max_abs_error=0 atol=0 rtol=0 hard_limit=0",
+      "correctness name=gmm2_output count=128 bad=0 max_abs_error=0.00269413 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/model-v7/moe_cal_e1_chain_r3/result.json",
+    "db_sha256": [
+      "13cae4827228ce8c11cd8f6b4fe2b9eee916c15cbb22d95865b33451420ee8ed",
+      "5d807ce297eff93f43f04714a68c28528ef4b52e68c14247f45aa92a50fa787d"
+    ],
+    "query_us_max": 298.01,
+    "query_us_median": 277.57500000000005,
+    "stages_us": {
+      "grouped_matmul_swiglu_quant_v2": 7.272121212121213,
+      "gmm2": 3.40969696969697
+    }
+  },
+  {
+    "op": "grouped_matmul_swiglu_quant_v2",
+    "shape": [
+      2,
+      64,
+      64,
+      1
+    ],
+    "attrs": {
+      "expert_counts": [
+        2
+      ]
+    },
+    "role": "development",
+    "predicted_us": 7.272121212121213,
+    "reference_us": 7.004848484848485,
+    "api": "aclnnGroupedMatmulSwigluQuantV2",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 0,
+        "reference_us": 7.004848484848485,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 147,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 6.636969696969697,
+          "MTE1": 0.07272727272727272,
+          "MTE2": 1.16,
+          "CUBE": 0.09090909090909091,
+          "FIXP": 0.06909090909090909
+        }
+      }
+    ],
+    "kernel": "entry_kernel_0",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=gmm1_output count=128 bad=0 max_abs_error=0 atol=0.0625 rtol=0.25 hard_limit=4",
+      "correctness name=gmm1_mx_scale count=4 bad=0 max_abs_error=0 atol=0 rtol=0 hard_limit=0",
+      "correctness name=gmm2_output count=128 bad=0 max_abs_error=0.00269413 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/model-v7/moe_cal_e1_chain_r3/result.json",
+    "db_sha256": [
+      "13cae4827228ce8c11cd8f6b4fe2b9eee916c15cbb22d95865b33451420ee8ed"
+    ],
+    "query_us_max": 207.3,
+    "query_us_median": 198.235,
+    "stages_us": {
+      "grouped_matmul_swiglu_quant_v2": 7.272121212121213
+    }
+  },
+  {
+    "op": "gmm2",
+    "shape": [
+      2,
+      64,
+      64,
+      1
+    ],
+    "attrs": {
+      "expert_counts": [
+        2
+      ]
+    },
+    "role": "development",
+    "predicted_us": 3.40969696969697,
+    "reference_us": 3.247878787878788,
+    "api": "aclnnGroupedMatmulV5",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 1,
+        "reference_us": 3.247878787878788,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 0,
+        "max_core_rv_count": 0,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 2.5357575757575757,
+          "MTE1": 0.03151515151515152,
+          "MTE2": 0.3563636363636364,
+          "CUBE": 0.06,
+          "FIXP": 0.37272727272727274
+        }
+      }
+    ],
+    "kernel": "entry_kernel_0",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      0
+    ],
+    "correctness": [
+      "correctness name=gmm1_output count=128 bad=0 max_abs_error=0 atol=0.0625 rtol=0.25 hard_limit=4",
+      "correctness name=gmm1_mx_scale count=4 bad=0 max_abs_error=0 atol=0 rtol=0 hard_limit=0",
+      "correctness name=gmm2_output count=128 bad=0 max_abs_error=0.00269413 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/model-v7/moe_cal_e1_chain_r3/result.json",
+    "db_sha256": [
+      "5d807ce297eff93f43f04714a68c28528ef4b52e68c14247f45aa92a50fa787d"
+    ],
+    "query_us_max": 89.71,
+    "query_us_median": 80.89,
+    "stages_us": {
+      "gmm2": 3.40969696969697
+    }
+  },
+  {
+    "op": "moe_ffn",
+    "shape": [
+      2,
+      64,
+      128,
+      1
+    ],
+    "attrs": {
+      "expert_counts": [
+        2
+      ]
+    },
+    "role": "development",
+    "predicted_us": 10.967272727272729,
+    "reference_us": 10.825454545454546,
+    "api": "aclnnGroupedMatmulSwigluQuantV2 + aclnnGroupedMatmulV5",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 0,
+        "reference_us": 7.28,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 189,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 6.876363636363636,
+          "MTE1": 0.09696969696969697,
+          "MTE2": 1.0793939393939394,
+          "CUBE": 0.1006060606060606,
+          "FIXP": 0.07878787878787878
+        }
+      },
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 1,
+        "reference_us": 3.5454545454545454,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 0,
+        "max_core_rv_count": 0,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 2.62969696969697,
+          "MTE1": 0.040606060606060604,
+          "MTE2": 0.5515151515151515,
+          "CUBE": 0.07090909090909091,
+          "FIXP": 0.36727272727272725
+        }
+      }
+    ],
+    "kernel": "entry_kernel_0+entry_kernel_0",
+    "active_aic": [
+      32,
+      32
+    ],
+    "active_aiv": [
+      64,
+      0
+    ],
+    "correctness": [
+      "correctness name=gmm1_output count=256 bad=0 max_abs_error=0 atol=0.0625 rtol=0.25 hard_limit=4",
+      "correctness name=gmm1_mx_scale count=8 bad=0 max_abs_error=0 atol=0 rtol=0 hard_limit=0",
+      "correctness name=gmm2_output count=128 bad=0 max_abs_error=0.00259399 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/model-v7/moe_cal_e1_f128_chain_r3/result.json",
+    "db_sha256": [
+      "848bc7c3d94e59b8fb492957a0b8e0b5338236da00a0221cbb27c5aec8709641",
+      "383d7fa64f66192763b636d9a4945b2288f9ba4d0aa1a1f458deb81414401011"
+    ],
+    "query_us_max": 287.02,
+    "query_us_median": 277.87,
+    "stages_us": {
+      "grouped_matmul_swiglu_quant_v2": 7.272121212121213,
+      "gmm2": 3.6951515151515153
+    }
+  },
+  {
+    "op": "grouped_matmul_swiglu_quant_v2",
+    "shape": [
+      2,
+      64,
+      128,
+      1
+    ],
+    "attrs": {
+      "expert_counts": [
+        2
+      ]
+    },
+    "role": "development",
+    "predicted_us": 7.272121212121213,
+    "reference_us": 7.28,
+    "api": "aclnnGroupedMatmulSwigluQuantV2",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 0,
+        "reference_us": 7.28,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 189,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 6.876363636363636,
+          "MTE1": 0.09696969696969697,
+          "MTE2": 1.0793939393939394,
+          "CUBE": 0.1006060606060606,
+          "FIXP": 0.07878787878787878
+        }
+      }
+    ],
+    "kernel": "entry_kernel_0",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=gmm1_output count=256 bad=0 max_abs_error=0 atol=0.0625 rtol=0.25 hard_limit=4",
+      "correctness name=gmm1_mx_scale count=8 bad=0 max_abs_error=0 atol=0 rtol=0 hard_limit=0",
+      "correctness name=gmm2_output count=128 bad=0 max_abs_error=0.00259399 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/model-v7/moe_cal_e1_f128_chain_r3/result.json",
+    "db_sha256": [
+      "848bc7c3d94e59b8fb492957a0b8e0b5338236da00a0221cbb27c5aec8709641"
+    ],
+    "query_us_max": 223.31,
+    "query_us_median": 198.565,
+    "stages_us": {
+      "grouped_matmul_swiglu_quant_v2": 7.272121212121213
+    }
+  },
+  {
+    "op": "gmm2",
+    "shape": [
+      2,
+      64,
+      128,
+      1
+    ],
+    "attrs": {
+      "expert_counts": [
+        2
+      ]
+    },
+    "role": "development",
+    "predicted_us": 3.6951515151515153,
+    "reference_us": 3.5454545454545454,
+    "api": "aclnnGroupedMatmulV5",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 1,
+        "reference_us": 3.5454545454545454,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 0,
+        "max_core_rv_count": 0,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 2.62969696969697,
+          "MTE1": 0.040606060606060604,
+          "MTE2": 0.5515151515151515,
+          "CUBE": 0.07090909090909091,
+          "FIXP": 0.36727272727272725
+        }
+      }
+    ],
+    "kernel": "entry_kernel_0",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      0
+    ],
+    "correctness": [
+      "correctness name=gmm1_output count=256 bad=0 max_abs_error=0 atol=0.0625 rtol=0.25 hard_limit=4",
+      "correctness name=gmm1_mx_scale count=8 bad=0 max_abs_error=0 atol=0 rtol=0 hard_limit=0",
+      "correctness name=gmm2_output count=128 bad=0 max_abs_error=0.00259399 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/model-v7/moe_cal_e1_f128_chain_r3/result.json",
+    "db_sha256": [
+      "383d7fa64f66192763b636d9a4945b2288f9ba4d0aa1a1f458deb81414401011"
+    ],
+    "query_us_max": 80.67,
+    "query_us_median": 79.905,
+    "stages_us": {
+      "gmm2": 3.6951515151515153
+    }
+  },
+  {
+    "op": "moe_ffn",
+    "shape": [
+      4,
+      128,
+      64,
+      2
+    ],
+    "attrs": {
+      "expert_counts": [
+        1,
+        3
+      ]
+    },
+    "role": "development",
+    "predicted_us": 11.26757575757576,
+    "reference_us": 11.07030303030303,
+    "api": "aclnnGroupedMatmulSwigluQuantV2 + aclnnGroupedMatmulV5",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 0,
+        "reference_us": 7.363636363636363,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 196,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 6.75939393939394,
+          "MTE1": 0.10303030303030303,
+          "MTE2": 1.1157575757575757,
+          "CUBE": 0.1006060606060606,
+          "FIXP": 0.07151515151515152
+        }
+      },
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 1,
+        "reference_us": 3.7066666666666666,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 0,
+        "max_core_rv_count": 0,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 2.7387878787878788,
+          "MTE1": 0.04606060606060606,
+          "MTE2": 0.5472727272727272,
+          "CUBE": 0.06121212121212121,
+          "FIXP": 0.3709090909090909
+        }
+      }
+    ],
+    "kernel": "entry_kernel_0+entry_kernel_0",
+    "active_aic": [
+      32,
+      32
+    ],
+    "active_aiv": [
+      64,
+      0
+    ],
+    "correctness": [
+      "correctness name=gmm1_output count=256 bad=0 max_abs_error=0 atol=0.0625 rtol=0.25 hard_limit=4",
+      "correctness name=gmm1_mx_scale count=8 bad=0 max_abs_error=0 atol=0 rtol=0 hard_limit=0",
+      "correctness name=gmm2_output count=512 bad=0 max_abs_error=0.0141296 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/model-v7/moe_cal_e2_skew_chain_r3/result.json",
+    "db_sha256": [
+      "fcdcf6d69b847ae6019407d15e9e1918df60b5a1fbbdbbd24ec187561c391fe3",
+      "321369f9d63fb4f4c631a17d19127a4350646168885426cce15098f11a61a718"
+    ],
+    "query_us_max": 289.32,
+    "query_us_median": 277.395,
+    "stages_us": {
+      "grouped_matmul_swiglu_quant_v2": 7.857878787878789,
+      "gmm2": 3.40969696969697
+    }
+  },
+  {
+    "op": "grouped_matmul_swiglu_quant_v2",
+    "shape": [
+      4,
+      128,
+      64,
+      2
+    ],
+    "attrs": {
+      "expert_counts": [
+        1,
+        3
+      ]
+    },
+    "role": "development",
+    "predicted_us": 7.857878787878789,
+    "reference_us": 7.363636363636363,
+    "api": "aclnnGroupedMatmulSwigluQuantV2",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 0,
+        "reference_us": 7.363636363636363,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 196,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 6.75939393939394,
+          "MTE1": 0.10303030303030303,
+          "MTE2": 1.1157575757575757,
+          "CUBE": 0.1006060606060606,
+          "FIXP": 0.07151515151515152
+        }
+      }
+    ],
+    "kernel": "entry_kernel_0",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=gmm1_output count=256 bad=0 max_abs_error=0 atol=0.0625 rtol=0.25 hard_limit=4",
+      "correctness name=gmm1_mx_scale count=8 bad=0 max_abs_error=0 atol=0 rtol=0 hard_limit=0",
+      "correctness name=gmm2_output count=512 bad=0 max_abs_error=0.0141296 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/model-v7/moe_cal_e2_skew_chain_r3/result.json",
+    "db_sha256": [
+      "fcdcf6d69b847ae6019407d15e9e1918df60b5a1fbbdbbd24ec187561c391fe3"
+    ],
+    "query_us_max": 223.64,
+    "query_us_median": 199.135,
+    "stages_us": {
+      "grouped_matmul_swiglu_quant_v2": 7.857878787878789
+    }
+  },
+  {
+    "op": "gmm2",
+    "shape": [
+      4,
+      128,
+      64,
+      2
+    ],
+    "attrs": {
+      "expert_counts": [
+        1,
+        3
+      ]
+    },
+    "role": "development",
+    "predicted_us": 3.40969696969697,
+    "reference_us": 3.7066666666666666,
+    "api": "aclnnGroupedMatmulV5",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 1,
+        "reference_us": 3.7066666666666666,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 0,
+        "max_core_rv_count": 0,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 2.7387878787878788,
+          "MTE1": 0.04606060606060606,
+          "MTE2": 0.5472727272727272,
+          "CUBE": 0.06121212121212121,
+          "FIXP": 0.3709090909090909
+        }
+      }
+    ],
+    "kernel": "entry_kernel_0",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      0
+    ],
+    "correctness": [
+      "correctness name=gmm1_output count=256 bad=0 max_abs_error=0 atol=0.0625 rtol=0.25 hard_limit=4",
+      "correctness name=gmm1_mx_scale count=8 bad=0 max_abs_error=0 atol=0 rtol=0 hard_limit=0",
+      "correctness name=gmm2_output count=512 bad=0 max_abs_error=0.0141296 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/model-v7/moe_cal_e2_skew_chain_r3/result.json",
+    "db_sha256": [
+      "321369f9d63fb4f4c631a17d19127a4350646168885426cce15098f11a61a718"
+    ],
+    "query_us_max": 81.1,
+    "query_us_median": 80.42,
+    "stages_us": {
+      "gmm2": 3.40969696969697
+    }
+  },
+  {
+    "op": "moe_ffn",
+    "shape": [
+      6,
+      128,
+      128,
+      2
+    ],
+    "attrs": {
+      "expert_counts": [
+        1,
+        5
+      ]
+    },
+    "role": "development",
+    "predicted_us": 11.553030303030305,
+    "reference_us": 11.086666666666666,
+    "api": "aclnnGroupedMatmulSwigluQuantV2 + aclnnGroupedMatmulV5",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 0,
+        "reference_us": 7.38969696969697,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 402,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 6.849090909090909,
+          "MTE1": 0.15151515151515152,
+          "MTE2": 1.2545454545454546,
+          "CUBE": 0.12,
+          "FIXP": 0.08363636363636363
+        }
+      },
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 1,
+        "reference_us": 3.696969696969697,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 0,
+        "max_core_rv_count": 0,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 2.6684848484848485,
+          "MTE1": 0.040606060606060604,
+          "MTE2": 0.6436363636363637,
+          "CUBE": 0.06909090909090909,
+          "FIXP": 0.3793939393939394
+        }
+      }
+    ],
+    "kernel": "entry_kernel_0+entry_kernel_0",
+    "active_aic": [
+      32,
+      32
+    ],
+    "active_aiv": [
+      64,
+      0
+    ],
+    "correctness": [
+      "correctness name=gmm1_output count=768 bad=0 max_abs_error=0 atol=0.0625 rtol=0.25 hard_limit=4",
+      "correctness name=gmm1_mx_scale count=24 bad=0 max_abs_error=0 atol=0 rtol=0 hard_limit=0",
+      "correctness name=gmm2_output count=768 bad=0 max_abs_error=0.0139265 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/model-v7/moe_holdout_e2_wide_chain_r3/result.json",
+    "db_sha256": [
+      "b2fafc5ae69674e1049cc63d05b661d35ab0e719f520ba76e6767f85cde7a49c",
+      "31855cc022da94341c25e55e25e8f19b94e1836702a1d7471302e4bb5842d480"
+    ],
+    "query_us_max": 310.57,
+    "query_us_median": 276.99,
+    "stages_us": {
+      "grouped_matmul_swiglu_quant_v2": 7.857878787878789,
+      "gmm2": 3.6951515151515153
+    }
+  },
+  {
+    "op": "grouped_matmul_swiglu_quant_v2",
+    "shape": [
+      6,
+      128,
+      128,
+      2
+    ],
+    "attrs": {
+      "expert_counts": [
+        1,
+        5
+      ]
+    },
+    "role": "development",
+    "predicted_us": 7.857878787878789,
+    "reference_us": 7.38969696969697,
+    "api": "aclnnGroupedMatmulSwigluQuantV2",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 0,
+        "reference_us": 7.38969696969697,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 402,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 6.849090909090909,
+          "MTE1": 0.15151515151515152,
+          "MTE2": 1.2545454545454546,
+          "CUBE": 0.12,
+          "FIXP": 0.08363636363636363
+        }
+      }
+    ],
+    "kernel": "entry_kernel_0",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=gmm1_output count=768 bad=0 max_abs_error=0 atol=0.0625 rtol=0.25 hard_limit=4",
+      "correctness name=gmm1_mx_scale count=24 bad=0 max_abs_error=0 atol=0 rtol=0 hard_limit=0",
+      "correctness name=gmm2_output count=768 bad=0 max_abs_error=0.0139265 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/model-v7/moe_holdout_e2_wide_chain_r3/result.json",
+    "db_sha256": [
+      "b2fafc5ae69674e1049cc63d05b661d35ab0e719f520ba76e6767f85cde7a49c"
+    ],
+    "query_us_max": 219.37,
+    "query_us_median": 200.20999999999998,
+    "stages_us": {
+      "grouped_matmul_swiglu_quant_v2": 7.857878787878789
+    }
+  },
+  {
+    "op": "gmm2",
+    "shape": [
+      6,
+      128,
+      128,
+      2
+    ],
+    "attrs": {
+      "expert_counts": [
+        1,
+        5
+      ]
+    },
+    "role": "development",
+    "predicted_us": 3.6951515151515153,
+    "reference_us": 3.696969696969697,
+    "api": "aclnnGroupedMatmulV5",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 1,
+        "reference_us": 3.696969696969697,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 0,
+        "max_core_rv_count": 0,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 2.6684848484848485,
+          "MTE1": 0.040606060606060604,
+          "MTE2": 0.6436363636363637,
+          "CUBE": 0.06909090909090909,
+          "FIXP": 0.3793939393939394
+        }
+      }
+    ],
+    "kernel": "entry_kernel_0",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      0
+    ],
+    "correctness": [
+      "correctness name=gmm1_output count=768 bad=0 max_abs_error=0 atol=0.0625 rtol=0.25 hard_limit=4",
+      "correctness name=gmm1_mx_scale count=24 bad=0 max_abs_error=0 atol=0 rtol=0 hard_limit=0",
+      "correctness name=gmm2_output count=768 bad=0 max_abs_error=0.0139265 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/model-v7/moe_holdout_e2_wide_chain_r3/result.json",
+    "db_sha256": [
+      "31855cc022da94341c25e55e25e8f19b94e1836702a1d7471302e4bb5842d480"
+    ],
+    "query_us_max": 81.31,
+    "query_us_median": 80.91,
+    "stages_us": {
+      "gmm2": 3.6951515151515153
+    }
+  },
+  {
+    "op": "lightning_indexer",
+    "shape": [
+      1,
+      1,
+      640,
+      8,
+      128
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "layout": "BSND",
+      "sparse_count": 512,
+      "sparse_mode": 3,
+      "return_values": false
+    },
+    "role": "validation",
+    "predicted_us": 6.6516666666666655,
+    "reference_us": 6.2,
+    "api": "aclnnLightningIndexer",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_31b1b",
+        "launch_id": 0,
+        "reference_us": 6.2,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 1028,
+        "max_core_mmad": 5,
+        "critical_pipeline_us": {
+          "SCALAR": 4.5636363636363635,
+          "SIMD": 1.1181818181818182,
+          "MTE2": 1.0048484848484849,
+          "MTE3": 0.8739393939393939
+        }
+      }
+    ],
+    "kernel": "entry_kernel_31b1b",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=topk_set count=512 bad=0 exact_integer_set=true all_indices_checked=true"
+    ],
+    "source": "runs/v8cv/lightning_indexer-01/result.json",
+    "db_sha256": [
+      "0f81c2ee520782bbe412e1c0f16678d8e8c9b0e7d57040d43569d358f2df04da"
+    ],
+    "query_us_max": 299.77,
+    "query_us_median": 249.215,
+    "stages_us": {
+      "lightning_indexer": 6.6516666666666655
+    }
+  },
+  {
+    "op": "lightning_indexer",
+    "shape": [
+      1,
+      1,
+      896,
+      8,
+      128
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "layout": "BSND",
+      "sparse_count": 512,
+      "sparse_mode": 3,
+      "return_values": false
+    },
+    "role": "validation",
+    "predicted_us": 6.711363636363635,
+    "reference_us": 6.4387878787878785,
+    "api": "aclnnLightningIndexer",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_31b1b",
+        "launch_id": 0,
+        "reference_us": 6.4387878787878785,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 1309,
+        "max_core_mmad": 7,
+        "critical_pipeline_us": {
+          "SCALAR": 4.751515151515152,
+          "SIMD": 1.3109090909090908,
+          "MTE2": 1.4218181818181819,
+          "MTE3": 0.9575757575757575
+        }
+      }
+    ],
+    "kernel": "entry_kernel_31b1b",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=topk_set count=512 bad=0 exact_integer_set=true all_indices_checked=true"
+    ],
+    "source": "runs/v8cv/lightning_indexer-02/result.json",
+    "db_sha256": [
+      "43ade50750c2e888cea5359567cd02c051dbe825ff48ff325a1e262d010dfbfb"
+    ],
+    "query_us_max": 276.5,
+    "query_us_median": 249.83499999999998,
+    "stages_us": {
+      "lightning_indexer": 6.711363636363635
+    }
+  },
+  {
+    "op": "lightning_indexer",
+    "shape": [
+      1,
+      2,
+      1024,
+      8,
+      128
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "layout": "BSND",
+      "sparse_count": 512,
+      "sparse_mode": 3,
+      "return_values": false
+    },
+    "role": "validation",
+    "predicted_us": 6.755151515151514,
+    "reference_us": 6.516363636363637,
+    "api": "aclnnLightningIndexer",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_31b1b",
+        "launch_id": 0,
+        "reference_us": 6.516363636363637,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 1410,
+        "max_core_mmad": 8,
+        "critical_pipeline_us": {
+          "SCALAR": 4.515757575757576,
+          "SIMD": 1.3490909090909091,
+          "MTE2": 1.5393939393939393,
+          "MTE3": 1.0678787878787879
+        }
+      }
+    ],
+    "kernel": "entry_kernel_31b1b",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=topk_set count=1024 bad=0 exact_integer_set=true all_indices_checked=true"
+    ],
+    "source": "runs/v8cv/lightning_indexer-03/result.json",
+    "db_sha256": [
+      "23975979e2ea4de4261ceb3bd3e087e7ad7cbe2bbd2372e6fa0dafd2c64af2e8"
+    ],
+    "query_us_max": 276.16,
+    "query_us_median": 250.55,
+    "stages_us": {
+      "lightning_indexer": 6.755151515151514
+    }
+  },
+  {
+    "op": "lightning_indexer",
+    "shape": [
+      1,
+      4,
+      1024,
+      8,
+      128
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "layout": "BSND",
+      "sparse_count": 512,
+      "sparse_mode": 3,
+      "return_values": false
+    },
+    "role": "validation",
+    "predicted_us": 6.755151515151514,
+    "reference_us": 8.043030303030303,
+    "api": "aclnnLightningIndexer",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_31b1b",
+        "launch_id": 0,
+        "reference_us": 8.043030303030303,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 2820,
+        "max_core_mmad": 8,
+        "critical_pipeline_us": {
+          "SCALAR": 4.996969696969697,
+          "SIMD": 2.6515151515151514,
+          "MTE2": 1.7357575757575758,
+          "MTE3": 1.3872727272727272
+        }
+      }
+    ],
+    "kernel": "entry_kernel_31b1b",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=topk_set count=2048 bad=0 exact_integer_set=true all_indices_checked=true"
+    ],
+    "source": "runs/v8cv/lightning_indexer-04/result.json",
+    "db_sha256": [
+      "a5ed89bdcfdd83edf85fe138b854db7afb2a68a402e35c7125593575d934cc4c"
+    ],
+    "query_us_max": 271.82,
+    "query_us_median": 249.885,
+    "stages_us": {
+      "lightning_indexer": 6.755151515151514
+    }
+  },
+  {
+    "op": "lightning_indexer",
+    "shape": [
+      1,
+      8,
+      1536,
+      8,
+      128
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "layout": "BSND",
+      "sparse_count": 512,
+      "sparse_mode": 3,
+      "return_values": false
+    },
+    "role": "validation",
+    "predicted_us": 8.396060606060606,
+    "reference_us": 8.862424242424243,
+    "api": "aclnnLightningIndexer",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_31b1b",
+        "launch_id": 0,
+        "reference_us": 8.862424242424243,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 3944,
+        "max_core_mmad": 12,
+        "critical_pipeline_us": {
+          "SCALAR": 5.093333333333334,
+          "SIMD": 3.4484848484848483,
+          "MTE2": 2.212121212121212,
+          "MTE3": 2.398181818181818
+        }
+      }
+    ],
+    "kernel": "entry_kernel_31b1b",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=topk_set count=4096 bad=0 exact_integer_set=true all_indices_checked=true"
+    ],
+    "source": "runs/v8cv/lightning_indexer-05/result.json",
+    "db_sha256": [
+      "4ddeba5f4d7ef1b5598ebbfa94c7156ec63f3c7d008bbc469ea3c884f7f0a2e6"
+    ],
+    "query_us_max": 272.68,
+    "query_us_median": 249.645,
+    "stages_us": {
+      "lightning_indexer": 8.396060606060606
+    }
+  },
+  {
+    "op": "lightning_indexer",
+    "shape": [
+      1,
+      1,
+      2048,
+      8,
+      128
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "layout": "BSND",
+      "sparse_count": 512,
+      "sparse_mode": 3,
+      "return_values": false
+    },
+    "role": "validation",
+    "predicted_us": 10.050909090909089,
+    "reference_us": 8.613939393939393,
+    "api": "aclnnLightningIndexer",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_31b1b",
+        "launch_id": 0,
+        "reference_us": 8.613939393939393,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 2526,
+        "max_core_mmad": 16,
+        "critical_pipeline_us": {
+          "SCALAR": 5.626666666666667,
+          "SIMD": 2.2315151515151515,
+          "MTE2": 2.46,
+          "MTE3": 1.9696969696969697
+        }
+      }
+    ],
+    "kernel": "entry_kernel_31b1b",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=topk_set count=512 bad=0 exact_integer_set=true all_indices_checked=true"
+    ],
+    "source": "runs/v8cv/lightning_indexer-06/result.json",
+    "db_sha256": [
+      "2614b20e46211b84715744b20bc87daae366b0db1ad212d469de9c63259f6683"
+    ],
+    "query_us_max": 268.66,
+    "query_us_median": 250.13,
+    "stages_us": {
+      "lightning_indexer": 10.050909090909089
+    }
+  },
+  {
+    "op": "lightning_indexer",
+    "shape": [
+      1,
+      2,
+      3072,
+      8,
+      128
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "layout": "BSND",
+      "sparse_count": 512,
+      "sparse_mode": 3,
+      "return_values": false
+    },
+    "role": "validation",
+    "predicted_us": 13.36060606060606,
+    "reference_us": 11.101212121212122,
+    "api": "aclnnLightningIndexer",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_31b1b",
+        "launch_id": 0,
+        "reference_us": 11.101212121212122,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 3658,
+        "max_core_mmad": 24,
+        "critical_pipeline_us": {
+          "SCALAR": 6.118787878787879,
+          "SIMD": 3.2236363636363636,
+          "MTE2": 2.793939393939394,
+          "MTE3": 3.016969696969697
+        }
+      }
+    ],
+    "kernel": "entry_kernel_31b1b",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=topk_set count=1024 bad=0 exact_integer_set=true all_indices_checked=true"
+    ],
+    "source": "runs/v8cv/lightning_indexer-07/result.json",
+    "db_sha256": [
+      "e849f0f7a216b658117347ac45eb57671314310626521930c75635a3c6b1d14b"
+    ],
+    "query_us_max": 271.2,
+    "query_us_median": 250.8,
+    "stages_us": {
+      "lightning_indexer": 13.36060606060606
+    }
+  },
+  {
+    "op": "lightning_indexer",
+    "shape": [
+      1,
+      4,
+      4096,
+      8,
+      128
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "layout": "BSND",
+      "sparse_count": 512,
+      "sparse_mode": 3,
+      "return_values": false
+    },
+    "role": "validation",
+    "predicted_us": 16.670303030303028,
+    "reference_us": 15.673939393939394,
+    "api": "aclnnLightningIndexer",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_31b1b",
+        "launch_id": 0,
+        "reference_us": 15.673939393939394,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 9564,
+        "max_core_mmad": 32,
+        "critical_pipeline_us": {
+          "SCALAR": 7.590909090909091,
+          "SIMD": 7.501212121212121,
+          "MTE2": 5.02,
+          "MTE3": 4.956363636363636
+        }
+      }
+    ],
+    "kernel": "entry_kernel_31b1b",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=topk_set count=2048 bad=0 exact_integer_set=true all_indices_checked=true"
+    ],
+    "source": "runs/v8cv/lightning_indexer-08/result.json",
+    "db_sha256": [
+      "32233930737e3ff1ae2f09c69b1a10a3e94287d9a4e1ce34e0fe2801a32f71eb"
+    ],
+    "query_us_max": 273.39,
+    "query_us_median": 252.76999999999998,
+    "stages_us": {
+      "lightning_indexer": 16.670303030303028
+    }
+  },
+  {
+    "op": "lightning_indexer",
+    "shape": [
+      1,
+      9,
+      4096,
+      8,
+      128
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "layout": "BSND",
+      "sparse_count": 512,
+      "sparse_mode": 3,
+      "return_values": false
+    },
+    "role": "validation",
+    "predicted_us": 16.670303030303028,
+    "reference_us": 15.333939393939394,
+    "api": "aclnnLightningIndexer",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_31b1b",
+        "launch_id": 0,
+        "reference_us": 15.333939393939394,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 9564,
+        "max_core_mmad": 32,
+        "critical_pipeline_us": {
+          "SCALAR": 7.499393939393939,
+          "SIMD": 7.488484848484848,
+          "MTE2": 3.7812121212121212,
+          "MTE3": 4.955757575757576
+        }
+      }
+    ],
+    "kernel": "entry_kernel_31b1b",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=topk_set count=4608 bad=0 exact_integer_set=true all_indices_checked=true"
+    ],
+    "source": "runs/v8cv/lightning_indexer-09/result.json",
+    "db_sha256": [
+      "44276025984adc3fd052a8bc26afc1baa266330b1344f385356141fc157bd8ec"
+    ],
+    "query_us_max": 279.62,
+    "query_us_median": 251.57999999999998,
+    "stages_us": {
+      "lightning_indexer": 16.670303030303028
+    }
+  },
+  {
+    "op": "lightning_indexer",
+    "shape": [
+      1,
+      1,
+      8192,
+      8,
+      128
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "layout": "BSND",
+      "sparse_count": 512,
+      "sparse_mode": 3,
+      "return_values": false
+    },
+    "role": "validation",
+    "predicted_us": 29.909090909090907,
+    "reference_us": 22.70909090909091,
+    "api": "aclnnLightningIndexer",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_31b1b",
+        "launch_id": 0,
+        "reference_us": 22.70909090909091,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 9270,
+        "max_core_mmad": 64,
+        "critical_pipeline_us": {
+          "SCALAR": 10.132121212121213,
+          "SIMD": 7.40060606060606,
+          "MTE2": 8.165454545454546,
+          "MTE3": 7.90060606060606
+        }
+      }
+    ],
+    "kernel": "entry_kernel_31b1b",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=topk_set count=512 bad=0 exact_integer_set=true all_indices_checked=true"
+    ],
+    "source": "runs/v8cv/lightning_indexer-10/result.json",
+    "db_sha256": [
+      "f09ed67f4921b575474a5ab7f12ed86032bedcccb21d1ba282b930a95b96073e"
+    ],
+    "query_us_max": 274.61,
+    "query_us_median": 251.14,
+    "stages_us": {
+      "lightning_indexer": 29.909090909090907
+    }
+  },
+  {
+    "op": "mhc_pre_sinkhorn",
+    "shape": [
+      3,
+      4,
+      4096
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "num_iters": 20,
+      "need_backward": false
+    },
+    "role": "validation",
+    "predicted_us": 9.939393939393941,
+    "reference_us": 10.373333333333333,
+    "api": "aclnnMhcPreSinkhorn",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_3e8",
+        "launch_id": 0,
+        "reference_us": 10.373333333333333,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 2659,
+        "max_core_mmad": 2,
+        "critical_pipeline_us": {
+          "SCALAR": 4.013939393939394,
+          "SIMD": 1.84,
+          "MTE2": 2.9072727272727272,
+          "MTE3": 1.5157575757575759
+        }
+      }
+    ],
+    "kernel": "entry_kernel_3e8",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=hin count=12288 bad=0 max_abs_error=0.00275226 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=12 bad=0 max_abs_error=1.39029e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=48 bad=0 max_abs_error=1.00993e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "source": "runs/v8cv/mhc_pre_sinkhorn-01/result.json",
+    "db_sha256": [
+      "e4daeca8ba3b3cd561464d5683a8bda8854f84eeb90702264041ee8cbffcd47c"
+    ],
+    "query_us_max": 207.18,
+    "query_us_median": 185.625,
+    "stages_us": {
+      "mhc_pre_sinkhorn": 9.939393939393941
+    }
+  },
+  {
+    "op": "mhc_pre_sinkhorn",
+    "shape": [
+      5,
+      4,
+      4096
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "num_iters": 20,
+      "need_backward": false
+    },
+    "role": "validation",
+    "predicted_us": 9.939393939393941,
+    "reference_us": 9.76060606060606,
+    "api": "aclnnMhcPreSinkhorn",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_3e8",
+        "launch_id": 0,
+        "reference_us": 9.76060606060606,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 2713,
+        "max_core_mmad": 2,
+        "critical_pipeline_us": {
+          "SCALAR": 4.470909090909091,
+          "SIMD": 1.8515151515151516,
+          "MTE2": 2.5721212121212123,
+          "MTE3": 1.2036363636363636
+        }
+      }
+    ],
+    "kernel": "entry_kernel_3e8",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=hin count=20480 bad=0 max_abs_error=0.00275226 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=20 bad=0 max_abs_error=1.39029e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=80 bad=0 max_abs_error=1.17007e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "source": "runs/v8cv/mhc_pre_sinkhorn-02/result.json",
+    "db_sha256": [
+      "6828918c1307e2d45e53031bb5ccac2fb42b4b75a3706f7872cb1afe2bfc206c"
+    ],
+    "query_us_max": 204.81,
+    "query_us_median": 184.955,
+    "stages_us": {
+      "mhc_pre_sinkhorn": 9.939393939393941
+    }
+  },
+  {
+    "op": "mhc_pre_sinkhorn",
+    "shape": [
+      6,
+      4,
+      4096
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "num_iters": 20,
+      "need_backward": false
+    },
+    "role": "validation",
+    "predicted_us": 9.939393939393941,
+    "reference_us": 9.785454545454545,
+    "api": "aclnnMhcPreSinkhorn",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_3e8",
+        "launch_id": 0,
+        "reference_us": 9.785454545454545,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 2713,
+        "max_core_mmad": 2,
+        "critical_pipeline_us": {
+          "SCALAR": 4.108484848484848,
+          "SIMD": 1.8545454545454545,
+          "MTE2": 3.4157575757575755,
+          "MTE3": 1.1624242424242424
+        }
+      }
+    ],
+    "kernel": "entry_kernel_3e8",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=hin count=24576 bad=0 max_abs_error=0.00275226 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=24 bad=0 max_abs_error=1.39029e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=96 bad=0 max_abs_error=1.17007e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "source": "runs/v8cv/mhc_pre_sinkhorn-03/result.json",
+    "db_sha256": [
+      "8836ec7683e4813b206240ae2250fcd2aad4084c3cfc4a85613daec8432b5d0c"
+    ],
+    "query_us_max": 204.48,
+    "query_us_median": 184.88,
+    "stages_us": {
+      "mhc_pre_sinkhorn": 9.939393939393941
+    }
+  },
+  {
+    "op": "mhc_pre_sinkhorn",
+    "shape": [
+      7,
+      4,
+      4096
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "num_iters": 20,
+      "need_backward": false
+    },
+    "role": "validation",
+    "predicted_us": 9.939393939393941,
+    "reference_us": 11.517575757575758,
+    "api": "aclnnMhcPreSinkhorn",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_3e8",
+        "launch_id": 0,
+        "reference_us": 11.517575757575758,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 2767,
+        "max_core_mmad": 2,
+        "critical_pipeline_us": {
+          "SCALAR": 4.220606060606061,
+          "SIMD": 1.8533333333333333,
+          "MTE2": 3.139393939393939,
+          "MTE3": 1.48
+        }
+      }
+    ],
+    "kernel": "entry_kernel_3e8",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=hin count=28672 bad=0 max_abs_error=0.00275226 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=28 bad=0 max_abs_error=1.39029e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=112 bad=0 max_abs_error=1.17007e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "source": "runs/v8cv/mhc_pre_sinkhorn-04/result.json",
+    "db_sha256": [
+      "f072385821cd80592c221c79c619224f3cb29bc1712369ad8ef3087343d22a78"
+    ],
+    "query_us_max": 211.48,
+    "query_us_median": 186.72,
+    "stages_us": {
+      "mhc_pre_sinkhorn": 9.939393939393941
+    }
+  },
+  {
+    "op": "mhc_pre_sinkhorn",
+    "shape": [
+      8,
+      4,
+      4096
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "num_iters": 20,
+      "need_backward": false
+    },
+    "role": "validation",
+    "predicted_us": 9.939393939393941,
+    "reference_us": 10.52909090909091,
+    "api": "aclnnMhcPreSinkhorn",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_3e8",
+        "launch_id": 0,
+        "reference_us": 10.52909090909091,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 2767,
+        "max_core_mmad": 2,
+        "critical_pipeline_us": {
+          "SCALAR": 4.138181818181818,
+          "SIMD": 1.8636363636363635,
+          "MTE2": 2.895757575757576,
+          "MTE3": 1.5442424242424242
+        }
+      }
+    ],
+    "kernel": "entry_kernel_3e8",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=hin count=32768 bad=0 max_abs_error=0.00275226 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=32 bad=0 max_abs_error=1.39029e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=128 bad=0 max_abs_error=1.79467e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "source": "runs/v8cv/mhc_pre_sinkhorn-05/result.json",
+    "db_sha256": [
+      "658373b787a66cf5c4ed6d8adba96eef1dc02a8c1c2a4dd4229d7aa19f1e5a70"
+    ],
+    "query_us_max": 204.18,
+    "query_us_median": 186.005,
+    "stages_us": {
+      "mhc_pre_sinkhorn": 9.939393939393941
+    }
+  },
+  {
+    "op": "mhc_pre_sinkhorn",
+    "shape": [
+      9,
+      4,
+      4096
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "num_iters": 20,
+      "need_backward": false
+    },
+    "role": "validation",
+    "predicted_us": 9.939393939393941,
+    "reference_us": 10.201818181818181,
+    "api": "aclnnMhcPreSinkhorn",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_3e8",
+        "launch_id": 0,
+        "reference_us": 10.201818181818181,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 2821,
+        "max_core_mmad": 2,
+        "critical_pipeline_us": {
+          "SCALAR": 3.735757575757576,
+          "SIMD": 1.8781818181818182,
+          "MTE2": 3.5315151515151517,
+          "MTE3": 0.9787878787878788
+        }
+      }
+    ],
+    "kernel": "entry_kernel_3e8",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=hin count=36864 bad=0 max_abs_error=0.00275226 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=36 bad=0 max_abs_error=1.39029e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=144 bad=0 max_abs_error=1.79467e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "source": "runs/v8cv/mhc_pre_sinkhorn-06/result.json",
+    "db_sha256": [
+      "fe6fc6ea3a0796caf96817938e2c2b6f83716c416e17da87e0a5b8a753ef9340"
+    ],
+    "query_us_max": 204.77,
+    "query_us_median": 185.155,
+    "stages_us": {
+      "mhc_pre_sinkhorn": 9.939393939393941
+    }
+  },
+  {
+    "op": "mhc_pre_sinkhorn",
+    "shape": [
+      12,
+      4,
+      4096
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "num_iters": 20,
+      "need_backward": false
+    },
+    "role": "validation",
+    "predicted_us": 9.939393939393941,
+    "reference_us": 10.951515151515151,
+    "api": "aclnnMhcPreSinkhorn",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_3e8",
+        "launch_id": 0,
+        "reference_us": 10.951515151515151,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 2875,
+        "max_core_mmad": 2,
+        "critical_pipeline_us": {
+          "SCALAR": 4.082424242424242,
+          "SIMD": 1.8854545454545455,
+          "MTE2": 3.023030303030303,
+          "MTE3": 0.9618181818181818
+        }
+      }
+    ],
+    "kernel": "entry_kernel_3e8",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=hin count=49152 bad=0 max_abs_error=0.00275226 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=48 bad=0 max_abs_error=1.39029e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=192 bad=0 max_abs_error=1.79467e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "source": "runs/v8cv/mhc_pre_sinkhorn-07/result.json",
+    "db_sha256": [
+      "290de6eff9539ebb640ae4084f88d66fad168dba059158d5e23f7d9b2237e99f"
+    ],
+    "query_us_max": 214.52,
+    "query_us_median": 184.615,
+    "stages_us": {
+      "mhc_pre_sinkhorn": 9.939393939393941
+    }
+  },
+  {
+    "op": "mhc_pre_sinkhorn",
+    "shape": [
+      16,
+      4,
+      4096
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "num_iters": 20,
+      "need_backward": false
+    },
+    "role": "validation",
+    "predicted_us": 9.939393939393941,
+    "reference_us": 11.56,
+    "api": "aclnnMhcPreSinkhorn",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_3e8",
+        "launch_id": 0,
+        "reference_us": 11.56,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 2981,
+        "max_core_mmad": 2,
+        "critical_pipeline_us": {
+          "SCALAR": 4.08969696969697,
+          "SIMD": 1.912121212121212,
+          "MTE2": 2.8412121212121213,
+          "MTE3": 0.7933333333333333
+        }
+      }
+    ],
+    "kernel": "entry_kernel_3e8",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=hin count=65536 bad=0 max_abs_error=0.00275226 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=64 bad=0 max_abs_error=1.72379e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=256 bad=0 max_abs_error=1.79467e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "source": "runs/v8cv/mhc_pre_sinkhorn-08/result.json",
+    "db_sha256": [
+      "f06d066f0efd1ab9d5b806af7910d138f6faac8472bca7f1304b44d7e3e3d0e2"
+    ],
+    "query_us_max": 210.21,
+    "query_us_median": 185.125,
+    "stages_us": {
+      "mhc_pre_sinkhorn": 9.939393939393941
+    }
+  },
+  {
+    "op": "mhc_pre_sinkhorn",
+    "shape": [
+      24,
+      4,
+      4096
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "num_iters": 20,
+      "need_backward": false
+    },
+    "role": "validation",
+    "predicted_us": 9.939393939393941,
+    "reference_us": 11.583030303030304,
+    "api": "aclnnMhcPreSinkhorn",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_3e8",
+        "launch_id": 0,
+        "reference_us": 11.583030303030304,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 3330,
+        "max_core_mmad": 2,
+        "critical_pipeline_us": {
+          "SCALAR": 4.180606060606061,
+          "SIMD": 2.0715151515151513,
+          "MTE2": 3.3212121212121213,
+          "MTE3": 1.1466666666666667
+        }
+      }
+    ],
+    "kernel": "entry_kernel_3e8",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=hin count=98304 bad=0 max_abs_error=0.00275226 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=96 bad=0 max_abs_error=1.72379e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=384 bad=0 max_abs_error=1.79467e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "source": "runs/v8cv/mhc_pre_sinkhorn-09/result.json",
+    "db_sha256": [
+      "f8a28ff4b8f5d01ee38eaff3fa7c513e1e5904445d9d0da23463c4c367528b48"
+    ],
+    "query_us_max": 206.78,
+    "query_us_median": 185.35000000000002,
+    "stages_us": {
+      "mhc_pre_sinkhorn": 9.939393939393941
+    }
+  },
+  {
+    "op": "mhc_pre_sinkhorn",
+    "shape": [
+      32,
+      4,
+      4096
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "num_iters": 20,
+      "need_backward": false
+    },
+    "role": "validation",
+    "predicted_us": 9.939393939393941,
+    "reference_us": 11.113939393939393,
+    "api": "aclnnMhcPreSinkhorn",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_3e8",
+        "launch_id": 0,
+        "reference_us": 11.113939393939393,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 3544,
+        "max_core_mmad": 2,
+        "critical_pipeline_us": {
+          "SCALAR": 3.873939393939394,
+          "SIMD": 2.118181818181818,
+          "MTE2": 3.1272727272727274,
+          "MTE3": 1.3581818181818182
+        }
+      }
+    ],
+    "kernel": "entry_kernel_3e8",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=hin count=131072 bad=0 max_abs_error=0.00275226 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=128 bad=0 max_abs_error=1.72379e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=512 bad=0 max_abs_error=1.79467e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "source": "runs/v8cv/mhc_pre_sinkhorn-10/result.json",
+    "db_sha256": [
+      "76dc33ee3effc40ddb2fda082dbd5c371a24f74e7bb6e6e11b117e4947a56e32"
+    ],
+    "query_us_max": 204.15,
+    "query_us_median": 183.985,
+    "stages_us": {
+      "mhc_pre_sinkhorn": 9.939393939393941
+    }
+  },
+  {
+    "op": "mhc",
+    "shape": [
+      1,
+      4,
+      64
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "implementation": "split",
+      "num_iters": 20
+    },
+    "role": "validation",
+    "predicted_us": 16.70181818181818,
+    "reference_us": 17.143030303030304,
+    "api": "aclnnMhcPre + aclnnMhcSinkhorn + aclnnMhcPost",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_1",
+        "launch_id": 0,
+        "reference_us": 9.481818181818182,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 579,
+        "max_core_mmad": 1,
+        "critical_pipeline_us": {
+          "SCALAR": 3.82,
+          "MTE2": 2.389090909090909,
+          "SIMD": 1.616969696969697,
+          "MTE3": 0.7381818181818182
+        }
+      },
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 1,
+        "reference_us": 4.922424242424243,
+        "block_dim": 1,
+        "active_aic": 0,
+        "active_aiv": 1,
+        "max_core_rv_count": 1903,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 3.201212121212121,
+          "SIMD": 4.001818181818182,
+          "MTE2": 0.18363636363636363,
+          "MTE3": 0.13272727272727272
+        }
+      },
+      {
+        "kernel": "entry_kernel_5",
+        "launch_id": 2,
+        "reference_us": 2.7387878787878788,
+        "block_dim": 1,
+        "active_aic": 0,
+        "active_aiv": 1,
+        "max_core_rv_count": 264,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 1.5884848484848484,
+          "SIMD": 0.9903030303030304,
+          "MTE2": 0.33636363636363636,
+          "MTE3": 0.6866666666666666
+        }
+      }
+    ],
+    "kernel": "entry_kernel_1+entry_kernel_0+entry_kernel_5",
+    "active_aic": [
+      32,
+      0,
+      0
+    ],
+    "active_aiv": [
+      64,
+      1,
+      1
+    ],
+    "correctness": [
+      "correctness name=hin count=64 bad=0 max_abs_error=0.000445302 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=4 bad=0 max_abs_error=5.75754e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=16 bad=0 max_abs_error=2.5807e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=1 bad=0 max_abs_error=4.59929e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=24 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=4 bad=0 max_abs_error=2.96594e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=16 bad=0 max_abs_error=4.0836e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=256 bad=0 max_abs_error=0.000973562 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=256 bad=0 max_abs_error=0.000973541 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/mhc-01/result.json",
+    "db_sha256": [
+      "d265bf9e8f865493917f8477d9cf96ce4ed8e6e0caa7e798fc4535a29d2799b2",
+      "2a774c2a2a855f8b84d6913bef24375d479ebd2d6a5c4857abaa6ea73f7e0db5",
+      "56aedf0740fb82c5f1ab31b84206434b3543fb5397c5e23e5de25ce69e502015"
+    ],
+    "query_us_max": 433.84,
+    "query_us_median": 358.99,
+    "stages_us": {
+      "mhc_pre": 8.31212121212121,
+      "split_sink": 5.349090909090909,
+      "split_post": 3.04060606060606
+    }
+  },
+  {
+    "op": "mhc_pre",
+    "shape": [
+      1,
+      4,
+      64
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "alpha_count": 3,
+      "has_gamma": false,
+      "return_intermediates": true
+    },
+    "role": "validation",
+    "predicted_us": 8.31212121212121,
+    "reference_us": 9.481818181818182,
+    "api": "aclnnMhcPre",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_1",
+        "launch_id": 0,
+        "reference_us": 9.481818181818182,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 579,
+        "max_core_mmad": 1,
+        "critical_pipeline_us": {
+          "SCALAR": 3.82,
+          "MTE2": 2.389090909090909,
+          "SIMD": 1.616969696969697,
+          "MTE3": 0.7381818181818182
+        }
+      }
+    ],
+    "kernel": "entry_kernel_1",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=hin count=64 bad=0 max_abs_error=0.000445302 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=4 bad=0 max_abs_error=5.75754e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=16 bad=0 max_abs_error=2.5807e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=1 bad=0 max_abs_error=4.59929e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=24 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=4 bad=0 max_abs_error=2.96594e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=16 bad=0 max_abs_error=4.0836e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=256 bad=0 max_abs_error=0.000973562 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=256 bad=0 max_abs_error=0.000973541 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/mhc-01/result.json",
+    "db_sha256": [
+      "d265bf9e8f865493917f8477d9cf96ce4ed8e6e0caa7e798fc4535a29d2799b2"
+    ],
+    "query_us_max": 176.51,
+    "query_us_median": 172.99,
+    "stages_us": {
+      "mhc_pre": 8.31212121212121
+    }
+  },
+  {
+    "op": "mhc",
+    "shape": [
+      2,
+      4,
+      128
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "implementation": "split",
+      "num_iters": 20
+    },
+    "role": "validation",
+    "predicted_us": 16.70181818181818,
+    "reference_us": 16.415757575757578,
+    "api": "aclnnMhcPre + aclnnMhcSinkhorn + aclnnMhcPost",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_2",
+        "launch_id": 0,
+        "reference_us": 8.005454545454546,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 474,
+        "max_core_mmad": 8,
+        "critical_pipeline_us": {
+          "SCALAR": 4.470909090909091,
+          "MTE2": 1.9103030303030304,
+          "SIMD": 1.1442424242424243,
+          "MTE3": 1.166060606060606
+        }
+      },
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 1,
+        "reference_us": 5.411515151515151,
+        "block_dim": 2,
+        "active_aic": 0,
+        "active_aiv": 2,
+        "max_core_rv_count": 1903,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 3.376969696969697,
+          "SIMD": 3.7751515151515154,
+          "MTE2": 0.5212121212121212,
+          "MTE3": 0.3490909090909091
+        }
+      },
+      {
+        "kernel": "entry_kernel_5",
+        "launch_id": 2,
+        "reference_us": 2.998787878787879,
+        "block_dim": 2,
+        "active_aic": 0,
+        "active_aiv": 2,
+        "max_core_rv_count": 396,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 1.8703030303030304,
+          "SIMD": 1.3036363636363637,
+          "MTE2": 0.5593939393939394,
+          "MTE3": 0.5018181818181818
+        }
+      }
+    ],
+    "kernel": "entry_kernel_2+entry_kernel_0+entry_kernel_5",
+    "active_aic": [
+      32,
+      0,
+      0
+    ],
+    "active_aiv": [
+      64,
+      2,
+      2
+    ],
+    "correctness": [
+      "correctness name=hin count=256 bad=0 max_abs_error=0.000922135 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=8 bad=0 max_abs_error=8.43412e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=32 bad=0 max_abs_error=4.16239e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=2 bad=0 max_abs_error=1.93959e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=48 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=8 bad=0 max_abs_error=3.73303e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=32 bad=0 max_abs_error=7.51358e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=1024 bad=0 max_abs_error=0.00192444 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=1024 bad=0 max_abs_error=0.00192443 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/mhc-02/result.json",
+    "db_sha256": [
+      "6db71a4a8a250c41781ce8a4f0d76f196951919e8158d8da2259ffd1b0a6bc74",
+      "c4abf52183238b739aaa23aa505f307435a44541370448dfc18c3891cf77638e",
+      "64e3fad8c8dcc6d2371d5a1bece767006eb421bd05eba8ad8a1bc325f8ebf521"
+    ],
+    "query_us_max": 388.21,
+    "query_us_median": 359.435,
+    "stages_us": {
+      "mhc_pre": 8.31212121212121,
+      "split_sink": 5.349090909090909,
+      "split_post": 3.04060606060606
+    }
+  },
+  {
+    "op": "mhc_pre",
+    "shape": [
+      2,
+      4,
+      128
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "alpha_count": 3,
+      "has_gamma": false,
+      "return_intermediates": true
+    },
+    "role": "validation",
+    "predicted_us": 8.31212121212121,
+    "reference_us": 8.005454545454546,
+    "api": "aclnnMhcPre",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_2",
+        "launch_id": 0,
+        "reference_us": 8.005454545454546,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 474,
+        "max_core_mmad": 8,
+        "critical_pipeline_us": {
+          "SCALAR": 4.470909090909091,
+          "MTE2": 1.9103030303030304,
+          "SIMD": 1.1442424242424243,
+          "MTE3": 1.166060606060606
+        }
+      }
+    ],
+    "kernel": "entry_kernel_2",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=hin count=256 bad=0 max_abs_error=0.000922135 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=8 bad=0 max_abs_error=8.43412e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=32 bad=0 max_abs_error=4.16239e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=2 bad=0 max_abs_error=1.93959e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=48 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=8 bad=0 max_abs_error=3.73303e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=32 bad=0 max_abs_error=7.51358e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=1024 bad=0 max_abs_error=0.00192444 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=1024 bad=0 max_abs_error=0.00192443 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/mhc-02/result.json",
+    "db_sha256": [
+      "6db71a4a8a250c41781ce8a4f0d76f196951919e8158d8da2259ffd1b0a6bc74"
+    ],
+    "query_us_max": 199.92,
+    "query_us_median": 172.32,
+    "stages_us": {
+      "mhc_pre": 8.31212121212121
+    }
+  },
+  {
+    "op": "mhc",
+    "shape": [
+      4,
+      4,
+      256
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "implementation": "split",
+      "num_iters": 20
+    },
+    "role": "validation",
+    "predicted_us": 22.519999999999996,
+    "reference_us": 17.344242424242424,
+    "api": "aclnnMhcPre + aclnnMhcSinkhorn + aclnnMhcPost",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_2",
+        "launch_id": 0,
+        "reference_us": 8.42060606060606,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 619,
+        "max_core_mmad": 8,
+        "critical_pipeline_us": {
+          "SCALAR": 4.9763636363636365,
+          "MTE2": 1.347878787878788,
+          "SIMD": 1.0284848484848486,
+          "MTE3": 1.3896969696969697
+        }
+      },
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 1,
+        "reference_us": 5.76,
+        "block_dim": 4,
+        "active_aic": 0,
+        "active_aiv": 4,
+        "max_core_rv_count": 1903,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 3.3763636363636365,
+          "SIMD": 3.7333333333333334,
+          "MTE2": 0.516969696969697,
+          "MTE3": 0.7042424242424242
+        }
+      },
+      {
+        "kernel": "entry_kernel_5",
+        "launch_id": 2,
+        "reference_us": 3.1636363636363636,
+        "block_dim": 4,
+        "active_aic": 0,
+        "active_aiv": 4,
+        "max_core_rv_count": 660,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 1.8763636363636365,
+          "SIMD": 1.372121212121212,
+          "MTE2": 0.5836363636363636,
+          "MTE3": 0.5284848484848484
+        }
+      }
+    ],
+    "kernel": "entry_kernel_2+entry_kernel_0+entry_kernel_5",
+    "active_aic": [
+      32,
+      0,
+      0
+    ],
+    "active_aiv": [
+      64,
+      4,
+      4
+    ],
+    "correctness": [
+      "correctness name=hin count=1024 bad=0 max_abs_error=0.00190367 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=16 bad=0 max_abs_error=1.08006e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=64 bad=0 max_abs_error=4.92958e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=4 bad=0 max_abs_error=1.37095e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=96 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=16 bad=0 max_abs_error=5.69434e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=64 bad=0 max_abs_error=7.30785e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=4096 bad=0 max_abs_error=0.00384157 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=4096 bad=0 max_abs_error=0.00384158 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/mhc-03/result.json",
+    "db_sha256": [
+      "58bf162a67b13449ee4a0aba1300bb0f520bbf4eefa18dc69188caaffa147f9b",
+      "17e4344634c5595d4c89b7abfff4f4e3d180daef8ff74422d7b6fa1876c09460",
+      "5e7cf4804e3b325bfd73967a73a9b6580968584dbbfbc90433ee24ce7cc752c0"
+    ],
+    "query_us_max": 394.92,
+    "query_us_median": 358.32,
+    "stages_us": {
+      "mhc_pre": 12.125454545454543,
+      "split_sink": 5.349090909090909,
+      "split_post": 5.045454545454545
+    }
+  },
+  {
+    "op": "mhc_pre",
+    "shape": [
+      4,
+      4,
+      256
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "alpha_count": 3,
+      "has_gamma": false,
+      "return_intermediates": true
+    },
+    "role": "validation",
+    "predicted_us": 12.125454545454543,
+    "reference_us": 8.42060606060606,
+    "api": "aclnnMhcPre",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_2",
+        "launch_id": 0,
+        "reference_us": 8.42060606060606,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 619,
+        "max_core_mmad": 8,
+        "critical_pipeline_us": {
+          "SCALAR": 4.9763636363636365,
+          "MTE2": 1.347878787878788,
+          "SIMD": 1.0284848484848486,
+          "MTE3": 1.3896969696969697
+        }
+      }
+    ],
+    "kernel": "entry_kernel_2",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=hin count=1024 bad=0 max_abs_error=0.00190367 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=16 bad=0 max_abs_error=1.08006e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=64 bad=0 max_abs_error=4.92958e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=4 bad=0 max_abs_error=1.37095e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=96 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=16 bad=0 max_abs_error=5.69434e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=64 bad=0 max_abs_error=7.30785e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=4096 bad=0 max_abs_error=0.00384157 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=4096 bad=0 max_abs_error=0.00384158 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/mhc-03/result.json",
+    "db_sha256": [
+      "58bf162a67b13449ee4a0aba1300bb0f520bbf4eefa18dc69188caaffa147f9b"
+    ],
+    "query_us_max": 193.37,
+    "query_us_median": 173.58499999999998,
+    "stages_us": {
+      "mhc_pre": 12.125454545454543
+    }
+  },
+  {
+    "op": "mhc",
+    "shape": [
+      16,
+      4,
+      128
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "implementation": "split",
+      "num_iters": 20
+    },
+    "role": "validation",
+    "predicted_us": 16.70181818181818,
+    "reference_us": 18.202424242424243,
+    "api": "aclnnMhcPre + aclnnMhcSinkhorn + aclnnMhcPost",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_2",
+        "launch_id": 0,
+        "reference_us": 9.307878787878789,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 719,
+        "max_core_mmad": 8,
+        "critical_pipeline_us": {
+          "SCALAR": 4.597575757575758,
+          "MTE2": 1.1066666666666667,
+          "SIMD": 0.4812121212121212,
+          "MTE3": 1.332121212121212
+        }
+      },
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 1,
+        "reference_us": 5.706060606060606,
+        "block_dim": 16,
+        "active_aic": 0,
+        "active_aiv": 16,
+        "max_core_rv_count": 1903,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 3.4224242424242424,
+          "SIMD": 3.8315151515151515,
+          "MTE2": 0.4290909090909091,
+          "MTE3": 0.44181818181818183
+        }
+      },
+      {
+        "kernel": "entry_kernel_5",
+        "launch_id": 2,
+        "reference_us": 3.1884848484848485,
+        "block_dim": 16,
+        "active_aic": 0,
+        "active_aiv": 16,
+        "max_core_rv_count": 396,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 2.001212121212121,
+          "SIMD": 1.3618181818181818,
+          "MTE2": 0.5527272727272727,
+          "MTE3": 0.5224242424242425
+        }
+      }
+    ],
+    "kernel": "entry_kernel_2+entry_kernel_0+entry_kernel_5",
+    "active_aic": [
+      32,
+      0,
+      0
+    ],
+    "active_aiv": [
+      64,
+      16,
+      16
+    ],
+    "correctness": [
+      "correctness name=hin count=2048 bad=0 max_abs_error=0.000955987 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=64 bad=0 max_abs_error=9.38482e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=256 bad=0 max_abs_error=4.16239e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=16 bad=0 max_abs_error=2.33421e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=384 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=64 bad=0 max_abs_error=5.93675e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=256 bad=0 max_abs_error=7.51358e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=8192 bad=0 max_abs_error=0.00194787 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=8192 bad=0 max_abs_error=0.00194788 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/mhc-05/result.json",
+    "db_sha256": [
+      "0afe276c71a4f165d89a1802ff66fa30ec72b670424309242b2df06d1706387c",
+      "d4069c5f1a9837c52700ba0dca6c952161a848176976662e65ad2fa5edffbe88",
+      "fbae9ac45bb38d665589ac95ddf274ca89d7bd1e043ec9b2edadc1fe56d28b61"
+    ],
+    "query_us_max": 384.2,
+    "query_us_median": 357.735,
+    "stages_us": {
+      "mhc_pre": 8.31212121212121,
+      "split_sink": 5.349090909090909,
+      "split_post": 3.04060606060606
+    }
+  },
+  {
+    "op": "mhc_pre",
+    "shape": [
+      16,
+      4,
+      128
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "alpha_count": 3,
+      "has_gamma": false,
+      "return_intermediates": true
+    },
+    "role": "validation",
+    "predicted_us": 8.31212121212121,
+    "reference_us": 9.307878787878789,
+    "api": "aclnnMhcPre",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_2",
+        "launch_id": 0,
+        "reference_us": 9.307878787878789,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 719,
+        "max_core_mmad": 8,
+        "critical_pipeline_us": {
+          "SCALAR": 4.597575757575758,
+          "MTE2": 1.1066666666666667,
+          "SIMD": 0.4812121212121212,
+          "MTE3": 1.332121212121212
+        }
+      }
+    ],
+    "kernel": "entry_kernel_2",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=hin count=2048 bad=0 max_abs_error=0.000955987 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=64 bad=0 max_abs_error=9.38482e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=256 bad=0 max_abs_error=4.16239e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=16 bad=0 max_abs_error=2.33421e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=384 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=64 bad=0 max_abs_error=5.93675e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=256 bad=0 max_abs_error=7.51358e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=8192 bad=0 max_abs_error=0.00194787 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=8192 bad=0 max_abs_error=0.00194788 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/mhc-05/result.json",
+    "db_sha256": [
+      "0afe276c71a4f165d89a1802ff66fa30ec72b670424309242b2df06d1706387c"
+    ],
+    "query_us_max": 176.39,
+    "query_us_median": 172.53,
+    "stages_us": {
+      "mhc_pre": 8.31212121212121
+    }
+  },
+  {
+    "op": "mhc",
+    "shape": [
+      1,
+      4,
+      512
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "implementation": "split",
+      "num_iters": 20
+    },
+    "role": "validation",
+    "predicted_us": 34.15636363636363,
+    "reference_us": 17.343030303030304,
+    "api": "aclnnMhcPre + aclnnMhcSinkhorn + aclnnMhcPost",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_2",
+        "launch_id": 0,
+        "reference_us": 8.544242424242425,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 507,
+        "max_core_mmad": 8,
+        "critical_pipeline_us": {
+          "SCALAR": 4.671515151515152,
+          "MTE2": 2.0375757575757576,
+          "SIMD": 1.1242424242424243,
+          "MTE3": 0.9915151515151515
+        }
+      },
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 1,
+        "reference_us": 5.571515151515151,
+        "block_dim": 1,
+        "active_aic": 0,
+        "active_aiv": 1,
+        "max_core_rv_count": 1903,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 3.444848484848485,
+          "SIMD": 4.007272727272727,
+          "MTE2": 0.21515151515151515,
+          "MTE3": 0.5478787878787879
+        }
+      },
+      {
+        "kernel": "entry_kernel_5",
+        "launch_id": 2,
+        "reference_us": 3.227272727272727,
+        "block_dim": 2,
+        "active_aic": 0,
+        "active_aiv": 2,
+        "max_core_rv_count": 660,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 2.298787878787879,
+          "SIMD": 1.3593939393939394,
+          "MTE2": 0.5696969696969697,
+          "MTE3": 0.4127272727272727
+        }
+      }
+    ],
+    "kernel": "entry_kernel_2+entry_kernel_0+entry_kernel_5",
+    "active_aic": [
+      32,
+      0,
+      0
+    ],
+    "active_aiv": [
+      64,
+      1,
+      2
+    ],
+    "correctness": [
+      "correctness name=hin count=512 bad=0 max_abs_error=0.00192282 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=4 bad=0 max_abs_error=3.73635e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=16 bad=0 max_abs_error=4.82353e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=1 bad=0 max_abs_error=7.49867e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=24 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=4 bad=0 max_abs_error=3.23335e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=16 bad=0 max_abs_error=3.26362e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=2048 bad=0 max_abs_error=0.00312909 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=2048 bad=0 max_abs_error=0.00312907 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/mhc-06/result.json",
+    "db_sha256": [
+      "4950843dca68a785bcd27112ba1775d13b18df09ff2de511c61a313f5c98cc79",
+      "2231bb21933cf0a37330fc8ed4855551577e441ecafcdb6da3f6923c4389275e",
+      "798b0b29a82d680e494055d817a3a54e9302446b878ef9f843f31f483f1ad93f"
+    ],
+    "query_us_max": 397.75,
+    "query_us_median": 356.71000000000004,
+    "stages_us": {
+      "mhc_pre": 19.752121212121207,
+      "split_sink": 5.349090909090909,
+      "split_post": 9.055151515151515
+    }
+  },
+  {
+    "op": "mhc_pre",
+    "shape": [
+      1,
+      4,
+      512
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "alpha_count": 3,
+      "has_gamma": false,
+      "return_intermediates": true
+    },
+    "role": "validation",
+    "predicted_us": 19.752121212121207,
+    "reference_us": 8.544242424242425,
+    "api": "aclnnMhcPre",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_2",
+        "launch_id": 0,
+        "reference_us": 8.544242424242425,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 507,
+        "max_core_mmad": 8,
+        "critical_pipeline_us": {
+          "SCALAR": 4.671515151515152,
+          "MTE2": 2.0375757575757576,
+          "SIMD": 1.1242424242424243,
+          "MTE3": 0.9915151515151515
+        }
+      }
+    ],
+    "kernel": "entry_kernel_2",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=hin count=512 bad=0 max_abs_error=0.00192282 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=4 bad=0 max_abs_error=3.73635e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=16 bad=0 max_abs_error=4.82353e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=1 bad=0 max_abs_error=7.49867e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=24 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=4 bad=0 max_abs_error=3.23335e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=16 bad=0 max_abs_error=3.26362e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=2048 bad=0 max_abs_error=0.00312909 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=2048 bad=0 max_abs_error=0.00312907 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/mhc-06/result.json",
+    "db_sha256": [
+      "4950843dca68a785bcd27112ba1775d13b18df09ff2de511c61a313f5c98cc79"
+    ],
+    "query_us_max": 204.5,
+    "query_us_median": 173.815,
+    "stages_us": {
+      "mhc_pre": 19.752121212121207
+    }
+  },
+  {
+    "op": "mhc",
+    "shape": [
+      4,
+      4,
+      1024
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "implementation": "split",
+      "num_iters": 20
+    },
+    "role": "validation",
+    "predicted_us": 57.429090909090895,
+    "reference_us": 18.22,
+    "api": "aclnnMhcPre + aclnnMhcSinkhorn + aclnnMhcPost",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_2",
+        "launch_id": 0,
+        "reference_us": 8.72969696969697,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 1297,
+        "max_core_mmad": 8,
+        "critical_pipeline_us": {
+          "SCALAR": 4.58969696969697,
+          "MTE2": 2.3636363636363638,
+          "SIMD": 1.1193939393939394,
+          "MTE3": 2.026666666666667
+        }
+      },
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 1,
+        "reference_us": 6.015757575757576,
+        "block_dim": 4,
+        "active_aic": 0,
+        "active_aiv": 4,
+        "max_core_rv_count": 1903,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 3.381818181818182,
+          "SIMD": 3.958787878787879,
+          "MTE2": 0.5133333333333333,
+          "MTE3": 0.7018181818181818
+        }
+      },
+      {
+        "kernel": "entry_kernel_5",
+        "launch_id": 2,
+        "reference_us": 3.4745454545454546,
+        "block_dim": 16,
+        "active_aic": 0,
+        "active_aiv": 16,
+        "max_core_rv_count": 660,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 2.1551515151515153,
+          "SIMD": 1.36,
+          "MTE2": 0.49696969696969695,
+          "MTE3": 0.6945454545454546
+        }
+      }
+    ],
+    "kernel": "entry_kernel_2+entry_kernel_0+entry_kernel_5",
+    "active_aic": [
+      32,
+      0,
+      0
+    ],
+    "active_aiv": [
+      64,
+      4,
+      16
+    ],
+    "correctness": [
+      "correctness name=hin count=4096 bad=0 max_abs_error=0.0016496 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=16 bad=0 max_abs_error=1.06904e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=64 bad=0 max_abs_error=1.77318e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=4 bad=0 max_abs_error=1.44718e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=96 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=16 bad=0 max_abs_error=7.23108e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=64 bad=0 max_abs_error=1.4691e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=16384 bad=0 max_abs_error=0.00191589 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=16384 bad=0 max_abs_error=0.00191589 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/mhc-07/result.json",
+    "db_sha256": [
+      "35ee3398c4686a09019a6314cf3627ffbe19cf755832f33bc9100743ae200a2c",
+      "095858b91fbfee977fcd4300b71d0096fd9951b2397d1c45c698317385012e95",
+      "f38428aca4a752313d53b6d251c8cd0731ab0b22a64873ee9dfec31368432f28"
+    ],
+    "query_us_max": 395.92,
+    "query_us_median": 357.325,
+    "stages_us": {
+      "mhc_pre": 35.00545454545453,
+      "split_sink": 5.349090909090909,
+      "split_post": 17.07454545454545
+    }
+  },
+  {
+    "op": "mhc_pre",
+    "shape": [
+      4,
+      4,
+      1024
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "alpha_count": 3,
+      "has_gamma": false,
+      "return_intermediates": true
+    },
+    "role": "validation",
+    "predicted_us": 35.00545454545453,
+    "reference_us": 8.72969696969697,
+    "api": "aclnnMhcPre",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_2",
+        "launch_id": 0,
+        "reference_us": 8.72969696969697,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 1297,
+        "max_core_mmad": 8,
+        "critical_pipeline_us": {
+          "SCALAR": 4.58969696969697,
+          "MTE2": 2.3636363636363638,
+          "SIMD": 1.1193939393939394,
+          "MTE3": 2.026666666666667
+        }
+      }
+    ],
+    "kernel": "entry_kernel_2",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=hin count=4096 bad=0 max_abs_error=0.0016496 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=16 bad=0 max_abs_error=1.06904e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=64 bad=0 max_abs_error=1.77318e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=4 bad=0 max_abs_error=1.44718e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=96 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=16 bad=0 max_abs_error=7.23108e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=64 bad=0 max_abs_error=1.4691e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=16384 bad=0 max_abs_error=0.00191589 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=16384 bad=0 max_abs_error=0.00191589 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/mhc-07/result.json",
+    "db_sha256": [
+      "35ee3398c4686a09019a6314cf3627ffbe19cf755832f33bc9100743ae200a2c"
+    ],
+    "query_us_max": 193.14,
+    "query_us_median": 173.305,
+    "stages_us": {
+      "mhc_pre": 35.00545454545453
+    }
+  },
+  {
+    "op": "mhc",
+    "shape": [
+      9,
+      4,
+      1024
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "implementation": "split",
+      "num_iters": 20
+    },
+    "role": "validation",
+    "predicted_us": 57.429090909090895,
+    "reference_us": 18.48242424242424,
+    "api": "aclnnMhcPre + aclnnMhcSinkhorn + aclnnMhcPost",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_2",
+        "launch_id": 0,
+        "reference_us": 9.024242424242424,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 1402,
+        "max_core_mmad": 8,
+        "critical_pipeline_us": {
+          "SCALAR": 4.836363636363636,
+          "MTE2": 1.5915151515151515,
+          "SIMD": 0.8,
+          "MTE3": 1.3327272727272728
+        }
+      },
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 1,
+        "reference_us": 5.778787878787878,
+        "block_dim": 9,
+        "active_aic": 0,
+        "active_aiv": 9,
+        "max_core_rv_count": 1903,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 3.5921212121212123,
+          "SIMD": 3.6854545454545455,
+          "MTE2": 0.5206060606060606,
+          "MTE3": 0.44727272727272727
+        }
+      },
+      {
+        "kernel": "entry_kernel_5",
+        "launch_id": 2,
+        "reference_us": 3.679393939393939,
+        "block_dim": 36,
+        "active_aic": 0,
+        "active_aiv": 36,
+        "max_core_rv_count": 660,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 2.1751515151515153,
+          "SIMD": 1.538181818181818,
+          "MTE2": 0.6509090909090909,
+          "MTE3": 0.6509090909090909
+        }
+      }
+    ],
+    "kernel": "entry_kernel_2+entry_kernel_0+entry_kernel_5",
+    "active_aic": [
+      32,
+      0,
+      0
+    ],
+    "active_aiv": [
+      64,
+      9,
+      36
+    ],
+    "correctness": [
+      "correctness name=hin count=9216 bad=0 max_abs_error=0.0016496 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=36 bad=0 max_abs_error=1.29228e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=144 bad=0 max_abs_error=2.76524e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=9 bad=0 max_abs_error=2.16692e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=216 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=36 bad=0 max_abs_error=7.23108e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=144 bad=0 max_abs_error=1.4691e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=36864 bad=0 max_abs_error=0.00191589 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=36864 bad=0 max_abs_error=0.00191589 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/mhc-08/result.json",
+    "db_sha256": [
+      "7d4db5a7a6628b5b647a1146f95ea50fec221eb416cb74e421d659f3f0ffa659",
+      "a8af3e9e82d29050de6e9162964f0bac9c0d884c0af918e676bcf7bbed5450ca",
+      "3818caf76027e1ed269ce365035b7bd8fcf7946426293d50dccd9e56f4cbc6ee"
+    ],
+    "query_us_max": 405.5,
+    "query_us_median": 357.805,
+    "stages_us": {
+      "mhc_pre": 35.00545454545453,
+      "split_sink": 5.349090909090909,
+      "split_post": 17.07454545454545
+    }
+  },
+  {
+    "op": "mhc_pre",
+    "shape": [
+      9,
+      4,
+      1024
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "alpha_count": 3,
+      "has_gamma": false,
+      "return_intermediates": true
+    },
+    "role": "validation",
+    "predicted_us": 35.00545454545453,
+    "reference_us": 9.024242424242424,
+    "api": "aclnnMhcPre",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_2",
+        "launch_id": 0,
+        "reference_us": 9.024242424242424,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 1402,
+        "max_core_mmad": 8,
+        "critical_pipeline_us": {
+          "SCALAR": 4.836363636363636,
+          "MTE2": 1.5915151515151515,
+          "SIMD": 0.8,
+          "MTE3": 1.3327272727272728
+        }
+      }
+    ],
+    "kernel": "entry_kernel_2",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=hin count=9216 bad=0 max_abs_error=0.0016496 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=36 bad=0 max_abs_error=1.29228e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=144 bad=0 max_abs_error=2.76524e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=9 bad=0 max_abs_error=2.16692e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=216 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=36 bad=0 max_abs_error=7.23108e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=144 bad=0 max_abs_error=1.4691e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=36864 bad=0 max_abs_error=0.00191589 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=36864 bad=0 max_abs_error=0.00191589 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/mhc-08/result.json",
+    "db_sha256": [
+      "7d4db5a7a6628b5b647a1146f95ea50fec221eb416cb74e421d659f3f0ffa659"
+    ],
+    "query_us_max": 177.22,
+    "query_us_median": 172.41500000000002,
+    "stages_us": {
+      "mhc_pre": 35.00545454545453
+    }
+  },
+  {
+    "op": "mhc",
+    "shape": [
+      16,
+      4,
+      512
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "implementation": "split",
+      "num_iters": 20
+    },
+    "role": "validation",
+    "predicted_us": 34.15636363636363,
+    "reference_us": 18.690909090909088,
+    "api": "aclnnMhcPre + aclnnMhcSinkhorn + aclnnMhcPost",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_2",
+        "launch_id": 0,
+        "reference_us": 9.385454545454545,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 1055,
+        "max_core_mmad": 8,
+        "critical_pipeline_us": {
+          "SCALAR": 4.506060606060606,
+          "MTE2": 1.5327272727272727,
+          "SIMD": 1.1515151515151516,
+          "MTE3": 1.8527272727272728
+        }
+      },
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 1,
+        "reference_us": 5.838787878787879,
+        "block_dim": 16,
+        "active_aic": 0,
+        "active_aiv": 16,
+        "max_core_rv_count": 1903,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 3.629090909090909,
+          "SIMD": 3.5424242424242425,
+          "MTE2": 0.4890909090909091,
+          "MTE3": 0.4715151515151515
+        }
+      },
+      {
+        "kernel": "entry_kernel_5",
+        "launch_id": 2,
+        "reference_us": 3.466666666666667,
+        "block_dim": 32,
+        "active_aic": 0,
+        "active_aiv": 32,
+        "max_core_rv_count": 660,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 2.1036363636363635,
+          "SIMD": 1.3012121212121213,
+          "MTE2": 0.5018181818181818,
+          "MTE3": 0.6606060606060606
+        }
+      }
+    ],
+    "kernel": "entry_kernel_2+entry_kernel_0+entry_kernel_5",
+    "active_aic": [
+      32,
+      0,
+      0
+    ],
+    "active_aiv": [
+      64,
+      16,
+      32
+    ],
+    "correctness": [
+      "correctness name=hin count=8192 bad=0 max_abs_error=0.00192282 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=64 bad=0 max_abs_error=1.51706e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=256 bad=0 max_abs_error=1.66782e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=16 bad=0 max_abs_error=1.86762e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=384 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=64 bad=0 max_abs_error=6.49073e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=256 bad=0 max_abs_error=9.84489e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=32768 bad=0 max_abs_error=0.0038902 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=32768 bad=0 max_abs_error=0.00389015 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/mhc-09/result.json",
+    "db_sha256": [
+      "8262f1db545f017b75d28044831572adabdde3310c9dba4b85c2c4a00ddb016a",
+      "93149f321eff1142a12b9b78a7d637f212adc20ca9866fc334d4a0416cc16711",
+      "0643c0485cf8f389138097239430f7ab7bf4fdb921b28dbed1e4365a5e96bf0c"
+    ],
+    "query_us_max": 384.39,
+    "query_us_median": 357.845,
+    "stages_us": {
+      "mhc_pre": 19.752121212121207,
+      "split_sink": 5.349090909090909,
+      "split_post": 9.055151515151515
+    }
+  },
+  {
+    "op": "mhc_pre",
+    "shape": [
+      16,
+      4,
+      512
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "alpha_count": 3,
+      "has_gamma": false,
+      "return_intermediates": true
+    },
+    "role": "validation",
+    "predicted_us": 19.752121212121207,
+    "reference_us": 9.385454545454545,
+    "api": "aclnnMhcPre",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_2",
+        "launch_id": 0,
+        "reference_us": 9.385454545454545,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 1055,
+        "max_core_mmad": 8,
+        "critical_pipeline_us": {
+          "SCALAR": 4.506060606060606,
+          "MTE2": 1.5327272727272727,
+          "SIMD": 1.1515151515151516,
+          "MTE3": 1.8527272727272728
+        }
+      }
+    ],
+    "kernel": "entry_kernel_2",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=hin count=8192 bad=0 max_abs_error=0.00192282 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=64 bad=0 max_abs_error=1.51706e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=256 bad=0 max_abs_error=1.66782e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=16 bad=0 max_abs_error=1.86762e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=384 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=64 bad=0 max_abs_error=6.49073e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=256 bad=0 max_abs_error=9.84489e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=32768 bad=0 max_abs_error=0.0038902 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=32768 bad=0 max_abs_error=0.00389015 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/mhc-09/result.json",
+    "db_sha256": [
+      "8262f1db545f017b75d28044831572adabdde3310c9dba4b85c2c4a00ddb016a"
+    ],
+    "query_us_max": 210.41,
+    "query_us_median": 174.06,
+    "stages_us": {
+      "mhc_pre": 19.752121212121207
+    }
+  },
+  {
+    "op": "mhc",
+    "shape": [
+      32,
+      4,
+      1024
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "implementation": "split",
+      "num_iters": 20
+    },
+    "role": "validation",
+    "predicted_us": 57.429090909090895,
+    "reference_us": 20.06969696969697,
+    "api": "aclnnMhcPre + aclnnMhcSinkhorn + aclnnMhcPost",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_2",
+        "launch_id": 0,
+        "reference_us": 11.368484848484849,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 1787,
+        "max_core_mmad": 8,
+        "critical_pipeline_us": {
+          "SCALAR": 4.635151515151515,
+          "MTE2": 2.192121212121212,
+          "SIMD": 0.9654545454545455,
+          "MTE3": 2.5490909090909093
+        }
+      },
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 1,
+        "reference_us": 6.076363636363636,
+        "block_dim": 32,
+        "active_aic": 0,
+        "active_aiv": 32,
+        "max_core_rv_count": 1903,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 3.453939393939394,
+          "SIMD": 3.9284848484848487,
+          "MTE2": 0.44666666666666666,
+          "MTE3": 0.4866666666666667
+        }
+      },
+      {
+        "kernel": "entry_kernel_6",
+        "launch_id": 2,
+        "reference_us": 2.624848484848485,
+        "block_dim": 32,
+        "active_aic": 0,
+        "active_aiv": 32,
+        "max_core_rv_count": 1384,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 1.4290909090909092,
+          "SIMD": 0.4066666666666667,
+          "MTE2": 0.7157575757575757,
+          "MTE3": 0.21454545454545454
+        }
+      }
+    ],
+    "kernel": "entry_kernel_2+entry_kernel_0+entry_kernel_6",
+    "active_aic": [
+      32,
+      0,
+      0
+    ],
+    "active_aiv": [
+      64,
+      32,
+      32
+    ],
+    "correctness": [
+      "correctness name=hin count=32768 bad=0 max_abs_error=0.0016496 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=128 bad=0 max_abs_error=1.29228e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=512 bad=0 max_abs_error=2.76524e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=32 bad=0 max_abs_error=2.16692e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=768 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=128 bad=0 max_abs_error=7.23108e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=512 bad=0 max_abs_error=1.4691e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=131072 bad=0 max_abs_error=0.00258538 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=131072 bad=0 max_abs_error=0.0025854 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/mhc-10/result.json",
+    "db_sha256": [
+      "e75d3812adccce3466102d86cbda1519ea408a457e0a56f6bb1437d1f494f875",
+      "e4f77a86f9d34220f970365fcd4eb8beaf414c48fa1b2cc88defeb7df1daae3e",
+      "adfc80c6dcc367d04429ca9fb82e617b5ae3569ee820d9c2a444d92b8becdacb"
+    ],
+    "query_us_max": 396.24,
+    "query_us_median": 358.755,
+    "stages_us": {
+      "mhc_pre": 35.00545454545453,
+      "split_sink": 5.349090909090909,
+      "split_post": 17.07454545454545
+    }
+  },
+  {
+    "op": "mhc_pre",
+    "shape": [
+      32,
+      4,
+      1024
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "alpha_count": 3,
+      "has_gamma": false,
+      "return_intermediates": true
+    },
+    "role": "validation",
+    "predicted_us": 35.00545454545453,
+    "reference_us": 11.368484848484849,
+    "api": "aclnnMhcPre",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_2",
+        "launch_id": 0,
+        "reference_us": 11.368484848484849,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 1787,
+        "max_core_mmad": 8,
+        "critical_pipeline_us": {
+          "SCALAR": 4.635151515151515,
+          "MTE2": 2.192121212121212,
+          "SIMD": 0.9654545454545455,
+          "MTE3": 2.5490909090909093
+        }
+      }
+    ],
+    "kernel": "entry_kernel_2",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=hin count=32768 bad=0 max_abs_error=0.0016496 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=128 bad=0 max_abs_error=1.29228e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=512 bad=0 max_abs_error=2.76524e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=32 bad=0 max_abs_error=2.16692e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=768 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=128 bad=0 max_abs_error=7.23108e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=512 bad=0 max_abs_error=1.4691e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=131072 bad=0 max_abs_error=0.00258538 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=131072 bad=0 max_abs_error=0.0025854 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/mhc-10/result.json",
+    "db_sha256": [
+      "e75d3812adccce3466102d86cbda1519ea408a457e0a56f6bb1437d1f494f875"
+    ],
+    "query_us_max": 197.97,
+    "query_us_median": 173.54,
+    "stages_us": {
+      "mhc_pre": 35.00545454545453
+    }
+  },
+  {
+    "op": "moe_ffn",
+    "shape": [
+      1,
+      64,
+      64,
+      1
+    ],
+    "attrs": {
+      "expert_counts": [
+        1
+      ]
+    },
+    "role": "validation",
+    "predicted_us": 10.681818181818183,
+    "reference_us": 10.194545454545455,
+    "api": "aclnnGroupedMatmulSwigluQuantV2 + aclnnGroupedMatmulV5",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 0,
+        "reference_us": 7.043636363636364,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 147,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 6.615757575757576,
+          "MTE1": 0.07272727272727272,
+          "MTE2": 1.183030303030303,
+          "CUBE": 0.09090909090909091,
+          "FIXP": 0.06909090909090909
+        }
+      },
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 1,
+        "reference_us": 3.150909090909091,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 0,
+        "max_core_rv_count": 0,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 2.533939393939394,
+          "MTE1": 0.03151515151515152,
+          "MTE2": 0.32606060606060605,
+          "CUBE": 0.06303030303030303,
+          "FIXP": 0.32727272727272727
+        }
+      }
+    ],
+    "kernel": "entry_kernel_0+entry_kernel_0",
+    "active_aic": [
+      32,
+      32
+    ],
+    "active_aiv": [
+      64,
+      0
+    ],
+    "correctness": [
+      "correctness name=gmm1_output count=64 bad=0 max_abs_error=0 atol=0.0625 rtol=0.25 hard_limit=4",
+      "correctness name=gmm1_mx_scale count=2 bad=0 max_abs_error=0 atol=0 rtol=0 hard_limit=0",
+      "correctness name=gmm2_output count=64 bad=0 max_abs_error=0.000970364 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/moe_ffn-01/result.json",
+    "db_sha256": [
+      "42b1443c98209001cd205c83d20e7e8502d793870e093f280f5afe62cf7de2b6",
+      "68302fe5472f3932600a73cabad37b7230847f6241f40b0aa358a62d0f4278c4"
+    ],
+    "query_us_max": 333.87,
+    "query_us_median": 275.58500000000004,
+    "stages_us": {
+      "grouped_matmul_swiglu_quant_v2": 7.272121212121213,
+      "gmm2": 3.40969696969697
+    }
+  },
+  {
+    "op": "grouped_matmul_swiglu_quant_v2",
+    "shape": [
+      1,
+      64,
+      64,
+      1
+    ],
+    "attrs": {
+      "expert_counts": [
+        1
+      ]
+    },
+    "role": "validation",
+    "predicted_us": 7.272121212121213,
+    "reference_us": 7.043636363636364,
+    "api": "aclnnGroupedMatmulSwigluQuantV2",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 0,
+        "reference_us": 7.043636363636364,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 147,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 6.615757575757576,
+          "MTE1": 0.07272727272727272,
+          "MTE2": 1.183030303030303,
+          "CUBE": 0.09090909090909091,
+          "FIXP": 0.06909090909090909
+        }
+      }
+    ],
+    "kernel": "entry_kernel_0",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=gmm1_output count=64 bad=0 max_abs_error=0 atol=0.0625 rtol=0.25 hard_limit=4",
+      "correctness name=gmm1_mx_scale count=2 bad=0 max_abs_error=0 atol=0 rtol=0 hard_limit=0",
+      "correctness name=gmm2_output count=64 bad=0 max_abs_error=0.000970364 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/moe_ffn-01/result.json",
+    "db_sha256": [
+      "42b1443c98209001cd205c83d20e7e8502d793870e093f280f5afe62cf7de2b6"
+    ],
+    "query_us_max": 199.64,
+    "query_us_median": 196.87,
+    "stages_us": {
+      "grouped_matmul_swiglu_quant_v2": 7.272121212121213
+    }
+  },
+  {
+    "op": "gmm2",
+    "shape": [
+      1,
+      64,
+      64,
+      1
+    ],
+    "attrs": {
+      "expert_counts": [
+        1
+      ]
+    },
+    "role": "validation",
+    "predicted_us": 3.40969696969697,
+    "reference_us": 3.150909090909091,
+    "api": "aclnnGroupedMatmulV5",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 1,
+        "reference_us": 3.150909090909091,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 0,
+        "max_core_rv_count": 0,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 2.533939393939394,
+          "MTE1": 0.03151515151515152,
+          "MTE2": 0.32606060606060605,
+          "CUBE": 0.06303030303030303,
+          "FIXP": 0.32727272727272727
+        }
+      }
+    ],
+    "kernel": "entry_kernel_0",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      0
+    ],
+    "correctness": [
+      "correctness name=gmm1_output count=64 bad=0 max_abs_error=0 atol=0.0625 rtol=0.25 hard_limit=4",
+      "correctness name=gmm1_mx_scale count=2 bad=0 max_abs_error=0 atol=0 rtol=0 hard_limit=0",
+      "correctness name=gmm2_output count=64 bad=0 max_abs_error=0.000970364 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/moe_ffn-01/result.json",
+    "db_sha256": [
+      "68302fe5472f3932600a73cabad37b7230847f6241f40b0aa358a62d0f4278c4"
+    ],
+    "query_us_max": 81.4,
+    "query_us_median": 79.35499999999999,
+    "stages_us": {
+      "gmm2": 3.40969696969697
+    }
+  },
+  {
+    "op": "moe_ffn",
+    "shape": [
+      3,
+      64,
+      64,
+      2
+    ],
+    "attrs": {
+      "expert_counts": [
+        1,
+        2
+      ]
+    },
+    "role": "validation",
+    "predicted_us": 10.681818181818183,
+    "reference_us": 10.851515151515152,
+    "api": "aclnnGroupedMatmulSwigluQuantV2 + aclnnGroupedMatmulV5",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 0,
+        "reference_us": 7.080606060606061,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 147,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 6.703636363636364,
+          "MTE1": 0.07272727272727272,
+          "MTE2": 0.9533333333333334,
+          "CUBE": 0.09090909090909091,
+          "FIXP": 0.06909090909090909
+        }
+      },
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 1,
+        "reference_us": 3.770909090909091,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 0,
+        "max_core_rv_count": 0,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 2.8612121212121213,
+          "MTE1": 0.03151515151515152,
+          "MTE2": 0.5351515151515152,
+          "CUBE": 0.06424242424242424,
+          "FIXP": 0.3563636363636364
+        }
+      }
+    ],
+    "kernel": "entry_kernel_0+entry_kernel_0",
+    "active_aic": [
+      32,
+      32
+    ],
+    "active_aiv": [
+      64,
+      0
+    ],
+    "correctness": [
+      "correctness name=gmm1_output count=192 bad=0 max_abs_error=0 atol=0.0625 rtol=0.25 hard_limit=4",
+      "correctness name=gmm1_mx_scale count=6 bad=0 max_abs_error=0 atol=0 rtol=0 hard_limit=0",
+      "correctness name=gmm2_output count=192 bad=0 max_abs_error=0.00373173 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/moe_ffn-02/result.json",
+    "db_sha256": [
+      "785081d90fb9ae8c508c3d1840ccdbe133a2085efd6aceebf4b9a8b2dc661b79",
+      "e10aa9d1f6a6451d293bc7ab09d980e7eca82a515b1b4605615ed9d8daf670b1"
+    ],
+    "query_us_max": 302.47,
+    "query_us_median": 276.96500000000003,
+    "stages_us": {
+      "grouped_matmul_swiglu_quant_v2": 7.272121212121213,
+      "gmm2": 3.40969696969697
+    }
+  },
+  {
+    "op": "grouped_matmul_swiglu_quant_v2",
+    "shape": [
+      3,
+      64,
+      64,
+      2
+    ],
+    "attrs": {
+      "expert_counts": [
+        1,
+        2
+      ]
+    },
+    "role": "validation",
+    "predicted_us": 7.272121212121213,
+    "reference_us": 7.080606060606061,
+    "api": "aclnnGroupedMatmulSwigluQuantV2",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 0,
+        "reference_us": 7.080606060606061,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 147,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 6.703636363636364,
+          "MTE1": 0.07272727272727272,
+          "MTE2": 0.9533333333333334,
+          "CUBE": 0.09090909090909091,
+          "FIXP": 0.06909090909090909
+        }
+      }
+    ],
+    "kernel": "entry_kernel_0",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=gmm1_output count=192 bad=0 max_abs_error=0 atol=0.0625 rtol=0.25 hard_limit=4",
+      "correctness name=gmm1_mx_scale count=6 bad=0 max_abs_error=0 atol=0 rtol=0 hard_limit=0",
+      "correctness name=gmm2_output count=192 bad=0 max_abs_error=0.00373173 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/moe_ffn-02/result.json",
+    "db_sha256": [
+      "785081d90fb9ae8c508c3d1840ccdbe133a2085efd6aceebf4b9a8b2dc661b79"
+    ],
+    "query_us_max": 229.67,
+    "query_us_median": 198.525,
+    "stages_us": {
+      "grouped_matmul_swiglu_quant_v2": 7.272121212121213
+    }
+  },
+  {
+    "op": "gmm2",
+    "shape": [
+      3,
+      64,
+      64,
+      2
+    ],
+    "attrs": {
+      "expert_counts": [
+        1,
+        2
+      ]
+    },
+    "role": "validation",
+    "predicted_us": 3.40969696969697,
+    "reference_us": 3.770909090909091,
+    "api": "aclnnGroupedMatmulV5",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 1,
+        "reference_us": 3.770909090909091,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 0,
+        "max_core_rv_count": 0,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 2.8612121212121213,
+          "MTE1": 0.03151515151515152,
+          "MTE2": 0.5351515151515152,
+          "CUBE": 0.06424242424242424,
+          "FIXP": 0.3563636363636364
+        }
+      }
+    ],
+    "kernel": "entry_kernel_0",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      0
+    ],
+    "correctness": [
+      "correctness name=gmm1_output count=192 bad=0 max_abs_error=0 atol=0.0625 rtol=0.25 hard_limit=4",
+      "correctness name=gmm1_mx_scale count=6 bad=0 max_abs_error=0 atol=0 rtol=0 hard_limit=0",
+      "correctness name=gmm2_output count=192 bad=0 max_abs_error=0.00373173 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/moe_ffn-02/result.json",
+    "db_sha256": [
+      "e10aa9d1f6a6451d293bc7ab09d980e7eca82a515b1b4605615ed9d8daf670b1"
+    ],
+    "query_us_max": 82.91,
+    "query_us_median": 80.64,
+    "stages_us": {
+      "gmm2": 3.40969696969697
+    }
+  },
+  {
+    "op": "moe_ffn",
+    "shape": [
+      8,
+      64,
+      128,
+      1
+    ],
+    "attrs": {
+      "expert_counts": [
+        8
+      ]
+    },
+    "role": "validation",
+    "predicted_us": 10.967272727272729,
+    "reference_us": 10.632727272727273,
+    "api": "aclnnGroupedMatmulSwigluQuantV2 + aclnnGroupedMatmulV5",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 0,
+        "reference_us": 7.404848484848485,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 493,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 6.886666666666667,
+          "MTE1": 0.09696969696969697,
+          "MTE2": 1.3357575757575757,
+          "CUBE": 0.1006060606060606,
+          "FIXP": 0.08606060606060606
+        }
+      },
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 1,
+        "reference_us": 3.227878787878788,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 0,
+        "max_core_rv_count": 0,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 2.347272727272727,
+          "MTE1": 0.040606060606060604,
+          "MTE2": 0.666060606060606,
+          "FIXP": 0.4624242424242424,
+          "CUBE": 0.06787878787878789
+        }
+      }
+    ],
+    "kernel": "entry_kernel_0+entry_kernel_0",
+    "active_aic": [
+      32,
+      32
+    ],
+    "active_aiv": [
+      64,
+      0
+    ],
+    "correctness": [
+      "correctness name=gmm1_output count=1024 bad=0 max_abs_error=0 atol=0.0625 rtol=0.25 hard_limit=4",
+      "correctness name=gmm1_mx_scale count=32 bad=0 max_abs_error=0 atol=0 rtol=0 hard_limit=0",
+      "correctness name=gmm2_output count=512 bad=0 max_abs_error=0.00714874 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/moe_ffn-03/result.json",
+    "db_sha256": [
+      "02e2b340cd1ef74d54ec349d7fea38b822e99ac58484b6c6574ff15905b98a07",
+      "33602789a0bfb3ea0232218fc9af65b5b13c7053204d1a5f2e1c8876089d1fb5"
+    ],
+    "query_us_max": 316.97,
+    "query_us_median": 276.57500000000005,
+    "stages_us": {
+      "grouped_matmul_swiglu_quant_v2": 7.272121212121213,
+      "gmm2": 3.6951515151515153
+    }
+  },
+  {
+    "op": "grouped_matmul_swiglu_quant_v2",
+    "shape": [
+      8,
+      64,
+      128,
+      1
+    ],
+    "attrs": {
+      "expert_counts": [
+        8
+      ]
+    },
+    "role": "validation",
+    "predicted_us": 7.272121212121213,
+    "reference_us": 7.404848484848485,
+    "api": "aclnnGroupedMatmulSwigluQuantV2",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 0,
+        "reference_us": 7.404848484848485,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 493,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 6.886666666666667,
+          "MTE1": 0.09696969696969697,
+          "MTE2": 1.3357575757575757,
+          "CUBE": 0.1006060606060606,
+          "FIXP": 0.08606060606060606
+        }
+      }
+    ],
+    "kernel": "entry_kernel_0",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=gmm1_output count=1024 bad=0 max_abs_error=0 atol=0.0625 rtol=0.25 hard_limit=4",
+      "correctness name=gmm1_mx_scale count=32 bad=0 max_abs_error=0 atol=0 rtol=0 hard_limit=0",
+      "correctness name=gmm2_output count=512 bad=0 max_abs_error=0.00714874 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/moe_ffn-03/result.json",
+    "db_sha256": [
+      "02e2b340cd1ef74d54ec349d7fea38b822e99ac58484b6c6574ff15905b98a07"
+    ],
+    "query_us_max": 223.41,
+    "query_us_median": 197.74,
+    "stages_us": {
+      "grouped_matmul_swiglu_quant_v2": 7.272121212121213
+    }
+  },
+  {
+    "op": "gmm2",
+    "shape": [
+      8,
+      64,
+      128,
+      1
+    ],
+    "attrs": {
+      "expert_counts": [
+        8
+      ]
+    },
+    "role": "validation",
+    "predicted_us": 3.6951515151515153,
+    "reference_us": 3.227878787878788,
+    "api": "aclnnGroupedMatmulV5",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 1,
+        "reference_us": 3.227878787878788,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 0,
+        "max_core_rv_count": 0,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 2.347272727272727,
+          "MTE1": 0.040606060606060604,
+          "MTE2": 0.666060606060606,
+          "FIXP": 0.4624242424242424,
+          "CUBE": 0.06787878787878789
+        }
+      }
+    ],
+    "kernel": "entry_kernel_0",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      0
+    ],
+    "correctness": [
+      "correctness name=gmm1_output count=1024 bad=0 max_abs_error=0 atol=0.0625 rtol=0.25 hard_limit=4",
+      "correctness name=gmm1_mx_scale count=32 bad=0 max_abs_error=0 atol=0 rtol=0 hard_limit=0",
+      "correctness name=gmm2_output count=512 bad=0 max_abs_error=0.00714874 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/moe_ffn-03/result.json",
+    "db_sha256": [
+      "33602789a0bfb3ea0232218fc9af65b5b13c7053204d1a5f2e1c8876089d1fb5"
+    ],
+    "query_us_max": 82.22,
+    "query_us_median": 79.725,
+    "stages_us": {
+      "gmm2": 3.6951515151515153
+    }
+  },
+  {
+    "op": "moe_ffn",
+    "shape": [
+      16,
+      128,
+      128,
+      2
+    ],
+    "attrs": {
+      "expert_counts": [
+        1,
+        15
+      ]
+    },
+    "role": "validation",
+    "predicted_us": 11.553030303030305,
+    "reference_us": 11.209090909090909,
+    "api": "aclnnGroupedMatmulSwigluQuantV2 + aclnnGroupedMatmulV5",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 0,
+        "reference_us": 7.371515151515151,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 919,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 6.751515151515152,
+          "MTE1": 0.15151515151515152,
+          "MTE2": 1.2715151515151515,
+          "CUBE": 0.12,
+          "FIXP": 0.10545454545454545
+        }
+      },
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 1,
+        "reference_us": 3.8375757575757574,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 0,
+        "max_core_rv_count": 0,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 2.541212121212121,
+          "MTE1": 0.040606060606060604,
+          "MTE2": 0.7193939393939394,
+          "CUBE": 0.0696969696969697,
+          "FIXP": 0.3339393939393939
+        }
+      }
+    ],
+    "kernel": "entry_kernel_0+entry_kernel_0",
+    "active_aic": [
+      32,
+      32
+    ],
+    "active_aiv": [
+      64,
+      0
+    ],
+    "correctness": [
+      "correctness name=gmm1_output count=2048 bad=0 max_abs_error=0 atol=0.0625 rtol=0.25 hard_limit=4",
+      "correctness name=gmm1_mx_scale count=64 bad=0 max_abs_error=0 atol=0 rtol=0 hard_limit=0",
+      "correctness name=gmm2_output count=2048 bad=0 max_abs_error=0.0140705 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/moe_ffn-04/result.json",
+    "db_sha256": [
+      "35cc0f456671fdb007231aa181090be5943dc0f18a639b79bf88389b5018267d",
+      "eb8824bb760919852626e23dca3117d0cdbb0692e8190130cc7c046d2f20b8ad"
+    ],
+    "query_us_max": 309.32,
+    "query_us_median": 276.48,
+    "stages_us": {
+      "grouped_matmul_swiglu_quant_v2": 7.857878787878789,
+      "gmm2": 3.6951515151515153
+    }
+  },
+  {
+    "op": "grouped_matmul_swiglu_quant_v2",
+    "shape": [
+      16,
+      128,
+      128,
+      2
+    ],
+    "attrs": {
+      "expert_counts": [
+        1,
+        15
+      ]
+    },
+    "role": "validation",
+    "predicted_us": 7.857878787878789,
+    "reference_us": 7.371515151515151,
+    "api": "aclnnGroupedMatmulSwigluQuantV2",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 0,
+        "reference_us": 7.371515151515151,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 919,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 6.751515151515152,
+          "MTE1": 0.15151515151515152,
+          "MTE2": 1.2715151515151515,
+          "CUBE": 0.12,
+          "FIXP": 0.10545454545454545
+        }
+      }
+    ],
+    "kernel": "entry_kernel_0",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=gmm1_output count=2048 bad=0 max_abs_error=0 atol=0.0625 rtol=0.25 hard_limit=4",
+      "correctness name=gmm1_mx_scale count=64 bad=0 max_abs_error=0 atol=0 rtol=0 hard_limit=0",
+      "correctness name=gmm2_output count=2048 bad=0 max_abs_error=0.0140705 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/moe_ffn-04/result.json",
+    "db_sha256": [
+      "35cc0f456671fdb007231aa181090be5943dc0f18a639b79bf88389b5018267d"
+    ],
+    "query_us_max": 201.15,
+    "query_us_median": 197.95,
+    "stages_us": {
+      "grouped_matmul_swiglu_quant_v2": 7.857878787878789
+    }
+  },
+  {
+    "op": "gmm2",
+    "shape": [
+      16,
+      128,
+      128,
+      2
+    ],
+    "attrs": {
+      "expert_counts": [
+        1,
+        15
+      ]
+    },
+    "role": "validation",
+    "predicted_us": 3.6951515151515153,
+    "reference_us": 3.8375757575757574,
+    "api": "aclnnGroupedMatmulV5",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 1,
+        "reference_us": 3.8375757575757574,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 0,
+        "max_core_rv_count": 0,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 2.541212121212121,
+          "MTE1": 0.040606060606060604,
+          "MTE2": 0.7193939393939394,
+          "CUBE": 0.0696969696969697,
+          "FIXP": 0.3339393939393939
+        }
+      }
+    ],
+    "kernel": "entry_kernel_0",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      0
+    ],
+    "correctness": [
+      "correctness name=gmm1_output count=2048 bad=0 max_abs_error=0 atol=0.0625 rtol=0.25 hard_limit=4",
+      "correctness name=gmm1_mx_scale count=64 bad=0 max_abs_error=0 atol=0 rtol=0 hard_limit=0",
+      "correctness name=gmm2_output count=2048 bad=0 max_abs_error=0.0140705 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/moe_ffn-04/result.json",
+    "db_sha256": [
+      "eb8824bb760919852626e23dca3117d0cdbb0692e8190130cc7c046d2f20b8ad"
+    ],
+    "query_us_max": 106.77,
+    "query_us_median": 81.005,
+    "stages_us": {
+      "gmm2": 3.6951515151515153
+    }
+  },
+  {
+    "op": "moe_ffn",
+    "shape": [
+      17,
+      128,
+      64,
+      2
+    ],
+    "attrs": {
+      "expert_counts": [
+        8,
+        9
+      ]
+    },
+    "role": "validation",
+    "predicted_us": 11.26757575757576,
+    "reference_us": 11.335151515151516,
+    "api": "aclnnGroupedMatmulSwigluQuantV2 + aclnnGroupedMatmulV5",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 0,
+        "reference_us": 7.413939393939394,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 374,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 6.776969696969697,
+          "MTE1": 0.10303030303030303,
+          "MTE2": 0.9848484848484849,
+          "CUBE": 0.1006060606060606,
+          "FIXP": 0.07636363636363637
+        }
+      },
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 1,
+        "reference_us": 3.9212121212121214,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 0,
+        "max_core_rv_count": 0,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 2.567878787878788,
+          "MTE1": 0.03151515151515152,
+          "MTE2": 0.5103030303030303,
+          "CUBE": 0.06181818181818182,
+          "FIXP": 0.5351515151515152
+        }
+      }
+    ],
+    "kernel": "entry_kernel_0+entry_kernel_0",
+    "active_aic": [
+      32,
+      32
+    ],
+    "active_aiv": [
+      64,
+      0
+    ],
+    "correctness": [
+      "correctness name=gmm1_output count=1088 bad=0 max_abs_error=0 atol=0.0625 rtol=0.25 hard_limit=4",
+      "correctness name=gmm1_mx_scale count=34 bad=0 max_abs_error=0 atol=0 rtol=0 hard_limit=0",
+      "correctness name=gmm2_output count=2176 bad=0 max_abs_error=0.0149384 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/moe_ffn-05/result.json",
+    "db_sha256": [
+      "5a98380c6918201cd0f4d728f24ffbad83a03c5ea4f8308363700fe03fd63727",
+      "4afa124232288e99aedcab2e519620d7dd25ae6055dac120ec364fea8962d096"
+    ],
+    "query_us_max": 309.95,
+    "query_us_median": 275.195,
+    "stages_us": {
+      "grouped_matmul_swiglu_quant_v2": 7.857878787878789,
+      "gmm2": 3.40969696969697
+    }
+  },
+  {
+    "op": "grouped_matmul_swiglu_quant_v2",
+    "shape": [
+      17,
+      128,
+      64,
+      2
+    ],
+    "attrs": {
+      "expert_counts": [
+        8,
+        9
+      ]
+    },
+    "role": "validation",
+    "predicted_us": 7.857878787878789,
+    "reference_us": 7.413939393939394,
+    "api": "aclnnGroupedMatmulSwigluQuantV2",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 0,
+        "reference_us": 7.413939393939394,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 374,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 6.776969696969697,
+          "MTE1": 0.10303030303030303,
+          "MTE2": 0.9848484848484849,
+          "CUBE": 0.1006060606060606,
+          "FIXP": 0.07636363636363637
+        }
+      }
+    ],
+    "kernel": "entry_kernel_0",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=gmm1_output count=1088 bad=0 max_abs_error=0 atol=0.0625 rtol=0.25 hard_limit=4",
+      "correctness name=gmm1_mx_scale count=34 bad=0 max_abs_error=0 atol=0 rtol=0 hard_limit=0",
+      "correctness name=gmm2_output count=2176 bad=0 max_abs_error=0.0149384 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/moe_ffn-05/result.json",
+    "db_sha256": [
+      "5a98380c6918201cd0f4d728f24ffbad83a03c5ea4f8308363700fe03fd63727"
+    ],
+    "query_us_max": 200.14,
+    "query_us_median": 197.885,
+    "stages_us": {
+      "grouped_matmul_swiglu_quant_v2": 7.857878787878789
+    }
+  },
+  {
+    "op": "gmm2",
+    "shape": [
+      17,
+      128,
+      64,
+      2
+    ],
+    "attrs": {
+      "expert_counts": [
+        8,
+        9
+      ]
+    },
+    "role": "validation",
+    "predicted_us": 3.40969696969697,
+    "reference_us": 3.9212121212121214,
+    "api": "aclnnGroupedMatmulV5",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 1,
+        "reference_us": 3.9212121212121214,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 0,
+        "max_core_rv_count": 0,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 2.567878787878788,
+          "MTE1": 0.03151515151515152,
+          "MTE2": 0.5103030303030303,
+          "CUBE": 0.06181818181818182,
+          "FIXP": 0.5351515151515152
+        }
+      }
+    ],
+    "kernel": "entry_kernel_0",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      0
+    ],
+    "correctness": [
+      "correctness name=gmm1_output count=1088 bad=0 max_abs_error=0 atol=0.0625 rtol=0.25 hard_limit=4",
+      "correctness name=gmm1_mx_scale count=34 bad=0 max_abs_error=0 atol=0 rtol=0 hard_limit=0",
+      "correctness name=gmm2_output count=2176 bad=0 max_abs_error=0.0149384 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/moe_ffn-05/result.json",
+    "db_sha256": [
+      "4afa124232288e99aedcab2e519620d7dd25ae6055dac120ec364fea8962d096"
+    ],
+    "query_us_max": 81.56,
+    "query_us_median": 80.38,
+    "stages_us": {
+      "gmm2": 3.40969696969697
+    }
+  },
+  {
+    "op": "moe_ffn",
+    "shape": [
+      8,
+      256,
+      128,
+      2
+    ],
+    "attrs": {
+      "expert_counts": [
+        1,
+        7
+      ]
+    },
+    "role": "validation",
+    "predicted_us": 13.636060606060607,
+    "reference_us": 11.11939393939394,
+    "api": "aclnnGroupedMatmulSwigluQuantV2 + aclnnGroupedMatmulV5",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 0,
+        "reference_us": 7.489090909090909,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 493,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 6.793939393939394,
+          "MTE1": 0.26545454545454544,
+          "MTE2": 1.736969696969697,
+          "CUBE": 0.24,
+          "FIXP": 0.08606060606060606
+        }
+      },
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 1,
+        "reference_us": 3.6303030303030304,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 0,
+        "max_core_rv_count": 0,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 2.5757575757575757,
+          "MTE1": 0.05272727272727273,
+          "MTE2": 0.7090909090909091,
+          "FIXP": 0.3751515151515151,
+          "CUBE": 0.0696969696969697
+        }
+      }
+    ],
+    "kernel": "entry_kernel_0+entry_kernel_0",
+    "active_aic": [
+      32,
+      32
+    ],
+    "active_aiv": [
+      64,
+      0
+    ],
+    "correctness": [
+      "correctness name=gmm1_output count=1024 bad=0 max_abs_error=0 atol=0.0625 rtol=0.25 hard_limit=4",
+      "correctness name=gmm1_mx_scale count=32 bad=0 max_abs_error=0 atol=0 rtol=0 hard_limit=0",
+      "correctness name=gmm2_output count=2048 bad=0 max_abs_error=0.0309982 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/moe_ffn-06/result.json",
+    "db_sha256": [
+      "04222d83082bd7a0f35291abd9e046e737b3f53d03d1212e43e2b2aac25772a0",
+      "a8f552aca9106b39eabdeba5b0237e74e7b4c66252580fd816ad7d8f8b8caf74"
+    ],
+    "query_us_max": 301.35,
+    "query_us_median": 275.495,
+    "stages_us": {
+      "grouped_matmul_swiglu_quant_v2": 9.940909090909091,
+      "gmm2": 3.6951515151515153
+    }
+  },
+  {
+    "op": "grouped_matmul_swiglu_quant_v2",
+    "shape": [
+      8,
+      256,
+      128,
+      2
+    ],
+    "attrs": {
+      "expert_counts": [
+        1,
+        7
+      ]
+    },
+    "role": "validation",
+    "predicted_us": 9.940909090909091,
+    "reference_us": 7.489090909090909,
+    "api": "aclnnGroupedMatmulSwigluQuantV2",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 0,
+        "reference_us": 7.489090909090909,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 493,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 6.793939393939394,
+          "MTE1": 0.26545454545454544,
+          "MTE2": 1.736969696969697,
+          "CUBE": 0.24,
+          "FIXP": 0.08606060606060606
+        }
+      }
+    ],
+    "kernel": "entry_kernel_0",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=gmm1_output count=1024 bad=0 max_abs_error=0 atol=0.0625 rtol=0.25 hard_limit=4",
+      "correctness name=gmm1_mx_scale count=32 bad=0 max_abs_error=0 atol=0 rtol=0 hard_limit=0",
+      "correctness name=gmm2_output count=2048 bad=0 max_abs_error=0.0309982 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/moe_ffn-06/result.json",
+    "db_sha256": [
+      "04222d83082bd7a0f35291abd9e046e737b3f53d03d1212e43e2b2aac25772a0"
+    ],
+    "query_us_max": 227.3,
+    "query_us_median": 198.225,
+    "stages_us": {
+      "grouped_matmul_swiglu_quant_v2": 9.940909090909091
+    }
+  },
+  {
+    "op": "gmm2",
+    "shape": [
+      8,
+      256,
+      128,
+      2
+    ],
+    "attrs": {
+      "expert_counts": [
+        1,
+        7
+      ]
+    },
+    "role": "validation",
+    "predicted_us": 3.6951515151515153,
+    "reference_us": 3.6303030303030304,
+    "api": "aclnnGroupedMatmulV5",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 1,
+        "reference_us": 3.6303030303030304,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 0,
+        "max_core_rv_count": 0,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 2.5757575757575757,
+          "MTE1": 0.05272727272727273,
+          "MTE2": 0.7090909090909091,
+          "FIXP": 0.3751515151515151,
+          "CUBE": 0.0696969696969697
+        }
+      }
+    ],
+    "kernel": "entry_kernel_0",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      0
+    ],
+    "correctness": [
+      "correctness name=gmm1_output count=1024 bad=0 max_abs_error=0 atol=0.0625 rtol=0.25 hard_limit=4",
+      "correctness name=gmm1_mx_scale count=32 bad=0 max_abs_error=0 atol=0 rtol=0 hard_limit=0",
+      "correctness name=gmm2_output count=2048 bad=0 max_abs_error=0.0309982 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/moe_ffn-06/result.json",
+    "db_sha256": [
+      "a8f552aca9106b39eabdeba5b0237e74e7b4c66252580fd816ad7d8f8b8caf74"
+    ],
+    "query_us_max": 82.7,
+    "query_us_median": 80.24,
+    "stages_us": {
+      "gmm2": 3.6951515151515153
+    }
+  },
+  {
+    "op": "moe_ffn",
+    "shape": [
+      32,
+      128,
+      128,
+      4
+    ],
+    "attrs": {
+      "expert_counts": [
+        2,
+        6,
+        8,
+        16
+      ]
+    },
+    "role": "validation",
+    "predicted_us": 11.553030303030305,
+    "reference_us": 11.57090909090909,
+    "api": "aclnnGroupedMatmulSwigluQuantV2 + aclnnGroupedMatmulV5",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 0,
+        "reference_us": 7.6860606060606065,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 919,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 6.875151515151515,
+          "MTE1": 0.15151515151515152,
+          "MTE2": 1.256969696969697,
+          "CUBE": 0.12,
+          "FIXP": 0.10545454545454545
+        }
+      },
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 1,
+        "reference_us": 3.8848484848484848,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 0,
+        "max_core_rv_count": 0,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 2.7115151515151514,
+          "MTE1": 0.040606060606060604,
+          "MTE2": 0.5793939393939394,
+          "CUBE": 0.06848484848484848,
+          "FIXP": 0.31757575757575757
+        }
+      }
+    ],
+    "kernel": "entry_kernel_0+entry_kernel_0",
+    "active_aic": [
+      32,
+      32
+    ],
+    "active_aiv": [
+      64,
+      0
+    ],
+    "correctness": [
+      "correctness name=gmm1_output count=4096 bad=0 max_abs_error=0 atol=0.0625 rtol=0.25 hard_limit=4",
+      "correctness name=gmm1_mx_scale count=128 bad=0 max_abs_error=0 atol=0 rtol=0 hard_limit=0",
+      "correctness name=gmm2_output count=4096 bad=0 max_abs_error=0.015583 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/moe_ffn-07/result.json",
+    "db_sha256": [
+      "a4260215ef625b9fda85b868913ed6053b83c11b60e5d790744c8453509553a4",
+      "59a941c06402aa9fec4f20fd133350199cfc9dd91eb4e9d479fb1376eefc6a74"
+    ],
+    "query_us_max": 311.79,
+    "query_us_median": 279.975,
+    "stages_us": {
+      "grouped_matmul_swiglu_quant_v2": 7.857878787878789,
+      "gmm2": 3.6951515151515153
+    }
+  },
+  {
+    "op": "grouped_matmul_swiglu_quant_v2",
+    "shape": [
+      32,
+      128,
+      128,
+      4
+    ],
+    "attrs": {
+      "expert_counts": [
+        2,
+        6,
+        8,
+        16
+      ]
+    },
+    "role": "validation",
+    "predicted_us": 7.857878787878789,
+    "reference_us": 7.6860606060606065,
+    "api": "aclnnGroupedMatmulSwigluQuantV2",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 0,
+        "reference_us": 7.6860606060606065,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 919,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 6.875151515151515,
+          "MTE1": 0.15151515151515152,
+          "MTE2": 1.256969696969697,
+          "CUBE": 0.12,
+          "FIXP": 0.10545454545454545
+        }
+      }
+    ],
+    "kernel": "entry_kernel_0",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=gmm1_output count=4096 bad=0 max_abs_error=0 atol=0.0625 rtol=0.25 hard_limit=4",
+      "correctness name=gmm1_mx_scale count=128 bad=0 max_abs_error=0 atol=0 rtol=0 hard_limit=0",
+      "correctness name=gmm2_output count=4096 bad=0 max_abs_error=0.015583 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/moe_ffn-07/result.json",
+    "db_sha256": [
+      "a4260215ef625b9fda85b868913ed6053b83c11b60e5d790744c8453509553a4"
+    ],
+    "query_us_max": 223.59,
+    "query_us_median": 199.29000000000002,
+    "stages_us": {
+      "grouped_matmul_swiglu_quant_v2": 7.857878787878789
+    }
+  },
+  {
+    "op": "gmm2",
+    "shape": [
+      32,
+      128,
+      128,
+      4
+    ],
+    "attrs": {
+      "expert_counts": [
+        2,
+        6,
+        8,
+        16
+      ]
+    },
+    "role": "validation",
+    "predicted_us": 3.6951515151515153,
+    "reference_us": 3.8848484848484848,
+    "api": "aclnnGroupedMatmulV5",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 1,
+        "reference_us": 3.8848484848484848,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 0,
+        "max_core_rv_count": 0,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 2.7115151515151514,
+          "MTE1": 0.040606060606060604,
+          "MTE2": 0.5793939393939394,
+          "CUBE": 0.06848484848484848,
+          "FIXP": 0.31757575757575757
+        }
+      }
+    ],
+    "kernel": "entry_kernel_0",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      0
+    ],
+    "correctness": [
+      "correctness name=gmm1_output count=4096 bad=0 max_abs_error=0 atol=0.0625 rtol=0.25 hard_limit=4",
+      "correctness name=gmm1_mx_scale count=128 bad=0 max_abs_error=0 atol=0 rtol=0 hard_limit=0",
+      "correctness name=gmm2_output count=4096 bad=0 max_abs_error=0.015583 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/moe_ffn-07/result.json",
+    "db_sha256": [
+      "59a941c06402aa9fec4f20fd133350199cfc9dd91eb4e9d479fb1376eefc6a74"
+    ],
+    "query_us_max": 83.21,
+    "query_us_median": 80.635,
+    "stages_us": {
+      "gmm2": 3.6951515151515153
+    }
+  },
+  {
+    "op": "moe_ffn",
+    "shape": [
+      16,
+      256,
+      256,
+      1
+    ],
+    "attrs": {
+      "expert_counts": [
+        16
+      ]
+    },
+    "role": "validation",
+    "predicted_us": 14.456969696969697,
+    "reference_us": 11.752727272727274,
+    "api": "aclnnGroupedMatmulSwigluQuantV2 + aclnnGroupedMatmulV5",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 0,
+        "reference_us": 8.192727272727273,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 1715,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 6.83030303030303,
+          "MTE1": 0.46424242424242423,
+          "MTE2": 1.7454545454545454,
+          "CUBE": 0.31757575757575757,
+          "FIXP": 0.14424242424242426
+        }
+      },
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 1,
+        "reference_us": 3.56,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 0,
+        "max_core_rv_count": 0,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 2.5193939393939395,
+          "MTE1": 0.08545454545454545,
+          "MTE2": 0.7909090909090909,
+          "FIXP": 0.4193939393939394,
+          "CUBE": 0.07939393939393939
+        }
+      }
+    ],
+    "kernel": "entry_kernel_0+entry_kernel_0",
+    "active_aic": [
+      32,
+      32
+    ],
+    "active_aiv": [
+      64,
+      0
+    ],
+    "correctness": [
+      "correctness name=gmm1_output count=4096 bad=0 max_abs_error=0 atol=0.0625 rtol=0.25 hard_limit=4",
+      "correctness name=gmm1_mx_scale count=128 bad=0 max_abs_error=0 atol=0 rtol=0 hard_limit=0",
+      "correctness name=gmm2_output count=4096 bad=0 max_abs_error=0.127815 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/moe_ffn-08/result.json",
+    "db_sha256": [
+      "2f67618b3b6fec29c8d3d424c35562f5f350673913204314be0ee822259ba10e",
+      "eb6ded78df01cf1d12cdc99bc39bba339a4ca174f5c6cc1d31e85ae48f3ead95"
+    ],
+    "query_us_max": 305.98,
+    "query_us_median": 274.79499999999996,
+    "stages_us": {
+      "grouped_matmul_swiglu_quant_v2": 9.940909090909091,
+      "gmm2": 4.516060606060606
+    }
+  },
+  {
+    "op": "grouped_matmul_swiglu_quant_v2",
+    "shape": [
+      16,
+      256,
+      256,
+      1
+    ],
+    "attrs": {
+      "expert_counts": [
+        16
+      ]
+    },
+    "role": "validation",
+    "predicted_us": 9.940909090909091,
+    "reference_us": 8.192727272727273,
+    "api": "aclnnGroupedMatmulSwigluQuantV2",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 0,
+        "reference_us": 8.192727272727273,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 1715,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 6.83030303030303,
+          "MTE1": 0.46424242424242423,
+          "MTE2": 1.7454545454545454,
+          "CUBE": 0.31757575757575757,
+          "FIXP": 0.14424242424242426
+        }
+      }
+    ],
+    "kernel": "entry_kernel_0",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=gmm1_output count=4096 bad=0 max_abs_error=0 atol=0.0625 rtol=0.25 hard_limit=4",
+      "correctness name=gmm1_mx_scale count=128 bad=0 max_abs_error=0 atol=0 rtol=0 hard_limit=0",
+      "correctness name=gmm2_output count=4096 bad=0 max_abs_error=0.127815 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/moe_ffn-08/result.json",
+    "db_sha256": [
+      "2f67618b3b6fec29c8d3d424c35562f5f350673913204314be0ee822259ba10e"
+    ],
+    "query_us_max": 200.52,
+    "query_us_median": 197.305,
+    "stages_us": {
+      "grouped_matmul_swiglu_quant_v2": 9.940909090909091
+    }
+  },
+  {
+    "op": "gmm2",
+    "shape": [
+      16,
+      256,
+      256,
+      1
+    ],
+    "attrs": {
+      "expert_counts": [
+        16
+      ]
+    },
+    "role": "validation",
+    "predicted_us": 4.516060606060606,
+    "reference_us": 3.56,
+    "api": "aclnnGroupedMatmulV5",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 1,
+        "reference_us": 3.56,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 0,
+        "max_core_rv_count": 0,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 2.5193939393939395,
+          "MTE1": 0.08545454545454545,
+          "MTE2": 0.7909090909090909,
+          "FIXP": 0.4193939393939394,
+          "CUBE": 0.07939393939393939
+        }
+      }
+    ],
+    "kernel": "entry_kernel_0",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      0
+    ],
+    "correctness": [
+      "correctness name=gmm1_output count=4096 bad=0 max_abs_error=0 atol=0.0625 rtol=0.25 hard_limit=4",
+      "correctness name=gmm1_mx_scale count=128 bad=0 max_abs_error=0 atol=0 rtol=0 hard_limit=0",
+      "correctness name=gmm2_output count=4096 bad=0 max_abs_error=0.127815 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/moe_ffn-08/result.json",
+    "db_sha256": [
+      "eb6ded78df01cf1d12cdc99bc39bba339a4ca174f5c6cc1d31e85ae48f3ead95"
+    ],
+    "query_us_max": 81.06,
+    "query_us_median": 79.225,
+    "stages_us": {
+      "gmm2": 4.516060606060606
+    }
+  },
+  {
+    "op": "moe_ffn",
+    "shape": [
+      32,
+      256,
+      128,
+      2
+    ],
+    "attrs": {
+      "expert_counts": [
+        1,
+        31
+      ]
+    },
+    "role": "validation",
+    "predicted_us": 13.636060606060607,
+    "reference_us": 12.118787878787879,
+    "api": "aclnnGroupedMatmulSwigluQuantV2 + aclnnGroupedMatmulV5",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 0,
+        "reference_us": 8.213939393939395,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 1771,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 7.06,
+          "MTE1": 0.2896969696969697,
+          "MTE2": 1.6593939393939394,
+          "CUBE": 0.31757575757575757,
+          "FIXP": 0.14424242424242426
+        }
+      },
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 1,
+        "reference_us": 3.904848484848485,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 0,
+        "max_core_rv_count": 0,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 2.826060606060606,
+          "MTE1": 0.05272727272727273,
+          "MTE2": 0.7890909090909091,
+          "FIXP": 0.5690909090909091,
+          "CUBE": 0.07393939393939394
+        }
+      }
+    ],
+    "kernel": "entry_kernel_0+entry_kernel_0",
+    "active_aic": [
+      32,
+      32
+    ],
+    "active_aiv": [
+      64,
+      0
+    ],
+    "correctness": [
+      "correctness name=gmm1_output count=4096 bad=0 max_abs_error=0 atol=0.0625 rtol=0.25 hard_limit=4",
+      "correctness name=gmm1_mx_scale count=128 bad=0 max_abs_error=0 atol=0 rtol=0 hard_limit=0",
+      "correctness name=gmm2_output count=8192 bad=0 max_abs_error=0.0614948 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/moe_ffn-09/result.json",
+    "db_sha256": [
+      "17607f0681c5d897d677f529bcab18c4911962e51897eb6b540ba7e90d61a95c",
+      "247cb26934db4e0b99cdcd3a06e1a2c07174f55600acb93b2b70680db3ed5b4c"
+    ],
+    "query_us_max": 299.3,
+    "query_us_median": 274.365,
+    "stages_us": {
+      "grouped_matmul_swiglu_quant_v2": 9.940909090909091,
+      "gmm2": 3.6951515151515153
+    }
+  },
+  {
+    "op": "grouped_matmul_swiglu_quant_v2",
+    "shape": [
+      32,
+      256,
+      128,
+      2
+    ],
+    "attrs": {
+      "expert_counts": [
+        1,
+        31
+      ]
+    },
+    "role": "validation",
+    "predicted_us": 9.940909090909091,
+    "reference_us": 8.213939393939395,
+    "api": "aclnnGroupedMatmulSwigluQuantV2",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 0,
+        "reference_us": 8.213939393939395,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 1771,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 7.06,
+          "MTE1": 0.2896969696969697,
+          "MTE2": 1.6593939393939394,
+          "CUBE": 0.31757575757575757,
+          "FIXP": 0.14424242424242426
+        }
+      }
+    ],
+    "kernel": "entry_kernel_0",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=gmm1_output count=4096 bad=0 max_abs_error=0 atol=0.0625 rtol=0.25 hard_limit=4",
+      "correctness name=gmm1_mx_scale count=128 bad=0 max_abs_error=0 atol=0 rtol=0 hard_limit=0",
+      "correctness name=gmm2_output count=8192 bad=0 max_abs_error=0.0614948 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/moe_ffn-09/result.json",
+    "db_sha256": [
+      "17607f0681c5d897d677f529bcab18c4911962e51897eb6b540ba7e90d61a95c"
+    ],
+    "query_us_max": 231.64,
+    "query_us_median": 197.445,
+    "stages_us": {
+      "grouped_matmul_swiglu_quant_v2": 9.940909090909091
+    }
+  },
+  {
+    "op": "gmm2",
+    "shape": [
+      32,
+      256,
+      128,
+      2
+    ],
+    "attrs": {
+      "expert_counts": [
+        1,
+        31
+      ]
+    },
+    "role": "validation",
+    "predicted_us": 3.6951515151515153,
+    "reference_us": 3.904848484848485,
+    "api": "aclnnGroupedMatmulV5",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 1,
+        "reference_us": 3.904848484848485,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 0,
+        "max_core_rv_count": 0,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 2.826060606060606,
+          "MTE1": 0.05272727272727273,
+          "MTE2": 0.7890909090909091,
+          "FIXP": 0.5690909090909091,
+          "CUBE": 0.07393939393939394
+        }
+      }
+    ],
+    "kernel": "entry_kernel_0",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      0
+    ],
+    "correctness": [
+      "correctness name=gmm1_output count=4096 bad=0 max_abs_error=0 atol=0.0625 rtol=0.25 hard_limit=4",
+      "correctness name=gmm1_mx_scale count=128 bad=0 max_abs_error=0 atol=0 rtol=0 hard_limit=0",
+      "correctness name=gmm2_output count=8192 bad=0 max_abs_error=0.0614948 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/moe_ffn-09/result.json",
+    "db_sha256": [
+      "247cb26934db4e0b99cdcd3a06e1a2c07174f55600acb93b2b70680db3ed5b4c"
+    ],
+    "query_us_max": 81.88,
+    "query_us_median": 79.86,
+    "stages_us": {
+      "gmm2": 3.6951515151515153
+    }
+  },
+  {
+    "op": "moe_ffn",
+    "shape": [
+      64,
+      128,
+      256,
+      4
+    ],
+    "attrs": {
+      "expert_counts": [
+        8,
+        8,
+        16,
+        32
+      ]
+    },
+    "role": "validation",
+    "predicted_us": 12.373939393939395,
+    "reference_us": 12.496363636363636,
+    "api": "aclnnGroupedMatmulSwigluQuantV2 + aclnnGroupedMatmulV5",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 0,
+        "reference_us": 8.354545454545455,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 3363,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 6.6478787878787875,
+          "MTE1": 0.2703030303030303,
+          "MTE2": 1.44,
+          "CUBE": 0.23636363636363636,
+          "FIXP": 0.22181818181818183
+        }
+      },
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 1,
+        "reference_us": 4.141818181818182,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 0,
+        "max_core_rv_count": 0,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 3.04,
+          "MTE1": 0.06121212121212121,
+          "MTE2": 0.6333333333333333,
+          "FIXP": 0.3884848484848485,
+          "CUBE": 0.08242424242424243
+        }
+      }
+    ],
+    "kernel": "entry_kernel_0+entry_kernel_0",
+    "active_aic": [
+      32,
+      32
+    ],
+    "active_aiv": [
+      64,
+      0
+    ],
+    "correctness": [
+      "correctness name=gmm1_output count=16384 bad=0 max_abs_error=0 atol=0.0625 rtol=0.25 hard_limit=4",
+      "correctness name=gmm1_mx_scale count=512 bad=0 max_abs_error=0 atol=0 rtol=0 hard_limit=0",
+      "correctness name=gmm2_output count=8192 bad=0 max_abs_error=0.0623169 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/moe_ffn-10/result.json",
+    "db_sha256": [
+      "49a475526beb29a626b812b3f2396c4cbd8ae186412bbc1ccd8351cd6a8f1c29",
+      "abce57d1eae78fe445d501c5fec97200f998904eb29b70a2d588316038b7c465"
+    ],
+    "query_us_max": 335.31,
+    "query_us_median": 277.72,
+    "stages_us": {
+      "grouped_matmul_swiglu_quant_v2": 7.857878787878789,
+      "gmm2": 4.516060606060606
+    }
+  },
+  {
+    "op": "grouped_matmul_swiglu_quant_v2",
+    "shape": [
+      64,
+      128,
+      256,
+      4
+    ],
+    "attrs": {
+      "expert_counts": [
+        8,
+        8,
+        16,
+        32
+      ]
+    },
+    "role": "validation",
+    "predicted_us": 7.857878787878789,
+    "reference_us": 8.354545454545455,
+    "api": "aclnnGroupedMatmulSwigluQuantV2",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 0,
+        "reference_us": 8.354545454545455,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 3363,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 6.6478787878787875,
+          "MTE1": 0.2703030303030303,
+          "MTE2": 1.44,
+          "CUBE": 0.23636363636363636,
+          "FIXP": 0.22181818181818183
+        }
+      }
+    ],
+    "kernel": "entry_kernel_0",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=gmm1_output count=16384 bad=0 max_abs_error=0 atol=0.0625 rtol=0.25 hard_limit=4",
+      "correctness name=gmm1_mx_scale count=512 bad=0 max_abs_error=0 atol=0 rtol=0 hard_limit=0",
+      "correctness name=gmm2_output count=8192 bad=0 max_abs_error=0.0623169 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/moe_ffn-10/result.json",
+    "db_sha256": [
+      "49a475526beb29a626b812b3f2396c4cbd8ae186412bbc1ccd8351cd6a8f1c29"
+    ],
+    "query_us_max": 223.1,
+    "query_us_median": 198.76999999999998,
+    "stages_us": {
+      "grouped_matmul_swiglu_quant_v2": 7.857878787878789
+    }
+  },
+  {
+    "op": "gmm2",
+    "shape": [
+      64,
+      128,
+      256,
+      4
+    ],
+    "attrs": {
+      "expert_counts": [
+        8,
+        8,
+        16,
+        32
+      ]
+    },
+    "role": "validation",
+    "predicted_us": 4.516060606060606,
+    "reference_us": 4.141818181818182,
+    "api": "aclnnGroupedMatmulV5",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 1,
+        "reference_us": 4.141818181818182,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 0,
+        "max_core_rv_count": 0,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 3.04,
+          "MTE1": 0.06121212121212121,
+          "MTE2": 0.6333333333333333,
+          "FIXP": 0.3884848484848485,
+          "CUBE": 0.08242424242424243
+        }
+      }
+    ],
+    "kernel": "entry_kernel_0",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      0
+    ],
+    "correctness": [
+      "correctness name=gmm1_output count=16384 bad=0 max_abs_error=0 atol=0.0625 rtol=0.25 hard_limit=4",
+      "correctness name=gmm1_mx_scale count=512 bad=0 max_abs_error=0 atol=0 rtol=0 hard_limit=0",
+      "correctness name=gmm2_output count=8192 bad=0 max_abs_error=0.0623169 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/moe_ffn-10/result.json",
+    "db_sha256": [
+      "abce57d1eae78fe445d501c5fec97200f998904eb29b70a2d588316038b7c465"
+    ],
+    "query_us_max": 83.55,
+    "query_us_median": 80.87,
+    "stages_us": {
+      "gmm2": 4.516060606060606
+    }
+  },
+  {
+    "op": "mhc",
+    "shape": [
+      1,
+      4,
+      80
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "implementation": "split",
+      "num_iters": 20
+    },
+    "role": "validation",
+    "predicted_us": 16.70181818181818,
+    "reference_us": 17.55939393939394,
+    "api": "aclnnMhcPre + aclnnMhcSinkhorn + aclnnMhcPost",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_1",
+        "launch_id": 0,
+        "reference_us": 9.802424242424243,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 606,
+        "max_core_mmad": 1,
+        "critical_pipeline_us": {
+          "SCALAR": 3.793939393939394,
+          "MTE2": 2.2418181818181817,
+          "SIMD": 1.6327272727272728,
+          "MTE3": 1.0260606060606061
+        }
+      },
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 1,
+        "reference_us": 5.073333333333333,
+        "block_dim": 1,
+        "active_aic": 0,
+        "active_aiv": 1,
+        "max_core_rv_count": 1903,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 3.3448484848484847,
+          "SIMD": 4.038181818181818,
+          "MTE2": 0.2012121212121212,
+          "MTE3": 0.24424242424242423
+        }
+      },
+      {
+        "kernel": "entry_kernel_5",
+        "launch_id": 2,
+        "reference_us": 2.6836363636363636,
+        "block_dim": 1,
+        "active_aic": 0,
+        "active_aiv": 1,
+        "max_core_rv_count": 384,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 1.6290909090909091,
+          "SIMD": 1.0363636363636364,
+          "MTE2": 0.336969696969697,
+          "MTE3": 0.4696969696969697
+        }
+      }
+    ],
+    "kernel": "entry_kernel_1+entry_kernel_0+entry_kernel_5",
+    "active_aic": [
+      32,
+      0,
+      0
+    ],
+    "active_aiv": [
+      64,
+      1,
+      1
+    ],
+    "correctness": [
+      "correctness name=hin count=80 bad=0 max_abs_error=0.000394732 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=4 bad=0 max_abs_error=4.54699e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=16 bad=0 max_abs_error=3.18626e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=1 bad=0 max_abs_error=2.09528e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=24 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=4 bad=0 max_abs_error=5.94908e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=16 bad=0 max_abs_error=3.9292e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=320 bad=0 max_abs_error=0.00185325 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=320 bad=0 max_abs_error=0.00185327 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/mhc-reserve1/result.json",
+    "db_sha256": [
+      "156636e58a09c708c18728d8094bf5d6ab9ad560eba571f8db9f42d65030587d",
+      "26451273bb41b32947446b4df91b786266f42d83bce3a90478feaa626817c4c0",
+      "b0badae18c9a6bf0b0de1370f769ccbd8d8ac48098d645add617bdf81f338aa5"
+    ],
+    "query_us_max": 430.27,
+    "query_us_median": 359.445,
+    "stages_us": {
+      "mhc_pre": 8.31212121212121,
+      "split_sink": 5.349090909090909,
+      "split_post": 3.04060606060606
+    }
+  },
+  {
+    "op": "mhc_pre",
+    "shape": [
+      1,
+      4,
+      80
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "alpha_count": 3,
+      "has_gamma": false,
+      "return_intermediates": true
+    },
+    "role": "validation",
+    "predicted_us": 8.31212121212121,
+    "reference_us": 9.802424242424243,
+    "api": "aclnnMhcPre",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_1",
+        "launch_id": 0,
+        "reference_us": 9.802424242424243,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 606,
+        "max_core_mmad": 1,
+        "critical_pipeline_us": {
+          "SCALAR": 3.793939393939394,
+          "MTE2": 2.2418181818181817,
+          "SIMD": 1.6327272727272728,
+          "MTE3": 1.0260606060606061
+        }
+      }
+    ],
+    "kernel": "entry_kernel_1",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=hin count=80 bad=0 max_abs_error=0.000394732 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=4 bad=0 max_abs_error=4.54699e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=16 bad=0 max_abs_error=3.18626e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=1 bad=0 max_abs_error=2.09528e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=24 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=4 bad=0 max_abs_error=5.94908e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=16 bad=0 max_abs_error=3.9292e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=320 bad=0 max_abs_error=0.00185325 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=320 bad=0 max_abs_error=0.00185327 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/mhc-reserve1/result.json",
+    "db_sha256": [
+      "156636e58a09c708c18728d8094bf5d6ab9ad560eba571f8db9f42d65030587d"
+    ],
+    "query_us_max": 179.64,
+    "query_us_median": 173.615,
+    "stages_us": {
+      "mhc_pre": 8.31212121212121
+    }
+  }
+]

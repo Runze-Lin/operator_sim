@@ -1,0 +1,1086 @@
+[
+  {
+    "id": "m2_cal_skinny_k",
+    "op": "matmul",
+    "shape": [
+      1,
+      256,
+      1024
+    ],
+    "attrs": {},
+    "role": "development",
+    "predicted_us": 4.560229898458819,
+    "reference_us": 4.624242544174194,
+    "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+    "active_aic": 4,
+    "active_aiv": 0,
+    "correctness": [
+      "correctness elements=256 bad=0 max_abs_error=0.015625 atol=0.01 rtol=0.005"
+    ],
+    "source": "results/v0.4/dataset.json",
+    "api": "aclnnMatmul \u2192 MatMulV3",
+    "status": "ok"
+  },
+  {
+    "id": "m2_cal_k_tail",
+    "op": "matmul",
+    "shape": [
+      65,
+      128,
+      129
+    ],
+    "attrs": {},
+    "role": "development",
+    "predicted_us": 3.627777342144439,
+    "reference_us": 3.7115153074264526,
+    "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+    "active_aic": 10,
+    "active_aiv": 0,
+    "correctness": [
+      "correctness elements=8320 bad=0 max_abs_error=0.015625 atol=0.01 rtol=0.005"
+    ],
+    "source": "results/v0.4/dataset.json",
+    "api": "aclnnMatmul \u2192 MatMulV3",
+    "status": "ok"
+  },
+  {
+    "id": "m2_cal_full",
+    "op": "matmul",
+    "shape": [
+      128,
+      512,
+      512
+    ],
+    "attrs": {},
+    "role": "development",
+    "predicted_us": 4.506080117090378,
+    "reference_us": 4.381818175315857,
+    "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+    "active_aic": 32,
+    "active_aiv": 0,
+    "correctness": [
+      "correctness elements=65536 bad=0 max_abs_error=0.03125 atol=0.01 rtol=0.005"
+    ],
+    "source": "results/v0.4/dataset.json",
+    "api": "aclnnMatmul \u2192 MatMulV3",
+    "status": "ok"
+  },
+  {
+    "id": "m2_test_m_tail",
+    "op": "matmul",
+    "shape": [
+      129,
+      256,
+      256
+    ],
+    "attrs": {},
+    "role": "development",
+    "predicted_us": 3.9468988093849275,
+    "reference_us": 3.6642425060272217,
+    "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+    "active_aic": 20,
+    "active_aiv": 0,
+    "correctness": [
+      "correctness elements=33024 bad=0 max_abs_error=0.015625 atol=0.01 rtol=0.005"
+    ],
+    "source": "results/v0.4/dataset.json",
+    "api": "aclnnMatmul \u2192 MatMulV3",
+    "status": "ok"
+  },
+  {
+    "id": "m2_test_k_work",
+    "op": "matmul",
+    "shape": [
+      17,
+      256,
+      1024
+    ],
+    "attrs": {},
+    "role": "development",
+    "predicted_us": 5.040239826638453,
+    "reference_us": 4.741818428039551,
+    "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+    "active_aic": 8,
+    "active_aiv": 0,
+    "correctness": [
+      "correctness elements=4352 bad=0 max_abs_error=0.015625 atol=0.01 rtol=0.005"
+    ],
+    "source": "results/v0.4/dataset.json",
+    "api": "aclnnMatmul \u2192 MatMulV3",
+    "status": "ok"
+  },
+  {
+    "id": "import_v1_m_cal_prefill",
+    "op": "matmul",
+    "shape": [
+      128,
+      256,
+      512
+    ],
+    "attrs": {},
+    "role": "development",
+    "predicted_us": 4.260930496312998,
+    "reference_us": 4.393333196640015,
+    "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+    "active_aic": 32,
+    "active_aiv": 0,
+    "correctness": [
+      "correctness elements=32768 bad=0 max_abs_error=0.015625 atol=0.01 rtol=0.005"
+    ],
+    "source": "results/v0.4/dataset.json",
+    "api": "aclnnMatmul \u2192 MatMulV3",
+    "status": "ok"
+  },
+  {
+    "id": "import_v1_m_cal_decode",
+    "op": "matmul",
+    "shape": [
+      1,
+      128,
+      128
+    ],
+    "attrs": {},
+    "role": "development",
+    "predicted_us": 3.3703927461928664,
+    "reference_us": 3.3563634157180786,
+    "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+    "active_aic": 2,
+    "active_aiv": 0,
+    "correctness": [
+      "correctness elements=128 bad=0 max_abs_error=0 atol=0.01 rtol=0.005"
+    ],
+    "source": "results/v0.4/dataset.json",
+    "api": "aclnnMatmul \u2192 MatMulV3",
+    "status": "ok"
+  },
+  {
+    "id": "import_v1_m_cal_small",
+    "op": "matmul",
+    "shape": [
+      32,
+      64,
+      64
+    ],
+    "attrs": {},
+    "role": "development",
+    "predicted_us": 3.367861201990678,
+    "reference_us": 3.291515290737152,
+    "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+    "active_aic": 2,
+    "active_aiv": 0,
+    "correctness": [
+      "correctness elements=2048 bad=0 max_abs_error=0.015625 atol=0.01 rtol=0.005"
+    ],
+    "source": "results/v0.4/dataset.json",
+    "api": "aclnnMatmul \u2192 MatMulV3",
+    "status": "ok"
+  },
+  {
+    "id": "import_v1_m_test_prefill",
+    "op": "matmul",
+    "shape": [
+      48,
+      128,
+      192
+    ],
+    "attrs": {},
+    "role": "development",
+    "predicted_us": 3.6327130876330145,
+    "reference_us": 3.5751516819000244,
+    "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+    "active_aic": 6,
+    "active_aiv": 0,
+    "correctness": [
+      "correctness elements=6144 bad=0 max_abs_error=0.015625 atol=0.01 rtol=0.005"
+    ],
+    "source": "results/v0.4/dataset.json",
+    "api": "aclnnMatmul \u2192 MatMulV3",
+    "status": "ok"
+  },
+  {
+    "id": "import_v1_m_test_tail",
+    "op": "matmul",
+    "shape": [
+      17,
+      96,
+      128
+    ],
+    "attrs": {},
+    "role": "development",
+    "predicted_us": 3.5054952431828683,
+    "reference_us": 3.4939396381378174,
+    "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+    "active_aic": 4,
+    "active_aiv": 0,
+    "correctness": [
+      "correctness elements=1632 bad=0 max_abs_error=0.015625 atol=0.01 rtol=0.005"
+    ],
+    "source": "results/v0.4/dataset.json",
+    "api": "aclnnMatmul \u2192 MatMulV3",
+    "status": "ok"
+  },
+  {
+    "id": "a7_cal_k256",
+    "op": "addmm",
+    "shape": [
+      16,
+      64,
+      256
+    ],
+    "attrs": {
+      "self_shape": [
+        64
+      ],
+      "alpha": 1,
+      "beta": 1
+    },
+    "role": "development",
+    "predicted_us": 5.039720111164404,
+    "reference_us": 3.4466666666666668,
+    "kernel": "entry_kernel_2",
+    "active_aic": 1,
+    "active_aiv": 0,
+    "correctness": [
+      "correctness count=1024 bad=0 max_abs_error=0.03125 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/model-v7/a7_cal_k256/result.json",
+    "api": "aclnnAddmm",
+    "status": "ok"
+  },
+  {
+    "id": "a7_hold_q9",
+    "op": "addmm",
+    "shape": [
+      9,
+      64,
+      128
+    ],
+    "attrs": {
+      "self_shape": [
+        64
+      ],
+      "alpha": 1,
+      "beta": 1
+    },
+    "role": "development",
+    "predicted_us": 4.765602626335463,
+    "reference_us": 3.3424242424242423,
+    "kernel": "entry_kernel_2",
+    "active_aic": 1,
+    "active_aiv": 0,
+    "correctness": [
+      "correctness count=576 bad=0 max_abs_error=0.015625 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/model-v7/a7_hold_q9/result.json",
+    "api": "aclnnAddmm",
+    "status": "ok"
+  },
+  {
+    "id": "reused_addmm",
+    "op": "addmm",
+    "shape": [
+      2,
+      16,
+      16
+    ],
+    "attrs": {
+      "self_shape": [
+        16
+      ],
+      "alpha": 1,
+      "beta": 1
+    },
+    "role": "development",
+    "predicted_us": 4.532370106101819,
+    "reference_us": 2.992121212121212,
+    "kernel": "entry_kernel_2",
+    "active_aic": 1,
+    "active_aiv": 0,
+    "correctness": [
+      "correctness count=32 bad=0 max_abs_error=0.00390625 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "docs/extensions/smoke-950dt.json",
+    "api": "aclnnAddmm",
+    "status": "ok"
+  },
+  {
+    "id": "addmm_128_192_256",
+    "op": "addmm",
+    "shape": [
+      128,
+      192,
+      256
+    ],
+    "attrs": {
+      "self_shape": [
+        192
+      ],
+      "alpha": 1,
+      "beta": 1
+    },
+    "role": "validation",
+    "predicted_us": 5.039720111164404,
+    "reference_us": 3.763030303030303,
+    "kernel": "entry_kernel_2",
+    "active_aic": 24,
+    "active_aiv": 0,
+    "correctness": [
+      "correctness count=24576 bad=0 max_abs_error=0.03125 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cube/addmm_128_192_256/result.json",
+    "source_sha256": "9db1bcd907da708f1bd8db1e303e02140426192f0ae9d8229acf2b370d688967",
+    "kernels": [
+      {
+        "kernel": "entry_kernel_2",
+        "reference_us": 3.763030303030303,
+        "active_aic": 24,
+        "active_aiv": 0,
+        "max_core_mmad": 1,
+        "db_sha256": "ed5bd75b95b93bedc4a5d8545021724b33d2e2455d0c9f05795d52adbb62da5a",
+        "db_bytes": 7327744
+      }
+    ],
+    "api": "aclnnAddmm",
+    "status": "ok",
+    "query_seconds": 2.474e-05,
+    "wall_s": 53.0875789897982
+  },
+  {
+    "id": "addmm_16_192_384",
+    "op": "addmm",
+    "shape": [
+      16,
+      192,
+      384
+    ],
+    "attrs": {
+      "self_shape": [
+        192
+      ],
+      "alpha": 1,
+      "beta": 1
+    },
+    "role": "validation",
+    "predicted_us": 5.2511516838117975,
+    "reference_us": 3.876969696969697,
+    "kernel": "entry_kernel_2",
+    "active_aic": 3,
+    "active_aiv": 0,
+    "correctness": [
+      "correctness count=3072 bad=0 max_abs_error=0.03125 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cube/addmm_16_192_384/result.json",
+    "source_sha256": "544976ce6080d4faf7e2404b7d084e7114ced8b13f0ec0eb8b4cb1f8d8acaaf2",
+    "kernels": [
+      {
+        "kernel": "entry_kernel_2",
+        "reference_us": 3.876969696969697,
+        "active_aic": 3,
+        "active_aiv": 0,
+        "max_core_mmad": 2,
+        "db_sha256": "5b15276282a212c7fb3f03c4a0bab866734d26c6a91c0071526863a81b3a1cd4",
+        "db_bytes": 1044480
+      }
+    ],
+    "api": "aclnnAddmm",
+    "status": "ok",
+    "query_seconds": 2.588e-05,
+    "wall_s": 50.11479606013745
+  },
+  {
+    "id": "addmm_256_512_256",
+    "op": "addmm",
+    "shape": [
+      256,
+      512,
+      256
+    ],
+    "attrs": {
+      "self_shape": [
+        512
+      ],
+      "alpha": 1,
+      "beta": 1
+    },
+    "role": "validation",
+    "predicted_us": 5.623102358773547,
+    "reference_us": 4.327272727272727,
+    "kernel": "entry_kernel_2",
+    "active_aic": 32,
+    "active_aiv": 0,
+    "correctness": [
+      "correctness count=131072 bad=0 max_abs_error=0.03125 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cube/addmm_256_512_256/result.json",
+    "source_sha256": "0089f7c5e9ad6e26eb3673f9d1025a52a2caa4fd1596a635ff0394404b25b695",
+    "kernels": [
+      {
+        "kernel": "entry_kernel_2",
+        "reference_us": 4.327272727272727,
+        "active_aic": 32,
+        "active_aiv": 0,
+        "max_core_mmad": 1,
+        "db_sha256": "f0e85abef4f025043094eaa61c57d4ea04ab425818cbe1aadaa85e53cd8af5f2",
+        "db_bytes": 9793536
+      }
+    ],
+    "api": "aclnnAddmm",
+    "status": "ok",
+    "query_seconds": 3.568e-05,
+    "wall_s": 66.14771626982838
+  },
+  {
+    "id": "addmm_4_80_48",
+    "op": "addmm",
+    "shape": [
+      4,
+      80,
+      48
+    ],
+    "attrs": {
+      "self_shape": [
+        80
+      ],
+      "alpha": 1,
+      "beta": 1
+    },
+    "role": "validation",
+    "predicted_us": 4.61267224072415,
+    "reference_us": 3.6254545454545455,
+    "kernel": "entry_kernel_2",
+    "active_aic": 2,
+    "active_aiv": 0,
+    "correctness": [
+      "correctness count=320 bad=0 max_abs_error=0.00390625 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cube/addmm_4_80_48/result.json",
+    "source_sha256": "2171e3c0a6da82470f8d7832c6a96fe345eb499dbf25d51a948770789cb1302e",
+    "kernels": [
+      {
+        "kernel": "entry_kernel_2",
+        "reference_us": 3.6254545454545455,
+        "active_aic": 2,
+        "active_aiv": 0,
+        "max_core_mmad": 1,
+        "db_sha256": "4563c9ccbf6188e11ce5b57bdd5ddda045077134c2cd708022f70b0fc87df5b6",
+        "db_bytes": 655360
+      }
+    ],
+    "api": "aclnnAddmm",
+    "status": "ok",
+    "query_seconds": 2.87e-05,
+    "wall_s": 45.11473937984556
+  },
+  {
+    "id": "addmm_512_512_256",
+    "op": "addmm",
+    "shape": [
+      512,
+      512,
+      256
+    ],
+    "attrs": {
+      "self_shape": [
+        512
+      ],
+      "alpha": 1,
+      "beta": 1
+    },
+    "role": "validation",
+    "predicted_us": 6.402197331432853,
+    "reference_us": 4.4787878787878785,
+    "kernel": "entry_kernel_2",
+    "active_aic": 32,
+    "active_aiv": 0,
+    "correctness": [
+      "correctness count=262144 bad=0 max_abs_error=0.03125 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cube/addmm_512_512_256/result.json",
+    "source_sha256": "40f9ffc57db1dda95e7f3667bdf9fb5632e0ce9f1e572a08b14b440a2dfaa940",
+    "kernels": [
+      {
+        "kernel": "entry_kernel_2",
+        "reference_us": 4.4787878787878785,
+        "active_aic": 32,
+        "active_aiv": 0,
+        "max_core_mmad": 2,
+        "db_sha256": "2d8bbf3aba9929b63f1fdae0799817fa6033604b5cf3ad7d85626535e0f60515",
+        "db_bytes": 10993664
+      }
+    ],
+    "api": "aclnnAddmm",
+    "status": "ok",
+    "query_seconds": 4.064e-05,
+    "wall_s": 85.37569736992009
+  },
+  {
+    "id": "addmm_64_128_512",
+    "op": "addmm",
+    "shape": [
+      64,
+      128,
+      512
+    ],
+    "attrs": {
+      "self_shape": [
+        128
+      ],
+      "alpha": 1,
+      "beta": 1
+    },
+    "role": "validation",
+    "predicted_us": 5.462583256459191,
+    "reference_us": 4.5193939393939395,
+    "kernel": "entry_kernel_2",
+    "active_aic": 8,
+    "active_aiv": 0,
+    "correctness": [
+      "correctness count=8192 bad=0 max_abs_error=0.0625 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cube/addmm_64_128_512/result.json",
+    "source_sha256": "e3e9add54ae6149fa5db0cebbc7b46dd34b99cc8ac9c869a905f6498f5a3e7aa",
+    "kernels": [
+      {
+        "kernel": "entry_kernel_2",
+        "reference_us": 4.5193939393939395,
+        "active_aic": 8,
+        "active_aiv": 0,
+        "max_core_mmad": 2,
+        "db_sha256": "cf248b436c2c6cc447dd8af19ce16324d1417ce20d4a02ab8100e11afd990a01",
+        "db_bytes": 2818048
+      }
+    ],
+    "api": "aclnnAddmm",
+    "status": "ok",
+    "query_seconds": 2.536e-05,
+    "wall_s": 52.111238789977506
+  },
+  {
+    "id": "matmul_128_192_256",
+    "op": "matmul",
+    "shape": [
+      128,
+      192,
+      256
+    ],
+    "attrs": {},
+    "role": "validation",
+    "predicted_us": 3.815878797908989,
+    "reference_us": 3.7975757575757574,
+    "kernel": "entry_kernel_2",
+    "active_aic": 24,
+    "active_aiv": 0,
+    "correctness": [
+      "correctness count=24576 bad=0 max_abs_error=0.015625 atol=0.01 rtol=0.005"
+    ],
+    "source": "runs/v8cube/matmul_128_192_256/result.json",
+    "source_sha256": "918b43a00601ba6998e3597925110556f0146750e68349cd273b09eaa246bee7",
+    "kernels": [
+      {
+        "kernel": "entry_kernel_2",
+        "reference_us": 3.7975757575757574,
+        "active_aic": 24,
+        "active_aiv": 0,
+        "max_core_mmad": 1,
+        "db_sha256": "02f9f3d9f7723fbd722dd438cd2c4fcbdb762753915f1aa0885f26954084c53e",
+        "db_bytes": 7286784
+      }
+    ],
+    "api": "aclnnMatmul",
+    "status": "ok",
+    "query_seconds": 0.00010675,
+    "wall_s": 53.095687930006534
+  },
+  {
+    "id": "matmul_1_32_16",
+    "op": "matmul",
+    "shape": [
+      1,
+      32,
+      16
+    ],
+    "attrs": {},
+    "role": "validation",
+    "predicted_us": 3.188145708743793,
+    "reference_us": 3.0296969696969698,
+    "kernel": "entry_kernel_2",
+    "active_aic": 1,
+    "active_aiv": 0,
+    "correctness": [
+      "correctness count=32 bad=0 max_abs_error=0 atol=0.01 rtol=0.005"
+    ],
+    "source": "runs/v8cube/matmul_1_32_16/result.json",
+    "source_sha256": "46a9aaf5d9866968d529f4727a95b2f9c751979f5f99355507740683be2c71bf",
+    "kernels": [
+      {
+        "kernel": "entry_kernel_2",
+        "reference_us": 3.0296969696969698,
+        "active_aic": 1,
+        "active_aiv": 0,
+        "max_core_mmad": 1,
+        "db_sha256": "4e806f4ef2a782006ac67eff2f54e1a42006b4f25509dfb140db3dc4ad6ee2e8",
+        "db_bytes": 352256
+      }
+    ],
+    "api": "aclnnMatmul",
+    "status": "ok",
+    "query_seconds": 0.00319308,
+    "wall_s": 45.10838245018385
+  },
+  {
+    "id": "matmul_256_512_256",
+    "op": "matmul",
+    "shape": [
+      256,
+      512,
+      256
+    ],
+    "attrs": {},
+    "role": "validation",
+    "predicted_us": 4.3679753807186765,
+    "reference_us": 4.191515151515151,
+    "kernel": "entry_kernel_2",
+    "active_aic": 32,
+    "active_aiv": 0,
+    "correctness": [
+      "correctness count=131072 bad=0 max_abs_error=0.03125 atol=0.01 rtol=0.005"
+    ],
+    "source": "runs/v8cube/matmul_256_512_256/result.json",
+    "source_sha256": "18c6ca1fd4adac6c9eafb9f177c7268e0852d90c481e8cabd82127f887ab8455",
+    "kernels": [
+      {
+        "kernel": "entry_kernel_2",
+        "reference_us": 4.191515151515151,
+        "active_aic": 32,
+        "active_aiv": 0,
+        "max_core_mmad": 1,
+        "db_sha256": "d71483ebc7cafbb5306c3de2f2703b41301e60bf651807754931a0d817a74a3f",
+        "db_bytes": 9908224
+      }
+    ],
+    "api": "aclnnMatmul",
+    "status": "ok",
+    "query_seconds": 0.00011908,
+    "wall_s": 57.1167472100351
+  },
+  {
+    "id": "matmul_31_64_257",
+    "op": "matmul",
+    "shape": [
+      31,
+      64,
+      257
+    ],
+    "attrs": {},
+    "role": "validation",
+    "predicted_us": 3.7643884819925315,
+    "reference_us": 4.090909090909091,
+    "kernel": "entry_kernel_2",
+    "active_aic": 2,
+    "active_aiv": 0,
+    "correctness": [
+      "correctness count=1984 bad=0 max_abs_error=0.015625 atol=0.01 rtol=0.005"
+    ],
+    "source": "runs/v8cube/matmul_31_64_257/result.json",
+    "source_sha256": "e2b805eda9b2dcf84073fc6dfe6f5210ea9f0586a21d031406e7e847bfe7bd0c",
+    "kernels": [
+      {
+        "kernel": "entry_kernel_2",
+        "reference_us": 4.090909090909091,
+        "active_aic": 2,
+        "active_aiv": 0,
+        "max_core_mmad": 2,
+        "db_sha256": "2f81d32ab7b4f49033fe78e918f340850213e042e095eb470ad293443b429633",
+        "db_bytes": 729088
+      }
+    ],
+    "api": "aclnnMatmul",
+    "status": "ok",
+    "query_seconds": 0.00010763,
+    "wall_s": 51.12512322003022
+  },
+  {
+    "id": "matmul_4_80_48",
+    "op": "matmul",
+    "shape": [
+      4,
+      80,
+      48
+    ],
+    "attrs": {},
+    "role": "validation",
+    "predicted_us": 3.256504670309444,
+    "reference_us": 3.5236363636363635,
+    "kernel": "entry_kernel_2",
+    "active_aic": 2,
+    "active_aiv": 0,
+    "correctness": [
+      "correctness count=320 bad=0 max_abs_error=0.015625 atol=0.01 rtol=0.005"
+    ],
+    "source": "runs/v8cube/matmul_4_80_48/result.json",
+    "source_sha256": "03ec0df4980b693a8a681de53e89898560fc7f9e34d206e578a2580d006acfb1",
+    "kernels": [
+      {
+        "kernel": "entry_kernel_2",
+        "reference_us": 3.5236363636363635,
+        "active_aic": 2,
+        "active_aiv": 0,
+        "max_core_mmad": 1,
+        "db_sha256": "de49f371a08de16e9db979084532a91c942847b3c0b8f37c3bb909c108894e89",
+        "db_bytes": 659456
+      }
+    ],
+    "api": "aclnnMatmul",
+    "status": "ok",
+    "query_seconds": 0.00012677,
+    "wall_s": 43.105535940034315
+  },
+  {
+    "id": "matmul_512_512_256",
+    "op": "matmul",
+    "shape": [
+      512,
+      512,
+      256
+    ],
+    "attrs": {},
+    "role": "validation",
+    "predicted_us": 5.156123653730549,
+    "reference_us": 4.79939393939394,
+    "kernel": "entry_kernel_2",
+    "active_aic": 32,
+    "active_aiv": 0,
+    "correctness": [
+      "correctness count=262144 bad=0 max_abs_error=0.03125 atol=0.01 rtol=0.005"
+    ],
+    "source": "runs/v8cube/matmul_512_512_256/result.json",
+    "source_sha256": "f07ddad4340329c53a7b0f4063825dcb5ecab7c0c45d48ebd312e6d13acdf0eb",
+    "kernels": [
+      {
+        "kernel": "entry_kernel_2",
+        "reference_us": 4.79939393939394,
+        "active_aic": 32,
+        "active_aiv": 0,
+        "max_core_mmad": 2,
+        "db_sha256": "539568a91fabe6a93c1f37144e3f74b02d358cdbbde5085914f8812588ec464f",
+        "db_bytes": 10932224
+      }
+    ],
+    "api": "aclnnMatmul",
+    "status": "ok",
+    "query_seconds": 0.00012675,
+    "wall_s": 75.25668764999136
+  },
+  {
+    "id": "matmul_64_128_512",
+    "op": "matmul",
+    "shape": [
+      64,
+      128,
+      512
+    ],
+    "attrs": {},
+    "role": "validation",
+    "predicted_us": 4.18330890600197,
+    "reference_us": 4.436969696969697,
+    "kernel": "entry_kernel_2",
+    "active_aic": 8,
+    "active_aiv": 0,
+    "correctness": [
+      "correctness count=8192 bad=0 max_abs_error=0.015625 atol=0.01 rtol=0.005"
+    ],
+    "source": "runs/v8cube/matmul_64_128_512/result.json",
+    "source_sha256": "a18a9c65a5d98741a5f6c4961de65c269ba6242dd9bb5efa85a600ee8f1a92bf",
+    "kernels": [
+      {
+        "kernel": "entry_kernel_2",
+        "reference_us": 4.436969696969697,
+        "active_aic": 8,
+        "active_aiv": 0,
+        "max_core_mmad": 2,
+        "db_sha256": "67c470d000005e74948a2b8a480126f0d89fcd028a20c93fa3d5509a5394b58a",
+        "db_bytes": 2838528
+      }
+    ],
+    "api": "aclnnMatmul",
+    "status": "ok",
+    "query_seconds": 0.00011771,
+    "wall_s": 52.12863299995661
+  },
+  {
+    "id": "addmm_1_32_16",
+    "op": "addmm",
+    "shape": [
+      1,
+      32,
+      16
+    ],
+    "attrs": {
+      "self_shape": [
+        32
+      ],
+      "alpha": 1,
+      "beta": 1
+    },
+    "role": "validation",
+    "predicted_us": 4.53737800949028,
+    "reference_us": 3.287878787878788,
+    "kernel": "entry_kernel_2",
+    "active_aic": 1,
+    "active_aiv": 0,
+    "correctness": [
+      "correctness count=32 bad=0 max_abs_error=0 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cube-isolated/addmm_1_32_16/result.json",
+    "source_sha256": "de9f9eb1516ba6dd20fc3a0b64c25f198eda22b0c9eda21d9df764f9c9f3b14d",
+    "kernels": [
+      {
+        "kernel": "entry_kernel_2",
+        "reference_us": 3.287878787878788,
+        "active_aic": 1,
+        "active_aiv": 0,
+        "max_core_mmad": 1,
+        "db_sha256": "f279443b79c4fc1421cc58ec34449fcc534acaa0b6776c039d1f7eb2ec9c6f0b",
+        "db_bytes": 352256
+      }
+    ],
+    "api": "aclnnAddmm",
+    "status": "ok",
+    "query_seconds": 0.00015044,
+    "wall_s": 62.19954900001176
+  },
+  {
+    "id": "addmm_2_32_32",
+    "op": "addmm",
+    "shape": [
+      2,
+      32,
+      32
+    ],
+    "attrs": {
+      "self_shape": [
+        32
+      ],
+      "alpha": 1,
+      "beta": 1
+    },
+    "role": "validation",
+    "predicted_us": 4.551341289080213,
+    "reference_us": 3.4084848484848487,
+    "kernel": "entry_kernel_2",
+    "active_aic": 1,
+    "active_aiv": 0,
+    "correctness": [
+      "correctness count=64 bad=0 max_abs_error=0.00390625 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cube-isolated/addmm_2_32_32/result.json",
+    "source_sha256": "908f36c991ab7481b7df9d99d02d688d51229e2683d989c9df52a43352a75ce2",
+    "kernels": [
+      {
+        "kernel": "entry_kernel_2",
+        "reference_us": 3.4084848484848487,
+        "active_aic": 1,
+        "active_aiv": 0,
+        "max_core_mmad": 1,
+        "db_sha256": "4d47967d67e0aeed1c0bc5bd6f0ec3c9ea2367e77fc3c5aef36ac3c46a9a87c9",
+        "db_bytes": 352256
+      }
+    ],
+    "api": "aclnnAddmm",
+    "status": "ok",
+    "query_seconds": 0.00544536,
+    "wall_s": 67.18217432009988
+  },
+  {
+    "id": "addmm_31_64_257",
+    "op": "addmm",
+    "shape": [
+      31,
+      64,
+      257
+    ],
+    "attrs": {
+      "self_shape": [
+        64
+      ],
+      "alpha": 1,
+      "beta": 1
+    },
+    "role": "validation",
+    "predicted_us": 5.066149057745328,
+    "reference_us": 4.252727272727273,
+    "kernel": "entry_kernel_2",
+    "active_aic": 2,
+    "active_aiv": 0,
+    "correctness": [
+      "correctness count=1984 bad=0 max_abs_error=0.03125 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cube-isolated/addmm_31_64_257/result.json",
+    "source_sha256": "27e013e8c0a0fdd8fbf168f46d3117e82223a6305920641a259e89314d5b895c",
+    "kernels": [
+      {
+        "kernel": "entry_kernel_2",
+        "reference_us": 4.252727272727273,
+        "active_aic": 2,
+        "active_aiv": 0,
+        "max_core_mmad": 2,
+        "db_sha256": "8653b739eeaec8f7fd6c25a68f2ee8b7ae6698b53cd5a990901deffbc868a8fe",
+        "db_bytes": 729088
+      }
+    ],
+    "api": "aclnnAddmm",
+    "status": "ok",
+    "query_seconds": 2.68e-05,
+    "wall_s": 150.3996454498265
+  },
+  {
+    "id": "addmm_9_128_256",
+    "op": "addmm",
+    "shape": [
+      9,
+      128,
+      256
+    ],
+    "attrs": {
+      "self_shape": [
+        128
+      ],
+      "alpha": 1,
+      "beta": 1
+    },
+    "role": "validation",
+    "predicted_us": 4.9546435333880705,
+    "reference_us": 3.7563636363636363,
+    "kernel": "entry_kernel_2",
+    "active_aic": 2,
+    "active_aiv": 0,
+    "correctness": [
+      "correctness count=1152 bad=0 max_abs_error=0.03125 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cube-isolated/addmm_9_128_256/result.json",
+    "source_sha256": "0967b5b75570c52cde9f18f4fbe63fc3633c531b568f8371ee27ee024f5cbea8",
+    "kernels": [
+      {
+        "kernel": "entry_kernel_2",
+        "reference_us": 3.7563636363636363,
+        "active_aic": 2,
+        "active_aiv": 0,
+        "max_core_mmad": 1,
+        "db_sha256": "d918767aa1454bc60764300009a2d28fcfb44edda6be01c8a81f69f946a69b2f",
+        "db_bytes": 675840
+      }
+    ],
+    "api": "aclnnAddmm",
+    "status": "ok",
+    "query_seconds": 2.628e-05,
+    "wall_s": 116.34634236013517
+  },
+  {
+    "id": "matmul_192_384_256",
+    "op": "matmul",
+    "shape": [
+      192,
+      384,
+      256
+    ],
+    "attrs": {},
+    "role": "validation",
+    "predicted_us": 4.3349937732918935,
+    "reference_us": 3.9254545454545453,
+    "kernel": "entry_kernel_2",
+    "active_aic": 24,
+    "active_aiv": 0,
+    "correctness": [
+      "correctness count=73728 bad=0 max_abs_error=0.015625 atol=0.01 rtol=0.005"
+    ],
+    "source": "runs/v8cube-isolated/matmul_192_384_256/result.json",
+    "source_sha256": "1ca22756347334dac6bfc4a86856c185a90dd0ab6ec69085096b56a036420e7b",
+    "kernels": [
+      {
+        "kernel": "entry_kernel_2",
+        "reference_us": 3.9254545454545453,
+        "active_aic": 24,
+        "active_aiv": 0,
+        "max_core_mmad": 1,
+        "db_sha256": "40597425ade9625b1973fca3b18977afcd46a37e829582e38f7bd8c999004792",
+        "db_bytes": 7315456
+      }
+    ],
+    "api": "aclnnMatmul",
+    "status": "ok",
+    "query_seconds": 0.00012111,
+    "wall_s": 179.53550829016604
+  },
+  {
+    "id": "matmul_2_32_32",
+    "op": "matmul",
+    "shape": [
+      2,
+      32,
+      32
+    ],
+    "attrs": {},
+    "role": "validation",
+    "predicted_us": 3.170772212788286,
+    "reference_us": 3.244242424242424,
+    "kernel": "entry_kernel_2",
+    "active_aic": 1,
+    "active_aiv": 0,
+    "correctness": [
+      "correctness count=64 bad=0 max_abs_error=0.015625 atol=0.01 rtol=0.005"
+    ],
+    "source": "runs/v8cube-isolated/matmul_2_32_32/result.json",
+    "source_sha256": "9072caf511cb6b354e779a0768d99dc7e7adac002abe3149287f70ef8bbfeceb",
+    "kernels": [
+      {
+        "kernel": "entry_kernel_2",
+        "reference_us": 3.244242424242424,
+        "active_aic": 1,
+        "active_aiv": 0,
+        "max_core_mmad": 1,
+        "db_sha256": "a3e613c08ecac75064cb2103c6de4958b956d67da5a05e06a3d26f13dc361452",
+        "db_bytes": 352256
+      }
+    ],
+    "api": "aclnnMatmul",
+    "status": "ok",
+    "query_seconds": 0.00019931,
+    "wall_s": 82.18978924001567
+  },
+  {
+    "id": "matmul_9_128_256",
+    "op": "matmul",
+    "shape": [
+      9,
+      128,
+      256
+    ],
+    "attrs": {},
+    "role": "validation",
+    "predicted_us": 3.603006579868685,
+    "reference_us": 4.018787878787879,
+    "kernel": "entry_kernel_2",
+    "active_aic": 2,
+    "active_aiv": 0,
+    "correctness": [
+      "correctness count=1152 bad=0 max_abs_error=0.015625 atol=0.01 rtol=0.005"
+    ],
+    "source": "runs/v8cube-isolated/matmul_9_128_256/result.json",
+    "source_sha256": "6a22e95ad3f146dabb6c5e54a1ff35433e1dd0eb5c49ce169e3ae2d8b5b2962e",
+    "kernels": [
+      {
+        "kernel": "entry_kernel_2",
+        "reference_us": 4.018787878787879,
+        "active_aic": 2,
+        "active_aiv": 0,
+        "max_core_mmad": 1,
+        "db_sha256": "256b2edd0f809740496e3bad53c35fe8945401afd44bed7a1bd36297e47c0171",
+        "db_bytes": 679936
+      }
+    ],
+    "api": "aclnnMatmul",
+    "status": "ok",
+    "query_seconds": 0.00011142,
+    "wall_s": 50.14489912008867
+  }
+]
