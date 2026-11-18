@@ -165,6 +165,7 @@ def project(op, shape, attrs, reference_result, work, reference_chip, target_chi
              'MTE/HBM split uses logical bytes and nominal bandwidth; HBM traffic is unmeasured.']
     stages = {}
     target_plan = None
+    timing_diagnostics = {}
     aic=aiv=0
     def prices(part, res, w):
         nonlocal aic,aiv
@@ -181,7 +182,18 @@ def project(op, shape, attrs, reference_result, work, reference_chip, target_chi
         if target_plan:
             aic,aiv = target_plan['active_aic'],target_plan['active_aiv']
             notes[0] = 'Target core count drives a fresh 950-policy partition; target local work and waves are priced once.'
-        stages['scheduled_window']=_legacy_time(op,shape,f,target_plan)
+        adjusted = None
+        if op == 'quant':
+            from .quant_transfer_v14 import project_quant
+            adjusted = project_quant(shape, f, ref, target, target_plan)
+        elif op == 'matmul':
+            from .cube_transfer_v14 import project_matmul
+            adjusted = project_matmul(shape, f, ref, target, target_plan)
+        if adjusted is None:
+            stages['scheduled_window'] = _legacy_time(op, shape, f, target_plan)
+        else:
+            stages['scheduled_window'], timing_diagnostics = adjusted
+            notes[1] = 'Matched calibrated phase model. See timing_diagnostics for its scope.'
     elif op=='addmm':
         r=reference_result
         f=prices(op,r,work)
@@ -223,4 +235,4 @@ def project(op, shape, attrs, reference_result, work, reference_chip, target_chi
             f=prices(part,{'predicted_us':us},w)
             stages[part]=_template(part,shape,attrs,f)
     return dict(latency_us=sum(stages.values()),active_aiv=aiv,active_aic=aic,method='fixed_dispatch_phase_projection',
-                reference_latency_us=base,stages_us=stages,target_plan=target_plan,notes=list(dict.fromkeys(notes)))
+                reference_latency_us=base,stages_us=stages,target_plan=target_plan,timing_diagnostics=timing_diagnostics,notes=list(dict.fromkeys(notes)))

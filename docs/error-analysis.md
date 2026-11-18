@@ -1,67 +1,143 @@
 # 算子耗时预测与 CA 校准误差
 
-| 算子 | DT 开发 / 独立 | DT 独立 WAPE / 最大误差 | PR 开发 / 独立 | PR 独立 WAPE / 最大误差 | 校准状态 |
-|---|---:|---:|---:|---:|---|
-| dynamicMXquant | 19 / 10 | 3.47% / 5.92% | 1 / 1 | 6.67% / 6.67% | DT 完整，PR 配对及冻结验证 |
-| Matmul | 10 / 10 | 6.29% / 10.43% | 1 / 1 | 10.47% / 10.47% | DT 完整，PR 配对及冻结验证 |
-| FA | 16 / 12 | 1.14% / 13.61% | 1 / 0 | N/A | DT 完整，PR 配对开发 |
-| RMSNorm | 43 / 10 | 17.04% / 45.96% | 0 / 0 | N/A | DT 完整，PR 外推 |
-| Addmm | 13 / 10 | 6.09% / 11.54% | 0 / 0 | N/A | DT 完整，PR 外推 |
-| Lightning Indexer | 3 / 10 | 14.56% / 31.71% | 0 / 0 | N/A | DT 完整，PR 外推 |
-| mHC Pre | 13 / 10 | 2.97% / 6.09% | 0 / 0 | N/A | DT 完整，PR 外推 |
-| mHC Sinkhorn | 13 / 10 | 10.37% / 39.20% | 0 / 0 | N/A | DT 完整，PR 外推 |
-| mHC PreSinkhorn | 3 / 10 | 8.05% / 14.19% | 0 / 0 | N/A | DT 完整，PR 外推 |
-| mHC Post | 43 / 10 | 27.28% / 84.91% | 0 / 0 | N/A | DT 完整，PR 外推 |
-| mHC组合 | 13 / 10 | 2.34% / 5.02% | 0 / 0 | N/A | DT 完整，PR 外推 |
-| KDA recurrent | 3 / 10 | 7.94% / 17.55% | 0 / 0 | N/A | DT 完整，PR 外推 |
-| KDA chunk | 0 / 0 | N/A | 0 / 0 | N/A | 仅结构 |
-| GMM1–SwiGLU–MX量化 | 4 / 10 | 10.59% / 32.74% | 0 / 0 | N/A | DT 完整，PR 外推 |
-| MoE GMM2 | 4 / 10 | 9.55% / 26.86% | 0 / 0 | N/A | DT 完整，PR 外推 |
-| MoE FFN组合 | 4 / 10 | 7.31% / 23.01% | 0 / 0 | N/A | DT 完整，PR 外推 |
+| 算子 | DT 开发 / 独立 | DT 独立 WAPE / 最大误差 | PR 开发 / 独立 | PR 独立 WAPE / 最大误差 | 最慢查询 ms（DT / PR） | 校准状态 |
+|---|---:|---:|---:|---:|---:|---|
+| dynamicMXquant | 19 / 10 | 3.47% / 5.92% | 2 / 10 | 5.34% / 14.48% | 1.694 / 1.051 | DT、PR 完整 CA |
+| Matmul | 10 / 10 | 6.29% / 10.43% | 2 / 10 | 4.30% / 8.80% | 0.151 / 0.684 | DT、PR 完整 CA |
+| FA | 16 / 12 | 1.14% / 13.61% | 1 / 10 | 6.95% / 9.50% | 0.157 / 1.203 | DT、PR 完整 CA |
+| RMSNorm | 43 / 10 | 17.04% / 45.96% | 0 / 0 | N/A | 1.032 / 0.108 | DT 完整，PR 外推 |
+| Addmm | 13 / 10 | 6.09% / 11.54% | 0 / 0 | N/A | 2.539 / 0.095 | DT 完整，PR 外推 |
+| Lightning Indexer | 3 / 10 | 14.56% / 31.71% | 0 / 0 | N/A | 0.928 / 0.425 | DT 完整，PR 外推 |
+| mHC Pre | 13 / 10 | 2.97% / 6.09% | 0 / 0 | N/A | 0.637 / 0.282 | DT 完整，PR 外推 |
+| mHC Sinkhorn | 13 / 10 | 10.37% / 39.20% | 0 / 0 | N/A | 0.694 / 0.133 | DT 完整，PR 外推 |
+| mHC PreSinkhorn | 3 / 10 | 8.05% / 14.19% | 0 / 0 | N/A | 0.245 / 0.372 | DT 完整，PR 外推 |
+| mHC Post | 43 / 10 | 27.28% / 84.91% | 0 / 0 | N/A | 1.086 / 0.137 | DT 完整，PR 外推 |
+| mHC组合 | 13 / 10 | 2.34% / 5.02% | 0 / 0 | N/A | 0.363 / 0.487 | DT 完整，PR 外推 |
+| KDA recurrent | 3 / 10 | 7.94% / 17.55% | 0 / 0 | N/A | 1.649 / 0.193 | DT 完整，PR 外推 |
+| KDA chunk | 0 / 0 | N/A | 0 / 0 | N/A | N/A | 仅结构 |
+| GMM1–SwiGLU–MX量化 | 4 / 10 | 10.59% / 32.74% | 0 / 0 | N/A | 0.144 / 0.290 | DT 完整，PR 外推 |
+| MoE GMM2 | 4 / 10 | 9.55% / 26.86% | 0 / 0 | N/A | 0.076 / 0.169 | DT 完整，PR 外推 |
+| MoE FFN组合 | 4 / 10 | 7.31% / 23.01% | 0 / 0 | N/A | 0.251 / 0.441 | DT 完整，PR 外推 |
 
-WAPE = 绝对误差之和 / CA 参考时间之和。最大误差取单例的绝对相对误差。DT 使用已有冻结独立集，更新接口后逐点回放。PR 独立指预测冻结后首次在该 SKU 采集的 shape；同一 shape 可以有更早的 DT 记录。每个 PR 独立组仅一例，WAPE 与最大误差相等。960 / 970 / 980 均无实测。
+WAPE 为全部绝对误差之和除以同组 CA 总耗时，最大误差取最差单例的绝对相对误差。PR 的 5 个旧样例均列为开发，独立列只包括冻结之后在 PR 首次采集的 shape。DT 沿用已冻结的独立集。查询列为已安装 wheel 在同一进程内逐条调用的墙钟峰值，单位 ms。
 
-## 950PR 与 950DT 的配对检验
+## 两款芯片的配置与 CA 差异
 
-两端均为 CANN 9.2.1，输入合同、数值校验和计时口径一致。逐例核对运行时 SKU、安装包实际 kernel、黄金输出、二进制与 trace 指纹、各核窗口和跨核设备时间。下列三个开发例用于辨认两种芯片分核差异，独立例在调整分块后冻结。
+下表使用后端单芯片配置的稠密峰值。算力单位为万亿标量操作/秒（TOP/s，浮点时也称 TFLOPS，FMA 计两次）。带宽为十进制 GB/s，容量显式区分 GiB 和 GB。差异列以 DT 为基准。
 
-| 算子与本卡 shape | PR 角色 | DT CA µs | PR CA µs | 原样复用 DT 预测 µs | PR 预测 µs | 有符号误差 | PR 预测 / 实测活跃核（C,V） |
-|---|---|---:|---:|---:|---:|---:|---|
-| quant `[64, 1024]` | 开发 | 5.532 | 5.373 | 5.214 | 5.430 | +1.06% | (0,44) / (0,44) |
-| matmul `[128, 256, 512]` | 开发 | 4.393 | 4.368 | 4.261 | 4.555 | +4.28% | (16,0) / (16,0) |
-| fa `[16, 64, 64]` | 开发 | 9.052 | 8.472 | 8.657 | 8.666 | +2.29% | (1,2) / (1,2) |
-| quant `[512, 256]` | 独立 | 5.208 | 5.090 | 5.430 | 5.430 | +6.67% | (0,52) / (0,52) |
-| matmul `[129, 256, 256]` | 独立 | 3.664 | 3.609 | 3.947 | 3.987 | +10.47% | (20,0) / (20,0) |
+| 项目 | Ascend950DT_9582 | Ascend950PR_957b | PR 相对 DT 及对建模的影响 |
+|---|---:|---:|---|
+| CANN、CA 架构、时钟 | 9.2.1、DAV_3510、1.65 GHz | 9.2.1、DAV_3510、1.65 GHz | 相同时钟允许按周期比较库内控制与流水 |
+| Cube / Vector 核 | 32 / 64 | 28 / 56 | 各少 12.5%，核数比均为 1:2。目标核数可能触发另一种分块 |
+| Cube 峰值，32 / 16 / 8 / 4 位 | 未知 / 432 / 865 / 1730 | 未知 / 378 / 756 / 1513 | 16 位少 12.5%，BF16 单 Cube 核均为 13.5 TOP/s。严格 FP32 峰值未登记 |
+| Vector 峰值，32 / 16 / 8 / 4 位 | 27 / 54 / 54 / 未知 | 23 / 47 / 47 / 未知 | FP32 整片少 14.8%，16 位少 13.0%。8 位项来自 INT8 |
+| 片外容量 | 96 GiB（103.08 GB） | 112 GiB（120.26 GB） | 多 16 GiB，可容纳更大的工作集 |
+| 片外名义峰值带宽 | 4000 GB/s | 1400 GB/s | 少 65%。PR 的带宽档位按容量匹配，持续实测带宽未知 |
+| CA 实际载入的外存子模型 | HBM3，2 channels | LPDDR5，1 channel | 来自模拟器日志；通道数仅指 CA 子模型 |
+| L2 | 128 MiB | 112 MiB | 少 12.5%，本次缺少实际命中率和 L2 带宽 |
+| 本地缓冲 | UB 248 KiB，L1 512 KiB，L0A/B 各 64 KiB，L0C 256 KiB | 同 DT | 每核容量相同，每核分到的工作量仍可能改变 UB 轮数 |
+| MTE2 / MTE3 带宽 | 未知 / 未知 | 未知 / 未知 | 预测使用参考阶段成本和假设的带宽敏感度 |
 
-![同 shape 设备时间，按开发和独立标注](../results/v0.13/sku-comparison.png)
+核数、时钟与缓冲容量对应安装包的精确 SKU 配置。16 位 Cube 为 FP16/BF16，8 位 Cube 为 FP8/INT8，4 位为 MXFP4；具体算子仍受已测 dtype 合同约束。两端复用同一顶层 CA 配置并能选中不同的外存子模型。单次 kernel 的总耗时不能反推整片外存峰值利用率。[DT 配置与来源](../configs/chips/Ascend950DT_9582.json) · [PR 配置与来源](../configs/chips/Ascend950PR_957b.json) · [CA 外存日志摘录](../results/v0.13/sku/memory-models.json)
 
-在 PR 的开发点，quant [64,1024] 的活跃 AIV 从 DT 的 64 变成 44，Matmul [128,256,512] 的活跃 AIC 从 32 变成 16，FA 维持 1 AIC / 2 AIV。这使按目标核数重做分块成为 quant 与 Matmul 的校准项。两款平台配置了不同片外存储子模型。同一小算子只有合成的设备时延，无法单独识别持续外存带宽、缓存命中率或实际 HBM 字节。
+## 冻结 PR 预测与直接复用 DT 的同集比较
 
-冻结的 quant [512,256] 在两端的预测都受同一个 5.430 µs 控制下限约束，核数虽命中，shape 在 PR 上的额外时延变化未被捕获。Matmul [129,256,256] 在两端均为 20 AIC，PR 阶段缩放使预测从 3.947 µs 增至 3.987 µs，CA 却从 DT 3.664 µs 降至 PR 3.609 µs。该点已有 DT 基线偏差，迁移倍率额外放大偏差；需要阶段级证据才能将剩余误差分到读、算、控制。两个独立点都没有显示相对直接复用 DT 耗时预测的精度优势。
+“复用 DT”是在相同 shape、dtype、属性上运行 DT 预测器，然后将预测时间直接用作 PR 时间。两种预测共用一个 PR CA 分母。另列 v0.13 原跨芯片预测，用于区分本轮改动的效果。
 
-新增 5 个合格 PR CA 样例，成功进程墙钟累计 298.8 s。另有三次通信失败、运行时 SKU 不符的尝试，额外累计 206.3 s，未计入精度。DT 复用既有 trace。[实际 ACLNN、外存子模型与核数](../results/v0.13/sku/README.md) · [开发配对摘要](../results/v0.13/sku/pairs.json) · [冻结合同](../results/v0.13/sku/holdout-freeze.json) · [独立配对原始摘要](../results/v0.13/sku/holdout.json)
+| 算子 | 独立 shape | v0.14 PR WAPE / 最大误差 | 直接复用 DT WAPE / 最大误差 | v0.13 PR WAPE / 最大误差 | 比直接复用更准 / 持平 / 更差 |
+|---|---:|---:|---:|---:|---:|
+| DynamicMXQuant | 10 | 5.34% / 14.48% | 9.50% / 21.51% | 7.60% / 17.81% | 7 / 2 / 1 |
+| Matmul | 10 | 4.30% / 8.80% | 4.84% / 10.73% | 12.32% / 41.03% | 5 / 0 / 5 |
+| FA | 10 | 6.95% / 9.50% | 6.44% / 8.33% | 6.95% / 9.50% | 1 / 0 / 9 |
 
-## 在线预测的开销
+![三个算子的独立 shape 逐点有符号误差](../results/v0.14/sku-comparison.png)
 
-| 先载入芯片配置 | DT 最慢 ms | PR 最慢 ms |
-|---|---:|---:|
-| dynamicMXquant | 1.632 | 1.015 |
-| Matmul | 0.127 | 0.455 |
-| FA | 0.153 | 0.243 |
-| RMSNorm | 0.885 | 0.094 |
-| Addmm | 2.433 | 0.088 |
-| Lightning Indexer | 0.899 | 0.390 |
-| mHC Pre | 0.287 | 0.247 |
-| mHC Sinkhorn | 0.611 | 0.127 |
-| mHC PreSinkhorn | 0.236 | 0.365 |
-| mHC Post | 0.922 | 0.137 |
-| mHC组合 | 0.242 | 0.478 |
-| KDA recurrent | 1.728 | 0.140 |
-| GMM1–SwiGLU–MX量化 | 0.150 | 0.276 |
-| MoE GMM2 | 0.077 | 0.152 |
-| MoE FFN组合 | 0.235 | 0.423 |
+### 分核命中后，偏差出在哪里
 
-同一 Python 进程对 356 条 DT 既有计时输入，在两种配置上各调用三次，均含工作量统计；目标为单次 100 ms。[逐条预测、逻辑字节与计时](../results/v0.13/evaluation.json)
+对具备两端 CA 的点，PR 的总误差可以精确拆成两项。第一项是 DT 预测本身的偏差。第二项是芯片切换时的增量误差，即（PR 预测−DT 预测）减去（PR CA−DT CA）。下面给出逐点拆分后取算术平均的有符号值；异号误差可相消。
+
+| 算子 | 双端 CA 点数 | DT 基础偏差 µs | 芯片增量偏差 µs | PR 总偏差 µs |
+|---|---:|---:|---:|---:|
+| DynamicMXQuant | 10 | +0.090 | -0.032 | +0.058 |
+| Matmul | 10 | +0.097 | -0.010 | +0.087 |
+| FA | 10 | -0.046 | +0.733 | +0.687 |
+
+### 工作量范围与尾块
+
+分别按 quant 输入元素数、Matmul 有用 Cube 运算数和 FA 的 QK+PV 有用 Cube 运算数排序。每种算子在自己的十例中取较小五例和较大五例，显示数据规模对本组误差的影响。
+
+| 算子 | 工作量范围 | 小五例 WAPE，DT复用 → PR | 大五例 WAPE，DT复用 → PR | 活跃核数完全命中 |
+|---|---:|---:|---:|---:|
+| DynamicMXQuant | 64…2,621,440 | 10.9% → 6.8% | 8.5% → 4.3% | 10/10 |
+| Matmul | 32,768…134,217,728 | 3.8% → 4.7% | 5.7% → 3.9% | 7/10 |
+| FA | 32,768…9,437,184 | 4.7% → 4.8% | 7.7% → 8.6% | 10/10 |
+
+### 从旧 trace 定位的偏差，到新 shape 暴露的边界
+
+**DynamicMXQuant。** 在旧配对的 `[512,256]` 上，PR 的末核从数据读完到第一条 RVEC 比 DT 提早 0.326 µs，末写窗口却多出 0.262 µs。v0.13 两端都取 5.430 µs 的控制下限，无法反映这两项相反的变化。十个新点均命中核数，单轮高并发分支改善了 `[1,4096]` 的总时延，但其中读后等待仍高估 0.397 µs、写窗低估 0.585 µs。最大误差来自低并发 `[4,256]`，预测 4.759、PR CA 4.157 µs，关键核的 RVECEX 计数与 DT 相同、读写窗均缩短。多轮大输入沿用通用双缓冲路线。相对复用 DT，绝对误差在 `[640,4096]` 上缩小 1.278 µs，在邻近 UB 边界的 `[576,4096]` 上增加 0.290 µs。[旧配对的六段测量](../results/v0.14/quant-diagnosis.md) · [独立集临界核的阶段对照](../results/v0.14/quant-independent.md)
+
+**Matmul。** 旧 `[128,256,512]` 的 PR 尾核上，FIXP 指令时间窗 1.910 µs 与矩阵计算重叠，最后一次 MMAD 后露出的尾段仅 0.235 µs。改用完成事件划分读、算和收尾后，十例总体 WAPE 下降。最大相对误差来自 `[1,128,128]`，两端都是 2 核、每核一次 MMAD，PR 首读前实测 1.901 µs、估计 2.139 µs，解释了总高估的 86%。三个 N=512 的大样例则暴露分核规则的另外一个缺口。`[128,512,512]`、`[256,512,256]`、`[512,512,256]` 都预测 16 个 AIC，实测分别为 24、24、28。最后一例预测每核 128×128 输出块、一次 K=256 的 MMAD，trace 的 56 次 MMAD 中，48 次为 80×128×128、8 次为 32×128×128。库选择了不等大的 M 切片和两段 K。该例时延误差只有 +2.57%，仍不能据此确认分块机制正确。前两例也出现了模型候选集未包含的 M 切片。[旧配对的阶段数据](../results/v0.14/cube-diagnosis.json) · [独立点阶段复核](../results/v0.14/cube-independent.md) · [每种 MMAD 尺寸和次数](../results/v0.14/sku/instructions.json)
+
+**FA。** 冻结前只有一个 PR 短上下文开发样例，因此沿用 CV 阶段公式。在十个新点中，核数全部命中，九例直接复用 DT 更准。最大误差 `[Q,KV,D,B,H]=[9,4096,64,1,1]` 的逻辑计算和实际 MMAD 数两端一致。DT/PR 的 64 次 MMAD 时长之和是 3.468/3.464 µs，而 PR 首次发起提早 0.890 µs、首末 MMAD 窗口缩短 0.459 µs。DT 本身只高估 0.030 µs，模型却将切换到 PR 的增量估成 +0.227 µs，实测为 −1.346 µs。首发与循环间隙主导了这里的迁移误差；目前无法将它们进一步归因到缓存、发射或同步。PR 最长实测 KV 是 4096，32k–512k 的准确性仍属于外推。该点 DT 的 npusim 数据库记录入口地址，PR 的 msopprof 记录库 kernel 名称，缺少相同二进制的双侧哈希。[FA 指令与采集口径](../results/v0.14/cube-independent.md)
+
+**数据量增大时的趋势。** 固定 Matmul 的 N=512、K=256，仅将 M 从 256 增至 512，工作量翻倍，PR CA 从 4.239 增至 4.656 µs（+9.8%），同时实际 AIC 从 24 增至 28。Quant 固定宽 4096，行数从 576 增至 640，工作量增加 11.1%，PR 时间增加 5.4%。启动、分块和并行度都影响这一段斜率。十例的覆盖足以发现分支转换，不能确定继续扩大规模后的渐近斜率或 960/970/980 上的误差。[按逻辑字节分组及相邻 shape 对照](../results/v0.14/sku/coverage.md)
+
+### 逐 shape 验证
+
+| 实际库入口 / 每卡 shape | DT CA µs | PR CA µs | 复用 DT µs | PR 预测 µs | PR 有符号误差 | 预计 / 实际活跃核（C,V） | 实际 PR kernel |
+|---|---:|---:|---:|---:|---:|---:|---|
+| ops-nn / aclnnDynamicMxQuant `[1, 64]` | 4.326 | 3.946 | 4.231 | 4.231 | +7.21% | (0,1) / (0,1) | `DynamicMxQuant_bf16toe4m3_high_performance_33_mix_aiv` |
+| ops-nn / aclnnDynamicMxQuant `[4, 256]` | 4.588 | 4.157 | 4.759 | 4.759 | +14.48% | (0,4) / (0,4) | `DynamicMxQuant_bf16toe4m3_high_performance_33_mix_aiv` |
+| ops-nn / aclnnDynamicMxQuant `[8, 384]` | 5.760 | 5.136 | 5.430 | 4.968 | -3.28% | (0,16) / (0,16) | `DynamicMxQuant_bf16toe4m3_high_performance_33_mix_aiv` |
+| ops-nn / aclnnDynamicMxQuant `[1, 4096]` | 5.686 | 4.945 | 5.430 | 4.968 | +0.45% | (0,16) / (0,16) | `DynamicMxQuant_bf16toe4m3_high_performance_33_mix_aiv` |
+| ops-nn / aclnnDynamicMxQuant `[33, 768]` | 5.210 | 4.915 | 5.430 | 5.120 | +4.18% | (0,34) / (0,34) | `DynamicMxQuant_bf16toe4m3_high_performance_33_mix_aiv` |
+| ops-nn / aclnnDynamicMxQuant `[65, 256]` | 4.898 | 4.609 | 5.430 | 5.084 | +10.31% | (0,33) / (0,33) | `DynamicMxQuant_bf16toe4m3_high_performance_33_mix_aiv` |
+| ops-nn / aclnnDynamicMxQuant `[9, 5120]` | 4.867 | 5.025 | 4.980 | 4.993 | -0.64% | (0,45) / (0,45) | `DynamicMxQuant_bf16toe4m3_high_performance_33_mix_aiv` |
+| ops-nn / aclnnDynamicMxQuant `[144, 7168]` | 6.332 | 6.415 | 6.207 | 6.581 | +2.59% | (0,56) / (0,56) | `DynamicMxQuant_bf16toe4m3_high_performance_33_mix_aiv` |
+| ops-nn / aclnnDynamicMxQuant `[576, 4096]` | 6.948 | 7.692 | 7.470 | 7.180 | -6.64% | (0,56) / (0,56) | `DynamicMxQuant_bf16toe4m3_high_performance_33_mix_aiv` |
+| ops-nn / aclnnDynamicMxQuant `[640, 4096]` | 6.218 | 8.108 | 6.364 | 7.642 | -5.76% | (0,56) / (0,56) | `DynamicMxQuant_bf16toe4m3_high_performance_33_mix_aiv` |
+| ops-nn / aclnnMatmul `[1, 128, 128]` | 3.356 | 3.138 | 3.370 | 3.414 | +8.80% | (2,0) / (2,0) | `MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2` |
+| ops-nn / aclnnMatmul `[32, 64, 64]` | 3.292 | 3.158 | 3.368 | 3.304 | +4.64% | (2,0) / (2,0) | `MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2` |
+| ops-nn / aclnnMatmul `[17, 96, 128]` | 3.494 | 3.414 | 3.505 | 3.459 | +1.31% | (4,0) / (4,0) | `MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2` |
+| ops-nn / aclnnMatmul `[48, 128, 192]` | 3.575 | 3.481 | 3.633 | 3.606 | +3.57% | (6,0) / (6,0) | `MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2` |
+| ops-nn / aclnnMatmul `[65, 128, 129]` | 3.712 | 3.733 | 3.628 | 3.497 | -6.32% | (10,0) / (10,0) | `MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2` |
+| ops-nn / aclnnMatmul `[1, 256, 1024]` | 4.624 | 4.612 | 4.560 | 4.763 | +3.29% | (4,0) / (4,0) | `MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2` |
+| ops-nn / aclnnMatmul `[17, 256, 1024]` | 4.742 | 4.687 | 5.040 | 4.856 | +3.62% | (8,0) / (8,0) | `MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2` |
+| ops-nn / aclnnMatmul `[128, 512, 512]` | 4.382 | 4.604 | 4.506 | 4.420 | -4.00% | (16,0) / (24,0) | `MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2` |
+| ops-nn / aclnnMatmul `[256, 512, 256]` | 4.192 | 4.239 | 4.368 | 4.495 | +6.03% | (16,0) / (24,0) | `MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2` |
+| ops-nn / aclnnMatmul `[512, 512, 256]` | 4.799 | 4.656 | 5.156 | 4.776 | +2.57% | (16,0) / (28,0) | `MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2` |
+| ops-transformer / aclnnFlashAttentionScoreV2 `[1, 128, 64, 1, 1]` | 8.784 | 8.190 | 8.718 | 8.728 | +6.57% | (1,2) / (1,2) | `FlashAttentionScore_50348df09d0b3ee451d3693a6b2ab3f5_2328361008425337376_mix_aic` |
+| ops-transformer / aclnnFlashAttentionScoreV2 `[17, 96, 64, 1, 1]` | 9.162 | 8.736 | 8.692 | 8.701 | -0.40% | (1,2) / (1,2) | `FlashAttentionScore_50348df09d0b3ee451d3693a6b2ab3f5_2328361008425337376_mix_aic` |
+| ops-transformer / aclnnFlashAttentionScoreV2 `[16, 128, 128, 1, 1]` | 8.715 | 8.224 | 8.829 | 8.842 | +7.51% | (1,2) / (1,2) | `FlashAttentionScore_50348df09d0b3ee451d3693a6b2ab3f5_2328361009230643744_mix_aic` |
+| ops-transformer / aclnnFlashAttentionScoreV2 `[16, 128, 64, 1, 4]` | 8.758 | 8.539 | 8.894 | 8.913 | +4.38% | (4,8) / (4,8) | `FlashAttentionScore_50348df09d0b3ee451d3693a6b2ab3f5_2328361008425337376_mix_aic` |
+| ops-transformer / aclnnFlashAttentionScoreV2 `[128, 128, 64, 1, 1]` | 9.498 | 8.793 | 9.248 | 9.262 | +5.33% | (2,4) / (2,4) | `FlashAttentionScore_50348df09d0b3ee451d3693a6b2ab3f5_2328361008425337376_mix_aic` |
+| ops-transformer / aclnnFlashAttentionScoreV2 `[129, 128, 64, 1, 1]` | 8.871 | 8.508 | 9.081 | 9.095 | +6.91% | (3,6) / (3,6) | `FlashAttentionScore_50348df09d0b3ee451d3693a6b2ab3f5_2328361008425337376_mix_aic` |
+| ops-transformer / aclnnFlashAttentionScoreV2 `[16, 1025, 64, 1, 1]` | 12.384 | 11.365 | 12.313 | 12.382 | +8.95% | (1,2) / (1,2) | `FlashAttentionScore_50348df09d0b3ee451d3693a6b2ab3f5_2328361008425599520_mix_aic` |
+| ops-transformer / aclnnFlashAttentionScoreV2 `[17, 1153, 64, 1, 1]` | 12.487 | 11.489 | 12.322 | 12.399 | +7.92% | (1,2) / (1,2) | `FlashAttentionScore_50348df09d0b3ee451d3693a6b2ab3f5_2328361008425599520_mix_aic` |
+| ops-transformer / aclnnFlashAttentionScoreV2 `[9, 256, 128, 4, 1]` | 9.690 | 9.058 | 9.767 | 9.844 | +8.68% | (4,8) / (4,8) | `FlashAttentionScore_50348df09d0b3ee451d3693a6b2ab3f5_2328361009230643744_mix_aic` |
+| ops-transformer / aclnnFlashAttentionScoreV2 `[9, 4096, 64, 1, 1]` | 18.226 | 16.880 | 18.256 | 18.483 | +9.50% | (1,2) / (1,2) | `FlashAttentionScore_50348df09d0b3ee451d3693a6b2ab3f5_2328361008425599520_mix_aic` |
+
+按队列复核完整 PR 指令时间线。Matmul 的最多单核 MMAD 次数与分块预测在 8/10 例一致。Quant 的 RVEC 分成发起、加载、存储和执行等子队列，合计是时间线事件数；FA 的 MMAD 另按核计数。这些计数可核对分支和循环，直接乘单条指令延迟会重复计入重叠。[逐 shape 队列与 MMAD 计数](../results/v0.14/sku/instructions.json)
+
+Quant 检查每个量化值和 scale 字节；Matmul 检查全部 BF16 输出；FA 检查全部注意力主输出，辅助统计未验。每例还检查运行时 SKU、PR 的 LPDDR5 子模型、实际启动 kernel、跨核首末指令，以及各核时间窗与 profiler 的差值。逐例二进制和 trace 的 SHA-256、golden、有效核和采集成本见[原始验收记录](../results/v0.14/sku/holdout.json)。
+
+### 开发回放
+
+| PR 旧样例 | PR CA µs | 直接复用 DT µs | v0.14 PR µs | 有符号误差 |
+|---|---:|---:|---:|---:|
+| quant [64, 1024] | 5.373 | 5.214 | 5.188 | -3.44% |
+| matmul [128, 256, 512] | 4.368 | 4.261 | 4.280 | -2.03% |
+| fa [16, 64, 64] | 8.472 | 8.657 | 8.666 | +2.29% |
+| quant [512, 256] | 5.090 | 5.430 | 5.275 | +3.63% |
+| matmul [129, 256, 256] | 3.609 | 3.947 | 3.832 | +6.18% |
+
+## CA 采集与预测开销
+
+复用 30 份 DT 历史结果和 trace，DT 新采集 0 次。PR 在 4 个并行槽位上发起 30 次 CA，30 个合格，0 个未通过，使用 0 个预登记备用 shape。整组实际墙钟 **9.52 分钟**，上限 40 分钟。各 CA 进程墙钟累计 2089.0 秒，单次 50.1–130.3 秒。原始目录合计 4.03 GiB，上限 12,500 MiB。原始 trace 本机保存，仓库保留输入、哈希和核验摘要。[预算](../results/v0.14/sku/budget.json) · [冻结预测](../results/v0.14/sku/freeze.json) · [全部尝试](../results/v0.14/sku/attempts.json) · [采集成本](../results/v0.14/sku/campaign-cost.json)
+
+用隔离环境安装 v0.14.0 wheel，进程中预加载目标配置，再调用公开 `estimate`。两款芯片各查 536 次，包含 356 条已有输入及 36 条冻结输入（含备用，各重复 5 次），每次包括分块、估时和工作量返回。DT 中位数 / 最大值为 **0.096 / 2.539 ms**，PR 为 **0.147 / 1.203 ms**。单列的首次 Python 模块导入耗时 28.4 ms。100 ms 指单次进程内预测；以上峰值对应本次测试环境。356 条 DT 回放与 v0.13 最大时延差为 0 µs。[安装包核对](../results/v0.14/wheel-check.json)
+
+[预测及误差 JSON](../results/v0.14/evaluation.json) · [安装与墙钟验证](../results/v0.14/wheel-check.json) · [变更摘要](../results/v0.14/changes.md)
 
 ## 950DT 已校准路线的同集对照
 

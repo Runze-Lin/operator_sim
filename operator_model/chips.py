@@ -1,6 +1,6 @@
 """Versioned chip scenarios. The online backend only reads portable JSON."""
 from collections.abc import Mapping
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from functools import lru_cache
 import json
 import math
@@ -33,8 +33,9 @@ class ChipConfig:
     hbm_capacity_gb: float
     hbm_bandwidth_gbs: float
     details: Mapping
-    sources: Mapping
-    inherited_fields: tuple = ()
+    # Provenance does not change the hardware cost of a dispatch.
+    sources: Mapping = field(compare=False)
+    inherited_fields: tuple = field(default=(), compare=False)
 
     def __post_init__(self):
         if not isinstance(self.name, str) or not self.name.strip():
