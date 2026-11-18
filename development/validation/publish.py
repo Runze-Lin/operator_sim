@@ -9,10 +9,10 @@ from time import perf_counter_ns
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 from operator_model.backend import estimate
-from operator_model.predictor import predict_v10
+from operator_model.predictor import predict_v11 as previous_predict
 
-OUT = ROOT / 'results/v0.11'
-PREVIOUS = ROOT / 'results/v0.10'
+OUT = ROOT / 'results/v0.12'
+PREVIOUS = ROOT / 'results/v0.11'
 CAMPAIGNS = {'mhc_post': 'post', 'rmsnorm': 'rms'}
 
 
@@ -80,9 +80,9 @@ def collect():
         if r['query_max_ms'] >= 100 or not math.isfinite(r['reference_us']) or r['reference_us'] <= 0:
             raise ValueError('Invalid CA time or query exceeded 100 ms')
         if r['op'] in CAMPAIGNS:
-            prior = predict_v10(r['op'], r['shape'], r.get('attrs', {}))['predicted_us']
+            prior = previous_predict(r['op'], r['shape'], r.get('attrs', {}))['predicted_us']
             if r.get('previous_us') is not None and not math.isclose(prior, r['previous_us'], rel_tol=1e-8):
-                raise ValueError('Incorrect same-shape v0.10 prediction')
+                raise ValueError(f'Incorrect same-shape {PREVIOUS.name} prediction')
             r['previous_us'] = prior
     summaries = []
     for operator in previous['operator_summary']:
@@ -107,7 +107,7 @@ def collect():
                 prev, prev_max = errors(group_rows, 'previous_us')
                 now, now_max = errors(group_rows)
                 summary['groups'][group] = dict(count=len(group_rows), wape=now, max_ape=now_max,
-                                                v010_wape=prev, v010_max_ape=prev_max)
+                                                previous_wape=prev, previous_max_ape=prev_max)
         summaries.append(summary)
     return rows, summaries
 
@@ -151,13 +151,34 @@ def shape_label(row):
 def subgroup_table(summaries):
     lines = ['## 改动算子的同集对照', '',
              '默认调用只传 shape。少 token 宽通道组在冻结时定义为 T≤4 且末维 D≥2048，普通组为其余输入。两个版本使用相同库调用的 CA 窗口。', '',
-             '| 算子 | 独立分组 | shape 数 | v0.10 WAPE → 当前 | v0.10 最大误差 → 当前 |',
+             f'| 算子 | 独立分组 | shape 数 | {PREVIOUS.name} WAPE → 当前 | {PREVIOUS.name} 最大误差 → 当前 |',
              '|---|---|---:|---:|---:|']
     labels = {'all': '全部', 'small_wide': '少 token 宽通道', 'ordinary': '普通'}
     for s in summaries:
         for group, g in s.get('groups', {}).items():
             lines.append(f"| {s['name']} | {labels[group]} | {g['count']} | "
-                         f"{pct(g['v010_wape'])} → {pct(g['wape'])} | {pct(g['v010_max_ape'])} → {pct(g['max_ape'])} |")
+                         f"{pct(g['previous_wape'])} → {pct(g['wape'])} | {pct(g['previous_max_ape'])} → {pct(g['max_ape'])} |")
+    return lines
+
+
+def post_state_table(rows):
+    post = [row for row in rows if row['op'] == 'mhc_post' and row['role'] == 'validation'
+            and row['shape'][0] <= 4 and row['shape'][-1] >= 2048]
+    by_state = {'首次': [], '扩核': [], '热态': []}
+    for row in post:
+        before = row['prior_aiv']
+        state = '首次' if before == 0 else ('扩核' if row['active_aiv'] > before else '热态')
+        by_state[state].append(row)
+    lines = ['### mHC Post 小宽组按发射前状态拆分', '',
+             '前三列比较不传 `resident_aiv` 时的表现，最后一列使用发射前可知的高水位。分组只用于评价；默认调用没有读取验证序列。', '',
+             '| 状态（shape 数） | 旧版默认 WAPE | 当前默认 WAPE | 当前显式历史 WAPE |',
+             '|---|---:|---:|---:|']
+    for state, group in by_state.items():
+        if not group:
+            raise ValueError(f'Missing small-wide Post state {state}')
+        conditional = [dict(r, known_us=r['sequence_prediction']['predicted_us']) for r in group]
+        lines.append(f"| {state}（{len(group)}） | {pct(errors(group, 'previous_us')[0])} | "
+                     f"{pct(errors(group)[0])} | {pct(errors(conditional, 'known_us')[0])} |")
     return lines
 
 
@@ -172,13 +193,13 @@ def render(rows, summaries):
                      f"{pct(s['wape'])} / {pct(s['max_ape'])} | {duration} | "
                      f"{'完整计时' if s['independent'] else '仅结构核对'} |")
     lines += ['', '每行对应后端的一条默认预测路径。WAPE 是绝对时延偏差之和除以 CA 参考时延之和；较慢的样例权重较大。最大误差是单例最大的绝对相对误差。表内误差只使用独立 shape。KDA chunk 有 10 个结构检查，尚无完整 CA 耗时。',
-              '', '![各路径的独立 CA 误差](../results/v0.11/validation.png)', '',
+              '', f'![各路径的独立 CA 误差](../results/{OUT.name}/validation.png)', '',
               '## 怎样把这些误差用于系统仿真', '',
               '参考平台为 CANN 9.2.1 的 Ascend950DT_9582 CA。单 kernel 取最早指令至最晚指令的跨核净窗口，多 kernel 串行链求各窗口之和。框架需另计 host launch、通信、kernel 间间隙和跨算子重叠。多个组件共享一次链采集，整链误差可能包含相反方向的阶段偏差。A7/A8 尚无对应实测。',
               '', '模型输入使用每卡实际 shape、布局、dtype、迭代数或专家 token 分布。对批量顺序执行的 trace，缓存与控制状态可能随请求顺序变化。查询列为一个 Python 进程逐个 shape 调用系统后端五次的最大墙钟，按次重算且包含各路径首次读参数；返回的设备时延以 µs 计。',
-              '', *subgroup_table(summaries), '']
+              '', *subgroup_table(summaries), '', *post_state_table(rows), '']
     analysis = (OUT/'analysis.md').read_text().strip()
-    for folder in (*CAMPAIGNS.values(), 'scaling'):
+    for folder in (*CAMPAIGNS.values(), 'audit'):
         analysis = analysis.replace(f']({folder}/', f'](../results/{OUT.name}/{folder}/')
     lines += [analysis, '', '## 逐算子与逐 shape 的证据', '']
     for s in summaries:
@@ -196,17 +217,17 @@ def render(rows, summaries):
             lines.append(f"| {shape_label(r)} | {role} | {r['predicted_us']:.3f} | {r['reference_us']:.3f} | "
                          f"{r['predicted_us']/r['reference_us']-1:+.1%} | {r['kernel']} | {r['active_aic']} / {r['active_aiv']} |")
         lines.append('')
-    lines += ['[机器可读校验数据与 CA 采集成本](../results/v0.11/evaluation.json) · [本次冻结与同集比较](../results/v0.11/changes.md)', '']
+    lines += [f'[机器可读校验数据与 CA 采集成本](../results/{OUT.name}/evaluation.json) · [本次冻结与同集比较](../results/{OUT.name}/changes.md)', '']
     text = '\n'.join(lines)
     (ROOT/'docs/error-analysis.md').write_text(text)
-    (OUT/'error-analysis.md').write_text(text.replace('../results/v0.11/', './').replace('../results/v0.8/', '../v0.8/'))
+    (OUT/'error-analysis.md').write_text(text.replace(f'../results/{OUT.name}/', './').replace('../results/', '../'))
 
 
 if __name__ == '__main__':
     observations, operators = collect()
     figure(operators)
     render(observations, operators)
-    data = dict(version=OUT.name, rows=observations, operator_summary=operators,
+    data = dict(version=OUT.name, previous_version=PREVIOUS.name, rows=observations, operator_summary=operators,
                 collection_cost={folder: load(OUT/folder/'costs.json') for folder in CAMPAIGNS.values()})
     dump(OUT/'evaluation.json', data)
     (ROOT/'results/current/evaluation.json').write_bytes((OUT/'evaluation.json').read_bytes())

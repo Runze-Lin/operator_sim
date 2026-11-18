@@ -1,0 +1,192 @@
+{
+  "completed": [
+    {
+      "id": "v12_post_3_0",
+      "op": "mhc_post",
+      "shape": [
+        4,
+        4,
+        6144
+      ],
+      "attrs": {
+        "dtype": "bf16",
+        "has_h_res": true
+      },
+      "prior_aiv": 0,
+      "prediction": {
+        "predicted_us": 3.1945351310317887,
+        "stages_us": {
+          "arrival": 0.03460700560662217,
+          "SCALAR": 1.2994047456254882,
+          "MTE2": 0.6337651581935828,
+          "SIMD": 0.9614216291247328,
+          "MTE3": 0.25623808099834355,
+          "other": 0.00909851148301925
+        },
+        "route": "post_channel",
+        "predicted_active_aiv": 64,
+        "rows_per_core": 1,
+        "context": "relative_minimax",
+        "context_predictions_us": {
+          "first": 4.855324256409521,
+          "expand": 4.278433564057363,
+          "reuse": 2.3803305745113907
+        },
+        "status": "950DT critical-AIV estimate"
+      },
+      "role": "context_warmup",
+      "previous_us": 2.3472990369383653,
+      "fixed_us": 2.7187878787878788,
+      "sequence_prediction": {
+        "predicted_us": 4.855324256409521,
+        "stages_us": {
+          "arrival": 0.052210806535105354,
+          "SCALAR": 1.9578265662305838,
+          "MTE2": 1.2270297669730037,
+          "SIMD": 1.3529205241894648,
+          "MTE3": 0.25623808099834355,
+          "other": 0.009098511483019251
+        },
+        "route": "post_channel",
+        "predicted_active_aiv": 64,
+        "rows_per_core": 1,
+        "context": "first",
+        "context_predictions_us": {
+          "first": 4.855324256409521,
+          "expand": 4.278433564057363,
+          "reuse": 2.3803305745113907
+        },
+        "status": "950DT critical-AIV estimate"
+      },
+      "group": "few_wide",
+      "source": "development/validation/post12/raw/batch-v12_post_3_1/profile/npusim_20261118141144_MHC/record/0000_entry_kernel_5.db",
+      "correctness": [
+        "correctness name=output count=98304 bad=0 max_abs_error=0 atol=0.015625 rtol=0.015625 hard_limit=1"
+      ],
+      "helper_flush": "start_events=221312 end_events=221376 start_overwrites=58816 end_overwrites=57216 start_only=1600 end_only=3264 matched=160896 mismatched=0 invalid=0 written=164160 write_failed=0 status=ok",
+      "batch_wall_s": 137.17564488993958,
+      "batch": "batch-v12_post_3_1",
+      "db_sha256": "a18ef723656dc353cc81627482e403f615d25e2afbcabf626b3511b49a344779",
+      "reference_us": 5.235151515151515,
+      "predicted_us": 3.1945351310317887,
+      "active_aic": 0,
+      "active_aiv": 64,
+      "kernel": "entry_kernel_5",
+      "max_core_rv_count": 924,
+      "output_audit": {
+        "shape": [
+          4,
+          4,
+          6144
+        ],
+        "id": "v12_post_3_0",
+        "source": "development/validation/post12/raw/batch-v12_post_3_1/profile/npusim_20261118141144_MHC/record/0000_entry_kernel_5.db",
+        "launch": null,
+        "db_sha256": "a18ef723656dc353cc81627482e403f615d25e2afbcabf626b3511b49a344779",
+        "writes": 256,
+        "unique_starts": 256,
+        "expected_bytes": 196608,
+        "transfer_bytes": 196608,
+        "union_bytes": 196608,
+        "span_bytes": 196608,
+        "actual_base": "0x9154ba9800",
+        "qualified": true
+      }
+    },
+    {
+      "id": "v12_post_3_1",
+      "op": "mhc_post",
+      "shape": [
+        256,
+        4,
+        1536
+      ],
+      "attrs": {
+        "dtype": "bf16",
+        "has_h_res": true
+      },
+      "prior_aiv": 64,
+      "prediction": {
+        "predicted_us": 6.204804699224549,
+        "stages_us": {
+          "arrival": 0.33844259077033856,
+          "SCALAR": 0.7709634189969299,
+          "MTE2": 2.327780958418042,
+          "SIMD": 2.219368378182141,
+          "MTE3": 0.5382003607003639,
+          "other": 0.010048992156733359
+        },
+        "route": "post_token",
+        "predicted_active_aiv": 64,
+        "rows_per_core": 4,
+        "context": "reuse",
+        "context_predictions_us": {
+          "first": 7.601749111852657,
+          "expand": 6.832064257905609,
+          "reuse": 6.204804699224549
+        },
+        "status": "950DT critical-AIV estimate"
+      },
+      "role": "validation",
+      "previous_us": 6.015216684951921,
+      "fixed_us": 2.7187878787878788,
+      "sequence_prediction": {
+        "predicted_us": 6.204804699224549,
+        "stages_us": {
+          "arrival": 0.33844259077033856,
+          "SCALAR": 0.7709634189969299,
+          "MTE2": 2.327780958418042,
+          "SIMD": 2.219368378182141,
+          "MTE3": 0.5382003607003639,
+          "other": 0.010048992156733359
+        },
+        "route": "post_token",
+        "predicted_active_aiv": 64,
+        "rows_per_core": 4,
+        "context": "reuse",
+        "context_predictions_us": {
+          "first": 7.601749111852657,
+          "expand": 6.832064257905609,
+          "reuse": 6.204804699224549
+        },
+        "status": "950DT critical-AIV estimate"
+      },
+      "group": "controls",
+      "source": "development/validation/post12/raw/batch-v12_post_3_1/profile/npusim_20261118141144_MHC/record/0001_entry_kernel_6.db",
+      "correctness": [
+        "correctness name=output count=1572864 bad=0 max_abs_error=0 atol=0.015625 rtol=0.015625 hard_limit=1"
+      ],
+      "helper_flush": "start_events=1241600 end_events=1251008 start_overwrites=525568 end_overwrites=525056 start_only=512 end_only=10432 matched=715520 mismatched=0 invalid=0 written=725952 write_failed=0 status=ok",
+      "batch_wall_s": 137.17564488993958,
+      "batch": "batch-v12_post_3_1",
+      "db_sha256": "0d665f3733f0e7cb2c8bae0721eabe172b17bbe43d8cb1028a4a00d1a9b49d05",
+      "reference_us": 5.20060606060606,
+      "predicted_us": 6.204804699224549,
+      "active_aic": 0,
+      "active_aiv": 64,
+      "kernel": "entry_kernel_6",
+      "max_core_rv_count": 8224,
+      "output_audit": {
+        "shape": [
+          256,
+          4,
+          1536
+        ],
+        "id": "v12_post_3_1",
+        "source": "development/validation/post12/raw/batch-v12_post_3_1/profile/npusim_20261118141144_MHC/record/0001_entry_kernel_6.db",
+        "launch": null,
+        "db_sha256": "0d665f3733f0e7cb2c8bae0721eabe172b17bbe43d8cb1028a4a00d1a9b49d05",
+        "writes": 256,
+        "unique_starts": 256,
+        "expected_bytes": 3145728,
+        "transfer_bytes": 3145728,
+        "union_bytes": 3145728,
+        "span_bytes": 3145728,
+        "actual_base": "0x9154f2d800",
+        "qualified": true
+      }
+    }
+  ],
+  "timing_failed": [],
+  "wall_s": 137.17564488993958
+}

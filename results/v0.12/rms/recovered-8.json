@@ -1,0 +1,147 @@
+{
+  "controls": [],
+  "target": {
+    "id": "v12_rms_8",
+    "op": "rmsnorm",
+    "shape": [
+      384,
+      6144
+    ],
+    "attrs": {},
+    "kind": "NORM",
+    "groups": 2,
+    "args": [
+      384,
+      6144,
+      0
+    ],
+    "role": "validation",
+    "prediction": {
+      "predicted_us": 5.213949504162498,
+      "stages_us": {
+        "SCALAR": 1.6133473136370424,
+        "MTE2": 0.6479906176564318,
+        "SIMD": 2.1764261202826893,
+        "MTE3": 0.2794790730958856,
+        "arrival": 0.49288557160431407,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 64,
+      "rows_per_core": 6,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.1,
+        "expand": 0.75,
+        "reuse": 0.15
+      },
+      "status": "950DT critical-AIV estimate",
+      "ub_tile_rows": [
+        4,
+        2
+      ],
+      "write_union_ticks": 2580.0837363350265,
+      "write_simd_overlap_ticks": 2118.9432657268153
+    },
+    "previous_us": 11.074402909477657,
+    "fixed_us": 3.636969696969697,
+    "prior_aiv": 0,
+    "group": "controls",
+    "sequence_prediction": {
+      "predicted_us": 5.57801605916649,
+      "stages_us": {
+        "SCALAR": 1.9506605231503982,
+        "MTE2": 1.0226791847837529,
+        "SIMD": 2.2825652083042423,
+        "MTE3": 0.2794790730958856,
+        "arrival": 0.03881126194607609,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 64,
+      "rows_per_core": 6,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 1.0,
+        "expand": 0.0,
+        "reuse": 0.0
+      },
+      "status": "950DT critical-AIV estimate",
+      "ub_tile_rows": [
+        4,
+        2
+      ],
+      "write_union_ticks": 2580.0837363350265,
+      "write_simd_overlap_ticks": 2118.9432657268153
+    },
+    "batch": "recover-8",
+    "batch_wall_s": 151.40797847998329,
+    "source": "runs/v12rms/recover-8/profile/npusim_20261118142807_NORM/record/0000_entry_kernel_1388.db",
+    "db_sha256": "51291c6b35d9920db27a8139e36379f0aabefab97e2873961967a9071de3063a",
+    "reference_us": 6.838181818181818,
+    "kernel": "entry_kernel_1388",
+    "active_aic": 0,
+    "active_aiv": 64,
+    "max_core_rv_count": 8234,
+    "correctness": [
+      "correctness count=2359296 bad=0 max_abs_error=0.00157541 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness count=384 bad=0 max_abs_error=1.29672e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "audit": {
+      "op": "rmsnorm",
+      "shape": "[384, 6144]",
+      "db": "runs/v12rms/recover-8/profile/npusim_20261118142807_NORM/record/0000_entry_kernel_1388.db",
+      "launch": 0,
+      "flush": "ok",
+      "invalid": 0,
+      "mismatched": 0,
+      "write_failed": 0,
+      "written": 625664,
+      "start_overwrites": 526080,
+      "end_overwrites": 525696,
+      "start_only": 512,
+      "end_only": 3776,
+      "db_rows": 625664,
+      "aiv": 64,
+      "reversed_intervals": 0,
+      "per_core_rv_min": 8234,
+      "per_core_rv_max": 8234,
+      "n_out_copies": 256,
+      "n_out_addresses": 256,
+      "main_expected": 4718592,
+      "main_raw": 4718592,
+      "main_unique": 4718592,
+      "main_span": 4718592,
+      "aux_expected": 1536,
+      "aux_raw": 1536,
+      "aux_unique": 1536,
+      "aux_span": 1536,
+      "core0_aiv0_out_tick_start_end_addr_bytes": [
+        [
+          12512,
+          13014,
+          "0x9155470800",
+          16
+        ],
+        [
+          13772,
+          14722,
+          "0x9154ff0800",
+          49152
+        ],
+        [
+          14439,
+          15126,
+          "0x9155470810",
+          8
+        ],
+        [
+          15091,
+          15638,
+          "0x9154ffc800",
+          24576
+        ]
+      ],
+      "passed": true
+    },
+    "predicted_us": 5.213949504162498
+  }
+}
