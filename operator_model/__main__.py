@@ -1,5 +1,6 @@
 import argparse
 import json
+from pathlib import Path
 from .model import Case, Predictor
 
 
@@ -22,8 +23,9 @@ def main():
             output['instruction_count_diagnostics'] = _legacy().instruction_counts(LegacyCase(args.op,tuple(args.shape)))
         print(json.dumps(output,indent=2))
         return
-    args.model = args.model or 'results/v0.7/model.json'
-    args.hardware_profile = args.hardware_profile or 'configs/hardware-950dt-v7.json'
+    resource_root = Path(__file__).resolve().parents[1]
+    args.model = args.model or resource_root / 'results/v0.7/model.json'
+    args.hardware_profile = args.hardware_profile or resource_root / 'configs/hardware-950dt-v7.json'
     if args.op in ('quant','matmul','fa') and attrs:
         parser.error('Legacy quant/matmul/fa models have fixed attributes; attrs-json is for extension contracts')
     if args.op not in ('quant','matmul','fa') and not args.local_proxy:
