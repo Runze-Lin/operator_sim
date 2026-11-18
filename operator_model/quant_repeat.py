@@ -2,6 +2,7 @@
 import math
 from .model import ceildiv, line
 from .model_v2 import plan
+from .model_v6 import applies, correction
 
 NEG = -math.inf
 IDENTITY = tuple(tuple(0. if i==j else NEG for j in range(5)) for i in range(5))
@@ -23,8 +24,20 @@ def price(predictor, case):
     p=plan(case)
     if p['iterations']<256:
         return predictor.predict_us(case,use_cache=False)
+    return price_plan(predictor, p)
+
+
+def price_plan(predictor, p):
+    """Price an explicit UB schedule with the same recurrence on any chip."""
     costs=predictor.quant_model['quant']['costs']
     prefix=line(costs['prefix'],math.log2(1+p['active_aiv']))
+    floor=line(costs['control_floor'],min(predictor.quant_model['control_log2_cap'],math.log2(1+p['active_aiv'])))
+    if p['iterations']==1:
+        total=(prefix+line(costs['first_read'],p['units']['read'])+
+               line(costs['vector'],p['units']['vector'])+costs['write_drain_us']+costs['suffix_us'])
+        if applies(p):
+            return total+correction(p,predictor.model['quant_vf_gap']['coefficients'])
+        return max(total,floor)
     drain=costs['write_drain_us']
     rows,cols=p['rows_per_core'],p['cols_per_core']
     tr,tc=p['tile']
@@ -52,5 +65,4 @@ def price(predictor, case):
     if tail:
         matrix=compose(row(tail),matrix)
     body=initial+matrix[2][0]+costs['suffix_us']
-    floor=line(costs['control_floor'],min(predictor.quant_model['control_log2_cap'],math.log2(1+p['active_aiv'])))
     return max(body,floor)

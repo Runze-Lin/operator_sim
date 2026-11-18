@@ -2,6 +2,10 @@
 
 系统接入请读[工具说明](../README.md)和[接入指南](../docs/integration.md)。本目录保存开发过程、早期设计和验证辅助程序。当前有效的公式与校验结论分别发布在[总建模方法](../docs/modeling-strategy.md)和[总误差分析](../docs/error-analysis.md)。
 
+## 复现跨芯片后端
+
+`development/validation/replay_v13.py` 对既有 950DT 计时输入回放两个 SKU，并校验新旧 DT 预测以及两端工作量。两款芯片的 `msopprof` 证据、采集预算与独立冻结合同见[双 SKU 配对校准](../results/v0.13/sku/README.md)。`development/validation/report_v13.py` 使用合格结果生成逐 SKU 误差表与对照图，`wheel_v13.py` 从部署环境核对安装包输出。两款芯片的输入参数及来源保存在 [configs/chips](../configs/chips)。
+
 ## 从哪里复现一次校验
 
 1. **确定合同。** 记录 SoC、CANN 版本、ACLNN 入口、dtype / layout 和可变属性，确认使用的库 kernel。平台和环境见 [CANN 包清单](../docs/cann-packages.json)、[安装记录](../docs/cann-installation.json)、[950DT 最小用例与复跑命令](../docs/smoke-950dt.md)。离线校验可用[隔离 Conda 环境](../environment.yml)，通过 `bash scripts/cann-run.sh COMMAND ...` 同时选定 CANN 和 Python；本机还保留了 [CANNBot 安装来源](../docs/cannbot-installation.json)。

@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "name": "Ascend950DT_9582",
+  "frequency_ghz": 1.65,
+  "cube_cores": 32,
+  "vector_cores": 64,
+  "cube_tops": {
+    "32": null,
+    "16": 432,
+    "8": 865,
+    "4": 1730
+  },
+  "vector_tops": {
+    "32": 27,
+    "16": 54,
+    "8": 54,
+    "4": null
+  },
+  "hbm_capacity_gb": 103.079215104,
+  "hbm_bandwidth_gbs": 4000,
+  "details": {
+    "ub_bytes": 253952,
+    "l1_bytes": 524288,
+    "l2_bytes": 134217728,
+    "l0a_bytes": 65536,
+    "l0b_bytes": 65536,
+    "l0c_bytes": 262144
+  },
+  "sources": {
+    "frequency_ghz,core_counts,capacity,buffer_sizes": "CANN 9.2.1 aarch64-linux/data/platform_config/Ascend950DT_9582.ini, SHA256 b8e7d61780056889e795639504530ecacb2b759ad1602e929b863d837fdf0099. Capacity in decimal GB computed from memory_size bytes.",
+    "cube_tops,vector_tops": "Huawei 950 NPU architecture white paper table 3-1, matched by core count. Cube 16=BF16/FP16, 8=FP8/INT8, 4=MXFP4. Vector 32=FP32, 16=FP16/BF16, 8=INT8. Unquoted formats are unknown (null). TF32 is distinct from strict FP32.",
+    "hbm_bandwidth_gbs": "DT family peak, white paper table 3-1, GB/s decimal.",
+    "white_paper": "https://public-download.obs.cn-east-2.myhuaweicloud.com/ascend/%E6%98%87%E8%85%BE950%20NPU%E6%9E%B6%E6%9E%84%E7%99%BD%E7%9A%AE%E4%B9%A6.pdf"
+  }
+}

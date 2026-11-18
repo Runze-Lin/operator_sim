@@ -1,0 +1,120 @@
+[
+  {
+    "op": "quant",
+    "shape": [
+      512,
+      256
+    ],
+    "dt": {
+      "soc": "Ascend950DT_9582",
+      "kernel": "DynamicMxQuant_bf16toe4m3_high_performance_33_mix_aiv",
+      "correctness": [
+        "quant_elements=131072 scale_elements=4096 bad=0 comparison=exact_bytes"
+      ],
+      "events": 92352,
+      "active_aiv": 64,
+      "active_aic": 0,
+      "ca_us": 5.207878592424095,
+      "trace_sha256": "d083b899d40a3628f4736640c1a11e2665b268944f6ecce9a3d0f98838736262",
+      "kernel_binary_sha256": "17d48c749a27b6d68751ec25f76dc1e9feba37df2052be7b53a7cbd36e86a661",
+      "ca_config_sha256": "dcc4e26e5cee5220526cbf8733ad2299d6edd9b067c969455900ff21cca88e5b",
+      "trace": "runs/model-v3/q3_test_small-af161df0e83accfc5b2d/profile/OPPROF_20261117141800_VGTVQMPAWZBSLZVP/simulator/trace.json"
+    },
+    "pr": {
+      "soc": "Ascend950PR_957b",
+      "kernel": "DynamicMxQuant_bf16toe4m3_high_performance_33_mix_aiv",
+      "correctness": [
+        "quant_elements=131072 scale_elements=4096 bad=0 comparison=exact_bytes"
+      ],
+      "events": 79260,
+      "active_aiv": 52,
+      "active_aic": 0,
+      "ca_us": 5.090302946977317,
+      "trace_sha256": "cce45bebe28a0a7ae0bd8b8cf8226a92a47630040f27c536568c314dec665dea",
+      "kernel_binary_sha256": "17d48c749a27b6d68751ec25f76dc1e9feba37df2052be7b53a7cbd36e86a661",
+      "ca_config_sha256": "dcc4e26e5cee5220526cbf8733ad2299d6edd9b067c969455900ff21cca88e5b",
+      "trace": "runs/sku13-holdout/quant/profile/OPPROF_20261118154832_AEOWVWDYLRUCROOC/simulator/trace.json"
+    },
+    "pr_cost": {
+      "seconds": 63.186301910085604,
+      "exit_code": 0,
+      "raw_bytes": 154171599
+    },
+    "pr_to_dt_ratio": 0.9774235049146854,
+    "rejected_infrastructure_attempt": null,
+    "frozen": {
+      "op": "quant",
+      "shape": [
+        512,
+        256
+      ],
+      "dt_us": 5.429783005268281,
+      "dt_aic": 0,
+      "dt_aiv": 64,
+      "pr_us": 5.429783005268281,
+      "pr_aic": 0,
+      "pr_aiv": 52
+    },
+    "pr_error_percent": 6.6691523437234945
+  },
+  {
+    "op": "matmul",
+    "shape": [
+      129,
+      256,
+      256
+    ],
+    "dt": {
+      "soc": "Ascend950DT_9582",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "correctness": [
+        "elements=33024 bad=0 max_abs_error=0.015625 atol=0.01 rtol=0.005"
+      ],
+      "events": 17860,
+      "active_aiv": 0,
+      "active_aic": 20,
+      "ca_us": 3.6642425060272217,
+      "trace_sha256": "abd6159bf8d28ad6cef5ad443b3f7e6bfac92fb346e912d0c6b18d73ae935b12",
+      "kernel_binary_sha256": "e6899fbaa2659b7778bee81deb00b64b009dafcb7ad350f06576767fdeba2bf7",
+      "ca_config_sha256": "dcc4e26e5cee5220526cbf8733ad2299d6edd9b067c969455900ff21cca88e5b",
+      "trace": "runs/model-v2/m2_test_m_tail-e3f27823fb0bf6404957/profile/OPPROF_20261117122010_ONXDQFCODKESKMPQ/simulator/trace.json"
+    },
+    "pr": {
+      "soc": "Ascend950PR_957b",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "correctness": [
+        "elements=33024 bad=0 max_abs_error=0.015625 atol=0.01 rtol=0.005"
+      ],
+      "events": 17860,
+      "active_aiv": 0,
+      "active_aic": 20,
+      "ca_us": 3.6090906858444214,
+      "trace_sha256": "be7516bf5d360f863b26ce9bb3d815b6595cf8b839717f1f200de5bfaf2df207",
+      "kernel_binary_sha256": "e6899fbaa2659b7778bee81deb00b64b009dafcb7ad350f06576767fdeba2bf7",
+      "ca_config_sha256": "dcc4e26e5cee5220526cbf8733ad2299d6edd9b067c969455900ff21cca88e5b",
+      "trace": "runs/sku13-holdout/matmul/profile/OPPROF_20261118154935_KZZXZAORUMZXHXLN/simulator/trace.json"
+    },
+    "pr_cost": {
+      "seconds": 55.0812830501236,
+      "exit_code": 0,
+      "raw_bytes": 36420704
+    },
+    "pr_to_dt_ratio": 0.984948643521251,
+    "rejected_infrastructure_attempt": null,
+    "frozen": {
+      "op": "matmul",
+      "shape": [
+        129,
+        256,
+        256
+      ],
+      "dt_us": 3.9468988093849275,
+      "dt_aic": 20,
+      "dt_aiv": null,
+      "pr_us": 3.986887677719678,
+      "pr_aic": 20,
+      "pr_aiv": 0
+    },
+    "pr_error_percent": 10.467927374533769
+  }
+]

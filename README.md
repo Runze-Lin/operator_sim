@@ -1,6 +1,6 @@
 # operator-sim：昇腾算子耗时预测后端
 
-`operator-sim` 给系统仿真器提供单卡算子的**设备耗时估计（µs）**。调用方传入某个 rank 实际执行的算子、shape 和属性，模型按库实现的分块、分核和流水依赖估时。可以在原来调用 Roofline 的地方接入它；每次预测只运行 Python，无需 NPU、CANN 或调用 CA 仿真器。
+`operator-sim` 给系统仿真器提供单卡算子的**设备耗时（µs）、Cube / Vector 工作量和逻辑读写字节**。调用方传入某个 rank 的算子、shape、dtype、调用属性和目标芯片配置，模型按库实现的分块、分核和流水依赖估时。可以在原来调用 Roofline 的地方接入它；每次预测只运行 Python，无需 NPU、CANN 或调用 CA 仿真器。
 
 | 调用方要了解什么 | 入口 |
 |---|---|
@@ -19,19 +19,17 @@ python3 -m pip install .
 operator-sim --op rmsnorm --shape 9 7168
 ```
 
-CLI 输出 JSON，`predicted_us` 是这段设备工作的估计微秒数。系统仿真器应在自己的 Python 进程内复用后端，无需为每个事件启动 CLI。下面是从 Roofline 接入的一个最小回调；本例只接受 `estimated`，把外推和缺少合格计时的情况交回原有后端。
+要对另一款芯片做同一调用，可以在系统仿真器启动时加载芯片 JSON，然后在同一个进程反复调用后端。用内置 SKU 名也可以加载 950DT 或 950PR。以下示例输出一次本卡 Matmul 的微秒数、Cube 工作量、逻辑输入字节和计时状态。
 
 ```python
-from operator_model import estimate
+from operator_model import estimate, load_chip
 
-def device_time_us(op, local_shape, attrs, soc, roofline_us):
-    result = estimate(op, local_shape, attrs, soc=soc)
-    if result.status == "estimated":
-        return result.latency_us
-    return roofline_us(op, local_shape, attrs)
+chip = load_chip("Ascend950PR_957b")
+result = estimate("matmul", (128, 256, 512), dtype="bf16", chip=chip)
+print(result.latency_us, result.work["cube_ops"], result.work["logical_read_bytes"], result.status)
 ```
 
-`soc` 传入当前模拟设备的型号；`roofline_us` 由调用方提供，返回值同样使用 µs。若要单独记录外推或区分“算子不支持”和“参考计时不可用”，见[接入指南](docs/integration.md)。
+维护 960、970、980 等架构情景时，每个目标使用一份 JSON，分别填写按位宽区分的两类算力、核数、频率、外存容量和带宽。提供的 120 Cube / 120 Vector 配置用于演示自定义输入。调用方通过 `extrapolated` 状态识别外推，并决定是否将其交给事件调度器。[自定义芯片示例](configs/chips/scenario-example.json) · [字段、单位和返回合同](docs/integration.md)
 
 ## 可预测的算子
 
@@ -45,8 +43,8 @@ KDA chunk 可查询任务结构；其 CA 同步检查尚未通过，系统层应
 
 ## 硬件与计时边界
 
-校准目标是 **Ascend950DT_9582（A5），CANN 9.2.1，32 AIC / 64 AIV，1.65 GHz**。参考值是安装包实际 kernel 在 CA Model 上从首条到末条设备指令的跨核时间窗；串行组合返回各窗口之和。主机 launch、卡间通信、排队及算子间并发由系统仿真器处理。报告的查询开销是运行预测器花费的真实墙钟时间，与 `predicted_us` 使用的是两条不同的时间轴。
+主要校准参考是 **Ascend950DT_9582（A5），CANN 9.2.1，32 AIC / 64 AIV，1.65 GHz**。参考值是安装包实际 kernel 在 CA Model 上从首条到末条设备指令的跨核时间窗；串行组合返回各窗口之和。主机 launch、卡间通信、排队及算子间并发由系统仿真器处理。报告的查询开销是运行预测器花费的真实墙钟时间，与 `predicted_us` 使用的是两条不同的时间轴。
 
-误差数据针对已列出的 A5 路线和 CA 参考，不代表整网时延、实际芯片效率或 A7/A8 的精度。移植到另一代芯片需要确认分核、指令与访存成本以及实现分支，再用目标平台数据验证。
+**Ascend950PR_957b** 有同库输入的 CA 配对数据。两款参考芯片使用不同分核和外存子模型。尚未取得 960、970、980 的 CA 或上板数据，预测采用调用方提供的硬件参数及相近实现假设。逐 SKU 的开发、独立误差和数据缺口见[校验报告](docs/error-analysis.md)。
 
 维护模型、复现 CA 或查阅历史版本，请从[开发与验证档案](development/README.md)进入。
