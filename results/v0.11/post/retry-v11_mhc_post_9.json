@@ -1,0 +1,168 @@
+{
+  "completed": [
+    {
+      "id": "v11_mhc_post_3",
+      "op": "mhc_post",
+      "shape": [
+        4,
+        4,
+        6144
+      ],
+      "attrs": {
+        "dtype": "bf16",
+        "has_h_res": true
+      },
+      "kind": "MHC",
+      "groups": 1,
+      "args": [
+        4,
+        4,
+        6144
+      ],
+      "role": "context_warmup",
+      "group": "few_wide",
+      "prediction": {
+        "predicted_us": 2.3472990369383653,
+        "stages_us": {
+          "arrival": 0.026123887932373413,
+          "SCALAR": 0.9986605314836121,
+          "MTE2": 0.3270082906522938,
+          "SIMD": 0.7504044301374014,
+          "MTE3": 0.2372601809544239,
+          "other": 0.007841715778260705
+        },
+        "route": "post_channel",
+        "predicted_active_aiv": 64,
+        "rows_per_core": 1,
+        "context": "reuse",
+        "context_predictions_us": {
+          "first": 4.771244414187087,
+          "expand": 4.269589674109711,
+          "reuse": 2.3472990369383653
+        },
+        "status": "950DT critical-AIV estimate"
+      },
+      "previous_us": 4.068898556851181,
+      "fixed_us": 2.5024242424242424,
+      "prior_aiv": 0,
+      "sequence_prediction": {
+        "predicted_us": 4.269589674109711,
+        "stages_us": {
+          "arrival": 0.7183781766391139,
+          "SCALAR": 1.5982658801155833,
+          "MTE2": 0.7485101659234097,
+          "SIMD": 0.9593335546989199,
+          "MTE3": 0.2372601809544239,
+          "other": 0.007841715778260705
+        },
+        "route": "post_channel",
+        "predicted_active_aiv": 64,
+        "rows_per_core": 1,
+        "context": "expand",
+        "context_predictions_us": {
+          "first": 4.771244414187087,
+          "expand": 4.269589674109711,
+          "reuse": 2.3472990369383653
+        },
+        "status": "950DT critical-AIV estimate"
+      },
+      "source": "runs/v11post/retry-v11_mhc_post_9/profile/npusim_20261118125546_MHC/record/0000_entry_kernel_5.db",
+      "correctness": [
+        "correctness name=output count=98304 bad=0 max_abs_error=0 atol=0.015625 rtol=0.015625 hard_limit=1"
+      ],
+      "helper_flush": "start_events=221312 end_events=221376 start_overwrites=58816 end_overwrites=57216 start_only=1600 end_only=3264 matched=160896 mismatched=0 invalid=0 written=164160 write_failed=0 status=ok",
+      "batch_wall_s": 111.13359243003651,
+      "batch": "retry-v11_mhc_post_9",
+      "db_sha256": "2f39c6903c135553578e3cb86a708c2b79ea258be3f323a8bdc00d4188d61599",
+      "reference_us": 5.24969696969697,
+      "predicted_us": 2.3472990369383653,
+      "active_aic": 0,
+      "active_aiv": 64,
+      "kernel": "entry_kernel_5",
+      "max_core_rv_count": 924
+    },
+    {
+      "id": "v11_mhc_post_9",
+      "op": "mhc_post",
+      "shape": [
+        256,
+        4,
+        1024
+      ],
+      "attrs": {
+        "dtype": "bf16",
+        "has_h_res": true
+      },
+      "kind": "MHC",
+      "groups": 1,
+      "args": [
+        256,
+        4,
+        1024
+      ],
+      "role": "validation",
+      "group": "controls",
+      "prediction": {
+        "predicted_us": 4.836603588942972,
+        "stages_us": {
+          "arrival": 0.13706523795510206,
+          "SCALAR": 0.9344450465543821,
+          "MTE2": 2.183258528130305,
+          "SIMD": 0.8071504674586102,
+          "MTE3": 0.7642785516935113,
+          "other": 0.01040575715106142
+        },
+        "route": "post_token",
+        "predicted_active_aiv": 64,
+        "rows_per_core": 4,
+        "context": "reuse",
+        "context_predictions_us": {
+          "first": 6.395664316306708,
+          "expand": 5.642580097608691,
+          "reuse": 4.836603588942972
+        },
+        "status": "950DT critical-AIV estimate"
+      },
+      "previous_us": 3.3481127898294507,
+      "fixed_us": 2.5024242424242424,
+      "prior_aiv": 64,
+      "sequence_prediction": {
+        "predicted_us": 4.836603588942972,
+        "stages_us": {
+          "arrival": 0.13706523795510206,
+          "SCALAR": 0.9344450465543821,
+          "MTE2": 2.183258528130305,
+          "SIMD": 0.8071504674586102,
+          "MTE3": 0.7642785516935113,
+          "other": 0.01040575715106142
+        },
+        "route": "post_token",
+        "predicted_active_aiv": 64,
+        "rows_per_core": 4,
+        "context": "reuse",
+        "context_predictions_us": {
+          "first": 6.395664316306708,
+          "expand": 5.642580097608691,
+          "reuse": 4.836603588942972
+        },
+        "status": "950DT critical-AIV estimate"
+      },
+      "source": "runs/v11post/retry-v11_mhc_post_9/profile/npusim_20261118125546_MHC/record/0001_entry_kernel_6.db",
+      "correctness": [
+        "correctness name=output count=1048576 bad=0 max_abs_error=0 atol=0.015625 rtol=0.015625 hard_limit=1"
+      ],
+      "helper_flush": "start_events=897536 end_events=906944 start_overwrites=353536 end_overwrites=353024 start_only=512 end_only=10432 matched=543488 mismatched=0 invalid=0 written=553920 write_failed=0 status=ok",
+      "batch_wall_s": 111.13359243003651,
+      "batch": "retry-v11_mhc_post_9",
+      "db_sha256": "39c259b0e368aea4cc9cddf1594f38e96238b10bb9090b7180496258dd36b97d",
+      "reference_us": 4.6460606060606064,
+      "predicted_us": 4.836603588942972,
+      "active_aic": 0,
+      "active_aiv": 64,
+      "kernel": "entry_kernel_6",
+      "max_core_rv_count": 5536
+    }
+  ],
+  "timing_failed": [],
+  "wall_s": 111.13359243003651
+}

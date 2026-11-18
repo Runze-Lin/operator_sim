@@ -1,0 +1,5989 @@
+[
+  {
+    "id": "r7_cal_wide",
+    "op": "rmsnorm",
+    "shape": [
+      9,
+      5120
+    ],
+    "reference_us": 4.1884848484848485,
+    "correctness": [
+      "correctness count=46080 bad=0 max_abs_error=0.00157092 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness count=9 bad=0 max_abs_error=1.29276e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "kernel": "entry_kernel_1388",
+    "source": "runs/model-v7/r7_cal_wide/result.json",
+    "attrs": {},
+    "role": "development",
+    "predicted_us": 2.9040055722585314,
+    "active_aiv": 9,
+    "active_aic": 0,
+    "query_max_us": 55.31,
+    "phase_us": {
+      "other": 0.004242424242424242,
+      "SCALAR": 2.044848484848451,
+      "MTE2": 0.7703030303030316,
+      "SIMD": 0.4654545454545476,
+      "MTE3": 0.7654545454545455,
+      "arrival": 0.13818181818181818
+    },
+    "previous_us": 3.084561011361972,
+    "prediction": {
+      "predicted_us": 2.9040055722585314,
+      "stages_us": {
+        "SCALAR": 1.2355144980401387,
+        "MTE2": 0.5975664518493079,
+        "SIMD": 0.4607662377476883,
+        "MTE3": 0.43125854799361424,
+        "arrival": 0.1750790287416476,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 9,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.1,
+        "expand": 0.25,
+        "reuse": 0.65
+      },
+      "status": "950DT critical-AIV estimate"
+    },
+    "counts": {
+      "SCALAR": 1093,
+      "MTE2": 5,
+      "MTE3": 3,
+      "SIMD": 1194
+    },
+    "copies": {
+      "MOV_SRC_TO_DST_ALIGNv2": 3,
+      "MOV_SPR_XN": 1
+    },
+    "raw_duration_ticks": {
+      "SCALAR": 57862,
+      "MTE2": 1774,
+      "MTE3": 2819,
+      "SIMD": 11194
+    },
+    "slow": [
+      [
+        1556,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        1258,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        1233,
+        "STI_XN_IMM"
+      ],
+      [
+        1233,
+        "STI_XN_IMM"
+      ],
+      [
+        1167,
+        "STI_XN_IMM"
+      ],
+      [
+        1167,
+        "STI_XN_IMM"
+      ],
+      [
+        1055,
+        "STI_XN_IMM"
+      ],
+      [
+        1038,
+        "ST_XD_XN_IMM"
+      ]
+    ],
+    "launch": 0,
+    "core": 17,
+    "core_type": 3,
+    "db_source": "runs/model-v7/r7_cal_wide/profile/npusim_20261117192539_extension_norm_addmm/record/0000_entry_kernel_1388.db",
+    "group": "controls",
+    "fixed_us": 3.6006060606060606,
+    "prior_aiv": 0,
+    "sequence_us": 3.9704423708046868,
+    "query_median_us": 27.185000000000002,
+    "sequence_prediction": {
+      "predicted_us": 3.9704423708046868,
+      "stages_us": {
+        "SCALAR": 1.9506605231503982,
+        "MTE2": 1.0226791847837529,
+        "SIMD": 0.5232120450447104,
+        "MTE3": 0.43125854799361424,
+        "arrival": 0.03881126194607609,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 9,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 1.0,
+        "expand": 0.0,
+        "reuse": 0.0
+      },
+      "status": "950DT critical-AIV estimate"
+    }
+  },
+  {
+    "id": "r7_hold_batch4",
+    "op": "rmsnorm",
+    "shape": [
+      36,
+      7168
+    ],
+    "reference_us": 6.613939393939394,
+    "correctness": [
+      "correctness count=258048 bad=0 max_abs_error=0.00141852 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness count=36 bad=0 max_abs_error=1.93012e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "kernel": "entry_kernel_1388",
+    "source": "runs/model-v7/r7_hold_batch4/result.json",
+    "attrs": {},
+    "role": "development",
+    "predicted_us": 5.207956199404961,
+    "active_aiv": 36,
+    "active_aic": 0,
+    "query_max_us": 30.62,
+    "phase_us": {
+      "other": 0.004242424242424242,
+      "SCALAR": 1.9157575757575407,
+      "MTE2": 1.28787878787878,
+      "SIMD": 0.586060606060609,
+      "MTE3": 2.745454545454545,
+      "arrival": 0.07454545454545454
+    },
+    "previous_us": 5.424836908680713,
+    "prediction": {
+      "predicted_us": 5.207956199404961,
+      "stages_us": {
+        "SCALAR": 1.4244309058385907,
+        "MTE2": 0.6227785347528699,
+        "SIMD": 0.5411450217927697,
+        "MTE3": 2.2817986289616154,
+        "arrival": 0.3339823001729808,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 36,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.1,
+        "expand": 0.5,
+        "reuse": 0.4
+      },
+      "status": "950DT critical-AIV estimate"
+    },
+    "counts": {
+      "SCALAR": 1093,
+      "MTE2": 5,
+      "MTE3": 3,
+      "SIMD": 1642
+    },
+    "copies": {
+      "MOV_SRC_TO_DST_ALIGNv2": 3,
+      "MOV_SPR_XN": 1
+    },
+    "raw_duration_ticks": {
+      "SCALAR": 52396,
+      "MTE2": 3786,
+      "MTE3": 9496,
+      "SIMD": 14840
+    },
+    "slow": [
+      [
+        4966,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        4525,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        1734,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        1640,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        1167,
+        "STI_XN_IMM"
+      ],
+      [
+        1113,
+        "STI_XN_IMM"
+      ],
+      [
+        1096,
+        "STI_XN_IMM"
+      ],
+      [
+        1065,
+        "STI_XN_IMM"
+      ]
+    ],
+    "launch": 0,
+    "core": 3,
+    "core_type": 2,
+    "db_source": "runs/model-v7/r7_hold_batch4/profile/npusim_20261117201746_extension_norm_addmm/record/0000_entry_kernel_1388.db",
+    "group": "controls",
+    "fixed_us": 3.6006060606060606,
+    "prior_aiv": 0,
+    "sequence_us": 5.9043358945152935,
+    "query_median_us": 27.03,
+    "sequence_prediction": {
+      "predicted_us": 5.9043358945152935,
+      "stages_us": {
+        "SCALAR": 1.9506605231503982,
+        "MTE2": 1.0226791847837529,
+        "SIMD": 0.6065654877873157,
+        "MTE3": 2.2817986289616154,
+        "arrival": 0.03881126194607609,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 36,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 1.0,
+        "expand": 0.0,
+        "reuse": 0.0
+      },
+      "status": "950DT critical-AIV estimate"
+    }
+  },
+  {
+    "id": "reused_rmsnorm",
+    "op": "rmsnorm",
+    "shape": [
+      1,
+      128
+    ],
+    "reference_us": 3.453939393939394,
+    "correctness": [
+      "correctness count=128 bad=0 max_abs_error=0.00135139 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness count=1 bad=0 max_abs_error=9.23429e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "kernel": "entry_kernel_1388",
+    "source": "docs/extensions/smoke-950dt.json",
+    "attrs": {},
+    "role": "development",
+    "predicted_us": 2.109218834365685,
+    "active_aiv": 1,
+    "active_aic": 0,
+    "query_max_us": 37.72,
+    "phase_us": {
+      "other": 0.007272727272727273,
+      "SCALAR": 1.9157575757575456,
+      "MTE2": 0.9545454545454557,
+      "SIMD": 0.3945454545454548,
+      "MTE3": 0.18181818181818182,
+      "arrival": 0.0
+    },
+    "previous_us": 2.102281182871863,
+    "prediction": {
+      "predicted_us": 2.109218834365685,
+      "stages_us": {
+        "SCALAR": 1.0465980902416867,
+        "MTE2": 0.572354368945746,
+        "SIMD": 0.2605668797601117,
+        "MTE3": 0.20970293022169081,
+        "arrival": 0.016175757310314388,
+        "other": 0.00382080788613492
+      },
+      "predicted_active_aiv": 1,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.1,
+        "expand": 0.0,
+        "reuse": 0.9
+      },
+      "status": "950DT critical-AIV estimate"
+    },
+    "counts": {
+      "SCALAR": 1041,
+      "MTE2": 5,
+      "MTE3": 3,
+      "SIMD": 89
+    },
+    "copies": {
+      "MOV_SRC_TO_DST_ALIGNv2": 3,
+      "MOV_SPR_XN": 1
+    },
+    "raw_duration_ticks": {
+      "SCALAR": 60225,
+      "MTE2": 2588,
+      "MTE3": 437,
+      "SIMD": 1320
+    },
+    "slow": [
+      [
+        1346,
+        "STI_XN_IMM"
+      ],
+      [
+        1346,
+        "STI_XN_IMM"
+      ],
+      [
+        1287,
+        "STI_XN_IMM"
+      ],
+      [
+        1287,
+        "STI_XN_IMM"
+      ],
+      [
+        1261,
+        "STI_XN_IMM"
+      ],
+      [
+        1250,
+        "STI_XN_IMM"
+      ],
+      [
+        1239,
+        "STP_XI_XJ_XN"
+      ],
+      [
+        1227,
+        "STI_XN_IMM"
+      ]
+    ],
+    "launch": 0,
+    "core": 0,
+    "core_type": 2,
+    "db_source": "runs/extensions/smoke950/rmsnorm/profile/npusim_20261117170924_extension_norm_addmm/record/0000_entry_kernel_1388.db",
+    "group": "controls",
+    "fixed_us": 3.6006060606060606,
+    "prior_aiv": 0,
+    "sequence_us": 3.545712736347663,
+    "query_median_us": 26.68,
+    "sequence_prediction": {
+      "predicted_us": 3.545712736347663,
+      "stages_us": {
+        "SCALAR": 1.9506605231503982,
+        "MTE2": 1.0226791847837529,
+        "SIMD": 0.3200380283596099,
+        "MTE3": 0.20970293022169081,
+        "arrival": 0.03881126194607609,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 1,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 1.0,
+        "expand": 0.0,
+        "reuse": 0.0
+      },
+      "status": "950DT critical-AIV estimate"
+    }
+  },
+  {
+    "id": "rmsnorm_0",
+    "op": "rmsnorm",
+    "shape": [
+      1,
+      256
+    ],
+    "attrs": {},
+    "args": [
+      1,
+      256,
+      0
+    ],
+    "kind": "NORM",
+    "groups": 2,
+    "prediction": {
+      "predicted_us": 2.1147627749602993,
+      "stages_us": {
+        "SCALAR": 1.0465980902416867,
+        "MTE2": 0.572354368945746,
+        "SIMD": 0.2657764699315246,
+        "MTE3": 0.2100372806448927,
+        "arrival": 0.016175757310314388,
+        "other": 0.00382080788613492
+      },
+      "predicted_active_aiv": 1,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.1,
+        "expand": 0.0,
+        "reuse": 0.9
+      },
+      "status": "950DT critical-AIV estimate"
+    },
+    "role": "development",
+    "reference_us": 3.636969696969697,
+    "predicted_us": 2.1147627749602993,
+    "kernel": "entry_kernel_1388",
+    "active_aic": 0,
+    "active_aiv": 1,
+    "source": "runs/v8vec/rmsnorm-0-10/profile/npusim_20261118094931_NORM/record/0000_entry_kernel_1388.db",
+    "correctness": [
+      "correctness count=256 bad=0 max_abs_error=0.00189815 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness count=1 bad=0 max_abs_error=2.59363e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "6cde0b2a87b217c2520f21ab5c6dade89b0739a955137d2fe38ec607cb126080",
+    "batch_wall_s": 196.24290900002234,
+    "batch": "rmsnorm-0-10",
+    "max_core_rv_count": 119,
+    "query_max_us": 34.98,
+    "phase_us": {
+      "other": 0.0048484848484848485,
+      "SCALAR": 2.0654545454545112,
+      "MTE2": 1.0018181818181828,
+      "SIMD": 0.3775757575757577,
+      "MTE3": 0.18727272727272729,
+      "arrival": 0.0
+    },
+    "previous_us": 2.108630184487201,
+    "counts": {
+      "SCALAR": 1093,
+      "MTE2": 5,
+      "MTE3": 3,
+      "SIMD": 130
+    },
+    "copies": {
+      "MOV_SRC_TO_DST_ALIGNv2": 3,
+      "MOV_SPR_XN": 1
+    },
+    "raw_duration_ticks": {
+      "SCALAR": 68317,
+      "MTE2": 2731,
+      "MTE3": 448,
+      "SIMD": 1640
+    },
+    "slow": [
+      [
+        1641,
+        "STI_XN_IMM"
+      ],
+      [
+        1641,
+        "STI_XN_IMM"
+      ],
+      [
+        1585,
+        "STI_XN_IMM"
+      ],
+      [
+        1585,
+        "STI_XN_IMM"
+      ],
+      [
+        1450,
+        "STI_XN_IMM"
+      ],
+      [
+        1437,
+        "STI_XN_IMM"
+      ],
+      [
+        1428,
+        "STP_XI_XJ_XN"
+      ],
+      [
+        1420,
+        "STI_XN_IMM"
+      ]
+    ],
+    "launch": 0,
+    "core": 0,
+    "core_type": 2,
+    "db_source": "runs/v8vec/rmsnorm-0-10/profile/npusim_20261118094931_NORM/record/0000_entry_kernel_1388.db",
+    "group": "controls",
+    "fixed_us": 3.6006060606060606,
+    "prior_aiv": 0,
+    "sequence_us": 3.5512566769422778,
+    "query_median_us": 26.884999999999998,
+    "sequence_prediction": {
+      "predicted_us": 3.5512566769422778,
+      "stages_us": {
+        "SCALAR": 1.9506605231503982,
+        "MTE2": 1.0226791847837529,
+        "SIMD": 0.3252476185310228,
+        "MTE3": 0.2100372806448927,
+        "arrival": 0.03881126194607609,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 1,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 1.0,
+        "expand": 0.0,
+        "reuse": 0.0
+      },
+      "status": "950DT critical-AIV estimate"
+    }
+  },
+  {
+    "id": "rmsnorm_1",
+    "op": "rmsnorm",
+    "shape": [
+      4,
+      512
+    ],
+    "attrs": {},
+    "args": [
+      4,
+      512,
+      0
+    ],
+    "kind": "NORM",
+    "groups": 2,
+    "prediction": {
+      "predicted_us": 2.3688264663054577,
+      "stages_us": {
+        "SCALAR": 1.159947934920758,
+        "MTE2": 0.5874816186878831,
+        "SIMD": 0.2744108550558359,
+        "MTE3": 0.23164752958573137,
+        "arrival": 0.11151772016911433,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 4,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.1,
+        "expand": 0.15000000000000002,
+        "reuse": 0.75
+      },
+      "status": "950DT critical-AIV estimate"
+    },
+    "role": "development",
+    "reference_us": 4.292121212121212,
+    "predicted_us": 2.3688264663054577,
+    "kernel": "entry_kernel_1388",
+    "active_aic": 0,
+    "active_aiv": 4,
+    "source": "runs/v8vec/rmsnorm-0-10/profile/npusim_20261118094931_NORM/record/0001_entry_kernel_1388.db",
+    "correctness": [
+      "correctness count=2048 bad=0 max_abs_error=0.00151996 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness count=4 bad=0 max_abs_error=1.30929e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "20f2990c9529ab15f96e5d3b42247b80c07d0c9629db6e0e16da1092708316fd",
+    "batch_wall_s": 196.24290900002234,
+    "batch": "rmsnorm-0-10",
+    "max_core_rv_count": 175,
+    "query_max_us": 28.66,
+    "phase_us": {
+      "other": 0.004242424242424242,
+      "SCALAR": 1.5818181818181514,
+      "MTE2": 0.8218181818181831,
+      "SIMD": 0.2569696969696971,
+      "MTE3": 0.22,
+      "arrival": 1.4072727272727272
+    },
+    "previous_us": 2.3570353871064746,
+    "counts": {
+      "SCALAR": 1093,
+      "MTE2": 5,
+      "MTE3": 3,
+      "SIMD": 186
+    },
+    "copies": {
+      "MOV_SRC_TO_DST_ALIGNv2": 3,
+      "MOV_SPR_XN": 1
+    },
+    "raw_duration_ticks": {
+      "SCALAR": 47702,
+      "MTE2": 2097,
+      "MTE3": 854,
+      "SIMD": 1931
+    },
+    "slow": [
+      [
+        1078,
+        "STI_XN_IMM"
+      ],
+      [
+        1020,
+        "STI_XN_IMM"
+      ],
+      [
+        1003,
+        "STI_XN_IMM"
+      ],
+      [
+        993,
+        "STP_XI_XJ_XN"
+      ],
+      [
+        975,
+        "STI_XN_IMM"
+      ],
+      [
+        959,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        950,
+        "STI_XN_IMM"
+      ],
+      [
+        901,
+        "ST_XD_XN_IMM"
+      ]
+    ],
+    "launch": 1,
+    "core": 16,
+    "core_type": 2,
+    "db_source": "runs/v8vec/rmsnorm-0-10/profile/npusim_20261118094931_NORM/record/0001_entry_kernel_1388.db",
+    "group": "controls",
+    "fixed_us": 3.6006060606060606,
+    "prior_aiv": 1,
+    "sequence_us": 3.4674101844337035,
+    "query_median_us": 26.83,
+    "sequence_prediction": {
+      "predicted_us": 3.4674101844337035,
+      "stages_us": {
+        "SCALAR": 1.701812340001193,
+        "MTE2": 0.6231666099113264,
+        "SIMD": 0.25768911008431045,
+        "MTE3": 0.23164752958573137,
+        "arrival": 0.649273786965007,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 4,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.0,
+        "expand": 1.0,
+        "reuse": 0.0
+      },
+      "status": "950DT critical-AIV estimate"
+    }
+  },
+  {
+    "id": "rmsnorm_2",
+    "op": "rmsnorm",
+    "shape": [
+      16,
+      1024
+    ],
+    "attrs": {},
+    "args": [
+      16,
+      1024,
+      0
+    ],
+    "kind": "NORM",
+    "groups": 2,
+    "prediction": {
+      "predicted_us": 2.970568763614135,
+      "stages_us": {
+        "SCALAR": 1.273297779599829,
+        "MTE2": 0.6026088684300204,
+        "SIMD": 0.2934644205229729,
+        "MTE3": 0.5905172041472635,
+        "arrival": 0.20685968302791424,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 16,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.1,
+        "expand": 0.3,
+        "reuse": 0.6000000000000001
+      },
+      "status": "950DT critical-AIV estimate"
+    },
+    "role": "development",
+    "reference_us": 3.8145454545454545,
+    "predicted_us": 2.970568763614135,
+    "kernel": "entry_kernel_1388",
+    "active_aic": 0,
+    "active_aiv": 16,
+    "source": "runs/v8vec/rmsnorm-0-10/profile/npusim_20261118094931_NORM/record/0002_entry_kernel_1388.db",
+    "correctness": [
+      "correctness count=16384 bad=0 max_abs_error=0.00188154 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness count=16 bad=0 max_abs_error=1.30929e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "76a3235d9f7843cbb9c63dff842958a58fd94a50a8a1fa00a91dca438c53c8ab",
+    "batch_wall_s": 196.24290900002234,
+    "batch": "rmsnorm-0-10",
+    "max_core_rv_count": 287,
+    "query_max_us": 37.17,
+    "phase_us": {
+      "other": 0.004242424242424242,
+      "SCALAR": 1.7666666666666369,
+      "MTE2": 0.7048484848484866,
+      "SIMD": 0.24060606060606088,
+      "MTE3": 0.42000000000000004,
+      "arrival": 0.6781818181818182
+    },
+    "previous_us": 2.7275220915732548,
+    "counts": {
+      "SCALAR": 1093,
+      "MTE2": 5,
+      "MTE3": 3,
+      "SIMD": 298
+    },
+    "copies": {
+      "MOV_SRC_TO_DST_ALIGNv2": 3,
+      "MOV_SPR_XN": 1
+    },
+    "raw_duration_ticks": {
+      "SCALAR": 57777,
+      "MTE2": 1465,
+      "MTE3": 1473,
+      "SIMD": 2861
+    },
+    "slow": [
+      [
+        1386,
+        "STI_XN_IMM"
+      ],
+      [
+        1386,
+        "STI_XN_IMM"
+      ],
+      [
+        1328,
+        "STI_XN_IMM"
+      ],
+      [
+        1328,
+        "STI_XN_IMM"
+      ],
+      [
+        1243,
+        "STI_XN_IMM"
+      ],
+      [
+        1226,
+        "STI_XN_IMM"
+      ],
+      [
+        1211,
+        "STI_XN_IMM"
+      ],
+      [
+        1195,
+        "STP_XI_XJ_XN"
+      ]
+    ],
+    "launch": 2,
+    "core": 17,
+    "core_type": 2,
+    "db_source": "runs/v8vec/rmsnorm-0-10/profile/npusim_20261118094931_NORM/record/0002_entry_kernel_1388.db",
+    "group": "controls",
+    "fixed_us": 3.6006060606060606,
+    "prior_aiv": 4,
+    "sequence_us": 3.847118219680887,
+    "query_median_us": 26.895,
+    "sequence_prediction": {
+      "predicted_us": 3.847118219680887,
+      "stages_us": {
+        "SCALAR": 1.701812340001193,
+        "MTE2": 0.6231666099113264,
+        "SIMD": 0.27852747076996176,
+        "MTE3": 0.5905172041472635,
+        "arrival": 0.649273786965007,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 16,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.0,
+        "expand": 1.0,
+        "reuse": 0.0
+      },
+      "status": "950DT critical-AIV estimate"
+    }
+  },
+  {
+    "id": "rmsnorm_3",
+    "op": "rmsnorm",
+    "shape": [
+      9,
+      7168
+    ],
+    "attrs": {},
+    "args": [
+      9,
+      7168,
+      0
+    ],
+    "kind": "NORM",
+    "groups": 2,
+    "prediction": {
+      "predicted_us": 3.0355054759422075,
+      "stages_us": {
+        "SCALAR": 1.2355144980401387,
+        "MTE2": 0.5975664518493079,
+        "SIMD": 0.5441196804902937,
+        "MTE3": 0.4794050089346847,
+        "arrival": 0.1750790287416476,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 9,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.1,
+        "expand": 0.25,
+        "reuse": 0.65
+      },
+      "status": "950DT critical-AIV estimate"
+    },
+    "role": "development",
+    "reference_us": 2.7903030303030305,
+    "predicted_us": 3.0355054759422075,
+    "kernel": "entry_kernel_1388",
+    "active_aic": 0,
+    "active_aiv": 9,
+    "source": "runs/v8vec/rmsnorm-0-10/profile/npusim_20261118094931_NORM/record/0003_entry_kernel_1388.db",
+    "correctness": [
+      "correctness count=64512 bad=0 max_abs_error=0.00141852 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness count=9 bad=0 max_abs_error=1.93012e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "ee3bcb0f5e2c3256dda67621b905d767611c8c5c35bdabe6cf8033abc59d378a",
+    "batch_wall_s": 196.24290900002234,
+    "batch": "rmsnorm-0-10",
+    "max_core_rv_count": 1631,
+    "query_max_us": 34.4,
+    "phase_us": {
+      "other": 0.0048484848484848485,
+      "SCALAR": 0.8703030303030321,
+      "MTE2": 0.796363636363638,
+      "SIMD": 0.555151515151518,
+      "MTE3": 0.5127272727272728,
+      "arrival": 0.05090909090909091
+    },
+    "previous_us": 3.331989702029822,
+    "counts": {
+      "SCALAR": 1093,
+      "MTE2": 5,
+      "MTE3": 3,
+      "SIMD": 1642
+    },
+    "copies": {
+      "MOV_SRC_TO_DST_ALIGNv2": 3,
+      "MOV_SPR_XN": 1
+    },
+    "raw_duration_ticks": {
+      "SCALAR": 27602,
+      "MTE2": 2035,
+      "MTE3": 2084,
+      "SIMD": 14778
+    },
+    "slow": [
+      [
+        1238,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        1061,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        841,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        794,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        526,
+        "ST_XD_XN_IMM"
+      ],
+      [
+        494,
+        "VF"
+      ],
+      [
+        443,
+        "STI_XN_IMM"
+      ],
+      [
+        436,
+        "STP_XI_XJ_XN"
+      ]
+    ],
+    "launch": 3,
+    "core": 17,
+    "core_type": 2,
+    "db_source": "runs/v8vec/rmsnorm-0-10/profile/npusim_20261118094931_NORM/record/0003_entry_kernel_1388.db",
+    "group": "controls",
+    "fixed_us": 3.6006060606060606,
+    "prior_aiv": 16,
+    "sequence_us": 2.505837938952831,
+    "query_median_us": 26.799999999999997,
+    "sequence_prediction": {
+      "predicted_us": 2.505837938952831,
+      "stages_us": {
+        "SCALAR": 0.9461467088073854,
+        "MTE2": 0.5223182782970784,
+        "SIMD": 0.5404864337878732,
+        "MTE3": 0.4794050089346847,
+        "arrival": 0.013660701239674198,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 9,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.0,
+        "expand": 0.0,
+        "reuse": 1.0
+      },
+      "status": "950DT critical-AIV estimate"
+    }
+  },
+  {
+    "id": "rmsnorm_4",
+    "op": "rmsnorm",
+    "shape": [
+      36,
+      5120
+    ],
+    "attrs": {},
+    "args": [
+      36,
+      5120,
+      0
+    ],
+    "kind": "NORM",
+    "groups": 2,
+    "prediction": {
+      "predicted_us": 4.9320169128980735,
+      "stages_us": {
+        "SCALAR": 1.4244309058385907,
+        "MTE2": 0.6227785347528699,
+        "SIMD": 0.45779157905016443,
+        "MTE3": 2.089212785197333,
+        "arrival": 0.3339823001729808,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 36,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.1,
+        "expand": 0.5,
+        "reuse": 0.4
+      },
+      "status": "950DT critical-AIV estimate"
+    },
+    "role": "development",
+    "reference_us": 5.289090909090909,
+    "predicted_us": 4.9320169128980735,
+    "kernel": "entry_kernel_1388",
+    "active_aic": 0,
+    "active_aiv": 36,
+    "source": "runs/v8vec/rmsnorm-0-10/profile/npusim_20261118094931_NORM/record/0004_entry_kernel_1388.db",
+    "correctness": [
+      "correctness count=184320 bad=0 max_abs_error=0.00162899 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness count=36 bad=0 max_abs_error=1.29276e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "77423bec5c8bec003cd1196d7eee5ee711f17fa4acab9c7225d362d7e5679e70",
+    "batch_wall_s": 196.24290900002234,
+    "batch": "rmsnorm-0-10",
+    "max_core_rv_count": 1183,
+    "query_max_us": 28.95,
+    "phase_us": {
+      "other": 0.0018181818181818182,
+      "SCALAR": 1.6303030303029997,
+      "MTE2": 0.5739393939393951,
+      "SIMD": 0.4703030303030326,
+      "MTE3": 1.9569696969696968,
+      "arrival": 0.6557575757575758
+    },
+    "previous_us": 4.68518247423713,
+    "counts": {
+      "SCALAR": 1093,
+      "MTE2": 5,
+      "MTE3": 3,
+      "SIMD": 1194
+    },
+    "copies": {
+      "MOV_SRC_TO_DST_ALIGNv2": 3,
+      "MOV_SPR_XN": 1
+    },
+    "raw_duration_ticks": {
+      "SCALAR": 54757,
+      "MTE2": 1450,
+      "MTE3": 6751,
+      "SIMD": 11208
+    },
+    "slow": [
+      [
+        3522,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        3224,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        1305,
+        "STI_XN_IMM"
+      ],
+      [
+        1305,
+        "STI_XN_IMM"
+      ],
+      [
+        1249,
+        "STI_XN_IMM"
+      ],
+      [
+        1249,
+        "STI_XN_IMM"
+      ],
+      [
+        1186,
+        "STI_XN_IMM"
+      ],
+      [
+        1148,
+        "STI_XN_IMM"
+      ]
+    ],
+    "launch": 4,
+    "core": 8,
+    "core_type": 3,
+    "db_source": "runs/v8vec/rmsnorm-0-10/profile/npusim_20261118094931_NORM/record/0004_entry_kernel_1388.db",
+    "group": "controls",
+    "fixed_us": 3.6006060606060606,
+    "prior_aiv": 16,
+    "sequence_us": 5.512520686216167,
+    "query_median_us": 26.915,
+    "sequence_prediction": {
+      "predicted_us": 5.512520686216167,
+      "stages_us": {
+        "SCALAR": 1.701812340001193,
+        "MTE2": 0.6231666099113264,
+        "SIMD": 0.4452343562551724,
+        "MTE3": 2.089212785197333,
+        "arrival": 0.649273786965007,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 36,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.0,
+        "expand": 1.0,
+        "reuse": 0.0
+      },
+      "status": "950DT critical-AIV estimate"
+    }
+  },
+  {
+    "id": "rmsnorm_5",
+    "op": "rmsnorm",
+    "shape": [
+      32,
+      4096
+    ],
+    "attrs": {},
+    "args": [
+      32,
+      4096,
+      0
+    ],
+    "kind": "NORM",
+    "groups": 2,
+    "prediction": {
+      "predicted_us": 4.751229518573339,
+      "stages_us": {
+        "SCALAR": 1.4244309058385907,
+        "MTE2": 0.6227785347528699,
+        "SIMD": 0.41611485767886175,
+        "MTE3": 1.9501021122439017,
+        "arrival": 0.3339823001729808,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 32,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.1,
+        "expand": 0.5,
+        "reuse": 0.4
+      },
+      "status": "950DT critical-AIV estimate"
+    },
+    "role": "development",
+    "reference_us": 4.580606060606061,
+    "predicted_us": 4.751229518573339,
+    "kernel": "entry_kernel_1388",
+    "active_aic": 0,
+    "active_aiv": 32,
+    "source": "runs/v8vec/rmsnorm-0-10/profile/npusim_20261118094931_NORM/record/0005_entry_kernel_1388.db",
+    "correctness": [
+      "correctness count=131072 bad=0 max_abs_error=0.00146301 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness count=32 bad=0 max_abs_error=1.27822e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "6134ec3919870d7d2666dff18f50c23b2b91c30f5ad82da0a715ce44da990d92",
+    "batch_wall_s": 196.24290900002234,
+    "batch": "rmsnorm-0-10",
+    "max_core_rv_count": 959,
+    "query_max_us": 35.94,
+    "phase_us": {
+      "other": 0.0048484848484848485,
+      "SCALAR": 0.9715151515151537,
+      "MTE2": 0.7078787878787896,
+      "SIMD": 0.39515151515151653,
+      "MTE3": 2.498181818181818,
+      "arrival": 0.0030303030303030303
+    },
+    "previous_us": 4.169510592192898,
+    "counts": {
+      "SCALAR": 1093,
+      "MTE2": 5,
+      "MTE3": 3,
+      "SIMD": 970
+    },
+    "copies": {
+      "MOV_SRC_TO_DST_ALIGNv2": 3,
+      "MOV_SPR_XN": 1
+    },
+    "raw_duration_ticks": {
+      "SCALAR": 28400,
+      "MTE2": 2088,
+      "MTE3": 8484,
+      "SIMD": 8742
+    },
+    "slow": [
+      [
+        4362,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        4117,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        993,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        899,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        519,
+        "ST_XD_XN_IMM"
+      ],
+      [
+        447,
+        "STP_XI_XJ_XN"
+      ],
+      [
+        440,
+        "STI_XN_IMM"
+      ],
+      [
+        429,
+        "STI_XN_IMM"
+      ]
+    ],
+    "launch": 5,
+    "core": 1,
+    "core_type": 3,
+    "db_source": "runs/v8vec/rmsnorm-0-10/profile/npusim_20261118094931_NORM/record/0005_entry_kernel_1388.db",
+    "group": "controls",
+    "fixed_us": 3.6006060606060606,
+    "prior_aiv": 36,
+    "sequence_us": 3.8515048781481402,
+    "query_median_us": 26.84,
+    "sequence_prediction": {
+      "predicted_us": 3.8515048781481402,
+      "stages_us": {
+        "SCALAR": 0.9461467088073854,
+        "MTE2": 0.5223182782970784,
+        "SIMD": 0.41545626967396526,
+        "MTE3": 1.9501021122439017,
+        "arrival": 0.013660701239674198,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 32,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.0,
+        "expand": 0.0,
+        "reuse": 1.0
+      },
+      "status": "950DT critical-AIV estimate"
+    }
+  },
+  {
+    "id": "rmsnorm_6",
+    "op": "rmsnorm",
+    "shape": [
+      64,
+      2048
+    ],
+    "attrs": {},
+    "args": [
+      64,
+      2048,
+      0
+    ],
+    "kind": "NORM",
+    "groups": 2,
+    "prediction": {
+      "predicted_us": 5.038100354478159,
+      "stages_us": {
+        "SCALAR": 1.6133473136370424,
+        "MTE2": 0.6479906176564318,
+        "SIMD": 0.32978675623873255,
+        "MTE3": 1.9502692874555028,
+        "arrival": 0.49288557160431407,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 64,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.1,
+        "expand": 0.75,
+        "reuse": 0.15
+      },
+      "status": "950DT critical-AIV estimate"
+    },
+    "role": "development",
+    "reference_us": 4.3521212121212125,
+    "predicted_us": 5.038100354478159,
+    "kernel": "entry_kernel_1388",
+    "active_aic": 0,
+    "active_aiv": 64,
+    "source": "runs/v8vec/rmsnorm-0-10/profile/npusim_20261118094931_NORM/record/0006_entry_kernel_1388.db",
+    "correctness": [
+      "correctness count=131072 bad=0 max_abs_error=0.00179999 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness count=64 bad=0 max_abs_error=1.44554e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "5e8f2515de36c1e5ba4536e2976508489a1488cac3af541feb6a2eadb8b33c8c",
+    "batch_wall_s": 196.24290900002234,
+    "batch": "rmsnorm-0-10",
+    "max_core_rv_count": 511,
+    "query_max_us": 32.25,
+    "phase_us": {
+      "other": 0.0018181818181818182,
+      "SCALAR": 1.8054545454545106,
+      "MTE2": 0.5387878787878797,
+      "SIMD": 0.34060606060606174,
+      "MTE3": 0.9903030303030304,
+      "arrival": 0.6751515151515152
+    },
+    "previous_us": 4.456214252886117,
+    "counts": {
+      "SCALAR": 1093,
+      "MTE2": 5,
+      "MTE3": 3,
+      "SIMD": 522
+    },
+    "copies": {
+      "MOV_SRC_TO_DST_ALIGNv2": 3,
+      "MOV_SPR_XN": 1
+    },
+    "raw_duration_ticks": {
+      "SCALAR": 54413,
+      "MTE2": 1266,
+      "MTE3": 3480,
+      "SIMD": 4899
+    },
+    "slow": [
+      [
+        1846,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        1629,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        1160,
+        "STI_XN_IMM"
+      ],
+      [
+        1160,
+        "STI_XN_IMM"
+      ],
+      [
+        1118,
+        "DC_PRELOAD_XN_XM"
+      ],
+      [
+        1101,
+        "STI_XN_IMM"
+      ],
+      [
+        1101,
+        "STI_XN_IMM"
+      ],
+      [
+        1088,
+        "DC_PRELOAD_XN_XM"
+      ]
+    ],
+    "launch": 6,
+    "core": 10,
+    "core_type": 3,
+    "db_source": "runs/v8vec/rmsnorm-0-10/profile/npusim_20261118094931_NORM/record/0006_entry_kernel_1388.db",
+    "group": "controls",
+    "fixed_us": 3.6006060606060606,
+    "prior_aiv": 36,
+    "sequence_us": 5.248547024360429,
+    "query_median_us": 26.11,
+    "sequence_prediction": {
+      "predicted_us": 5.248547024360429,
+      "stages_us": {
+        "SCALAR": 1.701812340001193,
+        "MTE2": 0.6231666099113264,
+        "SIMD": 0.32020419214126444,
+        "MTE3": 1.9502692874555028,
+        "arrival": 0.649273786965007,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 64,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.0,
+        "expand": 1.0,
+        "reuse": 0.0
+      },
+      "status": "950DT critical-AIV estimate"
+    }
+  },
+  {
+    "id": "rmsnorm_7",
+    "op": "rmsnorm",
+    "shape": [
+      65,
+      128
+    ],
+    "attrs": {},
+    "args": [
+      65,
+      128,
+      0
+    ],
+    "kind": "NORM",
+    "groups": 2,
+    "prediction": {
+      "predicted_us": 3.552822222513859,
+      "stages_us": {
+        "SCALAR": 1.4244309058385907,
+        "MTE2": 0.6227785347528699,
+        "SIMD": 0.2598271525364768,
+        "MTE3": 0.9079825213268053,
+        "arrival": 0.3339823001729808,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 33,
+      "rows_per_core": 2,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.1,
+        "expand": 0.5,
+        "reuse": 0.4
+      },
+      "status": "950DT critical-AIV estimate"
+    },
+    "role": "development",
+    "reference_us": 3.0836363636363635,
+    "predicted_us": 3.552822222513859,
+    "kernel": "entry_kernel_1388",
+    "active_aic": 0,
+    "active_aiv": 33,
+    "source": "runs/v8vec/rmsnorm-0-10/profile/npusim_20261118094931_NORM/record/0007_entry_kernel_1388.db",
+    "correctness": [
+      "correctness count=8320 bad=0 max_abs_error=0.00179598 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness count=65 bad=0 max_abs_error=1.29262e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "909586ef6746ca0c0d2fc87cc84162f2d7978c61febfffcc8764b64cbe3c91f9",
+    "batch_wall_s": 196.24290900002234,
+    "batch": "rmsnorm-0-10",
+    "max_core_rv_count": 111,
+    "query_max_us": 27.54,
+    "phase_us": {
+      "other": 0.0024242424242424242,
+      "SCALAR": 0.9357575757575779,
+      "MTE2": 0.3896969696969713,
+      "SIMD": 0.3563636363636372,
+      "MTE3": 1.3496969696969696,
+      "arrival": 0.0496969696969697
+    },
+    "previous_us": 3.2614896102151234,
+    "counts": {
+      "SCALAR": 1041,
+      "MTE2": 5,
+      "MTE3": 3,
+      "SIMD": 121
+    },
+    "copies": {
+      "MOV_SRC_TO_DST_ALIGNv2": 3,
+      "MOV_SPR_XN": 1
+    },
+    "raw_duration_ticks": {
+      "SCALAR": 27832,
+      "MTE2": 738,
+      "MTE3": 4511,
+      "SIMD": 1506
+    },
+    "slow": [
+      [
+        2284,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        2222,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        507,
+        "ST_XD_XN_IMM"
+      ],
+      [
+        447,
+        "STP_XI_XJ_XN"
+      ],
+      [
+        429,
+        "STI_XN_IMM"
+      ],
+      [
+        395,
+        "STI_XN_IMM"
+      ],
+      [
+        390,
+        "STI_XN_IMM"
+      ],
+      [
+        390,
+        "STI_XN_IMM"
+      ]
+    ],
+    "launch": 7,
+    "core": 19,
+    "core_type": 3,
+    "db_source": "runs/v8vec/rmsnorm-0-10/profile/npusim_20261118094931_NORM/record/0007_entry_kernel_1388.db",
+    "group": "controls",
+    "fixed_us": 3.6006060606060606,
+    "prior_aiv": 64,
+    "sequence_us": 2.653097582088659,
+    "query_median_us": 25.96,
+    "sequence_prediction": {
+      "predicted_us": 2.653097582088659,
+      "stages_us": {
+        "SCALAR": 0.9461467088073854,
+        "MTE2": 0.5223182782970784,
+        "SIMD": 0.2591685645315803,
+        "MTE3": 0.9079825213268053,
+        "arrival": 0.013660701239674198,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 33,
+      "rows_per_core": 2,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.0,
+        "expand": 0.0,
+        "reuse": 1.0
+      },
+      "status": "950DT critical-AIV estimate"
+    }
+  },
+  {
+    "id": "rmsnorm_8",
+    "op": "rmsnorm",
+    "shape": [
+      128,
+      1024
+    ],
+    "attrs": {},
+    "args": [
+      128,
+      1024,
+      0
+    ],
+    "kind": "NORM",
+    "groups": 2,
+    "prediction": {
+      "predicted_us": 4.316784770397902,
+      "stages_us": {
+        "SCALAR": 1.6133473136370424,
+        "MTE2": 0.6479906176564318,
+        "SIMD": 0.32978675623873255,
+        "MTE3": 1.2289537033752458,
+        "arrival": 0.49288557160431407,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 64,
+      "rows_per_core": 2,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.1,
+        "expand": 0.75,
+        "reuse": 0.15
+      },
+      "status": "950DT critical-AIV estimate"
+    },
+    "role": "development",
+    "reference_us": 3.08969696969697,
+    "predicted_us": 4.316784770397902,
+    "kernel": "entry_kernel_1388",
+    "active_aic": 0,
+    "active_aiv": 64,
+    "source": "runs/v8vec/rmsnorm-0-10/profile/npusim_20261118094931_NORM/record/0008_entry_kernel_1388.db",
+    "correctness": [
+      "correctness count=131072 bad=0 max_abs_error=0.00188154 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness count=128 bad=0 max_abs_error=1.30929e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "55d7812a38b941f648929f50a10b89a3f04d2c860e3c83338c401eb76417808c",
+    "batch_wall_s": 196.24290900002234,
+    "batch": "rmsnorm-0-10",
+    "max_core_rv_count": 522,
+    "query_max_us": 34.95,
+    "phase_us": {
+      "other": 0.0048484848484848485,
+      "SCALAR": 0.9830303030303053,
+      "MTE2": 0.6024242424242442,
+      "SIMD": 0.29212121212121284,
+      "MTE3": 1.2018181818181817,
+      "arrival": 0.005454545454545455
+    },
+    "previous_us": 4.797176550775098,
+    "counts": {
+      "SCALAR": 1093,
+      "MTE2": 5,
+      "MTE3": 3,
+      "SIMD": 533
+    },
+    "copies": {
+      "MOV_SRC_TO_DST_ALIGNv2": 3,
+      "MOV_SPR_XN": 1
+    },
+    "raw_duration_ticks": {
+      "SCALAR": 26852,
+      "MTE2": 1354,
+      "MTE3": 4108,
+      "SIMD": 4885
+    },
+    "slow": [
+      [
+        2125,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        1978,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        579,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        504,
+        "ST_XD_XN_IMM"
+      ],
+      [
+        448,
+        "DC_PRELOAD_XN_IMM"
+      ],
+      [
+        434,
+        "LD_XD_XN_IMM"
+      ],
+      [
+        434,
+        "LDP_XI_XJ_XN"
+      ],
+      [
+        434,
+        "LDP_XI_XJ_XN"
+      ]
+    ],
+    "launch": 8,
+    "core": 4,
+    "core_type": 2,
+    "db_source": "runs/v8vec/rmsnorm-0-10/profile/npusim_20261118094931_NORM/record/0008_entry_kernel_1388.db",
+    "group": "controls",
+    "fixed_us": 3.6006060606060606,
+    "prior_aiv": 64,
+    "sequence_us": 3.0470030265368786,
+    "query_median_us": 25.955,
+    "sequence_prediction": {
+      "predicted_us": 3.0470030265368786,
+      "stages_us": {
+        "SCALAR": 0.9461467088073854,
+        "MTE2": 0.5223182782970784,
+        "SIMD": 0.33210282693135995,
+        "MTE3": 1.2289537033752458,
+        "arrival": 0.013660701239674198,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 64,
+      "rows_per_core": 2,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.0,
+        "expand": 0.0,
+        "reuse": 1.0
+      },
+      "status": "950DT critical-AIV estimate"
+    }
+  },
+  {
+    "id": "rmsnorm_9",
+    "op": "rmsnorm",
+    "shape": [
+      1,
+      8192
+    ],
+    "attrs": {},
+    "args": [
+      1,
+      8192,
+      0
+    ],
+    "kind": "NORM",
+    "groups": 2,
+    "prediction": {
+      "predicted_us": 2.4584870918264117,
+      "stages_us": {
+        "SCALAR": 1.0465980902416867,
+        "MTE2": 0.572354368945746,
+        "SIMD": 0.5887710605591201,
+        "MTE3": 0.23076700688340915,
+        "arrival": 0.016175757310314388,
+        "other": 0.00382080788613492
+      },
+      "predicted_active_aiv": 1,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.1,
+        "expand": 0.0,
+        "reuse": 0.9
+      },
+      "status": "950DT critical-AIV estimate"
+    },
+    "role": "development",
+    "reference_us": 2.055151515151515,
+    "predicted_us": 2.4584870918264117,
+    "kernel": "entry_kernel_1388",
+    "active_aic": 0,
+    "active_aiv": 1,
+    "source": "runs/v8vec/rmsnorm-0-10/profile/npusim_20261118094931_NORM/record/0009_entry_kernel_1388.db",
+    "correctness": [
+      "correctness count=8192 bad=0 max_abs_error=0.00132673 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness count=1 bad=0 max_abs_error=1.46446e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "065c1e56fd0248e28307321a654f56ad03261a1a9fcec3abb75c5ee436cdbefb",
+    "batch_wall_s": 196.24290900002234,
+    "batch": "rmsnorm-0-10",
+    "max_core_rv_count": 1855,
+    "query_max_us": 44.34,
+    "phase_us": {
+      "other": 0.005454545454545455,
+      "SCALAR": 0.8515151515151536,
+      "MTE2": 0.3781818181818199,
+      "SIMD": 0.6054545454545487,
+      "MTE3": 0.21454545454545454,
+      "arrival": 0.0
+    },
+    "previous_us": 2.502268284638166,
+    "counts": {
+      "SCALAR": 1093,
+      "MTE2": 5,
+      "MTE3": 3,
+      "SIMD": 1866
+    },
+    "copies": {
+      "MOV_SRC_TO_DST_ALIGNv2": 3,
+      "MOV_SPR_XN": 1
+    },
+    "raw_duration_ticks": {
+      "SCALAR": 27631,
+      "MTE2": 884,
+      "MTE3": 514,
+      "SIMD": 16574
+    },
+    "slow": [
+      [
+        544,
+        "VF"
+      ],
+      [
+        485,
+        "ST_XD_XN_IMM"
+      ],
+      [
+        471,
+        "STP_XI_XJ_XN"
+      ],
+      [
+        453,
+        "STI_XN_IMM"
+      ],
+      [
+        434,
+        "STI_XN_IMM"
+      ],
+      [
+        406,
+        "VF"
+      ],
+      [
+        402,
+        "STI_XN_IMM"
+      ],
+      [
+        402,
+        "STI_XN_IMM"
+      ]
+    ],
+    "launch": 9,
+    "core": 0,
+    "core_type": 2,
+    "db_source": "runs/v8vec/rmsnorm-0-10/profile/npusim_20261118094931_NORM/record/0009_entry_kernel_1388.db",
+    "group": "few_wide",
+    "fixed_us": 3.6006060606060606,
+    "prior_aiv": 64,
+    "sequence_us": 2.298876658272858,
+    "query_median_us": 25.99,
+    "sequence_prediction": {
+      "predicted_us": 2.298876658272858,
+      "stages_us": {
+        "SCALAR": 0.9461467088073854,
+        "MTE2": 0.5223182782970784,
+        "SIMD": 0.5821631551591758,
+        "MTE3": 0.23076700688340915,
+        "arrival": 0.013660701239674198,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 1,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.0,
+        "expand": 0.0,
+        "reuse": 1.0
+      },
+      "status": "950DT critical-AIV estimate"
+    }
+  },
+  {
+    "id": "v9_rmsnorm_0",
+    "op": "rmsnorm",
+    "shape": [
+      2,
+      128
+    ],
+    "attrs": {},
+    "args": [
+      2,
+      128,
+      0
+    ],
+    "groups": 2,
+    "kind": "NORM",
+    "prediction": {
+      "predicted_us": 2.1863887747580675,
+      "stages_us": {
+        "SCALAR": 1.084381371801377,
+        "MTE2": 0.5773967855264583,
+        "SIMD": 0.25997194802060697,
+        "MTE3": 0.21286144992690936,
+        "arrival": 0.04795641159658103,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 2,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.1,
+        "expand": 0.05,
+        "reuse": 0.85
+      },
+      "status": "950DT critical-AIV estimate"
+    },
+    "previous_us": 2.1774320150029522,
+    "role": "development",
+    "reference_us": 3.4066666666666667,
+    "predicted_us": 2.1863887747580675,
+    "kernel": "entry_kernel_1388",
+    "active_aic": 0,
+    "active_aiv": 2,
+    "source": "runs/v9vec/rmsnorm-0-10/profile/npusim_20261118111305_NORM/record/0000_entry_kernel_1388.db",
+    "correctness": [
+      "correctness count=256 bad=0 max_abs_error=0.00135139 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness count=2 bad=0 max_abs_error=1.16386e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "da85ce292fc73040f26278e73f61cb05f72db4b6d29c50e8bea6839743bdda24",
+    "batch_wall_s": 178.27871987991966,
+    "batch": "rmsnorm-0-10",
+    "max_core_rv_count": 79,
+    "query_max_us": 27.15,
+    "phase_us": {
+      "other": 0.0018181818181818182,
+      "SCALAR": 1.8145454545454234,
+      "MTE2": 1.1272727272727259,
+      "SIMD": 0.27878787878787903,
+      "MTE3": 0.18424242424242424,
+      "arrival": 0.0
+    },
+    "counts": {
+      "SCALAR": 1041,
+      "MTE2": 5,
+      "MTE3": 3,
+      "SIMD": 89
+    },
+    "copies": {
+      "MOV_SRC_TO_DST_ALIGNv2": 3,
+      "MOV_SPR_XN": 1
+    },
+    "raw_duration_ticks": {
+      "SCALAR": 56106,
+      "MTE2": 3321,
+      "MTE3": 794,
+      "SIMD": 1129
+    },
+    "slow": [
+      [
+        1534,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        1440,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        1179,
+        "STI_XN_IMM"
+      ],
+      [
+        1179,
+        "STI_XN_IMM"
+      ],
+      [
+        1118,
+        "STI_XN_IMM"
+      ],
+      [
+        1118,
+        "STI_XN_IMM"
+      ],
+      [
+        1039,
+        "STP_XI_XJ_XN"
+      ],
+      [
+        1027,
+        "STI_XN_IMM"
+      ]
+    ],
+    "launch": 0,
+    "core": 0,
+    "core_type": 2,
+    "db_source": "runs/v9vec/rmsnorm-0-10/profile/npusim_20261118111305_NORM/record/0000_entry_kernel_1388.db",
+    "group": "controls",
+    "fixed_us": 3.6006060606060606,
+    "prior_aiv": 0,
+    "sequence_us": 3.5488712560528812,
+    "query_median_us": 25.75,
+    "sequence_prediction": {
+      "predicted_us": 3.5488712560528812,
+      "stages_us": {
+        "SCALAR": 1.9506605231503982,
+        "MTE2": 1.0226791847837529,
+        "SIMD": 0.3200380283596099,
+        "MTE3": 0.21286144992690936,
+        "arrival": 0.03881126194607609,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 2,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 1.0,
+        "expand": 0.0,
+        "reuse": 0.0
+      },
+      "status": "950DT critical-AIV estimate"
+    }
+  },
+  {
+    "id": "v9_rmsnorm_1",
+    "op": "rmsnorm",
+    "shape": [
+      3,
+      384
+    ],
+    "attrs": {},
+    "args": [
+      3,
+      384,
+      0
+    ],
+    "groups": 2,
+    "kind": "NORM",
+    "prediction": {
+      "predicted_us": 2.2788029430891426,
+      "stages_us": {
+        "SCALAR": 1.1221646533610676,
+        "MTE2": 0.5824392021071707,
+        "SIMD": 0.26979619662392784,
+        "MTE3": 0.2208450172279933,
+        "arrival": 0.07973706588284768,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 3,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.1,
+        "expand": 0.1,
+        "reuse": 0.8
+      },
+      "status": "950DT critical-AIV estimate"
+    },
+    "previous_us": 2.2698384961404203,
+    "role": "development",
+    "reference_us": 2.8696969696969696,
+    "predicted_us": 2.2788029430891426,
+    "kernel": "entry_kernel_1388",
+    "active_aic": 0,
+    "active_aiv": 3,
+    "source": "runs/v9vec/rmsnorm-0-10/profile/npusim_20261118111305_NORM/record/0001_entry_kernel_1388.db",
+    "correctness": [
+      "correctness count=1152 bad=0 max_abs_error=0.00154468 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness count=3 bad=0 max_abs_error=6.15737e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "a39b66bc45e7dc7d3fb07b67c2076e3c950ae46937a5614259f8c6a46a0ba799",
+    "batch_wall_s": 178.27871987991966,
+    "batch": "rmsnorm-0-10",
+    "max_core_rv_count": 147,
+    "query_max_us": 31.4,
+    "phase_us": {
+      "other": 0.0024242424242424242,
+      "SCALAR": 1.7327272727272582,
+      "MTE2": 0.6430303030303048,
+      "SIMD": 0.2030303030303031,
+      "MTE3": 0.17272727272727273,
+      "arrival": 0.11575757575757575
+    },
+    "counts": {
+      "SCALAR": 1093,
+      "MTE2": 5,
+      "MTE3": 3,
+      "SIMD": 158
+    },
+    "copies": {
+      "MOV_SRC_TO_DST_ALIGNv2": 3,
+      "MOV_SPR_XN": 1
+    },
+    "raw_duration_ticks": {
+      "SCALAR": 59185,
+      "MTE2": 1367,
+      "MTE3": 451,
+      "SIMD": 1608
+    },
+    "slow": [
+      [
+        1165,
+        "STI_XN_IMM"
+      ],
+      [
+        1165,
+        "STI_XN_IMM"
+      ],
+      [
+        1105,
+        "STI_XN_IMM"
+      ],
+      [
+        1105,
+        "STI_XN_IMM"
+      ],
+      [
+        1022,
+        "STP_XI_XJ_XN"
+      ],
+      [
+        1010,
+        "STI_XN_IMM"
+      ],
+      [
+        1004,
+        "STI_XN_IMM"
+      ],
+      [
+        997,
+        "STI_XN_IMM"
+      ]
+    ],
+    "launch": 1,
+    "core": 0,
+    "core_type": 3,
+    "db_source": "runs/v9vec/rmsnorm-0-10/profile/npusim_20261118111305_NORM/record/0001_entry_kernel_1388.db",
+    "group": "controls",
+    "fixed_us": 3.6006060606060606,
+    "prior_aiv": 2,
+    "sequence_us": 3.4513980819045527,
+    "query_median_us": 25.814999999999998,
+    "sequence_prediction": {
+      "predicted_us": 3.4513980819045527,
+      "stages_us": {
+        "SCALAR": 1.701812340001193,
+        "MTE2": 0.6231666099113264,
+        "SIMD": 0.25247951991289763,
+        "MTE3": 0.2208450172279933,
+        "arrival": 0.649273786965007,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 3,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.0,
+        "expand": 1.0,
+        "reuse": 0.0
+      },
+      "status": "950DT critical-AIV estimate"
+    }
+  },
+  {
+    "id": "v9_rmsnorm_2",
+    "op": "rmsnorm",
+    "shape": [
+      8,
+      1536
+    ],
+    "attrs": {},
+    "args": [
+      8,
+      1536,
+      0
+    ],
+    "groups": 2,
+    "kind": "NORM",
+    "prediction": {
+      "predicted_us": 2.5733003303679167,
+      "stages_us": {
+        "SCALAR": 1.1977312164804483,
+        "MTE2": 0.5925240352685955,
+        "SIMD": 0.3154926446876338,
+        "MTE3": 0.32043325158972275,
+        "arrival": 0.143298374455381,
+        "other": 0.00382080788613492
+      },
+      "predicted_active_aiv": 8,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.1,
+        "expand": 0.2,
+        "reuse": 0.7000000000000001
+      },
+      "status": "950DT critical-AIV estimate"
+    },
+    "previous_us": 2.563876444678967,
+    "role": "development",
+    "reference_us": 3.7715151515151515,
+    "predicted_us": 2.5733003303679167,
+    "kernel": "entry_kernel_1388",
+    "active_aic": 0,
+    "active_aiv": 8,
+    "source": "runs/v9vec/rmsnorm-0-10/profile/npusim_20261118111305_NORM/record/0002_entry_kernel_1388.db",
+    "correctness": [
+      "correctness count=12288 bad=0 max_abs_error=0.00179136 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness count=8 bad=0 max_abs_error=1.69051e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "00629d52aaa88808ff390df9c5f2e947248a04c26da45011000abf427e4235a8",
+    "batch_wall_s": 178.27871987991966,
+    "batch": "rmsnorm-0-10",
+    "max_core_rv_count": 399,
+    "query_max_us": 34.39,
+    "phase_us": {
+      "other": 0.004242424242424242,
+      "SCALAR": 1.8327272727272423,
+      "MTE2": 0.7575757575757595,
+      "SIMD": 0.2709090909090914,
+      "MTE3": 0.23333333333333334,
+      "arrival": 0.6727272727272727
+    },
+    "counts": {
+      "SCALAR": 1093,
+      "MTE2": 5,
+      "MTE3": 3,
+      "SIMD": 410
+    },
+    "copies": {
+      "MOV_SRC_TO_DST_ALIGNv2": 3,
+      "MOV_SPR_XN": 1
+    },
+    "raw_duration_ticks": {
+      "SCALAR": 59238,
+      "MTE2": 1635,
+      "MTE3": 887,
+      "SIMD": 3955
+    },
+    "slow": [
+      [
+        1323,
+        "STI_XN_IMM"
+      ],
+      [
+        1323,
+        "STI_XN_IMM"
+      ],
+      [
+        1267,
+        "STI_XN_IMM"
+      ],
+      [
+        1267,
+        "STI_XN_IMM"
+      ],
+      [
+        1247,
+        "STI_XN_IMM"
+      ],
+      [
+        1220,
+        "STI_XN_IMM"
+      ],
+      [
+        1208,
+        "STP_XI_XJ_XN"
+      ],
+      [
+        1199,
+        "STI_XN_IMM"
+      ]
+    ],
+    "launch": 2,
+    "core": 17,
+    "core_type": 2,
+    "db_source": "runs/v9vec/rmsnorm-0-10/profile/npusim_20261118111305_NORM/record/0002_entry_kernel_1388.db",
+    "group": "controls",
+    "fixed_us": 3.6006060606060606,
+    "prior_aiv": 3,
+    "sequence_us": 3.5978726278089974,
+    "query_median_us": 25.82,
+    "sequence_prediction": {
+      "predicted_us": 3.5978726278089974,
+      "stages_us": {
+        "SCALAR": 1.701812340001193,
+        "MTE2": 0.6231666099113264,
+        "SIMD": 0.29936583145561313,
+        "MTE3": 0.32043325158972275,
+        "arrival": 0.649273786965007,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 8,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.0,
+        "expand": 1.0,
+        "reuse": 0.0
+      },
+      "status": "950DT critical-AIV estimate"
+    }
+  },
+  {
+    "id": "v9_rmsnorm_3",
+    "op": "rmsnorm",
+    "shape": [
+      15,
+      3072
+    ],
+    "attrs": {},
+    "args": [
+      15,
+      3072,
+      0
+    ],
+    "groups": 2,
+    "kind": "NORM",
+    "prediction": {
+      "predicted_us": 3.015190683777237,
+      "stages_us": {
+        "SCALAR": 1.2355144980401387,
+        "MTE2": 0.5975664518493079,
+        "SIMD": 0.377412795005083,
+        "MTE3": 0.6257971022549247,
+        "arrival": 0.1750790287416476,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 15,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.1,
+        "expand": 0.25,
+        "reuse": 0.65
+      },
+      "status": "950DT critical-AIV estimate"
+    },
+    "previous_us": 3.001207568619367,
+    "role": "development",
+    "reference_us": 3.6818181818181817,
+    "predicted_us": 3.015190683777237,
+    "kernel": "entry_kernel_1388",
+    "active_aic": 0,
+    "active_aiv": 15,
+    "source": "runs/v9vec/rmsnorm-0-10/profile/npusim_20261118111305_NORM/record/0003_entry_kernel_1388.db",
+    "correctness": [
+      "correctness count=46080 bad=0 max_abs_error=0.0015149 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness count=15 bad=0 max_abs_error=1.29968e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "d33b62d9354043039a839a1249a6778b8f2e2f08a93654aeed99e882ca063cd8",
+    "batch_wall_s": 178.27871987991966,
+    "batch": "rmsnorm-0-10",
+    "max_core_rv_count": 735,
+    "query_max_us": 26.92,
+    "phase_us": {
+      "other": 0.004242424242424242,
+      "SCALAR": 1.6612121212120912,
+      "MTE2": 0.7806060606060624,
+      "SIMD": 0.350909090909092,
+      "MTE3": 0.2193939393939394,
+      "arrival": 0.6654545454545454
+    },
+    "counts": {
+      "SCALAR": 1093,
+      "MTE2": 5,
+      "MTE3": 3,
+      "SIMD": 746
+    },
+    "copies": {
+      "MOV_SRC_TO_DST_ALIGNv2": 3,
+      "MOV_SPR_XN": 1
+    },
+    "raw_duration_ticks": {
+      "SCALAR": 52830,
+      "MTE2": 1667,
+      "MTE3": 828,
+      "SIMD": 6975
+    },
+    "slow": [
+      [
+        1158,
+        "STI_XN_IMM"
+      ],
+      [
+        1158,
+        "STI_XN_IMM"
+      ],
+      [
+        1072,
+        "STI_XN_IMM"
+      ],
+      [
+        1072,
+        "STI_XN_IMM"
+      ],
+      [
+        955,
+        "STI_XN_IMM"
+      ],
+      [
+        948,
+        "STP_XI_XJ_XN"
+      ],
+      [
+        943,
+        "STI_XN_IMM"
+      ],
+      [
+        930,
+        "STI_XN_IMM"
+      ]
+    ],
+    "launch": 3,
+    "core": 19,
+    "core_type": 2,
+    "db_source": "runs/v9vec/rmsnorm-0-10/profile/npusim_20261118111305_NORM/record/0003_entry_kernel_1388.db",
+    "group": "controls",
+    "fixed_us": 3.6006060606060606,
+    "prior_aiv": 8,
+    "sequence_us": 3.965751560531153,
+    "query_median_us": 25.72,
+    "sequence_prediction": {
+      "predicted_us": 3.965751560531153,
+      "stages_us": {
+        "SCALAR": 1.701812340001193,
+        "MTE2": 0.6231666099113264,
+        "SIMD": 0.36188091351256707,
+        "MTE3": 0.6257971022549247,
+        "arrival": 0.649273786965007,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 15,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.0,
+        "expand": 1.0,
+        "reuse": 0.0
+      },
+      "status": "950DT critical-AIV estimate"
+    }
+  },
+  {
+    "id": "v9_rmsnorm_4",
+    "op": "rmsnorm",
+    "shape": [
+      17,
+      7168
+    ],
+    "attrs": {},
+    "args": [
+      17,
+      7168,
+      0
+    ],
+    "groups": 2,
+    "kind": "NORM",
+    "prediction": {
+      "predicted_us": 3.6892650270664564,
+      "stages_us": {
+        "SCALAR": 1.3488643427192097,
+        "MTE2": 0.6126937015914451,
+        "SIMD": 0.5423348852717793,
+        "MTE3": 0.9111302979974398,
+        "arrival": 0.2704209916004476,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 17,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.1,
+        "expand": 0.4,
+        "reuse": 0.5
+      },
+      "status": "950DT critical-AIV estimate"
+    },
+    "previous_us": 4.064480290969855,
+    "role": "development",
+    "reference_us": 3.867272727272727,
+    "predicted_us": 3.6892650270664564,
+    "kernel": "entry_kernel_1388",
+    "active_aic": 0,
+    "active_aiv": 17,
+    "source": "runs/v9vec/rmsnorm-0-10/profile/npusim_20261118111305_NORM/record/0004_entry_kernel_1388.db",
+    "correctness": [
+      "correctness count=121856 bad=0 max_abs_error=0.00141852 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness count=17 bad=0 max_abs_error=1.93012e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "35c0eb3048a93421ccb4df019cd213feee9a10f2d87317700ab8d598192d97e9",
+    "batch_wall_s": 178.27871987991966,
+    "batch": "rmsnorm-0-10",
+    "max_core_rv_count": 1631,
+    "query_max_us": 30.63,
+    "phase_us": {
+      "other": 0.0018181818181818182,
+      "SCALAR": 1.6212121212120914,
+      "MTE2": 0.5315151515151527,
+      "SIMD": 0.5593939393939422,
+      "MTE3": 0.6175757575757576,
+      "arrival": 0.5357575757575758
+    },
+    "counts": {
+      "SCALAR": 1093,
+      "MTE2": 5,
+      "MTE3": 3,
+      "SIMD": 1642
+    },
+    "copies": {
+      "MOV_SRC_TO_DST_ALIGNv2": 3,
+      "MOV_SPR_XN": 1
+    },
+    "raw_duration_ticks": {
+      "SCALAR": 52645,
+      "MTE2": 1343,
+      "MTE3": 2436,
+      "SIMD": 14802
+    },
+    "slow": [
+      [
+        1417,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        1152,
+        "STI_XN_IMM"
+      ],
+      [
+        1152,
+        "STI_XN_IMM"
+      ],
+      [
+        1083,
+        "STI_XN_IMM"
+      ],
+      [
+        1083,
+        "STI_XN_IMM"
+      ],
+      [
+        1014,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        997,
+        "STP_XI_XJ_XN"
+      ],
+      [
+        979,
+        "STI_XN_IMM"
+      ]
+    ],
+    "launch": 4,
+    "core": 4,
+    "core_type": 2,
+    "db_source": "runs/v9vec/rmsnorm-0-10/profile/npusim_20261118111305_NORM/record/0004_entry_kernel_1388.db",
+    "group": "controls",
+    "fixed_us": 3.6006060606060606,
+    "prior_aiv": 15,
+    "sequence_us": 4.417791641758879,
+    "query_median_us": 25.78,
+    "sequence_prediction": {
+      "predicted_us": 4.417791641758879,
+      "stages_us": {
+        "SCALAR": 1.701812340001193,
+        "MTE2": 0.6231666099113264,
+        "SIMD": 0.5285877989977776,
+        "MTE3": 0.9111302979974398,
+        "arrival": 0.649273786965007,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 17,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.0,
+        "expand": 1.0,
+        "reuse": 0.0
+      },
+      "status": "950DT critical-AIV estimate"
+    }
+  },
+  {
+    "id": "v9_rmsnorm_5",
+    "op": "rmsnorm",
+    "shape": [
+      24,
+      4096
+    ],
+    "attrs": {},
+    "args": [
+      24,
+      4096,
+      0
+    ],
+    "groups": 2,
+    "kind": "NORM",
+    "prediction": {
+      "predicted_us": 3.9714146832796846,
+      "stages_us": {
+        "SCALAR": 1.3866476242789003,
+        "MTE2": 0.6177361181721576,
+        "SIMD": 0.41670978941836656,
+        "MTE3": 1.244298697637411,
+        "arrival": 0.3022016458867142,
+        "other": 0.00382080788613492
+      },
+      "predicted_active_aiv": 24,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.1,
+        "expand": 0.45,
+        "reuse": 0.45000000000000007
+      },
+      "status": "950DT critical-AIV estimate"
+    },
+    "previous_us": 3.8038098418608546,
+    "role": "development",
+    "reference_us": 4.30969696969697,
+    "predicted_us": 3.9714146832796846,
+    "kernel": "entry_kernel_1388",
+    "active_aic": 0,
+    "active_aiv": 24,
+    "source": "runs/v9vec/rmsnorm-0-10/profile/npusim_20261118111305_NORM/record/0005_entry_kernel_1388.db",
+    "correctness": [
+      "correctness count=98304 bad=0 max_abs_error=0.00146301 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness count=24 bad=0 max_abs_error=1.27822e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "e907eecbe66aa747d0a8f411ebcba526e5c021b5aa82edca0b276ae9f9c8f66b",
+    "batch_wall_s": 178.27871987991966,
+    "batch": "rmsnorm-0-10",
+    "max_core_rv_count": 959,
+    "query_max_us": 31.13,
+    "phase_us": {
+      "other": 0.0018181818181818182,
+      "SCALAR": 1.447272727272704,
+      "MTE2": 0.500000000000001,
+      "SIMD": 0.4030303030303046,
+      "MTE3": 1.4006060606060606,
+      "arrival": 0.556969696969697
+    },
+    "counts": {
+      "SCALAR": 1093,
+      "MTE2": 5,
+      "MTE3": 3,
+      "SIMD": 970
+    },
+    "copies": {
+      "MOV_SRC_TO_DST_ALIGNv2": 3,
+      "MOV_SPR_XN": 1
+    },
+    "raw_duration_ticks": {
+      "SCALAR": 45657,
+      "MTE2": 1286,
+      "MTE3": 4869,
+      "SIMD": 8792
+    },
+    "slow": [
+      [
+        2558,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        2306,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        1023,
+        "STI_XN_IMM"
+      ],
+      [
+        959,
+        "STP_XI_XJ_XN"
+      ],
+      [
+        956,
+        "STI_XN_IMM"
+      ],
+      [
+        941,
+        "STI_XN_IMM"
+      ],
+      [
+        920,
+        "STI_XN_IMM"
+      ],
+      [
+        888,
+        "STI_XN_IMM"
+      ]
+    ],
+    "launch": 5,
+    "core": 5,
+    "core_type": 3,
+    "db_source": "runs/v9vec/rmsnorm-0-10/profile/npusim_20261118111305_NORM/record/0005_entry_kernel_1388.db",
+    "group": "controls",
+    "fixed_us": 3.6006060606060606,
+    "prior_aiv": 17,
+    "sequence_us": 4.625929877284943,
+    "query_median_us": 25.884999999999998,
+    "sequence_prediction": {
+      "predicted_us": 4.625929877284943,
+      "stages_us": {
+        "SCALAR": 1.701812340001193,
+        "MTE2": 0.6231666099113264,
+        "SIMD": 0.40355763488386975,
+        "MTE3": 1.244298697637411,
+        "arrival": 0.649273786965007,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 24,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.0,
+        "expand": 1.0,
+        "reuse": 0.0
+      },
+      "status": "950DT critical-AIV estimate"
+    }
+  },
+  {
+    "id": "v9_rmsnorm_6",
+    "op": "rmsnorm",
+    "shape": [
+      63,
+      512
+    ],
+    "attrs": {},
+    "args": [
+      63,
+      512,
+      0
+    ],
+    "groups": 2,
+    "kind": "NORM",
+    "prediction": {
+      "predicted_us": 4.495427259422498,
+      "stages_us": {
+        "SCALAR": 1.4999974689579711,
+        "MTE2": 0.6328633679142946,
+        "SIMD": 0.26905646940029293,
+        "MTE3": 1.6921455365182902,
+        "arrival": 0.3975436087455141,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 63,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.1,
+        "expand": 0.6,
+        "reuse": 0.3
+      },
+      "status": "950DT critical-AIV estimate"
+    },
+    "previous_us": 3.292039274057329,
+    "role": "development",
+    "reference_us": 4.431515151515152,
+    "predicted_us": 4.495427259422498,
+    "kernel": "entry_kernel_1388",
+    "active_aic": 0,
+    "active_aiv": 63,
+    "source": "runs/v9vec/rmsnorm-0-10/profile/npusim_20261118111305_NORM/record/0006_entry_kernel_1388.db",
+    "correctness": [
+      "correctness count=32256 bad=0 max_abs_error=0.00183194 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness count=63 bad=0 max_abs_error=1.30929e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "1dc3e3ecf4c23b8009817f3a71ccda1e4f54a06fa3dde493792e24e8f7cf7b0e",
+    "batch_wall_s": 178.27871987991966,
+    "batch": "rmsnorm-0-10",
+    "max_core_rv_count": 175,
+    "query_max_us": 26.8,
+    "phase_us": {
+      "other": 0.004242424242424242,
+      "SCALAR": 1.9309090909090614,
+      "MTE2": 0.43333333333333424,
+      "SIMD": 0.30909090909090986,
+      "MTE3": 1.0424242424242423,
+      "arrival": 0.7115151515151515
+    },
+    "counts": {
+      "SCALAR": 1093,
+      "MTE2": 5,
+      "MTE3": 3,
+      "SIMD": 186
+    },
+    "copies": {
+      "MOV_SRC_TO_DST_ALIGNv2": 3,
+      "MOV_SPR_XN": 1
+    },
+    "raw_duration_ticks": {
+      "SCALAR": 61557,
+      "MTE2": 975,
+      "MTE3": 3629,
+      "SIMD": 1980
+    },
+    "slow": [
+      [
+        1909,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        1715,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        1595,
+        "STI_XN_IMM"
+      ],
+      [
+        1595,
+        "STI_XN_IMM"
+      ],
+      [
+        1536,
+        "STI_XN_IMM"
+      ],
+      [
+        1536,
+        "STI_XN_IMM"
+      ],
+      [
+        1022,
+        "STI_XN_IMM"
+      ],
+      [
+        1003,
+        "STP_XI_XJ_XN"
+      ]
+    ],
+    "launch": 6,
+    "core": 23,
+    "core_type": 3,
+    "db_source": "runs/v9vec/rmsnorm-0-10/profile/npusim_20261118111305_NORM/record/0006_entry_kernel_1388.db",
+    "group": "controls",
+    "fixed_us": 3.6006060606060606,
+    "prior_aiv": 24,
+    "sequence_us": 4.927908191366262,
+    "query_median_us": 25.875,
+    "sequence_prediction": {
+      "predicted_us": 4.927908191366262,
+      "stages_us": {
+        "SCALAR": 1.701812340001193,
+        "MTE2": 0.6231666099113264,
+        "SIMD": 0.25768911008431045,
+        "MTE3": 1.6921455365182902,
+        "arrival": 0.649273786965007,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 63,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.0,
+        "expand": 1.0,
+        "reuse": 0.0
+      },
+      "status": "950DT critical-AIV estimate"
+    }
+  },
+  {
+    "id": "v9_rmsnorm_7",
+    "op": "rmsnorm",
+    "shape": [
+      66,
+      256
+    ],
+    "attrs": {},
+    "args": [
+      66,
+      256,
+      0
+    ],
+    "groups": 2,
+    "kind": "NORM",
+    "prediction": {
+      "predicted_us": 3.5856481054365728,
+      "stages_us": {
+        "SCALAR": 1.4244309058385907,
+        "MTE2": 0.6227785347528699,
+        "SIMD": 0.2702463328793025,
+        "MTE3": 0.9303892239066938,
+        "arrival": 0.3339823001729808,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 33,
+      "rows_per_core": 2,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.1,
+        "expand": 0.5,
+        "reuse": 0.4
+      },
+      "status": "950DT critical-AIV estimate"
+    },
+    "previous_us": 3.348249357300945,
+    "role": "development",
+    "reference_us": 2.830909090909091,
+    "predicted_us": 3.5856481054365728,
+    "kernel": "entry_kernel_1388",
+    "active_aic": 0,
+    "active_aiv": 33,
+    "source": "runs/v9vec/rmsnorm-0-10/profile/npusim_20261118111305_NORM/record/0007_entry_kernel_1388.db",
+    "correctness": [
+      "correctness count=16896 bad=0 max_abs_error=0.00189815 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness count=66 bad=0 max_abs_error=1.39693e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "c43560b41b668e3b325bb7f688efc5f871f93c5ede3b51d89ee22f723d8c7ca0",
+    "batch_wall_s": 178.27871987991966,
+    "batch": "rmsnorm-0-10",
+    "max_core_rv_count": 186,
+    "query_max_us": 32.08,
+    "phase_us": {
+      "other": 0.0024242424242424242,
+      "SCALAR": 1.0230303030303014,
+      "MTE2": 0.28969696969697084,
+      "SIMD": 0.21393939393939407,
+      "MTE3": 1.301212121212121,
+      "arrival": 0.0006060606060606061
+    },
+    "counts": {
+      "SCALAR": 1093,
+      "MTE2": 5,
+      "MTE3": 3,
+      "SIMD": 197
+    },
+    "copies": {
+      "MOV_SRC_TO_DST_ALIGNv2": 3,
+      "MOV_SPR_XN": 1
+    },
+    "raw_duration_ticks": {
+      "SCALAR": 28713,
+      "MTE2": 571,
+      "MTE3": 4358,
+      "SIMD": 1911
+    },
+    "slow": [
+      [
+        2211,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        2142,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        481,
+        "ST_XD_XN_IMM"
+      ],
+      [
+        455,
+        "STP_XI_XJ_XN"
+      ],
+      [
+        438,
+        "DC_PRELOAD_XN_IMM"
+      ],
+      [
+        437,
+        "STI_XN_IMM"
+      ],
+      [
+        424,
+        "LD_XD_XN_IMM"
+      ],
+      [
+        424,
+        "LDP_XI_XJ_XN"
+      ]
+    ],
+    "launch": 7,
+    "core": 0,
+    "core_type": 2,
+    "db_source": "runs/v9vec/rmsnorm-0-10/profile/npusim_20261118111305_NORM/record/0007_entry_kernel_1388.db",
+    "group": "controls",
+    "fixed_us": 3.6006060606060606,
+    "prior_aiv": 63,
+    "sequence_us": 2.685923465011373,
+    "query_median_us": 25.945,
+    "sequence_prediction": {
+      "predicted_us": 2.685923465011373,
+      "stages_us": {
+        "SCALAR": 0.9461467088073854,
+        "MTE2": 0.5223182782970784,
+        "SIMD": 0.269587744874406,
+        "MTE3": 0.9303892239066938,
+        "arrival": 0.013660701239674198,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 33,
+      "rows_per_core": 2,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.0,
+        "expand": 0.0,
+        "reuse": 1.0
+      },
+      "status": "950DT critical-AIV estimate"
+    }
+  },
+  {
+    "id": "v9_rmsnorm_8",
+    "op": "rmsnorm",
+    "shape": [
+      96,
+      2048
+    ],
+    "attrs": {},
+    "args": [
+      96,
+      2048,
+      0
+    ],
+    "groups": 2,
+    "kind": "NORM",
+    "prediction": {
+      "predicted_us": 4.349124192546774,
+      "stages_us": {
+        "SCALAR": 1.4999974689579711,
+        "MTE2": 0.6328633679142946,
+        "SIMD": 0.4149249941998522,
+        "MTE3": 1.3999739448430066,
+        "arrival": 0.3975436087455141,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 48,
+      "rows_per_core": 2,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.1,
+        "expand": 0.6,
+        "reuse": 0.3
+      },
+      "status": "950DT critical-AIV estimate"
+    },
+    "previous_us": 5.241874390745966,
+    "role": "development",
+    "reference_us": 3.4484848484848483,
+    "predicted_us": 4.349124192546774,
+    "kernel": "entry_kernel_1388",
+    "active_aic": 0,
+    "active_aiv": 48,
+    "source": "runs/v9vec/rmsnorm-0-10/profile/npusim_20261118111305_NORM/record/0008_entry_kernel_1388.db",
+    "correctness": [
+      "correctness count=196608 bad=0 max_abs_error=0.00179999 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness count=96 bad=0 max_abs_error=1.44554e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "d41caa4bae15f5bb9c5460f181970a96a31c2caf48f9abba4e53f807b202aaff",
+    "batch_wall_s": 178.27871987991966,
+    "batch": "rmsnorm-0-10",
+    "max_core_rv_count": 970,
+    "query_max_us": 32.91,
+    "phase_us": {
+      "other": 0.004242424242424242,
+      "SCALAR": 1.1012121212121144,
+      "MTE2": 0.8157575757575775,
+      "SIMD": 0.40242424242424396,
+      "MTE3": 1.1224242424242423,
+      "arrival": 0.0024242424242424242
+    },
+    "counts": {
+      "SCALAR": 1093,
+      "MTE2": 5,
+      "MTE3": 3,
+      "SIMD": 981
+    },
+    "copies": {
+      "MOV_SRC_TO_DST_ALIGNv2": 3,
+      "MOV_SPR_XN": 1
+    },
+    "raw_duration_ticks": {
+      "SCALAR": 29405,
+      "MTE2": 2490,
+      "MTE3": 3951,
+      "SIMD": 8827
+    },
+    "slow": [
+      [
+        2099,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        1847,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        1217,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        1123,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        552,
+        "DC_PRELOAD_XN_IMM"
+      ],
+      [
+        538,
+        "LD_XD_XN_IMM"
+      ],
+      [
+        538,
+        "LDP_XI_XJ_XN"
+      ],
+      [
+        538,
+        "LDP_XI_XJ_XN"
+      ]
+    ],
+    "launch": 8,
+    "core": 1,
+    "core_type": 2,
+    "db_source": "runs/v9vec/rmsnorm-0-10/profile/npusim_20261118111305_NORM/record/0008_entry_kernel_1388.db",
+    "group": "controls",
+    "fixed_us": 3.6006060606060606,
+    "prior_aiv": 63,
+    "sequence_us": 3.301376710747245,
+    "query_median_us": 25.84,
+    "sequence_prediction": {
+      "predicted_us": 3.301376710747245,
+      "stages_us": {
+        "SCALAR": 0.9461467088073854,
+        "MTE2": 0.5223182782970784,
+        "SIMD": 0.41545626967396526,
+        "MTE3": 1.3999739448430066,
+        "arrival": 0.013660701239674198,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 48,
+      "rows_per_core": 2,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.0,
+        "expand": 0.0,
+        "reuse": 1.0
+      },
+      "status": "950DT critical-AIV estimate"
+    }
+  },
+  {
+    "id": "v9_rmsnorm_9",
+    "op": "rmsnorm",
+    "shape": [
+      1,
+      6144
+    ],
+    "attrs": {},
+    "args": [
+      1,
+      6144,
+      0
+    ],
+    "groups": 2,
+    "kind": "NORM",
+    "prediction": {
+      "predicted_us": 2.3697840423125762,
+      "stages_us": {
+        "SCALAR": 1.0465980902416867,
+        "MTE2": 0.572354368945746,
+        "SIMD": 0.5054176178165148,
+        "MTE3": 0.2254174001121791,
+        "arrival": 0.016175757310314388,
+        "other": 0.00382080788613492
+      },
+      "predicted_active_aiv": 1,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.1,
+        "expand": 0.0,
+        "reuse": 0.9
+      },
+      "status": "950DT critical-AIV estimate"
+    },
+    "previous_us": 2.4006842587927553,
+    "role": "development",
+    "reference_us": 1.936969696969697,
+    "predicted_us": 2.3697840423125762,
+    "kernel": "entry_kernel_1388",
+    "active_aic": 0,
+    "active_aiv": 1,
+    "source": "runs/v9vec/rmsnorm-0-10/profile/npusim_20261118111305_NORM/record/0009_entry_kernel_1388.db",
+    "correctness": [
+      "correctness count=6144 bad=0 max_abs_error=0.00147166 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness count=1 bad=0 max_abs_error=5.51634e-09 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "3ef45309e5f73193516fe265fd3adbf4312d398d5b603bb8b63749f97b64538c",
+    "batch_wall_s": 178.27871987991966,
+    "batch": "rmsnorm-0-10",
+    "max_core_rv_count": 1407,
+    "query_max_us": 27.57,
+    "phase_us": {
+      "other": 0.005454545454545455,
+      "SCALAR": 0.8581818181818202,
+      "MTE2": 0.33818181818181964,
+      "SIMD": 0.5072727272727298,
+      "MTE3": 0.22787878787878788,
+      "arrival": 0.0
+    },
+    "counts": {
+      "SCALAR": 1093,
+      "MTE2": 5,
+      "MTE3": 3,
+      "SIMD": 1418
+    },
+    "copies": {
+      "MOV_SRC_TO_DST_ALIGNv2": 3,
+      "MOV_SPR_XN": 1
+    },
+    "raw_duration_ticks": {
+      "SCALAR": 27637,
+      "MTE2": 791,
+      "MTE3": 479,
+      "SIMD": 12969
+    },
+    "slow": [
+      [
+        486,
+        "ST_XD_XN_IMM"
+      ],
+      [
+        457,
+        "STP_XI_XJ_XN"
+      ],
+      [
+        445,
+        "VF"
+      ],
+      [
+        439,
+        "STI_XN_IMM"
+      ],
+      [
+        422,
+        "STI_XN_IMM"
+      ],
+      [
+        404,
+        "STI_XN_IMM"
+      ],
+      [
+        404,
+        "STI_XN_IMM"
+      ],
+      [
+        387,
+        "STI_XN_IMM"
+      ]
+    ],
+    "launch": 9,
+    "core": 0,
+    "core_type": 2,
+    "db_source": "runs/v9vec/rmsnorm-0-10/profile/npusim_20261118111305_NORM/record/0009_entry_kernel_1388.db",
+    "group": "few_wide",
+    "fixed_us": 3.6006060606060606,
+    "prior_aiv": 63,
+    "sequence_us": 2.210173608759023,
+    "query_median_us": 25.92,
+    "sequence_prediction": {
+      "predicted_us": 2.210173608759023,
+      "stages_us": {
+        "SCALAR": 0.9461467088073854,
+        "MTE2": 0.5223182782970784,
+        "SIMD": 0.49880971241657057,
+        "MTE3": 0.2254174001121791,
+        "arrival": 0.013660701239674198,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 1,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.0,
+        "expand": 0.0,
+        "reuse": 1.0
+      },
+      "status": "950DT critical-AIV estimate"
+    }
+  },
+  {
+    "id": "v10_rmsnorm_0",
+    "op": "rmsnorm",
+    "shape": [
+      2,
+      4608
+    ],
+    "attrs": {},
+    "kind": "NORM",
+    "groups": 2,
+    "args": [
+      2,
+      4608,
+      0
+    ],
+    "role": "development",
+    "prediction": {
+      "predicted_us": 2.392128960381648,
+      "stages_us": {
+        "SCALAR": 1.084381371801377,
+        "MTE2": 0.5773967855264583,
+        "SIMD": 0.4423076040200561,
+        "MTE3": 0.23626597955104084,
+        "arrival": 0.04795641159658103,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 2,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.1,
+        "expand": 0.05,
+        "reuse": 0.85
+      },
+      "status": "950DT critical-AIV estimate"
+    },
+    "previous_us": 2.439526472077173,
+    "fixed_us": 3.6006060606060606,
+    "sequence_prediction": {
+      "predicted_us": 3.754611441676462,
+      "stages_us": {
+        "SCALAR": 1.9506605231503982,
+        "MTE2": 1.0226791847837529,
+        "SIMD": 0.502373684359059,
+        "MTE3": 0.23626597955104084,
+        "arrival": 0.03881126194607609,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 2,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 1.0,
+        "expand": 0.0,
+        "reuse": 0.0
+      },
+      "status": "950DT critical-AIV estimate"
+    },
+    "prior_aiv": 0,
+    "group": "few_wide",
+    "reference_us": 3.8193939393939393,
+    "predicted_us": 2.392128960381648,
+    "kernel": "entry_kernel_1388",
+    "active_aic": 0,
+    "active_aiv": 2,
+    "source": "runs/v10wide/rmsnorm-0-11/profile/npusim_20261118114858_NORM/record/0000_entry_kernel_1388.db",
+    "correctness": [
+      "correctness count=9216 bad=0 max_abs_error=0.00150337 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness count=2 bad=0 max_abs_error=9.79835e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "0e66975a7df6810fd4e337d7cf346921983e9b8cfbb9502a4ed767b08a71614f",
+    "batch_wall_s": 134.20259442995302,
+    "batch": "rmsnorm-0-11",
+    "max_core_rv_count": 1071,
+    "phase_us": {
+      "other": 0.009696969696969697,
+      "SCALAR": 2.0539393939393604,
+      "MTE2": 0.8436363636363648,
+      "SIMD": 0.6836363636363659,
+      "MTE3": 0.22848484848484849,
+      "arrival": 0.0
+    },
+    "counts": {
+      "SCALAR": 1093,
+      "MTE2": 5,
+      "MTE3": 3,
+      "SIMD": 1082
+    },
+    "copies": {
+      "MOV_SRC_TO_DST_ALIGNv2": 3,
+      "MOV_SPR_XN": 1
+    },
+    "raw_duration_ticks": {
+      "SCALAR": 68034,
+      "MTE2": 2326,
+      "MTE3": 812,
+      "SIMD": 10576
+    },
+    "slow": [
+      [
+        1641,
+        "STI_XN_IMM"
+      ],
+      [
+        1641,
+        "STI_XN_IMM"
+      ],
+      [
+        1585,
+        "STI_XN_IMM"
+      ],
+      [
+        1585,
+        "STI_XN_IMM"
+      ],
+      [
+        1443,
+        "STI_XN_IMM"
+      ],
+      [
+        1431,
+        "STI_XN_IMM"
+      ],
+      [
+        1416,
+        "STP_XI_XJ_XN"
+      ],
+      [
+        1410,
+        "STI_XN_IMM"
+      ]
+    ],
+    "launch": 0,
+    "core": 0,
+    "core_type": 2,
+    "db_source": "runs/v10wide/rmsnorm-0-11/profile/npusim_20261118114858_NORM/record/0000_entry_kernel_1388.db",
+    "sequence_us": 3.754611441676462,
+    "query_max_us": 36.86,
+    "query_median_us": 25.814999999999998
+  },
+  {
+    "id": "v10_rmsnorm_1",
+    "op": "rmsnorm",
+    "shape": [
+      7,
+      640
+    ],
+    "attrs": {},
+    "kind": "NORM",
+    "groups": 2,
+    "args": [
+      7,
+      640,
+      0
+    ],
+    "role": "development",
+    "prediction": {
+      "predicted_us": 2.4966999837307706,
+      "stages_us": {
+        "SCALAR": 1.1977312164804483,
+        "MTE2": 0.5925240352685955,
+        "SIMD": 0.27902551348774396,
+        "MTE3": 0.2803000361524667,
+        "arrival": 0.143298374455381,
+        "other": 0.00382080788613492
+      },
+      "predicted_active_aiv": 7,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.1,
+        "expand": 0.2,
+        "reuse": 0.7000000000000001
+      },
+      "status": "950DT critical-AIV estimate"
+    },
+    "previous_us": 2.457905215399633,
+    "fixed_us": 3.6006060606060606,
+    "sequence_prediction": {
+      "predicted_us": 3.5212722811718513,
+      "stages_us": {
+        "SCALAR": 1.701812340001193,
+        "MTE2": 0.6231666099113264,
+        "SIMD": 0.26289870025572326,
+        "MTE3": 0.2803000361524667,
+        "arrival": 0.649273786965007,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 7,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.0,
+        "expand": 1.0,
+        "reuse": 0.0
+      },
+      "status": "950DT critical-AIV estimate"
+    },
+    "prior_aiv": 2,
+    "group": "controls",
+    "reference_us": 3.3884848484848487,
+    "predicted_us": 2.4966999837307706,
+    "kernel": "entry_kernel_1388",
+    "active_aic": 0,
+    "active_aiv": 7,
+    "source": "runs/v10wide/rmsnorm-0-11/profile/npusim_20261118114858_NORM/record/0001_entry_kernel_1388.db",
+    "correctness": [
+      "correctness count=4480 bad=0 max_abs_error=0.00174732 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness count=7 bad=0 max_abs_error=1.3279e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "c2b2912465f876a16d59ae20c5ecfd0294dcd164a28f6429b58b20278ddd8099",
+    "batch_wall_s": 134.20259442995302,
+    "batch": "rmsnorm-0-11",
+    "max_core_rv_count": 203,
+    "phase_us": {
+      "other": 0.004242424242424242,
+      "SCALAR": 1.7139393939393641,
+      "MTE2": 0.5769696969696982,
+      "SIMD": 0.2193939393939396,
+      "MTE3": 0.1987878787878788,
+      "arrival": 0.6751515151515152
+    },
+    "counts": {
+      "SCALAR": 1093,
+      "MTE2": 5,
+      "MTE3": 3,
+      "SIMD": 214
+    },
+    "copies": {
+      "MOV_SRC_TO_DST_ALIGNv2": 3,
+      "MOV_SPR_XN": 1
+    },
+    "raw_duration_ticks": {
+      "SCALAR": 54780,
+      "MTE2": 1294,
+      "MTE3": 637,
+      "SIMD": 2159
+    },
+    "slow": [
+      [
+        1204,
+        "STI_XN_IMM"
+      ],
+      [
+        1204,
+        "STI_XN_IMM"
+      ],
+      [
+        1144,
+        "STI_XN_IMM"
+      ],
+      [
+        1144,
+        "STI_XN_IMM"
+      ],
+      [
+        1053,
+        "STP_XI_XJ_XN"
+      ],
+      [
+        1046,
+        "STI_XN_IMM"
+      ],
+      [
+        1035,
+        "STI_XN_IMM"
+      ],
+      [
+        1006,
+        "STI_XN_IMM"
+      ]
+    ],
+    "launch": 1,
+    "core": 17,
+    "core_type": 2,
+    "db_source": "runs/v10wide/rmsnorm-0-11/profile/npusim_20261118114858_NORM/record/0001_entry_kernel_1388.db",
+    "sequence_us": 3.5212722811718513,
+    "query_max_us": 30.39,
+    "query_median_us": 25.76
+  },
+  {
+    "id": "v10_rmsnorm_2",
+    "op": "rmsnorm",
+    "shape": [
+      1,
+      5120
+    ],
+    "attrs": {},
+    "kind": "NORM",
+    "groups": 2,
+    "args": [
+      1,
+      5120,
+      0
+    ],
+    "role": "development",
+    "prediction": {
+      "predicted_us": 2.3254325175556585,
+      "stages_us": {
+        "SCALAR": 1.0465980902416867,
+        "MTE2": 0.572354368945746,
+        "SIMD": 0.46374089644521216,
+        "MTE3": 0.22274259672656407,
+        "arrival": 0.016175757310314388,
+        "other": 0.00382080788613492
+      },
+      "predicted_active_aiv": 1,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.1,
+        "expand": 0.0,
+        "reuse": 0.9
+      },
+      "status": "950DT critical-AIV estimate"
+    },
+    "previous_us": 2.3498922458700506,
+    "fixed_us": 3.6006060606060606,
+    "sequence_prediction": {
+      "predicted_us": 2.165822084002105,
+      "stages_us": {
+        "SCALAR": 0.9461467088073854,
+        "MTE2": 0.5223182782970784,
+        "SIMD": 0.45713299104526794,
+        "MTE3": 0.22274259672656407,
+        "arrival": 0.013660701239674198,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 1,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.0,
+        "expand": 0.0,
+        "reuse": 1.0
+      },
+      "status": "950DT critical-AIV estimate"
+    },
+    "prior_aiv": 7,
+    "group": "few_wide",
+    "reference_us": 1.9266666666666667,
+    "predicted_us": 2.3254325175556585,
+    "kernel": "entry_kernel_1388",
+    "active_aic": 0,
+    "active_aiv": 1,
+    "source": "runs/v10wide/rmsnorm-0-11/profile/npusim_20261118114858_NORM/record/0002_entry_kernel_1388.db",
+    "correctness": [
+      "correctness count=5120 bad=0 max_abs_error=0.00157092 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness count=1 bad=0 max_abs_error=9.8622e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "3bc552646bb20b32a239e6df9c90a94c0e3144682abefcf40a9430d16f3893d5",
+    "batch_wall_s": 134.20259442995302,
+    "batch": "rmsnorm-0-11",
+    "max_core_rv_count": 1183,
+    "phase_us": {
+      "other": 0.005454545454545455,
+      "SCALAR": 0.8454545454545475,
+      "MTE2": 0.38363636363636533,
+      "SIMD": 0.4654545454545476,
+      "MTE3": 0.22666666666666666,
+      "arrival": 0.0
+    },
+    "counts": {
+      "SCALAR": 1093,
+      "MTE2": 5,
+      "MTE3": 3,
+      "SIMD": 1194
+    },
+    "copies": {
+      "MOV_SRC_TO_DST_ALIGNv2": 3,
+      "MOV_SPR_XN": 1
+    },
+    "raw_duration_ticks": {
+      "SCALAR": 27358,
+      "MTE2": 1041,
+      "MTE3": 511,
+      "SIMD": 11194
+    },
+    "slow": [
+      [
+        481,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        477,
+        "ST_XD_XN_IMM"
+      ],
+      [
+        453,
+        "STP_XI_XJ_XN"
+      ],
+      [
+        435,
+        "STI_XN_IMM"
+      ],
+      [
+        401,
+        "STI_XN_IMM"
+      ],
+      [
+        397,
+        "STI_XN_IMM"
+      ],
+      [
+        397,
+        "STI_XN_IMM"
+      ],
+      [
+        396,
+        "VF"
+      ]
+    ],
+    "launch": 2,
+    "core": 0,
+    "core_type": 2,
+    "db_source": "runs/v10wide/rmsnorm-0-11/profile/npusim_20261118114858_NORM/record/0002_entry_kernel_1388.db",
+    "sequence_us": 2.165822084002105,
+    "query_max_us": 27.26,
+    "query_median_us": 25.740000000000002
+  },
+  {
+    "id": "v10_rmsnorm_3",
+    "op": "rmsnorm",
+    "shape": [
+      34,
+      1536
+    ],
+    "attrs": {},
+    "kind": "NORM",
+    "groups": 2,
+    "args": [
+      34,
+      1536,
+      0
+    ],
+    "role": "development",
+    "prediction": {
+      "predicted_us": 4.441088302903451,
+      "stages_us": {
+        "SCALAR": 1.4244309058385907,
+        "MTE2": 0.6227785347528699,
+        "SIMD": 0.3119230542506051,
+        "MTE3": 1.7441527000022699,
+        "arrival": 0.3339823001729808,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 34,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.1,
+        "expand": 0.5,
+        "reuse": 0.4
+      },
+      "status": "950DT critical-AIV estimate"
+    },
+    "previous_us": 3.3634413393066516,
+    "fixed_us": 3.6006060606060606,
+    "sequence_prediction": {
+      "predicted_us": 5.021592076221545,
+      "stages_us": {
+        "SCALAR": 1.701812340001193,
+        "MTE2": 0.6231666099113264,
+        "SIMD": 0.29936583145561313,
+        "MTE3": 1.7441527000022699,
+        "arrival": 0.649273786965007,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 34,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.0,
+        "expand": 1.0,
+        "reuse": 0.0
+      },
+      "status": "950DT critical-AIV estimate"
+    },
+    "prior_aiv": 7,
+    "group": "controls",
+    "reference_us": 5.576363636363636,
+    "predicted_us": 4.441088302903451,
+    "kernel": "entry_kernel_1388",
+    "active_aic": 0,
+    "active_aiv": 34,
+    "source": "runs/v10wide/rmsnorm-0-11/profile/npusim_20261118114858_NORM/record/0003_entry_kernel_1388.db",
+    "correctness": [
+      "correctness count=52224 bad=0 max_abs_error=0.00179136 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness count=34 bad=0 max_abs_error=1.69051e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "24b1cf9f7197b2c5babea5aa5d6a13fd6f89668f1f2b39f4fd68d8ea99f1dd54",
+    "batch_wall_s": 134.20259442995302,
+    "batch": "rmsnorm-0-11",
+    "max_core_rv_count": 399,
+    "phase_us": {
+      "other": 0.004242424242424242,
+      "SCALAR": 1.6993939393939135,
+      "MTE2": 0.6715151515151533,
+      "SIMD": 0.2709090909090914,
+      "MTE3": 2.325454545454545,
+      "arrival": 0.6048484848484849
+    },
+    "counts": {
+      "SCALAR": 1093,
+      "MTE2": 5,
+      "MTE3": 3,
+      "SIMD": 410
+    },
+    "copies": {
+      "MOV_SRC_TO_DST_ALIGNv2": 3,
+      "MOV_SPR_XN": 1
+    },
+    "raw_duration_ticks": {
+      "SCALAR": 53302,
+      "MTE2": 1502,
+      "MTE3": 7791,
+      "SIMD": 3955
+    },
+    "slow": [
+      [
+        3954,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        3832,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        1040,
+        "STI_XN_IMM"
+      ],
+      [
+        1030,
+        "STP_XI_XJ_XN"
+      ],
+      [
+        1012,
+        "STI_XN_IMM"
+      ],
+      [
+        977,
+        "STI_XN_IMM"
+      ],
+      [
+        948,
+        "STI_XN_IMM"
+      ],
+      [
+        924,
+        "STI_XN_IMM"
+      ]
+    ],
+    "launch": 3,
+    "core": 7,
+    "core_type": 3,
+    "db_source": "runs/v10wide/rmsnorm-0-11/profile/npusim_20261118114858_NORM/record/0003_entry_kernel_1388.db",
+    "sequence_us": 5.021592076221545,
+    "query_max_us": 30.83,
+    "query_median_us": 25.92
+  },
+  {
+    "id": "v10_rmsnorm_4",
+    "op": "rmsnorm",
+    "shape": [
+      4,
+      8192
+    ],
+    "attrs": {},
+    "kind": "NORM",
+    "groups": 2,
+    "args": [
+      4,
+      8192,
+      0
+    ],
+    "role": "development",
+    "prediction": {
+      "predicted_us": 2.7616459781586786,
+      "stages_us": {
+        "SCALAR": 1.159947934920758,
+        "MTE2": 0.5874816186878831,
+        "SIMD": 0.5869862653406057,
+        "MTE3": 0.31189163115418217,
+        "arrival": 0.11151772016911433,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 4,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.1,
+        "expand": 0.15000000000000002,
+        "reuse": 0.75
+      },
+      "status": "950DT critical-AIV estimate"
+    },
+    "previous_us": 2.9430695439333188,
+    "fixed_us": 3.6006060606060606,
+    "sequence_prediction": {
+      "predicted_us": 2.380001282543631,
+      "stages_us": {
+        "SCALAR": 0.9461467088073854,
+        "MTE2": 0.5223182782970784,
+        "SIMD": 0.5821631551591758,
+        "MTE3": 0.31189163115418217,
+        "arrival": 0.013660701239674198,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 4,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.0,
+        "expand": 0.0,
+        "reuse": 1.0
+      },
+      "status": "950DT critical-AIV estimate"
+    },
+    "prior_aiv": 34,
+    "group": "few_wide",
+    "reference_us": 2.395151515151515,
+    "predicted_us": 2.7616459781586786,
+    "kernel": "entry_kernel_1388",
+    "active_aic": 0,
+    "active_aiv": 4,
+    "source": "runs/v10wide/rmsnorm-0-11/profile/npusim_20261118114858_NORM/record/0004_entry_kernel_1388.db",
+    "correctness": [
+      "correctness count=32768 bad=0 max_abs_error=0.00132673 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness count=4 bad=0 max_abs_error=1.46446e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "58824f737ceaab077fc4f395c656cbc2df97f4b6cf1d236730d926cc7b63a117",
+    "batch_wall_s": 134.20259442995302,
+    "batch": "rmsnorm-0-11",
+    "max_core_rv_count": 1855,
+    "phase_us": {
+      "other": 0.007272727272727273,
+      "SCALAR": 0.8193939393939412,
+      "MTE2": 0.6484848484848502,
+      "SIMD": 0.6054545454545487,
+      "MTE3": 0.26606060606060605,
+      "arrival": 0.048484848484848485
+    },
+    "counts": {
+      "SCALAR": 1093,
+      "MTE2": 5,
+      "MTE3": 3,
+      "SIMD": 1866
+    },
+    "copies": {
+      "MOV_SRC_TO_DST_ALIGNv2": 3,
+      "MOV_SPR_XN": 1
+    },
+    "raw_duration_ticks": {
+      "SCALAR": 26464,
+      "MTE2": 1389,
+      "MTE3": 819,
+      "SIMD": 16574
+    },
+    "slow": [
+      [
+        846,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        544,
+        "VF"
+      ],
+      [
+        518,
+        "ST_XD_XN_IMM"
+      ],
+      [
+        439,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        420,
+        "STI_XN_IMM"
+      ],
+      [
+        406,
+        "VF"
+      ],
+      [
+        404,
+        "STI_XN_IMM"
+      ],
+      [
+        393,
+        "STP_XI_XJ_XN"
+      ]
+    ],
+    "launch": 4,
+    "core": 16,
+    "core_type": 2,
+    "db_source": "runs/v10wide/rmsnorm-0-11/profile/npusim_20261118114858_NORM/record/0004_entry_kernel_1388.db",
+    "sequence_us": 2.380001282543631,
+    "query_max_us": 31.85,
+    "query_median_us": 25.8
+  },
+  {
+    "id": "v10_rmsnorm_5",
+    "op": "rmsnorm",
+    "shape": [
+      64,
+      768
+    ],
+    "attrs": {},
+    "kind": "NORM",
+    "groups": 2,
+    "args": [
+      64,
+      768,
+      0
+    ],
+    "role": "development",
+    "prediction": {
+      "predicted_us": 4.7720201819148285,
+      "stages_us": {
+        "SCALAR": 1.6133473136370424,
+        "MTE2": 0.6479906176564318,
+        "SIMD": 0.27769085452460424,
+        "MTE3": 1.7362850166063006,
+        "arrival": 0.49288557160431407,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 64,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.1,
+        "expand": 0.75,
+        "reuse": 0.15
+      },
+      "status": "950DT critical-AIV estimate"
+    },
+    "previous_us": 3.6748950270597898,
+    "fixed_us": 3.6006060606060606,
+    "sequence_prediction": {
+      "predicted_us": 4.982466851797098,
+      "stages_us": {
+        "SCALAR": 1.701812340001193,
+        "MTE2": 0.6231666099113264,
+        "SIMD": 0.26810829042713613,
+        "MTE3": 1.7362850166063006,
+        "arrival": 0.649273786965007,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 64,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.0,
+        "expand": 1.0,
+        "reuse": 0.0
+      },
+      "status": "950DT critical-AIV estimate"
+    },
+    "prior_aiv": 34,
+    "group": "controls",
+    "reference_us": 4.41030303030303,
+    "predicted_us": 4.7720201819148285,
+    "kernel": "entry_kernel_1388",
+    "active_aic": 0,
+    "active_aiv": 64,
+    "source": "runs/v10wide/rmsnorm-0-11/profile/npusim_20261118114858_NORM/record/0005_entry_kernel_1388.db",
+    "correctness": [
+      "correctness count=49152 bad=0 max_abs_error=0.00171909 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness count=64 bad=0 max_abs_error=1.67392e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "11a823aa4c7e43677687304a96d5a55196635aea8417556cdab877152ef0425c",
+    "batch_wall_s": 134.20259442995302,
+    "batch": "rmsnorm-0-11",
+    "max_core_rv_count": 231,
+    "phase_us": {
+      "other": 0.0018181818181818182,
+      "SCALAR": 1.6490909090908785,
+      "MTE2": 0.5121212121212133,
+      "SIMD": 0.2345454545454552,
+      "MTE3": 1.3993939393939394,
+      "arrival": 0.6133333333333333
+    },
+    "counts": {
+      "SCALAR": 1093,
+      "MTE2": 5,
+      "MTE3": 3,
+      "SIMD": 242
+    },
+    "copies": {
+      "MOV_SRC_TO_DST_ALIGNv2": 3,
+      "MOV_SPR_XN": 1
+    },
+    "raw_duration_ticks": {
+      "SCALAR": 53547,
+      "MTE2": 1092,
+      "MTE3": 4716,
+      "SIMD": 2392
+    },
+    "slow": [
+      [
+        2407,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        2304,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        1172,
+        "STI_XN_IMM"
+      ],
+      [
+        1172,
+        "STI_XN_IMM"
+      ],
+      [
+        1109,
+        "STI_XN_IMM"
+      ],
+      [
+        1109,
+        "STI_XN_IMM"
+      ],
+      [
+        1045,
+        "STI_XN_IMM"
+      ],
+      [
+        1010,
+        "STI_XN_IMM"
+      ]
+    ],
+    "launch": 5,
+    "core": 27,
+    "core_type": 2,
+    "db_source": "runs/v10wide/rmsnorm-0-11/profile/npusim_20261118114858_NORM/record/0005_entry_kernel_1388.db",
+    "sequence_us": 4.982466851797098,
+    "query_max_us": 26.84,
+    "query_median_us": 25.795
+  },
+  {
+    "id": "v10_rmsnorm_6",
+    "op": "rmsnorm",
+    "shape": [
+      65,
+      384
+    ],
+    "attrs": {},
+    "kind": "NORM",
+    "groups": 2,
+    "args": [
+      65,
+      384,
+      0
+    ],
+    "role": "development",
+    "prediction": {
+      "predicted_us": 3.6171261382157547,
+      "stages_us": {
+        "SCALAR": 1.4244309058385907,
+        "MTE2": 0.6227785347528699,
+        "SIMD": 0.2806655132221281,
+        "MTE3": 0.9514480763430495,
+        "arrival": 0.3339823001729808,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 33,
+      "rows_per_core": 2,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.1,
+        "expand": 0.5,
+        "reuse": 0.4
+      },
+      "status": "950DT critical-AIV estimate"
+    },
+    "previous_us": 3.430451458611065,
+    "fixed_us": 3.6006060606060606,
+    "sequence_prediction": {
+      "predicted_us": 2.7174014977905543,
+      "stages_us": {
+        "SCALAR": 0.9461467088073854,
+        "MTE2": 0.5223182782970784,
+        "SIMD": 0.28000692521723164,
+        "MTE3": 0.9514480763430495,
+        "arrival": 0.013660701239674198,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 33,
+      "rows_per_core": 2,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.0,
+        "expand": 0.0,
+        "reuse": 1.0
+      },
+      "status": "950DT critical-AIV estimate"
+    },
+    "prior_aiv": 64,
+    "group": "controls",
+    "reference_us": 3.0727272727272728,
+    "predicted_us": 3.6171261382157547,
+    "kernel": "entry_kernel_1388",
+    "active_aic": 0,
+    "active_aiv": 33,
+    "source": "runs/v10wide/rmsnorm-0-11/profile/npusim_20261118114858_NORM/record/0006_entry_kernel_1388.db",
+    "correctness": [
+      "correctness count=24960 bad=0 max_abs_error=0.00176535 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness count=65 bad=0 max_abs_error=1.57147e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "7c67a02113b39627e85181a1bd78cde12606710cacda7366a1d1694b1514c44e",
+    "batch_wall_s": 134.20259442995302,
+    "batch": "rmsnorm-0-11",
+    "max_core_rv_count": 242,
+    "phase_us": {
+      "other": 0.0030303030303030303,
+      "SCALAR": 0.9769696969696992,
+      "MTE2": 0.39696969696969864,
+      "SIMD": 0.22848484848484868,
+      "MTE3": 1.4157575757575758,
+      "arrival": 0.051515151515151514
+    },
+    "counts": {
+      "SCALAR": 1093,
+      "MTE2": 5,
+      "MTE3": 3,
+      "SIMD": 253
+    },
+    "copies": {
+      "MOV_SRC_TO_DST_ALIGNv2": 3,
+      "MOV_SPR_XN": 1
+    },
+    "raw_duration_ticks": {
+      "SCALAR": 28353,
+      "MTE2": 767,
+      "MTE3": 4749,
+      "SIMD": 2441
+    },
+    "slow": [
+      [
+        2413,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        2331,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        523,
+        "ST_XD_XN_IMM"
+      ],
+      [
+        457,
+        "STI_XN_IMM"
+      ],
+      [
+        433,
+        "STP_XI_XJ_XN"
+      ],
+      [
+        428,
+        "STI_XN_IMM"
+      ],
+      [
+        415,
+        "STI_XN_IMM"
+      ],
+      [
+        407,
+        "STI_XN_IMM"
+      ]
+    ],
+    "launch": 6,
+    "core": 17,
+    "core_type": 3,
+    "db_source": "runs/v10wide/rmsnorm-0-11/profile/npusim_20261118114858_NORM/record/0006_entry_kernel_1388.db",
+    "sequence_us": 2.7174014977905543,
+    "query_max_us": 35.28,
+    "query_median_us": 25.77
+  },
+  {
+    "id": "v10_rmsnorm_7",
+    "op": "rmsnorm",
+    "shape": [
+      2,
+      7168
+    ],
+    "attrs": {},
+    "kind": "NORM",
+    "groups": 2,
+    "args": [
+      2,
+      7168,
+      0
+    ],
+    "role": "development",
+    "prediction": {
+      "predicted_us": 2.50969478073798,
+      "stages_us": {
+        "SCALAR": 1.084381371801377,
+        "MTE2": 0.5773967855264583,
+        "SIMD": 0.5464994074483127,
+        "MTE3": 0.24963999647911597,
+        "arrival": 0.04795641159658103,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 2,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.1,
+        "expand": 0.05,
+        "reuse": 0.85
+      },
+      "status": "950DT critical-AIV estimate"
+    },
+    "previous_us": 2.5892947332624425,
+    "fixed_us": 3.6006060606060606,
+    "sequence_prediction": {
+      "predicted_us": 2.276072926497262,
+      "stages_us": {
+        "SCALAR": 0.9461467088073854,
+        "MTE2": 0.5223182782970784,
+        "SIMD": 0.5404864337878732,
+        "MTE3": 0.24963999647911597,
+        "arrival": 0.013660701239674198,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 2,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.0,
+        "expand": 0.0,
+        "reuse": 1.0
+      },
+      "status": "950DT critical-AIV estimate"
+    },
+    "prior_aiv": 64,
+    "group": "few_wide",
+    "reference_us": 2.1266666666666665,
+    "predicted_us": 2.50969478073798,
+    "kernel": "entry_kernel_1388",
+    "active_aic": 0,
+    "active_aiv": 2,
+    "source": "runs/v10wide/rmsnorm-0-11/profile/npusim_20261118114858_NORM/record/0007_entry_kernel_1388.db",
+    "correctness": [
+      "correctness count=14336 bad=0 max_abs_error=0.00132952 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness count=2 bad=0 max_abs_error=1.66754e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "f51926f031597f73c0fddb81f7e1a2132d0956064e61dbc848376cba3d463ed0",
+    "batch_wall_s": 134.20259442995302,
+    "batch": "rmsnorm-0-11",
+    "max_core_rv_count": 1631,
+    "phase_us": {
+      "other": 0.007272727272727273,
+      "SCALAR": 0.8157575757575776,
+      "MTE2": 0.44727272727272893,
+      "SIMD": 0.5630303030303059,
+      "MTE3": 0.24484848484848484,
+      "arrival": 0.048484848484848485
+    },
+    "counts": {
+      "SCALAR": 1093,
+      "MTE2": 5,
+      "MTE3": 3,
+      "SIMD": 1642
+    },
+    "copies": {
+      "MOV_SRC_TO_DST_ALIGNv2": 3,
+      "MOV_SPR_XN": 1
+    },
+    "raw_duration_ticks": {
+      "SCALAR": 26460,
+      "MTE2": 990,
+      "MTE3": 727,
+      "SIMD": 14802
+    },
+    "slow": [
+      [
+        516,
+        "ST_XD_XN_IMM"
+      ],
+      [
+        516,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        501,
+        "VF"
+      ],
+      [
+        418,
+        "STI_XN_IMM"
+      ],
+      [
+        409,
+        "STP_XI_XJ_XN"
+      ],
+      [
+        404,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        403,
+        "STI_XN_IMM"
+      ],
+      [
+        391,
+        "STI_XN_IMM"
+      ]
+    ],
+    "launch": 7,
+    "core": 16,
+    "core_type": 2,
+    "db_source": "runs/v10wide/rmsnorm-0-11/profile/npusim_20261118114858_NORM/record/0007_entry_kernel_1388.db",
+    "sequence_us": 2.276072926497262,
+    "query_max_us": 32.28,
+    "query_median_us": 25.95
+  },
+  {
+    "id": "v10_rmsnorm_8",
+    "op": "rmsnorm",
+    "shape": [
+      96,
+      1280
+    ],
+    "attrs": {},
+    "kind": "NORM",
+    "groups": 2,
+    "args": [
+      96,
+      1280,
+      0
+    ],
+    "role": "development",
+    "prediction": {
+      "predicted_us": 4.094023266725538,
+      "stages_us": {
+        "SCALAR": 1.4999974689579711,
+        "MTE2": 0.6328633679142946,
+        "SIMD": 0.3524099121428982,
+        "MTE3": 1.2073881010787249,
+        "arrival": 0.3975436087455141,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 48,
+      "rows_per_core": 2,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.1,
+        "expand": 0.6,
+        "reuse": 0.3
+      },
+      "status": "950DT critical-AIV estimate"
+    },
+    "previous_us": 4.523058316988035,
+    "fixed_us": 3.6006060606060606,
+    "sequence_prediction": {
+      "predicted_us": 3.046275784926009,
+      "stages_us": {
+        "SCALAR": 0.9461467088073854,
+        "MTE2": 0.5223182782970784,
+        "SIMD": 0.3529411876170113,
+        "MTE3": 1.2073881010787249,
+        "arrival": 0.013660701239674198,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 48,
+      "rows_per_core": 2,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.0,
+        "expand": 0.0,
+        "reuse": 1.0
+      },
+      "status": "950DT critical-AIV estimate"
+    },
+    "prior_aiv": 64,
+    "group": "controls",
+    "reference_us": 3.6006060606060606,
+    "predicted_us": 4.094023266725538,
+    "kernel": "entry_kernel_1388",
+    "active_aic": 0,
+    "active_aiv": 48,
+    "source": "runs/v10wide/rmsnorm-0-11/profile/npusim_20261118114858_NORM/record/0008_entry_kernel_1388.db",
+    "correctness": [
+      "correctness count=122880 bad=0 max_abs_error=0.00191473 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness count=96 bad=0 max_abs_error=1.21545e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "d6606f81df35933c01038731beeaa3837746b58107a591d0e8ff040c81facfe6",
+    "batch_wall_s": 134.20259442995302,
+    "batch": "rmsnorm-0-11",
+    "max_core_rv_count": 634,
+    "phase_us": {
+      "other": 0.0048484848484848485,
+      "SCALAR": 1.0824242424242356,
+      "MTE2": 0.6848484848484866,
+      "SIMD": 0.3242424242424252,
+      "MTE3": 1.4533333333333331,
+      "arrival": 0.05090909090909091
+    },
+    "counts": {
+      "SCALAR": 1093,
+      "MTE2": 5,
+      "MTE3": 3,
+      "SIMD": 645
+    },
+    "copies": {
+      "MOV_SRC_TO_DST_ALIGNv2": 3,
+      "MOV_SPR_XN": 1
+    },
+    "raw_duration_ticks": {
+      "SCALAR": 29099,
+      "MTE2": 2027,
+      "MTE3": 4961,
+      "SIMD": 6106
+    },
+    "slow": [
+      [
+        2563,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        2393,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        970,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        876,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        527,
+        "ST_XD_XN_IMM"
+      ],
+      [
+        527,
+        "DC_PRELOAD_XN_IMM"
+      ],
+      [
+        513,
+        "LD_XD_XN_IMM"
+      ],
+      [
+        513,
+        "LDP_XI_XJ_XN"
+      ]
+    ],
+    "launch": 8,
+    "core": 17,
+    "core_type": 2,
+    "db_source": "runs/v10wide/rmsnorm-0-11/profile/npusim_20261118114858_NORM/record/0008_entry_kernel_1388.db",
+    "sequence_us": 3.046275784926009,
+    "query_max_us": 27.47,
+    "query_median_us": 25.93
+  },
+  {
+    "id": "v10_rmsnorm_9",
+    "op": "rmsnorm",
+    "shape": [
+      3,
+      3072
+    ],
+    "attrs": {},
+    "kind": "NORM",
+    "groups": 2,
+    "args": [
+      3,
+      3072,
+      0
+    ],
+    "role": "development",
+    "prediction": {
+      "predicted_us": 2.40926841335053,
+      "stages_us": {
+        "SCALAR": 1.1221646533610676,
+        "MTE2": 0.5824392021071707,
+        "SIMD": 0.3791975902235973,
+        "MTE3": 0.24190909388971163,
+        "arrival": 0.07973706588284768,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 3,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.1,
+        "expand": 0.1,
+        "reuse": 0.8
+      },
+      "status": "950DT critical-AIV estimate"
+    },
+    "previous_us": 2.4510228107073844,
+    "fixed_us": 3.6006060606060606,
+    "sequence_prediction": {
+      "predicted_us": 2.1016351384226475,
+      "stages_us": {
+        "SCALAR": 0.9461467088073854,
+        "MTE2": 0.5223182782970784,
+        "SIMD": 0.3737795483026626,
+        "MTE3": 0.24190909388971163,
+        "arrival": 0.013660701239674198,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 3,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.0,
+        "expand": 0.0,
+        "reuse": 1.0
+      },
+      "status": "950DT critical-AIV estimate"
+    },
+    "prior_aiv": 64,
+    "group": "few_wide",
+    "reference_us": 1.84,
+    "predicted_us": 2.40926841335053,
+    "kernel": "entry_kernel_1388",
+    "active_aic": 0,
+    "active_aiv": 3,
+    "source": "runs/v10wide/rmsnorm-0-11/profile/npusim_20261118114858_NORM/record/0009_entry_kernel_1388.db",
+    "correctness": [
+      "correctness count=9216 bad=0 max_abs_error=0.0015149 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness count=3 bad=0 max_abs_error=9.70401e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "7504ef602bd289b90c3a64f4296f0576c90962325e2c7ba07a2d2c8699b506fa",
+    "batch_wall_s": 134.20259442995302,
+    "batch": "rmsnorm-0-11",
+    "max_core_rv_count": 735,
+    "phase_us": {
+      "other": 0.0018181818181818182,
+      "SCALAR": 0.8284848484848505,
+      "MTE2": 0.3781818181818199,
+      "SIMD": 0.350909090909092,
+      "MTE3": 0.23212121212121212,
+      "arrival": 0.048484848484848485
+    },
+    "counts": {
+      "SCALAR": 1093,
+      "MTE2": 5,
+      "MTE3": 3,
+      "SIMD": 746
+    },
+    "copies": {
+      "MOV_SRC_TO_DST_ALIGNv2": 3,
+      "MOV_SPR_XN": 1
+    },
+    "raw_duration_ticks": {
+      "SCALAR": 27063,
+      "MTE2": 778,
+      "MTE3": 763,
+      "SIMD": 6975
+    },
+    "slow": [
+      [
+        523,
+        "ST_XD_XN_IMM"
+      ],
+      [
+        476,
+        "STP_XI_XJ_XN"
+      ],
+      [
+        458,
+        "STI_XN_IMM"
+      ],
+      [
+        433,
+        "STI_XN_IMM"
+      ],
+      [
+        433,
+        "STI_XN_IMM"
+      ],
+      [
+        407,
+        "STI_XN_IMM"
+      ],
+      [
+        397,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        387,
+        "STI_XN_IMM"
+      ]
+    ],
+    "launch": 9,
+    "core": 16,
+    "core_type": 2,
+    "db_source": "runs/v10wide/rmsnorm-0-11/profile/npusim_20261118114858_NORM/record/0009_entry_kernel_1388.db",
+    "sequence_us": 2.1016351384226475,
+    "query_max_us": 30.67,
+    "query_median_us": 25.695
+  },
+  {
+    "id": "v11_rms_0",
+    "op": "rmsnorm",
+    "shape": [
+      3,
+      5120
+    ],
+    "attrs": {},
+    "kind": "NORM",
+    "groups": 2,
+    "args": [
+      3,
+      5120,
+      0
+    ],
+    "role": "validation",
+    "prediction": {
+      "predicted_us": 2.508670676406825,
+      "stages_us": {
+        "SCALAR": 1.1221646533610676,
+        "MTE2": 0.5824392021071707,
+        "SIMD": 0.4625510329662026,
+        "MTE3": 0.2579579142034018,
+        "arrival": 0.07973706588284768,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 3,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.1,
+        "expand": 0.1,
+        "reuse": 0.8
+      },
+      "status": "950DT critical-AIV estimate"
+    },
+    "previous_us": 2.5890680027584043,
+    "fixed_us": 3.6006060606060606,
+    "prior_aiv": 0,
+    "group": "few_wide",
+    "sequence_prediction": {
+      "predicted_us": 3.797141737014474,
+      "stages_us": {
+        "SCALAR": 1.9506605231503982,
+        "MTE2": 1.0226791847837529,
+        "SIMD": 0.5232120450447104,
+        "MTE3": 0.2579579142034018,
+        "arrival": 0.03881126194607609,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 3,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 1.0,
+        "expand": 0.0,
+        "reuse": 0.0
+      },
+      "status": "950DT critical-AIV estimate"
+    },
+    "reference_us": 3.807878787878788,
+    "predicted_us": 2.508670676406825,
+    "kernel": "entry_kernel_1388",
+    "active_aic": 0,
+    "active_aiv": 3,
+    "source": "runs/v11rms/rmsnorm-0-6/profile/npusim_20261118124638_NORM/record/0000_entry_kernel_1388.db",
+    "correctness": [
+      "correctness count=15360 bad=0 max_abs_error=0.00157092 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness count=3 bad=0 max_abs_error=1.29276e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "4a382762918adbaa61ce52dbb30f8cd68c7219209566cd400328a6f963c55dc0",
+    "batch_wall_s": 84.120888780104,
+    "batch": "rmsnorm-0-6",
+    "max_core_rv_count": 1183,
+    "phase_us": {
+      "other": 0.007272727272727273,
+      "SCALAR": 1.9624242424242075,
+      "MTE2": 0.861818181818183,
+      "SIMD": 0.6915151515151542,
+      "MTE3": 0.21393939393939393,
+      "arrival": 0.07090909090909091
+    },
+    "counts": {
+      "SCALAR": 1093,
+      "MTE2": 5,
+      "MTE3": 3,
+      "SIMD": 1194
+    },
+    "copies": {
+      "MOV_SRC_TO_DST_ALIGNv2": 3,
+      "MOV_SPR_XN": 1
+    },
+    "raw_duration_ticks": {
+      "SCALAR": 64444,
+      "MTE2": 2428,
+      "MTE3": 894,
+      "SIMD": 11527
+    },
+    "slow": [
+      [
+        1517,
+        "STI_XN_IMM"
+      ],
+      [
+        1517,
+        "STI_XN_IMM"
+      ],
+      [
+        1461,
+        "STI_XN_IMM"
+      ],
+      [
+        1461,
+        "STI_XN_IMM"
+      ],
+      [
+        1334,
+        "STP_XI_XJ_XN"
+      ],
+      [
+        1316,
+        "STI_XN_IMM"
+      ],
+      [
+        1308,
+        "STI_XN_IMM"
+      ],
+      [
+        1288,
+        "STI_XN_IMM"
+      ]
+    ],
+    "launch": 0,
+    "core": 0,
+    "core_type": 3,
+    "db_source": "runs/v11rms/rmsnorm-0-6/profile/npusim_20261118124638_NORM/record/0000_entry_kernel_1388.db",
+    "sequence_us": 3.797141737014474,
+    "query_median_us": 25.79,
+    "query_max_us": 33.55
+  },
+  {
+    "id": "v11_rms_1",
+    "op": "rmsnorm",
+    "shape": [
+      2,
+      5376
+    ],
+    "attrs": {},
+    "kind": "NORM",
+    "groups": 2,
+    "args": [
+      2,
+      5376,
+      0
+    ],
+    "role": "validation",
+    "prediction": {
+      "predicted_us": 2.427398706488548,
+      "stages_us": {
+        "SCALAR": 1.084381371801377,
+        "MTE2": 0.5773967855264583,
+        "SIMD": 0.4735651450485331,
+        "MTE3": 0.24027818462946338,
+        "arrival": 0.04795641159658103,
+        "other": 0.003820807886134919
+      },
+      "predicted_active_aiv": 2,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.1,
+        "expand": 0.05,
+        "reuse": 0.85
+      },
+      "status": "950DT critical-AIV estimate"
+    },
+    "previous_us": 2.484456950432754,
+    "fixed_us": 3.6006060606060606,
+    "prior_aiv": 3,
+    "group": "few_wide",
+    "sequence_prediction": {
+      "predicted_us": 2.19377685224783,
+      "stages_us": {
+        "SCALAR": 0.9461467088073854,
+        "MTE2": 0.5223182782970784,
+        "SIMD": 0.4675521713880936,
+        "MTE3": 0.24027818462946338,
+        "arrival": 0.013660701239674198,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 2,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.0,
+        "expand": 0.0,
+        "reuse": 1.0
+      },
+      "status": "950DT critical-AIV estimate"
+    },
+    "reference_us": 1.9787878787878788,
+    "predicted_us": 2.427398706488548,
+    "kernel": "entry_kernel_1388",
+    "active_aic": 0,
+    "active_aiv": 2,
+    "source": "runs/v11rms/rmsnorm-0-6/profile/npusim_20261118124638_NORM/record/0001_entry_kernel_1388.db",
+    "correctness": [
+      "correctness count=10752 bad=0 max_abs_error=0.00156529 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness count=2 bad=0 max_abs_error=8.52459e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "fbf54d8b91865fc4e754410977f7c9dd118f65f8c492df2f2c33a33a7cb48e47",
+    "batch_wall_s": 84.120888780104,
+    "batch": "rmsnorm-0-6",
+    "max_core_rv_count": 1239,
+    "phase_us": {
+      "other": 0.004242424242424242,
+      "SCALAR": 0.8145454545454562,
+      "MTE2": 0.4151515151515168,
+      "SIMD": 0.46424242424242634,
+      "MTE3": 0.23212121212121214,
+      "arrival": 0.048484848484848485
+    },
+    "counts": {
+      "SCALAR": 1093,
+      "MTE2": 5,
+      "MTE3": 3,
+      "SIMD": 1250
+    },
+    "copies": {
+      "MOV_SRC_TO_DST_ALIGNv2": 3,
+      "MOV_SPR_XN": 1
+    },
+    "raw_duration_ticks": {
+      "SCALAR": 26296,
+      "MTE2": 880,
+      "MTE3": 713,
+      "SIMD": 11583
+    },
+    "slow": [
+      [
+        513,
+        "ST_XD_XN_IMM"
+      ],
+      [
+        462,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        436,
+        "STI_XN_IMM"
+      ],
+      [
+        420,
+        "STI_XN_IMM"
+      ],
+      [
+        406,
+        "VF"
+      ],
+      [
+        402,
+        "STI_XN_IMM"
+      ],
+      [
+        390,
+        "STP_XI_XJ_XN"
+      ],
+      [
+        389,
+        "STI_XN_IMM"
+      ]
+    ],
+    "launch": 1,
+    "core": 16,
+    "core_type": 2,
+    "db_source": "runs/v11rms/rmsnorm-0-6/profile/npusim_20261118124638_NORM/record/0001_entry_kernel_1388.db",
+    "sequence_us": 2.19377685224783,
+    "query_median_us": 25.845,
+    "query_max_us": 27.14
+  },
+  {
+    "id": "v11_rms_2",
+    "op": "rmsnorm",
+    "shape": [
+      4,
+      4608
+    ],
+    "attrs": {},
+    "kind": "NORM",
+    "groups": 2,
+    "args": [
+      4,
+      4608,
+      0
+    ],
+    "role": "validation",
+    "prediction": {
+      "predicted_us": 2.5783302059605084,
+      "stages_us": {
+        "SCALAR": 1.159947934920758,
+        "MTE2": 0.5874816186878831,
+        "SIMD": 0.44111774054104647,
+        "MTE3": 0.2744443837555718,
+        "arrival": 0.11151772016911433,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 4,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.1,
+        "expand": 0.15000000000000002,
+        "reuse": 0.75
+      },
+      "status": "950DT critical-AIV estimate"
+    },
+    "previous_us": 2.669586937414125,
+    "fixed_us": 3.6006060606060606,
+    "prior_aiv": 3,
+    "group": "few_wide",
+    "sequence_prediction": {
+      "predicted_us": 3.6769139240887543,
+      "stages_us": {
+        "SCALAR": 1.701812340001193,
+        "MTE2": 0.6231666099113264,
+        "SIMD": 0.424395995569521,
+        "MTE3": 0.2744443837555718,
+        "arrival": 0.649273786965007,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 4,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.0,
+        "expand": 1.0,
+        "reuse": 0.0
+      },
+      "status": "950DT critical-AIV estimate"
+    },
+    "reference_us": 2.632727272727273,
+    "predicted_us": 2.5783302059605084,
+    "kernel": "entry_kernel_1388",
+    "active_aic": 0,
+    "active_aiv": 4,
+    "source": "runs/v11rms/rmsnorm-0-6/profile/npusim_20261118124638_NORM/record/0002_entry_kernel_1388.db",
+    "correctness": [
+      "correctness count=18432 bad=0 max_abs_error=0.00150337 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness count=4 bad=0 max_abs_error=1.61594e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "cd3095c9d7a0468220c3476d7d0cdd0c7e7f41e9d514aa720a76ed42fa15158a",
+    "batch_wall_s": 84.120888780104,
+    "batch": "rmsnorm-0-6",
+    "max_core_rv_count": 1071,
+    "phase_us": {
+      "other": 0.004242424242424242,
+      "SCALAR": 1.2848484848484738,
+      "MTE2": 0.5448484848484861,
+      "SIMD": 0.4321212121212139,
+      "MTE3": 0.21151515151515152,
+      "arrival": 0.15515151515151515
+    },
+    "counts": {
+      "SCALAR": 1093,
+      "MTE2": 5,
+      "MTE3": 3,
+      "SIMD": 1082
+    },
+    "copies": {
+      "MOV_SRC_TO_DST_ALIGNv2": 3,
+      "MOV_SPR_XN": 1
+    },
+    "raw_duration_ticks": {
+      "SCALAR": 45364,
+      "MTE2": 1266,
+      "MTE3": 679,
+      "SIMD": 10258
+    },
+    "slow": [
+      [
+        1067,
+        "STI_XN_IMM"
+      ],
+      [
+        1033,
+        "STP_XI_XJ_XN"
+      ],
+      [
+        1015,
+        "STI_XN_IMM"
+      ],
+      [
+        1010,
+        "STI_XN_IMM"
+      ],
+      [
+        978,
+        "STI_XN_IMM"
+      ],
+      [
+        954,
+        "STI_XN_IMM"
+      ],
+      [
+        806,
+        "STI_XN_IMM"
+      ],
+      [
+        806,
+        "STI_XN_IMM"
+      ]
+    ],
+    "launch": 2,
+    "core": 16,
+    "core_type": 3,
+    "db_source": "runs/v11rms/rmsnorm-0-6/profile/npusim_20261118124638_NORM/record/0002_entry_kernel_1388.db",
+    "sequence_us": 3.6769139240887543,
+    "query_median_us": 25.83,
+    "query_max_us": 37.8
+  },
+  {
+    "id": "v11_rms_3",
+    "op": "rmsnorm",
+    "shape": [
+      1,
+      6912
+    ],
+    "attrs": {},
+    "kind": "NORM",
+    "groups": 2,
+    "args": [
+      1,
+      6912,
+      0
+    ],
+    "role": "validation",
+    "prediction": {
+      "predicted_us": 2.403047685880264,
+      "stages_us": {
+        "SCALAR": 1.0465980902416867,
+        "MTE2": 0.572354368945746,
+        "SIMD": 0.5366751588449918,
+        "MTE3": 0.22742350265139036,
+        "arrival": 0.016175757310314388,
+        "other": 0.00382080788613492
+      },
+      "predicted_active_aiv": 1,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.1,
+        "expand": 0.0,
+        "reuse": 0.9
+      },
+      "status": "950DT critical-AIV estimate"
+    },
+    "previous_us": 2.4387782684847843,
+    "fixed_us": 3.6006060606060606,
+    "prior_aiv": 4,
+    "group": "few_wide",
+    "sequence_prediction": {
+      "predicted_us": 2.2434372523267108,
+      "stages_us": {
+        "SCALAR": 0.9461467088073854,
+        "MTE2": 0.5223182782970784,
+        "SIMD": 0.5300672534450476,
+        "MTE3": 0.22742350265139036,
+        "arrival": 0.013660701239674198,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 1,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.0,
+        "expand": 0.0,
+        "reuse": 1.0
+      },
+      "status": "950DT critical-AIV estimate"
+    },
+    "reference_us": 2.0084848484848483,
+    "predicted_us": 2.403047685880264,
+    "kernel": "entry_kernel_1388",
+    "active_aic": 0,
+    "active_aiv": 1,
+    "source": "runs/v11rms/rmsnorm-0-6/profile/npusim_20261118124638_NORM/record/0003_entry_kernel_1388.db",
+    "correctness": [
+      "correctness count=6912 bad=0 max_abs_error=0.00135727 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness count=1 bad=0 max_abs_error=6.03382e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "c65884030347a86a83fa564d7f4dafca7e1e8a918e43d28e7501473abbc8cde1",
+    "batch_wall_s": 84.120888780104,
+    "batch": "rmsnorm-0-6",
+    "max_core_rv_count": 1575,
+    "phase_us": {
+      "other": 0.005454545454545455,
+      "SCALAR": 0.8509090909090927,
+      "MTE2": 0.36363636363636526,
+      "SIMD": 0.5436363636363664,
+      "MTE3": 0.24484848484848484,
+      "arrival": 0.0
+    },
+    "counts": {
+      "SCALAR": 1093,
+      "MTE2": 5,
+      "MTE3": 3,
+      "SIMD": 1586
+    },
+    "copies": {
+      "MOV_SRC_TO_DST_ALIGNv2": 3,
+      "MOV_SPR_XN": 1
+    },
+    "raw_duration_ticks": {
+      "SCALAR": 27321,
+      "MTE2": 923,
+      "MTE3": 710,
+      "SIMD": 14337
+    },
+    "slow": [
+      [
+        483,
+        "ST_XD_XN_IMM"
+      ],
+      [
+        480,
+        "VF"
+      ],
+      [
+        422,
+        "STP_XI_XJ_XN"
+      ],
+      [
+        418,
+        "STI_XN_IMM"
+      ],
+      [
+        404,
+        "STI_XN_IMM"
+      ],
+      [
+        404,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        396,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        390,
+        "STI_XN_IMM"
+      ]
+    ],
+    "launch": 3,
+    "core": 0,
+    "core_type": 2,
+    "db_source": "runs/v11rms/rmsnorm-0-6/profile/npusim_20261118124638_NORM/record/0003_entry_kernel_1388.db",
+    "sequence_us": 2.2434372523267108,
+    "query_median_us": 25.79,
+    "query_max_us": 34.84
+  },
+  {
+    "id": "v11_rms_4",
+    "op": "rmsnorm",
+    "shape": [
+      33,
+      1536
+    ],
+    "attrs": {},
+    "kind": "NORM",
+    "groups": 2,
+    "args": [
+      33,
+      1536,
+      0
+    ],
+    "role": "validation",
+    "prediction": {
+      "predicted_us": 4.437070873599666,
+      "stages_us": {
+        "SCALAR": 1.4244309058385904,
+        "MTE2": 0.6227785347528699,
+        "SIMD": 0.3119230542506051,
+        "MTE3": 1.740135270698485,
+        "arrival": 0.3339823001729808,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 33,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.1,
+        "expand": 0.5,
+        "reuse": 0.4
+      },
+      "status": "950DT critical-AIV estimate"
+    },
+    "previous_us": 3.349768401979547,
+    "fixed_us": 3.6006060606060606,
+    "prior_aiv": 4,
+    "group": "controls",
+    "sequence_prediction": {
+      "predicted_us": 5.017574646917759,
+      "stages_us": {
+        "SCALAR": 1.701812340001193,
+        "MTE2": 0.6231666099113264,
+        "SIMD": 0.29936583145561313,
+        "MTE3": 1.740135270698485,
+        "arrival": 0.649273786965007,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 33,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.0,
+        "expand": 1.0,
+        "reuse": 0.0
+      },
+      "status": "950DT critical-AIV estimate"
+    },
+    "reference_us": 5.547878787878788,
+    "predicted_us": 4.437070873599666,
+    "kernel": "entry_kernel_1388",
+    "active_aic": 0,
+    "active_aiv": 33,
+    "source": "runs/v11rms/rmsnorm-0-6/profile/npusim_20261118124638_NORM/record/0004_entry_kernel_1388.db",
+    "correctness": [
+      "correctness count=50688 bad=0 max_abs_error=0.00179136 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness count=33 bad=0 max_abs_error=1.69051e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "dff07ec185681272d554b5ac040e0a85a5d771e6f8f6dc47e963af80d60e6b40",
+    "batch_wall_s": 84.120888780104,
+    "batch": "rmsnorm-0-6",
+    "max_core_rv_count": 399,
+    "phase_us": {
+      "other": 0.004242424242424242,
+      "SCALAR": 1.5733333333333077,
+      "MTE2": 0.7351515151515169,
+      "SIMD": 0.2721212121212126,
+      "MTE3": 2.233333333333333,
+      "arrival": 0.7296969696969697
+    },
+    "counts": {
+      "SCALAR": 1093,
+      "MTE2": 5,
+      "MTE3": 3,
+      "SIMD": 410
+    },
+    "copies": {
+      "MOV_SRC_TO_DST_ALIGNv2": 3,
+      "MOV_SPR_XN": 1
+    },
+    "raw_duration_ticks": {
+      "SCALAR": 51792,
+      "MTE2": 1554,
+      "MTE3": 7487,
+      "SIMD": 3957
+    },
+    "slow": [
+      [
+        3802,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        3680,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        1148,
+        "STI_XN_IMM"
+      ],
+      [
+        1148,
+        "STI_XN_IMM"
+      ],
+      [
+        1078,
+        "STI_XN_IMM"
+      ],
+      [
+        1078,
+        "STI_XN_IMM"
+      ],
+      [
+        984,
+        "STP_XI_XJ_XN"
+      ],
+      [
+        966,
+        "STI_XN_IMM"
+      ]
+    ],
+    "launch": 4,
+    "core": 21,
+    "core_type": 2,
+    "db_source": "runs/v11rms/rmsnorm-0-6/profile/npusim_20261118124638_NORM/record/0004_entry_kernel_1388.db",
+    "sequence_us": 5.017574646917759,
+    "query_median_us": 25.795,
+    "query_max_us": 26.63
+  },
+  {
+    "id": "v11_rms_5",
+    "op": "rmsnorm",
+    "shape": [
+      38,
+      1536
+    ],
+    "attrs": {},
+    "kind": "NORM",
+    "groups": 2,
+    "args": [
+      38,
+      1536,
+      0
+    ],
+    "role": "validation",
+    "prediction": {
+      "predicted_us": 4.60518086149292,
+      "stages_us": {
+        "SCALAR": 1.4999974689579711,
+        "MTE2": 0.6328633679142946,
+        "SIMD": 0.31073319077159556,
+        "MTE3": 1.7602224172174101,
+        "arrival": 0.39754360874551403,
+        "other": 0.003820807886134919
+      },
+      "predicted_active_aiv": 38,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.1,
+        "expand": 0.6,
+        "reuse": 0.3
+      },
+      "status": "950DT critical-AIV estimate"
+    },
+    "previous_us": 3.566155929989395,
+    "fixed_us": 3.6006060606060606,
+    "prior_aiv": 33,
+    "group": "controls",
+    "sequence_prediction": {
+      "predicted_us": 5.037661793436684,
+      "stages_us": {
+        "SCALAR": 1.701812340001193,
+        "MTE2": 0.6231666099113264,
+        "SIMD": 0.29936583145561313,
+        "MTE3": 1.7602224172174101,
+        "arrival": 0.649273786965007,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 38,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.0,
+        "expand": 1.0,
+        "reuse": 0.0
+      },
+      "status": "950DT critical-AIV estimate"
+    },
+    "reference_us": 4.921212121212121,
+    "predicted_us": 4.60518086149292,
+    "kernel": "entry_kernel_1388",
+    "active_aic": 0,
+    "active_aiv": 38,
+    "source": "runs/v11rms/rmsnorm-0-6/profile/npusim_20261118124638_NORM/record/0005_entry_kernel_1388.db",
+    "correctness": [
+      "correctness count=58368 bad=0 max_abs_error=0.00179136 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness count=38 bad=0 max_abs_error=1.69051e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "a7acc89e8b3f7733a46d6d583bb309b3c432287d60916d246aee76af7cb66db3",
+    "batch_wall_s": 84.120888780104,
+    "batch": "rmsnorm-0-6",
+    "max_core_rv_count": 399,
+    "phase_us": {
+      "other": 0.0018181818181818182,
+      "SCALAR": 1.6545454545454235,
+      "MTE2": 0.43454545454545557,
+      "SIMD": 0.29272727272727367,
+      "MTE3": 1.9763636363636363,
+      "arrival": 0.5612121212121212
+    },
+    "counts": {
+      "SCALAR": 1093,
+      "MTE2": 5,
+      "MTE3": 3,
+      "SIMD": 410
+    },
+    "copies": {
+      "MOV_SRC_TO_DST_ALIGNv2": 3,
+      "MOV_SPR_XN": 1
+    },
+    "raw_duration_ticks": {
+      "SCALAR": 57667,
+      "MTE2": 1007,
+      "MTE3": 6681,
+      "SIMD": 3986
+    },
+    "slow": [
+      [
+        3420,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        3256,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        1442,
+        "STI_XN_IMM"
+      ],
+      [
+        1418,
+        "STI_XN_IMM"
+      ],
+      [
+        1406,
+        "STI_XN_IMM"
+      ],
+      [
+        1395,
+        "STP_XI_XJ_XN"
+      ],
+      [
+        1377,
+        "STI_XN_IMM"
+      ],
+      [
+        1352,
+        "STI_XN_IMM"
+      ]
+    ],
+    "launch": 5,
+    "core": 9,
+    "core_type": 2,
+    "db_source": "runs/v11rms/rmsnorm-0-6/profile/npusim_20261118124638_NORM/record/0005_entry_kernel_1388.db",
+    "sequence_us": 5.037661793436684,
+    "query_median_us": 25.95,
+    "query_max_us": 32.08
+  },
+  {
+    "id": "v11_rms_6",
+    "op": "rmsnorm",
+    "shape": [
+      64,
+      4096
+    ],
+    "attrs": {},
+    "kind": "NORM",
+    "groups": 2,
+    "args": [
+      64,
+      4096,
+      0
+    ],
+    "role": "validation",
+    "prediction": {
+      "predicted_us": 5.463828630579488,
+      "stages_us": {
+        "SCALAR": 1.6133473136370424,
+        "MTE2": 0.6479906176564318,
+        "SIMD": 0.41314019898133786,
+        "MTE3": 2.2926441208142263,
+        "arrival": 0.49288557160431407,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 64,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.1,
+        "expand": 0.75,
+        "reuse": 0.15
+      },
+      "status": "950DT critical-AIV estimate"
+    },
+    "previous_us": 5.706325014208239,
+    "fixed_us": 3.6006060606060606,
+    "prior_aiv": 0,
+    "group": "controls",
+    "sequence_prediction": {
+      "predicted_us": 5.790151222253996,
+      "stages_us": {
+        "SCALAR": 1.9506605231503982,
+        "MTE2": 1.0226791847837529,
+        "SIMD": 0.4815353236734077,
+        "MTE3": 2.2926441208142263,
+        "arrival": 0.03881126194607609,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 64,
+      "rows_per_core": 1,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 1.0,
+        "expand": 0.0,
+        "reuse": 0.0
+      },
+      "status": "950DT critical-AIV estimate"
+    },
+    "reference_us": 6.456969696969697,
+    "predicted_us": 5.463828630579488,
+    "kernel": "entry_kernel_1388",
+    "active_aic": 0,
+    "active_aiv": 64,
+    "source": "runs/v11rms/rmsnorm-6-10/profile/npusim_20261118124646_NORM/record/0000_entry_kernel_1388.db",
+    "correctness": [
+      "correctness count=262144 bad=0 max_abs_error=0.00146301 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness count=64 bad=0 max_abs_error=1.27822e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "fb5326535544d2b71719af57f3f16e47a08705ed7208b06d7a249de9fd00d302",
+    "batch_wall_s": 180.26943464018404,
+    "batch": "rmsnorm-6-10",
+    "max_core_rv_count": 959,
+    "phase_us": {
+      "other": 0.0018181818181818182,
+      "SCALAR": 2.3369696969696547,
+      "MTE2": 0.7296969696969712,
+      "SIMD": 0.4103030303030318,
+      "MTE3": 2.5018181818181815,
+      "arrival": 0.4763636363636364
+    },
+    "counts": {
+      "SCALAR": 1093,
+      "MTE2": 5,
+      "MTE3": 3,
+      "SIMD": 970
+    },
+    "copies": {
+      "MOV_SRC_TO_DST_ALIGNv2": 3,
+      "MOV_SPR_XN": 1
+    },
+    "raw_duration_ticks": {
+      "SCALAR": 58282,
+      "MTE2": 1639,
+      "MTE3": 8503,
+      "SIMD": 8798
+    },
+    "slow": [
+      [
+        4375,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        4123,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        1543,
+        "DC_PRELOAD_XN_IMM"
+      ],
+      [
+        1529,
+        "LD_XD_XN_IMM"
+      ],
+      [
+        1529,
+        "LDP_XI_XJ_XN"
+      ],
+      [
+        1529,
+        "LDP_XI_XJ_XN"
+      ],
+      [
+        1187,
+        "STI_XN_IMM"
+      ],
+      [
+        1187,
+        "STI_XN_IMM"
+      ]
+    ],
+    "launch": 0,
+    "core": 19,
+    "core_type": 3,
+    "db_source": "runs/v11rms/rmsnorm-6-10/profile/npusim_20261118124646_NORM/record/0000_entry_kernel_1388.db",
+    "sequence_us": 5.790151222253996,
+    "query_median_us": 25.92,
+    "query_max_us": 32.07
+  },
+  {
+    "id": "v11_rms_7",
+    "op": "rmsnorm",
+    "shape": [
+      128,
+      4096
+    ],
+    "attrs": {},
+    "kind": "NORM",
+    "groups": 2,
+    "args": [
+      128,
+      4096,
+      0
+    ],
+    "role": "validation",
+    "prediction": {
+      "predicted_us": 5.593969598701888,
+      "stages_us": {
+        "SCALAR": 1.6133473136370424,
+        "MTE2": 0.6479906176564318,
+        "SIMD": 0.5798470844665484,
+        "MTE3": 2.2560782034514157,
+        "arrival": 0.49288557160431407,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 64,
+      "rows_per_core": 2,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.1,
+        "expand": 0.75,
+        "reuse": 0.15
+      },
+      "status": "950DT critical-AIV estimate"
+    },
+    "previous_us": 8.547508834741464,
+    "fixed_us": 3.6006060606060606,
+    "prior_aiv": 64,
+    "group": "controls",
+    "sequence_prediction": {
+      "predicted_us": 4.324187854840864,
+      "stages_us": {
+        "SCALAR": 0.9461467088073854,
+        "MTE2": 0.5223182782970784,
+        "SIMD": 0.5821631551591758,
+        "MTE3": 2.2560782034514157,
+        "arrival": 0.013660701239674198,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 64,
+      "rows_per_core": 2,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.0,
+        "expand": 0.0,
+        "reuse": 1.0
+      },
+      "status": "950DT critical-AIV estimate"
+    },
+    "reference_us": 3.8375757575757574,
+    "predicted_us": 5.593969598701888,
+    "kernel": "entry_kernel_1388",
+    "active_aic": 0,
+    "active_aiv": 64,
+    "source": "runs/v11rms/rmsnorm-6-10/profile/npusim_20261118124646_NORM/record/0001_entry_kernel_1388.db",
+    "correctness": [
+      "correctness count=524288 bad=0 max_abs_error=0.00146301 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness count=128 bad=0 max_abs_error=1.27822e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "976e55819ff3daf50c20e31c9c13c89c36fde1fc22f7579973382dfa5ce1d37a",
+    "batch_wall_s": 180.26943464018404,
+    "batch": "rmsnorm-6-10",
+    "max_core_rv_count": 1866,
+    "phase_us": {
+      "other": 0.0048484848484848485,
+      "SCALAR": 1.10666666666666,
+      "MTE2": 1.041212121212123,
+      "SIMD": 0.6048484848484881,
+      "MTE3": 1.0793939393939394,
+      "arrival": 0.0006060606060606061
+    },
+    "counts": {
+      "SCALAR": 1093,
+      "MTE2": 5,
+      "MTE3": 3,
+      "SIMD": 1877
+    },
+    "copies": {
+      "MOV_SRC_TO_DST_ALIGNv2": 3,
+      "MOV_SPR_XN": 1
+    },
+    "raw_duration_ticks": {
+      "SCALAR": 28164,
+      "MTE2": 3150,
+      "MTE3": 4005,
+      "SIMD": 16635
+    },
+    "slow": [
+      [
+        2224,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        1776,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        1505,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        1411,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        632,
+        "DC_PRELOAD_XN_IMM"
+      ],
+      [
+        618,
+        "LD_XD_XN_IMM"
+      ],
+      [
+        618,
+        "LDP_XI_XJ_XN"
+      ],
+      [
+        618,
+        "LDP_XI_XJ_XN"
+      ]
+    ],
+    "launch": 1,
+    "core": 8,
+    "core_type": 3,
+    "db_source": "runs/v11rms/rmsnorm-6-10/profile/npusim_20261118124646_NORM/record/0001_entry_kernel_1388.db",
+    "sequence_us": 4.324187854840864,
+    "query_median_us": 25.855,
+    "query_max_us": 27.68
+  },
+  {
+    "id": "v11_rms_8",
+    "op": "rmsnorm",
+    "shape": [
+      256,
+      4096
+    ],
+    "attrs": {},
+    "kind": "NORM",
+    "groups": 2,
+    "args": [
+      256,
+      4096,
+      0
+    ],
+    "role": "validation",
+    "prediction": {
+      "predicted_us": 6.936726436701877,
+      "stages_us": {
+        "SCALAR": 1.6133473136370424,
+        "MTE2": 0.6479906176564318,
+        "SIMD": 0.9132608554369697,
+        "MTE3": 3.2654212704809833,
+        "arrival": 0.49288557160431407,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 64,
+      "rows_per_core": 4,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.1,
+        "expand": 0.75,
+        "reuse": 0.15
+      },
+      "status": "950DT critical-AIV estimate"
+    },
+    "previous_us": 14.229876475807915,
+    "fixed_us": 3.6006060606060606,
+    "prior_aiv": 64,
+    "group": "controls",
+    "sequence_prediction": {
+      "predicted_us": 5.666944692840853,
+      "stages_us": {
+        "SCALAR": 0.9461467088073854,
+        "MTE2": 0.5223182782970784,
+        "SIMD": 0.9155769261295971,
+        "MTE3": 3.2654212704809833,
+        "arrival": 0.013660701239674198,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 64,
+      "rows_per_core": 4,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.0,
+        "expand": 0.0,
+        "reuse": 1.0
+      },
+      "status": "950DT critical-AIV estimate"
+    },
+    "reference_us": 3.589090909090909,
+    "predicted_us": 6.936726436701877,
+    "kernel": "entry_kernel_1388",
+    "active_aic": 0,
+    "active_aiv": 64,
+    "source": "runs/v11rms/rmsnorm-6-10/profile/npusim_20261118124646_NORM/record/0002_entry_kernel_1388.db",
+    "correctness": [
+      "correctness count=1048576 bad=0 max_abs_error=0.00146301 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness count=256 bad=0 max_abs_error=1.27822e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "fd074dea100e9a752d3c8e27f3546ef04c050c693ffc50390c517ecfe8ed155c",
+    "batch_wall_s": 180.26943464018404,
+    "batch": "rmsnorm-6-10",
+    "max_core_rv_count": 3680,
+    "phase_us": {
+      "other": 0.004242424242424242,
+      "SCALAR": 1.1593939393939314,
+      "MTE2": 1.0496969696969713,
+      "SIMD": 1.0309090909090932,
+      "MTE3": 0.34181818181818185,
+      "arrival": 0.0030303030303030303
+    },
+    "counts": {
+      "SCALAR": 1093,
+      "MTE2": 5,
+      "MTE3": 3,
+      "SIMD": 3691
+    },
+    "copies": {
+      "MOV_SRC_TO_DST_ALIGNv2": 3,
+      "MOV_SPR_XN": 1
+    },
+    "raw_duration_ticks": {
+      "SCALAR": 29566,
+      "MTE2": 3266,
+      "MTE3": 1977,
+      "SIMD": 32457
+    },
+    "slow": [
+      [
+        1607,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        1513,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        1413,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        952,
+        "VF"
+      ],
+      [
+        700,
+        "VF"
+      ],
+      [
+        661,
+        "DC_PRELOAD_XN_IMM"
+      ],
+      [
+        647,
+        "LD_XD_XN_IMM"
+      ],
+      [
+        647,
+        "LDP_XI_XJ_XN"
+      ]
+    ],
+    "launch": 2,
+    "core": 7,
+    "core_type": 2,
+    "db_source": "runs/v11rms/rmsnorm-6-10/profile/npusim_20261118124646_NORM/record/0002_entry_kernel_1388.db",
+    "sequence_us": 5.666944692840853,
+    "query_median_us": 25.915,
+    "query_max_us": 35.11
+  },
+  {
+    "id": "v11_rms_9",
+    "op": "rmsnorm",
+    "shape": [
+      512,
+      4096
+    ],
+    "attrs": {},
+    "kind": "NORM",
+    "groups": 2,
+    "args": [
+      512,
+      4096,
+      0
+    ],
+    "role": "validation",
+    "prediction": {
+      "predicted_us": 10.163477563579448,
+      "stages_us": {
+        "SCALAR": 1.6133473136370424,
+        "MTE2": 0.6479906176564318,
+        "SIMD": 1.580088397377812,
+        "MTE3": 5.825344855417713,
+        "arrival": 0.49288557160431407,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 64,
+      "rows_per_core": 8,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.1,
+        "expand": 0.75,
+        "reuse": 0.15
+      },
+      "status": "950DT critical-AIV estimate"
+    },
+    "previous_us": 25.594611757940815,
+    "fixed_us": 3.6006060606060606,
+    "prior_aiv": 64,
+    "group": "controls",
+    "sequence_prediction": {
+      "predicted_us": 8.893695819718426,
+      "stages_us": {
+        "SCALAR": 0.9461467088073854,
+        "MTE2": 0.5223182782970784,
+        "SIMD": 1.5824044680704394,
+        "MTE3": 5.825344855417713,
+        "arrival": 0.013660701239674198,
+        "other": 0.0038208078861349196
+      },
+      "predicted_active_aiv": 64,
+      "rows_per_core": 8,
+      "route": "rmsnorm",
+      "context_weights": {
+        "first": 0.0,
+        "expand": 0.0,
+        "reuse": 1.0
+      },
+      "status": "950DT critical-AIV estimate"
+    },
+    "reference_us": 4.850909090909091,
+    "predicted_us": 10.163477563579448,
+    "kernel": "entry_kernel_1388",
+    "active_aic": 0,
+    "active_aiv": 64,
+    "source": "runs/v11rms/rmsnorm-6-10/profile/npusim_20261118124646_NORM/record/0003_entry_kernel_1388.db",
+    "correctness": [
+      "correctness count=2097152 bad=0 max_abs_error=0.00146301 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness count=512 bad=0 max_abs_error=1.27822e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "db_sha256": "88c6d2d177f3629a4a3b430e9aa5d0121dad9c489d2c16a8a754eeaaef3d4fee",
+    "batch_wall_s": 180.26943464018404,
+    "batch": "rmsnorm-6-10",
+    "max_core_rv_count": 7360,
+    "phase_us": {
+      "other": 0.0024242424242424242,
+      "SCALAR": 1.0296969696969671,
+      "MTE2": 1.063030303030306,
+      "SIMD": 2.0448484848483273,
+      "MTE3": 0.7109090909090909,
+      "arrival": 0.0
+    },
+    "counts": {
+      "SCALAR": 1511,
+      "MTE2": 6,
+      "MTE3": 5,
+      "SIMD": 7380
+    },
+    "copies": {
+      "MOV_SRC_TO_DST_ALIGNv2": 4,
+      "MOV_SPR_XN": 1
+    },
+    "raw_duration_ticks": {
+      "SCALAR": 30668,
+      "MTE2": 3671,
+      "MTE3": 4311,
+      "SIMD": 64943
+    },
+    "slow": [
+      [
+        1552,
+        "VF"
+      ],
+      [
+        1499,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        1420,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        1275,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        1168,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        1147,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ],
+      [
+        1141,
+        "VF"
+      ],
+      [
+        829,
+        "MOV_SRC_TO_DST_ALIGNv2"
+      ]
+    ],
+    "launch": 3,
+    "core": 11,
+    "core_type": 3,
+    "db_source": "runs/v11rms/rmsnorm-6-10/profile/npusim_20261118124646_NORM/record/0003_entry_kernel_1388.db",
+    "sequence_us": 8.893695819718426,
+    "query_median_us": 25.85,
+    "query_max_us": 31.97
+  }
+]

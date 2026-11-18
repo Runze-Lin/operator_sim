@@ -1,0 +1,150 @@
+{
+  "utc": "2026-11-18T04:55:45.588448+00:00",
+  "sha256": {
+    "development/validation/post11/isolate256.py": "1b3674936c1d898fb2dbc56f0518f7765c3bbc2854e835034ad36d81802b8bed",
+    "development/validation/post11/retry.py": "51242a10be2cee91d474dfc1b42c613bb29bb835f67eb24c1c56b554c71eb1dc",
+    "development/validation/post11/recover.py": "84221b2f741a9a06ac0bea335bbcc882a2b4de76516dd9ad7ab5940610f407fe",
+    "results/v0.11/post/freeze.json": "37e8ebe0e5a2e1d7edea42922c2d2237192acee6c7bbd15d4bb6bcef8ee9b9d6"
+  },
+  "isolated_batches": [
+    [
+      {
+        "id": "v11_mhc_post_3",
+        "op": "mhc_post",
+        "shape": [
+          4,
+          4,
+          6144
+        ],
+        "attrs": {
+          "dtype": "bf16",
+          "has_h_res": true
+        },
+        "kind": "MHC",
+        "groups": 1,
+        "args": [
+          4,
+          4,
+          6144
+        ],
+        "role": "context_warmup",
+        "group": "few_wide",
+        "prediction": {
+          "predicted_us": 2.3472990369383653,
+          "stages_us": {
+            "arrival": 0.026123887932373413,
+            "SCALAR": 0.9986605314836121,
+            "MTE2": 0.3270082906522938,
+            "SIMD": 0.7504044301374014,
+            "MTE3": 0.2372601809544239,
+            "other": 0.007841715778260705
+          },
+          "route": "post_channel",
+          "predicted_active_aiv": 64,
+          "rows_per_core": 1,
+          "context": "reuse",
+          "context_predictions_us": {
+            "first": 4.771244414187087,
+            "expand": 4.269589674109711,
+            "reuse": 2.3472990369383653
+          },
+          "status": "950DT critical-AIV estimate"
+        },
+        "previous_us": 4.068898556851181,
+        "fixed_us": 2.5024242424242424,
+        "prior_aiv": 0,
+        "sequence_prediction": {
+          "predicted_us": 4.269589674109711,
+          "stages_us": {
+            "arrival": 0.7183781766391139,
+            "SCALAR": 1.5982658801155833,
+            "MTE2": 0.7485101659234097,
+            "SIMD": 0.9593335546989199,
+            "MTE3": 0.2372601809544239,
+            "other": 0.007841715778260705
+          },
+          "route": "post_channel",
+          "predicted_active_aiv": 64,
+          "rows_per_core": 1,
+          "context": "expand",
+          "context_predictions_us": {
+            "first": 4.771244414187087,
+            "expand": 4.269589674109711,
+            "reuse": 2.3472990369383653
+          },
+          "status": "950DT critical-AIV estimate"
+        }
+      },
+      {
+        "id": "v11_mhc_post_9",
+        "op": "mhc_post",
+        "shape": [
+          256,
+          4,
+          1024
+        ],
+        "attrs": {
+          "dtype": "bf16",
+          "has_h_res": true
+        },
+        "kind": "MHC",
+        "groups": 1,
+        "args": [
+          256,
+          4,
+          1024
+        ],
+        "role": "validation",
+        "group": "controls",
+        "prediction": {
+          "predicted_us": 4.836603588942972,
+          "stages_us": {
+            "arrival": 0.13706523795510206,
+            "SCALAR": 0.9344450465543821,
+            "MTE2": 2.183258528130305,
+            "SIMD": 0.8071504674586102,
+            "MTE3": 0.7642785516935113,
+            "other": 0.01040575715106142
+          },
+          "route": "post_token",
+          "predicted_active_aiv": 64,
+          "rows_per_core": 4,
+          "context": "reuse",
+          "context_predictions_us": {
+            "first": 6.395664316306708,
+            "expand": 5.642580097608691,
+            "reuse": 4.836603588942972
+          },
+          "status": "950DT critical-AIV estimate"
+        },
+        "previous_us": 3.3481127898294507,
+        "fixed_us": 2.5024242424242424,
+        "prior_aiv": 64,
+        "sequence_prediction": {
+          "predicted_us": 4.836603588942972,
+          "stages_us": {
+            "arrival": 0.13706523795510206,
+            "SCALAR": 0.9344450465543821,
+            "MTE2": 2.183258528130305,
+            "SIMD": 0.8071504674586102,
+            "MTE3": 0.7642785516935113,
+            "other": 0.01040575715106142
+          },
+          "route": "post_token",
+          "predicted_active_aiv": 64,
+          "rows_per_core": 4,
+          "context": "reuse",
+          "context_predictions_us": {
+            "first": 6.395664316306708,
+            "expand": 5.642580097608691,
+            "reuse": 4.836603588942972
+          },
+          "status": "950DT critical-AIV estimate"
+        }
+      }
+    ]
+  ],
+  "per_batch_seconds": 360,
+  "per_batch_gib": 1.25,
+  "cause": "initial T256 had 408 MTE3 output transfers of 8192B, 311 unique row addresses vs 256 expected"
+}

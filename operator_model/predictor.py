@@ -43,6 +43,12 @@ def _estimate(op, shape, attrs, revision):
         elif revision >= 9 and op == 'addmm':
             from .addmm_v9 import predict as estimate_addmm
             result = estimate_addmm(op, shape, attrs)
+        elif revision >= 11 and op == 'rmsnorm':
+            from .rms_v11 import predict as estimate_rms
+            result = estimate_rms(op, shape, attrs)
+        elif revision >= 11 and op == 'mhc_post':
+            from .post_v11 import predict as estimate_post
+            result = estimate_post(op, shape, attrs)
         elif revision >= 10 and op in ('rmsnorm', 'mhc_post'):
             from .wide_v10 import predict as estimate_wide
             result = estimate_wide(op, shape, attrs)
@@ -77,7 +83,7 @@ def _estimate(op, shape, attrs, revision):
 
 def predict(op, shape, attrs=None):
     """Predict the current model's net device time, in microseconds."""
-    return _estimate(op, shape, attrs, revision=10)
+    return _estimate(op, shape, attrs, revision=11)
 
 
 def predict_v8(op, shape, attrs=None):
@@ -87,3 +93,8 @@ def predict_v8(op, shape, attrs=None):
 def predict_v9(op, shape, attrs=None):
     """Replay the previous critical-core models for calibration comparisons."""
     return _estimate(op, shape, attrs, revision=9)
+
+
+def predict_v10(op, shape, attrs=None):
+    """Replay v0.10 on the same shape and pre-launch attributes."""
+    return _estimate(op, shape, attrs, revision=10)

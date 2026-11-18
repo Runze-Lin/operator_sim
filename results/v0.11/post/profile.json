@@ -1,0 +1,113 @@
+{
+  "contract": {
+    "dtype": "bf16",
+    "has_h_res": true
+  },
+  "context_counts": {
+    "channel_unsplit": {
+      "first": 4,
+      "expand": 2,
+      "reuse": 2
+    },
+    "token": {
+      "first": 1,
+      "expand": 2,
+      "reuse": 8
+    },
+    "channel_split": {
+      "first": 1,
+      "expand": 5,
+      "reuse": 8
+    }
+  },
+  "phases": {
+    "post_channel": {
+      "arrival": {
+        "first": 0.02532544778087471,
+        "expand": 0.7183781766391139,
+        "reuse": 0.026123887932373413,
+        "service": 0.0,
+        "per_extra_row": 0.0
+      },
+      "SCALAR": {
+        "first": 2.001337088266892,
+        "expand": 1.5982658801155833,
+        "reuse": 0.9986605314836121,
+        "service": 0.0,
+        "per_extra_row": 0.0
+      },
+      "MTE2": {
+        "first": 1.2288861300434106,
+        "expand": 0.7485101659234097,
+        "reuse": 0.3270082906522938,
+        "service": 0.0,
+        "per_extra_row": 0.0
+      },
+      "SIMD": {
+        "first": 1.135856275760971,
+        "expand": 0.8245959790966662,
+        "reuse": 0.6156668545351477,
+        "service": 0.0011228131300187814,
+        "per_extra_row": 0.0
+      },
+      "MTE3": {
+        "first": 0.2372601809544239,
+        "expand": 0.2372601809544239,
+        "reuse": 0.2372601809544239,
+        "service": 0.0,
+        "per_extra_row": 0.0
+      },
+      "other": {
+        "first": 0.007841715778260705,
+        "expand": 0.007841715778260705,
+        "reuse": 0.007841715778260705,
+        "service": 0.0,
+        "per_extra_row": 0.0
+      }
+    },
+    "post_token": {
+      "arrival": {
+        "first": 0.503030303030303,
+        "expand": 0.40121212121212024,
+        "reuse": 0.13706523795510206,
+        "service": 0.0,
+        "per_extra_row": 0.0
+      },
+      "SCALAR": {
+        "first": 1.5230303030302934,
+        "expand": 1.2218181818181708,
+        "reuse": 0.7982400362966819,
+        "service": 0.0,
+        "per_extra_row": 0.04540167008590004
+      },
+      "MTE2": {
+        "first": 0.9881677557632724,
+        "expand": 0.5960184079156813,
+        "reuse": 0.40826299699180846,
+        "service": 0.05546861034807802,
+        "per_extra_row": 0.0
+      },
+      "SIMD": {
+        "first": 0.11332044336267043,
+        "expand": 0.15541587554254951,
+        "reuse": 0.2249198065792107,
+        "service": 0.0004548677038120308,
+        "per_extra_row": 0.0
+      },
+      "MTE3": {
+        "first": 0.19776542440514955,
+        "expand": 0.19776542440514955,
+        "reuse": 0.19776542440514955,
+        "service": 0.0,
+        "per_extra_row": 0.1888377090961206
+      },
+      "other": {
+        "first": 0.01040575715106142,
+        "expand": 0.01040575715106142,
+        "reuse": 0.01040575715106142,
+        "service": 0.0,
+        "per_extra_row": 0.0
+      }
+    }
+  }
+}

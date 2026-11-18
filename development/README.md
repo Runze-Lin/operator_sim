@@ -19,7 +19,8 @@
 | 量化流水和 FA 指令建模 | [v0.3 方法](model-v3.md) / [结果](../results/v0.3/report.md) · [v0.4 方法](model-v4.md) / [结果](../results/v0.4/report.md) |
 | FA 长上下文 | [压缩采集方案](fa-compact-capture.md) · [长上下文数据](../results/long-fa/error-analysis.md) · [v0.5 方法](../results/v0.5/modeling-strategy.md) · [v0.6 变更](../results/v0.6/changes.md) |
 | 增加算子与独立验证 | [扩展算子早期证据](../docs/extensions/README.md) · [v0.7](../results/v0.7/changes.md) · [v0.8](../results/v0.8/changes.md) · [v0.9](../results/v0.9/changes.md) |
-| 少 token、宽通道的 mHC Post / RMSNorm | [v0.10 冻结清单](../results/v0.10/wide/freeze.json) · [模型与采集结果](../results/v0.10/) · [生成本版总误差报告](validation/publish.py) |
+| 少 token、宽通道的 mHC Post / RMSNorm | [v0.10 冻结清单](../results/v0.10/wide/freeze.json) · [模型与采集结果](../results/v0.10/) |
+| 写回与上下文、固定宽度放大 | [v0.11 变更](../results/v0.11/changes.md) · [规模实验](../results/v0.11/scaling/summary.md) · [汇总发布脚本](validation/publish.py) |
 | 所有版本 | [版本目录](../results/) |
 
 `results/vX.Y/` 本身就是按版本隔离的实验档案，冻结清单和早期复现脚本会按这些路径查找数据；不要为了整理首页搬动它们。早期脚本留在 [`scripts/`](../scripts/)；新的维护代码和实验说明可放在本目录。`runs/` 的原始 CA trace、安装包、工具链和权重均留在本机。重跑前请核对可用空间和每组采集预算。

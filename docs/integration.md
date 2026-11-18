@@ -70,3 +70,5 @@ result = estimate("rmsnorm", (2, 6144), {"resident_aiv": resident})
 if result.active_aiv is not None:
     resident = max(resident, result.active_aiv)
 ```
+
+mHC Post 只传 shape 时，按当前分核路线采用历史发射时间的条件中位数；这通常适合预测该类单次调用。如果线上批次的首次发射或扩展比例不同，积累到整网的时间会有系统偏差。RMSNorm 对未知前序覆盖采用状态加权平均。两者都支持上面的显式输入，且查询次序不会暗中改变模型状态。固定宽度、增大 token 的实测区间及剩余误差见[大 shape 校验](../results/v0.11/scaling/summary.md)。
