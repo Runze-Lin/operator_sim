@@ -69,7 +69,31 @@ def _rates(work, latency_us, chip):
     }
 
 
-def _evaluate(op, shape, attrs, soc, chip, dtype):
+_RESOURCE_OPS = {'quant', 'matmul', 'fa'}
+
+
+def _price_resource(op, shape, target, call, dtype):
+    from .model_v6 import Case
+    from .quant_resource import resource_quant
+    from .matmul_resource import resource_matmul
+    from .fa_resource import resource_fa
+
+    if call:
+        raise ValueError('This validated route has fixed attributes')
+    Case(op, shape)  # Apply the public shape contract before partitioning.
+    price = {'quant': resource_quant, 'matmul': resource_matmul, 'fa': resource_fa}[op]
+    us, aic, aiv, diag = price(shape, target)
+    work = account_work(op, shape, {'dtype': dtype})
+    projected = dict(method='target_resource_schedule', latency_us=us, active_aic=aic,
+                     active_aiv=aiv, reference_latency_us=None, stages_us=diag['stages_us'],
+                     target_plan=diag['target_plan'], timing_diagnostics=diag,
+                     inherited_fields=list(target.inherited_fields),
+                     notes=['DT-only resource defaults; 950 library tiling policy assumed.'])
+    return Estimate(us,'extrapolated','Target resource schedule with 950DT phase defaults',
+                    aiv,aic,target.name,work,projected,_rates(work,us,target))
+
+
+def _evaluate(op, shape, attrs, soc, chip, dtype, timing_mode='auto'):
     raw = {}
     try:
         if not isinstance(op, str) or ALIASES.get(op, op) not in VECTOR | CUBE | FUSION:
@@ -88,6 +112,15 @@ def _evaluate(op, shape, attrs, soc, chip, dtype):
         if op == 'fa' and len(shape) == 3:
             shape += (1, 1)
         call, chosen_dtype = _call_attrs(op, attrs, dtype)
+        if timing_mode not in ('auto','resource','calibrated'):
+            raise ValueError('timing_mode must be auto, resource or calibrated')
+        if timing_mode == 'resource' or (timing_mode == 'auto' and not same and op in _RESOURCE_OPS):
+            if op not in _RESOURCE_OPS:
+                raise ValueError(f'{op} has no target resource schedule yet')
+            return _price_resource(op, shape, target, call, chosen_dtype), raw
+        if timing_mode == 'calibrated' and not same and (
+                op not in _RESOURCE_OPS or target != load_chip('Ascend950PR_957b')):
+            raise ValueError('No calibration route for this operator and target configuration')
         # Residency is counted on the target. Translate only routes that use it.
         resident = None
         if not same and op in ('mhc_post', 'rmsnorm') and 'resident_aiv' in call:
@@ -142,6 +175,7 @@ def _evaluate(op, shape, attrs, soc, chip, dtype):
 
 
 def estimate(op: str, shape: Sequence[int], attrs: Optional[Mapping] = None, *,
-             soc: str = REFERENCE_NAME, chip=None, dtype: Optional[str] = None) -> Estimate:
+             soc: str = REFERENCE_NAME, chip=None, dtype: Optional[str] = None,
+             timing_mode: str = 'auto') -> Estimate:
     """Estimate one local dispatch. chip accepts a config, mapping, JSON file or SKU."""
-    return _evaluate(op, shape, attrs, soc, chip, dtype)[0]
+    return _evaluate(op, shape, attrs, soc, chip, dtype, timing_mode)[0]

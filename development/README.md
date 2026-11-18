@@ -4,6 +4,8 @@
 
 ## 复现跨芯片后端
 
+v0.16 的目标资源调度、同集基线和采集成本见[本轮记录](../results/v0.16/changes.md)。校准只使用旧 DT 阶段证据，PR 新 shape 预先登记并冻结。[校准、冻结与验证脚本](validation/sku16)
+
 v0.15 在 PR 上以 FA 和 Matmul 各 10 个新 shape 检查两种库分支，包含 32k FA、M=255/257 等分块边界。采集前冻结 v0.15、v0.14 和直接复用 DT 三组预测。[v0.15 验证与采集成本](../results/v0.15/changes.md) · [采集、安装核对与报告程序](validation/sku15)
 
 v0.14 独立验证包括 DynamicMXQuant、Matmul、FA 三条 PR 路线。固定输入、两端模型与直接复用 DT 的预测后，采集预算按 shape 执行；可从[本轮变更](../results/v0.14/changes.md)进入冻结合同、实际样例和逐点对比。[采集与发布脚本](validation/sku14)

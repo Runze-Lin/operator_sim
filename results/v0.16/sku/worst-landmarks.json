@@ -1,0 +1,139 @@
+[
+  {
+    "id": "quant_288_7168",
+    "op": "quant",
+    "shape": [
+      288,
+      7168
+    ],
+    "signed_error_percent": 22.25240394849839,
+    "active_match": true,
+    "critical_core": "core24.veccore0",
+    "full_core_window": {
+      "core": "core24.veccore0",
+      "start_us": 0.21454524993896484,
+      "end_us": 8.009090426377952,
+      "profiler_span_us": 7.79,
+      "events": 7677
+    },
+    "predicted_stages_us": {
+      "dispatch": 3.367555372536988,
+      "ub_pipeline": 6.4140532448759116,
+      "drain": 0.009696963243186474
+    },
+    "measured_landmarks": {
+      "mte2_data": {
+        "count": 2,
+        "first_issue_us": 0.7430300712585449,
+        "last_finish_us": 6.028484582901001
+      },
+      "mte3_data": {
+        "count": 2,
+        "first_issue_us": 7.20424222946167,
+        "last_finish_us": 7.999394237995148
+      },
+      "vector_exec": {
+        "count": 1299,
+        "first_issue_us": 6.043635845184326,
+        "last_finish_us": 7.200605750083923
+      }
+    },
+    "trace_sha256": "842f755067f8e7a3c2000a68fd4f07c7876fd05ecc984e475230e1427750c903",
+    "measured_data_scope": "critical-core detail timeline, includes only named opcode families; no addition of overlapping intervals",
+    "trace": "runs/sku16/quant_288_7168/profile/OPPROF_20261118175130_ZPORAMTFCCEDACGV/simulator/core24.veccore0/trace.json"
+  },
+  {
+    "id": "matmul_1536_2048_16",
+    "op": "matmul",
+    "shape": [
+      1536,
+      2048,
+      16
+    ],
+    "signed_error_percent": 97.54575166997816,
+    "active_match": true,
+    "critical_core": "core19.cubecore0",
+    "full_core_window": {
+      "core": "core19.cubecore0",
+      "start_us": 0.40242433547973633,
+      "end_us": 4.755151629447937,
+      "profiler_span_us": 4.35,
+      "events": 1388
+    },
+    "predicted_stages_us": {
+      "read_fill": 1.6329780417952604,
+      "l0_lead": 0.09579580400880035,
+      "page_intervals": 0.0,
+      "last_mmad": 0.3929686195286195,
+      "write_tail": 4.956697375470386,
+      "launch": 2.315160188637076
+    },
+    "measured_landmarks": {
+      "mte2_data": {
+        "count": 4,
+        "first_issue_us": 2.4727272987365723,
+        "last_finish_us": 3.210908830165863
+      },
+      "mmad": {
+        "count": 2,
+        "first_issue_us": 3.0721211433410645,
+        "last_finish_us": 3.778787612915039
+      },
+      "fix_write": {
+        "count": 2,
+        "first_issue_us": 2.5860605239868164,
+        "last_finish_us": 4.755151629447937
+      }
+    },
+    "trace_sha256": "492b0fab5ba92e2677ddd95dd0bf1285daacc49b79cdd3695a946f8d72e61a02",
+    "measured_data_scope": "critical-core detail timeline, includes only named opcode families; no addition of overlapping intervals",
+    "trace": "runs/sku16/matmul_1536_2048_16/profile/OPPROF_20261118175348_TWNOHDWRWEKQHFKS/simulator/core19.cubecore0/trace.json"
+  },
+  {
+    "id": "fa_9_2049_64_1_1",
+    "op": "fa",
+    "shape": [
+      9,
+      2049,
+      64,
+      1,
+      1
+    ],
+    "signed_error_percent": 10.832874015062721,
+    "active_match": true,
+    "critical_core": "core0.veccore1",
+    "full_core_window": {
+      "core": "core0.veccore1",
+      "start_us": 0.1484849452972412,
+      "end_us": 13.146060707978904,
+      "profiler_span_us": 13.0,
+      "events": 10564
+    },
+    "predicted_stages_us": {
+      "launch": 6.4787878787878785,
+      "first_tile": 3.8772310014204545,
+      "steady": 3.8791123340902094,
+      "drain": 0.33502568811937905
+    },
+    "measured_landmarks": {
+      "mte2_data": {
+        "count": 1,
+        "first_issue_us": 0.7860605716705322,
+        "last_finish_us": 1.3218181729316711
+      },
+      "mte3_data": {
+        "count": 3,
+        "first_issue_us": 12.26606011390686,
+        "last_finish_us": 13.140605881810188
+      },
+      "vector_exec": {
+        "count": 1306,
+        "first_issue_us": 8.838181734085083,
+        "last_finish_us": 12.933332695625722
+      }
+    },
+    "trace_sha256": "b27661f109f1d6302097cf5ec5312f4aaf566d75630dcb746667c9a6d428fc55",
+    "measured_data_scope": "critical-core detail timeline, includes only named opcode families; no addition of overlapping intervals",
+    "trace": "runs/sku16/fa_9_2049_64_1_1/profile/OPPROF_20261118174639_PDEBSRKTAGVBAATS/simulator/core0.veccore1/trace.json"
+  }
+]

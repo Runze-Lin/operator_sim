@@ -1,0 +1,1020 @@
+{
+  "utc": "2026-11-18T09:39:23.894218+00:00",
+  "sku": "Ascend950PR_957b",
+  "contracts": {
+    "quant": {
+      "api": "aclnnDynamicMxQuant",
+      "family": "ops-nn",
+      "axes": [
+        "rows",
+        "cols"
+      ],
+      "dtype": "bf16",
+      "attrs": {
+        "dst": "e4m3fn",
+        "scale_dtype": "e8m0",
+        "axis": -1,
+        "block": 32,
+        "rounding": "rint"
+      },
+      "golden": "all output and scale bytes"
+    },
+    "matmul": {
+      "api": "aclnnMatmul",
+      "family": "ops-nn",
+      "axes": [
+        "M",
+        "N",
+        "K"
+      ],
+      "dtype": "bf16",
+      "attrs": {
+        "bias": false,
+        "transpose": false,
+        "layout": "ND",
+        "cube_math_type": 0
+      },
+      "golden": "every BF16 output vs FP64; atol=0.01, rtol=0.005"
+    },
+    "fa": {
+      "api": "aclnnFlashAttentionScoreV2",
+      "family": "ops-transformer",
+      "axes": [
+        "Q",
+        "KV",
+        "D",
+        "B",
+        "H"
+      ],
+      "dtype": "bf16",
+      "attrs": {
+        "layout": "SBH",
+        "causal": false,
+        "keep_prob": 1.0
+      },
+      "golden": "every BF16 attention output vs FP64; atol=0.002, rtol=0.01; does not validate auxiliary statistics"
+    }
+  },
+  "cases": [
+    {
+      "id": "fa_9_32767_64_1_1",
+      "op": "fa",
+      "shape": [
+        9,
+        32767,
+        64,
+        1,
+        1
+      ],
+      "cli_shape": [
+        9,
+        32767,
+        64,
+        1,
+        1
+      ],
+      "role": "independent_pr",
+      "priority": "primary",
+      "coverage": "Q9 KV-tail loop",
+      "backend": "official_full_compacted_after_parse",
+      "runner": "build/smoke/three_ops",
+      "host_binary_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "dt": null,
+      "raw_limit_mib": 1800,
+      "wall_limit_s": 600
+    },
+    {
+      "id": "fa_9_12289_64_1_1",
+      "op": "fa",
+      "shape": [
+        9,
+        12289,
+        64,
+        1,
+        1
+      ],
+      "cli_shape": [
+        9,
+        12289,
+        64,
+        1,
+        1
+      ],
+      "role": "independent_pr",
+      "priority": "primary",
+      "coverage": "Q9 KV-tail loop",
+      "backend": "official_full_compacted_after_parse",
+      "runner": "build/smoke/three_ops",
+      "host_binary_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "dt": null,
+      "raw_limit_mib": 1800,
+      "wall_limit_s": 600
+    },
+    {
+      "id": "fa_9_2049_64_1_1",
+      "op": "fa",
+      "shape": [
+        9,
+        2049,
+        64,
+        1,
+        1
+      ],
+      "cli_shape": [
+        9,
+        2049,
+        64,
+        1,
+        1
+      ],
+      "role": "independent_pr",
+      "priority": "primary",
+      "coverage": "Q9 KV-tail loop",
+      "backend": "official_full_compacted_after_parse",
+      "runner": "build/smoke/three_ops",
+      "host_binary_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "dt": null,
+      "raw_limit_mib": 1800,
+      "wall_limit_s": 600
+    },
+    {
+      "id": "fa_1_224_64_1_1",
+      "op": "fa",
+      "shape": [
+        1,
+        224,
+        64,
+        1,
+        1
+      ],
+      "cli_shape": [
+        1,
+        224,
+        64,
+        1,
+        1
+      ],
+      "role": "independent_pr",
+      "priority": "primary",
+      "coverage": "batch/head/short Q tiling",
+      "backend": "msopprof",
+      "runner": "build/smoke/three_ops",
+      "host_binary_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "dt": {
+        "record": "results/v0.13/evaluation.json",
+        "id": "fa_reserve_1",
+        "ca_us": 8.826060606060606
+      },
+      "raw_limit_mib": 640,
+      "wall_limit_s": 210
+    },
+    {
+      "id": "fa_32_129_64_1_4",
+      "op": "fa",
+      "shape": [
+        32,
+        129,
+        64,
+        1,
+        4
+      ],
+      "cli_shape": [
+        32,
+        129,
+        64,
+        1,
+        4
+      ],
+      "role": "independent_pr",
+      "priority": "primary",
+      "coverage": "batch/head/short Q tiling",
+      "backend": "msopprof",
+      "runner": "build/smoke/three_ops",
+      "host_binary_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "dt": {
+        "record": "results/v0.13/evaluation.json",
+        "id": "f3_test_short_tail",
+        "ca_us": 9.150303366594017
+      },
+      "raw_limit_mib": 640,
+      "wall_limit_s": 210
+    },
+    {
+      "id": "fa_17_257_128_1_1",
+      "op": "fa",
+      "shape": [
+        17,
+        257,
+        128,
+        1,
+        1
+      ],
+      "cli_shape": [
+        17,
+        257,
+        128,
+        1,
+        1
+      ],
+      "role": "independent_pr",
+      "priority": "primary",
+      "coverage": "batch/head/short Q tiling",
+      "backend": "msopprof",
+      "runner": "build/smoke/three_ops",
+      "host_binary_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "dt": {
+        "record": "results/v0.13/evaluation.json",
+        "id": "f3_test_d128_tail",
+        "ca_us": 9.550909521989524
+      },
+      "raw_limit_mib": 640,
+      "wall_limit_s": 210
+    },
+    {
+      "id": "fa_16_128_64_1_8",
+      "op": "fa",
+      "shape": [
+        16,
+        128,
+        64,
+        1,
+        8
+      ],
+      "cli_shape": [
+        16,
+        128,
+        64,
+        1,
+        8
+      ],
+      "role": "independent_pr",
+      "priority": "primary",
+      "coverage": "batch/head/short Q tiling",
+      "backend": "msopprof",
+      "runner": "build/smoke/three_ops",
+      "host_binary_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "dt": {
+        "record": "results/v0.13/evaluation.json",
+        "id": "f2_test_heads8",
+        "ca_us": 9.401818278245628
+      },
+      "raw_limit_mib": 640,
+      "wall_limit_s": 210
+    },
+    {
+      "id": "fa_8_192_64_1_1",
+      "op": "fa",
+      "shape": [
+        8,
+        192,
+        64,
+        1,
+        1
+      ],
+      "cli_shape": [
+        8,
+        192,
+        64,
+        1,
+        1
+      ],
+      "role": "independent_pr",
+      "priority": "primary",
+      "coverage": "batch/head/short Q tiling",
+      "backend": "msopprof",
+      "runner": "build/smoke/three_ops",
+      "host_binary_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "dt": {
+        "record": "results/v0.13/evaluation.json",
+        "id": "import_v1_f_test_context",
+        "ca_us": 8.805454313755035
+      },
+      "raw_limit_mib": 640,
+      "wall_limit_s": 210
+    },
+    {
+      "id": "fa_64_256_64_1_1",
+      "op": "fa",
+      "shape": [
+        64,
+        256,
+        64,
+        1,
+        1
+      ],
+      "cli_shape": [
+        64,
+        256,
+        64,
+        1,
+        1
+      ],
+      "role": "independent_pr",
+      "priority": "primary",
+      "coverage": "batch/head/short Q tiling",
+      "backend": "msopprof",
+      "runner": "build/smoke/three_ops",
+      "host_binary_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "dt": {
+        "record": "results/v0.13/evaluation.json",
+        "id": "import_v1_f_cal_prefill",
+        "ca_us": 9.409090998582542
+      },
+      "raw_limit_mib": 640,
+      "wall_limit_s": 210
+    },
+    {
+      "id": "fa_9_384_128_2_2",
+      "op": "fa",
+      "shape": [
+        9,
+        384,
+        128,
+        2,
+        2
+      ],
+      "cli_shape": [
+        9,
+        384,
+        128,
+        2,
+        2
+      ],
+      "role": "independent_pr",
+      "priority": "primary",
+      "coverage": "batch/head/short Q tiling",
+      "backend": "msopprof",
+      "runner": "build/smoke/three_ops",
+      "host_binary_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "dt": null,
+      "raw_limit_mib": 640,
+      "wall_limit_s": 210
+    },
+    {
+      "id": "fa_4_160_64_1_1",
+      "op": "fa",
+      "shape": [
+        4,
+        160,
+        64,
+        1,
+        1
+      ],
+      "cli_shape": [
+        4,
+        160,
+        64,
+        1,
+        1
+      ],
+      "role": "independent_pr",
+      "priority": "reserve",
+      "coverage": "batch/head/short Q tiling",
+      "backend": "msopprof",
+      "runner": "build/smoke/three_ops",
+      "host_binary_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "dt": {
+        "record": "results/v0.13/evaluation.json",
+        "id": "fa_reserve_2",
+        "ca_us": 9.461212121212121
+      },
+      "raw_limit_mib": 640,
+      "wall_limit_s": 210
+    },
+    {
+      "id": "fa_8_128_128_1_1",
+      "op": "fa",
+      "shape": [
+        8,
+        128,
+        128,
+        1,
+        1
+      ],
+      "cli_shape": [
+        8,
+        128,
+        128,
+        1,
+        1
+      ],
+      "role": "independent_pr",
+      "priority": "reserve",
+      "coverage": "batch/head/short Q tiling",
+      "backend": "msopprof",
+      "runner": "build/smoke/three_ops",
+      "host_binary_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "dt": {
+        "record": "results/v0.13/evaluation.json",
+        "id": "fa_reserve_3",
+        "ca_us": 9.135757575757577
+      },
+      "raw_limit_mib": 640,
+      "wall_limit_s": 210
+    },
+    {
+      "id": "matmul_4_80_48",
+      "op": "matmul",
+      "shape": [
+        4,
+        80,
+        48
+      ],
+      "cli_shape": [
+        4,
+        80,
+        48
+      ],
+      "role": "independent_pr",
+      "priority": "primary",
+      "coverage": "single/tail/K pages",
+      "backend": "msopprof",
+      "runner": "build/smoke/three_ops",
+      "host_binary_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "dt": {
+        "record": "results/v0.13/evaluation.json",
+        "id": "matmul_4_80_48",
+        "ca_us": 3.5236363636363635
+      },
+      "raw_limit_mib": 640,
+      "wall_limit_s": 210
+    },
+    {
+      "id": "matmul_64_128_512",
+      "op": "matmul",
+      "shape": [
+        64,
+        128,
+        512
+      ],
+      "cli_shape": [
+        64,
+        128,
+        512
+      ],
+      "role": "independent_pr",
+      "priority": "primary",
+      "coverage": "single/tail/K pages",
+      "backend": "msopprof",
+      "runner": "build/smoke/three_ops",
+      "host_binary_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "dt": {
+        "record": "results/v0.13/evaluation.json",
+        "id": "matmul_64_128_512",
+        "ca_us": 4.436969696969697
+      },
+      "raw_limit_mib": 640,
+      "wall_limit_s": 210
+    },
+    {
+      "id": "matmul_2_32_32",
+      "op": "matmul",
+      "shape": [
+        2,
+        32,
+        32
+      ],
+      "cli_shape": [
+        2,
+        32,
+        32
+      ],
+      "role": "independent_pr",
+      "priority": "primary",
+      "coverage": "single/tail/K pages",
+      "backend": "msopprof",
+      "runner": "build/smoke/three_ops",
+      "host_binary_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "dt": {
+        "record": "results/v0.13/evaluation.json",
+        "id": "matmul_2_32_32",
+        "ca_us": 3.244242424242424
+      },
+      "raw_limit_mib": 640,
+      "wall_limit_s": 210
+    },
+    {
+      "id": "matmul_9_128_256",
+      "op": "matmul",
+      "shape": [
+        9,
+        128,
+        256
+      ],
+      "cli_shape": [
+        9,
+        128,
+        256
+      ],
+      "role": "independent_pr",
+      "priority": "primary",
+      "coverage": "single/tail/K pages",
+      "backend": "msopprof",
+      "runner": "build/smoke/three_ops",
+      "host_binary_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "dt": {
+        "record": "results/v0.13/evaluation.json",
+        "id": "matmul_9_128_256",
+        "ca_us": 4.018787878787879
+      },
+      "raw_limit_mib": 640,
+      "wall_limit_s": 210
+    },
+    {
+      "id": "matmul_224_512_256",
+      "op": "matmul",
+      "shape": [
+        224,
+        512,
+        256
+      ],
+      "cli_shape": [
+        224,
+        512,
+        256
+      ],
+      "role": "independent_pr",
+      "priority": "primary",
+      "coverage": "24/28 AIC boundary candidate",
+      "backend": "msopprof",
+      "runner": "build/smoke/three_ops",
+      "host_binary_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "dt": null,
+      "raw_limit_mib": 640,
+      "wall_limit_s": 210
+    },
+    {
+      "id": "matmul_448_512_256",
+      "op": "matmul",
+      "shape": [
+        448,
+        512,
+        256
+      ],
+      "cli_shape": [
+        448,
+        512,
+        256
+      ],
+      "role": "independent_pr",
+      "priority": "primary",
+      "coverage": "24/28 AIC boundary candidate",
+      "backend": "msopprof",
+      "runner": "build/smoke/three_ops",
+      "host_binary_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "dt": null,
+      "raw_limit_mib": 640,
+      "wall_limit_s": 210
+    },
+    {
+      "id": "matmul_513_384_256",
+      "op": "matmul",
+      "shape": [
+        513,
+        384,
+        256
+      ],
+      "cli_shape": [
+        513,
+        384,
+        256
+      ],
+      "role": "independent_pr",
+      "priority": "primary",
+      "coverage": "24/28 AIC boundary candidate",
+      "backend": "msopprof",
+      "runner": "build/smoke/three_ops",
+      "host_binary_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "dt": null,
+      "raw_limit_mib": 640,
+      "wall_limit_s": 210
+    },
+    {
+      "id": "matmul_768_512_128",
+      "op": "matmul",
+      "shape": [
+        768,
+        512,
+        128
+      ],
+      "cli_shape": [
+        768,
+        512,
+        128
+      ],
+      "role": "independent_pr",
+      "priority": "primary",
+      "coverage": "high load/multi-wave candidate",
+      "backend": "msopprof",
+      "runner": "build/smoke/three_ops",
+      "host_binary_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "dt": null,
+      "raw_limit_mib": 640,
+      "wall_limit_s": 210
+    },
+    {
+      "id": "matmul_1024_2048_32",
+      "op": "matmul",
+      "shape": [
+        1024,
+        2048,
+        32
+      ],
+      "cli_shape": [
+        1024,
+        2048,
+        32
+      ],
+      "role": "independent_pr",
+      "priority": "primary",
+      "coverage": "high load/multi-wave candidate",
+      "backend": "msopprof",
+      "runner": "build/smoke/three_ops",
+      "host_binary_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "dt": null,
+      "raw_limit_mib": 640,
+      "wall_limit_s": 210
+    },
+    {
+      "id": "matmul_1536_2048_16",
+      "op": "matmul",
+      "shape": [
+        1536,
+        2048,
+        16
+      ],
+      "cli_shape": [
+        1536,
+        2048,
+        16
+      ],
+      "role": "independent_pr",
+      "priority": "primary",
+      "coverage": "high load/multi-wave candidate",
+      "backend": "msopprof",
+      "runner": "build/smoke/three_ops",
+      "host_binary_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "dt": null,
+      "raw_limit_mib": 640,
+      "wall_limit_s": 210
+    },
+    {
+      "id": "matmul_320_384_256",
+      "op": "matmul",
+      "shape": [
+        320,
+        384,
+        256
+      ],
+      "cli_shape": [
+        320,
+        384,
+        256
+      ],
+      "role": "independent_pr",
+      "priority": "reserve",
+      "coverage": "high load/multi-wave candidate",
+      "backend": "msopprof",
+      "runner": "build/smoke/three_ops",
+      "host_binary_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "dt": null,
+      "raw_limit_mib": 640,
+      "wall_limit_s": 210
+    },
+    {
+      "id": "matmul_1024_2048_16",
+      "op": "matmul",
+      "shape": [
+        1024,
+        2048,
+        16
+      ],
+      "cli_shape": [
+        1024,
+        2048,
+        16
+      ],
+      "role": "independent_pr",
+      "priority": "reserve",
+      "coverage": "high load/multi-wave candidate",
+      "backend": "msopprof",
+      "runner": "build/smoke/three_ops",
+      "host_binary_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "dt": null,
+      "raw_limit_mib": 640,
+      "wall_limit_s": 210
+    },
+    {
+      "id": "quant_1_128",
+      "op": "quant",
+      "shape": [
+        1,
+        128
+      ],
+      "cli_shape": [
+        1,
+        128
+      ],
+      "role": "independent_pr",
+      "priority": "primary",
+      "coverage": "small, aligned or tail vector tile",
+      "backend": "msopprof",
+      "runner": "build/smoke/three_ops",
+      "host_binary_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "dt": {
+        "record": "results/v0.13/evaluation.json",
+        "id": "q4_test_tiny",
+        "ca_us": 4.324848177842796
+      },
+      "raw_limit_mib": 640,
+      "wall_limit_s": 210
+    },
+    {
+      "id": "quant_7_320",
+      "op": "quant",
+      "shape": [
+        7,
+        320
+      ],
+      "cli_shape": [
+        7,
+        320
+      ],
+      "role": "independent_pr",
+      "priority": "primary",
+      "coverage": "small, aligned or tail vector tile",
+      "backend": "msopprof",
+      "runner": "build/smoke/three_ops",
+      "host_binary_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "dt": {
+        "record": "results/v0.13/evaluation.json",
+        "id": "quant_7_320",
+        "ca_us": 5.1460606060606064
+      },
+      "raw_limit_mib": 640,
+      "wall_limit_s": 210
+    },
+    {
+      "id": "quant_17_1024",
+      "op": "quant",
+      "shape": [
+        17,
+        1024
+      ],
+      "cli_shape": [
+        17,
+        1024
+      ],
+      "role": "independent_pr",
+      "priority": "primary",
+      "coverage": "small, aligned or tail vector tile",
+      "backend": "msopprof",
+      "runner": "build/smoke/three_ops",
+      "host_binary_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "dt": {
+        "record": "results/v0.13/evaluation.json",
+        "id": "quant_17_1024",
+        "ca_us": 5.7715151515151515
+      },
+      "raw_limit_mib": 640,
+      "wall_limit_s": 210
+    },
+    {
+      "id": "quant_36_512",
+      "op": "quant",
+      "shape": [
+        36,
+        512
+      ],
+      "cli_shape": [
+        36,
+        512
+      ],
+      "role": "independent_pr",
+      "priority": "primary",
+      "coverage": "small, aligned or tail vector tile",
+      "backend": "msopprof",
+      "runner": "build/smoke/three_ops",
+      "host_binary_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "dt": {
+        "record": "results/v0.13/evaluation.json",
+        "id": "q4_test_small",
+        "ca_us": 5.646060469560325
+      },
+      "raw_limit_mib": 640,
+      "wall_limit_s": 210
+    },
+    {
+      "id": "quant_36_3072",
+      "op": "quant",
+      "shape": [
+        36,
+        3072
+      ],
+      "cli_shape": [
+        36,
+        3072
+      ],
+      "role": "independent_pr",
+      "priority": "primary",
+      "coverage": "small, aligned or tail vector tile",
+      "backend": "msopprof",
+      "runner": "build/smoke/three_ops",
+      "host_binary_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "dt": {
+        "record": "results/v0.13/evaluation.json",
+        "id": "quant_36_3072",
+        "ca_us": 4.970909090909091
+      },
+      "raw_limit_mib": 640,
+      "wall_limit_s": 210
+    },
+    {
+      "id": "quant_128_5120",
+      "op": "quant",
+      "shape": [
+        128,
+        5120
+      ],
+      "cli_shape": [
+        128,
+        5120
+      ],
+      "role": "independent_pr",
+      "priority": "primary",
+      "coverage": "small, aligned or tail vector tile",
+      "backend": "msopprof",
+      "runner": "build/smoke/three_ops",
+      "host_binary_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "dt": {
+        "record": "results/v0.13/evaluation.json",
+        "id": "quant_128_5120",
+        "ca_us": 5.884848484848485
+      },
+      "raw_limit_mib": 640,
+      "wall_limit_s": 210
+    },
+    {
+      "id": "quant_36_5120",
+      "op": "quant",
+      "shape": [
+        36,
+        5120
+      ],
+      "cli_shape": [
+        36,
+        5120
+      ],
+      "role": "independent_pr",
+      "priority": "primary",
+      "coverage": "small, aligned or tail vector tile",
+      "backend": "msopprof",
+      "runner": "build/smoke/three_ops",
+      "host_binary_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "dt": {
+        "record": "results/v0.13/evaluation.json",
+        "id": "q6_verify_batch4",
+        "ca_us": 5.583636363636364
+      },
+      "raw_limit_mib": 640,
+      "wall_limit_s": 210
+    },
+    {
+      "id": "quant_288_7168",
+      "op": "quant",
+      "shape": [
+        288,
+        7168
+      ],
+      "cli_shape": [
+        288,
+        7168
+      ],
+      "role": "independent_pr",
+      "priority": "primary",
+      "coverage": "UB repeat or wide per-core block",
+      "backend": "msopprof",
+      "runner": "build/smoke/three_ops",
+      "host_binary_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "dt": {
+        "record": "results/v0.13/evaluation.json",
+        "id": "q6_verify_batch32",
+        "ca_us": 6.876363636363636
+      },
+      "raw_limit_mib": 2000,
+      "wall_limit_s": 420
+    },
+    {
+      "id": "quant_768_4096",
+      "op": "quant",
+      "shape": [
+        768,
+        4096
+      ],
+      "cli_shape": [
+        768,
+        4096
+      ],
+      "role": "independent_pr",
+      "priority": "primary",
+      "coverage": "UB repeat or wide per-core block",
+      "backend": "msopprof",
+      "runner": "build/smoke/three_ops",
+      "host_binary_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "dt": {
+        "record": "results/v0.13/evaluation.json",
+        "id": "q3_test_two_ub",
+        "ca_us": 7.202424052171409
+      },
+      "raw_limit_mib": 2000,
+      "wall_limit_s": 420
+    },
+    {
+      "id": "quant_1024_4096",
+      "op": "quant",
+      "shape": [
+        1024,
+        4096
+      ],
+      "cli_shape": [
+        1024,
+        4096
+      ],
+      "role": "independent_pr",
+      "priority": "primary",
+      "coverage": "UB repeat or wide per-core block",
+      "backend": "msopprof",
+      "runner": "build/smoke/three_ops",
+      "host_binary_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "dt": {
+        "record": "results/v0.13/evaluation.json",
+        "id": "q2_cal_ub_loop",
+        "ca_us": 8.047273161821067
+      },
+      "raw_limit_mib": 2000,
+      "wall_limit_s": 420
+    },
+    {
+      "id": "quant_17_512",
+      "op": "quant",
+      "shape": [
+        17,
+        512
+      ],
+      "cli_shape": [
+        17,
+        512
+      ],
+      "role": "independent_pr",
+      "priority": "reserve",
+      "coverage": "small, aligned or tail vector tile",
+      "backend": "msopprof",
+      "runner": "build/smoke/three_ops",
+      "host_binary_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "dt": {
+        "record": "results/v0.13/evaluation.json",
+        "id": "import_v1_q_cal_decode",
+        "ca_us": 5.790302756242454
+      },
+      "raw_limit_mib": 640,
+      "wall_limit_s": 210
+    },
+    {
+      "id": "quant_1_192",
+      "op": "quant",
+      "shape": [
+        1,
+        192
+      ],
+      "cli_shape": [
+        1,
+        192
+      ],
+      "role": "independent_pr",
+      "priority": "reserve",
+      "coverage": "small, aligned or tail vector tile",
+      "backend": "msopprof",
+      "runner": "build/smoke/three_ops",
+      "host_binary_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "dt": {
+        "record": "results/v0.13/evaluation.json",
+        "id": "quant_1_192",
+        "ca_us": 4.129090909090909
+      },
+      "raw_limit_mib": 640,
+      "wall_limit_s": 210
+    }
+  ],
+  "max_workers": 4,
+  "max_total_seconds": 1800,
+  "max_total_raw_mib": 10240,
+  "mandatory_shape": [
+    9,
+    32767,
+    64,
+    1,
+    1
+  ],
+  "reserve_rule": "Only predeclared reserve after failed qualification; never replace mandatory PR 32767 with another shape; no replacements based on error",
+  "note": "Use K32/K16 on wide matmul to cover multiple output-tile waves under deterministic host golden work cap. No new PR timings opened before freeze."
+}

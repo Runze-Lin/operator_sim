@@ -29,6 +29,8 @@ result = estimate("matmul", (128, 256, 512), dtype="bf16", chip=chip)
 print(result.latency_us, result.work["cube_ops"], result.work["logical_read_bytes"], result.status)
 ```
 
+**比较芯片架构时可显式指定 `timing_mode="resource"`。** Quant、Matmul 和 FA 会按目标配置重新决定分核、tile、读写字节、计算与流水时间。PR 和自定义配置的这三项默认使用该路径。其余算子的跨芯片估计沿用 DT 阶段投影。相同配置更换名称时，显式资源模型给出相同预测。[三条路线的资源公式与算例](docs/modeling-strategy.md) · [独立 PR 校验与误差](docs/error-analysis.md)
+
 维护 960、970、980 等架构情景时，每个目标使用一份 JSON，分别填写按位宽区分的两类算力、核数、频率、外存容量和带宽。提供的 120 Cube / 120 Vector 配置用于演示自定义输入。调用方通过 `extrapolated` 状态识别外推，并决定是否将其交给事件调度器。[自定义芯片示例](configs/chips/scenario-example.json) · [字段、单位和返回合同](docs/integration.md)
 
 ## 可预测的算子
@@ -45,6 +47,6 @@ KDA chunk 可查询任务结构；其 CA 同步检查尚未通过，系统层应
 
 主要校准参考是 **Ascend950DT_9582（A5），CANN 9.2.1，32 AIC / 64 AIV，1.65 GHz**。参考值是安装包实际 kernel 在 CA Model 上从首条到末条设备指令的跨核时间窗；串行组合返回各窗口之和。主机 launch、卡间通信、排队及算子间并发由系统仿真器处理。报告的查询开销是运行预测器花费的真实墙钟时间，与 `predicted_us` 使用的是两条不同的时间轴。
 
-**Ascend950PR_957b** 上的 DynamicMXQuant、Matmul 和 FA 各有 10 个冻结后采集的独立 shape。FA 已用正式 PR CA 验到单头 Q=9、KV=32,768；Matmul 包含了触发 24/28 核分块的大矩阵。未校准目标沿用实现假设，用自己的硬件配置重新分块、计价。同一份[误差分析](docs/error-analysis.md)列出两款芯片的核数、分精度算力、频率、存储容量与带宽，并用同一组 PR CA 比较跨芯片预测和直接复用 DT。尚未取得 960、970、980 的 CA 或上板数据，预测采用调用方提供的硬件参数及相近实现假设。逐 SKU 的开发、独立误差和数据缺口见[校验报告](docs/error-analysis.md)。
+**Ascend950PR_957b** 上，三条资源路线各完成了 10 个新 shape 的冻结后验证。FA 的 WAPE 为 5.52%，Quant 为 12.18%，Matmul 为 27.57%。Matmul 的 8 个单波样例为 7.50%，2 个薄 K 多波样例因跨波重叠估计不足达到 95.58%。需要在已知 PR 上复现旧的专属校准可选 `timing_mode="calibrated"`。960、970、980 的准确性仍待独立测量。[逐 shape 误差、库身份及 DT/PR 芯片差异](docs/error-analysis.md) · [v0.16 同集对比](results/v0.16/changes.md)
 
 维护模型、复现 CA 或查阅历史版本，请从[开发与验证档案](development/README.md)进入。

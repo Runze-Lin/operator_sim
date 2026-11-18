@@ -15,12 +15,13 @@ def main():
     parser.add_argument('--hardware-profile',default=None)
     parser.add_argument('--chip', help='Built-in chip name or path to a chip JSON config')
     parser.add_argument('--dtype', help='Primary input dtype, e.g. bf16 or fp8_e4m3fn')
+    parser.add_argument('--timing-mode', choices=('auto','resource','calibrated'), default='auto')
     args = parser.parse_args()
     attrs=json.loads(args.attrs_json)
     if args.model is None and not args.local_proxy and args.hardware_profile is None:
         from .backend import _evaluate
         from .chips import REFERENCE_NAME
-        estimated, raw = _evaluate(args.op, args.shape, attrs, REFERENCE_NAME, args.chip, args.dtype)
+        estimated, raw = _evaluate(args.op, args.shape, attrs, REFERENCE_NAME, args.chip, args.dtype, args.timing_mode)
         # Keep historical DT diagnostics for tools that inspect stage-specific fields.
         # Reference timings must never appear as target-chip phase measurements.
         output = dict(raw) if estimated.projection is None and raw else {}
@@ -37,8 +38,8 @@ def main():
             output['instruction_count_diagnostics'] = _legacy().instruction_counts(LegacyCase(args.op,tuple(args.shape)))
         print(json.dumps(output,indent=2))
         return
-    if args.chip is not None or args.dtype is not None:
-        parser.error('--chip and --dtype require the current system backend')
+    if args.chip is not None or args.dtype is not None or args.timing_mode != 'auto':
+        parser.error('--chip, --dtype and --timing-mode require the current system backend')
     resource_root = Path(__file__).resolve().parents[1]
     args.model = args.model or resource_root / 'results/v0.7/model.json'
     args.hardware_profile = args.hardware_profile or resource_root / 'configs/hardware-950dt-v7.json'

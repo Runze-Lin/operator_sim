@@ -20,6 +20,16 @@ result = estimate("rmsnorm", (2, 6144))
 print(result.latency_us, result.status)
 ```
 
+## 在系统仿真里选择计时模式
+
+| `timing_mode` | 适用范围与语义 |
+|---|---|
+| `auto`（默认） | 原 950DT 配置使用参考校准。其他配置的 Quant、Matmul、FA 使用按目标芯片计价的资源模型。其余算子保留现有 DT 阶段投影。 |
+| `resource` | 对三条已实现路线强制使用同一套资源调度，可在 DT、PR 或自定义芯片上调用。没有相应模型的算子返回 `unsupported`。 |
+| `calibrated` | 使用已登记配置的校准路线。DT 上沿用原接口，PR 上的三条路线复现 v0.15 的专属预测及其分支覆盖。自定义配置无对应校准时返回 `unsupported`。 |
+
+例如 `estimate("fa", (9, 32768, 64), chip=chip, timing_mode="resource")`。CLI 对应 `--timing-mode resource`。`projection.method == "target_resource_schedule"` 表示按目标资源计价，`stages_us` 是可相加的关键路径阶段，`timing_diagnostics` 内含操作数、搬运量、局部吞吐或流水约束。具体单位由字段和算子公式给出。目标资源路径不调用 DT 时延预测，`reference_latency_us` 为 `None`。[三类算法、参数和算例](modeling-strategy.md)
+
 ## 维护芯片配置
 
 `load_chip("Ascend950DT_9582")` 与 `load_chip("Ascend950PR_957b")` 读取随包发布的常量。自定义芯片传 JSON 路径或同结构的 Python 字典。建议每个系统情景只载入一次，复用返回的只读 `ChipConfig`。运行时无需安装 CANN、读取芯片信息或执行 profiler。
@@ -31,7 +41,7 @@ print(result.latency_us, result.status)
 | `cube_cores`、`vector_cores` | 此调度域的 Cube、Vector 核数。双 die 设备的核数、峰值和带宽需取同一范围 |
 | `cube_tops`、`vector_tops` | 两张表各有字符串键 `32`、`16`、`8`、`4`，每项是该单元全体核的稠密峰值，单位为 $10^{12}$ 次标量操作/秒，FMA=2。位宽以该算子的计算格式解释。无法确定的项填 `null`。如果仅有整卡矩阵乘算力，将其填入 Cube 表，Vector 对应位置填 `null` |
 | `hbm_capacity_gb`、`hbm_bandwidth_gbs` | 设备外存容量（十进制 GB）和总带宽（十进制 GB/s）。字段名沿用 HBM，PR 的 CA 外存类型另有记录；容量供系统层放置张量 |
-| `details` | 可选的 `ub_bytes`、`l1_bytes`、`l2_bytes`、`l0{a,b,c}_bytes`，以及 `l2_bandwidth_gbs`、`mte2_bandwidth_gbs`、`mte3_bandwidth_gbs`。省略的细项继承 950DT 有记录的值，`chip.inherited_fields` 列出来源。显式 `null` 保留未知。当前 MTE 带宽倍率需要两端都有同口径值；L2、UB 信息的使用范围见建模方法 |
+| `details` | 可选的 `ub_bytes`、`l1_bytes`、`l2_bytes`、`l0{a,b,c}_bytes`，以及 `l2_bandwidth_gbs`（整片）、`mte1_bandwidth_gbs`、`mte2_bandwidth_gbs`、`mte3_bandwidth_gbs`（每核）。省略的细项继承 950DT 有记录的值，`chip.inherited_fields` 列出来源。显式 `null` 保留未知。资源法可直接使用目标端口带宽，可按算子覆盖发起、等待、局部有效带宽等参数；缺少细节时用 DT 阶段测量的默认值。该类模型默认值记录在各算子参数表中，独立于芯片字段继承清单。其余路线的相对带宽投影需要两端同口径数据 |
 | `sources` | 可选，字符串到字符串的来源/假设说明 |
 
 例如将仓库里的示例复制成自己的 `960.json`、`970.json`、`980.json`，用各自的参数替换。示例数值仅用于演示。在 CLI 可直接运行 `operator-sim --op fa --shape 9 32768 64 1 1 --dtype bf16 --chip configs/chips/scenario-example.json`。[完整示例](../configs/chips/scenario-example.json) · [DT 配置及来源](../configs/chips/Ascend950DT_9582.json) · [PR 配置及来源](../configs/chips/Ascend950PR_957b.json)
@@ -59,7 +69,7 @@ if event.status in ("estimated", "extrapolated"):
 | `work` | `cube_ops`、`vec_ops` 及各自的 `*_by_dtype`，`vec_ops_by_class` 拆分运算类别。每个 exp、除法等按一次有用标量运算计，实际每周期服务能力随指令而变。见 `scope` 和 `notes` 中的已统计范围 |
 | `work["logical_read_bytes"]`、`work["logical_write_bytes"]` | 每个 kernel 输入、输出张量的逻辑字节。未知方向返回 `None`。实际外存字节 `physical_hbm_bytes` 当前保留为 `None`。系统内存容量约束需单独核算活跃张量和 workspace |
 | `rates` | `useful_cube_tops`、`counted_vector_tops` 和 `logical_io_gbs`，均为工作量除以预测的设备时间。逻辑接口吞吐可以大于外存带宽；另给出 `cube_nominal_peak_fraction`、`vector_nominal_peak_fraction`，即已计工作按对应位宽峰值完成所需的理想时间除以预测时间。缺少相应峰值时为 `None`。用于比较有用吞吐占整片名义峰值的比例，实际硬件忙碌率需要独立流水证据 |
-| `projection` | 跨芯片时提供参考微秒数、目标阶段时间、继承字段、迁移方法和假设。FA、Quant 与 Matmul 命中分段路径时，`timing_diagnostics` 提供首读、计算和写回等阶段的 µs 估计；通用路线可返回空字典。系统调度按 `latency_us` 记一次耗时。高水位已知时，两种核数间按本次活跃核比例折算，并记录在 `resident_aiv_mapping` |
+| `projection` | 目标资源路径给出目标周期或字节诊断和阶段微秒数；DT 阶段投影另保留参考微秒数、目标阶段时间、继承字段、迁移方法和假设。FA、Quant 与 Matmul 命中分段路径时，`timing_diagnostics` 提供首读、计算和写回等阶段的 µs 估计；通用路线可返回空字典。系统调度按 `latency_us` 记一次耗时。高水位已知时，两种核数间按本次活跃核比例折算，并记录在 `resident_aiv_mapping` |
 
 CLI 用 `predicted_us` 表示相同微秒数，用 `estimate_status` 表示系统接口状态。Python 接口保留上一版的 `soc=` 参数。芯片名拼错或配置不合法会返回 `unsupported`；在初始化时直接用 `load_chip` 可以及早发现配置问题。
 
