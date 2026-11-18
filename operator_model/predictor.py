@@ -23,7 +23,7 @@ def _profile(path):
 def _legacy():
     return Predictor(_profile('results/v0.6/model.json'), cache_size=0)
 
-def predict(op, shape, attrs=None):
+def _estimate(op, shape, attrs, current):
     """Estimate net device instruction time in microseconds, using shape and caller attributes."""
     op = ALIASES.get(op, op)
     if op not in VECTOR | CUBE | FUSION:
@@ -40,6 +40,20 @@ def predict(op, shape, attrs=None):
             case = Case(op,shape)
             us = quant_time(_legacy(),case) if op=='quant' else _legacy().predict_us(case,use_cache=False)
             result = {'predicted_us':us}
+        elif current and op == 'addmm':
+            from .addmm_v9 import predict as estimate_addmm
+            result = estimate_addmm(op, shape, attrs)
+        elif current and op in ('rmsnorm', 'mhc_sinkhorn', 'mhc_post'):
+            from .vector_v9 import predict as estimate_vector
+            result = estimate_vector(op, shape, attrs)
+        elif current and op in ('mhc_pre', 'mhc'):
+            from .mhc_v9 import predict as estimate_mhc
+            if len(shape) == 3 and shape[0] > 256 and shape[2] <= 16384:
+                result = fusion_v8.predict(op, shape, attrs, _profile('results/v0.8/fusion/model.json'))
+                result['status'] = 'extrapolation'
+                result['reason'] = 'Above the calibrated 256-token split mHC partition; using the previous overlap estimate'
+            else:
+                result = estimate_mhc(op, shape, attrs)
         elif op == 'addmm':
             result = cube_v8.predict(op,shape,attrs)
         elif op in VECTOR:
@@ -57,3 +71,12 @@ def predict(op, shape, attrs=None):
     return {'op':op,'family':family,'shape':shape,'soc_version':'Ascend950DT_9582',
             'scope':'device instruction window; sum of windows for a serial chain',
             'status':'A5_estimate', **result}
+
+def predict(op, shape, attrs=None):
+    """Predict the current model's net device time, in microseconds."""
+    return _estimate(op, shape, attrs, current=True)
+
+
+def predict_v8(op, shape, attrs=None):
+    """Replay the v0.8 predictor for same-shape version comparisons."""
+    return _estimate(op, shape, attrs, current=False)

@@ -2,12 +2,12 @@
 
 面向模型系统仿真的低开销算子性能模型。以 A5 的 CA Model 为首阶段参考，通过 tile、硬件流水、依赖和分核调度预测耗时，区分流水占用、核覆盖率与算力利用率。A7、A8 外推是后续目标。
 
-当前 v0.8 通过一个入口估算单算子耗时。Vector 路径按核内归约、读算写和状态依赖建模，Cube 路径按矩阵 tile、K 循环和核间波次建模，CV 融合路径按流水交接和重叠建模。每条路径用未参与开发的 shape 校验。总表列出一个当前预测的误差和实测查询开销，KDA chunk 的计时资格单独标明。
+当前 v0.9 通过一个入口估算单算子耗时。Vector 路径按核内归约、读算写和状态依赖建模，Cube 路径按矩阵 tile、K 循环和核间波次建模，CV 融合路径按流水交接和重叠建模。每条路径用未参与开发的 shape 校验。总表列出一个当前预测的误差和实测查询开销，KDA chunk 的计时资格单独标明。
 
-- [算子建模方法、三类实施步骤与算例](docs/modeling-strategy.md)
+- [算子建模方法、三类实施步骤与逐算子算例](docs/modeling-strategy.md)
 - [逐算子独立验证、全部 shape 和查询开销](docs/error-analysis.md)
-- [v0.8 方法及误差变化](results/v0.8/changes.md)
-- [冻结参数、采集记录和误差数据](results/v0.8)
+- [v0.9 方法变化及同集误差对照](results/v0.9/changes.md)
+- [冻结参数、采集记录和误差数据](results/v0.9)
 - [历史 v0.7 对照与验证](results/v0.7/error-analysis.md)
 
 - [建模方案](docs/modeling-design.md)
@@ -22,7 +22,7 @@
 
 A5 平台固定为 `Ascend950DT_9582`；配套 CANN 9.2.1 的目标配置为 32 Cube / 64 Vector、1.65 GHz。MTP 草拟长度覆盖 0–16，主模型每请求校验长度覆盖 1–17，prefill/decode 和用户指定的并行组合均纳入计划。三个模型的官方 config 已固定 revision 并下载；本阶段不依赖权重。
 
-代码版本为 v0.8.0，长期方案版本号独立。各组在 CA 验证前冻结预测。场景覆盖 prefill 单卡batch=1/4/16，decode=1/4/16/32/128/256，输入32k/128k/256k/512k与输出1k，推测8个时主模型校验Q=9；生成360条场景映射，但仅代表点有CA实测。尚未校准独立 ISA 峰值利用率，也未验证 A7/A8 外推。使用 `bash scripts/cann-run.sh COMMAND ...` 启动 CANN 环境；在线预测无需加载 CANN。
+代码版本为 v0.9.0，长期方案版本号独立。各组在 CA 验证前冻结预测。场景覆盖 prefill 单卡batch=1/4/16，decode=1/4/16/32/128/256，输入32k/128k/256k/512k与输出1k，推测8个时主模型校验Q=9；生成360条场景映射，但仅代表点有CA实测。尚未校准独立 ISA 峰值利用率，也未验证 A7/A8 外推。使用 `bash scripts/cann-run.sh COMMAND ...` 启动 CANN 环境；在线预测无需加载 CANN。
 
 ```bash
 python3 -m operator_model --op quant --shape 9 5120

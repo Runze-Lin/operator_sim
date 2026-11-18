@@ -1,0 +1,3880 @@
+[
+  {
+    "op": "mhc_pre",
+    "shape": [
+      1,
+      4,
+      128
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "alpha_count": 3,
+      "has_gamma": false,
+      "return_intermediates": true
+    },
+    "role": "development",
+    "predicted_us": 8.377614070122512,
+    "reference_us": 8.270909090909091,
+    "api": "aclnnMhcPre",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_2",
+        "launch_id": 0,
+        "reference_us": 8.270909090909091,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 339,
+        "max_core_mmad": 8,
+        "critical_pipeline_us": {
+          "SCALAR": 4.696363636363636,
+          "MTE2": 1.7127272727272727,
+          "SIMD": 1.0957575757575757,
+          "MTE3": 0.8981818181818182
+        }
+      }
+    ],
+    "kernel": "entry_kernel_2",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=hin count=128 bad=0 max_abs_error=0.000922135 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=4 bad=0 max_abs_error=3.73175e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=16 bad=0 max_abs_error=4.16239e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=1 bad=0 max_abs_error=1.93959e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=24 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=4 bad=0 max_abs_error=2.90029e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "source": "runs/model-v7/mhc_pre_v7_1/result.json",
+    "db_sha256": [
+      "f70940d8b9a8dad30671a613ca216b0688d8bc3f91e75f55b203a5efb3b540d9"
+    ],
+    "query_us_max": 178.82,
+    "query_us_median": 173.51999999999998,
+    "stages_us": {
+      "pre": 8.377614070122512
+    },
+    "previous_us": 8.31212121212121
+  },
+  {
+    "op": "mhc_pre",
+    "shape": [
+      8,
+      4,
+      128
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "alpha_count": 3,
+      "has_gamma": false,
+      "return_intermediates": true
+    },
+    "role": "development",
+    "predicted_us": 8.39379495593144,
+    "reference_us": 8.542424242424243,
+    "api": "aclnnMhcPre",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_2",
+        "launch_id": 0,
+        "reference_us": 8.542424242424243,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 579,
+        "max_core_mmad": 8,
+        "critical_pipeline_us": {
+          "SCALAR": 4.412121212121212,
+          "MTE2": 1.8466666666666667,
+          "SIMD": 1.0375757575757576,
+          "MTE3": 1.6654545454545455
+        }
+      }
+    ],
+    "kernel": "entry_kernel_2",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=hin count=1024 bad=0 max_abs_error=0.000929246 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=32 bad=0 max_abs_error=9.30212e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=128 bad=0 max_abs_error=4.16239e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=8 bad=0 max_abs_error=2.33421e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=192 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=32 bad=0 max_abs_error=5.93675e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "source": "runs/model-v7/mhc_pre_v7_2/result.json",
+    "db_sha256": [
+      "95d15be2e3a3b6c64b030c2fd1bb5a8c610bf693c09fc261e825683c1f35cdda"
+    ],
+    "query_us_max": 198.91,
+    "query_us_median": 176.235,
+    "stages_us": {
+      "pre": 8.39379495593144
+    },
+    "previous_us": 8.31212121212121
+  },
+  {
+    "op": "mhc_pre",
+    "shape": [
+      3,
+      4,
+      128
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "alpha_count": 3,
+      "has_gamma": false,
+      "return_intermediates": true
+    },
+    "role": "development",
+    "predicted_us": 8.382237180353634,
+    "reference_us": 8.312121212121212,
+    "api": "aclnnMhcPre",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_2",
+        "launch_id": 0,
+        "reference_us": 8.312121212121212,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 509,
+        "max_core_mmad": 8,
+        "critical_pipeline_us": {
+          "SCALAR": 4.258787878787879,
+          "MTE2": 1.876969696969697,
+          "SIMD": 1.112121212121212,
+          "MTE3": 1.2387878787878788
+        }
+      }
+    ],
+    "kernel": "entry_kernel_2",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=hin count=384 bad=0 max_abs_error=0.000922135 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=12 bad=0 max_abs_error=8.43412e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=48 bad=0 max_abs_error=4.16239e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=3 bad=0 max_abs_error=2.33421e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=72 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=12 bad=0 max_abs_error=3.73303e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "source": "runs/model-v7/mhc_pre_v7_3/result.json",
+    "db_sha256": [
+      "104a2c5b00e22434cfba75f5ccd099fd3a0fa9fd0ef42ba2afd9bd9a196fb674"
+    ],
+    "query_us_max": 182.2,
+    "query_us_median": 173.75,
+    "stages_us": {
+      "pre": 8.382237180353634
+    },
+    "previous_us": 8.31212121212121
+  },
+  {
+    "op": "mhc",
+    "shape": [
+      1,
+      4,
+      128
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "implementation": "split",
+      "num_iters": 20
+    },
+    "role": "development",
+    "predicted_us": 16.90339858275877,
+    "reference_us": 15.97030303030303,
+    "api": "aclnnMhcPre + aclnnMhcSinkhorn + aclnnMhcPost",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_2",
+        "launch_id": 0,
+        "reference_us": 8.078181818181818,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 339,
+        "max_core_mmad": 8,
+        "critical_pipeline_us": {
+          "SCALAR": 4.59030303030303,
+          "MTE2": 1.9218181818181819,
+          "SIMD": 1.0909090909090908,
+          "MTE3": 0.8909090909090909
+        }
+      },
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 1,
+        "reference_us": 5.222424242424243,
+        "block_dim": 1,
+        "active_aic": 0,
+        "active_aiv": 1,
+        "max_core_rv_count": 1903,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 3.421818181818182,
+          "SIMD": 3.978787878787879,
+          "MTE2": 0.21333333333333335,
+          "MTE3": 0.23575757575757575
+        }
+      },
+      {
+        "kernel": "entry_kernel_5",
+        "launch_id": 2,
+        "reference_us": 2.66969696969697,
+        "block_dim": 1,
+        "active_aic": 0,
+        "active_aiv": 1,
+        "max_core_rv_count": 396,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 1.6127272727272728,
+          "SIMD": 1.018181818181818,
+          "MTE2": 0.3333333333333333,
+          "MTE3": 0.4381818181818182
+        }
+      }
+    ],
+    "kernel": "entry_kernel_2+entry_kernel_0+entry_kernel_5",
+    "active_aic": [
+      32,
+      0,
+      0
+    ],
+    "active_aiv": [
+      64,
+      1,
+      1
+    ],
+    "correctness": [
+      "correctness name=hin count=128 bad=0 max_abs_error=0.000922135 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=4 bad=0 max_abs_error=3.73175e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=16 bad=0 max_abs_error=4.16239e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=1 bad=0 max_abs_error=1.93959e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=24 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=4 bad=0 max_abs_error=2.90029e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=16 bad=0 max_abs_error=4.6103e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=512 bad=0 max_abs_error=0.00188338 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=512 bad=0 max_abs_error=0.00188338 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/model-v7/mhc_v7_1/result.json",
+    "db_sha256": [
+      "a4e242bd67ba1b41f0643e59d3a000e6216cfe9615196eb9821f80cf8ff7dd78",
+      "7311488d4b3593ed4554020dd26452cd9c636d5ae7d795236dde3f70e0dc4ffb",
+      "ed4f0db1b65dc67e60563a82ee79f40454e3755d348adcb24c9dc53e3d5d50ab"
+    ],
+    "query_us_max": 383.95,
+    "query_us_median": 358.54,
+    "stages_us": {
+      "pre": 8.377614070122512,
+      "sink": 5.540017590149517,
+      "post": 2.98576692248674
+    },
+    "previous_us": 16.70181818181818
+  },
+  {
+    "op": "mhc",
+    "shape": [
+      8,
+      4,
+      128
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "implementation": "split",
+      "num_iters": 20
+    },
+    "role": "development",
+    "predicted_us": 17.03994751692577,
+    "reference_us": 16.79090909090909,
+    "api": "aclnnMhcPre + aclnnMhcSinkhorn + aclnnMhcPost",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_2",
+        "launch_id": 0,
+        "reference_us": 8.255757575757576,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 579,
+        "max_core_mmad": 8,
+        "critical_pipeline_us": {
+          "SCALAR": 4.420606060606061,
+          "MTE2": 1.7387878787878788,
+          "SIMD": 0.9715151515151516,
+          "MTE3": 1.5418181818181818
+        }
+      },
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 1,
+        "reference_us": 5.449696969696969,
+        "block_dim": 8,
+        "active_aic": 0,
+        "active_aiv": 8,
+        "max_core_rv_count": 1903,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 3.4472727272727273,
+          "SIMD": 3.666060606060606,
+          "MTE2": 0.5127272727272727,
+          "MTE3": 0.35515151515151516
+        }
+      },
+      {
+        "kernel": "entry_kernel_5",
+        "launch_id": 2,
+        "reference_us": 3.0854545454545454,
+        "block_dim": 8,
+        "active_aic": 0,
+        "active_aiv": 8,
+        "max_core_rv_count": 396,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 1.96,
+          "SIMD": 1.2993939393939393,
+          "MTE2": 0.5757575757575758,
+          "MTE3": 0.5236363636363637
+        }
+      }
+    ],
+    "kernel": "entry_kernel_2+entry_kernel_0+entry_kernel_5",
+    "active_aic": [
+      32,
+      0,
+      0
+    ],
+    "active_aiv": [
+      64,
+      8,
+      8
+    ],
+    "correctness": [
+      "correctness name=hin count=1024 bad=0 max_abs_error=0.000929246 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=32 bad=0 max_abs_error=9.30212e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=128 bad=0 max_abs_error=4.16239e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=8 bad=0 max_abs_error=2.33421e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=192 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=32 bad=0 max_abs_error=5.93675e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=128 bad=0 max_abs_error=7.51358e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=4096 bad=0 max_abs_error=0.00194787 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=4096 bad=0 max_abs_error=0.00194788 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/model-v7/mhc_v7_2/result.json",
+    "db_sha256": [
+      "4649cd37ef3d5880805753c83dc4617c57909db6ce519cf2750533fb60c78b5b",
+      "eaf381f6073982620ed8a83472b49dd84bd925ca1aaddaffe467071ac8a58610",
+      "ca684e6aeb75fd45dbb3aaff637820d9f5fb2aa44dd70b5a8502d00a29395884"
+    ],
+    "query_us_max": 381.34,
+    "query_us_median": 357.455,
+    "stages_us": {
+      "pre": 8.39379495593144,
+      "sink": 5.62968859791458,
+      "post": 3.016463963079752
+    },
+    "previous_us": 16.70181818181818
+  },
+  {
+    "op": "mhc",
+    "shape": [
+      3,
+      4,
+      128
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "implementation": "split",
+      "num_iters": 20
+    },
+    "role": "development",
+    "predicted_us": 16.94241256394934,
+    "reference_us": 16.834545454545452,
+    "api": "aclnnMhcPre + aclnnMhcSinkhorn + aclnnMhcPost",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_2",
+        "launch_id": 0,
+        "reference_us": 8.444848484848485,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 509,
+        "max_core_mmad": 8,
+        "critical_pipeline_us": {
+          "SCALAR": 4.718181818181818,
+          "MTE2": 1.5793939393939394,
+          "SIMD": 1.1012121212121213,
+          "MTE3": 1.1157575757575757
+        }
+      },
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 1,
+        "reference_us": 5.349090909090909,
+        "block_dim": 3,
+        "active_aic": 0,
+        "active_aiv": 3,
+        "max_core_rv_count": 1903,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 3.48,
+          "SIMD": 3.953333333333333,
+          "MTE2": 0.21393939393939393,
+          "MTE3": 0.3284848484848485
+        }
+      },
+      {
+        "kernel": "entry_kernel_5",
+        "launch_id": 2,
+        "reference_us": 3.0406060606060605,
+        "block_dim": 3,
+        "active_aic": 0,
+        "active_aiv": 3,
+        "max_core_rv_count": 396,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 1.876969696969697,
+          "SIMD": 1.3175757575757576,
+          "MTE2": 0.5357575757575758,
+          "MTE3": 0.5278787878787878
+        }
+      }
+    ],
+    "kernel": "entry_kernel_2+entry_kernel_0+entry_kernel_5",
+    "active_aic": [
+      32,
+      0,
+      0
+    ],
+    "active_aiv": [
+      64,
+      3,
+      3
+    ],
+    "correctness": [
+      "correctness name=hin count=384 bad=0 max_abs_error=0.000922135 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=12 bad=0 max_abs_error=8.43412e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=48 bad=0 max_abs_error=4.16239e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=3 bad=0 max_abs_error=2.33421e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=72 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=12 bad=0 max_abs_error=3.73303e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=48 bad=0 max_abs_error=7.51358e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=1536 bad=0 max_abs_error=0.00194585 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=1536 bad=0 max_abs_error=0.00194589 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/model-v7/mhc_v7_3/result.json",
+    "db_sha256": [
+      "3ab64c13fbd18d57bf8533349519d3315edce432ea0081c283da16404fedebd6",
+      "ddf0b82c1c4c69375defb1381bd7dd68dc376fc5787cc2906fb4a93b024f3abc",
+      "82b479a18ad88a28ab1a8e60f79367836ae2e1eac01ad1509d45c92b979b8bb7"
+    ],
+    "query_us_max": 365.84,
+    "query_us_median": 359.04499999999996,
+    "stages_us": {
+      "pre": 8.382237180353634,
+      "sink": 5.565637878082391,
+      "post": 2.994537505513315
+    },
+    "previous_us": 16.70181818181818
+  },
+  {
+    "op": "mhc",
+    "shape": [
+      1,
+      4,
+      64
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "implementation": "split",
+      "num_iters": 20
+    },
+    "role": "development",
+    "predicted_us": 18.002177725465472,
+    "reference_us": 17.143030303030304,
+    "api": "aclnnMhcPre + aclnnMhcSinkhorn + aclnnMhcPost",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_1",
+        "launch_id": 0,
+        "reference_us": 9.481818181818182,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 579,
+        "max_core_mmad": 1,
+        "critical_pipeline_us": {
+          "SCALAR": 3.82,
+          "MTE2": 2.389090909090909,
+          "SIMD": 1.616969696969697,
+          "MTE3": 0.7381818181818182
+        }
+      },
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 1,
+        "reference_us": 4.922424242424243,
+        "block_dim": 1,
+        "active_aic": 0,
+        "active_aiv": 1,
+        "max_core_rv_count": 1903,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 3.201212121212121,
+          "SIMD": 4.001818181818182,
+          "MTE2": 0.18363636363636363,
+          "MTE3": 0.13272727272727272
+        }
+      },
+      {
+        "kernel": "entry_kernel_5",
+        "launch_id": 2,
+        "reference_us": 2.7387878787878788,
+        "block_dim": 1,
+        "active_aic": 0,
+        "active_aiv": 1,
+        "max_core_rv_count": 264,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 1.5884848484848484,
+          "SIMD": 0.9903030303030304,
+          "MTE2": 0.33636363636363636,
+          "MTE3": 0.6866666666666666
+        }
+      }
+    ],
+    "kernel": "entry_kernel_1+entry_kernel_0+entry_kernel_5",
+    "active_aic": [
+      32,
+      0,
+      0
+    ],
+    "active_aiv": [
+      64,
+      1,
+      1
+    ],
+    "correctness": [
+      "correctness name=hin count=64 bad=0 max_abs_error=0.000445302 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=4 bad=0 max_abs_error=5.75754e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=16 bad=0 max_abs_error=2.5807e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=1 bad=0 max_abs_error=4.59929e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=24 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=4 bad=0 max_abs_error=2.96594e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=16 bad=0 max_abs_error=4.0836e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=256 bad=0 max_abs_error=0.000973562 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=256 bad=0 max_abs_error=0.000973541 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/mhc-01/result.json",
+    "db_sha256": [
+      "d265bf9e8f865493917f8477d9cf96ce4ed8e6e0caa7e798fc4535a29d2799b2",
+      "2a774c2a2a855f8b84d6913bef24375d479ebd2d6a5c4857abaa6ea73f7e0db5",
+      "56aedf0740fb82c5f1ab31b84206434b3543fb5397c5e23e5de25ce69e502015"
+    ],
+    "query_us_max": 433.84,
+    "query_us_median": 358.99,
+    "stages_us": {
+      "pre": 9.578787878787878,
+      "sink": 5.540017590149517,
+      "post": 2.8833722565280757
+    },
+    "previous_us": 16.70181818181818
+  },
+  {
+    "op": "mhc_pre",
+    "shape": [
+      1,
+      4,
+      64
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "alpha_count": 3,
+      "has_gamma": false,
+      "return_intermediates": true
+    },
+    "role": "development",
+    "predicted_us": 9.578787878787878,
+    "reference_us": 9.481818181818182,
+    "api": "aclnnMhcPre",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_1",
+        "launch_id": 0,
+        "reference_us": 9.481818181818182,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 579,
+        "max_core_mmad": 1,
+        "critical_pipeline_us": {
+          "SCALAR": 3.82,
+          "MTE2": 2.389090909090909,
+          "SIMD": 1.616969696969697,
+          "MTE3": 0.7381818181818182
+        }
+      }
+    ],
+    "kernel": "entry_kernel_1",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=hin count=64 bad=0 max_abs_error=0.000445302 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=4 bad=0 max_abs_error=5.75754e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=16 bad=0 max_abs_error=2.5807e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=1 bad=0 max_abs_error=4.59929e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=24 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=4 bad=0 max_abs_error=2.96594e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=16 bad=0 max_abs_error=4.0836e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=256 bad=0 max_abs_error=0.000973562 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=256 bad=0 max_abs_error=0.000973541 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/mhc-01/result.json",
+    "db_sha256": [
+      "d265bf9e8f865493917f8477d9cf96ce4ed8e6e0caa7e798fc4535a29d2799b2"
+    ],
+    "query_us_max": 176.51,
+    "query_us_median": 172.99,
+    "stages_us": {
+      "pre": 9.578787878787878
+    },
+    "previous_us": 8.31212121212121
+  },
+  {
+    "op": "mhc",
+    "shape": [
+      2,
+      4,
+      128
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "implementation": "split",
+      "num_iters": 20
+    },
+    "role": "development",
+    "predicted_us": 16.922905573354054,
+    "reference_us": 16.415757575757578,
+    "api": "aclnnMhcPre + aclnnMhcSinkhorn + aclnnMhcPost",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_2",
+        "launch_id": 0,
+        "reference_us": 8.005454545454546,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 474,
+        "max_core_mmad": 8,
+        "critical_pipeline_us": {
+          "SCALAR": 4.470909090909091,
+          "MTE2": 1.9103030303030304,
+          "SIMD": 1.1442424242424243,
+          "MTE3": 1.166060606060606
+        }
+      },
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 1,
+        "reference_us": 5.411515151515151,
+        "block_dim": 2,
+        "active_aic": 0,
+        "active_aiv": 2,
+        "max_core_rv_count": 1903,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 3.376969696969697,
+          "SIMD": 3.7751515151515154,
+          "MTE2": 0.5212121212121212,
+          "MTE3": 0.3490909090909091
+        }
+      },
+      {
+        "kernel": "entry_kernel_5",
+        "launch_id": 2,
+        "reference_us": 2.998787878787879,
+        "block_dim": 2,
+        "active_aic": 0,
+        "active_aiv": 2,
+        "max_core_rv_count": 396,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 1.8703030303030304,
+          "SIMD": 1.3036363636363637,
+          "MTE2": 0.5593939393939394,
+          "MTE3": 0.5018181818181818
+        }
+      }
+    ],
+    "kernel": "entry_kernel_2+entry_kernel_0+entry_kernel_5",
+    "active_aic": [
+      32,
+      0,
+      0
+    ],
+    "active_aiv": [
+      64,
+      2,
+      2
+    ],
+    "correctness": [
+      "correctness name=hin count=256 bad=0 max_abs_error=0.000922135 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=8 bad=0 max_abs_error=8.43412e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=32 bad=0 max_abs_error=4.16239e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=2 bad=0 max_abs_error=1.93959e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=48 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=8 bad=0 max_abs_error=3.73303e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=32 bad=0 max_abs_error=7.51358e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=1024 bad=0 max_abs_error=0.00192444 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=1024 bad=0 max_abs_error=0.00192443 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/mhc-02/result.json",
+    "db_sha256": [
+      "6db71a4a8a250c41781ce8a4f0d76f196951919e8158d8da2259ffd1b0a6bc74",
+      "c4abf52183238b739aaa23aa505f307435a44541370448dfc18c3891cf77638e",
+      "64e3fad8c8dcc6d2371d5a1bece767006eb421bd05eba8ad8a1bc325f8ebf521"
+    ],
+    "query_us_max": 388.21,
+    "query_us_median": 359.435,
+    "stages_us": {
+      "pre": 8.379925625238073,
+      "sink": 5.552827734115954,
+      "post": 2.990152214000027
+    },
+    "previous_us": 16.70181818181818
+  },
+  {
+    "op": "mhc_pre",
+    "shape": [
+      2,
+      4,
+      128
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "alpha_count": 3,
+      "has_gamma": false,
+      "return_intermediates": true
+    },
+    "role": "development",
+    "predicted_us": 8.379925625238073,
+    "reference_us": 8.005454545454546,
+    "api": "aclnnMhcPre",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_2",
+        "launch_id": 0,
+        "reference_us": 8.005454545454546,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 474,
+        "max_core_mmad": 8,
+        "critical_pipeline_us": {
+          "SCALAR": 4.470909090909091,
+          "MTE2": 1.9103030303030304,
+          "SIMD": 1.1442424242424243,
+          "MTE3": 1.166060606060606
+        }
+      }
+    ],
+    "kernel": "entry_kernel_2",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=hin count=256 bad=0 max_abs_error=0.000922135 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=8 bad=0 max_abs_error=8.43412e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=32 bad=0 max_abs_error=4.16239e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=2 bad=0 max_abs_error=1.93959e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=48 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=8 bad=0 max_abs_error=3.73303e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=32 bad=0 max_abs_error=7.51358e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=1024 bad=0 max_abs_error=0.00192444 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=1024 bad=0 max_abs_error=0.00192443 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/mhc-02/result.json",
+    "db_sha256": [
+      "6db71a4a8a250c41781ce8a4f0d76f196951919e8158d8da2259ffd1b0a6bc74"
+    ],
+    "query_us_max": 199.92,
+    "query_us_median": 172.32,
+    "stages_us": {
+      "pre": 8.379925625238073
+    },
+    "previous_us": 8.31212121212121
+  },
+  {
+    "op": "mhc",
+    "shape": [
+      4,
+      4,
+      256
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "implementation": "split",
+      "num_iters": 20
+    },
+    "role": "development",
+    "predicted_us": 17.300065627011005,
+    "reference_us": 17.344242424242424,
+    "api": "aclnnMhcPre + aclnnMhcSinkhorn + aclnnMhcPost",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_2",
+        "launch_id": 0,
+        "reference_us": 8.42060606060606,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 619,
+        "max_core_mmad": 8,
+        "critical_pipeline_us": {
+          "SCALAR": 4.9763636363636365,
+          "MTE2": 1.347878787878788,
+          "SIMD": 1.0284848484848486,
+          "MTE3": 1.3896969696969697
+        }
+      },
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 1,
+        "reference_us": 5.76,
+        "block_dim": 4,
+        "active_aic": 0,
+        "active_aiv": 4,
+        "max_core_rv_count": 1903,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 3.3763636363636365,
+          "SIMD": 3.7333333333333334,
+          "MTE2": 0.516969696969697,
+          "MTE3": 0.7042424242424242
+        }
+      },
+      {
+        "kernel": "entry_kernel_5",
+        "launch_id": 2,
+        "reference_us": 3.1636363636363636,
+        "block_dim": 4,
+        "active_aic": 0,
+        "active_aiv": 4,
+        "max_core_rv_count": 660,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 1.8763636363636365,
+          "SIMD": 1.372121212121212,
+          "MTE2": 0.5836363636363636,
+          "MTE3": 0.5284848484848484
+        }
+      }
+    ],
+    "kernel": "entry_kernel_2+entry_kernel_0+entry_kernel_5",
+    "active_aic": [
+      32,
+      0,
+      0
+    ],
+    "active_aiv": [
+      64,
+      4,
+      4
+    ],
+    "correctness": [
+      "correctness name=hin count=1024 bad=0 max_abs_error=0.00190367 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=16 bad=0 max_abs_error=1.08006e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=64 bad=0 max_abs_error=4.92958e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=4 bad=0 max_abs_error=1.37095e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=96 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=16 bad=0 max_abs_error=5.69434e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=64 bad=0 max_abs_error=7.30785e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=4096 bad=0 max_abs_error=0.00384157 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=4096 bad=0 max_abs_error=0.00384158 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/mhc-03/result.json",
+    "db_sha256": [
+      "58bf162a67b13449ee4a0aba1300bb0f520bbf4eefa18dc69188caaffa147f9b",
+      "17e4344634c5595d4c89b7abfff4f4e3d180daef8ff74422d7b6fa1876c09460",
+      "5e7cf4804e3b325bfd73967a73a9b6580968584dbbfbc90433ee24ce7cc752c0"
+    ],
+    "query_us_max": 394.92,
+    "query_us_median": 358.32,
+    "stages_us": {
+      "pre": 8.504749601478384,
+      "sink": 5.578448022048829,
+      "post": 3.216868003483792
+    },
+    "previous_us": 22.519999999999996
+  },
+  {
+    "op": "mhc_pre",
+    "shape": [
+      4,
+      4,
+      256
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "alpha_count": 3,
+      "has_gamma": false,
+      "return_intermediates": true
+    },
+    "role": "development",
+    "predicted_us": 8.504749601478384,
+    "reference_us": 8.42060606060606,
+    "api": "aclnnMhcPre",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_2",
+        "launch_id": 0,
+        "reference_us": 8.42060606060606,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 619,
+        "max_core_mmad": 8,
+        "critical_pipeline_us": {
+          "SCALAR": 4.9763636363636365,
+          "MTE2": 1.347878787878788,
+          "SIMD": 1.0284848484848486,
+          "MTE3": 1.3896969696969697
+        }
+      }
+    ],
+    "kernel": "entry_kernel_2",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=hin count=1024 bad=0 max_abs_error=0.00190367 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=16 bad=0 max_abs_error=1.08006e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=64 bad=0 max_abs_error=4.92958e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=4 bad=0 max_abs_error=1.37095e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=96 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=16 bad=0 max_abs_error=5.69434e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=64 bad=0 max_abs_error=7.30785e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=4096 bad=0 max_abs_error=0.00384157 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=4096 bad=0 max_abs_error=0.00384158 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/mhc-03/result.json",
+    "db_sha256": [
+      "58bf162a67b13449ee4a0aba1300bb0f520bbf4eefa18dc69188caaffa147f9b"
+    ],
+    "query_us_max": 193.37,
+    "query_us_median": 173.58499999999998,
+    "stages_us": {
+      "pre": 8.504749601478384
+    },
+    "previous_us": 12.125454545454543
+  },
+  {
+    "op": "mhc",
+    "shape": [
+      16,
+      4,
+      128
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "implementation": "split",
+      "num_iters": 20
+    },
+    "role": "development",
+    "predicted_us": 17.196003441688063,
+    "reference_us": 18.202424242424243,
+    "api": "aclnnMhcPre + aclnnMhcSinkhorn + aclnnMhcPost",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_2",
+        "launch_id": 0,
+        "reference_us": 9.307878787878789,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 719,
+        "max_core_mmad": 8,
+        "critical_pipeline_us": {
+          "SCALAR": 4.597575757575758,
+          "MTE2": 1.1066666666666667,
+          "SIMD": 0.4812121212121212,
+          "MTE3": 1.332121212121212
+        }
+      },
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 1,
+        "reference_us": 5.706060606060606,
+        "block_dim": 16,
+        "active_aic": 0,
+        "active_aiv": 16,
+        "max_core_rv_count": 1903,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 3.4224242424242424,
+          "SIMD": 3.8315151515151515,
+          "MTE2": 0.4290909090909091,
+          "MTE3": 0.44181818181818183
+        }
+      },
+      {
+        "kernel": "entry_kernel_5",
+        "launch_id": 2,
+        "reference_us": 3.1884848484848485,
+        "block_dim": 16,
+        "active_aic": 0,
+        "active_aiv": 16,
+        "max_core_rv_count": 396,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 2.001212121212121,
+          "SIMD": 1.3618181818181818,
+          "MTE2": 0.5527272727272727,
+          "MTE3": 0.5224242424242425
+        }
+      }
+    ],
+    "kernel": "entry_kernel_2+entry_kernel_0+entry_kernel_5",
+    "active_aic": [
+      32,
+      0,
+      0
+    ],
+    "active_aiv": [
+      64,
+      16,
+      16
+    ],
+    "correctness": [
+      "correctness name=hin count=2048 bad=0 max_abs_error=0.000955987 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=64 bad=0 max_abs_error=9.38482e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=256 bad=0 max_abs_error=4.16239e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=16 bad=0 max_abs_error=2.33421e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=384 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=64 bad=0 max_abs_error=5.93675e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=256 bad=0 max_abs_error=7.51358e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=8192 bad=0 max_abs_error=0.00194787 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=8192 bad=0 max_abs_error=0.00194788 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/mhc-05/result.json",
+    "db_sha256": [
+      "0afe276c71a4f165d89a1802ff66fa30ec72b670424309242b2df06d1706387c",
+      "d4069c5f1a9837c52700ba0dca6c952161a848176976662e65ad2fa5edffbe88",
+      "fbae9ac45bb38d665589ac95ddf274ca89d7bd1e043ec9b2edadc1fe56d28b61"
+    ],
+    "query_us_max": 384.2,
+    "query_us_median": 357.735,
+    "stages_us": {
+      "pre": 8.41228739685593,
+      "sink": 5.732169749646081,
+      "post": 3.0515462951860512
+    },
+    "previous_us": 16.70181818181818
+  },
+  {
+    "op": "mhc_pre",
+    "shape": [
+      16,
+      4,
+      128
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "alpha_count": 3,
+      "has_gamma": false,
+      "return_intermediates": true
+    },
+    "role": "development",
+    "predicted_us": 8.41228739685593,
+    "reference_us": 9.307878787878789,
+    "api": "aclnnMhcPre",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_2",
+        "launch_id": 0,
+        "reference_us": 9.307878787878789,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 719,
+        "max_core_mmad": 8,
+        "critical_pipeline_us": {
+          "SCALAR": 4.597575757575758,
+          "MTE2": 1.1066666666666667,
+          "SIMD": 0.4812121212121212,
+          "MTE3": 1.332121212121212
+        }
+      }
+    ],
+    "kernel": "entry_kernel_2",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=hin count=2048 bad=0 max_abs_error=0.000955987 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=64 bad=0 max_abs_error=9.38482e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=256 bad=0 max_abs_error=4.16239e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=16 bad=0 max_abs_error=2.33421e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=384 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=64 bad=0 max_abs_error=5.93675e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=256 bad=0 max_abs_error=7.51358e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=8192 bad=0 max_abs_error=0.00194787 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=8192 bad=0 max_abs_error=0.00194788 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/mhc-05/result.json",
+    "db_sha256": [
+      "0afe276c71a4f165d89a1802ff66fa30ec72b670424309242b2df06d1706387c"
+    ],
+    "query_us_max": 176.39,
+    "query_us_median": 172.53,
+    "stages_us": {
+      "pre": 8.41228739685593
+    },
+    "previous_us": 8.31212121212121
+  },
+  {
+    "op": "mhc",
+    "shape": [
+      1,
+      4,
+      512
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "implementation": "split",
+      "num_iters": 20
+    },
+    "role": "development",
+    "predicted_us": 17.456757099690183,
+    "reference_us": 17.343030303030304,
+    "api": "aclnnMhcPre + aclnnMhcSinkhorn + aclnnMhcPost",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_2",
+        "launch_id": 0,
+        "reference_us": 8.544242424242425,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 507,
+        "max_core_mmad": 8,
+        "critical_pipeline_us": {
+          "SCALAR": 4.671515151515152,
+          "MTE2": 2.0375757575757576,
+          "SIMD": 1.1242424242424243,
+          "MTE3": 0.9915151515151515
+        }
+      },
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 1,
+        "reference_us": 5.571515151515151,
+        "block_dim": 1,
+        "active_aic": 0,
+        "active_aiv": 1,
+        "max_core_rv_count": 1903,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 3.444848484848485,
+          "SIMD": 4.007272727272727,
+          "MTE2": 0.21515151515151515,
+          "MTE3": 0.5478787878787879
+        }
+      },
+      {
+        "kernel": "entry_kernel_5",
+        "launch_id": 2,
+        "reference_us": 3.227272727272727,
+        "block_dim": 2,
+        "active_aic": 0,
+        "active_aiv": 2,
+        "max_core_rv_count": 660,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 2.298787878787879,
+          "SIMD": 1.3593939393939394,
+          "MTE2": 0.5696969696969697,
+          "MTE3": 0.4127272727272727
+        }
+      }
+    ],
+    "kernel": "entry_kernel_2+entry_kernel_0+entry_kernel_5",
+    "active_aic": [
+      32,
+      0,
+      0
+    ],
+    "active_aiv": [
+      64,
+      1,
+      2
+    ],
+    "correctness": [
+      "correctness name=hin count=512 bad=0 max_abs_error=0.00192282 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=4 bad=0 max_abs_error=3.73635e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=16 bad=0 max_abs_error=4.82353e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=1 bad=0 max_abs_error=7.49867e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=24 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=4 bad=0 max_abs_error=3.23335e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=16 bad=0 max_abs_error=3.26362e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=2048 bad=0 max_abs_error=0.00312909 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=2048 bad=0 max_abs_error=0.00312907 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/mhc-06/result.json",
+    "db_sha256": [
+      "4950843dca68a785bcd27112ba1775d13b18df09ff2de511c61a313f5c98cc79",
+      "2231bb21933cf0a37330fc8ed4855551577e441ecafcdb6da3f6923c4389275e",
+      "798b0b29a82d680e494055d817a3a54e9302446b878ef9f843f31f483f1ad93f"
+    ],
+    "query_us_max": 397.75,
+    "query_us_median": 356.71000000000004,
+    "stages_us": {
+      "pre": 8.717412672110024,
+      "sink": 5.540017590149517,
+      "post": 3.1993268374306427
+    },
+    "previous_us": 34.15636363636363
+  },
+  {
+    "op": "mhc_pre",
+    "shape": [
+      1,
+      4,
+      512
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "alpha_count": 3,
+      "has_gamma": false,
+      "return_intermediates": true
+    },
+    "role": "development",
+    "predicted_us": 8.717412672110024,
+    "reference_us": 8.544242424242425,
+    "api": "aclnnMhcPre",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_2",
+        "launch_id": 0,
+        "reference_us": 8.544242424242425,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 507,
+        "max_core_mmad": 8,
+        "critical_pipeline_us": {
+          "SCALAR": 4.671515151515152,
+          "MTE2": 2.0375757575757576,
+          "SIMD": 1.1242424242424243,
+          "MTE3": 0.9915151515151515
+        }
+      }
+    ],
+    "kernel": "entry_kernel_2",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=hin count=512 bad=0 max_abs_error=0.00192282 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=4 bad=0 max_abs_error=3.73635e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=16 bad=0 max_abs_error=4.82353e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=1 bad=0 max_abs_error=7.49867e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=24 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=4 bad=0 max_abs_error=3.23335e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=16 bad=0 max_abs_error=3.26362e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=2048 bad=0 max_abs_error=0.00312909 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=2048 bad=0 max_abs_error=0.00312907 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/mhc-06/result.json",
+    "db_sha256": [
+      "4950843dca68a785bcd27112ba1775d13b18df09ff2de511c61a313f5c98cc79"
+    ],
+    "query_us_max": 204.5,
+    "query_us_median": 173.815,
+    "stages_us": {
+      "pre": 8.717412672110024
+    },
+    "previous_us": 19.752121212121207
+  },
+  {
+    "op": "mhc",
+    "shape": [
+      4,
+      4,
+      1024
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "implementation": "split",
+      "num_iters": 20
+    },
+    "role": "development",
+    "predicted_us": 18.126517819385032,
+    "reference_us": 18.22,
+    "api": "aclnnMhcPre + aclnnMhcSinkhorn + aclnnMhcPost",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_2",
+        "launch_id": 0,
+        "reference_us": 8.72969696969697,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 1297,
+        "max_core_mmad": 8,
+        "critical_pipeline_us": {
+          "SCALAR": 4.58969696969697,
+          "MTE2": 2.3636363636363638,
+          "SIMD": 1.1193939393939394,
+          "MTE3": 2.026666666666667
+        }
+      },
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 1,
+        "reference_us": 6.015757575757576,
+        "block_dim": 4,
+        "active_aic": 0,
+        "active_aiv": 4,
+        "max_core_rv_count": 1903,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 3.381818181818182,
+          "SIMD": 3.958787878787879,
+          "MTE2": 0.5133333333333333,
+          "MTE3": 0.7018181818181818
+        }
+      },
+      {
+        "kernel": "entry_kernel_5",
+        "launch_id": 2,
+        "reference_us": 3.4745454545454546,
+        "block_dim": 16,
+        "active_aic": 0,
+        "active_aiv": 16,
+        "max_core_rv_count": 660,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 2.1551515151515153,
+          "SIMD": 1.36,
+          "MTE2": 0.49696969696969695,
+          "MTE3": 0.6945454545454546
+        }
+      }
+    ],
+    "kernel": "entry_kernel_2+entry_kernel_0+entry_kernel_5",
+    "active_aic": [
+      32,
+      0,
+      0
+    ],
+    "active_aiv": [
+      64,
+      4,
+      16
+    ],
+    "correctness": [
+      "correctness name=hin count=4096 bad=0 max_abs_error=0.0016496 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=16 bad=0 max_abs_error=1.06904e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=64 bad=0 max_abs_error=1.77318e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=4 bad=0 max_abs_error=1.44718e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=96 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=16 bad=0 max_abs_error=7.23108e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=64 bad=0 max_abs_error=1.4691e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=16384 bad=0 max_abs_error=0.00191589 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=16384 bad=0 max_abs_error=0.00191589 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/mhc-07/result.json",
+    "db_sha256": [
+      "35ee3398c4686a09019a6314cf3627ffbe19cf755832f33bc9100743ae200a2c",
+      "095858b91fbfee977fcd4300b71d0096fd9951b2397d1c45c698317385012e95",
+      "f38428aca4a752313d53b6d251c8cd0731ab0b22a64873ee9dfec31368432f28"
+    ],
+    "query_us_max": 395.92,
+    "query_us_median": 357.325,
+    "stages_us": {
+      "pre": 9.225954797533513,
+      "sink": 5.578448022048829,
+      "post": 3.322114999802691
+    },
+    "previous_us": 57.429090909090895
+  },
+  {
+    "op": "mhc_pre",
+    "shape": [
+      4,
+      4,
+      1024
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "alpha_count": 3,
+      "has_gamma": false,
+      "return_intermediates": true
+    },
+    "role": "development",
+    "predicted_us": 9.225954797533513,
+    "reference_us": 8.72969696969697,
+    "api": "aclnnMhcPre",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_2",
+        "launch_id": 0,
+        "reference_us": 8.72969696969697,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 1297,
+        "max_core_mmad": 8,
+        "critical_pipeline_us": {
+          "SCALAR": 4.58969696969697,
+          "MTE2": 2.3636363636363638,
+          "SIMD": 1.1193939393939394,
+          "MTE3": 2.026666666666667
+        }
+      }
+    ],
+    "kernel": "entry_kernel_2",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=hin count=4096 bad=0 max_abs_error=0.0016496 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=16 bad=0 max_abs_error=1.06904e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=64 bad=0 max_abs_error=1.77318e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=4 bad=0 max_abs_error=1.44718e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=96 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=16 bad=0 max_abs_error=7.23108e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=64 bad=0 max_abs_error=1.4691e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=16384 bad=0 max_abs_error=0.00191589 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=16384 bad=0 max_abs_error=0.00191589 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/mhc-07/result.json",
+    "db_sha256": [
+      "35ee3398c4686a09019a6314cf3627ffbe19cf755832f33bc9100743ae200a2c"
+    ],
+    "query_us_max": 193.14,
+    "query_us_median": 173.305,
+    "stages_us": {
+      "pre": 9.225954797533513
+    },
+    "previous_us": 35.00545454545453
+  },
+  {
+    "op": "mhc",
+    "shape": [
+      9,
+      4,
+      1024
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "implementation": "split",
+      "num_iters": 20
+    },
+    "role": "development",
+    "predicted_us": 18.45844240437117,
+    "reference_us": 18.48242424242424,
+    "api": "aclnnMhcPre + aclnnMhcSinkhorn + aclnnMhcPost",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_2",
+        "launch_id": 0,
+        "reference_us": 9.024242424242424,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 1402,
+        "max_core_mmad": 8,
+        "critical_pipeline_us": {
+          "SCALAR": 4.836363636363636,
+          "MTE2": 1.5915151515151515,
+          "SIMD": 0.8,
+          "MTE3": 1.3327272727272728
+        }
+      },
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 1,
+        "reference_us": 5.778787878787878,
+        "block_dim": 9,
+        "active_aic": 0,
+        "active_aiv": 9,
+        "max_core_rv_count": 1903,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 3.5921212121212123,
+          "SIMD": 3.6854545454545455,
+          "MTE2": 0.5206060606060606,
+          "MTE3": 0.44727272727272727
+        }
+      },
+      {
+        "kernel": "entry_kernel_5",
+        "launch_id": 2,
+        "reference_us": 3.679393939393939,
+        "block_dim": 36,
+        "active_aic": 0,
+        "active_aiv": 36,
+        "max_core_rv_count": 660,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 2.1751515151515153,
+          "SIMD": 1.538181818181818,
+          "MTE2": 0.6509090909090909,
+          "MTE3": 0.6509090909090909
+        }
+      }
+    ],
+    "kernel": "entry_kernel_2+entry_kernel_0+entry_kernel_5",
+    "active_aic": [
+      32,
+      0,
+      0
+    ],
+    "active_aiv": [
+      64,
+      9,
+      36
+    ],
+    "correctness": [
+      "correctness name=hin count=9216 bad=0 max_abs_error=0.0016496 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=36 bad=0 max_abs_error=1.29228e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=144 bad=0 max_abs_error=2.76524e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=9 bad=0 max_abs_error=2.16692e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=216 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=36 bad=0 max_abs_error=7.23108e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=144 bad=0 max_abs_error=1.4691e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=36864 bad=0 max_abs_error=0.00191589 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=36864 bad=0 max_abs_error=0.00191589 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/mhc-08/result.json",
+    "db_sha256": [
+      "7d4db5a7a6628b5b647a1146f95ea50fec221eb416cb74e421d659f3f0ffa659",
+      "a8af3e9e82d29050de6e9162964f0bac9c0d884c0af918e676bcf7bbed5450ca",
+      "3818caf76027e1ed269ce365035b7bd8fcf7946426293d50dccd9e56f4cbc6ee"
+    ],
+    "query_us_max": 405.5,
+    "query_us_median": 357.805,
+    "stages_us": {
+      "pre": 9.318417002155964,
+      "sink": 5.642498741881017,
+      "post": 3.497526660334188
+    },
+    "previous_us": 57.429090909090895
+  },
+  {
+    "op": "mhc_pre",
+    "shape": [
+      9,
+      4,
+      1024
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "alpha_count": 3,
+      "has_gamma": false,
+      "return_intermediates": true
+    },
+    "role": "development",
+    "predicted_us": 9.318417002155964,
+    "reference_us": 9.024242424242424,
+    "api": "aclnnMhcPre",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_2",
+        "launch_id": 0,
+        "reference_us": 9.024242424242424,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 1402,
+        "max_core_mmad": 8,
+        "critical_pipeline_us": {
+          "SCALAR": 4.836363636363636,
+          "MTE2": 1.5915151515151515,
+          "SIMD": 0.8,
+          "MTE3": 1.3327272727272728
+        }
+      }
+    ],
+    "kernel": "entry_kernel_2",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=hin count=9216 bad=0 max_abs_error=0.0016496 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=36 bad=0 max_abs_error=1.29228e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=144 bad=0 max_abs_error=2.76524e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=9 bad=0 max_abs_error=2.16692e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=216 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=36 bad=0 max_abs_error=7.23108e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=144 bad=0 max_abs_error=1.4691e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=36864 bad=0 max_abs_error=0.00191589 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=36864 bad=0 max_abs_error=0.00191589 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/mhc-08/result.json",
+    "db_sha256": [
+      "7d4db5a7a6628b5b647a1146f95ea50fec221eb416cb74e421d659f3f0ffa659"
+    ],
+    "query_us_max": 177.22,
+    "query_us_median": 172.41500000000002,
+    "stages_us": {
+      "pre": 9.318417002155964
+    },
+    "previous_us": 35.00545454545453
+  },
+  {
+    "op": "mhc",
+    "shape": [
+      16,
+      4,
+      512
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "implementation": "split",
+      "num_iters": 20
+    },
+    "role": "development",
+    "predicted_us": 18.050720056917672,
+    "reference_us": 18.690909090909088,
+    "api": "aclnnMhcPre + aclnnMhcSinkhorn + aclnnMhcPost",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_2",
+        "launch_id": 0,
+        "reference_us": 9.385454545454545,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 1055,
+        "max_core_mmad": 8,
+        "critical_pipeline_us": {
+          "SCALAR": 4.506060606060606,
+          "MTE2": 1.5327272727272727,
+          "SIMD": 1.1515151515151516,
+          "MTE3": 1.8527272727272728
+        }
+      },
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 1,
+        "reference_us": 5.838787878787879,
+        "block_dim": 16,
+        "active_aic": 0,
+        "active_aiv": 16,
+        "max_core_rv_count": 1903,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 3.629090909090909,
+          "SIMD": 3.5424242424242425,
+          "MTE2": 0.4890909090909091,
+          "MTE3": 0.4715151515151515
+        }
+      },
+      {
+        "kernel": "entry_kernel_5",
+        "launch_id": 2,
+        "reference_us": 3.466666666666667,
+        "block_dim": 32,
+        "active_aic": 0,
+        "active_aiv": 32,
+        "max_core_rv_count": 660,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 2.1036363636363635,
+          "SIMD": 1.3012121212121213,
+          "MTE2": 0.5018181818181818,
+          "MTE3": 0.6606060606060606
+        }
+      }
+    ],
+    "kernel": "entry_kernel_2+entry_kernel_0+entry_kernel_5",
+    "active_aic": [
+      32,
+      0,
+      0
+    ],
+    "active_aiv": [
+      64,
+      16,
+      32
+    ],
+    "correctness": [
+      "correctness name=hin count=8192 bad=0 max_abs_error=0.00192282 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=64 bad=0 max_abs_error=1.51706e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=256 bad=0 max_abs_error=1.66782e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=16 bad=0 max_abs_error=1.86762e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=384 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=64 bad=0 max_abs_error=6.49073e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=256 bad=0 max_abs_error=9.84489e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=32768 bad=0 max_abs_error=0.0038902 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=32768 bad=0 max_abs_error=0.00389015 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/mhc-09/result.json",
+    "db_sha256": [
+      "8262f1db545f017b75d28044831572adabdde3310c9dba4b85c2c4a00ddb016a",
+      "93149f321eff1142a12b9b78a7d637f212adc20ca9866fc334d4a0416cc16711",
+      "0643c0485cf8f389138097239430f7ab7bf4fdb921b28dbed1e4365a5e96bf0c"
+    ],
+    "query_us_max": 384.39,
+    "query_us_median": 357.845,
+    "stages_us": {
+      "pre": 8.856105979043702,
+      "sink": 5.732169749646081,
+      "post": 3.4624443282278885
+    },
+    "previous_us": 34.15636363636363
+  },
+  {
+    "op": "mhc_pre",
+    "shape": [
+      16,
+      4,
+      512
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "alpha_count": 3,
+      "has_gamma": false,
+      "return_intermediates": true
+    },
+    "role": "development",
+    "predicted_us": 8.856105979043702,
+    "reference_us": 9.385454545454545,
+    "api": "aclnnMhcPre",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_2",
+        "launch_id": 0,
+        "reference_us": 9.385454545454545,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 1055,
+        "max_core_mmad": 8,
+        "critical_pipeline_us": {
+          "SCALAR": 4.506060606060606,
+          "MTE2": 1.5327272727272727,
+          "SIMD": 1.1515151515151516,
+          "MTE3": 1.8527272727272728
+        }
+      }
+    ],
+    "kernel": "entry_kernel_2",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=hin count=8192 bad=0 max_abs_error=0.00192282 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=64 bad=0 max_abs_error=1.51706e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=256 bad=0 max_abs_error=1.66782e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=16 bad=0 max_abs_error=1.86762e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=384 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=64 bad=0 max_abs_error=6.49073e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=256 bad=0 max_abs_error=9.84489e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=32768 bad=0 max_abs_error=0.0038902 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=32768 bad=0 max_abs_error=0.00389015 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/mhc-09/result.json",
+    "db_sha256": [
+      "8262f1db545f017b75d28044831572adabdde3310c9dba4b85c2c4a00ddb016a"
+    ],
+    "query_us_max": 210.41,
+    "query_us_median": 174.06,
+    "stages_us": {
+      "pre": 8.856105979043702
+    },
+    "previous_us": 19.752121212121207
+  },
+  {
+    "op": "mhc",
+    "shape": [
+      32,
+      4,
+      1024
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "implementation": "split",
+      "num_iters": 20
+    },
+    "role": "development",
+    "predicted_us": 19.558329741982874,
+    "reference_us": 20.06969696969697,
+    "api": "aclnnMhcPre + aclnnMhcSinkhorn + aclnnMhcPost",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_2",
+        "launch_id": 0,
+        "reference_us": 11.368484848484849,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 1787,
+        "max_core_mmad": 8,
+        "critical_pipeline_us": {
+          "SCALAR": 4.635151515151515,
+          "MTE2": 2.192121212121212,
+          "SIMD": 0.9654545454545455,
+          "MTE3": 2.5490909090909093
+        }
+      },
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 1,
+        "reference_us": 6.076363636363636,
+        "block_dim": 32,
+        "active_aic": 0,
+        "active_aiv": 32,
+        "max_core_rv_count": 1903,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 3.453939393939394,
+          "SIMD": 3.9284848484848487,
+          "MTE2": 0.44666666666666666,
+          "MTE3": 0.4866666666666667
+        }
+      },
+      {
+        "kernel": "entry_kernel_6",
+        "launch_id": 2,
+        "reference_us": 2.624848484848485,
+        "block_dim": 32,
+        "active_aic": 0,
+        "active_aiv": 32,
+        "max_core_rv_count": 1384,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 1.4290909090909092,
+          "SIMD": 0.4066666666666667,
+          "MTE2": 0.7157575757575757,
+          "MTE3": 0.21454545454545454
+        }
+      }
+    ],
+    "kernel": "entry_kernel_2+entry_kernel_0+entry_kernel_6",
+    "active_aic": [
+      32,
+      0,
+      0
+    ],
+    "active_aiv": [
+      64,
+      32,
+      32
+    ],
+    "correctness": [
+      "correctness name=hin count=32768 bad=0 max_abs_error=0.0016496 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=128 bad=0 max_abs_error=1.29228e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=512 bad=0 max_abs_error=2.76524e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=32 bad=0 max_abs_error=2.16692e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=768 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=128 bad=0 max_abs_error=7.23108e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=512 bad=0 max_abs_error=1.4691e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=131072 bad=0 max_abs_error=0.00258538 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=131072 bad=0 max_abs_error=0.0025854 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/mhc-10/result.json",
+    "db_sha256": [
+      "e75d3812adccce3466102d86cbda1519ea408a457e0a56f6bb1437d1f494f875",
+      "e4f77a86f9d34220f970365fcd4eb8beaf414c48fa1b2cc88defeb7df1daae3e",
+      "adfc80c6dcc367d04429ca9fb82e617b5ae3569ee820d9c2a444d92b8becdacb"
+    ],
+    "query_us_max": 396.24,
+    "query_us_median": 358.755,
+    "stages_us": {
+      "pre": 10.996349204025307,
+      "sink": 5.9371320531090825,
+      "post": 2.624848484848485
+    },
+    "previous_us": 57.429090909090895
+  },
+  {
+    "op": "mhc_pre",
+    "shape": [
+      32,
+      4,
+      1024
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "alpha_count": 3,
+      "has_gamma": false,
+      "return_intermediates": true
+    },
+    "role": "development",
+    "predicted_us": 10.996349204025307,
+    "reference_us": 11.368484848484849,
+    "api": "aclnnMhcPre",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_2",
+        "launch_id": 0,
+        "reference_us": 11.368484848484849,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 1787,
+        "max_core_mmad": 8,
+        "critical_pipeline_us": {
+          "SCALAR": 4.635151515151515,
+          "MTE2": 2.192121212121212,
+          "SIMD": 0.9654545454545455,
+          "MTE3": 2.5490909090909093
+        }
+      }
+    ],
+    "kernel": "entry_kernel_2",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=hin count=32768 bad=0 max_abs_error=0.0016496 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=128 bad=0 max_abs_error=1.29228e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=512 bad=0 max_abs_error=2.76524e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=32 bad=0 max_abs_error=2.16692e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=768 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=128 bad=0 max_abs_error=7.23108e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=512 bad=0 max_abs_error=1.4691e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=131072 bad=0 max_abs_error=0.00258538 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=131072 bad=0 max_abs_error=0.0025854 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/mhc-10/result.json",
+    "db_sha256": [
+      "e75d3812adccce3466102d86cbda1519ea408a457e0a56f6bb1437d1f494f875"
+    ],
+    "query_us_max": 197.97,
+    "query_us_median": 173.54,
+    "stages_us": {
+      "pre": 10.996349204025307
+    },
+    "previous_us": 35.00545454545453
+  },
+  {
+    "op": "mhc",
+    "shape": [
+      1,
+      4,
+      80
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "implementation": "split",
+      "num_iters": 20
+    },
+    "role": "development",
+    "predicted_us": 18.229594573773323,
+    "reference_us": 17.55939393939394,
+    "api": "aclnnMhcPre + aclnnMhcSinkhorn + aclnnMhcPost",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_1",
+        "launch_id": 0,
+        "reference_us": 9.802424242424243,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 606,
+        "max_core_mmad": 1,
+        "critical_pipeline_us": {
+          "SCALAR": 3.793939393939394,
+          "MTE2": 2.2418181818181817,
+          "SIMD": 1.6327272727272728,
+          "MTE3": 1.0260606060606061
+        }
+      },
+      {
+        "kernel": "entry_kernel_0",
+        "launch_id": 1,
+        "reference_us": 5.073333333333333,
+        "block_dim": 1,
+        "active_aic": 0,
+        "active_aiv": 1,
+        "max_core_rv_count": 1903,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 3.3448484848484847,
+          "SIMD": 4.038181818181818,
+          "MTE2": 0.2012121212121212,
+          "MTE3": 0.24424242424242423
+        }
+      },
+      {
+        "kernel": "entry_kernel_5",
+        "launch_id": 2,
+        "reference_us": 2.6836363636363636,
+        "block_dim": 1,
+        "active_aic": 0,
+        "active_aiv": 1,
+        "max_core_rv_count": 384,
+        "max_core_mmad": 0,
+        "critical_pipeline_us": {
+          "SCALAR": 1.6290909090909091,
+          "SIMD": 1.0363636363636364,
+          "MTE2": 0.336969696969697,
+          "MTE3": 0.4696969696969697
+        }
+      }
+    ],
+    "kernel": "entry_kernel_1+entry_kernel_0+entry_kernel_5",
+    "active_aic": [
+      32,
+      0,
+      0
+    ],
+    "active_aiv": [
+      64,
+      1,
+      1
+    ],
+    "correctness": [
+      "correctness name=hin count=80 bad=0 max_abs_error=0.000394732 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=4 bad=0 max_abs_error=4.54699e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=16 bad=0 max_abs_error=3.18626e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=1 bad=0 max_abs_error=2.09528e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=24 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=4 bad=0 max_abs_error=5.94908e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=16 bad=0 max_abs_error=3.9292e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=320 bad=0 max_abs_error=0.00185325 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=320 bad=0 max_abs_error=0.00185327 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/mhc-reserve1/result.json",
+    "db_sha256": [
+      "156636e58a09c708c18728d8094bf5d6ab9ad560eba571f8db9f42d65030587d",
+      "26451273bb41b32947446b4df91b786266f42d83bce3a90478feaa626817c4c0",
+      "b0badae18c9a6bf0b0de1370f769ccbd8d8ac48098d645add617bdf81f338aa5"
+    ],
+    "query_us_max": 430.27,
+    "query_us_median": 359.445,
+    "stages_us": {
+      "pre": 9.705454545454547,
+      "sink": 5.540017590149517,
+      "post": 2.984122438169257
+    },
+    "previous_us": 16.70181818181818
+  },
+  {
+    "op": "mhc_pre",
+    "shape": [
+      1,
+      4,
+      80
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "alpha_count": 3,
+      "has_gamma": false,
+      "return_intermediates": true
+    },
+    "role": "development",
+    "predicted_us": 9.705454545454547,
+    "reference_us": 9.802424242424243,
+    "api": "aclnnMhcPre",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_1",
+        "launch_id": 0,
+        "reference_us": 9.802424242424243,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_rv_count": 606,
+        "max_core_mmad": 1,
+        "critical_pipeline_us": {
+          "SCALAR": 3.793939393939394,
+          "MTE2": 2.2418181818181817,
+          "SIMD": 1.6327272727272728,
+          "MTE3": 1.0260606060606061
+        }
+      }
+    ],
+    "kernel": "entry_kernel_1",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "correctness": [
+      "correctness name=hin count=80 bad=0 max_abs_error=0.000394732 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=4 bad=0 max_abs_error=4.54699e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=16 bad=0 max_abs_error=3.18626e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=1 bad=0 max_abs_error=2.09528e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=24 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=4 bad=0 max_abs_error=5.94908e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=16 bad=0 max_abs_error=3.9292e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=320 bad=0 max_abs_error=0.00185325 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=320 bad=0 max_abs_error=0.00185327 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cv/mhc-reserve1/result.json",
+    "db_sha256": [
+      "156636e58a09c708c18728d8094bf5d6ab9ad560eba571f8db9f42d65030587d"
+    ],
+    "query_us_max": 179.64,
+    "query_us_median": 173.615,
+    "stages_us": {
+      "pre": 9.705454545454547
+    },
+    "previous_us": 8.31212121212121
+  },
+  {
+    "op": "mhc_pre",
+    "shape": [
+      2,
+      4,
+      64
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "alpha_count": 3,
+      "has_gamma": false,
+      "return_intermediates": true
+    },
+    "role": "validation",
+    "predicted_us": 9.589128014842302,
+    "previous_us": 8.31212121212121,
+    "reference_us": 9.961818181818181,
+    "correctness": [
+      "correctness name=hin count=128 bad=0 max_abs_error=0.000445302 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=8 bad=0 max_abs_error=8.56244e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=32 bad=0 max_abs_error=2.5807e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=2 bad=0 max_abs_error=1.57591e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=48 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=8 bad=0 max_abs_error=6.26299e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=32 bad=0 max_abs_error=4.0836e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=512 bad=0 max_abs_error=0.000973562 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=512 bad=0 max_abs_error=0.000973541 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "stages_us": {
+      "pre": 9.589128014842302
+    },
+    "api": "aclnnMhcPre",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_1",
+        "reference_us": 9.961818181818181,
+        "launch_id": 0,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_mmad": 1,
+        "max_core_rv_count": 579,
+        "critical_pipeline_us": {
+          "SCALAR": 3.875757575757576,
+          "MTE2": 2.463636363636364,
+          "SIMD": 1.6090909090909091,
+          "MTE3": 1.1854545454545455
+        }
+      }
+    ],
+    "kernel": "entry_kernel_1",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "source": "runs/v9mhc/mhc-00/result.json",
+    "db_sha256": [
+      "84c5db358738d423121a9edaf45227051eb29ed54f0cf95720e6d9665bc228a3"
+    ],
+    "query_us_max": 22.76,
+    "query_us_median": 9.495000000000001
+  },
+  {
+    "op": "mhc",
+    "shape": [
+      2,
+      4,
+      64
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "implementation": "split",
+      "num_iters": 20
+    },
+    "role": "validation",
+    "predicted_us": 18.027520651242977,
+    "previous_us": 16.70181818181818,
+    "reference_us": 17.935151515151514,
+    "correctness": [
+      "correctness name=hin count=128 bad=0 max_abs_error=0.000445302 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=8 bad=0 max_abs_error=8.56244e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=32 bad=0 max_abs_error=2.5807e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=2 bad=0 max_abs_error=1.57591e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=48 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=8 bad=0 max_abs_error=6.26299e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=32 bad=0 max_abs_error=4.0836e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=512 bad=0 max_abs_error=0.000973562 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=512 bad=0 max_abs_error=0.000973541 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "stages_us": {
+      "pre": 9.589128014842302,
+      "sink": 5.552827734115954,
+      "post": 2.88556490228472
+    },
+    "api": "aclnnMhcPre + aclnnMhcSinkhorn + aclnnMhcPost",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_1",
+        "reference_us": 9.961818181818181,
+        "launch_id": 0,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_mmad": 1,
+        "max_core_rv_count": 579,
+        "critical_pipeline_us": {
+          "SCALAR": 3.875757575757576,
+          "MTE2": 2.463636363636364,
+          "SIMD": 1.6090909090909091,
+          "MTE3": 1.1854545454545455
+        }
+      },
+      {
+        "kernel": "entry_kernel_0",
+        "reference_us": 5.192727272727272,
+        "launch_id": 1,
+        "block_dim": 2,
+        "active_aic": 0,
+        "active_aiv": 2,
+        "max_core_mmad": 0,
+        "max_core_rv_count": 1903,
+        "critical_pipeline_us": {
+          "SCALAR": 3.2054545454545456,
+          "SIMD": 3.918181818181818,
+          "MTE2": 0.30484848484848487,
+          "MTE3": 0.31272727272727274
+        }
+      },
+      {
+        "kernel": "entry_kernel_5",
+        "reference_us": 2.7806060606060607,
+        "launch_id": 2,
+        "block_dim": 2,
+        "active_aic": 0,
+        "active_aiv": 2,
+        "max_core_mmad": 0,
+        "max_core_rv_count": 264,
+        "critical_pipeline_us": {
+          "SCALAR": 1.736969696969697,
+          "SIMD": 1.1484848484848484,
+          "MTE2": 0.5157575757575757,
+          "MTE3": 0.3496969696969697
+        }
+      }
+    ],
+    "kernel": "entry_kernel_1+entry_kernel_0+entry_kernel_5",
+    "active_aic": [
+      32,
+      0,
+      0
+    ],
+    "active_aiv": [
+      64,
+      2,
+      2
+    ],
+    "source": "runs/v9mhc/mhc-00/result.json",
+    "db_sha256": [
+      "84c5db358738d423121a9edaf45227051eb29ed54f0cf95720e6d9665bc228a3",
+      "27186ded387b09a119841e71c53ed14df0d3e3f760756dd2423004c2cdad8b9f",
+      "7ab3aa9d3123a386da420c944bd1588e5c1c747e0833d2217e61a8c87dcccebb"
+    ],
+    "query_us_max": 22.01,
+    "query_us_median": 16.645
+  },
+  {
+    "op": "mhc_pre",
+    "shape": [
+      4,
+      4,
+      96
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "alpha_count": 3,
+      "has_gamma": false,
+      "return_intermediates": true
+    },
+    "role": "validation",
+    "predicted_us": 9.87865182436611,
+    "previous_us": 8.31212121212121,
+    "reference_us": 9.31151515151515,
+    "correctness": [
+      "correctness name=hin count=384 bad=0 max_abs_error=0.000975495 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=16 bad=0 max_abs_error=7.54652e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=64 bad=0 max_abs_error=2.71096e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=4 bad=0 max_abs_error=1.76845e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=96 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=16 bad=0 max_abs_error=5.54321e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=64 bad=0 max_abs_error=4.76191e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=1536 bad=0 max_abs_error=0.00189862 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=1536 bad=0 max_abs_error=0.00189861 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "stages_us": {
+      "pre": 9.87865182436611
+    },
+    "api": "aclnnMhcPre",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_1",
+        "reference_us": 9.31151515151515,
+        "launch_id": 0,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_mmad": 1,
+        "max_core_rv_count": 613,
+        "critical_pipeline_us": {
+          "SCALAR": 3.804242424242424,
+          "MTE2": 2.1236363636363635,
+          "SIMD": 1.6206060606060606,
+          "MTE3": 1.329090909090909
+        }
+      }
+    ],
+    "kernel": "entry_kernel_1",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "source": "runs/v9mhc/mhc-01/result.json",
+    "db_sha256": [
+      "6905e117f082e62fae006f92fb8d0c60810d3af6ac60bc7678131179eb328956"
+    ],
+    "query_us_max": 22.28,
+    "query_us_median": 9.2
+  },
+  {
+    "op": "mhc",
+    "shape": [
+      4,
+      4,
+      96
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "implementation": "split",
+      "num_iters": 20
+    },
+    "role": "validation",
+    "predicted_us": 18.45163735192825,
+    "previous_us": 16.70181818181818,
+    "reference_us": 17.56969696969697,
+    "correctness": [
+      "correctness name=hin count=384 bad=0 max_abs_error=0.000975495 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=16 bad=0 max_abs_error=7.54652e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=64 bad=0 max_abs_error=2.71096e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=4 bad=0 max_abs_error=1.76845e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=96 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=16 bad=0 max_abs_error=5.54321e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=64 bad=0 max_abs_error=4.76191e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=1536 bad=0 max_abs_error=0.00189862 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=1536 bad=0 max_abs_error=0.00189861 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "stages_us": {
+      "pre": 9.87865182436611,
+      "sink": 5.578448022048829,
+      "post": 2.994537505513315
+    },
+    "api": "aclnnMhcPre + aclnnMhcSinkhorn + aclnnMhcPost",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_1",
+        "reference_us": 9.31151515151515,
+        "launch_id": 0,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_mmad": 1,
+        "max_core_rv_count": 613,
+        "critical_pipeline_us": {
+          "SCALAR": 3.804242424242424,
+          "MTE2": 2.1236363636363635,
+          "SIMD": 1.6206060606060606,
+          "MTE3": 1.329090909090909
+        }
+      },
+      {
+        "kernel": "entry_kernel_0",
+        "reference_us": 5.238181818181818,
+        "launch_id": 1,
+        "block_dim": 4,
+        "active_aic": 0,
+        "active_aiv": 4,
+        "max_core_mmad": 0,
+        "max_core_rv_count": 1903,
+        "critical_pipeline_us": {
+          "SCALAR": 3.232121212121212,
+          "SIMD": 3.8254545454545457,
+          "MTE2": 0.2884848484848485,
+          "MTE3": 0.3612121212121212
+        }
+      },
+      {
+        "kernel": "entry_kernel_5",
+        "reference_us": 3.02,
+        "launch_id": 2,
+        "block_dim": 4,
+        "active_aic": 0,
+        "active_aiv": 4,
+        "max_core_mmad": 0,
+        "max_core_rv_count": 388,
+        "critical_pipeline_us": {
+          "SCALAR": 1.7254545454545454,
+          "SIMD": 1.1818181818181819,
+          "MTE2": 0.6309090909090909,
+          "MTE3": 0.5812121212121212
+        }
+      }
+    ],
+    "kernel": "entry_kernel_1+entry_kernel_0+entry_kernel_5",
+    "active_aic": [
+      32,
+      0,
+      0
+    ],
+    "active_aiv": [
+      64,
+      4,
+      4
+    ],
+    "source": "runs/v9mhc/mhc-01/result.json",
+    "db_sha256": [
+      "6905e117f082e62fae006f92fb8d0c60810d3af6ac60bc7678131179eb328956",
+      "639b5f6b970b970a86b85e055b394aeaed565e1311258bee516472d3e88a94c3",
+      "cb0ddc7615026d2ac0418415bd3d8500a2bd6673a69509408d7b1639b9864580"
+    ],
+    "query_us_max": 22.45,
+    "query_us_median": 16.895
+  },
+  {
+    "op": "mhc_pre",
+    "shape": [
+      6,
+      4,
+      128
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "alpha_count": 3,
+      "has_gamma": false,
+      "return_intermediates": true
+    },
+    "role": "validation",
+    "predicted_us": 8.389171845700318,
+    "previous_us": 8.31212121212121,
+    "reference_us": 8.40969696969697,
+    "correctness": [
+      "correctness name=hin count=768 bad=0 max_abs_error=0.000922135 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=24 bad=0 max_abs_error=9.30212e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=96 bad=0 max_abs_error=4.16239e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=6 bad=0 max_abs_error=2.33421e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=144 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=24 bad=0 max_abs_error=5.35081e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=96 bad=0 max_abs_error=7.51358e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=3072 bad=0 max_abs_error=0.00194585 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=3072 bad=0 max_abs_error=0.00194589 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "stages_us": {
+      "pre": 8.389171845700318
+    },
+    "api": "aclnnMhcPre",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_2",
+        "reference_us": 8.40969696969697,
+        "launch_id": 0,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_mmad": 8,
+        "max_core_rv_count": 544,
+        "critical_pipeline_us": {
+          "SCALAR": 5.0618181818181816,
+          "MTE2": 1.083030303030303,
+          "SIMD": 0.9030303030303031,
+          "MTE3": 1.1236363636363635
+        }
+      }
+    ],
+    "kernel": "entry_kernel_2",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "source": "runs/v9mhc/mhc-02/result.json",
+    "db_sha256": [
+      "7edde1f2c967ea4a70f6c1db20c12d8b079e7392df554d2e3aa76c639c7b83da"
+    ],
+    "query_us_max": 22.91,
+    "query_us_median": 9.055
+  },
+  {
+    "op": "mhc",
+    "shape": [
+      6,
+      4,
+      128
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "implementation": "split",
+      "num_iters": 20
+    },
+    "role": "validation",
+    "predicted_us": 17.0009335357352,
+    "previous_us": 16.70181818181818,
+    "reference_us": 17.01636363636364,
+    "correctness": [
+      "correctness name=hin count=768 bad=0 max_abs_error=0.000922135 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=24 bad=0 max_abs_error=9.30212e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=96 bad=0 max_abs_error=4.16239e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=6 bad=0 max_abs_error=2.33421e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=144 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=24 bad=0 max_abs_error=5.35081e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=96 bad=0 max_abs_error=7.51358e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=3072 bad=0 max_abs_error=0.00194585 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=3072 bad=0 max_abs_error=0.00194589 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "stages_us": {
+      "pre": 8.389171845700318,
+      "sink": 5.604068309981704,
+      "post": 3.007693380053177
+    },
+    "api": "aclnnMhcPre + aclnnMhcSinkhorn + aclnnMhcPost",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_2",
+        "reference_us": 8.40969696969697,
+        "launch_id": 0,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_mmad": 8,
+        "max_core_rv_count": 544,
+        "critical_pipeline_us": {
+          "SCALAR": 5.0618181818181816,
+          "MTE2": 1.083030303030303,
+          "SIMD": 0.9030303030303031,
+          "MTE3": 1.1236363636363635
+        }
+      },
+      {
+        "kernel": "entry_kernel_0",
+        "reference_us": 5.526060606060606,
+        "launch_id": 1,
+        "block_dim": 6,
+        "active_aic": 0,
+        "active_aiv": 6,
+        "max_core_mmad": 0,
+        "max_core_rv_count": 1903,
+        "critical_pipeline_us": {
+          "SCALAR": 3.452121212121212,
+          "SIMD": 3.6551515151515153,
+          "MTE2": 0.5339393939393939,
+          "MTE3": 0.4078787878787879
+        }
+      },
+      {
+        "kernel": "entry_kernel_5",
+        "reference_us": 3.0806060606060606,
+        "launch_id": 2,
+        "block_dim": 6,
+        "active_aic": 0,
+        "active_aiv": 6,
+        "max_core_mmad": 0,
+        "max_core_rv_count": 396,
+        "critical_pipeline_us": {
+          "SCALAR": 1.8696969696969696,
+          "SIMD": 1.3036363636363637,
+          "MTE2": 0.5254545454545455,
+          "MTE3": 0.5527272727272727
+        }
+      }
+    ],
+    "kernel": "entry_kernel_2+entry_kernel_0+entry_kernel_5",
+    "active_aic": [
+      32,
+      0,
+      0
+    ],
+    "active_aiv": [
+      64,
+      6,
+      6
+    ],
+    "source": "runs/v9mhc/mhc-02/result.json",
+    "db_sha256": [
+      "7edde1f2c967ea4a70f6c1db20c12d8b079e7392df554d2e3aa76c639c7b83da",
+      "98ef073a881a29234b0970202c19432d172040e067ceac459bfcdd58279d4f8d",
+      "3e9b062618061086ec2024bc9e9941002e6cc40d3ba4f507abdc99e0b605c0d6"
+    ],
+    "query_us_max": 22.46,
+    "query_us_median": 16.36
+  },
+  {
+    "op": "mhc_pre",
+    "shape": [
+      5,
+      4,
+      256
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "alpha_count": 3,
+      "has_gamma": false,
+      "return_intermediates": true
+    },
+    "role": "validation",
+    "predicted_us": 8.509372711709506,
+    "previous_us": 12.125454545454543,
+    "reference_us": 8.25090909090909,
+    "correctness": [
+      "correctness name=hin count=1280 bad=0 max_abs_error=0.00190367 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=20 bad=0 max_abs_error=1.08006e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=80 bad=0 max_abs_error=4.92958e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=5 bad=0 max_abs_error=1.37095e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=120 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=20 bad=0 max_abs_error=6.79502e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=80 bad=0 max_abs_error=7.30785e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=5120 bad=0 max_abs_error=0.00384157 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=5120 bad=0 max_abs_error=0.00384158 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "stages_us": {
+      "pre": 8.509372711709506
+    },
+    "api": "aclnnMhcPre",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_2",
+        "reference_us": 8.25090909090909,
+        "launch_id": 0,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_mmad": 8,
+        "max_core_rv_count": 654,
+        "critical_pipeline_us": {
+          "SCALAR": 4.4381818181818184,
+          "MTE2": 1.687878787878788,
+          "SIMD": 0.9557575757575758,
+          "MTE3": 1.6224242424242423
+        }
+      }
+    ],
+    "kernel": "entry_kernel_2",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "source": "runs/v9mhc/mhc-03/result.json",
+    "db_sha256": [
+      "e9212c0bdbf65fa643ff7e28041feb60e0bd32331b17c167b6ee8aae78fc63c8"
+    ],
+    "query_us_max": 20.32,
+    "query_us_median": 9.955
+  },
+  {
+    "op": "mhc",
+    "shape": [
+      5,
+      4,
+      256
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "implementation": "split",
+      "num_iters": 20
+    },
+    "role": "validation",
+    "predicted_us": 17.32626946423514,
+    "previous_us": 22.519999999999996,
+    "reference_us": 17.125454545454545,
+    "correctness": [
+      "correctness name=hin count=1280 bad=0 max_abs_error=0.00190367 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=20 bad=0 max_abs_error=1.08006e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=80 bad=0 max_abs_error=4.92958e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=5 bad=0 max_abs_error=1.37095e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=120 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=20 bad=0 max_abs_error=6.79502e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=80 bad=0 max_abs_error=7.30785e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=5120 bad=0 max_abs_error=0.00384157 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=5120 bad=0 max_abs_error=0.00384158 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "stages_us": {
+      "pre": 8.509372711709506,
+      "sink": 5.591258166015267,
+      "post": 3.225638586510367
+    },
+    "api": "aclnnMhcPre + aclnnMhcSinkhorn + aclnnMhcPost",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_2",
+        "reference_us": 8.25090909090909,
+        "launch_id": 0,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_mmad": 8,
+        "max_core_rv_count": 654,
+        "critical_pipeline_us": {
+          "SCALAR": 4.4381818181818184,
+          "MTE2": 1.687878787878788,
+          "SIMD": 0.9557575757575758,
+          "MTE3": 1.6224242424242423
+        }
+      },
+      {
+        "kernel": "entry_kernel_0",
+        "reference_us": 5.676363636363637,
+        "launch_id": 1,
+        "block_dim": 5,
+        "active_aic": 0,
+        "active_aiv": 5,
+        "max_core_mmad": 0,
+        "max_core_rv_count": 1903,
+        "critical_pipeline_us": {
+          "SCALAR": 3.3684848484848486,
+          "SIMD": 3.733939393939394,
+          "MTE2": 0.49333333333333335,
+          "MTE3": 0.6363636363636364
+        }
+      },
+      {
+        "kernel": "entry_kernel_5",
+        "reference_us": 3.1981818181818182,
+        "launch_id": 2,
+        "block_dim": 5,
+        "active_aic": 0,
+        "active_aiv": 5,
+        "max_core_mmad": 0,
+        "max_core_rv_count": 660,
+        "critical_pipeline_us": {
+          "SCALAR": 1.9084848484848485,
+          "SIMD": 1.4072727272727272,
+          "MTE2": 0.563030303030303,
+          "MTE3": 0.47515151515151516
+        }
+      }
+    ],
+    "kernel": "entry_kernel_2+entry_kernel_0+entry_kernel_5",
+    "active_aic": [
+      32,
+      0,
+      0
+    ],
+    "active_aiv": [
+      64,
+      5,
+      5
+    ],
+    "source": "runs/v9mhc/mhc-03/result.json",
+    "db_sha256": [
+      "e9212c0bdbf65fa643ff7e28041feb60e0bd32331b17c167b6ee8aae78fc63c8",
+      "6e5ce9a5d3b93db4fd52d23590a28002569a165d64b51eb1c2d2d9840728c82f",
+      "4584942c5b5847d61f30f7ea1da7413c3595dd5aa0b7d38e2c36ef5f7fcffd1f"
+    ],
+    "query_us_max": 21.78,
+    "query_us_median": 16.485
+  },
+  {
+    "op": "mhc_pre",
+    "shape": [
+      12,
+      4,
+      384
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "alpha_count": 3,
+      "has_gamma": false,
+      "return_intermediates": true
+    },
+    "role": "validation",
+    "predicted_us": 8.680427790261044,
+    "previous_us": 15.93878787878788,
+    "reference_us": 9.136969696969697,
+    "correctness": [
+      "correctness name=hin count=4608 bad=0 max_abs_error=0.000963015 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=48 bad=0 max_abs_error=9.33341e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=192 bad=0 max_abs_error=8.56867e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=12 bad=0 max_abs_error=2.92774e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=288 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=48 bad=0 max_abs_error=4.43501e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=192 bad=0 max_abs_error=8.30466e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=18432 bad=0 max_abs_error=0.00195013 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=18432 bad=0 max_abs_error=0.00195015 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "stages_us": {
+      "pre": 8.680427790261044
+    },
+    "api": "aclnnMhcPre",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_2",
+        "reference_us": 9.136969696969697,
+        "launch_id": 0,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_mmad": 8,
+        "max_core_rv_count": 875,
+        "critical_pipeline_us": {
+          "SCALAR": 4.750909090909091,
+          "MTE2": 1.7296969696969697,
+          "SIMD": 0.7454545454545455,
+          "MTE3": 1.8024242424242425
+        }
+      }
+    ],
+    "kernel": "entry_kernel_2",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "source": "runs/v9mhc/mhc-04/result.json",
+    "db_sha256": [
+      "23686440cd533196af75395e25d8c17b47efc4cbcd5351721e883412531b67cd"
+    ],
+    "query_us_max": 22.13,
+    "query_us_median": 9.27
+  },
+  {
+    "op": "mhc",
+    "shape": [
+      12,
+      4,
+      384
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "implementation": "split",
+      "num_iters": 20
+    },
+    "role": "validation",
+    "predicted_us": 17.600811109695194,
+    "previous_us": 28.338181818181816,
+    "reference_us": 18.486060606060605,
+    "correctness": [
+      "correctness name=hin count=4608 bad=0 max_abs_error=0.000963015 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=48 bad=0 max_abs_error=9.33341e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=192 bad=0 max_abs_error=8.56867e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=12 bad=0 max_abs_error=2.92774e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=288 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=48 bad=0 max_abs_error=4.43501e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=192 bad=0 max_abs_error=8.30466e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=18432 bad=0 max_abs_error=0.00195013 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=18432 bad=0 max_abs_error=0.00195015 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "stages_us": {
+      "pre": 8.680427790261044,
+      "sink": 5.6809291737803305,
+      "post": 3.2394541456538204
+    },
+    "api": "aclnnMhcPre + aclnnMhcSinkhorn + aclnnMhcPost",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_2",
+        "reference_us": 9.136969696969697,
+        "launch_id": 0,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_mmad": 8,
+        "max_core_rv_count": 875,
+        "critical_pipeline_us": {
+          "SCALAR": 4.750909090909091,
+          "MTE2": 1.7296969696969697,
+          "SIMD": 0.7454545454545455,
+          "MTE3": 1.8024242424242425
+        }
+      },
+      {
+        "kernel": "entry_kernel_0",
+        "reference_us": 5.790909090909091,
+        "launch_id": 1,
+        "block_dim": 12,
+        "active_aic": 0,
+        "active_aiv": 12,
+        "max_core_mmad": 0,
+        "max_core_rv_count": 1903,
+        "critical_pipeline_us": {
+          "SCALAR": 3.3854545454545453,
+          "SIMD": 3.924848484848485,
+          "MTE2": 0.4296969696969697,
+          "MTE3": 0.6430303030303031
+        }
+      },
+      {
+        "kernel": "entry_kernel_5",
+        "reference_us": 3.558181818181818,
+        "launch_id": 2,
+        "block_dim": 24,
+        "active_aic": 0,
+        "active_aiv": 24,
+        "max_core_mmad": 0,
+        "max_core_rv_count": 528,
+        "critical_pipeline_us": {
+          "SCALAR": 2.064848484848485,
+          "SIMD": 1.3387878787878789,
+          "MTE2": 0.5006060606060606,
+          "MTE3": 0.5951515151515151
+        }
+      }
+    ],
+    "kernel": "entry_kernel_2+entry_kernel_0+entry_kernel_5",
+    "active_aic": [
+      32,
+      0,
+      0
+    ],
+    "active_aiv": [
+      64,
+      12,
+      24
+    ],
+    "source": "runs/v9mhc/mhc-04/result.json",
+    "db_sha256": [
+      "23686440cd533196af75395e25d8c17b47efc4cbcd5351721e883412531b67cd",
+      "7e0324ef67c015f56d78cb3ebb7cb898e21b0ac412ecea315a1ee5e6e7c0f563",
+      "a405458933d4b44e88207ae19aedbcdfe499ae436e3d170c3bb95e0ccac1a143"
+    ],
+    "query_us_max": 22.54,
+    "query_us_median": 16.955
+  },
+  {
+    "op": "mhc_pre",
+    "shape": [
+      8,
+      4,
+      512
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "alpha_count": 3,
+      "has_gamma": false,
+      "return_intermediates": true
+    },
+    "role": "validation",
+    "predicted_us": 8.78213621534574,
+    "previous_us": 19.752121212121207,
+    "reference_us": 8.866060606060605,
+    "correctness": [
+      "correctness name=hin count=4096 bad=0 max_abs_error=0.00192282 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=32 bad=0 max_abs_error=1.51706e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=128 bad=0 max_abs_error=1.37479e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=8 bad=0 max_abs_error=1.86762e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=192 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=32 bad=0 max_abs_error=6.49073e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=128 bad=0 max_abs_error=9.84489e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=16384 bad=0 max_abs_error=0.00375948 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=16384 bad=0 max_abs_error=0.00375946 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "stages_us": {
+      "pre": 8.78213621534574
+    },
+    "api": "aclnnMhcPre",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_2",
+        "reference_us": 8.866060606060605,
+        "launch_id": 0,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_mmad": 8,
+        "max_core_rv_count": 915,
+        "critical_pipeline_us": {
+          "SCALAR": 5.326666666666667,
+          "MTE2": 1.3975757575757575,
+          "SIMD": 0.7036363636363636,
+          "MTE3": 1.706060606060606
+        }
+      }
+    ],
+    "kernel": "entry_kernel_2",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "source": "runs/v9mhc/mhc-05/result.json",
+    "db_sha256": [
+      "0e44cb57b35ba761b8743f265376059f1c2ee4304eaa1707f3d94423ce51a4ea"
+    ],
+    "query_us_max": 19.43,
+    "query_us_median": 8.81
+  },
+  {
+    "op": "mhc",
+    "shape": [
+      8,
+      4,
+      512
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "implementation": "split",
+      "num_iters": 20
+    },
+    "role": "validation",
+    "predicted_us": 17.73393981306301,
+    "previous_us": 34.15636363636363,
+    "reference_us": 18.65151515151515,
+    "correctness": [
+      "correctness name=hin count=4096 bad=0 max_abs_error=0.00192282 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=32 bad=0 max_abs_error=1.51706e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=128 bad=0 max_abs_error=1.37479e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=8 bad=0 max_abs_error=1.86762e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=192 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=32 bad=0 max_abs_error=6.49073e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=128 bad=0 max_abs_error=9.84489e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=16384 bad=0 max_abs_error=0.00375948 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=16384 bad=0 max_abs_error=0.00375946 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "stages_us": {
+      "pre": 8.78213621534574,
+      "sink": 5.62968859791458,
+      "post": 3.322114999802691
+    },
+    "api": "aclnnMhcPre + aclnnMhcSinkhorn + aclnnMhcPost",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_2",
+        "reference_us": 8.866060606060605,
+        "launch_id": 0,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_mmad": 8,
+        "max_core_rv_count": 915,
+        "critical_pipeline_us": {
+          "SCALAR": 5.326666666666667,
+          "MTE2": 1.3975757575757575,
+          "SIMD": 0.7036363636363636,
+          "MTE3": 1.706060606060606
+        }
+      },
+      {
+        "kernel": "entry_kernel_0",
+        "reference_us": 6.2296969696969695,
+        "launch_id": 1,
+        "block_dim": 8,
+        "active_aic": 0,
+        "active_aiv": 8,
+        "max_core_mmad": 0,
+        "max_core_rv_count": 1903,
+        "critical_pipeline_us": {
+          "SCALAR": 3.4484848484848483,
+          "SIMD": 3.8824242424242423,
+          "MTE2": 0.5363636363636364,
+          "MTE3": 0.8872727272727273
+        }
+      },
+      {
+        "kernel": "entry_kernel_5",
+        "reference_us": 3.5557575757575757,
+        "launch_id": 2,
+        "block_dim": 16,
+        "active_aic": 0,
+        "active_aiv": 16,
+        "max_core_mmad": 0,
+        "max_core_rv_count": 660,
+        "critical_pipeline_us": {
+          "SCALAR": 2.0684848484848484,
+          "SIMD": 1.2678787878787878,
+          "MTE2": 0.48424242424242425,
+          "MTE3": 0.6981818181818182
+        }
+      }
+    ],
+    "kernel": "entry_kernel_2+entry_kernel_0+entry_kernel_5",
+    "active_aic": [
+      32,
+      0,
+      0
+    ],
+    "active_aiv": [
+      64,
+      8,
+      16
+    ],
+    "source": "runs/v9mhc/mhc-05/result.json",
+    "db_sha256": [
+      "0e44cb57b35ba761b8743f265376059f1c2ee4304eaa1707f3d94423ce51a4ea",
+      "0c8e08e942bdb7ada4d8594b4575d3ec7c435cd60e063725a6501857c7e61af3",
+      "4b647c01a765d093644c8e35ced53d7e3c07bcd101f7f4f5d424ca36b8e72f5b"
+    ],
+    "query_us_max": 24.02,
+    "query_us_median": 16.955
+  },
+  {
+    "op": "mhc_pre",
+    "shape": [
+      12,
+      4,
+      768
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "alpha_count": 3,
+      "has_gamma": false,
+      "return_intermediates": true
+    },
+    "role": "validation",
+    "predicted_us": 9.09650771106208,
+    "previous_us": 27.37878787878788,
+    "reference_us": 9.058181818181819,
+    "correctness": [
+      "correctness name=hin count=9216 bad=0 max_abs_error=0.00179182 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=48 bad=0 max_abs_error=1.22965e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=192 bad=0 max_abs_error=2.82394e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=12 bad=0 max_abs_error=1.51874e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=288 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=48 bad=0 max_abs_error=5.74039e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=192 bad=0 max_abs_error=1.01194e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=36864 bad=0 max_abs_error=0.00255603 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=36864 bad=0 max_abs_error=0.00255603 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "stages_us": {
+      "pre": 9.09650771106208
+    },
+    "api": "aclnnMhcPre",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_2",
+        "reference_us": 9.058181818181819,
+        "launch_id": 0,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_mmad": 8,
+        "max_core_rv_count": 1211,
+        "critical_pipeline_us": {
+          "SCALAR": 4.249090909090909,
+          "MTE2": 1.8654545454545455,
+          "SIMD": 0.9248484848484848,
+          "MTE3": 1.7860606060606061
+        }
+      }
+    ],
+    "kernel": "entry_kernel_2",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "source": "runs/v9mhc/mhc-06/result.json",
+    "db_sha256": [
+      "2c70068aad9d33800f67df5c4c9b64772d1fb8c4ee8f464d4cde56e265cd39db"
+    ],
+    "query_us_max": 20.33,
+    "query_us_median": 9.08
+  },
+  {
+    "op": "mhc",
+    "shape": [
+      12,
+      4,
+      768
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "implementation": "split",
+      "num_iters": 20
+    },
+    "role": "validation",
+    "predicted_us": 18.174761524974578,
+    "previous_us": 45.79272727272727,
+    "reference_us": 18.78727272727273,
+    "correctness": [
+      "correctness name=hin count=9216 bad=0 max_abs_error=0.00179182 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=48 bad=0 max_abs_error=1.22965e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=192 bad=0 max_abs_error=2.82394e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=12 bad=0 max_abs_error=1.51874e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=288 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=48 bad=0 max_abs_error=5.74039e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=192 bad=0 max_abs_error=1.01194e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=36864 bad=0 max_abs_error=0.00255603 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=36864 bad=0 max_abs_error=0.00255603 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "stages_us": {
+      "pre": 9.09650771106208,
+      "sink": 5.6809291737803305,
+      "post": 3.3973246401321675
+    },
+    "api": "aclnnMhcPre + aclnnMhcSinkhorn + aclnnMhcPost",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_2",
+        "reference_us": 9.058181818181819,
+        "launch_id": 0,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_mmad": 8,
+        "max_core_rv_count": 1211,
+        "critical_pipeline_us": {
+          "SCALAR": 4.249090909090909,
+          "MTE2": 1.8654545454545455,
+          "SIMD": 0.9248484848484848,
+          "MTE3": 1.7860606060606061
+        }
+      },
+      {
+        "kernel": "entry_kernel_0",
+        "reference_us": 5.84,
+        "launch_id": 1,
+        "block_dim": 12,
+        "active_aic": 0,
+        "active_aiv": 12,
+        "max_core_mmad": 0,
+        "max_core_rv_count": 1903,
+        "critical_pipeline_us": {
+          "SCALAR": 3.667878787878788,
+          "SIMD": 3.563030303030303,
+          "MTE2": 0.4575757575757576,
+          "MTE3": 0.5193939393939394
+        }
+      },
+      {
+        "kernel": "entry_kernel_5",
+        "reference_us": 3.889090909090909,
+        "launch_id": 2,
+        "block_dim": 48,
+        "active_aic": 0,
+        "active_aiv": 48,
+        "max_core_mmad": 0,
+        "max_core_rv_count": 528,
+        "critical_pipeline_us": {
+          "SCALAR": 2.186060606060606,
+          "SIMD": 1.4963636363636363,
+          "MTE2": 0.4793939393939394,
+          "MTE3": 0.6315151515151515
+        }
+      }
+    ],
+    "kernel": "entry_kernel_2+entry_kernel_0+entry_kernel_5",
+    "active_aic": [
+      32,
+      0,
+      0
+    ],
+    "active_aiv": [
+      64,
+      12,
+      48
+    ],
+    "source": "runs/v9mhc/mhc-06/result.json",
+    "db_sha256": [
+      "2c70068aad9d33800f67df5c4c9b64772d1fb8c4ee8f464d4cde56e265cd39db",
+      "b4e43706e50cab8e6b1b7293c12001b433f8a4183841e3e35c2a9f5846f2bab1",
+      "b66d3f070f99c91bfebe1675882f2a89a00385e868626edf65d5400296ce848a"
+    ],
+    "query_us_max": 22.41,
+    "query_us_median": 17.049999999999997
+  },
+  {
+    "op": "mhc_pre",
+    "shape": [
+      6,
+      4,
+      1024
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "alpha_count": 3,
+      "has_gamma": false,
+      "return_intermediates": true
+    },
+    "role": "validation",
+    "predicted_us": 9.262939679382495,
+    "previous_us": 35.00545454545453,
+    "reference_us": 8.973333333333333,
+    "correctness": [
+      "correctness name=hin count=6144 bad=0 max_abs_error=0.0016496 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=24 bad=0 max_abs_error=1.06904e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=96 bad=0 max_abs_error=1.77318e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=6 bad=0 max_abs_error=1.44718e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=144 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=24 bad=0 max_abs_error=7.23108e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=96 bad=0 max_abs_error=1.4691e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=24576 bad=0 max_abs_error=0.00191589 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=24576 bad=0 max_abs_error=0.00191589 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "stages_us": {
+      "pre": 9.262939679382495
+    },
+    "api": "aclnnMhcPre",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_2",
+        "reference_us": 8.973333333333333,
+        "launch_id": 0,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_mmad": 8,
+        "max_core_rv_count": 1332,
+        "critical_pipeline_us": {
+          "SCALAR": 4.3921212121212125,
+          "MTE2": 1.9739393939393939,
+          "SIMD": 1.0963636363636364,
+          "MTE3": 1.3981818181818182
+        }
+      }
+    ],
+    "kernel": "entry_kernel_2",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "source": "runs/v9mhc/mhc-07/result.json",
+    "db_sha256": [
+      "82e51db5676fd917867ffffc6a9c5b9ab860f4ff2307a2c27371617871cc1d1c"
+    ],
+    "query_us_max": 21.97,
+    "query_us_median": 9.22
+  },
+  {
+    "op": "mhc",
+    "shape": [
+      6,
+      4,
+      1024
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "implementation": "split",
+      "num_iters": 20
+    },
+    "role": "validation",
+    "predicted_us": 18.259287653379488,
+    "previous_us": 57.429090909090895,
+    "reference_us": 18.36121212121212,
+    "correctness": [
+      "correctness name=hin count=6144 bad=0 max_abs_error=0.0016496 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=24 bad=0 max_abs_error=1.06904e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=96 bad=0 max_abs_error=1.77318e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=6 bad=0 max_abs_error=1.44718e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=144 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=24 bad=0 max_abs_error=7.23108e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=96 bad=0 max_abs_error=1.4691e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=24576 bad=0 max_abs_error=0.00191589 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=24576 bad=0 max_abs_error=0.00191589 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "stages_us": {
+      "pre": 9.262939679382495,
+      "sink": 5.604068309981704,
+      "post": 3.3922796640152897
+    },
+    "api": "aclnnMhcPre + aclnnMhcSinkhorn + aclnnMhcPost",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_2",
+        "reference_us": 8.973333333333333,
+        "launch_id": 0,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_mmad": 8,
+        "max_core_rv_count": 1332,
+        "critical_pipeline_us": {
+          "SCALAR": 4.3921212121212125,
+          "MTE2": 1.9739393939393939,
+          "SIMD": 1.0963636363636364,
+          "MTE3": 1.3981818181818182
+        }
+      },
+      {
+        "kernel": "entry_kernel_0",
+        "reference_us": 5.930909090909091,
+        "launch_id": 1,
+        "block_dim": 6,
+        "active_aic": 0,
+        "active_aiv": 6,
+        "max_core_mmad": 0,
+        "max_core_rv_count": 1903,
+        "critical_pipeline_us": {
+          "SCALAR": 3.453333333333333,
+          "SIMD": 3.7654545454545456,
+          "MTE2": 0.5036363636363637,
+          "MTE3": 0.8115151515151515
+        }
+      },
+      {
+        "kernel": "entry_kernel_5",
+        "reference_us": 3.456969696969697,
+        "launch_id": 2,
+        "block_dim": 24,
+        "active_aic": 0,
+        "active_aiv": 24,
+        "max_core_mmad": 0,
+        "max_core_rv_count": 660,
+        "critical_pipeline_us": {
+          "SCALAR": 2.2,
+          "SIMD": 1.269090909090909,
+          "MTE2": 0.5012121212121212,
+          "MTE3": 0.6812121212121212
+        }
+      }
+    ],
+    "kernel": "entry_kernel_2+entry_kernel_0+entry_kernel_5",
+    "active_aic": [
+      32,
+      0,
+      0
+    ],
+    "active_aiv": [
+      64,
+      6,
+      24
+    ],
+    "source": "runs/v9mhc/mhc-07/result.json",
+    "db_sha256": [
+      "82e51db5676fd917867ffffc6a9c5b9ab860f4ff2307a2c27371617871cc1d1c",
+      "7f43c38685f2c6f30e4c08b66883a68175ae0d8ee650ed478502c9c12c3aac32",
+      "bd8ed00f6b657694f314e83b2e50b03b91cb35e2b3443d73676cefa504c75a6c"
+    ],
+    "query_us_max": 23.28,
+    "query_us_median": 17.2
+  },
+  {
+    "op": "mhc_pre",
+    "shape": [
+      17,
+      4,
+      512
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "alpha_count": 3,
+      "has_gamma": false,
+      "return_intermediates": true
+    },
+    "role": "validation",
+    "predicted_us": 10.117958260112008,
+    "previous_us": 19.752121212121207,
+    "reference_us": 10.094545454545454,
+    "correctness": [
+      "correctness name=hin count=8704 bad=0 max_abs_error=0.00192282 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=68 bad=0 max_abs_error=1.51706e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=272 bad=0 max_abs_error=1.66782e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=17 bad=0 max_abs_error=1.86762e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=408 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=68 bad=0 max_abs_error=6.49073e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=272 bad=0 max_abs_error=9.84489e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=34816 bad=0 max_abs_error=0.0038902 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=34816 bad=0 max_abs_error=0.00389015 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "stages_us": {
+      "pre": 10.117958260112008
+    },
+    "api": "aclnnMhcPre",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_2",
+        "reference_us": 10.094545454545454,
+        "launch_id": 0,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_mmad": 8,
+        "max_core_rv_count": 1090,
+        "critical_pipeline_us": {
+          "SCALAR": 4.976969696969697,
+          "MTE2": 1.8157575757575757,
+          "SIMD": 0.9545454545454546,
+          "MTE3": 1.9236363636363636
+        }
+      }
+    ],
+    "kernel": "entry_kernel_2",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "source": "runs/v9mhc/mhc-08/result.json",
+    "db_sha256": [
+      "7d4b16573e6a3e5aebbfe3d83351d4695210a63db2aad635c2428e5a7bcc0079"
+    ],
+    "query_us_max": 20.17,
+    "query_us_median": 8.945
+  },
+  {
+    "op": "mhc",
+    "shape": [
+      17,
+      4,
+      512
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "implementation": "split",
+      "num_iters": 20
+    },
+    "role": "validation",
+    "predicted_us": 19.342923648005563,
+    "previous_us": 34.15636363636363,
+    "reference_us": 19.327878787878788,
+    "correctness": [
+      "correctness name=hin count=8704 bad=0 max_abs_error=0.00192282 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=68 bad=0 max_abs_error=1.51706e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=272 bad=0 max_abs_error=1.66782e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=17 bad=0 max_abs_error=1.86762e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=408 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=68 bad=0 max_abs_error=6.49073e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=272 bad=0 max_abs_error=9.84489e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=34816 bad=0 max_abs_error=0.0038902 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=34816 bad=0 max_abs_error=0.00389015 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "stages_us": {
+      "pre": 10.117958260112008,
+      "sink": 5.744979893612518,
+      "post": 3.479985494281038
+    },
+    "api": "aclnnMhcPre + aclnnMhcSinkhorn + aclnnMhcPost",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_2",
+        "reference_us": 10.094545454545454,
+        "launch_id": 0,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_mmad": 8,
+        "max_core_rv_count": 1090,
+        "critical_pipeline_us": {
+          "SCALAR": 4.976969696969697,
+          "MTE2": 1.8157575757575757,
+          "SIMD": 0.9545454545454546,
+          "MTE3": 1.9236363636363636
+        }
+      },
+      {
+        "kernel": "entry_kernel_0",
+        "reference_us": 5.756363636363637,
+        "launch_id": 1,
+        "block_dim": 17,
+        "active_aic": 0,
+        "active_aiv": 17,
+        "max_core_mmad": 0,
+        "max_core_rv_count": 1903,
+        "critical_pipeline_us": {
+          "SCALAR": 3.4890909090909092,
+          "SIMD": 4.178181818181818,
+          "MTE2": 0.19818181818181818,
+          "MTE3": 0.43393939393939396
+        }
+      },
+      {
+        "kernel": "entry_kernel_5",
+        "reference_us": 3.476969696969697,
+        "launch_id": 2,
+        "block_dim": 34,
+        "active_aic": 0,
+        "active_aiv": 34,
+        "max_core_mmad": 0,
+        "max_core_rv_count": 660,
+        "critical_pipeline_us": {
+          "SCALAR": 1.8909090909090909,
+          "SIMD": 1.44,
+          "MTE2": 0.6012121212121212,
+          "MTE3": 0.6854545454545454
+        }
+      }
+    ],
+    "kernel": "entry_kernel_2+entry_kernel_0+entry_kernel_5",
+    "active_aic": [
+      32,
+      0,
+      0
+    ],
+    "active_aiv": [
+      64,
+      17,
+      34
+    ],
+    "source": "runs/v9mhc/mhc-08/result.json",
+    "db_sha256": [
+      "7d4b16573e6a3e5aebbfe3d83351d4695210a63db2aad635c2428e5a7bcc0079",
+      "83890d59564554cc2b8d92ce61b003a187ae13ab9eab61b3941c89d34678ea0a",
+      "ebdb07a199dc21e61956d576e2d24825a7fa63d32f9827bd2f02aaedd7577ae2"
+    ],
+    "query_us_max": 22.7,
+    "query_us_median": 17.13
+  },
+  {
+    "op": "mhc_pre",
+    "shape": [
+      24,
+      4,
+      1536
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "alpha_count": 3,
+      "has_gamma": false,
+      "return_intermediates": true
+    },
+    "role": "validation",
+    "predicted_us": 11.514137549911041,
+    "previous_us": 50.25878787878788,
+    "reference_us": 12.200606060606061,
+    "correctness": [
+      "correctness name=hin count=36864 bad=0 max_abs_error=0.00188599 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=96 bad=0 max_abs_error=1.50023e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=384 bad=0 max_abs_error=4.44942e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=24 bad=0 max_abs_error=2.43935e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=576 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=96 bad=0 max_abs_error=8.35665e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=384 bad=0 max_abs_error=1.23924e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=147456 bad=0 max_abs_error=0.00389082 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=147456 bad=0 max_abs_error=0.00389087 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "stages_us": {
+      "pre": 11.514137549911041
+    },
+    "api": "aclnnMhcPre",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_2",
+        "reference_us": 12.200606060606061,
+        "launch_id": 0,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_mmad": 8,
+        "max_core_rv_count": 2099,
+        "critical_pipeline_us": {
+          "SCALAR": 4.453333333333333,
+          "MTE2": 2.3327272727272725,
+          "SIMD": 0.9787878787878788,
+          "MTE3": 1.7878787878787878
+        }
+      }
+    ],
+    "kernel": "entry_kernel_2",
+    "active_aic": [
+      32
+    ],
+    "active_aiv": [
+      64
+    ],
+    "source": "runs/v9mhc/mhc-09/result.json",
+    "db_sha256": [
+      "fda24c0f309f085265cae62c41fd03877c4f5994d2a71110cf9915e07f3aeb2b"
+    ],
+    "query_us_max": 44.86,
+    "query_us_median": 9.280000000000001
+  },
+  {
+    "op": "mhc",
+    "shape": [
+      24,
+      4,
+      1536
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "implementation": "split",
+      "num_iters": 20
+    },
+    "role": "validation",
+    "predicted_us": 22.595154240109057,
+    "previous_us": 80.70181818181818,
+    "reference_us": 21.986060606060605,
+    "correctness": [
+      "correctness name=hin count=36864 bad=0 max_abs_error=0.00188599 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=96 bad=0 max_abs_error=1.50023e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=384 bad=0 max_abs_error=4.44942e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=inv_rms count=24 bad=0 max_abs_error=2.43935e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hmix count=576 bad=0 max_abs_error=0 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hpre count=96 bad=0 max_abs_error=8.35665e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_sinkhorn count=384 bad=0 max_abs_error=1.23924e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=chain_post count=147456 bad=0 max_abs_error=0.00389082 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=chain_end_to_end count=147456 bad=0 max_abs_error=0.00389087 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "stages_us": {
+      "pre": 11.514137549911041,
+      "sink": 5.834650901377581,
+      "post": 5.246365788820434
+    },
+    "api": "aclnnMhcPre + aclnnMhcSinkhorn + aclnnMhcPost",
+    "library": "ops-transformer",
+    "kernel_records": [
+      {
+        "kernel": "entry_kernel_2",
+        "reference_us": 12.200606060606061,
+        "launch_id": 0,
+        "block_dim": 32,
+        "active_aic": 32,
+        "active_aiv": 64,
+        "max_core_mmad": 8,
+        "max_core_rv_count": 2099,
+        "critical_pipeline_us": {
+          "SCALAR": 4.453333333333333,
+          "MTE2": 2.3327272727272725,
+          "SIMD": 0.9787878787878788,
+          "MTE3": 1.7878787878787878
+        }
+      },
+      {
+        "kernel": "entry_kernel_0",
+        "reference_us": 5.92,
+        "launch_id": 1,
+        "block_dim": 24,
+        "active_aic": 0,
+        "active_aiv": 24,
+        "max_core_mmad": 0,
+        "max_core_rv_count": 1903,
+        "critical_pipeline_us": {
+          "SCALAR": 3.4775757575757575,
+          "SIMD": 3.820606060606061,
+          "MTE2": 0.4406060606060606,
+          "MTE3": 0.4781818181818182
+        }
+      },
+      {
+        "kernel": "entry_kernel_5",
+        "reference_us": 3.8654545454545453,
+        "launch_id": 2,
+        "block_dim": 48,
+        "active_aic": 0,
+        "active_aiv": 48,
+        "max_core_mmad": 0,
+        "max_core_rv_count": 1716,
+        "critical_pipeline_us": {
+          "SCALAR": 1.9896969696969697,
+          "SIMD": 1.5612121212121213,
+          "MTE2": 0.7115151515151515,
+          "MTE3": 0.730909090909091
+        }
+      }
+    ],
+    "kernel": "entry_kernel_2+entry_kernel_0+entry_kernel_5",
+    "active_aic": [
+      32,
+      0,
+      0
+    ],
+    "active_aiv": [
+      64,
+      24,
+      48
+    ],
+    "source": "runs/v9mhc/mhc-09/result.json",
+    "db_sha256": [
+      "fda24c0f309f085265cae62c41fd03877c4f5994d2a71110cf9915e07f3aeb2b",
+      "e05744fe183d09430e14552cef2326f410011e739be806c3b50a46f978e5aca7",
+      "7c14bd2f93b291d159ce5a42b798ad21a3039a63c3f2b916d93ecf0db3a0d170"
+    ],
+    "query_us_max": 24.23,
+    "query_us_median": 17.41
+  }
+]

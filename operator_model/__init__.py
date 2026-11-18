@@ -1,3 +1,3 @@
 """Low-cost Ascend operator models; CA is an offline calibration dependency."""
 
-__version__ = '0.8.0'
+__version__ = '0.9.0'

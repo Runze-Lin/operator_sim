@@ -1,0 +1,972 @@
+[
+  {
+    "id": "a7_cal_k256",
+    "op": "addmm",
+    "shape": [
+      16,
+      64,
+      256
+    ],
+    "attrs": {
+      "self_shape": [
+        64
+      ],
+      "alpha": 1,
+      "beta": 1
+    },
+    "role": "development",
+    "predicted_us": 3.6496841049525166,
+    "reference_us": 3.4466666666666668,
+    "kernel": "entry_kernel_2",
+    "active_aic": 1,
+    "active_aiv": 0,
+    "correctness": [
+      "correctness count=1024 bad=0 max_abs_error=0.03125 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/model-v7/a7_cal_k256/result.json",
+    "api": "aclnnAddmm",
+    "status": "ok",
+    "previous_us": 5.039720111164404,
+    "query_max_ms": 0.04264
+  },
+  {
+    "id": "a7_hold_q9",
+    "op": "addmm",
+    "shape": [
+      9,
+      64,
+      128
+    ],
+    "attrs": {
+      "self_shape": [
+        64
+      ],
+      "alpha": 1,
+      "beta": 1
+    },
+    "role": "development",
+    "predicted_us": 3.5776489289123314,
+    "reference_us": 3.3424242424242423,
+    "kernel": "entry_kernel_2",
+    "active_aic": 1,
+    "active_aiv": 0,
+    "correctness": [
+      "correctness count=576 bad=0 max_abs_error=0.015625 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/model-v7/a7_hold_q9/result.json",
+    "api": "aclnnAddmm",
+    "status": "ok",
+    "previous_us": 4.765602626335463,
+    "query_max_ms": 0.02961
+  },
+  {
+    "id": "reused_addmm",
+    "op": "addmm",
+    "shape": [
+      2,
+      16,
+      16
+    ],
+    "attrs": {
+      "self_shape": [
+        16
+      ],
+      "alpha": 1,
+      "beta": 1
+    },
+    "role": "development",
+    "predicted_us": 3.5015304191721897,
+    "reference_us": 2.992121212121212,
+    "kernel": "entry_kernel_2",
+    "active_aic": 1,
+    "active_aiv": 0,
+    "correctness": [
+      "correctness count=32 bad=0 max_abs_error=0.00390625 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "docs/extensions/smoke-950dt.json",
+    "api": "aclnnAddmm",
+    "status": "ok",
+    "previous_us": 4.532370106101819,
+    "query_max_ms": 0.02938
+  },
+  {
+    "id": "addmm_128_192_256",
+    "op": "addmm",
+    "shape": [
+      128,
+      192,
+      256
+    ],
+    "attrs": {
+      "self_shape": [
+        192
+      ],
+      "alpha": 1,
+      "beta": 1
+    },
+    "role": "development",
+    "predicted_us": 3.860592379985689,
+    "reference_us": 3.763030303030303,
+    "kernel": "entry_kernel_2",
+    "active_aic": 24,
+    "active_aiv": 0,
+    "correctness": [
+      "correctness count=24576 bad=0 max_abs_error=0.03125 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cube/addmm_128_192_256/result.json",
+    "source_sha256": "9db1bcd907da708f1bd8db1e303e02140426192f0ae9d8229acf2b370d688967",
+    "kernels": [
+      {
+        "kernel": "entry_kernel_2",
+        "reference_us": 3.763030303030303,
+        "active_aic": 24,
+        "active_aiv": 0,
+        "max_core_mmad": 1,
+        "db_sha256": "ed5bd75b95b93bedc4a5d8545021724b33d2e2455d0c9f05795d52adbb62da5a",
+        "db_bytes": 7327744
+      }
+    ],
+    "api": "aclnnAddmm",
+    "status": "ok",
+    "query_seconds": 2.474e-05,
+    "wall_s": 53.0875789897982,
+    "previous_us": 5.039720111164404,
+    "query_max_ms": 0.02954
+  },
+  {
+    "id": "addmm_16_192_384",
+    "op": "addmm",
+    "shape": [
+      16,
+      192,
+      384
+    ],
+    "attrs": {
+      "self_shape": [
+        192
+      ],
+      "alpha": 1,
+      "beta": 1
+    },
+    "role": "development",
+    "predicted_us": 3.745276890279056,
+    "reference_us": 3.876969696969697,
+    "kernel": "entry_kernel_2",
+    "active_aic": 3,
+    "active_aiv": 0,
+    "correctness": [
+      "correctness count=3072 bad=0 max_abs_error=0.03125 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cube/addmm_16_192_384/result.json",
+    "source_sha256": "544976ce6080d4faf7e2404b7d084e7114ced8b13f0ec0eb8b4cb1f8d8acaaf2",
+    "kernels": [
+      {
+        "kernel": "entry_kernel_2",
+        "reference_us": 3.876969696969697,
+        "active_aic": 3,
+        "active_aiv": 0,
+        "max_core_mmad": 2,
+        "db_sha256": "5b15276282a212c7fb3f03c4a0bab866734d26c6a91c0071526863a81b3a1cd4",
+        "db_bytes": 1044480
+      }
+    ],
+    "api": "aclnnAddmm",
+    "status": "ok",
+    "query_seconds": 2.588e-05,
+    "wall_s": 50.11479606013745,
+    "previous_us": 5.2511516838117975,
+    "query_max_ms": 0.03999
+  },
+  {
+    "id": "addmm_256_512_256",
+    "op": "addmm",
+    "shape": [
+      256,
+      512,
+      256
+    ],
+    "attrs": {
+      "self_shape": [
+        512
+      ],
+      "alpha": 1,
+      "beta": 1
+    },
+    "role": "development",
+    "predicted_us": 4.236671177550122,
+    "reference_us": 4.327272727272727,
+    "kernel": "entry_kernel_2",
+    "active_aic": 32,
+    "active_aiv": 0,
+    "correctness": [
+      "correctness count=131072 bad=0 max_abs_error=0.03125 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cube/addmm_256_512_256/result.json",
+    "source_sha256": "0089f7c5e9ad6e26eb3673f9d1025a52a2caa4fd1596a635ff0394404b25b695",
+    "kernels": [
+      {
+        "kernel": "entry_kernel_2",
+        "reference_us": 4.327272727272727,
+        "active_aic": 32,
+        "active_aiv": 0,
+        "max_core_mmad": 1,
+        "db_sha256": "f0e85abef4f025043094eaa61c57d4ea04ab425818cbe1aadaa85e53cd8af5f2",
+        "db_bytes": 9793536
+      }
+    ],
+    "api": "aclnnAddmm",
+    "status": "ok",
+    "query_seconds": 3.568e-05,
+    "wall_s": 66.14771626982838,
+    "previous_us": 5.623102358773547,
+    "query_max_ms": 0.04183
+  },
+  {
+    "id": "addmm_4_80_48",
+    "op": "addmm",
+    "shape": [
+      4,
+      80,
+      48
+    ],
+    "attrs": {
+      "self_shape": [
+        80
+      ],
+      "alpha": 1,
+      "beta": 1
+    },
+    "role": "development",
+    "predicted_us": 3.5771241512387473,
+    "reference_us": 3.6254545454545455,
+    "kernel": "entry_kernel_2",
+    "active_aic": 2,
+    "active_aiv": 0,
+    "correctness": [
+      "correctness count=320 bad=0 max_abs_error=0.00390625 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cube/addmm_4_80_48/result.json",
+    "source_sha256": "2171e3c0a6da82470f8d7832c6a96fe345eb499dbf25d51a948770789cb1302e",
+    "kernels": [
+      {
+        "kernel": "entry_kernel_2",
+        "reference_us": 3.6254545454545455,
+        "active_aic": 2,
+        "active_aiv": 0,
+        "max_core_mmad": 1,
+        "db_sha256": "4563c9ccbf6188e11ce5b57bdd5ddda045077134c2cd708022f70b0fc87df5b6",
+        "db_bytes": 655360
+      }
+    ],
+    "api": "aclnnAddmm",
+    "status": "ok",
+    "query_seconds": 2.87e-05,
+    "wall_s": 45.11473937984556,
+    "previous_us": 4.61267224072415,
+    "query_max_ms": 0.02852
+  },
+  {
+    "id": "addmm_512_512_256",
+    "op": "addmm",
+    "shape": [
+      512,
+      512,
+      256
+    ],
+    "attrs": {
+      "self_shape": [
+        512
+      ],
+      "alpha": 1,
+      "beta": 1
+    },
+    "role": "development",
+    "predicted_us": 4.712782771803708,
+    "reference_us": 4.4787878787878785,
+    "kernel": "entry_kernel_2",
+    "active_aic": 32,
+    "active_aiv": 0,
+    "correctness": [
+      "correctness count=262144 bad=0 max_abs_error=0.03125 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cube/addmm_512_512_256/result.json",
+    "source_sha256": "40f9ffc57db1dda95e7f3667bdf9fb5632e0ce9f1e572a08b14b440a2dfaa940",
+    "kernels": [
+      {
+        "kernel": "entry_kernel_2",
+        "reference_us": 4.4787878787878785,
+        "active_aic": 32,
+        "active_aiv": 0,
+        "max_core_mmad": 2,
+        "db_sha256": "2d8bbf3aba9929b63f1fdae0799817fa6033604b5cf3ad7d85626535e0f60515",
+        "db_bytes": 10993664
+      }
+    ],
+    "api": "aclnnAddmm",
+    "status": "ok",
+    "query_seconds": 4.064e-05,
+    "wall_s": 85.37569736992009,
+    "previous_us": 6.402197331432853,
+    "query_max_ms": 0.04486
+  },
+  {
+    "id": "addmm_64_128_512",
+    "op": "addmm",
+    "shape": [
+      64,
+      128,
+      512
+    ],
+    "attrs": {
+      "self_shape": [
+        128
+      ],
+      "alpha": 1,
+      "beta": 1
+    },
+    "role": "development",
+    "predicted_us": 3.8349207737760693,
+    "reference_us": 4.5193939393939395,
+    "kernel": "entry_kernel_2",
+    "active_aic": 8,
+    "active_aiv": 0,
+    "correctness": [
+      "correctness count=8192 bad=0 max_abs_error=0.0625 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cube/addmm_64_128_512/result.json",
+    "source_sha256": "e3e9add54ae6149fa5db0cebbc7b46dd34b99cc8ac9c869a905f6498f5a3e7aa",
+    "kernels": [
+      {
+        "kernel": "entry_kernel_2",
+        "reference_us": 4.5193939393939395,
+        "active_aic": 8,
+        "active_aiv": 0,
+        "max_core_mmad": 2,
+        "db_sha256": "cf248b436c2c6cc447dd8af19ce16324d1417ce20d4a02ab8100e11afd990a01",
+        "db_bytes": 2818048
+      }
+    ],
+    "api": "aclnnAddmm",
+    "status": "ok",
+    "query_seconds": 2.536e-05,
+    "wall_s": 52.111238789977506,
+    "previous_us": 5.462583256459191,
+    "query_max_ms": 0.02846
+  },
+  {
+    "id": "addmm_1_32_16",
+    "op": "addmm",
+    "shape": [
+      1,
+      32,
+      16
+    ],
+    "attrs": {
+      "self_shape": [
+        32
+      ],
+      "alpha": 1,
+      "beta": 1
+    },
+    "role": "development",
+    "predicted_us": 3.502045742332643,
+    "reference_us": 3.287878787878788,
+    "kernel": "entry_kernel_2",
+    "active_aic": 1,
+    "active_aiv": 0,
+    "correctness": [
+      "correctness count=32 bad=0 max_abs_error=0 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cube-isolated/addmm_1_32_16/result.json",
+    "source_sha256": "de9f9eb1516ba6dd20fc3a0b64c25f198eda22b0c9eda21d9df764f9c9f3b14d",
+    "kernels": [
+      {
+        "kernel": "entry_kernel_2",
+        "reference_us": 3.287878787878788,
+        "active_aic": 1,
+        "active_aiv": 0,
+        "max_core_mmad": 1,
+        "db_sha256": "f279443b79c4fc1421cc58ec34449fcc534acaa0b6776c039d1f7eb2ec9c6f0b",
+        "db_bytes": 352256
+      }
+    ],
+    "api": "aclnnAddmm",
+    "status": "ok",
+    "query_seconds": 0.00015044,
+    "wall_s": 62.19954900001176,
+    "previous_us": 4.53737800949028,
+    "query_max_ms": 0.03268
+  },
+  {
+    "id": "addmm_2_32_32",
+    "op": "addmm",
+    "shape": [
+      2,
+      32,
+      32
+    ],
+    "attrs": {
+      "self_shape": [
+        32
+      ],
+      "alpha": 1,
+      "beta": 1
+    },
+    "role": "development",
+    "predicted_us": 3.5065287678868033,
+    "reference_us": 3.4084848484848487,
+    "kernel": "entry_kernel_2",
+    "active_aic": 1,
+    "active_aiv": 0,
+    "correctness": [
+      "correctness count=64 bad=0 max_abs_error=0.00390625 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cube-isolated/addmm_2_32_32/result.json",
+    "source_sha256": "908f36c991ab7481b7df9d99d02d688d51229e2683d989c9df52a43352a75ce2",
+    "kernels": [
+      {
+        "kernel": "entry_kernel_2",
+        "reference_us": 3.4084848484848487,
+        "active_aic": 1,
+        "active_aiv": 0,
+        "max_core_mmad": 1,
+        "db_sha256": "4d47967d67e0aeed1c0bc5bd6f0ec3c9ea2367e77fc3c5aef36ac3c46a9a87c9",
+        "db_bytes": 352256
+      }
+    ],
+    "api": "aclnnAddmm",
+    "status": "ok",
+    "query_seconds": 0.00544536,
+    "wall_s": 67.18217432009988,
+    "previous_us": 4.551341289080213,
+    "query_max_ms": 0.02893
+  },
+  {
+    "id": "addmm_31_64_257",
+    "op": "addmm",
+    "shape": [
+      31,
+      64,
+      257
+    ],
+    "attrs": {
+      "self_shape": [
+        64
+      ],
+      "alpha": 1,
+      "beta": 1
+    },
+    "role": "development",
+    "predicted_us": 3.6985196687391872,
+    "reference_us": 4.252727272727273,
+    "kernel": "entry_kernel_2",
+    "active_aic": 2,
+    "active_aiv": 0,
+    "correctness": [
+      "correctness count=1984 bad=0 max_abs_error=0.03125 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cube-isolated/addmm_31_64_257/result.json",
+    "source_sha256": "27e013e8c0a0fdd8fbf168f46d3117e82223a6305920641a259e89314d5b895c",
+    "kernels": [
+      {
+        "kernel": "entry_kernel_2",
+        "reference_us": 4.252727272727273,
+        "active_aic": 2,
+        "active_aiv": 0,
+        "max_core_mmad": 2,
+        "db_sha256": "8653b739eeaec8f7fd6c25a68f2ee8b7ae6698b53cd5a990901deffbc868a8fe",
+        "db_bytes": 729088
+      }
+    ],
+    "api": "aclnnAddmm",
+    "status": "ok",
+    "query_seconds": 2.68e-05,
+    "wall_s": 150.3996454498265,
+    "previous_us": 5.066149057745328,
+    "query_max_ms": 0.02852
+  },
+  {
+    "id": "addmm_9_128_256",
+    "op": "addmm",
+    "shape": [
+      9,
+      128,
+      256
+    ],
+    "attrs": {
+      "self_shape": [
+        128
+      ],
+      "alpha": 1,
+      "beta": 1
+    },
+    "role": "development",
+    "predicted_us": 3.6436234901986992,
+    "reference_us": 3.7563636363636363,
+    "kernel": "entry_kernel_2",
+    "active_aic": 2,
+    "active_aiv": 0,
+    "correctness": [
+      "correctness count=1152 bad=0 max_abs_error=0.03125 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v8cube-isolated/addmm_9_128_256/result.json",
+    "source_sha256": "0967b5b75570c52cde9f18f4fbe63fc3633c531b568f8371ee27ee024f5cbea8",
+    "kernels": [
+      {
+        "kernel": "entry_kernel_2",
+        "reference_us": 3.7563636363636363,
+        "active_aic": 2,
+        "active_aiv": 0,
+        "max_core_mmad": 1,
+        "db_sha256": "d918767aa1454bc60764300009a2d28fcfb44edda6be01c8a81f69f946a69b2f",
+        "db_bytes": 675840
+      }
+    ],
+    "api": "aclnnAddmm",
+    "status": "ok",
+    "query_seconds": 2.628e-05,
+    "wall_s": 116.34634236013517,
+    "previous_us": 4.9546435333880705,
+    "query_max_ms": 0.02892
+  },
+  {
+    "op": "addmm",
+    "id": "addmm_128_256_384",
+    "shape": [
+      128,
+      256,
+      384
+    ],
+    "attrs": {
+      "self_shape": [
+        256
+      ],
+      "alpha": 1,
+      "beta": 1
+    },
+    "timeout_s": 240,
+    "predicted_us": 3.9023686152458823,
+    "previous_us": 5.2511516838117975,
+    "role": "validation",
+    "reference_us": 4.275151515151515,
+    "kernel": "entry_kernel_2",
+    "active_aic": 32,
+    "active_aiv": 0,
+    "correctness": [
+      "correctness count=32768 bad=0 max_abs_error=0.121094 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v9addmm/addmm_128_256_384/result.json",
+    "source_sha256": "2d4c23967511ddf31a8cc3619697997b690ffe20c3276ac460eb203e904f469e",
+    "kernels": [
+      {
+        "kernel": "entry_kernel_2",
+        "reference_us": 4.275151515151515,
+        "active_aic": 32,
+        "active_aiv": 0,
+        "max_core_mmad": 2,
+        "db_sha256": "e401b833982db436096a989b3fcccc75886c73045c8c7c57aa831240cea64d06",
+        "db_bytes": 10985472
+      }
+    ],
+    "api": "aclnnAddmm",
+    "status": "ok",
+    "wall_s": 52.13620937988162,
+    "query_max_ms": 0.02818
+  },
+  {
+    "op": "addmm",
+    "id": "addmm_17_128_128",
+    "shape": [
+      17,
+      128,
+      128
+    ],
+    "attrs": {
+      "self_shape": [
+        128
+      ],
+      "alpha": 1,
+      "beta": 1
+    },
+    "timeout_s": 240,
+    "predicted_us": 3.7189995946591505,
+    "previous_us": 4.828288538517009,
+    "role": "validation",
+    "reference_us": 3.3927272727272726,
+    "kernel": "entry_kernel_2",
+    "active_aic": 4,
+    "active_aiv": 0,
+    "correctness": [
+      "correctness count=2176 bad=0 max_abs_error=0.015625 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v9addmm/addmm_17_128_128/result.json",
+    "source_sha256": "9b6d06dfeb537736b9eb8b81167396d9f7163acb3d3dc69ba724f0e52c4a5bbb",
+    "kernels": [
+      {
+        "kernel": "entry_kernel_2",
+        "reference_us": 3.3927272727272726,
+        "active_aic": 4,
+        "active_aiv": 0,
+        "max_core_mmad": 1,
+        "db_sha256": "3393a687331c961f15a421f0ef4cae5c6f4f83772ca035c3516b972ada86af18",
+        "db_bytes": 1286144
+      }
+    ],
+    "api": "aclnnAddmm",
+    "status": "ok",
+    "wall_s": 38.13081352994777,
+    "query_max_ms": 0.03736
+  },
+  {
+    "op": "addmm",
+    "id": "addmm_1_64_32",
+    "shape": [
+      1,
+      64,
+      32
+    ],
+    "attrs": {
+      "self_shape": [
+        64
+      ],
+      "alpha": 1,
+      "beta": 1
+    },
+    "timeout_s": 240,
+    "predicted_us": 3.5085900605286175,
+    "previous_us": 4.571372902634055,
+    "role": "validation",
+    "reference_us": 3.1454545454545455,
+    "kernel": "entry_kernel_2",
+    "active_aic": 1,
+    "active_aiv": 0,
+    "correctness": [
+      "correctness count=64 bad=0 max_abs_error=0.00390625 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v9addmm/addmm_1_64_32/result.json",
+    "source_sha256": "841b1d1311fc1792b69ee186a1d9f4cdebdd62fd0a7d2b902a54edcd23a0981b",
+    "kernels": [
+      {
+        "kernel": "entry_kernel_2",
+        "reference_us": 3.1454545454545455,
+        "active_aic": 1,
+        "active_aiv": 0,
+        "max_core_mmad": 1,
+        "db_sha256": "8354a6dd7e4b5bc7f6a7fe13c41555f37155dda21dd3c3d39ff45cae7c0b9a03",
+        "db_bytes": 352256
+      }
+    ],
+    "api": "aclnnAddmm",
+    "status": "ok",
+    "wall_s": 42.144370179856196,
+    "query_max_ms": 0.02922
+  },
+  {
+    "op": "addmm",
+    "id": "addmm_256_384_256",
+    "shape": [
+      256,
+      384,
+      256
+    ],
+    "attrs": {
+      "self_shape": [
+        384
+      ],
+      "alpha": 1,
+      "beta": 1
+    },
+    "timeout_s": 240,
+    "predicted_us": 4.217579452583294,
+    "previous_us": 5.623102358773547,
+    "role": "validation",
+    "reference_us": 4.380606060606061,
+    "kernel": "entry_kernel_2",
+    "active_aic": 24,
+    "active_aiv": 0,
+    "correctness": [
+      "correctness count=98304 bad=0 max_abs_error=0.03125 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v9addmm/addmm_256_384_256/result.json",
+    "source_sha256": "633a7f2ba852c943fd669790e011f059c1dd1784b204bca2380d1b23db880117",
+    "kernels": [
+      {
+        "kernel": "entry_kernel_2",
+        "reference_us": 4.380606060606061,
+        "active_aic": 24,
+        "active_aiv": 0,
+        "max_core_mmad": 1,
+        "db_sha256": "32419bc95a4fa70624767b559aedaae4a83976a8876aa6d4614bf976403735de",
+        "db_bytes": 7278592
+      }
+    ],
+    "api": "aclnnAddmm",
+    "status": "ok",
+    "wall_s": 48.12590054003522,
+    "query_max_ms": 0.04146
+  },
+  {
+    "op": "addmm",
+    "id": "addmm_2_64_32",
+    "shape": [
+      2,
+      64,
+      32
+    ],
+    "attrs": {
+      "self_shape": [
+        64
+      ],
+      "alpha": 1,
+      "beta": 1
+    },
+    "timeout_s": 240,
+    "predicted_us": 3.5153498039559845,
+    "previous_us": 4.577929033060549,
+    "role": "validation",
+    "reference_us": 3.423030303030303,
+    "kernel": "entry_kernel_2",
+    "active_aic": 1,
+    "active_aiv": 0,
+    "correctness": [
+      "correctness count=128 bad=0 max_abs_error=0.00390625 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v9addmm/addmm_2_64_32/result.json",
+    "source_sha256": "68254a1e10dd750ed3e76e36eb8a191544b9414d4d44c0297a869172099628f0",
+    "kernels": [
+      {
+        "kernel": "entry_kernel_2",
+        "reference_us": 3.423030303030303,
+        "active_aic": 1,
+        "active_aiv": 0,
+        "max_core_mmad": 1,
+        "db_sha256": "09e4bcf3f42b7cc30256b19748508f341d8f951447ac5f8b692240f6e9397d45",
+        "db_bytes": 352256
+      }
+    ],
+    "api": "aclnnAddmm",
+    "status": "ok",
+    "wall_s": 44.110544859897345,
+    "query_max_ms": 0.02876
+  },
+  {
+    "op": "addmm",
+    "id": "addmm_32_80_272",
+    "shape": [
+      32,
+      80,
+      272
+    ],
+    "attrs": {
+      "self_shape": [
+        80
+      ],
+      "alpha": 1,
+      "beta": 1
+    },
+    "timeout_s": 240,
+    "predicted_us": 3.744519668739187,
+    "previous_us": 5.066149057745328,
+    "role": "validation",
+    "reference_us": 4.227878787878788,
+    "kernel": "entry_kernel_2",
+    "active_aic": 4,
+    "active_aiv": 0,
+    "correctness": [
+      "correctness count=2560 bad=0 max_abs_error=0 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v9addmm/addmm_32_80_272/result.json",
+    "source_sha256": "d697461e8c1cfdd2ae3fe77b643e95913ee3a92d9fffc2ea15676b336a153672",
+    "kernels": [
+      {
+        "kernel": "entry_kernel_2",
+        "reference_us": 4.227878787878788,
+        "active_aic": 4,
+        "active_aiv": 0,
+        "max_core_mmad": 2,
+        "db_sha256": "fbeea570f5169e6799fd781cb3d11c5485bd65544d6d0c35eca23810c00dbf01",
+        "db_bytes": 1384448
+      }
+    ],
+    "api": "aclnnAddmm",
+    "status": "ok",
+    "wall_s": 48.12719668983482,
+    "query_max_ms": 0.02942
+  },
+  {
+    "op": "addmm",
+    "id": "addmm_3_48_96",
+    "shape": [
+      3,
+      48,
+      96
+    ],
+    "attrs": {
+      "self_shape": [
+        48
+      ],
+      "alpha": 1,
+      "beta": 1
+    },
+    "timeout_s": 240,
+    "predicted_us": 3.522741225877693,
+    "previous_us": 4.634341078245738,
+    "role": "validation",
+    "reference_us": 3.3515151515151516,
+    "kernel": "entry_kernel_2",
+    "active_aic": 1,
+    "active_aiv": 0,
+    "correctness": [
+      "correctness count=144 bad=0 max_abs_error=0.0078125 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v9addmm/addmm_3_48_96/result.json",
+    "source_sha256": "96b7f95f8e198adba4dd89ee91ac7dd54bc9149f7413951a0059d1eb9fe43cd3",
+    "kernels": [
+      {
+        "kernel": "entry_kernel_2",
+        "reference_us": 3.3515151515151516,
+        "active_aic": 1,
+        "active_aiv": 0,
+        "max_core_mmad": 1,
+        "db_sha256": "fcdc5366b0b923c338ea2c6832888128cb2f3a4e82ca630d2630f624a43dce33",
+        "db_bytes": 352256
+      }
+    ],
+    "api": "aclnnAddmm",
+    "status": "ok",
+    "wall_s": 43.148323389934376,
+    "query_max_ms": 0.02836
+  },
+  {
+    "op": "addmm",
+    "id": "addmm_48_256_384",
+    "shape": [
+      48,
+      256,
+      384
+    ],
+    "attrs": {
+      "self_shape": [
+        256
+      ],
+      "alpha": 1,
+      "beta": 1
+    },
+    "timeout_s": 240,
+    "predicted_us": 3.8372768902790555,
+    "previous_us": 5.2511516838117975,
+    "role": "validation",
+    "reference_us": 4.026666666666666,
+    "kernel": "entry_kernel_2",
+    "active_aic": 12,
+    "active_aiv": 0,
+    "correctness": [
+      "correctness count=12288 bad=0 max_abs_error=0.121094 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v9addmm/addmm_48_256_384/result.json",
+    "source_sha256": "a8e5a1f12bfd560dacb0d222598d1087bac4baa5512daae571ffcb87fe7fb451",
+    "kernels": [
+      {
+        "kernel": "entry_kernel_2",
+        "reference_us": 4.026666666666666,
+        "active_aic": 12,
+        "active_aiv": 0,
+        "max_core_mmad": 2,
+        "db_sha256": "139ac824e2430f25253e63a0d633307eb5021acc485dc6ac051d95d08ff8a89a",
+        "db_bytes": 4112384
+      }
+    ],
+    "api": "aclnnAddmm",
+    "status": "ok",
+    "wall_s": 48.13871639990248,
+    "query_max_ms": 0.02819
+  },
+  {
+    "op": "addmm",
+    "id": "addmm_8_96_192",
+    "shape": [
+      8,
+      96,
+      192
+    ],
+    "attrs": {
+      "self_shape": [
+        96
+      ],
+      "alpha": 1,
+      "beta": 1
+    },
+    "timeout_s": 240,
+    "predicted_us": 3.6263925466626126,
+    "previous_us": 4.849568616293347,
+    "role": "validation",
+    "reference_us": 3.6872727272727275,
+    "kernel": "entry_kernel_2",
+    "active_aic": 2,
+    "active_aiv": 0,
+    "correctness": [
+      "correctness count=768 bad=0 max_abs_error=0.015625 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v9addmm/addmm_8_96_192/result.json",
+    "source_sha256": "1a71bac32d6c5b2a7596a30b9334c606123ccced60fb44a09db5f2b5d5a8bb2b",
+    "kernels": [
+      {
+        "kernel": "entry_kernel_2",
+        "reference_us": 3.6872727272727275,
+        "active_aic": 2,
+        "active_aiv": 0,
+        "max_core_mmad": 1,
+        "db_sha256": "46e3040856a67d36763399e2ee8234c3712eefa5ad1a8e29d0576f439671ed9f",
+        "db_bytes": 675840
+      }
+    ],
+    "api": "aclnnAddmm",
+    "status": "ok",
+    "wall_s": 42.14485442987643,
+    "query_max_ms": 0.02785
+  },
+  {
+    "op": "addmm",
+    "id": "addmm_96_192_256",
+    "shape": [
+      96,
+      192,
+      256
+    ],
+    "attrs": {
+      "self_shape": [
+        192
+      ],
+      "alpha": 1,
+      "beta": 1
+    },
+    "timeout_s": 240,
+    "predicted_us": 3.8415006550188626,
+    "previous_us": 5.039720111164404,
+    "role": "validation",
+    "reference_us": 3.924848484848485,
+    "kernel": "entry_kernel_2",
+    "active_aic": 18,
+    "active_aiv": 0,
+    "correctness": [
+      "correctness count=18432 bad=0 max_abs_error=0.03125 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "source": "runs/v9addmm/addmm_96_192_256/result.json",
+    "source_sha256": "9b735bb343abea3c3de35daeb23891209bd72b6b69537a4d0376ab5504584c33",
+    "kernels": [
+      {
+        "kernel": "entry_kernel_2",
+        "reference_us": 3.924848484848485,
+        "active_aic": 18,
+        "active_aiv": 0,
+        "max_core_mmad": 1,
+        "db_sha256": "9c579cc1c5d7c7e14d48fbf59ae71c4063253cb545cccae31d6e79ec88548dbb",
+        "db_bytes": 5607424
+      }
+    ],
+    "api": "aclnnAddmm",
+    "status": "ok",
+    "wall_s": 46.11724003008567,
+    "query_max_ms": 0.02738
+  }
+]
