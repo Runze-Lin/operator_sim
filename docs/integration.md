@@ -59,7 +59,7 @@ if event.status in ("estimated", "extrapolated"):
 | `work` | `cube_ops`、`vec_ops` 及各自的 `*_by_dtype`，`vec_ops_by_class` 拆分运算类别。每个 exp、除法等按一次有用标量运算计，实际每周期服务能力随指令而变。见 `scope` 和 `notes` 中的已统计范围 |
 | `work["logical_read_bytes"]`、`work["logical_write_bytes"]` | 每个 kernel 输入、输出张量的逻辑字节。未知方向返回 `None`。实际外存字节 `physical_hbm_bytes` 当前保留为 `None`。系统内存容量约束需单独核算活跃张量和 workspace |
 | `rates` | `useful_cube_tops`、`counted_vector_tops` 和 `logical_io_gbs`，均为工作量除以预测的设备时间。逻辑接口吞吐可以大于外存带宽；另给出 `cube_nominal_peak_fraction`、`vector_nominal_peak_fraction`，即已计工作按对应位宽峰值完成所需的理想时间除以预测时间。缺少相应峰值时为 `None`。用于比较有用吞吐占整片名义峰值的比例，实际硬件忙碌率需要独立流水证据 |
-| `projection` | 跨芯片时提供参考微秒数、目标阶段时间、继承字段、迁移方法和假设。Quant 与 Matmul 命中分段路径时，`timing_diagnostics` 提供首读、计算和写回等阶段的 µs 估计；通用路线可返回空字典。系统调度按 `latency_us` 记一次耗时。高水位已知时，两种核数间按本次活跃核比例折算，并记录在 `resident_aiv_mapping` |
+| `projection` | 跨芯片时提供参考微秒数、目标阶段时间、继承字段、迁移方法和假设。FA、Quant 与 Matmul 命中分段路径时，`timing_diagnostics` 提供首读、计算和写回等阶段的 µs 估计；通用路线可返回空字典。系统调度按 `latency_us` 记一次耗时。高水位已知时，两种核数间按本次活跃核比例折算，并记录在 `resident_aiv_mapping` |
 
 CLI 用 `predicted_us` 表示相同微秒数，用 `estimate_status` 表示系统接口状态。Python 接口保留上一版的 `soc=` 参数。芯片名拼错或配置不合法会返回 `unsupported`；在初始化时直接用 `load_chip` 可以及早发现配置问题。
 
@@ -115,3 +115,5 @@ if result.active_aiv is not None:
 ```
 
 mHC Post 在少 token 且切通道时，默认估计在首次、扩核与热态之间平衡相对误差。已知连续调用处于热态时，传入 `resident_aiv` 可避免把额外的启动时间累积到每个事件。其余分核分支用历史条件时间的加权中位数。在线查询本身不改变设备历史。[不同状态的同集误差与大 shape 核查](../results/v0.12/audit/summary.md)
+
+对于 BF16 ND Matmul，`projection["target_plan"]` 给出目标的输出 tile、MMAD K 深度、DMA 页深、活跃核数和波数。FA 的 `timing_diagnostics["phases_us"]` 给出首次 MMAD 前缀、矩阵乘窗口（长循环进一步列出填充和稳态）及排空；`parameter_source` 标记配对 PR 校准或 DT 阶段随目标配置迁移。两者都是跨芯片诊断字段；设备调度器统一使用 `latency_us`。

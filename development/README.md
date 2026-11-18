@@ -4,7 +4,9 @@
 
 ## 复现跨芯片后端
 
-本轮独立验证包括 DynamicMXQuant、Matmul、FA 三条 PR 路线。固定输入、两端模型与直接复用 DT 的预测后，采集预算按 shape 执行；可从[本轮变更](../results/v0.14/changes.md)进入冻结合同、实际样例和逐点对比。[采集与发布脚本](validation/sku14)
+v0.15 在 PR 上以 FA 和 Matmul 各 10 个新 shape 检查两种库分支，包含 32k FA、M=255/257 等分块边界。采集前冻结 v0.15、v0.14 和直接复用 DT 三组预测。[v0.15 验证与采集成本](../results/v0.15/changes.md) · [采集、安装核对与报告程序](validation/sku15)
+
+v0.14 独立验证包括 DynamicMXQuant、Matmul、FA 三条 PR 路线。固定输入、两端模型与直接复用 DT 的预测后，采集预算按 shape 执行；可从[本轮变更](../results/v0.14/changes.md)进入冻结合同、实际样例和逐点对比。[采集与发布脚本](validation/sku14)
 
 `development/validation/replay_v13.py` 对既有 950DT 计时输入回放两个 SKU，并校验新旧 DT 预测以及两端工作量。两款芯片的 `msopprof` 证据、采集预算与独立冻结合同见[双 SKU 配对校准](../results/v0.13/sku/README.md)。`development/validation/report_v13.py` 使用合格结果生成逐 SKU 误差表与对照图，`wheel_v13.py` 从部署环境核对安装包输出。两款芯片的输入参数及来源保存在 [configs/chips](../configs/chips)。
 

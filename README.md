@@ -45,6 +45,6 @@ KDA chunk 可查询任务结构；其 CA 同步检查尚未通过，系统层应
 
 主要校准参考是 **Ascend950DT_9582（A5），CANN 9.2.1，32 AIC / 64 AIV，1.65 GHz**。参考值是安装包实际 kernel 在 CA Model 上从首条到末条设备指令的跨核时间窗；串行组合返回各窗口之和。主机 launch、卡间通信、排队及算子间并发由系统仿真器处理。报告的查询开销是运行预测器花费的真实墙钟时间，与 `predicted_us` 使用的是两条不同的时间轴。
 
-**Ascend950PR_957b** 上的 DynamicMXQuant、Matmul 和 FA 各有 10 个冻结后采集的独立 shape。同一份[误差分析](docs/error-analysis.md)列出两款芯片的核数、分精度算力、频率、存储容量与带宽，并用同一组 PR CA 比较跨芯片预测和直接复用 DT。尚未取得 960、970、980 的 CA 或上板数据，预测采用调用方提供的硬件参数及相近实现假设。逐 SKU 的开发、独立误差和数据缺口见[校验报告](docs/error-analysis.md)。
+**Ascend950PR_957b** 上的 DynamicMXQuant、Matmul 和 FA 各有 10 个冻结后采集的独立 shape。FA 已用正式 PR CA 验到单头 Q=9、KV=32,768；Matmul 包含了触发 24/28 核分块的大矩阵。未校准目标沿用实现假设，用自己的硬件配置重新分块、计价。同一份[误差分析](docs/error-analysis.md)列出两款芯片的核数、分精度算力、频率、存储容量与带宽，并用同一组 PR CA 比较跨芯片预测和直接复用 DT。尚未取得 960、970、980 的 CA 或上板数据，预测采用调用方提供的硬件参数及相近实现假设。逐 SKU 的开发、独立误差和数据缺口见[校验报告](docs/error-analysis.md)。
 
 维护模型、复现 CA 或查阅历史版本，请从[开发与验证档案](development/README.md)进入。

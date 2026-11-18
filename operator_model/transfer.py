@@ -9,7 +9,8 @@ from .model_v2 import plan
 from .model_v6 import Case
 from .predictor import _legacy, _profile
 from .quant_repeat import price_plan
-from .target_tiling import quant_plan, matmul_plan
+from .target_tiling import quant_plan
+from .matmul_v15 import matmul_plan
 
 
 def _compute_ratio(engine, counts, clock, ref, target, notes):
@@ -176,7 +177,7 @@ def project(op, shape, attrs, reference_result, work, reference_chip, target_chi
     if op in ('quant','fa','matmul'):
         f=prices(op,reference_result,work)
         if op=='matmul':
-            target_plan = matmul_plan(shape,target.cube_cores)
+            target_plan = matmul_plan(shape,target)
         elif op=='quant':
             target_plan = quant_plan(shape,target.vector_cores,target.details.get('ub_bytes') or 253952)
         if target_plan:
@@ -189,11 +190,14 @@ def project(op, shape, attrs, reference_result, work, reference_chip, target_chi
         elif op == 'matmul':
             from .cube_transfer_v14 import project_matmul
             adjusted = project_matmul(shape, f, ref, target, target_plan)
+        elif op == 'fa':
+            from .fa_transfer_v15 import project_fa
+            adjusted = project_fa(shape, f, ref, target, reference_result)
         if adjusted is None:
             stages['scheduled_window'] = _legacy_time(op, shape, f, target_plan)
         else:
             stages['scheduled_window'], timing_diagnostics = adjusted
-            notes[1] = 'Matched calibrated phase model. See timing_diagnostics for its scope.'
+            notes[1] = 'Timing uses pipeline stages. See timing_diagnostics for calibration scope and assumptions.'
     elif op=='addmm':
         r=reference_result
         f=prices(op,r,work)

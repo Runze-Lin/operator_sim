@@ -1,0 +1,762 @@
+[
+  {
+    "case": "dt",
+    "op": "matmul",
+    "shape": [
+      512,
+      512,
+      256
+    ],
+    "latency_us": 5.156123653730549,
+    "aic": 32,
+    "aiv": null,
+    "query_ms": 0.15691,
+    "plan": null,
+    "timing": null,
+    "inherited": [],
+    "ca_us": null
+  },
+  {
+    "case": "unknown_same_resources",
+    "op": "matmul",
+    "shape": [
+      512,
+      512,
+      256
+    ],
+    "latency_us": 5.156123653730549,
+    "aic": 32,
+    "aiv": 0,
+    "query_ms": 9.8304,
+    "plan": {
+      "active_aic": 32,
+      "active_aiv": 0,
+      "tile": [
+        128,
+        64,
+        128
+      ],
+      "read_page_k": 256,
+      "waves": 1,
+      "iterations": 1,
+      "branch": "coarse_tile",
+      "mmads_total": 64,
+      "output_tiles": 32,
+      "units": {
+        "read": 96.0,
+        "cube": 32.0,
+        "fix": 16.0,
+        "vector": 0.0,
+        "write": 0.0
+      }
+    },
+    "timing": {
+      "prefix_us": 2.2499990736925928,
+      "first_pair_us": 1.4893506003444614,
+      "l0_us": 0.1404099116660099,
+      "page_intervals_us": 0.0,
+      "last_compute_us": 0.31242655063348557,
+      "drain_us": 0.22121213376522064,
+      "extra_waves_us": 0.0,
+      "logical_hbm_floor_us": 0.262144,
+      "read_pages": 1,
+      "read_page_k": 256,
+      "mmad_k": 128,
+      "mode": "reference_anchored_landmarks",
+      "reference_window_us": 4.41339827010177,
+      "reference_level_us": 5.156123653730549
+    },
+    "inherited": [],
+    "ca_us": null
+  },
+  {
+    "case": "cube_cores_x2_same_per_core",
+    "op": "matmul",
+    "shape": [
+      512,
+      512,
+      256
+    ],
+    "latency_us": 4.641888932051488,
+    "aic": 64,
+    "aiv": 0,
+    "query_ms": 0.57305,
+    "plan": {
+      "active_aic": 64,
+      "active_aiv": 0,
+      "tile": [
+        64,
+        64,
+        256
+      ],
+      "read_page_k": 256,
+      "waves": 1,
+      "iterations": 1,
+      "branch": "coarse_tile",
+      "mmads_total": 64,
+      "output_tiles": 64,
+      "units": {
+        "read": 64.0,
+        "cube": 16.0,
+        "fix": 8.0,
+        "vector": 0.0,
+        "write": 0.0
+      }
+    },
+    "timing": {
+      "prefix_us": 2.2813098891876793,
+      "first_pair_us": 1.0835492702746796,
+      "l0_us": 0.17781680762873342,
+      "page_intervals_us": 0.0,
+      "last_compute_us": 0.2093495401568608,
+      "drain_us": 0.22121213376522064,
+      "extra_waves_us": 0.0,
+      "logical_hbm_floor_us": 0.262144,
+      "read_pages": 1,
+      "read_page_k": 256,
+      "mmad_k": 256,
+      "mode": "reference_anchored_landmarks",
+      "reference_window_us": 4.41339827010177,
+      "reference_level_us": 5.156123653730549
+    },
+    "inherited": [],
+    "ca_us": null
+  },
+  {
+    "case": "vector_peaks_x0.5",
+    "op": "matmul",
+    "shape": [
+      512,
+      512,
+      256
+    ],
+    "latency_us": 5.156123653730549,
+    "aic": 32,
+    "aiv": 0,
+    "query_ms": 0.54072,
+    "plan": {
+      "active_aic": 32,
+      "active_aiv": 0,
+      "tile": [
+        128,
+        64,
+        128
+      ],
+      "read_page_k": 256,
+      "waves": 1,
+      "iterations": 1,
+      "branch": "coarse_tile",
+      "mmads_total": 64,
+      "output_tiles": 32,
+      "units": {
+        "read": 96.0,
+        "cube": 32.0,
+        "fix": 16.0,
+        "vector": 0.0,
+        "write": 0.0
+      }
+    },
+    "timing": {
+      "prefix_us": 2.2499990736925928,
+      "first_pair_us": 1.4893506003444614,
+      "l0_us": 0.1404099116660099,
+      "page_intervals_us": 0.0,
+      "last_compute_us": 0.31242655063348557,
+      "drain_us": 0.22121213376522064,
+      "extra_waves_us": 0.0,
+      "logical_hbm_floor_us": 0.262144,
+      "read_pages": 1,
+      "read_page_k": 256,
+      "mmad_k": 128,
+      "mode": "reference_anchored_landmarks",
+      "reference_window_us": 4.41339827010177,
+      "reference_level_us": 5.156123653730549
+    },
+    "inherited": [],
+    "ca_us": null
+  },
+  {
+    "case": "offchip_bandwidth_x0.5",
+    "op": "matmul",
+    "shape": [
+      512,
+      512,
+      256
+    ],
+    "latency_us": 5.156123653730549,
+    "aic": 32,
+    "aiv": 0,
+    "query_ms": 0.54802,
+    "plan": {
+      "active_aic": 32,
+      "active_aiv": 0,
+      "tile": [
+        128,
+        64,
+        128
+      ],
+      "read_page_k": 256,
+      "waves": 1,
+      "iterations": 1,
+      "branch": "coarse_tile",
+      "mmads_total": 64,
+      "output_tiles": 32,
+      "units": {
+        "read": 96.0,
+        "cube": 32.0,
+        "fix": 16.0,
+        "vector": 0.0,
+        "write": 0.0
+      }
+    },
+    "timing": {
+      "prefix_us": 2.2499990736925928,
+      "first_pair_us": 1.4893506003444614,
+      "l0_us": 0.1404099116660099,
+      "page_intervals_us": 0.0,
+      "last_compute_us": 0.31242655063348557,
+      "drain_us": 0.22121213376522064,
+      "extra_waves_us": 0.0,
+      "logical_hbm_floor_us": 0.524288,
+      "read_pages": 1,
+      "read_page_k": 256,
+      "mmad_k": 128,
+      "mode": "reference_anchored_landmarks",
+      "reference_window_us": 4.41339827010177,
+      "reference_level_us": 5.156123653730549
+    },
+    "inherited": [],
+    "ca_us": null
+  },
+  {
+    "case": "clock_and_peaks_x1.1",
+    "op": "matmul",
+    "shape": [
+      512,
+      512,
+      256
+    ],
+    "latency_us": 4.687385139755044,
+    "aic": 32,
+    "aiv": 0,
+    "query_ms": 0.51189,
+    "plan": {
+      "active_aic": 32,
+      "active_aiv": 0,
+      "tile": [
+        128,
+        64,
+        128
+      ],
+      "read_page_k": 256,
+      "waves": 1,
+      "iterations": 1,
+      "branch": "coarse_tile",
+      "mmads_total": 64,
+      "output_tiles": 32,
+      "units": {
+        "read": 96.0,
+        "cube": 32.0,
+        "fix": 16.0,
+        "vector": 0.0,
+        "write": 0.0
+      }
+    },
+    "timing": {
+      "prefix_us": 2.0454537033569022,
+      "first_pair_us": 1.3539550912222376,
+      "l0_us": 0.1276453742418272,
+      "page_intervals_us": 0.0,
+      "last_compute_us": 0.2840241369395323,
+      "drain_us": 0.2011019397865642,
+      "extra_waves_us": 0.0,
+      "logical_hbm_floor_us": 0.262144,
+      "read_pages": 1,
+      "read_page_k": 256,
+      "mmad_k": 128,
+      "mode": "reference_anchored_landmarks",
+      "reference_window_us": 4.41339827010177,
+      "reference_level_us": 5.156123653730549
+    },
+    "inherited": [],
+    "ca_us": null
+  },
+  {
+    "case": "custom_120c_120v",
+    "op": "matmul",
+    "shape": [
+      512,
+      512,
+      256
+    ],
+    "latency_us": 4.222982168024259,
+    "aic": 88,
+    "aiv": 0,
+    "query_ms": 0.52561,
+    "plan": {
+      "active_aic": 88,
+      "active_aiv": 0,
+      "tile": [
+        48,
+        64,
+        256
+      ],
+      "read_page_k": 256,
+      "waves": 1,
+      "iterations": 1,
+      "branch": "coarse_tile",
+      "mmads_total": 88,
+      "output_tiles": 88,
+      "units": {
+        "read": 56.0,
+        "cube": 12.0,
+        "fix": 6.0,
+        "vector": 0.0,
+        "write": 0.0
+      }
+    },
+    "timing": {
+      "prefix_us": 2.104506110040465,
+      "first_pair_us": 0.9932534977517897,
+      "l0_us": 0.1458539130100907,
+      "page_intervals_us": 0.0,
+      "last_compute_us": 0.16828193025383192,
+      "drain_us": 0.20277778928478557,
+      "extra_waves_us": 0.0,
+      "logical_hbm_floor_us": 0.2097152,
+      "read_pages": 1,
+      "read_page_k": 256,
+      "mmad_k": 256,
+      "mode": "reference_anchored_landmarks",
+      "reference_window_us": 4.41339827010177,
+      "reference_level_us": 5.156123653730549
+    },
+    "inherited": [
+      "details.l0a_bytes",
+      "details.l0b_bytes",
+      "details.l0c_bytes",
+      "details.l1_bytes",
+      "details.l2_bytes",
+      "details.ub_bytes"
+    ],
+    "ca_us": null
+  },
+  {
+    "case": "dt",
+    "op": "fa",
+    "shape": [
+      9,
+      32768,
+      64,
+      1,
+      1
+    ],
+    "latency_us": 76.18387794817,
+    "aic": 1,
+    "aiv": 2,
+    "query_ms": 0.05194,
+    "plan": null,
+    "timing": null,
+    "inherited": [],
+    "ca_us": null
+  },
+  {
+    "case": "unknown_same_resources",
+    "op": "fa",
+    "shape": [
+      9,
+      32768,
+      64,
+      1,
+      1
+    ],
+    "latency_us": 76.18387794817,
+    "aic": 1,
+    "aiv": 2,
+    "query_ms": 1.6204,
+    "plan": null,
+    "timing": {
+      "kv_tiles": 128,
+      "kv_issue_tokens": 256,
+      "issue_us": 0.5172149778786946,
+      "mmads_per_core": 512,
+      "method": "FA first MMAD / loop / drain",
+      "phases_us": {
+        "first_mmad_prefix": 7.53531700174135,
+        "mmad_fill": 2.437797429396326,
+        "steady_loop": 65.86255894912925,
+        "drain": 0.34820456790305887
+      },
+      "parameter_source": "DT queue exposures and target chip config"
+    },
+    "inherited": [],
+    "ca_us": null
+  },
+  {
+    "case": "cube_cores_x2_same_per_core",
+    "op": "fa",
+    "shape": [
+      9,
+      32768,
+      64,
+      1,
+      1
+    ],
+    "latency_us": 76.18387794817,
+    "aic": 1,
+    "aiv": 2,
+    "query_ms": 0.19289,
+    "plan": null,
+    "timing": {
+      "kv_tiles": 128,
+      "kv_issue_tokens": 256,
+      "issue_us": 0.5172149778786946,
+      "mmads_per_core": 512,
+      "method": "FA first MMAD / loop / drain",
+      "phases_us": {
+        "first_mmad_prefix": 7.53531700174135,
+        "mmad_fill": 2.437797429396326,
+        "steady_loop": 65.86255894912925,
+        "drain": 0.34820456790305887
+      },
+      "parameter_source": "DT queue exposures and target chip config"
+    },
+    "inherited": [],
+    "ca_us": null
+  },
+  {
+    "case": "vector_peaks_x0.5",
+    "op": "fa",
+    "shape": [
+      9,
+      32768,
+      64,
+      1,
+      1
+    ],
+    "latency_us": 76.92530966010433,
+    "aic": 1,
+    "aiv": 2,
+    "query_ms": 0.18603,
+    "plan": null,
+    "timing": {
+      "kv_tiles": 128,
+      "kv_issue_tokens": 256,
+      "issue_us": 0.5172149778786946,
+      "mmads_per_core": 512,
+      "method": "FA first MMAD / loop / drain",
+      "phases_us": {
+        "first_mmad_prefix": 7.53531700174135,
+        "mmad_fill": 3.095615577097731,
+        "steady_loop": 65.86255894912925,
+        "drain": 0.43181813213600245
+      },
+      "parameter_source": "DT queue exposures and target chip config"
+    },
+    "inherited": [],
+    "ca_us": null
+  },
+  {
+    "case": "offchip_bandwidth_x0.5",
+    "op": "fa",
+    "shape": [
+      9,
+      32768,
+      64,
+      1,
+      1
+    ],
+    "latency_us": 76.28906426601048,
+    "aic": 1,
+    "aiv": 2,
+    "query_ms": 0.16624,
+    "plan": null,
+    "timing": {
+      "kv_tiles": 128,
+      "kv_issue_tokens": 256,
+      "issue_us": 0.5172149778786946,
+      "mmads_per_core": 512,
+      "method": "FA first MMAD / loop / drain",
+      "phases_us": {
+        "first_mmad_prefix": 7.583078848181675,
+        "mmad_fill": 2.4873842787841745,
+        "steady_loop": 65.86255894912925,
+        "drain": 0.3560421899153882
+      },
+      "parameter_source": "DT queue exposures and target chip config"
+    },
+    "inherited": [],
+    "ca_us": null
+  },
+  {
+    "case": "clock_and_peaks_x1.1",
+    "op": "fa",
+    "shape": [
+      9,
+      32768,
+      64,
+      1,
+      1
+    ],
+    "latency_us": 69.26763325450366,
+    "aic": 1,
+    "aiv": 2,
+    "query_ms": 0.16321,
+    "plan": null,
+    "timing": {
+      "kv_tiles": 128,
+      "kv_issue_tokens": 256,
+      "issue_us": 0.4701954344351769,
+      "mmads_per_core": 512,
+      "method": "FA first MMAD / loop / drain",
+      "phases_us": {
+        "first_mmad_prefix": 6.854630169441258,
+        "mmad_fill": 2.220687376668282,
+        "steady_loop": 59.875053590117496,
+        "drain": 0.3172621182766289
+      },
+      "parameter_source": "DT queue exposures and target chip config"
+    },
+    "inherited": [],
+    "ca_us": null
+  },
+  {
+    "case": "custom_120c_120v",
+    "op": "fa",
+    "shape": [
+      9,
+      32768,
+      64,
+      1,
+      1
+    ],
+    "latency_us": 69.82699493243327,
+    "aic": 1,
+    "aiv": 2,
+    "query_ms": 0.16999,
+    "plan": null,
+    "timing": {
+      "kv_tiles": 128,
+      "kv_issue_tokens": 256,
+      "issue_us": 0.4741137297221367,
+      "mmads_per_core": 512,
+      "method": "FA first MMAD / loop / drain",
+      "phases_us": {
+        "first_mmad_prefix": 6.902247232489228,
+        "mmad_fill": 2.2322903206064515,
+        "steady_loop": 60.374012370035146,
+        "drain": 0.3184450093024435
+      },
+      "parameter_source": "DT queue exposures and target chip config"
+    },
+    "inherited": [
+      "details.l0a_bytes",
+      "details.l0b_bytes",
+      "details.l0c_bytes",
+      "details.l1_bytes",
+      "details.l2_bytes",
+      "details.ub_bytes"
+    ],
+    "ca_us": null
+  },
+  {
+    "case": "dt",
+    "op": "fa",
+    "shape": [
+      9,
+      2048,
+      64,
+      32,
+      4
+    ],
+    "latency_us": 36.570494167785625,
+    "aic": 32,
+    "aiv": 64,
+    "query_ms": 0.11867,
+    "plan": null,
+    "timing": null,
+    "inherited": [],
+    "ca_us": null
+  },
+  {
+    "case": "unknown_same_resources",
+    "op": "fa",
+    "shape": [
+      9,
+      2048,
+      64,
+      32,
+      4
+    ],
+    "latency_us": 36.570494167785625,
+    "aic": 32,
+    "aiv": 64,
+    "query_ms": 0.2293,
+    "plan": null,
+    "timing": {
+      "kv_tiles": 8,
+      "kv_issue_tokens": 256,
+      "method": "FA first MMAD / loop / drain",
+      "phases_us": {
+        "first_mmad_prefix": 24.738085103065703,
+        "mmad_window": 10.182836505530032,
+        "drain": 1.6495725591898875
+      },
+      "parameter_source": "DT queue exposures and target chip config"
+    },
+    "inherited": [],
+    "ca_us": null
+  },
+  {
+    "case": "cube_cores_x2_same_per_core",
+    "op": "fa",
+    "shape": [
+      9,
+      2048,
+      64,
+      32,
+      4
+    ],
+    "latency_us": 32.943065930599474,
+    "aic": 64,
+    "aiv": 64,
+    "query_ms": 0.22952,
+    "plan": null,
+    "timing": {
+      "kv_tiles": 8,
+      "kv_issue_tokens": 256,
+      "method": "FA first MMAD / loop / drain",
+      "phases_us": {
+        "first_mmad_prefix": 23.204316651879928,
+        "mmad_window": 8.411692861894371,
+        "drain": 1.327056416825172
+      },
+      "parameter_source": "DT queue exposures and target chip config"
+    },
+    "inherited": [],
+    "ca_us": null
+  },
+  {
+    "case": "vector_peaks_x0.5",
+    "op": "fa",
+    "shape": [
+      9,
+      2048,
+      64,
+      32,
+      4
+    ],
+    "latency_us": 39.71435091455605,
+    "aic": 32,
+    "aiv": 64,
+    "query_ms": 0.22753,
+    "plan": null,
+    "timing": {
+      "kv_tiles": 8,
+      "kv_issue_tokens": 256,
+      "method": "FA first MMAD / loop / drain",
+      "phases_us": {
+        "first_mmad_prefix": 24.738085103065703,
+        "mmad_window": 12.930585177195814,
+        "drain": 2.045680634294531
+      },
+      "parameter_source": "DT queue exposures and target chip config"
+    },
+    "inherited": [],
+    "ca_us": null
+  },
+  {
+    "case": "offchip_bandwidth_x0.5",
+    "op": "fa",
+    "shape": [
+      9,
+      2048,
+      64,
+      32,
+      4
+    ],
+    "latency_us": 43.28877845439405,
+    "aic": 32,
+    "aiv": 64,
+    "query_ms": 0.22364,
+    "plan": null,
+    "timing": {
+      "kv_tiles": 8,
+      "kv_issue_tokens": 256,
+      "method": "FA first MMAD / loop / drain",
+      "phases_us": {
+        "first_mmad_prefix": 27.364709285473587,
+        "mmad_window": 13.652520716349883,
+        "drain": 2.27154845257058
+      },
+      "parameter_source": "DT queue exposures and target chip config"
+    },
+    "inherited": [],
+    "ca_us": null
+  },
+  {
+    "case": "clock_and_peaks_x1.1",
+    "op": "fa",
+    "shape": [
+      9,
+      2048,
+      64,
+      32,
+      4
+    ],
+    "latency_us": 33.856656905860426,
+    "aic": 32,
+    "aiv": 64,
+    "query_ms": 0.22252,
+    "plan": null,
+    "timing": {
+      "kv_tiles": 8,
+      "kv_issue_tokens": 256,
+      "method": "FA first MMAD / loop / drain",
+      "phases_us": {
+        "first_mmad_prefix": 22.727952292096813,
+        "mmad_window": 9.572549933283653,
+        "drain": 1.5561546804799606
+      },
+      "parameter_source": "DT queue exposures and target chip config"
+    },
+    "inherited": [],
+    "ca_us": null
+  },
+  {
+    "case": "custom_120c_120v",
+    "op": "fa",
+    "shape": [
+      9,
+      2048,
+      64,
+      32,
+      4
+    ],
+    "latency_us": 28.81117908030774,
+    "aic": 120,
+    "aiv": 120,
+    "query_ms": 0.22487,
+    "plan": null,
+    "timing": {
+      "kv_tiles": 8,
+      "kv_issue_tokens": 256,
+      "method": "FA first MMAD / loop / drain",
+      "phases_us": {
+        "first_mmad_prefix": 20.96418410960902,
+        "mmad_window": 6.782878047910072,
+        "drain": 1.06411692278865
+      },
+      "parameter_source": "DT queue exposures and target chip config"
+    },
+    "inherited": [
+      "details.l0a_bytes",
+      "details.l0b_bytes",
+      "details.l0c_bytes",
+      "details.l1_bytes",
+      "details.l2_bytes",
+      "details.ub_bytes"
+    ],
+    "ca_us": null
+  }
+]
