@@ -1,0 +1,41 @@
+{
+  "qualified": false,
+  "reason": "process/budget: wall or raw cap",
+  "shape": [
+    4,
+    256,
+    8,
+    6
+  ],
+  "chip": "Ascend950DT_9582",
+  "cost": {
+    "seconds": 600.6008956900332,
+    "cpu_seconds": null,
+    "raw_bytes": 12582610,
+    "exit_code": -9,
+    "stop_reason": "wall or raw cap",
+    "started_utc": "2026-11-19T12:03:40.360762+00:00",
+    "finished_utc": "2026-11-19T12:13:40.965459+00:00",
+    "command": [
+      "/home/l00925865/operator_sim/runs/fusion21/attnres_h256_4_6_Ascend950DT_9582/cpu.txt",
+      "bash",
+      "/home/l00925865/operator_sim/scripts/cann-run.sh",
+      "bash",
+      "-c",
+      "export ASCEND_CUSTOM_OPP_PATH=\"$1\"; export LD_LIBRARY_PATH=\"$1/op_api/lib:$LD_LIBRARY_PATH\"; shift; exec \"$@\"",
+      "attn-res-vendor",
+      "/home/l00925865/operator_sim/runs/workloads19/sources/fastbuild/vendors/custom_transformer",
+      "msopprof",
+      "simulator",
+      "--soc-version=Ascend950DT_9582",
+      "--dump=true",
+      "--launch-count=1",
+      "--timeout=10",
+      "--output=/home/l00925865/operator_sim/runs/fusion21/attnres_h256_4_6_Ascend950DT_9582/profile",
+      "/home/l00925865/operator_sim/build/smoke/attn_res_fwd19_h256",
+      "4",
+      "6"
+    ]
+  },
+  "run_log": "runs/fusion21/attnres_h256_4_6_Ascend950DT_9582/run.log"
+}

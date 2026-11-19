@@ -74,7 +74,7 @@ def changes(out,paired):
                 return f"{m['wape']:.2%} / {m['max_ape']:.2%}" if m else 'N/A'
             lines.append(f'| {NAMES[op]} | {side.upper()} | {len(group)} / 10 | {cell(old)} | {cell(new)} |')
     costs = []
-    for root in ('vector21','fusion21','dispatch21','rms21','fusion21-retry'):
+    for root in ('vector21','fusion21','dispatch21','rms21','fusion21-retry','dispatch21-retry'):
         for p in sorted((ROOT/'runs'/root).glob('*/cost.json')):
             item = read(p)
             seconds = item.get('seconds',item.get('wall_s'))
@@ -105,6 +105,7 @@ def inputs():
              ROOT/'results/v0.20/rms/records.json',OUT/'wheel-check.json',OUT/'dispatch/stream-replay.json']
     for folder in ('dispatch','rms'):
         files.extend(sorted((OUT/folder/'receipts').glob('*.json')))
+    files.extend(sorted((OUT/'dispatch/retries').glob('*.json')))
     files.extend(sorted((OUT/'large').glob('*terminal.json')))
     return sha256(b''.join(f.read_bytes() for f in files)).hexdigest()
 

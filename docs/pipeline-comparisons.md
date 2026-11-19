@@ -68,7 +68,7 @@ DT、PR 采用相同的逻辑输入。下表的当前模型在归档窗口上回
 
 ![Flash 的 256k 整批 Cast，模型和 950DT 末核按首、中、末轮比对](examples/figures/v021-cast-256ki-dt.png)
 
-在每条 128k → 256k 时，Flash Cast 的逻辑流量翻倍，DT、PR 的实测时间分别增长 **3.00 倍、3.16 倍**。两点之间跨过缓存容量区间，线性外推在此处会低估。Kimi 的相同长度变化对应 **2.30 倍、2.58 倍**。两款芯片的逐轮图及控制器读写数据保留了这一区别。[Flash 的 256k PR](examples/figures/v021-cast-256ki-pr.png) · [Kimi 的 128k DT](examples/figures/v021-sigmoid-128ki-dt.png) · [Kimi 的 128k PR](examples/figures/v021-sigmoid-128ki-pr.png) · [开发回放的所有数据](../results/v0.21/vector/development.json)
+在每条 128k → 256k 时，Flash Cast 的逻辑流量翻倍，DT、PR 的实测时间分别增长 **3.00 倍、3.16 倍**。仅 BF16→FP32 的逻辑输出就由 128 MiB 增至 256 MiB；末核满块的发起间隔也发生了变化。在这个区间按元素数直接翻倍会低估。Kimi 的相同长度变化对应 **2.30 倍、2.58 倍**。两款芯片的逐轮图及控制器读写数据保留了这一区别。[Flash 的 256k PR](examples/figures/v021-cast-256ki-pr.png) · [Kimi 的 128k DT](examples/figures/v021-sigmoid-128ki-dt.png) · [Kimi 的 128k PR](examples/figures/v021-sigmoid-128ki-pr.png) · [开发回放的所有数据](../results/v0.21/vector/development.json)
 
 ## MoE · 同一批 token 的两个专家
 
@@ -79,6 +79,31 @@ GMM1 和 GMM2 均用 `[8,256,128,2]`、专家分配 `[1,7]`。GMM1 的两份中�
 ### 各种图能看出什么
 
 20 条路线中，**11 条**可以按工作块、阶段或资源队列对到真实时间（Matmul、Addmm、量化、FA、Cast、Sigmoid、AttnResFwd、PreSinkhorn、Lightning Indexer、GMM1 和 GMM2）。**2 条**对应串行 kernel（mHC 链、MoE FFN）。**6 条**给出状态或阶段成本及真实 CA 队列（RMSNorm、mHC Post、mHC Pre、Sinkhorn、KDA recurrent、MoE 路由）。独占成本可以解释总误差来自哪个资源；该资源的逐条发起时刻只在有指令记录的一侧可见。KDA chunk 目前只有失败事件诊断，完整耗时为 N/A。[各算子示例](modeling-strategy.md#逐算子算例) · [误差明细](error-analysis.md)
+
+### 按算子打开图
+
+| 算例与推导 | 芯片与输入 | 流水图能核对的内容 |
+|---|---|---|
+| [Matmul](examples/matmul.md) | DT · 1280×2048×512 | [每个输出块的两页 K、逐条 MMAD](examples/figures/matmul-tile-pages.png) |
+| [Addmm](examples/addmm.md) | PR · 512×512×256 | [偏置进 L1、BT，与矩阵读重叠](examples/figures/addmm-v21-pr-page.png) |
+| [DynamicMXQuant](examples/quant.md) | PR · 2048×5120 | [一个 UB 块的读、计算、值和 scale 写](examples/figures/quant-chunk-pr-tiles.png) |
+| [FA](examples/fa.md) | PR · Q=9，KV=32768，D=64 | [逐 KV 页 QK、PV 发起和稳态间隔](examples/figures/fa-pr-32k-pages.png) |
+| [Cast](examples/cast_bf16_fp32.md) | DT · 2097152×32 | [整批 Flash prefill 的首中末轮](examples/figures/v021-cast-256ki-dt.png) |
+| [Sigmoid](examples/sigmoid_fp32.md) | DT · 524288×12 | [Kimi 冻结新形，终止核的 UB 轮次](examples/figures/v021-holdout-sigmoid_fp32_524288_12-dt.png) |
+| [AttnResFwd](examples/attn_res_fwd.md) | PR · 2×4096×8×1 | [五个阶段的边界](examples/figures/attn_res_fwd-independent-v21-pr.png) |
+| [Lightning Indexer](examples/lightning_indexer.md) | PR · 1×2×3072×8×128 | [AIC/AIV 的资源队列和 24 个 MMAD](examples/figures/lightning-indexer-3072-pr.png) |
+| [GMM1–SwiGLU–MXQuant](examples/grouped_matmul_swiglu_quant_v2.md) | PR · 8×256×128×2 | [两个中位模板、两专家 MMAD_MX](examples/figures/gmm1-two-experts-pr.png) |
+| [GMM2](examples/gmm2.md) | PR · 8×256×128×2 | [同一专家分布的第二次 GEMM](examples/figures/gmm2-two-experts-pr.png) |
+| [mHC PreSinkhorn](examples/mhc_pre_sinkhorn.md) | PR · 1×4×4096 | [AIC 与 AIV 的交接](examples/figures/mhc_pre_sinkhorn-v21-pr.png) |
+| [mHC 拆分链](examples/mhc.md) | PR · 1×4×128 | [三个串行 kernel 的独立设备窗](examples/figures/mhc-pr-pipeline.png) |
+| [MoE FFN](examples/moe_ffn.md) | PR · 2×64×64×1 | [GMM1 与 GMM2 两个设备窗](examples/figures/moe_ffn-pr-pipeline.png) |
+| [RMSNorm](examples/rmsnorm.md) | DT · 3×6656 | [首次或热态的阶段预算和末核指令](examples/figures/rmsnorm-v21-state.png) |
+| [mHC Post](examples/mhc_post.md) | DT · 16×4×256 | [隐藏调度历史如何改变读算写](examples/figures/mhc_post-v21-state.png) |
+| [mHC Pre](examples/mhc_pre.md) | PR · 1×4×128 | [末核控制等待、计算、搬运独占成本](examples/figures/mhc-pre-exclusive-pr.png) |
+| [mHC Sinkhorn](examples/mhc_sinkhorn.md) | PR · 64×4 | [每 AIV 两行共用发射的阶段成本](examples/figures/mhc_sinkhorn-v21-pr.png) |
+| [KDA recurrent](examples/kda_recurrent.md) | PR · 1×1×1×1×128×128 | [递推状态更新的阶段成本](examples/figures/kda_recurrent-pr-pipeline.png) |
+| [MoE 路由 Top-K](examples/moe_gating_top_k.md) | PR · 1×384×6 | [路由阶段成本和末核队列](examples/figures/moe_gating_top_k-pr-pipeline.png) |
+| [KDA chunk](examples/kda_chunk.md) | PR · 1×64×2×2×128×128 | [失败前事件记录，完整 CA 窗口 N/A](examples/figures/kda-chunk-pr-event.png) |
 
 ### 从仓内数据重画
 

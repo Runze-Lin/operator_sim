@@ -1,0 +1,116 @@
+{
+  "utc": "2026-11-19T12:13:41.785075+00:00",
+  "shape": [
+    3,
+    4,
+    5376
+  ],
+  "order": [
+    "Ascend950PR_957b",
+    "Ascend950DT_9582"
+  ],
+  "runner": "build/vector-v8/MHC",
+  "runner_sha256": "a7d3a4da5264a489830c2899954eb252bb823974b23baee733ba513788a2c6d0",
+  "source_sha256": "1c1af1e6241eaa48f1be3a65941a978796f5c8ac590d6bf11631086378cbef2c",
+  "candidate_source": "565c521264e40ce666f460d40315c3da7139b417a3409d9fa78937e85aa504e6",
+  "public_model_sha256": "1c3d9f3e2b70ba1991f4111a3dcd4cd080fc92e270838a1e6895993df4a43fab",
+  "runner_sources": {
+    "smoke/vector_v8.cpp": "476f4200a3f1684b90ad753e7c79b46e2df427ad27ddfa0c454b2bdd5cd4b3f1",
+    "smoke/extension_indexer_mhc.cpp": "a1536bfd32a9c7ffec7fb2434d00cbecb8afa21a14e73c2040d54d2f2cb9b5e5"
+  },
+  "expected_kernel_sha256": "36851e45520023382742d07d871519f65e57e9c49ec3594583e361b0bb9b6677",
+  "batch_text": "mhc_post 0 3 4 5376\nmhc_post 1 3 4 5376\n",
+  "checks": [
+    "same native stream and single process (one host aclrtCreateStream)",
+    "Full output golden and official all-core trace per ordinal, same Post ELF for both.",
+    "Second ordinal is previous same-shape Post executed; cache contents not assumed or observed."
+  ],
+  "wall_s_per_process": 3600,
+  "raw_mib_per_process": 1536,
+  "concurrency": 1,
+  "admission": {
+    "cpus": 256,
+    "load1_limit": 224,
+    "load5_limit": 224,
+    "poll_s": 60,
+    "rule": "Leave 32 logical CPUs of headroom for the default CA worker count; both SKUs wait their turn. DT only after a qualified PR window pair."
+  },
+  "targets": {
+    "Ascend950PR_957b": {
+      "v021_us": {
+        "first": 4.860785315346709,
+        "reuse": 2.385791633448579,
+        "unknown": 3.200634180603523
+      },
+      "v021_all_state_us": {
+        "first": 4.860785315346709,
+        "expand": 4.283894622994552,
+        "reuse": 2.385791633448579
+      },
+      "candidate_us": {
+        "first": 4.835413128518825,
+        "reuse": 2.550310845300587,
+        "shape_only": 3.3393629620829706
+      },
+      "prior_registered_shape": {
+        "chip": "Ascend950PR_957b",
+        "shape": [
+          3,
+          4,
+          5376
+        ],
+        "first_us": 4.835413128518825,
+        "reuse_us": 2.550310845300587,
+        "shape_only_us": 3.3393629620829706,
+        "target_plan": {
+          "active_aiv": 48,
+          "active_aic": 0,
+          "route": "post_channel",
+          "channel_slices": 16,
+          "fragment_width": 336,
+          "rows_per_core": 1
+        }
+      },
+      "first_resident_aiv": 0,
+      "previous_issued_aiv": 48
+    },
+    "Ascend950DT_9582": {
+      "v021_us": {
+        "first": 4.855324256409521,
+        "reuse": 2.3803305745113907,
+        "unknown": 3.1945351310317887
+      },
+      "v021_all_state_us": {
+        "first": 4.855324256409521,
+        "expand": 4.278433564057363,
+        "reuse": 2.3803305745113907
+      },
+      "candidate_us": {
+        "first": 4.827332305731369,
+        "reuse": 2.5422300225131313,
+        "shape_only": 3.330506906561757
+      },
+      "prior_registered_shape": {
+        "chip": "Ascend950DT_9582",
+        "shape": [
+          3,
+          4,
+          5376
+        ],
+        "first_us": 4.827332305731369,
+        "reuse_us": 2.5422300225131313,
+        "shape_only_us": 3.330506906561757,
+        "target_plan": {
+          "active_aiv": 48,
+          "active_aic": 0,
+          "route": "post_channel",
+          "channel_slices": 16,
+          "fragment_width": 336,
+          "rows_per_core": 1
+        }
+      },
+      "first_resident_aiv": 0,
+      "previous_issued_aiv": 48
+    }
+  }
+}

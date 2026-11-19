@@ -111,7 +111,14 @@ def collect():
             if not path.exists():continue
             data=read(path)
             if not data['qualified']:
-                rejected.append({k:v for k,v in data.items() if k!='cost'});continue
+                rejected.append({**{k:v for k,v in data.items() if k!='cost'},'source':str(path.relative_to(ROOT))})
+                path=OUT/folder/'retries'/path.name
+                if not path.is_file():
+                    continue
+                data=read(path)
+                if not data['qualified']:
+                    rejected.append({**{k:v for k,v in data.items() if k!='cost'},'source':str(path.relative_to(ROOT))})
+                    continue
             obs=data['observation']
             row=dict(op=j['op'],shape=j['shape'],chip=chip,attrs=j['attrs'],us=y[side+'_us'],ca_us=obs['ca_us'],
                      future_us=y['future_us'],old_us=y['old_'+side+'_us'],receipt=receipt(obs),

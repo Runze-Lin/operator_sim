@@ -890,7 +890,19 @@
       },
       "pr": {
         "status": "超门槛",
-        "primary": null,
+        "primary": {
+          "n": 1,
+          "shapes": 1,
+          "wape": 0.24251784011349536,
+          "max_ape": 0.24251784011349536,
+          "worst_shape": [
+            37,
+            4,
+            144
+          ],
+          "worst_pred_us": 2.5804892942195927,
+          "worst_ca_us": 3.4066667584702373
+        },
         "cohorts": {
           "prior published pair replay": {
             "n": 10,
@@ -904,10 +916,24 @@
             ],
             "worst_pred_us": 3.123642889802718,
             "worst_ca_us": 4.7000000504776835
+          },
+          "primary": {
+            "n": 1,
+            "shapes": 1,
+            "wape": 0.24251784011349536,
+            "max_ape": 0.24251784011349536,
+            "worst_shape": [
+              37,
+              4,
+              144
+            ],
+            "worst_pred_us": 2.5804892942195927,
+            "worst_ca_us": 3.4066667584702373
           }
         },
         "outside": [
-          "prior published pair replay"
+          "prior published pair replay",
+          "primary"
         ]
       }
     },
@@ -22902,6 +22928,41 @@
       "cohort": "primary",
       "first_us": 3.4541278214296747,
       "protocol": "isolated first launch"
+    },
+    {
+      "op": "mhc_post",
+      "shape": [
+        37,
+        4,
+        144
+      ],
+      "chip": "Ascend950PR_957b",
+      "attrs": {
+        "has_h_res": true
+      },
+      "us": 2.5804892942195927,
+      "ca_us": 3.4066667584702373,
+      "future_us": 2.8250004582636765,
+      "old_us": 2.079127436958239,
+      "receipt": {
+        "api": "aclnnMhcPost",
+        "kernel": "MhcPost_59130ccee6717ff2c0f15b485e731162_6",
+        "trace": [
+          "runs/dispatch21/mhc_post_37_4_144_Ascend950PR_957b/profile/OPPROF_20261119200812_MQUQJLZTEDVDMIEO/simulator/trace.json"
+        ],
+        "trace_sha256": [
+          "43e89b484e3360a5a98b71d0747bff58dfa66968d369d770f321f04bfc978b0e"
+        ],
+        "correctness": [
+          "correctness name=output count=21312 bad=0 max_abs_error=0 atol=0.015625 rtol=0.015625 hard_limit=1"
+        ],
+        "active_aic": 0,
+        "active_aiv": 37
+      },
+      "source": "results/v0.21/dispatch/receipts/mhc_post_37_4_144_Ascend950PR_957b.json",
+      "cohort": "primary",
+      "first_us": 3.455889192444971,
+      "protocol": "isolated first launch"
     }
   ],
   "rejected": [
@@ -23142,6 +23203,47 @@
       }
     },
     {
+      "op": "attn_res_fwd",
+      "shape": [
+        4,
+        256,
+        8,
+        6
+      ],
+      "chip": "Ascend950DT_9582",
+      "attempt": "original",
+      "reason": "process/budget: wall or raw cap",
+      "cost": {
+        "seconds": 600.6008956900332,
+        "cpu_seconds": null,
+        "raw_bytes": 12582610,
+        "exit_code": -9,
+        "stop_reason": "wall or raw cap",
+        "started_utc": "2026-11-19T12:03:40.360762+00:00",
+        "finished_utc": "2026-11-19T12:13:40.965459+00:00",
+        "command": [
+          "/home/l00925865/operator_sim/runs/fusion21/attnres_h256_4_6_Ascend950DT_9582/cpu.txt",
+          "bash",
+          "/home/l00925865/operator_sim/scripts/cann-run.sh",
+          "bash",
+          "-c",
+          "export ASCEND_CUSTOM_OPP_PATH=\"$1\"; export LD_LIBRARY_PATH=\"$1/op_api/lib:$LD_LIBRARY_PATH\"; shift; exec \"$@\"",
+          "attn-res-vendor",
+          "/home/l00925865/operator_sim/runs/workloads19/sources/fastbuild/vendors/custom_transformer",
+          "msopprof",
+          "simulator",
+          "--soc-version=Ascend950DT_9582",
+          "--dump=true",
+          "--launch-count=1",
+          "--timeout=10",
+          "--output=/home/l00925865/operator_sim/runs/fusion21/attnres_h256_4_6_Ascend950DT_9582/profile",
+          "/home/l00925865/operator_sim/build/smoke/attn_res_fwd19_h256",
+          "4",
+          "6"
+        ]
+      }
+    },
+    {
       "id": "addmm_17_80_96",
       "op": "addmm",
       "shape": [
@@ -23151,7 +23253,8 @@
       ],
       "chip": "Ascend950DT_9582",
       "qualified": false,
-      "error": "process/budget: wall cap"
+      "error": "process/budget: wall cap",
+      "source": "results/v0.21/dispatch/receipts/addmm_17_80_96_Ascend950DT_9582.json"
     },
     {
       "id": "mhc_post_5_4_288",
@@ -23163,7 +23266,8 @@
       ],
       "chip": "Ascend950PR_957b",
       "qualified": false,
-      "error": "process/budget: wall cap"
+      "error": "process/budget: wall cap",
+      "source": "results/v0.21/dispatch/receipts/mhc_post_5_4_288_Ascend950PR_957b.json"
     }
   ]
 }
