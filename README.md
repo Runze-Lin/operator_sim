@@ -14,6 +14,8 @@
 
 需要核对大 prefill 输入时，可直接打开 8 条请求、每条 32k / 128k / 256k 的逐节点张量表，查看本卡 hidden、head、专家工作量及同形 CA 状态。[DeepSeek V4.1 Flash](docs/workloads/deepseek-flash.md) · [DeepSeek V4 Pro](docs/workloads/deepseek-pro.md) · [Kimi K3](docs/workloads/kimi-k3.md)
 
+默认 Matmul 和 Addmm 会在目标卡重新选择 tile 和波次。验收表分别给出每个算子在 950DT、950PR 的 WAPE、最坏 shape 和完整采集数量。当前仍有超限及未获得合格 CA 的路线。[逐算子验收](docs/error-analysis.md) · [同轴流水图](docs/pipeline-comparisons.md)
+
 ## 试一次预测
 
 在仓库根目录用系统仿真器的 Python 环境安装（Python 3.10 或更新版本）。安装后可在任意工作目录查询。下面的 `9` 表示这个 rank 上的一次 RMSNorm 同时处理 9 个 token，`7168` 是每个 token 的通道数。
@@ -37,7 +39,7 @@ print(result.latency_us, result.work["cube_ops"], result.work["logical_read_byte
 
 维护 960、970、980 等架构情景时，每个目标使用一份 JSON，分别填写按位宽区分的两类算力、核数、频率、外存容量和带宽。内置 `Ascend970DT` 情景为 120 Cube / 120 Vector、1.8 GHz、288 GB、14.4 TB/s；其中 16 位 Vector 峰值 110.592 TOP/s 已含双发射。这些是架构假设。调用方通过 `extrapolated` 状态识别外推，并决定是否将其交给事件调度器。[970DT 配置及逐项来源](configs/chips/Ascend970DT.json) · [自定义芯片示例](configs/chips/scenario-example.json) · [字段、单位和返回合同](docs/integration.md)
 
-隔离安装 v0.20 wheel 后，对三种芯片做了 1,089 个不同的单次查询。中位 0.083 ms，P95 0.548 ms，最慢 2.933 ms；导入另计 13.19 ms。覆盖 8×32k 至 8×256k 的按模型形状、10 组新 RMSNorm、10 组 Kimi beta Sigmoid 以及缺少时延的结构查询。[部署验证](results/v0.20/wheel-smoke.json)
+隔离安装 v0.21 wheel 后，对三种芯片做了 1,126 个不同的单次查询。中位 0.129 ms，P95 0.510 ms，最慢 4.234 ms；导入另计 13.35 ms。包括 8×32k 至 8×256k 的模型形状，以及 KDA chunk 仅返回工作量的查询。[各算子实测开销](results/v0.21/wheel-check.json) · [本版变化](results/v0.21/changes.md)
 
 ## 可预测的算子
 

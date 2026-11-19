@@ -1,0 +1,53 @@
+{
+  "role": "mechanism development, zero current latency estimates",
+  "tokens": 64,
+  "heads": 2,
+  "cube_shape": [
+    1,
+    64,
+    2,
+    2,
+    128,
+    128
+  ],
+  "chips": [
+    "Ascend950DT_9582",
+    "Ascend950PR_957b"
+  ],
+  "utc": "2026-11-19T11:24:04.234979+00:00",
+  "dtype": "bf16",
+  "beta_dtype": "fp32",
+  "gate_dtype": "fp32",
+  "state_dtype": "fp32",
+  "layout": "BSND",
+  "use_gate_in_kernel": true,
+  "lower_bound": -0.03125,
+  "safe_gate": true,
+  "state_v_first": true,
+  "dt_bias": true,
+  "initial_state": true,
+  "cu_seqlens": [
+    0,
+    64
+  ],
+  "chunk_size": 64,
+  "chunk_indices": [
+    0,
+    0
+  ],
+  "outputs": [
+    "attention",
+    "final VK state",
+    "Aqk",
+    "Akk"
+  ],
+  "exports_gk": false,
+  "budget_seconds": 420,
+  "budget_bytes": 1073741824,
+  "hashes": {
+    "build/smoke/chunk21": "6eef66d159f044efa5c3a9cd230c641d14aa949b011e4a181d8336e0e900f16c",
+    "development/validation/chunk21/kimi.cpp": "9a8a00c3ea62e1ee4b46f0b7a0d57d7b94de94f47be96698be75ef1d16435e37",
+    "smoke/extension_kda.cpp": "e0859cda502617c6e76c2cfb0d6da57120a9a3d42f0e63bee192e7a5b3427138",
+    "development/validation/chunk21/probe.py": "054c7987823285a3a63280e5ca3ab763313cd6f851f1939b4fe0c0d5c2850710"
+  }
+}

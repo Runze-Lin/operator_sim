@@ -12,7 +12,7 @@ def _costs():
     return json.loads(p.read_text())['parameters']
 
 
-def resource_matmul(shape,chip):
+def resource_matmul(shape,chip,*,column_bias=False):
     m,n,k=shape; plan=matmul_plan(shape,chip); am,an,ak=plan['tile']
     active=plan['active_aic']; jobs=plan['output_tiles']; waves=plan['waves']
     bm,bn=min(am,m),min(an,n);page=plan['read_page_k'];pages=ceil(k/page)
@@ -39,6 +39,10 @@ def resource_matmul(shape,chip):
     full_waves=waves-1
     split_jobs=sum(full_hist.values())+sum(last_hist.values())
     total_l2_read=2*k*sum((a+b)*v for hist in (full_hist,last_hist) for (a,b),v in hist.items())
+    # The fused column bias is copied GM -> L1 -> BT once per output tile.
+    bias_l2_bytes = (2 * sum(b * count for hist in (full_hist,last_hist)
+                              for (_,b),count in hist.items()) if column_bias else 0)
+    bias_cold_bytes = 2*n if column_bias else 0
     total_l0_read=total_l2_read
     hbm_input=cold_input*k if cold_input*min(k,page)<=l2_size else total_l2_read
     out_bytes=2*m*n
@@ -48,7 +52,7 @@ def resource_matmul(shape,chip):
     if retained_fraction is None:retained_fraction=1.
     # Cache write-back scenario: capacity bounds the possible dirty retention;
     # it is not a hit-rate observation. Caller may force write-through (fraction=0).
-    retained=min(out_bytes,max(0,l2_size-min(k,page)*cold_input))*retained_fraction
+    retained=min(out_bytes,max(0,l2_size-min(k,page)*cold_input-bias_cold_bytes))*retained_fraction
     visible_write=out_bytes-retained; lh=l2*l2_eff;hh=hbm*hbm_eff
     plan={**plan,'mmads_total':split_jobs*ceil(k/ak),'tail_split_mn':list(split),
           'effective_output_tiles':split_jobs,'tail_wave_pieces':sum(last_hist.values()),
@@ -73,9 +77,15 @@ def resource_matmul(shape,chip):
         pii=max(2*cost('read_ii_cycles'),rd,(cost('read_latency_cycles')+rd)/2,cmp)
         # Local FIXP bandwidth, shared L2 ingress and exposed HBM spill compete.
         wt=max(2*max_area/fix,writes/lh,writes*(visible_write/out_bytes)/hh)
-        return dict(R=cost('read_latency_cycles')+rd,L=cost('l0_latency_cycles')+l0,
+        bias_read = bias_load = 0.
+        if column_bias:
+            local_bias = 2 * max(b for _,b in hist)
+            wave_bias = 2 * sum(b*count for (_,b),count in hist.items()) / repeat
+            bias_read = max(local_bias/mte2, wave_bias/lh)
+            bias_load = local_bias/mte1
+        return dict(R=cost('read_latency_cycles')+rd+bias_read,L=cost('l0_latency_cycles')+l0+bias_load,
                     P=(pages-1)*pii,C=end[2],W=cost('drain_cycles')+wt,
-                    Ri=max(2*cost('read_ii_cycles'),rd)+(pages-1)*pii,
+                    Ri=max(2*cost('read_ii_cycles'),rd+bias_read)+(pages-1)*pii,
                     Ci=(pages-1)*pii+max(0,end[2]-cost('mmad_latency_cycles')+cost('mmad_ii_cycles')),
                     Wi=wt,write_bytes=writes)
     tailwave=wave(last_hist,1)
@@ -101,6 +111,8 @@ def resource_matmul(shape,chip):
         elapsed=max(prev_w+f['W'],tail_w+t['W'])
     # A shared link must also carry read+write bytes; this is an integrated
     # lower bound, not an independently recharged duration.
+    total_l2_read += bias_l2_bytes
+    hbm_input += bias_cold_bytes
     busfloor=max((total_l2_read+out_bytes)/lh,(hbm_input+visible_write)/hh)
     base['additional_output_waves']=max(0,elapsed-sum(base.values()))
     base['shared_link_floor']=max(0,busfloor-elapsed)
@@ -123,4 +135,7 @@ def resource_matmul(shape,chip):
                   l2_payload_fraction_of_nominal=(total_l2_read+out_bytes)/(1000*total*l2*ghz)),
               wave_cost_cycles=dict(full=fwave if full_waves else None,tail=tailwave),
               calibrated_on='DT-only phase costs; 950 library scheduling assumptions, checked on historical DT/PR')
+    if column_bias:
+        info.update(model='target_resource_addmm', bias_cold_bytes=bias_cold_bytes,
+                    l1_to_bt_bytes=bias_l2_bytes, logical_read_bytes=cold_input*k+bias_cold_bytes)
     return total,active,0,info

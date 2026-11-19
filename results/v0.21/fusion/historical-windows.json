@@ -1,0 +1,2071 @@
+{
+  "scope": "Retrospective sensitivity including reused original development windows, earlier heldout windows and distinct direct controls. Mixed launch contexts, deduplicated by trace SHA; not an independent accuracy test.",
+  "summary": [
+    {
+      "op": "attn_res_fwd",
+      "chip": "Ascend950DT_9582",
+      "distinct_windows": 11,
+      "distinct_shapes": 11,
+      "wape": 0.041354140528127345,
+      "max_relative_error": 0.0976204835460075,
+      "worst_shape": [
+        1,
+        7168,
+        8,
+        3
+      ],
+      "worst_attrs": {
+        "addend": true,
+        "materialize": true,
+        "write_idx": 3
+      }
+    },
+    {
+      "op": "attn_res_fwd",
+      "chip": "Ascend950PR_957b",
+      "distinct_windows": 11,
+      "distinct_shapes": 11,
+      "wape": 0.055504745176591014,
+      "max_relative_error": 0.11415676224208227,
+      "worst_shape": [
+        1,
+        7168,
+        8,
+        3
+      ],
+      "worst_attrs": {
+        "addend": true,
+        "materialize": true,
+        "write_idx": 3
+      }
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "chip": "Ascend950DT_9582",
+      "distinct_windows": 24,
+      "distinct_shapes": 23,
+      "wape": 0.10815466671195294,
+      "max_relative_error": 0.39201851638603014,
+      "worst_shape": [
+        66,
+        4
+      ],
+      "worst_attrs": {
+        "dtype": "fp32",
+        "return_intermediates": false,
+        "num_iters": 10
+      }
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "chip": "Ascend950PR_957b",
+      "distinct_windows": 10,
+      "distinct_shapes": 10,
+      "wape": 0.06402425204481763,
+      "max_relative_error": 0.16544119838444504,
+      "worst_shape": [
+        2,
+        4
+      ],
+      "worst_attrs": {
+        "dtype": "fp32",
+        "return_intermediates": false,
+        "num_iters": 2
+      }
+    },
+    {
+      "op": "mhc_pre_sinkhorn",
+      "chip": "Ascend950DT_9582",
+      "distinct_windows": 14,
+      "distinct_shapes": 13,
+      "wape": 0.06607991031421374,
+      "max_relative_error": 0.14190037672666378,
+      "worst_shape": [
+        24,
+        4,
+        4096
+      ],
+      "worst_attrs": {
+        "dtype": "bf16",
+        "num_iters": 20,
+        "need_backward": false
+      }
+    },
+    {
+      "op": "mhc_pre_sinkhorn",
+      "chip": "Ascend950PR_957b",
+      "distinct_windows": 10,
+      "distinct_shapes": 10,
+      "wape": 0.058625710471054186,
+      "max_relative_error": 0.13998317801545013,
+      "worst_shape": [
+        1,
+        4,
+        4096
+      ],
+      "worst_attrs": {
+        "dtype": "bf16",
+        "num_iters": 20,
+        "need_backward": false
+      }
+    }
+  ],
+  "rows": [
+    {
+      "op": "mhc_pre_sinkhorn",
+      "shape": [
+        1,
+        4,
+        4096
+      ],
+      "attrs": {
+        "dtype": "bf16",
+        "num_iters": 20,
+        "need_backward": false
+      },
+      "chip": "Ascend950DT_9582",
+      "ca_us": 9.700606060606061,
+      "pred_us": 9.939393939393941,
+      "kernel": "entry_kernel_3e8",
+      "source": "results/v0.12/evaluation.json",
+      "trace_sha256": [
+        "fef139c03eefc1f27f703c353a89914302f574767d17a2a2e2a1bc0be5e8fd40"
+      ],
+      "correctness": [
+        "correctness name=hin count=4096 bad=0 max_abs_error=0.00180695 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness name=hpost count=4 bad=0 max_abs_error=7.47497e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+        "correctness name=hres count=16 bad=0 max_abs_error=1.00993e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ]
+    },
+    {
+      "op": "mhc_pre_sinkhorn",
+      "shape": [
+        4,
+        4,
+        4096
+      ],
+      "attrs": {
+        "dtype": "bf16",
+        "num_iters": 20,
+        "need_backward": false
+      },
+      "chip": "Ascend950DT_9582",
+      "ca_us": 9.93939393939394,
+      "pred_us": 9.939393939393941,
+      "kernel": "entry_kernel_3e8",
+      "source": "results/v0.12/evaluation.json",
+      "trace_sha256": [
+        "75824a4e69e0ce9911607e0788d024ec5af913d17d9892b6e29e3d6b9bcad0a9"
+      ],
+      "correctness": [
+        "correctness name=hin count=16384 bad=0 max_abs_error=0.00275226 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness name=hpost count=16 bad=0 max_abs_error=1.39029e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+        "correctness name=hres count=64 bad=0 max_abs_error=1.00993e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ]
+    },
+    {
+      "op": "mhc_pre_sinkhorn",
+      "shape": [
+        2,
+        4,
+        4096
+      ],
+      "attrs": {
+        "dtype": "bf16",
+        "num_iters": 20,
+        "need_backward": false
+      },
+      "chip": "Ascend950DT_9582",
+      "ca_us": 10.648484848484848,
+      "pred_us": 9.939393939393941,
+      "kernel": "entry_kernel_3e8",
+      "source": "results/v0.12/evaluation.json",
+      "trace_sha256": [
+        "22de1f91593a01931f9414c7d269dd1b276e949a92c54e4e0b916dbe2ad2e62f"
+      ],
+      "correctness": [
+        "correctness name=hin count=8192 bad=0 max_abs_error=0.00186385 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness name=hpost count=8 bad=0 max_abs_error=7.47497e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+        "correctness name=hres count=32 bad=0 max_abs_error=1.00993e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ]
+    },
+    {
+      "op": "mhc_pre_sinkhorn",
+      "shape": [
+        3,
+        4,
+        4096
+      ],
+      "attrs": {
+        "dtype": "bf16",
+        "num_iters": 20,
+        "need_backward": false
+      },
+      "chip": "Ascend950DT_9582",
+      "ca_us": 10.373333333333333,
+      "pred_us": 9.939393939393941,
+      "kernel": "entry_kernel_3e8",
+      "source": "results/v0.12/evaluation.json",
+      "trace_sha256": [
+        "e4daeca8ba3b3cd561464d5683a8bda8854f84eeb90702264041ee8cbffcd47c"
+      ],
+      "correctness": [
+        "correctness name=hin count=12288 bad=0 max_abs_error=0.00275226 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness name=hpost count=12 bad=0 max_abs_error=1.39029e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+        "correctness name=hres count=48 bad=0 max_abs_error=1.00993e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ]
+    },
+    {
+      "op": "mhc_pre_sinkhorn",
+      "shape": [
+        5,
+        4,
+        4096
+      ],
+      "attrs": {
+        "dtype": "bf16",
+        "num_iters": 20,
+        "need_backward": false
+      },
+      "chip": "Ascend950DT_9582",
+      "ca_us": 9.76060606060606,
+      "pred_us": 9.939393939393941,
+      "kernel": "entry_kernel_3e8",
+      "source": "results/v0.12/evaluation.json",
+      "trace_sha256": [
+        "6828918c1307e2d45e53031bb5ccac2fb42b4b75a3706f7872cb1afe2bfc206c"
+      ],
+      "correctness": [
+        "correctness name=hin count=20480 bad=0 max_abs_error=0.00275226 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness name=hpost count=20 bad=0 max_abs_error=1.39029e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+        "correctness name=hres count=80 bad=0 max_abs_error=1.17007e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ]
+    },
+    {
+      "op": "mhc_pre_sinkhorn",
+      "shape": [
+        6,
+        4,
+        4096
+      ],
+      "attrs": {
+        "dtype": "bf16",
+        "num_iters": 20,
+        "need_backward": false
+      },
+      "chip": "Ascend950DT_9582",
+      "ca_us": 9.785454545454545,
+      "pred_us": 9.939393939393941,
+      "kernel": "entry_kernel_3e8",
+      "source": "results/v0.12/evaluation.json",
+      "trace_sha256": [
+        "8836ec7683e4813b206240ae2250fcd2aad4084c3cfc4a85613daec8432b5d0c"
+      ],
+      "correctness": [
+        "correctness name=hin count=24576 bad=0 max_abs_error=0.00275226 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness name=hpost count=24 bad=0 max_abs_error=1.39029e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+        "correctness name=hres count=96 bad=0 max_abs_error=1.17007e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ]
+    },
+    {
+      "op": "mhc_pre_sinkhorn",
+      "shape": [
+        7,
+        4,
+        4096
+      ],
+      "attrs": {
+        "dtype": "bf16",
+        "num_iters": 20,
+        "need_backward": false
+      },
+      "chip": "Ascend950DT_9582",
+      "ca_us": 11.517575757575758,
+      "pred_us": 9.939393939393941,
+      "kernel": "entry_kernel_3e8",
+      "source": "results/v0.12/evaluation.json",
+      "trace_sha256": [
+        "f072385821cd80592c221c79c619224f3cb29bc1712369ad8ef3087343d22a78"
+      ],
+      "correctness": [
+        "correctness name=hin count=28672 bad=0 max_abs_error=0.00275226 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness name=hpost count=28 bad=0 max_abs_error=1.39029e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+        "correctness name=hres count=112 bad=0 max_abs_error=1.17007e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ]
+    },
+    {
+      "op": "mhc_pre_sinkhorn",
+      "shape": [
+        8,
+        4,
+        4096
+      ],
+      "attrs": {
+        "dtype": "bf16",
+        "num_iters": 20,
+        "need_backward": false
+      },
+      "chip": "Ascend950DT_9582",
+      "ca_us": 10.52909090909091,
+      "pred_us": 9.939393939393941,
+      "kernel": "entry_kernel_3e8",
+      "source": "results/v0.12/evaluation.json",
+      "trace_sha256": [
+        "658373b787a66cf5c4ed6d8adba96eef1dc02a8c1c2a4dd4229d7aa19f1e5a70"
+      ],
+      "correctness": [
+        "correctness name=hin count=32768 bad=0 max_abs_error=0.00275226 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness name=hpost count=32 bad=0 max_abs_error=1.39029e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+        "correctness name=hres count=128 bad=0 max_abs_error=1.79467e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ]
+    },
+    {
+      "op": "mhc_pre_sinkhorn",
+      "shape": [
+        9,
+        4,
+        4096
+      ],
+      "attrs": {
+        "dtype": "bf16",
+        "num_iters": 20,
+        "need_backward": false
+      },
+      "chip": "Ascend950DT_9582",
+      "ca_us": 10.201818181818181,
+      "pred_us": 9.939393939393941,
+      "kernel": "entry_kernel_3e8",
+      "source": "results/v0.12/evaluation.json",
+      "trace_sha256": [
+        "fe6fc6ea3a0796caf96817938e2c2b6f83716c416e17da87e0a5b8a753ef9340"
+      ],
+      "correctness": [
+        "correctness name=hin count=36864 bad=0 max_abs_error=0.00275226 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness name=hpost count=36 bad=0 max_abs_error=1.39029e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+        "correctness name=hres count=144 bad=0 max_abs_error=1.79467e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ]
+    },
+    {
+      "op": "mhc_pre_sinkhorn",
+      "shape": [
+        12,
+        4,
+        4096
+      ],
+      "attrs": {
+        "dtype": "bf16",
+        "num_iters": 20,
+        "need_backward": false
+      },
+      "chip": "Ascend950DT_9582",
+      "ca_us": 10.951515151515151,
+      "pred_us": 9.939393939393941,
+      "kernel": "entry_kernel_3e8",
+      "source": "results/v0.12/evaluation.json",
+      "trace_sha256": [
+        "290de6eff9539ebb640ae4084f88d66fad168dba059158d5e23f7d9b2237e99f"
+      ],
+      "correctness": [
+        "correctness name=hin count=49152 bad=0 max_abs_error=0.00275226 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness name=hpost count=48 bad=0 max_abs_error=1.39029e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+        "correctness name=hres count=192 bad=0 max_abs_error=1.79467e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ]
+    },
+    {
+      "op": "mhc_pre_sinkhorn",
+      "shape": [
+        16,
+        4,
+        4096
+      ],
+      "attrs": {
+        "dtype": "bf16",
+        "num_iters": 20,
+        "need_backward": false
+      },
+      "chip": "Ascend950DT_9582",
+      "ca_us": 11.56,
+      "pred_us": 9.939393939393941,
+      "kernel": "entry_kernel_3e8",
+      "source": "results/v0.12/evaluation.json",
+      "trace_sha256": [
+        "f06d066f0efd1ab9d5b806af7910d138f6faac8472bca7f1304b44d7e3e3d0e2"
+      ],
+      "correctness": [
+        "correctness name=hin count=65536 bad=0 max_abs_error=0.00275226 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness name=hpost count=64 bad=0 max_abs_error=1.72379e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+        "correctness name=hres count=256 bad=0 max_abs_error=1.79467e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ]
+    },
+    {
+      "op": "mhc_pre_sinkhorn",
+      "shape": [
+        24,
+        4,
+        4096
+      ],
+      "attrs": {
+        "dtype": "bf16",
+        "num_iters": 20,
+        "need_backward": false
+      },
+      "chip": "Ascend950DT_9582",
+      "ca_us": 11.583030303030304,
+      "pred_us": 9.939393939393941,
+      "kernel": "entry_kernel_3e8",
+      "source": "results/v0.12/evaluation.json",
+      "trace_sha256": [
+        "f8a28ff4b8f5d01ee38eaff3fa7c513e1e5904445d9d0da23463c4c367528b48"
+      ],
+      "correctness": [
+        "correctness name=hin count=98304 bad=0 max_abs_error=0.00275226 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness name=hpost count=96 bad=0 max_abs_error=1.72379e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+        "correctness name=hres count=384 bad=0 max_abs_error=1.79467e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ]
+    },
+    {
+      "op": "mhc_pre_sinkhorn",
+      "shape": [
+        32,
+        4,
+        4096
+      ],
+      "attrs": {
+        "dtype": "bf16",
+        "num_iters": 20,
+        "need_backward": false
+      },
+      "chip": "Ascend950DT_9582",
+      "ca_us": 11.113939393939393,
+      "pred_us": 9.939393939393941,
+      "kernel": "entry_kernel_3e8",
+      "source": "results/v0.12/evaluation.json",
+      "trace_sha256": [
+        "76dc33ee3effc40ddb2fda082dbd5c371a24f74e7bb6e6e11b117e4947a56e32"
+      ],
+      "correctness": [
+        "correctness name=hin count=131072 bad=0 max_abs_error=0.00275226 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness name=hpost count=128 bad=0 max_abs_error=1.72379e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+        "correctness name=hres count=512 bad=0 max_abs_error=1.79467e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ]
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "shape": [
+        1,
+        4
+      ],
+      "attrs": {
+        "dtype": "fp32",
+        "num_iters": 20,
+        "return_intermediates": false
+      },
+      "chip": "Ascend950DT_9582",
+      "ca_us": 6.296363636363636,
+      "pred_us": 5.7855716817891985,
+      "kernel": "entry_kernel_0",
+      "source": "results/v0.12/evaluation.json",
+      "trace_sha256": [
+        "fa1da2112ba080516991e9aa989465a5b1104ef4c836bd035a78dfbf99aa9551"
+      ],
+      "correctness": [
+        "correctness name=output count=16 bad=0 max_abs_error=1.15814e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ]
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "shape": [
+        64,
+        4
+      ],
+      "attrs": {
+        "dtype": "fp32",
+        "num_iters": 20,
+        "return_intermediates": false
+      },
+      "chip": "Ascend950DT_9582",
+      "ca_us": 7.597575757575758,
+      "pred_us": 6.040209244020158,
+      "kernel": "entry_kernel_0",
+      "source": "results/v0.12/evaluation.json",
+      "trace_sha256": [
+        "aefa4c4775dbbf47476a4b6040fc3a8bc62ce94b6b262d1009fa0c5e0fe1d045"
+      ],
+      "correctness": [
+        "correctness name=output count=1024 bad=0 max_abs_error=4.97686e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ]
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "shape": [
+        17,
+        4
+      ],
+      "attrs": {
+        "dtype": "fp32",
+        "num_iters": 20,
+        "return_intermediates": false
+      },
+      "chip": "Ascend950DT_9582",
+      "ca_us": 6.532121212121212,
+      "pred_us": 5.959041944056802,
+      "kernel": "entry_kernel_0",
+      "source": "results/v0.12/evaluation.json",
+      "trace_sha256": [
+        "275351e16ecb74e69b3d98f96e1507dbd29a31f996ecbff777dea76f07f95491"
+      ],
+      "correctness": [
+        "correctness name=output count=272 bad=0 max_abs_error=4.78737e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ]
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "shape": [
+        2,
+        4
+      ],
+      "attrs": {
+        "dtype": "fp32",
+        "return_intermediates": false,
+        "num_iters": 2
+      },
+      "chip": "Ascend950DT_9582",
+      "ca_us": 3.5927272727272728,
+      "pred_us": 3.077032549262559,
+      "kernel": "entry_kernel_0",
+      "source": "results/v0.12/evaluation.json",
+      "trace_sha256": [
+        "21b2a30cd07da7d9d09ab01940e651d921b9a6e8a27eeb4ada24c633a8bf58a2"
+      ],
+      "correctness": [
+        "correctness name=output count=32 bad=0 max_abs_error=1.15811e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ]
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "shape": [
+        4,
+        4
+      ],
+      "attrs": {
+        "dtype": "fp32",
+        "return_intermediates": false,
+        "num_iters": 5
+      },
+      "chip": "Ascend950DT_9582",
+      "ca_us": 2.9454545454545453,
+      "pred_us": 3.5779685973396855,
+      "kernel": "entry_kernel_0",
+      "source": "results/v0.12/evaluation.json",
+      "trace_sha256": [
+        "c0370067e4000775011ff19aefc442916310eb0d32301460f7878468fb70076d"
+      ],
+      "correctness": [
+        "correctness name=output count=64 bad=0 max_abs_error=3.22625e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ]
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "shape": [
+        8,
+        4
+      ],
+      "attrs": {
+        "dtype": "fp32",
+        "return_intermediates": false,
+        "num_iters": 10
+      },
+      "chip": "Ascend950DT_9582",
+      "ca_us": 4.995151515151515,
+      "pred_us": 4.384568948331456,
+      "kernel": "entry_kernel_0",
+      "source": "results/v0.12/evaluation.json",
+      "trace_sha256": [
+        "cc1e0303f1c057e56d1435ff5df14e15097c793e4540adf483fe9d6ea4af2b8e"
+      ],
+      "correctness": [
+        "correctness name=output count=128 bad=0 max_abs_error=3.6923e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ]
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "shape": [
+        9,
+        4
+      ],
+      "attrs": {
+        "dtype": "fp32",
+        "return_intermediates": false,
+        "num_iters": 20
+      },
+      "chip": "Ascend950DT_9582",
+      "ca_us": 6.212121212121212,
+      "pred_us": 5.920102010926239,
+      "kernel": "entry_kernel_0",
+      "source": "results/v0.12/evaluation.json",
+      "trace_sha256": [
+        "70d9af3a057b19a536b25d815c26b367360a29bec03c38fdb94745408b25b1a5"
+      ],
+      "correctness": [
+        "correctness name=output count=144 bad=0 max_abs_error=4.78737e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ]
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "shape": [
+        16,
+        4
+      ],
+      "attrs": {
+        "dtype": "fp32",
+        "return_intermediates": false,
+        "num_iters": 32
+      },
+      "chip": "Ascend950DT_9582",
+      "ca_us": 8.156363636363636,
+      "pred_us": 7.789315874097704,
+      "kernel": "entry_kernel_0",
+      "source": "results/v0.12/evaluation.json",
+      "trace_sha256": [
+        "8d40ee3047406a732f8dfe7e17ec29e4576c5c841d1a3f90ad59871f16c6c697"
+      ],
+      "correctness": [
+        "correctness name=output count=256 bad=0 max_abs_error=6.26493e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ]
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "shape": [
+        31,
+        4
+      ],
+      "attrs": {
+        "dtype": "fp32",
+        "return_intermediates": false,
+        "num_iters": 20
+      },
+      "chip": "Ascend950DT_9582",
+      "ca_us": 6.332727272727273,
+      "pred_us": 5.9958257603376195,
+      "kernel": "entry_kernel_0",
+      "source": "results/v0.12/evaluation.json",
+      "trace_sha256": [
+        "55446a6fcdce7e9c2636ef18a7597e3ddeb43ec769ce6b067b6ad0113b8e453e"
+      ],
+      "correctness": [
+        "correctness name=output count=496 bad=0 max_abs_error=4.97686e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ]
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "shape": [
+        32,
+        4
+      ],
+      "attrs": {
+        "dtype": "fp32",
+        "return_intermediates": false,
+        "num_iters": 20
+      },
+      "chip": "Ascend950DT_9582",
+      "ca_us": 5.336363636363636,
+      "pred_us": 5.997769650314998,
+      "kernel": "entry_kernel_0",
+      "source": "results/v0.12/evaluation.json",
+      "trace_sha256": [
+        "98a38e131bd458f612223bd4b021a93f8b6e3cdb613672a01720023d8d953eda"
+      ],
+      "correctness": [
+        "correctness name=output count=512 bad=0 max_abs_error=4.97686e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ]
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "shape": [
+        63,
+        4
+      ],
+      "attrs": {
+        "dtype": "fp32",
+        "return_intermediates": false,
+        "num_iters": 5
+      },
+      "chip": "Ascend950DT_9582",
+      "ca_us": 4.1012121212121215,
+      "pred_us": 3.7467627413447113,
+      "kernel": "entry_kernel_0",
+      "source": "results/v0.12/evaluation.json",
+      "trace_sha256": [
+        "1b9f30f149a3884dff0c21c4cab4c4e16029d78a8810d0950385b6a1558cd092"
+      ],
+      "correctness": [
+        "correctness name=output count=1008 bad=0 max_abs_error=8.04453e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ]
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "shape": [
+        65,
+        4
+      ],
+      "attrs": {
+        "dtype": "fp32",
+        "return_intermediates": false,
+        "num_iters": 10
+      },
+      "chip": "Ascend950DT_9582",
+      "ca_us": 3.2581818181818183,
+      "pred_us": 4.471332204149066,
+      "kernel": "entry_kernel_0",
+      "source": "results/v0.12/evaluation.json",
+      "trace_sha256": [
+        "003f4278fdfa0c281d57c90ec91c973e9f1558d7db2f27fbcfe0ea55106d81fd"
+      ],
+      "correctness": [
+        "correctness name=output count=1040 bad=0 max_abs_error=4.96274e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ]
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "shape": [
+        128,
+        4
+      ],
+      "attrs": {
+        "dtype": "fp32",
+        "return_intermediates": false,
+        "num_iters": 20
+      },
+      "chip": "Ascend950DT_9582",
+      "ca_us": 5.474545454545455,
+      "pred_us": 6.0402092440389765,
+      "kernel": "entry_kernel_0",
+      "source": "results/v0.12/evaluation.json",
+      "trace_sha256": [
+        "5ab92e17e491660ebd1b922e0708b17ad5d7da3bc28ff8a007bbe4862836c6ce"
+      ],
+      "correctness": [
+        "correctness name=output count=2048 bad=0 max_abs_error=4.97686e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ]
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "shape": [
+        3,
+        4
+      ],
+      "attrs": {
+        "dtype": "fp32",
+        "return_intermediates": false,
+        "num_iters": 2
+      },
+      "chip": "Ascend950DT_9582",
+      "ca_us": 3.7296969696969695,
+      "pred_us": 3.101858120125919,
+      "kernel": "entry_kernel_0",
+      "source": "results/v0.12/evaluation.json",
+      "trace_sha256": [
+        "a39506bc050a32044c3e8650c4d897414ff260792d0fc6b1461f84b3a213da55"
+      ],
+      "correctness": [
+        "correctness name=output count=48 bad=0 max_abs_error=3.12619e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ]
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "shape": [
+        5,
+        4
+      ],
+      "attrs": {
+        "dtype": "fp32",
+        "return_intermediates": false,
+        "num_iters": 6
+      },
+      "chip": "Ascend950DT_9582",
+      "ca_us": 4.066060606060606,
+      "pred_us": 3.7444632463463035,
+      "kernel": "entry_kernel_0",
+      "source": "results/v0.12/evaluation.json",
+      "trace_sha256": [
+        "84ca36c188f412155936b9591a78fde1cf58d47017c587be4247b341f014013b"
+      ],
+      "correctness": [
+        "correctness name=output count=80 bad=0 max_abs_error=4.33741e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ]
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "shape": [
+        7,
+        4
+      ],
+      "attrs": {
+        "dtype": "fp32",
+        "return_intermediates": false,
+        "num_iters": 12
+      },
+      "chip": "Ascend950DT_9582",
+      "ca_us": 5.141818181818182,
+      "pred_us": 4.682057472408927,
+      "kernel": "entry_kernel_0",
+      "source": "results/v0.12/evaluation.json",
+      "trace_sha256": [
+        "7e543eb39319ab0b2b5233efe99b10fffccce4df4ebdbb421ee42cca2be4979a"
+      ],
+      "correctness": [
+        "correctness name=output count=112 bad=0 max_abs_error=4.23852e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ]
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "shape": [
+        11,
+        4
+      ],
+      "attrs": {
+        "dtype": "fp32",
+        "return_intermediates": false,
+        "num_iters": 20
+      },
+      "chip": "Ascend950DT_9582",
+      "ca_us": 6.406060606060606,
+      "pred_us": 5.932388554134949,
+      "kernel": "entry_kernel_0",
+      "source": "results/v0.12/evaluation.json",
+      "trace_sha256": [
+        "77dc00cea850d4268a09ebe14ee54ead96843452ec61e232f98c6b433d0c9878"
+      ],
+      "correctness": [
+        "correctness name=output count=176 bad=0 max_abs_error=4.78737e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ]
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "shape": [
+        15,
+        4
+      ],
+      "attrs": {
+        "dtype": "fp32",
+        "return_intermediates": false,
+        "num_iters": 24
+      },
+      "chip": "Ascend950DT_9582",
+      "ca_us": 6.966666666666667,
+      "pred_us": 6.562707137146623,
+      "kernel": "entry_kernel_0",
+      "source": "results/v0.12/evaluation.json",
+      "trace_sha256": [
+        "9e08e9bde8114f89016b7af027d55389ea8cb3de67ca00bea97733b561aa00c2"
+      ],
+      "correctness": [
+        "correctness name=output count=240 bad=0 max_abs_error=6.04535e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ]
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "shape": [
+        21,
+        4
+      ],
+      "attrs": {
+        "dtype": "fp32",
+        "return_intermediates": false,
+        "num_iters": 16
+      },
+      "chip": "Ascend950DT_9582",
+      "ca_us": 5.596969696969697,
+      "pred_us": 5.360651242806735,
+      "kernel": "entry_kernel_0",
+      "source": "results/v0.12/evaluation.json",
+      "trace_sha256": [
+        "0d6a563fb1725fae2989d18a697604e136219b9f7536e6c25c8cbb5ad1cb6301"
+      ],
+      "correctness": [
+        "correctness name=output count=336 bad=0 max_abs_error=5.6941e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ]
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "shape": [
+        33,
+        4
+      ],
+      "attrs": {
+        "dtype": "fp32",
+        "return_intermediates": false,
+        "num_iters": 20
+      },
+      "chip": "Ascend950DT_9582",
+      "ca_us": 6.376969696969697,
+      "pred_us": 5.999653718703469,
+      "kernel": "entry_kernel_0",
+      "source": "results/v0.12/evaluation.json",
+      "trace_sha256": [
+        "24488b7e95af5ebea5f6da37ec649a2cc889c5d16cf7835f021eb063cd10177a"
+      ],
+      "correctness": [
+        "correctness name=output count=528 bad=0 max_abs_error=4.97686e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ]
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "shape": [
+        47,
+        4
+      ],
+      "attrs": {
+        "dtype": "fp32",
+        "return_intermediates": false,
+        "num_iters": 4
+      },
+      "chip": "Ascend950DT_9582",
+      "ca_us": 3.9963636363636366,
+      "pred_us": 3.575991752536453,
+      "kernel": "entry_kernel_0",
+      "source": "results/v0.12/evaluation.json",
+      "trace_sha256": [
+        "0b58faca2ff35873e3a979159f6d95812482d6ee6083c1300de4ea157771a82e"
+      ],
+      "correctness": [
+        "correctness name=output count=752 bad=0 max_abs_error=8.34922e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ]
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "shape": [
+        66,
+        4
+      ],
+      "attrs": {
+        "dtype": "fp32",
+        "return_intermediates": false,
+        "num_iters": 10
+      },
+      "chip": "Ascend950DT_9582",
+      "ca_us": 3.212121212121212,
+      "pred_us": 4.471332204149066,
+      "kernel": "entry_kernel_0",
+      "source": "results/v0.12/evaluation.json",
+      "trace_sha256": [
+        "1782e698a7e30de613ce12ed014cb3937b732982f922d0c221c139150a7d4a0d"
+      ],
+      "correctness": [
+        "correctness name=output count=1056 bad=0 max_abs_error=4.96274e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ]
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "shape": [
+        96,
+        4
+      ],
+      "attrs": {
+        "dtype": "fp32",
+        "return_intermediates": false,
+        "num_iters": 20
+      },
+      "chip": "Ascend950DT_9582",
+      "ca_us": 5.333939393939394,
+      "pred_us": 6.022595221197177,
+      "kernel": "entry_kernel_0",
+      "source": "results/v0.12/evaluation.json",
+      "trace_sha256": [
+        "4cec1a21bd704ad24b3b4e3ad352d9f770ea232649c5a0159260c21a71340aa6"
+      ],
+      "correctness": [
+        "correctness name=output count=1536 bad=0 max_abs_error=4.97686e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ]
+    },
+    {
+      "op": "mhc_pre_sinkhorn",
+      "shape": [
+        1,
+        4,
+        4096
+      ],
+      "attrs": {
+        "dtype": "bf16",
+        "num_iters": 20,
+        "need_backward": false
+      },
+      "chip": "Ascend950DT_9582",
+      "ca_us": 10.108484986238182,
+      "pred_us": 9.939393939393941,
+      "kernel": "MhcPreSinkhorn_bd8e37c67f2294e1437f03bb2bace96c_1000_mix_aic",
+      "source": "results/v0.17/sku/records.json",
+      "trace_sha256": [
+        "ce23a734892be2c8ecec742ffeeb3fb9f0d1b4b8b52df883bd1507fc6dd56257"
+      ],
+      "correctness": [
+        "correctness name=hin count=4096 bad=0 max_abs_error=0.00180695 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness name=hpost count=4 bad=0 max_abs_error=7.47497e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+        "correctness name=hres count=16 bad=0 max_abs_error=1.00993e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ]
+    },
+    {
+      "op": "mhc_pre_sinkhorn",
+      "shape": [
+        1,
+        4,
+        4096
+      ],
+      "attrs": {
+        "dtype": "bf16",
+        "num_iters": 20,
+        "need_backward": false
+      },
+      "chip": "Ascend950PR_957b",
+      "ca_us": 8.763030054979026,
+      "pred_us": 9.989706851119895,
+      "kernel": "MhcPreSinkhorn_bd8e37c67f2294e1437f03bb2bace96c_1000_mix_aic",
+      "source": "results/v0.17/sku/records.json",
+      "trace_sha256": [
+        "8bab742de8ee64232a188a2404e1b809e0c6652b6c3acf42a87b661095deefae"
+      ],
+      "correctness": [
+        "correctness name=hin count=4096 bad=0 max_abs_error=0.00180695 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness name=hpost count=4 bad=0 max_abs_error=7.47497e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+        "correctness name=hres count=16 bad=0 max_abs_error=1.00993e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ]
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "shape": [
+        1,
+        4
+      ],
+      "attrs": {
+        "dtype": "fp32",
+        "num_iters": 20,
+        "return_intermediates": false
+      },
+      "chip": "Ascend950DT_9582",
+      "ca_us": 6.149090292863548,
+      "pred_us": 5.7855716817891985,
+      "kernel": "MhcSinkhorn_8997d9c5c22e82688b98bc25d8daa9cd_0",
+      "source": "results/v0.17/sku/records.json",
+      "trace_sha256": [
+        "4baea9e45247f5866699bfb97aa58b2f5263816caec183f849513992d3139662"
+      ],
+      "correctness": [
+        "correctness name=output count=16 bad=0 max_abs_error=1.15814e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ]
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "shape": [
+        1,
+        4
+      ],
+      "attrs": {
+        "dtype": "fp32",
+        "num_iters": 20,
+        "return_intermediates": false
+      },
+      "chip": "Ascend950PR_957b",
+      "ca_us": 5.948484423570335,
+      "pred_us": 5.868632633668177,
+      "kernel": "MhcSinkhorn_8997d9c5c22e82688b98bc25d8daa9cd_0",
+      "source": "results/v0.17/sku/records.json",
+      "trace_sha256": [
+        "d10f4babbd3f01d5ae9ab672b3cb71f22794c89e6ef50a6bf768d298d47f6805"
+      ],
+      "correctness": [
+        "correctness name=output count=16 bad=0 max_abs_error=1.15814e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ]
+    },
+    {
+      "op": "mhc_pre_sinkhorn",
+      "shape": [
+        4,
+        4,
+        4096
+      ],
+      "attrs": {
+        "dtype": "bf16",
+        "num_iters": 20,
+        "need_backward": false
+      },
+      "chip": "Ascend950PR_957b",
+      "ca_us": 9.470303061418235,
+      "pred_us": 9.989706851119895,
+      "kernel": "MhcPreSinkhorn_bd8e37c67f2294e1437f03bb2bace96c_1000_mix_aic",
+      "source": "results/v0.17/sku/records.json",
+      "trace_sha256": [
+        "674c0d4f978656db90e6cc95e750799a3373c33e5d4911ed5e9a33d254ab6872"
+      ],
+      "correctness": [
+        "correctness name=hin count=16384 bad=0 max_abs_error=0.00275226 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness name=hpost count=16 bad=0 max_abs_error=1.39029e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+        "correctness name=hres count=64 bad=0 max_abs_error=1.00993e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ]
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "shape": [
+        64,
+        4
+      ],
+      "attrs": {
+        "dtype": "fp32",
+        "num_iters": 20,
+        "return_intermediates": false
+      },
+      "chip": "Ascend950PR_957b",
+      "ca_us": 6.532727244310081,
+      "pred_us": 6.080830602212797,
+      "kernel": "MhcSinkhorn_8997d9c5c22e82688b98bc25d8daa9cd_0",
+      "source": "results/v0.17/sku/records.json",
+      "trace_sha256": [
+        "b28319d163bad900c44eab5a1e723c7f4d548372a2fe169ba046159f97cfcc25"
+      ],
+      "correctness": [
+        "correctness name=output count=1024 bad=0 max_abs_error=4.97686e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ]
+    },
+    {
+      "op": "mhc_pre_sinkhorn",
+      "shape": [
+        2,
+        4,
+        4096
+      ],
+      "attrs": {
+        "dtype": "bf16",
+        "num_iters": 20,
+        "need_backward": false
+      },
+      "chip": "Ascend950PR_957b",
+      "ca_us": 10.19757533352822,
+      "pred_us": 9.989706851119895,
+      "kernel": "MhcPreSinkhorn_bd8e37c67f2294e1437f03bb2bace96c_1000_mix_aic",
+      "source": "results/v0.17/sku/records.json",
+      "trace_sha256": [
+        "a24967429a64f2bf8835b2d81db8a624383f0387312e7bc9907476fc5283a58f"
+      ],
+      "correctness": [
+        "correctness name=hin count=8192 bad=0 max_abs_error=0.00186385 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness name=hpost count=8 bad=0 max_abs_error=7.47497e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+        "correctness name=hres count=32 bad=0 max_abs_error=1.00993e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ]
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "shape": [
+        17,
+        4
+      ],
+      "attrs": {
+        "dtype": "fp32",
+        "num_iters": 20,
+        "return_intermediates": false
+      },
+      "chip": "Ascend950PR_957b",
+      "ca_us": 6.280000212602317,
+      "pred_us": 6.0421028959357805,
+      "kernel": "MhcSinkhorn_8997d9c5c22e82688b98bc25d8daa9cd_0",
+      "source": "results/v0.17/sku/records.json",
+      "trace_sha256": [
+        "9a4e84d888238c12f9a19552e02569bcf5116be8ccc3c5e8282a0d25a48df1fc"
+      ],
+      "correctness": [
+        "correctness name=output count=272 bad=0 max_abs_error=4.78737e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ]
+    },
+    {
+      "op": "mhc_pre_sinkhorn",
+      "shape": [
+        3,
+        4,
+        4096
+      ],
+      "attrs": {
+        "dtype": "bf16",
+        "num_iters": 20,
+        "need_backward": false
+      },
+      "chip": "Ascend950PR_957b",
+      "ca_us": 9.24969697277993,
+      "pred_us": 9.989706851119895,
+      "kernel": "MhcPreSinkhorn_bd8e37c67f2294e1437f03bb2bace96c_1000_mix_aic",
+      "source": "results/v0.17/sku/records.json",
+      "trace_sha256": [
+        "6cccc43e35b1311c8a48dfc62f3c0364490f4466fce262a17706aa45864824bf"
+      ],
+      "correctness": [
+        "correctness name=hin count=12288 bad=0 max_abs_error=0.00275226 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness name=hpost count=12 bad=0 max_abs_error=1.39029e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+        "correctness name=hres count=48 bad=0 max_abs_error=1.00993e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ]
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "shape": [
+        2,
+        4
+      ],
+      "attrs": {
+        "dtype": "fp32",
+        "return_intermediates": false,
+        "num_iters": 2
+      },
+      "chip": "Ascend950PR_957b",
+      "ca_us": 3.6969697503373027,
+      "pred_us": 3.0853386444504567,
+      "kernel": "MhcSinkhorn_8997d9c5c22e82688b98bc25d8daa9cd_0",
+      "source": "results/v0.17/sku/records.json",
+      "trace_sha256": [
+        "ebbd8cdacafc48cf63a3f971f30106369007e88924cff7a242aa5d0da3de0d15"
+      ],
+      "correctness": [
+        "correctness name=output count=32 bad=0 max_abs_error=1.15811e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ]
+    },
+    {
+      "op": "mhc_pre_sinkhorn",
+      "shape": [
+        5,
+        4,
+        4096
+      ],
+      "attrs": {
+        "dtype": "bf16",
+        "num_iters": 20,
+        "need_backward": false
+      },
+      "chip": "Ascend950PR_957b",
+      "ca_us": 9.494545700959861,
+      "pred_us": 9.989706851119895,
+      "kernel": "MhcPreSinkhorn_bd8e37c67f2294e1437f03bb2bace96c_1000_mix_aic",
+      "source": "results/v0.17/sku/records.json",
+      "trace_sha256": [
+        "46ff1580018c7ad89103745e8e355e23621843c6f598cd8ce9ea909b36e2ca79"
+      ],
+      "correctness": [
+        "correctness name=hin count=20480 bad=0 max_abs_error=0.00275226 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness name=hpost count=20 bad=0 max_abs_error=1.39029e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+        "correctness name=hres count=80 bad=0 max_abs_error=1.17007e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ]
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "shape": [
+        4,
+        4
+      ],
+      "attrs": {
+        "dtype": "fp32",
+        "return_intermediates": false,
+        "num_iters": 5
+      },
+      "chip": "Ascend950PR_957b",
+      "ca_us": 3.938181879930198,
+      "pred_us": 3.5987338353094303,
+      "kernel": "MhcSinkhorn_8997d9c5c22e82688b98bc25d8daa9cd_0",
+      "source": "results/v0.17/sku/records.json",
+      "trace_sha256": [
+        "23ee6e03e59a6ab71a567f44c4260ec4f67de34c9b5dc93e7cc8b08e3a16721f"
+      ],
+      "correctness": [
+        "correctness name=output count=64 bad=0 max_abs_error=3.22625e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ]
+    },
+    {
+      "op": "mhc_pre_sinkhorn",
+      "shape": [
+        6,
+        4,
+        4096
+      ],
+      "attrs": {
+        "dtype": "bf16",
+        "num_iters": 20,
+        "need_backward": false
+      },
+      "chip": "Ascend950PR_957b",
+      "ca_us": 9.404848578386009,
+      "pred_us": 9.989706851119895,
+      "kernel": "MhcPreSinkhorn_bd8e37c67f2294e1437f03bb2bace96c_1000_mix_aic",
+      "source": "results/v0.17/sku/records.json",
+      "trace_sha256": [
+        "cf18b1acaf69cd7f8680b9c3963ebd81f0681829c8de31e53bb7fd6df80af5e0"
+      ],
+      "correctness": [
+        "correctness name=hin count=24576 bad=0 max_abs_error=0.00275226 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness name=hpost count=24 bad=0 max_abs_error=1.39029e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+        "correctness name=hres count=96 bad=0 max_abs_error=1.17007e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ]
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "shape": [
+        8,
+        4
+      ],
+      "attrs": {
+        "dtype": "fp32",
+        "return_intermediates": false,
+        "num_iters": 10
+      },
+      "chip": "Ascend950PR_957b",
+      "ca_us": 4.719393971376121,
+      "pred_us": 4.426099424270945,
+      "kernel": "MhcSinkhorn_8997d9c5c22e82688b98bc25d8daa9cd_0",
+      "source": "results/v0.17/sku/records.json",
+      "trace_sha256": [
+        "e36c51132b61e15348fa4de93782ba16255de0bcce72db1a04d176304e80ebf4"
+      ],
+      "correctness": [
+        "correctness name=output count=128 bad=0 max_abs_error=3.6923e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ]
+    },
+    {
+      "op": "mhc_pre_sinkhorn",
+      "shape": [
+        7,
+        4,
+        4096
+      ],
+      "attrs": {
+        "dtype": "bf16",
+        "num_iters": 20,
+        "need_backward": false
+      },
+      "chip": "Ascend950PR_957b",
+      "ca_us": 9.388484480790794,
+      "pred_us": 9.989706851119895,
+      "kernel": "MhcPreSinkhorn_bd8e37c67f2294e1437f03bb2bace96c_1000_mix_aic",
+      "source": "results/v0.17/sku/records.json",
+      "trace_sha256": [
+        "9fb27bc31ce0ec7ef4a726dc9ebe746cc5bda2b34b60035e134c9629578bb794"
+      ],
+      "correctness": [
+        "correctness name=hin count=28672 bad=0 max_abs_error=0.00275226 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness name=hpost count=28 bad=0 max_abs_error=1.39029e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+        "correctness name=hres count=112 bad=0 max_abs_error=1.17007e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ]
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "shape": [
+        9,
+        4
+      ],
+      "attrs": {
+        "dtype": "fp32",
+        "return_intermediates": false,
+        "num_iters": 20
+      },
+      "chip": "Ascend950PR_957b",
+      "ca_us": 6.268484595231712,
+      "pred_us": 6.003162962805218,
+      "kernel": "MhcSinkhorn_8997d9c5c22e82688b98bc25d8daa9cd_0",
+      "source": "results/v0.17/sku/records.json",
+      "trace_sha256": [
+        "0ceb71406b4760a3708a95399464995be1504164d4e17b828e139b400e84e9ca"
+      ],
+      "correctness": [
+        "correctness name=output count=144 bad=0 max_abs_error=4.78737e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ]
+    },
+    {
+      "op": "mhc_pre_sinkhorn",
+      "shape": [
+        8,
+        4,
+        4096
+      ],
+      "attrs": {
+        "dtype": "bf16",
+        "num_iters": 20,
+        "need_backward": false
+      },
+      "chip": "Ascend950PR_957b",
+      "ca_us": 9.713333609513938,
+      "pred_us": 9.989706851119895,
+      "kernel": "MhcPreSinkhorn_bd8e37c67f2294e1437f03bb2bace96c_1000_mix_aic",
+      "source": "results/v0.17/sku/records.json",
+      "trace_sha256": [
+        "d4056c07adeec75616d3e3450ab61977ba296a26416fc719d360c496ddffeaab"
+      ],
+      "correctness": [
+        "correctness name=hin count=32768 bad=0 max_abs_error=0.00275226 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness name=hpost count=32 bad=0 max_abs_error=1.39029e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+        "correctness name=hres count=128 bad=0 max_abs_error=1.79467e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ]
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "shape": [
+        16,
+        4
+      ],
+      "attrs": {
+        "dtype": "fp32",
+        "return_intermediates": false,
+        "num_iters": 32
+      },
+      "chip": "Ascend950PR_957b",
+      "ca_us": 8.327878954820335,
+      "pred_us": 7.922213397104071,
+      "kernel": "MhcSinkhorn_8997d9c5c22e82688b98bc25d8daa9cd_0",
+      "source": "results/v0.17/sku/records.json",
+      "trace_sha256": [
+        "eb69084fc0ef750c2ff160b342e0c883e92972ae77adfd97a93220b78daf781a"
+      ],
+      "correctness": [
+        "correctness name=output count=256 bad=0 max_abs_error=6.26493e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ]
+    },
+    {
+      "op": "mhc_pre_sinkhorn",
+      "shape": [
+        9,
+        4,
+        4096
+      ],
+      "attrs": {
+        "dtype": "bf16",
+        "num_iters": 20,
+        "need_backward": false
+      },
+      "chip": "Ascend950PR_957b",
+      "ca_us": 9.389696839265525,
+      "pred_us": 9.989706851119895,
+      "kernel": "MhcPreSinkhorn_bd8e37c67f2294e1437f03bb2bace96c_1000_mix_aic",
+      "source": "results/v0.17/sku/records.json",
+      "trace_sha256": [
+        "9706a7dfb8d4ab9c8082662ee8d85a6e4e9ff43e59c625b45a87461ca1fc25e5"
+      ],
+      "correctness": [
+        "correctness name=hin count=36864 bad=0 max_abs_error=0.00275226 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness name=hpost count=36 bad=0 max_abs_error=1.39029e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+        "correctness name=hres count=144 bad=0 max_abs_error=1.79467e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ]
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "shape": [
+        31,
+        4
+      ],
+      "attrs": {
+        "dtype": "fp32",
+        "return_intermediates": false,
+        "num_iters": 20
+      },
+      "chip": "Ascend950PR_957b",
+      "ca_us": 6.633939030114561,
+      "pred_us": 6.078886712216599,
+      "kernel": "MhcSinkhorn_8997d9c5c22e82688b98bc25d8daa9cd_0",
+      "source": "results/v0.17/sku/records.json",
+      "trace_sha256": [
+        "a2a87bb9eada536f10199c25a33493364ad5c2c7aa4ffa92f8fa3a810d62ad46"
+      ],
+      "correctness": [
+        "correctness name=output count=496 bad=0 max_abs_error=4.97686e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ]
+    },
+    {
+      "op": "mhc_pre_sinkhorn",
+      "shape": [
+        12,
+        4,
+        4096
+      ],
+      "attrs": {
+        "dtype": "bf16",
+        "num_iters": 20,
+        "need_backward": false
+      },
+      "chip": "Ascend950PR_957b",
+      "ca_us": 9.686060669831932,
+      "pred_us": 9.989706851119895,
+      "kernel": "MhcPreSinkhorn_bd8e37c67f2294e1437f03bb2bace96c_1000_mix_aic",
+      "source": "results/v0.17/sku/records.json",
+      "trace_sha256": [
+        "ec8020a9e12d63cd6ff643db1f24a175e9becc9713381400efc90541bde602c8"
+      ],
+      "correctness": [
+        "correctness name=hin count=49152 bad=0 max_abs_error=0.00275226 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness name=hpost count=48 bad=0 max_abs_error=1.39029e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+        "correctness name=hres count=192 bad=0 max_abs_error=1.79467e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ]
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "shape": [
+        32,
+        4
+      ],
+      "attrs": {
+        "dtype": "fp32",
+        "return_intermediates": false,
+        "num_iters": 20
+      },
+      "chip": "Ascend950PR_957b",
+      "ca_us": 6.615757944993675,
+      "pred_us": 6.080830602193977,
+      "kernel": "MhcSinkhorn_8997d9c5c22e82688b98bc25d8daa9cd_0",
+      "source": "results/v0.17/sku/records.json",
+      "trace_sha256": [
+        "efe546c65f89b3a5fdf2dfb80fcc1f4570c432556aceabc06e1a887ab0666ba4"
+      ],
+      "correctness": [
+        "correctness name=output count=512 bad=0 max_abs_error=4.97686e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ]
+    },
+    {
+      "op": "attn_res_fwd",
+      "shape": [
+        1,
+        7168,
+        8,
+        1
+      ],
+      "attrs": {
+        "addend": true,
+        "materialize": true,
+        "write_idx": 1
+      },
+      "chip": "Ascend950DT_9582",
+      "ca_us": 9.504848721437156,
+      "pred_us": 10.15161184013186,
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "source": "results/v0.19/workloads/attn-res-holdout.json",
+      "trace_sha256": [
+        "25fdc24683378adf55f84e2e585e8ce7699cef80f5a12d286e1c80a12c2b9fe5"
+      ],
+      "correctness": [
+        "correctness shape=1x7168 S=8 N=1 groups=output,prefix,materialized,bank bad=0"
+      ]
+    },
+    {
+      "op": "attn_res_fwd",
+      "shape": [
+        1,
+        7168,
+        8,
+        1
+      ],
+      "attrs": {
+        "addend": true,
+        "materialize": true,
+        "write_idx": 1
+      },
+      "chip": "Ascend950PR_957b",
+      "ca_us": 9.499393704347312,
+      "pred_us": 10.220500701500423,
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "source": "results/v0.19/workloads/attn-res-holdout.json",
+      "trace_sha256": [
+        "76819d594c6d35a3e6d111fcd4aec299e564109eb815d5d6ffe740b8c780ea28"
+      ],
+      "correctness": [
+        "correctness shape=1x7168 S=8 N=1 groups=output,prefix,materialized,bank bad=0"
+      ]
+    },
+    {
+      "op": "attn_res_fwd",
+      "shape": [
+        2,
+        512,
+        8,
+        1
+      ],
+      "attrs": {
+        "addend": true,
+        "materialize": true,
+        "write_idx": 1
+      },
+      "chip": "Ascend950DT_9582",
+      "ca_us": 7.1218185452744365,
+      "pred_us": 6.796664698069951,
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "source": "results/v0.19/workloads/attn-res-holdout.json",
+      "trace_sha256": [
+        "2b31e415541bb3f58078e28a9eefcbf4f84bde4cb1d7cfced8f1594585103408"
+      ],
+      "correctness": [
+        "correctness shape=2x512 S=8 N=1 groups=output,prefix,materialized,bank bad=0"
+      ]
+    },
+    {
+      "op": "attn_res_fwd",
+      "shape": [
+        2,
+        512,
+        8,
+        1
+      ],
+      "attrs": {
+        "addend": true,
+        "materialize": true,
+        "write_idx": 1
+      },
+      "chip": "Ascend950PR_957b",
+      "ca_us": 6.5975759057328105,
+      "pred_us": 6.801585331024849,
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "source": "results/v0.19/workloads/attn-res-holdout.json",
+      "trace_sha256": [
+        "2e80e2db1ef6e01d03ed28674cf5606612c7ccf63fb39b91d5ba334cc4073d2a"
+      ],
+      "correctness": [
+        "correctness shape=2x512 S=8 N=1 groups=output,prefix,materialized,bank bad=0"
+      ]
+    },
+    {
+      "op": "attn_res_fwd",
+      "shape": [
+        1,
+        256,
+        8,
+        1
+      ],
+      "attrs": {
+        "addend": true,
+        "materialize": true,
+        "write_idx": 1
+      },
+      "chip": "Ascend950DT_9582",
+      "ca_us": 6.324848177842796,
+      "pred_us": 6.667628269529108,
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "source": "results/v0.19/workloads/attn-res-micro-ca.json",
+      "trace_sha256": [
+        "87a1753436b5654b3d23d4c9d2a528bbff986521c1f047997f515b1f5a9e6828"
+      ],
+      "correctness": [
+        "correctness shape=1x256 S=8 N=1 groups=output,prefix,materialized,bank bad=0"
+      ]
+    },
+    {
+      "op": "attn_res_fwd",
+      "shape": [
+        1,
+        512,
+        8,
+        2
+      ],
+      "attrs": {
+        "addend": true,
+        "materialize": true,
+        "write_idx": 2
+      },
+      "chip": "Ascend950PR_957b",
+      "ca_us": 7.039394143037498,
+      "pred_us": 7.4103393505126105,
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "source": "results/v0.19/workloads/attn-res-micro-ca.json",
+      "trace_sha256": [
+        "028131592a40898f25e53312d4996111e27b298c90b4c0eea6c423426714ec09"
+      ],
+      "correctness": [
+        "correctness shape=1x512 S=8 N=2 groups=output,prefix,materialized,bank bad=0"
+      ]
+    },
+    {
+      "op": "attn_res_fwd",
+      "shape": [
+        1,
+        7168,
+        8,
+        3
+      ],
+      "attrs": {
+        "addend": true,
+        "materialize": true,
+        "write_idx": 3
+      },
+      "chip": "Ascend950DT_9582",
+      "ca_us": 11.571514609269798,
+      "pred_us": 12.701131460786405,
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "source": "results/v0.19/workloads/attn-res-extension-holdout.json",
+      "trace_sha256": [
+        "8d23be57c918c7e21ab20c5d25505e94bd47dae306c2235dc7d31592bf4b05ba"
+      ],
+      "correctness": [
+        "correctness shape=1x7168 S=8 N=3 groups=output,prefix,materialized,bank bad=0"
+      ]
+    },
+    {
+      "op": "attn_res_fwd",
+      "shape": [
+        1,
+        7168,
+        8,
+        3
+      ],
+      "attrs": {
+        "addend": true,
+        "materialize": true,
+        "write_idx": 3
+      },
+      "chip": "Ascend950PR_957b",
+      "ca_us": 11.487879040651023,
+      "pred_us": 12.799298116960422,
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "source": "results/v0.19/workloads/attn-res-extension-holdout.json",
+      "trace_sha256": [
+        "37c75f38a63ebc2b98ef31920df66d9ec8ef7e28210c2cc5a135d13278579227"
+      ],
+      "correctness": [
+        "correctness shape=1x7168 S=8 N=3 groups=output,prefix,materialized,bank bad=0"
+      ]
+    },
+    {
+      "op": "attn_res_fwd",
+      "shape": [
+        2,
+        4096,
+        8,
+        2
+      ],
+      "attrs": {
+        "addend": true,
+        "materialize": true,
+        "write_idx": 2
+      },
+      "chip": "Ascend950DT_9582",
+      "ca_us": 9.398182394914329,
+      "pred_us": 9.57006461887597,
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "source": "results/v0.19/workloads/attn-res-extension-holdout.json",
+      "trace_sha256": [
+        "663de3da21e8278cd595b26de785ecea82fac104be06037556b5fcb8d79f4396"
+      ],
+      "correctness": [
+        "correctness shape=2x4096 S=8 N=2 groups=output,prefix,materialized,bank bad=0"
+      ]
+    },
+    {
+      "op": "attn_res_fwd",
+      "shape": [
+        2,
+        4096,
+        8,
+        2
+      ],
+      "attrs": {
+        "addend": true,
+        "materialize": true,
+        "write_idx": 2
+      },
+      "chip": "Ascend950PR_957b",
+      "ca_us": 9.00727296154946,
+      "pred_us": 9.617794766745277,
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "source": "results/v0.19/workloads/attn-res-extension-holdout.json",
+      "trace_sha256": [
+        "818fa88c11b2588db174f2ed54a33052e1427ec3de615d1584086592ab64bc64"
+      ],
+      "correctness": [
+        "correctness shape=2x4096 S=8 N=2 groups=output,prefix,materialized,bank bad=0"
+      ]
+    },
+    {
+      "op": "attn_res_fwd",
+      "shape": [
+        5,
+        2048,
+        8,
+        1
+      ],
+      "attrs": {
+        "addend": true,
+        "materialize": true,
+        "write_idx": 1
+      },
+      "chip": "Ascend950DT_9582",
+      "ca_us": 7.573939326219261,
+      "pred_us": 7.570883269315006,
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "source": "results/v0.19/workloads/attn-res-extension-holdout.json",
+      "trace_sha256": [
+        "d213fe02f38c451fdde5651cc0077e187640ee9d78ea4cc55e207aa5c438fcc1"
+      ],
+      "correctness": [
+        "correctness shape=5x2048 S=8 N=1 groups=output,prefix,materialized,bank bad=0"
+      ]
+    },
+    {
+      "op": "attn_res_fwd",
+      "shape": [
+        5,
+        2048,
+        8,
+        1
+      ],
+      "attrs": {
+        "addend": true,
+        "materialize": true,
+        "write_idx": 1
+      },
+      "chip": "Ascend950PR_957b",
+      "ca_us": 7.432727339677513,
+      "pred_us": 7.590565801134596,
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "source": "results/v0.19/workloads/attn-res-extension-holdout.json",
+      "trace_sha256": [
+        "21366b60699e1049a3a9192aa76433429ef84183a5318c6de838d65d5d80eca2"
+      ],
+      "correctness": [
+        "correctness shape=5x2048 S=8 N=1 groups=output,prefix,materialized,bank bad=0"
+      ]
+    },
+    {
+      "op": "attn_res_fwd",
+      "shape": [
+        2,
+        1024,
+        8,
+        4
+      ],
+      "attrs": {
+        "addend": true,
+        "materialize": true,
+        "write_idx": 4
+      },
+      "chip": "Ascend950DT_9582",
+      "ca_us": 9.17818212788552,
+      "pred_us": 9.031797651575152,
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "source": "results/v0.19/workloads/attn-res-extension-holdout.json",
+      "trace_sha256": [
+        "96c2f8b09c6cc9e2e0effbbbb3ce355affe50549d4cb776222521b6bafee501f"
+      ],
+      "correctness": [
+        "correctness shape=2x1024 S=8 N=4 groups=output,prefix,materialized,bank bad=0"
+      ]
+    },
+    {
+      "op": "attn_res_fwd",
+      "shape": [
+        2,
+        1024,
+        8,
+        4
+      ],
+      "attrs": {
+        "addend": true,
+        "materialize": true,
+        "write_idx": 4
+      },
+      "chip": "Ascend950PR_957b",
+      "ca_us": 8.973333599977195,
+      "pred_us": 9.047912730657545,
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "source": "results/v0.19/workloads/attn-res-extension-holdout.json",
+      "trace_sha256": [
+        "278925e906841c680e3caa68f3b4535ec7b1b67bf26be49137f1731e668fcbef"
+      ],
+      "correctness": [
+        "correctness shape=2x1024 S=8 N=4 groups=output,prefix,materialized,bank bad=0"
+      ]
+    },
+    {
+      "op": "attn_res_fwd",
+      "shape": [
+        8,
+        512,
+        8,
+        2
+      ],
+      "attrs": {
+        "addend": true,
+        "materialize": true,
+        "write_idx": 2
+      },
+      "chip": "Ascend950DT_9582",
+      "ca_us": 7.652121069841087,
+      "pred_us": 7.404373082028948,
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "source": "results/v0.19/workloads/attn-res-extension-holdout.json",
+      "trace_sha256": [
+        "505d2ff7e2adfa43e907ac469a6440a3cc26cc211e3577b3c5f7e301fe238f33"
+      ],
+      "correctness": [
+        "correctness shape=8x512 S=8 N=2 groups=output,prefix,materialized,bank bad=0"
+      ]
+    },
+    {
+      "op": "attn_res_fwd",
+      "shape": [
+        8,
+        512,
+        8,
+        2
+      ],
+      "attrs": {
+        "addend": true,
+        "materialize": true,
+        "write_idx": 2
+      },
+      "chip": "Ascend950PR_957b",
+      "ca_us": 7.223030569963157,
+      "pred_us": 7.4103393505126105,
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "source": "results/v0.19/workloads/attn-res-extension-holdout.json",
+      "trace_sha256": [
+        "1cf07ba65feb47aa5eb10eea3c7215979b52f1993387161aa91185303ae20bdd"
+      ],
+      "correctness": [
+        "correctness shape=8x512 S=8 N=2 groups=output,prefix,materialized,bank bad=0"
+      ]
+    },
+    {
+      "op": "attn_res_fwd",
+      "shape": [
+        3,
+        512,
+        8,
+        1
+      ],
+      "attrs": {
+        "addend": true,
+        "materialize": true,
+        "write_idx": 1
+      },
+      "chip": "Ascend950DT_9582",
+      "ca_us": 7.009697440080345,
+      "pred_us": 6.796664698069951,
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "source": "results/v0.19/workloads/attn-res-extension-holdout.json",
+      "trace_sha256": [
+        "4e185e68786030ee18d069246bdde778605efbe092f62d4cbcdcdd3f46a249c1"
+      ],
+      "correctness": [
+        "correctness shape=3x512 S=8 N=1 groups=output,prefix,materialized,bank bad=0"
+      ]
+    },
+    {
+      "op": "attn_res_fwd",
+      "shape": [
+        3,
+        512,
+        8,
+        1
+      ],
+      "attrs": {
+        "addend": true,
+        "materialize": true,
+        "write_idx": 1
+      },
+      "chip": "Ascend950PR_957b",
+      "ca_us": 6.696969750337303,
+      "pred_us": 6.801585331024849,
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "source": "results/v0.19/workloads/attn-res-extension-holdout.json",
+      "trace_sha256": [
+        "8957dd020e93e96d58d45b788dedbe12dc1a42e23bc93607535be464e5c410dd"
+      ],
+      "correctness": [
+        "correctness shape=3x512 S=8 N=1 groups=output,prefix,materialized,bank bad=0"
+      ]
+    },
+    {
+      "op": "attn_res_fwd",
+      "shape": [
+        4,
+        256,
+        8,
+        3
+      ],
+      "attrs": {
+        "addend": true,
+        "materialize": true,
+        "write_idx": 3
+      },
+      "chip": "Ascend950DT_9582",
+      "ca_us": 7.585454943589866,
+      "pred_us": 7.831733389264927,
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "source": "results/v0.19/workloads/attn-res-extension-holdout.json",
+      "trace_sha256": [
+        "c318313b0c6dea45e5521f4dc485f5fd3435ea2f427d9b3240fcea1c2d2e0794"
+      ],
+      "correctness": [
+        "correctness shape=4x256 S=8 N=3 groups=output,prefix,materialized,bank bad=0"
+      ]
+    },
+    {
+      "op": "attn_res_fwd",
+      "shape": [
+        4,
+        256,
+        8,
+        3
+      ],
+      "attrs": {
+        "addend": true,
+        "materialize": true,
+        "write_idx": 3
+      },
+      "chip": "Ascend950PR_957b",
+      "ca_us": 7.367878916673362,
+      "pred_us": 7.835239341271142,
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "source": "results/v0.19/workloads/attn-res-extension-holdout.json",
+      "trace_sha256": [
+        "e7b046f12150da9e76409230abc8823956c88b3f6593eac6c28fdb57b491b651"
+      ],
+      "correctness": [
+        "correctness shape=4x256 S=8 N=3 groups=output,prefix,materialized,bank bad=0"
+      ]
+    },
+    {
+      "op": "attn_res_fwd",
+      "shape": [
+        1,
+        256,
+        8,
+        2
+      ],
+      "attrs": {
+        "addend": true,
+        "materialize": true,
+        "write_idx": 2
+      },
+      "chip": "Ascend950DT_9582",
+      "ca_us": 7.003636839799583,
+      "pred_us": 7.249680829397017,
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "source": "results/v0.19/workloads/attn-res-extension-holdout.json",
+      "trace_sha256": [
+        "8c961e5cfb0d35fd5b7ae6991e5d881a769f310f8294d1619c84d5bfac55e096"
+      ],
+      "correctness": [
+        "correctness shape=1x256 S=8 N=2 groups=output,prefix,materialized,bank bad=0"
+      ]
+    },
+    {
+      "op": "attn_res_fwd",
+      "shape": [
+        1,
+        256,
+        8,
+        2
+      ],
+      "attrs": {
+        "addend": true,
+        "materialize": true,
+        "write_idx": 2
+      },
+      "chip": "Ascend950PR_957b",
+      "ca_us": 6.5830307034775615,
+      "pred_us": 7.25266396363885,
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "source": "results/v0.19/workloads/attn-res-extension-holdout.json",
+      "trace_sha256": [
+        "00135b3264e196d40858e2039061c10f9a5c1dc691625f490a002e24af476107"
+      ],
+      "correctness": [
+        "correctness shape=1x256 S=8 N=2 groups=output,prefix,materialized,bank bad=0"
+      ]
+    }
+  ]
+}

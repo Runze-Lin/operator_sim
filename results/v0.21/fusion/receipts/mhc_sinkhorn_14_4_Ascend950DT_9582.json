@@ -1,0 +1,118 @@
+{
+  "chip": "Ascend950DT_9582",
+  "shape": [
+    14,
+    4
+  ],
+  "cost": {
+    "seconds": 214.55123469000682,
+    "raw_bytes": 96257207,
+    "cpu_seconds": 4628.87,
+    "exit_code": 0,
+    "stop_reason": null,
+    "started_utc": "2026-11-19T11:53:05.570594+00:00",
+    "finished_utc": "2026-11-19T11:56:40.123491+00:00",
+    "command": [
+      "bash",
+      "/home/l00925865/operator_sim/scripts/cann-run.sh",
+      "msopprof",
+      "simulator",
+      "--soc-version=Ascend950DT_9582",
+      "--dump=true",
+      "--launch-count=20",
+      "--timeout=10",
+      "--output=/home/l00925865/operator_sim/runs/fusion21/mhc_sinkhorn_14_4_Ascend950DT_9582/profile",
+      "/home/l00925865/operator_sim/build/smoke/extension_indexer_mhc",
+      "mhc_sinkhorn",
+      "14",
+      "4",
+      "7"
+    ]
+  },
+  "run_log": "runs/fusion21/mhc_sinkhorn_14_4_Ascend950DT_9582/run.log",
+  "qualified": true,
+  "kernel": {
+    "kernel": "MhcSinkhorn_8997d9c5c22e82688b98bc25d8daa9cd_0",
+    "ca_us": 4.636363509111106,
+    "active_aic": 0,
+    "active_aiv": 14,
+    "windows": {
+      "core17.veccore0": [
+        0.07575774192810059,
+        4.46606111805886
+      ],
+      "core0.veccore0": [
+        0.0,
+        4.423636916093528
+      ],
+      "core1.veccore1": [
+        0.06969714164733887,
+        4.389697554521263
+      ],
+      "core3.veccore0": [
+        0.07030320167541504,
+        4.443636420182884
+      ],
+      "core2.veccore1": [
+        0.11030316352844238,
+        4.636363509111106
+      ],
+      "core18.veccore0": [
+        0.144242525100708,
+        4.2557578114792705
+      ],
+      "core16.veccore1": [
+        0.12181830406188965,
+        4.302424433641136
+      ],
+      "core1.veccore0": [
+        0.055757761001586914,
+        4.553333762101829
+      ],
+      "core17.veccore1": [
+        0.11272740364074707,
+        4.4109091786667705
+      ],
+      "core0.veccore1": [
+        0.052727460861206055,
+        4.6157574681565166
+      ],
+      "core16.veccore0": [
+        0.11272740364074707,
+        4.189697268418968
+      ],
+      "core18.veccore1": [
+        0.15272736549377441,
+        4.30969715397805
+      ],
+      "core2.veccore0": [
+        0.09939408302307129,
+        4.446060660295188
+      ],
+      "core19.veccore0": [
+        0.17818188667297363,
+        4.483636382035911
+      ]
+    },
+    "trace": "runs/fusion21/mhc_sinkhorn_14_4_Ascend950DT_9582/profile/OPPROF_20261119195305_RFIZXJIEPPTSSORW/simulator/trace.json",
+    "trace_sha256": "1602ae3a4c8b45d7a75451fdbf4db24dc50392dd042d825db90807409c3608ae",
+    "binary_sha256": "50ff8fc0d508329a7d5123ee5dcde5e6c930a97a24c398411cfbd92c0432d17a",
+    "queue_events": {
+      "SCALAR": 26296,
+      "FLOWCTRL": 910,
+      "MTE3": 28,
+      "MTE2": 42,
+      "PUSHQ": 728,
+      "RVECLP": 1288,
+      "RVECEX": 8988,
+      "RVECSU": 5404,
+      "RVECST": 3024,
+      "RVECLD": 3976
+    },
+    "mmad": 0,
+    "total_events": 50684
+  },
+  "correctness": [
+    "correctness name=output count=224 bad=0 max_abs_error=6.33785e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+  ]
+}

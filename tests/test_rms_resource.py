@@ -14,8 +14,11 @@ class RmsResourceTest(unittest.TestCase):
             self.assertEqual(d['target_plan']['vector_groups'],16*rows)
             self.assertGreater(d['store_union_cycles'],d['store_eligible_overlap_cycles'])
             self.assertAlmostEqual(sum(r.projection['stages_us'].values()),r.latency_us)
-            self.assertEqual(d['residency_assumption'],'standalone_first_launch')
-            self.assertAlmostEqual(r.latency_us,d['conditional_us']['first'])
+            self.assertEqual(d['residency_assumption'],'unknown_stream_history')
+            p = (active-1)/load_chip(name).vector_cores
+            states = d['conditional_us']
+            running = states['reuse']*(1-p) + states['expand']*p
+            self.assertAlmostEqual(r.latency_us,2*running*states['first']/(running+states['first']))
 
     def test_resource_sensitivity_and_ub(self):
         chip=load_chip()

@@ -125,6 +125,15 @@ def _structured(op, shape, attrs, dtype):
         prepared_gate = not attrs.get("use_gate_in_kernel") and params.get("gate_mode", "preactivated") == "preactivated"
         if gate_width and beta_width and prepared_gate:
             read = 2*b*s*(2*hq*k+hv*v) + b*s*hv*(gate_width*k + beta_width) + state
+        if op == "kda_chunk" and gate_width and beta_width:
+            if prepared_gate and not attrs.get("initial_state", True):
+                read -= state
+            if not prepared_gate and "dt_bias" in attrs:
+                read = (2*b*s*(2*hq*k+hv*v) + b*s*hv*(gate_width*k+beta_width)
+                        + 4*hv + (4*hv*k if attrs["dt_bias"] else 0)
+                        + (state if attrs.get("initial_state", True) else 0))
+            if "cu_seqlens" in attrs:
+                notes.append("Counts tensor bytes only; host-side sequence metadata and internal workspaces are excluded.")
         write = 2*b*s*hv*v + (state if attrs.get("output_final_state", True) else 0)
         if op == "kda_chunk":
             chunk = plan["attrs"]["chunk_size"]

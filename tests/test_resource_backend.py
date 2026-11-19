@@ -7,6 +7,18 @@ from operator_model.quant_resource import resource_quant
 
 
 class ResourceBackendTest(TestCase):
+    def test_fused_bias_repartitions_on_target_and_loads_bt_once_per_tile(self):
+        pr = load_chip('Ascend950PR_957b')
+        for m,cores in ((256,24),(512,28)):
+            x = estimate('addmm',(m,512,256),chip=replace(pr,name='target-with-same-resources'))
+            diag = x.projection['timing_diagnostics']
+            self.assertEqual(x.active_aic,cores)
+            self.assertEqual(diag['target_plan']['waves'],1)
+            self.assertEqual(diag['bias_cold_bytes'],1024)
+            self.assertGreaterEqual(diag['l1_to_bt_bytes'],1024)
+            self.assertEqual(x.work['logical_read_bytes'],2*((m+512)*256+512))
+        self.assertIsNone(estimate('addmm',(256,512,256),{'self_shape':[256,512]}).latency_us)
+
     def test_resource_never_calls_reference_predictor(self):
         dt, pr = load_chip(), load_chip('Ascend950PR_957b')
         with patch('operator_model.backend.predict', side_effect=AssertionError('reference pricing')):
@@ -21,7 +33,7 @@ class ResourceBackendTest(TestCase):
 
     def test_contract_and_explicit_mode(self):
         for op,shape,kw in [('quant',[1,65],{}),('fa',[9,128,8],{}),('matmul',[1,32,16],{'dtype':'fp16'}),
-                            ('mhc_post',[2,4,256],{}),('rmsnorm',[2,255],{}),('quant',[1,128],{'attrs':{'layout':'wrong'}})]:
+                            ('mhc_post',[2,5,256],{}),('rmsnorm',[2,255],{}),('quant',[1,128],{'attrs':{'layout':'wrong'}})]:
             self.assertEqual(estimate(op,shape,timing_mode='resource',**kw).status,'unsupported')
         unknown = replace(load_chip('Ascend950PR_957b'),name='other')
         self.assertEqual(estimate('quant',[1,128],chip=unknown,timing_mode='calibrated').status,'unsupported')

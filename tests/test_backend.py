@@ -36,7 +36,7 @@ class TestSystemBackend(unittest.TestCase):
     def test_scheduler_can_track_vector_residency(self):
         result = estimate('rmsnorm', (2, 6144), {'resident_aiv': 0})
         self.assertEqual(result.active_aiv, 2)
-        self.assertIsNone(estimate('matmul', (2, 64, 128)).active_aiv)
+        self.assertEqual(estimate('matmul', (2, 64, 128)).active_aiv, 0)
 
     def test_fused_contract_uses_expert_distribution(self):
         result = estimate('groupedmatmulswiglugmm', (32, 256, 128, 2),

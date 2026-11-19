@@ -1,5 +1,21 @@
 # mHC Post 算例
 
+![mHC Post shape-only、首发和热态与 DT 关键核指令](figures/mhc_post-v21-state.png)
+
+取同一个 BF16 调用 [16,4,256]。16 个 token 按 16 个 AIV 各一行分配，通道宽恰为 256，每核有 4×4×5=80 个 64-lane 向量工作组。DT、PR 的整形逻辑读 42,240 B、写 32,768 B。已测接口是 ops-transformer 的 `aclnnMhcPost`。DT 旧序列的先前覆盖为 36 AIV，此次复用；PR 的正式进程中它是首次调用。形状相同，两种调度状态在 CA 中分别耗时 2.214 和 4.255 µs。上栏对照可由 shape 得到的三种候选时间，不同颜色的线分别表示未知历史及已知历史预测。下栏为真实退休指令区间。[图上时间与 DB 指纹](../../results/v0.21/dispatch/mhc_post-state.json)
+
+```python
+from operator_model import estimate
+r = estimate('mhc_post', [16,4,256], chip='Ascend950DT_9582')
+print(r.work, r.projection['timing_diagnostics']['context_predictions_us'])
+warm = estimate('mhc_post', [16,4,256], {'resident_aiv':36}, chip='Ascend950DT_9582')
+```
+
+在 DT 上，给出历史时热态点值 2.313 µs，未知历史时初次与热态估计 4.788、2.313 µs，调和中心为 3.120 µs，对该热窗仍高估 40.9%。PR 无提示为 3.124 µs，指定首发则为 4.792 µs；970DT 无提示为 2.859 µs，只有外推。相同 shape 的实际首发与热态之比是一个可检验的限制。把输入固定后，无状态预测器有最小可能最大误差 (最大窗−最小窗)/(最大窗+最小窗)；目前归档同形最高为 DT 28.03%、PR 22.96%。这些数值不足以证明 40% 目标不可实现。系统知道调度顺序时可用 OperatorStream，仅已提交的调用更新状态。[成对指令、冷暖窗口与下界](../../results/v0.21/dispatch/post-identifiability.json) · [流式调用方法](../integration.md#从系统的调用顺序恢复启动状态)
+
+## v0.20 阶段校准的历史算例
+
+
 ## 模型与实际库流水对照
 
 ![950PR mhc_post 的模型与 CA 同轴对照](figures/mhc_post-pr-pipeline.png)

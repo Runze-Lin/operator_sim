@@ -1,10 +1,16 @@
 # GroupedMatmulSwigluQuantV2（GMM1） 算例
 
-## 模型与实际库流水对照
+## 同一批两个专家的预测流水与真实指令
 
-![950PR grouped_matmul_swiglu_quant_v2 的模型与 CA 同轴对照](figures/grouped_matmul_swiglu_quant_v2-pr-pipeline.png)
+![GMM1 两个中位模板与同形 950PR 末核逐队列流水](figures/gmm1-two-experts-pr.png)
 
-本卡 shape 为 `[2, 64, 64, 1]`，950PR 模型 **7.272 µs**，完整 CA **6.885 µs**，有符号误差 +5.63%。上栏画出当前预测器能够辨识的阶段时长。只返回一个阶段的路线保留整段预测；多个暴露阶段按贡献累计，模型尚未辨识它们的具体指令发起点。下栏用实际库 trace 的最后完成核逐队列展开，黑色刻度来自真实 DMA 或 MMAD 发起。 [图上每段的时间与 trace 指纹](../../results/v0.20/examples/grouped_matmul_swiglu_quant_v2-pr.json)
+`[总 token, hidden, intermediate, 本地专家]=[8,256,128,2]`，专家分别收到 1、7 个 token。GMM1 将每个专家的 256 维输入投影为 2×128 列，随后 AIV 做 SwiGLU 与 MX 量化。安装包接口为 `aclnnGroupedMatmulSwigluQuantV2`，实际 kernel 是 `GroupedMatmulSwigluQuantV2_201ac99772cea936e22117f5ac241d38_0_mix_aic`。模型 **9.964 µs**，950PR CA **7.393 µs**，有符号误差 **+34.79%**。CA 只取该 kernel 的全核首指令至末指令，两个算例在真实 MoE 串行调用中采集，计时均排除宿主间隙。
+
+上栏的每行有深浅两条，表示四个 DT 模板在目标芯片上重算后位于中间的两条真实参考排程，分别为 **8.930、10.999 µs**。公开模型返回两者末时刻的算术平均，图中的虚线标出这个均值。每条排程内，资源同时活动的原始区间按其中最慢的资源倍率定价。下栏是相同队列上的实测活动，Cube 行深色短线对应末核 `core1.cubecore0` 发起的 4 条 `MMAD_MX`。扫描全部 AIC 的原始事件，共数到 **8 条 MX 乘加，分布在 2 个核**。若解析器只匹配普通助记符 `MMAD`，该计数将返回 0。
+
+两条模板的最迟 AIC 分别为 8.930、10.999 µs，对应最迟 AIV 为 8.354、8.799 µs；CA 观察到最迟 AIC 与 AIV 在 7.393、7.385 µs 收尾。两条参考排程的 Cube 起始都晚，且它们的 AIC 终点相差 2.069 µs，这正是均值掩盖的阶段不确定性。本次沿用历史数值回执，GMM1 输出及 MX scale、GMM2 输出均完成比较，三项 bad 均为 0。[两个中位模板、逐核 MX 次数、完整时间窗与 SHA](../../results/v0.21/fusion/gmm1-two-experts-pr.json) · [复算与重绘](../../development/validation/fusion21/moe_queue_figures.py)
+
+## 单专家小形状的三端算例
 
 输入轴顺序为 **T,K,F（SwiGLU 中间宽度）,E**。本例比较同一输入契约在 950DT、950PR 与假设的 970DT 上的设备指令窗口。
 

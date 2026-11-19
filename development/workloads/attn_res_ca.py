@@ -33,7 +33,8 @@ def collect(item,vendor,registration):
     launch='export ASCEND_CUSTOM_OPP_PATH="$1"; export LD_LIBRARY_PATH="$1/op_api/lib:$LD_LIBRARY_PATH"; shift; exec "$@"'
     args=['/usr/bin/time','-f','%U %S','-o',str(location/'cpu.txt'),'bash',str(ROOT/'scripts/cann-run.sh'),
           'bash','-c',launch,'attn-res-vendor',str(vendor),'msopprof','simulator','--soc-version='+chip,
-          '--dump=true','--launch-count=1','--timeout=3','--output='+str(location/'profile'),
+          '--dump=true','--launch-count=1','--timeout='+str(registration.get('profiler_timeout_minutes',3)),
+          '--output='+str(location/'profile'),
           str(ROOT/item.get('runner','build/smoke/attn_res_fwd19')),str(t),str(valid)]
     start=time.monotonic(); reason=None
     with (location/'run.log').open('w') as f:

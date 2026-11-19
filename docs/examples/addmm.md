@@ -1,69 +1,35 @@
-# Addmm 算例
+# Addmm · 列偏置与目标芯片分波
 
-## 模型与实际库流水对照
+![950PR 的模型关键路径与最后一个 AIC 的真实流水](figures/addmm-v21-pr-page.png)
 
-![950PR addmm 的模型与 CA 同轴对照](figures/addmm-pr-pipeline.png)
-
-本卡 shape 为 `[16, 64, 256]`，950PR 模型 **3.650 µs**，完整 CA **3.215 µs**，有符号误差 +13.54%。上栏画出当前预测器能够辨识的阶段时长。只返回一个阶段的路线保留整段预测；多个暴露阶段按贡献累计，模型尚未辨识它们的具体指令发起点。下栏用实际库 trace 的最后完成核逐队列展开，黑色刻度来自真实 DMA 或 MMAD 发起。 [图上每段的时间与 trace 指纹](../../results/v0.20/examples/addmm-pr.json)
-
-输入轴顺序为 **M,N,K**。本例比较同一输入契约在 950DT、950PR 与假设的 970DT 上的设备指令窗口。
+对同一 BF16 输入 `[M,N,K]=[512,512,256]`，950PR 实测用了 28 个 AIC，一波内完成 56 条 MMAD。旧版按 DT 的分块推成额外一波，预测 7.101 µs。当前预测 4.856 µs，CA 4.687 µs，高估 3.62%。[每条图元的原始时间与 trace 哈希](../../results/v0.21/dispatch/addmm-pr-page.json)
 
 ```python
 from operator_model import estimate
-
-shape = [16, 64, 256]
-attrs = {'self_shape': [64], 'alpha': 1, 'beta': 1}
 for chip in ('Ascend950DT_9582', 'Ascend950PR_957b', 'Ascend970DT'):
-    r = estimate('addmm', shape, attrs, chip=chip, dtype='bf16', timing_mode='auto')
-    print(r.latency_us, r.status, r.active_aic, r.active_aiv, r.work)
+    r = estimate('addmm', [512,512,256], {'alpha':1, 'beta':1, 'self_shape':[512]}, chip=chip)
+    print(r.latency_us, r.active_aic, r.work, r.projection['target_plan'])
 ```
 
-## 输入到工作量
+输入为 BF16 的 A[512,256]、B[256,512] 和 bias[512]。有效工作为 134,217,728 FLOP，逻辑读为 525,312 B，写为 524,288 B。调用 CANN 9.2.1 ops-nn 的 `aclnnAddmm`，日志给出实际 kernel `MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2`；已校验所有输出。列偏置进入 BT 参与计算，设备窗口包含此次 kernel 的所有核。
 
-该路线调用 CANN 9.2.1 的 ops-nn 算子族。实际调用接口为 `aclnnAddmm`。
-工作量接口给出的 Cube 操作为 524,288，Vector 计数为 0。逻辑读/写分别为 41088 / 2048 B。此处 None 表示缺少计数；片外实际流量须另行观测，逻辑字节不含中间层重复搬运。
+PR 的 28 个 AIC 用目标 L0/L1 容量和输出网格重选 [80,128,128] 主块。M 方向 7 块、N 方向 4 块，24 个 80×128 主输出和 4 个 32×128 尾输出，每个块 K 读一页 256，页内计算两次。bias 随 N 分区在同一个 tile 内复用，冷读一次共 1,024 B，跨各 AIC 的 L1→BT 搬运合计 28×128×2=7,168 B。数学字节量、核侧搬运量与片外事务分别计量。
 
-## 分块、资源和关键路径
+| 关键路径部分 | 设备 µs | 来自哪些输入 |
+|---|---:|---|
+| 启动及核到达 | 2.315 | 启动周期和 log₂(28) 的到达偏斜，来自 950 的指令校准 |
+| GM→L1 首次填充 | 1.557 | 操作数与列偏置，分别受本核端口、共享 L2 和片外读限制 |
+| L1→L0/BT 先导 | 0.131 | 首个 K=128 段的数据服务与 L0 响应周期 |
+| MMAD 两段 | 0.508 | 对齐后的矩阵运算数、目标 BF16 每核算力、发起间隔与末条响应 |
+| FIXP 写出与排空 | 0.345 | 主块 20,480 B 的本核写口及共享写口上界，含末写退休 |
+| 合计 | **4.856** | 28 核同一波，最慢输出块的关键路径 |
 
-输入 A[M,K]、B[K,N] 和列偏置 [N]。输出[M,N]共 1,024 项，每项含一次融合偏置加。主 tile=[16, 64, 256]、分支=dense、1 AIC、1 波。读处理量含偏置的 2·min(N,tileN) B。每队列服务用 950DT 单核 trace 区间拟合 a+bX（µs）。
-| 队列 | X（读写 KiB、Cube 以 131072 ops 为一单位） | a (µs) | b (µs/单位) | 服务 (µs) |
-|---|---:|---:|---:|---:|
-| CUBE | 4.00000 | 0.06927 | 0.009539 | 0.10743 |
-| MTE2 | 40.12500 | 0.83794 | 0.007047 | 1.12071 |
-| MTE1 | 40.12500 | 0.02527 | 0.002445 | 0.12337 |
-| FIXP | 2.00000 | 1.29390 | 0.053304 | 1.40051 |
+下图栏的偏置读和 B 读几乎同时发起。首条实际 MMAD 在 3.886 µs，模型在约 4.003 µs 才完成先导；收尾误差并非来自额外一波。FIXP 的长橙条从描述符发起开始，包含设备等待依赖的时间。本模型上栏的写尾是关键路径的暴露成本。[队列周期参数](../../results/v0.16/matmul.json)
 
-控制底噪 2.10242 µs，核到达偏斜 0.04600·log₂(1)=0.00000 µs，额外队列暴露系数 η=0.10858。全时长=控制+偏斜+波数×最长服务+η(服务和−最长服务)=3.64968 µs。η 来自关键核 trace 上各队列活动并集，描述该实现的重叠程度。
+| 平台 | 当前预测 µs | CA µs | AIC |
+|---|---:|---:|---:|
+| 950DT | 4.773 | 4.479 | 32 |
+| 950PR | 4.856 | 4.687 | 28 |
+| 970DT | 3.761 | N/A · 外推 | 88 |
 
-Ascend950PR_957b 按目标频率、每核峰值、有限任务波数和访存压力缩放服务：CUBE=1.000，MTE2=1.005，MTE1=1.000，FIXP=1.000，SCALAR=1.000。重算最长队列后 control=2.102，queue_window=1.548 µs，总计 **3.65035 µs**。
-
-Ascend970DT 按目标频率、每核峰值、有限任务波数和访存压力缩放服务：CUBE=0.915，MTE2=0.915，MTE1=0.917，FIXP=0.917，SCALAR=0.917。重算最长队列后 control=1.927，queue_window=1.418 µs，总计 **3.34530 µs**。
-
-[DT 各阶段参数及训练 trace](../../results/v0.9/addmm/profile.json)
-
-## 设备时间及误差
-
-| 平台 | 模型 (µs) | CA (µs) | 有符号误差 | 预测 AIC / AIV | CA AIC / AIV |
-|---|---:|---:|---:|---|---|
-| 950DT | 3.64968 | 3.58788 | +1.72% | 1 / N/A | 1 / 0 |
-| 950PR | 3.65035 | 3.21515 | +13.54% | 1 / 0 | 1 / 0 |
-| 970DT 外推 | 3.34530 | N/A | N/A | 1 / 0 | N/A |
-
-DT/PR 加速比取同形耗时之比，模型 0.9998×，CA 1.1159×。正时延误差为高估。
-
-**950DT CA**　msopprof official full trace，角色 new paired DT CA；核名 `MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2`。该宿主的数值检查共 1 组；子算子切片共享宿主检查。各设备窗以最早到最晚核指令计，多 kernel 取串行窗之和。
-
-**950PR CA**　msopprof official full trace，角色 frozen PR holdout；核名 `MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2`。该宿主的数值检查共 1 组；子算子切片共享宿主检查。各设备窗以最早到最晚核指令计，多 kernel 取串行窗之和。
-
-## CA 流水与模型差距
-
-![Addmm 实测队列](figures/addmm.png)
-
-横轴为每次 kernel 自身的设备时间，两端各自从零开始。每种核取最晚结束的一个核。每行按该队列有效指令区间的并集着色，100 个等宽时间格，深蓝表示格内占满。不同队列可重叠，行长不能相加。DMA/FIX 行表示描述符的在途窗口，可能包含等待依赖的时间；颜色深度不能直接换算 HBM 总线利用率。
-
-950DT 第 1 段 3.5879 µs；所选核上占用最长的队列为 AIC/Scalar 2.3388 µs、AIC/FIXP 1.2612 µs、AIC/MTE2 0.9770 µs。
-950PR 第 1 段 3.2152 µs；所选核上占用最长的队列为 AIC/Scalar 2.0400 µs、AIC/FIXP 1.1873 µs、AIC/MTE2 0.8818 µs。
-
-PR 的模型与 CA 相差 +0.4352 µs。最长队列外的暴露比例来自 DT 关键核；固定比例只近似覆盖跨设备排队和尾波。上图给出可观测的队列活动；一次端到端差值无法唯一分摊到这些因素。
-
-[总建模方法](../modeling-strategy.md) · [全部 shape 的误差](../error-analysis.md) · [970DT 配置与来源](../../configs/chips/Ascend970DT.json)
+DT 原始归档与 PR 单独发起的实验沿用各自的采集上下文。本例是开发回放，新验证的形状、预测、基线和资格记录另外保存。[开发形状原始回执](../../results/v0.17/evaluation.json) · [独立预注册](../../results/v0.21/dispatch/freeze.json)

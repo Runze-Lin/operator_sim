@@ -35,7 +35,11 @@ def resource_sigmoid(shape, chip):
     f = chip.frequency_ghz
     read_port = chip.details.get('mte2_bandwidth_gbs') or 1024*f / READ_PER_KIB
     write_port = chip.details.get('mte3_bandwidth_gbs') or 1024*f / WRITE_PER_KIB
-    shared = min(chip.hbm_bandwidth_gbs, chip.details.get('l2_bandwidth_gbs') or float('inf'))
+    from .vector_memory import stream_memory
+    memory = stream_memory(chip, active, 4*n, 4*n)
+    # MTE2 response is a per-request latency. The sustained cross-core issue
+    # rate acts once on the whole cold/spilled payload, not on each response.
+    per_element_cycles = max(memory['external_floor_cycles'], memory['l2_floor_cycles'] or 0) / n
     fp32 = chip.vector_tops['32']
     simd_factor = (27/(64*1.65))/(fp32/(chip.vector_cores*f)) if fp32 else 1.
     # Single 950DT AIV: 3012 cycles to the first tensor read; 64-AIV
@@ -46,13 +50,11 @@ def resource_sigmoid(shape, chip):
         data = 4 * amount
         local_read = data * f / read_port
         local_write = data * f / write_port
-        # Fair-share lower bounds. Physical write miss/eviction counts are unknown.
-        shared_one = data * active * f / shared
-        read = 1159 + max(local_read, shared_one)
+        read = max(1159 + local_read, data * active * f / chip.hbm_bandwidth_gbs)
         groups = _ceil(amount, 64)
         vector = (79 + 4*(groups-1)) * simd_factor
-        write = 159 + max(local_write, shared_one)
-        return read, vector, write, max(local_read, local_write, 2*shared_one, vector,
+        write = 159 + local_write
+        return read, vector, write, max(local_read, local_write, amount * active * per_element_cycles, vector,
                                        (read+vector)/2, (vector+write)/2)
 
     first_count = min(cap, local)
@@ -83,5 +85,5 @@ def resource_sigmoid(shape, chip):
                     last_write_at=last_write_at/factor, last_read=lr/factor, last_vector=lv/factor,
                     last_write=lw/factor)
     return end/factor, 0, active, dict(target_plan=plan, stages_us=stages, schedule_us=schedule,
-                                       port_read_gbs=read_port, port_write_gbs=write_port, shared_gbs=shared,
+                                       port_read_gbs=read_port, port_write_gbs=write_port, shared_gbs=memory['effective_external_gbs'], **memory,
                                        special_function_rate_scale=simd_factor)

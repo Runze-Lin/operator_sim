@@ -1,10 +1,24 @@
 # Lightning Indexer 算例
 
-## 模型与实际库流水对照
+## 两个 query 扫描 3072 个位置时的模型与 CA 流水
 
-![950PR lightning_indexer 的模型与 CA 同轴对照](figures/lightning_indexer-pr-pipeline.png)
+![950PR Lightning Indexer 的模型与 CA，AIC 和 AIV 队列共用微秒轴](figures/lightning-indexer-3072-pr.png)
 
-本卡 shape 为 `[1, 1, 512, 8, 128]`，950PR 模型 **5.790 µs**，完整 CA **5.779 µs**，有符号误差 +0.20%。上栏画出当前预测器能够辨识的阶段时长。只返回一个阶段的路线保留整段预测；多个暴露阶段按贡献累计，模型尚未辨识它们的具体指令发起点。下栏用实际库 trace 的最后完成核逐队列展开，黑色刻度来自真实 DMA 或 MMAD 发起。 [图上每段的时间与 trace 指纹](../../results/v0.20/examples/lightning_indexer-pr.json)
+取 BF16、BSND，`[B,Q,KV,G,D]=[1,2,3072,8,128]`，右下对齐的因果 Top-512。实际调用 `aclnnLightningIndexer`，安装包执行 `LightningIndexer_2517851d7f53b28f971ff94bfa4b7037_203547_mix_aic`，两行共 1024 个索引全部通过集合校验。模型给出 **13.633 µs**，950PR CA 整窗 **10.776 µs**，偏高 **2.857 µs（26.51%）**。
+
+| 同一工作阶段，自本图全核首指令计 µs | 上栏模型 | 下栏 CA |
+|---|---:|---:|
+| AIC 首次 Cube 活动 | 4.910 | 2.561 |
+| AIC 最后一次 Cube 活动结束 | 11.744 | 8.901 |
+| AIC 末核结束 | 12.138 | 9.064 |
+| AIV 最后写回结束 | 13.629 | 10.770 |
+| 全调用完成 | 13.633 | 10.776 |
+
+首个 Cube 阶段已经晚约 2.35 µs。模型中 AIC 收尾至全调用完成的间隔是 1.50 µs，CA 为 1.71 µs，说明本例的主要正残差在 AIC 完成前已经形成。图中下栏两个核分别是最晚完成的 AIC 和 AIV。深紫刻度标出 `core0.cubecore0` 实际发起的全部 24 条 MMAD。CA 报告 28 个 AIC、56 个 AIV 的启动窗口；公共接口给出 2 个 Cube 和 4 个 Vector 作业的并行代理。
+
+这里可以复核到队列级别。模型的 Cube、MTE1、MTE2 工作单位各为 ⌈3072/128⌉=24，SIMD 与 MTE3 各为 ⌈3072/512⌉=6。对已校准 DT 模板的每个原始区间，按当时同时工作的队列逐个定价，取最大倍率缩放区间长度。三个模板在 PR 上重算为 17.772、13.633、13.374 µs，中位数来自 KV=1024 的模板。上栏复原该模板实际的先后顺序与重叠，各条的长度服从冻结模型；它仅能推算队列何时活动，预测单条 MMAD 的发起时刻仍需更细的调度模型。原始数据库和实际 trace 均校验 SHA。无需重新运行 CA 即可从提交的 JSON 重绘。[精简绘图数据](../../results/v0.21/fusion/lightning-indexer-3072-pr.json) · [提取与重绘脚本](../../development/validation/fusion21/indexer_figure.py)
+
+## 小形状的工作量、参数与三端价格
 
 输入轴顺序为 **B,Q,KV,查询头数,D**。本例比较同一输入契约在 950DT、950PR 与假设的 970DT 上的设备指令窗口。
 

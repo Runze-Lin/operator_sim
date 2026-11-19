@@ -1,0 +1,376 @@
+{
+  "method": "public estimate, single call per shape per chip in one fresh interpreter, process startup excluded",
+  "evidence": "workload arithmetic, no CA latency",
+  "tp": 8,
+  "cases": [
+    {
+      "shape": [
+        1,
+        64,
+        12,
+        12,
+        128,
+        128
+      ],
+      "batch": 1,
+      "context_per_request": 64,
+      "attrs": {
+        "cu_seqlens": [
+          0,
+          64
+        ],
+        "dt_bias": true,
+        "initial_state": true,
+        "gate_dtype": "bf16",
+        "beta_dtype": "fp32",
+        "output_final_state": true,
+        "export_gk": false,
+        "state_v_first": true,
+        "use_gate_in_kernel": true,
+        "safe_gate": true,
+        "lower_bound": -5.0,
+        "chunk_size": 64
+      },
+      "partition": {
+        "status": "logical_partition_only",
+        "chunks_per_sequence": 1,
+        "max_chunks_per_sequence": 1,
+        "total_chunks": 1,
+        "full_chunks_total": 1,
+        "full_chunks": 1,
+        "tail_tokens": 0,
+        "state_chains": 12,
+        "parallel_chunk_head_tasks": 12,
+        "active_aic": null,
+        "active_aiv": null,
+        "single_kernel_internal_stages": true,
+        "actual_fusion_flags": null
+      },
+      "work": {
+        "dtype": "bf16",
+        "cube_ops": 125829120,
+        "vec_ops": 196608,
+        "cube_ops_by_dtype": {
+          "bf16": 125829120
+        },
+        "vec_ops_by_dtype": {
+          "fp32": 196608
+        },
+        "vec_ops_by_class": {
+          "alu": 196608
+        },
+        "logical_read_bytes": 1582128,
+        "logical_write_bytes": 1179648,
+        "physical_hbm_bytes": null,
+        "scope": "Useful scalar-equivalent work (FMA=2), one logical read/write per tensor per kernel; excludes padding, cache traffic and ISA expansion.",
+        "notes": [
+          "Counts tensor bytes only; host-side sequence metadata and internal workspaces are excluded.",
+          "Chunk dot counts mix useful triangular and dense-equivalent terms; triangular solve work is unknown.",
+          "Core recurrence/state work only; gate processing, casts and normalization excluded."
+        ]
+      },
+      "estimates": [
+        {
+          "chip": "Ascend950DT_9582",
+          "predicted_us": null,
+          "status": "unavailable",
+          "wall_ms": 1.76111
+        },
+        {
+          "chip": "Ascend950PR_957b",
+          "predicted_us": null,
+          "status": "unavailable",
+          "wall_ms": 0.70724
+        },
+        {
+          "chip": "Ascend970DT",
+          "predicted_us": null,
+          "status": "unavailable",
+          "wall_ms": 0.7287
+        }
+      ]
+    },
+    {
+      "shape": [
+        1,
+        262144,
+        12,
+        12,
+        128,
+        128
+      ],
+      "batch": 8,
+      "context_per_request": 32768,
+      "attrs": {
+        "cu_seqlens": [
+          0,
+          32768,
+          65536,
+          98304,
+          131072,
+          163840,
+          196608,
+          229376,
+          262144
+        ],
+        "dt_bias": true,
+        "initial_state": true,
+        "gate_dtype": "bf16",
+        "beta_dtype": "fp32",
+        "output_final_state": true,
+        "export_gk": false,
+        "state_v_first": true,
+        "use_gate_in_kernel": true,
+        "safe_gate": true,
+        "lower_bound": -5.0,
+        "chunk_size": 64
+      },
+      "partition": {
+        "status": "logical_partition_only",
+        "chunks_per_sequence": 512,
+        "max_chunks_per_sequence": 512,
+        "total_chunks": 4096,
+        "full_chunks_total": 4096,
+        "full_chunks": 512,
+        "tail_tokens": 0,
+        "state_chains": 96,
+        "parallel_chunk_head_tasks": 49152,
+        "active_aic": null,
+        "active_aiv": null,
+        "single_kernel_internal_stages": true,
+        "actual_fusion_flags": null
+      },
+      "work": {
+        "dtype": "bf16",
+        "cube_ops": 515396075520,
+        "vec_ops": 805306368,
+        "cube_ops_by_dtype": {
+          "bf16": 515396075520
+        },
+        "vec_ops_by_dtype": {
+          "fp32": 805306368
+        },
+        "vec_ops_by_class": {
+          "alu": 805306368
+        },
+        "logical_read_bytes": 3240106032,
+        "logical_write_bytes": 1616904192,
+        "physical_hbm_bytes": null,
+        "scope": "Useful scalar-equivalent work (FMA=2), one logical read/write per tensor per kernel; excludes padding, cache traffic and ISA expansion.",
+        "notes": [
+          "Counts tensor bytes only; host-side sequence metadata and internal workspaces are excluded.",
+          "Chunk dot counts mix useful triangular and dense-equivalent terms; triangular solve work is unknown.",
+          "Core recurrence/state work only; gate processing, casts and normalization excluded."
+        ]
+      },
+      "estimates": [
+        {
+          "chip": "Ascend950DT_9582",
+          "predicted_us": null,
+          "status": "unavailable",
+          "wall_ms": 0.44038
+        },
+        {
+          "chip": "Ascend950PR_957b",
+          "predicted_us": null,
+          "status": "unavailable",
+          "wall_ms": 0.44173
+        },
+        {
+          "chip": "Ascend970DT",
+          "predicted_us": null,
+          "status": "unavailable",
+          "wall_ms": 0.45108
+        }
+      ]
+    },
+    {
+      "shape": [
+        1,
+        1048576,
+        12,
+        12,
+        128,
+        128
+      ],
+      "batch": 8,
+      "context_per_request": 131072,
+      "attrs": {
+        "cu_seqlens": [
+          0,
+          131072,
+          262144,
+          393216,
+          524288,
+          655360,
+          786432,
+          917504,
+          1048576
+        ],
+        "dt_bias": true,
+        "initial_state": true,
+        "gate_dtype": "bf16",
+        "beta_dtype": "fp32",
+        "output_final_state": true,
+        "export_gk": false,
+        "state_v_first": true,
+        "use_gate_in_kernel": true,
+        "safe_gate": true,
+        "lower_bound": -5.0,
+        "chunk_size": 64
+      },
+      "partition": {
+        "status": "logical_partition_only",
+        "chunks_per_sequence": 2048,
+        "max_chunks_per_sequence": 2048,
+        "total_chunks": 16384,
+        "full_chunks_total": 16384,
+        "full_chunks": 2048,
+        "tail_tokens": 0,
+        "state_chains": 96,
+        "parallel_chunk_head_tasks": 196608,
+        "active_aic": null,
+        "active_aiv": null,
+        "single_kernel_internal_stages": true,
+        "actual_fusion_flags": null
+      },
+      "work": {
+        "dtype": "bf16",
+        "cube_ops": 2061584302080,
+        "vec_ops": 3221225472,
+        "cube_ops_by_dtype": {
+          "bf16": 2061584302080
+        },
+        "vec_ops_by_dtype": {
+          "fp32": 3221225472
+        },
+        "vec_ops_by_class": {
+          "alu": 3221225472
+        },
+        "logical_read_bytes": 12941531184,
+        "logical_write_bytes": 6448742400,
+        "physical_hbm_bytes": null,
+        "scope": "Useful scalar-equivalent work (FMA=2), one logical read/write per tensor per kernel; excludes padding, cache traffic and ISA expansion.",
+        "notes": [
+          "Counts tensor bytes only; host-side sequence metadata and internal workspaces are excluded.",
+          "Chunk dot counts mix useful triangular and dense-equivalent terms; triangular solve work is unknown.",
+          "Core recurrence/state work only; gate processing, casts and normalization excluded."
+        ]
+      },
+      "estimates": [
+        {
+          "chip": "Ascend950DT_9582",
+          "predicted_us": null,
+          "status": "unavailable",
+          "wall_ms": 0.49781
+        },
+        {
+          "chip": "Ascend950PR_957b",
+          "predicted_us": null,
+          "status": "unavailable",
+          "wall_ms": 0.45523
+        },
+        {
+          "chip": "Ascend970DT",
+          "predicted_us": null,
+          "status": "unavailable",
+          "wall_ms": 0.44992
+        }
+      ]
+    },
+    {
+      "shape": [
+        1,
+        2097152,
+        12,
+        12,
+        128,
+        128
+      ],
+      "batch": 8,
+      "context_per_request": 262144,
+      "attrs": {
+        "cu_seqlens": [
+          0,
+          262144,
+          524288,
+          786432,
+          1048576,
+          1310720,
+          1572864,
+          1835008,
+          2097152
+        ],
+        "dt_bias": true,
+        "initial_state": true,
+        "gate_dtype": "bf16",
+        "beta_dtype": "fp32",
+        "output_final_state": true,
+        "export_gk": false,
+        "state_v_first": true,
+        "use_gate_in_kernel": true,
+        "safe_gate": true,
+        "lower_bound": -5.0,
+        "chunk_size": 64
+      },
+      "partition": {
+        "status": "logical_partition_only",
+        "chunks_per_sequence": 4096,
+        "max_chunks_per_sequence": 4096,
+        "total_chunks": 32768,
+        "full_chunks_total": 32768,
+        "full_chunks": 4096,
+        "tail_tokens": 0,
+        "state_chains": 96,
+        "parallel_chunk_head_tasks": 393216,
+        "active_aic": null,
+        "active_aiv": null,
+        "single_kernel_internal_stages": true,
+        "actual_fusion_flags": null
+      },
+      "work": {
+        "dtype": "bf16",
+        "cube_ops": 4123168604160,
+        "vec_ops": 6442450944,
+        "cube_ops_by_dtype": {
+          "bf16": 4123168604160
+        },
+        "vec_ops_by_dtype": {
+          "fp32": 6442450944
+        },
+        "vec_ops_by_class": {
+          "alu": 6442450944
+        },
+        "logical_read_bytes": 25876764720,
+        "logical_write_bytes": 12891193344,
+        "physical_hbm_bytes": null,
+        "scope": "Useful scalar-equivalent work (FMA=2), one logical read/write per tensor per kernel; excludes padding, cache traffic and ISA expansion.",
+        "notes": [
+          "Counts tensor bytes only; host-side sequence metadata and internal workspaces are excluded.",
+          "Chunk dot counts mix useful triangular and dense-equivalent terms; triangular solve work is unknown.",
+          "Core recurrence/state work only; gate processing, casts and normalization excluded."
+        ]
+      },
+      "estimates": [
+        {
+          "chip": "Ascend950DT_9582",
+          "predicted_us": null,
+          "status": "unavailable",
+          "wall_ms": 0.44072
+        },
+        {
+          "chip": "Ascend950PR_957b",
+          "predicted_us": null,
+          "status": "unavailable",
+          "wall_ms": 0.43998
+        },
+        {
+          "chip": "Ascend970DT",
+          "predicted_us": null,
+          "status": "unavailable",
+          "wall_ms": 0.4541
+        }
+      ]
+    }
+  ]
+}

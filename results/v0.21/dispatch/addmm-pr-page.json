@@ -1,0 +1,149 @@
+{
+  "chip": "Ascend950PR_957b",
+  "shape": [
+    512,
+    512,
+    256
+  ],
+  "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+  "trace": "runs/sku17/extension/addmm_512_512_256_Ascend950PR_957b/profile/OPPROF_20261119114601_NPOKQUKKYITFEFYN/simulator/trace.json",
+  "trace_sha256": "e551d4a39ec7838bcdf84db2cf668e56ff0d3b30e1f08c739f211f30da8b565d",
+  "core": "core16.cubecore0",
+  "start": "earliest instruction over all cores",
+  "model_us": 4.85641441238626,
+  "old_us": 7.100998388872155,
+  "ca_us": 4.686666488647461,
+  "model": [
+    {
+      "lane": "MTE2",
+      "start": 2.315160188637076,
+      "end": 3.872062790770401
+    },
+    {
+      "lane": "MTE1",
+      "start": 3.872062790770401,
+      "end": 4.003267102236445
+    },
+    {
+      "lane": "MMAD",
+      "start": 4.003267102236445,
+      "end": 4.511532044997388
+    },
+    {
+      "lane": "FIXP",
+      "start": 4.511532044997388,
+      "end": 4.85641441238626
+    }
+  ],
+  "ca": [
+    {
+      "lane": "MTE2",
+      "start": 2.5078787803649902,
+      "end": 3.417575776576996,
+      "opcode": "MOV_OUT_TO_L1_MULTI_ND2NZ"
+    },
+    {
+      "lane": "MTE2",
+      "start": 2.516969680786133,
+      "end": 3.7309091091156006,
+      "opcode": "MOV_OUT_TO_L1_MULTI_ND2NZ"
+    },
+    {
+      "lane": "bias GM → L1",
+      "start": 2.527878761291504,
+      "end": 3.7315151691436768,
+      "opcode": "MOV_SRC_TO_DST_ALIGNv2"
+    },
+    {
+      "lane": "MTE1",
+      "start": 3.7339391708374023,
+      "end": 3.79999977350235,
+      "opcode": "LOAD_2Dv2"
+    },
+    {
+      "lane": "MTE1",
+      "start": 3.7345452308654785,
+      "end": 3.877575531601906,
+      "opcode": "LOAD_2Dv2"
+    },
+    {
+      "lane": "bias L1 → BT",
+      "start": 3.7351512908935547,
+      "end": 3.8836361467838287,
+      "opcode": "MOV_L1_TO_BT"
+    },
+    {
+      "lane": "MTE1",
+      "start": 3.736363410949707,
+      "end": 3.935151293873787,
+      "opcode": "LOAD_2Dv2"
+    },
+    {
+      "lane": "MTE1",
+      "start": 3.785454750061035,
+      "end": 4.0127274841070175,
+      "opcode": "LOAD_2Dv2"
+    },
+    {
+      "lane": "MMAD",
+      "start": 3.8860607147216797,
+      "end": 4.144242525100708,
+      "opcode": "MMAD"
+    },
+    {
+      "lane": "MMAD",
+      "start": 4.129696846008301,
+      "end": 4.338787749409676,
+      "opcode": "MMAD"
+    },
+    {
+      "lane": "FIXP",
+      "start": 2.6715149879455566,
+      "end": 4.686666488647461,
+      "opcode": "FIX_L0C_TO_DST"
+    }
+  ],
+  "launch_us": 2.315160188637076,
+  "target_plan": {
+    "active_aic": 28,
+    "active_aiv": 0,
+    "tile": [
+      80,
+      128,
+      128
+    ],
+    "read_page_k": 256,
+    "waves": 1,
+    "iterations": 1,
+    "branch": "coarse_tile",
+    "mmads_total": 56,
+    "output_tiles": 28,
+    "units": {
+      "read": 104.0,
+      "cube": 40.0,
+      "fix": 20.0,
+      "vector": 0.0,
+      "write": 0.0
+    },
+    "tail_split_mn": [
+      1,
+      1
+    ],
+    "effective_output_tiles": 28,
+    "tail_wave_pieces": 28,
+    "tail_wave_histogram": [
+      [
+        32,
+        128,
+        4
+      ],
+      [
+        80,
+        128,
+        24
+      ]
+    ]
+  },
+  "ca_aic": 28,
+  "bias_l1_to_bt_bytes": 7168
+}

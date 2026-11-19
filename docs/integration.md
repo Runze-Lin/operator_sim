@@ -120,7 +120,7 @@ def duration_seconds(op, local_shape, attrs, roofline_us, soc="Ascend950DT_9582"
 
 例如 `estimate("moe_ffn", (32, 256, 128, 2), {"expert_counts": [1, 31]})` 预测整个两段计算链。调度该节点后不要再把两个 GMM 组件的估计加到同一事件上。EP 大小不能替代本地专家直方图。推测 8 个 token 时，普通 FA 的主模型校验长度常为 Q=9，实际 B、H、打包方式仍由框架提供。
 
-目标资源路径的 RMSNorm 把省略 resident_aiv 的查询解释为单独启动一次。它不保存上次调用的设备状态。系统若连续执行同类 kernel，可显式传入此前覆盖的最大 AIV 数 H（0…目标核数），H=0 表示首次，H 小于本次活动核数表示扩核，其余表示复用。未知启动历史时可从 projection.timing_diagnostics.conditional_us 读取三种条件时间并做系统级情景分析。对持续热态重复使用首次启动会高估耗时。DT 在历史范围内的 auto 和 mHC Post 保留原参考模型的状态估计。
+RMSNorm 与 mHC Post 可用 shape、dtype 和芯片独立预测。一次查询没有提供同流历史时，返回未知启动状态的点估计，同时返回首次、扩核和热态的时间供系统做敏感性分析。选择多种调度方案时，调用本身不会改变后续预测。如果明确是单独首次启动，可传入 `resident_aiv=0`。
 
 当调度器知道隔离序列刚开始时，令 `resident = 0`。以下三行只由同一流、同类 kernel 的实际调度事件驱动；同一个待选方案反复试算时保留原状态。返回的 `active_aiv` 是本次预计活跃核数，缺少此信息的路线返回 None。
 
@@ -130,11 +130,9 @@ if result.active_aiv is not None:
     resident = max(resident, result.active_aiv)
 ```
 
-mHC Post 在少 token 且切通道时，默认估计在首次、扩核与热态之间平衡相对误差。已知连续调用处于热态时，传入 `resident_aiv` 可避免把额外的启动时间累积到每个事件。其余分核分支用历史条件时间的加权中位数。在线查询本身不改变设备历史。[不同状态的同集误差与大 shape 核查](../results/v0.12/audit/summary.md)
-
 ## 检查资源瓶颈与设备情景
 
-对同一算子比较设备时，在四条已实现的资源路线上对两端都指定 `timing_mode="resource"`，以保持算法口径一致。默认的 DT 参考校准仍可用于和系统原有结果衔接。
+对同一算子比较设备时，在具有目标资源调度的路线上对两端都指定 `timing_mode="resource"`，以保持算法口径一致。默认的 DT 参考校准仍可用于和系统原有结果衔接。
 
 ```python
 from operator_model import estimate, load_chip
@@ -165,3 +163,19 @@ Kimi 的融合 Attention Residual 接收 `(tokens, hidden, bank_slots, valid_ban
 
 
 在系统延迟的敏感性分析中，注意两个已量化的误差。对于 [2048,5120] 的 RMSNorm，PR 全写回情景高估 77.64%，默认按 L2 余量估计为 16.669 µs，比完整 CA 的 17.820 µs 低 6.46%。可通过芯片配置 `rms_output_retained_fraction` 做敏感性分析。Kimi AttnResFwd 在 10 个驻留 shape 上，DT/PR 的耗时 WAPE 分别为 29.95%/33.10%，点估计未判中两张卡的相对方向。一个可计时分支仍有特定适用范围；模型的设备微秒数与置信程度分别查看。[全体逐算子误差与逐 shape 数据](error-analysis.md)
+
+### 从系统的调用顺序恢复启动状态
+
+系统知道流从空闲开始、并连续提交同类算子时，可以为每个 rank 和流建一个 `OperatorStream`。首次、扩核、热态只依赖已提交的核数，调用方仍只需传入 shape 和 dtype。试排多个候选 shape 用 `preview`，确认派发用 `advance`。重置流用 `reset`。在中间执行另一族 kernel 后，首次回到该家族使用未知历史点估计。此后连续同类调用给出已预热的核数下界；需求在该下界内按热态计，需求超过已知下界时继续给未知状态估计。达到整卡核数或显式传入驻留核数后，高水位重新确定。其他 kernel 对指令缓存的具体作用目前缺少足够证据。
+
+```python
+from operator_model import OperatorStream
+
+rank0 = OperatorStream("Ascend950PR_957b")
+first = rank0.advance("mhc_post", [2, 4, 6144], dtype="bf16")
+candidate = rank0.preview("mhc_post", [1, 4, 128], dtype="bf16")
+executed = rank0.advance("mhc_post", [1, 4, 128], dtype="bf16")
+assert candidate == executed
+```
+
+同形状、同平台、同一 kernel 的两次采集仍可能给出不同设备时间。验收的默认主表向无状态 `estimate` 只传 shape、dtype 和算子属性。已知调用顺序的成绩单列。[同输入实测上下界](../results/v0.21/dispatch/post-identifiability.json)

@@ -1,0 +1,2658 @@
+{
+  "summary": {
+    "attn_res_fwd": {
+      "Ascend950DT_9582": {
+        "current": {
+          "n": 1,
+          "wape": 0.06037490494257621,
+          "max_relative_error": 0.060374904942576135
+        },
+        "v020": {
+          "n": 1,
+          "wape": 0.3494530612890818,
+          "max_relative_error": 0.3494530612890818
+        }
+      },
+      "Ascend950PR_957b": {
+        "current": {
+          "n": 1,
+          "wape": 0.08244959770070039,
+          "max_relative_error": 0.08244959770070048
+        },
+        "v020": {
+          "n": 1,
+          "wape": 0.38596058563164554,
+          "max_relative_error": 0.3859605856316455
+        }
+      }
+    },
+    "mhc_pre_sinkhorn": {
+      "Ascend950DT_9582": {
+        "current": {
+          "n": 2,
+          "wape": 0.08841029569307789,
+          "max_relative_error": 0.1371600103687658
+        },
+        "v020": {
+          "n": 2,
+          "wape": 0.44510547221248387,
+          "max_relative_error": 0.7589961665461364
+        }
+      },
+      "Ascend950PR_957b": {
+        "current": {
+          "n": 2,
+          "wape": 0.09424440588713989,
+          "max_relative_error": 0.0994010245261282
+        },
+        "v020": {
+          "n": 2,
+          "wape": 0.006232585785958605,
+          "max_relative_error": 0.006284196527131414
+        }
+      }
+    },
+    "mhc_sinkhorn": {
+      "Ascend950DT_9582": {
+        "current": {
+          "n": 3,
+          "wape": 0.15441993705701618,
+          "max_relative_error": 0.1758718389795545
+        },
+        "v020": {
+          "n": 3,
+          "wape": 0.15441993705701615,
+          "max_relative_error": 0.1758718389795545
+        }
+      },
+      "Ascend950PR_957b": {
+        "current": {
+          "n": 3,
+          "wape": 0.07201089058632597,
+          "max_relative_error": 0.0921910833748174
+        },
+        "v020": {
+          "n": 3,
+          "wape": 0.3359054499414596,
+          "max_relative_error": 0.6437351644485738
+        }
+      }
+    }
+  },
+  "development_summary": {
+    "attn_res_fwd": {
+      "Ascend950DT_9582": {
+        "current": {
+          "n": 10,
+          "wape": 0.040382585287429905,
+          "max_relative_error": 0.0976204835460075
+        },
+        "v020": {
+          "n": 10,
+          "wape": 0.29946217480701826,
+          "max_relative_error": 1.0389268450571372
+        }
+      },
+      "Ascend950PR_957b": {
+        "current": {
+          "n": 10,
+          "wape": 0.05574927086647226,
+          "max_relative_error": 0.11415676224208227
+        },
+        "v020": {
+          "n": 10,
+          "wape": 0.3309588605158147,
+          "max_relative_error": 1.0893160869408658
+        }
+      }
+    },
+    "mhc_pre_sinkhorn": {
+      "Ascend950DT_9582": {
+        "current": {
+          "n": 10,
+          "wape": 0.04900289683445599,
+          "max_relative_error": 0.13702378446642793
+        },
+        "v020": {
+          "n": 10,
+          "wape": 0.04900289683445599,
+          "max_relative_error": 0.13702378446642793
+        }
+      },
+      "Ascend950PR_957b": {
+        "current": {
+          "n": 10,
+          "wape": 0.058625710471054186,
+          "max_relative_error": 0.13998317801545013
+        },
+        "v020": {
+          "n": 10,
+          "wape": 0.25527368243953774,
+          "max_relative_error": 0.35480609668083374
+        }
+      }
+    },
+    "mhc_sinkhorn": {
+      "Ascend950DT_9582": {
+        "current": {
+          "n": 10,
+          "wape": 0.10216354790446064,
+          "max_relative_error": 0.21474242502273277
+        },
+        "v020": {
+          "n": 10,
+          "wape": 0.10216354790446064,
+          "max_relative_error": 0.21474242502273277
+        }
+      },
+      "Ascend950PR_957b": {
+        "current": {
+          "n": 10,
+          "wape": 0.06402425204481763,
+          "max_relative_error": 0.16544119838444504
+        },
+        "v020": {
+          "n": 10,
+          "wape": 0.12187662309647512,
+          "max_relative_error": 0.6138676757752586
+        }
+      }
+    }
+  },
+  "dev_reference": "v0.17/sku/pairs and v0.19/workloads/attn-res-extension-evaluation (reused for calibration)",
+  "development_rows": [
+    {
+      "op": "mhc_pre_sinkhorn",
+      "chip": "Ascend950DT_9582",
+      "shape": [
+        1,
+        4,
+        4096
+      ],
+      "attrs": {
+        "dtype": "bf16",
+        "num_iters": 20,
+        "need_backward": false
+      },
+      "pred_us": 9.939393939393941,
+      "active": [
+        32,
+        64
+      ],
+      "old_us": 9.939393939393941,
+      "ca_us": 10.108484986238182,
+      "kernel": "MhcPreSinkhorn_bd8e37c67f2294e1437f03bb2bace96c_1000_mix_aic",
+      "ca_active": [
+        32,
+        64
+      ],
+      "trace": [
+        "ce23a734892be2c8ecec742ffeeb3fb9f0d1b4b8b52df883bd1507fc6dd56257"
+      ]
+    },
+    {
+      "op": "mhc_pre_sinkhorn",
+      "chip": "Ascend950PR_957b",
+      "shape": [
+        1,
+        4,
+        4096
+      ],
+      "attrs": {
+        "dtype": "bf16",
+        "num_iters": 20,
+        "need_backward": false
+      },
+      "pred_us": 9.989706851119895,
+      "active": [
+        22,
+        44
+      ],
+      "old_us": 11.872206543882967,
+      "ca_us": 8.763030054979026,
+      "kernel": "MhcPreSinkhorn_bd8e37c67f2294e1437f03bb2bace96c_1000_mix_aic",
+      "ca_active": [
+        22,
+        44
+      ],
+      "trace": [
+        "8bab742de8ee64232a188a2404e1b809e0c6652b6c3acf42a87b661095deefae"
+      ]
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "chip": "Ascend950DT_9582",
+      "shape": [
+        1,
+        4
+      ],
+      "attrs": {
+        "dtype": "fp32",
+        "num_iters": 20,
+        "return_intermediates": false
+      },
+      "pred_us": 5.7855716817891985,
+      "active": [
+        0,
+        1
+      ],
+      "old_us": 5.7855716817891985,
+      "ca_us": 6.149090292863548,
+      "kernel": "MhcSinkhorn_8997d9c5c22e82688b98bc25d8daa9cd_0",
+      "ca_active": [
+        0,
+        1
+      ],
+      "trace": [
+        "4baea9e45247f5866699bfb97aa58b2f5263816caec183f849513992d3139662"
+      ]
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "chip": "Ascend950PR_957b",
+      "shape": [
+        1,
+        4
+      ],
+      "attrs": {
+        "dtype": "fp32",
+        "num_iters": 20,
+        "return_intermediates": false
+      },
+      "pred_us": 5.868632633668177,
+      "active": [
+        0,
+        1
+      ],
+      "old_us": 5.884912059762381,
+      "ca_us": 5.948484423570335,
+      "kernel": "MhcSinkhorn_8997d9c5c22e82688b98bc25d8daa9cd_0",
+      "ca_active": [
+        0,
+        1
+      ],
+      "trace": [
+        "d10f4babbd3f01d5ae9ab672b3cb71f22794c89e6ef50a6bf768d298d47f6805"
+      ]
+    },
+    {
+      "op": "mhc_pre_sinkhorn",
+      "chip": "Ascend950DT_9582",
+      "shape": [
+        4,
+        4,
+        4096
+      ],
+      "attrs": {
+        "dtype": "bf16",
+        "num_iters": 20,
+        "need_backward": false
+      },
+      "pred_us": 9.939393939393941,
+      "active": [
+        32,
+        64
+      ],
+      "old_us": 9.939393939393941,
+      "ca_us": 9.93939393939394,
+      "kernel": "entry_kernel_3e8",
+      "ca_active": [
+        32,
+        64
+      ],
+      "trace": [
+        "75824a4e69e0ce9911607e0788d024ec5af913d17d9892b6e29e3d6b9bcad0a9"
+      ]
+    },
+    {
+      "op": "mhc_pre_sinkhorn",
+      "chip": "Ascend950PR_957b",
+      "shape": [
+        4,
+        4,
+        4096
+      ],
+      "attrs": {
+        "dtype": "bf16",
+        "num_iters": 20,
+        "need_backward": false
+      },
+      "pred_us": 9.989706851119895,
+      "active": [
+        22,
+        44
+      ],
+      "old_us": 11.886544312959625,
+      "ca_us": 9.470303061418235,
+      "kernel": "MhcPreSinkhorn_bd8e37c67f2294e1437f03bb2bace96c_1000_mix_aic",
+      "ca_active": [
+        22,
+        44
+      ],
+      "trace": [
+        "674c0d4f978656db90e6cc95e750799a3373c33e5d4911ed5e9a33d254ab6872"
+      ]
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "chip": "Ascend950DT_9582",
+      "shape": [
+        64,
+        4
+      ],
+      "attrs": {
+        "dtype": "fp32",
+        "num_iters": 20,
+        "return_intermediates": false
+      },
+      "pred_us": 6.040209244020158,
+      "active": [
+        0,
+        64
+      ],
+      "old_us": 6.040209244020158,
+      "ca_us": 7.597575757575758,
+      "kernel": "entry_kernel_0",
+      "ca_active": [
+        0,
+        64
+      ],
+      "trace": [
+        "aefa4c4775dbbf47476a4b6040fc3a8bc62ce94b6b262d1009fa0c5e0fe1d045"
+      ]
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "chip": "Ascend950PR_957b",
+      "shape": [
+        64,
+        4
+      ],
+      "attrs": {
+        "dtype": "fp32",
+        "num_iters": 20,
+        "return_intermediates": false
+      },
+      "pred_us": 6.080830602212797,
+      "active": [
+        0,
+        32
+      ],
+      "old_us": 10.54295733424842,
+      "ca_us": 6.532727244310081,
+      "kernel": "MhcSinkhorn_8997d9c5c22e82688b98bc25d8daa9cd_0",
+      "ca_active": [
+        0,
+        32
+      ],
+      "trace": [
+        "b28319d163bad900c44eab5a1e723c7f4d548372a2fe169ba046159f97cfcc25"
+      ]
+    },
+    {
+      "op": "mhc_pre_sinkhorn",
+      "chip": "Ascend950DT_9582",
+      "shape": [
+        2,
+        4,
+        4096
+      ],
+      "attrs": {
+        "dtype": "bf16",
+        "num_iters": 20,
+        "need_backward": false
+      },
+      "pred_us": 9.939393939393941,
+      "active": [
+        32,
+        64
+      ],
+      "old_us": 9.939393939393941,
+      "ca_us": 10.648484848484848,
+      "kernel": "entry_kernel_3e8",
+      "ca_active": [
+        32,
+        64
+      ],
+      "trace": [
+        "22de1f91593a01931f9414c7d269dd1b276e949a92c54e4e0b916dbe2ad2e62f"
+      ]
+    },
+    {
+      "op": "mhc_pre_sinkhorn",
+      "chip": "Ascend950PR_957b",
+      "shape": [
+        2,
+        4,
+        4096
+      ],
+      "attrs": {
+        "dtype": "bf16",
+        "num_iters": 20,
+        "need_backward": false
+      },
+      "pred_us": 9.989706851119895,
+      "active": [
+        22,
+        44
+      ],
+      "old_us": 11.876985800241856,
+      "ca_us": 10.19757533352822,
+      "kernel": "MhcPreSinkhorn_bd8e37c67f2294e1437f03bb2bace96c_1000_mix_aic",
+      "ca_active": [
+        22,
+        44
+      ],
+      "trace": [
+        "a24967429a64f2bf8835b2d81db8a624383f0387312e7bc9907476fc5283a58f"
+      ]
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "chip": "Ascend950DT_9582",
+      "shape": [
+        17,
+        4
+      ],
+      "attrs": {
+        "dtype": "fp32",
+        "num_iters": 20,
+        "return_intermediates": false
+      },
+      "pred_us": 5.959041944056802,
+      "active": [
+        0,
+        17
+      ],
+      "old_us": 5.959041944056802,
+      "ca_us": 6.532121212121212,
+      "kernel": "entry_kernel_0",
+      "ca_active": [
+        0,
+        17
+      ],
+      "trace": [
+        "275351e16ecb74e69b3d98f96e1507dbd29a31f996ecbff777dea76f07f95491"
+      ]
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "chip": "Ascend950PR_957b",
+      "shape": [
+        17,
+        4
+      ],
+      "attrs": {
+        "dtype": "fp32",
+        "num_iters": 20,
+        "return_intermediates": false
+      },
+      "pred_us": 6.0421028959357805,
+      "active": [
+        0,
+        17
+      ],
+      "old_us": 6.05848559219344,
+      "ca_us": 6.280000212602317,
+      "kernel": "MhcSinkhorn_8997d9c5c22e82688b98bc25d8daa9cd_0",
+      "ca_active": [
+        0,
+        17
+      ],
+      "trace": [
+        "9a4e84d888238c12f9a19552e02569bcf5116be8ccc3c5e8282a0d25a48df1fc"
+      ]
+    },
+    {
+      "op": "mhc_pre_sinkhorn",
+      "chip": "Ascend950DT_9582",
+      "shape": [
+        3,
+        4,
+        4096
+      ],
+      "attrs": {
+        "dtype": "bf16",
+        "num_iters": 20,
+        "need_backward": false
+      },
+      "pred_us": 9.939393939393941,
+      "active": [
+        32,
+        64
+      ],
+      "old_us": 9.939393939393941,
+      "ca_us": 10.373333333333333,
+      "kernel": "entry_kernel_3e8",
+      "ca_active": [
+        32,
+        64
+      ],
+      "trace": [
+        "e4daeca8ba3b3cd561464d5683a8bda8854f84eeb90702264041ee8cbffcd47c"
+      ]
+    },
+    {
+      "op": "mhc_pre_sinkhorn",
+      "chip": "Ascend950PR_957b",
+      "shape": [
+        3,
+        4,
+        4096
+      ],
+      "attrs": {
+        "dtype": "bf16",
+        "num_iters": 20,
+        "need_backward": false
+      },
+      "pred_us": 9.989706851119895,
+      "active": [
+        22,
+        44
+      ],
+      "old_us": 11.88176505660074,
+      "ca_us": 9.24969697277993,
+      "kernel": "MhcPreSinkhorn_bd8e37c67f2294e1437f03bb2bace96c_1000_mix_aic",
+      "ca_active": [
+        22,
+        44
+      ],
+      "trace": [
+        "6cccc43e35b1311c8a48dfc62f3c0364490f4466fce262a17706aa45864824bf"
+      ]
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "chip": "Ascend950DT_9582",
+      "shape": [
+        2,
+        4
+      ],
+      "attrs": {
+        "dtype": "fp32",
+        "return_intermediates": false,
+        "num_iters": 2
+      },
+      "pred_us": 3.077032549262559,
+      "active": [
+        0,
+        2
+      ],
+      "old_us": 3.077032549262559,
+      "ca_us": 3.5927272727272728,
+      "kernel": "entry_kernel_0",
+      "ca_active": [
+        0,
+        2
+      ],
+      "trace": [
+        "21b2a30cd07da7d9d09ab01940e651d921b9a6e8a27eeb4ada24c633a8bf58a2"
+      ]
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "chip": "Ascend950PR_957b",
+      "shape": [
+        2,
+        4
+      ],
+      "attrs": {
+        "dtype": "fp32",
+        "return_intermediates": false,
+        "num_iters": 2
+      },
+      "pred_us": 3.0853386444504567,
+      "active": [
+        0,
+        2
+      ],
+      "old_us": 3.101636456469847,
+      "ca_us": 3.6969697503373027,
+      "kernel": "MhcSinkhorn_8997d9c5c22e82688b98bc25d8daa9cd_0",
+      "ca_active": [
+        0,
+        2
+      ],
+      "trace": [
+        "ebbd8cdacafc48cf63a3f971f30106369007e88924cff7a242aa5d0da3de0d15"
+      ]
+    },
+    {
+      "op": "mhc_pre_sinkhorn",
+      "chip": "Ascend950DT_9582",
+      "shape": [
+        5,
+        4,
+        4096
+      ],
+      "attrs": {
+        "dtype": "bf16",
+        "num_iters": 20,
+        "need_backward": false
+      },
+      "pred_us": 9.939393939393941,
+      "active": [
+        32,
+        64
+      ],
+      "old_us": 9.939393939393941,
+      "ca_us": 9.76060606060606,
+      "kernel": "entry_kernel_3e8",
+      "ca_active": [
+        32,
+        64
+      ],
+      "trace": [
+        "6828918c1307e2d45e53031bb5ccac2fb42b4b75a3706f7872cb1afe2bfc206c"
+      ]
+    },
+    {
+      "op": "mhc_pre_sinkhorn",
+      "chip": "Ascend950PR_957b",
+      "shape": [
+        5,
+        4,
+        4096
+      ],
+      "attrs": {
+        "dtype": "bf16",
+        "num_iters": 20,
+        "need_backward": false
+      },
+      "pred_us": 9.989706851119895,
+      "active": [
+        22,
+        44
+      ],
+      "old_us": 11.891323569318509,
+      "ca_us": 9.494545700959861,
+      "kernel": "MhcPreSinkhorn_bd8e37c67f2294e1437f03bb2bace96c_1000_mix_aic",
+      "ca_active": [
+        22,
+        44
+      ],
+      "trace": [
+        "46ff1580018c7ad89103745e8e355e23621843c6f598cd8ce9ea909b36e2ca79"
+      ]
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "chip": "Ascend950DT_9582",
+      "shape": [
+        4,
+        4
+      ],
+      "attrs": {
+        "dtype": "fp32",
+        "return_intermediates": false,
+        "num_iters": 5
+      },
+      "pred_us": 3.5779685973396855,
+      "active": [
+        0,
+        4
+      ],
+      "old_us": 3.5779685973396855,
+      "ca_us": 2.9454545454545453,
+      "kernel": "entry_kernel_0",
+      "ca_active": [
+        0,
+        4
+      ],
+      "trace": [
+        "c0370067e4000775011ff19aefc442916310eb0d32301460f7878468fb70076d"
+      ]
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "chip": "Ascend950PR_957b",
+      "shape": [
+        4,
+        4
+      ],
+      "attrs": {
+        "dtype": "fp32",
+        "return_intermediates": false,
+        "num_iters": 5
+      },
+      "pred_us": 3.5987338353094303,
+      "active": [
+        0,
+        4
+      ],
+      "old_us": 3.615049680389487,
+      "ca_us": 3.938181879930198,
+      "kernel": "MhcSinkhorn_8997d9c5c22e82688b98bc25d8daa9cd_0",
+      "ca_active": [
+        0,
+        4
+      ],
+      "trace": [
+        "23ee6e03e59a6ab71a567f44c4260ec4f67de34c9b5dc93e7cc8b08e3a16721f"
+      ]
+    },
+    {
+      "op": "mhc_pre_sinkhorn",
+      "chip": "Ascend950DT_9582",
+      "shape": [
+        6,
+        4,
+        4096
+      ],
+      "attrs": {
+        "dtype": "bf16",
+        "num_iters": 20,
+        "need_backward": false
+      },
+      "pred_us": 9.939393939393941,
+      "active": [
+        32,
+        64
+      ],
+      "old_us": 9.939393939393941,
+      "ca_us": 9.785454545454545,
+      "kernel": "entry_kernel_3e8",
+      "ca_active": [
+        32,
+        64
+      ],
+      "trace": [
+        "8836ec7683e4813b206240ae2250fcd2aad4084c3cfc4a85613daec8432b5d0c"
+      ]
+    },
+    {
+      "op": "mhc_pre_sinkhorn",
+      "chip": "Ascend950PR_957b",
+      "shape": [
+        6,
+        4,
+        4096
+      ],
+      "attrs": {
+        "dtype": "bf16",
+        "num_iters": 20,
+        "need_backward": false
+      },
+      "pred_us": 9.989706851119895,
+      "active": [
+        22,
+        44
+      ],
+      "old_us": 11.896102825677394,
+      "ca_us": 9.404848578386009,
+      "kernel": "MhcPreSinkhorn_bd8e37c67f2294e1437f03bb2bace96c_1000_mix_aic",
+      "ca_active": [
+        22,
+        44
+      ],
+      "trace": [
+        "cf18b1acaf69cd7f8680b9c3963ebd81f0681829c8de31e53bb7fd6df80af5e0"
+      ]
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "chip": "Ascend950DT_9582",
+      "shape": [
+        8,
+        4
+      ],
+      "attrs": {
+        "dtype": "fp32",
+        "return_intermediates": false,
+        "num_iters": 10
+      },
+      "pred_us": 4.384568948331456,
+      "active": [
+        0,
+        8
+      ],
+      "old_us": 4.384568948331456,
+      "ca_us": 4.995151515151515,
+      "kernel": "entry_kernel_0",
+      "ca_active": [
+        0,
+        8
+      ],
+      "trace": [
+        "cc1e0303f1c057e56d1435ff5df14e15097c793e4540adf483fe9d6ea4af2b8e"
+      ]
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "chip": "Ascend950PR_957b",
+      "shape": [
+        8,
+        4
+      ],
+      "attrs": {
+        "dtype": "fp32",
+        "return_intermediates": false,
+        "num_iters": 10
+      },
+      "pred_us": 4.426099424270945,
+      "active": [
+        0,
+        8
+      ],
+      "old_us": 4.442442498667172,
+      "ca_us": 4.719393971376121,
+      "kernel": "MhcSinkhorn_8997d9c5c22e82688b98bc25d8daa9cd_0",
+      "ca_active": [
+        0,
+        8
+      ],
+      "trace": [
+        "e36c51132b61e15348fa4de93782ba16255de0bcce72db1a04d176304e80ebf4"
+      ]
+    },
+    {
+      "op": "mhc_pre_sinkhorn",
+      "chip": "Ascend950DT_9582",
+      "shape": [
+        7,
+        4,
+        4096
+      ],
+      "attrs": {
+        "dtype": "bf16",
+        "num_iters": 20,
+        "need_backward": false
+      },
+      "pred_us": 9.939393939393941,
+      "active": [
+        32,
+        64
+      ],
+      "old_us": 9.939393939393941,
+      "ca_us": 11.517575757575758,
+      "kernel": "entry_kernel_3e8",
+      "ca_active": [
+        32,
+        64
+      ],
+      "trace": [
+        "f072385821cd80592c221c79c619224f3cb29bc1712369ad8ef3087343d22a78"
+      ]
+    },
+    {
+      "op": "mhc_pre_sinkhorn",
+      "chip": "Ascend950PR_957b",
+      "shape": [
+        7,
+        4,
+        4096
+      ],
+      "attrs": {
+        "dtype": "bf16",
+        "num_iters": 20,
+        "need_backward": false
+      },
+      "pred_us": 9.989706851119895,
+      "active": [
+        22,
+        44
+      ],
+      "old_us": 11.90088208203628,
+      "ca_us": 9.388484480790794,
+      "kernel": "MhcPreSinkhorn_bd8e37c67f2294e1437f03bb2bace96c_1000_mix_aic",
+      "ca_active": [
+        22,
+        44
+      ],
+      "trace": [
+        "9fb27bc31ce0ec7ef4a726dc9ebe746cc5bda2b34b60035e134c9629578bb794"
+      ]
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "chip": "Ascend950DT_9582",
+      "shape": [
+        9,
+        4
+      ],
+      "attrs": {
+        "dtype": "fp32",
+        "return_intermediates": false,
+        "num_iters": 20
+      },
+      "pred_us": 5.920102010926239,
+      "active": [
+        0,
+        9
+      ],
+      "old_us": 5.920102010926239,
+      "ca_us": 6.212121212121212,
+      "kernel": "entry_kernel_0",
+      "ca_active": [
+        0,
+        9
+      ],
+      "trace": [
+        "70d9af3a057b19a536b25d815c26b367360a29bec03c38fdb94745408b25b1a5"
+      ]
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "chip": "Ascend950PR_957b",
+      "shape": [
+        9,
+        4
+      ],
+      "attrs": {
+        "dtype": "fp32",
+        "return_intermediates": false,
+        "num_iters": 20
+      },
+      "pred_us": 6.003162962805218,
+      "active": [
+        0,
+        9
+      ],
+      "old_us": 6.019494309843111,
+      "ca_us": 6.268484595231712,
+      "kernel": "MhcSinkhorn_8997d9c5c22e82688b98bc25d8daa9cd_0",
+      "ca_active": [
+        0,
+        9
+      ],
+      "trace": [
+        "0ceb71406b4760a3708a95399464995be1504164d4e17b828e139b400e84e9ca"
+      ]
+    },
+    {
+      "op": "mhc_pre_sinkhorn",
+      "chip": "Ascend950DT_9582",
+      "shape": [
+        8,
+        4,
+        4096
+      ],
+      "attrs": {
+        "dtype": "bf16",
+        "num_iters": 20,
+        "need_backward": false
+      },
+      "pred_us": 9.939393939393941,
+      "active": [
+        32,
+        64
+      ],
+      "old_us": 9.939393939393941,
+      "ca_us": 10.52909090909091,
+      "kernel": "entry_kernel_3e8",
+      "ca_active": [
+        32,
+        64
+      ],
+      "trace": [
+        "658373b787a66cf5c4ed6d8adba96eef1dc02a8c1c2a4dd4229d7aa19f1e5a70"
+      ]
+    },
+    {
+      "op": "mhc_pre_sinkhorn",
+      "chip": "Ascend950PR_957b",
+      "shape": [
+        8,
+        4,
+        4096
+      ],
+      "attrs": {
+        "dtype": "bf16",
+        "num_iters": 20,
+        "need_backward": false
+      },
+      "pred_us": 9.989706851119895,
+      "active": [
+        22,
+        44
+      ],
+      "old_us": 11.905661338395163,
+      "ca_us": 9.713333609513938,
+      "kernel": "MhcPreSinkhorn_bd8e37c67f2294e1437f03bb2bace96c_1000_mix_aic",
+      "ca_active": [
+        22,
+        44
+      ],
+      "trace": [
+        "d4056c07adeec75616d3e3450ab61977ba296a26416fc719d360c496ddffeaab"
+      ]
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "chip": "Ascend950DT_9582",
+      "shape": [
+        16,
+        4
+      ],
+      "attrs": {
+        "dtype": "fp32",
+        "return_intermediates": false,
+        "num_iters": 32
+      },
+      "pred_us": 7.789315874097704,
+      "active": [
+        0,
+        16
+      ],
+      "old_us": 7.789315874097704,
+      "ca_us": 8.156363636363636,
+      "kernel": "entry_kernel_0",
+      "ca_active": [
+        0,
+        16
+      ],
+      "trace": [
+        "8d40ee3047406a732f8dfe7e17ec29e4576c5c841d1a3f90ad59871f16c6c697"
+      ]
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "chip": "Ascend950PR_957b",
+      "shape": [
+        16,
+        4
+      ],
+      "attrs": {
+        "dtype": "fp32",
+        "return_intermediates": false,
+        "num_iters": 32
+      },
+      "pred_us": 7.922213397104071,
+      "active": [
+        0,
+        16
+      ],
+      "old_us": 7.938565315666573,
+      "ca_us": 8.327878954820335,
+      "kernel": "MhcSinkhorn_8997d9c5c22e82688b98bc25d8daa9cd_0",
+      "ca_active": [
+        0,
+        16
+      ],
+      "trace": [
+        "eb69084fc0ef750c2ff160b342e0c883e92972ae77adfd97a93220b78daf781a"
+      ]
+    },
+    {
+      "op": "mhc_pre_sinkhorn",
+      "chip": "Ascend950DT_9582",
+      "shape": [
+        9,
+        4,
+        4096
+      ],
+      "attrs": {
+        "dtype": "bf16",
+        "num_iters": 20,
+        "need_backward": false
+      },
+      "pred_us": 9.939393939393941,
+      "active": [
+        32,
+        64
+      ],
+      "old_us": 9.939393939393941,
+      "ca_us": 10.201818181818181,
+      "kernel": "entry_kernel_3e8",
+      "ca_active": [
+        32,
+        64
+      ],
+      "trace": [
+        "fe6fc6ea3a0796caf96817938e2c2b6f83716c416e17da87e0a5b8a753ef9340"
+      ]
+    },
+    {
+      "op": "mhc_pre_sinkhorn",
+      "chip": "Ascend950PR_957b",
+      "shape": [
+        9,
+        4,
+        4096
+      ],
+      "attrs": {
+        "dtype": "bf16",
+        "num_iters": 20,
+        "need_backward": false
+      },
+      "pred_us": 9.989706851119895,
+      "active": [
+        22,
+        44
+      ],
+      "old_us": 11.910440594754048,
+      "ca_us": 9.389696839265525,
+      "kernel": "MhcPreSinkhorn_bd8e37c67f2294e1437f03bb2bace96c_1000_mix_aic",
+      "ca_active": [
+        22,
+        44
+      ],
+      "trace": [
+        "9706a7dfb8d4ab9c8082662ee8d85a6e4e9ff43e59c625b45a87461ca1fc25e5"
+      ]
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "chip": "Ascend950DT_9582",
+      "shape": [
+        31,
+        4
+      ],
+      "attrs": {
+        "dtype": "fp32",
+        "return_intermediates": false,
+        "num_iters": 20
+      },
+      "pred_us": 5.9958257603376195,
+      "active": [
+        0,
+        31
+      ],
+      "old_us": 5.9958257603376195,
+      "ca_us": 6.332727272727273,
+      "kernel": "entry_kernel_0",
+      "ca_active": [
+        0,
+        31
+      ],
+      "trace": [
+        "55446a6fcdce7e9c2636ef18a7597e3ddeb43ec769ce6b067b6ad0113b8e453e"
+      ]
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "chip": "Ascend950PR_957b",
+      "shape": [
+        31,
+        4
+      ],
+      "attrs": {
+        "dtype": "fp32",
+        "return_intermediates": false,
+        "num_iters": 20
+      },
+      "pred_us": 6.078886712216599,
+      "active": [
+        0,
+        31
+      ],
+      "old_us": 6.095358709705553,
+      "ca_us": 6.633939030114561,
+      "kernel": "MhcSinkhorn_8997d9c5c22e82688b98bc25d8daa9cd_0",
+      "ca_active": [
+        0,
+        31
+      ],
+      "trace": [
+        "a2a87bb9eada536f10199c25a33493364ad5c2c7aa4ffa92f8fa3a810d62ad46"
+      ]
+    },
+    {
+      "op": "mhc_pre_sinkhorn",
+      "chip": "Ascend950DT_9582",
+      "shape": [
+        12,
+        4,
+        4096
+      ],
+      "attrs": {
+        "dtype": "bf16",
+        "num_iters": 20,
+        "need_backward": false
+      },
+      "pred_us": 9.939393939393941,
+      "active": [
+        32,
+        64
+      ],
+      "old_us": 9.939393939393941,
+      "ca_us": 10.951515151515151,
+      "kernel": "entry_kernel_3e8",
+      "ca_active": [
+        32,
+        64
+      ],
+      "trace": [
+        "290de6eff9539ebb640ae4084f88d66fad168dba059158d5e23f7d9b2237e99f"
+      ]
+    },
+    {
+      "op": "mhc_pre_sinkhorn",
+      "chip": "Ascend950PR_957b",
+      "shape": [
+        12,
+        4,
+        4096
+      ],
+      "attrs": {
+        "dtype": "bf16",
+        "num_iters": 20,
+        "need_backward": false
+      },
+      "pred_us": 9.989706851119895,
+      "active": [
+        22,
+        44
+      ],
+      "old_us": 11.924778363830704,
+      "ca_us": 9.686060669831932,
+      "kernel": "MhcPreSinkhorn_bd8e37c67f2294e1437f03bb2bace96c_1000_mix_aic",
+      "ca_active": [
+        22,
+        44
+      ],
+      "trace": [
+        "ec8020a9e12d63cd6ff643db1f24a175e9becc9713381400efc90541bde602c8"
+      ]
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "chip": "Ascend950DT_9582",
+      "shape": [
+        32,
+        4
+      ],
+      "attrs": {
+        "dtype": "fp32",
+        "return_intermediates": false,
+        "num_iters": 20
+      },
+      "pred_us": 5.997769650314998,
+      "active": [
+        0,
+        32
+      ],
+      "old_us": 5.997769650314998,
+      "ca_us": 5.336363636363636,
+      "kernel": "entry_kernel_0",
+      "ca_active": [
+        0,
+        32
+      ],
+      "trace": [
+        "98a38e131bd458f612223bd4b021a93f8b6e3cdb613672a01720023d8d953eda"
+      ]
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "chip": "Ascend950PR_957b",
+      "shape": [
+        32,
+        4
+      ],
+      "attrs": {
+        "dtype": "fp32",
+        "return_intermediates": false,
+        "num_iters": 20
+      },
+      "pred_us": 6.080830602193977,
+      "active": [
+        0,
+        32
+      ],
+      "old_us": 6.097308959860299,
+      "ca_us": 6.615757944993675,
+      "kernel": "MhcSinkhorn_8997d9c5c22e82688b98bc25d8daa9cd_0",
+      "ca_active": [
+        0,
+        32
+      ],
+      "trace": [
+        "efe546c65f89b3a5fdf2dfb80fcc1f4570c432556aceabc06e1a887ab0666ba4"
+      ]
+    },
+    {
+      "op": "attn_res_fwd",
+      "shape": [
+        1,
+        7168,
+        8,
+        1
+      ],
+      "attrs": {
+        "addend": true,
+        "materialize": true,
+        "write_idx": 1
+      },
+      "chip": "Ascend950DT_9582",
+      "pred_us": 10.15161184013186,
+      "old_us": 14.647533129920179,
+      "ca_us": 9.504848721437156,
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "trace": "25fdc24683378adf55f84e2e585e8ce7699cef80f5a12d286e1c80a12c2b9fe5"
+    },
+    {
+      "op": "attn_res_fwd",
+      "shape": [
+        1,
+        7168,
+        8,
+        1
+      ],
+      "attrs": {
+        "addend": true,
+        "materialize": true,
+        "write_idx": 1
+      },
+      "chip": "Ascend950PR_957b",
+      "pred_us": 10.220500701500423,
+      "old_us": 14.852778310412422,
+      "ca_us": 9.499393704347312,
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "trace": "76819d594c6d35a3e6d111fcd4aec299e564109eb815d5d6ffe740b8c780ea28"
+    },
+    {
+      "op": "attn_res_fwd",
+      "shape": [
+        2,
+        512,
+        8,
+        1
+      ],
+      "attrs": {
+        "addend": true,
+        "materialize": true,
+        "write_idx": 1
+      },
+      "chip": "Ascend950DT_9582",
+      "pred_us": 6.796664698069951,
+      "old_us": 6.633095768660477,
+      "ca_us": 7.1218185452744365,
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "trace": "2b31e415541bb3f58078e28a9eefcbf4f84bde4cb1d7cfced8f1594585103408"
+    },
+    {
+      "op": "attn_res_fwd",
+      "shape": [
+        2,
+        512,
+        8,
+        1
+      ],
+      "attrs": {
+        "addend": true,
+        "materialize": true,
+        "write_idx": 1
+      },
+      "chip": "Ascend950PR_957b",
+      "pred_us": 6.801585331024849,
+      "old_us": 6.647756138695637,
+      "ca_us": 6.5975759057328105,
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "trace": "2e80e2db1ef6e01d03ed28674cf5606612c7ccf63fb39b91d5ba334cc4073d2a"
+    },
+    {
+      "op": "attn_res_fwd",
+      "shape": [
+        1,
+        7168,
+        8,
+        3
+      ],
+      "attrs": {
+        "addend": true,
+        "materialize": true,
+        "write_idx": 3
+      },
+      "chip": "Ascend950DT_9582",
+      "pred_us": 12.701131460786405,
+      "old_us": 23.59347177481104,
+      "ca_us": 11.571514609269798,
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "trace": "8d23be57c918c7e21ab20c5d25505e94bd47dae306c2235dc7d31592bf4b05ba"
+    },
+    {
+      "op": "attn_res_fwd",
+      "shape": [
+        1,
+        7168,
+        8,
+        3
+      ],
+      "attrs": {
+        "addend": true,
+        "materialize": true,
+        "write_idx": 3
+      },
+      "chip": "Ascend950PR_957b",
+      "pred_us": 12.799298116960422,
+      "old_us": 24.001810484462982,
+      "ca_us": 11.487879040651023,
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "trace": "37c75f38a63ebc2b98ef31920df66d9ec8ef7e28210c2cc5a135d13278579227"
+    },
+    {
+      "op": "attn_res_fwd",
+      "shape": [
+        2,
+        4096,
+        8,
+        2
+      ],
+      "attrs": {
+        "addend": true,
+        "materialize": true,
+        "write_idx": 2
+      },
+      "chip": "Ascend950DT_9582",
+      "pred_us": 9.57006461887597,
+      "old_us": 13.743000253981178,
+      "ca_us": 9.398182394914329,
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "trace": "663de3da21e8278cd595b26de785ecea82fac104be06037556b5fcb8d79f4396"
+    },
+    {
+      "op": "attn_res_fwd",
+      "shape": [
+        2,
+        4096,
+        8,
+        2
+      ],
+      "attrs": {
+        "addend": true,
+        "materialize": true,
+        "write_idx": 2
+      },
+      "chip": "Ascend950PR_957b",
+      "pred_us": 9.617794766745277,
+      "old_us": 13.918309936879519,
+      "ca_us": 9.00727296154946,
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "trace": "818fa88c11b2588db174f2ed54a33052e1427ec3de615d1584086592ab64bc64"
+    },
+    {
+      "op": "attn_res_fwd",
+      "shape": [
+        5,
+        2048,
+        8,
+        1
+      ],
+      "attrs": {
+        "addend": true,
+        "materialize": true,
+        "write_idx": 1
+      },
+      "chip": "Ascend950DT_9582",
+      "pred_us": 7.570883269315006,
+      "old_us": 8.482581313566563,
+      "ca_us": 7.573939326219261,
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "trace": "d213fe02f38c451fdde5651cc0077e187640ee9d78ea4cc55e207aa5c438fcc1"
+    },
+    {
+      "op": "attn_res_fwd",
+      "shape": [
+        5,
+        2048,
+        8,
+        1
+      ],
+      "attrs": {
+        "addend": true,
+        "materialize": true,
+        "write_idx": 1
+      },
+      "chip": "Ascend950PR_957b",
+      "pred_us": 7.590565801134596,
+      "old_us": 8.541222793707202,
+      "ca_us": 7.432727339677513,
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "trace": "21366b60699e1049a3a9192aa76433429ef84183a5318c6de838d65d5d80eca2"
+    },
+    {
+      "op": "attn_res_fwd",
+      "shape": [
+        2,
+        1024,
+        8,
+        4
+      ],
+      "attrs": {
+        "addend": true,
+        "materialize": true,
+        "write_idx": 4
+      },
+      "chip": "Ascend950DT_9582",
+      "pred_us": 9.031797651575152,
+      "old_us": 10.597312266198566,
+      "ca_us": 9.17818212788552,
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "trace": "96c2f8b09c6cc9e2e0effbbbb3ce355affe50549d4cb776222521b6bafee501f"
+    },
+    {
+      "op": "attn_res_fwd",
+      "shape": [
+        2,
+        1024,
+        8,
+        4
+      ],
+      "attrs": {
+        "addend": true,
+        "materialize": true,
+        "write_idx": 4
+      },
+      "chip": "Ascend950PR_957b",
+      "pred_us": 9.047912730657545,
+      "old_us": 10.670153048231679,
+      "ca_us": 8.973333599977195,
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "trace": "278925e906841c680e3caa68f3b4535ec7b1b67bf26be49137f1731e668fcbef"
+    },
+    {
+      "op": "attn_res_fwd",
+      "shape": [
+        8,
+        512,
+        8,
+        2
+      ],
+      "attrs": {
+        "addend": true,
+        "materialize": true,
+        "write_idx": 2
+      },
+      "chip": "Ascend950DT_9582",
+      "pred_us": 7.404373082028948,
+      "old_us": 7.469247689199342,
+      "ca_us": 7.652121069841087,
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "trace": "505d2ff7e2adfa43e907ac469a6440a3cc26cc211e3577b3c5f7e301fe238f33"
+    },
+    {
+      "op": "attn_res_fwd",
+      "shape": [
+        8,
+        512,
+        8,
+        2
+      ],
+      "attrs": {
+        "addend": true,
+        "materialize": true,
+        "write_idx": 2
+      },
+      "chip": "Ascend950PR_957b",
+      "pred_us": 7.4103393505126105,
+      "old_us": 7.491161399561634,
+      "ca_us": 7.223030569963157,
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "trace": "1cf07ba65feb47aa5eb10eea3c7215979b52f1993387161aa91185303ae20bdd"
+    },
+    {
+      "op": "attn_res_fwd",
+      "shape": [
+        3,
+        512,
+        8,
+        1
+      ],
+      "attrs": {
+        "addend": true,
+        "materialize": true,
+        "write_idx": 1
+      },
+      "chip": "Ascend950DT_9582",
+      "pred_us": 6.796664698069951,
+      "old_us": 6.633095768660477,
+      "ca_us": 7.009697440080345,
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "trace": "4e185e68786030ee18d069246bdde778605efbe092f62d4cbcdcdd3f46a249c1"
+    },
+    {
+      "op": "attn_res_fwd",
+      "shape": [
+        3,
+        512,
+        8,
+        1
+      ],
+      "attrs": {
+        "addend": true,
+        "materialize": true,
+        "write_idx": 1
+      },
+      "chip": "Ascend950PR_957b",
+      "pred_us": 6.801585331024849,
+      "old_us": 6.6477561386956365,
+      "ca_us": 6.696969750337303,
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "trace": "8957dd020e93e96d58d45b788dedbe12dc1a42e23bc93607535be464e5c410dd"
+    },
+    {
+      "op": "attn_res_fwd",
+      "shape": [
+        4,
+        256,
+        8,
+        3
+      ],
+      "attrs": {
+        "addend": true,
+        "materialize": true,
+        "write_idx": 3
+      },
+      "chip": "Ascend950DT_9582",
+      "pred_us": 7.831733389264927,
+      "old_us": 7.7173968341584835,
+      "ca_us": 7.585454943589866,
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "trace": "c318313b0c6dea45e5521f4dc485f5fd3435ea2f427d9b3240fcea1c2d2e0794"
+    },
+    {
+      "op": "attn_res_fwd",
+      "shape": [
+        4,
+        256,
+        8,
+        3
+      ],
+      "attrs": {
+        "addend": true,
+        "materialize": true,
+        "write_idx": 3
+      },
+      "chip": "Ascend950PR_957b",
+      "pred_us": 7.835239341271142,
+      "old_us": 7.731980359503195,
+      "ca_us": 7.367878916673362,
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "trace": "e7b046f12150da9e76409230abc8823956c88b3f6593eac6c28fdb57b491b651"
+    },
+    {
+      "op": "attn_res_fwd",
+      "shape": [
+        1,
+        256,
+        8,
+        2
+      ],
+      "attrs": {
+        "addend": true,
+        "materialize": true,
+        "write_idx": 2
+      },
+      "chip": "Ascend950DT_9582",
+      "pred_us": 7.249680829397017,
+      "old_us": 7.02112250600064,
+      "ca_us": 7.003636839799583,
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "trace": "8c961e5cfb0d35fd5b7ae6991e5d881a769f310f8294d1619c84d5bfac55e096"
+    },
+    {
+      "op": "attn_res_fwd",
+      "shape": [
+        1,
+        256,
+        8,
+        2
+      ],
+      "attrs": {
+        "addend": true,
+        "materialize": true,
+        "write_idx": 2
+      },
+      "chip": "Ascend950PR_957b",
+      "pred_us": 7.25266396363885,
+      "old_us": 7.032079361181785,
+      "ca_us": 6.5830307034775615,
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "trace": "00135b3264e196d40858e2039061c10f9a5c1dc691625f490a002e24af476107"
+    }
+  ],
+  "independent_rows": [
+    {
+      "op": "mhc_sinkhorn",
+      "shape": [
+        57,
+        4
+      ],
+      "attrs": {
+        "num_iters": 20,
+        "return_intermediates": false
+      },
+      "chip": "Ascend950DT_9582",
+      "pred_us": 6.033117164117234,
+      "old_us": 6.033117164117234,
+      "ca_us": 7.3206055192276835,
+      "future_us": 5.526874896989622,
+      "query_ms": 2.700699958950281,
+      "active": [
+        0,
+        57
+      ],
+      "ca_active": [
+        0,
+        57
+      ],
+      "kernel": "MhcSinkhorn_8997d9c5c22e82688b98bc25d8daa9cd_0",
+      "correctness": [
+        "correctness name=output count=912 bad=0 max_abs_error=4.97686e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ],
+      "mmad": 0,
+      "trace": "runs/fusion21/mhc_sinkhorn_57_4_Ascend950DT_9582/profile/OPPROF_20261119192752_BPBLRJIFFLBMSHQB/simulator/trace.json",
+      "trace_sha256": "3a1174c8003e9b08bae973d901f524ecd8c63c16256741c254751e91c2146258",
+      "cost": {
+        "seconds": 297.1156853400171,
+        "raw_bytes": 805366148,
+        "cpu_seconds": 7610.139999999999,
+        "exit_code": 0,
+        "stop_reason": null,
+        "started_utc": "2026-11-19T11:27:52.611652+00:00",
+        "finished_utc": "2026-11-19T11:32:49.732319+00:00",
+        "command": [
+          "bash",
+          "/home/l00925865/operator_sim/scripts/cann-run.sh",
+          "msopprof",
+          "simulator",
+          "--soc-version=Ascend950DT_9582",
+          "--dump=true",
+          "--launch-count=20",
+          "--timeout=10",
+          "--output=/home/l00925865/operator_sim/runs/fusion21/mhc_sinkhorn_57_4_Ascend950DT_9582/profile",
+          "/home/l00925865/operator_sim/build/smoke/extension_indexer_mhc",
+          "mhc_sinkhorn",
+          "57",
+          "4",
+          "20"
+        ]
+      }
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "shape": [
+        57,
+        4
+      ],
+      "attrs": {
+        "num_iters": 20,
+        "return_intermediates": false
+      },
+      "chip": "Ascend950PR_957b",
+      "pred_us": 6.074803373347599,
+      "old_us": 10.535844840597866,
+      "ca_us": 6.409697297029197,
+      "future_us": 5.526874896989622,
+      "query_ms": 0.22167013958096504,
+      "active": [
+        0,
+        29
+      ],
+      "ca_active": [
+        0,
+        29
+      ],
+      "kernel": "MhcSinkhorn_8997d9c5c22e82688b98bc25d8daa9cd_0",
+      "correctness": [
+        "correctness name=output count=912 bad=0 max_abs_error=4.97686e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ],
+      "mmad": 0,
+      "trace": "runs/fusion21/mhc_sinkhorn_57_4_Ascend950PR_957b/profile/OPPROF_20261119192753_IABGQUHHIQBZYSDS/simulator/trace.json",
+      "trace_sha256": "20c094556facf3b56ced7cf7f233c4c899164f6219c14975861fbaa05cdb552d",
+      "cost": {
+        "seconds": 204.34358245995827,
+        "raw_bytes": 410003521,
+        "cpu_seconds": 4796.28,
+        "exit_code": 0,
+        "stop_reason": null,
+        "started_utc": "2026-11-19T11:27:53.003526+00:00",
+        "finished_utc": "2026-11-19T11:31:17.349999+00:00",
+        "command": [
+          "bash",
+          "/home/l00925865/operator_sim/scripts/cann-run.sh",
+          "msopprof",
+          "simulator",
+          "--soc-version=Ascend950PR_957b",
+          "--dump=true",
+          "--launch-count=20",
+          "--timeout=10",
+          "--output=/home/l00925865/operator_sim/runs/fusion21/mhc_sinkhorn_57_4_Ascend950PR_957b/profile",
+          "/home/l00925865/operator_sim/build/smoke/extension_indexer_mhc",
+          "mhc_sinkhorn",
+          "57",
+          "4",
+          "20"
+        ]
+      }
+    },
+    {
+      "op": "mhc_pre_sinkhorn",
+      "shape": [
+        20,
+        4,
+        4096
+      ],
+      "attrs": {
+        "num_iters": 20,
+        "need_backward": false
+      },
+      "chip": "Ascend950DT_9582",
+      "pred_us": 9.939393939393941,
+      "old_us": 9.93939393939394,
+      "ca_us": 11.519394162110984,
+      "future_us": 9.109492582070708,
+      "query_ms": 1.543340040370822,
+      "active": [
+        32,
+        64
+      ],
+      "ca_active": [
+        32,
+        64
+      ],
+      "kernel": "MhcPreSinkhorn_bd8e37c67f2294e1437f03bb2bace96c_1000_mix_aic",
+      "correctness": [
+        "correctness name=hin count=81920 bad=0 max_abs_error=0.00275226 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness name=hpost count=80 bad=0 max_abs_error=1.72379e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+        "correctness name=hres count=320 bad=0 max_abs_error=1.79467e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ],
+      "mmad": 64,
+      "trace": "runs/fusion21/mhc_pre_sinkhorn_20_4_4096_Ascend950DT_9582/profile/OPPROF_20261119193120_FUHLYGUHSGWSUVVZ/simulator/trace.json",
+      "trace_sha256": "602d767489430619c728ebd84f80b044c5e76279bef95588d3caa4ed6dc6a44d",
+      "cost": {
+        "seconds": 235.68116071005352,
+        "raw_bytes": 652241606,
+        "cpu_seconds": 6119.1900000000005,
+        "exit_code": 0,
+        "stop_reason": null,
+        "started_utc": "2026-11-19T11:31:20.771511+00:00",
+        "finished_utc": "2026-11-19T11:35:16.462142+00:00",
+        "command": [
+          "bash",
+          "/home/l00925865/operator_sim/scripts/cann-run.sh",
+          "msopprof",
+          "simulator",
+          "--soc-version=Ascend950DT_9582",
+          "--dump=true",
+          "--launch-count=20",
+          "--timeout=10",
+          "--output=/home/l00925865/operator_sim/runs/fusion21/mhc_pre_sinkhorn_20_4_4096_Ascend950DT_9582/profile",
+          "/home/l00925865/operator_sim/build/smoke/extension_indexer_mhc",
+          "mhc_pre_sinkhorn",
+          "20",
+          "4",
+          "4096"
+        ]
+      }
+    },
+    {
+      "op": "mhc_pre_sinkhorn",
+      "shape": [
+        20,
+        4,
+        4096
+      ],
+      "attrs": {
+        "num_iters": 20,
+        "need_backward": false
+      },
+      "chip": "Ascend950PR_957b",
+      "pred_us": 10.114545454545457,
+      "old_us": 11.161484779978483,
+      "ca_us": 11.230909350328147,
+      "future_us": 9.109492582070708,
+      "query_ms": 0.5023898556828499,
+      "active": [
+        22,
+        44
+      ],
+      "ca_active": [
+        22,
+        44
+      ],
+      "kernel": "MhcPreSinkhorn_bd8e37c67f2294e1437f03bb2bace96c_1000_mix_aic",
+      "correctness": [
+        "correctness name=hin count=81920 bad=0 max_abs_error=0.00275226 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness name=hpost count=80 bad=0 max_abs_error=1.72379e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+        "correctness name=hres count=320 bad=0 max_abs_error=1.79467e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ],
+      "mmad": 64,
+      "trace": "runs/fusion21/mhc_pre_sinkhorn_20_4_4096_Ascend950PR_957b/profile/OPPROF_20261119193256_SFPMYOYZXRSDAMRC/simulator/trace.json",
+      "trace_sha256": "fcf0b7e5a7231a8a09857f5895464598c2fe2f343863f68c323e8e0fdaca793e",
+      "cost": {
+        "seconds": 180.45750158000737,
+        "raw_bytes": 596522304,
+        "cpu_seconds": 4341.12,
+        "exit_code": 0,
+        "stop_reason": null,
+        "started_utc": "2026-11-19T11:32:56.091096+00:00",
+        "finished_utc": "2026-11-19T11:35:56.554062+00:00",
+        "command": [
+          "bash",
+          "/home/l00925865/operator_sim/scripts/cann-run.sh",
+          "msopprof",
+          "simulator",
+          "--soc-version=Ascend950PR_957b",
+          "--dump=true",
+          "--launch-count=20",
+          "--timeout=10",
+          "--output=/home/l00925865/operator_sim/runs/fusion21/mhc_pre_sinkhorn_20_4_4096_Ascend950PR_957b/profile",
+          "/home/l00925865/operator_sim/build/smoke/extension_indexer_mhc",
+          "mhc_pre_sinkhorn",
+          "20",
+          "4",
+          "4096"
+        ]
+      }
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "shape": [
+        6,
+        4
+      ],
+      "attrs": {
+        "num_iters": 2,
+        "return_intermediates": false
+      },
+      "chip": "Ascend950DT_9582",
+      "pred_us": 3.1442977138310786,
+      "old_us": 3.144297713831079,
+      "ca_us": 3.5799999265000224,
+      "future_us": 2.8819246540000383,
+      "query_ms": 0.23199990391731262,
+      "active": [
+        0,
+        6
+      ],
+      "ca_active": [
+        0,
+        6
+      ],
+      "kernel": "MhcSinkhorn_8997d9c5c22e82688b98bc25d8daa9cd_0",
+      "correctness": [
+        "correctness name=output count=96 bad=0 max_abs_error=3.91085e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ],
+      "mmad": 0,
+      "trace": "runs/fusion21/mhc_sinkhorn_6_4_Ascend950DT_9582/profile/OPPROF_20261119193829_NXFAJUULZKFIHXTB/simulator/trace.json",
+      "trace_sha256": "9cca27d2b15dd5e837c6b9270f00dfc858bd7691f69a1658a02ae067ed055a4b",
+      "cost": {
+        "seconds": 231.1896960735321,
+        "raw_bytes": 24805339,
+        "cpu_seconds": 4620.33,
+        "exit_code": 0,
+        "stop_reason": null,
+        "started_utc": "2026-11-19T11:38:29.071137+00:00",
+        "finished_utc": "2026-11-19T11:42:20.260833+00:00",
+        "command": [
+          "bash",
+          "/home/l00925865/operator_sim/scripts/cann-run.sh",
+          "msopprof",
+          "simulator",
+          "--soc-version=Ascend950DT_9582",
+          "--dump=true",
+          "--launch-count=20",
+          "--timeout=10",
+          "--output=/home/l00925865/operator_sim/runs/fusion21/mhc_sinkhorn_6_4_Ascend950DT_9582/profile",
+          "/home/l00925865/operator_sim/build/smoke/extension_indexer_mhc",
+          "mhc_sinkhorn",
+          "6",
+          "4",
+          "2"
+        ],
+        "timing_source": "GNU time PID boot ticks to GNU time receipt mtime during queue handoff"
+      }
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "shape": [
+        6,
+        4
+      ],
+      "attrs": {
+        "num_iters": 2,
+        "return_intermediates": false
+      },
+      "chip": "Ascend950PR_957b",
+      "pred_us": 3.1526038090189767,
+      "old_us": 3.1689501062402043,
+      "ca_us": 3.438181641511619,
+      "future_us": 2.8819246540000383,
+      "query_ms": 0.1913299784064293,
+      "active": [
+        0,
+        6
+      ],
+      "ca_active": [
+        0,
+        6
+      ],
+      "kernel": "MhcSinkhorn_8997d9c5c22e82688b98bc25d8daa9cd_0",
+      "correctness": [
+        "correctness name=output count=96 bad=0 max_abs_error=3.91085e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ],
+      "mmad": 0,
+      "trace": "runs/fusion21/mhc_sinkhorn_6_4_Ascend950PR_957b/profile/OPPROF_20261119193910_BIBUZXYQCPDWMJTC/simulator/trace.json",
+      "trace_sha256": "31dcc17d5c7efcdcc8ef40f4ee40526d1549e99dd87878f0551c4c870419442f",
+      "cost": {
+        "seconds": 58.08686848008074,
+        "raw_bytes": 24732344,
+        "cpu_seconds": 619.91,
+        "exit_code": 0,
+        "stop_reason": null,
+        "started_utc": "2026-11-19T11:39:09.812642+00:00",
+        "finished_utc": "2026-11-19T11:40:07.900479+00:00",
+        "command": [
+          "bash",
+          "/home/l00925865/operator_sim/scripts/cann-run.sh",
+          "msopprof",
+          "simulator",
+          "--soc-version=Ascend950PR_957b",
+          "--dump=true",
+          "--launch-count=20",
+          "--timeout=10",
+          "--output=/home/l00925865/operator_sim/runs/fusion21/mhc_sinkhorn_6_4_Ascend950PR_957b/profile",
+          "/home/l00925865/operator_sim/build/smoke/extension_indexer_mhc",
+          "mhc_sinkhorn",
+          "6",
+          "4",
+          "2"
+        ]
+      }
+    },
+    {
+      "op": "mhc_pre_sinkhorn",
+      "shape": [
+        33,
+        4,
+        4096
+      ],
+      "attrs": {
+        "num_iters": 20,
+        "need_backward": false
+      },
+      "chip": "Ascend950DT_9582",
+      "pred_us": 11.73878787878788,
+      "old_us": 19.87878787878788,
+      "ca_us": 11.301211598329246,
+      "future_us": 10.753888888888888,
+      "query_ms": 0.46187988482415676,
+      "active": [
+        32,
+        64
+      ],
+      "ca_active": [
+        32,
+        64
+      ],
+      "kernel": "MhcPreSinkhorn_bd8e37c67f2294e1437f03bb2bace96c_1000_mix_aic",
+      "correctness": [
+        "correctness name=hin count=135168 bad=0 max_abs_error=0.00275226 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness name=hpost count=132 bad=0 max_abs_error=1.72379e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+        "correctness name=hres count=528 bad=0 max_abs_error=1.79467e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ],
+      "mmad": 128,
+      "trace": "runs/fusion21/mhc_pre_sinkhorn_33_4_4096_Ascend950DT_9582/profile/OPPROF_20261119194008_DPDFEWNQNPLIDTAB/simulator/trace.json",
+      "trace_sha256": "a3224db8614bad11fca9f1cc9dc8ff69c7d04c58aea8ee2dd70aa920103d8138",
+      "cost": {
+        "seconds": 174.44216203689575,
+        "raw_bytes": 945603537,
+        "cpu_seconds": 4340.07,
+        "exit_code": 0,
+        "stop_reason": null,
+        "started_utc": "2026-11-19T11:40:08.090671+00:00",
+        "finished_utc": "2026-11-19T11:43:02.532833+00:00",
+        "command": [
+          "bash",
+          "/home/l00925865/operator_sim/scripts/cann-run.sh",
+          "msopprof",
+          "simulator",
+          "--soc-version=Ascend950DT_9582",
+          "--dump=true",
+          "--launch-count=20",
+          "--timeout=10",
+          "--output=/home/l00925865/operator_sim/runs/fusion21/mhc_pre_sinkhorn_33_4_4096_Ascend950DT_9582/profile",
+          "/home/l00925865/operator_sim/build/smoke/extension_indexer_mhc",
+          "mhc_pre_sinkhorn",
+          "33",
+          "4",
+          "4096"
+        ],
+        "timing_source": "GNU time PID boot ticks to GNU time receipt mtime during queue handoff"
+      }
+    },
+    {
+      "op": "attn_res_fwd",
+      "shape": [
+        2,
+        4096,
+        8,
+        1
+      ],
+      "attrs": {
+        "addend": true,
+        "materialize": true,
+        "write_idx": 1
+      },
+      "chip": "Ascend950DT_9582",
+      "pred_us": 8.603174697641748,
+      "old_us": 10.948562040108008,
+      "ca_us": 8.113332989625633,
+      "future_us": 7.884593010534648,
+      "query_ms": 0.16709999181330204,
+      "active": [
+        0,
+        2
+      ],
+      "ca_active": [
+        0,
+        2
+      ],
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "correctness": [
+        "correctness shape=2x4096 S=8 N=1 groups=output,prefix,materialized,bank bad=0"
+      ],
+      "mmad": 0,
+      "trace": "runs/fusion21/attnres_h4096_2_1_Ascend950DT_9582/profile/OPPROF_20261119194312_KBJHFYKAVYJMTUBM/simulator/trace.json",
+      "trace_sha256": "47c982c85dd70927bdcd29405a49d4de811c80bce5134768488e236c560e473a",
+      "cost": {
+        "seconds": 229.0347029401455,
+        "cpu_seconds": 5635.1,
+        "raw_bytes": 56322384,
+        "exit_code": 0,
+        "stop_reason": null,
+        "started_utc": "2026-11-19T11:43:12.616671+00:00",
+        "finished_utc": "2026-11-19T11:47:01.652348+00:00",
+        "command": [
+          "/home/l00925865/operator_sim/runs/fusion21/attnres_h4096_2_1_Ascend950DT_9582/cpu.txt",
+          "bash",
+          "/home/l00925865/operator_sim/scripts/cann-run.sh",
+          "bash",
+          "-c",
+          "export ASCEND_CUSTOM_OPP_PATH=\"$1\"; export LD_LIBRARY_PATH=\"$1/op_api/lib:$LD_LIBRARY_PATH\"; shift; exec \"$@\"",
+          "attn-res-vendor",
+          "/home/l00925865/operator_sim/runs/workloads19/sources/fastbuild/vendors/custom_transformer",
+          "msopprof",
+          "simulator",
+          "--soc-version=Ascend950DT_9582",
+          "--dump=true",
+          "--launch-count=1",
+          "--timeout=10",
+          "--output=/home/l00925865/operator_sim/runs/fusion21/attnres_h4096_2_1_Ascend950DT_9582/profile",
+          "/home/l00925865/operator_sim/build/smoke/attn_res_fwd19_h4096",
+          "2",
+          "1"
+        ]
+      }
+    },
+    {
+      "op": "attn_res_fwd",
+      "shape": [
+        2,
+        4096,
+        8,
+        1
+      ],
+      "attrs": {
+        "addend": true,
+        "materialize": true,
+        "write_idx": 1
+      },
+      "chip": "Ascend950PR_957b",
+      "pred_us": 8.642539761280926,
+      "old_us": 11.06584500038929,
+      "ca_us": 7.984242203645408,
+      "future_us": 7.884593010534648,
+      "query_ms": 0.10335003025829792,
+      "active": [
+        0,
+        2
+      ],
+      "ca_active": [
+        0,
+        2
+      ],
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "correctness": [
+        "correctness shape=2x4096 S=8 N=1 groups=output,prefix,materialized,bank bad=0"
+      ],
+      "mmad": 0,
+      "trace": "runs/fusion21/attnres_h4096_2_1_Ascend950PR_957b/profile/OPPROF_20261119194702_LZKPLAPMTJCHXZAB/simulator/trace.json",
+      "trace_sha256": "6dc4617c1dd09cceefde40f65fa726eeacdd4c8d670baa8b00cc66d355daaedc",
+      "cost": {
+        "seconds": 412.91716363001615,
+        "cpu_seconds": 10329.849999999999,
+        "raw_bytes": 56220283,
+        "exit_code": 0,
+        "stop_reason": null,
+        "started_utc": "2026-11-19T11:47:02.092037+00:00",
+        "finished_utc": "2026-11-19T11:53:55.009878+00:00",
+        "command": [
+          "/home/l00925865/operator_sim/runs/fusion21/attnres_h4096_2_1_Ascend950PR_957b/cpu.txt",
+          "bash",
+          "/home/l00925865/operator_sim/scripts/cann-run.sh",
+          "bash",
+          "-c",
+          "export ASCEND_CUSTOM_OPP_PATH=\"$1\"; export LD_LIBRARY_PATH=\"$1/op_api/lib:$LD_LIBRARY_PATH\"; shift; exec \"$@\"",
+          "attn-res-vendor",
+          "/home/l00925865/operator_sim/runs/workloads19/sources/fastbuild/vendors/custom_transformer",
+          "msopprof",
+          "simulator",
+          "--soc-version=Ascend950PR_957b",
+          "--dump=true",
+          "--launch-count=1",
+          "--timeout=10",
+          "--output=/home/l00925865/operator_sim/runs/fusion21/attnres_h4096_2_1_Ascend950PR_957b/profile",
+          "/home/l00925865/operator_sim/build/smoke/attn_res_fwd19_h4096",
+          "2",
+          "1"
+        ]
+      }
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "shape": [
+        14,
+        4
+      ],
+      "attrs": {
+        "num_iters": 7,
+        "return_intermediates": false
+      },
+      "chip": "Ascend950DT_9582",
+      "pred_us": 3.9603363088274754,
+      "old_us": 3.9603363088274754,
+      "ca_us": 4.636363509111106,
+      "future_us": 3.629089406883941,
+      "query_ms": 0.1947600394487381,
+      "active": [
+        0,
+        14
+      ],
+      "ca_active": [
+        0,
+        14
+      ],
+      "kernel": "MhcSinkhorn_8997d9c5c22e82688b98bc25d8daa9cd_0",
+      "correctness": [
+        "correctness name=output count=224 bad=0 max_abs_error=6.33785e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ],
+      "mmad": 0,
+      "trace": "runs/fusion21/mhc_sinkhorn_14_4_Ascend950DT_9582/profile/OPPROF_20261119195305_RFIZXJIEPPTSSORW/simulator/trace.json",
+      "trace_sha256": "1602ae3a4c8b45d7a75451fdbf4db24dc50392dd042d825db90807409c3608ae",
+      "cost": {
+        "seconds": 214.55123469000682,
+        "raw_bytes": 96257207,
+        "cpu_seconds": 4628.87,
+        "exit_code": 0,
+        "stop_reason": null,
+        "started_utc": "2026-11-19T11:53:05.570594+00:00",
+        "finished_utc": "2026-11-19T11:56:40.123491+00:00",
+        "command": [
+          "bash",
+          "/home/l00925865/operator_sim/scripts/cann-run.sh",
+          "msopprof",
+          "simulator",
+          "--soc-version=Ascend950DT_9582",
+          "--dump=true",
+          "--launch-count=20",
+          "--timeout=10",
+          "--output=/home/l00925865/operator_sim/runs/fusion21/mhc_sinkhorn_14_4_Ascend950DT_9582/profile",
+          "/home/l00925865/operator_sim/build/smoke/extension_indexer_mhc",
+          "mhc_sinkhorn",
+          "14",
+          "4",
+          "7"
+        ]
+      }
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "shape": [
+        14,
+        4
+      ],
+      "attrs": {
+        "num_iters": 7,
+        "return_intermediates": false
+      },
+      "chip": "Ascend950PR_957b",
+      "pred_us": 3.9894076419851183,
+      "old_us": 4.005816628011651,
+      "ca_us": 4.394545557908714,
+      "future_us": 3.629089406883941,
+      "query_ms": 0.18798001110553741,
+      "active": [
+        0,
+        14
+      ],
+      "ca_active": [
+        0,
+        14
+      ],
+      "kernel": "MhcSinkhorn_8997d9c5c22e82688b98bc25d8daa9cd_0",
+      "correctness": [
+        "correctness name=output count=224 bad=0 max_abs_error=6.33785e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ],
+      "mmad": 0,
+      "trace": "runs/fusion21/mhc_sinkhorn_14_4_Ascend950PR_957b/profile/OPPROF_20261119195355_RNONYVAXDGJFAZSV/simulator/trace.json",
+      "trace_sha256": "3c90f1cb6cbfc0552d8202865d8d274dd172eac855a7989047c59ebdfacea401",
+      "cost": {
+        "seconds": 168.2540146498941,
+        "raw_bytes": 96098476,
+        "cpu_seconds": 3548.44,
+        "exit_code": 0,
+        "stop_reason": null,
+        "started_utc": "2026-11-19T11:53:55.439856+00:00",
+        "finished_utc": "2026-11-19T11:56:43.695392+00:00",
+        "command": [
+          "bash",
+          "/home/l00925865/operator_sim/scripts/cann-run.sh",
+          "msopprof",
+          "simulator",
+          "--soc-version=Ascend950PR_957b",
+          "--dump=true",
+          "--launch-count=20",
+          "--timeout=10",
+          "--output=/home/l00925865/operator_sim/runs/fusion21/mhc_sinkhorn_14_4_Ascend950PR_957b/profile",
+          "/home/l00925865/operator_sim/build/smoke/extension_indexer_mhc",
+          "mhc_sinkhorn",
+          "14",
+          "4",
+          "7"
+        ]
+      }
+    },
+    {
+      "op": "mhc_pre_sinkhorn",
+      "shape": [
+        22,
+        4,
+        4096
+      ],
+      "attrs": {
+        "num_iters": 20,
+        "need_backward": false
+      },
+      "chip": "Ascend950PR_957b",
+      "pred_us": 10.114545454545457,
+      "old_us": 11.172804071354792,
+      "ca_us": 11.103030445985496,
+      "future_us": 9.109492582070708,
+      "query_ms": 0.4255799576640129,
+      "active": [
+        22,
+        44
+      ],
+      "ca_active": [
+        22,
+        44
+      ],
+      "kernel": "MhcPreSinkhorn_bd8e37c67f2294e1437f03bb2bace96c_1000_mix_aic",
+      "correctness": [
+        "correctness name=hin count=90112 bad=0 max_abs_error=0.00275226 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness name=hpost count=88 bad=0 max_abs_error=1.72379e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+        "correctness name=hres count=352 bad=0 max_abs_error=1.79467e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ],
+      "mmad": 64,
+      "trace": "runs/fusion21/mhc_pre_sinkhorn_22_4_4096_Ascend950PR_957b/profile/OPPROF_20261119195644_CPZXVGBNYQTISTYL/simulator/trace.json",
+      "trace_sha256": "cfe375d72643f621a1a8f02707fa1681dae1ece4b83d5384c63c11a2621543f5",
+      "cost": {
+        "seconds": 410.79939099005423,
+        "raw_bytes": 630098607,
+        "cpu_seconds": 10946.210000000001,
+        "exit_code": 0,
+        "stop_reason": null,
+        "started_utc": "2026-11-19T11:56:44.412557+00:00",
+        "finished_utc": "2026-11-19T12:03:35.217333+00:00",
+        "command": [
+          "bash",
+          "/home/l00925865/operator_sim/scripts/cann-run.sh",
+          "msopprof",
+          "simulator",
+          "--soc-version=Ascend950PR_957b",
+          "--dump=true",
+          "--launch-count=20",
+          "--timeout=10",
+          "--output=/home/l00925865/operator_sim/runs/fusion21/mhc_pre_sinkhorn_22_4_4096_Ascend950PR_957b/profile",
+          "/home/l00925865/operator_sim/build/smoke/extension_indexer_mhc",
+          "mhc_pre_sinkhorn",
+          "22",
+          "4",
+          "4096"
+        ]
+      }
+    }
+  ],
+  "rejections": [
+    {
+      "op": "attn_res_fwd",
+      "shape": [
+        2,
+        7168,
+        8,
+        3
+      ],
+      "chip": "Ascend950DT_9582",
+      "attempt": "original",
+      "reason": "exact SKU/physical memory/parse/golden gate",
+      "cost": {
+        "seconds": 186.96542194020003,
+        "cpu_seconds": 4035.73,
+        "raw_bytes": 242245,
+        "exit_code": 0,
+        "stop_reason": null,
+        "started_utc": "2026-11-19T11:24:45.635355+00:00",
+        "finished_utc": "2026-11-19T11:27:52.601548+00:00",
+        "command": [
+          "/home/l00925865/operator_sim/runs/fusion21/attnres_h7168_2_3_Ascend950DT_9582/cpu.txt",
+          "bash",
+          "/home/l00925865/operator_sim/scripts/cann-run.sh",
+          "bash",
+          "-c",
+          "export ASCEND_CUSTOM_OPP_PATH=\"$1\"; export LD_LIBRARY_PATH=\"$1/op_api/lib:$LD_LIBRARY_PATH\"; shift; exec \"$@\"",
+          "attn-res-vendor",
+          "/home/l00925865/operator_sim/runs/workloads19/sources/fastbuild/vendors/custom_transformer",
+          "msopprof",
+          "simulator",
+          "--soc-version=Ascend950DT_9582",
+          "--dump=true",
+          "--launch-count=1",
+          "--timeout=3",
+          "--output=/home/l00925865/operator_sim/runs/fusion21/attnres_h7168_2_3_Ascend950DT_9582/profile",
+          "/home/l00925865/operator_sim/build/smoke/attn_res_fwd19",
+          "2",
+          "3"
+        ]
+      }
+    },
+    {
+      "op": "attn_res_fwd",
+      "shape": [
+        2,
+        7168,
+        8,
+        3
+      ],
+      "chip": "Ascend950PR_957b",
+      "attempt": "original",
+      "reason": "exact SKU/physical memory/parse/golden gate",
+      "cost": {
+        "seconds": 187.36317441007122,
+        "cpu_seconds": 4146.3,
+        "raw_bytes": 178905,
+        "exit_code": 0,
+        "stop_reason": null,
+        "started_utc": "2026-11-19T11:24:45.636154+00:00",
+        "finished_utc": "2026-11-19T11:27:52.999885+00:00",
+        "command": [
+          "/home/l00925865/operator_sim/runs/fusion21/attnres_h7168_2_3_Ascend950PR_957b/cpu.txt",
+          "bash",
+          "/home/l00925865/operator_sim/scripts/cann-run.sh",
+          "bash",
+          "-c",
+          "export ASCEND_CUSTOM_OPP_PATH=\"$1\"; export LD_LIBRARY_PATH=\"$1/op_api/lib:$LD_LIBRARY_PATH\"; shift; exec \"$@\"",
+          "attn-res-vendor",
+          "/home/l00925865/operator_sim/runs/workloads19/sources/fastbuild/vendors/custom_transformer",
+          "msopprof",
+          "simulator",
+          "--soc-version=Ascend950PR_957b",
+          "--dump=true",
+          "--launch-count=1",
+          "--timeout=3",
+          "--output=/home/l00925865/operator_sim/runs/fusion21/attnres_h7168_2_3_Ascend950PR_957b/profile",
+          "/home/l00925865/operator_sim/build/smoke/attn_res_fwd19",
+          "2",
+          "3"
+        ]
+      }
+    },
+    {
+      "op": "attn_res_fwd",
+      "shape": [
+        3,
+        512,
+        8,
+        3
+      ],
+      "chip": "Ascend950DT_9582",
+      "attempt": "original",
+      "reason": "exact SKU/physical memory/parse/golden gate",
+      "cost": {
+        "seconds": 187.05418060999364,
+        "cpu_seconds": 4141.51,
+        "raw_bytes": 1825970,
+        "exit_code": 0,
+        "stop_reason": null,
+        "started_utc": "2026-11-19T11:35:22.009046+00:00",
+        "finished_utc": "2026-11-19T11:38:29.064080+00:00",
+        "command": [
+          "/home/l00925865/operator_sim/runs/fusion21/attnres_h512_3_3_Ascend950DT_9582/cpu.txt",
+          "bash",
+          "/home/l00925865/operator_sim/scripts/cann-run.sh",
+          "bash",
+          "-c",
+          "export ASCEND_CUSTOM_OPP_PATH=\"$1\"; export LD_LIBRARY_PATH=\"$1/op_api/lib:$LD_LIBRARY_PATH\"; shift; exec \"$@\"",
+          "attn-res-vendor",
+          "/home/l00925865/operator_sim/runs/workloads19/sources/fastbuild/vendors/custom_transformer",
+          "msopprof",
+          "simulator",
+          "--soc-version=Ascend950DT_9582",
+          "--dump=true",
+          "--launch-count=1",
+          "--timeout=3",
+          "--output=/home/l00925865/operator_sim/runs/fusion21/attnres_h512_3_3_Ascend950DT_9582/profile",
+          "/home/l00925865/operator_sim/build/smoke/attn_res_fwd19_h512",
+          "3",
+          "3"
+        ]
+      }
+    },
+    {
+      "op": "attn_res_fwd",
+      "shape": [
+        3,
+        512,
+        8,
+        3
+      ],
+      "chip": "Ascend950PR_957b",
+      "attempt": "original",
+      "reason": "exact SKU/physical memory/parse/golden gate",
+      "cost": {
+        "seconds": 188.30205430998467,
+        "cpu_seconds": 2087.37,
+        "raw_bytes": 178442,
+        "exit_code": 0,
+        "stop_reason": null,
+        "started_utc": "2026-11-19T11:36:01.506015+00:00",
+        "finished_utc": "2026-11-19T11:39:09.808555+00:00",
+        "command": [
+          "/home/l00925865/operator_sim/runs/fusion21/attnres_h512_3_3_Ascend950PR_957b/cpu.txt",
+          "bash",
+          "/home/l00925865/operator_sim/scripts/cann-run.sh",
+          "bash",
+          "-c",
+          "export ASCEND_CUSTOM_OPP_PATH=\"$1\"; export LD_LIBRARY_PATH=\"$1/op_api/lib:$LD_LIBRARY_PATH\"; shift; exec \"$@\"",
+          "attn-res-vendor",
+          "/home/l00925865/operator_sim/runs/workloads19/sources/fastbuild/vendors/custom_transformer",
+          "msopprof",
+          "simulator",
+          "--soc-version=Ascend950PR_957b",
+          "--dump=true",
+          "--launch-count=1",
+          "--timeout=3",
+          "--output=/home/l00925865/operator_sim/runs/fusion21/attnres_h512_3_3_Ascend950PR_957b/profile",
+          "/home/l00925865/operator_sim/build/smoke/attn_res_fwd19_h512",
+          "3",
+          "3"
+        ]
+      }
+    },
+    {
+      "op": "mhc_pre_sinkhorn",
+      "shape": [
+        33,
+        4,
+        4096
+      ],
+      "chip": "Ascend950PR_957b",
+      "attempt": "original",
+      "reason": "process/budget: wall cap",
+      "cost": {
+        "seconds": 600.8538762000389,
+        "raw_bytes": 246691,
+        "cpu_seconds": null,
+        "exit_code": -9,
+        "stop_reason": "wall cap",
+        "started_utc": "2026-11-19T11:43:04.712025+00:00",
+        "finished_utc": "2026-11-19T11:53:05.566377+00:00",
+        "command": [
+          "bash",
+          "/home/l00925865/operator_sim/scripts/cann-run.sh",
+          "msopprof",
+          "simulator",
+          "--soc-version=Ascend950PR_957b",
+          "--dump=true",
+          "--launch-count=20",
+          "--timeout=10",
+          "--output=/home/l00925865/operator_sim/runs/fusion21/mhc_pre_sinkhorn_33_4_4096_Ascend950PR_957b/profile",
+          "/home/l00925865/operator_sim/build/smoke/extension_indexer_mhc",
+          "mhc_pre_sinkhorn",
+          "33",
+          "4",
+          "4096"
+        ]
+      }
+    },
+    {
+      "op": "mhc_pre_sinkhorn",
+      "shape": [
+        22,
+        4,
+        4096
+      ],
+      "chip": "Ascend950DT_9582",
+      "attempt": "original",
+      "reason": "process/budget: wall cap",
+      "cost": {
+        "seconds": 600.1367513500154,
+        "raw_bytes": 142949902,
+        "cpu_seconds": null,
+        "exit_code": -9,
+        "stop_reason": "wall cap",
+        "started_utc": "2026-11-19T11:56:40.930889+00:00",
+        "finished_utc": "2026-11-19T12:06:41.072383+00:00",
+        "command": [
+          "bash",
+          "/home/l00925865/operator_sim/scripts/cann-run.sh",
+          "msopprof",
+          "simulator",
+          "--soc-version=Ascend950DT_9582",
+          "--dump=true",
+          "--launch-count=20",
+          "--timeout=10",
+          "--output=/home/l00925865/operator_sim/runs/fusion21/mhc_pre_sinkhorn_22_4_4096_Ascend950DT_9582/profile",
+          "/home/l00925865/operator_sim/build/smoke/extension_indexer_mhc",
+          "mhc_pre_sinkhorn",
+          "22",
+          "4",
+          "4096"
+        ]
+      }
+    }
+  ],
+  "queued": 42
+}

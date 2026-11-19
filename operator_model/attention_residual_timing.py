@@ -52,6 +52,12 @@ def resource_attention(shape, chip, attrs):
         prices=_prices()[name]
         cycles=(prices['fixed_cycles']*repeats+prices['cycles_per_vector_chunk']*chunks*reference_peak/target_peak
                 +reads*2*h/read_rate)
+        if name == 'weighted_norm_write':
+            # The reduction/normalization/write path processes the output row
+            # once. Only the resident weighted MulAdd scales with bank depth.
+            # DT gamma-issue-to-final-instruction phase, cycles per 64 FP32
+            # elements. Fit provenance: development/validation/fusion21/prices.py.
+            cycles = 2347.99163 + (20.3083544*lanes + 2.09690792*chunks)*reference_peak/target_peak + 2*h/read_rate
         times[name]=cycles/clock
     transfer=d['cold_input_hbm_floor_us']
     if chip.details.get('l2_bandwidth_gbs'):

@@ -1,40 +1,39 @@
-# Kimi K3 Attention Residual · 一个 decode token
+# Kimi AttnResFwd · 驻留 4 行的 decode
 
-## 模型与实际库流水对照
+![950PR 模型阶段与 CA 同一阶段的指令](figures/attn_res_fwd-v21-pr.png)
 
-![950PR attn_res_fwd 的模型与 CA 同轴对照](figures/attn_res_fwd-pr-pipeline.png)
-
-本卡 shape 为 `[1, 7168, 8, 1]`，950PR 模型 **14.853 µs**，完整 CA **9.499 µs**，有符号误差 +56.36%。上栏画出当前预测器能够辨识的阶段时长。只返回一个阶段的路线保留整段预测；多个暴露阶段按贡献累计，模型尚未辨识它们的具体指令发起点。下栏用实际库 trace 的最后完成核逐队列展开，黑色刻度来自真实 DMA 或 MMAD 发起。 [图上每段的时间与 trace 指纹](../../results/v0.20/examples/attn_res_fwd-pr.json)
-
-一个本卡 token、H=7168、8 个 bank slot、其中 1 个有效，当前层融合 BF16 加法，将 raw prefix 写到 slot 1，同时保留加权输出并做输出 RMSNorm。
+在 950PR 上，一个 7168 维 token、8 个 slot、3 行有效历史，模型给出 **12.799 µs**，CA 完整设备窗口 **11.488 µs**，偏高 **11.42%**。旧模型为 24.002 µs。上图两栏按同一组读请求划分阶段，起点为全芯片第一条指令；下栏还能看到每个阶段里 MTE2、SIMD 和写回的并行。保留每段边界、trace 和绘图输入以便核对。[图数据](../../results/v0.21/fusion/attn_res_fwd-figure.json)
 
 ```python
 from operator_model import estimate
 
-r = estimate('attn_res_fwd', (1,7168,8,1), dtype='bf16', chip='Ascend950PR_957b',
-             attrs={'addend':True, 'write_idx':1, 'materialize':True, 'output_norm':True})
-print(r.latency_us, r.active_aiv, r.projection['stages_us'])
+shape = (1, 7168, 8, 3)  # tokens, hidden, bank slots, valid history
+attrs = dict(addend=True, write_idx=3, materialize=True, output_norm=True)
+r = estimate('attn_res_fwd', shape, attrs, dtype='bf16', chip='Ascend950PR_957b')
+print(r.latency_us, r.active_aiv, r.work, r.projection['stages_us'])
 ```
 
-UB=253,952 B 允许 floor((253952−22×7168−32768)/(2×7168+4))=4 行驻留。1 个历史行加 1 行当前 prefix 共 2 行，于是 host 选 40020，1 个 AIV 做 1 个 token。该 AIV 读投影权重、打分 gamma、prefix、addend、bank 和输出 gamma 六行 BF16，各 14,336 B，共读 86,016 B。四次写为加法所得 prefix、bank slot 1、物化的混合向量、归一化输出，共 57,344 B。
+输入和输出为 BF16，输出同时包含归一化结果、前缀、物化中间值和 bank slot 写回。UB 为 253,952 B，容量公式给出 ⌊(253952−22×7168−32768)/(2×7168+4)⌋=4 行，正好放下三行历史和一行 prefix。宿主选择 40020，1 个 AIV，1 个 token/核。逻辑输入 114,688 B，写 57,344 B，Vector 计数 243,737 ops。实际库为 vLLM-Ascend 的自定义包，运行接口为 `aclnnAttnResFwd`，实测 kernel 为 `AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020`，四组输出全部通过核验。
 
-模型在读权重、读 prefix、读 bank、读输出 gamma 的指令发起处分段。设 L=112 个 FP32 数据块，即 7168/64。DT 单核 FP32 每周期峰值为 27,000/(64×1.65)=255.68，PR 为 23,000/(56×1.65)=248.92。以读两种权重并组合为例，PR 使用 1746.59 + 112×4.3085×255.68/248.92 + 2×14336/48.36 = 约 2835 cycles，即 1.718 µs。下表逐段比较安装的原版 kernel 时间线。读和写可能跨段重叠，因此这里按指令起点之间的暴露墙钟记账。
-
-| 阶段 µs | DT 预测 | DT CA | PR 预测 | PR CA |
+| 暴露阶段 µs | DT 预测 | DT CA | PR 预测 | PR CA |
 |---|---:|---:|---:|---:|
-| 启动至首笔投影读 | 2.744 | 2.253 | 2.744 | 2.534 |
-| 权重读与组合 | 1.710 | 1.504 | 1.718 | 1.441 |
-| 前缀读、加和发起写回 | 1.299 | 1.572 | 1.304 | 1.287 |
-| bank 行及打分 | 1.132 | 1.007 | 1.143 | 0.992 |
-| gamma 发起至输出完成 | 7.762 | 3.168 | 7.943 | 3.246 |
-| **总时间** | **14.648** | **9.505** | **14.853** | **9.499** |
+| 启动至权重读 | 2.744 | 2.27 | 2.744 | 2.25 |
+| 读权重与组合 | 1.710 | 1.49 | 1.718 | 1.44 |
+| 前缀、加法和写回发起 | 1.299 | 1.33 | 1.304 | 1.26 |
+| bank 行与打分 | 3.397 | 3.00 | 3.430 | 2.96 |
+| 输出 gamma 发起至完成 | 3.551 | 3.48 | 3.603 | 3.58 |
+| **设备总时间** | **12.701** | **11.572** | **12.799** | **11.488** |
 
-![两个 950 SKU 的实测和预测阶段窗口](figures/attn_res_fwd.png)
+最后一段用周期计价。设 L=⌈hidden/64⌉=112 为一行需要处理的 64 元素组数，B=valid+1=4 为加权行数，r 为参考/目标的每 AIV 每周期 FP32 峰值比。用 R 表示核内 MTE2 字节/周期，f 表示 GHz，则
 
-CA 通过四个输出组的数值核验，实际 kernel 为 vLLM Ascend 自定义包的 `AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020`。PR 的主要偏差来自最后一段，归一化、softmax 加权和写回在该阶段内的贡献仍欠可辨识性。970DT 预测 13.418 µs，沿用相同 arch35 策略及启动和依赖的参考周期。把属性改为多 token/核、非物化或 RELOAD 时，可继续查询工作量和分块；这些分支的设备时间为 N/A。[公式与参数来源](../../results/v0.19/workloads/attention-residual.md) · [冻结、SHA、逐核观测和开销](../../results/v0.19/workloads/attn-res-evaluation.json)
+$$
+t_{tail}=\frac{2347.99+(20.308L+2.097LB)r+2H/R}{1000f}\quad(\mu s).
+$$
 
-## 同一 hidden 上增加有效历史行
+2H 为一行 BF16 的字节数。固定项覆盖短指令、等待和尾部清空，20.308 周期/组包含只作用在一行输出上的归一化等工作，2.097 周期/组/行反映每条历史的加权累积。三项通过 9 个已有 DT 末段读指令界标的完整样本识别，设计矩阵满秩；它们是当前实现的暴露周期，不能解读成单条 ISA 指令延迟。旧方法把后两类工作合并后乘 B，在同一 H 上由 1 行历史变到 3 行时，仅尾段就多算 6.68 µs，而 DT 观测只增加 0.313 µs。修订后 PR 尾段与 CA 相差约 0.027 µs，剩余误差主要落在启动和较早读指令界标。970DT 用其自身频率和每核峰值外推 **11.639 µs**。多 token/核或需要重读 bank 的实现仍只返回工作量。[系数复算](../../development/validation/fusion21/prices.py) · [双芯片数据](../../results/v0.21/fusion/evaluation.json)
 
-将上述输入改为 `shape=(1,7168,8,3)`、`write_idx=3`，4 行刚好满足驻留条件，仍使用同一个 AIV。同一冻结版本给出 DT 23.593 µs、PR 24.002 µs，CA 分别为 11.572、11.488 µs，970DT 外推为 21.610 µs。两种 bank 深度的具体差别是，DT 上新增两行带来的整 kernel CA 增量为 2.067 µs，从输出 gamma 请求到最后输出的尾窗只增加 0.313 µs。模型尾窗却增加 6.681 µs，原因在于它将全部历史行的加权活动按小 H 拟得的斜率计入该窗口。实际时间线上，尾窗的 SIMD 活动并集仅从 2.622 增至 2.936 µs。
+## 模型冻结后的新形状
 
-全部 10 个不同的驻留输入上，DT 设备时间 WAPE 29.95%、PR 33.10%，DT/PR 倍速 WAPE 4.24%。H=256～7168、每次 1～8 个有载荷的核。这 10 对都预测 DT 略快，CA 则均为 PR 略快。始终返回 1× 的倍速误差为 3.59%。该子集的 SKU 排序仍欠可靠。[逐 shape 双端实测、分组误差、采集开销](../../results/v0.19/workloads/attention-residual.md#同一冻结模型的两次独立验证)
+![未用于标定的 950PR AttnRes 两个 token、宽 4096 的模型与 CA](figures/attn_res_fwd-independent-v21-pr.png)
+
+将输入变为 `(2,4096,8,1)`、`write_idx=1`，两个 AIV 各处理一行。冻结后的 950PR 预测 **8.643 µs**，CA **7.984 µs**，v0.20 为 11.066 µs。图上可以检验改动影响的位置：gamma 请求至最终输出，预测 2.502 µs，实测 2.417 µs；启动至第一笔权重读，预测 2.744 µs，实测 2.415 µs。DT 同形预测 8.603 µs、CA 8.113 µs。970DT 外推 7.885 µs。此例中 PR 的 CA 略快，模型仍将 DT 排在前面。四组输出均通过 CPU 校验，两个设备窗口的留出采集分别耗费 229 秒和 413 秒。[独立流水图数据](../../results/v0.21/fusion/attn_res_fwd-independent-figure.json)

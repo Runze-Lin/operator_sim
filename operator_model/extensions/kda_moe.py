@@ -58,10 +58,12 @@ def plan(op, shape, **attrs):
 def _kda(out, shape, attrs):
     allowed = {'mode', 'dtype', 'layout', 'chunk_size', 'gate_mode', 'state_dtype',
                'state_v_first', 'normalize_qk', 'export_intermediates'}
+    alias_mode = {'kda_recurrent': 'recurrent', 'kda_chunk': 'chunk'}.get(out['op'])
+    mode = attrs.get('mode', alias_mode)
+    if mode == 'chunk':
+        allowed.update(('cu_seqlens', 'dt_bias', 'initial_state'))
     if set(attrs) - allowed:
         return _reject(out, 'Unmodelled KDA attributes: ' + ','.join(sorted(set(attrs)-allowed)))
-    mode = attrs.get('mode', {'kda_recurrent': 'recurrent', 'kda_chunk': 'chunk'}.get(out['op']))
-    alias_mode = {'kda_recurrent': 'recurrent', 'kda_chunk': 'chunk'}.get(out['op'])
     if mode not in ('recurrent', 'chunk') or (alias_mode and alias_mode != mode):
         return _reject(out, 'Select an explicit, consistent recurrent or chunk mode')
     dims = _dims(shape, ('B', 'S', 'Hq', 'Hv', 'K', 'V'))
@@ -71,7 +73,7 @@ def _kda(out, shape, attrs):
     gate_mode = attrs.get('gate_mode', 'preactivated')
     state_dtype = attrs.get('state_dtype', 'fp32')
     if layout != 'BSND':
-        return _reject(out, 'Initial plan covers dense BSND; packed/varlen state scheduling is not modelled')
+        return _reject(out, 'KDA work accounting currently requires rank-4 BSND inputs')
     if hv % hq:
         return _reject(out, 'Hv must be divisible by Hq')
     if gate_mode not in ('preactivated', 'raw_safe', 'raw_unsafe'):
@@ -111,27 +113,57 @@ def _kda(out, shape, attrs):
     c = attrs.get('chunk_size', 64)
     if type(c) is not int or c not in (64, 128):
         return _reject(out, 'chunk_size must be 64 or128')
-    full, tail = divmod(s, c)
-    chunks = full + bool(tail)
-    square_sum = full*c*c + tail*tail
-    pairs = full*c*(c+1)//2 + tail*(tail+1)//2
-    strict_pairs = pairs-s
-    chains = b*hv
+    for flag in ('initial_state', 'dt_bias'):
+        if flag in attrs and type(attrs[flag]) is not bool:
+            return _reject(out, flag+' must be bool')
+    offsets = attrs.get('cu_seqlens')
+    length_classes = {s: b}
+    if offsets is not None:
+        if (b != 1 or not isinstance(offsets, (list, tuple)) or not 2 <= len(offsets) <= 1025
+                or any(type(i) is not int for i in offsets) or offsets[0] != 0 or offsets[-1] != s):
+            return _reject(out, 'cu_seqlens requires B=1, 1..1024 sequences and ordered integer offsets from 0 to S')
+        length_classes = {}
+        for start, end in zip(offsets, offsets[1:]):
+            length = end-start
+            if length < 0:
+                return _reject(out, 'cu_seqlens must be nondecreasing')
+            length_classes[length] = length_classes.get(length, 0)+1
+    uniform = len(length_classes) == 1
+    uniform_length = next(iter(length_classes)) if uniform else 0
+    num_sequences = sum(length_classes.values())
+    chains = num_sequences*hv
+    chunk_count = square_sum = full_count = 0
+    max_chunks = 0
+    for length, count in length_classes.items():
+        n, remainder = divmod(length, c)
+        full_count += count*n
+        chunk_count += count*(n+bool(remainder))
+        max_chunks = max(max_chunks, n+bool(remainder))
+        square_sum += count*(n*c*c+remainder*remainder)
+    tokens = b*s
+    pairs = (square_sum+tokens)//2
+    strict_pairs = pairs-tokens
+    out['output_shapes']['state'][0] = num_sequences
+    out['work'].update(state_elements=chains*k*v, state_tensor_bytes=4*chains*k*v)
     out['attrs']['chunk_size'] = c
     out.update(api='aclnnChunkKdaFwd', kernel_package_path=_PACKAGE+'chunk_kda_fwd/')
     out['output_shapes'].update(aqk=[b,hv,s,c], akk=[b,hv,s,c])
     out['work'].update(
-        aqk_useful_dot_flops=chains*2*k*pairs,
-        akk_useful_dot_flops=chains*2*k*strict_pairs,
-        post_wu_dense_equivalent_flops=chains*2*(k+v)*square_sum,
-        fwd_h_matmul_flops=chains*4*s*k*v,
-        fwd_h_state_decay_multiplies=chains*chunks*k*v,
-        finalize_dense_equivalent_flops=chains*(2*s*k*v+2*v*square_sum),
+        aqk_useful_dot_flops=hv*2*k*pairs,
+        akk_useful_dot_flops=hv*2*k*strict_pairs,
+        post_wu_dense_equivalent_flops=hv*2*(k+v)*square_sum,
+        fwd_h_matmul_flops=hv*4*tokens*k*v,
+        fwd_h_state_decay_multiplies=hv*chunk_count*k*v,
+        finalize_dense_equivalent_flops=hv*(2*tokens*k*v+2*v*square_sum),
         triangular_inverse_flops=None, total_executed_flops=None)
     out['stage_dag'] = ['Gate -> Prepare -> Post-WU -> FwdH (serial chunk state chain) -> Finalize']
-    out['tiling'] = {'status': 'logical_partition_only', 'chunks_per_sequence': chunks,
-                     'full_chunks': full, 'tail_tokens': tail, 'state_chains': chains,
-                     'parallel_chunk_head_tasks': chains*chunks, 'active_aic': None, 'active_aiv': None,
+    out['tiling'] = {'status': 'logical_partition_only', 'chunks_per_sequence': max_chunks if uniform else None,
+                     'max_chunks_per_sequence': max_chunks, 'total_chunks': chunk_count,
+                     'full_chunks_total': full_count,
+                     'full_chunks': uniform_length//c if uniform else None,
+                     'tail_tokens': uniform_length%c if uniform else None,
+                     'state_chains': chains,
+                     'parallel_chunk_head_tasks': hv*chunk_count, 'active_aic': None, 'active_aiv': None,
                      'single_kernel_internal_stages': True, 'actual_fusion_flags': None}
     out['limitations'].append('Stage names are internal dependencies, not five public launches; fast fusion depends on gate, dtype, tail and saved outputs.')
     return out

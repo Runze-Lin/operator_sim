@@ -269,13 +269,15 @@ def build_graph(plan):
             vec('state_recurrence',w['recurrence_scalar_flops'],tasks,steps=s,serial=True)
             out['missing_evidence'].append('gate/beta, qk normalization and per-token state handoff omitted')
         else:
+            tasks = plan['tiling']['state_chains']
+            head_chunks = plan['tiling']['parallel_chunk_head_tasks']
             for sid,key in [('qk','aqk_useful_dot_flops'),('kk','akk_useful_dot_flops'),('wu','post_wu_dense_equivalent_flops')]:
-                add(sid,cube,w[key],tasks*plan['tiling']['chunks_per_sequence'])
+                add(sid,cube,w[key],head_chunks)
             add('triangular_solve','vector_alu',w['triangular_inverse_flops'],tasks)
-            chunks=plan['tiling']['chunks_per_sequence']
+            chunks = plan['tiling'].get('max_chunks_per_sequence', plan['tiling']['chunks_per_sequence'])
             add('state_update',cube,w['fwd_h_matmul_flops'],tasks,chunks,True)
             vec('state_decay',w['fwd_h_state_decay_multiplies'],tasks,steps=chunks,serial=True)
-            add('finalize',cube,w['finalize_dense_equivalent_flops'],tasks*chunks)
+            add('finalize',cube,w['finalize_dense_equivalent_flops'],head_chunks)
             out['missing_evidence'].append('chunk gate/prepare/triangular solve work and fusion layout unknown')
     elif op in ('moe_ffn','groupedmatmulswiglugmm','grouped_matmul_swiglu_quant_v2'):
         m,k,f,e = dims; counts=w['expert_counts']; outdim=a.get('output_dim',k)

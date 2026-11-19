@@ -68,6 +68,24 @@ class TestWorkloadAccounting(unittest.TestCase):
         self.assertEqual(pre["logical_write_bytes"], 512+4*(4+16+1+24+4))
 
 
+    def test_packed_chunk_keeps_separate_state_chains_and_tail_tiles(self):
+        from operator_model import estimate
+
+        attrs = {"use_gate_in_kernel": True, "dt_bias": True, "initial_state": True,
+                 "export_gk": False, "state_v_first": True, "safe_gate": True}
+        shape = (1, 98, 2, 2, 128, 128)
+        packed = estimate("kda_chunk", shape, {**attrs, "cu_seqlens": [0, 65, 98]})
+        self.assertEqual(packed.status, "unavailable")
+        separate = [account_work("kda_chunk", (1, s, *shape[2:]), attrs) for s in (65, 33)]
+        for field in ("cube_ops", "vec_ops", "logical_write_bytes"):
+            self.assertEqual(packed.work[field], sum(r[field] for r in separate))
+        shared_alog_and_bias = 4*2*(1+128)
+        self.assertEqual(packed.work["logical_read_bytes"],
+                         sum(r["logical_read_bytes"] for r in separate)-shared_alog_and_bias)
+        for invalid in ([1, 98], [0, 65, 63, 98], [0, 97]):
+            self.assertEqual(estimate("kda_chunk", shape, {**attrs, "cu_seqlens": invalid}).status,
+                             "unsupported")
+
     def test_split_mhc_keeps_legacy_large_token_contract(self):
         from operator_model.predictor import predict
         for tokens in (256, 257, 4096):

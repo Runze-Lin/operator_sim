@@ -69,8 +69,8 @@ def _rates(work, latency_us, chip):
     }
 
 
-_RESOURCE_ONLY = {'moe_gating_top_k', 'cast_bf16_fp32', 'attn_res_fwd', 'sigmoid_fp32'}
-_RESOURCE_OPS = {'quant', 'matmul', 'fa', 'rmsnorm'} | _RESOURCE_ONLY
+_RESOURCE_ONLY = {'mhc_sinkhorn', 'mhc_pre_sinkhorn', 'moe_gating_top_k', 'cast_bf16_fp32', 'attn_res_fwd', 'sigmoid_fp32'}
+_RESOURCE_OPS = {'quant', 'matmul', 'fa', 'rmsnorm', 'addmm', 'mhc_post'} | _RESOURCE_ONLY
 
 
 def _price_resource(op, shape, target, call, dtype):
@@ -80,13 +80,28 @@ def _price_resource(op, shape, target, call, dtype):
     from .fa_resource import resource_fa
 
     work = None
-    if op == 'attn_res_fwd':
+    if op in ('mhc_sinkhorn', 'mhc_pre_sinkhorn'):
+        from .mhc_sink_resource import fused, sink
+        price = sink if op == 'mhc_sinkhorn' else fused
+        us, aic, aiv, diag = price(shape, target, call)
+        work = account_work(op, shape, {**call, 'dtype': dtype})
+    elif op == 'attn_res_fwd':
         from .attention_residual_timing import resource_attention
         us, work, diag = resource_attention(shape, target, call)
         aic, aiv = 0, diag['target_plan']['active_aiv']
     elif op == 'rmsnorm':
-        from .rms_target_cost import configured_rms
-        us, aic, aiv, diag = configured_rms(shape, target, call)
+        from .rms_dispatch import price_rms
+        us, aic, aiv, diag = price_rms(shape, target, call)
+    elif op == 'mhc_post':
+        from .post_resource import resource_post
+        us, aic, aiv, diag = resource_post(shape, target, call)
+    elif op == 'addmm':
+        if len(shape) != 3 or any(type(n) is not int or n <= 0 for n in shape):
+            raise ValueError('Addmm requires positive M,N,K')
+        expected = {'self_shape': [shape[1]], 'alpha': 1, 'beta': 1, 'cube_math_type': 0}
+        if any(k not in expected or v != expected[k] for k,v in call.items()):
+            raise ValueError('Addmm requires contiguous BF16 ND, column bias, alpha=beta=1, cubeMathType=0')
+        us, aic, aiv, diag = resource_matmul(shape, target, column_bias=True)
     elif op == 'sigmoid_fp32':
         if call:
             raise ValueError('Sigmoid expects contiguous FP32 input without attributes')
@@ -134,6 +149,9 @@ def _price_resource(op, shape, target, call, dtype):
         if 0 < h < aiv and reference_active > 1:
             mapped = min(mapped, reference_active - 1)
         projected['resident_aiv_mapping'] = {'target':h,'reference':mapped}
+    if op == 'addmm' and target == load_chip() and max(shape) <= 512:
+        return Estimate(us, 'estimated', 'DT-calibrated MatMulV3 and fused bias transfer', aiv, aic,
+                        target.name, work, projected, _rates(work, us, target))
     if op == 'sigmoid_fp32' and target == load_chip() and 12 <= shape[0]*shape[1] <= 3072*96:
         return Estimate(us, 'estimated', 'DT stage calibration range', aiv, aic, target.name,
                         work, projected, _rates(work, us, target))
@@ -170,12 +188,10 @@ def _evaluate(op, shape, attrs, soc, chip, dtype, timing_mode='auto'):
         call, chosen_dtype = _call_attrs(op, attrs, dtype)
         if timing_mode not in ('auto','resource','calibrated'):
             raise ValueError('timing_mode must be auto, resource or calibrated')
-        large_rms = op == 'rmsnorm' and len(shape) == 2 and type(shape[0]) is int and shape[0] > 512
         # A batch contains multiple request contexts. The reference surrogate's
         # historical dimension limit does not bound the aggregate token axis.
-        large_matrix = op == 'matmul' and any(type(n) is int and n > 4096 for n in shape)
         large_quant = op == 'quant' and len(shape) == 2 and type(shape[0]) is int and shape[0] > 1048576
-        auto_resource = (op in _RESOURCE_ONLY or large_rms or large_matrix or large_quant
+        auto_resource = (op in _RESOURCE_ONLY or op in ('matmul', 'addmm', 'mhc_post', 'rmsnorm') or large_quant
                          or (not same and op in _RESOURCE_OPS))
         use_resource = timing_mode == 'resource' or (timing_mode == 'auto' and auto_resource)
         if use_resource or (timing_mode == 'calibrated' and same and op in _RESOURCE_ONLY):
