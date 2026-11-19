@@ -46,7 +46,7 @@ def fragment_wave(shape, plan, service, chip, loop_work, peak, scale_base, scale
         s=service(h,w)
         issue=spread*i/(active-1)
         compute=costs['vector_cycles']+s['loops']*loop_work/peak
-        ready=issue+max(s['read_latency'],costs['frontend_cycles'])+compute
+        ready=issue+max(s['read_latency']+s['dependency_cycles'], costs['frontend_cycles'])+compute
         s['vector']=ready-issue-s['read_latency']
         requests.append((ready,i,row,col,s,grains))
     # Reserve each touched line independently. One descriptor can span two

@@ -69,7 +69,7 @@ def _rates(work, latency_us, chip):
     }
 
 
-_RESOURCE_OPS = {'quant', 'matmul', 'fa', 'rmsnorm'}
+_RESOURCE_OPS = {'quant', 'matmul', 'fa', 'rmsnorm', 'moe_gating_top_k'}
 
 
 def _price_resource(op, shape, target, call, dtype):
@@ -81,6 +81,11 @@ def _price_resource(op, shape, target, call, dtype):
     if op == 'rmsnorm':
         from .rms_resource import resource_rms
         us, aic, aiv, diag = resource_rms(shape, target, call)
+    elif op == 'moe_gating_top_k':
+        if call:
+            raise ValueError('Router expects the fixed sigmoid/bias, one-group contract')
+        from .moe_router import resource_router
+        us, aic, aiv, diag = resource_router(shape, target)
     else:
         if call:
             raise ValueError('This validated route has fixed attributes')
@@ -102,6 +107,9 @@ def _price_resource(op, shape, target, call, dtype):
         if 0 < h < aiv and reference_active > 1:
             mapped = min(mapped, reference_active - 1)
         projected['resident_aiv_mapping'] = {'target':h,'reference':mapped}
+    if op == 'moe_gating_top_k' and target == load_chip():
+        return Estimate(us, 'estimated', 'DT-calibrated router stage schedule', aiv, aic,
+                        target.name, work, projected, _rates(work, us, target))
     return Estimate(us,'extrapolated','Target resource schedule with inherited 950 phase defaults',
                     aiv,aic,target.name,work,projected,_rates(work,us,target))
 
@@ -127,7 +135,10 @@ def _evaluate(op, shape, attrs, soc, chip, dtype, timing_mode='auto'):
         call, chosen_dtype = _call_attrs(op, attrs, dtype)
         if timing_mode not in ('auto','resource','calibrated'):
             raise ValueError('timing_mode must be auto, resource or calibrated')
-        if timing_mode == 'resource' or (timing_mode == 'auto' and not same and op in _RESOURCE_OPS):
+        large_rms = op == 'rmsnorm' and len(shape) == 2 and type(shape[0]) is int and shape[0] > 512
+        auto_resource = (not same and op in _RESOURCE_OPS) or large_rms
+        if (timing_mode == 'resource' or timing_mode == 'auto' and auto_resource
+                or op == 'moe_gating_top_k' and (timing_mode != 'calibrated' or same)):
             if op not in _RESOURCE_OPS:
                 raise ValueError(f'{op} has no target resource schedule yet')
             return _price_resource(op, shape, target, call, chosen_dtype), raw

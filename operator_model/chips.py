@@ -21,6 +21,7 @@ _DETAILS = {'ub_bytes', 'l1_bytes', 'l2_bytes', 'l0a_bytes', 'l0b_bytes', 'l0c_b
             'quant_fragment_launch_cycles', 'quant_fragment_spread_cycles', 'quant_fragment_frontend_cycles',
             'quant_fragment_vector_cycles', 'quant_fragment_grain_ii_cycles', 'quant_fragment_fabric_ii_cycles',
             'quant_write_latency_cycles', 'quant_end_cycles', 'fa_aiv_per_aic',
+            'quant_prefetch_launch_cycles', 'quant_loop_work_ops', 'quant_output_retained_fraction',
             'matmul_hbm_efficiency', 'matmul_l2_efficiency', 'matmul_output_retained_fraction'}
 
 
@@ -62,7 +63,7 @@ class ChipConfig:
             raise ValueError('Unknown chip detail field')
         for field, value in self.details.items():
             if value is not None:
-                if field == 'matmul_output_retained_fraction':
+                if field in ('matmul_output_retained_fraction', 'quant_output_retained_fraction'):
                     if type(value) not in (int, float) or not 0 <= value <= 1:
                         raise ValueError(f'{field} must be in [0,1]')
                 else:

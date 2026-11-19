@@ -19,7 +19,7 @@ def default_dtype(op):
     op = ALIASES.get(op, op)
     if op in _MOE:
         return "fp8_e4m3fn"
-    return "fp32" if op == "mhc_sinkhorn" else "bf16"
+    return "fp32" if op in ("mhc_sinkhorn", "moe_gating_top_k") else "bf16"
 
 
 def _counts(dtype, read, write, cube=None, vec=None, *, classes=None, notes=()):
@@ -151,6 +151,9 @@ def account_work(op, shape, attrs=None):
     op = ALIASES.get(op, op)
     attrs = attrs or {}
     dtype = str(attrs.get("dtype", default_dtype(op))).lower()
+    if op == "moe_gating_top_k":
+        from .moe_router import router_work
+        return router_work(shape)
     if op == "mhc":
         t, n, _ = shape
         children = [account_work("mhc_pre", shape),

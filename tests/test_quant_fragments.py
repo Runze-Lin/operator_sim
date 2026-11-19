@@ -33,7 +33,8 @@ class QuantFragmentWave(TestCase):
     def test_odd_scale_count_is_packed_in_pairs(self):
         chip=load_chip()
         d=resource_quant((4,96),chip)[-1]
-        self.assertEqual(d['assumed_offchip_write_bytes'],4*(96+4))
+        self.assertEqual(d['logical_write_bytes'],4*(96+4))
+        self.assertEqual(d['assumed_offchip_write_bytes'],0)
         self.assertEqual(d['first_tile_cycles']['scale_bytes'],4)
         self.assertEqual(d['fragment_wave']['peak_writers'],4)
         self.assertEqual(peak_scale_writers(2_000_000_002,64,1_000_000_001,64),2)

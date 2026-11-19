@@ -8,7 +8,7 @@ from .fast_query import Predictor
 from .model_v6 import Case
 
 ROOT = Path(__file__).resolve().parents[1]
-VECTOR = {'quant', 'rmsnorm', 'mhc_sinkhorn', 'mhc_post', 'kda_recurrent'}
+VECTOR = {'quant', 'rmsnorm', 'mhc_sinkhorn', 'mhc_post', 'kda_recurrent', 'moe_gating_top_k'}
 CUBE = {'matmul', 'addmm', 'gmm2'}
 FUSION = {'fa', 'lightning_indexer', 'mhc_pre', 'mhc_pre_sinkhorn', 'mhc',
           'kda_chunk', 'grouped_matmul_swiglu_quant_v2', 'moe_ffn'}
@@ -40,6 +40,13 @@ def _estimate(op, shape, attrs, revision):
             case = Case(op,shape)
             us = quant_time(_legacy(),case) if op=='quant' else _legacy().predict_us(case,use_cache=False)
             result = {'predicted_us':us}
+        elif op == 'moe_gating_top_k':
+            if revision < 12 or attrs:
+                raise ValueError('Router requires the current fixed sigmoid/bias contract')
+            from .chips import load_chip
+            from .moe_router import resource_router
+            duration, _, active, diag = resource_router(shape, load_chip())
+            result = dict(predicted_us=duration, predicted_active_aiv=active, stages_us=diag['stages_us'])
         elif revision >= 9 and op == 'addmm':
             from .addmm_v9 import predict as estimate_addmm
             result = estimate_addmm(op, shape, attrs)

@@ -14,8 +14,8 @@ class RmsResourceTest(unittest.TestCase):
             self.assertEqual(d['target_plan']['vector_groups'],16*rows)
             self.assertGreater(d['store_union_cycles'],d['store_eligible_overlap_cycles'])
             self.assertAlmostEqual(sum(r.projection['stages_us'].values()),r.latency_us)
-            conditions=list(d['conditional_us'].values())
-            self.assertAlmostEqual(r.latency_us,2*min(conditions)*max(conditions)/(min(conditions)+max(conditions)))
+            self.assertEqual(d['residency_assumption'],'standalone_first_launch')
+            self.assertAlmostEqual(r.latency_us,d['conditional_us']['first'])
 
     def test_resource_sensitivity_and_ub(self):
         chip=load_chip()
@@ -28,6 +28,17 @@ class RmsResourceTest(unittest.TestCase):
             else:self.assertGreater(r.latency_us,base.latency_us)
         self.assertGreater(get(replace(chip,hbm_bandwidth_gbs=10)).latency_us,base.latency_us)
         self.assertEqual(get(replace(chip,name='scenario')).latency_us,base.latency_us)
+
+    def test_long_prefill_plan_is_run_length_encoded(self):
+        chip = load_chip()
+        r = estimate('rmsnorm', (8*32768, 7168), chip=chip, timing_mode='resource')
+        plan = r.projection['target_plan']
+        self.assertEqual(plan['iterations'], 1024)
+        self.assertEqual(plan['full_tile_count']*plan['full_tile_rows']+plan['tail_tile_rows'], 4096)
+        self.assertNotIn('ub_tile_rows',plan)
+        self.assertGreaterEqual(r.latency_us*1e3*chip.hbm_bandwidth_gbs,
+                                (2*7168*(2*8*32768+1)+4*8*32768)*(1-1e-12))
+        self.assertEqual(estimate('rmsnorm',(262144,16),chip=chip,timing_mode='resource').status,'unsupported')
 
     def test_context_contract_and_clock(self):
         chip=load_chip('Ascend950PR_957b')

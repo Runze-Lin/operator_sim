@@ -30,3 +30,17 @@ class TargetQuantDma(TestCase):
         slow=resource_quant((1024,4096),replace(chip,hbm_bandwidth_gbs=20))
         self.assertGreater(slow[0],fast[0])
         self.assertGreater(slow[-1]['chip_io_floor_cycles'],fast[-1]['chip_io_floor_cycles'])
+
+    def test_local_read_issue_and_shared_completion_are_independent(self):
+        chip=load_chip('Ascend950PR_957b')
+        shape=(448,6592)
+        base=resource_quant(shape,chip)
+        slow=resource_quant(shape,replace(chip,hbm_bandwidth_gbs=180))
+        self.assertEqual(base[-1]['first_tile_cycles']['read_ii'],slow[-1]['first_tile_cycles']['read_ii'])
+        self.assertGreater(slow[-1]['read_plus_tail_floor_cycles'],base[-1]['read_plus_tail_floor_cycles'])
+        wt=resource_quant(shape,replace(chip,details={**chip.details,'quant_output_retained_fraction':0} ))
+        self.assertEqual(wt[-1]['assumed_offchip_write_bytes'],base[-1]['logical_write_bytes'])
+        self.assertGreater(wt[0],base[0])
+        saturated=resource_quant((262144,4096),chip)[-1]
+        self.assertGreater(saturated['assumed_offchip_write_bytes'],0)
+        self.assertLessEqual(saturated['output_retained_bytes'],chip.details['l2_bytes'])
