@@ -1,12 +1,20 @@
 # Chunk KDA 算例
 
+## 对齐到一个 head 的每个状态块
+
+![950DT 三段 KDA 的 FwdH；64+16 个 token，逐块对齐模型与真实末工作组](../../results/v0.24/kda-prefetch/dt-80-independent.png)
+
+输入 [1,80,1,1,128,128]，逐块更新 128×128 状态，第二块只有 16 个有效 token。W 与 U 的生产者是 Prepare，下一块读这两份输入时有机会与前块重叠。H 来自前块的写回，因此必须等待。冻结排程把 DT 的 FwdH 从 9.411 µs 修正为 8.244 µs，独立 CA 为 7.708 µs。完整的三段分别计入，在这个输入合计为 31.751 / 30.882 µs。上栏把各阶段排到资源与依赖就绪时刻，下栏按 GM/片上地址对应每一块。970DT 仍是按配置外推。[两端逐块公式、参数和未建分支](../../results/v0.24/kda-prefetch/method.md) · [三块的 PR 图](../../results/v0.24/kda-prefetch/pr-129-fwdh.png)
+
+默认融合 V1 在 DT 与 PR 的 T2/H1 都取得四组逐字节相同的正确回读，但两端均在相同的 42 个指令地址报重复 SET_FLAG。该库的正常利用率和时延仍缺合格测量。[数值及同步检查](../../results/v0.24/kda-v1/README.md)
+
 输入轴顺序为 **B,T,Hq,Hv,K,V**。本例比较同一输入契约在 950DT、950PR 与假设的 970DT 上的设备指令窗口。
 
 ## 三段 V2 的冻结独立对比
 
 ![950DT 两个头的 KDA V2，上栏为模型阶段预算，下栏为实际源相位上的 DMA、VF 和 MMAD](../../results/kda-resource23/950dt-t5-holdout-comparison.png)
 
-同一输入 B=1、T=5、Hq=Hv=2、K=V=128。三个 kernel 各自以全核首指令为零；上方对应最忙工作组，下方各自取最后完成的物理工作组。DT 的总和为模型 22.275 µs、CA 22.822 µs。单看总数只差约半个微秒，但 Prepare 低估 1.491 µs、FwdH 高估 0.976 µs。在 PR 上总预测 22.306 µs、CA 22.397 µs。这次 PR 实际略快，模型预计略慢。该例直接选择 V2 ABI，生产小 shape 的自动分派另见下文。[950PR 同形对照](../../results/kda-resource23/950pr-t5-holdout-comparison.png) · [DT 每段时间戳与 trace SHA](../../results/kda-resource23/950dt-t5-holdout-comparison.json)
+同一输入 B=1、T=5、Hq=Hv=2、K=V=128。三个 kernel 各自以全核首指令为零；上方对应最忙工作组，下方各自取最后完成的物理工作组。这张历史图中 DT 的总和为 v0.23 模型 22.275 µs、CA 22.822 µs，v0.24 同形为 22.024 µs。单看总数只差约半个微秒，但 Prepare 低估 1.491 µs、FwdH 高估 0.976 µs。在 PR 上 v0.23 总预测 22.306 µs、v0.24 为 22.056 µs，CA 22.397 µs。这次 PR 实际略快，模型预计略慢。该例直接选择 V2 ABI，生产小 shape 的自动分派另见下文。[950PR 同形对照](../../results/kda-resource23/950pr-t5-holdout-comparison.png) · [DT 每段时间戳与 trace SHA](../../results/kda-resource23/950dt-t5-holdout-comparison.json)
 
 ```python
 from operator_model import estimate
@@ -123,4 +131,4 @@ print(r.status, r.latency_us, r.work["logical_read_bytes"], r.work["logical_writ
 
 ![950PR 的 129-token 独立留出，逐块对齐三次状态更新](../../results/v0.23/kda-multiblock/950pr-t129-h3-fwdh.png)
 
-FwdH 在 head 2 的工作组上依次处理 64、64、1 个有效 token。两次 32,768 B 中间状态写入后，下一块的状态读取命中相同 GM 地址。末块 MMAD 的有效行与物理发射几何不同。该段模型 13.329 µs，CA 11.079 µs（+20.3%）；全算子还包含 Prepare 和 Finalize。图只复用已归档的独立窗口。[每一块的真实地址、队列、指令与设备时钟](../../results/v0.23/kda-multiblock/950pr-t129-h3-fwdh.json)
+FwdH 在 head 2 的工作组上依次处理 64、64、1 个有效 token。两次 32,768 B 中间状态写入后，下一块的状态读取命中相同 GM 地址。末块 MMAD 的有效行与物理发射几何不同。图中 v0.23 的 FwdH 为 13.329 µs，CA 11.079 µs（+20.3%）；v0.24 重排后为 11.459 µs（+3.4%）；全算子还包含 Prepare 和 Finalize。图只复用已归档的独立窗口。[每一块的真实地址、队列、指令与设备时钟](../../results/v0.23/kda-multiblock/950pr-t129-h3-fwdh.json)

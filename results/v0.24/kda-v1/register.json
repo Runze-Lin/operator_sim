@@ -1,0 +1,166 @@
+{
+  "utc": "2026-11-19T15:36:07.144782+00:00",
+  "role": "predeclared cause-discriminating development only",
+  "cases": [
+    {
+      "id": "dt-t2-h1-varlen",
+      "shape": [
+        1,
+        2,
+        1,
+        1,
+        128,
+        128
+      ],
+      "metadata": "varlen",
+      "sku": "Ascend950DT_9582",
+      "physical_memory": "hbm3_8000M.ini",
+      "oracle": {
+        "attention": 256,
+        "aqk": 128,
+        "akk": 128,
+        "state_vk": 16384
+      }
+    },
+    {
+      "id": "dt-t64-h2-dense",
+      "shape": [
+        1,
+        64,
+        2,
+        2,
+        128,
+        128
+      ],
+      "metadata": "dense",
+      "sku": "Ascend950DT_9582",
+      "physical_memory": "hbm3_8000M.ini",
+      "oracle": {
+        "attention": 16384,
+        "aqk": 8192,
+        "akk": 8192,
+        "state_vk": 32768
+      }
+    },
+    {
+      "id": "pr-t2-h1-varlen",
+      "shape": [
+        1,
+        2,
+        1,
+        1,
+        128,
+        128
+      ],
+      "metadata": "varlen",
+      "sku": "Ascend950PR_957b",
+      "physical_memory": "lpddr5_6400M_bailu.ini",
+      "oracle": {
+        "attention": 256,
+        "aqk": 128,
+        "akk": 128,
+        "state_vk": 16384
+      }
+    },
+    {
+      "id": "pr-t64-h2-dense",
+      "shape": [
+        1,
+        64,
+        2,
+        2,
+        128,
+        128
+      ],
+      "metadata": "dense",
+      "sku": "Ascend950PR_957b",
+      "physical_memory": "lpddr5_6400M_bailu.ini",
+      "oracle": {
+        "attention": 16384,
+        "aqk": 8192,
+        "akk": 8192,
+        "state_vk": 32768
+      }
+    }
+  ],
+  "max_concurrency": 1,
+  "budget_seconds": 1200,
+  "budget_bytes": 6442450944,
+  "conditional": "PR dense runs only after DT dense has verified numerics, full windows, correct FLA identity and zero sync errors.",
+  "eligibility": "all four V1 CPU oracle outputs, initial VK unchanged, successful process, no simulator sync errors, physically bound released host; exactly one monolithic FLA V1 device code among all full official per-core windows with physical END; chronological auxiliary launches.",
+  "dtype_layout": "Q,K,V,raw_gate BF16, beta and VK state FP32. BSND, chunk=64, K=V=128, mixed signs, safe gate -5 including AF/dt_bias.",
+  "mechanism": "Original cu/indices force isVarLen and generic-backend path for little work. Without metadata T=64,H=2 permits dedicated dense FwdH path; on B=1 numerical inputs and results are identical. Dense is separate from the proven vLLM call with metadata.",
+  "oracle": "FLA fused V1 ATK _reference_model_parallel, BF16 operand pairs with last-row shift per 16. Original higher precision mathematical comparator also emitted, with identical original thresholds. Neither threshold nor fixtures may be changed after capture.",
+  "published_kda_text": {
+    "ChunkKdaFwd_ab840dfc4cfa173688cbf30179316228.o": "eb642856ca5e19f07e079e1af1b68ed9b61174942e1d7a2097daa69113e67c0d",
+    "ChunkKdaFwd_5e864108d5688e456abb78f238c67b16.o": "5275721e11b3906d6f56a7fa5d04f535b64d9da894932abd84e082973652f200",
+    "ChunkKdaFwd_bdc078c5221f705217d250323b8feb82.o": "eb642856ca5e19f07e079e1af1b68ed9b61174942e1d7a2097daa69113e67c0d",
+    "ChunkKdaFwd_c4ae0e35839222ca5076179abc74a4f5.o": "b155d4c10ea06207c4f9277422ddc043216f881123d98ab9a5d12608471806e1",
+    "ChunkKdaFwd_3d0869ad99fc0117a05ebce5fc52f4ef.o": "5275721e11b3906d6f56a7fa5d04f535b64d9da894932abd84e082973652f200",
+    "ChunkKdaFwd_ec37fa71324acfcc6979b4d975461463.o": "e99b62c6adbe282379e1c0e5bc72cc3054a083def13b1cfbd63467ec49f3e1b0",
+    "ChunkKdaFwd_1abcbd578c0aecb0d613ba7f77626658.o": "e99b62c6adbe282379e1c0e5bc72cc3054a083def13b1cfbd63467ec49f3e1b0",
+    "ChunkKdaFwd_fc61fbaf568f8d0a23b644397f403111.o": "b155d4c10ea06207c4f9277422ddc043216f881123d98ab9a5d12608471806e1"
+  },
+  "builtin_text": {
+    "ChunkKdaFwd_e1f47b7ed74c47416550f45ace82d988.o": "bab4def46047afb93f7e4ef6554da85623b43074611d3ae7f9b466fda83d8329",
+    "ChunkKdaFwd_2abd624f2831d861ffa7ac1b0049c12a.o": "fa936b1653b1ad1682edea6cec5a7342bd1f359738df68ea4b8e893b262bedc2",
+    "ChunkKdaFwd_5fc9a4d54f054c7c0081057a92293b10.o": "247d431053dbef3f328c5f45ddc0d3109db10273451ccfec78f8842a13e74bee",
+    "ChunkKdaFwd_ec5c70105c2ca6873f26879e62efa878.o": "fa936b1653b1ad1682edea6cec5a7342bd1f359738df68ea4b8e893b262bedc2",
+    "ChunkKdaFwd_fa73d2b349dc97ef1ea5da4e484ceccf.o": "d6d3136972a6a6eff562a4933b08d434b937adb0b4fe61018f6ae79181fc9a81",
+    "ChunkKdaFwd_739e9f97dc2733c698e3a00e12fb80ab.o": "bab4def46047afb93f7e4ef6554da85623b43074611d3ae7f9b466fda83d8329",
+    "ChunkKdaFwd_6476ca0e1178d6f9989248428cab5a3c.o": "247d431053dbef3f328c5f45ddc0d3109db10273451ccfec78f8842a13e74bee",
+    "ChunkKdaFwd_c7537eac07b2e805494bc8b22c2da1a4.o": "d6d3136972a6a6eff562a4933b08d434b937adb0b4fe61018f6ae79181fc9a81"
+  },
+  "release_asset": {
+    "name": "flash_linear_attention_npu_a5-26.9.1-py3-none-manylinux_2_34_aarch64.whl",
+    "size": 121538023,
+    "digest": "sha256:c660b90cee1d93c83292bb9b8509371da83493a633efd3e5113f70380d373521",
+    "browser_download_url": "https://github.com/flashserve/flash-linear-attention-npu/releases/download/v26.9.1-release/flash_linear_attention_npu_a5-26.9.1-py3-none-manylinux_2_34_aarch64.whl",
+    "id": 678963966
+  },
+  "official_source": {
+    "chunk_kda_fwd_tiling.cpp": {
+      "path": "fla/ops/ascendc/kda/chunk_kda_fwd/op_host/chunk_kda_fwd_tiling.cpp",
+      "git_blob": "91ccbae35792fb3a028276317222689c01793686",
+      "tree": "5cc699069c7f91a35aabd583032c8720a0b626fa"
+    },
+    "chunk_kda_fwd_tiling_impl.h": {
+      "path": "fla/ops/ascendc/kda/chunk_kda_fwd/op_host/arch35/chunk_kda_fwd_tiling_impl.h",
+      "git_blob": "a8b8cc2a4a8cab31d44e08b40f509f1cfe50d9ef",
+      "tree": "5cc699069c7f91a35aabd583032c8720a0b626fa"
+    },
+    "vendor-v1-oracle.py": {
+      "path": "tests/atk/chunk_kda_fwd/executor_chunk_kda_fwd.py",
+      "git_blob": "52d1568b569f753281edac92037f15e7db8983e8",
+      "tree": "5cc699069c7f91a35aabd583032c8720a0b626fa"
+    }
+  },
+  "source_sha256": {
+    "development/validation/kda_v1_24/host.py": "13bf53456cae6b7b63765cf8423dfcce2d419704736022fa277a42d59f282f64",
+    "development/validation/kda_v1_24/golden.py": "c4cf43728bc65b6ac6646d9dd7330494961cae00933f1f7d531f8c74b2c852d0",
+    "development/validation/kda_v1_24/investigate.py": "d715cb2586cedcc5e1b10c86475f44e7c5b1a81067abb610eb3a1cdf30995d0a",
+    "results/v0.24/kda-v1/raw/chunk_kda_fwd_tiling.cpp": "6a1095dc12275bf12af0ef6d6a5717bf8a6467f9d208ea375e81dfe87d098f78",
+    "results/v0.24/kda-v1/raw/kimi-v1-default.cpp": "383c382bd6af2e67038e49256e90bfc1c42452efb6f1002e200a46030990e4a8",
+    "results/v0.24/kda-v1/raw/chunk_kda_fwd_tiling_impl.h": "e7542eff7113d97ce069b7ec4f57b01809f4894f1e3b5e801add5f557991fe59",
+    "results/v0.24/kda-v1/raw/vendor-v1-oracle.py": "feec929ef7d14cabb1580decacd07288c979718d059c0e0eed9d4a966267a804",
+    "results/v0.24/kda-v1/raw/kimi-v1-default": "12b8243870064d7f580eeb6e6d27e5e79c24c8f115a912d56aae11aca53cbfb9",
+    "results/v0.24/kda-v1/raw/oracles/64-2/akk.bin": "16fd8d02d8440ebd35a242c5445b11de02d20d9ab031fb93462f3a878371ab93",
+    "results/v0.24/kda-v1/raw/oracles/64-2/aqk.bin": "a6051cb64f4658a1060c8691e70a39121875c679d91d59123f6a84572fd098ba",
+    "results/v0.24/kda-v1/raw/oracles/64-2/state_vk.bin": "bd9031f77591cb6897faf44082ae1f20fef2859103479e105fba20ac60506791",
+    "results/v0.24/kda-v1/raw/oracles/64-2/attention.bin": "357bcb550c673b2cb2e249e0ac68279edaa64895218f878cf0eff3c3f5ecfc0b",
+    "results/v0.24/kda-v1/raw/oracles/2-1/akk.bin": "ffa123f533271027306f7b0cfdb184ee522803ea83eff4f255ed9728a7436c6f",
+    "results/v0.24/kda-v1/raw/oracles/2-1/aqk.bin": "ccfb43784bc422beca111c098b5a40e13090844e557ca2278b401ea5a74c4d7e",
+    "results/v0.24/kda-v1/raw/oracles/2-1/state_vk.bin": "a01cf3a3794db6a1cbe302a7a6e847b702cae92b893f940ff3cabcbbf0bd1de3",
+    "results/v0.24/kda-v1/raw/oracles/2-1/attention.bin": "726b79521c8c3e6149e51f0b88557ce0990e832e992a70b6143270ecb0037385",
+    "development/validation/kda_v23/precise_host.hpp": "9aebd0d23d27da2f524a354bcdb6ea65c3990d524195c1a5611b2238520d2057",
+    "development/validation/kda_v23/qualify.py": "56bafa44fe50ae0003c0fae0f1562840745313ee1f967b8fcc59e1aab079ae15",
+    "development/validation/kda_v23/series.py": "0c1b686c9c2dddae06ac8bf022878aa573f653234a0286d0adda78969daed371",
+    "development/validation/chunk_recovery/fla2691/v2/verify_chrome.py": "0362d7a7d028d6dc3fce4f7311cfedbf6b96f9861feaa1b8f48af0f84f0f3e84",
+    "results/chunk-recovery/fla2691/register.json": "57c5ad5e40c3c7d501346edd05a4d13511984bd5f031014728375519ef4e93c5",
+    "build/smoke/chunk21-kimi.cpp": "7c8d87c0a65275aaf182f362ab8cf0f98a815390857af7cc5930b54140887aa1",
+    "results/chunk-recovery/fla2691/raw/fla-source-tree.json": "5bf210992abacc7b05b2dbd01434d5d39bb03fe5e83ed51bb1760cf4f9f880b7",
+    "results/chunk-recovery/fla2691/vllm-source.json": "edf2c08e1dece1e781352bd3d1509838a85b6296497dd34656c3c3c11f9be2ac",
+    "results/chunk-recovery/fla2691/raw/fla_npu/opp/vendors/fla_npu_transformer/op_api/lib/libcust_opapi.so": "f229fc7ce9bfe486aad870bf31d6f02bc5b4b9204f7d0f4382bf655d63060e75",
+    "smoke/extension_kda.cpp": "e0859cda502617c6e76c2cfb0d6da57120a9a3d42f0e63bee192e7a5b3427138"
+  }
+}

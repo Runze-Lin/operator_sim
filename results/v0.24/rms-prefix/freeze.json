@@ -1,0 +1,1135 @@
+{
+  "utc": "2026-11-19T15:35:52.511328+00:00",
+  "files": {
+    "development/validation/rms_prefix24/campaign.py": "493e1012e130ad883edff5eb24d8b0c264f5375a3112f3ba7101daf8210d9e7e",
+    "build/vector-v8/NORM": "9ecfa6f9c54417e5bd59aaaa10a8e3f53e9d9aabe9e721110c6d55ab21f5bba2",
+    "toolchains/cann/9.2.1/cann-9.2.1/opp/built-in/op_impl/ai_core/tbe/kernel/ascend950/ops_nn/rms_norm/RmsNorm_normal_all_bf16_high_performance.o": "0926fe478e5f718ef49241c08ef00b665797690f0f7f22c67fdc25044e0cb54d",
+    "development/validation/rms_ordered_verify/verify.py": "6880244f8a43a62658b773fba3a1e677d06fd6eba7265790cfa839a30220d31c",
+    "development/validation/rms_ordered_verify/prefix.py": "e5c361ea888382c0044a21a4e5e4528f7fb6f2918ef80899363f7c9f42673807",
+    "development/validation/rms_dispatch_audit/ordered_ca.py": "3ff3608e325dae887acd9e85efc4ef1c15492e8117d5b4607f2a66ef2ef29720",
+    "scripts/cann-run.sh": "d529513abc0bc340a56c91365a9e72d5e434d2cb4841be1692930294cd0624df",
+    "operator_model/stream.py": "55126ba46f061c82ee86114da6e24eee343a2fbe51f04a79b11103593d1a1d1d",
+    "operator_model/rms_history.py": "d41f2139c23974745049d7049215cebd8a3d3227ca7f638026b3008996bd0fcd",
+    "operator_model/backend.py": "f9b6b4d5a3ced39b998e79de341d3c2c3d08e1674a99fe5791d510a96175aca7",
+    "operator_model/rms_dispatch.py": "4cea972b883d3dfc31768fff403f97dd2f0cb4adf0ccc3856889038449518aa5",
+    "operator_model/rms_lane_schedule.py": "5bcd2dcfc271278ac24b5e37d9ab8f299b20b7dc6eb8da5f6514641a653a4e7e"
+  },
+  "wall_per_batch_s": 3600,
+  "raw_mib_per_batch": 12288,
+  "rows": [
+    {
+      "i": 0,
+      "chip": "Ascend950DT_9582",
+      "group": "narrow-start",
+      "shape": [
+        1,
+        1200
+      ],
+      "role": "hidden",
+      "active_aiv": 1,
+      "true_H": 0,
+      "observed_lower": 0,
+      "full_us": 3.2362835777689276,
+      "previous_partial_us": 2.339507040797704,
+      "partial_us": 3.2362835777689276,
+      "scenario": null,
+      "query_ms": null
+    },
+    {
+      "i": 1,
+      "chip": "Ascend950DT_9582",
+      "group": "narrow-start",
+      "shape": [
+        2,
+        1888
+      ],
+      "role": "observed_prefix",
+      "active_aiv": 2,
+      "true_H": 1,
+      "observed_lower": 0,
+      "full_us": 4.235038254161307,
+      "previous_partial_us": 2.4294197020871513,
+      "partial_us": 2.4294197020871513,
+      "scenario": null,
+      "query_ms": 0.14319
+    },
+    {
+      "i": 2,
+      "chip": "Ascend950DT_9582",
+      "group": "narrow-start",
+      "shape": [
+        3,
+        3008
+      ],
+      "role": "target",
+      "active_aiv": 3,
+      "true_H": 2,
+      "observed_lower": 2,
+      "full_us": 2.7079851396778816,
+      "previous_partial_us": 2.5664920815236956,
+      "partial_us": 2.5664920815236956,
+      "scenario": {
+        "minimum_resident_aiv": 2,
+        "possible_us": [
+          1.888176740327232,
+          2.7079851396778816
+        ],
+        "shape_only_us": 2.5664920815236956,
+        "endpoint_scenario_aiv": null
+      },
+      "query_ms": 0.52382
+    },
+    {
+      "i": 3,
+      "chip": "Ascend950DT_9582",
+      "group": "narrow-start",
+      "shape": [
+        9,
+        2272
+      ],
+      "role": "target",
+      "active_aiv": 9,
+      "true_H": 3,
+      "observed_lower": 3,
+      "full_us": 3.461098551955877,
+      "previous_partial_us": 3.103839204918598,
+      "partial_us": 3.103839204918598,
+      "scenario": {
+        "minimum_resident_aiv": 3,
+        "possible_us": [
+          2.283275429112554,
+          3.4610985519558772
+        ],
+        "shape_only_us": 3.103839204918598,
+        "endpoint_scenario_aiv": null
+      },
+      "query_ms": 0.57015
+    },
+    {
+      "i": 4,
+      "chip": "Ascend950DT_9582",
+      "group": "narrow-start",
+      "shape": [
+        19,
+        2032
+      ],
+      "role": "target",
+      "active_aiv": 19,
+      "true_H": 9,
+      "observed_lower": 9,
+      "full_us": 3.6078360170454546,
+      "previous_partial_us": 4.2134819650166815,
+      "partial_us": 3.6078360170454546,
+      "scenario": {
+        "minimum_resident_aiv": 9,
+        "possible_us": [
+          3.272099678300866,
+          3.6078360170454546
+        ],
+        "shape_only_us": 4.2134819650166815,
+        "endpoint_scenario_aiv": 9
+      },
+      "query_ms": 1.50923
+    },
+    {
+      "i": 0,
+      "chip": "Ascend950DT_9582",
+      "group": "wide-start",
+      "shape": [
+        55,
+        1920
+      ],
+      "role": "hidden",
+      "active_aiv": 55,
+      "true_H": 0,
+      "observed_lower": 0,
+      "full_us": 6.311469609402624,
+      "previous_partial_us": 6.053108187290015,
+      "partial_us": 6.311469609402624,
+      "scenario": null,
+      "query_ms": null
+    },
+    {
+      "i": 1,
+      "chip": "Ascend950DT_9582",
+      "group": "wide-start",
+      "shape": [
+        3,
+        1808
+      ],
+      "role": "observed_prefix",
+      "active_aiv": 3,
+      "true_H": 55,
+      "observed_lower": 0,
+      "full_us": 1.7955426533246446,
+      "previous_partial_us": 2.4488266502057536,
+      "partial_us": 2.4488266502057536,
+      "scenario": null,
+      "query_ms": 0.14897
+    },
+    {
+      "i": 2,
+      "chip": "Ascend950DT_9582",
+      "group": "wide-start",
+      "shape": [
+        9,
+        1568
+      ],
+      "role": "target",
+      "active_aiv": 9,
+      "true_H": 55,
+      "observed_lower": 3,
+      "full_us": 2.2526148457792208,
+      "previous_partial_us": 3.071416524919121,
+      "partial_us": 3.071416524919121,
+      "scenario": {
+        "minimum_resident_aiv": 3,
+        "possible_us": [
+          2.2526148457792208,
+          3.4077797722205623
+        ],
+        "shape_only_us": 3.071416524919121,
+        "endpoint_scenario_aiv": null
+      },
+      "query_ms": 0.58633
+    },
+    {
+      "i": 3,
+      "chip": "Ascend950DT_9582",
+      "group": "wide-start",
+      "shape": [
+        34,
+        1728
+      ],
+      "role": "target",
+      "active_aiv": 34,
+      "true_H": 55,
+      "observed_lower": 9,
+      "full_us": 4.584018790010495,
+      "previous_partial_us": 5.661532475261887,
+      "partial_us": 4.796625205204216,
+      "scenario": {
+        "minimum_resident_aiv": 9,
+        "possible_us": [
+          4.584018790010495,
+          4.796625205204216
+        ],
+        "shape_only_us": 5.661532475261887,
+        "endpoint_scenario_aiv": 9
+      },
+      "query_ms": 3.00485
+    },
+    {
+      "i": 4,
+      "chip": "Ascend950DT_9582",
+      "group": "wide-start",
+      "shape": [
+        47,
+        2592
+      ],
+      "role": "target",
+      "active_aiv": 47,
+      "true_H": 55,
+      "observed_lower": 34,
+      "full_us": 4.7031859528892825,
+      "previous_partial_us": 5.942082148812196,
+      "partial_us": 4.705627006784882,
+      "scenario": {
+        "minimum_resident_aiv": 34,
+        "possible_us": [
+          4.7031859528892825,
+          4.705627006784883
+        ],
+        "shape_only_us": 5.942082148812196,
+        "endpoint_scenario_aiv": 34
+      },
+      "query_ms": 5.75842
+    },
+    {
+      "i": 0,
+      "chip": "Ascend950DT_9582",
+      "group": "many-rows",
+      "shape": [
+        1,
+        1280
+      ],
+      "role": "hidden",
+      "active_aiv": 1,
+      "true_H": 0,
+      "observed_lower": 0,
+      "full_us": 3.2395425370492306,
+      "previous_partial_us": 2.3430159172535476,
+      "partial_us": 3.2395425370492306,
+      "scenario": null,
+      "query_ms": null
+    },
+    {
+      "i": 1,
+      "chip": "Ascend950DT_9582",
+      "group": "many-rows",
+      "shape": [
+        3,
+        1392
+      ],
+      "role": "observed_prefix",
+      "active_aiv": 3,
+      "true_H": 1,
+      "observed_lower": 0,
+      "full_us": 4.195722946894035,
+      "previous_partial_us": 2.401449467533422,
+      "partial_us": 2.401449467533422,
+      "scenario": null,
+      "query_ms": 0.1051
+    },
+    {
+      "i": 2,
+      "chip": "Ascend950DT_9582",
+      "group": "many-rows",
+      "shape": [
+        17,
+        2176
+      ],
+      "role": "target",
+      "active_aiv": 17,
+      "true_H": 3,
+      "observed_lower": 3,
+      "full_us": 3.977051222943723,
+      "previous_partial_us": 3.9981445331194605,
+      "partial_us": 3.977051222943723,
+      "scenario": {
+        "minimum_resident_aiv": 3,
+        "possible_us": [
+          3.077186023929774,
+          3.9770512229437234
+        ],
+        "shape_only_us": 3.9981445331194605,
+        "endpoint_scenario_aiv": 3
+      },
+      "query_ms": 1.02087
+    },
+    {
+      "i": 3,
+      "chip": "Ascend950DT_9582",
+      "group": "many-rows",
+      "shape": [
+        33,
+        2128
+      ],
+      "role": "target",
+      "active_aiv": 33,
+      "true_H": 17,
+      "observed_lower": 17,
+      "full_us": 4.602723044763108,
+      "previous_partial_us": 5.66123488093826,
+      "partial_us": 4.602723044763108,
+      "scenario": {
+        "minimum_resident_aiv": 17,
+        "possible_us": [
+          4.595167401752919,
+          4.602723044763107
+        ],
+        "shape_only_us": 5.66123488093826,
+        "endpoint_scenario_aiv": 17
+      },
+      "query_ms": 2.19812
+    },
+    {
+      "i": 4,
+      "chip": "Ascend950DT_9582",
+      "group": "many-rows",
+      "shape": [
+        49,
+        2368
+      ],
+      "role": "target",
+      "active_aiv": 49,
+      "true_H": 33,
+      "observed_lower": 33,
+      "full_us": 4.708876028138529,
+      "previous_partial_us": 5.967187957997271,
+      "partial_us": 4.708876028138529,
+      "scenario": {
+        "minimum_resident_aiv": 33,
+        "possible_us": [
+          4.705974661222616,
+          4.708876028138529
+        ],
+        "shape_only_us": 5.967187957997271,
+        "endpoint_scenario_aiv": 33
+      },
+      "query_ms": 3.23875
+    },
+    {
+      "i": 5,
+      "chip": "Ascend950DT_9582",
+      "group": "many-rows",
+      "shape": [
+        513,
+        3968
+      ],
+      "role": "target",
+      "active_aiv": 57,
+      "true_H": 49,
+      "observed_lower": 49,
+      "full_us": 6.0219762397784,
+      "previous_partial_us": 6.039083853130308,
+      "partial_us": 6.0219762397784,
+      "scenario": {
+        "minimum_resident_aiv": 49,
+        "possible_us": [
+          4.378564995285988,
+          6.0219762397784
+        ],
+        "shape_only_us": 6.039083853130308,
+        "endpoint_scenario_aiv": 49
+      },
+      "query_ms": 0.33298
+    },
+    {
+      "i": 0,
+      "chip": "Ascend950PR_957b",
+      "group": "narrow-start",
+      "shape": [
+        1,
+        1200
+      ],
+      "role": "hidden",
+      "active_aiv": 1,
+      "true_H": 0,
+      "observed_lower": 0,
+      "full_us": 3.0242031582157747,
+      "previous_partial_us": 2.2831134582899875,
+      "partial_us": 3.0242031582157747,
+      "scenario": null,
+      "query_ms": null
+    },
+    {
+      "i": 1,
+      "chip": "Ascend950PR_957b",
+      "group": "narrow-start",
+      "shape": [
+        2,
+        1888
+      ],
+      "role": "observed_prefix",
+      "active_aiv": 2,
+      "true_H": 1,
+      "observed_lower": 0,
+      "full_us": 4.236532651443242,
+      "previous_partial_us": 2.3749718314375627,
+      "partial_us": 2.3749718314375627,
+      "scenario": null,
+      "query_ms": 0.11415
+    },
+    {
+      "i": 2,
+      "chip": "Ascend950PR_957b",
+      "group": "narrow-start",
+      "shape": [
+        3,
+        3008
+      ],
+      "role": "target",
+      "active_aiv": 3,
+      "true_H": 2,
+      "observed_lower": 2,
+      "full_us": 2.710376175328976,
+      "previous_partial_us": 2.514052671183028,
+      "partial_us": 2.514052671183028,
+      "scenario": {
+        "minimum_resident_aiv": 2,
+        "possible_us": [
+          1.8905677759783268,
+          2.7103761753289763
+        ],
+        "shape_only_us": 2.514052671183028,
+        "endpoint_scenario_aiv": null
+      },
+      "query_ms": 0.28634
+    },
+    {
+      "i": 3,
+      "chip": "Ascend950PR_957b",
+      "group": "narrow-start",
+      "shape": [
+        9,
+        2272
+      ],
+      "role": "target",
+      "active_aiv": 9,
+      "true_H": 3,
+      "observed_lower": 3,
+      "full_us": 3.4628918286941976,
+      "previous_partial_us": 3.0539962006290486,
+      "partial_us": 3.0539962006290486,
+      "scenario": {
+        "minimum_resident_aiv": 3,
+        "possible_us": [
+          2.283275429112554,
+          3.462891828694198
+        ],
+        "shape_only_us": 3.0539962006290486,
+        "endpoint_scenario_aiv": null
+      },
+      "query_ms": 0.42469
+    },
+    {
+      "i": 4,
+      "chip": "Ascend950PR_957b",
+      "group": "narrow-start",
+      "shape": [
+        19,
+        2032
+      ],
+      "role": "target",
+      "active_aiv": 19,
+      "true_H": 9,
+      "observed_lower": 9,
+      "full_us": 3.6078360170454546,
+      "previous_partial_us": 4.171652432758471,
+      "partial_us": 3.6078360170454546,
+      "scenario": {
+        "minimum_resident_aiv": 9,
+        "possible_us": [
+          3.272099678300866,
+          3.6078360170454546
+        ],
+        "shape_only_us": 4.171652432758471,
+        "endpoint_scenario_aiv": 9
+      },
+      "query_ms": 1.10958
+    },
+    {
+      "i": 0,
+      "chip": "Ascend950PR_957b",
+      "group": "wide-start",
+      "shape": [
+        55,
+        1920
+      ],
+      "role": "hidden",
+      "active_aiv": 55,
+      "true_H": 0,
+      "observed_lower": 0,
+      "full_us": 6.098824279760658,
+      "previous_partial_us": 6.0563437569175385,
+      "partial_us": 6.098824279760658,
+      "scenario": null,
+      "query_ms": null
+    },
+    {
+      "i": 1,
+      "chip": "Ascend950PR_957b",
+      "group": "wide-start",
+      "shape": [
+        3,
+        1808
+      ],
+      "role": "observed_prefix",
+      "active_aiv": 3,
+      "true_H": 55,
+      "observed_lower": 0,
+      "full_us": 1.7970370506065787,
+      "previous_partial_us": 2.3963725169067462,
+      "partial_us": 2.3963725169067462,
+      "scenario": null,
+      "query_ms": 0.11059
+    },
+    {
+      "i": 2,
+      "chip": "Ascend950PR_957b",
+      "group": "wide-start",
+      "shape": [
+        9,
+        1568
+      ],
+      "role": "target",
+      "active_aiv": 9,
+      "true_H": 55,
+      "observed_lower": 3,
+      "full_us": 2.2526148457792208,
+      "previous_partial_us": 3.021505601225125,
+      "partial_us": 3.021505601225125,
+      "scenario": {
+        "minimum_resident_aiv": 3,
+        "possible_us": [
+          2.2526148457792208,
+          3.409074916531572
+        ],
+        "shape_only_us": 3.021505601225125,
+        "endpoint_scenario_aiv": null
+      },
+      "query_ms": 0.44499
+    },
+    {
+      "i": 3,
+      "chip": "Ascend950PR_957b",
+      "group": "wide-start",
+      "shape": [
+        34,
+        1728
+      ],
+      "role": "target",
+      "active_aiv": 34,
+      "true_H": 55,
+      "observed_lower": 9,
+      "full_us": 4.584018790010495,
+      "previous_partial_us": 5.636270027494685,
+      "partial_us": 4.796625205204216,
+      "scenario": {
+        "minimum_resident_aiv": 9,
+        "possible_us": [
+          4.584018790010495,
+          4.796625205204216
+        ],
+        "shape_only_us": 5.636270027494685,
+        "endpoint_scenario_aiv": 9
+      },
+      "query_ms": 2.24919
+    },
+    {
+      "i": 4,
+      "chip": "Ascend950PR_957b",
+      "group": "wide-start",
+      "shape": [
+        47,
+        2592
+      ],
+      "role": "target",
+      "active_aiv": 47,
+      "true_H": 55,
+      "observed_lower": 34,
+      "full_us": 4.7031859528892825,
+      "previous_partial_us": 5.935401868474851,
+      "partial_us": 4.705627006784882,
+      "scenario": {
+        "minimum_resident_aiv": 34,
+        "possible_us": [
+          4.7031859528892825,
+          4.705627006784883
+        ],
+        "shape_only_us": 5.935401868474851,
+        "endpoint_scenario_aiv": 34
+      },
+      "query_ms": 3.08638
+    },
+    {
+      "i": 0,
+      "chip": "Ascend950PR_957b",
+      "group": "many-rows",
+      "shape": [
+        1,
+        1280
+      ],
+      "role": "hidden",
+      "active_aiv": 1,
+      "true_H": 0,
+      "observed_lower": 0,
+      "full_us": 3.0274621174960776,
+      "previous_partial_us": 2.286567858833323,
+      "partial_us": 3.0274621174960776,
+      "scenario": null,
+      "query_ms": null
+    },
+    {
+      "i": 1,
+      "chip": "Ascend950PR_957b",
+      "group": "many-rows",
+      "shape": [
+        3,
+        1392
+      ],
+      "role": "observed_prefix",
+      "active_aiv": 3,
+      "true_H": 1,
+      "observed_lower": 0,
+      "full_us": 4.19681883823412,
+      "previous_partial_us": 2.3489454561160987,
+      "partial_us": 2.3489454561160987,
+      "scenario": null,
+      "query_ms": 0.11346
+    },
+    {
+      "i": 2,
+      "chip": "Ascend950PR_957b",
+      "group": "many-rows",
+      "shape": [
+        17,
+        2176
+      ],
+      "role": "target",
+      "active_aiv": 17,
+      "true_H": 3,
+      "observed_lower": 3,
+      "full_us": 3.977051222943723,
+      "previous_partial_us": 3.9545213419602545,
+      "partial_us": 3.9545213419602545,
+      "scenario": {
+        "minimum_resident_aiv": 3,
+        "possible_us": [
+          3.077186023929774,
+          3.9770512229437234
+        ],
+        "shape_only_us": 3.9545213419602545,
+        "endpoint_scenario_aiv": null
+      },
+      "query_ms": 0.73455
+    },
+    {
+      "i": 3,
+      "chip": "Ascend950PR_957b",
+      "group": "many-rows",
+      "shape": [
+        33,
+        2128
+      ],
+      "role": "target",
+      "active_aiv": 33,
+      "true_H": 17,
+      "observed_lower": 17,
+      "full_us": 4.602723044763108,
+      "previous_partial_us": 5.634705498450451,
+      "partial_us": 4.602723044763108,
+      "scenario": {
+        "minimum_resident_aiv": 17,
+        "possible_us": [
+          4.595167401752919,
+          4.602723044763107
+        ],
+        "shape_only_us": 5.634705498450451,
+        "endpoint_scenario_aiv": 17
+      },
+      "query_ms": 2.24275
+    },
+    {
+      "i": 4,
+      "chip": "Ascend950PR_957b",
+      "group": "many-rows",
+      "shape": [
+        49,
+        2368
+      ],
+      "role": "target",
+      "active_aiv": 49,
+      "true_H": 33,
+      "observed_lower": 33,
+      "full_us": 4.708876028138529,
+      "previous_partial_us": 5.963005993642279,
+      "partial_us": 4.708876028138529,
+      "scenario": {
+        "minimum_resident_aiv": 33,
+        "possible_us": [
+          4.705974661222616,
+          4.708876028138529
+        ],
+        "shape_only_us": 5.963005993642279,
+        "endpoint_scenario_aiv": 33
+      },
+      "query_ms": 3.2914
+    },
+    {
+      "i": 5,
+      "chip": "Ascend950PR_957b",
+      "group": "many-rows",
+      "shape": [
+        513,
+        3968
+      ],
+      "role": "target",
+      "active_aiv": 52,
+      "true_H": 49,
+      "observed_lower": 49,
+      "full_us": 6.3669135255524525,
+      "previous_partial_us": 6.292246803640334,
+      "partial_us": 6.292246803640334,
+      "scenario": {
+        "minimum_resident_aiv": 49,
+        "possible_us": [
+          4.72350228106004,
+          6.3669135255524525
+        ],
+        "shape_only_us": 6.292246803640334,
+        "endpoint_scenario_aiv": null
+      },
+      "query_ms": 0.21938
+    },
+    {
+      "i": 0,
+      "chip": "Ascend970DT",
+      "group": "narrow-start",
+      "shape": [
+        1,
+        1200
+      ],
+      "role": "hidden",
+      "active_aiv": 1,
+      "true_H": 0,
+      "observed_lower": 0,
+      "full_us": 2.9665153382475102,
+      "previous_partial_us": 2.144464194442525,
+      "partial_us": 2.9665153382475102,
+      "scenario": null,
+      "query_ms": null
+    },
+    {
+      "i": 1,
+      "chip": "Ascend970DT",
+      "group": "narrow-start",
+      "shape": [
+        2,
+        1888
+      ],
+      "role": "observed_prefix",
+      "active_aiv": 2,
+      "true_H": 1,
+      "observed_lower": 0,
+      "full_us": 3.882055743928493,
+      "previous_partial_us": 2.2180272771718363,
+      "partial_us": 2.2180272771718363,
+      "scenario": null,
+      "query_ms": 0.10285
+    },
+    {
+      "i": 2,
+      "chip": "Ascend970DT",
+      "group": "narrow-start",
+      "shape": [
+        3,
+        3008
+      ],
+      "role": "target",
+      "active_aiv": 3,
+      "true_H": 2,
+      "observed_lower": 2,
+      "full_us": 3.037378628887062,
+      "previous_partial_us": 2.3351707933269847,
+      "partial_us": 2.3351707933269847,
+      "scenario": {
+        "minimum_resident_aiv": 2,
+        "possible_us": [
+          1.7307284294822998,
+          3.037378628887062
+        ],
+        "shape_only_us": 2.3351707933269847,
+        "endpoint_scenario_aiv": null
+      },
+      "query_ms": 0.25944
+    },
+    {
+      "i": 3,
+      "chip": "Ascend970DT",
+      "group": "narrow-start",
+      "shape": [
+        9,
+        2272
+      ],
+      "role": "target",
+      "active_aiv": 9,
+      "true_H": 3,
+      "observed_lower": 3,
+      "full_us": 3.1860905492550367,
+      "previous_partial_us": 2.7812506448151217,
+      "partial_us": 2.7812506448151217,
+      "scenario": {
+        "minimum_resident_aiv": 3,
+        "possible_us": [
+          2.093002476686508,
+          3.186090549255037
+        ],
+        "shape_only_us": 2.7812506448151217,
+        "endpoint_scenario_aiv": null
+      },
+      "query_ms": 0.39312
+    },
+    {
+      "i": 4,
+      "chip": "Ascend970DT",
+      "group": "narrow-start",
+      "shape": [
+        19,
+        2032
+      ],
+      "role": "target",
+      "active_aiv": 19,
+      "true_H": 9,
+      "observed_lower": 9,
+      "full_us": 3.3892537226957073,
+      "previous_partial_us": 3.7331290268155715,
+      "partial_us": 3.3892537226957073,
+      "scenario": {
+        "minimum_resident_aiv": 9,
+        "possible_us": [
+          2.999424705109127,
+          3.3892537226957073
+        ],
+        "shape_only_us": 3.7331290268155715,
+        "endpoint_scenario_aiv": 9
+      },
+      "query_ms": 1.0456
+    },
+    {
+      "i": 0,
+      "chip": "Ascend970DT",
+      "group": "wide-start",
+      "shape": [
+        55,
+        1920
+      ],
+      "role": "hidden",
+      "active_aiv": 55,
+      "true_H": 0,
+      "observed_lower": 0,
+      "full_us": 5.785459552277435,
+      "previous_partial_us": 5.209149719083322,
+      "partial_us": 5.785459552277435,
+      "scenario": null,
+      "query_ms": null
+    },
+    {
+      "i": 1,
+      "chip": "Ascend970DT",
+      "group": "wide-start",
+      "shape": [
+        3,
+        1808
+      ],
+      "role": "observed_prefix",
+      "active_aiv": 3,
+      "true_H": 55,
+      "observed_lower": 0,
+      "full_us": 1.6458514431615514,
+      "previous_partial_us": 2.2270901274095403,
+      "partial_us": 2.2270901274095403,
+      "scenario": null,
+      "query_ms": 0.10651
+    },
+    {
+      "i": 2,
+      "chip": "Ascend970DT",
+      "group": "wide-start",
+      "shape": [
+        9,
+        1568
+      ],
+      "role": "target",
+      "active_aiv": 9,
+      "true_H": 55,
+      "observed_lower": 3,
+      "full_us": 2.0648969419642857,
+      "previous_partial_us": 2.7513342883331586,
+      "partial_us": 2.7513342883331586,
+      "scenario": {
+        "minimum_resident_aiv": 3,
+        "possible_us": [
+          2.0648969419642857,
+          3.1372358864041225
+        ],
+        "shape_only_us": 2.7513342883331586,
+        "endpoint_scenario_aiv": null
+      },
+      "query_ms": 0.40804
+    },
+    {
+      "i": 3,
+      "chip": "Ascend970DT",
+      "group": "wide-start",
+      "shape": [
+        34,
+        1728
+      ],
+      "role": "target",
+      "active_aiv": 34,
+      "true_H": 55,
+      "observed_lower": 9,
+      "full_us": 4.202017224176287,
+      "previous_partial_us": 4.972857050958553,
+      "partial_us": 4.483102090277778,
+      "scenario": {
+        "minimum_resident_aiv": 9,
+        "possible_us": [
+          4.202017224176287,
+          4.483102090277778
+        ],
+        "shape_only_us": 4.972857050958553,
+        "endpoint_scenario_aiv": 9
+      },
+      "query_ms": 2.1766
+    },
+    {
+      "i": 4,
+      "chip": "Ascend970DT",
+      "group": "wide-start",
+      "shape": [
+        47,
+        2592
+      ],
+      "role": "target",
+      "active_aiv": 47,
+      "true_H": 55,
+      "observed_lower": 34,
+      "full_us": 4.311253790148509,
+      "previous_partial_us": 5.153143426349624,
+      "partial_us": 4.313491422886142,
+      "scenario": {
+        "minimum_resident_aiv": 34,
+        "possible_us": [
+          4.311253790148509,
+          4.313491422886142
+        ],
+        "shape_only_us": 5.153143426349624,
+        "endpoint_scenario_aiv": 34
+      },
+      "query_ms": 2.98575
+    },
+    {
+      "i": 0,
+      "chip": "Ascend970DT",
+      "group": "many-rows",
+      "shape": [
+        1,
+        1280
+      ],
+      "role": "hidden",
+      "active_aiv": 1,
+      "true_H": 0,
+      "observed_lower": 0,
+      "full_us": 2.969502717587788,
+      "previous_partial_us": 2.1476806798914465,
+      "partial_us": 2.969502717587788,
+      "scenario": null,
+      "query_ms": null
+    },
+    {
+      "i": 1,
+      "chip": "Ascend970DT",
+      "group": "many-rows",
+      "shape": [
+        3,
+        1392
+      ],
+      "role": "observed_prefix",
+      "active_aiv": 3,
+      "true_H": 1,
+      "observed_lower": 0,
+      "full_us": 3.846033420458659,
+      "previous_partial_us": 2.183568115289476,
+      "partial_us": 2.183568115289476,
+      "scenario": null,
+      "query_ms": 0.10235
+    },
+    {
+      "i": 2,
+      "chip": "Ascend970DT",
+      "group": "many-rows",
+      "shape": [
+        17,
+        2176
+      ],
+      "role": "target",
+      "active_aiv": 17,
+      "true_H": 3,
+      "observed_lower": 3,
+      "full_us": 3.7301540972222225,
+      "previous_partial_us": 3.548105206471984,
+      "partial_us": 3.548105206471984,
+      "scenario": {
+        "minimum_resident_aiv": 3,
+        "possible_us": [
+          2.8207538552689595,
+          3.7301540972222225
+        ],
+        "shape_only_us": 3.548105206471984,
+        "endpoint_scenario_aiv": null
+      },
+      "query_ms": 0.72203
+    },
+    {
+      "i": 3,
+      "chip": "Ascend970DT",
+      "group": "many-rows",
+      "shape": [
+        33,
+        2128
+      ],
+      "role": "target",
+      "active_aiv": 33,
+      "true_H": 17,
+      "observed_lower": 17,
+      "full_us": 4.219162791032849,
+      "previous_partial_us": 4.978801489651228,
+      "partial_us": 4.219162791032849,
+      "scenario": {
+        "minimum_resident_aiv": 17,
+        "possible_us": [
+          4.212236784940176,
+          4.219162791032848
+        ],
+        "shape_only_us": 4.978801489651228,
+        "endpoint_scenario_aiv": 17
+      },
+      "query_ms": 2.15686
+    },
+    {
+      "i": 4,
+      "chip": "Ascend970DT",
+      "group": "many-rows",
+      "shape": [
+        49,
+        2368
+      ],
+      "role": "target",
+      "active_aiv": 49,
+      "true_H": 33,
+      "observed_lower": 33,
+      "full_us": 4.316469692460317,
+      "previous_partial_us": 5.164565617962491,
+      "partial_us": 4.316469692460317,
+      "scenario": {
+        "minimum_resident_aiv": 33,
+        "possible_us": [
+          4.313810106120731,
+          4.316469692460318
+        ],
+        "shape_only_us": 5.164565617962491,
+        "endpoint_scenario_aiv": 33
+      },
+      "query_ms": 3.22615
+    },
+    {
+      "i": 5,
+      "chip": "Ascend970DT",
+      "group": "many-rows",
+      "shape": [
+        513,
+        3968
+      ],
+      "role": "target",
+      "active_aiv": 103,
+      "true_H": 49,
+      "observed_lower": 49,
+      "full_us": 4.147441374712073,
+      "previous_partial_us": 4.946629273776416,
+      "partial_us": 4.147441374712073,
+      "scenario": {
+        "minimum_resident_aiv": 49,
+        "possible_us": [
+          3.2334631440021964,
+          4.147441374712073
+        ],
+        "shape_only_us": 4.946629273776416,
+        "endpoint_scenario_aiv": 49
+      },
+      "query_ms": 11.28016
+    }
+  ],
+  "chip_order": [
+    "Ascend950DT_9582",
+    "Ascend950PR_957b"
+  ],
+  "groups": [
+    "narrow-start",
+    "wide-start",
+    "many-rows"
+  ],
+  "scope": "One bounded serial slot, 10 distinct scored shapes on each 950, observed prefixes only, no refits. 970 predictions only."
+}

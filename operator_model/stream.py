@@ -1,9 +1,11 @@
 """Scheduler-owned residency for one rank and one ordered stream of launches."""
 from collections.abc import Mapping
+from dataclasses import replace
 
 from .backend import estimate
 from .chips import REFERENCE_NAME, load_chip
 from .predictor import ALIASES
+from .rms_history import estimate_rms_history_band
 
 
 _STATEFUL = {'rmsnorm', 'mhc_post'}
@@ -33,6 +35,32 @@ class OperatorStream:
         self._resident = 0
         self._exact = True
 
+    def forget_history(self):
+        """Attach to a running stream, or record an unmodeled completed dispatch.
+
+        No predecessor coverage is known at this point. Further launches of
+        the same family can establish a new lower bound without profiler input.
+        """
+        self._last_family = None
+        self._resident = 0
+        self._exact = False
+
+    def _partial_rms(self, shape, options, dtype, forecast):
+        """Restrict a shape-only point to times allowed by the observed prefix."""
+        band = estimate_rms_history_band(shape, chip=self.chip, dtype=dtype)
+        times = band.by_resident_aiv_us[self._resident:]
+        lower, upper = min(times), max(times)
+        point = forecast.latency_us
+        selected = None
+        if point < lower or point > upper:
+            endpoint = lower if point < lower else upper
+            selected = self._resident + times.index(endpoint)
+            forecast = estimate('rmsnorm', shape, {**options, 'resident_aiv': selected},
+                                chip=self.chip, dtype=dtype)
+        context = dict(minimum_resident_aiv=self._resident, possible_us=[lower, upper],
+                       shape_only_us=point, endpoint_scenario_aiv=selected)
+        return replace(forecast, projection={**forecast.projection, 'partial_history': context})
+
     def preview(self, op, shape, attrs=None, *, dtype=None):
         """Price a candidate without changing the next call."""
         family = _kernel_family(op, attrs)
@@ -44,6 +72,9 @@ class OperatorStream:
             return estimate(op, shape, options, chip=self.chip, dtype=dtype)
         if not self._exact:
             forecast = estimate(op, shape, options, chip=self.chip, dtype=dtype)
+            if (family == 'rmsnorm' and forecast.latency_us is not None and
+                    forecast.active_aiv is not None and 0 < self._resident < forecast.active_aiv):
+                return self._partial_rms(shape, options, dtype, forecast)
             if forecast.active_aiv is None or forecast.active_aiv > self._resident:
                 return forecast
         options['resident_aiv'] = self._resident

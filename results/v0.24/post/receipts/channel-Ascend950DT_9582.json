@@ -1,0 +1,1166 @@
+{
+  "group": "channel",
+  "chip": "Ascend950DT_9582",
+  "cost": {
+    "started_utc": "2026-11-19T15:35:18.973552+00:00",
+    "finished_utc": "2026-11-19T15:37:29.236943+00:00",
+    "seconds": 130.26340987998992,
+    "exit_code": 0,
+    "stop_reason": null,
+    "raw_bytes": 276895129,
+    "peak_bytes": 435199099,
+    "cpu_seconds": 3262.7599999999998
+  },
+  "qualified": false,
+  "rows": [
+    {
+      "chip": "Ascend950DT_9582",
+      "group": "channel",
+      "i": 0,
+      "role": "entry",
+      "shape": [
+        1,
+        4,
+        192
+      ],
+      "prior_aiv": 0,
+      "previous_shape": null,
+      "old_known_us": 4.754840771965253,
+      "old_unknown_us": 3.0819590322421635,
+      "candidate_unknown_us": 3.0819590322421635,
+      "predict_ms": 0.37835,
+      "us": 4.754840771965253,
+      "active": 1,
+      "state": "first",
+      "mode": "public resource stages",
+      "stages": {
+        "arrival": 0.052210806535105354,
+        "SCALAR": 1.9578265662305838,
+        "MTE2": 1.2270297669730037,
+        "SIMD": 1.2524370397451978,
+        "MTE3": 0.25623808099834355,
+        "other": 0.009098511483019251,
+        "shared_link_floor": 0.0
+      },
+      "plan": {
+        "active_aiv": 1,
+        "active_aic": 0,
+        "route": "post_channel",
+        "channel_slices": 1,
+        "fragment_width": 192,
+        "rows_per_core": 1
+      },
+      "port": null,
+      "all_output_elements": 768,
+      "timing_qualified": true,
+      "stage": {
+        "kernel": "MhcPost_59130ccee6717ff2c0f15b485e731162_5",
+        "ca_us": 4.528484848484848,
+        "first_tick": 7109,
+        "last_tick": 14581,
+        "active_aic": 0,
+        "active_aiv": 1,
+        "writes_bytes": 1536,
+        "per_core_writes": {
+          "core0.veccore0": 1536
+        },
+        "windows": {
+          "core0.veccore0": [
+            0.0,
+            4.528484848484848
+          ]
+        },
+        "trace": "runs/post24/channel-Ascend950DT_9582/profile/OPPROF_20261119233519_JLTJAYPTFAXOJJED/MhcPost_59130ccee6717ff2c0f15b485e731162_5/0/simulator/trace.json",
+        "trace_sha256": "aa948c7ab06f8cd1ed2a744fc5d0c11053b1e5256cb3fd6ee251b326d11c3f7e",
+        "binary_sha256": "36851e45520023382742d07d871519f65e57e9c49ec3594583e361b0bb9b6677",
+        "queue_events": {
+          "SCALAR": 1437,
+          "MTE3": 5,
+          "MTE2": 4,
+          "PUSHQ": 53,
+          "FLOWCTRL": 90,
+          "RVECLP": 82,
+          "RVECSU": 102,
+          "RVECLD": 295,
+          "RVECEX": 348,
+          "RVECST": 199
+        }
+      },
+      "active_matches": true,
+      "ca_milestones": {
+        "phase_us": {
+          "arrival": 0.0,
+          "control": 1.891514778137207,
+          "read": 0.9793939590454102,
+          "body": 1.4466667175292969,
+          "retire": 0.21090939377293338
+        },
+        "raw_queue_instruction_counts": {
+          "SIMD": 1079,
+          "SCALAR": 1528,
+          "MTE2": 5,
+          "MTE3": 5
+        },
+        "raw_nonwait_service_us": {
+          "SIMD": 4.238787851878442,
+          "SCALAR": 45.372727199224755,
+          "MTE2": 1.3842424182221293,
+          "MTE3": 0.788484844379127
+        },
+        "dma_read": [
+          {
+            "start_us": 0.42545413970947266,
+            "end_us": 0.7557571828365326,
+            "bytes": 96
+          },
+          {
+            "start_us": 1.891514778137207,
+            "end_us": 2.484242022037506,
+            "bytes": 384
+          },
+          {
+            "start_us": 2.324848175048828,
+            "end_us": 2.78303000330925,
+            "bytes": 1536
+          }
+        ],
+        "dma_write": [
+          {
+            "start_us": 3.823636054992676,
+            "end_us": 4.017575442790985,
+            "bytes": 384
+          },
+          {
+            "start_us": 3.9654541015625,
+            "end_us": 4.151514708995819,
+            "bytes": 384
+          },
+          {
+            "start_us": 4.17575740814209,
+            "end_us": 4.376363471150398,
+            "bytes": 384
+          },
+          {
+            "start_us": 4.317575454711914,
+            "end_us": 4.522423937916756,
+            "bytes": 384
+          }
+        ],
+        "simd_core_instructions": {
+          "RV_VLD": 270,
+          "RV_VST": 174,
+          "RV_VMULS": 24
+        },
+        "read_bytes": 1920,
+        "write_bytes": 1536,
+        "first_vector_operand_us": 2.870908737182617
+      }
+    },
+    {
+      "chip": "Ascend950DT_9582",
+      "group": "channel",
+      "i": 1,
+      "role": "repeat",
+      "shape": [
+        1,
+        4,
+        192
+      ],
+      "prior_aiv": 1,
+      "previous_shape": [
+        1,
+        4,
+        192
+      ],
+      "old_known_us": 2.279847090067124,
+      "old_unknown_us": 3.0819590322421635,
+      "candidate_unknown_us": 3.0819590322421635,
+      "predict_ms": 0.05945,
+      "us": 1.8886683518635818,
+      "active": 1,
+      "state": "reuse",
+      "mode": "repeat operand schedule",
+      "stages": {
+        "arrival": 0.0,
+        "control": 0.8981819152832031,
+        "read": 0.17139601419344813,
+        "body": 0.6557574804450137,
+        "retire": 0.16333294194191694,
+        "shared_link_floor": 0.0
+      },
+      "plan": {
+        "active_aiv": 1,
+        "active_aic": 0,
+        "route": "post_channel",
+        "channel_slices": 1,
+        "fragment_width": 192,
+        "rows_per_core": 1
+      },
+      "port": {
+        "bytes": [
+          384,
+          1536
+        ],
+        "issue_us": [
+          0.0,
+          0.038181304931640625
+        ],
+        "response_us": [
+          0.1117127456018708,
+          0.1174570293225375
+        ],
+        "handoff_us": 0.01575767993927002
+      },
+      "all_output_elements": 768,
+      "timing_qualified": true,
+      "stage": {
+        "kernel": "MhcPost_59130ccee6717ff2c0f15b485e731162_5",
+        "ca_us": 1.7418181818181817,
+        "first_tick": 15247,
+        "last_tick": 18121,
+        "active_aic": 0,
+        "active_aiv": 1,
+        "writes_bytes": 1536,
+        "per_core_writes": {
+          "core0.veccore0": 1536
+        },
+        "windows": {
+          "core0.veccore0": [
+            0.0,
+            1.7418181818181817
+          ]
+        },
+        "trace": "runs/post24/channel-Ascend950DT_9582/profile/OPPROF_20261119233519_JLTJAYPTFAXOJJED/MhcPost_59130ccee6717ff2c0f15b485e731162_5/1/simulator/trace.json",
+        "trace_sha256": "d1d3a6ced72b97f31cb6333beb5053f7601655d6feb27fdb78b4042f9573228a",
+        "binary_sha256": "36851e45520023382742d07d871519f65e57e9c49ec3594583e361b0bb9b6677",
+        "queue_events": {
+          "SCALAR": 1437,
+          "MTE3": 5,
+          "MTE2": 4,
+          "PUSHQ": 53,
+          "FLOWCTRL": 90,
+          "RVECLP": 82,
+          "RVECSU": 102,
+          "RVECLD": 295,
+          "RVECEX": 348,
+          "RVECST": 199
+        }
+      },
+      "active_matches": true,
+      "ca_milestones": {
+        "phase_us": {
+          "arrival": 0.0,
+          "control": 0.7696971893310547,
+          "read": 0.1830301284790039,
+          "body": 0.6781816482543945,
+          "retire": 0.11090921575372903
+        },
+        "raw_queue_instruction_counts": {
+          "SIMD": 1079,
+          "SCALAR": 1528,
+          "MTE2": 5,
+          "MTE3": 5
+        },
+        "raw_nonwait_service_us": {
+          "SIMD": 3.6945454214001074,
+          "SCALAR": 18.151515163248405,
+          "MTE2": 0.33939393144100904,
+          "MTE3": 0.37090909015387297
+        },
+        "dma_read": [
+          {
+            "start_us": 0.15151500701904297,
+            "end_us": 0.2533331885933876,
+            "bytes": 96
+          },
+          {
+            "start_us": 0.7696971893310547,
+            "end_us": 0.8751517310738564,
+            "bytes": 384
+          },
+          {
+            "start_us": 0.8078784942626953,
+            "end_us": 0.9369693994522095,
+            "bytes": 1536
+          }
+        ],
+        "dma_write": [
+          {
+            "start_us": 1.205453872680664,
+            "end_us": 1.2909084185957909,
+            "bytes": 384
+          },
+          {
+            "start_us": 1.3472728729248047,
+            "end_us": 1.4321213588118553,
+            "bytes": 384
+          },
+          {
+            "start_us": 1.489090919494629,
+            "end_us": 1.5818181931972504,
+            "bytes": 384
+          },
+          {
+            "start_us": 1.6309089660644531,
+            "end_us": 1.7357574477791786,
+            "bytes": 384
+          }
+        ],
+        "simd_core_instructions": {
+          "RV_VLD": 270,
+          "RV_VST": 174,
+          "RV_VMULS": 24
+        },
+        "read_bytes": 1920,
+        "write_bytes": 1536,
+        "first_vector_operand_us": 0.9527273178100586
+      }
+    },
+    {
+      "chip": "Ascend950DT_9582",
+      "group": "channel",
+      "i": 2,
+      "role": "entry",
+      "shape": [
+        2,
+        4,
+        448
+      ],
+      "prior_aiv": 1,
+      "previous_shape": [
+        1,
+        4,
+        192
+      ],
+      "old_known_us": 4.211444574427852,
+      "old_unknown_us": 3.1195604436454984,
+      "candidate_unknown_us": 3.1195604436454984,
+      "predict_ms": 0.03051,
+      "us": 4.211444574427852,
+      "active": 4,
+      "state": "expand",
+      "mode": "public resource stages",
+      "stages": {
+        "arrival": 0.7009246052798199,
+        "SCALAR": 1.620155984845675,
+        "MTE2": 0.7239462309822412,
+        "SIMD": 0.901081160838753,
+        "MTE3": 0.25623808099834355,
+        "other": 0.009098511483019251,
+        "shared_link_floor": 0.0
+      },
+      "plan": {
+        "active_aiv": 4,
+        "active_aic": 0,
+        "route": "post_channel",
+        "channel_slices": 2,
+        "fragment_width": 224,
+        "rows_per_core": 1
+      },
+      "port": null,
+      "all_output_elements": 3584,
+      "timing_qualified": true,
+      "stage": {
+        "kernel": "MhcPost_59130ccee6717ff2c0f15b485e731162_5",
+        "ca_us": 5.349090909090909,
+        "first_tick": 19279,
+        "last_tick": 28105,
+        "active_aic": 0,
+        "active_aiv": 4,
+        "writes_bytes": 7168,
+        "per_core_writes": {
+          "core16.veccore1": 1792,
+          "core0.veccore0": 1792,
+          "core0.veccore1": 1792,
+          "core16.veccore0": 1792
+        },
+        "windows": {
+          "core16.veccore1": [
+            1.4581818181818182,
+            5.349090909090909
+          ],
+          "core0.veccore0": [
+            0.0,
+            2.3066666666666666
+          ],
+          "core0.veccore1": [
+            0.11878787878787879,
+            3.0515151515151517
+          ],
+          "core16.veccore0": [
+            1.4193939393939394,
+            5.192727272727272
+          ]
+        },
+        "trace": "runs/post24/channel-Ascend950DT_9582/profile/OPPROF_20261119233519_JLTJAYPTFAXOJJED/MhcPost_59130ccee6717ff2c0f15b485e731162_5/2/simulator/trace.json",
+        "trace_sha256": "2f4cb5edb7cb07089e39c4d8a0ab8e23ba9e2b8da80472cca97d5fc78747c5a5",
+        "binary_sha256": "36851e45520023382742d07d871519f65e57e9c49ec3594583e361b0bb9b6677",
+        "queue_events": {
+          "SCALAR": 5748,
+          "MTE3": 20,
+          "MTE2": 16,
+          "PUSHQ": 212,
+          "FLOWCTRL": 360,
+          "RVECLP": 328,
+          "RVECSU": 408,
+          "RVECLD": 1524,
+          "RVECEX": 1824,
+          "RVECST": 1012
+        }
+      },
+      "active_matches": true,
+      "ca_milestones": {
+        "phase_us": {
+          "arrival": 1.458181818181819,
+          "control": 1.7127265930175781,
+          "read": 0.7193946838378906,
+          "body": 1.3490896224975586,
+          "retire": 0.10969819155606331
+        },
+        "raw_queue_instruction_counts": {
+          "SIMD": 1327,
+          "SCALAR": 1528,
+          "MTE2": 5,
+          "MTE3": 5
+        },
+        "raw_nonwait_service_us": {
+          "SIMD": 4.760606034076773,
+          "SCALAR": 43.743030168581754,
+          "MTE2": 1.2678788034245372,
+          "MTE3": 0.9799999846145511
+        },
+        "dma_read": [
+          {
+            "start_us": 1.7745451528375806,
+            "end_us": 2.079999705011195,
+            "bytes": 96
+          },
+          {
+            "start_us": 3.170908411199397,
+            "end_us": 3.716969032937831,
+            "bytes": 448
+          },
+          {
+            "start_us": 3.4181818563287916,
+            "end_us": 3.831515182906932,
+            "bytes": 1792
+          }
+        ],
+        "dma_write": [
+          {
+            "start_us": 4.521817644292659,
+            "end_us": 4.928484310561961,
+            "bytes": 448
+          },
+          {
+            "start_us": 4.66908975427801,
+            "end_us": 4.929695804769343,
+            "bytes": 448
+          },
+          {
+            "start_us": 5.092120607549495,
+            "end_us": 5.298181210810489,
+            "bytes": 448
+          },
+          {
+            "start_us": 5.239392717534846,
+            "end_us": 5.343029079193419,
+            "bytes": 448
+          }
+        ],
+        "simd_core_instructions": {
+          "RV_VLD": 356,
+          "RV_VST": 228,
+          "RV_VMULS": 32
+        },
+        "read_bytes": 2240,
+        "write_bytes": 1792,
+        "first_vector_operand_us": 3.8903030950372877
+      }
+    },
+    {
+      "chip": "Ascend950DT_9582",
+      "group": "channel",
+      "i": 3,
+      "role": "repeat",
+      "shape": [
+        2,
+        4,
+        448
+      ],
+      "prior_aiv": 4,
+      "previous_shape": [
+        2,
+        4,
+        448
+      ],
+      "old_known_us": 2.3133415848818797,
+      "old_unknown_us": 3.1195604436454984,
+      "candidate_unknown_us": 3.1195604436454984,
+      "predict_ms": 0.05402,
+      "us": 1.9704975185734142,
+      "active": 4,
+      "state": "reuse",
+      "mode": "repeat operand schedule",
+      "stages": {
+        "arrival": 0.029479461189193902,
+        "control": 0.8981819152832031,
+        "read": 0.17418333995102392,
+        "body": 0.7053198602080764,
+        "retire": 0.16333294194191694,
+        "shared_link_floor": 0.0
+      },
+      "plan": {
+        "active_aiv": 4,
+        "active_aic": 0,
+        "route": "post_channel",
+        "channel_slices": 2,
+        "fragment_width": 224,
+        "rows_per_core": 1
+      },
+      "port": {
+        "bytes": [
+          448,
+          1792
+        ],
+        "issue_us": [
+          0.0,
+          0.038181304931640625
+        ],
+        "response_us": [
+          0.11240957704126474,
+          0.12024435508011326
+        ],
+        "handoff_us": 0.01575767993927002
+      },
+      "all_output_elements": 3584,
+      "timing_qualified": true,
+      "stage": {
+        "kernel": "MhcPost_59130ccee6717ff2c0f15b485e731162_5",
+        "ca_us": 1.8987878787878787,
+        "first_tick": 29262,
+        "last_tick": 32395,
+        "active_aic": 0,
+        "active_aiv": 4,
+        "writes_bytes": 7168,
+        "per_core_writes": {
+          "core16.veccore0": 1792,
+          "core0.veccore1": 1792,
+          "core0.veccore0": 1792,
+          "core16.veccore1": 1792
+        },
+        "windows": {
+          "core16.veccore0": [
+            0.04909090909090909,
+            1.8987878787878787
+          ],
+          "core0.veccore1": [
+            0.0,
+            1.8490909090909091
+          ],
+          "core0.veccore0": [
+            0.0,
+            1.7787878787878788
+          ],
+          "core16.veccore1": [
+            0.04909090909090909,
+            1.7963636363636364
+          ]
+        },
+        "trace": "runs/post24/channel-Ascend950DT_9582/profile/OPPROF_20261119233519_JLTJAYPTFAXOJJED/MhcPost_59130ccee6717ff2c0f15b485e731162_5/3/simulator/trace.json",
+        "trace_sha256": "c6899c4cf1154de7a66ef61d0755af2c952914b5ac129251cef367f12433bb11",
+        "binary_sha256": "36851e45520023382742d07d871519f65e57e9c49ec3594583e361b0bb9b6677",
+        "queue_events": {
+          "SCALAR": 5748,
+          "MTE3": 20,
+          "MTE2": 16,
+          "PUSHQ": 212,
+          "FLOWCTRL": 360,
+          "RVECLP": 328,
+          "RVECSU": 408,
+          "RVECLD": 1524,
+          "RVECEX": 1824,
+          "RVECST": 1012
+        }
+      },
+      "active_matches": true,
+      "ca_milestones": {
+        "phase_us": {
+          "arrival": 0.04909090909091063,
+          "control": 0.7709102630615234,
+          "read": 0.19272613525390625,
+          "body": 0.7248477935791016,
+          "retire": 0.1612127778024366
+        },
+        "raw_queue_instruction_counts": {
+          "SIMD": 1327,
+          "SCALAR": 1528,
+          "MTE2": 5,
+          "MTE3": 5
+        },
+        "raw_nonwait_service_us": {
+          "SIMD": 4.370909059769474,
+          "SCALAR": 20.012121121166274,
+          "MTE2": 0.3418181864544749,
+          "MTE3": 0.6484848437830806
+        },
+        "dma_read": [
+          {
+            "start_us": 0.18848566922274657,
+            "end_us": 0.281212942925368,
+            "bytes": 96
+          },
+          {
+            "start_us": 0.8200011721524341,
+            "end_us": 0.9272739014300448,
+            "bytes": 448
+          },
+          {
+            "start_us": 0.8581824770840747,
+            "end_us": 0.9969703576239688,
+            "bytes": 1792
+          }
+        ],
+        "dma_write": [
+          {
+            "start_us": 1.232121991244231,
+            "end_us": 1.4175765386494739,
+            "bytes": 448
+          },
+          {
+            "start_us": 1.3793941012295825,
+            "end_us": 1.5527274331721408,
+            "bytes": 448
+          },
+          {
+            "start_us": 1.5903029910000903,
+            "end_us": 1.7218181363019092,
+            "bytes": 448
+          },
+          {
+            "start_us": 1.7375751009854419,
+            "end_us": 1.8927266171845538,
+            "bytes": 448
+          }
+        ],
+        "simd_core_instructions": {
+          "RV_VLD": 356,
+          "RV_VST": 228,
+          "RV_VMULS": 32
+        },
+        "read_bytes": 2240,
+        "write_bytes": 1792,
+        "first_vector_operand_us": 1.0127273074063403
+      }
+    },
+    {
+      "chip": "Ascend950DT_9582",
+      "group": "channel",
+      "i": 4,
+      "role": "entry",
+      "shape": [
+        8,
+        4,
+        896
+      ],
+      "prior_aiv": 4,
+      "previous_shape": [
+        2,
+        4,
+        448
+      ],
+      "old_known_us": 4.211444574427852,
+      "old_unknown_us": 3.1195604436454984,
+      "candidate_unknown_us": 3.1195604436454984,
+      "predict_ms": 0.02799,
+      "us": 4.211444574427852,
+      "active": 32,
+      "state": "expand",
+      "mode": "public resource stages",
+      "stages": {
+        "arrival": 0.7009246052798199,
+        "SCALAR": 1.620155984845675,
+        "MTE2": 0.7239462309822412,
+        "SIMD": 0.901081160838753,
+        "MTE3": 0.25623808099834355,
+        "other": 0.009098511483019251,
+        "shared_link_floor": 0.0
+      },
+      "plan": {
+        "active_aiv": 32,
+        "active_aic": 0,
+        "route": "post_channel",
+        "channel_slices": 4,
+        "fragment_width": 224,
+        "rows_per_core": 1
+      },
+      "port": null,
+      "all_output_elements": 28672,
+      "timing_qualified": false,
+      "reason": "ValueError('official/trace/write/terminal lane rosters disagree')"
+    },
+    {
+      "chip": "Ascend950DT_9582",
+      "group": "channel",
+      "i": 5,
+      "role": "repeat",
+      "shape": [
+        8,
+        4,
+        896
+      ],
+      "prior_aiv": 32,
+      "previous_shape": [
+        8,
+        4,
+        896
+      ],
+      "old_known_us": 2.3133415848818797,
+      "old_unknown_us": 3.1195604436454984,
+      "candidate_unknown_us": 3.1195604436454984,
+      "predict_ms": 0.04794,
+      "us": 2.014716710357205,
+      "active": 32,
+      "state": "reuse",
+      "mode": "repeat operand schedule",
+      "stages": {
+        "arrival": 0.07369865297298477,
+        "control": 0.8981819152832031,
+        "read": 0.17418333995102392,
+        "body": 0.7053198602080764,
+        "retire": 0.16333294194191694,
+        "shared_link_floor": 0.0
+      },
+      "plan": {
+        "active_aiv": 32,
+        "active_aic": 0,
+        "route": "post_channel",
+        "channel_slices": 4,
+        "fragment_width": 224,
+        "rows_per_core": 1
+      },
+      "port": {
+        "bytes": [
+          448,
+          1792
+        ],
+        "issue_us": [
+          0.0,
+          0.038181304931640625
+        ],
+        "response_us": [
+          0.11240957704126474,
+          0.12024435508011326
+        ],
+        "handoff_us": 0.01575767993927002
+      },
+      "all_output_elements": 28672,
+      "timing_qualified": true,
+      "stage": {
+        "kernel": "MhcPost_59130ccee6717ff2c0f15b485e731162_5",
+        "ca_us": 2.0303030303030303,
+        "first_tick": 47344,
+        "last_tick": 50694,
+        "active_aic": 0,
+        "active_aiv": 32,
+        "writes_bytes": 57344,
+        "per_core_writes": {
+          "core22.veccore1": 1792,
+          "core7.veccore1": 1792,
+          "core21.veccore1": 1792,
+          "core7.veccore0": 1792,
+          "core6.veccore0": 1792,
+          "core6.veccore1": 1792,
+          "core4.veccore0": 1792,
+          "core19.veccore0": 1792,
+          "core20.veccore1": 1792,
+          "core3.veccore1": 1792,
+          "core5.veccore1": 1792,
+          "core23.veccore0": 1792,
+          "core23.veccore1": 1792,
+          "core3.veccore0": 1792,
+          "core5.veccore0": 1792,
+          "core2.veccore1": 1792,
+          "core22.veccore0": 1792,
+          "core0.veccore0": 1792,
+          "core19.veccore1": 1792,
+          "core16.veccore1": 1792,
+          "core4.veccore1": 1792,
+          "core2.veccore0": 1792,
+          "core0.veccore1": 1792,
+          "core17.veccore1": 1792,
+          "core21.veccore0": 1792,
+          "core20.veccore0": 1792,
+          "core1.veccore1": 1792,
+          "core18.veccore1": 1792,
+          "core1.veccore0": 1792,
+          "core17.veccore0": 1792,
+          "core18.veccore0": 1792,
+          "core16.veccore0": 1792
+        },
+        "windows": {
+          "core22.veccore1": [
+            0.04787878787878788,
+            1.733939393939394
+          ],
+          "core7.veccore1": [
+            0.0030303030303030303,
+            1.9339393939393938
+          ],
+          "core21.veccore1": [
+            0.0503030303030303,
+            1.935151515151515
+          ],
+          "core7.veccore0": [
+            0.0030303030303030303,
+            1.833939393939394
+          ],
+          "core6.veccore0": [
+            0.0,
+            1.9290909090909092
+          ],
+          "core6.veccore1": [
+            0.0,
+            1.8327272727272728
+          ],
+          "core4.veccore0": [
+            0.005454545454545455,
+            1.8812121212121211
+          ],
+          "core19.veccore0": [
+            0.0503030303030303,
+            1.9787878787878788
+          ],
+          "core20.veccore1": [
+            0.05333333333333334,
+            1.8854545454545455
+          ],
+          "core3.veccore1": [
+            0.0012121212121212121,
+            1.7139393939393939
+          ],
+          "core5.veccore1": [
+            0.0012121212121212121,
+            1.9236363636363636
+          ],
+          "core23.veccore0": [
+            0.05090909090909091,
+            1.9290909090909092
+          ],
+          "core23.veccore1": [
+            0.05090909090909091,
+            2.021212121212121
+          ],
+          "core3.veccore0": [
+            0.0012121212121212121,
+            1.7854545454545454
+          ],
+          "core5.veccore0": [
+            0.0012121212121212121,
+            2.0303030303030303
+          ],
+          "core2.veccore1": [
+            0.0,
+            1.9290909090909092
+          ],
+          "core22.veccore0": [
+            0.04787878787878788,
+            1.829090909090909
+          ],
+          "core0.veccore0": [
+            0.0012121212121212121,
+            2.0024242424242424
+          ],
+          "core19.veccore1": [
+            0.0503030303030303,
+            1.9
+          ],
+          "core16.veccore1": [
+            0.0503030303030303,
+            1.9987878787878788
+          ],
+          "core4.veccore1": [
+            0.005454545454545455,
+            1.7684848484848485
+          ],
+          "core2.veccore0": [
+            0.0,
+            1.7951515151515152
+          ],
+          "core0.veccore1": [
+            0.0012121212121212121,
+            1.8915151515151516
+          ],
+          "core17.veccore1": [
+            0.05090909090909091,
+            1.993939393939394
+          ],
+          "core21.veccore0": [
+            0.0503030303030303,
+            1.8424242424242425
+          ],
+          "core20.veccore0": [
+            0.05333333333333334,
+            1.7951515151515152
+          ],
+          "core1.veccore1": [
+            0.0030303030303030303,
+            1.8436363636363637
+          ],
+          "core18.veccore1": [
+            0.04787878787878788,
+            1.8351515151515152
+          ],
+          "core1.veccore0": [
+            0.0030303030303030303,
+            1.9339393939393938
+          ],
+          "core17.veccore0": [
+            0.05090909090909091,
+            1.893939393939394
+          ],
+          "core18.veccore0": [
+            0.04787878787878788,
+            1.9315151515151514
+          ],
+          "core16.veccore0": [
+            0.0503030303030303,
+            1.8927272727272728
+          ]
+        },
+        "trace": "runs/post24/channel-Ascend950DT_9582/profile/OPPROF_20261119233519_JLTJAYPTFAXOJJED/MhcPost_59130ccee6717ff2c0f15b485e731162_5/5/simulator/trace.json",
+        "trace_sha256": "bb53ad58c88bb245ea9cf03e2bbcfa7ab73eaabc8e8b4d0dbd83b0ccbe43cb99",
+        "binary_sha256": "36851e45520023382742d07d871519f65e57e9c49ec3594583e361b0bb9b6677",
+        "queue_events": {
+          "SCALAR": 45984,
+          "MTE3": 160,
+          "MTE2": 128,
+          "PUSHQ": 1696,
+          "FLOWCTRL": 2880,
+          "RVECLP": 2624,
+          "RVECSU": 3264,
+          "RVECLD": 12192,
+          "RVECEX": 14592,
+          "RVECST": 8096
+        }
+      },
+      "active_matches": true,
+      "ca_milestones": {
+        "phase_us": {
+          "arrival": 0.0012121212121201097,
+          "control": 0.8393936157226562,
+          "read": 0.18000030517578125,
+          "body": 0.8472728729248047,
+          "retire": 0.16242411526766887
+        },
+        "raw_queue_instruction_counts": {
+          "SIMD": 1327,
+          "SCALAR": 1528,
+          "MTE2": 5,
+          "MTE3": 5
+        },
+        "raw_nonwait_service_us": {
+          "SIMD": 4.355151484138332,
+          "SCALAR": 18.032727293437347,
+          "MTE2": 0.3769696978852153,
+          "MTE3": 0.6036363644525409
+        },
+        "dma_read": [
+          {
+            "start_us": 0.24363613244258886,
+            "end_us": 0.3684846174355698,
+            "bytes": 96
+          },
+          {
+            "start_us": 0.8406057369347764,
+            "end_us": 0.9636360418435288,
+            "bytes": 448
+          },
+          {
+            "start_us": 0.878787041866417,
+            "end_us": 1.0048476469155503,
+            "bytes": 1792
+          }
+        ],
+        "dma_write": [
+          {
+            "start_us": 1.3830308925744248,
+            "end_us": 1.543030888998146,
+            "bytes": 448
+          },
+          {
+            "start_us": 1.5303030025597764,
+            "end_us": 1.7006060343619538,
+            "bytes": 448
+          },
+          {
+            "start_us": 1.7066659938927842,
+            "end_us": 1.8206053909298134,
+            "bytes": 448
+          },
+          {
+            "start_us": 1.8678789150353623,
+            "end_us": 2.0242425512906266,
+            "bytes": 448
+          }
+        ],
+        "simd_core_instructions": {
+          "RV_VLD": 356,
+          "RV_VST": 228,
+          "RV_VMULS": 32
+        },
+        "read_bytes": 2240,
+        "write_bytes": 1792,
+        "first_vector_operand_us": 1.0206060421105576
+      }
+    },
+    {
+      "chip": "Ascend950DT_9582",
+      "group": "channel",
+      "i": 6,
+      "role": "revisit",
+      "shape": [
+        1,
+        4,
+        192
+      ],
+      "prior_aiv": 32,
+      "previous_shape": [
+        8,
+        4,
+        896
+      ],
+      "old_known_us": 2.279847090067124,
+      "old_unknown_us": 3.0819590322421635,
+      "candidate_unknown_us": 3.0819590322421635,
+      "predict_ms": 0.02763,
+      "us": 2.279847090067124,
+      "active": 1,
+      "state": "reuse",
+      "mode": "public resource stages",
+      "stages": {
+        "arrival": 0.02597671371162371,
+        "SCALAR": 0.9766123824907671,
+        "MTE2": 0.3429162236061571,
+        "SIMD": 0.6690051777772132,
+        "MTE3": 0.25623808099834355,
+        "other": 0.009098511483019251,
+        "shared_link_floor": 0.0
+      },
+      "plan": {
+        "active_aiv": 1,
+        "active_aic": 0,
+        "route": "post_channel",
+        "channel_slices": 1,
+        "fragment_width": 192,
+        "rows_per_core": 1
+      },
+      "port": null,
+      "all_output_elements": 768,
+      "timing_qualified": true,
+      "stage": {
+        "kernel": "MhcPost_59130ccee6717ff2c0f15b485e731162_5",
+        "ca_us": 1.7442424242424241,
+        "first_tick": 60015,
+        "last_tick": 62893,
+        "active_aic": 0,
+        "active_aiv": 1,
+        "writes_bytes": 1536,
+        "per_core_writes": {
+          "core0.veccore0": 1536
+        },
+        "windows": {
+          "core0.veccore0": [
+            0.0,
+            1.7442424242424241
+          ]
+        },
+        "trace": "runs/post24/channel-Ascend950DT_9582/profile/OPPROF_20261119233519_JLTJAYPTFAXOJJED/MhcPost_59130ccee6717ff2c0f15b485e731162_5/6/simulator/trace.json",
+        "trace_sha256": "75bac42b4edaee86dcd3f2410b1323302ef4e5227f3867d8214b31b3624b1b39",
+        "binary_sha256": "36851e45520023382742d07d871519f65e57e9c49ec3594583e361b0bb9b6677",
+        "queue_events": {
+          "SCALAR": 1437,
+          "MTE3": 5,
+          "MTE2": 4,
+          "PUSHQ": 53,
+          "FLOWCTRL": 90,
+          "RVECLP": 82,
+          "RVECSU": 102,
+          "RVECLD": 295,
+          "RVECEX": 348,
+          "RVECST": 199
+        }
+      },
+      "active_matches": true,
+      "ca_milestones": {
+        "phase_us": {
+          "arrival": 0.0,
+          "control": 0.7769699096679688,
+          "read": 0.18363571166992188,
+          "body": 0.6787910461425781,
+          "retire": 0.10484575676195362
+        },
+        "raw_queue_instruction_counts": {
+          "SIMD": 1079,
+          "SCALAR": 1528,
+          "MTE2": 5,
+          "MTE3": 5
+        },
+        "raw_nonwait_service_us": {
+          "SIMD": 3.693333297618665,
+          "SCALAR": 18.059394025010988,
+          "MTE2": 0.34545453917235136,
+          "MTE3": 0.3660606099292636
+        },
+        "dma_read": [
+          {
+            "start_us": 0.1575775146484375,
+            "end_us": 0.25878963619470596,
+            "bytes": 96
+          },
+          {
+            "start_us": 0.7769699096679688,
+            "end_us": 0.8884850591421127,
+            "bytes": 384
+          },
+          {
+            "start_us": 0.8151512145996094,
+            "end_us": 0.9448481798171997,
+            "bytes": 1536
+          }
+        ],
+        "dma_write": [
+          {
+            "start_us": 1.2139396667480469,
+            "end_us": 1.2993942126631737,
+            "bytes": 384
+          },
+          {
+            "start_us": 1.3557586669921875,
+            "end_us": 1.4412132129073143,
+            "bytes": 384
+          },
+          {
+            "start_us": 1.4975776672363281,
+            "end_us": 1.5909110009670258,
+            "bytes": 384
+          },
+          {
+            "start_us": 1.6393966674804688,
+            "end_us": 1.7381845489144325,
+            "bytes": 384
+          }
+        ],
+        "simd_core_instructions": {
+          "RV_VLD": 270,
+          "RV_VST": 174,
+          "RV_VMULS": 24
+        },
+        "read_bytes": 1920,
+        "write_bytes": 1536,
+        "first_vector_operand_us": 0.9606056213378906
+      }
+    }
+  ],
+  "freeze_sha256": "ca836280153f9f16d6aaa8e455bb9e84bba008c2305c4d24c530333a688e9edf"
+}

@@ -1,0 +1,5092 @@
+{
+  "case": {
+    "id": "dt-t64-h2-dense",
+    "shape": [
+      1,
+      64,
+      2,
+      2,
+      128,
+      128
+    ],
+    "metadata": "dense",
+    "sku": "Ascend950DT_9582",
+    "physical_memory": "hbm3_8000M.ini",
+    "oracle": {
+      "attention": 16384,
+      "aqk": 8192,
+      "akk": 8192,
+      "state_vk": 32768
+    }
+  },
+  "registration_sha256": "ce564a7e697a023417d2b2676185718e7b7f05b56f4e77a144b723a9555a672f",
+  "cost": {
+    "started": "2026-11-19T15:43:39.526674+00:00",
+    "finished": "2026-11-19T15:49:19.803230+00:00",
+    "seconds": 340.27659917995334,
+    "peak_bytes": 1349690035,
+    "stop": null,
+    "exit_code": 0,
+    "command": [
+      "bash",
+      "/home/l00925865/operator_sim/scripts/cann-run.sh",
+      "bash",
+      "-c",
+      "source \"$1/bin/set_env.bash\"; shift; exec \"$@\"",
+      "fla",
+      "/home/l00925865/operator_sim/results/chunk-recovery/fla2691/raw/fla_npu/opp/vendors/fla_npu_transformer",
+      "msopprof",
+      "simulator",
+      "--soc-version=Ascend950DT_9582",
+      "--dump=false",
+      "--launch-count=32",
+      "--timeout=20",
+      "--output=/home/l00925865/operator_sim/results/v0.24/kda-v1/raw/dt-t64-h2-dense/profile",
+      "/home/l00925865/operator_sim/results/v0.24/kda-v1/raw/kimi-v1-default",
+      "64",
+      "2",
+      "dense"
+    ]
+  },
+  "qualified": false,
+  "actual_sku_verified": true,
+  "published_host": true,
+  "published_monolithic_elf": true,
+  "process_success": false,
+  "golden": false,
+  "output_groups": {
+    "attention": {
+      "count": 16384,
+      "bad": 0,
+      "max_abs": 7.15256e-07
+    },
+    "math_attention": {
+      "count": 16384,
+      "bad": 0,
+      "max_abs": 6.64449e-07
+    },
+    "aqk": {
+      "count": 8192,
+      "bad": 935,
+      "max_abs": 0.00012207
+    },
+    "math_aqk": {
+      "count": 8192,
+      "bad": 620,
+      "max_abs": 8.47146e-05
+    },
+    "akk": {
+      "count": 8192,
+      "bad": 101,
+      "max_abs": 0.000488281
+    },
+    "math_akk": {
+      "count": 8192,
+      "bad": 69,
+      "max_abs": 0.000338407
+    },
+    "state_vk": {
+      "count": 32768,
+      "bad": 0,
+      "max_abs": 3.17837e-06
+    },
+    "math_state_vk": {
+      "count": 32768,
+      "bad": 0,
+      "max_abs": 4.5099e-06
+    }
+  },
+  "sync_errors": 207,
+  "sync_fault_pc_counts": {
+    "0x91587c8584": 1,
+    "0x91587c859c": 1,
+    "0x91587c85b4": 1,
+    "0x91587ca080": 1,
+    "0x91587ca098": 1,
+    "0x91587ca0b0": 1,
+    "0x91587c66d0": 1,
+    "0x91587c66e8": 1,
+    "0x91587c6700": 1,
+    "0x91587c94ec": 1,
+    "0x91587c9504": 1,
+    "0x91587c951c": 1,
+    "0x91587cad48": 6,
+    "0x91587cad5c": 6,
+    "0x91587cad7c": 6,
+    "0x91587cb47c": 6,
+    "0x91587cb490": 6,
+    "0x91587cb4b0": 6,
+    "0x91587cb75c": 6,
+    "0x91587cb764": 6,
+    "0x91587cbb18": 6,
+    "0x91587cbb24": 6,
+    "0x91587cbb34": 6,
+    "0x91587cc21c": 6,
+    "0x91587cc230": 6,
+    "0x91587cc24c": 6,
+    "0x91587cc490": 6,
+    "0x91587cc49c": 6,
+    "0x91587d18dc": 1,
+    "0x91587d18e8": 1,
+    "0x91587d18fc": 1,
+    "0x9158848744": 32,
+    "0x915884875c": 32,
+    "0x915884876c": 32
+  },
+  "sync_examples": [
+    "[ERROR] pem_ccu.cc:2277 execute_set_flag already has same set_flag! pc:0x91587c8584.",
+    "[ERROR] pem_ccu.cc:2277 execute_set_flag already has same set_flag! pc:0x91587c859c.",
+    "[ERROR] pem_ccu.cc:2277 execute_set_flag already has same set_flag! pc:0x91587c85b4."
+  ],
+  "full_windows": true,
+  "chronological": true,
+  "stages": [
+    {
+      "kernel": "Transpose_float32_int64_high_performance_10001",
+      "ordinal": 0,
+      "ca_us": 3.267272727272727,
+      "raw_path": "results/v0.24/kda-v1/raw/dt-t64-h2-dense/profile/OPPROF_20261119234339_KPDCBBCWTNNOORHL/Transpose_float32_int64_high_performance_10001/0",
+      "device_text_sha256": "186722ef55b32dbc748b4af4f6a3d772abc150377f4c96ed88adab573e8aa2b9",
+      "first_tick": 7596,
+      "last_tick": 12987,
+      "active_aic": 0,
+      "active_aiv": 4,
+      "mmads": 0,
+      "resource": {
+        "descriptor_bytes": {
+          "OUT->UB": 3712
+        },
+        "mmad_issued_shapes": {},
+        "issued_mmad_ops": 0,
+        "queue_instruction_counts": {
+          "SCALAR": 2544,
+          "MTE3": 4,
+          "MTE2": 8,
+          "PUSHQ": 20,
+          "FLOWCTRL": 192,
+          "WARP_0": 124,
+          "WARP_1": 36,
+          "WARP_2": 36,
+          "WARP_3": 36,
+          "WARP_4": 36,
+          "WARP_5": 36,
+          "WARP_6": 36,
+          "WARP_7": 36,
+          "WARP_8": 36,
+          "WARP_9": 36,
+          "WARP_10": 36,
+          "WARP_11": 36,
+          "WARP_12": 36,
+          "WARP_13": 36,
+          "WARP_14": 36,
+          "WARP_15": 36,
+          "WARP_16": 36,
+          "WARP_17": 36,
+          "WARP_18": 36,
+          "WARP_19": 36,
+          "WARP_20": 36,
+          "WARP_21": 36,
+          "WARP_22": 36,
+          "WARP_23": 36,
+          "WARP_24": 36,
+          "WARP_25": 36,
+          "WARP_26": 36,
+          "WARP_27": 36,
+          "WARP_28": 36,
+          "WARP_29": 36,
+          "WARP_30": 36,
+          "WARP_31": 36,
+          "WARP_33": 36,
+          "WARP_34": 36,
+          "WARP_35": 36,
+          "WARP_32": 36,
+          "WARP_37": 36,
+          "WARP_38": 36,
+          "WARP_36": 36,
+          "WARP_39": 36,
+          "WARP_40": 36,
+          "WARP_41": 36,
+          "WARP_42": 36,
+          "WARP_43": 36,
+          "WARP_44": 36,
+          "WARP_45": 36,
+          "WARP_46": 36,
+          "WARP_47": 36,
+          "WARP_48": 36,
+          "WARP_49": 36,
+          "WARP_50": 36,
+          "WARP_51": 36,
+          "WARP_52": 36,
+          "WARP_53": 36,
+          "WARP_54": 36,
+          "WARP_55": 36,
+          "WARP_56": 36,
+          "WARP_57": 36,
+          "WARP_58": 36,
+          "WARP_59": 36,
+          "WARP_60": 36,
+          "WARP_61": 36,
+          "WARP_62": 36,
+          "WARP_63": 36
+        }
+      },
+      "cores": {
+        "core0.veccore1": {
+          "first_tick": 7690,
+          "last_tick": 12986,
+          "end": [
+            "0x9000d18fbc",
+            12979,
+            12979
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              12981,
+              12986
+            ]
+          ],
+          "official_us": "3.21",
+          "mmads": 0,
+          "phys_digest": "a5e6fc4b483a2debeecfb3e9cade373ff6553138a1c6a9251ad73580861025b0",
+          "sync_digest": "00e3c3d5fa69455ffa68124f1f0058f6fb658f69790d1094f230b136e3d02742",
+          "shard_sha256": "8c34704864a6fa269d3e4ac5d9eccafe677b93f153e4d55901fc65f43dcec2ca"
+        },
+        "core16.veccore0": {
+          "first_tick": 7719,
+          "last_tick": 12930,
+          "end": [
+            "0x9000d18fbc",
+            12923,
+            12923
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              12925,
+              12930
+            ]
+          ],
+          "official_us": "3.16",
+          "mmads": 0,
+          "phys_digest": "8e6d5a8edc7555bc1f8b0fc35e3ce5b7f5ac0f8582b6f8cff685d6a27ca03fed",
+          "sync_digest": "e4ca65ae5dcd3744cfe125d3213af6eb918e6f51c746905051c1ecfafb136943",
+          "shard_sha256": "d2ad0da2b6d9a868f9174769aafc154519918a5ee0095fb6eae750e6442de16e"
+        },
+        "core16.veccore1": {
+          "first_tick": 7792,
+          "last_tick": 12920,
+          "end": [
+            "0x9000d18fbc",
+            12913,
+            12913
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              12915,
+              12920
+            ]
+          ],
+          "official_us": "3.11",
+          "mmads": 0,
+          "phys_digest": "282b97ad3a8322be04e44a88352a310342a99e5606606f71827f7558e6f04952",
+          "sync_digest": "0b946ebcc76b2467b084af75f523656b5210921ee066f4c2d3c15daaccdb54b3",
+          "shard_sha256": "b49117de53bd4ce74cd3fb9713970148253350a6c5a621ad3a3c779f11e5d801"
+        },
+        "core0.veccore0": {
+          "first_tick": 7596,
+          "last_tick": 12987,
+          "end": [
+            "0x9000d18fbc",
+            12980,
+            12980
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              12982,
+              12987
+            ]
+          ],
+          "official_us": "3.27",
+          "mmads": 0,
+          "phys_digest": "2ea7f20376943fd4669de6248aa90bee5ff1e1c580c7ce316bae1780f0b53d6a",
+          "sync_digest": "8456bbbc32aca297bde93292f735077736e5010b57cc80a57796314a73e3ed02",
+          "shard_sha256": "216442682055d6ba5acd015cd719672ee751a222903f5c466958f59910fed646"
+        }
+      },
+      "captured_binary": "results/v0.24/kda-v1/raw/dt-t64-h2-dense/profile/OPPROF_20261119234339_KPDCBBCWTNNOORHL/Transpose_float32_int64_high_performance_10001/0/dump/aicore_binary.o",
+      "published_names": [],
+      "aggregate": "results/v0.24/kda-v1/raw/dt-t64-h2-dense/profile/OPPROF_20261119234339_KPDCBBCWTNNOORHL/Transpose_float32_int64_high_performance_10001/0/simulator/trace.json",
+      "aggregate_sha256": "be6c41029484b09e2d294d35141cd2398d6ef127f8911a475a4ef7b2f4298823"
+    },
+    {
+      "kernel": "Transpose_float32_int64_high_performance_10001",
+      "ordinal": 1,
+      "ca_us": 4.741818181818182,
+      "raw_path": "results/v0.24/kda-v1/raw/dt-t64-h2-dense/profile/OPPROF_20261119234339_KPDCBBCWTNNOORHL/Transpose_float32_int64_high_performance_10001/1",
+      "device_text_sha256": "186722ef55b32dbc748b4af4f6a3d772abc150377f4c96ed88adab573e8aa2b9",
+      "first_tick": 13688,
+      "last_tick": 21512,
+      "active_aic": 0,
+      "active_aiv": 64,
+      "mmads": 0,
+      "resource": {
+        "descriptor_bytes": {
+          "OUT->UB": 59392
+        },
+        "mmad_issued_shapes": {},
+        "issued_mmad_ops": 0,
+        "queue_instruction_counts": {
+          "SCALAR": 44416,
+          "MTE3": 64,
+          "MTE2": 128,
+          "PUSHQ": 384,
+          "FLOWCTRL": 3392,
+          "WARP_0": 2432,
+          "WARP_1": 2432,
+          "WARP_2": 2432,
+          "WARP_3": 2432,
+          "WARP_4": 2432,
+          "WARP_5": 2432,
+          "WARP_6": 2432,
+          "WARP_7": 2432,
+          "WARP_8": 2432,
+          "WARP_9": 2432,
+          "WARP_10": 2432,
+          "WARP_11": 2432,
+          "WARP_12": 2432,
+          "WARP_13": 2432,
+          "WARP_14": 2432,
+          "WARP_15": 2432,
+          "WARP_16": 576,
+          "WARP_17": 576,
+          "WARP_18": 576,
+          "WARP_19": 576,
+          "WARP_20": 576,
+          "WARP_21": 576,
+          "WARP_22": 576,
+          "WARP_24": 576,
+          "WARP_25": 576,
+          "WARP_23": 576,
+          "WARP_26": 576,
+          "WARP_27": 576,
+          "WARP_28": 576,
+          "WARP_29": 576,
+          "WARP_30": 576,
+          "WARP_31": 576,
+          "WARP_32": 576,
+          "WARP_33": 576,
+          "WARP_34": 576,
+          "WARP_35": 576,
+          "WARP_36": 576,
+          "WARP_37": 576,
+          "WARP_38": 576,
+          "WARP_39": 576,
+          "WARP_40": 576,
+          "WARP_41": 576,
+          "WARP_42": 576,
+          "WARP_43": 576,
+          "WARP_44": 576,
+          "WARP_45": 576,
+          "WARP_46": 576,
+          "WARP_47": 576,
+          "WARP_60": 576,
+          "WARP_61": 576,
+          "WARP_62": 576,
+          "WARP_63": 576,
+          "WARP_48": 576,
+          "WARP_49": 576,
+          "WARP_50": 576,
+          "WARP_51": 576,
+          "WARP_52": 576,
+          "WARP_53": 576,
+          "WARP_54": 576,
+          "WARP_55": 576,
+          "WARP_56": 576,
+          "WARP_57": 576,
+          "WARP_58": 576,
+          "WARP_59": 576
+        }
+      },
+      "cores": {
+        "core20.veccore0": {
+          "first_tick": 14953,
+          "last_tick": 21290,
+          "end": [
+            "0x9000d18fbc",
+            21283,
+            21283
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              21285,
+              21290
+            ]
+          ],
+          "official_us": "3.84",
+          "mmads": 0,
+          "phys_digest": "7fa676344c54f09e45523a9524752640f48dd042270b3c87f2790d1d0a3a550c",
+          "sync_digest": "e3d508b1e4680725535b4561cfa6414845b189627cc9fd889755e7393d625085",
+          "shard_sha256": "3ecfec789bc05d50030ec48ec7baffce3e80363a71f7da3b545f731f29809fa2"
+        },
+        "core15.veccore0": {
+          "first_tick": 14765,
+          "last_tick": 20545,
+          "end": [
+            "0x9000d18fbc",
+            20538,
+            20538
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              20540,
+              20545
+            ]
+          ],
+          "official_us": "3.5",
+          "mmads": 0,
+          "phys_digest": "52e329c4c2d3ed6c745977a16677f2c76aba53ec8f56a09c7990bde9364c8403",
+          "sync_digest": "b8f1d9f135835684b34d597edf465d1e99fc8121bf2a2961da94c9171c1dbbfe",
+          "shard_sha256": "cb1dea69c55576c1c071ff7b1ddee5a8fea3b2cc4cd5a807b19aaad1709d95d7"
+        },
+        "core28.veccore1": {
+          "first_tick": 14680,
+          "last_tick": 20378,
+          "end": [
+            "0x9000d18fbc",
+            20371,
+            20371
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              20373,
+              20378
+            ]
+          ],
+          "official_us": "3.45",
+          "mmads": 0,
+          "phys_digest": "853cf3a79073a80afca31ca37914b479d0c196ee0284f2bc431b262e7f19381e",
+          "sync_digest": "61d873c3c4431b293215d9cda527751ba00b0ebf324bcf5d1cdb1a30e4457521",
+          "shard_sha256": "a36a79b2963dfbce827de60f5dbb0e7d2d9b3385422661c2ae952b7d18a14717"
+        },
+        "core26.veccore1": {
+          "first_tick": 14767,
+          "last_tick": 20741,
+          "end": [
+            "0x9000d18fbc",
+            20734,
+            20734
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              20736,
+              20741
+            ]
+          ],
+          "official_us": "3.62",
+          "mmads": 0,
+          "phys_digest": "c68869112dc759523ca613d55a914a5ac186743ea0b7b1223513c83bebc8c80d",
+          "sync_digest": "f6318c1b058c33a612dfd9d2ce05e957cec5888e28986622d2d575d190848833",
+          "shard_sha256": "234f4f983a54abd98e4c3b6655c56d94fe6a60b66cf49fd5d6d4a6b4b96c8343"
+        },
+        "core27.veccore0": {
+          "first_tick": 14892,
+          "last_tick": 21089,
+          "end": [
+            "0x9000d18fbc",
+            21082,
+            21082
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              21084,
+              21089
+            ]
+          ],
+          "official_us": "3.76",
+          "mmads": 0,
+          "phys_digest": "0402ab1b8d3f27110b3ee07b506d14c15eff6ca207f90e15e50111177102b476",
+          "sync_digest": "a0ac606e0bd6bc2aa04ac4535eb77ff01eff6e55caa11c4e6c28895053167c04",
+          "shard_sha256": "87473ead9f9927fd4beee090bc8b99306bd5148f9dd7dafa58ef1669e1baca86"
+        },
+        "core19.veccore1": {
+          "first_tick": 14949,
+          "last_tick": 20770,
+          "end": [
+            "0x9000d18fbc",
+            20763,
+            20763
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              20765,
+              20770
+            ]
+          ],
+          "official_us": "3.53",
+          "mmads": 0,
+          "phys_digest": "69cb37d213fafc6ed6578b1e0a7fd56bd1893a690e9db0a8bef519ee955a8895",
+          "sync_digest": "81c408eea0ef9d3163ee405c1c0f4ca947eaf0aaf5168ae80c59c4d07091eabb",
+          "shard_sha256": "10b2b4951a89749f1cfd7f307ab44f30c59ddb4ff4504c7f0d4e9c18972861f4"
+        },
+        "core17.veccore0": {
+          "first_tick": 14931,
+          "last_tick": 21166,
+          "end": [
+            "0x9000d18fbc",
+            21159,
+            21159
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              21161,
+              21166
+            ]
+          ],
+          "official_us": "3.78",
+          "mmads": 0,
+          "phys_digest": "de3fb5e2d8c8c49c4496588c98d055e38a150985e995c9a70aea459fa7453e80",
+          "sync_digest": "f7a8a48b5f8a65c3af52a83bd3c2fa8f050723dfef7a726c4c212940df3b7b23",
+          "shard_sha256": "0ab4b82d3989664cb9df047895c6152271997cc6f279668a84a87f862448add5"
+        },
+        "core17.veccore1": {
+          "first_tick": 14936,
+          "last_tick": 20704,
+          "end": [
+            "0x9000d18fbc",
+            20697,
+            20697
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              20699,
+              20704
+            ]
+          ],
+          "official_us": "3.5",
+          "mmads": 0,
+          "phys_digest": "34265e71f4408a8a9b1442b4c13041e3bab7b182ab9ef05d21aba8285ea0c05b",
+          "sync_digest": "5d95476f383c5d429999fcfb8c901fe59eb26fc3581a663240b748fdf2b95753",
+          "shard_sha256": "b9e81c22cee267b5c1231fbede47021ca4d0353a7f919a1869c8015168863e74"
+        },
+        "core22.veccore1": {
+          "first_tick": 14797,
+          "last_tick": 20795,
+          "end": [
+            "0x9000d18fbc",
+            20788,
+            20788
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              20790,
+              20795
+            ]
+          ],
+          "official_us": "3.64",
+          "mmads": 0,
+          "phys_digest": "6d032ef23a33a22e442ca43a9d822927c3e5964ba498aca5ad0924b407461588",
+          "sync_digest": "32d6c4deb7b90f20c08faef9c55bf827e6c9c26205eb90b69dec5551e22ad5ee",
+          "shard_sha256": "6ce86ebae9a9dc3b33c73fa49484a1ecf1fc2c88b7841bb8287ab87d3d9af463"
+        },
+        "core26.veccore0": {
+          "first_tick": 14896,
+          "last_tick": 20729,
+          "end": [
+            "0x9000d18fbc",
+            20722,
+            20722
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              20724,
+              20729
+            ]
+          ],
+          "official_us": "3.54",
+          "mmads": 0,
+          "phys_digest": "99f90697ab6c4ad762e06953b99116ab062e1890a9cc250207fe8681dc36e663",
+          "sync_digest": "b73d9643c719c3c01d001f9646c6b339973828edec7e65b0201b93bf4aae315a",
+          "shard_sha256": "dbeba808d83aaf41ed4d88102d7ffefd0741c6024f3cec3e8830896b1710376e"
+        },
+        "core0.veccore1": {
+          "first_tick": 13688,
+          "last_tick": 17563,
+          "end": [
+            "0x9000d18fbc",
+            17556,
+            17556
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              17558,
+              17563
+            ]
+          ],
+          "official_us": "2.35",
+          "mmads": 0,
+          "phys_digest": "1df0e70b1ebf750be6ffef6440eafb1c5c2093e49333bc6f9ecdf1d9477baa30",
+          "sync_digest": "e2ac4179fbdf07774283aedc5654bf9087c86e7c694091944e5211a9699f823f",
+          "shard_sha256": "bf6c931ff91cb14444f29c236eb41939b00e28945088671408c18584fae638dc"
+        },
+        "core11.veccore1": {
+          "first_tick": 14651,
+          "last_tick": 20669,
+          "end": [
+            "0x9000d18fbc",
+            20662,
+            20662
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              20664,
+              20669
+            ]
+          ],
+          "official_us": "3.65",
+          "mmads": 0,
+          "phys_digest": "9d8866885a1c8bfa696f3a176881403b23df5fe4a11ffe98c1a8abf312ef7152",
+          "sync_digest": "010f971bb9715fb3b84a1c9a1183b3460c39ca5f109fa169e5922d247ac699a9",
+          "shard_sha256": "9204e9155fc22c89ca1516078bfc08293c6c908fdcc04cd0811023556c45f003"
+        },
+        "core18.veccore1": {
+          "first_tick": 15028,
+          "last_tick": 21294,
+          "end": [
+            "0x9000d18fbc",
+            21287,
+            21287
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              21289,
+              21294
+            ]
+          ],
+          "official_us": "3.8",
+          "mmads": 0,
+          "phys_digest": "efd44b2561d4d5e18c2c88cb57dfea467dc39e011ef29ef3ed7458a11397cf93",
+          "sync_digest": "cc6adfd2ddbc8227b26f85a19051e67002350af29ddd8fbcf8028d802eb34169",
+          "shard_sha256": "4931f625e6d54249ab2eaae8ac10a26ed43d0627b2dc224fb49a2ea4ae1a14e2"
+        },
+        "core13.veccore1": {
+          "first_tick": 14814,
+          "last_tick": 21358,
+          "end": [
+            "0x9000d18fbc",
+            21351,
+            21351
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              21353,
+              21358
+            ]
+          ],
+          "official_us": "3.97",
+          "mmads": 0,
+          "phys_digest": "ba2dd592d7e2f4ac182c1191a7b65c4c346b59925efcc5a3ac222a0b4158b2c9",
+          "sync_digest": "cd26c2ca18ef3e18319160632bb599c286a0bf4df42e2db5a45ebb1fdda460cb",
+          "shard_sha256": "ceb965cc8c9211be0a10f547627f3f94ebef9a5eeb0523c17d50f2b39ae29663"
+        },
+        "core21.veccore1": {
+          "first_tick": 14991,
+          "last_tick": 20665,
+          "end": [
+            "0x9000d18fbc",
+            20658,
+            20658
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              20660,
+              20665
+            ]
+          ],
+          "official_us": "3.44",
+          "mmads": 0,
+          "phys_digest": "2883376e27c650859a41a435da8a83b35f6ecfc6f60fe35529e68f3c9ded421a",
+          "sync_digest": "c619739b7c1c59ab5f2599e7d238b37ffd5ca6a3b8b3592c08f289aafc8e1bf5",
+          "shard_sha256": "2370310e77d1aa099e1c6a915460ba80ac6eb1e711c4b6a2fc9c1fe22055a919"
+        },
+        "core10.veccore0": {
+          "first_tick": 14876,
+          "last_tick": 20937,
+          "end": [
+            "0x9000d18fbc",
+            20930,
+            20930
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              20932,
+              20937
+            ]
+          ],
+          "official_us": "3.67",
+          "mmads": 0,
+          "phys_digest": "29cc37b0763a413cbf53a44106215b9692c0977683759847ac8bbf5aaecd1f63",
+          "sync_digest": "ce1f3d94ec128f9b9b229d5eb3c2ed31f113cc718082212a4ff5443ebd1bbecd",
+          "shard_sha256": "a6a475264fb20cb7b48741ceaad2a60e00fa673bca3987af6e1cc4e4d41b58a2"
+        },
+        "core22.veccore0": {
+          "first_tick": 14741,
+          "last_tick": 20712,
+          "end": [
+            "0x9000d18fbc",
+            20705,
+            20705
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              20707,
+              20712
+            ]
+          ],
+          "official_us": "3.62",
+          "mmads": 0,
+          "phys_digest": "9484cc8843bebed7d2f3aedc19a82526c5e7c727da60808fc934c4ba8f92df34",
+          "sync_digest": "56a01ee7d06093951726b7cc187320ac5ad598b03bc612b2df27bb21030d12d5",
+          "shard_sha256": "c4611a8f70d8682a0ab7d105063731a5050ddbdf1941f42ac07ac7e23f975537"
+        },
+        "core29.veccore0": {
+          "first_tick": 14689,
+          "last_tick": 20285,
+          "end": [
+            "0x9000d18fbc",
+            20278,
+            20278
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              20280,
+              20285
+            ]
+          ],
+          "official_us": "3.39",
+          "mmads": 0,
+          "phys_digest": "8d90f835064c8dab058985e8040445a62606280581752e56d6f1c3804cf053f4",
+          "sync_digest": "9e6e9de54085a039a2aac3669cf08dfe6824d6055ef18ce9d69b5cc8b58c13c0",
+          "shard_sha256": "58c08cbd82ad7f8b1736394cc075f072d724c0e9ea7c6ce6a0075b1c939c9f34"
+        },
+        "core25.veccore0": {
+          "first_tick": 14738,
+          "last_tick": 20564,
+          "end": [
+            "0x9000d18fbc",
+            20557,
+            20557
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              20559,
+              20564
+            ]
+          ],
+          "official_us": "3.53",
+          "mmads": 0,
+          "phys_digest": "95a29132147c0b6271a51954489c4311ed2fe96878a4325e28ba7f718504e095",
+          "sync_digest": "f6318c1b058c33a612dfd9d2ce05e957cec5888e28986622d2d575d190848833",
+          "shard_sha256": "79db866b68c8552842cbae87b7df463c576ae7faec8759b757c97de53d1d5f0e"
+        },
+        "core10.veccore1": {
+          "first_tick": 14839,
+          "last_tick": 20749,
+          "end": [
+            "0x9000d18fbc",
+            20742,
+            20742
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              20744,
+              20749
+            ]
+          ],
+          "official_us": "3.58",
+          "mmads": 0,
+          "phys_digest": "04cc805366b588d51593f68ef94a3ab344e98e59a676f697e69912b6ff45c2ca",
+          "sync_digest": "4808a168f88cdc38f3d38596295dda6f2bb108568366cd26bc838a0a2a539f04",
+          "shard_sha256": "868c818bfa07acf5843d406694917cc4d26e28a1a700d6d610de4027bf933bc0"
+        },
+        "core25.veccore1": {
+          "first_tick": 14768,
+          "last_tick": 20654,
+          "end": [
+            "0x9000d18fbc",
+            20647,
+            20647
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              20649,
+              20654
+            ]
+          ],
+          "official_us": "3.57",
+          "mmads": 0,
+          "phys_digest": "0e0523daca6edb0cbd7d7b216cac1556765c5e4d489062b635548ce70856a0ce",
+          "sync_digest": "293761c01205df79e63ad1a919ddab3569f24746b0ef41ddb37fe4d66ab20475",
+          "shard_sha256": "5eb7a18da88c055f69991bf41f68188249ce9aa0375c32114ed0e7c5287a90ea"
+        },
+        "core19.veccore0": {
+          "first_tick": 15052,
+          "last_tick": 20885,
+          "end": [
+            "0x9000d18fbc",
+            20878,
+            20878
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              20880,
+              20885
+            ]
+          ],
+          "official_us": "3.54",
+          "mmads": 0,
+          "phys_digest": "2de1378a6e8044bc644cf19c2d8e982c02a793df02eabae40dd212d73da16333",
+          "sync_digest": "3e6cfb6f2397064ce988352b1b42c89bed143bc68a1e9c1266747e7cef435d06",
+          "shard_sha256": "cf75f65a5e2fc01421a017eb0eb84c047e72bca094fa6a5fcad3857273e1e3a9"
+        },
+        "core23.veccore1": {
+          "first_tick": 14913,
+          "last_tick": 20811,
+          "end": [
+            "0x9000d18fbc",
+            20804,
+            20804
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              20806,
+              20811
+            ]
+          ],
+          "official_us": "3.57",
+          "mmads": 0,
+          "phys_digest": "7d03fb4de253f6f0514d03232eda79e16450c30c8f7bd16673e299bd764e6163",
+          "sync_digest": "834e8b2d63697dc757bd33356ecb0efd9b2f2b89b443a2c96dff901dd4040c4b",
+          "shard_sha256": "eea33883cb8cc58540a4607c8db4d4e831694e60ad083761429db3aad164210c"
+        },
+        "core16.veccore0": {
+          "first_tick": 13768,
+          "last_tick": 17321,
+          "end": [
+            "0x9000d18fbc",
+            17314,
+            17314
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              17316,
+              17321
+            ]
+          ],
+          "official_us": "2.15",
+          "mmads": 0,
+          "phys_digest": "ebedb020a40db69c527ab8aa794290f7a8172e38c537f40e1241e856558a70d9",
+          "sync_digest": "a83c3b4f66312b751664cb59eac5249cfc788134c395816c5cff37c49d645f12",
+          "shard_sha256": "ee852543af52d11d0eedb4e18ae719920e1c8b93f06b42b924cd5af98efcbadf"
+        },
+        "core12.veccore0": {
+          "first_tick": 14891,
+          "last_tick": 20951,
+          "end": [
+            "0x9000d18fbc",
+            20944,
+            20944
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              20946,
+              20951
+            ]
+          ],
+          "official_us": "3.67",
+          "mmads": 0,
+          "phys_digest": "d6439599f7dd94cc08577e01922cbadfeb724718df9d8cc8b790ca131fca1f72",
+          "sync_digest": "f58a28422c861d1f2fcb2c2b2d3f23d9a825931e0e448cc81465acfbd9a2542d",
+          "shard_sha256": "696d85715d8790e2e09556b900dee284f59d61e49097b67fbf817776d7024964"
+        },
+        "core23.veccore0": {
+          "first_tick": 14807,
+          "last_tick": 20846,
+          "end": [
+            "0x9000d18fbc",
+            20839,
+            20839
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              20841,
+              20846
+            ]
+          ],
+          "official_us": "3.66",
+          "mmads": 0,
+          "phys_digest": "94313e37d6d209bc7e1d2d593f6a9644415773bfb93d98c24748cdbe69a43840",
+          "sync_digest": "0f958ddc027df26ebfee87abd284aed93477fee794036936a1b0f8d4e4a715da",
+          "shard_sha256": "e39284a767b65793f59ce32517d057a684178eafaac718dc4f5add04b533b0b3"
+        },
+        "core18.veccore0": {
+          "first_tick": 15013,
+          "last_tick": 21411,
+          "end": [
+            "0x9000d18fbc",
+            21404,
+            21404
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              21406,
+              21411
+            ]
+          ],
+          "official_us": "3.88",
+          "mmads": 0,
+          "phys_digest": "0e807ca1407c0a2f7938a068477afd146730f59841fa899fb61d28a99eb86688",
+          "sync_digest": "0da0dd75eaa58d8b6975f83c8360e82fde8a5c743e99919872e35f417bcf51e0",
+          "shard_sha256": "b0cdb820f84421cedb6b54629e5c294b3693d74ae5ca50fd90b8b88111859940"
+        },
+        "core21.veccore0": {
+          "first_tick": 14860,
+          "last_tick": 21389,
+          "end": [
+            "0x9000d18fbc",
+            21382,
+            21382
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              21384,
+              21389
+            ]
+          ],
+          "official_us": "3.96",
+          "mmads": 0,
+          "phys_digest": "22ce87e8334f565a3430e2aec6ec7402f24538a4fbdaf16beebb548816ea8a0c",
+          "sync_digest": "24d20d5713bf126614ab50c34fc94911713524ebeb59aeaff2bafdb96c7658a1",
+          "shard_sha256": "a6e28243dd44c74f42ed26cecd23b7886f42c4b7390c0dd6a5f96063193e31df"
+        },
+        "core28.veccore0": {
+          "first_tick": 14640,
+          "last_tick": 20766,
+          "end": [
+            "0x9000d18fbc",
+            20759,
+            20759
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              20761,
+              20766
+            ]
+          ],
+          "official_us": "3.71",
+          "mmads": 0,
+          "phys_digest": "2c8a09e656aca5862959cbdfc34b7ce9da531af4d50c6b4e856b444156447542",
+          "sync_digest": "8519c7a733f8139a0da1150cd4fb7b0d7c294d3dcd40163f86379d6d95d7c7cd",
+          "shard_sha256": "a3b5bc35f0934e9aaa66c4397a0e094daa77333185048af0f68f878ed44cea1d"
+        },
+        "core20.veccore1": {
+          "first_tick": 14998,
+          "last_tick": 20691,
+          "end": [
+            "0x9000d18fbc",
+            20684,
+            20684
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              20686,
+              20691
+            ]
+          ],
+          "official_us": "3.45",
+          "mmads": 0,
+          "phys_digest": "a79576da4a11a37385604969c593c61e6ee04f08acf6cbfb84d85ef0c84cc0ba",
+          "sync_digest": "ea8c859eb4dfda290cd7d2e0deda488796f8b735ba835b1a506d9d2452fe8ae9",
+          "shard_sha256": "009c5b8a02c6ad075be37cdead8358c83c85fa7e0c25b395c3fd6bbff874e30a"
+        },
+        "core2.veccore1": {
+          "first_tick": 14511,
+          "last_tick": 20207,
+          "end": [
+            "0x9000d18fbc",
+            20200,
+            20200
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              20202,
+              20207
+            ]
+          ],
+          "official_us": "3.45",
+          "mmads": 0,
+          "phys_digest": "a27d919467d53cada3895b4f86a5768d3e788540c25c23189aa2a235a6b2fe47",
+          "sync_digest": "0107e66bb6b5740fa053e675dfbbe5c580aaa90ef1a428ba08532c6f4cc8616e",
+          "shard_sha256": "2e3b5f3a42ccf8b07459280b609ee84968d0ed8b953aad1b56e32ec6e80eccc6"
+        },
+        "core13.veccore0": {
+          "first_tick": 14845,
+          "last_tick": 21488,
+          "end": [
+            "0x9000d18fbc",
+            21481,
+            21481
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              21483,
+              21488
+            ]
+          ],
+          "official_us": "4.03",
+          "mmads": 0,
+          "phys_digest": "0d5dd082a510fffa866f02bea6ee55329829637e38b3aec7b92ed90ec2ca7cee",
+          "sync_digest": "ac0c0dfd79309c2ef18115a5a739bf3c83f1e4598f292aef2f4efc967145cdfa",
+          "shard_sha256": "b272e35d7c56005827d994ce54aae4e24ce07694414c2279fbb603d4ba690946"
+        },
+        "core2.veccore0": {
+          "first_tick": 14495,
+          "last_tick": 20147,
+          "end": [
+            "0x9000d18fbc",
+            20140,
+            20140
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              20142,
+              20147
+            ]
+          ],
+          "official_us": "3.43",
+          "mmads": 0,
+          "phys_digest": "f92b86143b4555bdb2fe347ba36bf01fedb5a17e276abf01edd0d6c4dd4b449b",
+          "sync_digest": "6f5d420d5567d9aeb7febe8691e0ed6118898f2ec6fbfe3c6a337f5d39adeba1",
+          "shard_sha256": "c48265d2d01dff2e0f1b6a6ad2be9d8fdc1a1ed144ff097ce7fa86c531bd2a46"
+        },
+        "core14.veccore0": {
+          "first_tick": 14742,
+          "last_tick": 20186,
+          "end": [
+            "0x9000d18fbc",
+            20179,
+            20179
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              20181,
+              20186
+            ]
+          ],
+          "official_us": "3.3",
+          "mmads": 0,
+          "phys_digest": "60e563cf08ba64e57dab75bd37239490acd6dbe0d0eaf5ace7a665c31c224cb6",
+          "sync_digest": "a607897e110479d0733a92b4165b8e57e4f54d9a279fa4057daa84d4f3e43268",
+          "shard_sha256": "d93da8d62e6d41babf6bacb11486345bf72164af7577b675231e5306bc0788e6"
+        },
+        "core1.veccore1": {
+          "first_tick": 14578,
+          "last_tick": 20229,
+          "end": [
+            "0x9000d18fbc",
+            20222,
+            20222
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              20224,
+              20229
+            ]
+          ],
+          "official_us": "3.42",
+          "mmads": 0,
+          "phys_digest": "9d4b08b721e4784c48d182839368e612ca4a56ed572289d596b3a4d35591b847",
+          "sync_digest": "bf7a098da77e609088470d7679f10823cff38b37f24ee83400687086c3d4c6a5",
+          "shard_sha256": "27dac5c95f89f9e2ed1141803c50bbcd1dfb1395b7dc73085a1c12cd885f49de"
+        },
+        "core0.veccore0": {
+          "first_tick": 13688,
+          "last_tick": 17631,
+          "end": [
+            "0x9000d18fbc",
+            17624,
+            17624
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              17626,
+              17631
+            ]
+          ],
+          "official_us": "2.39",
+          "mmads": 0,
+          "phys_digest": "97a4ee607cf2dec8c860407e8931e73b0ecc145dc0a3069008286a01151aa688",
+          "sync_digest": "c2dbf767d162f9176456cb49d4514e573a7bb71cc0e54d3e4c78c06ed97df97c",
+          "shard_sha256": "52cd5f48b3461d617d4ebd2a886b07415e06988be4c66420dd339f1e428fcc5c"
+        },
+        "core16.veccore1": {
+          "first_tick": 13768,
+          "last_tick": 17317,
+          "end": [
+            "0x9000d18fbc",
+            17310,
+            17310
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              17312,
+              17317
+            ]
+          ],
+          "official_us": "2.15",
+          "mmads": 0,
+          "phys_digest": "25be1f0255b96090c02564a3ed2c04b409b4e0aceb172cea77c4e8ebe6dc4153",
+          "sync_digest": "73697380d87635b604e4cad20d34f2056e05d317032597404a257924fc3812e5",
+          "shard_sha256": "9cc73c530afe26fe2ff77c4d16271dffef8a0939d26c07d0e9b394d3b6b6c730"
+        },
+        "core24.veccore1": {
+          "first_tick": 14839,
+          "last_tick": 21473,
+          "end": [
+            "0x9000d18fbc",
+            21466,
+            21466
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              21468,
+              21473
+            ]
+          ],
+          "official_us": "4.02",
+          "mmads": 0,
+          "phys_digest": "ed51419459757a41512c384c5a3b80f984c6bf803c1da9a42c64770b2cdb81f6",
+          "sync_digest": "a1dd819e6e1196ad9d770c1c8fd9cbbf2dbd34a1f2479377b9742c7a5c3d56bc",
+          "shard_sha256": "00ab1dc70c24d40ac4f0685faed1e38ff6fc40de238d746c5be3956bfcb31203"
+        },
+        "core11.veccore0": {
+          "first_tick": 14610,
+          "last_tick": 20613,
+          "end": [
+            "0x9000d18fbc",
+            20606,
+            20606
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              20608,
+              20613
+            ]
+          ],
+          "official_us": "3.64",
+          "mmads": 0,
+          "phys_digest": "1c59e7f28a4cef638229c7a6da6a51a69454f936b3e95732ef9401586b070cec",
+          "sync_digest": "dd28a08f5632d3027d876eec7aa1adf86cbd315e7221a25f50b236226d31a889",
+          "shard_sha256": "356c2ff78a1453e9a593a4ab57a9c26371ecb7902c0bcd4d5fc5ee117e7c4705"
+        },
+        "core29.veccore1": {
+          "first_tick": 14706,
+          "last_tick": 19967,
+          "end": [
+            "0x9000d18fbc",
+            19960,
+            19960
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              19962,
+              19967
+            ]
+          ],
+          "official_us": "3.19",
+          "mmads": 0,
+          "phys_digest": "57f0693f8015709ab288c687ddfb582b9026b21028b16856857854c550c86b13",
+          "sync_digest": "3c5d5eca779393d212dc129f27352ac14831104eae84b6bf48b841a35988ca9c",
+          "shard_sha256": "9b98f74cb674b5728f8de685e3ee6f7efce663f9d0bff17427346b9b01d8701d"
+        },
+        "core1.veccore0": {
+          "first_tick": 14620,
+          "last_tick": 20320,
+          "end": [
+            "0x9000d18fbc",
+            20313,
+            20313
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              20315,
+              20320
+            ]
+          ],
+          "official_us": "3.45",
+          "mmads": 0,
+          "phys_digest": "33032d0f6ddd12103f9807affbb794de7b713e22716ef5950c7116b0a4451f3b",
+          "sync_digest": "9cfcde14e03f6ba5e1685951b342f414337ec854461f6c703f4ce5292dfb026c",
+          "shard_sha256": "d86892eca113fa579d4eb6091341cc4fd74fb8ef4f5d4183a40802f57d2854e6"
+        },
+        "core3.veccore0": {
+          "first_tick": 14870,
+          "last_tick": 21329,
+          "end": [
+            "0x9000d18fbc",
+            21322,
+            21322
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              21324,
+              21329
+            ]
+          ],
+          "official_us": "3.91",
+          "mmads": 0,
+          "phys_digest": "cccc79273186e34558376064683767a85955831d99dfa45ef28ffa26ce278e2d",
+          "sync_digest": "127d9c7f6693382941723cfd4e717180b3ca55f6a8e440ca1853d46435fe0504",
+          "shard_sha256": "e56139e891f349ede6d76f8d5e96833a3dca82375c2321b81290935d5e2ab3fc"
+        },
+        "core3.veccore1": {
+          "first_tick": 14892,
+          "last_tick": 21254,
+          "end": [
+            "0x9000d18fbc",
+            21247,
+            21247
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              21249,
+              21254
+            ]
+          ],
+          "official_us": "3.86",
+          "mmads": 0,
+          "phys_digest": "e27910c9e3e3ce373d70d383cf853e56b4d0072701ad8dbb60d8814bcd7e450b",
+          "sync_digest": "aa2c3e53cb970c7adbebff7b592dc9ba539fd6e297ca78cfa8210ed5ef405694",
+          "shard_sha256": "f00de652cfafcf47c01af16ff1a3cc21d9abf18318afc8be592b4d168dbf3992"
+        },
+        "core24.veccore0": {
+          "first_tick": 14821,
+          "last_tick": 21345,
+          "end": [
+            "0x9000d18fbc",
+            21338,
+            21338
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              21340,
+              21345
+            ]
+          ],
+          "official_us": "3.95",
+          "mmads": 0,
+          "phys_digest": "6059df60c6b34c8e96cb1da101a5179de2ef28c8417d883198efab1974830d10",
+          "sync_digest": "76cbd763e21ffa83bbf6df1044bb9218bb3d3cdffbd600d1fe7941d7be4f088d",
+          "shard_sha256": "9357ceb4710bb2e4050f0f53a6f790dec4444b3421f986edbcfe994b32d261c9"
+        },
+        "core30.veccore0": {
+          "first_tick": 14610,
+          "last_tick": 21283,
+          "end": [
+            "0x9000d18fbc",
+            21276,
+            21276
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              21278,
+              21283
+            ]
+          ],
+          "official_us": "4.04",
+          "mmads": 0,
+          "phys_digest": "575752f0c7c0f046c8be86ce58abd1d7c3eeb0fc57c06b2e37474aaa54e8d661",
+          "sync_digest": "7f168b98afd6a10b45f7ef18e61353ef050532df5a5d76f9e6a2bd1923e08d4e",
+          "shard_sha256": "1ce60fb10df5d917572aed79a44500c4692715b5a267bbd3121ac060e7757fa5"
+        },
+        "core15.veccore1": {
+          "first_tick": 14730,
+          "last_tick": 20821,
+          "end": [
+            "0x9000d18fbc",
+            20814,
+            20814
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              20816,
+              20821
+            ]
+          ],
+          "official_us": "3.69",
+          "mmads": 0,
+          "phys_digest": "dabf39d90c1e91fd08dadba2168f3ecc03bc6fce7087e00f9d58a075002cf877",
+          "sync_digest": "84d4ee83f4e55f288dd85f6fd62ef32a601f1cdb08f0b73605f3be92ceba8929",
+          "shard_sha256": "d224bfb67049748ddde511ce5aad66ca3b563eaf77e3081e9b7cd8f9d7f1675c"
+        },
+        "core30.veccore1": {
+          "first_tick": 14567,
+          "last_tick": 21079,
+          "end": [
+            "0x9000d18fbc",
+            21072,
+            21072
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              21074,
+              21079
+            ]
+          ],
+          "official_us": "3.95",
+          "mmads": 0,
+          "phys_digest": "fbd39ede260e2a9c359e58c333e2bb314aecbdda2e7df598cc7d35b910c1dfe5",
+          "sync_digest": "d673fe7faf1370dab52c657cb63bbe987e7fe50ebac41729d6dde51d88718132",
+          "shard_sha256": "714c943a44a4d6216b001077e6d9be6862f753c7a5986a3913f4a5d8490b5dee"
+        },
+        "core12.veccore1": {
+          "first_tick": 14940,
+          "last_tick": 20834,
+          "end": [
+            "0x9000d18fbc",
+            20827,
+            20827
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              20829,
+              20834
+            ]
+          ],
+          "official_us": "3.57",
+          "mmads": 0,
+          "phys_digest": "d84ddac82cabf670a7468f21439a9e3df0fe1021973fb64e15c0a662cab165a6",
+          "sync_digest": "d0fad1d22e821cf47402a31ed36de3a90e8ab4822817e99a9f038995b5b716a1",
+          "shard_sha256": "d81cb8741b7cb77bdb028ecfb320008ab25f7b5a9cdf61e4f35cab2b4572c148"
+        },
+        "core27.veccore1": {
+          "first_tick": 14891,
+          "last_tick": 21265,
+          "end": [
+            "0x9000d18fbc",
+            21258,
+            21258
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              21260,
+              21265
+            ]
+          ],
+          "official_us": "3.86",
+          "mmads": 0,
+          "phys_digest": "f312313a65163f255464fe10f683842a9221c470819974cd0e89c397d3b95fc8",
+          "sync_digest": "3ea12edb5d8d2ac28ad148848827e9671ba5b9b46fdf712229b3549a419f5824",
+          "shard_sha256": "b3bb43e9aebbf9a9b7739f2c617c5a002441a5a8ed23384fc6229dd920a7ec18"
+        },
+        "core14.veccore1": {
+          "first_tick": 14779,
+          "last_tick": 20656,
+          "end": [
+            "0x9000d18fbc",
+            20649,
+            20649
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              20651,
+              20656
+            ]
+          ],
+          "official_us": "3.56",
+          "mmads": 0,
+          "phys_digest": "601e71df40e7ac71025ac266c6b89d662a7c5bab50f3523d911b1a6d413062a5",
+          "sync_digest": "1cf057e742f36ae20593ac02e2f9abf76ff11fe817d9c9f43daf67e9419cc1d8",
+          "shard_sha256": "92ebf07c0c981dc12e422d101255c9462223c8e1bc56edaaadb3a8f3763cf62a"
+        },
+        "core31.veccore0": {
+          "first_tick": 14557,
+          "last_tick": 19970,
+          "end": [
+            "0x9000d18fbc",
+            19963,
+            19963
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              19965,
+              19970
+            ]
+          ],
+          "official_us": "3.28",
+          "mmads": 0,
+          "phys_digest": "8ce30b615bab33102be485b0158127db9ed438af3d5839223404d3da2baecf64",
+          "sync_digest": "b1efc4cf507947af9502f8d07f979294204ae2955ea59e55ea4dbcebc9d98621",
+          "shard_sha256": "7c572d712c033231b3d97e8f700457e4e303aabbfff836931cde97a467f180b0"
+        },
+        "core31.veccore1": {
+          "first_tick": 14575,
+          "last_tick": 19683,
+          "end": [
+            "0x9000d18fbc",
+            19676,
+            19676
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              19678,
+              19683
+            ]
+          ],
+          "official_us": "3.1",
+          "mmads": 0,
+          "phys_digest": "ab15801e9e3e18ee4446b198a3e4770e477ca8f69aebc53177eef857f01deaa8",
+          "sync_digest": "d0e91a84ef29367d176573e5ce2aa7199e0696386c9dd23193dd65fd4ad54a6f",
+          "shard_sha256": "cf65f98ccc77c094e3794e83578f62aef1d37480446fb35da74f2fd9f3f343ae"
+        },
+        "core4.veccore0": {
+          "first_tick": 14656,
+          "last_tick": 20733,
+          "end": [
+            "0x9000d18fbc",
+            20726,
+            20726
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              20728,
+              20733
+            ]
+          ],
+          "official_us": "3.68",
+          "mmads": 0,
+          "phys_digest": "3b7617ff5d4fea584f4c123012b873236e0d367fbbc11cb9a5b1c9677b661016",
+          "sync_digest": "5b6e4d3fb82e17fc971dd8aecd475754fb9931ded53a5001e42ca51529186ca8",
+          "shard_sha256": "39a0856df74052424f93fe4e03fe3a4a51d8c484756fa9bc56d35f67e41b5209"
+        },
+        "core4.veccore1": {
+          "first_tick": 14741,
+          "last_tick": 20922,
+          "end": [
+            "0x9000d18fbc",
+            20915,
+            20915
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              20917,
+              20922
+            ]
+          ],
+          "official_us": "3.75",
+          "mmads": 0,
+          "phys_digest": "2fa7bf5118586b3dd56f5a8a4d936e4977fd879ac1612bc10b4cdcec61b02941",
+          "sync_digest": "c158d7feb535ce0fba2af65efc85042384095282527969394cb2a84478feddce",
+          "shard_sha256": "b8da13342231c0c67eabbe74637d63786ce67b3de004b6d34e851b52bc927a1e"
+        },
+        "core5.veccore0": {
+          "first_tick": 14791,
+          "last_tick": 20815,
+          "end": [
+            "0x9000d18fbc",
+            20808,
+            20808
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              20810,
+              20815
+            ]
+          ],
+          "official_us": "3.65",
+          "mmads": 0,
+          "phys_digest": "569f07965214777b396063f0d1d74e04e543af2ddb41dcddaaa50441985ea02e",
+          "sync_digest": "b6522abcd90e7b40329d02b7d7b1d1442d6c0e167c78f99568df67bfe5f1b9ad",
+          "shard_sha256": "62535c6ca74d41aa0d7366fb91292e783f16449f2ddcd87bdb15c678853eeb02"
+        },
+        "core5.veccore1": {
+          "first_tick": 14772,
+          "last_tick": 21376,
+          "end": [
+            "0x9000d18fbc",
+            21369,
+            21369
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              21371,
+              21376
+            ]
+          ],
+          "official_us": "4",
+          "mmads": 0,
+          "phys_digest": "ed837bb6d91f5bb545648c64ffd035bcc313a62d463fccd4e74bb49fb2bc641a",
+          "sync_digest": "55d3bb3fcde66a3a1088c31b3da31d71822b550b2c31b05f2bc8adb99589a3b7",
+          "shard_sha256": "aa41637e5404c2a648e4261331a49f36e5c29e97871c0a17d73102e362e722e6"
+        },
+        "core6.veccore1": {
+          "first_tick": 14528,
+          "last_tick": 20018,
+          "end": [
+            "0x9000d18fbc",
+            20011,
+            20011
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              20013,
+              20018
+            ]
+          ],
+          "official_us": "3.33",
+          "mmads": 0,
+          "phys_digest": "0ff621e26ba0b018150ddd8b494931a1f3492be7ed864df38e338c57f43a731e",
+          "sync_digest": "12860ecc879839849bbcf58d3c85ce1677c439c9a2d5f98b73ddcf0ad8aef779",
+          "shard_sha256": "f220556bbdd9f51482f9efe04b9633a7b7db2d77f9767c6c3c86f16710b6b478"
+        },
+        "core6.veccore0": {
+          "first_tick": 14550,
+          "last_tick": 20409,
+          "end": [
+            "0x9000d18fbc",
+            20402,
+            20402
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              20404,
+              20409
+            ]
+          ],
+          "official_us": "3.55",
+          "mmads": 0,
+          "phys_digest": "19d045c1ae6c1f3405e05b752d61b94144dc714736af4e009b4a0b71ce9dac11",
+          "sync_digest": "c1c8fb42e6bb5385001b6d004363ad3013a376316cafc2901b5f74524f0af6f9",
+          "shard_sha256": "e7ae0a16f42c430dd374f3468eb0833302a972b608763824ef0f74d6b1270c76"
+        },
+        "core7.veccore0": {
+          "first_tick": 14656,
+          "last_tick": 20776,
+          "end": [
+            "0x9000d18fbc",
+            20769,
+            20769
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              20771,
+              20776
+            ]
+          ],
+          "official_us": "3.71",
+          "mmads": 0,
+          "phys_digest": "d71ebe9e3d83e6911bbbb2c01bb7893ff50405a3080faec61b32f5ff9bcbede8",
+          "sync_digest": "a8dbccdef38f4f3c7d4e2df2eb22b0317008aa5215519f96200dddafd100c3b4",
+          "shard_sha256": "c72344fe2e6918d4980067c03f74bbc8ac78a16fd80f467cb25a7b9b340a28c9"
+        },
+        "core7.veccore1": {
+          "first_tick": 14682,
+          "last_tick": 21248,
+          "end": [
+            "0x9000d18fbc",
+            21241,
+            21241
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              21243,
+              21248
+            ]
+          ],
+          "official_us": "3.98",
+          "mmads": 0,
+          "phys_digest": "97cc172ce06d6622830254230c6b5eaa4c8cc858c3cef2f686f07d78b53790ae",
+          "sync_digest": "58871a4707ddf4b9df58f7dd645133c4c396418cc2e5b8a2781589dcc1697a22",
+          "shard_sha256": "005c2aaed72e4d369c2ae7ef5f4c09ee8ffaf8013ce2b9691a70516656a274d3"
+        },
+        "core8.veccore0": {
+          "first_tick": 14805,
+          "last_tick": 21512,
+          "end": [
+            "0x9000d18fbc",
+            21505,
+            21505
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              21507,
+              21512
+            ]
+          ],
+          "official_us": "4.06",
+          "mmads": 0,
+          "phys_digest": "b0ad615170c03ca1a95a0b8f5a950c66a0583e9ffb52ce6ffb110bc4b814175c",
+          "sync_digest": "1c0c2ff42fb1b217538badb33b1680f409a3ab95d3bc6a6162abc176ff52609f",
+          "shard_sha256": "96c7c75c6ac8ac9d88802d3a2b089c32f85b89cab862b400b0bcc719398396c7"
+        },
+        "core9.veccore0": {
+          "first_tick": 14978,
+          "last_tick": 21337,
+          "end": [
+            "0x9000d18fbc",
+            21330,
+            21330
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              21332,
+              21337
+            ]
+          ],
+          "official_us": "3.85",
+          "mmads": 0,
+          "phys_digest": "2e59b28171b6dbb48b191b8ce9808ffcaac24d89efc0a56075c1f1e8a4ff0110",
+          "sync_digest": "ce1f3d94ec128f9b9b229d5eb3c2ed31f113cc718082212a4ff5443ebd1bbecd",
+          "shard_sha256": "02f9fa458b506f4cc847e0124bc498dd8204047bde33bd80f95f35bc2bcf9322"
+        },
+        "core8.veccore1": {
+          "first_tick": 14915,
+          "last_tick": 21430,
+          "end": [
+            "0x9000d18fbc",
+            21423,
+            21423
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              21425,
+              21430
+            ]
+          ],
+          "official_us": "3.95",
+          "mmads": 0,
+          "phys_digest": "b07f3a76ba0640f735b3b223c2b4c816aabd201df25b1f5ae4eeb2e1a52b7105",
+          "sync_digest": "4075275b94781e31b696bad16d4de5e81cf732dbeedd30a564d58fa8f1627d56",
+          "shard_sha256": "5c85f9aad3071633ee1f1e56164e68b858ba278591e870c581c536d4645b8f21"
+        },
+        "core9.veccore1": {
+          "first_tick": 14987,
+          "last_tick": 21149,
+          "end": [
+            "0x9000d18fbc",
+            21142,
+            21142
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              21144,
+              21149
+            ]
+          ],
+          "official_us": "3.73",
+          "mmads": 0,
+          "phys_digest": "97673a265afd6d1bbc29d54625c1ea49692d27385782494df041cfba8c675c07",
+          "sync_digest": "cb4f95e914213fc305b1f492500821bfe5ceb327202844fa65dc577f1269110b",
+          "shard_sha256": "363d2a596325449f562c4a78b6fc8e9b01ee37a3af63b0f8bb0ccb62235f0155"
+        }
+      },
+      "captured_binary": "results/v0.24/kda-v1/raw/dt-t64-h2-dense/profile/OPPROF_20261119234339_KPDCBBCWTNNOORHL/Transpose_float32_int64_high_performance_10001/1/dump/aicore_binary.o",
+      "published_names": [],
+      "aggregate": "results/v0.24/kda-v1/raw/dt-t64-h2-dense/profile/OPPROF_20261119234339_KPDCBBCWTNNOORHL/Transpose_float32_int64_high_performance_10001/1/simulator/trace.json",
+      "aggregate_sha256": "aeece9597fa34c753cdd0dc3e3a3b538ec28250785c483dc5a92122003db5669"
+    },
+    {
+      "kernel": "ChunkKdaFwd_5e864108d5688e456abb78f238c67b16_2_mix_aic",
+      "ordinal": 0,
+      "ca_us": 73.77939393939394,
+      "raw_path": "results/v0.24/kda-v1/raw/dt-t64-h2-dense/profile/OPPROF_20261119234339_KPDCBBCWTNNOORHL/ChunkKdaFwd_5e864108d5688e456abb78f238c67b16_2_mix_aic/0",
+      "device_text_sha256": "5275721e11b3906d6f56a7fa5d04f535b64d9da894932abd84e082973652f200",
+      "first_tick": 26230,
+      "last_tick": 147966,
+      "active_aic": 32,
+      "active_aiv": 64,
+      "mmads": 26,
+      "resource": {
+        "descriptor_bytes": {
+          "OUT->UB": 570376,
+          "OUT->L1": 360448,
+          "L1->L0A": 221184,
+          "L1->L0B": 237568,
+          "L0C->UB": 376832,
+          "UB->L1": 98304,
+          "UB->OUT": 589824,
+          "L0C->OUT": 155648
+        },
+        "mmad_issued_shapes": {
+          "64x128x128": 4,
+          "128x128x64": 2,
+          "64x128x64": 2,
+          "64x32x128": 2,
+          "64x64x128": 2,
+          "16x16x16": 8,
+          "32x32x32": 4,
+          "64x256x64": 2
+        },
+        "issued_mmad_ops": 22347776,
+        "queue_instruction_counts": {
+          "SCALAR": 217263,
+          "MTE2": 786,
+          "FLOWCTRL": 10667,
+          "MTE3": 484,
+          "PUSHQ": 1676,
+          "MTE1": 196,
+          "CUBE": 26,
+          "FIXP": 64,
+          "RVECLP": 2182,
+          "RVECSU": 10864,
+          "RVECEX": 61512,
+          "RVECLD": 22534,
+          "RVECST": 15898
+        }
+      },
+      "cores": {
+        "core17.veccore0": {
+          "first_tick": 26978,
+          "last_tick": 139618,
+          "end": [
+            "0x9158a56378",
+            139611,
+            139611
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              139613,
+              139618
+            ]
+          ],
+          "official_us": "68.27",
+          "mmads": 0,
+          "phys_digest": "5f318e47c9a82dd4f0370d97fbee978331421ab23745715d1b58a86828568dcd",
+          "sync_digest": "16cc323104abd61cd67f088e8a8bd93add5bd14e27db213c6b883fa7324ccba2",
+          "shard_sha256": "d5c0f9b28fe3dab6e1a62f83873e4ac6df853b87954048b51470af9a09648694"
+        },
+        "core10.veccore0": {
+          "first_tick": 26865,
+          "last_tick": 140272,
+          "end": [
+            "0x9158a56378",
+            140265,
+            140265
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              140267,
+              140272
+            ]
+          ],
+          "official_us": "68.73",
+          "mmads": 0,
+          "phys_digest": "4502662cade4d6a360d76e8a41e2f368b416a06b00eb1f60970ed073f5422f11",
+          "sync_digest": "d366389e5255669e04138be7aa27a9735041bb8bd9862b2bcb7a50a39356f04e",
+          "shard_sha256": "47b385963d9e7ec27b900baeff933950c0c036f459155519031e7a8a73b3e177"
+        },
+        "core17.veccore1": {
+          "first_tick": 26941,
+          "last_tick": 139797,
+          "end": [
+            "0x9158a56378",
+            139790,
+            139790
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              139792,
+              139797
+            ]
+          ],
+          "official_us": "68.4",
+          "mmads": 0,
+          "phys_digest": "e858641b8d1e3902bd18e01989ac193a909ebf5dda5784ff8770d52fed0782cf",
+          "sync_digest": "2892367006f3e91d4aaf65c41a47dbc49a0892a3e06a158e6a702255264d2e11",
+          "shard_sha256": "f59fffec0900e46f87ff405a0a8172a605d2a7f1b71d08b74dd14193b7d50358"
+        },
+        "core1.cubecore0": {
+          "first_tick": 26261,
+          "last_tick": 146892,
+          "end": [
+            "0x91588ba210",
+            146888,
+            146888
+          ],
+          "end_labels": [],
+          "official_us": "73.11",
+          "mmads": 4,
+          "phys_digest": "af5be1ba10892ce9aa8c4963d1f3bc48e8285d11c317a1fa04a2a31108d4d436",
+          "sync_digest": "f39cfde6f55a7a15a812987757ca78a856e99d2dd623dd8398dd0acc430b5e78",
+          "shard_sha256": "de64156731fec57e0432b33e8ba0bbe9d29a9d24e99edf716b8a9429ce1c68a9"
+        },
+        "core14.cubecore0": {
+          "first_tick": 26286,
+          "last_tick": 139962,
+          "end": [
+            "0x91588ba210",
+            139958,
+            139958
+          ],
+          "end_labels": [],
+          "official_us": "68.89",
+          "mmads": 0,
+          "phys_digest": "fd15dc688953e9e06a534d332a31d060a6433a346c8f0a36a7883ef3a1bd224a",
+          "sync_digest": "649bad635a62484d668af457f698a0b1bdbdb1d7de5c65a82b38b9e9fe5d869c",
+          "shard_sha256": "6c711fb0e58cb678039d64638c739e34e01d0ae3b6471476ea71afab926368cc"
+        },
+        "core11.cubecore0": {
+          "first_tick": 26286,
+          "last_tick": 139924,
+          "end": [
+            "0x91588ba210",
+            139920,
+            139920
+          ],
+          "end_labels": [],
+          "official_us": "68.87",
+          "mmads": 0,
+          "phys_digest": "28c432e32b175bcc75bd7459bafe8dc4d41376bea83b0600960d0e7d16a1b0c4",
+          "sync_digest": "9a1de8fade6e0a3662506d2d6306eac5fc4edbf3c283a3080b2fc3145ea448ea",
+          "shard_sha256": "d2484c8f2b63cb2f76f7fa94822ac3931d1cce12d80c0980b13eaa96df68ca97"
+        },
+        "core15.cubecore0": {
+          "first_tick": 26279,
+          "last_tick": 140149,
+          "end": [
+            "0x91588ba210",
+            140145,
+            140145
+          ],
+          "end_labels": [],
+          "official_us": "69.01",
+          "mmads": 0,
+          "phys_digest": "97ae01c41c9f6cc55cc39446e016b5f83e0ca73c3c5eceb15d70042752216230",
+          "sync_digest": "a4395ebe2a2d172aa5f86cb0a9c8d2249f5793e40e11ef82d56ac71fa9ccebdc",
+          "shard_sha256": "2f184dc082cb32e6e481e7b93139a1e7bd4c2b83924421b8fdce2270e3ed2b0e"
+        },
+        "core10.cubecore0": {
+          "first_tick": 26296,
+          "last_tick": 139986,
+          "end": [
+            "0x91588ba210",
+            139982,
+            139982
+          ],
+          "end_labels": [],
+          "official_us": "68.9",
+          "mmads": 0,
+          "phys_digest": "220f34aa2980e9669414cedbe42ac23c3293a878ee4cba2042672f0268646815",
+          "sync_digest": "cb64e86d46d01c905fd5d359a7510bf3a5eb01613eba8fa5599321d490469c02",
+          "shard_sha256": "812d4df39aef920238f52ae590be1dbb21e1c5a0428114e20fb381b122bbb5dc"
+        },
+        "core12.veccore1": {
+          "first_tick": 27119,
+          "last_tick": 140427,
+          "end": [
+            "0x9158a56378",
+            140420,
+            140420
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              140422,
+              140427
+            ]
+          ],
+          "official_us": "68.67",
+          "mmads": 0,
+          "phys_digest": "7684ef81bed7626e0633d6e7a53d03fc2952c8ff980d377b7cebb0c0f6f19477",
+          "sync_digest": "b53a458c1ec7c2ace3438ebc566638da72f6f8cb7b2ec8d4c032d93aa07bb83e",
+          "shard_sha256": "1d5ebb43a8e19d074c07642dcfebe42e72a005a4588f5901881293bbc5093e05"
+        },
+        "core16.veccore1": {
+          "first_tick": 27298,
+          "last_tick": 139612,
+          "end": [
+            "0x9158a56378",
+            139605,
+            139605
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              139607,
+              139612
+            ]
+          ],
+          "official_us": "68.07",
+          "mmads": 0,
+          "phys_digest": "491bbde499c6e5df61b871700e531ac798e9686fa3f5443182d017e9d133d4d2",
+          "sync_digest": "cd15c73270b85d16ec8e46bb24d87c5b084458760378d2d92cf6713b857c5a11",
+          "shard_sha256": "1312558d61939f9e880dca7839eebe24e96d4823ac689e357d3df48f971fbc99"
+        },
+        "core16.veccore0": {
+          "first_tick": 27267,
+          "last_tick": 139453,
+          "end": [
+            "0x9158a56378",
+            139446,
+            139446
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              139448,
+              139453
+            ]
+          ],
+          "official_us": "67.99",
+          "mmads": 0,
+          "phys_digest": "fb9c3c1312fca892a36a2def459ba419ebe004b8deb9766dab15f1e4f729830d",
+          "sync_digest": "485c4bf3d35287e8c64b6aed261db623c007fa60601c824d44897a9803ac042b",
+          "shard_sha256": "cc45817a7fac1aea81335f5a213e53b9bb7930ebf127325e542abbdcbf4e60be"
+        },
+        "core13.veccore1": {
+          "first_tick": 26933,
+          "last_tick": 140307,
+          "end": [
+            "0x9158a56378",
+            140300,
+            140300
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              140302,
+              140307
+            ]
+          ],
+          "official_us": "68.71",
+          "mmads": 0,
+          "phys_digest": "76c6320027505469829d1fe0e47247b83e2527d1690cb5d829bd705b8fec76b4",
+          "sync_digest": "45cc9a099b250c18171bb4e22229c8c0f67cf2279243c5bc16ff1c033a749ecc",
+          "shard_sha256": "4f9fdbab5f1d2ca66d17c8149a53723d8264d65e6c880faebe0354e14f92aa14"
+        },
+        "core12.cubecore0": {
+          "first_tick": 26252,
+          "last_tick": 139999,
+          "end": [
+            "0x91588ba210",
+            139995,
+            139995
+          ],
+          "end_labels": [],
+          "official_us": "68.94",
+          "mmads": 0,
+          "phys_digest": "1ed85983e69249e588f9c3efac7cbcbd3e92627f70d18b01501454a93f966d1f",
+          "sync_digest": "43f0e791ee348ec5ad074ca3999bb357853ba89a2007feac16bae903ab45358b",
+          "shard_sha256": "7488153e734a71104f595f238a1d003706a98e2609449b997af70219f0cc53b5"
+        },
+        "core16.cubecore0": {
+          "first_tick": 26854,
+          "last_tick": 139553,
+          "end": [
+            "0x91588ba210",
+            139549,
+            139549
+          ],
+          "end_labels": [],
+          "official_us": "68.3",
+          "mmads": 0,
+          "phys_digest": "eacb38ade3339d730a3f98950fea5bc54877eef05bf4cfc426cdf9f5c7957011",
+          "sync_digest": "a2b47911db0883ed4bd41949256a24f5e9452793d4396524a1e005c5801599b8",
+          "shard_sha256": "6ed7bcf3d099eb91b832fc17d3496713c2037dd2edc59265af8935f88fed895a"
+        },
+        "core13.cubecore0": {
+          "first_tick": 26302,
+          "last_tick": 140085,
+          "end": [
+            "0x91588ba210",
+            140081,
+            140081
+          ],
+          "end_labels": [],
+          "official_us": "68.96",
+          "mmads": 0,
+          "phys_digest": "328977c0b9d451656f0f54cf1c15ef8eb8037d275a3e860b9f19f2ecdf3f79e8",
+          "sync_digest": "02db81274f6ac12c597523a10372ab1003e2daadedbcf9346493f0c8c4631737",
+          "shard_sha256": "5d9b4e3a2f3cafe7da266c31e43d5c5132c4e8ca045a6003477f1c0b7f86d51c"
+        },
+        "core17.cubecore0": {
+          "first_tick": 26709,
+          "last_tick": 139541,
+          "end": [
+            "0x91588ba210",
+            139537,
+            139537
+          ],
+          "end_labels": [],
+          "official_us": "68.38",
+          "mmads": 0,
+          "phys_digest": "79443e72c9a0508eb4bb55bed9bf7597bf92fbb0181af698f511e3a667fa46d3",
+          "sync_digest": "f4964952671c6b44245f3f4e60ddd2f899a13e0d146877993bd664e89f2f553f",
+          "shard_sha256": "f9e9d77589f606b633ea45cd74861d49ebca9267d9271431ea602738c161a6c5"
+        },
+        "core18.cubecore0": {
+          "first_tick": 26842,
+          "last_tick": 139648,
+          "end": [
+            "0x91588ba210",
+            139644,
+            139644
+          ],
+          "end_labels": [],
+          "official_us": "68.37",
+          "mmads": 0,
+          "phys_digest": "6a81a7553a0d0dddf1d85b746ac1e975d26b1201388e319818878aa7ed2c3356",
+          "sync_digest": "c682c2b5c8fb21e923a49ffdfc0757c5acc1181d9c08e4b661babac8fb2b5def",
+          "shard_sha256": "fa6a26f0619f620dc40ef29f6429b58754a2faf24b3fa2ae05b1b9853c1a06e1"
+        },
+        "core19.cubecore0": {
+          "first_tick": 26735,
+          "last_tick": 139524,
+          "end": [
+            "0x91588ba210",
+            139520,
+            139520
+          ],
+          "end_labels": [],
+          "official_us": "68.36",
+          "mmads": 0,
+          "phys_digest": "7b6546f0e81f3dff027f9965aae400d1f4894a80e35cfcaed45db28dbc8e6eb1",
+          "sync_digest": "66ca2c046d918783062fd1541aaf954d591ab46c5d087d0772451618c18ba44c",
+          "shard_sha256": "69e1181f4f1e4e84fd2a80559738b610f90b867e0847c13983b730c8790374b6"
+        },
+        "core2.cubecore0": {
+          "first_tick": 26279,
+          "last_tick": 139844,
+          "end": [
+            "0x91588ba210",
+            139840,
+            139840
+          ],
+          "end_labels": [],
+          "official_us": "68.83",
+          "mmads": 0,
+          "phys_digest": "864b7dc37ec4274bb37e777034005b435e553952c5bf8338b13d9217fb226175",
+          "sync_digest": "c1472e0478a355e088edb8a692bd6f1b190d822f31d580c60104e7f4a7c4da12",
+          "shard_sha256": "0cc51c0190ab90b552c236329a8ca6372ea8a89c2d42129ad5c34b2bcc74fde8"
+        },
+        "core20.cubecore0": {
+          "first_tick": 26717,
+          "last_tick": 139527,
+          "end": [
+            "0x91588ba210",
+            139523,
+            139523
+          ],
+          "end_labels": [],
+          "official_us": "68.37",
+          "mmads": 0,
+          "phys_digest": "8a678f2e81a46a4bf6e3b24c9522f363be509bd82ad9c7f1719f11f76313786f",
+          "sync_digest": "b9e4b60e0e29b05b54bea522e6a6caad1686476b0ff9240deee542e2ee00946c",
+          "shard_sha256": "0eee95406e2a5a2ca539b80560309215a0e59582d7948f6f472274ce505edcd7"
+        },
+        "core21.cubecore0": {
+          "first_tick": 26853,
+          "last_tick": 139448,
+          "end": [
+            "0x91588ba210",
+            139444,
+            139444
+          ],
+          "end_labels": [],
+          "official_us": "68.24",
+          "mmads": 0,
+          "phys_digest": "ea8da02f7102ee02b0312890aad12d50d5076ccb213dfbfbc17dedd8317347c6",
+          "sync_digest": "dde6e492c368ad1e6a7ae027c091fd769523dc1887441c71c0640466a8e995d6",
+          "shard_sha256": "0236e8ff06315bdcd39deb7592011e1ada6becf754e9c91f3c00d7b01069b067"
+        },
+        "core22.cubecore0": {
+          "first_tick": 26897,
+          "last_tick": 139685,
+          "end": [
+            "0x91588ba210",
+            139681,
+            139681
+          ],
+          "end_labels": [],
+          "official_us": "68.36",
+          "mmads": 0,
+          "phys_digest": "2f102a8030706d7dc612692a70818f6d11dcfb0b470e760bb617c3902d740bc7",
+          "sync_digest": "fa0e6f643f2943c4ebefdc98cb66263e43eb8abfcd7c7c41ba99e0077f937496",
+          "shard_sha256": "379cbfbc9ca5cc3b6d10c74f3e9567a45ee6dee4892fbf5524ddba0a6a49241f"
+        },
+        "core14.veccore1": {
+          "first_tick": 27139,
+          "last_tick": 140251,
+          "end": [
+            "0x9158a56378",
+            140244,
+            140244
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              140246,
+              140251
+            ]
+          ],
+          "official_us": "68.55",
+          "mmads": 0,
+          "phys_digest": "d9e5ef716fe1fb9ce8c3eb17cc179c73fcd2361702f175a509b4ae29362599de",
+          "sync_digest": "469373646b4a54d6c131a61e028a04eb8bfb82eb9f07c30f62ff737679ce4e3f",
+          "shard_sha256": "bba4f44e2a01b96a53b2637a1de3ce1095298d28a454455ce02e90cafcf0aede"
+        },
+        "core12.veccore0": {
+          "first_tick": 27031,
+          "last_tick": 140561,
+          "end": [
+            "0x9158a56378",
+            140554,
+            140554
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              140556,
+              140561
+            ]
+          ],
+          "official_us": "68.81",
+          "mmads": 0,
+          "phys_digest": "51589c65b195bf0446c6cd3005aaf37bf668b5cc21d7bbb4fae6268b8ebbe0ea",
+          "sync_digest": "6953dd262ed0da89d5e6f4dd8da8e5541a1d2f8669ac7f32adada49fb18a20bd",
+          "shard_sha256": "7d07ec8c8a34fbb7b937da33d3f3847a5f17e59314a3b2c272350576f040feff"
+        },
+        "core10.veccore1": {
+          "first_tick": 26968,
+          "last_tick": 140158,
+          "end": [
+            "0x9158a56378",
+            140151,
+            140151
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              140153,
+              140158
+            ]
+          ],
+          "official_us": "68.6",
+          "mmads": 0,
+          "phys_digest": "d4879d8d55095f87ce7d717faa615c0a789e41858855fc2725172f70a5f18699",
+          "sync_digest": "afb698704d6ffedfef7eba615eeceb7b505ae118d02dbc61c678144290c6399a",
+          "shard_sha256": "93bbc7649d84ecdbb8688196d49cc7adc942c8fe542bc410bbde2e52c6721f39"
+        },
+        "core23.cubecore0": {
+          "first_tick": 26665,
+          "last_tick": 139545,
+          "end": [
+            "0x91588ba210",
+            139541,
+            139541
+          ],
+          "end_labels": [],
+          "official_us": "68.41",
+          "mmads": 0,
+          "phys_digest": "862b90137c3181d80f8ec580af18fc6f2a4ec32cd9aba5bc28a3af4a72b0d666",
+          "sync_digest": "5cfea6dfad276affd55181399d63fdea8cc4a3cb32b5234b968b689751a482d3",
+          "shard_sha256": "d0e950b625974854ece82cf70ecb88d007649412a4de3ed02eb12898c23bf9a1"
+        },
+        "core11.veccore0": {
+          "first_tick": 27360,
+          "last_tick": 140315,
+          "end": [
+            "0x9158a56378",
+            140308,
+            140308
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              140310,
+              140315
+            ]
+          ],
+          "official_us": "68.46",
+          "mmads": 0,
+          "phys_digest": "8689339ea5fca105c0df33e7a146c5f7e63bcf80dd9e9c8e47fce6f3a8d88010",
+          "sync_digest": "b230ecb32084888d42f37c2eb367ada9adc92af9966b08dd9e101200523eb736",
+          "shard_sha256": "7bed0e911ded484ba4a68d0084da4630088f950e34916feef21a1c7efb26ce20"
+        },
+        "core15.veccore0": {
+          "first_tick": 27209,
+          "last_tick": 140427,
+          "end": [
+            "0x9158a56378",
+            140420,
+            140420
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              140422,
+              140427
+            ]
+          ],
+          "official_us": "68.62",
+          "mmads": 0,
+          "phys_digest": "8c96c9023906d8eb9459f6f1887a26fa2b441125d7591ce11e3a55d4e995bf9c",
+          "sync_digest": "55a728466b0f8b4251bf6b2f05acf457461f82d71c997838958fb42e9a7f23a2",
+          "shard_sha256": "1d7ebb303899c2bc4c112f9e4e332811b9edf784620c43634645e12aab70d23a"
+        },
+        "core14.veccore0": {
+          "first_tick": 27028,
+          "last_tick": 140338,
+          "end": [
+            "0x9158a56378",
+            140331,
+            140331
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              140333,
+              140338
+            ]
+          ],
+          "official_us": "68.67",
+          "mmads": 0,
+          "phys_digest": "4bd3d4bda65837cc517c4d4c22524c2a26090b136ea1795f6455ad65a7072caf",
+          "sync_digest": "079aec909f2a6d54ad7c49d4ef8182fac9a7d6300da8ef9eb964263ea558b6a1",
+          "shard_sha256": "673065b2576951c17cdb00aeb4e4bc3f14e156d6d2002a44f2f887244c21bf0d"
+        },
+        "core15.veccore1": {
+          "first_tick": 27236,
+          "last_tick": 140379,
+          "end": [
+            "0x9158a56378",
+            140372,
+            140372
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              140374,
+              140379
+            ]
+          ],
+          "official_us": "68.57",
+          "mmads": 0,
+          "phys_digest": "0a619129f02cde704375cc050b1c1eb0c22b9c3ba766a373e8f445fca51ebaa9",
+          "sync_digest": "e73b238f0e9bc8a6a9681b42fd3021f31ba95b65e54aa805e3016b20d7342148",
+          "shard_sha256": "cdd5d51c3f5f4a0d1ef4b30c0bd04d682c655edb816e03812e396a1472c5b037"
+        },
+        "core11.veccore1": {
+          "first_tick": 27375,
+          "last_tick": 140592,
+          "end": [
+            "0x9158a56378",
+            140585,
+            140585
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              140587,
+              140592
+            ]
+          ],
+          "official_us": "68.62",
+          "mmads": 0,
+          "phys_digest": "4bfb07efc4c275a9dc4ff1664163f00fdd0261f21aec6aabaa9bd6b9dc3f13b1",
+          "sync_digest": "8dc95527bc61f331fbdbc6b3b643b484fe02c09494027cf8994290b78d44d924",
+          "shard_sha256": "98fa29754c11c2a481aa08845945cf24f4f09a36e9df905e000cee68a6b4a07b"
+        },
+        "core13.veccore0": {
+          "first_tick": 26848,
+          "last_tick": 140470,
+          "end": [
+            "0x9158a56378",
+            140463,
+            140463
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              140465,
+              140470
+            ]
+          ],
+          "official_us": "68.86",
+          "mmads": 0,
+          "phys_digest": "6bc9275a7b02bf02a4fdca54eb0dadec3fe9fd7ec3848ade835860b29c918a73",
+          "sync_digest": "fdf6570f690ec4b93963d1a8fb6f3f9226f8ae98dba82320d715ce7a21fa4dd8",
+          "shard_sha256": "cf3a1a1a52983001a06c15c314642593007924851fc894d25621bbd9dafdb594"
+        },
+        "core18.veccore0": {
+          "first_tick": 27232,
+          "last_tick": 140284,
+          "end": [
+            "0x9158a56378",
+            140277,
+            140277
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              140279,
+              140284
+            ]
+          ],
+          "official_us": "68.52",
+          "mmads": 0,
+          "phys_digest": "087f506525b4ebc920bbf7fb0739b0db231d5a6330e3e370ea183f0367d72a6a",
+          "sync_digest": "af44fd7e52bcdc8d23b8b8b569c5fe65c65b80c25086d04ece2a98618ab9b0d9",
+          "shard_sha256": "4121482790d17ac735da82fb724ec1025cb014914799d0f9fcf0240bd92c72d0"
+        },
+        "core18.veccore1": {
+          "first_tick": 27253,
+          "last_tick": 139754,
+          "end": [
+            "0x9158a56378",
+            139747,
+            139747
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              139749,
+              139754
+            ]
+          ],
+          "official_us": "68.18",
+          "mmads": 0,
+          "phys_digest": "311d8cf0b825ee2f6328c79425fc3143213df0572e2cd8c4052a1a65a06d23f5",
+          "sync_digest": "bd69982dc71daeb4990af93f2c71440cad1c84857b43d85ae391fe75606193c4",
+          "shard_sha256": "f914b7caca8ff72a22de3df2dd4332e7d0e776f1277c4b3bda29ee53965370ad"
+        },
+        "core19.veccore1": {
+          "first_tick": 27063,
+          "last_tick": 139672,
+          "end": [
+            "0x9158a56378",
+            139665,
+            139665
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              139667,
+              139672
+            ]
+          ],
+          "official_us": "68.25",
+          "mmads": 0,
+          "phys_digest": "99ee78fb2aed9d6ccdcb05bb55e76aa71ac47af36cedda79ebdc8a80a69cc4ca",
+          "sync_digest": "824caaf7f74578b8cbdb0c1fe8f8b432d28e3435cbd257666342fa8ab54fac0f",
+          "shard_sha256": "1469740539f9d7e8de281102f2d28d7b24eb9738717eced30cb31bbc784c46a8"
+        },
+        "core19.veccore0": {
+          "first_tick": 27010,
+          "last_tick": 139509,
+          "end": [
+            "0x9158a56378",
+            139502,
+            139502
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              139504,
+              139509
+            ]
+          ],
+          "official_us": "68.18",
+          "mmads": 0,
+          "phys_digest": "c0eb24cd657e7673bf7d70765a95c77d9d0ccfff8b4d582a8f6b4b169417ed31",
+          "sync_digest": "81a2b20b20470e0438cd4749dc16f6ada7a25eed5966e894f0b5a2ebfb5eb073",
+          "shard_sha256": "12a92918523564499d0ff5f0e2dff6e4a65d2e56bac41c64c06ce45c76406ab9"
+        },
+        "core2.veccore1": {
+          "first_tick": 27238,
+          "last_tick": 140361,
+          "end": [
+            "0x9158a56378",
+            140354,
+            140354
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              140356,
+              140361
+            ]
+          ],
+          "official_us": "68.56",
+          "mmads": 0,
+          "phys_digest": "161e6fc89a6b8ca249bf27caea041b93bd0117bbd7d48dba64347cffc5f234ca",
+          "sync_digest": "3347c8600941259216c742de83abd5af9f14728a5676116e2975612b6f6b5fcb",
+          "shard_sha256": "2278f5c34cb09165f68a95c057cf636010b5373d49ea6643fbe08b9f18ae9a60"
+        },
+        "core2.veccore0": {
+          "first_tick": 27209,
+          "last_tick": 140497,
+          "end": [
+            "0x9158a56378",
+            140490,
+            140490
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              140492,
+              140497
+            ]
+          ],
+          "official_us": "68.66",
+          "mmads": 0,
+          "phys_digest": "4169ca95ac3585ed44e7361027b1d3667f539e646b202700f85ffd3383e02ae4",
+          "sync_digest": "82674d5051a674663386bd70a886d80812e70af569a1bf9186dae4e7818ac838",
+          "shard_sha256": "8a0c6f8c8d0a9da9d2cecc2d0a9c561b05158762a8e256f243d4e42eacb15b6a"
+        },
+        "core24.cubecore0": {
+          "first_tick": 26826,
+          "last_tick": 139516,
+          "end": [
+            "0x91588ba210",
+            139512,
+            139512
+          ],
+          "end_labels": [],
+          "official_us": "68.3",
+          "mmads": 0,
+          "phys_digest": "004b3c9d8378bf1249b5abd919a221952f32edab1b00fd8ab1d98491976dca7a",
+          "sync_digest": "4222a856db37960a5d18e2c9302540a6b5de9a095a7d863fccfbb30ea51ae83d",
+          "shard_sha256": "ba3668d5337de343c725b072543970f2b209c9133a6ba106bd906acd5c343fcf"
+        },
+        "core20.veccore0": {
+          "first_tick": 26976,
+          "last_tick": 139540,
+          "end": [
+            "0x9158a56378",
+            139533,
+            139533
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              139535,
+              139540
+            ]
+          ],
+          "official_us": "68.22",
+          "mmads": 0,
+          "phys_digest": "a5572c794774047b5fab9c5879f2d8da226715d459ea0e7e9242e813765322ef",
+          "sync_digest": "36a7fa6b7bf45ac97d36c7d08cd9b10f1e82096ecd94155470b39d9f505eca2c",
+          "shard_sha256": "f928e829d9be3e396bbe16faa82732cb60e6e9beca35ea103c05ee0d836001bc"
+        },
+        "core20.veccore1": {
+          "first_tick": 27044,
+          "last_tick": 139528,
+          "end": [
+            "0x9158a56378",
+            139521,
+            139521
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              139523,
+              139528
+            ]
+          ],
+          "official_us": "68.17",
+          "mmads": 0,
+          "phys_digest": "9a72d979ea5bf0a3f00b639e1469911e458f59144750c9bd70c67d084b0e2a3c",
+          "sync_digest": "6ce502bef3e977b1c5e2f99b8d7ceb8d80118e757d7858edf5e271ad0792a39b",
+          "shard_sha256": "216d5ca67089efa67fe2153f3f807ff19417db9d40f4ffbeb8b03e6f7d038f52"
+        },
+        "core25.cubecore0": {
+          "first_tick": 26923,
+          "last_tick": 139497,
+          "end": [
+            "0x91588ba210",
+            139493,
+            139493
+          ],
+          "end_labels": [],
+          "official_us": "68.23",
+          "mmads": 0,
+          "phys_digest": "df66ea0adb22c0f18ca64361a7e2b75113380e30ee3d31fe4fbe45ee96cb72e7",
+          "sync_digest": "9b4285d563d158159e52e32981463cf27ea54e036f3898db5c70d40cb3bd91dd",
+          "shard_sha256": "16cf3fb93d721339d493cc84d32388cbae2fe222e9b5d4135d6fff9ff082ff2c"
+        },
+        "core26.cubecore0": {
+          "first_tick": 26915,
+          "last_tick": 139627,
+          "end": [
+            "0x91588ba210",
+            139623,
+            139623
+          ],
+          "end_labels": [],
+          "official_us": "68.31",
+          "mmads": 0,
+          "phys_digest": "4c5186500a7372ebf7afa12106d66934651a97846f360a8716d64e0cfbb062e6",
+          "sync_digest": "ad01f463cb1f7445fb5d9024836ee6fb7708603c44df4f2fde6f97f45528c0ed",
+          "shard_sha256": "570d48f642ac726f0687091d4848c7d234890a79922035f215f95edd50f6b9e4"
+        },
+        "core21.veccore0": {
+          "first_tick": 27366,
+          "last_tick": 139531,
+          "end": [
+            "0x9158a56378",
+            139524,
+            139524
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              139526,
+              139531
+            ]
+          ],
+          "official_us": "67.98",
+          "mmads": 0,
+          "phys_digest": "b0251cd1e9d5debde912473d622d354fc46a9e38cfaabf0d8499224073e18316",
+          "sync_digest": "d809a84b920d50852cb9ae60ab0ab29444906d73f287c1d8c69dddc2ff727730",
+          "shard_sha256": "3162191727e4a04b78f89ed22542599af77877181e23746302fef1e796f44b66"
+        },
+        "core21.veccore1": {
+          "first_tick": 27383,
+          "last_tick": 139490,
+          "end": [
+            "0x9158a56378",
+            139483,
+            139483
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              139485,
+              139490
+            ]
+          ],
+          "official_us": "67.94",
+          "mmads": 0,
+          "phys_digest": "13c0b357ef722e86b41f9b415bf657233af41dbe6a717e27533659c84fc217b8",
+          "sync_digest": "f0db7e1e148c627f03d4394a7810fbee75bf96dc18fda22e0ae41931609c8633",
+          "shard_sha256": "c504d5f6b82b976c20480ffd87a26c4753d7a29417565bbc1792b83c35530514"
+        },
+        "core27.cubecore0": {
+          "first_tick": 26940,
+          "last_tick": 139662,
+          "end": [
+            "0x91588ba210",
+            139658,
+            139658
+          ],
+          "end_labels": [],
+          "official_us": "68.32",
+          "mmads": 0,
+          "phys_digest": "95c7b997628dc585cf41ec4d9924f6010421de0648855ebeb6ebcbab0a265d2c",
+          "sync_digest": "28af70614218adb168478d51faf13660829f559490769bd03d30b27fa50f3eed",
+          "shard_sha256": "40c7fb7213584a91fbbce261af92c608f0eaea1f7d7c4a26a1ff82538cdc4d70"
+        },
+        "core28.cubecore0": {
+          "first_tick": 26624,
+          "last_tick": 139601,
+          "end": [
+            "0x91588ba210",
+            139597,
+            139597
+          ],
+          "end_labels": [],
+          "official_us": "68.47",
+          "mmads": 0,
+          "phys_digest": "1a99e16bd0c62472821ea178a4fe2e3210f5171b302a28617d35deeac74b9751",
+          "sync_digest": "c34425fe8265a3a86d7ab1bd122c0f088fbd1bb674cf261202140c9c52c4e94e",
+          "shard_sha256": "36141342476541be9f68c461f3b462edabbe4ea72799ab9123cad538a248e284"
+        },
+        "core23.veccore1": {
+          "first_tick": 27018,
+          "last_tick": 139550,
+          "end": [
+            "0x9158a56378",
+            139543,
+            139543
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              139545,
+              139550
+            ]
+          ],
+          "official_us": "68.2",
+          "mmads": 0,
+          "phys_digest": "cf2135e6bae8c88917bf70d1cc81f37158155ca09a03c1a8a427fd783163e7d7",
+          "sync_digest": "bd910890bb30e7fb47e60484a86e4ff5ce2bd0500a8d33a925e894cd6be636f8",
+          "shard_sha256": "21ae26f469c2635b562a1b05916a5627059b8a3b4d1beb93ef1cb22d34dab37b"
+        },
+        "core29.cubecore0": {
+          "first_tick": 26898,
+          "last_tick": 139561,
+          "end": [
+            "0x91588ba210",
+            139557,
+            139557
+          ],
+          "end_labels": [],
+          "official_us": "68.28",
+          "mmads": 0,
+          "phys_digest": "2febf210200d29ff2ac45d6bbd960fd21af9bdfb450e8fd28afeb9424dbf83a6",
+          "sync_digest": "9497bff38ecd89a59e3c705ea81708729839f935b6c6d593d1feb125b494fcfd",
+          "shard_sha256": "fc91c96d2bc2b315e90c7eb4e8117d5c3662f8e09e3c1e73f40c21bfb1dbe38e"
+        },
+        "core22.veccore1": {
+          "first_tick": 27084,
+          "last_tick": 139767,
+          "end": [
+            "0x9158a56378",
+            139760,
+            139760
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              139762,
+              139767
+            ]
+          ],
+          "official_us": "68.29",
+          "mmads": 0,
+          "phys_digest": "e897728a07eb17e3438bbb36929330ac430ae577a68d4fd9ca011322a8b4c592",
+          "sync_digest": "19c2c2580b3707b9a03381b369d4cfa24a12ff243e60ad286efc469a311b02db",
+          "shard_sha256": "646af2349fb59c6991707076803a099127285527a5a4245377caf174af16a3db"
+        },
+        "core3.cubecore0": {
+          "first_tick": 26230,
+          "last_tick": 140174,
+          "end": [
+            "0x91588ba210",
+            140170,
+            140170
+          ],
+          "end_labels": [],
+          "official_us": "69.06",
+          "mmads": 0,
+          "phys_digest": "13599b5027c0b02bcabe0a1c87c6aaa7abfdafb2f809bca997df1bb698777550",
+          "sync_digest": "e7daf9b97107d4d46e95d57821bcc8a9c56ca5914e91b5f76b024cee342d7d46",
+          "shard_sha256": "9d4b34e801b664244ccc3c45209dde9bbf554aa5e62abee8d7e30dce603e44e6"
+        },
+        "core23.veccore0": {
+          "first_tick": 26927,
+          "last_tick": 139521,
+          "end": [
+            "0x9158a56378",
+            139514,
+            139514
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              139516,
+              139521
+            ]
+          ],
+          "official_us": "68.24",
+          "mmads": 0,
+          "phys_digest": "703be68957e1fef48af7f0bdfc0442888128f809cb8a58ab3d9b44f66ade9c84",
+          "sync_digest": "33718a8e4cca8615672db07b8f89118dca4fcf6b2d3181161fae6ae66726058e",
+          "shard_sha256": "98d1698a48d49e3784bb9651a253e3af6b0f66c22141c77aefcf339eb418b178"
+        },
+        "core30.cubecore0": {
+          "first_tick": 26822,
+          "last_tick": 139611,
+          "end": [
+            "0x91588ba210",
+            139607,
+            139607
+          ],
+          "end_labels": [],
+          "official_us": "68.36",
+          "mmads": 0,
+          "phys_digest": "9688ef93cae27e08bfc32f0c97b4d14ec1bf58d827eb766fb5414003b2b42917",
+          "sync_digest": "916494e2b308248ac667e3a4c16fad0dac62cee71bdba522ae8f5f9e36f902fa",
+          "shard_sha256": "c8e96a9fa25d9ff6dcefe1364f9cb3a574858d80de5ff7cf5a80a6bce6118387"
+        },
+        "core1.veccore0": {
+          "first_tick": 27432,
+          "last_tick": 147966,
+          "end": [
+            "0x9158a56378",
+            147959,
+            147959
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              147961,
+              147966
+            ]
+          ],
+          "official_us": "73.05",
+          "mmads": 0,
+          "phys_digest": "643a4553fae1fea8544936cded59147336c02234ab4203e7c5d3f9a232042009",
+          "sync_digest": "b8aee0ce6e640452f28e94fa2e05800aa1bbd669c2e113267acb39f6b90c884b",
+          "shard_sha256": "10750c925ebd1a12f960cba8937f1b43cb2d58775fc3b040c47a356bcea9becf"
+        },
+        "core22.veccore0": {
+          "first_tick": 27069,
+          "last_tick": 139630,
+          "end": [
+            "0x9158a56378",
+            139623,
+            139623
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              139625,
+              139630
+            ]
+          ],
+          "official_us": "68.22",
+          "mmads": 0,
+          "phys_digest": "0092c026de690bf0ff7eb3880219e7eb8e60b201fbff332bf69e265fa62b4ac3",
+          "sync_digest": "ca439471cf3db6ec2213d527853d0c447bc85a53e7e38e835c9ba34a56c926e6",
+          "shard_sha256": "ae938cac3261abde9791cb6f91e7ffc2b61d9ee69a596ab3ead18e86720dfc80"
+        },
+        "core31.cubecore0": {
+          "first_tick": 26863,
+          "last_tick": 139545,
+          "end": [
+            "0x91588ba210",
+            139541,
+            139541
+          ],
+          "end_labels": [],
+          "official_us": "68.29",
+          "mmads": 0,
+          "phys_digest": "29c3779c5caef4b7c8f4fa477a6511a96326d82c4a77e68eede71ced846a6930",
+          "sync_digest": "9fa367fb9a1241b9808edb3dd9d2b5a5e08ebfe38833b35cab7c90e1963e4136",
+          "shard_sha256": "ea5c57b02be85907e5b5045345f8cace1d34562604e643bc534034f70220ed38"
+        },
+        "core24.veccore1": {
+          "first_tick": 27246,
+          "last_tick": 139498,
+          "end": [
+            "0x9158a56378",
+            139491,
+            139491
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              139493,
+              139498
+            ]
+          ],
+          "official_us": "68.03",
+          "mmads": 0,
+          "phys_digest": "2287ff48fd9c701ddd816ab109e3eb7c25bb1c03d9237a3c8d076d85ff2d0824",
+          "sync_digest": "48cd25de2d7cf142daad0bcff7665a50fc61872087ee9b79e73c99f919f862f5",
+          "shard_sha256": "4e0362383a787712c76ea68117ad580069bc38a6c3dbbea2373d223495cf36c5"
+        },
+        "core24.veccore0": {
+          "first_tick": 27168,
+          "last_tick": 139661,
+          "end": [
+            "0x9158a56378",
+            139654,
+            139654
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              139656,
+              139661
+            ]
+          ],
+          "official_us": "68.18",
+          "mmads": 0,
+          "phys_digest": "2e41b8d96a1ccf41d8df634760721851354097e790dfc0bfedc244a412f26595",
+          "sync_digest": "ddc74ff9774b58515e3980132f874efa5ae184c269fddeab7b1104373e187f1b",
+          "shard_sha256": "9b6f92009272fa1539750ef7e8f918a501d67aee5dc08b4b8a7f6a64f7ec95fb"
+        },
+        "core25.veccore1": {
+          "first_tick": 26998,
+          "last_tick": 139680,
+          "end": [
+            "0x9158a56378",
+            139673,
+            139673
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              139675,
+              139680
+            ]
+          ],
+          "official_us": "68.29",
+          "mmads": 0,
+          "phys_digest": "34bd00e0f711a60c146895621c2f9863c6090812b18d37be325d0d8d6c153f53",
+          "sync_digest": "bdf1695e53bfb407e7b31ef219853f53b024f52e0e93511cfd571e5a689332a0",
+          "shard_sha256": "68ce274e9f925383f17fc3cbbc9cf3b990e4a4669aef429c6dfa3a9441375fa3"
+        },
+        "core25.veccore0": {
+          "first_tick": 26969,
+          "last_tick": 139495,
+          "end": [
+            "0x9158a56378",
+            139488,
+            139488
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              139490,
+              139495
+            ]
+          ],
+          "official_us": "68.2",
+          "mmads": 0,
+          "phys_digest": "98f8b29b23688053c01d67e637cfeede134c99706958c2a4c1e6cd55673985e2",
+          "sync_digest": "fe64626e18245f6ce1d7e7bc7f5bc49c8dd6d51e3667194b229e4a7f3afc30c6",
+          "shard_sha256": "ed92b1b3df49c8c2ae203ffcace18966df0157230564e1643e4978a53489d0ec"
+        },
+        "core4.cubecore0": {
+          "first_tick": 26290,
+          "last_tick": 140209,
+          "end": [
+            "0x91588ba210",
+            140205,
+            140205
+          ],
+          "end_labels": [],
+          "official_us": "69.04",
+          "mmads": 0,
+          "phys_digest": "e1f1376da47b88fc2b78a51d66c007cca1d87e2979f3519c844693da25cc5ea7",
+          "sync_digest": "08bc4b129bb58b001b719bb4643d1deee4d1dc54a82deff23fcc9e65421fde5e",
+          "shard_sha256": "ccbad065801659d26bdb5b8b967be62d5f11e2ebd728ec6c96eef18eb372e51b"
+        },
+        "core26.veccore1": {
+          "first_tick": 27337,
+          "last_tick": 139519,
+          "end": [
+            "0x9158a56378",
+            139512,
+            139512
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              139514,
+              139519
+            ]
+          ],
+          "official_us": "67.99",
+          "mmads": 0,
+          "phys_digest": "ff86c882c11cfc390e62c5f08ffd7fa05d75689e88591807b6659dc85d69d053",
+          "sync_digest": "3dbd06bcdc48cba6c5699c1f011f115e7cb13773320c6469132cd7f41725ebb4",
+          "shard_sha256": "d8659f87e8f563c09cbc870c5aa5614078c6b984ab2e819882c02ab2a0a299eb"
+        },
+        "core26.veccore0": {
+          "first_tick": 27321,
+          "last_tick": 139536,
+          "end": [
+            "0x9158a56378",
+            139529,
+            139529
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              139531,
+              139536
+            ]
+          ],
+          "official_us": "68.01",
+          "mmads": 0,
+          "phys_digest": "ee9b1099856363212bf43e8d95029b167fe4449d404b81cbaa8618880812bdb5",
+          "sync_digest": "be3ed36c868d6dc59e323e9fd055bfd6caa34d40273feaa837139ecedd809641",
+          "shard_sha256": "828c7e942a60790a291d500129ef3644e6c09fed958f8d3522aa2df797c4f142"
+        },
+        "core27.veccore0": {
+          "first_tick": 27145,
+          "last_tick": 139560,
+          "end": [
+            "0x9158a56378",
+            139553,
+            139553
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              139555,
+              139560
+            ]
+          ],
+          "official_us": "68.13",
+          "mmads": 0,
+          "phys_digest": "2f7917d8b2ef949055b7273f1f3094493a134a242b2cde4829faa272e2415f8e",
+          "sync_digest": "8dafdb32e57605e422eb42469063e64a8a838c9ec7c0fb4b087811e5030eca21",
+          "shard_sha256": "25b64bd73c1f7d9d7ac723fb0a284f3845d16d1e8ae62a5792335fd77cc203d0"
+        },
+        "core27.veccore1": {
+          "first_tick": 27137,
+          "last_tick": 140307,
+          "end": [
+            "0x9158a56378",
+            140300,
+            140300
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              140302,
+              140307
+            ]
+          ],
+          "official_us": "68.59",
+          "mmads": 0,
+          "phys_digest": "2346b3ca49fd938e73c677d7cd7d22280752f2ccecaf92c2858e3d293e94c209",
+          "sync_digest": "aeda195c699ed5e3b0d8771f9846d1d3a880c6c744848ebbe61479f950c89d43",
+          "shard_sha256": "abbab6366895a678dbaab50f4648ebbb9f8529593721de8368d24ef7e4eec34f"
+        },
+        "core5.cubecore0": {
+          "first_tick": 26296,
+          "last_tick": 139937,
+          "end": [
+            "0x91588ba210",
+            139933,
+            139933
+          ],
+          "end_labels": [],
+          "official_us": "68.87",
+          "mmads": 0,
+          "phys_digest": "bbdfb40544cddd0b1cb94dcbf493b556c585139f62b946da44f5ad6bb812e73e",
+          "sync_digest": "206b00bcb97d92d5cd79c6c1597b8714c5477a0c1bbf19bd966c015e831f9b47",
+          "shard_sha256": "583bf31a6eb0b40070b5ba14b523a0064b200150913c054acf566fddcbed56ea"
+        },
+        "core28.veccore0": {
+          "first_tick": 26890,
+          "last_tick": 139566,
+          "end": [
+            "0x9158a56378",
+            139559,
+            139559
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              139561,
+              139566
+            ]
+          ],
+          "official_us": "68.29",
+          "mmads": 0,
+          "phys_digest": "08df79c4e25787588573e7e1190f73b4edacc4f5fc077274ef3416eff03b853a",
+          "sync_digest": "1450b446d90e3d8cdba9269dd75ebc6814254ff3866616d977c9f5bcae4ec239",
+          "shard_sha256": "09be789c9e8840f3419ca798ca5fb86da0f17b369de348d24be37678d4901133"
+        },
+        "core28.veccore1": {
+          "first_tick": 27024,
+          "last_tick": 139554,
+          "end": [
+            "0x9158a56378",
+            139547,
+            139547
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              139549,
+              139554
+            ]
+          ],
+          "official_us": "68.2",
+          "mmads": 0,
+          "phys_digest": "2d067d66c932df1c6ee1fbb04f055e780df9dde2ee5d1bed006abcbd8d648a10",
+          "sync_digest": "4b5562fd6b56ff130552a83eeb9885be1b3836e6c4307fcaa8a6e1adf68d3b08",
+          "shard_sha256": "09ded59fd8b1aec58f87cb0170116672a8fbab049e9d66734922a4445ab198e1"
+        },
+        "core29.veccore1": {
+          "first_tick": 27420,
+          "last_tick": 139531,
+          "end": [
+            "0x9158a56378",
+            139524,
+            139524
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              139526,
+              139531
+            ]
+          ],
+          "official_us": "67.95",
+          "mmads": 0,
+          "phys_digest": "430567e0999ed569d2c88aab7d595b8d57e8612e0ed7e417eb06494682a361da",
+          "sync_digest": "155aa99059e554f56b17ac8ab0f98bb6c4cf1800d41fdca99dd02333424e11fc",
+          "shard_sha256": "8eb81a238319d9c8240d764fb0084e6367b508f4ec43eb57f43f8ef3f28f7515"
+        },
+        "core3.veccore0": {
+          "first_tick": 26941,
+          "last_tick": 140237,
+          "end": [
+            "0x9158a56378",
+            140230,
+            140230
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              140232,
+              140237
+            ]
+          ],
+          "official_us": "68.66",
+          "mmads": 0,
+          "phys_digest": "b89b7b19db8f538e540892397b04280b3e2fe92ffdd3ae223c66437e5fcff1f9",
+          "sync_digest": "b9ae8a078ca1b5ed9850171052a763dec7e457abda39e31a9c17e03f4b757cf4",
+          "shard_sha256": "1259478a1078ae4dae969a2207c7924ef337fa8b4aceaadfa5ebf8d0b365019d"
+        },
+        "core6.cubecore0": {
+          "first_tick": 26277,
+          "last_tick": 140091,
+          "end": [
+            "0x91588ba210",
+            140087,
+            140087
+          ],
+          "end_labels": [],
+          "official_us": "68.98",
+          "mmads": 0,
+          "phys_digest": "c316443fb6667f9d7dea95495adb1f268988466a804c29781ee515dbe1144422",
+          "sync_digest": "1164f4158cf18b3dc33bb4699dbb7bc65646ad32012ff4f0c6bff9611e1de797",
+          "shard_sha256": "e76f0b6b10e1b2b4e2ab986766edd3c2b958e47dd52f44ffdb3f1ef13a23790d"
+        },
+        "core29.veccore0": {
+          "first_tick": 27405,
+          "last_tick": 140311,
+          "end": [
+            "0x9158a56378",
+            140304,
+            140304
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              140306,
+              140311
+            ]
+          ],
+          "official_us": "68.43",
+          "mmads": 0,
+          "phys_digest": "8c05216b1da5946f59dc2313e0c4afc08b42d442dd6d00f24ab518f691f2392c",
+          "sync_digest": "21aa977bd96e04de0ccde30c2afef03e81a1c6e7d4e7b1d3ddbdec030e9b3cea",
+          "shard_sha256": "2e3005f22e6e2d0fc4b903467f7982f2b414b2401e1c7f17bbe1aac42bb706b9"
+        },
+        "core7.cubecore0": {
+          "first_tick": 26304,
+          "last_tick": 140108,
+          "end": [
+            "0x91588ba210",
+            140104,
+            140104
+          ],
+          "end_labels": [],
+          "official_us": "68.97",
+          "mmads": 0,
+          "phys_digest": "ecc7791c245f439a636e9e0354a14e70ff7a98e213383ef7112ee36be31482bc",
+          "sync_digest": "da932b3115995d36c0dd19c3b890f6926a6e21384b3d61813bae12acdd593cd2",
+          "shard_sha256": "2e0a325e86fbe4558f3148b6c708b678e869c454c0f65987158636ae5a7f23ae"
+        },
+        "core8.cubecore0": {
+          "first_tick": 26263,
+          "last_tick": 139966,
+          "end": [
+            "0x91588ba210",
+            139962,
+            139962
+          ],
+          "end_labels": [],
+          "official_us": "68.91",
+          "mmads": 0,
+          "phys_digest": "c46514828efa91b1bc7653fdd301c9fb8c06d32f17aad9cd9d436be226d1b514",
+          "sync_digest": "1a6165eae5d3c3b77d29c355a9a62899a7ac68ad0bc32ca1918e7cac98089c27",
+          "shard_sha256": "ffcb4f02abebfc1d4aefc2543f039f9c5c25ed70a39cb0fb8c4633d95230376c"
+        },
+        "core3.veccore1": {
+          "first_tick": 27079,
+          "last_tick": 140412,
+          "end": [
+            "0x9158a56378",
+            140405,
+            140405
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              140407,
+              140412
+            ]
+          ],
+          "official_us": "68.69",
+          "mmads": 0,
+          "phys_digest": "ea4b08d1f7b724489125a30fa88b4b325b9f0d0d81b9f429f6e6873b4c353f33",
+          "sync_digest": "e5488e1b0b3ea8696220c6fba758c10f5ef3c7cdef09f4da0498461401a37ff0",
+          "shard_sha256": "95af7e4f644df3cd4cb420dedd16ce2963220864f8fd85a0000b5aea774698f7"
+        },
+        "core30.veccore1": {
+          "first_tick": 27203,
+          "last_tick": 139540,
+          "end": [
+            "0x9158a56378",
+            139533,
+            139533
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              139535,
+              139540
+            ]
+          ],
+          "official_us": "68.08",
+          "mmads": 0,
+          "phys_digest": "57f0f9e17b6cc2c1304ae6fae0e6bd7139bd72520205730406b1af756b987df0",
+          "sync_digest": "1315fb2c637c5771aebfbd3ee2da947dd8a69fcc079911c03ad32d23ae83cda6",
+          "shard_sha256": "b0b36eefede86ac5102e4e849f92d823c88450df15b3425fc740dc3f6a43edb1"
+        },
+        "core30.veccore0": {
+          "first_tick": 27156,
+          "last_tick": 139833,
+          "end": [
+            "0x9158a56378",
+            139826,
+            139826
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              139828,
+              139833
+            ]
+          ],
+          "official_us": "68.29",
+          "mmads": 0,
+          "phys_digest": "52671e3a157586f0d304b7f152be648ad0c34ff24de31abb6e35dbe98177b628",
+          "sync_digest": "45e8f769d3c0971e264024bdf8ed50c83e6916b8b47ee6f18fc238a26db37a59",
+          "shard_sha256": "26e61f2de7cbc1ea60c5c609cbcb528672f3ba7db3d429144c0e980f5860e86b"
+        },
+        "core9.cubecore0": {
+          "first_tick": 26292,
+          "last_tick": 140069,
+          "end": [
+            "0x91588ba210",
+            140065,
+            140065
+          ],
+          "end_labels": [],
+          "official_us": "68.96",
+          "mmads": 0,
+          "phys_digest": "11cac50ad04832ca4fddc6d5ec8fd83b4554bda9b1b6f675c7ae188fea1d488f",
+          "sync_digest": "2170346dce57b8f75e0e05599c285d5edafcede885f6e722f12e4d3c116920bf",
+          "shard_sha256": "872fd90562273479a2ef223275763324b2e32a834c58fbf9c5a932fd159181db"
+        },
+        "core31.veccore0": {
+          "first_tick": 27440,
+          "last_tick": 139783,
+          "end": [
+            "0x9158a56378",
+            139776,
+            139776
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              139778,
+              139783
+            ]
+          ],
+          "official_us": "68.09",
+          "mmads": 0,
+          "phys_digest": "cccdef502be0c60445ff28b005b4a7d46693f0f7f0c4639818ae837778009c4c",
+          "sync_digest": "6e6da1909997e3aa3ac94cfd3d49dfcbb3be13ead5ab4e7e2c077d6fced0475c",
+          "shard_sha256": "41a1b38342baddf08e39d34eead97b0e4c16bd62877a429519464042b17befcb"
+        },
+        "core31.veccore1": {
+          "first_tick": 26958,
+          "last_tick": 139517,
+          "end": [
+            "0x9158a56378",
+            139510,
+            139510
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              139512,
+              139517
+            ]
+          ],
+          "official_us": "68.22",
+          "mmads": 0,
+          "phys_digest": "e5457ad5b9f1c667c86611f1873bc2a4ac3d82007998f60edd9cfc91103ebd04",
+          "sync_digest": "7c980aba245aa9dce0a767282cfe2fcc72d11a2cc360312f331be687cb09c757",
+          "shard_sha256": "f8cef1a7bf1741dbeb824df1ad0468e0139a7d17742231f3e1c55983b25ef374"
+        },
+        "core4.veccore0": {
+          "first_tick": 26773,
+          "last_tick": 140458,
+          "end": [
+            "0x9158a56378",
+            140451,
+            140451
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              140453,
+              140458
+            ]
+          ],
+          "official_us": "68.9",
+          "mmads": 0,
+          "phys_digest": "4417e04218492a968f8792f5952372841644ce999238b1cb3c01d90f7af30217",
+          "sync_digest": "280278fbfe74351195d9c8d1b095044944aa119f1cebc74b4686c8e01b8798c0",
+          "shard_sha256": "bbfc06f0f61094a45769ce4a9832771ef3346b6bd2d1d1d1540abb0e0b96f502"
+        },
+        "core4.veccore1": {
+          "first_tick": 26841,
+          "last_tick": 140554,
+          "end": [
+            "0x9158a56378",
+            140547,
+            140547
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              140549,
+              140554
+            ]
+          ],
+          "official_us": "68.92",
+          "mmads": 0,
+          "phys_digest": "52b2f51e4b42d215c944156a1b3506384b1607580ea861c8c7906afc6dd45f53",
+          "sync_digest": "0b472f6d6ddb27e27a5412d540b96a15f7db78fc0143d95664675806b20be66e",
+          "shard_sha256": "7167537dbf626444e25506dac3da54ff69449aa65c1ab051ab43d7a590cf76d6"
+        },
+        "core5.veccore1": {
+          "first_tick": 27156,
+          "last_tick": 140509,
+          "end": [
+            "0x9158a56378",
+            140502,
+            140502
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              140504,
+              140509
+            ]
+          ],
+          "official_us": "68.7",
+          "mmads": 0,
+          "phys_digest": "c262a6bc4a607e5e89de10d2d6a9f2fdfdfd28ed3e72319aa796d6f370b52d53",
+          "sync_digest": "084ba86c1274d624c36b441775fd6886a6c809f8437ee4ca03b254dac6e3711a",
+          "shard_sha256": "f4746f0de2d2d1d1f3a3dd9d95df8ab1ba6316755bffccee3a6867808341e680"
+        },
+        "core5.veccore0": {
+          "first_tick": 27049,
+          "last_tick": 140610,
+          "end": [
+            "0x9158a56378",
+            140603,
+            140603
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              140605,
+              140610
+            ]
+          ],
+          "official_us": "68.82",
+          "mmads": 0,
+          "phys_digest": "ab91ca7921736762e68986cbc4aef0b6c42ff1f488953ea28286561d137c3085",
+          "sync_digest": "63ea1106a597493ae848fa7f02ca4c2fa4c6652dd8226894ffbc8a96d5d0f25c",
+          "shard_sha256": "193a2e5abcde511d7d1b5b9c8cd13ed5fa0b27cdb6236edaa7caff80ec868f5b"
+        },
+        "core7.veccore0": {
+          "first_tick": 27278,
+          "last_tick": 140631,
+          "end": [
+            "0x9158a56378",
+            140624,
+            140624
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              140626,
+              140631
+            ]
+          ],
+          "official_us": "68.7",
+          "mmads": 0,
+          "phys_digest": "319b416a30939db6a68c22397c79514c54aef6351e4f100cb63dd2f7330efcd7",
+          "sync_digest": "f7323c49cf0b0b1715436c2c928cf991983ecb1379e110137e85fc0267cbbe2c",
+          "shard_sha256": "9ce60b36ca94fb8f18b244b0b369f8a482036baba9c611a144ec014db15f8803"
+        },
+        "core6.veccore1": {
+          "first_tick": 27183,
+          "last_tick": 140517,
+          "end": [
+            "0x9158a56378",
+            140510,
+            140510
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              140512,
+              140517
+            ]
+          ],
+          "official_us": "68.69",
+          "mmads": 0,
+          "phys_digest": "a5b4c5d4aec85ea80662d086b6138506574d923eb4416c24696cf2aeabe8e240",
+          "sync_digest": "60b4a72aab06e502510e5160fe16fb77bddfd0179604c9eccbdaedfd949d66f0",
+          "shard_sha256": "0e59f83e1a9ec1094a8c86f2ccaafde8bb81f196798b85dbb58ca59fd23bad34"
+        },
+        "core7.veccore1": {
+          "first_tick": 27301,
+          "last_tick": 140259,
+          "end": [
+            "0x9158a56378",
+            140252,
+            140252
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              140254,
+              140259
+            ]
+          ],
+          "official_us": "68.46",
+          "mmads": 0,
+          "phys_digest": "f529f74c3b83ece897861bc510341abd6b52fe3f062229a3413db26b6822080a",
+          "sync_digest": "b04a1911f6f12ee6dfe2f9fcdd179d7fab2f87b014281971ead00ff79d043a66",
+          "shard_sha256": "facdeb5a9c61784b764da9a3d1b83eeb8672ae93b85e870cfbb2a417f3bdb736"
+        },
+        "core6.veccore0": {
+          "first_tick": 27129,
+          "last_tick": 140282,
+          "end": [
+            "0x9158a56378",
+            140275,
+            140275
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              140277,
+              140282
+            ]
+          ],
+          "official_us": "68.58",
+          "mmads": 0,
+          "phys_digest": "c19daeb6674b74e62e1db088d7809269f93b13870bae6b03cbf85966ef7b38fa",
+          "sync_digest": "eda38e0d207d2542539ddfa900dede357a45bc47eb320438183855b7bb1a5a21",
+          "shard_sha256": "1eb0f1d2cbdf4e14c8086abe41cf7be5632a089728b473faab5b14e592097233"
+        },
+        "core9.veccore1": {
+          "first_tick": 27090,
+          "last_tick": 140587,
+          "end": [
+            "0x9158a56378",
+            140580,
+            140580
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              140582,
+              140587
+            ]
+          ],
+          "official_us": "68.79",
+          "mmads": 0,
+          "phys_digest": "51fed943af0254be6d8b0667fb678922be847697c483e77e65e6371357b79c4e",
+          "sync_digest": "62046903b44bf44d325a78ba0a5a76b5c8e504e531ea70816fc443fc577c6275",
+          "shard_sha256": "509b8fd3eb5e24512be9d62743c768d711ac70dc602b52005ec2e20988167176"
+        },
+        "core8.veccore1": {
+          "first_tick": 26927,
+          "last_tick": 140486,
+          "end": [
+            "0x9158a56378",
+            140479,
+            140479
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              140481,
+              140486
+            ]
+          ],
+          "official_us": "68.82",
+          "mmads": 0,
+          "phys_digest": "82405b675fd1e5fe5228637fd804a2b3fe0ae089116117ff2deed72e5ce32358",
+          "sync_digest": "f558ddad8f9a7934e7fd215de6af175cf2cf116f9dd15845fde98b0d938afb04",
+          "shard_sha256": "c906c915db94f2d5692fd93b7ec6c998e280ac44f3bc8132bd3ad56ba0fcea3f"
+        },
+        "core8.veccore0": {
+          "first_tick": 26896,
+          "last_tick": 140383,
+          "end": [
+            "0x9158a56378",
+            140376,
+            140376
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              140378,
+              140383
+            ]
+          ],
+          "official_us": "68.78",
+          "mmads": 0,
+          "phys_digest": "48c8358b521e81944f20ee79056616a24d6a1f6570ff2657113a11b98fcf737a",
+          "sync_digest": "ff38207673427392a04178d51d99bbc0a4d62f68adf697c22f803d52f6b0df1f",
+          "shard_sha256": "80d2b2eab6a3534dc4a9691cc8402145cf7f10ca4a20a1d87e732aab38699a3a"
+        },
+        "core9.veccore0": {
+          "first_tick": 26970,
+          "last_tick": 140462,
+          "end": [
+            "0x9158a56378",
+            140455,
+            140455
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              140457,
+              140462
+            ]
+          ],
+          "official_us": "68.78",
+          "mmads": 0,
+          "phys_digest": "01a05b48e3d2b36d9012919d6b9bd39153a0b72bb04d2addc8f1b87645aa0c77",
+          "sync_digest": "5099b8b1bab14ae4f09ebcb4978064c806d68b41796c7952068633bc3a32fb9c",
+          "shard_sha256": "672c3aecd26d9e86537ae71055b70b151c715bea522404e644d4db901f4971af"
+        },
+        "core1.veccore1": {
+          "first_tick": 27442,
+          "last_tick": 147875,
+          "end": [
+            "0x9158a56378",
+            147868,
+            147868
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              147870,
+              147875
+            ]
+          ],
+          "official_us": "72.99",
+          "mmads": 0,
+          "phys_digest": "5241a9e166bc024d6321d4b656ce5ae8182e889ecd7d2de0638a99b08826d6b8",
+          "sync_digest": "c95ec334e227123a415ca93428e046f4cb873f8062586328fab06d3eb9a45510",
+          "shard_sha256": "6619a04cd396810644941880dc2a6fd053692262058fdff3cf7e49e8b185c294"
+        },
+        "core0.cubecore0": {
+          "first_tick": 26306,
+          "last_tick": 146905,
+          "end": [
+            "0x91588ba210",
+            146901,
+            146901
+          ],
+          "end_labels": [],
+          "official_us": "73.09",
+          "mmads": 22,
+          "phys_digest": "67296b67a8d9736adc227197d0ff1e8a6782b978cd61dc3f4db10fc3cb66921e",
+          "sync_digest": "9929aa661f06530387d9b0770757673bed64d4dad15736685f7e523d2e1008e1",
+          "shard_sha256": "9eeb92e71f7233b492ce5f3b313008fe814786df0b2897877ea1f5bf855d7243"
+        },
+        "core0.veccore1": {
+          "first_tick": 27368,
+          "last_tick": 147828,
+          "end": [
+            "0x9158a56378",
+            147821,
+            147821
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              147823,
+              147828
+            ]
+          ],
+          "official_us": "73.01",
+          "mmads": 0,
+          "phys_digest": "e609182dc61533b111fad1394b0a1d1d0c45941fdf3fd732da13554af501b8c1",
+          "sync_digest": "7f3a912c4a75d62a955a785ca534caa5df9db211264dd1f5a61b895feea0e2eb",
+          "shard_sha256": "e3bfcf891f4c41c3008e9757ba286ee0baa281594de70b8a0657d7f989b2aa23"
+        },
+        "core0.veccore0": {
+          "first_tick": 27319,
+          "last_tick": 147818,
+          "end": [
+            "0x9158a56378",
+            147811,
+            147811
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              147813,
+              147818
+            ]
+          ],
+          "official_us": "73.03",
+          "mmads": 0,
+          "phys_digest": "12cda3afb10263bfb37ed539522a4950e8f692d719305730e8c6cbac842ac269",
+          "sync_digest": "dda69ee6c6f57c415eca014d693772eccf0d89e268d6ac67f8ab082a5d0bd7e5",
+          "shard_sha256": "611e9b898aa46784032207181595da317c6db8b0d11d027debf14da34078e588"
+        }
+      },
+      "captured_binary": "results/v0.24/kda-v1/raw/dt-t64-h2-dense/profile/OPPROF_20261119234339_KPDCBBCWTNNOORHL/ChunkKdaFwd_5e864108d5688e456abb78f238c67b16_2_mix_aic/0/dump/aicore_binary.o",
+      "published_names": [
+        "ChunkKdaFwd_5e864108d5688e456abb78f238c67b16.o",
+        "ChunkKdaFwd_3d0869ad99fc0117a05ebce5fc52f4ef.o"
+      ],
+      "aggregate": "results/v0.24/kda-v1/raw/dt-t64-h2-dense/profile/OPPROF_20261119234339_KPDCBBCWTNNOORHL/ChunkKdaFwd_5e864108d5688e456abb78f238c67b16_2_mix_aic/0/simulator/trace.json",
+      "aggregate_sha256": "5769e751d130a5d0a8a18d3bb8bfbdd039ae37d534e72ecff9ab89cfccf20c18"
+    },
+    {
+      "kernel": "Transpose_float32_int64_high_performance_10001",
+      "ordinal": 2,
+      "ca_us": 2.6769696969696968,
+      "raw_path": "results/v0.24/kda-v1/raw/dt-t64-h2-dense/profile/OPPROF_20261119234339_KPDCBBCWTNNOORHL/Transpose_float32_int64_high_performance_10001/2",
+      "device_text_sha256": "186722ef55b32dbc748b4af4f6a3d772abc150377f4c96ed88adab573e8aa2b9",
+      "first_tick": 169033,
+      "last_tick": 173450,
+      "active_aic": 0,
+      "active_aiv": 64,
+      "mmads": 0,
+      "resource": {
+        "descriptor_bytes": {
+          "OUT->UB": 59392
+        },
+        "mmad_issued_shapes": {},
+        "issued_mmad_ops": 0,
+        "queue_instruction_counts": {
+          "SCALAR": 44416,
+          "MTE3": 64,
+          "MTE2": 128,
+          "PUSHQ": 384,
+          "FLOWCTRL": 3392,
+          "WARP_0": 2432,
+          "WARP_1": 2432,
+          "WARP_2": 2432,
+          "WARP_3": 2432,
+          "WARP_4": 2432,
+          "WARP_5": 2432,
+          "WARP_6": 2432,
+          "WARP_7": 2432,
+          "WARP_8": 2432,
+          "WARP_9": 2432,
+          "WARP_10": 2432,
+          "WARP_11": 2432,
+          "WARP_12": 2432,
+          "WARP_13": 2432,
+          "WARP_14": 2432,
+          "WARP_15": 2432,
+          "WARP_16": 576,
+          "WARP_17": 576,
+          "WARP_18": 576,
+          "WARP_19": 576,
+          "WARP_20": 576,
+          "WARP_21": 576,
+          "WARP_22": 576,
+          "WARP_24": 576,
+          "WARP_23": 576,
+          "WARP_25": 576,
+          "WARP_26": 576,
+          "WARP_27": 576,
+          "WARP_28": 576,
+          "WARP_29": 576,
+          "WARP_30": 576,
+          "WARP_31": 576,
+          "WARP_32": 576,
+          "WARP_33": 576,
+          "WARP_34": 576,
+          "WARP_35": 576,
+          "WARP_36": 576,
+          "WARP_37": 576,
+          "WARP_38": 576,
+          "WARP_39": 576,
+          "WARP_40": 576,
+          "WARP_41": 576,
+          "WARP_42": 576,
+          "WARP_43": 576,
+          "WARP_44": 576,
+          "WARP_45": 576,
+          "WARP_46": 576,
+          "WARP_47": 576,
+          "WARP_48": 576,
+          "WARP_49": 576,
+          "WARP_50": 576,
+          "WARP_51": 576,
+          "WARP_52": 576,
+          "WARP_53": 576,
+          "WARP_54": 576,
+          "WARP_55": 576,
+          "WARP_56": 576,
+          "WARP_57": 576,
+          "WARP_58": 576,
+          "WARP_59": 576,
+          "WARP_60": 576,
+          "WARP_61": 576,
+          "WARP_62": 576,
+          "WARP_63": 576
+        }
+      },
+      "cores": {
+        "core21.veccore0": {
+          "first_tick": 169326,
+          "last_tick": 173135,
+          "end": [
+            "0x9000d18fbc",
+            173128,
+            173128
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              173130,
+              173135
+            ]
+          ],
+          "official_us": "2.31",
+          "mmads": 0,
+          "phys_digest": "a64c39bead1c38b3482f7c379be70e9d05b1a2a919723a63d4d64763af32fb3f",
+          "sync_digest": "3373d403af66c3fb4b9da1727484f5c8d858bc702d8cad6119e41da9d6117204",
+          "shard_sha256": "0c322e838b02c9895469046f0b0504a78084c0de2f902bc67f6e69b49fa6ed79"
+        },
+        "core28.veccore1": {
+          "first_tick": 169369,
+          "last_tick": 172797,
+          "end": [
+            "0x9000d18fbc",
+            172790,
+            172790
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              172792,
+              172797
+            ]
+          ],
+          "official_us": "2.08",
+          "mmads": 0,
+          "phys_digest": "b52b88cba4ecb2c15493d6922d3aeb6b0bb5f45da90d222c87b1d92944819219",
+          "sync_digest": "811856f95d4bd282d967254c6fef7c4e4035917403e271dc54fb914ef44c2bba",
+          "shard_sha256": "155cbdb554ea26ce83dcfc0d7d7cdcaf3b1988619ba8a3c6d69ac540817be473"
+        },
+        "core29.veccore0": {
+          "first_tick": 169208,
+          "last_tick": 173387,
+          "end": [
+            "0x9000d18fbc",
+            173380,
+            173380
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              173382,
+              173387
+            ]
+          ],
+          "official_us": "2.53",
+          "mmads": 0,
+          "phys_digest": "4f16f9455aae048dbf35b982ea6e21a46438e31d3384b34b3b2c2d01bbcc0e0e",
+          "sync_digest": "cbe207964d0b06688c6eb2cec4050783b67d3b9e84cc5300f0c670e33f5b5ec5",
+          "shard_sha256": "8f740052ffb9ad66ec614a09b6568fc0385ef353b69fab6b2c5409cdf7f53574"
+        },
+        "core14.veccore1": {
+          "first_tick": 169066,
+          "last_tick": 173354,
+          "end": [
+            "0x9000d18fbc",
+            173347,
+            173347
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              173349,
+              173354
+            ]
+          ],
+          "official_us": "2.6",
+          "mmads": 0,
+          "phys_digest": "fcf962c822605060ff1d9f2f76c142b94bfa3e9f73d2f4892207dd14dbd081f5",
+          "sync_digest": "a2803bf8227ef1e01c9a0caa17c19bd54961e563cc8d415460fe568f190b7f3d",
+          "shard_sha256": "45955ebf12579da03ee25295e73fd263ca822bf7c77d63952545364fc1d6cb86"
+        },
+        "core2.veccore1": {
+          "first_tick": 169095,
+          "last_tick": 173259,
+          "end": [
+            "0x9000d18fbc",
+            173252,
+            173252
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              173254,
+              173259
+            ]
+          ],
+          "official_us": "2.52",
+          "mmads": 0,
+          "phys_digest": "5ebfdc35ea9a223278b0112a5b8fdd0482e0d7321abe700c2f2779a97ebae6f7",
+          "sync_digest": "218ca270b111d1ddc4e8a7324ee35f27e29f1cd0e34524fcca97b5c2157d78a5",
+          "shard_sha256": "06ce07063c08dd249a6150734711bccd7fbbae4f714c0a4b2f53df5dd2f3381c"
+        },
+        "core19.veccore1": {
+          "first_tick": 169141,
+          "last_tick": 173094,
+          "end": [
+            "0x9000d18fbc",
+            173087,
+            173087
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              173089,
+              173094
+            ]
+          ],
+          "official_us": "2.4",
+          "mmads": 0,
+          "phys_digest": "d769c988e8bf8fee45739777e95aada2ee30d4155f6acbbe8c2e8aa22063534d",
+          "sync_digest": "831b58218ccc7577a61934f4734cc36d957af50ce53d7ccf3ba554040242d492",
+          "shard_sha256": "64abd619cd7587466345c8d0f88b20cebbd92503883de53d0ed9be1853bbe573"
+        },
+        "core29.veccore1": {
+          "first_tick": 169231,
+          "last_tick": 173226,
+          "end": [
+            "0x9000d18fbc",
+            173219,
+            173219
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              173221,
+              173226
+            ]
+          ],
+          "official_us": "2.42",
+          "mmads": 0,
+          "phys_digest": "b0f8c281bb5aada768f69a854ced8fd63c5b58164019c17e2ee0154d500214b5",
+          "sync_digest": "dc2f3bcef8c70b613127f7d7367c63eb11d124faaed3e46d5eabbc18bf79447d",
+          "shard_sha256": "bfa2fd2c6d6d7aa7fe97dfe1601a9c4d550910b6234aa5b4be3081459ad26abc"
+        },
+        "core14.veccore0": {
+          "first_tick": 169044,
+          "last_tick": 173244,
+          "end": [
+            "0x9000d18fbc",
+            173237,
+            173237
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              173239,
+              173244
+            ]
+          ],
+          "official_us": "2.55",
+          "mmads": 0,
+          "phys_digest": "369cb2227f9029d6f3063543ce2fde2d2247e9f6e298554adb6466388987d21d",
+          "sync_digest": "9cb9f7e98799856afe30bba56a1062f47d15b1b265947c2dab8bdb4bcd8960b1",
+          "shard_sha256": "278d0e96a5a93aa5a20bcfa60ec68c97cb8c95a330ae6a835d0da3e08749fec5"
+        },
+        "core20.veccore0": {
+          "first_tick": 169421,
+          "last_tick": 173271,
+          "end": [
+            "0x9000d18fbc",
+            173264,
+            173264
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              173266,
+              173271
+            ]
+          ],
+          "official_us": "2.33",
+          "mmads": 0,
+          "phys_digest": "9dde105c341383628a22eeea27355a7b79cf0530003e46182612b6fe06bc16f6",
+          "sync_digest": "69aa31234bb024c9c8afa30da79ca77d36fdde717ad89e8cbda3f3b42ab8428c",
+          "shard_sha256": "30331fd36eb5c4ca02fc97584ff0c3ff4a089d2ef6285dc1888c17d72633cc4e"
+        },
+        "core1.veccore0": {
+          "first_tick": 169138,
+          "last_tick": 172991,
+          "end": [
+            "0x9000d18fbc",
+            172984,
+            172984
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              172986,
+              172991
+            ]
+          ],
+          "official_us": "2.34",
+          "mmads": 0,
+          "phys_digest": "13baaefed9174264b97345e4fe99306274453810b291d71a95a413eed5f535de",
+          "sync_digest": "c994b1228c1c004d12efc19fd496acffe183f2aec6cd965fb3139d150f6e1ee8",
+          "shard_sha256": "7d006bb4e6e0c1890b8c101938d1ee973ac8523debf3273cc389eb9ff107a293"
+        },
+        "core12.veccore1": {
+          "first_tick": 169256,
+          "last_tick": 173143,
+          "end": [
+            "0x9000d18fbc",
+            173136,
+            173136
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              173138,
+              173143
+            ]
+          ],
+          "official_us": "2.36",
+          "mmads": 0,
+          "phys_digest": "ab7560dda9998e1c01e0ec25f2dc5b628d09f9e27fb9f3943eb7d3698eb63243",
+          "sync_digest": "f4ca7ebbee8da1dcdcd9a44d8eb4988f67ea56694127fe2939d5a3a4b6689c5c",
+          "shard_sha256": "905dcbfcb08c3e065dda4c0fed0f1b56d26d7760b5757aac1cb72433e0427008"
+        },
+        "core17.veccore1": {
+          "first_tick": 169460,
+          "last_tick": 173385,
+          "end": [
+            "0x9000d18fbc",
+            173378,
+            173378
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              173380,
+              173385
+            ]
+          ],
+          "official_us": "2.38",
+          "mmads": 0,
+          "phys_digest": "f0d6fd68c90877bdb0dbf41f4ae8e9e173838d44cc3a1f95cf262b005b9dcae6",
+          "sync_digest": "5e6c636a8887cf9ccff0241b6d9fe0f79b6887207abc901fbe3c59931c2ef793",
+          "shard_sha256": "3f3841a7af7688492fd0d01ae81d700b60ebb76e05ac9cf50a036a2078540fba"
+        },
+        "core24.veccore1": {
+          "first_tick": 169379,
+          "last_tick": 173341,
+          "end": [
+            "0x9000d18fbc",
+            173334,
+            173334
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              173336,
+              173341
+            ]
+          ],
+          "official_us": "2.4",
+          "mmads": 0,
+          "phys_digest": "7e9e8bdcce1ba157a2cf5373b88d281e785f2529f87ffa60181be50793895fc3",
+          "sync_digest": "badf6a7c549256ffa3f66d4eed1b95c234d4c7b0ee52fbdc430926b5f43e1546",
+          "shard_sha256": "f8bbb961e0f55029b3869ddc3d1c223637bed31d6f19638c122052f1daf3a2b4"
+        },
+        "core1.veccore1": {
+          "first_tick": 169225,
+          "last_tick": 173024,
+          "end": [
+            "0x9000d18fbc",
+            173017,
+            173017
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              173019,
+              173024
+            ]
+          ],
+          "official_us": "2.3",
+          "mmads": 0,
+          "phys_digest": "71af8288f6077ec3454b065160013d2bb715e39e9f99a3aa9e3380d5d6fec2a7",
+          "sync_digest": "13dc374fa8fd2b14726e5352aec00ebb6c53018301b632b80bf5a6a97736db79",
+          "shard_sha256": "816eb8de76b816a73b38bc5a4c71846e2148810f9cef4eeacb86cc6ab68d937a"
+        },
+        "core19.veccore0": {
+          "first_tick": 169109,
+          "last_tick": 173269,
+          "end": [
+            "0x9000d18fbc",
+            173262,
+            173262
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              173264,
+              173269
+            ]
+          ],
+          "official_us": "2.52",
+          "mmads": 0,
+          "phys_digest": "24ba782d57d07e788198854f56c4606634e0f6fac2653accb7346f6bcd738049",
+          "sync_digest": "acf7d885280d115ea90caa44cb98328cdc0ceb84c825f1a0e168ff5088c60a75",
+          "shard_sha256": "675081e9e09d943b9658be6886f0a4a35440fab8fded5599a31706ddb6494174"
+        },
+        "core13.veccore0": {
+          "first_tick": 169208,
+          "last_tick": 172997,
+          "end": [
+            "0x9000d18fbc",
+            172990,
+            172990
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              172992,
+              172997
+            ]
+          ],
+          "official_us": "2.3",
+          "mmads": 0,
+          "phys_digest": "46885ee56f342133c835d10b86ee9ff0a57b69ce210e1ebb5eeff5708b650ed5",
+          "sync_digest": "37d7717cff96b41d3e1178d052f408cfb227de9dc0c7bb33e5e5f7852f83082d",
+          "shard_sha256": "591a7d46273f8e1b96278d5a5149910ebb01e242a035acf306ec84857dd09e5e"
+        },
+        "core13.veccore1": {
+          "first_tick": 169229,
+          "last_tick": 173399,
+          "end": [
+            "0x9000d18fbc",
+            173392,
+            173392
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              173394,
+              173399
+            ]
+          ],
+          "official_us": "2.53",
+          "mmads": 0,
+          "phys_digest": "01e244774b878c3df33c9c421ae89683dee02c31bf93b88dff17a52cd9e9203f",
+          "sync_digest": "6a9a156571bdba722578e198c41d680bd5f7027bddaa129af6f7dfae39524c19",
+          "shard_sha256": "683a571ac8ccc0b91feec96b436747ebad6278354ce22efa81ed7594d180422e"
+        },
+        "core0.veccore0": {
+          "first_tick": 169114,
+          "last_tick": 173255,
+          "end": [
+            "0x9000d18fbc",
+            173248,
+            173248
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              173250,
+              173255
+            ]
+          ],
+          "official_us": "2.51",
+          "mmads": 0,
+          "phys_digest": "0ce94a24256139148153829f7373e134cf1151137a7badb562f76ee60d55210b",
+          "sync_digest": "a476418f931e7636c3a1a15b8cac5b00aed4db891bed5b36cdc73a315ba2b57f",
+          "shard_sha256": "43b3800a7dd0dbf4d1e17a2cfea420ac9dec5a488d082548d17c47840b00c993"
+        },
+        "core0.veccore1": {
+          "first_tick": 169310,
+          "last_tick": 173166,
+          "end": [
+            "0x9000d18fbc",
+            173159,
+            173159
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              173161,
+              173166
+            ]
+          ],
+          "official_us": "2.34",
+          "mmads": 0,
+          "phys_digest": "3f503e368a7831813f7f5514c1cafea86997f43b2e9aed1da9848385f8cfd8df",
+          "sync_digest": "2e792e4926287b2bbe961b00705c86d171f5ecb6ff3f98667ce7430658296bdf",
+          "shard_sha256": "09fc4c68be4dfc145697c7659a7e2e8e03b94cf0fd250adcad8e947391e21dc0"
+        },
+        "core16.veccore1": {
+          "first_tick": 169499,
+          "last_tick": 173062,
+          "end": [
+            "0x9000d18fbc",
+            173055,
+            173055
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              173057,
+              173062
+            ]
+          ],
+          "official_us": "2.16",
+          "mmads": 0,
+          "phys_digest": "9a9bfdceae8454aef94cfa845d5947756c289f28d9f13c6c9bda9c2d9be86514",
+          "sync_digest": "a8db8309577f524440cc76671826e68ea821ea7b801cb495d4ad01873717e471",
+          "shard_sha256": "5d080a7b007642e691ccce0043aec7ad2cdb021cabd401adcad26300b918d0e1"
+        },
+        "core11.veccore1": {
+          "first_tick": 169046,
+          "last_tick": 173003,
+          "end": [
+            "0x9000d18fbc",
+            172996,
+            172996
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              172998,
+              173003
+            ]
+          ],
+          "official_us": "2.4",
+          "mmads": 0,
+          "phys_digest": "418527ca2ff6f2ff5b6406d0f808fd35b53ad65cb6d4d3b4fbc1e204e842992b",
+          "sync_digest": "a4fd59add1decf6bd7963a7e30d3e4adad63985bd971357c14b193952dad5741",
+          "shard_sha256": "b50b8d81699efafe3aaea53081a99bdcad5ace81dbaed96a9a2f1c6c09ef8e67"
+        },
+        "core26.veccore1": {
+          "first_tick": 169233,
+          "last_tick": 173401,
+          "end": [
+            "0x9000d18fbc",
+            173394,
+            173394
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              173396,
+              173401
+            ]
+          ],
+          "official_us": "2.53",
+          "mmads": 0,
+          "phys_digest": "d0231a8d841444b17b3549e0fa35d98a6dce4277421718c84a1548a883154233",
+          "sync_digest": "6a9a156571bdba722578e198c41d680bd5f7027bddaa129af6f7dfae39524c19",
+          "shard_sha256": "837bfe2e7c8701bf7d383ee94ada27aa998a4f85ac9b9227876a212f8de21b1e"
+        },
+        "core2.veccore0": {
+          "first_tick": 169281,
+          "last_tick": 173050,
+          "end": [
+            "0x9000d18fbc",
+            173043,
+            173043
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              173045,
+              173050
+            ]
+          ],
+          "official_us": "2.28",
+          "mmads": 0,
+          "phys_digest": "1da733ca9e2fd1fad8b8cb5bb90aa96c4e6db79c151fa14347f07042bfc03666",
+          "sync_digest": "5be187e3a4617a0c1204adb639ef91750b6f54db9de50c36a126664034579540",
+          "shard_sha256": "58b1dc607f1acff69a6d24e019f177521e42ce630c88c198f3a091c5a724ec30"
+        },
+        "core17.veccore0": {
+          "first_tick": 169128,
+          "last_tick": 173384,
+          "end": [
+            "0x9000d18fbc",
+            173377,
+            173377
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              173379,
+              173384
+            ]
+          ],
+          "official_us": "2.58",
+          "mmads": 0,
+          "phys_digest": "26ef484d5aa52cacc770871bf1eb61b3ceb2c95017638bdd7efa775fe794bd52",
+          "sync_digest": "0f69b8e98e6a97c1cf16cfecfcf08b4246b63fe3c55cf70abdd6f3ec3c17d663",
+          "shard_sha256": "b3d8204979529e98d41796cf324e9c2857685a334ab36815a411a88cbbad4f97"
+        },
+        "core12.veccore0": {
+          "first_tick": 169033,
+          "last_tick": 173112,
+          "end": [
+            "0x9000d18fbc",
+            173105,
+            173105
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              173107,
+              173112
+            ]
+          ],
+          "official_us": "2.47",
+          "mmads": 0,
+          "phys_digest": "05df32b6cdf04196cf2e053e1c011206a0ed89433874141b55ec55124cc4dfdf",
+          "sync_digest": "1d71c1aa3ab397e75574c437922b4ec0ade5f8832bf2c41e858d3055cfd1f19f",
+          "shard_sha256": "d88e8375524a1d546bde3a456b1526b3bf9d626f9f9c2cf1dc23f0a6298fcf05"
+        },
+        "core20.veccore1": {
+          "first_tick": 169138,
+          "last_tick": 173450,
+          "end": [
+            "0x9000d18fbc",
+            173443,
+            173443
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              173445,
+              173450
+            ]
+          ],
+          "official_us": "2.61",
+          "mmads": 0,
+          "phys_digest": "ca3c202a4f428c79c0defc153bcb3caf02e71186ea0bc1ebc0b3b7f36c37fa19",
+          "sync_digest": "a68b1bd1ba7320dff80cdadbfd159abfc7e8b3d800abd6cd295b6aa53ef33557",
+          "shard_sha256": "8592433820c57bf61926cf5bcf6b94f45ff56d1983baabbdea3839112e7323d4"
+        },
+        "core10.veccore1": {
+          "first_tick": 169394,
+          "last_tick": 172838,
+          "end": [
+            "0x9000d18fbc",
+            172831,
+            172831
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              172833,
+              172838
+            ]
+          ],
+          "official_us": "2.09",
+          "mmads": 0,
+          "phys_digest": "eab5d85e95609a18fe5ea3dbeb077b4fc4533a7bed557cb4a9c4771732e86f79",
+          "sync_digest": "9b4b898bb8e49c1913c96693926b0bbbca696b6c2fd2ce12a0568dc9530713af",
+          "shard_sha256": "969b4f1e40258860203d8691c752a3297f7c2164fdcf440c8336a3cd35569ca8"
+        },
+        "core23.veccore1": {
+          "first_tick": 169279,
+          "last_tick": 173356,
+          "end": [
+            "0x9000d18fbc",
+            173349,
+            173349
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              173351,
+              173356
+            ]
+          ],
+          "official_us": "2.47",
+          "mmads": 0,
+          "phys_digest": "4942400bf88a4d25efab6f86947007056ee542eefd7f642b1dd3c6d62d9006c4",
+          "sync_digest": "1d0ca50c50e87cac425cbabf2b63e5aa94278dbd41d0f50324ba8bb837485cd1",
+          "shard_sha256": "2497765e6b1f267ed3ddcaf04b4d143ee77d798adac4cdde3396bfa6df90b6ed"
+        },
+        "core27.veccore1": {
+          "first_tick": 169283,
+          "last_tick": 173114,
+          "end": [
+            "0x9000d18fbc",
+            173107,
+            173107
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              173109,
+              173114
+            ]
+          ],
+          "official_us": "2.32",
+          "mmads": 0,
+          "phys_digest": "9b5459666e1d0cb62b9d8d284a7be106c501fa1324fbc9c07ae99d19c53630b2",
+          "sync_digest": "4c459e43529f0dc66737cc334474f72cefe9199461926a495709722a7c0b2964",
+          "shard_sha256": "48abc4a63106b75160042265bcd50b9120db555426a80221888924a66b0cd2b3"
+        },
+        "core11.veccore0": {
+          "first_tick": 169285,
+          "last_tick": 173069,
+          "end": [
+            "0x9000d18fbc",
+            173062,
+            173062
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              173064,
+              173069
+            ]
+          ],
+          "official_us": "2.29",
+          "mmads": 0,
+          "phys_digest": "84615e9e8edacbf859f986e1b88e7be020900f8b1399978c7034d91c1f00a5a4",
+          "sync_digest": "88de0ba5b98e480b449c8a7bde02cb5b8e4b52176df9f29cc33e056b75316a5b",
+          "shard_sha256": "e0bb4cc70424d6f657ae9f8fa1ee17e9560bf8bb99d7da83d663a5ab89897532"
+        },
+        "core25.veccore0": {
+          "first_tick": 169178,
+          "last_tick": 173296,
+          "end": [
+            "0x9000d18fbc",
+            173289,
+            173289
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              173291,
+              173296
+            ]
+          ],
+          "official_us": "2.5",
+          "mmads": 0,
+          "phys_digest": "c02bc4fc54d599a051b5d6f0ef4ea02ec9f050054f0080df3f52c46c508cd813",
+          "sync_digest": "ab14c97a4e51ba5bc17fab1f7dbf6627d65f957657cebeb60c22727182cb5554",
+          "shard_sha256": "8fd6fdec2a9fc4ea76a3c27483af25e85981b343e882505c8c41228869cb0ac0"
+        },
+        "core25.veccore1": {
+          "first_tick": 169297,
+          "last_tick": 173349,
+          "end": [
+            "0x9000d18fbc",
+            173342,
+            173342
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              173344,
+              173349
+            ]
+          ],
+          "official_us": "2.46",
+          "mmads": 0,
+          "phys_digest": "1ee869cd9df89f77bc8d005e1e68a76e2e80531058853b139c180a120b819242",
+          "sync_digest": "661e6696a0ffb359a5f17ed2ecff7e80a31266f7f9af64622d1d4a5fd49c4676",
+          "shard_sha256": "ede21b32ef9eab4081f079d6c708928e3ca6b55ec63a0017d199959a60e97224"
+        },
+        "core10.veccore0": {
+          "first_tick": 169336,
+          "last_tick": 173279,
+          "end": [
+            "0x9000d18fbc",
+            173272,
+            173272
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              173274,
+              173279
+            ]
+          ],
+          "official_us": "2.39",
+          "mmads": 0,
+          "phys_digest": "f5ef530d9542adbf37b305ad0bdc6787a0d6351abc0bb9cc9a327e354ade9f6b",
+          "sync_digest": "0aa3879600915a5bd83e0a58b66d115c31e31f7c6cac43b3126cbc170ac1e696",
+          "shard_sha256": "1f5b5cdb5e442d044e4c9bee4ce19affb62e694b1ada9bb70396fb2ac58ddd83"
+        },
+        "core18.veccore0": {
+          "first_tick": 169411,
+          "last_tick": 173343,
+          "end": [
+            "0x9000d18fbc",
+            173336,
+            173336
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              173338,
+              173343
+            ]
+          ],
+          "official_us": "2.38",
+          "mmads": 0,
+          "phys_digest": "e5b2890dae57e8680eef995238ac44db82c8ae0acf6a9b6abefd31a10c67d357",
+          "sync_digest": "4b0144a47614573b527bd68d575e471318562f4aacab0ea273621a8ffb4ca9c1",
+          "shard_sha256": "8a4b6e23b2d71f513329e2f0a7cd7fe832b2c2da9273e71232e1adb0a2dd218b"
+        },
+        "core22.veccore1": {
+          "first_tick": 169198,
+          "last_tick": 173096,
+          "end": [
+            "0x9000d18fbc",
+            173089,
+            173089
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              173091,
+              173096
+            ]
+          ],
+          "official_us": "2.36",
+          "mmads": 0,
+          "phys_digest": "78dc01b1318f22a3af275ea8922a4b397083d4d1eca70520cff7f5c2fd9d1f52",
+          "sync_digest": "563f5fabfac4f83344368c15ae5db2b1d0c87bf6d6726e25aac453a6dfff8fdf",
+          "shard_sha256": "7f2e3864a6bea386addda99f9d638ee8b38cc903ffc43a0153744741f906dbce"
+        },
+        "core22.veccore0": {
+          "first_tick": 169176,
+          "last_tick": 173234,
+          "end": [
+            "0x9000d18fbc",
+            173227,
+            173227
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              173229,
+              173234
+            ]
+          ],
+          "official_us": "2.46",
+          "mmads": 0,
+          "phys_digest": "ff7fe2055a21968cdd41291e48fdfad523964bbcae557ee4a0175ba22b82c2bc",
+          "sync_digest": "bfc7479e1edb376780c8c107a501e7a6d95caca2afde231406fa469e211be87c",
+          "shard_sha256": "5ee19afc6bd24c38775f0332113cb15e2b77741189636705be59b1fbdf3a1252"
+        },
+        "core28.veccore0": {
+          "first_tick": 169223,
+          "last_tick": 173364,
+          "end": [
+            "0x9000d18fbc",
+            173357,
+            173357
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              173359,
+              173364
+            ]
+          ],
+          "official_us": "2.51",
+          "mmads": 0,
+          "phys_digest": "c8887a104f5989e7fe91f514adeef2f576880d0e8b65e57665de57bca5e1012e",
+          "sync_digest": "a991611e437f006b60dc36f8bf2062b080790eaa51a21c44807e408e9f28f4f3",
+          "shard_sha256": "fdd6ea38a2fb3d25d9f41d090955b73268ffb4f777581e720355d6971f2357f8"
+        },
+        "core23.veccore0": {
+          "first_tick": 169289,
+          "last_tick": 172813,
+          "end": [
+            "0x9000d18fbc",
+            172806,
+            172806
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              172808,
+              172813
+            ]
+          ],
+          "official_us": "2.14",
+          "mmads": 0,
+          "phys_digest": "cbd8514874fb0ac524b56eaa76e346c9afdc4f6b4f14b82fbe5eafac2db5be66",
+          "sync_digest": "5d4f8a81fecee3d36709b743a76ce18393c6a7b6f42a72fb13902004f0ce2f02",
+          "shard_sha256": "b03bd880551d1f38194be304f4b0f967cbf182869b1517ff49a856ee9b4eb9bf"
+        },
+        "core18.veccore1": {
+          "first_tick": 169373,
+          "last_tick": 173275,
+          "end": [
+            "0x9000d18fbc",
+            173268,
+            173268
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              173270,
+              173275
+            ]
+          ],
+          "official_us": "2.36",
+          "mmads": 0,
+          "phys_digest": "72e6a4f79942c0fbfb7b200ed3bfcc28ee5a336715638570d5ee57c9af6b77ea",
+          "sync_digest": "6033cf59659a267a6eec7d6ec1d3f08c96a5f1080f9755359cdaba166d1e444d",
+          "shard_sha256": "f183b3da947c75c2c42ff5a2afce986caae683cda98f75f9ba0dfa87e0e71a5d"
+        },
+        "core15.veccore0": {
+          "first_tick": 169256,
+          "last_tick": 173345,
+          "end": [
+            "0x9000d18fbc",
+            173338,
+            173338
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              173340,
+              173345
+            ]
+          ],
+          "official_us": "2.48",
+          "mmads": 0,
+          "phys_digest": "2b9341df014f3f94c598a6dec0878f92c43029c50559fe4712240fc80f7fb2bb",
+          "sync_digest": "87e0d8cd83b789d77afd40fa45ce522764ecd3d9b28b4825caf408492a7c0e7c",
+          "shard_sha256": "ffc3662c331b4031d94820867a7928cd38bf55cdc28b8dc3d97649ee91d45196"
+        },
+        "core27.veccore0": {
+          "first_tick": 169347,
+          "last_tick": 173391,
+          "end": [
+            "0x9000d18fbc",
+            173384,
+            173384
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              173386,
+              173391
+            ]
+          ],
+          "official_us": "2.45",
+          "mmads": 0,
+          "phys_digest": "fd1d968d1a5bae9b8d7d130b21850834910fe7f7e1be17917782b74c4ba7ab3f",
+          "sync_digest": "cecebc9edd8ffd0c24caa2b8a2ea15bab7dec23590903863f4cf3be4a976a86a",
+          "shard_sha256": "eebaa0448bdc721d726fde2dc1d6a415cfbdabca6f603114c0af82f1cb773914"
+        },
+        "core16.veccore0": {
+          "first_tick": 169246,
+          "last_tick": 173191,
+          "end": [
+            "0x9000d18fbc",
+            173184,
+            173184
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              173186,
+              173191
+            ]
+          ],
+          "official_us": "2.39",
+          "mmads": 0,
+          "phys_digest": "1faa0c8bb2bad1e3a6c186b561f21c9fd4ddf09ebdb1bcdbdb006b1ccfccff4f",
+          "sync_digest": "36364e35978a17419238e83b3958812f1ef6c51137fe623f268e234c83e62952",
+          "shard_sha256": "968f910b3abf0cb2f3a24be2056b76db57a38ca42da5bec4bade365e31c4416f"
+        },
+        "core21.veccore1": {
+          "first_tick": 169315,
+          "last_tick": 173069,
+          "end": [
+            "0x9000d18fbc",
+            173062,
+            173062
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              173064,
+              173069
+            ]
+          ],
+          "official_us": "2.28",
+          "mmads": 0,
+          "phys_digest": "ef64b745482525e9a445d01fb2fe3f4bcbd527ae67c3d0f697ca1e1fbef94f47",
+          "sync_digest": "59b32c7a8f95d35481403ffdf282e6027ac122027083d75513721d06bb28245e",
+          "shard_sha256": "c9a869bbffaedca055d7d7767f2234058ccdaf660087307849a0cae04104cd2f"
+        },
+        "core24.veccore0": {
+          "first_tick": 169258,
+          "last_tick": 173300,
+          "end": [
+            "0x9000d18fbc",
+            173293,
+            173293
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              173295,
+              173300
+            ]
+          ],
+          "official_us": "2.45",
+          "mmads": 0,
+          "phys_digest": "c05d6978a20066d9626aad6de4f4c01da63eb1e1118716c917f707a6d6d2613c",
+          "sync_digest": "72f992b9c42adc9d906a35a003dec55ba12e28491ea1c57ba0db0ca15c797d0b",
+          "shard_sha256": "82dd61aa0835f545ccc60059c64ee8e1f58b557bddbf0eef17cc4b544c38b14f"
+        },
+        "core26.veccore0": {
+          "first_tick": 169386,
+          "last_tick": 173397,
+          "end": [
+            "0x9000d18fbc",
+            173390,
+            173390
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              173392,
+              173397
+            ]
+          ],
+          "official_us": "2.43",
+          "mmads": 0,
+          "phys_digest": "a6fd5e5d091da16065b32e699205d9da0c9d53cb27e6c003a366c02e24adaff3",
+          "sync_digest": "eecbca6486b6ec76a136c0d3630dc57e95e9600c016899d883bb490a1aea2fdc",
+          "shard_sha256": "b8967a1d557f51adaed824cb17af5360eb5e97449015ad6f86f2c30d9358304f"
+        },
+        "core15.veccore1": {
+          "first_tick": 169145,
+          "last_tick": 172382,
+          "end": [
+            "0x9000d18fbc",
+            172375,
+            172375
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              172377,
+              172382
+            ]
+          ],
+          "official_us": "1.96",
+          "mmads": 0,
+          "phys_digest": "a4535c19b75a46b673d652bbbd04e40739b39eb2e5219c3150b5580898576159",
+          "sync_digest": "e3a81ef90a025ce424495bf7fbf1aa1a913826166acb4a5020230f252d8af6b6",
+          "shard_sha256": "83d398c5f700c28a5a2a05c7b1f72ec4ef7a7e98b972c4e0b9bcee7877395413"
+        },
+        "core3.veccore0": {
+          "first_tick": 169209,
+          "last_tick": 173424,
+          "end": [
+            "0x9000d18fbc",
+            173417,
+            173417
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              173419,
+              173424
+            ]
+          ],
+          "official_us": "2.55",
+          "mmads": 0,
+          "phys_digest": "e554c0a1da8950f52e532dbff500a39a9affb703a0dcc36bbcd529774e66423c",
+          "sync_digest": "8875cd335f06b5f9420b79a8b73de216ae01c9bbfe068e0b537ef729c4f1d767",
+          "shard_sha256": "f2a889548c913f7d374b7ec31b73b6d9737a805ed9c5e59296a19e1e20eddf59"
+        },
+        "core3.veccore1": {
+          "first_tick": 169353,
+          "last_tick": 173139,
+          "end": [
+            "0x9000d18fbc",
+            173132,
+            173132
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              173134,
+              173139
+            ]
+          ],
+          "official_us": "2.29",
+          "mmads": 0,
+          "phys_digest": "03c6e7cba6a705aba3b3327311d4fb24bcddf0e4b04d8490b1ab202d65a88061",
+          "sync_digest": "ecff85e28cbb62080dc53fd6bed47ec13072cc2b9f02dab3d21514558348f8d2",
+          "shard_sha256": "8f2f35570af09719e40008336af697c52e48559f422bc91536c859d6af46ab0c"
+        },
+        "core30.veccore0": {
+          "first_tick": 169407,
+          "last_tick": 173259,
+          "end": [
+            "0x9000d18fbc",
+            173252,
+            173252
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              173254,
+              173259
+            ]
+          ],
+          "official_us": "2.33",
+          "mmads": 0,
+          "phys_digest": "cbbdc5316bd86148611825c43e32d74a56a561c67ceb3285cbf9a8e61c102dcb",
+          "sync_digest": "8867fcdbe0bf11499d577a525020496a408ef51d82031e8159f05838c383cb66",
+          "shard_sha256": "b91064e004d9578e0b9bd53931a1cf5ff77e483c17460161ca50003ff93e922d"
+        },
+        "core30.veccore1": {
+          "first_tick": 169442,
+          "last_tick": 173380,
+          "end": [
+            "0x9000d18fbc",
+            173373,
+            173373
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              173375,
+              173380
+            ]
+          ],
+          "official_us": "2.39",
+          "mmads": 0,
+          "phys_digest": "ca0068599773ad446fd79aef57015e0909166480b41c02401dd02eea53430814",
+          "sync_digest": "fdf19ec7ba75bf274f4b839361cf6d235e04ab739230f6660fba9a7c54ccb95a",
+          "shard_sha256": "1443153ded2f5b8c3e9fd8a025c002b8d67315f5168e20465bdbeb57b4a743c5"
+        },
+        "core31.veccore1": {
+          "first_tick": 169347,
+          "last_tick": 173368,
+          "end": [
+            "0x9000d18fbc",
+            173361,
+            173361
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              173363,
+              173368
+            ]
+          ],
+          "official_us": "2.44",
+          "mmads": 0,
+          "phys_digest": "31514cc74f86b705e5855f955a6510cae3b77b48a8f757acd26ef4b5e8a5147a",
+          "sync_digest": "da317824e9d548cd30cc9d73ebfa94c1ba6653eb1e29e8fceadcb2a710b5d468",
+          "shard_sha256": "222c1098d5e9ae9ce8b86b9494e5507720e1758185640cf4e199354e5acfb639"
+        },
+        "core31.veccore0": {
+          "first_tick": 169163,
+          "last_tick": 173125,
+          "end": [
+            "0x9000d18fbc",
+            173118,
+            173118
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              173120,
+              173125
+            ]
+          ],
+          "official_us": "2.4",
+          "mmads": 0,
+          "phys_digest": "52f80c8386a018762a70a318801e3e057c8b85e33a025ca4a027c0c3bfa6a59f",
+          "sync_digest": "ece357827ca54da8de39cc5658cdbd0dd97b5cfcc7617eefde2bf213818284bc",
+          "shard_sha256": "4f884a365d7c6a0cd60d939cc0dba990ded1c6b327e9908dc30b114e99ceaefc"
+        },
+        "core4.veccore0": {
+          "first_tick": 169258,
+          "last_tick": 173207,
+          "end": [
+            "0x9000d18fbc",
+            173200,
+            173200
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              173202,
+              173207
+            ]
+          ],
+          "official_us": "2.39",
+          "mmads": 0,
+          "phys_digest": "190408cda2f9f6d078b5fda84d6ef5bac2b704bb13153b0b1b49199c8c42211e",
+          "sync_digest": "65a07ea7cb85ac77cbbe01213e8dae34ccaeb2c3609640dbd1df8dc172965012",
+          "shard_sha256": "18de2aa39f99e6acf717232a2d7a521f045e98e015ac70271163fbec914f198c"
+        },
+        "core4.veccore1": {
+          "first_tick": 169182,
+          "last_tick": 173411,
+          "end": [
+            "0x9000d18fbc",
+            173404,
+            173404
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              173406,
+              173411
+            ]
+          ],
+          "official_us": "2.56",
+          "mmads": 0,
+          "phys_digest": "08ba98a4c4acccb5c1eaa3d9d5e3c58bf23bacf2d7cf86ca42ffb4e5c7166677",
+          "sync_digest": "fe69ee521a136c02fcbad4b6779561041ccd15caee3d14fcce68432da78489bc",
+          "shard_sha256": "f643dc5c69dd29866d702ceebb43d0fe1a23921d8e0c66d1ffda6e35c484438d"
+        },
+        "core5.veccore0": {
+          "first_tick": 169076,
+          "last_tick": 172741,
+          "end": [
+            "0x9000d18fbc",
+            172734,
+            172734
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              172736,
+              172741
+            ]
+          ],
+          "official_us": "2.22",
+          "mmads": 0,
+          "phys_digest": "44a966a6cf846bdc78e5a978ee761818f8b0ae718a6b069bc30c4ef5e9429d7b",
+          "sync_digest": "785270713e68bbfeb311f017dc94d6f7db2b32ff27781cab69a7106f36de79f0",
+          "shard_sha256": "ce10669e8b3cf893320fc3c9a34da2bec3f26e57d10e52f32273e804f73d8448"
+        },
+        "core5.veccore1": {
+          "first_tick": 169178,
+          "last_tick": 173380,
+          "end": [
+            "0x9000d18fbc",
+            173373,
+            173373
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              173375,
+              173380
+            ]
+          ],
+          "official_us": "2.55",
+          "mmads": 0,
+          "phys_digest": "05cb91477af55d6a1b65fba011f5bc969ca5baf9ee61c483fef4eefdadc5905c",
+          "sync_digest": "a0eb94d22e38cf7185bb1003b9841841222e7859a4843a86aa9d4e1c9fef6f83",
+          "shard_sha256": "b0074c9c578492011e5a800ad4ce004a182114128525dd0da664033017ea2c4e"
+        },
+        "core6.veccore0": {
+          "first_tick": 169316,
+          "last_tick": 173168,
+          "end": [
+            "0x9000d18fbc",
+            173161,
+            173161
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              173163,
+              173168
+            ]
+          ],
+          "official_us": "2.33",
+          "mmads": 0,
+          "phys_digest": "384939b8687cd3c99dcf8e7b726aa55fe23e73e2161f201cea9e2cd1d0950467",
+          "sync_digest": "1a44dc625e2bd6e87b706ad62287cc682aae85966153ceb9ba1b37058606950d",
+          "shard_sha256": "8cfeb00255cec735a5f09090846af23f002279f87968cf862659637b4524e656"
+        },
+        "core6.veccore1": {
+          "first_tick": 169283,
+          "last_tick": 173034,
+          "end": [
+            "0x9000d18fbc",
+            173027,
+            173027
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              173029,
+              173034
+            ]
+          ],
+          "official_us": "2.27",
+          "mmads": 0,
+          "phys_digest": "91e52d4cfa0804e86595cb856ba74d77215b1b536fa92e81b2da4f8e4d5f1a51",
+          "sync_digest": "24cb592e354e0aec521cedac479a3ddbddb8cfd6180481dd8bd407da6acf156c",
+          "shard_sha256": "ddfd48f1d9e4c7caad6ddb84c8a91abbc90d04addbb99921d4da961bde41fb27"
+        },
+        "core7.veccore0": {
+          "first_tick": 169167,
+          "last_tick": 172671,
+          "end": [
+            "0x9000d18fbc",
+            172664,
+            172664
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              172666,
+              172671
+            ]
+          ],
+          "official_us": "2.12",
+          "mmads": 0,
+          "phys_digest": "0267f221c817b2e21e26023d0be353b5d3ae21f580a019f6d81f46e0cfffeac4",
+          "sync_digest": "51d99c79efb8a427a8c6667d616ac15228d289f08efa2a6691b0361a448dd84b",
+          "shard_sha256": "4a9c3b97708baa7df436e7b3cd59dd656d15076c07213f7492941e26cf99f1cc"
+        },
+        "core7.veccore1": {
+          "first_tick": 169369,
+          "last_tick": 173114,
+          "end": [
+            "0x9000d18fbc",
+            173107,
+            173107
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              173109,
+              173114
+            ]
+          ],
+          "official_us": "2.27",
+          "mmads": 0,
+          "phys_digest": "6677dfa67e46fca00bd6b4797b20cfca32836af4fb746920c98f439b06d3f85d",
+          "sync_digest": "6033cf59659a267a6eec7d6ec1d3f08c96a5f1080f9755359cdaba166d1e444d",
+          "shard_sha256": "243e39d7111f575aaa527fb8189c6a7a91bc36262ef6237cc46b4add1c789177"
+        },
+        "core8.veccore0": {
+          "first_tick": 169103,
+          "last_tick": 173358,
+          "end": [
+            "0x9000d18fbc",
+            173351,
+            173351
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              173353,
+              173358
+            ]
+          ],
+          "official_us": "2.58",
+          "mmads": 0,
+          "phys_digest": "bcae50171ff19597399e0c0cb0c2fe218702d624687db0771ccf02f730b618b4",
+          "sync_digest": "e3c20cb899fde6dd64e5779f827b9edb758633d351a5a322b93766b716678c3e",
+          "shard_sha256": "6502db6bf83e1e6592a1758939c93309247578d14c73bff16f2385afc4e1e391"
+        },
+        "core8.veccore1": {
+          "first_tick": 169355,
+          "last_tick": 173248,
+          "end": [
+            "0x9000d18fbc",
+            173241,
+            173241
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              173243,
+              173248
+            ]
+          ],
+          "official_us": "2.36",
+          "mmads": 0,
+          "phys_digest": "412e9827b6022abed2d3500a9b7b21b220eb41781bb70d7b323cf423093de35f",
+          "sync_digest": "8ce3be8d3937408b23702e47106524a3717be05d4cc23c8a54e68c64bbd9cda1",
+          "shard_sha256": "2674a3ff91d18ac632e7c448538d1043caf1dcd69f12dde53257ccd877fd7b96"
+        },
+        "core9.veccore0": {
+          "first_tick": 169130,
+          "last_tick": 173174,
+          "end": [
+            "0x9000d18fbc",
+            173167,
+            173167
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              173169,
+              173174
+            ]
+          ],
+          "official_us": "2.45",
+          "mmads": 0,
+          "phys_digest": "56f08f318790df9ada2d974c96d91f21f8c1a13a2982505f8baf9c467bc0aee3",
+          "sync_digest": "12fee670759bdb153b1dcbdd541795d39103b3303961876c42d3ebf2dbb02210",
+          "shard_sha256": "15af1cd71672da83a99ae2d118885b76cec3ef384135d23a690e08a39057c757"
+        },
+        "core9.veccore1": {
+          "first_tick": 169196,
+          "last_tick": 173026,
+          "end": [
+            "0x9000d18fbc",
+            173019,
+            173019
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              173021,
+              173026
+            ]
+          ],
+          "official_us": "2.32",
+          "mmads": 0,
+          "phys_digest": "9128c1fa0a89562bedd17d19b9338e8e7c35b747888c464e72b2ba56625f8194",
+          "sync_digest": "07afef35845c078c81edfa4c912c7ae1596d7595371e1f36444f3c0ce9d6399e",
+          "shard_sha256": "a2bb67aea9b0ee0748c22a626dc814fb9d1f2b9ce2427e0e94623f0e0490f631"
+        }
+      },
+      "captured_binary": "results/v0.24/kda-v1/raw/dt-t64-h2-dense/profile/OPPROF_20261119234339_KPDCBBCWTNNOORHL/Transpose_float32_int64_high_performance_10001/2/dump/aicore_binary.o",
+      "published_names": [],
+      "aggregate": "results/v0.24/kda-v1/raw/dt-t64-h2-dense/profile/OPPROF_20261119234339_KPDCBBCWTNNOORHL/Transpose_float32_int64_high_performance_10001/2/simulator/trace.json",
+      "aggregate_sha256": "bdb181b76db91ce94bf5d14eb5ae91ff45924ee58b9ff3eb31182676ffa10324"
+    }
+  ],
+  "official_tables": 4,
+  "main_ca_us": null,
+  "serialized_ca_us": null,
+  "log_sha256": "91f98b92deabf075924055506afd712b75b3cc105d9e8708e91055f1c87d1a42"
+}

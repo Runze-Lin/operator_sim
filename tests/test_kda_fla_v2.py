@@ -10,17 +10,17 @@ ATTR = {"implementation": "fla_26_9_1_v2"}
 
 
 class FLAChunkTest(TestCase):
-    def test_all_preobserved_shapes_match_freeze_on_three_skus(self):
+    def test_v023_work_and_other_stage_prices_match_original_freeze(self):
         freeze = json.loads((ROOT / "results/kda-resource23/freeze.json").read_text())
         for row in freeze["predictions"]:
             with self.subTest(shape=row["shape"], chip=row["chip"]):
                 result = estimate("kda_chunk", row["shape"], ATTR, chip=row["chip"])
                 self.assertEqual(result.status, "extrapolated")
-                self.assertEqual(result.latency_us, row["serialized_device_us"])
                 for new, old in zip(
                     result.projection["target_plan"]["stages"], row["stages"]
                 ):
-                    self.assertEqual(new["device_us"], old["device_us"])
+                    if old["family"] != "chunk_fwd_h":
+                        self.assertEqual(new["device_us"], old["device_us"])
                     self.assertEqual(new["dma_bytes"], old["dma_bytes"])
                     self.assertEqual(
                         new["mmads"],
@@ -40,6 +40,39 @@ class FLAChunkTest(TestCase):
                     self.assertGreaterEqual(
                         new["max_core_head_chunks"], new["head_chunk_waves_lower_bound"]
                     )
+
+    def test_prefetched_stage_and_public_trace_match_prospective_freeze(self):
+        path = ROOT / "results/v0.24/kda-prefetch/register.json"
+        cases = json.loads(path.read_bytes())["cases"]
+        for case in cases[::2]:
+            for sku, expected in case["predictions"].items():
+                with self.subTest(shape=case["shape"], sku=sku):
+                    out = estimate("kda_chunk", case["shape"], ATTR, chip=sku)
+                    stages = out.projection["target_plan"]["stages"]
+                    self.assertEqual(out.latency_us, expected["us"])
+                    self.assertEqual([s["device_us"] for s in stages], expected["stages_us"])
+                    self.assertEqual([s["active_aic"] for s in stages], expected["active_aic"])
+                    self.assertEqual(stages[1]["prefetch_timeline_cycles"], expected["fwd_h_trace_model_ticks"])
+                    self.assertNotEqual(out.projection["prediction_freeze_sha256"], out.projection["resource_price_freeze_sha256"])
+                    for before, after in zip(expected["fwd_h_trace_model_ticks"], expected["fwd_h_trace_model_ticks"][1:]):
+                        self.assertEqual(after["H"][0], before["write_state"][1])
+                        self.assertEqual(after["W"][0], before["mm2"][1])
+                        self.assertLess(after["U"][0], before["write_state"][1])
+
+    def test_identical_full_chunks_skip_without_losing_tail_or_transient(self):
+        from operator_model.kda_fla_v2 import FAMILIES, Tile
+        from operator_model.kda_fwdh_schedule import _advance, _prices, _repeat, schedule_chain
+        tile = Tile(load_chip(), FAMILIES[1], 1)
+        costs = _prices(64, tile)
+        state = (0., 1200000., 2.)
+        direct = state
+        for _ in range(37):
+            direct, _ = _advance(direct, costs)
+        for actual, expected in zip(_repeat(state, costs, 37), direct):
+            self.assertAlmostEqual(actual, expected, places=7)
+        t, bars = schedule_chain(262145, 500, tile)
+        self.assertEqual(len(bars), 4)
+        self.assertEqual(bars[-1]["write_state"][1], t)
 
     def test_work_contract_and_scaling(self):
         shape = (1, 2, 1, 1, 128, 128)
@@ -87,6 +120,8 @@ class FLAChunkTest(TestCase):
         self.assertEqual(packed.latency_us, single.latency_us)
         stages = single.projection["target_plan"]["stages"]
         self.assertEqual(stages[1]["head_chunks"], 49152)
+        self.assertIn("multiple head", stages[1]["prefetch_domain"])
+        self.assertEqual(stages[1]["prefetch_timeline_cycles"], [])
         self.assertTrue(stages[2]["aiv_mover"])
         self.assertGreater(stages[2]["dma_bytes"]["UB->L1"], 0)
         self.assertLessEqual(stages[2]["launched_aiv"], 120)

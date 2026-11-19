@@ -16,6 +16,8 @@
 
 整批 prefill 的每个 rank 可以从模型规格直接查到各算子的输入、输出、dtype 和层号。按每卡 8 条、每条 32k／128k／256k 导出，模型和 CA 都齐备的单元格可以点开看该 shape 的流水。14 张图复用已完成的正式库采集。[DeepSeek V4.1 Flash](docs/workloads/deepseek-flash.md) · [DeepSeek V4 Pro](docs/workloads/deepseek-pro.md) · [Kimi K3](docs/workloads/kimi-k3.md) · [整批 prefill 的模型与 CA 图集](results/v0.23/prefill/README.md)
 
+新增的 **DeepSeek V4 Pro 单卡 B8×128k** 实测覆盖 950DT 上 50 轮 UB 分块。该层对 64 个 indexer 系数升精度，模型给 99.918 µs，CA 为 105.374 µs。对照图能看到差值从哪一轮开始积累。[大 shape 上下对照图](results/v0.23/pro-prefill/pro-b8-128ki-dt-plot.png) · [首块到尾块的计算过程](docs/examples/cast_bf16_fp32.md#pro-整批-128k-的-50-个-ub-块)
+
 ## 试一次预测
 
 在仓库根目录用系统仿真器的 Python 环境安装（Python 3.10 或更新版本）。安装后可在任意工作目录查询。下面的 `9` 表示这个 rank 上的一次 RMSNorm 同时处理 9 个 token，`7168` 是每个 token 的通道数。
@@ -39,7 +41,7 @@ print(result.latency_us, result.work["cube_ops"], result.work["logical_read_byte
 
 维护 960、970、980 等架构情景时，每个目标使用一份 JSON，分别填写按位宽区分的两类算力、核数、频率、外存容量和带宽。内置 `Ascend970DT` 情景为 120 Cube / 120 Vector、1.8 GHz、288 GB、14.4 TB/s；其中 16 位 Vector 峰值 110.592 TOP/s 已含双发射。这些是架构假设。调用方通过 `extrapolated` 状态识别外推，并决定是否将其交给事件调度器。[970DT 配置及逐项来源](configs/chips/Ascend970DT.json) · [自定义芯片示例](configs/chips/scenario-example.json) · [字段、单位和返回合同](docs/integration.md)
 
-已从隔离安装的 v0.23 wheel 检查三种芯片上既有计时、RMSNorm 前序区间、显式 KDA V2，以及每卡 B8×32k／128k／256k 的大 shape。设备预测时间与测量 Python 查询所花的墙钟分别记录。[查询开销、P95 和最大值](results/v0.23/wheel-check.json) · [本版变化与校准](results/v0.23/changes.md)
+隔离安装的 v0.24 wheel 在三种芯片上核对了 1,716 个常规输入，单次查询 P95 为 0.688 ms、最大 6.012 ms。另外 39 次只见到部分前序的 RMSNorm 流调用最大 11.407 ms。设备延迟按 µs 返回。[安装版开销与逐路由结果](results/v0.24/wheel-check.json) · [本版变化及校准范围](results/v0.24/changes.md)
 
 ## 可预测的算子
 

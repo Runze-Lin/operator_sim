@@ -115,7 +115,7 @@ def duration_seconds(op, local_shape, attrs, roofline_us, soc="Ascend950DT_9582"
 | [lightning_indexer](examples/lightning_indexer.md) | (B,Q,L,G,D) | BSND，G=8、D=128、top-512 |
 | [mhc_pre](examples/mhc_pre.md)、[mhc_post](examples/mhc_post.md)、[mhc_pre_sinkhorn](examples/mhc_pre_sinkhorn.md)、[mhc](examples/mhc.md) | (T,N,D) | N=4；mhc 代表 Pre、Sinkhorn、Post 三段，外部层单独调度 |
 | [mhc_sinkhorn](examples/mhc_sinkhorn.md) | (T,N) | N=4，`num_iters` 为实际迭代数 |
-| [kda_recurrent](examples/kda_recurrent.md)、[kda_chunk](examples/kda_chunk.md) | (B,S,Hq,Hv,K,V) | 分别为递推和分块路线，仅递推有完整时延校准 |
+| [kda_recurrent](examples/kda_recurrent.md)、[kda_chunk](examples/kda_chunk.md) | (B,S,Hq,Hv,K,V) | 递推有 CA 校准；分块默认 V1 仅工作量，显式 FLA V2 可估计三个设备窗 |
 | [grouped_matmul_swiglu_quant_v2](examples/grouped_matmul_swiglu_quant_v2.md)、[gmm2](examples/gmm2.md)、[moe_ffn](examples/moe_ffn.md) | (M,K,F,E) | `expert_counts` 为 E 个本地专家各自收到的有效 token 数，总和为 M |
 
 例如 `estimate("moe_ffn", (32, 256, 128, 2), {"expert_counts": [1, 31]})` 预测整个两段计算链。调度该节点后不要再把两个 GMM 组件的估计加到同一事件上。EP 大小不能替代本地专家直方图。推测 8 个 token 时，普通 FA 的主模型校验长度常为 Q=9，实际 B、H、打包方式仍由框架提供。
@@ -166,7 +166,7 @@ Kimi 的融合 Attention Residual 接收 `(tokens, hidden, bank_slots, valid_ban
 
 ### 从系统的调用顺序恢复启动状态
 
-系统知道流从空闲开始、并连续提交同类算子时，可以为每个 rank 和流建一个 `OperatorStream`。首次、扩核、热态只依赖已提交的核数，调用方仍只需传入 shape 和 dtype。试排多个候选 shape 用 `preview`，确认派发用 `advance`。重置流用 `reset`。在中间执行另一族 kernel 后，首次回到该家族使用未知历史点估计。此后连续同类调用给出已预热的核数下界；需求在该下界内按热态计，需求超过已知下界时继续给未知状态估计。达到整卡核数或显式传入驻留核数后，高水位重新确定。其他 kernel 对指令缓存的具体作用目前缺少足够证据。
+系统知道流从空闲开始、并连续提交同类算子时，可以为每个 rank 和流建一个 `OperatorStream`。首次、扩核、热态只依赖已提交的核数，调用方仍只需传入 shape 和 dtype。试排多个候选 shape 用 `preview`，确认派发用 `advance`。重置流用 `reset`。在中间执行另一族 kernel 后，首次回到该家族使用未知历史点估计。此后连续同类调用给出已预热的核数下界；需求在该下界内按热态计，需求超过已知下界时，RMSNorm 会将 shape 估计限制在仍可能的前序时长范围内，其他路线使用未知状态估计。达到整卡核数或显式传入驻留核数后，高水位重新确定。其他 kernel 对指令缓存的具体作用目前缺少足够证据。
 
 ```python
 from operator_model import OperatorStream
@@ -188,3 +188,6 @@ assert candidate == executed
 ### 按实际库选择扩展
 
 对于锁定的 FLA 26.9.1 三段 KDA，传 `estimate("kda_chunk", [B,S,H,H,128,128], {"implementation":"fla_26_9_1_v2"}, chip=...)`；每段的工作组、核数、分层字节和耗时见 `projection["target_plan"]["stages"]`。返回状态为 `extrapolated`。对 Flash/Pro 的 batched HcPost，传 `estimate("mhc_post", [1,T,4,D], {"implementation":"vllm_hc_post"}, chip=...)`，可查询目标分核、有效 FP32 算量、读写字节与双槽竞争后的设备时间。适用 BF16 路径返回 `extrapolated`；真实内核涉及短尾片数值风险或缺少必要资源时，时延为 `None`、工作量仍可用。默认三维 `mhc_post` 对应 CANN 安装包的 `aclnnMhcPost`。对 BF16 RMSNorm，`estimate_rms_history_band([T,D], chip=...).by_resident_aiv_us` 返回各个可区分历史 H 下的场景值。该区间用于敏感性分析；需要一条连续执行轨迹时使用 `OperatorStream`。[KDA V2](examples/kda_chunk.md) · [vLLM HcPost](examples/hc_post_vllm.md) · [RMSNorm](examples/rmsnorm.md)
+
+
+从中途接入一条已执行的流，或外部后端确实执行了一次未建模的 kernel，调用 `rank0.forget_history()`。随后第一个可见 RMSNorm 按未知历史估计，`advance` 记录它实际要求的活跃核数。若下次增加用核数，可查 `result.projection["partial_history"]` 中的 `minimum_resident_aiv`、`possible_us`、`shape_only_us` 和 `endpoint_scenario_aiv`。范围描述模型的可行前序，CA 波动仍可能超出。新进程明确从空流开始时使用 `reset()`；仅用 `preview()` 试算不会推进状态。

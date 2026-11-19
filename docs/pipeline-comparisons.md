@@ -18,11 +18,25 @@
 
 如果看完整 hidden，Flash B8×32k 的激活 Cast 是 [262144,5120]。一次 6 小时 11 分钟的 CA 中 64 个 AIV 已启动，31 个完成。该图仅将已结束核与原生包络下界对照，全核实测留空。[全 hidden 部分窗口图和长作业状态](../results/v0.23/full-hidden/report.md)
 
+### Pro · 每条 128k，单卡 8 条，一次 Cast 做 50 轮
+
+![单卡 8×128k 的 Pro indexer Cast 按相同 UB 块对齐，模型在上、CA 在下](../results/v0.23/pro-prefill/pro-b8-128ki-dt-plot.png)
+
+![末两块的放大图，上下栏保留相同的全核时间原点](../results/v0.24/pro-128ki-tail.png)
+
+这次独立库调用覆盖全部 67,108,864 个系数。沿尾块看，模型在 **97.747 µs** 发起读，末核 core7.veccore0 在 **102.408 µs** 发起。模型总共低估 5.456 µs，其中 4.661 µs 在尾块开始读之前已积累。上栏的稳态读写条分摊整卡共享带宽，下栏来自真实地址配对的 MTE2、转换和 MTE3 指令。[逐块原始地址与时间](../results/v0.23/pro-prefill/pro-b8-128ki-dt-blocks.json) · [完整库调用与金标](../results/v0.23/pro-prefill/pro-b8-128ki-dt.json)
+
 ## KDA V2 · 三个 kernel 分别在哪里产生偏差
 
 ![KDA V2，三个阶段各自按同一个时间轴对齐模型与 CA](../results/kda-resource23/950dt-t5-holdout-comparison.png)
 
 T=5、两个本地头时，950DT 在 Prepare 低估约 1.49 µs，在 FwdH 高估约 0.98 µs，整窗误差只有 0.55 µs。每列独立计时，竖线标实际 MMAD 发起，下栏保留对应的 MTE、Cube 和 Vector。该样本在模型冻结后采集。[950PR 同形流水](../results/kda-resource23/950pr-t5-holdout-comparison.png) · [公式、计时口径与完整算例](examples/kda_chunk.md)
+
+### 两个相邻块哪些输入可以预取
+
+![950DT KDA，两块按各个资源阶段对齐同一工作组](../results/v0.24/kda-prefetch/dt-80-independent.png)
+
+这个冻结后独立样本是 T=80/H=1。沿第二块可看到 W、U 提前发起，而 H 等待上块状态写结束；FwdH 新排程 8.244 µs，CA 7.708 µs。[公式、两端验证和实际缓冲地址](../results/v0.24/kda-prefetch/method.md)
 
 ### 129 个 token 如何串成三次状态更新
 
@@ -35,6 +49,12 @@ B=1、H=3，每个头的 128×128 状态沿时间递推，三个头可以并行�
 ![上面为三个 UB 块的模型，下面为同一时间轴上 PR 末核的实测读、转换和写](examples/figures/v022-cast-ub-pr.png)
 
 BF16 → FP32 Cast `[511,5120]`，第三个块开始读取输入槽 0 时，第一个块仍在从输出槽 0 写回。上栏的实色块表示已定价的首块阶段，斜纹表示后续槽的周转预算。下栏直接按真实 UB 地址配对读、转换和写。模型 5.446 µs，实测 6.576 µs。[按三个块展开算例](examples/cast_bf16_fp32.md)
+
+## RMSNorm · 同一行的两笔写何时结束
+
+![950PR 的模型与 CA，对应同一个输出地址的 rstd 和 y 写回](../results/v0.24/rms-prefix/pr-rms-output-rows.png)
+
+BF16 [34,1664]，前序同流已经执行过 17 个 AIV。图的每一行是同一个逻辑输出行。统计量 rstd 每行 4 B，因此行 31 和 32 恰好分属不同的 128 B 扇区。PR 第 31 行的 y 在模型 3.470 µs 结束，实际与该行的 rstd 几乎同时在 4.587 µs 结束；第 32 行 y 在 3.256 µs 就已完成。两端各有 28/34 行的两笔写退休间隔小于 0.005 µs。整窗预测依然接近，因为争用的 rstd 本来就在模型的关键路径上。图上保留这处逐行偏差。[950DT 同轴图](../results/v0.24/rms-prefix/dt-rms-output-rows.png) · [PR 全部 34 行](../results/v0.24/rms-prefix/pr-rms-output-rows.json) · [输入与公式](examples/rmsnorm.md)
 
 ## 最后一笔写怎样随行数改变
 

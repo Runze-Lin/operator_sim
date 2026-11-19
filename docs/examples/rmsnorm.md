@@ -6,6 +6,12 @@ RMSNorm 对每行计算 $r_t=(D^{-1}\sum_d x_{td}^2+\epsilon)^{-1/2}$，输出 $
 
 两列共用设备时间刻度，各次启动均从全核最早指令计零。上方只画正式 API 返回的关键依赖链，空白行表示该项没有决定预测窗。下方横条是最后结束的实际 AIV 的非等待指令及读写描述符区间，写描述符会包括等待完成的时间。最下方竖线覆盖向该地址扇区写 rstd 的**所有核**。算例直接取独立有序验证的第 4 和第 6 次派发，两组数值金标通过，包内 kernel 都是 `RmsNorm_normal_all_bf16_high_performance_5000`。完整设备窗按每核首末时间、END 指令和供应商各核 duration 表核实。原 10 次宿主任务曾触及整批导出预算，这里使用其中完整且已独立核对的两个窗口。[图中各阶段、退休时刻与 trace 指纹](../../results/v0.22/rms-lane-example.json) · [逐形完整性回执](../../results/rms-dispatch-audit/verified-ordered-Ascend950DT_9582.json) · [重绘脚本](../../development/validation/rms_lane_example/figure.py)
 
+## 两个输出在同一逻辑行上的写回
+
+![950PR 上按实际 GM 地址配到各输出行的两笔写，设备时间同轴](../../results/v0.24/rms-prefix/pr-rms-output-rows.png)
+
+[34,1664] 在两个 950 上均为 34 核、每核一行。给真实前序 H=17，模型预测 DT/PR 均为 4.589 µs，完整 CA 分别为 4.819 / 4.776 µs。这张图取 8 个行号，底层数据保留全部 34 行和核名。每行的蓝色统计量写按同一 128 B 扇区中的队列递推完成时刻，橙色输出写按该行归一化后发起和自身响应计算。PR 行 31 的两笔实际写入在 4.586 和 4.587 µs 结束，模型只给橙色写到 3.470 µs。行 32 写到下一个扇区，实际两次完成隔了 0.174 µs。同组各行的模型发起先后使用同类通道的区间排序；单靠最后总时延无法校准每行退出先后。[DT 同图](../../results/v0.24/rms-prefix/dt-rms-output-rows.png) · [全部 PR 读数和 trace 指纹](../../results/v0.24/rms-prefix/pr-rms-output-rows.json)
+
 ## 调用并读取结果
 
 ```python

@@ -1,0 +1,4238 @@
+{
+  "case": {
+    "id": "pr-t2-h1-varlen",
+    "shape": [
+      1,
+      2,
+      1,
+      1,
+      128,
+      128
+    ],
+    "metadata": "varlen",
+    "sku": "Ascend950PR_957b",
+    "physical_memory": "lpddr5_6400M_bailu.ini",
+    "oracle": {
+      "attention": 256,
+      "aqk": 128,
+      "akk": 128,
+      "state_vk": 16384
+    }
+  },
+  "registration_sha256": "ce564a7e697a023417d2b2676185718e7b7f05b56f4e77a144b723a9555a672f",
+  "cost": {
+    "started": "2026-11-19T15:50:04.606544+00:00",
+    "finished": "2026-11-19T15:55:49.122991+00:00",
+    "seconds": 344.5165197798051,
+    "peak_bytes": 784411882,
+    "stop": null,
+    "exit_code": 0,
+    "command": [
+      "bash",
+      "/home/l00925865/operator_sim/scripts/cann-run.sh",
+      "bash",
+      "-c",
+      "source \"$1/bin/set_env.bash\"; shift; exec \"$@\"",
+      "fla",
+      "/home/l00925865/operator_sim/results/chunk-recovery/fla2691/raw/fla_npu/opp/vendors/fla_npu_transformer",
+      "msopprof",
+      "simulator",
+      "--soc-version=Ascend950PR_957b",
+      "--dump=false",
+      "--launch-count=32",
+      "--timeout=20",
+      "--output=/home/l00925865/operator_sim/results/v0.24/kda-v1/raw/pr-t2-h1-varlen/profile",
+      "/home/l00925865/operator_sim/results/v0.24/kda-v1/raw/kimi-v1-default",
+      "2",
+      "1",
+      "varlen"
+    ]
+  },
+  "qualified": false,
+  "actual_sku_verified": true,
+  "published_host": true,
+  "published_monolithic_elf": true,
+  "process_success": true,
+  "golden": true,
+  "output_groups": {
+    "attention": {
+      "count": 256,
+      "bad": 0,
+      "max_abs": 4.76837e-07
+    },
+    "math_attention": {
+      "count": 256,
+      "bad": 0,
+      "max_abs": 3.862e-07
+    },
+    "aqk": {
+      "count": 128,
+      "bad": 0,
+      "max_abs": 0.0
+    },
+    "math_aqk": {
+      "count": 128,
+      "bad": 0,
+      "max_abs": 1.70948e-05
+    },
+    "akk": {
+      "count": 128,
+      "bad": 0,
+      "max_abs": 0.0
+    },
+    "math_akk": {
+      "count": 128,
+      "bad": 0,
+      "max_abs": 4.98989e-05
+    },
+    "state_vk": {
+      "count": 16384,
+      "bad": 0,
+      "max_abs": 1.09896e-07
+    },
+    "math_state_vk": {
+      "count": 16384,
+      "bad": 0,
+      "max_abs": 7.70532e-07
+    }
+  },
+  "sync_errors": 155,
+  "sync_fault_pc_counts": {
+    "0x91583a5bf4": 1,
+    "0x91583a5c00": 1,
+    "0x91583a5c1c": 1,
+    "0x91583a62f4": 1,
+    "0x91583a6300": 1,
+    "0x91583a6310": 1,
+    "0x91583a6838": 1,
+    "0x91583a6684": 1,
+    "0x91583a6d94": 1,
+    "0x91583a77b0": 3,
+    "0x91583a77bc": 3,
+    "0x91583a77d8": 3,
+    "0x91583a7ed8": 3,
+    "0x91583a7eec": 3,
+    "0x91583a7f0c": 3,
+    "0x91583a81ac": 3,
+    "0x91583a81b4": 3,
+    "0x91583a8568": 3,
+    "0x91583a8574": 3,
+    "0x91583a858c": 3,
+    "0x91583a8c68": 3,
+    "0x91583a8c84": 3,
+    "0x91583a8ca0": 3,
+    "0x91583a8ec4": 3,
+    "0x91583a8ed0": 3,
+    "0x915842eb2c": 28,
+    "0x915842eb38": 28,
+    "0x915842eb44": 28,
+    "0x9158449bd0": 1,
+    "0x9158449bdc": 1,
+    "0x9158449be8": 1,
+    "0x915844a93c": 1,
+    "0x915844a6e8": 1,
+    "0x915845912c": 1,
+    "0x9158459138": 1,
+    "0x9158459158": 1,
+    "0x9158459f24": 1,
+    "0x9158459f3c": 1,
+    "0x9158459f58": 1,
+    "0x915845a950": 1,
+    "0x915845a73c": 1,
+    "0x915845b344": 1
+  },
+  "sync_examples": [
+    "[ERROR] pem_ccu.cc:2277 execute_set_flag already has same set_flag! pc:0x91583a5bf4.",
+    "[ERROR] pem_ccu.cc:2277 execute_set_flag already has same set_flag! pc:0x91583a5c00.",
+    "[ERROR] pem_ccu.cc:2277 execute_set_flag already has same set_flag! pc:0x91583a5c1c."
+  ],
+  "full_windows": true,
+  "chronological": true,
+  "stages": [
+    {
+      "kernel": "Transpose_float32_int64_high_performance_10000",
+      "ordinal": 0,
+      "ca_us": 2.9327272727272726,
+      "raw_path": "results/v0.24/kda-v1/raw/pr-t2-h1-varlen/profile/OPPROF_20261119235004_KSDAEIYVPEQTHGCY/Transpose_float32_int64_high_performance_10000/0",
+      "device_text_sha256": "186722ef55b32dbc748b4af4f6a3d772abc150377f4c96ed88adab573e8aa2b9",
+      "first_tick": 5752,
+      "last_tick": 10591,
+      "active_aic": 0,
+      "active_aiv": 1,
+      "mmads": 0,
+      "resource": {
+        "descriptor_bytes": {
+          "OUT->UB": 936,
+          "UB->OUT": 8
+        },
+        "mmad_issued_shapes": {},
+        "issued_mmad_ops": 0,
+        "queue_instruction_counts": {
+          "SCALAR": 578,
+          "MTE3": 2,
+          "MTE2": 3,
+          "PUSHQ": 2,
+          "FLOWCTRL": 39
+        }
+      },
+      "cores": {
+        "core0.veccore0": {
+          "first_tick": 5752,
+          "last_tick": 10591,
+          "end": [
+            "0x9000d0d560",
+            10584,
+            10584
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              10586,
+              10591
+            ]
+          ],
+          "official_us": "2.93",
+          "mmads": 0,
+          "phys_digest": "534c88b02c222af5e3759ff9db0b573721cc29971bbe1955382b4288fb04fabb",
+          "sync_digest": "261b289d96ac5e0e1a3bf9d669fda846dcf79ddde9bea1ddbe9e8dcfffbae3be",
+          "shard_sha256": "1747e814f72a278f3281652149e99332d3a762e9ef08e19e9f60176a52319f52"
+        }
+      },
+      "captured_binary": "results/v0.24/kda-v1/raw/pr-t2-h1-varlen/profile/OPPROF_20261119235004_KSDAEIYVPEQTHGCY/Transpose_float32_int64_high_performance_10000/0/dump/aicore_binary.o",
+      "published_names": [],
+      "aggregate": "results/v0.24/kda-v1/raw/pr-t2-h1-varlen/profile/OPPROF_20261119235004_KSDAEIYVPEQTHGCY/Transpose_float32_int64_high_performance_10000/0/simulator/trace.json",
+      "aggregate_sha256": "b0894b432a5df24818acbf90c9883613452a2ca699b05574d2d5a54298b88b2d"
+    },
+    {
+      "kernel": "Transpose_float32_int64_high_performance_10001",
+      "ordinal": 0,
+      "ca_us": 5.36060606060606,
+      "raw_path": "results/v0.24/kda-v1/raw/pr-t2-h1-varlen/profile/OPPROF_20261119235004_KSDAEIYVPEQTHGCY/Transpose_float32_int64_high_performance_10001/0",
+      "device_text_sha256": "186722ef55b32dbc748b4af4f6a3d772abc150377f4c96ed88adab573e8aa2b9",
+      "first_tick": 11881,
+      "last_tick": 20726,
+      "active_aic": 0,
+      "active_aiv": 52,
+      "mmads": 0,
+      "resource": {
+        "descriptor_bytes": {
+          "OUT->UB": 48256
+        },
+        "mmad_issued_shapes": {},
+        "issued_mmad_ops": 0,
+        "queue_instruction_counts": {
+          "SCALAR": 33072,
+          "MTE3": 52,
+          "MTE2": 104,
+          "PUSHQ": 260,
+          "FLOWCTRL": 2496,
+          "WARP_0": 1612,
+          "WARP_1": 1612,
+          "WARP_2": 1590,
+          "WARP_3": 1590,
+          "WARP_4": 1590,
+          "WARP_5": 1590,
+          "WARP_6": 1590,
+          "WARP_7": 1590,
+          "WARP_8": 1590,
+          "WARP_9": 1590,
+          "WARP_10": 468,
+          "WARP_11": 468,
+          "WARP_12": 468,
+          "WARP_13": 468,
+          "WARP_14": 468,
+          "WARP_15": 468,
+          "WARP_16": 468,
+          "WARP_17": 468,
+          "WARP_18": 468,
+          "WARP_19": 468,
+          "WARP_20": 468,
+          "WARP_21": 468,
+          "WARP_22": 468,
+          "WARP_23": 468,
+          "WARP_24": 468,
+          "WARP_25": 468,
+          "WARP_26": 468,
+          "WARP_27": 468,
+          "WARP_28": 468,
+          "WARP_29": 468,
+          "WARP_30": 468,
+          "WARP_31": 468,
+          "WARP_34": 468,
+          "WARP_35": 468,
+          "WARP_32": 468,
+          "WARP_33": 468,
+          "WARP_38": 468,
+          "WARP_39": 468,
+          "WARP_36": 468,
+          "WARP_37": 468,
+          "WARP_42": 468,
+          "WARP_43": 468,
+          "WARP_40": 468,
+          "WARP_41": 468,
+          "WARP_46": 468,
+          "WARP_47": 468,
+          "WARP_44": 468,
+          "WARP_45": 468,
+          "WARP_50": 468,
+          "WARP_51": 468,
+          "WARP_48": 468,
+          "WARP_49": 468,
+          "WARP_54": 468,
+          "WARP_55": 468,
+          "WARP_52": 468,
+          "WARP_53": 468,
+          "WARP_58": 468,
+          "WARP_59": 468,
+          "WARP_56": 468,
+          "WARP_57": 468,
+          "WARP_62": 468,
+          "WARP_63": 468,
+          "WARP_60": 468,
+          "WARP_61": 468
+        }
+      },
+      "cores": {
+        "core28.veccore1": {
+          "first_tick": 14172,
+          "last_tick": 19571,
+          "end": [
+            "0x9000d18fbc",
+            19564,
+            19564
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              19566,
+              19571
+            ]
+          ],
+          "official_us": "3.27",
+          "mmads": 0,
+          "phys_digest": "9b20476e6b036bc7c9e9f584f47a0230331dcc265f6e34384fcfa1b48b8d6834",
+          "sync_digest": "83dcf0a8e2de50670fef7169d078eeac4c6dab95bc87297c9f92e223a028cdd1",
+          "shard_sha256": "77000b1e2aba6e8f8ac66fc2b2443d031952da18e5ad111c0a007680f2d9117b"
+        },
+        "core0.veccore1": {
+          "first_tick": 11881,
+          "last_tick": 15869,
+          "end": [
+            "0x9000d18fbc",
+            15862,
+            15862
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              15864,
+              15869
+            ]
+          ],
+          "official_us": "2.42",
+          "mmads": 0,
+          "phys_digest": "1aacbbee738f967417164e772b0660c18f217573769ad68537087b69d2020404",
+          "sync_digest": "1727732f28a68f55ebe04a4a6473b184b3b44ac5f7816968dcd1b76ad950f362",
+          "shard_sha256": "8160d988702eec786346272e1f5e1faf1f4fea7de058de1db714fde22140eb97"
+        },
+        "core17.veccore1": {
+          "first_tick": 14189,
+          "last_tick": 19815,
+          "end": [
+            "0x9000d18fbc",
+            19808,
+            19808
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              19810,
+              19815
+            ]
+          ],
+          "official_us": "3.41",
+          "mmads": 0,
+          "phys_digest": "74722495219933096ab27cfc998e7acfd1fcad774772ac2d0c54b322b8364a90",
+          "sync_digest": "010f971bb9715fb3b84a1c9a1183b3460c39ca5f109fa169e5922d247ac699a9",
+          "shard_sha256": "4a378fd61e44c9289b8096c7a0e015f29df021450a02a037689d2df42b67e513"
+        },
+        "core28.veccore0": {
+          "first_tick": 14159,
+          "last_tick": 20617,
+          "end": [
+            "0x9000d18fbc",
+            20610,
+            20610
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              20612,
+              20617
+            ]
+          ],
+          "official_us": "3.91",
+          "mmads": 0,
+          "phys_digest": "e018aed9cbe11ce7c0a213840e8af42fd4c5937b2b99a245e71a5fe64392c95a",
+          "sync_digest": "455aa22b0aa67ca6fef1e2f7e33db1d33665f262fb7740797f72e5f7e700eb1d",
+          "shard_sha256": "a6aadfeedbacaf8998f70853abe6919a4722b2927fb393fb310ae152c0fd220a"
+        },
+        "core3.veccore0": {
+          "first_tick": 12405,
+          "last_tick": 17886,
+          "end": [
+            "0x9000d18fbc",
+            17879,
+            17879
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              17881,
+              17886
+            ]
+          ],
+          "official_us": "3.32",
+          "mmads": 0,
+          "phys_digest": "0b17a95f98cb6094f7861a46d88b968b06c9f910643af2b2977728927453d86f",
+          "sync_digest": "7a0eadc818bda6c6c441fb5ef76b5d7acd0098c593b4657035a6f0b3c2fb176c",
+          "shard_sha256": "62aa9a37e55c00f67ef8ff713e3f43707dd8839ad590aa7d7448b254553d8189"
+        },
+        "core12.veccore0": {
+          "first_tick": 12474,
+          "last_tick": 18470,
+          "end": [
+            "0x9000d18fbc",
+            18463,
+            18463
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              18465,
+              18470
+            ]
+          ],
+          "official_us": "3.63",
+          "mmads": 0,
+          "phys_digest": "cfd2aaac8e299d6b48b547126c2b3eeacbc26b3eb3d392aa6768783109003720",
+          "sync_digest": "9bce269c4589edb1e0f0f8025572621eeb437373570cd4b0ce1fbaaf484cfe94",
+          "shard_sha256": "9ac5b82cf78d67ec7ae85fb39999cb7ecb5ca92480fc59701a2747d38fdbd38b"
+        },
+        "core2.veccore0": {
+          "first_tick": 12197,
+          "last_tick": 17280,
+          "end": [
+            "0x9000d18fbc",
+            17273,
+            17273
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              17275,
+              17280
+            ]
+          ],
+          "official_us": "3.08",
+          "mmads": 0,
+          "phys_digest": "cf7962a3cae6f2ef9603ade966ba4e643430d1e23766ad4150bb5b69d0a5e34c",
+          "sync_digest": "8967ad8bee3d769737d8abd280edd59b5a1e36209198b5cd86582979f3a9de4e",
+          "shard_sha256": "8c7455161c6dcff1a1006bd02235cd2f5b2d219e9ec5c5632ece9753879f34d9"
+        },
+        "core20.veccore1": {
+          "first_tick": 13979,
+          "last_tick": 20726,
+          "end": [
+            "0x9000d18fbc",
+            20719,
+            20719
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              20721,
+              20726
+            ]
+          ],
+          "official_us": "4.09",
+          "mmads": 0,
+          "phys_digest": "f88213702c5ba2b50bd88de6f9b44a0b16c68cbcfc9862137766ce61e3827623",
+          "sync_digest": "53d8ee5121da096f8a77185bb22352ac30462cebf9bd79eab049d6ebde3b37c2",
+          "shard_sha256": "563537770ee4b5db7b0ea41fc956db0117710c97977ab6ce38a0a86f719692ad"
+        },
+        "core26.veccore0": {
+          "first_tick": 14100,
+          "last_tick": 20366,
+          "end": [
+            "0x9000d18fbc",
+            20359,
+            20359
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              20361,
+              20366
+            ]
+          ],
+          "official_us": "3.8",
+          "mmads": 0,
+          "phys_digest": "15356bc2d87e063f0cb188ec209df4f3d6f8d168cb4cc8cbf222b4885f47719c",
+          "sync_digest": "761e2c361421c2b93395d46819210f5e68950f2fa4218e9970486b2588561a23",
+          "shard_sha256": "0bab267d282b90cb4f3d084c590d8bb4509d3d06102a08ce2575c2811aabd0bf"
+        },
+        "core17.veccore0": {
+          "first_tick": 14174,
+          "last_tick": 19875,
+          "end": [
+            "0x9000d18fbc",
+            19868,
+            19868
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              19870,
+              19875
+            ]
+          ],
+          "official_us": "3.46",
+          "mmads": 0,
+          "phys_digest": "9e96f4ad0fc4856ebc9e176bfa78c184551fc676c27ed148bbe15d6de285408d",
+          "sync_digest": "1c503f39950dbb6a6ba0f8cb551c50e2fa165f52a7c0f9eded17170650970995",
+          "shard_sha256": "471eb2716e7487381abebffd1669dc3267c9fe06d04cbb5c4fe9ff4040d1f813"
+        },
+        "core27.veccore0": {
+          "first_tick": 13811,
+          "last_tick": 19464,
+          "end": [
+            "0x9000d18fbc",
+            19457,
+            19457
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              19459,
+              19464
+            ]
+          ],
+          "official_us": "3.43",
+          "mmads": 0,
+          "phys_digest": "160b7068e1a2c0429c502cddd4ca84e46ed99cae5ce6eadfe6c78bcfc532a847",
+          "sync_digest": "c356d7047d237668d663dbe6882d28b998e5a944c7cd579861f7c8d60807da2c",
+          "shard_sha256": "1d2f11548dc1de9a5f5e4f7b1d779d87253372552310bebc34d5ec35f32ae964"
+        },
+        "core2.veccore1": {
+          "first_tick": 12200,
+          "last_tick": 17686,
+          "end": [
+            "0x9000d18fbc",
+            17679,
+            17679
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              17681,
+              17686
+            ]
+          ],
+          "official_us": "3.32",
+          "mmads": 0,
+          "phys_digest": "276a9dd358843acaa294d06bf8fbe8b173caecdee2855d8d979276dc0e993630",
+          "sync_digest": "09deb1f1460a57b1aac9d9c738a29cf44ee5b40d619e829cac46529934aab574",
+          "shard_sha256": "d417870b22a00176d742c8161257223ab9645d5f7e19e7dbc5f4ddaad478ac54"
+        },
+        "core1.veccore1": {
+          "first_tick": 12387,
+          "last_tick": 17818,
+          "end": [
+            "0x9000d18fbc",
+            17811,
+            17811
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              17813,
+              17818
+            ]
+          ],
+          "official_us": "3.29",
+          "mmads": 0,
+          "phys_digest": "1e5d592c49b2dfc8a57351de5bedec9b9562ad023cf1ccf8147f371ed322fae1",
+          "sync_digest": "09caa55f814375657baa8dd9f00efb53332109021eca007252024e857168f817",
+          "shard_sha256": "f095ced446dc6a998f99538b933c7f6a0fe26fc035495c25e2629ce08e62f041"
+        },
+        "core22.veccore0": {
+          "first_tick": 13883,
+          "last_tick": 19708,
+          "end": [
+            "0x9000d18fbc",
+            19701,
+            19701
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              19703,
+              19708
+            ]
+          ],
+          "official_us": "3.53",
+          "mmads": 0,
+          "phys_digest": "589e0b232d646d3f9a88dd95503d3fb44cee7ccd189e2d24f0f69d45eb6ee211",
+          "sync_digest": "d29fdf1309e23722f336ed296c7c18f43346f4dbf23fe70df7dbcfe777dfb4a9",
+          "shard_sha256": "c21cb76eb3356f277967f4bb1a8e816cc132a5e4513efea0708c89519c73bd97"
+        },
+        "core23.veccore0": {
+          "first_tick": 14267,
+          "last_tick": 20273,
+          "end": [
+            "0x9000d18fbc",
+            20266,
+            20266
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              20268,
+              20273
+            ]
+          ],
+          "official_us": "3.64",
+          "mmads": 0,
+          "phys_digest": "bfa85fb62f322cae292c81159f317ccfa248e470638d7886d095deee245f37e1",
+          "sync_digest": "9e6e9de54085a039a2aac3669cf08dfe6824d6055ef18ce9d69b5cc8b58c13c0",
+          "shard_sha256": "a9e7ef21619a6d2e6de5e4f57d4a91a9a3aed0613b94de606c90eff666b8a733"
+        },
+        "core18.veccore1": {
+          "first_tick": 14247,
+          "last_tick": 20009,
+          "end": [
+            "0x9000d18fbc",
+            20002,
+            20002
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              20004,
+              20009
+            ]
+          ],
+          "official_us": "3.49",
+          "mmads": 0,
+          "phys_digest": "1fbfcd8c30c6e7c81f35a24a9c9406373def86739a7f0fcfb259712a8069cd53",
+          "sync_digest": "bbed65f91c14472d5002721d8db84336c1f78462a6c4e9b864094722612fb605",
+          "shard_sha256": "897ef7d2a9454c63f10578995a3e1af332db4c3e643e62a53c515f2e92cf8017"
+        },
+        "core19.veccore0": {
+          "first_tick": 14004,
+          "last_tick": 19794,
+          "end": [
+            "0x9000d18fbc",
+            19787,
+            19787
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              19789,
+              19794
+            ]
+          ],
+          "official_us": "3.51",
+          "mmads": 0,
+          "phys_digest": "5d5b503c280afe5ed3fee0aa056d33741bf0f682c0ba655d809d26fcc45b8d53",
+          "sync_digest": "bdf65894924e9d4f549ae74bfe373bc4572f0cafd7857e2044f4e2ed74c88ab1",
+          "shard_sha256": "c7a095dd3425251074192cf416504f8599c3076c745af348703bd52603d22480"
+        },
+        "core25.veccore1": {
+          "first_tick": 14218,
+          "last_tick": 19829,
+          "end": [
+            "0x9000d18fbc",
+            19822,
+            19822
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              19824,
+              19829
+            ]
+          ],
+          "official_us": "3.4",
+          "mmads": 0,
+          "phys_digest": "201f84ec16aa2fe51d2faf1973654c3c82fd9611d913f22120a2152453f63987",
+          "sync_digest": "186e68cc5dda3c7ed45a714a39fee8e38284135389042c1bb7ba57ab516cb87a",
+          "shard_sha256": "a21fa94ae8cbbcac7e8661c267880881a99d73f11ac80693e3e933ffd8a0f54e"
+        },
+        "core19.veccore1": {
+          "first_tick": 14030,
+          "last_tick": 19525,
+          "end": [
+            "0x9000d18fbc",
+            19518,
+            19518
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              19520,
+              19525
+            ]
+          ],
+          "official_us": "3.33",
+          "mmads": 0,
+          "phys_digest": "62a350b57da1be9cc4d97f3df86be391724b29968e3099aa800b9ee5299e5110",
+          "sync_digest": "803d97095835c2b5751200e4a9ce09dfaee34b8dc61f88c70c8086d471f7e405",
+          "shard_sha256": "10d05e2a7f4a621eff04da76e365c5b1797cb39160bdd140ac11d3b47abb61f3"
+        },
+        "core18.veccore0": {
+          "first_tick": 14232,
+          "last_tick": 19790,
+          "end": [
+            "0x9000d18fbc",
+            19783,
+            19783
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              19785,
+              19790
+            ]
+          ],
+          "official_us": "3.37",
+          "mmads": 0,
+          "phys_digest": "557f186206e617a04b754fbffe1aaa768e5d03cc29d35002c238327ec30bd4f1",
+          "sync_digest": "645ed794ad958fe74689ba6170c7e832f5e0c38b8c509d42acb30f49c70ff31a",
+          "shard_sha256": "b15b5f97006546e632d29cf8fc2692140354229da8337481bb488395acb0001e"
+        },
+        "core0.veccore0": {
+          "first_tick": 11954,
+          "last_tick": 15719,
+          "end": [
+            "0x9000d18fbc",
+            15712,
+            15712
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              15714,
+              15719
+            ]
+          ],
+          "official_us": "2.28",
+          "mmads": 0,
+          "phys_digest": "05ba23b2ec1d316ef03c11e6f3206d8ceed93abddaf67e1610ead83c3270d651",
+          "sync_digest": "d3ebe8cd71272111d221bacbf2b3b34fb680494d0c04423444603930f4da72d6",
+          "shard_sha256": "32dac5846d1aef48173c49e061805c08f359e9040ff4ecfd18541be452b1854f"
+        },
+        "core20.veccore0": {
+          "first_tick": 13969,
+          "last_tick": 20724,
+          "end": [
+            "0x9000d18fbc",
+            20717,
+            20717
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              20719,
+              20724
+            ]
+          ],
+          "official_us": "4.09",
+          "mmads": 0,
+          "phys_digest": "ceab679ae59a4496dcccb417a4d66cb3acfda3213b3c5363ffea107288c4727f",
+          "sync_digest": "f510a2c48b6652ef26041ad72dfc9a2ffbcbdf040a02787dd9698f259dc402fc",
+          "shard_sha256": "ec31a9ff5645f8a6dddeec1887a8efc8e962bca8c1c87a487ea0c5fa2b124207"
+        },
+        "core16.veccore1": {
+          "first_tick": 13962,
+          "last_tick": 20149,
+          "end": [
+            "0x9000d18fbc",
+            20142,
+            20142
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              20144,
+              20149
+            ]
+          ],
+          "official_us": "3.75",
+          "mmads": 0,
+          "phys_digest": "e0477ca9d0e3bf8a2a87e52da839e598f7bed1984901ed9bce2668345d90e068",
+          "sync_digest": "1645913bfb11c446a7bc80e5e042a696eaff22d334077d539820e8fbc6e6c757",
+          "shard_sha256": "1b62fe69c1ed8720b9c244a25a66ab7e7305c91a9e916c154def9ff783e4d2d5"
+        },
+        "core25.veccore0": {
+          "first_tick": 14203,
+          "last_tick": 20135,
+          "end": [
+            "0x9000d18fbc",
+            20128,
+            20128
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              20130,
+              20135
+            ]
+          ],
+          "official_us": "3.6",
+          "mmads": 0,
+          "phys_digest": "854315a452f1359c10018ef980372a4311a9e9ab48373c4ac3658c06333f35e8",
+          "sync_digest": "7cb5917e83d449ce27075a3fc9b26080fff690114b1b857f3c13564ae4acc8b5",
+          "shard_sha256": "644b172a9db9100bf726ff4f7cf88ad6adff9b9ebcb9d1b8b6d54a814a899ea3"
+        },
+        "core26.veccore1": {
+          "first_tick": 14131,
+          "last_tick": 20304,
+          "end": [
+            "0x9000d18fbc",
+            20297,
+            20297
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              20299,
+              20304
+            ]
+          ],
+          "official_us": "3.74",
+          "mmads": 0,
+          "phys_digest": "6d19df61e067d99086af5c4d4532e87cd2b3f20cf74da2b9b3feab2524e4d9d6",
+          "sync_digest": "9e12bd0aa641f801c83794df9b0d9b0b89d2d4f9bf9a49754f736da179247803",
+          "shard_sha256": "8a924beb6f1b76e0a0065f50b8c8a2cd78f929fdee601cde1c9566778c0a00a0"
+        },
+        "core24.veccore1": {
+          "first_tick": 13937,
+          "last_tick": 20601,
+          "end": [
+            "0x9000d18fbc",
+            20594,
+            20594
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              20596,
+              20601
+            ]
+          ],
+          "official_us": "4.04",
+          "mmads": 0,
+          "phys_digest": "8562df6671f59841b9438f683e9b015bf88f9c3008cc84f60ca2fcdf54807a85",
+          "sync_digest": "19add59d4b891b7fc328d4dd44c5680537b5c67160aea07e82a8cd8753e02254",
+          "shard_sha256": "37b4a682a829bf17c0f4f79aaee100fc392a508186cd6db6e2c4bf4cebb2231a"
+        },
+        "core22.veccore1": {
+          "first_tick": 13890,
+          "last_tick": 20543,
+          "end": [
+            "0x9000d18fbc",
+            20536,
+            20536
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              20538,
+              20543
+            ]
+          ],
+          "official_us": "4.03",
+          "mmads": 0,
+          "phys_digest": "43404102e0f6dbee405d465fcd79eab816ce07b8fff4d5cd881df561ab2bf367",
+          "sync_digest": "8b4e793595588498fef71b94fd6a6fed4a88eedb04f76ef241585db419e44995",
+          "shard_sha256": "b6e730af34a735919bb5f8d6579a21bb043a258e058f2f079024b86013f5ebac"
+        },
+        "core24.veccore0": {
+          "first_tick": 13907,
+          "last_tick": 20467,
+          "end": [
+            "0x9000d18fbc",
+            20460,
+            20460
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              20462,
+              20467
+            ]
+          ],
+          "official_us": "3.98",
+          "mmads": 0,
+          "phys_digest": "ee6e1a0a22a5034ff4b9563964f7b2a869a9de429adbd26329cb349261f628b1",
+          "sync_digest": "5e2655efd9e442752c65e890e8cac70049e4e97c78d5548e0692f319707d1f3f",
+          "shard_sha256": "74fcb0ab5420d7f962057b8a64a46922c3eeb8ca63c58650b95d7790ca9b79bd"
+        },
+        "core9.veccore1": {
+          "first_tick": 12531,
+          "last_tick": 17839,
+          "end": [
+            "0x9000d18fbc",
+            17832,
+            17832
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              17834,
+              17839
+            ]
+          ],
+          "official_us": "3.22",
+          "mmads": 0,
+          "phys_digest": "c78d4bce1901f1d305332418178712336ee25ee98822618baee7963a1857338b",
+          "sync_digest": "39cc1b02b2ebaeb6bb9f68d7a0d4cea49b97d913efd154a4c66c46dbbfffc207",
+          "shard_sha256": "dc3bd23e8e40e690d72e3c8e74594c27fbb559da91921f85d55b850bbb30f22f"
+        },
+        "core12.veccore1": {
+          "first_tick": 12494,
+          "last_tick": 17820,
+          "end": [
+            "0x9000d18fbc",
+            17813,
+            17813
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              17815,
+              17820
+            ]
+          ],
+          "official_us": "3.23",
+          "mmads": 0,
+          "phys_digest": "cf7fae4db30a06613a5112a4c5ce65471ea31598a475363167b07ea1157ad542",
+          "sync_digest": "702c5ca2375eca83016a3fe8b8a2ade0c7b86dea46a7f82612304fd2d83733df",
+          "shard_sha256": "b330664b33abe67d18a3164e1ed5d896f937ec02dfa8d3938b43ae6625dce03c"
+        },
+        "core27.veccore1": {
+          "first_tick": 13870,
+          "last_tick": 19400,
+          "end": [
+            "0x9000d18fbc",
+            19393,
+            19393
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              19395,
+              19400
+            ]
+          ],
+          "official_us": "3.35",
+          "mmads": 0,
+          "phys_digest": "09c9683f3bc32d1271c037ec2a4d24d3d8c00ef1d044e1c4227b38aa5f910ad2",
+          "sync_digest": "7408d6b8b088f33f9de45f5006d7ff86d1b3d28c86e6aadb3a61b5d97d24d1b1",
+          "shard_sha256": "3017ba9a95274bd1e38a40f18d4e1550c6127c18233140c437704545f88fa17e"
+        },
+        "core21.veccore0": {
+          "first_tick": 14077,
+          "last_tick": 19724,
+          "end": [
+            "0x9000d18fbc",
+            19717,
+            19717
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              19719,
+              19724
+            ]
+          ],
+          "official_us": "3.42",
+          "mmads": 0,
+          "phys_digest": "b503594d6c68f7dd01d5fb59236f05ffeb3e7285ec4ea63f01ab0bc50ba463d5",
+          "sync_digest": "d57b38fb72a03f34798ea9537ad4bb2246e89e838c7c068278b420449691afca",
+          "shard_sha256": "c685b44c1de0c29839ae541e0de85c7923f683ba32925901fdcc0d8f58c7a197"
+        },
+        "core23.veccore1": {
+          "first_tick": 14280,
+          "last_tick": 19633,
+          "end": [
+            "0x9000d18fbc",
+            19626,
+            19626
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              19628,
+              19633
+            ]
+          ],
+          "official_us": "3.24",
+          "mmads": 0,
+          "phys_digest": "175e343eea1b469f4d6901f6c096e11dd3f8a573bb20889ee5eafca65c4db009",
+          "sync_digest": "b7e133b84c1cda47f8a61f09d6fb9b65976580521608695e26ed8f139dd6452b",
+          "shard_sha256": "683c128de9b9a8e5270493ab422c2bdb663985788ab836c6c542c1f437eefc8a"
+        },
+        "core16.veccore0": {
+          "first_tick": 13947,
+          "last_tick": 19974,
+          "end": [
+            "0x9000d18fbc",
+            19967,
+            19967
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              19969,
+              19974
+            ]
+          ],
+          "official_us": "3.65",
+          "mmads": 0,
+          "phys_digest": "7b6d08210fa2c2bd768e52cc891a98f79e24563682034941ba22ca9d9894def7",
+          "sync_digest": "c6b0c9774f900eeded8182e9469762bfaa93a9e8e098b39c72d04c05991f64ac",
+          "shard_sha256": "feb639d977eddec248f6a424652ac0bdfae57e7b4964a2f4ba9c77510fcdb2eb"
+        },
+        "core7.veccore1": {
+          "first_tick": 12341,
+          "last_tick": 17779,
+          "end": [
+            "0x9000d18fbc",
+            17772,
+            17772
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              17774,
+              17779
+            ]
+          ],
+          "official_us": "3.3",
+          "mmads": 0,
+          "phys_digest": "6622792c9394406634b17241f25e3def18b98204fbee25c334b9cfab23c64329",
+          "sync_digest": "299cfb6c7814194eed953df0eb653c7a51df2220d2c7a15486b4414a9fdf3575",
+          "shard_sha256": "b9187b48841d2add3221f5cccdff9c12f0112776f006f792fcbd5563cacb0919"
+        },
+        "core9.veccore0": {
+          "first_tick": 12560,
+          "last_tick": 17759,
+          "end": [
+            "0x9000d18fbc",
+            17752,
+            17752
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              17754,
+              17759
+            ]
+          ],
+          "official_us": "3.15",
+          "mmads": 0,
+          "phys_digest": "e2689907e10404b6bcddeff8514ac73aff5798e8f90a9425eb9984ef516919b4",
+          "sync_digest": "676aa14eb7b68bd40d989cfbc254a832c67794ebb6e193f1b0d239ede52d7920",
+          "shard_sha256": "d894d137846ea6b92b8782152f74ce45df6049357255858a26a8ecc3fc9178f5"
+        },
+        "core10.veccore1": {
+          "first_tick": 12613,
+          "last_tick": 18639,
+          "end": [
+            "0x9000d18fbc",
+            18632,
+            18632
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              18634,
+              18639
+            ]
+          ],
+          "official_us": "3.65",
+          "mmads": 0,
+          "phys_digest": "a661cb1d3f800cfd84a8198bb171d7321c2938a9540d003f5a43acf846b2e0ca",
+          "sync_digest": "5529f3c807854b5de834d69dc12fdb2ec75f8be70c226d742c3eb76d0450c246",
+          "shard_sha256": "21b6d44c3263274377e64905ddc9387891897b76cbf3ec48d7511b8b6d1c1f61"
+        },
+        "core1.veccore0": {
+          "first_tick": 12417,
+          "last_tick": 18559,
+          "end": [
+            "0x9000d18fbc",
+            18552,
+            18552
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              18554,
+              18559
+            ]
+          ],
+          "official_us": "3.72",
+          "mmads": 0,
+          "phys_digest": "6a39e864108960c49a191236b53014f7633469f58b3c290f5cd89e9ca9378a6e",
+          "sync_digest": "265d9e62377ad23cbf751182faa9fe0f5b6f82c00e92060d23252e89cdfd48cf",
+          "shard_sha256": "7d39e2d74487ebe5a06dde3f9adf23451110d7aef98c8a5f17d9b64ba7a57c04"
+        },
+        "core10.veccore0": {
+          "first_tick": 12589,
+          "last_tick": 18711,
+          "end": [
+            "0x9000d18fbc",
+            18704,
+            18704
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              18706,
+              18711
+            ]
+          ],
+          "official_us": "3.71",
+          "mmads": 0,
+          "phys_digest": "e53eb2daf7f17f627a27cc8e7c52b3c3e01ae13f9789805ca3100525d936d15c",
+          "sync_digest": "02e248a68f88f916f70d658621ac76e6470f0895268926766b2ead03367b36d9",
+          "shard_sha256": "f98045a4795d8e44ea0219e97cbedcd9af5fa31d659f51590db80a4277273bdf"
+        },
+        "core7.veccore0": {
+          "first_tick": 12325,
+          "last_tick": 17973,
+          "end": [
+            "0x9000d18fbc",
+            17966,
+            17966
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              17968,
+              17973
+            ]
+          ],
+          "official_us": "3.42",
+          "mmads": 0,
+          "phys_digest": "1a27b4ad035266bbc552e61902ddc44756248e026f7ffe54660f46b4502e3269",
+          "sync_digest": "2e20e567f29f887902d51e47b296ce1794d1c441efcfca87ef241c178ef8b632",
+          "shard_sha256": "ce283c5cb2a835769b3c58f7df6b28c882454bea5045468f94756d82e76c8af9"
+        },
+        "core11.veccore1": {
+          "first_tick": 12248,
+          "last_tick": 17697,
+          "end": [
+            "0x9000d18fbc",
+            17690,
+            17690
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              17692,
+              17697
+            ]
+          ],
+          "official_us": "3.3",
+          "mmads": 0,
+          "phys_digest": "061077a8014a33b8f191692fc7aaa4e861d7ec772d01d006e2dc63d494889407",
+          "sync_digest": "5e2b83f7ef071e6e1352cd274a095d92d10d391ca2ea0daea1814a6b063ca21b",
+          "shard_sha256": "886e4730b46ab888e007f3cbbada1e59127254ad3dbb9ed69ceed67916476a24"
+        },
+        "core11.veccore0": {
+          "first_tick": 12229,
+          "last_tick": 17585,
+          "end": [
+            "0x9000d18fbc",
+            17578,
+            17578
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              17580,
+              17585
+            ]
+          ],
+          "official_us": "3.25",
+          "mmads": 0,
+          "phys_digest": "107180551102fc3785b6f61f9ee94f96ad72102ce90ea8f9ccf0b26b8053fd9b",
+          "sync_digest": "a96ed1f1cf3a3c185678c705aead4400fcee8faa33f9a29b123f8e283851accd",
+          "shard_sha256": "42fc8873b741ae0a35a87428f601629b289b442f8b18f9b01562c1882e212ae2"
+        },
+        "core6.veccore0": {
+          "first_tick": 12224,
+          "last_tick": 17344,
+          "end": [
+            "0x9000d18fbc",
+            17337,
+            17337
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              17339,
+              17344
+            ]
+          ],
+          "official_us": "3.1",
+          "mmads": 0,
+          "phys_digest": "f5ac5df9162ebcea904406ae4d025d67b11cd5dbcb8fb509b7db3e25bb7832f6",
+          "sync_digest": "ea61eb95e399c9f16dbe53f1ec9b6397a01052a283a762845e5b3bac7b46ad40",
+          "shard_sha256": "7ef927fbd9d81f347cb3a4493d09d2e3b6ab0c59f381ad6554215849555e348d"
+        },
+        "core21.veccore1": {
+          "first_tick": 14090,
+          "last_tick": 19784,
+          "end": [
+            "0x9000d18fbc",
+            19777,
+            19777
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              19779,
+              19784
+            ]
+          ],
+          "official_us": "3.45",
+          "mmads": 0,
+          "phys_digest": "c9f4fbcfcc5dd61ac2d07a9408dbb9151f458da1c072eb6d98d3aad05276ad81",
+          "sync_digest": "62583cead54e298e0482041e35c8c97ba941e4197b5edcfebb0917f9cbd2cb50",
+          "shard_sha256": "ec490cd91437e1eb22be9302934008a2f56ff2b0a449725865bbb0d55f6f0589"
+        },
+        "core8.veccore1": {
+          "first_tick": 12442,
+          "last_tick": 17697,
+          "end": [
+            "0x9000d18fbc",
+            17690,
+            17690
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              17692,
+              17697
+            ]
+          ],
+          "official_us": "3.18",
+          "mmads": 0,
+          "phys_digest": "637b053c02f20f3767a1310a0e6b74a2d5920b5504bb051ca7260b756a156a3c",
+          "sync_digest": "21b80983b18c678bea213a024727df506bf58e0ccb3d8861f9950e49492e3c23",
+          "shard_sha256": "2aa82a68f4df61f8040d3625aadf19d9f2f3d5b8a4c3bd6eee5063e619a64e09"
+        },
+        "core5.veccore1": {
+          "first_tick": 12312,
+          "last_tick": 17385,
+          "end": [
+            "0x9000d18fbc",
+            17378,
+            17378
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              17380,
+              17385
+            ]
+          ],
+          "official_us": "3.07",
+          "mmads": 0,
+          "phys_digest": "b752f9f9f1fc0b503d29df5983d26f5e63c103d51c0872c8f4a6374d0b388848",
+          "sync_digest": "50dfc895db2992f61d344cf31c667b86205d80a80334e7e7b18c93b758a5b17f",
+          "shard_sha256": "50e823d0a123e00cea0f2cb8c99d41888d8b2965f857903ca07e6d8b23d8eaca"
+        },
+        "core5.veccore0": {
+          "first_tick": 12290,
+          "last_tick": 17550,
+          "end": [
+            "0x9000d18fbc",
+            17543,
+            17543
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              17545,
+              17550
+            ]
+          ],
+          "official_us": "3.19",
+          "mmads": 0,
+          "phys_digest": "e83480e714b0d818a6e983e605793f871eaade2b18a403446d00d83cd9143709",
+          "sync_digest": "ba1f76ea015a18620ffc9c28463a26a426904efebccd8375ccb242ed17a1c083",
+          "shard_sha256": "c7054c9f2ecb954fc87c7a5d034c02d0a8e42cb3a0f4e67c6395b03f60a28555"
+        },
+        "core3.veccore1": {
+          "first_tick": 12363,
+          "last_tick": 17623,
+          "end": [
+            "0x9000d18fbc",
+            17616,
+            17616
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              17618,
+              17623
+            ]
+          ],
+          "official_us": "3.19",
+          "mmads": 0,
+          "phys_digest": "1c37624b0196c19fb0c46898d94a157a85e7549a98c443d09176ad07e3c5fea8",
+          "sync_digest": "596b330ab78fc4d1cf81a1c0f09dc654bf15ed3cdfcc628ec24347e9ea91ae4c",
+          "shard_sha256": "31cd02f251f3a2ece486858454adc9ea5800d8c1e466fb99b79a3ee968222d0c"
+        },
+        "core4.veccore1": {
+          "first_tick": 12505,
+          "last_tick": 17276,
+          "end": [
+            "0x9000d18fbc",
+            17269,
+            17269
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              17271,
+              17276
+            ]
+          ],
+          "official_us": "2.89",
+          "mmads": 0,
+          "phys_digest": "00f9218a649f426a277e15fd6161fe62ca5ccda37d428d232a0c9a8d2b859f05",
+          "sync_digest": "1c27a55fe7b8afa9e0b91eeb3ce9736bd7066f5e6b692203cee5cc05a4c880d5",
+          "shard_sha256": "18f7a11dd8b90ba3aacb42644af35ce915322aeea463503e50bb04d7467de242"
+        },
+        "core6.veccore1": {
+          "first_tick": 12234,
+          "last_tick": 18132,
+          "end": [
+            "0x9000d18fbc",
+            18125,
+            18125
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              18127,
+              18132
+            ]
+          ],
+          "official_us": "3.57",
+          "mmads": 0,
+          "phys_digest": "3d314533eaf8b1613434243432556c09de901d3960055687f34d536cf850c9f5",
+          "sync_digest": "766eb953b1a79f09d774fb71483440cae5e9713c6f7c5785e267ed315efd3adc",
+          "shard_sha256": "199bc585336b82b407cfaaafc97fdf06e0eb84b9a1c94132b5fed1848a20d25d"
+        },
+        "core8.veccore0": {
+          "first_tick": 12471,
+          "last_tick": 17635,
+          "end": [
+            "0x9000d18fbc",
+            17628,
+            17628
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              17630,
+              17635
+            ]
+          ],
+          "official_us": "3.13",
+          "mmads": 0,
+          "phys_digest": "395d9d4ef449fd1c998c2788a76dddd0911f9964533f5ae221f1faa9e48c73ee",
+          "sync_digest": "0a923135061d9e5fab09734615e3dae188579c6a3d964d63a4bb22d68f021a6a",
+          "shard_sha256": "a3c27c9c68b3b775ac8a915d17a999c0c3b3d844982cccc4b530ba16f893cced"
+        },
+        "core4.veccore0": {
+          "first_tick": 12467,
+          "last_tick": 18136,
+          "end": [
+            "0x9000d18fbc",
+            18129,
+            18129
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              18131,
+              18136
+            ]
+          ],
+          "official_us": "3.44",
+          "mmads": 0,
+          "phys_digest": "23c344ea1bfbba38e225ab09c2fcbeb17ceebffd635c5a1a063113bc5c797cc6",
+          "sync_digest": "ec14859d86c5e03c8e17692ffb482de83062113976deaae186e108be471c19c2",
+          "shard_sha256": "e03847def32ee8338eb6d9c7f36c5baed19a181584a1178ea648fe4aaf55bdc0"
+        }
+      },
+      "captured_binary": "results/v0.24/kda-v1/raw/pr-t2-h1-varlen/profile/OPPROF_20261119235004_KSDAEIYVPEQTHGCY/Transpose_float32_int64_high_performance_10001/0/dump/aicore_binary.o",
+      "published_names": [],
+      "aggregate": "results/v0.24/kda-v1/raw/pr-t2-h1-varlen/profile/OPPROF_20261119235004_KSDAEIYVPEQTHGCY/Transpose_float32_int64_high_performance_10001/0/simulator/trace.json",
+      "aggregate_sha256": "8cee2b8423d04d3e8b344f620aeb02a7a9ddab78d1eb59eef61db2a37ca23575"
+    },
+    {
+      "kernel": "ChunkKdaFwd_5e864108d5688e456abb78f238c67b16_2_mix_aic",
+      "ordinal": 0,
+      "ca_us": 97.96,
+      "raw_path": "results/v0.24/kda-v1/raw/pr-t2-h1-varlen/profile/OPPROF_20261119235004_KSDAEIYVPEQTHGCY/ChunkKdaFwd_5e864108d5688e456abb78f238c67b16_2_mix_aic/0",
+      "device_text_sha256": "5275721e11b3906d6f56a7fa5d04f535b64d9da894932abd84e082973652f200",
+      "first_tick": 24506,
+      "last_tick": 186140,
+      "active_aic": 28,
+      "active_aiv": 56,
+      "mmads": 11,
+      "resource": {
+        "descriptor_bytes": {
+          "OUT->UB": 302340,
+          "OUT->L1": 83976,
+          "L1->L0A": 29184,
+          "L1->L0B": 86016,
+          "L0C->OUT": 88064,
+          "UB->OUT": 149248
+        },
+        "mmad_issued_shapes": {
+          "16x64x128": 2,
+          "16x16x16": 4,
+          "32x32x32": 2,
+          "128x128x2": 1,
+          "2x128x128": 1,
+          "2x128x2": 1
+        },
+        "issued_mmad_ops": 820224,
+        "queue_instruction_counts": {
+          "SCALAR": 298007,
+          "FLOWCTRL": 17236,
+          "MTE2": 886,
+          "MTE1": 173,
+          "MTE3": 340,
+          "PUSHQ": 1850,
+          "FIXP": 22,
+          "CUBE": 11,
+          "RVECLP": 2400,
+          "RVECSU": 3737,
+          "RVECLD": 6875,
+          "RVECEX": 10012,
+          "RVECST": 6350
+        }
+      },
+      "cores": {
+        "core11.cubecore0": {
+          "first_tick": 24545,
+          "last_tick": 173413,
+          "end": [
+            "0x915849d210",
+            173409,
+            173409
+          ],
+          "end_labels": [],
+          "official_us": "90.22",
+          "mmads": 0,
+          "phys_digest": "be713c494732272affb67139384329912f5c6124a883593ce4affffe9a4d927b",
+          "sync_digest": "893facecdc30283298a231f564b429dc330adb6bbc023f6ba9fd5a47bf71be9d",
+          "shard_sha256": "dd8022a14d1951b85bebd39fb8d6c62f2d227fbf43c523db37cf5ffdcb8bd635"
+        },
+        "core1.cubecore0": {
+          "first_tick": 24537,
+          "last_tick": 173203,
+          "end": [
+            "0x915849d210",
+            173199,
+            173199
+          ],
+          "end_labels": [],
+          "official_us": "90.1",
+          "mmads": 0,
+          "phys_digest": "b3ef8e0aa15e25cea375b26cecb906af054ba8179709e678da5516ee0ab0a7ac",
+          "sync_digest": "1bf472fd09975c1b07efa8a5fc6bfa689022d0c0fd9620dc69b1e801ddb50501",
+          "shard_sha256": "f1703ba5f10089266dfdb9c627a10f776d739c1b55ecb32ce382e478a6ba1fec"
+        },
+        "core19.cubecore0": {
+          "first_tick": 25036,
+          "last_tick": 173197,
+          "end": [
+            "0x915849d210",
+            173193,
+            173193
+          ],
+          "end_labels": [],
+          "official_us": "89.79",
+          "mmads": 0,
+          "phys_digest": "33320fdae5458f3bcff9dd524a157f5f409d4769e39d95db901cbc2fb5e22785",
+          "sync_digest": "2d9b502ff52f2781d79e57ac9ee1ee842b431a34a9ad3de8275327ea1850a899",
+          "shard_sha256": "72a4466b479b44fd5cbf84fee93cc88bf855a30d1843baa852bb2d6d845a771a"
+        },
+        "core17.cubecore0": {
+          "first_tick": 24998,
+          "last_tick": 173151,
+          "end": [
+            "0x915849d210",
+            173147,
+            173147
+          ],
+          "end_labels": [],
+          "official_us": "89.79",
+          "mmads": 0,
+          "phys_digest": "b4c689528aff8981bc7f520604acb0b7690d5606433ea36a095ec37922d79369",
+          "sync_digest": "76b36a99283ac68203fc9f2f24d036b03a8a3fa3b08a15d7570b7ecacce086d6",
+          "shard_sha256": "da5154bc96b0e733ebacfb218f1e93ce3a061b37e2d371e7b13f44d62716fb7d"
+        },
+        "core10.cubecore0": {
+          "first_tick": 24532,
+          "last_tick": 173226,
+          "end": [
+            "0x915849d210",
+            173222,
+            173222
+          ],
+          "end_labels": [],
+          "official_us": "90.12",
+          "mmads": 0,
+          "phys_digest": "4f9ab617765655c776923b2ab6466a94d1076a3ed7a4b4c4aa9de6acdac95c7b",
+          "sync_digest": "0d54ee3862d2a46012b84c48916089749fc49cae5bb05516b0631102db3825f0",
+          "shard_sha256": "16197ebb1fa107149e403dcc3adeb1f8973fd502df2576c8d432f9845f57f0bd"
+        },
+        "core1.veccore1": {
+          "first_tick": 24639,
+          "last_tick": 174198,
+          "end": [
+            "0x9158639378",
+            174191,
+            174191
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              174193,
+              174198
+            ]
+          ],
+          "official_us": "90.64",
+          "mmads": 0,
+          "phys_digest": "f450d6c09a6579f9b2062506fc462a7df6ea94305b4ba5636d14f7a3c5fca5bb",
+          "sync_digest": "b09ed02ff3abe1a23bb3b665eed558f3dd9144cb4896f4743dfba1d230c9bd83",
+          "shard_sha256": "d450c300968c7b6b6217770c01c3be54a15d2038b899274bfc83030b1c82efbf"
+        },
+        "core16.cubecore0": {
+          "first_tick": 24893,
+          "last_tick": 173182,
+          "end": [
+            "0x915849d210",
+            173178,
+            173178
+          ],
+          "end_labels": [],
+          "official_us": "89.87",
+          "mmads": 0,
+          "phys_digest": "4feab94d4f1685f8f1ecc40e189b7364b24b8fdbb71135095fa32b7962f2ea03",
+          "sync_digest": "20d7b9fa82f18f066483bccb11448663837e3a2ddf80561a94b43e328445e87a",
+          "shard_sha256": "2a21f44f7d694fca9463075813e2b414aa740c75a1c1b1cb2a656fa0fc27a33c"
+        },
+        "core20.veccore1": {
+          "first_tick": 25355,
+          "last_tick": 174132,
+          "end": [
+            "0x9158639378",
+            174125,
+            174125
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              174127,
+              174132
+            ]
+          ],
+          "official_us": "90.17",
+          "mmads": 0,
+          "phys_digest": "b7ec24454e7c5647698d20c2a043c427ee5f73a75f3cf81af264d102e2397078",
+          "sync_digest": "11131d116a1340d94c22c0fc646b5e4d0afb5817e9c618c82a67d7483d317b17",
+          "shard_sha256": "a1d84a0d717653e1ccb7264b78e2907b888791bfbd9b68146ed7ca5677e3cd6e"
+        },
+        "core1.veccore0": {
+          "first_tick": 24602,
+          "last_tick": 174447,
+          "end": [
+            "0x9158639378",
+            174440,
+            174440
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              174442,
+              174447
+            ]
+          ],
+          "official_us": "90.82",
+          "mmads": 0,
+          "phys_digest": "14f62d690068400facba24def5b9ec757de16128f08a6ac4fc0e5f169a5c67d3",
+          "sync_digest": "3b7ec6facaddb3f4206bbb797c6340c4afa7971530611235c2493cc562055822",
+          "shard_sha256": "75a09adec1879bd1780dae0bbfcd0c13727a92df5e0a3bf918121049c721b2d2"
+        },
+        "core21.cubecore0": {
+          "first_tick": 24961,
+          "last_tick": 173232,
+          "end": [
+            "0x915849d210",
+            173228,
+            173228
+          ],
+          "end_labels": [],
+          "official_us": "89.86",
+          "mmads": 0,
+          "phys_digest": "1ae8b19b2452b5b81e79843a229cca8cc7372bbf8a0e924725a9ad2f6036e882",
+          "sync_digest": "04e4840c5cd11237689ee75bb5b629b7e509b6bcae385dac62214df73c63a173",
+          "shard_sha256": "398d8c4d6c58da3e1e7c322726544c9b9a4445d3693c3e6da4b01ec0df7f3dab"
+        },
+        "core18.cubecore0": {
+          "first_tick": 24937,
+          "last_tick": 173151,
+          "end": [
+            "0x915849d210",
+            173147,
+            173147
+          ],
+          "end_labels": [],
+          "official_us": "89.83",
+          "mmads": 0,
+          "phys_digest": "e46804827c10d7ca445e5aa22209d4d88e60ce7b89a495e652de0bf747a406fe",
+          "sync_digest": "d148ed229857988c3baf338f8cef4262ea177189c113c5486326845c632d9492",
+          "shard_sha256": "fb4aa01d17ffb6a05da41ed2a973322448458d9b8f0a95154f2e4ca299193197"
+        },
+        "core20.cubecore0": {
+          "first_tick": 25029,
+          "last_tick": 173131,
+          "end": [
+            "0x915849d210",
+            173127,
+            173127
+          ],
+          "end_labels": [],
+          "official_us": "89.76",
+          "mmads": 0,
+          "phys_digest": "f14fa4df578443133fca31fedf8afa8d6e0cc5c78db3e38dd0ee2c3dcb9fb55c",
+          "sync_digest": "c6d7fc3ce1bce9f404dc40b7daa2fcd6f42d9b5e65c2b3a6f00ab49575edbc30",
+          "shard_sha256": "a1f2e249f6064b2b8cd7f0a93fd7145d250c4cdc5b8430d21d42cf8af43a91b0"
+        },
+        "core18.veccore1": {
+          "first_tick": 25141,
+          "last_tick": 174039,
+          "end": [
+            "0x9158639378",
+            174032,
+            174032
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              174034,
+              174039
+            ]
+          ],
+          "official_us": "90.24",
+          "mmads": 0,
+          "phys_digest": "23a30d929cf9f7a8bb58926e3b4f8709082b52ff99571dea36f5e330c6c41dfa",
+          "sync_digest": "674e957cd87caefafebecb20de1205d7591ee28f60c6323400ba2ca6aaace70c",
+          "shard_sha256": "27135af022548366e2b48b85352ea52b75d46cab870aac79aaafe7e1a47c9758"
+        },
+        "core10.veccore1": {
+          "first_tick": 24633,
+          "last_tick": 174252,
+          "end": [
+            "0x9158639378",
+            174245,
+            174245
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              174247,
+              174252
+            ]
+          ],
+          "official_us": "90.68",
+          "mmads": 0,
+          "phys_digest": "d2ccb86159a6fb987d8a35c3415694c18b5968bdac41f4a5872e7621db77b7a9",
+          "sync_digest": "d6cf4109272a3416bc246773d12a397c4f52eb6c5f000cf55f111539bf36102f",
+          "shard_sha256": "2136dfa3b9a810400abc38d3f15a6f57f1304fbdc6aa30e8984c4f9014e526c3"
+        },
+        "core21.veccore0": {
+          "first_tick": 25100,
+          "last_tick": 173897,
+          "end": [
+            "0x9158639378",
+            173890,
+            173890
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              173892,
+              173897
+            ]
+          ],
+          "official_us": "90.18",
+          "mmads": 0,
+          "phys_digest": "6a115dfd45c627f8c2bae830cb738145521980a03616d8492ffcff1d4a9e6a82",
+          "sync_digest": "882d0323fc205b00a822747d6b45c982f1a4c6723efe0028561bded3e9c844e4",
+          "shard_sha256": "f831695e14b2230f7747252c758e0f8394bed509303c4cc7e8e43bb6f2ebe863"
+        },
+        "core18.veccore0": {
+          "first_tick": 25077,
+          "last_tick": 174064,
+          "end": [
+            "0x9158639378",
+            174057,
+            174057
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              174059,
+              174064
+            ]
+          ],
+          "official_us": "90.3",
+          "mmads": 0,
+          "phys_digest": "12b334e80cdbc502be7d0b8222c9eca224e361f82ac7985d6d7ab357003663e5",
+          "sync_digest": "becaeac12b2225d187caaca8063274209efa0766ef2b24ab5583ac27e016452a",
+          "shard_sha256": "f4a14796620a70eb2a87ce6b095d11af630a201e9c43ed393bd0324a1ba5f9eb"
+        },
+        "core2.veccore1": {
+          "first_tick": 24684,
+          "last_tick": 174452,
+          "end": [
+            "0x9158639378",
+            174445,
+            174445
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              174447,
+              174452
+            ]
+          ],
+          "official_us": "90.77",
+          "mmads": 0,
+          "phys_digest": "d03130bd7c0f5b8df2932abc84cb4554556f119b6eb13e43b2fd83495f17c23b",
+          "sync_digest": "db466be285a71c202aba48c1e31e8e1e2def50ba365ff82e5f7af2ce1bcfb77d",
+          "shard_sha256": "aee143cc7a6981eb0c5672b7effd448e25803494adf755040772450276af994b"
+        },
+        "core12.veccore1": {
+          "first_tick": 24582,
+          "last_tick": 174250,
+          "end": [
+            "0x9158639378",
+            174243,
+            174243
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              174245,
+              174250
+            ]
+          ],
+          "official_us": "90.71",
+          "mmads": 0,
+          "phys_digest": "32ce0f405f1bab5c966e50b733ca25f3c96d66223e2340e12a2844a4f767ba0b",
+          "sync_digest": "99779c4995b61ed64f355f6c93b8b4ed4525b16808e869f4ecdb1c6bf5733d5c",
+          "shard_sha256": "9ff13279cc6f339037014433a5bd26cd3ddfb72d789249d10ea4cedbf95abf8a"
+        },
+        "core16.veccore1": {
+          "first_tick": 25097,
+          "last_tick": 174052,
+          "end": [
+            "0x9158639378",
+            174045,
+            174045
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              174047,
+              174052
+            ]
+          ],
+          "official_us": "90.28",
+          "mmads": 0,
+          "phys_digest": "0ec43fc1d2265bf3f99da50acec02f961492d3104026653668506eb27dad3a10",
+          "sync_digest": "6a73fec597f7ef7882987642a14d690e622f98ecbbf7a25800de13b84ae58894",
+          "shard_sha256": "b395105d0cc21d0f1fd10023b7155927c9123fdc50a98a2c3bb292db2311f158"
+        },
+        "core13.cubecore0": {
+          "first_tick": 24929,
+          "last_tick": 173327,
+          "end": [
+            "0x915849d210",
+            173323,
+            173323
+          ],
+          "end_labels": [],
+          "official_us": "89.94",
+          "mmads": 0,
+          "phys_digest": "c855a3be9e9dd53eb59033a4a52eb228d9c8106a97d8bde7a114b295ef519d66",
+          "sync_digest": "3d03616ea37f9a6350b21c3bfe018a9acedadcc210c07eb206edd3d49e92b3f4",
+          "shard_sha256": "8cb04588449b21a396e33069085236410a5055be13783f4f97b576ba95800c7a"
+        },
+        "core11.veccore0": {
+          "first_tick": 24594,
+          "last_tick": 174417,
+          "end": [
+            "0x9158639378",
+            174410,
+            174410
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              174412,
+              174417
+            ]
+          ],
+          "official_us": "90.8",
+          "mmads": 0,
+          "phys_digest": "daec872982179b8e4c4ade6f708e9d2b764c63bd39778fb0921abc38f4b70c76",
+          "sync_digest": "32f151c2ce59e7ab4cdbaf66201843d426ae7271460f514583b4280ad0f464d2",
+          "shard_sha256": "103cb21e5951cdec59a7e9db3b1cb42a543a69b6352757766252211e27923ae6"
+        },
+        "core20.veccore0": {
+          "first_tick": 25326,
+          "last_tick": 174192,
+          "end": [
+            "0x9158639378",
+            174185,
+            174185
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              174187,
+              174192
+            ]
+          ],
+          "official_us": "90.22",
+          "mmads": 0,
+          "phys_digest": "1d2d86f3dab359af934805198a207a537cfa4990b9b00a0379f5d1bf8d08df19",
+          "sync_digest": "2de0de7b6211ad8235d83dbbfc1626c7af0e7f2b206cd03bc38c6ebd5889ab6c",
+          "shard_sha256": "1bd8e7ceb0959ac6d6441936843d14557df39f74cc111676f3489af9276526ff"
+        },
+        "core17.veccore0": {
+          "first_tick": 25254,
+          "last_tick": 173903,
+          "end": [
+            "0x9158639378",
+            173896,
+            173896
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              173898,
+              173903
+            ]
+          ],
+          "official_us": "90.09",
+          "mmads": 0,
+          "phys_digest": "76fa7daf08ff9502553addd372c5c065818cac35e88c53ca7fa858569cd2adef",
+          "sync_digest": "f102f823695f7651f91de25c65db831a86ba2b3fc07c2ef82cb4d04efe3326f4",
+          "shard_sha256": "7a1f1fd4c9a44b7ea3eff80bdb1ac2a5b50a0e53d89a8b673a0b9a8338463c2d"
+        },
+        "core10.veccore0": {
+          "first_tick": 24606,
+          "last_tick": 174404,
+          "end": [
+            "0x9158639378",
+            174397,
+            174397
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              174399,
+              174404
+            ]
+          ],
+          "official_us": "90.79",
+          "mmads": 0,
+          "phys_digest": "cfa63c3969aa3f0abcb41f03b1d2186a02adc870d5b809577fbbee80fe2fb1e3",
+          "sync_digest": "222f68d567fd4938ac77079d9dc4b06f57f2d2ad73418affda74caf642f1eb2d",
+          "shard_sha256": "1dafebb92c5dad53083d6d9a9cb4a2253b6af4b3daeec09ad43ae1ffa9cf4df4"
+        },
+        "core21.veccore1": {
+          "first_tick": 25138,
+          "last_tick": 174010,
+          "end": [
+            "0x9158639378",
+            174003,
+            174003
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              174005,
+              174010
+            ]
+          ],
+          "official_us": "90.23",
+          "mmads": 0,
+          "phys_digest": "eab5a33abd242a92bdfa31106bc3edcbd99d35a66b886a12223736fcfa319be1",
+          "sync_digest": "0598f349ceac6fecf9bc66cf951694785adcb1a446937221e1de703ab389160b",
+          "shard_sha256": "e4e95b53f10fd7aeae3f23a85bc632e7aae308370f4aac867bb1f8a048563139"
+        },
+        "core19.veccore0": {
+          "first_tick": 25333,
+          "last_tick": 174080,
+          "end": [
+            "0x9158639378",
+            174073,
+            174073
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              174075,
+              174080
+            ]
+          ],
+          "official_us": "90.15",
+          "mmads": 0,
+          "phys_digest": "d1e5bb7bc5095e43bb42b805b28a6e58e466299a9b52e5936fa5879749916dc3",
+          "sync_digest": "8ae6a24fb9c2998a8e4c9ea0b99105d38a37e6cf31c8f42b34380028d96181e7",
+          "shard_sha256": "ba8f312aedb7ca579ed2743381998ea3adbae9c3fa75cbd1e7f24ca862cb82ae"
+        },
+        "core17.veccore1": {
+          "first_tick": 25285,
+          "last_tick": 174146,
+          "end": [
+            "0x9158639378",
+            174139,
+            174139
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              174141,
+              174146
+            ]
+          ],
+          "official_us": "90.22",
+          "mmads": 0,
+          "phys_digest": "0e22e00bb5dc56006a854e3b8e56f42a2278da1e88a6443b56778ac4b0175c52",
+          "sync_digest": "6af9581a21aaa6e5bfc1efbbd9413a2f22ed2e6c5a0ad9e2a2381648ce2ba8ec",
+          "shard_sha256": "3a85c88317ae7a02a848f00433d78719941baf998bae38f2044319cc2ca4062b"
+        },
+        "core2.veccore0": {
+          "first_tick": 24657,
+          "last_tick": 174239,
+          "end": [
+            "0x9158639378",
+            174232,
+            174232
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              174234,
+              174239
+            ]
+          ],
+          "official_us": "90.66",
+          "mmads": 0,
+          "phys_digest": "8b6b226a93a3c21b5e409dee2d81d8804a6168205de2754492eb9e3b1878ce8d",
+          "sync_digest": "1f04a499b81bed276d598ad5009bc75930a83e56a43044d50a6186614963e903",
+          "shard_sha256": "353a97c1d3e034b081695aeb2f55b11bf83f63c6e926cdad02588f591b30a2e6"
+        },
+        "core12.cubecore0": {
+          "first_tick": 24514,
+          "last_tick": 173243,
+          "end": [
+            "0x915849d210",
+            173239,
+            173239
+          ],
+          "end_labels": [],
+          "official_us": "90.14",
+          "mmads": 0,
+          "phys_digest": "8696fab7d1ed7dde50a5f2783571f87959d2559c25cdee54774a74dda7db0e15",
+          "sync_digest": "884ed5e1c37a6e6ea544d2f25b2886ef8640dadfbd6a5c256c9f5c8adeeda2eb",
+          "shard_sha256": "2cb5c9a4aa1a7ac6a875d8bb5976a4ab5ae8941a61b906a4276ae02ca9654665"
+        },
+        "core2.cubecore0": {
+          "first_tick": 24549,
+          "last_tick": 173452,
+          "end": [
+            "0x915849d210",
+            173448,
+            173448
+          ],
+          "end_labels": [],
+          "official_us": "90.24",
+          "mmads": 0,
+          "phys_digest": "e39e2057af8aba49266c9afc2c7b4b5cb3cd7fc2eda3b3b0bb2724cf3f2ee83e",
+          "sync_digest": "46b08ff1165cf49c59fdc4865b1d9b818853595cf08a275b6e58701f8b63472a",
+          "shard_sha256": "bce411ad28c0e65d93062c3ba2855449a757622317646cf770f90060f988d69a"
+        },
+        "core13.veccore0": {
+          "first_tick": 25016,
+          "last_tick": 174340,
+          "end": [
+            "0x9158639378",
+            174333,
+            174333
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              174335,
+              174340
+            ]
+          ],
+          "official_us": "90.5",
+          "mmads": 0,
+          "phys_digest": "ec732ccd87ac1af5d94855de14d3c683dc3f97352146a5e7bca4deab42424909",
+          "sync_digest": "abc7b353083acd629c40d28519d3474448fd8f0de32fc98d26fb198cb7b46080",
+          "shard_sha256": "2f9daf531f142a24e91fc324bee757d9fcf6055d52cbebf6bb452fa9f2392ad4"
+        },
+        "core22.cubecore0": {
+          "first_tick": 24854,
+          "last_tick": 173083,
+          "end": [
+            "0x915849d210",
+            173079,
+            173079
+          ],
+          "end_labels": [],
+          "official_us": "89.84",
+          "mmads": 0,
+          "phys_digest": "f3a6a6011be44ebbb4f1cc852816ebeac90b72a4d5dedea6e7972042b6a22164",
+          "sync_digest": "6f07e1eae0e0ad712b59d2b1170812ef15a246c8c6557f7c12d2c9b56580ae40",
+          "shard_sha256": "3dd636f6bb07fd92cf54e33617889ab50b856631e965eb7778bf3b96f0ae43da"
+        },
+        "core16.veccore0": {
+          "first_tick": 25068,
+          "last_tick": 174268,
+          "end": [
+            "0x9158639378",
+            174261,
+            174261
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              174263,
+              174268
+            ]
+          ],
+          "official_us": "90.42",
+          "mmads": 0,
+          "phys_digest": "7438785a4bbd442452709e9a74757fad8e1b9c8d99dd560080498a032dd0391c",
+          "sync_digest": "a998515127859cf4a48fafdcaaed345e0fe40a9d68717614db6aa530fd5f75ee",
+          "shard_sha256": "7a485a251a9e166820cc653c0d1f32d88b050c365a1a2fee83256189e88c8ade"
+        },
+        "core19.veccore1": {
+          "first_tick": 25397,
+          "last_tick": 174278,
+          "end": [
+            "0x9158639378",
+            174271,
+            174271
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              174273,
+              174278
+            ]
+          ],
+          "official_us": "90.23",
+          "mmads": 0,
+          "phys_digest": "08408dd67f8d8a16cc1afaeefed09b2261c6b87f341d0048bf3141681043cb7e",
+          "sync_digest": "945f84a9146d767dc49053f218e3bb2586f7528c4fb026320e6772aaed6b4101",
+          "shard_sha256": "1730ef8b7b5350350d87da69f1ea2a4ed6cac43192692ca9540c49188ad8ace7"
+        },
+        "core13.veccore1": {
+          "first_tick": 25046,
+          "last_tick": 174324,
+          "end": [
+            "0x9158639378",
+            174317,
+            174317
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              174319,
+              174324
+            ]
+          ],
+          "official_us": "90.47",
+          "mmads": 0,
+          "phys_digest": "a2d26f413c607c6417ee046b7042d8f6eaea8309195f699f1852280cbebd77fd",
+          "sync_digest": "d05455176764a242f1f6bacdfacbc73386fee86ad7a7492b94fdb798d29d8697",
+          "shard_sha256": "c7675019b8cd2e9ae0ac7d4eb6c377906336a930a4003261dcfdb9bbdcfc9f7d"
+        },
+        "core11.veccore1": {
+          "first_tick": 24569,
+          "last_tick": 174219,
+          "end": [
+            "0x9158639378",
+            174212,
+            174212
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              174214,
+              174219
+            ]
+          ],
+          "official_us": "90.7",
+          "mmads": 0,
+          "phys_digest": "34361c469525486e8c4d3288ad1b54880c206b786588d7cac43e3dff90cb1308",
+          "sync_digest": "ac264b0e9b0ae12ee12332c3b14bb7a44ac1d2b229bc5cf78ad50f797c2dd265",
+          "shard_sha256": "12b08873230da52c74d119a0492ec644ece58a3fca5946d5eb9104712b89f041"
+        },
+        "core12.veccore0": {
+          "first_tick": 24596,
+          "last_tick": 174346,
+          "end": [
+            "0x9158639378",
+            174339,
+            174339
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              174341,
+              174346
+            ]
+          ],
+          "official_us": "90.76",
+          "mmads": 0,
+          "phys_digest": "0e1bfa5bf06a4de68ce2d1328884483be0b586e0b00af3b920928afea2b8789c",
+          "sync_digest": "5030abb6074a0f450b787dd40ee754c1f802aa3b610d54750f7832a6094c2e8e",
+          "shard_sha256": "bc92c175e7cf99b1d8bcec4b276795adf061c0c8857e576489920c1c9a950ffc"
+        },
+        "core22.veccore0": {
+          "first_tick": 24972,
+          "last_tick": 174394,
+          "end": [
+            "0x9158639378",
+            174387,
+            174387
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              174389,
+              174394
+            ]
+          ],
+          "official_us": "90.56",
+          "mmads": 0,
+          "phys_digest": "1717dedcaaa5c71ad913ac2c10dca84a72c93d4ec16c568cdedb9d7349e57199",
+          "sync_digest": "63d59a96c9cd1ab79e1a57eedb8d8d810a105768c9c952c9176609b31d6eb1f5",
+          "shard_sha256": "04552c6b5a508c1d137b04a35d4716702242dbfe7f49dab16efe29014b616ccf"
+        },
+        "core22.veccore1": {
+          "first_tick": 24988,
+          "last_tick": 174239,
+          "end": [
+            "0x9158639378",
+            174232,
+            174232
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              174234,
+              174239
+            ]
+          ],
+          "official_us": "90.46",
+          "mmads": 0,
+          "phys_digest": "7558d8b06808888faddbacf22193849f72952b77cfa1e787b1c029d74bcfd708",
+          "sync_digest": "0fafafed9fa4d2550802b770b9a25a9fda3a470f40a73a0536287f98cfbb0f8e",
+          "shard_sha256": "19e3f6c8a5762663f6865a4eefe8c04e6b99ea38539182660a1216370f5781a8"
+        },
+        "core23.cubecore0": {
+          "first_tick": 25017,
+          "last_tick": 173273,
+          "end": [
+            "0x915849d210",
+            173269,
+            173269
+          ],
+          "end_labels": [],
+          "official_us": "89.85",
+          "mmads": 0,
+          "phys_digest": "671f9e8255952dd997ee0bc9f1d93bdc7cf37acb1b995acafc7e012875165d99",
+          "sync_digest": "15e1ba5d33d63b98ff3883a4b3dbc35ff29f1a9ca91eb09b4b926118543070ad",
+          "shard_sha256": "eae9f577d4fdf29803d6b487ecea15b1fe548788fd1b83c34d5c9d02c9b95a92"
+        },
+        "core23.veccore0": {
+          "first_tick": 25262,
+          "last_tick": 174161,
+          "end": [
+            "0x9158639378",
+            174154,
+            174154
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              174156,
+              174161
+            ]
+          ],
+          "official_us": "90.24",
+          "mmads": 0,
+          "phys_digest": "28b0b7f010d693c24fe138a5a632ed36ad4ead46f3da595eafdb8c465a37fa3c",
+          "sync_digest": "205da6a8df3829517dff1b95658241c37d6fcf45445444544fa836d4b271af11",
+          "shard_sha256": "72bdb22c299d69573bf5074572c9defb4c3bb9e1f637c9e76e6a9a83e3f62760"
+        },
+        "core23.veccore1": {
+          "first_tick": 25293,
+          "last_tick": 174099,
+          "end": [
+            "0x9158639378",
+            174092,
+            174092
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              174094,
+              174099
+            ]
+          ],
+          "official_us": "90.19",
+          "mmads": 0,
+          "phys_digest": "165c2f8a5fb4152b8944bd6269624e578070f928c76de3c73809185f73df0a5f",
+          "sync_digest": "26e0eff79345912cf0539312ec227763869a8030ae4c5a63f9ae51d6636e5dd0",
+          "shard_sha256": "1272e9e8619d3dd590593bf11b321780a1576b0d837372985f6dadff116b1114"
+        },
+        "core24.cubecore0": {
+          "first_tick": 24885,
+          "last_tick": 173112,
+          "end": [
+            "0x915849d210",
+            173108,
+            173108
+          ],
+          "end_labels": [],
+          "official_us": "89.83",
+          "mmads": 0,
+          "phys_digest": "9a2f3592181ce6b1f0961077e4def3992487a0db03c95b78e1b9c753992c9641",
+          "sync_digest": "ab07571644cbce052bb6f2b9df75583d13b41cdd6ae0281569967fbabd973cf0",
+          "shard_sha256": "b5ff8079890a2bd6c0db400da022e536b24394ba4eb1aaea1ff8412d925d7d25"
+        },
+        "core24.veccore0": {
+          "first_tick": 25013,
+          "last_tick": 174332,
+          "end": [
+            "0x9158639378",
+            174325,
+            174325
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              174327,
+              174332
+            ]
+          ],
+          "official_us": "90.5",
+          "mmads": 0,
+          "phys_digest": "4512b9c2cbcb7fa97ca1735b05315bc4c25ef1b6c62c4f3fc30201a5dcbeb139",
+          "sync_digest": "16ac32dc093cada45c685eb8d392db5072ad4cb967dd6d3f1e3cf103f0153afa",
+          "shard_sha256": "646aa49948365abcda49438eee9b4ce8c01e1adfb2dc67bc9401386db3347290"
+        },
+        "core24.veccore1": {
+          "first_tick": 25042,
+          "last_tick": 174087,
+          "end": [
+            "0x9158639378",
+            174080,
+            174080
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              174082,
+              174087
+            ]
+          ],
+          "official_us": "90.33",
+          "mmads": 0,
+          "phys_digest": "dc1411e2ba434ab9175018d45d3d32f496ad74f4e337014ab11c3c2d6fd0edb4",
+          "sync_digest": "9e9f95b87d95424bcba23bc7620207822076a7b6e6c7542f6133ad63e1231a0a",
+          "shard_sha256": "0b83ef124a648125ff3c4052885e4f5fd8500ce4588070d9bd68942dc4ddb824"
+        },
+        "core0.cubecore0": {
+          "first_tick": 24563,
+          "last_tick": 184872,
+          "end": [
+            "0x915849d210",
+            184868,
+            184868
+          ],
+          "end_labels": [],
+          "official_us": "97.16",
+          "mmads": 11,
+          "phys_digest": "cda1fc55a16f4ace81a00a5b2adba7e0c79ffb5993bfbedd3450f3aa04eda118",
+          "sync_digest": "b3743e531f9b613681a1dfd81b786c93172b93688751367521848aedff912fba",
+          "shard_sha256": "4dc4b30edbd86106643c9229d26c83826719ae8b857342c97925fde988928c09"
+        },
+        "core25.cubecore0": {
+          "first_tick": 24982,
+          "last_tick": 172948,
+          "end": [
+            "0x915849d210",
+            172944,
+            172944
+          ],
+          "end_labels": [],
+          "official_us": "89.68",
+          "mmads": 0,
+          "phys_digest": "732ea105f6f28d820a0f1b1931890ae7bdf88a0f71f98c25650bf2f25e3c3f1f",
+          "sync_digest": "a2ed42f66faa20cf5120bc24ed697320a2cb9a4f34932f9b2c1bbf0a4c2e9c3f",
+          "shard_sha256": "749b86acf26f8319e035f3f597e3a43510cf604b83adf20df9bb61050ac68a62"
+        },
+        "core25.veccore0": {
+          "first_tick": 25184,
+          "last_tick": 173841,
+          "end": [
+            "0x9158639378",
+            173834,
+            173834
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              173836,
+              173841
+            ]
+          ],
+          "official_us": "90.1",
+          "mmads": 0,
+          "phys_digest": "8aa2d7676b8ac29f4e4706c136e01e5b96373ac4e612e72f35bf39d29eecf42f",
+          "sync_digest": "9465be647e0b63a77b9026f40d573986ee035d21a13bb8d8db3dd053cb96c5ed",
+          "shard_sha256": "b7b5c40210d16860ca7ff9f04fe0903d660752f8edab51e1b1aa00314072c433"
+        },
+        "core25.veccore1": {
+          "first_tick": 25194,
+          "last_tick": 174210,
+          "end": [
+            "0x9158639378",
+            174203,
+            174203
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              174205,
+              174210
+            ]
+          ],
+          "official_us": "90.31",
+          "mmads": 0,
+          "phys_digest": "f60a854fc287b0ab668e7a91d49643b7ec7f32835d65579db4c0590241992b02",
+          "sync_digest": "b5dfeb4b0b9370e029f664edab55aecfce0c2a60829c7c6afdad672a4b8faba3",
+          "shard_sha256": "dbc1ea9d8b51276282cce23283680e1218c8c262501e2d6f14137e434fda80c8"
+        },
+        "core26.cubecore0": {
+          "first_tick": 24968,
+          "last_tick": 173186,
+          "end": [
+            "0x915849d210",
+            173182,
+            173182
+          ],
+          "end_labels": [],
+          "official_us": "89.83",
+          "mmads": 0,
+          "phys_digest": "decba4d9cec6dcec2463bb509a9224b0b05e084ebacc459bee090635ee85f4e9",
+          "sync_digest": "e111fdcb3ec83dad69e6f95364d5ff399145def6385b862ffad1581907cf31d9",
+          "shard_sha256": "792a87c94fc949896690b307303ea04f96b1c8229311bfcc2c8d035d360c9512"
+        },
+        "core26.veccore0": {
+          "first_tick": 25119,
+          "last_tick": 174120,
+          "end": [
+            "0x9158639378",
+            174113,
+            174113
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              174115,
+              174120
+            ]
+          ],
+          "official_us": "90.3",
+          "mmads": 0,
+          "phys_digest": "446147e689e1914d844e65a35d96ed6f49a368c84910fcc787dbc4b5f117c55a",
+          "sync_digest": "b225335a54911a0495c32029f582eb4022daf9e81596034a4b6332cc4e35c956",
+          "shard_sha256": "bbd224daa21facf03aaf8ee7fccddca26f25c56ffe7101191796a22f6cc94f04"
+        },
+        "core26.veccore1": {
+          "first_tick": 25182,
+          "last_tick": 174276,
+          "end": [
+            "0x9158639378",
+            174269,
+            174269
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              174271,
+              174276
+            ]
+          ],
+          "official_us": "90.36",
+          "mmads": 0,
+          "phys_digest": "d2af46b0b8456ab88232a577ce88508b7296aba10f86a91f45f3fdc77e729e37",
+          "sync_digest": "588223d1b0a4832c62993d57e48b556907ce994b306dd16e60869201f8bced9d",
+          "shard_sha256": "929af1d8142526cddb7a9e1fa1d963fc67d6aa5f47c42eb5a9487ddb9eb8d9e8"
+        },
+        "core27.cubecore0": {
+          "first_tick": 24881,
+          "last_tick": 173092,
+          "end": [
+            "0x915849d210",
+            173088,
+            173088
+          ],
+          "end_labels": [],
+          "official_us": "89.82",
+          "mmads": 0,
+          "phys_digest": "b95e5e6664df046f5b742491ff5447c8dccad13f7b57af6a95f64f8d90ec7a35",
+          "sync_digest": "f425fedf7738a415acaa2ed5ca74fb8419e158bdd4772b08a3138b293265ebf8",
+          "shard_sha256": "8f7a96c9fc67bf1971c068c7c6387a4b1cd40c937b8b5958910795bf517a5ba1"
+        },
+        "core27.veccore0": {
+          "first_tick": 24999,
+          "last_tick": 174250,
+          "end": [
+            "0x9158639378",
+            174243,
+            174243
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              174245,
+              174250
+            ]
+          ],
+          "official_us": "90.46",
+          "mmads": 0,
+          "phys_digest": "7121aa26f290c6ce35f480a457234d4375860175894e66482fdaccf2dd814277",
+          "sync_digest": "b74d59c878fee0d4c6cdf2d481f967c644bb924d7ff7c6c855b118bb40945c26",
+          "shard_sha256": "0d7bdbde6332cbf571e472f05ad8c5b8e23f9ff6c7c573652d8f0ac844b15a8b"
+        },
+        "core27.veccore1": {
+          "first_tick": 25031,
+          "last_tick": 174078,
+          "end": [
+            "0x9158639378",
+            174071,
+            174071
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              174073,
+              174078
+            ]
+          ],
+          "official_us": "90.33",
+          "mmads": 0,
+          "phys_digest": "d8a9da7376a0ba61bd7b3c8145f9ad3c08bf45f6970209a149489b989f48f32f",
+          "sync_digest": "a33fab6be73f850105114fa08e66a6b47919ef853800b43b8cd545b6c44b384a",
+          "shard_sha256": "d8acbaa5f2fbcef6a80e3a2bc8c6fb8c5814d078389f2f4a5b0ba39cc4d6f284"
+        },
+        "core28.cubecore0": {
+          "first_tick": 24805,
+          "last_tick": 173133,
+          "end": [
+            "0x915849d210",
+            173129,
+            173129
+          ],
+          "end_labels": [],
+          "official_us": "89.9",
+          "mmads": 0,
+          "phys_digest": "db41777b0ff5014f11014311897327db918095190bb657b76e27eb35c48db976",
+          "sync_digest": "9cfe9faa867511d2cdf6c91edc8bf123034ed1cedfafd0c9c36adea56b35eccf",
+          "shard_sha256": "0dc1227f7bbc9cf3a5ac07899928433f80b31347c8956dd8fb61688ac697c3e9"
+        },
+        "core28.veccore0": {
+          "first_tick": 24904,
+          "last_tick": 173967,
+          "end": [
+            "0x9158639378",
+            173960,
+            173960
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              173962,
+              173967
+            ]
+          ],
+          "official_us": "90.34",
+          "mmads": 0,
+          "phys_digest": "257cbe9dd17fa507cd168e3dc7b6d3af12fcf22a398b45ba10cf60ea0c5f6d23",
+          "sync_digest": "ba11b7d91990d0518b735ac07dcbefe0c4ba64522895dacaf8968d8f7014565f",
+          "shard_sha256": "f493853134f8a159db6dc3699dae4b9e555434c5222ee2e68adfd935abb725e1"
+        },
+        "core28.veccore1": {
+          "first_tick": 24960,
+          "last_tick": 174198,
+          "end": [
+            "0x9158639378",
+            174191,
+            174191
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              174193,
+              174198
+            ]
+          ],
+          "official_us": "90.45",
+          "mmads": 0,
+          "phys_digest": "f010b905e2632601c152c06a6deb7596fe5805cdb6b02f87ca6b9a208b0272cd",
+          "sync_digest": "d19cefbeb11388494c0dfdf75b753098b9608242c6436ef2f084a178fbf6acf6",
+          "shard_sha256": "386ea68b2627007c77556e9eee86e81ea2cf7de948a851ee5472c67f3dcbebeb"
+        },
+        "core29.cubecore0": {
+          "first_tick": 25066,
+          "last_tick": 173195,
+          "end": [
+            "0x915849d210",
+            173191,
+            173191
+          ],
+          "end_labels": [],
+          "official_us": "89.78",
+          "mmads": 0,
+          "phys_digest": "0cc9583aedbce2032f1f546eb2b9ac2262043a139a47733e372f5369a29db97a",
+          "sync_digest": "266f62fab0dcffbb62d52ac5d35f998d29e2016ac8064113eda7a00ff960cd0a",
+          "shard_sha256": "9e2aea2e27fdac6b2d4a8b31901c045c7c4e786a4c848488adcf110cf18dc04b"
+        },
+        "core29.veccore0": {
+          "first_tick": 25395,
+          "last_tick": 173932,
+          "end": [
+            "0x9158639378",
+            173925,
+            173925
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              173927,
+              173932
+            ]
+          ],
+          "official_us": "90.02",
+          "mmads": 0,
+          "phys_digest": "49f67e2e0657dcccedbdf542342b0e73d5eb978c1f7c54bcb3bcf94f11b66c90",
+          "sync_digest": "93340880078e33406ef04ba4724c202b7ab77cb31349616b31236ca143f44ef5",
+          "shard_sha256": "fc570b68ab2a06107b1313d509408618a3b02539607f95d1dbfc1cc1004792ea"
+        },
+        "core0.veccore0": {
+          "first_tick": 24602,
+          "last_tick": 186089,
+          "end": [
+            "0x9158639378",
+            186082,
+            186082
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              186084,
+              186089
+            ]
+          ],
+          "official_us": "97.87",
+          "mmads": 0,
+          "phys_digest": "cc5bc538520323ccd79dd8ed8ec3f2e307b638e09f151835285fe665aecade71",
+          "sync_digest": "56828f070fa5a55fd5140db36692985d03242262cf18483b32d63c8e550d129c",
+          "shard_sha256": "cd2f984e26bd84fd2ff821ed4368878fc1e43f79fac7ef08a2d214eb45ddc41b"
+        },
+        "core29.veccore1": {
+          "first_tick": 25413,
+          "last_tick": 174349,
+          "end": [
+            "0x9158639378",
+            174342,
+            174342
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              174344,
+              174349
+            ]
+          ],
+          "official_us": "90.26",
+          "mmads": 0,
+          "phys_digest": "9aee0643efbf88156d70ffa698f3b7e0b6a5db6887ddb34c3b592944d2b9a993",
+          "sync_digest": "b059dc9bc7fb5edb621cd850c404a8cd7e10ee5bb5103d92ce4ec0352ee8d44a",
+          "shard_sha256": "7db5dafe575040a041ca5e6965b4e9193b487a6246c8aff23233115364dc2dd9"
+        },
+        "core3.cubecore0": {
+          "first_tick": 24506,
+          "last_tick": 173234,
+          "end": [
+            "0x915849d210",
+            173230,
+            173230
+          ],
+          "end_labels": [],
+          "official_us": "90.14",
+          "mmads": 0,
+          "phys_digest": "5ecd0bd906f56d230f4face8c16fa3d07c90317d85a87da760545eca5dd7682e",
+          "sync_digest": "fda17629e5a323b776a069f03d150f74ae5c36e74c2320d67cd5088ea9f8068d",
+          "shard_sha256": "474254364cb62c0e9802ea53dd44491aac35ed8dec7845428f080390e8f7710e"
+        },
+        "core3.veccore0": {
+          "first_tick": 24516,
+          "last_tick": 174289,
+          "end": [
+            "0x9158639378",
+            174282,
+            174282
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              174284,
+              174289
+            ]
+          ],
+          "official_us": "90.77",
+          "mmads": 0,
+          "phys_digest": "4081771a7a81f030db58d652a720401a14ef6ba8d327eda7428caf533069bb6c",
+          "sync_digest": "a4c281d6e5e6d9f155a4a2c6fdad3d48aac7378e268dd5319b97b37f8fd11341",
+          "shard_sha256": "eb4d209740dd8d6840bca966093258a0500b20bd8babb163413de8340a8caf7d"
+        },
+        "core0.veccore1": {
+          "first_tick": 24586,
+          "last_tick": 186140,
+          "end": [
+            "0x9158639378",
+            186133,
+            186133
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              186135,
+              186140
+            ]
+          ],
+          "official_us": "97.91",
+          "mmads": 0,
+          "phys_digest": "f63be67a86a8ccf61b768d6be063a0bafdcdf6cb46f70126e5b4e125f2b7e4cf",
+          "sync_digest": "f6b8cd2557c1f149b3662e504fe1490456555f776847c74382ce43a7ec9bf9a8",
+          "shard_sha256": "618493662bbc0c3058e95dfd452758fe017a77c9e09db01530b862c3b24cd5c0"
+        },
+        "core3.veccore1": {
+          "first_tick": 24632,
+          "last_tick": 174315,
+          "end": [
+            "0x9158639378",
+            174308,
+            174308
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              174310,
+              174315
+            ]
+          ],
+          "official_us": "90.72",
+          "mmads": 0,
+          "phys_digest": "e90a9bcfdd1bcfe69b07bfd053e5ac7e51979090cc71f09aaa69ada27c7c487f",
+          "sync_digest": "b96f4064ed04d3094ddb87ba297ce80cf08e62bafccddb90a064d59c22f1dc12",
+          "shard_sha256": "84ecdeb7b7ddc080e6a486e5db533b86f3514737d8d8a342a4adfdf413e2a577"
+        },
+        "core4.cubecore0": {
+          "first_tick": 24576,
+          "last_tick": 173141,
+          "end": [
+            "0x915849d210",
+            173137,
+            173137
+          ],
+          "end_labels": [],
+          "official_us": "90.04",
+          "mmads": 0,
+          "phys_digest": "cebb41e57466f6492985e76d27a88228f496f7f2df5853d1ae1bfcbf3c4d4d93",
+          "sync_digest": "1d4c8361f44a57d662de1ea6454bde099442122455005d0d298b045eda5c2ee3",
+          "shard_sha256": "6a32c165b1ef6fd8c9b0a53d4e4d700db073111f5daa939902dcd7af49b9ac54"
+        },
+        "core4.veccore0": {
+          "first_tick": 24635,
+          "last_tick": 174476,
+          "end": [
+            "0x9158639378",
+            174469,
+            174469
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              174471,
+              174476
+            ]
+          ],
+          "official_us": "90.81",
+          "mmads": 0,
+          "phys_digest": "e1722b61dd6c6aedb0eded7e7840f2ff2c3bdc4d53f5b72bbe2e6335f06d1c45",
+          "sync_digest": "bacc173de9e2705189685bb0a3911328054f5032e8c1664f124abd08e8264a5e",
+          "shard_sha256": "c37e65dc417de3086d98cd5fbd8262bd09b3dcba33b817886d20265d2b2974be"
+        },
+        "core4.veccore1": {
+          "first_tick": 24561,
+          "last_tick": 174293,
+          "end": [
+            "0x9158639378",
+            174286,
+            174286
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              174288,
+              174293
+            ]
+          ],
+          "official_us": "90.75",
+          "mmads": 0,
+          "phys_digest": "2930b75f54cf05f7917abeb2167884e790bb6516b02c46da4c28180d5ec4b3fc",
+          "sync_digest": "521b22f9b093fb9f13c30064a8b242095b8f7319e7ba83182c19a5f0351b27f1",
+          "shard_sha256": "6da045b9b1d6ccb1694cd260fb57c36b73990ea6264f439a0e763fad41529aed"
+        },
+        "core5.cubecore0": {
+          "first_tick": 24545,
+          "last_tick": 173483,
+          "end": [
+            "0x915849d210",
+            173479,
+            173479
+          ],
+          "end_labels": [],
+          "official_us": "90.27",
+          "mmads": 0,
+          "phys_digest": "d749b559f974ac659ea12cba83a4fa7f1adb78cc2cd6f8c83cea7ec29e655169",
+          "sync_digest": "35f1ffe27806f5fb9cd7f8a0e0d4a3041dcac98802fe462c099ba739d545dd00",
+          "shard_sha256": "b422ddf1489917ea286afe96e488a17f154df0b72b133dc4b10778dcde42091c"
+        },
+        "core5.veccore0": {
+          "first_tick": 24621,
+          "last_tick": 174223,
+          "end": [
+            "0x9158639378",
+            174216,
+            174216
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              174218,
+              174223
+            ]
+          ],
+          "official_us": "90.67",
+          "mmads": 0,
+          "phys_digest": "a9b04087869bd3bcf23db1819f7ad728d5992cdb517c10d05a63b4b334283911",
+          "sync_digest": "315d5f4cbaaea7937db42e0ef92709126b9660ae45febffbee606359fb682834",
+          "shard_sha256": "dca53e56d0f510690ae9a1f9962e65e2cd0d1d6d0fbe80a3710bc5779faa2dc3"
+        },
+        "core5.veccore1": {
+          "first_tick": 24624,
+          "last_tick": 174520,
+          "end": [
+            "0x9158639378",
+            174513,
+            174513
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              174515,
+              174520
+            ]
+          ],
+          "official_us": "90.85",
+          "mmads": 0,
+          "phys_digest": "41754b8c030779693400ffc6383a56e193ac7dac76e1648b408e44fa6a8c8fb9",
+          "sync_digest": "496c9ef91592f48240314e713191010705a57b1db1322fba100f6ceccd271a85",
+          "shard_sha256": "2f74ada248f457e411d8ea33e2582d46badddd6fb38c369af04871d4da5e0b28"
+        },
+        "core6.cubecore0": {
+          "first_tick": 24551,
+          "last_tick": 173345,
+          "end": [
+            "0x915849d210",
+            173341,
+            173341
+          ],
+          "end_labels": [],
+          "official_us": "90.18",
+          "mmads": 0,
+          "phys_digest": "d43423bc451bd78592722ada1b17b15897be1bdb2789b578bdd43061128694fa",
+          "sync_digest": "8f536403b3f515ea503d4360cf232d27f9b9996284e12126092a32778ae04534",
+          "shard_sha256": "ea062b5da0e7872f64147dfad6b6b07429720b2a88c9fb95ca1ab0800023bbda"
+        },
+        "core6.veccore0": {
+          "first_tick": 24615,
+          "last_tick": 174363,
+          "end": [
+            "0x9158639378",
+            174356,
+            174356
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              174358,
+              174363
+            ]
+          ],
+          "official_us": "90.76",
+          "mmads": 0,
+          "phys_digest": "c16e36dca232381f30e2dfe6c55822340183291193957bb00bd1f47f7a8bad60",
+          "sync_digest": "d53c665b374a43b8bbe44dfd94b3f2466af72c29c56f2220c08d385de38c4200",
+          "shard_sha256": "11608e37d8b6402bd09c06921cbfcea818ab0bdd95a354bd53df070d4b4278a9"
+        },
+        "core6.veccore1": {
+          "first_tick": 24538,
+          "last_tick": 174072,
+          "end": [
+            "0x9158639378",
+            174065,
+            174065
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              174067,
+              174072
+            ]
+          ],
+          "official_us": "90.63",
+          "mmads": 0,
+          "phys_digest": "a37f1775c7f4e6b7d95ea94a6c6ecd6034e1bcb414fa3722130b1646b47ff8e2",
+          "sync_digest": "0b6e559471f08da6f8e89611d4ecbe8aca7103fe5bc713e065a1527293177f8f",
+          "shard_sha256": "0b3ac8c7dbe9ce9d6f1e86c9202371b20115efc84f4367208c1de03923adc6c2"
+        },
+        "core7.cubecore0": {
+          "first_tick": 24543,
+          "last_tick": 173347,
+          "end": [
+            "0x915849d210",
+            173343,
+            173343
+          ],
+          "end_labels": [],
+          "official_us": "90.18",
+          "mmads": 0,
+          "phys_digest": "28d9f6a004c1c8c539bbb7e8c8c33c582ef93be030bfed98217f73424149ae22",
+          "sync_digest": "cb662da6fc787a928f593d0e5401168332aa77ce04dfda91dacb6ddd97eac0ac",
+          "shard_sha256": "dfc97e7748207300d7bab96eb30ed05c5ccb6a3c63a71a64eeb611b0039c8f01"
+        },
+        "core7.veccore0": {
+          "first_tick": 24613,
+          "last_tick": 174150,
+          "end": [
+            "0x9158639378",
+            174143,
+            174143
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              174145,
+              174150
+            ]
+          ],
+          "official_us": "90.63",
+          "mmads": 0,
+          "phys_digest": "7d9ac22fbb8460a28df8547b28c70cc92235fd9221eda0032e5373fa10db5baa",
+          "sync_digest": "1034a7db4f746e3632ba6f527ab715f17fafee966ad82679ea8d189aa71fdc42",
+          "shard_sha256": "f4d26192e634d6d7be342a2cae0ee2ea7cf0bb12e011a83fd3257c396bedc1f5"
+        },
+        "core7.veccore1": {
+          "first_tick": 24647,
+          "last_tick": 174355,
+          "end": [
+            "0x9158639378",
+            174348,
+            174348
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              174350,
+              174355
+            ]
+          ],
+          "official_us": "90.73",
+          "mmads": 0,
+          "phys_digest": "64a496c46bf8c59f8d5c84d5ba7190ad20540c406f1af3775e8ab0cca81eeb2e",
+          "sync_digest": "15d1eba2f63c2adf67c4f6d5b726cfbc585a303890aed50a4a6d982a4b40cbe4",
+          "shard_sha256": "ef946ad5d19ea0392087619779fd18713a26b7628474c64363e29cd3dc8f6546"
+        },
+        "core8.cubecore0": {
+          "first_tick": 24564,
+          "last_tick": 173237,
+          "end": [
+            "0x915849d210",
+            173233,
+            173233
+          ],
+          "end_labels": [],
+          "official_us": "90.1",
+          "mmads": 0,
+          "phys_digest": "12bf2389944d8bbc78bfb7bf8e1fed836238e1663dc94b04ed5722479a05a18f",
+          "sync_digest": "0227000782104dc556731cfe7aee08f9a82633136272e6020ba3444c8c0e4088",
+          "shard_sha256": "77b51e2b785ea7bd43945a90af054b1a385acf3577d5e1867075b631b1d09feb"
+        },
+        "core8.veccore0": {
+          "first_tick": 24565,
+          "last_tick": 174198,
+          "end": [
+            "0x9158639378",
+            174191,
+            174191
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              174193,
+              174198
+            ]
+          ],
+          "official_us": "90.69",
+          "mmads": 0,
+          "phys_digest": "4c50e617f57a2e82ec596c8223a766c9c04e063cd5dfbc96e4390b68f808fcaa",
+          "sync_digest": "8b5ca1e5a57787fe1ab4c1b92b3188986d0c5ef3a12f22a5d6032c32692b9676",
+          "shard_sha256": "0e678a03d499cfac39cf223b4ad05f9509bccdeeb60ae20a85fb5955f87212b1"
+        },
+        "core9.cubecore0": {
+          "first_tick": 24559,
+          "last_tick": 173455,
+          "end": [
+            "0x915849d210",
+            173451,
+            173451
+          ],
+          "end_labels": [],
+          "official_us": "90.24",
+          "mmads": 0,
+          "phys_digest": "061df673213c7f8afeae8a4826fa763bfc45b2ee80da4494c0b66f31d1cec93d",
+          "sync_digest": "e94a1970909487ebe71eaffc883cfe6bbc6b881af8ad68947958de79c99148e0",
+          "shard_sha256": "f8e116d57c2b0f3b56c5ce90c8737242f1794bdfd244efce5ac8dcc63c22ebc2"
+        },
+        "core8.veccore1": {
+          "first_tick": 24576,
+          "last_tick": 174303,
+          "end": [
+            "0x9158639378",
+            174296,
+            174296
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              174298,
+              174303
+            ]
+          ],
+          "official_us": "90.74",
+          "mmads": 0,
+          "phys_digest": "d9b83f721898e5ac1807d3ef3454dd940541b55d1fe63e10ac7eefaf4a0dfe69",
+          "sync_digest": "779c689b6c6ea5f622a49f393312d49764722631537dc5fc10478c3380289284",
+          "shard_sha256": "22b2b2defdcd23dcdfd26657cb9f1f794e4c2d187fbbe6a7cf2472c8c2b147af"
+        },
+        "core9.veccore0": {
+          "first_tick": 24635,
+          "last_tick": 174181,
+          "end": [
+            "0x9158639378",
+            174174,
+            174174
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              174176,
+              174181
+            ]
+          ],
+          "official_us": "90.63",
+          "mmads": 0,
+          "phys_digest": "21b3bf89e2ff931b94a6c05b4f0aee3eeed3cda5fa797dd1e72fbbbb4c375809",
+          "sync_digest": "56e8f2d384d2c8f6914bc92317f594a10740bd011609ea7c3be80741faf731f2",
+          "shard_sha256": "57cf1722f5897e8d901c65618664952c26d8139e310bd8103dae9b9ea7ab1503"
+        },
+        "core9.veccore1": {
+          "first_tick": 24623,
+          "last_tick": 174169,
+          "end": [
+            "0x9158639378",
+            174162,
+            174162
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              174164,
+              174169
+            ]
+          ],
+          "official_us": "90.63",
+          "mmads": 0,
+          "phys_digest": "4649a14512fac0465bbcea86e7a722d64ccc072851402efd57605e68e6149b35",
+          "sync_digest": "ff98aa2e9c8042ead35ba71267a523f57d552a7d1b4aba533272f1e9112d2402",
+          "shard_sha256": "a34deebd5d516da88d844116c3ccc724f8f0693da1dba2936985de6b07e40eb1"
+        }
+      },
+      "captured_binary": "results/v0.24/kda-v1/raw/pr-t2-h1-varlen/profile/OPPROF_20261119235004_KSDAEIYVPEQTHGCY/ChunkKdaFwd_5e864108d5688e456abb78f238c67b16_2_mix_aic/0/dump/aicore_binary.o",
+      "published_names": [
+        "ChunkKdaFwd_5e864108d5688e456abb78f238c67b16.o",
+        "ChunkKdaFwd_3d0869ad99fc0117a05ebce5fc52f4ef.o"
+      ],
+      "aggregate": "results/v0.24/kda-v1/raw/pr-t2-h1-varlen/profile/OPPROF_20261119235004_KSDAEIYVPEQTHGCY/ChunkKdaFwd_5e864108d5688e456abb78f238c67b16_2_mix_aic/0/simulator/trace.json",
+      "aggregate_sha256": "1d24dead26a91603d1483a594d88fa453bf9b1e14a9cd51b858c281917fa6be5"
+    },
+    {
+      "kernel": "Transpose_float32_int64_high_performance_10001",
+      "ordinal": 1,
+      "ca_us": 2.4212121212121214,
+      "raw_path": "results/v0.24/kda-v1/raw/pr-t2-h1-varlen/profile/OPPROF_20261119235004_KSDAEIYVPEQTHGCY/Transpose_float32_int64_high_performance_10001/1",
+      "device_text_sha256": "186722ef55b32dbc748b4af4f6a3d772abc150377f4c96ed88adab573e8aa2b9",
+      "first_tick": 208270,
+      "last_tick": 212265,
+      "active_aic": 0,
+      "active_aiv": 52,
+      "mmads": 0,
+      "resource": {
+        "descriptor_bytes": {
+          "OUT->UB": 48256
+        },
+        "mmad_issued_shapes": {},
+        "issued_mmad_ops": 0,
+        "queue_instruction_counts": {
+          "SCALAR": 33072,
+          "MTE3": 52,
+          "MTE2": 104,
+          "PUSHQ": 260,
+          "FLOWCTRL": 2496,
+          "WARP_0": 1612,
+          "WARP_1": 1612,
+          "WARP_2": 1590,
+          "WARP_3": 1590,
+          "WARP_4": 1590,
+          "WARP_5": 1590,
+          "WARP_6": 1590,
+          "WARP_7": 1590,
+          "WARP_8": 1590,
+          "WARP_9": 1590,
+          "WARP_10": 468,
+          "WARP_11": 468,
+          "WARP_12": 468,
+          "WARP_13": 468,
+          "WARP_14": 468,
+          "WARP_15": 468,
+          "WARP_16": 468,
+          "WARP_17": 468,
+          "WARP_18": 468,
+          "WARP_19": 468,
+          "WARP_20": 468,
+          "WARP_21": 468,
+          "WARP_22": 468,
+          "WARP_23": 468,
+          "WARP_24": 468,
+          "WARP_25": 468,
+          "WARP_26": 468,
+          "WARP_27": 468,
+          "WARP_28": 468,
+          "WARP_29": 468,
+          "WARP_30": 468,
+          "WARP_31": 468,
+          "WARP_34": 468,
+          "WARP_35": 468,
+          "WARP_32": 468,
+          "WARP_38": 468,
+          "WARP_33": 468,
+          "WARP_39": 468,
+          "WARP_36": 468,
+          "WARP_37": 468,
+          "WARP_42": 468,
+          "WARP_40": 468,
+          "WARP_43": 468,
+          "WARP_41": 468,
+          "WARP_46": 468,
+          "WARP_44": 468,
+          "WARP_47": 468,
+          "WARP_45": 468,
+          "WARP_48": 468,
+          "WARP_49": 468,
+          "WARP_50": 468,
+          "WARP_51": 468,
+          "WARP_54": 468,
+          "WARP_55": 468,
+          "WARP_58": 468,
+          "WARP_59": 468,
+          "WARP_62": 468,
+          "WARP_63": 468,
+          "WARP_52": 468,
+          "WARP_53": 468,
+          "WARP_56": 468,
+          "WARP_57": 468,
+          "WARP_60": 468,
+          "WARP_61": 468
+        }
+      },
+      "cores": {
+        "core10.veccore0": {
+          "first_tick": 208437,
+          "last_tick": 211755,
+          "end": [
+            "0x9000d18fbc",
+            211748,
+            211748
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              211750,
+              211755
+            ]
+          ],
+          "official_us": "2.01",
+          "mmads": 0,
+          "phys_digest": "c1588e8dcc5e1a7427d726d1a431bd656763ac88c7f508b513a66b08ac6b4d62",
+          "sync_digest": "f561e55083bf4c68983fbe417042db3469c4bc7625531c5931cccdb4e63fb0aa",
+          "shard_sha256": "21895b05905df1bd5ddddea60c7cb50c9df6e63f74928fbe7a21bb013f03e6af"
+        },
+        "core1.veccore0": {
+          "first_tick": 208425,
+          "last_tick": 211869,
+          "end": [
+            "0x9000d18fbc",
+            211862,
+            211862
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              211864,
+              211869
+            ]
+          ],
+          "official_us": "2.09",
+          "mmads": 0,
+          "phys_digest": "6ea84ff5070285c4cd025ae4909446eb4093c620769e3a2854edde37a627a83d",
+          "sync_digest": "0bbbc8ae302108645767ff1ad69c1f7fd284bb0f93b13ccdd16f608c29f84cea",
+          "shard_sha256": "e30eb141e4f7332229babc3cc81e30ecad1ac68ebe49fe169f1c4c4f2ae2c4d4"
+        },
+        "core4.veccore0": {
+          "first_tick": 208569,
+          "last_tick": 211819,
+          "end": [
+            "0x9000d18fbc",
+            211812,
+            211812
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              211814,
+              211819
+            ]
+          ],
+          "official_us": "1.97",
+          "mmads": 0,
+          "phys_digest": "b7bb96fdcdb4fdd39098d3fbfb20913178d7343dd97f3490e29e7e38f120b954",
+          "sync_digest": "c9d4101c79990f23e6d3ea11df23b612efee4f8768ad3ab443760769c4246ce8",
+          "shard_sha256": "b35b94a04a0422fd5f979722cd82e5f2362ad2a92199d3c59ddc0ef20240741d"
+        },
+        "core6.veccore0": {
+          "first_tick": 208314,
+          "last_tick": 211829,
+          "end": [
+            "0x9000d18fbc",
+            211822,
+            211822
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              211824,
+              211829
+            ]
+          ],
+          "official_us": "2.13",
+          "mmads": 0,
+          "phys_digest": "a0e4858f707818444741f29d276d72938e6ad202515a77d1b87b0a1ca6a6cfd7",
+          "sync_digest": "d43acfcdfba2f9ba288dc82396c18b1e3d3aaccab9caff14499d6e6e39388a40",
+          "shard_sha256": "4411b1a00b97227cc21c4290e3a18775725415228fa01eccd3a4c8ae93426cc5"
+        },
+        "core8.veccore1": {
+          "first_tick": 208347,
+          "last_tick": 211858,
+          "end": [
+            "0x9000d18fbc",
+            211851,
+            211851
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              211853,
+              211858
+            ]
+          ],
+          "official_us": "2.13",
+          "mmads": 0,
+          "phys_digest": "9429d23a4544797e03d6367011d97904cdc8a4b0a3c88e05ad455afc549e359e",
+          "sync_digest": "985afc607719b64e433eb96d060df9b4350b7951122d443776fd445a22c77f86",
+          "shard_sha256": "b1d90102e575c439dbaf9ca98945a331b8c149aeb7a0febea0455d9d08bcc737"
+        },
+        "core18.veccore0": {
+          "first_tick": 208563,
+          "last_tick": 212192,
+          "end": [
+            "0x9000d18fbc",
+            212185,
+            212185
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              212187,
+              212192
+            ]
+          ],
+          "official_us": "2.2",
+          "mmads": 0,
+          "phys_digest": "ffd6c56ebf032fea91e8b043c511e95909fca227e495331be86298a1a1ba293b",
+          "sync_digest": "a76af6715a5f761fef7905c0d478d72123622a8c31c8233aa7c8f9c6d19280d3",
+          "shard_sha256": "4077a7b55fb81595bc7346ca2a75056acf3b7f755835c565a5e4f1725cfbaee3"
+        },
+        "core12.veccore1": {
+          "first_tick": 208287,
+          "last_tick": 211836,
+          "end": [
+            "0x9000d18fbc",
+            211829,
+            211829
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              211831,
+              211836
+            ]
+          ],
+          "official_us": "2.15",
+          "mmads": 0,
+          "phys_digest": "a94471dbd5122af7f102bc671168c35b86aeaaa78923f53cddf0ed76d7725657",
+          "sync_digest": "e5aba0b8a43245d287279c966fce05e581d6589241aec6816a19d17dcaf6c73e",
+          "shard_sha256": "14c56fc6ac38315aeea0ec97e6917e656207be2094f2a253707f0940d61940d9"
+        },
+        "core12.veccore0": {
+          "first_tick": 208270,
+          "last_tick": 211376,
+          "end": [
+            "0x9000d18fbc",
+            211369,
+            211369
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              211371,
+              211376
+            ]
+          ],
+          "official_us": "1.88",
+          "mmads": 0,
+          "phys_digest": "4360e576459ebeff5a153122b842302f1a421d86910ab44e1ceaa698de199cce",
+          "sync_digest": "8d5e1d5931dc67941a10945a4fbdf4b9413264a2ea140cbbc44d0334dfebcbf5",
+          "shard_sha256": "0b31e8653a2f30aa035cd45782ea7dd5dfc6b3db98cf171db6dad0937ce5c893"
+        },
+        "core9.veccore1": {
+          "first_tick": 208460,
+          "last_tick": 211634,
+          "end": [
+            "0x9000d18fbc",
+            211627,
+            211627
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              211629,
+              211634
+            ]
+          ],
+          "official_us": "1.92",
+          "mmads": 0,
+          "phys_digest": "db8481621704c600e516d48c1fe71df8b83212cf5b03f48a883705c5e6afca8f",
+          "sync_digest": "893e5beb3ab23ed6489675db5f97af047b911151b8ede31cefa921512fbabe27",
+          "shard_sha256": "997bb6cee28dec190353b7587a4e484b3e2d96e718a79f9ae5baa5ad5eaa6b15"
+        },
+        "core24.veccore1": {
+          "first_tick": 208512,
+          "last_tick": 211809,
+          "end": [
+            "0x9000d18fbc",
+            211802,
+            211802
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              211804,
+              211809
+            ]
+          ],
+          "official_us": "2",
+          "mmads": 0,
+          "phys_digest": "bc69a810a503388b782395306964c363d5ddf5544e6835e308e769cb798a5c69",
+          "sync_digest": "d5ed2dfb947788c97f242474b2e57d4ea2b89b80012310f209d7a8056c9bdeb7",
+          "shard_sha256": "b1d9ee59a8766406228c96b128d2756c487034d4bc249deee923d3975353b591"
+        },
+        "core11.veccore1": {
+          "first_tick": 208462,
+          "last_tick": 211943,
+          "end": [
+            "0x9000d18fbc",
+            211936,
+            211936
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              211938,
+              211943
+            ]
+          ],
+          "official_us": "2.11",
+          "mmads": 0,
+          "phys_digest": "02e89cec6ef5fc562ce09083415b60a5768c65fb21a8f0994185e80575324047",
+          "sync_digest": "3e090d6612853f9b774473d4bc6231da8ce32a23e39c86f665b01d8467b1baec",
+          "shard_sha256": "acd3a8045554515164439e0c6fb108f3f66f0aa2ecb3d2f6863c4132229240c3"
+        },
+        "core7.veccore1": {
+          "first_tick": 208400,
+          "last_tick": 211594,
+          "end": [
+            "0x9000d18fbc",
+            211587,
+            211587
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              211589,
+              211594
+            ]
+          ],
+          "official_us": "1.94",
+          "mmads": 0,
+          "phys_digest": "eb3b9890a969e6619e302999b02ae1811c84881ababc5528a0e16df683f37c3b",
+          "sync_digest": "82bc10b4cc687850a8a8e8a0982392caf0a17db1620a39f3ee0d6f5c4ac26106",
+          "shard_sha256": "699724fe14376b7f47ea32140b4967a7ee944c0e57c853e2e7228180d25df364"
+        },
+        "core23.veccore1": {
+          "first_tick": 208423,
+          "last_tick": 212009,
+          "end": [
+            "0x9000d18fbc",
+            212002,
+            212002
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              212004,
+              212009
+            ]
+          ],
+          "official_us": "2.17",
+          "mmads": 0,
+          "phys_digest": "230044a01fd71646f92462ef1067e6f58276a91ef79f0a402366e381a0f6a352",
+          "sync_digest": "a2aca6e98affd86dfbf7e20245914580f12552996261ff24d2c97219e3adc1dd",
+          "shard_sha256": "5c4cddea3a625696d66c2b45225efb137be15f9700020e9ae3ae9cde1a95063b"
+        },
+        "core16.veccore1": {
+          "first_tick": 208489,
+          "last_tick": 212225,
+          "end": [
+            "0x9000d18fbc",
+            212218,
+            212218
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              212220,
+              212225
+            ]
+          ],
+          "official_us": "2.26",
+          "mmads": 0,
+          "phys_digest": "12200f4d0e21b5bca03830d44167bba57c376f32c46e2ee70281adbdc19f7613",
+          "sync_digest": "416c960ee342317d2ce6193132762f0a95c62a5aaa7055887c22e54f8d820bbe",
+          "shard_sha256": "36280f0c350613d6b13285d2fd263891ab9a8e87a875f5a05b47c96e5e832a90"
+        },
+        "core17.veccore1": {
+          "first_tick": 208361,
+          "last_tick": 212166,
+          "end": [
+            "0x9000d18fbc",
+            212159,
+            212159
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              212161,
+              212166
+            ]
+          ],
+          "official_us": "2.31",
+          "mmads": 0,
+          "phys_digest": "c977a1990c47423f352607905ad4e845fa8da9433e86fde24fabc33f3ea7d59c",
+          "sync_digest": "049c8545db0cd552adf5103497a6bfefd6feb2f16a31659c8f0aa150854d1150",
+          "shard_sha256": "60f1ea2e24d125a04b9e02a519ac15a917f2081dcebf369e3a8c041083825f4c"
+        },
+        "core10.veccore1": {
+          "first_tick": 208373,
+          "last_tick": 211941,
+          "end": [
+            "0x9000d18fbc",
+            211934,
+            211934
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              211936,
+              211941
+            ]
+          ],
+          "official_us": "2.16",
+          "mmads": 0,
+          "phys_digest": "c2d41a60afbd0227cc2aee060f6cce5bf8595f6395fd6572791bd7e6312d510a",
+          "sync_digest": "06a89145a86b31bf94d5ba8a9e147d24170203ea61d4de8d866601b5707b444d",
+          "shard_sha256": "3ba2478ae12afebe2e92d8e5a34307ed64248bcb83e5af1aae5382d715704082"
+        },
+        "core0.veccore1": {
+          "first_tick": 208334,
+          "last_tick": 211953,
+          "end": [
+            "0x9000d18fbc",
+            211946,
+            211946
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              211948,
+              211953
+            ]
+          ],
+          "official_us": "2.19",
+          "mmads": 0,
+          "phys_digest": "e0f71e25ce8516eab8bac35f02a59f42fbec2102e7cbb0ae21bebdf47749f223",
+          "sync_digest": "cb823ba00440bf1846218108396cab245a75d2f53f8c9eb4a2ec71dc248f7c8b",
+          "shard_sha256": "19746bd06c957e7f15b0365bec59d4043be02ca8f8d816fc16e5d698bc898996"
+        },
+        "core5.veccore1": {
+          "first_tick": 208530,
+          "last_tick": 211745,
+          "end": [
+            "0x9000d18fbc",
+            211738,
+            211738
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              211740,
+              211745
+            ]
+          ],
+          "official_us": "1.95",
+          "mmads": 0,
+          "phys_digest": "153a2e5f3b83c118b6e94e32cd2e59b7779a56a9c385094e5dfc76465a2fb464",
+          "sync_digest": "c1a97fb4d5e87bc9a07d736150150aab58727eeec6b515caec24c029ddd7208e",
+          "shard_sha256": "65f5f32dda98af08e6f0f6c3ceaa8f907d4a53b626df06bea6b93a79b46a0e4f"
+        },
+        "core9.veccore0": {
+          "first_tick": 208516,
+          "last_tick": 211879,
+          "end": [
+            "0x9000d18fbc",
+            211872,
+            211872
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              211874,
+              211879
+            ]
+          ],
+          "official_us": "2.04",
+          "mmads": 0,
+          "phys_digest": "37e7180b8d0a839ed9687532824c0829e0f520699468c7a2e6052c7d3177fbcd",
+          "sync_digest": "8cb265e2fbe0071b99a8d9bb9a7f76115a888fca87c8f4370d568c9476145418",
+          "shard_sha256": "33d6233f5509622ab37015456030103a2a2ed35fc30b0dae027a15d6eb8373fb"
+        },
+        "core11.veccore0": {
+          "first_tick": 208431,
+          "last_tick": 211840,
+          "end": [
+            "0x9000d18fbc",
+            211833,
+            211833
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              211835,
+              211840
+            ]
+          ],
+          "official_us": "2.07",
+          "mmads": 0,
+          "phys_digest": "1ea2330e3e0bec24b974c2784f5bce944e7083e41752e803c64ee251b7253f57",
+          "sync_digest": "78f0481a21f299191aba0a80fb776e3052500436b60eefb4c235d6cbfb0b0679",
+          "shard_sha256": "b1589e3cc87248950dd0334ec788de9b573e926144bc8a621b506b6ac397d674"
+        },
+        "core4.veccore1": {
+          "first_tick": 208392,
+          "last_tick": 211992,
+          "end": [
+            "0x9000d18fbc",
+            211985,
+            211985
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              211987,
+              211992
+            ]
+          ],
+          "official_us": "2.18",
+          "mmads": 0,
+          "phys_digest": "6708b450772abcf22ab593da9d2669c69234ec76e0bc9a1465eaeed476d0d097",
+          "sync_digest": "9a6a0826992b4f8bb084b06e02eb37a67c007464141d96cae3890888405b165d",
+          "shard_sha256": "b211a2c2d73a7596f5def177c7fdb8e6a853a3b16ec2c77bef443109115b65e9"
+        },
+        "core21.veccore1": {
+          "first_tick": 208547,
+          "last_tick": 212207,
+          "end": [
+            "0x9000d18fbc",
+            212200,
+            212200
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              212202,
+              212207
+            ]
+          ],
+          "official_us": "2.22",
+          "mmads": 0,
+          "phys_digest": "0ea5ed963cf9bd5d1401714e036abdeceac601eec9a8594776bf5acd68a1cbfa",
+          "sync_digest": "29930398c0f7a656cabee698c112c3a88acbab4734f2eb7d08c66f604725fb05",
+          "shard_sha256": "2ab97ee9e9912a366f152de683128bbb36b0331be1a14922ce7eb0bf1f097278"
+        },
+        "core0.veccore0": {
+          "first_tick": 208489,
+          "last_tick": 211714,
+          "end": [
+            "0x9000d18fbc",
+            211707,
+            211707
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              211709,
+              211714
+            ]
+          ],
+          "official_us": "1.95",
+          "mmads": 0,
+          "phys_digest": "c0133e5dbb3977ad3d3acae02219d55b8dec011e1c4ad3b6f51e9f2a1d55044f",
+          "sync_digest": "5501c9e7bfbcb74564913ac3919d72ec64487cf17f2571d526ac0e133deca1ba",
+          "shard_sha256": "44354142979fd412b331c15ad5be87ff8e3a16c7a3bc006539ef0af8964e7335"
+        },
+        "core16.veccore0": {
+          "first_tick": 208646,
+          "last_tick": 212188,
+          "end": [
+            "0x9000d18fbc",
+            212181,
+            212181
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              212183,
+              212188
+            ]
+          ],
+          "official_us": "2.15",
+          "mmads": 0,
+          "phys_digest": "83d00b77655182703ef24ea76f02ad0d923456b7999865f5b7017b79bcb112be",
+          "sync_digest": "2371dc8b0e408a92e14d2113d84a4c1a9885717f5fae0d7f1621d8a0799b8acb",
+          "shard_sha256": "71f3371374778558a1ab82765b916e6441542da74adefbeff66d1a8fe3a9b0a7"
+        },
+        "core2.veccore0": {
+          "first_tick": 208470,
+          "last_tick": 212003,
+          "end": [
+            "0x9000d18fbc",
+            211996,
+            211996
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              211998,
+              212003
+            ]
+          ],
+          "official_us": "2.14",
+          "mmads": 0,
+          "phys_digest": "3e2593423beee20415c4dc1b6c0c87b9f7ce57fdc2ddbcc32d89ca00b19393a3",
+          "sync_digest": "668c8d7bb60bfc764ea5f0368776af4ece4c64ee1f1917c97b107d1dbb02d202",
+          "shard_sha256": "f23cda18a611776acdf6fd7fecaf421daf9cef51cf7e05db8d1ecb20746b9a21"
+        },
+        "core28.veccore1": {
+          "first_tick": 208530,
+          "last_tick": 211774,
+          "end": [
+            "0x9000d18fbc",
+            211767,
+            211767
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              211769,
+              211774
+            ]
+          ],
+          "official_us": "1.97",
+          "mmads": 0,
+          "phys_digest": "0a8c602ab4794559019c75ccb08f92b7edf01cb8fff1fafd274e9a97d6be3fda",
+          "sync_digest": "755b803e7204e1d7ffed7d5ffb6839f6059cffbe0f6a7d872bcfdab18abfbe87",
+          "shard_sha256": "15416f421af17418834a62f5b3b26d0b610a3758888002c5c72cfc48d556e22a"
+        },
+        "core26.veccore0": {
+          "first_tick": 208592,
+          "last_tick": 212036,
+          "end": [
+            "0x9000d18fbc",
+            212029,
+            212029
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              212031,
+              212036
+            ]
+          ],
+          "official_us": "2.09",
+          "mmads": 0,
+          "phys_digest": "22d4252e8ef40175bb8d2a1bf491213c31e41cf2679f5848bd403cbd9074d66e",
+          "sync_digest": "fa34be25716ecec336dd4a0c9a79d3e5e14db0111cee29629dc9a45331a2ea1e",
+          "shard_sha256": "643e69170c638203580de801ffdfdaa6aa6be000e2499418b9138bcd55d1188a"
+        },
+        "core19.veccore1": {
+          "first_tick": 208376,
+          "last_tick": 211986,
+          "end": [
+            "0x9000d18fbc",
+            211979,
+            211979
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              211981,
+              211986
+            ]
+          ],
+          "official_us": "2.19",
+          "mmads": 0,
+          "phys_digest": "604c4125075a9e13998fcd570fc172b5e9a4ef8621c2abb2bf0e0727c194491b",
+          "sync_digest": "bc73110f63c4675a6a1ac301d08d54836a57bd0eb71b6959cb6abbc77d2c762b",
+          "shard_sha256": "2ee3f03fb06fa1d4ce5428c7cfcb2cfbe3e6a9af394601616bf60bdc795b6742"
+        },
+        "core17.veccore0": {
+          "first_tick": 208386,
+          "last_tick": 212120,
+          "end": [
+            "0x9000d18fbc",
+            212113,
+            212113
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              212115,
+              212120
+            ]
+          ],
+          "official_us": "2.26",
+          "mmads": 0,
+          "phys_digest": "adf6b4d6e65c6d1c3354cbb7ccf7311355f611ec0a70148cc946d82c0dc35e5f",
+          "sync_digest": "bb004bb76084680da92c3f7f36954a197f7cce573b83e52624258412703ede8f",
+          "shard_sha256": "662b94027b166a15ce10627c6c8e877b8393efd08aa01d2d18836aa578856fe1"
+        },
+        "core27.veccore0": {
+          "first_tick": 208445,
+          "last_tick": 212110,
+          "end": [
+            "0x9000d18fbc",
+            212103,
+            212103
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              212105,
+              212110
+            ]
+          ],
+          "official_us": "2.22",
+          "mmads": 0,
+          "phys_digest": "743e4fcbd10733e17c9b8bbffb911886fcedc9313aa441bdefde74443118c555",
+          "sync_digest": "44b8befee1ff6046c4a811147b8c0ef620ce4b73d68d2c3613c4f1543f471ede",
+          "shard_sha256": "924b14a996c4ee390d70b5a3770862b764ffa45f294b0ddab64a0ec5a65fb45b"
+        },
+        "core20.veccore0": {
+          "first_tick": 208596,
+          "last_tick": 212265,
+          "end": [
+            "0x9000d18fbc",
+            212258,
+            212258
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              212260,
+              212265
+            ]
+          ],
+          "official_us": "2.22",
+          "mmads": 0,
+          "phys_digest": "b37e57d89ad4d6a4e80ff089256f2ad139e2e35e6e3c4a7dd9b7f49cca0c62b6",
+          "sync_digest": "f0c27e3db424c2bea93b05910c2ce4668e495841280399a3f6ede4ff9a23a5d9",
+          "shard_sha256": "de916812559ccf3bfa7089cb3e828a84c81b454c1696f150d63653a528f8248b"
+        },
+        "core19.veccore0": {
+          "first_tick": 208346,
+          "last_tick": 212228,
+          "end": [
+            "0x9000d18fbc",
+            212221,
+            212221
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              212223,
+              212228
+            ]
+          ],
+          "official_us": "2.35",
+          "mmads": 0,
+          "phys_digest": "bdd6afd09b7ea51bd8d40cfcd642d8344da3b79ab01dc387cfa5b9eb4cab2ed8",
+          "sync_digest": "3d275b57448557392bec4c2eb6f1137625b9fedfb02cc3f91c21a65eb173a86b",
+          "shard_sha256": "1007d3b2263639c6b1f6f88f7b33509030baa23526b436f83320b3410b256399"
+        },
+        "core25.veccore1": {
+          "first_tick": 208394,
+          "last_tick": 211968,
+          "end": [
+            "0x9000d18fbc",
+            211961,
+            211961
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              211963,
+              211968
+            ]
+          ],
+          "official_us": "2.17",
+          "mmads": 0,
+          "phys_digest": "40a67f570c1a7801de657ff8ee7149df022d549eed209c3373e4c1fa9e56f701",
+          "sync_digest": "c1a97fb4d5e87bc9a07d736150150aab58727eeec6b515caec24c029ddd7208e",
+          "shard_sha256": "db07261a741d6a2afc2679b282c6dffdd41de6db23f3caf1076f3a1aded9b72e"
+        },
+        "core3.veccore0": {
+          "first_tick": 208609,
+          "last_tick": 211846,
+          "end": [
+            "0x9000d18fbc",
+            211839,
+            211839
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              211841,
+              211846
+            ]
+          ],
+          "official_us": "1.96",
+          "mmads": 0,
+          "phys_digest": "e3ac02686e6471a50325cdc50485daa1c11a3318ab63b1c51313ca7a6e888e6e",
+          "sync_digest": "a0c9e3b826cfbeb1523ab82840b0913f1ab55a80c756ed279a47a1b7a3a98058",
+          "shard_sha256": "167cd954b911f62474aa29ff007c3a2519f165f2aacbf57ffc30b1290bebe802"
+        },
+        "core3.veccore1": {
+          "first_tick": 208536,
+          "last_tick": 211949,
+          "end": [
+            "0x9000d18fbc",
+            211942,
+            211942
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              211944,
+              211949
+            ]
+          ],
+          "official_us": "2.07",
+          "mmads": 0,
+          "phys_digest": "93fe9557df8196fcb925c6fadb95f1907fd40890f8a259d117ee7880d0c7bbb7",
+          "sync_digest": "9a55e6b3ebd982e3a903e8d6d174d1f894acb4fbd22deae2648e42459280eaf9",
+          "shard_sha256": "87fa3a5957cdff3bf67b2d62d020c08d4df1bfe25a9000f9fb30010c7b2bb759"
+        },
+        "core28.veccore0": {
+          "first_tick": 208514,
+          "last_tick": 212164,
+          "end": [
+            "0x9000d18fbc",
+            212157,
+            212157
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              212159,
+              212164
+            ]
+          ],
+          "official_us": "2.21",
+          "mmads": 0,
+          "phys_digest": "119a826bc32972a1ce40d69f187bbf8f5f56a8a4bd9aa3dcf089c2e29483028a",
+          "sync_digest": "e2bb5293326472fcccbad99e22b9dcf240717117b6889a616c70e2ae6fd39e36",
+          "shard_sha256": "cd854816818f87c0d5ba64a6a6c0e3302ced1d0a7f8b95427a12419c4c6c0dbc"
+        },
+        "core25.veccore0": {
+          "first_tick": 208605,
+          "last_tick": 211885,
+          "end": [
+            "0x9000d18fbc",
+            211878,
+            211878
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              211880,
+              211885
+            ]
+          ],
+          "official_us": "1.99",
+          "mmads": 0,
+          "phys_digest": "f448ebe4481a7b05908f6188489204aa11b3c57f54d67d58399cc6d243805bd6",
+          "sync_digest": "919320e816acd39b4d55f972a3c204a9d20130df247fe2f09880a0a373640c66",
+          "shard_sha256": "603625dd1f0f457ab000fd5cfc471171b801e908e6517bf92489399305007f7d"
+        },
+        "core18.veccore1": {
+          "first_tick": 208573,
+          "last_tick": 212023,
+          "end": [
+            "0x9000d18fbc",
+            212016,
+            212016
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              212018,
+              212023
+            ]
+          ],
+          "official_us": "2.09",
+          "mmads": 0,
+          "phys_digest": "cd06bd6588daeffbda217786a1256afb4da5152773ae37e245e48853cfeee8d0",
+          "sync_digest": "74267dfcf6c55d43089cd6b285795d250ad300358f08c63be42d3ccb10a53237",
+          "shard_sha256": "fb9bf13cb796eee193be0d7d6c24e2379c2f6c0f97db0466a5ff25b84ff51d3b"
+        },
+        "core27.veccore1": {
+          "first_tick": 208491,
+          "last_tick": 212023,
+          "end": [
+            "0x9000d18fbc",
+            212016,
+            212016
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              212018,
+              212023
+            ]
+          ],
+          "official_us": "2.14",
+          "mmads": 0,
+          "phys_digest": "2ecb2c6d899ae8638697f3738ab0c741f743b9ddb3aee448c9a01bba163e6ab8",
+          "sync_digest": "7483bd92a2d7a843d2e09b7e8d8aafc5411e28c551e654f7a42a8cf3a57415d3",
+          "shard_sha256": "40ffaaedeff450988e92169a5375327e3d98af202c1c75531082ca412e81a6d4"
+        },
+        "core1.veccore1": {
+          "first_tick": 208415,
+          "last_tick": 211968,
+          "end": [
+            "0x9000d18fbc",
+            211961,
+            211961
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              211963,
+              211968
+            ]
+          ],
+          "official_us": "2.15",
+          "mmads": 0,
+          "phys_digest": "ce9ea5775f99ce441e316397a758ea5b897fec7ee2bcbbba9083d73e6158830f",
+          "sync_digest": "be7faffc1199ab8c5ffc3841b1c215f97a7bf84e5ab79a128fe1b42ec826b61c",
+          "shard_sha256": "b0f5537068d94b51f0ed14cc1f7e0a055f9eaa5375b86e9e9c941a43d0ada20b"
+        },
+        "core23.veccore0": {
+          "first_tick": 208454,
+          "last_tick": 212052,
+          "end": [
+            "0x9000d18fbc",
+            212045,
+            212045
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              212047,
+              212052
+            ]
+          ],
+          "official_us": "2.18",
+          "mmads": 0,
+          "phys_digest": "5526c8b0c1d19b8feb6c4028a4df3564424623dd97877ba783a18df5eedaf165",
+          "sync_digest": "cb823ba00440bf1846218108396cab245a75d2f53f8c9eb4a2ec71dc248f7c8b",
+          "shard_sha256": "ad7f60aa691d22908696458218ca7e851d1a44fe577ce36cc47614b4d336b6ed"
+        },
+        "core6.veccore1": {
+          "first_tick": 208287,
+          "last_tick": 211753,
+          "end": [
+            "0x9000d18fbc",
+            211746,
+            211746
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              211748,
+              211753
+            ]
+          ],
+          "official_us": "2.1",
+          "mmads": 0,
+          "phys_digest": "8c26171e6723c2d2448483964a0b7522fab780cba984f2645868a7cdb6d87bda",
+          "sync_digest": "049c8545db0cd552adf5103497a6bfefd6feb2f16a31659c8f0aa150854d1150",
+          "shard_sha256": "85818b9579d608e2e8e3a83841ad5ace14d80f2e1eea113200304aa759f7980f"
+        },
+        "core24.veccore0": {
+          "first_tick": 208466,
+          "last_tick": 211984,
+          "end": [
+            "0x9000d18fbc",
+            211977,
+            211977
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              211979,
+              211984
+            ]
+          ],
+          "official_us": "2.13",
+          "mmads": 0,
+          "phys_digest": "9e59ecedae8d6cbdb2aeeb165c6e1b13250ae2c5fa2155c7b875fb62ad044496",
+          "sync_digest": "b12c2e4276ca5acec40729625b8eb2c9222e8e8f337d8e9faa7baf2a3e37b312",
+          "shard_sha256": "dbd57ebcba7fff35099e3b71711ad1f12f7fbc5ad581a58fe9019db783cfaf69"
+        },
+        "core22.veccore1": {
+          "first_tick": 208412,
+          "last_tick": 212085,
+          "end": [
+            "0x9000d18fbc",
+            212078,
+            212078
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              212080,
+              212085
+            ]
+          ],
+          "official_us": "2.23",
+          "mmads": 0,
+          "phys_digest": "b0caaf9125ac065fc4e1ea7e5e46f2f44fbba77b3f175605388769de484f9d1a",
+          "sync_digest": "062f1da655508094de29da9c9da6c180f040cd4691338e6a4775d4d9fd1ae20b",
+          "shard_sha256": "0a3749fc64935c0b950268f9b0f93c924ded20f5da6d7429fddee0bbb2dbbd18"
+        },
+        "core26.veccore1": {
+          "first_tick": 208532,
+          "last_tick": 212001,
+          "end": [
+            "0x9000d18fbc",
+            211994,
+            211994
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              211996,
+              212001
+            ]
+          ],
+          "official_us": "2.1",
+          "mmads": 0,
+          "phys_digest": "f7d3551fd8793fab2eeb054e0d0711ff38604d3fe4e21a2817986f4b5ccafd98",
+          "sync_digest": "d5ec8e7c64ce0bbf5db3944f94f4c838524eaef55440c6e7f9755f8ed6b7164a",
+          "shard_sha256": "68270a3867bbabfd863b441183e01120c9c4d003fba71874da8310b0a8e922b2"
+        },
+        "core20.veccore1": {
+          "first_tick": 208542,
+          "last_tick": 212135,
+          "end": [
+            "0x9000d18fbc",
+            212128,
+            212128
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              212130,
+              212135
+            ]
+          ],
+          "official_us": "2.18",
+          "mmads": 0,
+          "phys_digest": "01c18ae7e04581eb13d750327ccb05daa80419d22c8ebb8db6382674e338525c",
+          "sync_digest": "e3cfa40280dbeb6643d6fbb1ca4d6695a1a54ad669a197c9ec3388b6512aae15",
+          "shard_sha256": "6d2155e9d79d227d6b6770e9c376ac93e2066e34a67d1118699b82935897a981"
+        },
+        "core22.veccore0": {
+          "first_tick": 208675,
+          "last_tick": 212209,
+          "end": [
+            "0x9000d18fbc",
+            212202,
+            212202
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              212204,
+              212209
+            ]
+          ],
+          "official_us": "2.14",
+          "mmads": 0,
+          "phys_digest": "3f64214810579541090d58b3c77af52194bbd2824c42748cbc169be7c3f27db7",
+          "sync_digest": "fb964052f8c92891569663877fa79ee3a4b2716d483cdaa82050a285ed8a1367",
+          "shard_sha256": "7167d09bbe7db70f35ea26af0fed660ba31d9ff63afefec18db1829e0cdb146b"
+        },
+        "core8.veccore0": {
+          "first_tick": 208333,
+          "last_tick": 211763,
+          "end": [
+            "0x9000d18fbc",
+            211756,
+            211756
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              211758,
+              211763
+            ]
+          ],
+          "official_us": "2.08",
+          "mmads": 0,
+          "phys_digest": "7f3350484d96f6ab9025297b55979d3f9dc9adc8ef32e448bf839403463b7f3a",
+          "sync_digest": "e3b16ab7eca9da38a80370246204f0cb1e27e72ec262383b6a1f217c1cb36f8b",
+          "shard_sha256": "570c9957d5884927505a490995f942f6d491f9d25d0abf2fa78c891d6564c5ff"
+        },
+        "core2.veccore1": {
+          "first_tick": 208394,
+          "last_tick": 211042,
+          "end": [
+            "0x9000d18fbc",
+            211035,
+            211035
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              211037,
+              211042
+            ]
+          ],
+          "official_us": "1.6",
+          "mmads": 0,
+          "phys_digest": "03fe3bed880b5820bbf89b45263e70a0bee70834ed3d61d2cf89246546e31d2b",
+          "sync_digest": "d28dd3ff68aa4fd470734d756fa5197cc89fad1195504f671da64124c7155794",
+          "shard_sha256": "178261130c2eea5a0a67bb2bac7394f3d929d979fe9076b49090923845300824"
+        },
+        "core21.veccore0": {
+          "first_tick": 208445,
+          "last_tick": 212102,
+          "end": [
+            "0x9000d18fbc",
+            212095,
+            212095
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              212097,
+              212102
+            ]
+          ],
+          "official_us": "2.22",
+          "mmads": 0,
+          "phys_digest": "3e0966270a1e13106e8193da63550eb260ef12d0316ad3def4f5e08d4a49d9ae",
+          "sync_digest": "8ae1343a78a8dfe50d142b91cba7221c3fbfb696e25a1db023925090006b1cc8",
+          "shard_sha256": "e0914dcfe46b014c3d5c962efcae0e65046f338e501bcc2af066ca990a4f589e"
+        },
+        "core7.veccore0": {
+          "first_tick": 208355,
+          "last_tick": 211895,
+          "end": [
+            "0x9000d18fbc",
+            211888,
+            211888
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              211890,
+              211895
+            ]
+          ],
+          "official_us": "2.15",
+          "mmads": 0,
+          "phys_digest": "209ab6128024b38e7597f83334547f6f980a06676e01d73dccc09f9d58cc0fab",
+          "sync_digest": "d454603e8388ece7594350073bfc26bbe7d486fb3af1728265c6aba79e51e40a",
+          "shard_sha256": "c65187ffbd08dfb3e31e4904429e5269d1bc85253837e0285b826b9e825dc69f"
+        },
+        "core5.veccore0": {
+          "first_tick": 208514,
+          "last_tick": 211720,
+          "end": [
+            "0x9000d18fbc",
+            211713,
+            211713
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              211715,
+              211720
+            ]
+          ],
+          "official_us": "1.94",
+          "mmads": 0,
+          "phys_digest": "dcfab72525af6747c4d2879cb967ea4ba1c28299c7462f51076758c8bc739f02",
+          "sync_digest": "bc73110f63c4675a6a1ac301d08d54836a57bd0eb71b6959cb6abbc77d2c762b",
+          "shard_sha256": "9fc779dc5c077a24121978a1371a664db0402d56346b6fdd7f426f0ce0723b93"
+        }
+      },
+      "captured_binary": "results/v0.24/kda-v1/raw/pr-t2-h1-varlen/profile/OPPROF_20261119235004_KSDAEIYVPEQTHGCY/Transpose_float32_int64_high_performance_10001/1/dump/aicore_binary.o",
+      "published_names": [],
+      "aggregate": "results/v0.24/kda-v1/raw/pr-t2-h1-varlen/profile/OPPROF_20261119235004_KSDAEIYVPEQTHGCY/Transpose_float32_int64_high_performance_10001/1/simulator/trace.json",
+      "aggregate_sha256": "b673e3ef8f75ae321ff95202c09e2f982da1f525e119d6a37555e3a3a94b407b"
+    }
+  ],
+  "official_tables": 4,
+  "main_ca_us": null,
+  "serialized_ca_us": null,
+  "log_sha256": "f44ed8a7f369ee35ed0e6d0ad5cb96305d0bccb6116b1ac2b0e5922afa5b03b2"
+}

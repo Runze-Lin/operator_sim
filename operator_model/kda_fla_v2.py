@@ -7,6 +7,7 @@ import json
 from pathlib import Path
 
 from .chips import REFERENCE_NAME, load_chip
+from . import kda_fwdh_schedule
 
 IMPLEMENTATION = "fla_26_9_1_v2"
 FAMILIES = ("chunk_kda_fwd_prepare", "chunk_fwd_h", "chunk_kda_fwd_finalize")
@@ -329,15 +330,37 @@ def schedule(shape, chip):
         # Retired small-case front end up to first data-bearing MTE2 command; metadata
         # <=48 bytes is included here. Charge once per concurrently launched core group.
         startup = prices()["first_payload_cycles"][f]
-        cycles = [
-            startup
-            + _sum_cycles(
-                count * _sum_cycles(t for _, t in phase[key].legs)
-                for key, count in hist.items()
+        prefetch = {}
+        if i == 1 and b * h == act:
+            # Each active group owns one identical state chain. Input DMA for
+            # the next chunk can advance independently of the recurrent H edge.
+            critical_cycles, timeline = kda_fwdh_schedule.schedule_chain(
+                s, startup, Tile(chip, f, act)
             )
-            for hist in histograms
-        ]
-        critical = max(range(act), key=cycles.__getitem__)
+            critical = 0
+            prefetch = dict(
+                prefetch_domain="one sequence × head per active mixed workgroup",
+                prefetch_timeline_cycles=timeline,
+                prefetch_sample_chunk_indices=list(range(min(chunks - 1, 3))) + [chunks - 1],
+                prefetch_time_origin="first instruction of the FwdH kernel",
+                representative_phase_scope="standalone tile costs, before descriptor overlap",
+            )
+        else:
+            cycles = [
+                startup
+                + _sum_cycles(
+                    count * _sum_cycles(t for _, t in phase[key].legs)
+                    for key, count in hist.items()
+                )
+                for hist in histograms
+            ]
+            critical = max(range(act), key=cycles.__getitem__)
+            critical_cycles = cycles[critical]
+            if i == 1:
+                prefetch = dict(
+                    prefetch_domain="multiple head chains per workgroup; serialized v0.23 fallback",
+                    prefetch_timeline_cycles=[], prefetch_sample_chunk_indices=[],
+                )
         dma = weighted(total, phase, "bytes")
         desc = weighted(total, phase, "issues")
         if i == 0:
@@ -355,7 +378,7 @@ def schedule(shape, chip):
         # OUT descriptors include workspace reads from previous stages. The cold
         # miss model is a scenario; churn does not prove those bytes left the chip.
         floor = external_read_spill / (chip.hbm_bandwidth_gbs * 1000)
-        est = max(max(cycles) / (chip.frequency_ghz * 1000), floor)
+        est = max(critical_cycles / (chip.frequency_ghz * 1000), floor)
         physical_ops = Counter()
         for key, count in mm.items():
             dims, fmt = key.split(":")
@@ -414,6 +437,7 @@ def schedule(shape, chip):
                 representative_tile_phase_cycles={
                     str(k): dict(v.legs) for k, v in phase.items()
                 },
+                **prefetch,
             )
         )
     times = [s["device_us"] for s in stages]
@@ -567,7 +591,10 @@ def resource(shape, chip, attrs):
     projection = dict(
         method="experimental_fla_v2_resource_schedule",
         qualification="experimental",
-        prediction_freeze_sha256=prices()["freeze_sha256"],
+        prediction_freeze_sha256=kda_fwdh_schedule.FREEZE_SHA256
+        if result["stages"][1]["prefetch_timeline_cycles"]
+        else prices()["freeze_sha256"],
+        resource_price_freeze_sha256=prices()["freeze_sha256"],
         latency_us=result["serialized_device_us"],
         active_aic=active_aic,
         active_aiv=active_aiv,
