@@ -8,25 +8,13 @@
 | 某个算子为什么需要这么久？不同 shape 如何改变结果？ | [建模方法：Vector、Cube、CV 三类流程，含逐算子公式与算例](docs/modeling-strategy.md) |
 | 哪些算子、shape 和库实现实测过？偏差多大？预测有多快？ | [CA 校验与误差：逐算子摘要、逐 shape 数据及查询墙钟](docs/error-analysis.md) |
 
-**[流水对照图集](docs/pipeline-comparisons.md)**（[按算子选图](docs/pipeline-comparisons.md#按算子打开图)） 按同一设备时间轴查看上栏预测和下栏实测，可比较 [DynamicMXQuant 五轮 UB 读算写](docs/examples/quant.md)、[Matmul 两波、两页 K 的 MMAD](docs/examples/matmul.md)、[FA 的首个 QK/PV 与长循环](docs/examples/fa.md)。[逐算子的算例入口](docs/modeling-strategy.md#逐算子算例)
+![950DT MatMulV3，每个输出块的两页 K，上栏模型，下栏 CA 末核](docs/examples/figures/matmul-tile-pages.png)
 
-![同一 MatMulV3：左为 950DT，右为 950PR；上栏预测、下栏末核 CA，四栏共用相同设备微秒刻度](docs/examples/figures/matmul-tile-pages-dt-pr.png)
+同一 BF16 Matmul [1280,2048,512]，32 个 AIC 分两波计算。沿第一行看，首条 MMAD 在模型中于 4.852 µs 发起，CA 记录为 5.215 µs。到最后一个块的第二页，两者只差 0.031 µs。整窗为 12.449 / 12.219 µs。换成 950PR 后会得到 24 个矩形尾块，模型和库都发出 416 条 MMAD，整窗为 14.027 / 13.218 µs。[Matmul 的计算与逐页偏差](docs/examples/matmul.md) · [同一输入的 DT 与 PR 对照图](docs/examples/figures/matmul-tile-pages-dt-pr.png)
 
-左栏第一行是 256×256 输出块的第一个 K 页。首条 MMAD 预测在 4.852 µs 发起，CA 在 5.215 µs 发起；到尾块第二页，这个差距缩到 0.031 µs。整窗预测 12.449 µs、CA 12.219 µs。相同输入在 950PR 上，模型与库的 24 个矩形尾块和 416 条 MMAD 全部吻合，耗时 14.027 / 13.218 µs。[DT 逐页偏差](docs/examples/matmul.md#逐页核对偏差) · [PR 新实测流水图](docs/examples/figures/matmul-tile-pages-pr.png)
+[按算子选流水对照图](docs/pipeline-comparisons.md#按算子打开图)。Vector 可以逐块查看 DynamicMXQuant 的量化值和 scale 两路写回、Cast 的缓冲区复用；CV 融合可以对比 FA 的首次 QK/PV 和长循环间隔，或 KDA 三个 kernel 各自的阶段误差。[Quant](docs/examples/quant.md) · [Cast](docs/examples/cast_bf16_fp32.md) · [FA](docs/examples/fa.md) · [KDA](docs/examples/kda_chunk.md) · [DeepSeek HcPost 的五个通道块](docs/examples/hc_post_vllm.md)
 
-对于 Vector，同轴图还能检查缓冲区的复用。950PR Cast `[511,5120]` 的第三笔读开始时，第一笔输出尚未写完。950DT RMSNorm 从 `[4,4800]` 到 `[34,1904]`，最后完成的工作从归一化写换成了同一扇区的统计量写。[Cast 三块对照图与地址](docs/examples/cast_bf16_fp32.md) · [RMSNorm 双算例对照图与计算过程](docs/examples/rmsnorm.md)
-
-在真实模型维度上也能逐段核对。Flash 的窄输出投影在 950DT 预测 12.123 µs、CA 为 13.023 µs。两侧都是 640 条 MMAD，实际 kernel 多用了 64 个 AIV，图上可以直接看到末段归并。整批 B8×128k 的 Flash Cast 和 Kimi Sigmoid 分别展开首轮和末轮。[Flash 投影](docs/examples/matmul-prefill.md) · [Flash Cast 两端流水](results/v0.20/large/flash-128ki-tiles.png) · [Kimi beta 两端流水](results/v0.20/newop/long-timelines.md)
-
-需要核对大 prefill 输入时，可直接打开 8 条请求、每条 32k / 128k / 256k 的逐节点张量表，查看本卡 hidden、head、专家工作量及同形 CA 状态。[DeepSeek V4.1 Flash](docs/workloads/deepseek-flash.md) · [DeepSeek V4 Pro](docs/workloads/deepseek-pro.md) · [Kimi K3](docs/workloads/kimi-k3.md)
-
-系统仿真器处理连续调用时，可给每个 rank 的每条流维护一个 `OperatorStream`。例如 mHC Post [3,4,5376] 的两次相同输入在 DT 实测耗时相差 3.247 µs。带派发顺序的最坏误差为 12.15%，只给 shape 的任何单值至少为 43.34%。[调用方式](docs/integration.md#从系统的调用顺序恢复启动状态) · [两芯片首发与复用实测](docs/examples/mhc_post.md)
-
-默认 Matmul 和 Addmm 会在目标卡重新选择 tile 和波次。验收表分别给出每个算子在 950DT、950PR 的 WAPE、最坏 shape 和完整采集数量。当前仍有超限及未获得合格 CA 的路线。[逐算子验收](docs/error-analysis.md) · [同轴流水图](docs/pipeline-comparisons.md)
-
-![950DT Matmul，预测关键路径与 CA 末核按输出块和 K 页上下对齐](docs/examples/figures/matmul-tile-pages.png)
-
-同一 BF16 Matmul [1280,2048,512]，上栏给出每个输出块的两页 K，下栏竖线标出实际 MMAD 发起。32 个 AIC 的预测为 12.449 µs，完整 CA 为 12.219 µs。大 prefill 的图用相同的上下栏对齐每个 UB 块。[Matmul 的逐页推导](docs/examples/matmul.md) · [三个模型的大 prefill 六张对照图](results/v0.23/prefill/README.md)
+整批 prefill 的每个 rank 可以从模型规格直接查到各算子的输入、输出、dtype 和层号。按每卡 8 条、每条 32k／128k／256k 导出，模型和 CA 都齐备的单元格可以点开看该 shape 的流水。14 张图复用已完成的正式库采集。[DeepSeek V4.1 Flash](docs/workloads/deepseek-flash.md) · [DeepSeek V4 Pro](docs/workloads/deepseek-pro.md) · [Kimi K3](docs/workloads/kimi-k3.md) · [整批 prefill 的模型与 CA 图集](results/v0.23/prefill/README.md)
 
 ## 试一次预测
 

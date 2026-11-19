@@ -110,7 +110,7 @@ DT 同一次正式 CA 对 [262144,64] 的 128 个控制器记录了 32.043 MiB D
 
 同一正式 dispatch 的 64 核同时有 wrapper 和指令两组时标。在 1650 tick/µs 时，各核 wrapper start 到首条指令相差 [3535, 4579] tick，最后一条指令到 wrapper done 相差 [1, 1552] tick。该差值不能作为跨 shape 的固定校正。
 
-全宽任务已启动；通过全部输出和逐核结束门槛后会单独列出设备窗口。
+全宽已结束，尚未通过完整窗口/金标门槛，详见[原始结果](cast_262144_5120_native.json)。
 
 ![32ki × 8 的模型和最晚完成 AIV 流水](indexer-timeline.png)
 

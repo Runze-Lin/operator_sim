@@ -1,10 +1,13 @@
 """Plot the current resource schedule against archived, qualified whole-kernel windows."""
+import argparse
 from hashlib import sha256
 import json
 from math import isclose
+import os
 from pathlib import Path
 import sys
 
+os.environ.setdefault("MPLCONFIGDIR", "/tmp/operator-sim-mpl")
 import matplotlib
 matplotlib.use("Agg")
 from matplotlib import pyplot as plt
@@ -13,15 +16,17 @@ from matplotlib.ticker import MaxNLocator
 
 ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT))
-from development.validation.vector21.figures import cast, sigmoid
-from operator_model import estimate, __version__
 
 OUT = ROOT / "results/v0.23/prefill"
 FIG = ROOT / "docs/examples/figures"
 ARCHIVE = ROOT / "results/v0.20"
 CASES = (
+    ("flash", "DeepSeek V4.1 Flash", 32768, 32, "cast_bf16_fp32", "flash-32ki"),
+    ("flash", "DeepSeek V4.1 Flash", 131072, 32, "cast_bf16_fp32", "flash-128ki"),
     ("flash", "DeepSeek V4.1 Flash", 262144, 32, "cast_bf16_fp32", "flash-256ki"),
     ("pro", "DeepSeek V4 Pro", 32768, 64, "cast_bf16_fp32", "pro-32ki"),
+    ("kimi", "Kimi K3", 32768, 12, "sigmoid_fp32", "prefill32k"),
+    ("kimi", "Kimi K3", 131072, 12, "sigmoid_fp32", "prefill128k"),
     ("kimi", "Kimi K3", 262144, 12, "sigmoid_fp32", "prefill256k"),
 )
 PIPES = {"Read": "#14798a", "Vector": "#7957a7", "Write": "#b34a26"}
@@ -32,6 +37,9 @@ def read(path):
     return json.loads(path.read_text())
 
 def compare(case, sku):
+    from development.validation.vector21.figures import cast, sigmoid
+    from operator_model import estimate, __version__
+
     tag, name, seq, width, op, archive_name = case
     shape = [8 * seq, width]
     chip = {"dt": "Ascend950DT_9582", "pr": "Ascend950PR_957b"}[sku]
@@ -130,14 +138,22 @@ def draw(d, output):
     plt.close(fig)
 
 def main():
+    cases = {f"{case[0]}-{case[2]//1024}ki-{sku}": (case, sku)
+             for case in CASES for sku in ("dt", "pr")}
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--case", dest="case_id", choices=cases, help="Draw a single model, length and SKU.")
+    parser.add_argument("--replot", action="store_true", help="Use the published intervals without rerunning the predictor.")
+    args = parser.parse_args()
     OUT.mkdir(parents=True,exist_ok=True)
-    for case in CASES:
-        for sku in ("dt","pr"):
-            d = compare(case,sku)
-            slug = f"{case[0]}-{case[2]//1024}ki-{sku}"
-            (OUT/(slug+".json")).write_text(json.dumps(d,indent=2,ensure_ascii=False)+"\n")
-            draw(d,FIG/("prefill-"+slug+".png"))
-            print(slug, d["model_us"],d["ca_us"],d["projection_970dt_us"],d["read_start_gap_us"])
+    for slug in ([args.case_id] if args.case_id else cases):
+        path = OUT / (slug + ".json")
+        if args.replot:
+            d = read(path)
+        else:
+            d = compare(*cases[slug])
+            path.write_text(json.dumps(d, indent=2, ensure_ascii=False)+"\n")
+        draw(d, FIG / ("prefill-"+slug+".png"))
+        print(slug, d["model_us"], d["ca_us"], d["projection_970dt_us"], d["read_start_gap_us"])
 
 if __name__=="__main__":
     main()

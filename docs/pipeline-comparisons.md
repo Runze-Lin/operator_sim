@@ -14,7 +14,9 @@
 
 ![Pro 的 B8×32k 投影 Cast，模型和真实末核按 UB 块对齐](examples/figures/prefill-pro-32ki-pr.png)
 
-950PR 的 DeepSeek V4 Pro，8 条 32k 一次提交，indexer 系数张量为 BF16 [262144,64]。模型 **25.030 µs**，CA **23.762 µs**。下栏第一、第二块只隔 0.055 µs 就发起了读，写回也发生重叠。每栏最下方 15 根刻度保留所有读发起。相同画法覆盖 Flash 和 Kimi 的 B8×256k；两者在 PR 的实际末核分别跑了 57 轮和 29 轮。[三模型六张图及逐块偏差](../results/v0.23/prefill/README.md)
+950PR 的 DeepSeek V4 Pro，8 条 32k 一次提交，indexer 系数张量为 BF16 [262144,64]。模型 **25.030 µs**，CA **23.762 µs**。下栏第一、第二块只隔 0.055 µs 就发起了读，写回也发生重叠。每栏最下方 15 根刻度保留所有读发起。相同画法覆盖 Flash 和 Kimi 的 B8×256k；两者在 PR 的实际末核分别跑了 57 轮和 29 轮。[三模型 14 张图及逐块偏差](../results/v0.23/prefill/README.md)
+
+如果看完整 hidden，Flash B8×32k 的激活 Cast 是 [262144,5120]。一次 6 小时 11 分钟的 CA 中 64 个 AIV 已启动，31 个完成。该图仅将已结束核与原生包络下界对照，全核实测留空。[全 hidden 部分窗口图和长作业状态](../results/v0.23/full-hidden/report.md)
 
 ## KDA V2 · 三个 kernel 分别在哪里产生偏差
 
@@ -102,7 +104,7 @@ DT、PR 采用相同的逻辑输入。下表的当前模型在归档窗口上回
 
 | 每卡 8 个请求 | 算子输入 | DT 当前 / CA | PR 当前 / CA |
 |---|---|---:|---:|
-| Flash，每条 32k | Cast [262144,32] | 8.363 / 9.970 | 13.046 / 14.080 |
+| Flash，每条 32k | Cast [262144,32] | 9.850 / 9.970 | 13.046 / 14.080 |
 | Flash，每条 128k | Cast [1048576,32] | 36.368 / 35.535 | 88.943 / 70.711 |
 | Flash，每条 256k | Cast [2097152,32] | 99.918 / 106.757 | 232.748 / 223.493 |
 | Pro，每条 32k | Cast [262144,64] | 16.592 / 17.041 | 25.030 / 23.762 |
@@ -122,7 +124,7 @@ GMM1 和 GMM2 均用 `[8,256,128,2]`、专家分配 `[1,7]`。GMM1 的两份中�
 
 ### 各种图能看出什么
 
-20 条路线中，**12 条**可以按工作块、阶段或资源队列核对预测与实测（Matmul、Addmm、量化、FA、Cast、Sigmoid、RMSNorm、AttnResFwd、PreSinkhorn、Lightning Indexer、GMM1 和 GMM2）。大 RMSNorm 的局部块用首笔 rstd 对齐，完整设备窗另列。**2 条**对应串行 kernel（mHC 链、MoE FFN）。**5 条**给出状态或阶段成本及真实 CA 队列（mHC Post、mHC Pre、Sinkhorn、KDA recurrent、MoE 路由）。独占成本可以解释总误差来自哪个资源；该资源的逐条发起时刻只在有指令记录的一侧可见。融合 KDA V1 的全窗为 N/A；显式 FLA V2 分成三个 kernel，可用上面同形的新图核对。[各算子示例](modeling-strategy.md#逐算子算例) · [误差明细](error-analysis.md)
+最初的 20 条路线中，**12 条**可以按工作块、阶段或资源队列核对预测与实测（Matmul、Addmm、量化、FA、Cast、Sigmoid、RMSNorm、AttnResFwd、PreSinkhorn、Lightning Indexer、GMM1 和 GMM2）。大 RMSNorm 的局部块用首笔 rstd 对齐，完整设备窗另列。**2 条**对应串行 kernel（mHC 链、MoE FFN）。**5 条**给出状态或阶段成本及真实 CA 队列（mHC Post、mHC Pre、Sinkhorn、KDA recurrent、MoE 路由）。独占成本可以解释总误差来自哪个资源；该资源的逐条发起时刻只在有指令记录的一侧可见。融合 KDA V1 的全窗为 N/A；显式 FLA V2 分成三个 kernel，可用上面同形的新图核对。[各算子示例](modeling-strategy.md#逐算子算例) · [误差明细](error-analysis.md)
 
 ### 按算子打开图
 
@@ -147,13 +149,16 @@ GMM1 和 GMM2 均用 `[8,256,128,2]`、专家分配 `[1,7]`。GMM1 的两份中�
 | [mHC Sinkhorn](examples/mhc_sinkhorn.md) | PR · 64×4 | [每 AIV 两行共用发射的阶段成本](examples/figures/mhc_sinkhorn-v21-pr.png) |
 | [KDA recurrent](examples/kda_recurrent.md) | PR · 1×3×1×1×128×128 | [完整资源预算与六次实际状态更新](examples/figures/kda-recurrent-state-pr.png) |
 | [MoE 路由 Top-K](examples/moe_gating_top_k.md) | PR · 1×384×6 | [路由阶段成本和末核队列](examples/figures/moe_gating_top_k-pr-pipeline.png) |
-| [KDA chunk](examples/kda_chunk.md) | PR · 1×64×2×2×128×128 | [V1 失败事件](examples/figures/kda-chunk-pr-event.png) · [V2 完整的 PR 独立观测](../results/kda-resource23/950pr-t5-holdout-comparison.png) |
+| [KDA chunk，融合 V1](examples/kda_chunk.md) | PR · 1×64×2×2×128×128 | [V1 同步失败事件，整窗无合格结果](examples/figures/kda-chunk-pr-event.png) |
+| [KDA chunk，三段 V2](examples/kda_chunk.md) | PR · 1×5×2×2×128×128 | [V2 完整的 PR 独立观测](../results/kda-resource23/950pr-t5-holdout-comparison.png) |
+| [DeepSeek 扩展 HcPost](examples/hc_post_vllm.md) | DT · 1×2×4×16448 | [双槽、五个 D 块和尾片的整块转换](../results/v0.23/hc-timing/dt-16448-timeline.png) |
 
 ### 从仓内数据重画
 
 在安装 Matplotlib 的 Python 环境中，于仓库根目录执行下列命令即可重画三类代表图。脚本读取的是已经提交的模型区间、精简 CA 时间戳及设备窗口。完整原始的 CA trace 只在重新提取、核对程序计数器和地址时使用。
 
 ```sh
+python development/validation/prefill_timelines/compare.py --case pro-32ki-pr --replot
 python development/validation/dispatch21/addmm_figure.py
 python development/validation/fusion21/indexer_figure.py --replot
 python development/validation/sku20/matmul_figure.py

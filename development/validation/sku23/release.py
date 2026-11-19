@@ -36,6 +36,13 @@ def main():
     kda=read(ROOT/"results/kda-v23/holdout-comparison.json")
     hcs=[read(f) for f in sorted((OUT/"hc-post").glob("Ascend*.json"))]
     rows=[]
+    for fp in sorted((OUT/"prefill").glob("*.json")):
+        obs=read(fp)
+        event=estimate(obs["op"],obs["shape"],chip=obs["chip"],timing_mode="resource")
+        assert abs(event.latency_us-obs["model_us"])<1e-9
+        rows.append(dict(op=obs["op"],shape=obs["shape"],chip=obs["chip"],
+                         us=event.latency_us,ca_us=obs["ca_us"],future_us=obs["projection_970dt_us"],
+                         role="archived full prefill replay",receipt=str(fp.relative_to(ROOT))))
     for r in kda["rows"]:
         if not r["qualified"]:continue
         attrs={"implementation":"fla_26_9_1_v2"}

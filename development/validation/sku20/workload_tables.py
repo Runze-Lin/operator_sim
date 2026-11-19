@@ -1,4 +1,5 @@
 """Publish the entire pinned B8/TP8 prefill tensor grid in browsable Markdown."""
+import argparse
 from collections import defaultdict
 import gzip
 from itertools import groupby
@@ -28,15 +29,15 @@ def contract_key(call):
     return call['op'], tuple(call['shape']), call.get('dtype'), json.dumps(call.get('attrs',{}),sort_keys=True)
 
 
-def grid(root,rows):
-    v=root/'results/v0.20'
+def grid(root,rows,archive=None,timelines=None):
+    archive=archive or root/'results/v0.20/workloads'
     observed={}
     for r in rows:
         key=contract_key(r)
         assert key not in observed
         observed[key]=r
     models=defaultdict(list)
-    with gzip.open(v/'workloads/contracts.jsonl.gz','rt') as source:
+    with gzip.open(archive/'contracts.jsonl.gz','rt') as source:
         for case in map(json.loads,source):
             s=case['scenario']
             if s['batch']==8 and s['chunk']==0 and s['tp']==8 and s['dp']==1 and s['ep']==8:
@@ -55,7 +56,7 @@ def grid(root,rows):
             '此情景的残差激活为 BF16，beta Sigmoid 是 FP32→FP32；动态 MX 量化是 BF16→FP8 E4M3FN 和 E8M0 scale。'
             '“仅形状”表示只导出了结构，没有独立后端计时合同。视部署而定的算子可能被融合。'
             '[调度与参数来源](../prefill-shapes.md) · [独立库采集的角色及误差](../error-analysis.md) · '
-            '[完整配置、条件和其他并行拓扑](../../results/v0.20/workloads/contracts.jsonl.gz)','']
+            f'[完整配置、条件和其他并行拓扑](../../{archive.relative_to(root)}/contracts.jsonl.gz)','']
         for case in cases:
             seq=case['scenario']['seq'];nodes=case['contracts']
             lines += [f'## 每请求 {seq:,} token · 单卡 {case["tokens_per_rank"]:,} token','',
@@ -76,6 +77,13 @@ def grid(root,rows):
                     label+='<br>'+', '.join(f'{k}={json.dumps(v)}' for k,v in call['attrs'].items())
                 label+=condition
                 cells=[number(values[i])+' / '+number(evidence.get(s+'_ca_us')) for i,s in enumerate(('dt','pr'))]
+                for i,chip in enumerate(CHIPS[:2]):
+                    match=(timelines or {}).get((contract_key(call),chip))
+                    if match:
+                        figure,obs=match
+                        assert abs(values[i]-obs['model_us'])<1e-6
+                        assert abs(evidence[('dt','pr')[i]+'_ca_us']-obs['ca_us'])<1e-6
+                        cells[i]=f"[{cells[i]}](../examples/figures/{figure})"
                 lines.append(f'| {name} | {tensors} | {label} | {cells[0]} | {cells[1]} | {number(values[2])} |')
             lines.append('')
         lines+=['[返回三个模型的对照表](../prefill-shapes.md) · [模型与 CA 流水图集](../pipeline-comparisons.md)','']
@@ -84,5 +92,17 @@ def grid(root,rows):
 
 if __name__=='__main__':
     root=Path(__file__).resolve().parents[3]
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--archive',type=Path,default=Path('results/v0.20/workloads'))
+    parser.add_argument('--timelines',type=Path,help='Link qualified same-shape illustrated windows')
+    args=parser.parse_args()
+    timelines={}
+    if args.timelines:
+        for p in (root/args.timelines).glob('*.json'):
+            obs=json.loads(p.read_text())
+            key=(contract_key(dict(op=obs['op'],shape=obs['shape'])),obs['chip'])
+            fig=f'prefill-{p.stem}.png'
+            assert key not in timelines and (root/'docs/examples/figures'/fig).is_file()
+            timelines[key]=(fig,obs)
     rows=json.loads((root/'results/v0.20/evaluation.json').read_text())['rows']
-    grid(root,rows)
+    grid(root,rows,root/args.archive,timelines)

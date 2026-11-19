@@ -36,7 +36,7 @@
 
 先冻结芯片配置、输入张量、分块、每类资源价格和预测，再在同一 SKU 调实际库算子，校验数值，算全核最早指令至最后退休的微秒数。上图由这些冻结量产生，下图将末核的指令按同一页或 UB 块归行；两图使用同一时标。对于只能观测互斥资源贡献的路线，只报告阶段预算和可能的状态窗口。在线函数只读取芯片配置和已打包的参数。[模型与 CA 对照图集](pipeline-comparisons.md)
 
-**同轴图的读法。** 横轴取全核第一条设备指令为零。上栏独立使用目标芯片的分核和阶段预算，下栏取真实最后退休核的对应工作块；刻度表示发起，条宽表示服务或描述符的发起至退休。对反馈等待、重叠与尾部，可先核对对应块的首次读或首次 MMAD，再沿着同一个块看到最后写回。多个串行 kernel 各有独立的计时原点，整次设备耗时按各完整窗口求和。大 shape 只展开部分行时，保留每一轮的发起刻度和完整时间轴。Flash 的 PR Cast 展示了一个细节：真实末核和预测最忙核均跑 57 轮，尾部却分别为 15,656 和 15,664 个元素。两栏分别标注各自数量。[Matmul 的两波两页](examples/matmul.md) · [三个模型的六张长 prefill 算例](../results/v0.23/prefill/README.md) · [KDA V2 三个串行 kernel 的独立实测图](../results/kda-resource23/950dt-t5-holdout-comparison.png)
+**同轴图的读法。** 横轴取全核第一条设备指令为零。上栏独立使用目标芯片的分核和阶段预算，下栏取真实最后退休核的对应工作块；刻度表示发起，条宽表示服务或描述符的发起至退休。对反馈等待、重叠与尾部，可先核对对应块的首次读或首次 MMAD，再沿着同一个块看到最后写回。多个串行 kernel 各有独立的计时原点，整次设备耗时按各完整窗口求和。大 shape 只展开部分行时，保留每一轮的发起刻度和完整时间轴。Flash 的 PR Cast 展示了一个细节：真实末核和预测最忙核均跑 57 轮，尾部却分别为 15,656 和 15,664 个元素。两栏分别标注各自数量。[Matmul 的两波两页](examples/matmul.md) · [三个模型的 14 张长 prefill 算例](../results/v0.23/prefill/README.md) · [KDA V2 三个串行 kernel 的独立实测图](../results/kda-resource23/950dt-t5-holdout-comparison.png)
 
 
 本版默认 Matmul 与融合列偏置 Addmm 都在目标卡重新分波。对只给 shape 的 RMSNorm 和 mHC Post，先计算初次、扩核和热态三种窗口，再折合一个估计值。已知前序调用时，系统可选用与本次调度匹配的状态。每条路线、每个 SKU 分别用 WAPE ≤20%、最大绝对相对误差 ≤40% 验收；开发回放、未满十形和缺 CA 分别记录。[当前逐算子验收](error-analysis.md)
@@ -58,7 +58,7 @@
 
 | 路线 | 算例 |
 |---|---|
-| Vector | [quant](examples/quant.md) · [rmsnorm](examples/rmsnorm.md) · [mhc_sinkhorn](examples/mhc_sinkhorn.md) · [mhc_post](examples/mhc_post.md) · [kda_recurrent](examples/kda_recurrent.md) · [MoE sigmoid Top-K](examples/moe_gating_top_k.md) · [Cast BF16→FP32](examples/cast_bf16_fp32.md) · [Kimi AttnResFwd](examples/attn_res_fwd.md) · [Kimi KDA beta Sigmoid](examples/sigmoid_fp32.md) |
+| Vector | [DeepSeek 扩展 HcPost 的五片排程](examples/hc_post_vllm.md) · [quant](examples/quant.md) · [rmsnorm](examples/rmsnorm.md) · [mhc_sinkhorn](examples/mhc_sinkhorn.md) · [mhc_post](examples/mhc_post.md) · [kda_recurrent](examples/kda_recurrent.md) · [MoE sigmoid Top-K](examples/moe_gating_top_k.md) · [Cast BF16→FP32](examples/cast_bf16_fp32.md) · [Kimi AttnResFwd](examples/attn_res_fwd.md) · [Kimi KDA beta Sigmoid](examples/sigmoid_fp32.md) |
 | Cube | [matmul](examples/matmul.md) · [addmm](examples/addmm.md) · [gmm2](examples/gmm2.md) |
 | CV 与组合 | [fa](examples/fa.md) · [lightning_indexer](examples/lightning_indexer.md) · [mhc_pre](examples/mhc_pre.md) · [mhc_pre_sinkhorn](examples/mhc_pre_sinkhorn.md) · [mhc](examples/mhc.md) · [grouped_matmul_swiglu_quant_v2](examples/grouped_matmul_swiglu_quant_v2.md) · [moe_ffn](examples/moe_ffn.md) |
 | 结构可用、时延待校准 | [kda_chunk](examples/kda_chunk.md) |
@@ -926,7 +926,7 @@ Post 的 J 是对每个 token 进一步沿 D 切出的片数。初值为 1；当
 
 ### vLLM HcPost 的 token 分核
 
-在 DeepSeek 的 attention 与 FFN 之后，锁定的 vLLM 实际进入 `aclnnHcPost`。公开 `estimate("mhc_post", [B,S,4,D], {"implementation":"vllm_hc_post"})` 返回这条路的工作量和分核。令 T=BS、H=4、D=hidden。输出共 THD 个 BF16，每个输出是一路子层输出和 H 路残差的线性组合，共 THD(2H+1) 次有效 FP32 乘加操作（乘和加分别计一次）。读写字节分别为 2TD(1+H)+4T(H+H²) 与 2THD；FP32 系数在一行内复用。A=min(T,AIV数) 个核按整行分配，每核最多 ⌈T/A⌉ 行，每行固定拆成 ⌊D/4096⌋ 个满块及最多一个尾块。4096 来自 arch35 源码，尾块写有效数据，但 BF16 转换仍处理整块缓冲。换芯片可替换核数；新代实现继续用此分块是一个假设。该合同的全窗和真实 ELF 已在双端核验，公开接口尚仅返回工作量。CANN ops-transformer 的 `aclnnMhcPost` 小 token 分通道规则另见本章此前小节。[Flash 与 Pro 的真实接口、完整输入输出和 CA](examples/hc_post_vllm.md)
+在 DeepSeek 的 attention 与 FFN 之后，锁定的 vLLM 实际进入 `aclnnHcPost`。公开 `estimate("mhc_post", [B,S,4,D], {"implementation":"vllm_hc_post"})` 返回这条路的工作量和分核。令 T=BS、H=4、D=hidden。输出共 THD 个 BF16，每个输出是一路子层输出和 H 路残差的线性组合，共 THD(2H+1) 次有效 FP32 乘加操作（乘和加分别计一次）。读写字节分别为 2TD(1+H)+4T(H+H²) 与 2THD；FP32 系数在一行内复用。A=min(T,AIV数) 个核按整行分配，每核最多 ⌈T/A⌉ 行，每行固定拆成 ⌊D/4096⌋ 个满块及最多一个尾块。4096 来自 arch35 源码，尾块写有效数据，但 BF16 转换仍处理整块缓冲。换芯片可替换核数；新代实现继续用此分块是一个假设。该合同的全窗和真实 ELF 已在双端核验，公开接口返回工作量。开发中的分阶段模型把两套 UB 槽的复用、满片与尾片的转换以及首个读描述符分别计价；D=16448 的第五片只有 64 列，四路 BF16 转换仍按 4096 列定价。该开发窗为 8.869 / 8.636 µs。CANN ops-transformer 的 `aclnnMhcPost` 小 token 分通道规则另见本章此前小节。[Flash 与 Pro 的真实接口、完整输入输出和 CA](examples/hc_post_vllm.md)
 
 ## 9. KDA：状态递推与chunk前向
 

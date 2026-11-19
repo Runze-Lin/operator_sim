@@ -9,7 +9,7 @@
 | 每个请求累计 KV 长度 | 与 Q 相同 | 第一块 256，最后一块 32,768 / 131,072 / 262,144 |
 | 每请求分块次数 | 1 | 128 / 512 / 1,024 |
 
-生成结果覆盖三种模型、三个长度、两种并行拓扑和三个调度截面，共 **54 个场景**。每个场景含逐算子输入、参数或工作量、输出、适用层号、映射依据、条件分支，以及能建立同语义单算子定价时的 DT、PR、970DT 设备时间。其余条目给出具体原因或所缺的运行时输入。所有层号从 0 开始。[场景索引](../results/v0.20/workloads/index.csv) · [完整数值张量清单，gzip JSON Lines](../results/v0.20/workloads/contracts.jsonl.gz)
+生成结果覆盖三种模型、三个长度、两种并行拓扑和三个调度截面，共 **54 个场景**。每个场景含逐算子输入、参数或工作量、输出、适用层号、映射依据、条件分支，以及能建立同语义单算子定价时的 DT、PR、970DT 设备时间。其余条目给出具体原因或所缺的运行时输入。所有层号从 0 开始。[场景索引](../results/v0.23/workloads/index.csv) · [完整数值张量清单，gzip JSON Lines](../results/v0.23/workloads/contracts.jsonl.gz)
 
 固定版 vLLM Ascend 的外层 decoder 另用符号张量重跑了 27 组完整及分块场景。每组核对 token 数、hidden、各类层数以及路由/残差的实际调用次数。B8×32k 的 Flash 执行 80 次 mHC post、40 次主注意力；Pro 为 122 和 61 次；Kimi 的 decoder 内执行 186 次 AttnResFwd、69 次 KDA 和 24 次 MLA，另有模型末端一次 AttnResFwd。探针运行 decoder 方法，设备 leaf 由记录模块代替，物理 kernel 与调度仍需要 CA 或真实服务 trace。[源码假跑与逐场景断言](../results/v0.20/workloads/decoder-check.json)
 
@@ -45,16 +45,22 @@
 
 ## 一次实际形状的设备预测
 
-下表均为独立 kernel 的模型值，单位 µs。TP8、B8、整批 prefill；970DT 使用假设配置。计算条件一致时，64 倍或更多的每核工作量会产生重复 UB tile、DMA 事务与带宽竞争；小 shape 的单次固定开销占比不能直接搬到这里。以 Flash Cast 为例，当前各档预测并不构成固定比例，CA 检查仍需覆盖工作集和访存并发发生变化的位置。Kimi sigmoid 是 beta 的一个子步骤，输入规整为 [T,12] 后按 FP32 读写。下表每个数据点的实测资格请查 CA 校准表。[大 Cast 的 CA 证据](../results/v0.20/large/report.md) · [Sigmoid 的 CA 证据](../results/v0.20/newop/evaluation.json)
+下表均为独立 kernel 的模型值，单位 µs。TP8、B8、整批 prefill；970DT 使用假设配置。计算条件一致时，64 倍或更多的每核工作量会产生重复 UB tile、DMA 事务与带宽竞争；小 shape 的单次固定开销占比不能直接搬到这里。以 Flash Cast 为例，当前各档预测并不构成固定比例，CA 检查仍需覆盖工作集和访存并发发生变化的位置。Kimi sigmoid 是 beta 的一个子步骤，输入规整为 [T,12] 后按 FP32 读写。下表每个数据点的实测资格请查 CA 校准表。[对应 14 张模型 / CA 逐块实测图](../results/v0.23/prefill/README.md)
 
 | 算子与输入 | 上下文 | 950DT 预测 | 950PR 预测 | 970DT 外推 |
 |---|---:|---:|---:|---:|
-| Flash indexer Cast [262144,32] | 32k | 8.36 | 13.05 | 6.05 |
-| Flash indexer Cast [1048576,32] | 128k | 23.27 | 64.36 | 13.34 |
-| Flash indexer Cast [2097152,32] | 256k | 69.52 | 208.16 | 23.06 |
-| Kimi KDA beta sigmoid [262144,12] | 32k | 10.28 | 21.73 | 5.43 |
-| Kimi KDA beta sigmoid [2097152,12] | 256k | 54.18 | 147.42 | 17.85 |
-| Kimi 动态 MX 量化 [2097152,7168]，mixed QKV、scale_alg=0 | 256k | 11,362.75 | 32,472.19 | 4,186.59 |
+| Flash indexer Cast [262144,32] | 32k | 9.85 | 13.05 | 6.66 |
+| Flash indexer Cast [1048576,32] | 128k | 36.37 | 88.94 | 16.54 |
+| Flash indexer Cast [2097152,32] | 256k | 99.92 | 232.75 | 42.54 |
+| Pro indexer Cast [262144,64] | 32k | 16.59 | 25.03 | 9.95 |
+| Pro indexer Cast [1048576,64] | 128k | 99.92 | 232.75 | 42.54 |
+| Pro indexer Cast [2097152,64] | 256k | 227.02 | 520.36 | 104.67 |
+| Kimi KDA beta Sigmoid [262144,12] | 32k | 8.00 | 12.34 | 5.55 |
+| Kimi KDA beta Sigmoid [1048576,12] | 128k | 19.72 | 39.63 | 11.32 |
+| Kimi KDA beta Sigmoid [2097152,12] | 256k | 45.90 | 104.72 | 19.35 |
+| Kimi mixed QKV 动态 MX 量化 [262144,7168] | 32k | 1,394.99 | 3,992.86 | 527.78 |
+| Kimi mixed QKV 动态 MX 量化 [1048576,7168] | 128k | 5,666.88 | 16,198.29 | 2,095.70 |
+| Kimi mixed QKV 动态 MX 量化 [2097152,7168] | 256k | 11,362.75 | 32,472.19 | 4,186.59 |
 
 ## 提取与验证
 
@@ -74,14 +80,14 @@ python -m development.workloads.prefill_shapes --model DeepSeek-V4-Pro --seq 262
 import gzip, json
 from operator_model import estimate
 
-with gzip.open("results/v0.20/workloads/contracts.jsonl.gz", "rt") as source:
+with gzip.open("results/v0.23/workloads/contracts.jsonl.gz", "rt") as source:
     cases = (json.loads(line) for line in source)
     run = next(c for c in cases if c["scenario"]["model"] == "Kimi-K3"
                and c["scenario"]["seq"] == 131072 and c["scenario"]["tp"] == 8
                and c["scenario"]["chunk"] == 0)
 call = next(r["standalone_call"] for r in run["contracts"] if r["op"] == "kda.beta.sigmoid")
 event = estimate(**call, chip="Ascend970DT", timing_mode="resource")
-print(event.latency_us, event.status)  # 约 10.66 µs，extrapolated
+print(event.latency_us, event.status)  # 约 11.32 µs，extrapolated
 ```
 
 一次量测中，对清单内去重的 140 种算子/shape/属性，三芯片各调用公共 API 三次。覆盖长 sequence、宽 hidden、不同 AttnRes 有效槽数，以及无定价返回。在同一 Python 进程内计时，绕过导出器结果缓存，不含解释器导入、JSON 解压和 CA 仿真。各算子的墙钟中位数、最大值及对应 shape 可在结果中复核。[查询成本](../results/v0.20/workloads/query-cost.json)
