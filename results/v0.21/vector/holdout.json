@@ -4066,5 +4066,3009 @@
       "correctness count=18874368 bad=0 atol=2e-6"
     ],
     "api": "aclnnSigmoid"
+  },
+  {
+    "id": "cast_bf16_fp32_1572864_32",
+    "op": "cast_bf16_fp32",
+    "shape": [
+      1572864,
+      32
+    ],
+    "chip": "Ascend950DT_9582",
+    "cost": {
+      "started_utc": "2026-11-19T12:33:41.787973+00:00",
+      "finished_utc": "2026-11-19T12:57:49.832716+00:00",
+      "seconds": 1448.0446146498434,
+      "raw_bytes": 8088348473,
+      "peak_bytes": 15684352465,
+      "cpu_seconds": 39393.03,
+      "exit_code": 0,
+      "stop_reason": null,
+      "command": [
+        "bash",
+        "/home/l00925865/operator_sim/scripts/cann-run.sh",
+        "msopprof",
+        "simulator",
+        "--soc-version=Ascend950DT_9582",
+        "--dump=false",
+        "--launch-count=1",
+        "--timeout=180",
+        "--output=/home/l00925865/operator_sim/runs/vector21/cast_bf16_fp32_1572864_32_Ascend950DT_9582/profile",
+        "/home/l00925865/operator_sim/build/smoke/large_cast20",
+        "1572864",
+        "32"
+      ]
+    },
+    "qualified": true,
+    "ca_us": 72.23818016285077,
+    "stage": {
+      "kernel": "Cast_b2717900ea7de2d41ea9c63d23aa269b_high_performance_0",
+      "ca_us": 72.23818016285077,
+      "active_aic": 0,
+      "active_aiv": 64,
+      "windows": {
+        "core28.veccore1": [
+          0.6036367416381836,
+          61.5975737599656
+        ],
+        "core29.veccore0": [
+          0.3775758743286133,
+          61.8739409474656
+        ],
+        "core22.veccore1": [
+          0.6187882423400879,
+          63.22727346699685
+        ],
+        "core14.veccore0": [
+          0.29878807067871094,
+          72.152726653032
+        ],
+        "core10.veccore0": [
+          0.13212156295776367,
+          71.72303152363747
+        ],
+        "core21.veccore0": [
+          0.6775760650634766,
+          63.118791106157005
+        ],
+        "core19.veccore1": [
+          0.20121240615844727,
+          61.82969808857888
+        ],
+        "core2.veccore0": [
+          0.2133336067199707,
+          71.14605856221169
+        ],
+        "core13.veccore1": [
+          0.3745455741882324,
+          71.43090963643044
+        ],
+        "core12.veccore0": [
+          0.19757604598999023,
+          71.42969656269997
+        ],
+        "core16.veccore0": [
+          0.6581821441650391,
+          63.006059172563255
+        ],
+        "core20.veccore1": [
+          0.23333358764648438,
+          62.86242819111794
+        ],
+        "core17.veccore1": [
+          0.4933333396911621,
+          62.57757711689919
+        ],
+        "core14.veccore1": [
+          0.3400001525878906,
+          71.69091177266091
+        ],
+        "core23.veccore1": [
+          0.33333349227905273,
+          62.06242513936013
+        ],
+        "core26.veccore0": [
+          0.7296972274780273,
+          63.222421172074974
+        ],
+        "core11.veccore0": [
+          0.28121232986450195,
+          72.00848532002419
+        ],
+        "core27.veccore1": [
+          0.5460605621337891,
+          63.410912993364036
+        ],
+        "core2.veccore1": [
+          0.20969724655151367,
+          71.3733305959031
+        ],
+        "core24.veccore0": [
+          0.13636398315429688,
+          62.238786223344505
+        ],
+        "core18.veccore1": [
+          0.25757598876953125,
+          62.21636343281716
+        ],
+        "core15.veccore0": [
+          0.542424201965332,
+          71.53393698018044
+        ],
+        "core1.veccore1": [
+          0.2975759506225586,
+          71.38242483418435
+        ],
+        "core16.veccore1": [
+          0.6624245643615723,
+          63.082421782426536
+        ],
+        "core10.veccore1": [
+          0.14121246337890625,
+          72.00121450703591
+        ],
+        "core13.veccore0": [
+          0.36484861373901367,
+          71.41878652852029
+        ],
+        "core17.veccore0": [
+          0.48181819915771484,
+          61.53878927510232
+        ],
+        "core25.veccore0": [
+          0.44121217727661133,
+          63.54242086689919
+        ],
+        "core0.veccore0": [
+          0.12969732284545898,
+          71.74727011006325
+        ],
+        "core19.veccore0": [
+          0.27515172958374023,
+          61.83091116230935
+        ],
+        "core0.veccore1": [
+          0.0,
+          71.36727285664529
+        ],
+        "core11.veccore1": [
+          0.2200002670288086,
+          72.23818016285077
+        ],
+        "core1.veccore0": [
+          0.288485050201416,
+          70.9975752858445
+        ],
+        "core22.veccore0": [
+          0.6387882232666016,
+          63.39878988545388
+        ],
+        "core12.veccore1": [
+          0.18424272537231445,
+          70.91091299336404
+        ],
+        "core15.veccore1": [
+          0.5521211624145508,
+          71.9975752858445
+        ],
+        "core21.veccore1": [
+          0.7200002670288086,
+          63.32848501484841
+        ],
+        "core24.veccore1": [
+          0.19454574584960938,
+          62.53878927510232
+        ],
+        "core18.veccore0": [
+          0.7412123680114746,
+          62.40727377217263
+        ],
+        "core25.veccore1": [
+          0.4545454978942871,
+          63.2872710255906
+        ],
+        "core20.veccore0": [
+          0.17212152481079102,
+          62.69091177266091
+        ],
+        "core29.veccore1": [
+          0.38484859466552734,
+          62.582421782426536
+        ],
+        "core28.veccore0": [
+          0.5836362838745117,
+          62.54727316182107
+        ],
+        "core26.veccore1": [
+          0.7387881278991699,
+          63.62969351094216
+        ],
+        "core23.veccore0": [
+          0.3296971321105957,
+          61.91636038105935
+        ],
+        "core3.veccore0": [
+          0.5709090232849121,
+          70.87878561299294
+        ],
+        "core3.veccore1": [
+          0.5521211624145508,
+          71.31878805439919
+        ],
+        "core30.veccore0": [
+          0.3981819152832031,
+          61.989694121293724
+        ],
+        "core30.veccore1": [
+          0.4121212959289551,
+          62.602426054887474
+        ],
+        "core31.veccore0": [
+          0.21393966674804688,
+          63.21636343281716
+        ],
+        "core31.veccore1": [
+          0.21878814697265625,
+          63.38363790791482
+        ],
+        "core4.veccore0": [
+          0.43454551696777344,
+          71.84606313984841
+        ],
+        "core4.veccore1": [
+          0.5145454406738281,
+          71.68787527363747
+        ],
+        "core5.veccore0": [
+          0.27272748947143555,
+          71.35818063467741
+        ],
+        "core5.veccore1": [
+          0.26181840896606445,
+          72.06727248430252
+        ],
+        "core6.veccore0": [
+          0.42969703674316406,
+          72.11454713344574
+        ],
+        "core6.veccore1": [
+          0.3896970748901367,
+          71.338183991611
+        ],
+        "core7.veccore0": [
+          0.4872727394104004,
+          70.8909087209031
+        ],
+        "core7.veccore1": [
+          0.44484853744506836,
+          71.00727224629372
+        ],
+        "core8.veccore0": [
+          0.35212135314941406,
+          70.88363790791482
+        ],
+        "core8.veccore1": [
+          0.36121225357055664,
+          71.33394003193825
+        ],
+        "core27.veccore0": [
+          0.5048484802246094,
+          63.01999807637185
+        ],
+        "core9.veccore0": [
+          0.49878787994384766,
+          71.75393820088357
+        ],
+        "core9.veccore1": [
+          0.4896969795227051,
+          71.83636617939919
+        ]
+      },
+      "trace": "runs/vector21/cast_bf16_fp32_1572864_32_Ascend950DT_9582/profile/OPPROF_20261119203342_YYCYNHRRVUOYQUTP/simulator/trace.json",
+      "trace_sha256": "d35a02361e1353f096d5f26ed434fdfac1600a3c77b3f027fa07e465474e8a58",
+      "binary_sha256": "b4281f94c2b846460a173db1ab578880e18faeeab8b719e3de5ee0da44096953",
+      "queue_events": {
+        "SCALAR": 204928,
+        "MTE3": 2490,
+        "MTE2": 2496,
+        "PUSHQ": 4992,
+        "FLOWCTRL": 12467,
+        "RVECLP": 9728,
+        "RVECSU": 9728,
+        "RVECLD": 1575296,
+        "RVECEX": 3145728,
+        "RVECST": 1575296
+      },
+      "mmad": 0,
+      "total_events": 6543149
+    },
+    "correctness": [
+      "correctness count=50331648 bad=0"
+    ],
+    "api": "aclnnCast"
+  },
+  {
+    "id": "sigmoid_fp32_3_96",
+    "op": "sigmoid_fp32",
+    "shape": [
+      3,
+      96
+    ],
+    "chip": "Ascend950DT_9582",
+    "cost": {
+      "started_utc": "2026-11-19T12:58:50.598715+00:00",
+      "finished_utc": "2026-11-19T12:59:42.655991+00:00",
+      "seconds": 52.05718478001654,
+      "raw_bytes": 969539,
+      "peak_bytes": 33225287,
+      "cpu_seconds": 541.99,
+      "exit_code": 0,
+      "stop_reason": null,
+      "command": [
+        "bash",
+        "/home/l00925865/operator_sim/scripts/cann-run.sh",
+        "msopprof",
+        "simulator",
+        "--soc-version=Ascend950DT_9582",
+        "--dump=false",
+        "--launch-count=1",
+        "--timeout=30",
+        "--output=/home/l00925865/operator_sim/runs/vector21/sigmoid_fp32_3_96_Ascend950DT_9582/profile",
+        "/home/l00925865/operator_sim/build/smoke/sigmoid20",
+        "3",
+        "96"
+      ]
+    },
+    "qualified": true,
+    "ca_us": 3.0351514844223857,
+    "stage": {
+      "kernel": "Sigmoid_5c5e58e043224cccf51a06108010ae13_high_precision_300000000000100",
+      "ca_us": 3.0351514844223857,
+      "active_aic": 0,
+      "active_aiv": 1,
+      "windows": {
+        "core0.veccore0": [
+          0.0,
+          3.0351514844223857
+        ]
+      },
+      "trace": "runs/vector21/sigmoid_fp32_3_96_Ascend950DT_9582/profile/OPPROF_20261119205850_FPGRVJCYVCNIOCSX/simulator/trace.json",
+      "trace_sha256": "bf330bbc4bfba64c919e75a5fc28978bb95a9830775d3ca3305ab2ed3d3df768",
+      "binary_sha256": "ab4371eee0320cdf66bda9bbaccbee9c47aafccaaf6691b9fdae849c5f8a0c67",
+      "queue_events": {
+        "SCALAR": 375,
+        "FLOWCTRL": 14,
+        "MTE2": 3,
+        "MTE3": 2,
+        "PUSHQ": 5,
+        "RVECLP": 3,
+        "RVECEX": 54,
+        "RVECSU": 4,
+        "RVECLD": 11,
+        "RVECST": 11
+      },
+      "mmad": 0,
+      "total_events": 482
+    },
+    "correctness": [
+      "correctness count=288 bad=0 atol=2e-6"
+    ],
+    "api": "aclnnSigmoid"
+  },
+  {
+    "id": "sigmoid_fp32_3_96",
+    "op": "sigmoid_fp32",
+    "shape": [
+      3,
+      96
+    ],
+    "chip": "Ascend950PR_957b",
+    "cost": {
+      "started_utc": "2026-11-19T12:59:42.674055+00:00",
+      "finished_utc": "2026-11-19T13:00:52.718719+00:00",
+      "seconds": 70.04460358992219,
+      "raw_bytes": 905676,
+      "peak_bytes": 915474,
+      "cpu_seconds": 601.99,
+      "exit_code": 0,
+      "stop_reason": null,
+      "command": [
+        "bash",
+        "/home/l00925865/operator_sim/scripts/cann-run.sh",
+        "msopprof",
+        "simulator",
+        "--soc-version=Ascend950PR_957b",
+        "--dump=false",
+        "--launch-count=1",
+        "--timeout=30",
+        "--output=/home/l00925865/operator_sim/runs/vector21/sigmoid_fp32_3_96_Ascend950PR_957b/profile",
+        "/home/l00925865/operator_sim/build/smoke/sigmoid20",
+        "3",
+        "96"
+      ]
+    },
+    "qualified": true,
+    "ca_us": 2.628484728746116,
+    "stage": {
+      "kernel": "Sigmoid_5c5e58e043224cccf51a06108010ae13_high_precision_300000000000100",
+      "ca_us": 2.628484728746116,
+      "active_aic": 0,
+      "active_aiv": 1,
+      "windows": {
+        "core0.veccore0": [
+          0.0,
+          2.628484728746116
+        ]
+      },
+      "trace": "runs/vector21/sigmoid_fp32_3_96_Ascend950PR_957b/profile/OPPROF_20261119205942_CBYAWLMIDTOOAROZ/simulator/trace.json",
+      "trace_sha256": "fa4ac3dc9ff0dac6cb7ed9c32d75c15f55aaf5b6e36b4db05c8c7fde0dffdc3e",
+      "binary_sha256": "ab4371eee0320cdf66bda9bbaccbee9c47aafccaaf6691b9fdae849c5f8a0c67",
+      "queue_events": {
+        "SCALAR": 375,
+        "FLOWCTRL": 14,
+        "MTE2": 3,
+        "MTE3": 2,
+        "PUSHQ": 5,
+        "RVECLP": 3,
+        "RVECEX": 54,
+        "RVECSU": 4,
+        "RVECLD": 11,
+        "RVECST": 11
+      },
+      "mmad": 0,
+      "total_events": 482
+    },
+    "correctness": [
+      "correctness count=288 bad=0 atol=2e-6"
+    ],
+    "api": "aclnnSigmoid"
+  },
+  {
+    "id": "cast_bf16_fp32_3_7168",
+    "op": "cast_bf16_fp32",
+    "shape": [
+      3,
+      7168
+    ],
+    "chip": "Ascend950DT_9582",
+    "cost": {
+      "started_utc": "2026-11-19T13:00:52.736747+00:00",
+      "finished_utc": "2026-11-19T13:01:50.818765+00:00",
+      "seconds": 58.08189976983704,
+      "raw_bytes": 10234428,
+      "peak_bytes": 38446118,
+      "cpu_seconds": 707.6999999999999,
+      "exit_code": 0,
+      "stop_reason": null,
+      "command": [
+        "bash",
+        "/home/l00925865/operator_sim/scripts/cann-run.sh",
+        "msopprof",
+        "simulator",
+        "--soc-version=Ascend950DT_9582",
+        "--dump=false",
+        "--launch-count=1",
+        "--timeout=30",
+        "--output=/home/l00925865/operator_sim/runs/vector21/cast_bf16_fp32_3_7168_Ascend950DT_9582/profile",
+        "/home/l00925865/operator_sim/build/smoke/large_cast20",
+        "3",
+        "7168"
+      ]
+    },
+    "qualified": true,
+    "ca_us": 2.3793940572068095,
+    "stage": {
+      "kernel": "Cast_b2717900ea7de2d41ea9c63d23aa269b_high_performance_0",
+      "ca_us": 2.3793940572068095,
+      "active_aic": 0,
+      "active_aiv": 11,
+      "windows": {
+        "core0.veccore0": [
+          0.0,
+          2.233333113603294
+        ],
+        "core1.veccore1": [
+          0.09151506423950195,
+          2.1860604314133525
+        ],
+        "core17.veccore0": [
+          0.15575766563415527,
+          2.3793940572068095
+        ],
+        "core16.veccore1": [
+          0.14545464515686035,
+          2.155757430009544
+        ],
+        "core18.veccore0": [
+          0.08969688415527344,
+          2.103030207566917
+        ],
+        "core16.veccore0": [
+          0.13696980476379395,
+          2.2945456532761455
+        ],
+        "core17.veccore1": [
+          0.19696974754333496,
+          2.2496972111985087
+        ],
+        "core2.veccore1": [
+          0.13696980476379395,
+          2.324242594651878
+        ],
+        "core1.veccore0": [
+          0.09151506423950195,
+          2.0442423848435283
+        ],
+        "core0.veccore1": [
+          0.07515144348144531,
+          2.10727262776345
+        ],
+        "core2.veccore0": [
+          0.14181828498840332,
+          2.1230301884934306
+        ]
+      },
+      "trace": "runs/vector21/cast_bf16_fp32_3_7168_Ascend950DT_9582/profile/OPPROF_20261119210053_OIZONVKYXPETFOJK/simulator/trace.json",
+      "trace_sha256": "fd58a0329359083e4f0d112f291972fbd3258ebc28b1ede2ff1048cb088f0c71",
+      "binary_sha256": "b4281f94c2b846460a173db1ab578880e18faeeab8b719e3de5ee0da44096953",
+      "queue_events": {
+        "SCALAR": 4202,
+        "MTE3": 22,
+        "MTE2": 22,
+        "PUSHQ": 44,
+        "FLOWCTRL": 110,
+        "RVECLP": 44,
+        "RVECSU": 44,
+        "RVECLD": 691,
+        "RVECEX": 1360,
+        "RVECST": 691
+      },
+      "mmad": 0,
+      "total_events": 7230
+    },
+    "correctness": [
+      "correctness count=21504 bad=0"
+    ],
+    "api": "aclnnCast"
+  },
+  {
+    "id": "cast_bf16_fp32_3_7168",
+    "op": "cast_bf16_fp32",
+    "shape": [
+      3,
+      7168
+    ],
+    "chip": "Ascend950PR_957b",
+    "cost": {
+      "started_utc": "2026-11-19T13:01:50.905749+00:00",
+      "finished_utc": "2026-11-19T13:02:52.939649+00:00",
+      "seconds": 62.03382871998474,
+      "raw_bytes": 10162460,
+      "peak_bytes": 10170686,
+      "cpu_seconds": 709.52,
+      "exit_code": 0,
+      "stop_reason": null,
+      "command": [
+        "bash",
+        "/home/l00925865/operator_sim/scripts/cann-run.sh",
+        "msopprof",
+        "simulator",
+        "--soc-version=Ascend950PR_957b",
+        "--dump=false",
+        "--launch-count=1",
+        "--timeout=30",
+        "--output=/home/l00925865/operator_sim/runs/vector21/cast_bf16_fp32_3_7168_Ascend950PR_957b/profile",
+        "/home/l00925865/operator_sim/build/smoke/large_cast20",
+        "3",
+        "7168"
+      ]
+    },
+    "qualified": true,
+    "ca_us": 2.441212418489158,
+    "stage": {
+      "kernel": "Cast_b2717900ea7de2d41ea9c63d23aa269b_high_performance_0",
+      "ca_us": 2.441212418489158,
+      "active_aic": 0,
+      "active_aiv": 11,
+      "windows": {
+        "core17.veccore1": [
+          0.26848483085632324,
+          2.255151513032615
+        ],
+        "core16.veccore1": [
+          0.2436363697052002,
+          2.247878792695701
+        ],
+        "core1.veccore0": [
+          0.049697160720825195,
+          2.191515210084617
+        ],
+        "core16.veccore0": [
+          0.22727274894714355,
+          2.3399999169632792
+        ],
+        "core0.veccore1": [
+          0.040606021881103516,
+          2.0127275018021464
+        ],
+        "core18.veccore0": [
+          0.1896970272064209,
+          2.142424347810447
+        ],
+        "core2.veccore0": [
+          0.09636378288269043,
+          2.1890909699723125
+        ],
+        "core1.veccore1": [
+          0.06121230125427246,
+          2.089091065339744
+        ],
+        "core2.veccore1": [
+          0.08727288246154785,
+          2.0903031853958964
+        ],
+        "core0.veccore0": [
+          0.0,
+          2.1187880067154765
+        ],
+        "core17.veccore0": [
+          0.2478787899017334,
+          2.441212418489158
+        ]
+      },
+      "trace": "runs/vector21/cast_bf16_fp32_3_7168_Ascend950PR_957b/profile/OPPROF_20261119210151_NSLAEYQMBVTKAUYM/simulator/trace.json",
+      "trace_sha256": "e0de69f8dbc8945100529387d26f280e75d6b93f8f6c1d39ce51be7ece17a688",
+      "binary_sha256": "b4281f94c2b846460a173db1ab578880e18faeeab8b719e3de5ee0da44096953",
+      "queue_events": {
+        "SCALAR": 4202,
+        "MTE3": 22,
+        "MTE2": 22,
+        "PUSHQ": 44,
+        "FLOWCTRL": 110,
+        "RVECLP": 44,
+        "RVECSU": 44,
+        "RVECLD": 691,
+        "RVECEX": 1360,
+        "RVECST": 691
+      },
+      "mmad": 0,
+      "total_events": 7230
+    },
+    "correctness": [
+      "correctness count=21504 bad=0"
+    ],
+    "api": "aclnnCast"
+  },
+  {
+    "id": "sigmoid_fp32_129_12",
+    "op": "sigmoid_fp32",
+    "shape": [
+      129,
+      12
+    ],
+    "chip": "Ascend950DT_9582",
+    "cost": {
+      "started_utc": "2026-11-19T13:02:53.019536+00:00",
+      "finished_utc": "2026-11-19T13:04:35.177103+00:00",
+      "seconds": 102.15749234007671,
+      "raw_bytes": 1919875,
+      "peak_bytes": 30274527,
+      "cpu_seconds": 1901.07,
+      "exit_code": 0,
+      "stop_reason": null,
+      "command": [
+        "bash",
+        "/home/l00925865/operator_sim/scripts/cann-run.sh",
+        "msopprof",
+        "simulator",
+        "--soc-version=Ascend950DT_9582",
+        "--dump=false",
+        "--launch-count=1",
+        "--timeout=30",
+        "--output=/home/l00925865/operator_sim/runs/vector21/sigmoid_fp32_129_12_Ascend950DT_9582/profile",
+        "/home/l00925865/operator_sim/build/smoke/sigmoid20",
+        "129",
+        "12"
+      ]
+    },
+    "qualified": true,
+    "ca_us": 2.9260606793686748,
+    "stage": {
+      "kernel": "Sigmoid_5c5e58e043224cccf51a06108010ae13_high_precision_300000000000100",
+      "ca_us": 2.9260606793686748,
+      "active_aic": 0,
+      "active_aiv": 2,
+      "windows": {
+        "core16.veccore0": [
+          0.10363650321960449,
+          2.761212351731956
+        ],
+        "core0.veccore0": [
+          0.0,
+          2.9260606793686748
+        ]
+      },
+      "trace": "runs/vector21/sigmoid_fp32_129_12_Ascend950DT_9582/profile/OPPROF_20261119210253_XZAPJKBYRPPSPTAM/simulator/trace.json",
+      "trace_sha256": "1c15273b2b961f5433e75c975143956c45c39d18c91d0ef2115022896e2aadb9",
+      "binary_sha256": "ab4371eee0320cdf66bda9bbaccbee9c47aafccaaf6691b9fdae849c5f8a0c67",
+      "queue_events": {
+        "SCALAR": 750,
+        "FLOWCTRL": 28,
+        "MTE2": 6,
+        "MTE3": 4,
+        "PUSHQ": 10,
+        "RVECLP": 6,
+        "RVECEX": 258,
+        "RVECSU": 8,
+        "RVECLD": 52,
+        "RVECST": 52
+      },
+      "mmad": 0,
+      "total_events": 1174
+    },
+    "correctness": [
+      "correctness count=1548 bad=0 atol=2e-6"
+    ],
+    "api": "aclnnSigmoid"
+  },
+  {
+    "id": "sigmoid_fp32_129_12",
+    "op": "sigmoid_fp32",
+    "shape": [
+      129,
+      12
+    ],
+    "chip": "Ascend950PR_957b",
+    "cost": {
+      "started_utc": "2026-11-19T13:04:35.201575+00:00",
+      "finished_utc": "2026-11-19T13:05:47.247917+00:00",
+      "seconds": 72.04623065004125,
+      "raw_bytes": 1854043,
+      "peak_bytes": 1863839,
+      "cpu_seconds": 931.34,
+      "exit_code": 0,
+      "stop_reason": null,
+      "command": [
+        "bash",
+        "/home/l00925865/operator_sim/scripts/cann-run.sh",
+        "msopprof",
+        "simulator",
+        "--soc-version=Ascend950PR_957b",
+        "--dump=false",
+        "--launch-count=1",
+        "--timeout=30",
+        "--output=/home/l00925865/operator_sim/runs/vector21/sigmoid_fp32_129_12_Ascend950PR_957b/profile",
+        "/home/l00925865/operator_sim/build/smoke/sigmoid20",
+        "129",
+        "12"
+      ]
+    },
+    "qualified": true,
+    "ca_us": 2.715757849626243,
+    "stage": {
+      "kernel": "Sigmoid_5c5e58e043224cccf51a06108010ae13_high_precision_300000000000100",
+      "ca_us": 2.715757849626243,
+      "active_aic": 0,
+      "active_aiv": 2,
+      "windows": {
+        "core16.veccore0": [
+          0.20121216773986816,
+          2.715757849626243
+        ],
+        "core0.veccore0": [
+          0.0,
+          2.6393938092514873
+        ]
+      },
+      "trace": "runs/vector21/sigmoid_fp32_129_12_Ascend950PR_957b/profile/OPPROF_20261119210435_FQSYIACPRUDEOLAN/simulator/trace.json",
+      "trace_sha256": "476d26b91391a26ee730bce89fb804228597af187bc58e7b805ffe5ef31a93af",
+      "binary_sha256": "ab4371eee0320cdf66bda9bbaccbee9c47aafccaaf6691b9fdae849c5f8a0c67",
+      "queue_events": {
+        "SCALAR": 750,
+        "FLOWCTRL": 28,
+        "MTE2": 6,
+        "MTE3": 4,
+        "PUSHQ": 10,
+        "RVECLP": 6,
+        "RVECEX": 258,
+        "RVECSU": 8,
+        "RVECLD": 52,
+        "RVECST": 52
+      },
+      "mmad": 0,
+      "total_events": 1174
+    },
+    "correctness": [
+      "correctness count=1548 bad=0 atol=2e-6"
+    ],
+    "api": "aclnnSigmoid"
+  },
+  {
+    "id": "cast_bf16_fp32_17_32",
+    "op": "cast_bf16_fp32",
+    "shape": [
+      17,
+      32
+    ],
+    "chip": "Ascend950DT_9582",
+    "cost": {
+      "started_utc": "2026-11-19T13:05:47.273365+00:00",
+      "finished_utc": "2026-11-19T13:06:53.377042+00:00",
+      "seconds": 66.10355714010075,
+      "raw_bytes": 961465,
+      "peak_bytes": 29313728,
+      "cpu_seconds": 779.63,
+      "exit_code": 0,
+      "stop_reason": null,
+      "command": [
+        "bash",
+        "/home/l00925865/operator_sim/scripts/cann-run.sh",
+        "msopprof",
+        "simulator",
+        "--soc-version=Ascend950DT_9582",
+        "--dump=false",
+        "--launch-count=1",
+        "--timeout=30",
+        "--output=/home/l00925865/operator_sim/runs/vector21/cast_bf16_fp32_17_32_Ascend950DT_9582/profile",
+        "/home/l00925865/operator_sim/build/smoke/large_cast20",
+        "17",
+        "32"
+      ]
+    },
+    "qualified": true,
+    "ca_us": 2.406060698442161,
+    "stage": {
+      "kernel": "Cast_b2717900ea7de2d41ea9c63d23aa269b_high_performance_0",
+      "ca_us": 2.406060698442161,
+      "active_aic": 0,
+      "active_aiv": 1,
+      "windows": {
+        "core0.veccore0": [
+          0.0,
+          2.406060698442161
+        ]
+      },
+      "trace": "runs/vector21/cast_bf16_fp32_17_32_Ascend950DT_9582/profile/OPPROF_20261119210547_NBFQUOQTYCYQRHKB/simulator/trace.json",
+      "trace_sha256": "c57fbee67877cab25c9feee9c34c4160948e0a7370da1b672761b4e56b91c6a4",
+      "binary_sha256": "b4281f94c2b846460a173db1ab578880e18faeeab8b719e3de5ee0da44096953",
+      "queue_events": {
+        "SCALAR": 382,
+        "MTE3": 2,
+        "MTE2": 2,
+        "PUSHQ": 4,
+        "FLOWCTRL": 10,
+        "RVECLP": 4,
+        "RVECSU": 4,
+        "RVECLD": 19,
+        "RVECEX": 36,
+        "RVECST": 19
+      },
+      "mmad": 0,
+      "total_events": 482
+    },
+    "correctness": [
+      "correctness count=544 bad=0"
+    ],
+    "api": "aclnnCast"
+  },
+  {
+    "id": "cast_bf16_fp32_17_32",
+    "op": "cast_bf16_fp32",
+    "shape": [
+      17,
+      32
+    ],
+    "chip": "Ascend950PR_957b",
+    "cost": {
+      "started_utc": "2026-11-19T13:06:53.395668+00:00",
+      "finished_utc": "2026-11-19T13:11:35.695668+00:00",
+      "seconds": 282.29990310012363,
+      "raw_bytes": 897728,
+      "peak_bytes": 905954,
+      "cpu_seconds": 6810.009999999999,
+      "exit_code": 0,
+      "stop_reason": null,
+      "command": [
+        "bash",
+        "/home/l00925865/operator_sim/scripts/cann-run.sh",
+        "msopprof",
+        "simulator",
+        "--soc-version=Ascend950PR_957b",
+        "--dump=false",
+        "--launch-count=1",
+        "--timeout=30",
+        "--output=/home/l00925865/operator_sim/runs/vector21/cast_bf16_fp32_17_32_Ascend950PR_957b/profile",
+        "/home/l00925865/operator_sim/build/smoke/large_cast20",
+        "17",
+        "32"
+      ]
+    },
+    "qualified": true,
+    "ca_us": 1.9527275590226054,
+    "stage": {
+      "kernel": "Cast_b2717900ea7de2d41ea9c63d23aa269b_high_performance_0",
+      "ca_us": 1.9527275590226054,
+      "active_aic": 0,
+      "active_aiv": 1,
+      "windows": {
+        "core0.veccore0": [
+          0.0,
+          1.9527275590226054
+        ]
+      },
+      "trace": "runs/vector21/cast_bf16_fp32_17_32_Ascend950PR_957b/profile/OPPROF_20261119210653_ETSVLUFQYCAPIRLZ/simulator/trace.json",
+      "trace_sha256": "2102215aa871a5d9e5b1762a84fe367ab4e5a74c8338f8c610d6ff6283b8da61",
+      "binary_sha256": "b4281f94c2b846460a173db1ab578880e18faeeab8b719e3de5ee0da44096953",
+      "queue_events": {
+        "SCALAR": 382,
+        "MTE3": 2,
+        "MTE2": 2,
+        "PUSHQ": 4,
+        "FLOWCTRL": 10,
+        "RVECLP": 4,
+        "RVECSU": 4,
+        "RVECLD": 19,
+        "RVECEX": 36,
+        "RVECST": 19
+      },
+      "mmad": 0,
+      "total_events": 482
+    },
+    "correctness": [
+      "correctness count=544 bad=0"
+    ],
+    "api": "aclnnCast"
+  },
+  {
+    "id": "sigmoid_fp32_4545_24",
+    "op": "sigmoid_fp32",
+    "shape": [
+      4545,
+      24
+    ],
+    "chip": "Ascend950DT_9582",
+    "cost": {
+      "started_utc": "2026-11-19T13:11:35.712385+00:00",
+      "finished_utc": "2026-11-19T13:12:41.810614+00:00",
+      "seconds": 66.09816538006999,
+      "raw_bytes": 62239155,
+      "peak_bytes": 94652553,
+      "cpu_seconds": 862.44,
+      "exit_code": 0,
+      "stop_reason": null,
+      "command": [
+        "bash",
+        "/home/l00925865/operator_sim/scripts/cann-run.sh",
+        "msopprof",
+        "simulator",
+        "--soc-version=Ascend950DT_9582",
+        "--dump=false",
+        "--launch-count=1",
+        "--timeout=30",
+        "--output=/home/l00925865/operator_sim/runs/vector21/sigmoid_fp32_4545_24_Ascend950DT_9582/profile",
+        "/home/l00925865/operator_sim/build/smoke/sigmoid20",
+        "4545",
+        "24"
+      ]
+    },
+    "qualified": true,
+    "ca_us": 3.2672729520127177,
+    "stage": {
+      "kernel": "Sigmoid_5c5e58e043224cccf51a06108010ae13_high_precision_300000000000100",
+      "ca_us": 3.2672729520127177,
+      "active_aic": 0,
+      "active_aiv": 54,
+      "windows": {
+        "core10.veccore0": [
+          0.41090917587280273,
+          3.24000025074929
+        ],
+        "core11.veccore0": [
+          0.30303049087524414,
+          3.033333304338157
+        ],
+        "core26.veccore0": [
+          0.29212141036987305,
+          3.1254544286057353
+        ],
+        "core8.veccore0": [
+          0.189697265625,
+          3.085454466752708
+        ],
+        "core22.veccore0": [
+          0.23333358764648438,
+          3.099999907426536
+        ],
+        "core2.veccore1": [
+          0.08242416381835938,
+          3.0272727040573955
+        ],
+        "core24.veccore0": [
+          0.27696990966796875,
+          3.113333228044212
+        ],
+        "core0.veccore1": [
+          0.06121206283569336,
+          2.9709091214463115
+        ],
+        "core20.veccore1": [
+          0.2024245262145996,
+          3.1084847478196025
+        ],
+        "core18.veccore0": [
+          0.3775758743286133,
+          3.1369695691391826
+        ],
+        "core6.veccore0": [
+          0.16242456436157227,
+          3.121212008409202
+        ],
+        "core27.veccore0": [
+          0.09939384460449219,
+          3.0733332661911845
+        ],
+        "core1.veccore0": [
+          0.12363624572753906,
+          3.0987877873703837
+        ],
+        "core27.veccore1": [
+          0.13939380645751953,
+          3.1187877682968974
+        ],
+        "core12.veccore1": [
+          0.28606081008911133,
+          3.226666930131614
+        ],
+        "core23.veccore1": [
+          0.4357576370239258,
+          3.138787749223411
+        ],
+        "core6.veccore1": [
+          0.16848516464233398,
+          3.099999907426536
+        ],
+        "core16.veccore1": [
+          0.503636360168457,
+          3.155151846818626
+        ],
+        "core2.veccore0": [
+          0.07818174362182617,
+          3.0872726468369365
+        ],
+        "core10.veccore1": [
+          0.39090919494628906,
+          3.2672729520127177
+        ],
+        "core25.veccore1": [
+          0.20727300643920898,
+          3.061212065629661
+        ],
+        "core24.veccore1": [
+          0.288485050201416,
+          3.194545748643577
+        ],
+        "core28.veccore0": [
+          0.15454578399658203,
+          3.068484785966575
+        ],
+        "core21.veccore0": [
+          0.40242433547973633,
+          3.235757830552757
+        ],
+        "core29.veccore0": [
+          0.14121198654174805,
+          3.0945453671738505
+        ],
+        "core28.veccore1": [
+          0.1660609245300293,
+          3.082424166612327
+        ],
+        "core4.veccore0": [
+          0.34848499298095703,
+          3.0696969060227275
+        ],
+        "core12.veccore0": [
+          0.26727294921875,
+          3.2345457104966044
+        ],
+        "core3.veccore0": [
+          0.1484847068786621,
+          3.028484824113548
+        ],
+        "core4.veccore1": [
+          0.36727285385131836,
+          3.0636363057419658
+        ],
+        "core0.veccore0": [
+          0.0,
+          2.948484900407493
+        ],
+        "core18.veccore1": [
+          0.3939394950866699,
+          3.1533336667343974
+        ],
+        "core17.veccore0": [
+          0.33696985244750977,
+          3.2600002316758037
+        ],
+        "core5.veccore0": [
+          0.38242435455322266,
+          3.0272727040573955
+        ],
+        "core22.veccore1": [
+          0.27454566955566406,
+          3.084848406724632
+        ],
+        "core19.veccore1": [
+          0.4460606575012207,
+          3.176970007829368
+        ],
+        "core19.veccore0": [
+          0.4848484992980957,
+          3.222424509935081
+        ],
+        "core21.veccore1": [
+          0.4121212959289551,
+          3.2145457295700908
+        ],
+        "core26.veccore1": [
+          0.31151533126831055,
+          3.0945453671738505
+        ],
+        "core11.veccore1": [
+          0.32242441177368164,
+          3.0945453671738505
+        ],
+        "core20.veccore0": [
+          0.189697265625,
+          3.2200002698227763
+        ],
+        "core13.veccore0": [
+          0.46000003814697266,
+          3.2169699696823955
+        ],
+        "core3.veccore1": [
+          0.1533336639404297,
+          3.0036363629624248
+        ],
+        "core7.veccore0": [
+          0.24848508834838867,
+          3.0599999455735087
+        ],
+        "core16.veccore0": [
+          0.5096969604492188,
+          3.14848470967263
+        ],
+        "core1.veccore1": [
+          0.1012120246887207,
+          3.084848406724632
+        ],
+        "core25.veccore0": [
+          0.24848508834838867,
+          3.0812120465561748
+        ],
+        "core17.veccore1": [
+          0.3557577133178711,
+          3.2272729901596904
+        ],
+        "core23.veccore0": [
+          0.42606067657470703,
+          3.121212008409202
+        ],
+        "core8.veccore1": [
+          0.20969724655151367,
+          3.099999907426536
+        ],
+        "core5.veccore1": [
+          0.36969709396362305,
+          3.046060564927757
+        ],
+        "core7.veccore1": [
+          0.2309093475341797,
+          3.113333228044212
+        ],
+        "core9.veccore0": [
+          0.4545454978942871,
+          3.166060927323997
+        ],
+        "core9.veccore1": [
+          0.4357576370239258,
+          3.183636668138206
+        ]
+      },
+      "trace": "runs/vector21/sigmoid_fp32_4545_24_Ascend950DT_9582/profile/OPPROF_20261119211135_RXUERYTXBFKOBMYK/simulator/trace.json",
+      "trace_sha256": "8cc470799385ca43506bdc61fcfcc2a86a62ecb0503f863b78837bc2f512f089",
+      "binary_sha256": "ab4371eee0320cdf66bda9bbaccbee9c47aafccaaf6691b9fdae849c5f8a0c67",
+      "queue_events": {
+        "SCALAR": 20250,
+        "FLOWCTRL": 756,
+        "MTE2": 162,
+        "MTE3": 108,
+        "PUSHQ": 270,
+        "RVECLP": 162,
+        "RVECEX": 17266,
+        "RVECSU": 216,
+        "RVECLD": 3464,
+        "RVECST": 3464
+      },
+      "mmad": 0,
+      "total_events": 46118
+    },
+    "correctness": [
+      "correctness count=109080 bad=0 atol=2e-6"
+    ],
+    "api": "aclnnSigmoid"
+  },
+  {
+    "id": "sigmoid_fp32_4545_24",
+    "op": "sigmoid_fp32",
+    "shape": [
+      4545,
+      24
+    ],
+    "chip": "Ascend950PR_957b",
+    "cost": {
+      "started_utc": "2026-11-19T13:12:42.235376+00:00",
+      "finished_utc": "2026-11-19T13:13:50.285338+00:00",
+      "seconds": 68.04989451984875,
+      "raw_bytes": 62137731,
+      "peak_bytes": 62147526,
+      "cpu_seconds": 812.83,
+      "exit_code": 0,
+      "stop_reason": null,
+      "command": [
+        "bash",
+        "/home/l00925865/operator_sim/scripts/cann-run.sh",
+        "msopprof",
+        "simulator",
+        "--soc-version=Ascend950PR_957b",
+        "--dump=false",
+        "--launch-count=1",
+        "--timeout=30",
+        "--output=/home/l00925865/operator_sim/runs/vector21/sigmoid_fp32_4545_24_Ascend950PR_957b/profile",
+        "/home/l00925865/operator_sim/build/smoke/sigmoid20",
+        "4545",
+        "24"
+      ]
+    },
+    "qualified": true,
+    "ca_us": 3.1775760678574443,
+    "stage": {
+      "kernel": "Sigmoid_5c5e58e043224cccf51a06108010ae13_high_precision_300000000000100",
+      "ca_us": 3.1775760678574443,
+      "active_aic": 0,
+      "active_aiv": 54,
+      "windows": {
+        "core19.veccore0": [
+          0.22666668891906738,
+          3.0739393262192607
+        ],
+        "core12.veccore0": [
+          0.39151525497436523,
+          3.0242424039170146
+        ],
+        "core10.veccore0": [
+          0.29878807067871094,
+          2.9327273396775126
+        ],
+        "core27.veccore0": [
+          0.29030323028564453,
+          2.937575819902122
+        ],
+        "core19.veccore1": [
+          0.25151515007019043,
+          3.0951514272019267
+        ],
+        "core2.veccore0": [
+          0.056363821029663086,
+          2.947878840379417
+        ],
+        "core29.veccore0": [
+          0.14303040504455566,
+          3.0842423466965556
+        ],
+        "core22.veccore1": [
+          0.14181828498840332,
+          2.969090941362083
+        ],
+        "core28.veccore1": [
+          0.3466668128967285,
+          2.937575819902122
+        ],
+        "core1.veccore1": [
+          0.2351515293121338,
+          2.979393961839378
+        ],
+        "core6.veccore0": [
+          0.34121227264404297,
+          2.843030455522239
+        ],
+        "core3.veccore1": [
+          0.27878808975219727,
+          2.7739396123215556
+        ],
+        "core16.veccore1": [
+          0.28121232986450195,
+          2.9563636807724833
+        ],
+        "core11.veccore0": [
+          0.09575772285461426,
+          2.859394076280296
+        ],
+        "core12.veccore1": [
+          0.40424251556396484,
+          2.959393980912864
+        ],
+        "core8.veccore0": [
+          0.16424250602722168,
+          2.9315152196213603
+        ],
+        "core7.veccore1": [
+          0.21878790855407715,
+          3.0066666631028056
+        ],
+        "core6.veccore1": [
+          0.3163638114929199,
+          2.7739396123215556
+        ],
+        "core5.veccore1": [
+          0.15393948554992676,
+          2.7278790501877666
+        ],
+        "core0.veccore0": [
+          0.06121230125427246,
+          2.8090910939499736
+        ],
+        "core28.veccore0": [
+          0.2975759506225586,
+          2.9666667012497783
+        ],
+        "core16.veccore0": [
+          0.26848483085632324,
+          2.8866667775437236
+        ],
+        "core24.veccore1": [
+          0.4315152168273926,
+          3.053939345292747
+        ],
+        "core24.veccore0": [
+          0.42787885665893555,
+          3.0866665868088603
+        ],
+        "core10.veccore1": [
+          0.3078789710998535,
+          2.8515152959153056
+        ],
+        "core23.veccore0": [
+          0.3618183135986328,
+          3.141818049363792
+        ],
+        "core3.veccore0": [
+          0.2587878704071045,
+          2.732727530412376
+        ],
+        "core26.veccore1": [
+          0.1769697666168213,
+          2.9187879590317607
+        ],
+        "core0.veccore1": [
+          0.0,
+          2.8654546765610576
+        ],
+        "core1.veccore0": [
+          0.22909092903137207,
+          2.9351515797898173
+        ],
+        "core7.veccore0": [
+          0.22303032875061035,
+          2.9575758008286357
+        ],
+        "core5.veccore0": [
+          0.13757586479187012,
+          2.694545748643577
+        ],
+        "core22.veccore0": [
+          0.13515162467956543,
+          2.993939402513206
+        ],
+        "core8.veccore1": [
+          0.17272734642028809,
+          2.8751516370102763
+        ],
+        "core25.veccore1": [
+          0.3787879943847656,
+          3.0490908650681376
+        ],
+        "core2.veccore1": [
+          0.07515168190002441,
+          2.983030322007835
+        ],
+        "core4.veccore0": [
+          0.4315152168273926,
+          3.032727244310081
+        ],
+        "core26.veccore0": [
+          0.44303035736083984,
+          2.9606061009690166
+        ],
+        "core25.veccore0": [
+          0.3690910339355469,
+          3.0903029469773173
+        ],
+        "core4.veccore1": [
+          0.38424253463745117,
+          2.986666682176292
+        ],
+        "core27.veccore1": [
+          0.3103032112121582,
+          3.1503028897568583
+        ],
+        "core9.veccore0": [
+          0.3600001335144043,
+          2.7939395932480693
+        ],
+        "core20.veccore0": [
+          0.4654545783996582,
+          2.891515257768333
+        ],
+        "core18.veccore0": [
+          0.1678788661956787,
+          2.997575762681663
+        ],
+        "core11.veccore1": [
+          0.1163637638092041,
+          2.969090941362083
+        ],
+        "core18.veccore1": [
+          0.2066667079925537,
+          3.0375757245346904
+        ],
+        "core13.veccore0": [
+          0.4442424774169922,
+          2.8963637379929423
+        ],
+        "core9.veccore1": [
+          0.3727273941040039,
+          2.8575758961960673
+        ],
+        "core17.veccore1": [
+          0.16000008583068848,
+          3.0266666440293193
+        ],
+        "core17.veccore0": [
+          0.21636366844177246,
+          2.983030322007835
+        ],
+        "core21.veccore1": [
+          0.09030318260192871,
+          2.954545500688255
+        ],
+        "core21.veccore0": [
+          0.44909095764160156,
+          2.9878788022324443
+        ],
+        "core20.veccore1": [
+          0.48424243927001953,
+          2.9175758389756083
+        ],
+        "core23.veccore1": [
+          0.35636377334594727,
+          3.1775760678574443
+        ]
+      },
+      "trace": "runs/vector21/sigmoid_fp32_4545_24_Ascend950PR_957b/profile/OPPROF_20261119211242_PZROGYBFXEIEDAJI/simulator/trace.json",
+      "trace_sha256": "6f6f9745c506d9ed27e5e2e2c5ed923b06582adb0f3798086f6e4a1d131d96d6",
+      "binary_sha256": "ab4371eee0320cdf66bda9bbaccbee9c47aafccaaf6691b9fdae849c5f8a0c67",
+      "queue_events": {
+        "SCALAR": 20250,
+        "FLOWCTRL": 756,
+        "MTE2": 162,
+        "MTE3": 108,
+        "PUSHQ": 270,
+        "RVECLP": 162,
+        "RVECEX": 17266,
+        "RVECSU": 216,
+        "RVECLD": 3464,
+        "RVECST": 3464
+      },
+      "mmad": 0,
+      "total_events": 46118
+    },
+    "correctness": [
+      "correctness count=109080 bad=0 atol=2e-6"
+    ],
+    "api": "aclnnSigmoid"
+  },
+  {
+    "id": "cast_bf16_fp32_111_7168",
+    "op": "cast_bf16_fp32",
+    "shape": [
+      111,
+      7168
+    ],
+    "chip": "Ascend950DT_9582",
+    "cost": {
+      "started_utc": "2026-11-19T13:13:50.722569+00:00",
+      "finished_utc": "2026-11-19T13:14:58.820104+00:00",
+      "seconds": 68.09744111006148,
+      "raw_bytes": 162069210,
+      "peak_bytes": 206645363,
+      "cpu_seconds": 1102.84,
+      "exit_code": 0,
+      "stop_reason": null,
+      "command": [
+        "bash",
+        "/home/l00925865/operator_sim/scripts/cann-run.sh",
+        "msopprof",
+        "simulator",
+        "--soc-version=Ascend950DT_9582",
+        "--dump=false",
+        "--launch-count=1",
+        "--timeout=30",
+        "--output=/home/l00925865/operator_sim/runs/vector21/cast_bf16_fp32_111_7168_Ascend950DT_9582/profile",
+        "/home/l00925865/operator_sim/build/smoke/large_cast20",
+        "111",
+        "7168"
+      ]
+    },
+    "qualified": true,
+    "ca_us": 3.1721210507676005,
+    "stage": {
+      "kernel": "Cast_b2717900ea7de2d41ea9c63d23aa269b_high_performance_0",
+      "ca_us": 3.1721210507676005,
+      "active_aic": 0,
+      "active_aiv": 64,
+      "windows": {
+        "core21.veccore1": [
+          0.3296966552734375,
+          3.114545348100364
+        ],
+        "core28.veccore1": [
+          0.31333303451538086,
+          3.0375757245346904
+        ],
+        "core23.veccore1": [
+          0.2048482894897461,
+          3.095757487230003
+        ],
+        "core18.veccore1": [
+          0.2581815719604492,
+          3.0212121037766337
+        ],
+        "core25.veccore1": [
+          0.6157574653625488,
+          2.990909102372825
+        ],
+        "core27.veccore1": [
+          0.6466665267944336,
+          2.9927272824570537
+        ],
+        "core22.veccore1": [
+          0.1896967887878418,
+          2.8981814412400126
+        ],
+        "core22.veccore0": [
+          0.7212119102478027,
+          3.056969645433128
+        ],
+        "core14.veccore0": [
+          0.3036360740661621,
+          2.9927272824570537
+        ],
+        "core14.veccore1": [
+          0.3121209144592285,
+          3.123636248521507
+        ],
+        "core12.veccore0": [
+          0.21636343002319336,
+          2.9357576398178935
+        ],
+        "core16.veccore1": [
+          0.43212127685546875,
+          3.0303030041977763
+        ],
+        "core19.veccore0": [
+          0.6599998474121094,
+          3.1721210507676005
+        ],
+        "core0.veccore0": [
+          0.11939382553100586,
+          2.9157571820542216
+        ],
+        "core26.veccore0": [
+          0.718787670135498,
+          2.933333399705589
+        ],
+        "core24.veccore0": [
+          0.18848466873168945,
+          2.9563636807724833
+        ],
+        "core17.veccore1": [
+          0.5448484420776367,
+          3.046666624955833
+        ],
+        "core2.veccore0": [
+          0.15999984741210938,
+          2.882423880510032
+        ],
+        "core17.veccore0": [
+          0.5018181800842285,
+          3.138787749223411
+        ],
+        "core10.veccore0": [
+          0.12121200561523438,
+          2.861211779527366
+        ],
+        "core29.veccore1": [
+          0.49939393997192383,
+          3.067272665910423
+        ],
+        "core28.veccore0": [
+          0.3896965980529785,
+          2.9115147618576884
+        ],
+        "core25.veccore0": [
+          0.6036362648010254,
+          3.127272608689964
+        ],
+        "core13.veccore1": [
+          0.3660602569580078,
+          2.9951515225693583
+        ],
+        "core1.veccore1": [
+          0.2369694709777832,
+          2.726666453294456
+        ],
+        "core11.veccore1": [
+          0.14121198654174805,
+          2.80363607686013
+        ],
+        "core23.veccore0": [
+          0.27454519271850586,
+          3.0587878255173564
+        ],
+        "core21.veccore0": [
+          0.3793935775756836,
+          3.153333189897239
+        ],
+        "core1.veccore0": [
+          0.20363616943359375,
+          2.8018178967759013
+        ],
+        "core11.veccore0": [
+          0.15333318710327148,
+          2.709696772508323
+        ],
+        "core27.veccore0": [
+          0.6248483657836914,
+          3.167272570542991
+        ],
+        "core12.veccore1": [
+          0.22545433044433594,
+          2.8454542187973857
+        ],
+        "core19.veccore1": [
+          0.6660604476928711,
+          3.0618181256577373
+        ],
+        "core0.veccore1": [
+          0.0,
+          2.8551511792466044
+        ],
+        "core13.veccore0": [
+          0.3533329963684082,
+          3.0412120847031474
+        ],
+        "core20.veccore0": [
+          0.1381816864013672,
+          2.638787749223411
+        ],
+        "core24.veccore1": [
+          0.19696950912475586,
+          3.026060584001243
+        ],
+        "core2.veccore1": [
+          0.17999982833862305,
+          2.9600000409409404
+        ],
+        "core16.veccore0": [
+          0.443636417388916,
+          3.089696886949241
+        ],
+        "core26.veccore1": [
+          0.17939376831054688,
+          2.769090655259788
+        ],
+        "core10.veccore1": [
+          0.13090896606445312,
+          2.8909087209030986
+        ],
+        "core15.veccore1": [
+          0.5321211814880371,
+          3.113333228044212
+        ],
+        "core15.veccore0": [
+          0.5260605812072754,
+          3.114545348100364
+        ],
+        "core18.veccore0": [
+          0.19999980926513672,
+          2.9109087018296123
+        ],
+        "core3.veccore0": [
+          0.5569696426391602,
+          2.9569697408005595
+        ],
+        "core3.veccore1": [
+          0.5478787422180176,
+          3.012121203355491
+        ],
+        "core29.veccore0": [
+          0.4896969795227051,
+          3.113333228044212
+        ],
+        "core20.veccore1": [
+          0.7109088897705078,
+          2.90969658177346
+        ],
+        "core30.veccore0": [
+          0.5569696426391602,
+          3.0836362866684794
+        ],
+        "core30.veccore1": [
+          0.5660605430603027,
+          3.0406060246750712
+        ],
+        "core31.veccore0": [
+          0.3769693374633789,
+          3.1018180875107646
+        ],
+        "core31.veccore1": [
+          0.3424239158630371,
+          3.1472725896164775
+        ],
+        "core4.veccore0": [
+          0.5096969604492188,
+          3.1024241475388408
+        ],
+        "core4.veccore1": [
+          0.4872727394104004,
+          3.130908968858421
+        ],
+        "core5.veccore0": [
+          0.2848482131958008,
+          2.9157571820542216
+        ],
+        "core5.veccore1": [
+          0.2933330535888672,
+          2.8127269772812724
+        ],
+        "core6.veccore0": [
+          0.38060569763183594,
+          3.1048483876511455
+        ],
+        "core6.veccore1": [
+          0.4357576370239258,
+          3.053939345292747
+        ],
+        "core7.veccore0": [
+          0.39333295822143555,
+          3.0139393834397197
+        ],
+        "core7.veccore1": [
+          0.4133329391479492,
+          3.0660605458542705
+        ],
+        "core8.veccore0": [
+          0.2757573127746582,
+          3.0163636235520244
+        ],
+        "core8.veccore1": [
+          0.2993936538696289,
+          3.0945453671738505
+        ],
+        "core9.veccore0": [
+          0.44969701766967773,
+          2.9436364201828837
+        ],
+        "core9.veccore1": [
+          0.4696969985961914,
+          2.9460606602951884
+        ]
+      },
+      "trace": "runs/vector21/cast_bf16_fp32_111_7168_Ascend950DT_9582/profile/OPPROF_20261119211350_OXCLAMMYNGMYHSET/simulator/trace.json",
+      "trace_sha256": "9a9df17f10cf20714eef49ca6ce9f190d40361aed1c5f5df4e66417c5407a481",
+      "binary_sha256": "b4281f94c2b846460a173db1ab578880e18faeeab8b719e3de5ee0da44096953",
+      "queue_events": {
+        "SCALAR": 24448,
+        "MTE3": 128,
+        "MTE2": 128,
+        "PUSHQ": 256,
+        "FLOWCTRL": 640,
+        "RVECLP": 256,
+        "RVECSU": 256,
+        "RVECLD": 25024,
+        "RVECEX": 49920,
+        "RVECST": 25024
+      },
+      "mmad": 0,
+      "total_events": 126080
+    },
+    "correctness": [
+      "correctness count=795648 bad=0"
+    ],
+    "api": "aclnnCast"
+  },
+  {
+    "id": "cast_bf16_fp32_111_7168",
+    "op": "cast_bf16_fp32",
+    "shape": [
+      111,
+      7168
+    ],
+    "chip": "Ascend950PR_957b",
+    "cost": {
+      "started_utc": "2026-11-19T13:15:00.020130+00:00",
+      "finished_utc": "2026-11-19T13:16:10.064592+00:00",
+      "seconds": 70.0443801600486,
+      "raw_bytes": 156671694,
+      "peak_bytes": 156679918,
+      "cpu_seconds": 1008.84,
+      "exit_code": 0,
+      "stop_reason": null,
+      "command": [
+        "bash",
+        "/home/l00925865/operator_sim/scripts/cann-run.sh",
+        "msopprof",
+        "simulator",
+        "--soc-version=Ascend950PR_957b",
+        "--dump=false",
+        "--launch-count=1",
+        "--timeout=30",
+        "--output=/home/l00925865/operator_sim/runs/vector21/cast_bf16_fp32_111_7168_Ascend950PR_957b/profile",
+        "/home/l00925865/operator_sim/build/smoke/large_cast20",
+        "111",
+        "7168"
+      ]
+    },
+    "qualified": true,
+    "ca_us": 3.744242194108665,
+    "stage": {
+      "kernel": "Cast_b2717900ea7de2d41ea9c63d23aa269b_high_performance_0",
+      "ca_us": 3.744242194108665,
+      "active_aic": 0,
+      "active_aiv": 56,
+      "windows": {
+        "core3.veccore0": [
+          0.2739391326904297,
+          3.3975758580490947
+        ],
+        "core18.veccore0": [
+          0.5751514434814453,
+          3.4890909222885966
+        ],
+        "core12.veccore1": [
+          0.49272727966308594,
+          3.744242194108665
+        ],
+        "core20.veccore0": [
+          0.6490907669067383,
+          3.47272730153054
+        ],
+        "core16.veccore1": [
+          0.1678786277770996,
+          2.969697001390159
+        ],
+        "core4.veccore1": [
+          0.2351512908935547,
+          3.6993937520310283
+        ],
+        "core29.veccore1": [
+          0.3127269744873047,
+          3.3866667775437236
+        ],
+        "core1.veccore1": [
+          0.3903031349182129,
+          3.5593938855454326
+        ],
+        "core2.veccore1": [
+          0.12181806564331055,
+          3.0387878445908427
+        ],
+        "core26.veccore0": [
+          0.18424224853515625,
+          3.2387876538559794
+        ],
+        "core17.veccore0": [
+          0.5830302238464355,
+          3.641818049363792
+        ],
+        "core21.veccore0": [
+          0.11030292510986328,
+          2.983030322007835
+        ],
+        "core5.veccore0": [
+          0.13757562637329102,
+          2.880606177262962
+        ],
+        "core29.veccore0": [
+          0.32424211502075195,
+          3.567878725938499
+        ],
+        "core5.veccore1": [
+          0.116363525390625,
+          2.843030455522239
+        ],
+        "core25.veccore1": [
+          0.41696977615356445,
+          3.6963634518906474
+        ],
+        "core16.veccore0": [
+          0.6890907287597656,
+          3.2806057957932353
+        ],
+        "core23.veccore1": [
+          0.524848461151123,
+          3.726666453294456
+        ],
+        "core24.veccore1": [
+          0.4715151786804199,
+          3.6763634709641337
+        ],
+        "core25.veccore0": [
+          0.3775758743286133,
+          3.687878611497581
+        ],
+        "core11.veccore1": [
+          0.17515134811401367,
+          2.8127269772812724
+        ],
+        "core23.veccore0": [
+          0.4830303192138672,
+          3.6678786305710673
+        ],
+        "core0.veccore0": [
+          0.09515142440795898,
+          2.9751515416428447
+        ],
+        "core19.veccore1": [
+          0.1466665267944336,
+          3.4103031186386943
+        ],
+        "core22.veccore1": [
+          0.6327271461486816,
+          3.5618181256577373
+        ],
+        "core12.veccore0": [
+          0.4521212577819824,
+          3.6678786305710673
+        ],
+        "core17.veccore1": [
+          0.5266666412353516,
+          3.7133331326767802
+        ],
+        "core18.veccore1": [
+          0.5654544830322266,
+          3.663030150346458
+        ],
+        "core19.veccore0": [
+          0.16484832763671875,
+          3.1927270917221904
+        ],
+        "core27.veccore0": [
+          0.271514892578125,
+          3.4139394788071513
+        ],
+        "core28.veccore0": [
+          0.3666667938232422,
+          3.339394095353782
+        ],
+        "core26.veccore1": [
+          0.23393917083740234,
+          3.430303099565208
+        ],
+        "core11.veccore0": [
+          0.1527271270751953,
+          3.0199999837204814
+        ],
+        "core0.veccore1": [
+          0.0,
+          3.345454695634544
+        ],
+        "core3.veccore1": [
+          0.28303003311157227,
+          3.5775756863877177
+        ],
+        "core6.veccore0": [
+          0.38000011444091797,
+          3.4454546002671123
+        ],
+        "core2.veccore0": [
+          0.09757566452026367,
+          3.3963637379929423
+        ],
+        "core24.veccore0": [
+          0.42969703674316406,
+          3.5230302838608623
+        ],
+        "core20.veccore1": [
+          0.6563634872436523,
+          3.663030150346458
+        ],
+        "core28.veccore1": [
+          0.3575758934020996,
+          3.5278787640854716
+        ],
+        "core22.veccore0": [
+          0.6278786659240723,
+          3.6927270917221904
+        ],
+        "core27.veccore1": [
+          0.17757558822631836,
+          3.5866665868088603
+        ],
+        "core10.veccore0": [
+          0.2612118721008301,
+          3.6090908078476787
+        ],
+        "core1.veccore0": [
+          0.40181827545166016,
+          3.2848482159897685
+        ],
+        "core21.veccore1": [
+          0.1703028678894043,
+          3.276363375596702
+        ],
+        "core10.veccore1": [
+          0.21515130996704102,
+          3.3830304173752666
+        ],
+        "core4.veccore0": [
+          0.21393918991088867,
+          3.515757563523948
+        ],
+        "core13.veccore0": [
+          0.44121217727661133,
+          3.3103027371689677
+        ],
+        "core6.veccore1": [
+          0.3642425537109375,
+          3.6393938092514873
+        ],
+        "core13.veccore1": [
+          0.43030309677124023,
+          3.5193939236924052
+        ],
+        "core7.veccore0": [
+          0.31999969482421875,
+          3.3054542569443583
+        ],
+        "core7.veccore1": [
+          0.29393911361694336,
+          3.5515151051804423
+        ],
+        "core8.veccore0": [
+          0.1963634490966797,
+          3.41575765889138
+        ],
+        "core8.veccore1": [
+          0.2048482894897461,
+          3.6054544476792216
+        ],
+        "core9.veccore0": [
+          0.3363637924194336,
+          3.4242424992844462
+        ],
+        "core9.veccore1": [
+          0.331514835357666,
+          3.230302813462913
+        ]
+      },
+      "trace": "runs/vector21/cast_bf16_fp32_111_7168_Ascend950PR_957b/profile/OPPROF_20261119211500_QLBDVGXJGHMWPLSV/simulator/trace.json",
+      "trace_sha256": "3e2b5c1eb36236d049b82c13399183900ff4bb78cafd06855a5f0e90bcd37c50",
+      "binary_sha256": "b4281f94c2b846460a173db1ab578880e18faeeab8b719e3de5ee0da44096953",
+      "queue_events": {
+        "SCALAR": 21392,
+        "MTE3": 112,
+        "MTE2": 112,
+        "PUSHQ": 224,
+        "FLOWCTRL": 560,
+        "RVECLP": 224,
+        "RVECSU": 224,
+        "RVECLD": 24920,
+        "RVECEX": 49728,
+        "RVECST": 24920
+      },
+      "mmad": 0,
+      "total_events": 122416
+    },
+    "correctness": [
+      "correctness count=795648 bad=0"
+    ],
+    "api": "aclnnCast"
+  },
+  {
+    "id": "sigmoid_fp32_16385_48",
+    "op": "sigmoid_fp32",
+    "shape": [
+      16385,
+      48
+    ],
+    "chip": "Ascend950DT_9582",
+    "cost": {
+      "started_utc": "2026-11-19T13:16:11.174848+00:00",
+      "finished_utc": "2026-11-19T13:17:39.720136+00:00",
+      "seconds": 88.54521390004084,
+      "raw_bytes": 248185441,
+      "peak_bytes": 313032621,
+      "cpu_seconds": 1677.8500000000001,
+      "exit_code": 0,
+      "stop_reason": null,
+      "command": [
+        "bash",
+        "/home/l00925865/operator_sim/scripts/cann-run.sh",
+        "msopprof",
+        "simulator",
+        "--soc-version=Ascend950DT_9582",
+        "--dump=false",
+        "--launch-count=1",
+        "--timeout=30",
+        "--output=/home/l00925865/operator_sim/runs/vector21/sigmoid_fp32_16385_48_Ascend950DT_9582/profile",
+        "/home/l00925865/operator_sim/build/smoke/sigmoid20",
+        "16385",
+        "48"
+      ]
+    },
+    "qualified": true,
+    "ca_us": 4.769091370515525,
+    "stage": {
+      "kernel": "Sigmoid_5c5e58e043224cccf51a06108010ae13_high_precision_300000000000100",
+      "ca_us": 4.769091370515525,
+      "active_aic": 0,
+      "active_aiv": 62,
+      "windows": {
+        "core27.veccore0": [
+          0.13515162467956543,
+          4.010303261689842
+        ],
+        "core11.veccore0": [
+          0.21272730827331543,
+          4.655151131562889
+        ],
+        "core19.veccore0": [
+          0.1787879467010498,
+          4.6757571725174785
+        ],
+        "core25.veccore1": [
+          0.3472726345062256,
+          4.70242381375283
+        ],
+        "core13.veccore0": [
+          0.3424241542816162,
+          4.353333237580955
+        ],
+        "core24.veccore1": [
+          0.3599998950958252,
+          4.321212532930076
+        ],
+        "core29.veccore0": [
+          0.21393942832946777,
+          4.539394143037498
+        ],
+        "core0.veccore1": [
+          0.05878782272338867,
+          4.279393914155662
+        ],
+        "core21.veccore1": [
+          0.5775759220123291,
+          4.734545472078025
+        ],
+        "core18.veccore0": [
+          0.4951517581939697,
+          4.726060631684959
+        ],
+        "core2.veccore0": [
+          0.10848498344421387,
+          4.750303032808006
+        ],
+        "core23.veccore1": [
+          0.15272736549377441,
+          4.435151818208396
+        ],
+        "core16.veccore1": [
+          0.41515135765075684,
+          4.6715152291581035
+        ],
+        "core3.veccore1": [
+          0.3193938732147217,
+          4.536363366059959
+        ],
+        "core23.veccore0": [
+          0.08121204376220703,
+          4.1012122659012675
+        ],
+        "core22.veccore0": [
+          0.5575759410858154,
+          4.639393570832908
+        ],
+        "core1.veccore0": [
+          0.1939394474029541,
+          4.613333466462791
+        ],
+        "core14.veccore1": [
+          0.3339393138885498,
+          4.698787453584373
+        ],
+        "core10.veccore0": [
+          0.05757570266723633,
+          4.528485062532127
+        ],
+        "core3.veccore0": [
+          0.2799999713897705,
+          4.6363637475296855
+        ],
+        "core22.veccore1": [
+          0.5436365604400635,
+          4.552120926789939
+        ],
+        "core2.veccore1": [
+          0.1272728443145752,
+          4.708484414033592
+        ],
+        "core13.veccore1": [
+          0.38242411613464355,
+          4.551515343599021
+        ],
+        "core17.veccore0": [
+          0.3187878131866455,
+          4.753939392976463
+        ],
+        "core20.veccore1": [
+          0.46484827995300293,
+          4.683636429719627
+        ],
+        "core16.veccore0": [
+          0.4224240779876709,
+          4.613939049653709
+        ],
+        "core18.veccore1": [
+          0.5375759601593018,
+          4.672120812349021
+        ],
+        "core15.veccore0": [
+          0.5175759792327881,
+          4.3690907983109355
+        ],
+        "core11.veccore1": [
+          0.20606064796447754,
+          4.711515191011131
+        ],
+        "core10.veccore1": [
+          0.07878780364990234,
+          4.613939049653709
+        ],
+        "core24.veccore0": [
+          0.40363621711730957,
+          4.572726967744529
+        ],
+        "core17.veccore1": [
+          0.33757567405700684,
+          4.712727311067283
+        ],
+        "core0.veccore0": [
+          0.0,
+          4.475151780061424
+        ],
+        "core19.veccore1": [
+          0.19878792762756348,
+          4.553333046846092
+        ],
+        "core29.veccore1": [
+          0.15636372566223145,
+          4.441212418489158
+        ],
+        "core25.veccore0": [
+          0.33757567405700684,
+          4.659999611787498
+        ],
+        "core30.veccore0": [
+          0.23151516914367676,
+          3.9684846429154277
+        ],
+        "core27.veccore1": [
+          0.1424243450164795,
+          4.475151780061424
+        ],
+        "core28.veccore0": [
+          0.2739393711090088,
+          4.084848645143211
+        ],
+        "core21.veccore0": [
+          0.5600001811981201,
+          4.769091370515525
+        ],
+        "core26.veccore1": [
+          0.4824244976043701,
+          4.70242381375283
+        ],
+        "core28.veccore1": [
+          0.29393935203552246,
+          4.5163638619706035
+        ],
+        "core26.veccore0": [
+          0.47272706031799316,
+          4.650302651338279
+        ],
+        "core30.veccore1": [
+          0.25151515007019043,
+          4.455151322297752
+        ],
+        "core12.veccore0": [
+          0.15030312538146973,
+          4.052727463655174
+        ],
+        "core1.veccore1": [
+          0.1872727870941162,
+          4.518181565217674
+        ],
+        "core31.veccore0": [
+          0.1163637638092041,
+          3.5412123231217265
+        ],
+        "core20.veccore0": [
+          0.42363619804382324,
+          4.750303032808006
+        ],
+        "core12.veccore1": [
+          0.17393946647644043,
+          4.497575524263084
+        ],
+        "core14.veccore0": [
+          0.3927271366119385,
+          4.610302689485252
+        ],
+        "core4.veccore0": [
+          0.4636361598968506,
+          4.381818535737693
+        ],
+        "core4.veccore1": [
+          0.47515130043029785,
+          4.511515381745994
+        ],
+        "core5.veccore0": [
+          0.260606050491333,
+          4.414545777253807
+        ],
+        "core5.veccore1": [
+          0.27030301094055176,
+          4.564848664216697
+        ],
+        "core6.veccore0": [
+          0.3927271366119385,
+          4.759999993257225
+        ],
+        "core6.veccore1": [
+          0.4024240970611572,
+          4.696363213472068
+        ],
+        "core7.veccore0": [
+          0.09393930435180664,
+          4.515151741914451
+        ],
+        "core7.veccore1": [
+          0.10606074333190918,
+          4.4000003365799785
+        ],
+        "core8.veccore0": [
+          0.22363638877868652,
+          4.724848511628807
+        ],
+        "core8.veccore1": [
+          0.2351515293121338,
+          4.696363213472068
+        ],
+        "core9.veccore0": [
+          0.45575737953186035,
+          4.707878830842674
+        ],
+        "core9.veccore1": [
+          0.4163634777069092,
+          4.736364128999412
+        ]
+      },
+      "trace": "runs/vector21/sigmoid_fp32_16385_48_Ascend950DT_9582/profile/OPPROF_20261119211611_LAKHWZYHGLMRZYQR/simulator/trace.json",
+      "trace_sha256": "c1774aeaa94f3613415cce1ce86843c0a5cac1e53b2e8b7e1695c670ca9a8d6d",
+      "binary_sha256": "ab4371eee0320cdf66bda9bbaccbee9c47aafccaaf6691b9fdae849c5f8a0c67",
+      "queue_events": {
+        "SCALAR": 23250,
+        "FLOWCTRL": 868,
+        "MTE2": 186,
+        "MTE3": 124,
+        "PUSHQ": 310,
+        "RVECLP": 186,
+        "RVECEX": 123138,
+        "RVECSU": 248,
+        "RVECLD": 24640,
+        "RVECST": 24640
+      },
+      "mmad": 0,
+      "total_events": 197590
+    },
+    "correctness": [
+      "correctness count=786480 bad=0 atol=2e-6"
+    ],
+    "api": "aclnnSigmoid"
+  },
+  {
+    "id": "cast_bf16_fp32_1572864_32",
+    "op": "cast_bf16_fp32",
+    "shape": [
+      1572864,
+      32
+    ],
+    "chip": "Ascend950PR_957b",
+    "cost": {
+      "started_utc": "2026-11-19T12:48:04.668086+00:00",
+      "finished_utc": "2026-11-19T13:17:06.574642+00:00",
+      "seconds": 1741.9064755500294,
+      "raw_bytes": 8081380492,
+      "peak_bytes": 15884115412,
+      "cpu_seconds": 49790.44,
+      "exit_code": 0,
+      "stop_reason": null,
+      "command": [
+        "bash",
+        "/home/l00925865/operator_sim/scripts/cann-run.sh",
+        "msopprof",
+        "simulator",
+        "--soc-version=Ascend950PR_957b",
+        "--dump=false",
+        "--launch-count=1",
+        "--timeout=180",
+        "--output=/home/l00925865/operator_sim/runs/vector21/cast_bf16_fp32_1572864_32_Ascend950PR_957b/profile",
+        "/home/l00925865/operator_sim/build/smoke/large_cast20",
+        "1572864",
+        "32"
+      ]
+    },
+    "qualified": true,
+    "ca_us": 149.95878052990884,
+    "stage": {
+      "kernel": "Cast_b2717900ea7de2d41ea9c63d23aa269b_high_performance_0",
+      "ca_us": 149.95878052990884,
+      "active_aic": 0,
+      "active_aiv": 56,
+      "windows": {
+        "core18.veccore1": [
+          0.24727272987365723,
+          148.8545477418229
+        ],
+        "core10.veccore0": [
+          0.21030306816101074,
+          122.04000306408852
+        ],
+        "core16.veccore1": [
+          0.18484854698181152,
+          149.90242982190102
+        ],
+        "core17.veccore0": [
+          0.6375758647918701,
+          149.53878236096352
+        ],
+        "core19.veccore1": [
+          0.6600000858306885,
+          149.91091370861977
+        ],
+        "core17.veccore1": [
+          0.6466667652130127,
+          149.93212342541665
+        ],
+        "core21.veccore1": [
+          0.32606077194213867,
+          149.46727967541665
+        ],
+        "core27.veccore1": [
+          0.36363649368286133,
+          149.90485596936196
+        ],
+        "core13.veccore0": [
+          0.5109090805053711,
+          121.84121156018227
+        ],
+        "core29.veccore0": [
+          0.27939414978027344,
+          149.3721258668229
+        ],
+        "core27.veccore0": [
+          0.3448486328125,
+          149.55697083752602
+        ],
+        "core1.veccore0": [
+          0.05454564094543457,
+          118.66969514172524
+        ],
+        "core12.veccore1": [
+          0.30727291107177734,
+          122.65333009045571
+        ],
+        "core22.veccore1": [
+          0.47939395904541016,
+          149.93090272229165
+        ],
+        "core12.veccore0": [
+          0.28727293014526367,
+          122.05454469006509
+        ],
+        "core20.veccore0": [
+          0.503636360168457,
+          149.44484925549477
+        ],
+        "core0.veccore1": [
+          0.0,
+          119.81575990002602
+        ],
+        "core22.veccore0": [
+          0.45818185806274414,
+          148.92606568615884
+        ],
+        "core11.veccore0": [
+          0.32848501205444336,
+          120.43212342541665
+        ],
+        "core26.veccore0": [
+          0.5781819820404053,
+          149.95878052990884
+        ],
+        "core25.veccore0": [
+          0.4284849166870117,
+          149.74727845471352
+        ],
+        "core21.veccore0": [
+          0.30727291107177734,
+          149.27334046643227
+        ],
+        "core25.veccore1": [
+          0.4096970558166504,
+          149.41817689221352
+        ],
+        "core11.veccore1": [
+          0.34848499298095703,
+          121.5781805543229
+        ],
+        "core2.veccore1": [
+          0.07212138175964355,
+          119.85576081555337
+        ],
+        "core2.veccore0": [
+          0.10242438316345215,
+          119.82121491711587
+        ],
+        "core13.veccore1": [
+          0.5121212005615234,
+          122.3399984864518
+        ],
+        "core23.veccore0": [
+          0.6351516246795654,
+          149.92606568615884
+        ],
+        "core28.veccore0": [
+          0.3927273750305176,
+          149.5448553590104
+        ],
+        "core24.veccore0": [
+          0.559394121170044,
+          149.49091553967446
+        ],
+        "core19.veccore0": [
+          0.6993939876556396,
+          149.8309118775651
+        ],
+        "core20.veccore1": [
+          0.5224244594573975,
+          149.56000733654946
+        ],
+        "core1.veccore1": [
+          0.06363654136657715,
+          119.94121003430337
+        ],
+        "core18.veccore0": [
+          0.2284848690032959,
+          149.4636328248307
+        ],
+        "core24.veccore1": [
+          0.5381820201873779,
+          149.9333288697526
+        ],
+        "core29.veccore1": [
+          0.2969698905944824,
+          149.80605531018227
+        ],
+        "core23.veccore1": [
+          0.6175758838653564,
+          149.67333436291665
+        ],
+        "core26.veccore1": [
+          0.5969698429107666,
+          149.5672705201432
+        ],
+        "core3.veccore1": [
+          0.4593939781188965,
+          119.06242585461587
+        ],
+        "core4.veccore0": [
+          0.15454554557800293,
+          120.44242310803384
+        ],
+        "core6.veccore0": [
+          0.37818193435668945,
+          121.82848573010415
+        ],
+        "core28.veccore1": [
+          0.443636417388916,
+          149.45453858654946
+        ],
+        "core3.veccore0": [
+          0.46848487854003906,
+          121.77878785412759
+        ],
+        "core6.veccore1": [
+          0.3860607147216797,
+          122.5648520020768
+        ],
+        "core5.veccore1": [
+          0.27090930938720703,
+          122.0472738770768
+        ],
+        "core4.veccore1": [
+          0.16727280616760254,
+          121.60969758313149
+        ],
+        "core5.veccore0": [
+          0.25090909004211426,
+          122.3369696168229
+        ],
+        "core16.veccore0": [
+          0.20727276802062988,
+          148.3260595826432
+        ],
+        "core0.veccore0": [
+          0.05333352088928223,
+          118.9612143067643
+        ],
+        "core7.veccore0": [
+          0.44242429733276367,
+          120.96969819348305
+        ],
+        "core10.veccore1": [
+          0.2284848690032959,
+          120.50727296154946
+        ],
+        "core7.veccore1": [
+          0.44969701766967773,
+          120.4260580567643
+        ],
+        "core8.veccore0": [
+          0.1745455265045166,
+          120.51696992199868
+        ],
+        "core8.veccore1": [
+          0.19333338737487793,
+          121.64969849865884
+        ],
+        "core9.veccore0": [
+          0.3896970748901367,
+          121.76727509777993
+        ],
+        "core9.veccore1": [
+          0.39939403533935547,
+          121.61091065686196
+        ]
+      },
+      "trace": "runs/vector21/cast_bf16_fp32_1572864_32_Ascend950PR_957b/profile/OPPROF_20261119204804_CBUQZIQKGPSMNPYR/simulator/trace.json",
+      "trace_sha256": "54e35a8a35e19803bb0a2a72e4347596c3ee0e23daeb9c1b28777fe6396e739f",
+      "binary_sha256": "b4281f94c2b846460a173db1ab578880e18faeeab8b719e3de5ee0da44096953",
+      "queue_events": {
+        "SCALAR": 200312,
+        "MTE3": 2464,
+        "MTE2": 2464,
+        "PUSHQ": 4928,
+        "FLOWCTRL": 12320,
+        "RVECLP": 9632,
+        "RVECSU": 9632,
+        "RVECLD": 1575328,
+        "RVECEX": 3145840,
+        "RVECST": 1575328
+      },
+      "mmad": 0,
+      "total_events": 6538248
+    },
+    "correctness": [
+      "correctness count=50331648 bad=0"
+    ],
+    "api": "aclnnCast"
+  },
+  {
+    "id": "sigmoid_fp32_16385_48",
+    "op": "sigmoid_fp32",
+    "shape": [
+      16385,
+      48
+    ],
+    "chip": "Ascend950PR_957b",
+    "cost": {
+      "started_utc": "2026-11-19T13:17:43.944506+00:00",
+      "finished_utc": "2026-11-19T13:19:06.135056+00:00",
+      "seconds": 82.19042198988609,
+      "raw_bytes": 243790417,
+      "peak_bytes": 243800210,
+      "cpu_seconds": 1557.56,
+      "exit_code": 0,
+      "stop_reason": null,
+      "command": [
+        "bash",
+        "/home/l00925865/operator_sim/scripts/cann-run.sh",
+        "msopprof",
+        "simulator",
+        "--soc-version=Ascend950PR_957b",
+        "--dump=false",
+        "--launch-count=1",
+        "--timeout=30",
+        "--output=/home/l00925865/operator_sim/runs/vector21/sigmoid_fp32_16385_48_Ascend950PR_957b/profile",
+        "/home/l00925865/operator_sim/build/smoke/sigmoid20",
+        "16385",
+        "48"
+      ]
+    },
+    "qualified": true,
+    "ca_us": 5.723030092660338,
+    "stage": {
+      "kernel": "Sigmoid_5c5e58e043224cccf51a06108010ae13_high_precision_300000000000100",
+      "ca_us": 5.723030092660338,
+      "active_aic": 0,
+      "active_aiv": 55,
+      "windows": {
+        "core13.veccore0": [
+          0.20424246788024902,
+          5.666060927323997
+        ],
+        "core19.veccore0": [
+          0.24727272987365723,
+          5.723030092660338
+        ],
+        "core4.veccore1": [
+          0.27454543113708496,
+          5.593333723954856
+        ],
+        "core24.veccore1": [
+          0.30484867095947266,
+          5.478787901811302
+        ],
+        "core27.veccore0": [
+          0.28727269172668457,
+          5.275757315568626
+        ],
+        "core26.veccore1": [
+          0.4442424774169922,
+          5.2169699696823955
+        ],
+        "core22.veccore0": [
+          0.4981818199157715,
+          5.504242422990501
+        ],
+        "core3.veccore1": [
+          0.28303027153015137,
+          5.632121565751731
+        ],
+        "core22.veccore1": [
+          0.5109090805053711,
+          5.658181670121849
+        ],
+        "core6.veccore0": [
+          0.32848501205444336,
+          5.015151503495872
+        ],
+        "core0.veccore1": [
+          0.0,
+          5.0296969441697
+        ],
+        "core4.veccore0": [
+          0.23575758934020996,
+          5.4181818990036845
+        ],
+        "core21.veccore0": [
+          0.4284849166870117,
+          4.293333533219993
+        ],
+        "core23.veccore1": [
+          0.37818193435668945,
+          5.630909445695579
+        ],
+        "core16.veccore0": [
+          0.09939408302307129,
+          5.4569697408005595
+        ],
+        "core27.veccore1": [
+          0.22969698905944824,
+          5.006666663102806
+        ],
+        "core5.veccore1": [
+          0.15818190574645996,
+          4.3406062154099345
+        ],
+        "core1.veccore1": [
+          0.0884850025177002,
+          5.3333334950730205
+        ],
+        "core10.veccore1": [
+          0.3769698143005371,
+          5.393332961015403
+        ],
+        "core20.veccore0": [
+          0.200606107711792,
+          5.486060622148216
+        ],
+        "core17.veccore0": [
+          0.40424251556396484,
+          5.458181860856712
+        ],
+        "core25.veccore1": [
+          0.13939404487609863,
+          5.404848578386009
+        ],
+        "core10.veccore0": [
+          0.36727285385131836,
+          5.209697249345481
+        ],
+        "core18.veccore1": [
+          0.19333338737487793,
+          5.653333189897239
+        ],
+        "core6.veccore1": [
+          0.33939409255981445,
+          5.210909369401634
+        ],
+        "core17.veccore1": [
+          0.42303037643432617,
+          5.644848349504173
+        ],
+        "core2.veccore1": [
+          0.08424258232116699,
+          5.475758078508079
+        ],
+        "core24.veccore0": [
+          0.29454541206359863,
+          5.6157574681565166
+        ],
+        "core13.veccore1": [
+          0.18181824684143066,
+          5.416969778947532
+        ],
+        "core12.veccore1": [
+          0.3581819534301758,
+          5.032121184282005
+        ],
+        "core28.veccore0": [
+          0.3406062126159668,
+          5.256969931535423
+        ],
+        "core23.veccore0": [
+          0.3593940734863281,
+          5.471515181474388
+        ],
+        "core20.veccore1": [
+          0.20606064796447754,
+          5.2278790501877666
+        ],
+        "core5.veccore0": [
+          0.15212130546569824,
+          4.746060851030052
+        ],
+        "core26.veccore0": [
+          0.48424243927001953,
+          5.432121756486595
+        ],
+        "core11.veccore1": [
+          0.4133334159851074,
+          5.2169699696823955
+        ],
+        "core1.veccore0": [
+          0.10969710350036621,
+          5.514545920304954
+        ],
+        "core0.veccore0": [
+          0.06181836128234863,
+          5.290909293107688
+        ],
+        "core12.veccore0": [
+          0.34848499298095703,
+          5.234545233659446
+        ],
+        "core29.veccore0": [
+          0.14727282524108887,
+          4.000606062822044
+        ],
+        "core28.veccore1": [
+          0.3533334732055664,
+          5.472121718339622
+        ],
+        "core25.veccore0": [
+          0.13090920448303223,
+          5.599394324235618
+        ],
+        "core11.veccore0": [
+          0.4242424964904785,
+          4.9181818990036845
+        ],
+        "core19.veccore1": [
+          0.26848483085632324,
+          5.670909407548606
+        ],
+        "core16.veccore1": [
+          0.17939400672912598,
+          5.179394247941673
+        ],
+        "core3.veccore0": [
+          0.29212117195129395,
+          5.721818449907005
+        ],
+        "core2.veccore0": [
+          0.07090926170349121,
+          5.261818411760032
+        ],
+        "core7.veccore0": [
+          0.2260606288909912,
+          5.33818197529763
+        ],
+        "core21.veccore1": [
+          0.4393939971923828,
+          5.209697249345481
+        ],
+        "core18.veccore0": [
+          0.16424250602722168,
+          5.484848502092063
+        ],
+        "core7.veccore1": [
+          0.21696972846984863,
+          5.541818144731224
+        ],
+        "core8.veccore0": [
+          0.13939404487609863,
+          5.106060507707298
+        ],
+        "core8.veccore1": [
+          0.13090920448303223,
+          5.420606139115989
+        ],
+        "core9.veccore0": [
+          0.4757575988769531,
+          4.987272742204368
+        ],
+        "core9.veccore1": [
+          0.4357576370239258,
+          5.283636572770774
+        ]
+      },
+      "trace": "runs/vector21/sigmoid_fp32_16385_48_Ascend950PR_957b/profile/OPPROF_20261119211744_CBRXRRMARZXBBESQ/simulator/trace.json",
+      "trace_sha256": "f78df62f5797eca3506fdda491546bc2cc7fe73f8ce662e14bd88759c6cd3382",
+      "binary_sha256": "ab4371eee0320cdf66bda9bbaccbee9c47aafccaaf6691b9fdae849c5f8a0c67",
+      "queue_events": {
+        "SCALAR": 20625,
+        "FLOWCTRL": 769,
+        "MTE2": 165,
+        "MTE3": 110,
+        "PUSHQ": 275,
+        "RVECLP": 165,
+        "RVECEX": 123110,
+        "RVECSU": 220,
+        "RVECLD": 24633,
+        "RVECST": 24633
+      },
+      "mmad": 0,
+      "total_events": 194705
+    },
+    "correctness": [
+      "correctness count=786480 bad=0 atol=2e-6"
+    ],
+    "api": "aclnnSigmoid"
   }
 ]

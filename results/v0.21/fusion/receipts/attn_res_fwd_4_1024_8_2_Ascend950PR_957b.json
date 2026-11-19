@@ -1,0 +1,84 @@
+{
+  "qualified": true,
+  "kernel": {
+    "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+    "ca_us": 7.493938925676048,
+    "active_aic": 0,
+    "active_aiv": 4,
+    "windows": {
+      "core0.veccore0": [
+        0.0,
+        7.201212408952415
+      ],
+      "core16.veccore0": [
+        0.0733332633972168,
+        7.493938925676048
+      ],
+      "core0.veccore1": [
+        0.06969690322875977,
+        7.280000212602317
+      ],
+      "core16.veccore1": [
+        0.11393928527832031,
+        7.469090941362083
+      ]
+    },
+    "trace": "runs/fusion21/attnres_h1024_4_2_Ascend950PR_957b/profile/OPPROF_20261119205602_APRBGTYJPTLLFZMJ/simulator/trace.json",
+    "trace_sha256": "86594ad34c077ee45997b9ebe6870277247239ac2760846a83c9e089087923cf",
+    "binary_sha256": "1597fd69d8978d7e29c87ced997e2e0f06b39d509732abba08235b3abac5f392",
+    "queue_events": {
+      "SCALAR": 8352,
+      "FLOWCTRL": 648,
+      "MTE2": 36,
+      "MTE3": 20,
+      "PUSHQ": 304,
+      "RVECLP": 556,
+      "RVECSU": 1472,
+      "RVECLD": 3704,
+      "RVECEX": 15040,
+      "RVECST": 2288
+    },
+    "mmad": 0,
+    "total_events": 32420
+  },
+  "correctness": [
+    "correctness shape=4x1024 S=8 N=2 groups=output,prefix,materialized,bank bad=0"
+  ],
+  "shape": [
+    4,
+    1024,
+    8,
+    2
+  ],
+  "chip": "Ascend950PR_957b",
+  "cost": {
+    "seconds": 85.18103838013485,
+    "cpu_seconds": 1131.71,
+    "raw_bytes": 61077000,
+    "exit_code": 0,
+    "stop_reason": null,
+    "started_utc": "2026-11-19T12:56:02.081477+00:00",
+    "finished_utc": "2026-11-19T12:57:27.263566+00:00",
+    "command": [
+      "/home/l00925865/operator_sim/runs/fusion21/attnres_h1024_4_2_Ascend950PR_957b/cpu.txt",
+      "bash",
+      "/home/l00925865/operator_sim/scripts/cann-run.sh",
+      "bash",
+      "-c",
+      "export ASCEND_CUSTOM_OPP_PATH=\"$1\"; export LD_LIBRARY_PATH=\"$1/op_api/lib:$LD_LIBRARY_PATH\"; shift; exec \"$@\"",
+      "attn-res-vendor",
+      "/home/l00925865/operator_sim/runs/workloads19/sources/fastbuild/vendors/custom_transformer",
+      "msopprof",
+      "simulator",
+      "--soc-version=Ascend950PR_957b",
+      "--dump=true",
+      "--launch-count=1",
+      "--timeout=10",
+      "--output=/home/l00925865/operator_sim/runs/fusion21/attnres_h1024_4_2_Ascend950PR_957b/profile",
+      "/home/l00925865/operator_sim/build/smoke/attn_res_fwd19_h1024",
+      "4",
+      "2"
+    ]
+  },
+  "run_log": "runs/fusion21/attnres_h1024_4_2_Ascend950PR_957b/run.log"
+}

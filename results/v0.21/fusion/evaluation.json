@@ -3,39 +3,39 @@
     "attn_res_fwd": {
       "Ascend950DT_9582": {
         "current": {
-          "n": 5,
-          "wape": 0.05208295599087883,
-          "max_relative_error": 0.06681631817039846
+          "n": 9,
+          "wape": 0.04766050048538959,
+          "max_relative_error": 0.08136565903915094
         },
         "v020": {
-          "n": 5,
-          "wape": 0.26143087000010107,
-          "max_relative_error": 0.5081704058734406
+          "n": 9,
+          "wape": 0.3348062666414775,
+          "max_relative_error": 1.008732075056443
         }
       },
       "Ascend950PR_957b": {
         "current": {
-          "n": 6,
-          "wape": 0.04121950201671632,
-          "max_relative_error": 0.08244959770070048
+          "n": 10,
+          "wape": 0.045499943354717444,
+          "max_relative_error": 0.0952620391800636
         },
         "v020": {
-          "n": 6,
-          "wape": 0.29070978947358456,
-          "max_relative_error": 0.5677510325398387
+          "n": 10,
+          "wape": 0.36989024493132294,
+          "max_relative_error": 1.053883865740389
         }
       }
     },
     "mhc_pre_sinkhorn": {
       "Ascend950DT_9582": {
         "current": {
-          "n": 6,
-          "wape": 0.06921553362950732,
-          "max_relative_error": 0.1371600103687658
+          "n": 7,
+          "wape": 0.08571732362484312,
+          "max_relative_error": 0.1831581851278583
         },
         "v020": {
-          "n": 6,
-          "wape": 0.42148968463038533,
+          "n": 7,
+          "wape": 0.4639242589644264,
           "max_relative_error": 0.7589961665461364
         }
       },
@@ -55,25 +55,25 @@
     "mhc_sinkhorn": {
       "Ascend950DT_9582": {
         "current": {
-          "n": 8,
-          "wape": 0.1641934823849474,
+          "n": 10,
+          "wape": 0.16484294214884798,
           "max_relative_error": 0.29226419877697773
         },
         "v020": {
-          "n": 8,
-          "wape": 0.1641934823849474,
+          "n": 10,
+          "wape": 0.16484294214884793,
           "max_relative_error": 0.29226419877697773
         }
       },
       "Ascend950PR_957b": {
         "current": {
-          "n": 8,
-          "wape": 0.1093077298375017,
+          "n": 10,
+          "wape": 0.11682962664890736,
           "max_relative_error": 0.1928459837005564
         },
         "v020": {
-          "n": 8,
-          "wape": 0.18966975878996462,
+          "n": 10,
+          "wape": 0.1925397652382508,
           "max_relative_error": 0.6437351644485738
         }
       }
@@ -1704,6 +1704,134 @@
   ],
   "independent_rows": [
     {
+      "op": "attn_res_fwd",
+      "shape": [
+        2,
+        7168,
+        8,
+        3
+      ],
+      "attrs": {
+        "addend": true,
+        "materialize": true,
+        "write_idx": 3
+      },
+      "chip": "Ascend950DT_9582",
+      "pred_us": 12.701131460786405,
+      "old_us": 23.59347177481104,
+      "ca_us": 11.745454791001976,
+      "future_us": 11.63858799748024,
+      "query_ms": 3.925059922039509,
+      "active": [
+        0,
+        2
+      ],
+      "ca_active": [
+        0,
+        2
+      ],
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "correctness": [
+        "correctness shape=2x7168 S=8 N=3 groups=output,prefix,materialized,bank bad=0"
+      ],
+      "mmad": 0,
+      "trace": "runs/fusion21/retry_attnres_h7168_2_3_Ascend950DT_9582/profile/OPPROF_20261119211231_KQLIPVHHOZLMAOCJ/simulator/trace.json",
+      "trace_sha256": "d5108aa905edfa30e4fd1240a37728f32400bdc75251c3ec73a3f2a0aa6214a5",
+      "cost": {
+        "seconds": 99.3785986599978,
+        "cpu_seconds": 1931.3000000000002,
+        "raw_bytes": 126944049,
+        "exit_code": 0,
+        "stop_reason": null,
+        "started_utc": "2026-11-19T13:12:31.370988+00:00",
+        "finished_utc": "2026-11-19T13:14:10.750319+00:00",
+        "command": [
+          "/home/l00925865/operator_sim/runs/fusion21/retry_attnres_h7168_2_3_Ascend950DT_9582/cpu.txt",
+          "bash",
+          "/home/l00925865/operator_sim/scripts/cann-run.sh",
+          "bash",
+          "-c",
+          "export ASCEND_CUSTOM_OPP_PATH=\"$1\"; export LD_LIBRARY_PATH=\"$1/op_api/lib:$LD_LIBRARY_PATH\"; shift; exec \"$@\"",
+          "attn-res-vendor",
+          "/home/l00925865/operator_sim/runs/workloads19/sources/fastbuild/vendors/custom_transformer",
+          "msopprof",
+          "simulator",
+          "--soc-version=Ascend950DT_9582",
+          "--dump=true",
+          "--launch-count=1",
+          "--timeout=10",
+          "--output=/home/l00925865/operator_sim/runs/fusion21/retry_attnres_h7168_2_3_Ascend950DT_9582/profile",
+          "/home/l00925865/operator_sim/build/smoke/attn_res_fwd19",
+          "2",
+          "3"
+        ]
+      }
+    },
+    {
+      "op": "attn_res_fwd",
+      "shape": [
+        2,
+        7168,
+        8,
+        3
+      ],
+      "attrs": {
+        "addend": true,
+        "materialize": true,
+        "write_idx": 3
+      },
+      "chip": "Ascend950PR_957b",
+      "pred_us": 12.799298116960422,
+      "old_us": 24.001810484462982,
+      "ca_us": 11.686060192994773,
+      "future_us": 11.63858799748024,
+      "query_ms": 0.39381999522447586,
+      "active": [
+        0,
+        2
+      ],
+      "ca_active": [
+        0,
+        2
+      ],
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "correctness": [
+        "correctness shape=2x7168 S=8 N=3 groups=output,prefix,materialized,bank bad=0"
+      ],
+      "mmad": 0,
+      "trace": "runs/fusion21/retry_attnres_h7168_2_3_Ascend950PR_957b/profile/OPPROF_20261119211411_ENUWHELBEGCPIQGJ/simulator/trace.json",
+      "trace_sha256": "de978c0a8c33c3ada5948b7f41eb77cfde98d6803cfd361e806c760d2d6cb193",
+      "cost": {
+        "seconds": 105.16669539990835,
+        "cpu_seconds": 1634.17,
+        "raw_bytes": 126858104,
+        "exit_code": 0,
+        "stop_reason": null,
+        "started_utc": "2026-11-19T13:14:11.702705+00:00",
+        "finished_utc": "2026-11-19T13:15:56.869952+00:00",
+        "command": [
+          "/home/l00925865/operator_sim/runs/fusion21/retry_attnres_h7168_2_3_Ascend950PR_957b/cpu.txt",
+          "bash",
+          "/home/l00925865/operator_sim/scripts/cann-run.sh",
+          "bash",
+          "-c",
+          "export ASCEND_CUSTOM_OPP_PATH=\"$1\"; export LD_LIBRARY_PATH=\"$1/op_api/lib:$LD_LIBRARY_PATH\"; shift; exec \"$@\"",
+          "attn-res-vendor",
+          "/home/l00925865/operator_sim/runs/workloads19/sources/fastbuild/vendors/custom_transformer",
+          "msopprof",
+          "simulator",
+          "--soc-version=Ascend950PR_957b",
+          "--dump=true",
+          "--launch-count=1",
+          "--timeout=10",
+          "--output=/home/l00925865/operator_sim/runs/fusion21/retry_attnres_h7168_2_3_Ascend950PR_957b/profile",
+          "/home/l00925865/operator_sim/build/smoke/attn_res_fwd19",
+          "2",
+          "3"
+        ]
+      }
+    },
+    {
       "op": "mhc_sinkhorn",
       "shape": [
         57,
@@ -1934,6 +2062,134 @@
           "20",
           "4",
           "4096"
+        ]
+      }
+    },
+    {
+      "op": "attn_res_fwd",
+      "shape": [
+        3,
+        512,
+        8,
+        3
+      ],
+      "attrs": {
+        "addend": true,
+        "materialize": true,
+        "write_idx": 3
+      },
+      "chip": "Ascend950DT_9582",
+      "pred_us": 8.012081465987944,
+      "old_us": 8.305399609738208,
+      "ca_us": 8.47939348500222,
+      "future_us": 7.344114021805095,
+      "query_ms": 0.14950986951589584,
+      "active": [
+        0,
+        3
+      ],
+      "ca_active": [
+        0,
+        3
+      ],
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "correctness": [
+        "correctness shape=3x512 S=8 N=3 groups=output,prefix,materialized,bank bad=0"
+      ],
+      "mmad": 0,
+      "trace": "runs/fusion21/retry_attnres_h512_3_3_Ascend950DT_9582/profile/OPPROF_20261119211557_KQCRCJHWCMJRKYJT/simulator/trace.json",
+      "trace_sha256": "65624444af8f0c929c1a524da8ba0903cd7cefea523637a800e142b00eb26e5b",
+      "cost": {
+        "seconds": 77.30556565988809,
+        "cpu_seconds": 1337.3899999999999,
+        "raw_bytes": 42263185,
+        "exit_code": 0,
+        "stop_reason": null,
+        "started_utc": "2026-11-19T13:15:57.802194+00:00",
+        "finished_utc": "2026-11-19T13:17:15.108610+00:00",
+        "command": [
+          "/home/l00925865/operator_sim/runs/fusion21/retry_attnres_h512_3_3_Ascend950DT_9582/cpu.txt",
+          "bash",
+          "/home/l00925865/operator_sim/scripts/cann-run.sh",
+          "bash",
+          "-c",
+          "export ASCEND_CUSTOM_OPP_PATH=\"$1\"; export LD_LIBRARY_PATH=\"$1/op_api/lib:$LD_LIBRARY_PATH\"; shift; exec \"$@\"",
+          "attn-res-vendor",
+          "/home/l00925865/operator_sim/runs/workloads19/sources/fastbuild/vendors/custom_transformer",
+          "msopprof",
+          "simulator",
+          "--soc-version=Ascend950DT_9582",
+          "--dump=true",
+          "--launch-count=1",
+          "--timeout=10",
+          "--output=/home/l00925865/operator_sim/runs/fusion21/retry_attnres_h512_3_3_Ascend950DT_9582/profile",
+          "/home/l00925865/operator_sim/build/smoke/attn_res_fwd19_h512",
+          "3",
+          "3"
+        ]
+      }
+    },
+    {
+      "op": "attn_res_fwd",
+      "shape": [
+        3,
+        512,
+        8,
+        3
+      ],
+      "attrs": {
+        "addend": true,
+        "materialize": true,
+        "write_idx": 3
+      },
+      "chip": "Ascend950PR_957b",
+      "pred_us": 8.019093370000375,
+      "old_us": 8.334566660427631,
+      "ca_us": 7.775757315568626,
+      "future_us": 7.344114021805095,
+      "query_ms": 0.10832003317773342,
+      "active": [
+        0,
+        3
+      ],
+      "ca_active": [
+        0,
+        3
+      ],
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "correctness": [
+        "correctness shape=3x512 S=8 N=3 groups=output,prefix,materialized,bank bad=0"
+      ],
+      "mmad": 0,
+      "trace": "runs/fusion21/retry_attnres_h512_3_3_Ascend950PR_957b/profile/OPPROF_20261119211715_RSICPOMFXUARLFZM/simulator/trace.json",
+      "trace_sha256": "5d6a97d2e558859274e431e371323f95caf6ba73633457fe54f2a29a191745b4",
+      "cost": {
+        "seconds": 76.13952550012618,
+        "cpu_seconds": 911.1,
+        "raw_bytes": 42168270,
+        "exit_code": 0,
+        "stop_reason": null,
+        "started_utc": "2026-11-19T13:17:15.452941+00:00",
+        "finished_utc": "2026-11-19T13:18:31.593176+00:00",
+        "command": [
+          "/home/l00925865/operator_sim/runs/fusion21/retry_attnres_h512_3_3_Ascend950PR_957b/cpu.txt",
+          "bash",
+          "/home/l00925865/operator_sim/scripts/cann-run.sh",
+          "bash",
+          "-c",
+          "export ASCEND_CUSTOM_OPP_PATH=\"$1\"; export LD_LIBRARY_PATH=\"$1/op_api/lib:$LD_LIBRARY_PATH\"; shift; exec \"$@\"",
+          "attn-res-vendor",
+          "/home/l00925865/operator_sim/runs/workloads19/sources/fastbuild/vendors/custom_transformer",
+          "msopprof",
+          "simulator",
+          "--soc-version=Ascend950PR_957b",
+          "--dump=true",
+          "--launch-count=1",
+          "--timeout=10",
+          "--output=/home/l00925865/operator_sim/runs/fusion21/retry_attnres_h512_3_3_Ascend950PR_957b/profile",
+          "/home/l00925865/operator_sim/build/smoke/attn_res_fwd19_h512",
+          "3",
+          "3"
         ]
       }
     },
@@ -4040,6 +4296,550 @@
           "10"
         ]
       }
+    },
+    {
+      "op": "mhc_pre_sinkhorn",
+      "shape": [
+        56,
+        4,
+        4096
+      ],
+      "attrs": {
+        "num_iters": 20,
+        "need_backward": false
+      },
+      "chip": "Ascend950DT_9582",
+      "pred_us": 13.718181818181817,
+      "old_us": 19.87878787878788,
+      "ca_us": 11.594545844011009,
+      "future_us": 12.56611111111111,
+      "query_ms": 0.40652998723089695,
+      "active": [
+        32,
+        64
+      ],
+      "ca_active": [
+        32,
+        64
+      ],
+      "kernel": "MhcPreSinkhorn_bd8e37c67f2294e1437f03bb2bace96c_1000_mix_aic",
+      "correctness": [
+        "correctness name=hin count=229376 bad=0 max_abs_error=0.00275226 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness name=hpost count=224 bad=0 max_abs_error=1.72379e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+        "correctness name=hres count=896 bad=0 max_abs_error=1.79467e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ],
+      "mmad": 128,
+      "trace": "runs/fusion21/mhc_pre_sinkhorn_56_4_4096_Ascend950DT_9582/profile/OPPROF_20261119205238_PXVJGLSTXLARATUI/simulator/trace.json",
+      "trace_sha256": "c8b446f27bb6086c8e1ef5c93476d26a6433754909c51d9457a8c6948b2b6468",
+      "cost": {
+        "seconds": 192.85221805004403,
+        "raw_bytes": 1394476475,
+        "cpu_seconds": 4907.7,
+        "exit_code": 0,
+        "stop_reason": null,
+        "started_utc": "2026-11-19T12:52:38.550756+00:00",
+        "finished_utc": "2026-11-19T12:55:51.410237+00:00",
+        "command": [
+          "bash",
+          "/home/l00925865/operator_sim/scripts/cann-run.sh",
+          "msopprof",
+          "simulator",
+          "--soc-version=Ascend950DT_9582",
+          "--dump=true",
+          "--launch-count=20",
+          "--timeout=10",
+          "--output=/home/l00925865/operator_sim/runs/fusion21/mhc_pre_sinkhorn_56_4_4096_Ascend950DT_9582/profile",
+          "/home/l00925865/operator_sim/build/smoke/extension_indexer_mhc",
+          "mhc_pre_sinkhorn",
+          "56",
+          "4",
+          "4096"
+        ]
+      }
+    },
+    {
+      "op": "attn_res_fwd",
+      "shape": [
+        4,
+        1024,
+        8,
+        2
+      ],
+      "attrs": {
+        "addend": true,
+        "materialize": true,
+        "write_idx": 2
+      },
+      "chip": "Ascend950DT_9582",
+      "pred_us": 7.713757587292808,
+      "old_us": 8.365498055596747,
+      "ca_us": 7.852121355943382,
+      "future_us": 7.0704441585466,
+      "query_ms": 0.10682991705834866,
+      "active": [
+        0,
+        4
+      ],
+      "ca_active": [
+        0,
+        4
+      ],
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "correctness": [
+        "correctness shape=4x1024 S=8 N=2 groups=output,prefix,materialized,bank bad=0"
+      ],
+      "mmad": 0,
+      "trace": "runs/fusion21/attnres_h1024_4_2_Ascend950DT_9582/profile/OPPROF_20261119205543_COKHATUDJCEITTZJ/simulator/trace.json",
+      "trace_sha256": "7800bf146686ba2d4b7c2eb1bf27df2e9098e20aedfb8eff8014432d629edff2",
+      "cost": {
+        "seconds": 64.36387113016099,
+        "cpu_seconds": 983.42,
+        "raw_bytes": 61178984,
+        "exit_code": 0,
+        "stop_reason": null,
+        "started_utc": "2026-11-19T12:55:43.492267+00:00",
+        "finished_utc": "2026-11-19T12:56:47.857104+00:00",
+        "command": [
+          "/home/l00925865/operator_sim/runs/fusion21/attnres_h1024_4_2_Ascend950DT_9582/cpu.txt",
+          "bash",
+          "/home/l00925865/operator_sim/scripts/cann-run.sh",
+          "bash",
+          "-c",
+          "export ASCEND_CUSTOM_OPP_PATH=\"$1\"; export LD_LIBRARY_PATH=\"$1/op_api/lib:$LD_LIBRARY_PATH\"; shift; exec \"$@\"",
+          "attn-res-vendor",
+          "/home/l00925865/operator_sim/runs/workloads19/sources/fastbuild/vendors/custom_transformer",
+          "msopprof",
+          "simulator",
+          "--soc-version=Ascend950DT_9582",
+          "--dump=true",
+          "--launch-count=1",
+          "--timeout=10",
+          "--output=/home/l00925865/operator_sim/runs/fusion21/attnres_h1024_4_2_Ascend950DT_9582/profile",
+          "/home/l00925865/operator_sim/build/smoke/attn_res_fwd19_h1024",
+          "4",
+          "2"
+        ]
+      }
+    },
+    {
+      "op": "attn_res_fwd",
+      "shape": [
+        4,
+        1024,
+        8,
+        2
+      ],
+      "attrs": {
+        "addend": true,
+        "materialize": true,
+        "write_idx": 2
+      },
+      "chip": "Ascend950PR_957b",
+      "pred_us": 7.725690124260136,
+      "old_us": 8.409325476321332,
+      "ca_us": 7.493938925676048,
+      "future_us": 7.0704441585466,
+      "query_ms": 0.0966100487858057,
+      "active": [
+        0,
+        4
+      ],
+      "ca_active": [
+        0,
+        4
+      ],
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "correctness": [
+        "correctness shape=4x1024 S=8 N=2 groups=output,prefix,materialized,bank bad=0"
+      ],
+      "mmad": 0,
+      "trace": "runs/fusion21/attnres_h1024_4_2_Ascend950PR_957b/profile/OPPROF_20261119205602_APRBGTYJPTLLFZMJ/simulator/trace.json",
+      "trace_sha256": "86594ad34c077ee45997b9ebe6870277247239ac2760846a83c9e089087923cf",
+      "cost": {
+        "seconds": 85.18103838013485,
+        "cpu_seconds": 1131.71,
+        "raw_bytes": 61077000,
+        "exit_code": 0,
+        "stop_reason": null,
+        "started_utc": "2026-11-19T12:56:02.081477+00:00",
+        "finished_utc": "2026-11-19T12:57:27.263566+00:00",
+        "command": [
+          "/home/l00925865/operator_sim/runs/fusion21/attnres_h1024_4_2_Ascend950PR_957b/cpu.txt",
+          "bash",
+          "/home/l00925865/operator_sim/scripts/cann-run.sh",
+          "bash",
+          "-c",
+          "export ASCEND_CUSTOM_OPP_PATH=\"$1\"; export LD_LIBRARY_PATH=\"$1/op_api/lib:$LD_LIBRARY_PATH\"; shift; exec \"$@\"",
+          "attn-res-vendor",
+          "/home/l00925865/operator_sim/runs/workloads19/sources/fastbuild/vendors/custom_transformer",
+          "msopprof",
+          "simulator",
+          "--soc-version=Ascend950PR_957b",
+          "--dump=true",
+          "--launch-count=1",
+          "--timeout=10",
+          "--output=/home/l00925865/operator_sim/runs/fusion21/attnres_h1024_4_2_Ascend950PR_957b/profile",
+          "/home/l00925865/operator_sim/build/smoke/attn_res_fwd19_h1024",
+          "4",
+          "2"
+        ]
+      }
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "shape": [
+        113,
+        4
+      ],
+      "attrs": {
+        "num_iters": 20,
+        "return_intermediates": false
+      },
+      "chip": "Ascend950DT_9582",
+      "pred_us": 6.033117164136053,
+      "old_us": 6.033117164136054,
+      "ca_us": 6.996364119462669,
+      "future_us": 5.565283360336855,
+      "query_ms": 0.1956201158463955,
+      "active": [
+        0,
+        57
+      ],
+      "ca_active": [
+        0,
+        57
+      ],
+      "kernel": "MhcSinkhorn_8997d9c5c22e82688b98bc25d8daa9cd_0",
+      "correctness": [
+        "correctness name=output count=1808 bad=0 max_abs_error=4.97686e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ],
+      "mmad": 0,
+      "trace": "runs/fusion21/mhc_sinkhorn_113_4_Ascend950DT_9582/profile/OPPROF_20261119205648_UNLSZKZZRETVQGCN/simulator/trace.json",
+      "trace_sha256": "57004d3b3e68341fa827f983beb0ad2f9c435941b07775135866fff2707a4f50",
+      "cost": {
+        "seconds": 132.41062522004358,
+        "raw_bytes": 805388342,
+        "cpu_seconds": 3101.19,
+        "exit_code": 0,
+        "stop_reason": null,
+        "started_utc": "2026-11-19T12:56:48.363521+00:00",
+        "finished_utc": "2026-11-19T12:59:00.778756+00:00",
+        "command": [
+          "bash",
+          "/home/l00925865/operator_sim/scripts/cann-run.sh",
+          "msopprof",
+          "simulator",
+          "--soc-version=Ascend950DT_9582",
+          "--dump=true",
+          "--launch-count=20",
+          "--timeout=10",
+          "--output=/home/l00925865/operator_sim/runs/fusion21/mhc_sinkhorn_113_4_Ascend950DT_9582/profile",
+          "/home/l00925865/operator_sim/build/smoke/extension_indexer_mhc",
+          "mhc_sinkhorn",
+          "113",
+          "4",
+          "20"
+        ]
+      }
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "shape": [
+        113,
+        4
+      ],
+      "attrs": {
+        "num_iters": 20,
+        "return_intermediates": false
+      },
+      "chip": "Ascend950PR_957b",
+      "pred_us": 6.091352545170492,
+      "old_us": 8.334591273772217,
+      "ca_us": 6.8266665963456035,
+      "future_us": 5.565283360336855,
+      "query_ms": 0.17733988352119923,
+      "active": [
+        0,
+        38
+      ],
+      "ca_active": [
+        0,
+        38
+      ],
+      "kernel": "MhcSinkhorn_8997d9c5c22e82688b98bc25d8daa9cd_0",
+      "correctness": [
+        "correctness name=output count=1808 bad=0 max_abs_error=4.97686e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ],
+      "mmad": 0,
+      "trace": "runs/fusion21/mhc_sinkhorn_113_4_Ascend950PR_957b/profile/OPPROF_20261119205728_JMSPLCUIDOLZPHAN/simulator/trace.json",
+      "trace_sha256": "8063cdf1efa391ca60b70ef99599cd173090e9b2526c89f7d86a0cc3912c67ee",
+      "cost": {
+        "seconds": 96.52280197991058,
+        "raw_bytes": 536948653,
+        "cpu_seconds": 1886.87,
+        "exit_code": 0,
+        "stop_reason": null,
+        "started_utc": "2026-11-19T12:57:27.812512+00:00",
+        "finished_utc": "2026-11-19T12:59:04.614205+00:00",
+        "command": [
+          "bash",
+          "/home/l00925865/operator_sim/scripts/cann-run.sh",
+          "msopprof",
+          "simulator",
+          "--soc-version=Ascend950PR_957b",
+          "--dump=true",
+          "--launch-count=20",
+          "--timeout=10",
+          "--output=/home/l00925865/operator_sim/runs/fusion21/mhc_sinkhorn_113_4_Ascend950PR_957b/profile",
+          "/home/l00925865/operator_sim/build/smoke/extension_indexer_mhc",
+          "mhc_sinkhorn",
+          "113",
+          "4",
+          "20"
+        ]
+      }
+    },
+    {
+      "op": "attn_res_fwd",
+      "shape": [
+        3,
+        2048,
+        8,
+        4
+      ],
+      "attrs": {
+        "addend": true,
+        "materialize": true,
+        "write_idx": 4
+      },
+      "chip": "Ascend950DT_9582",
+      "pred_us": 9.855813254831574,
+      "old_us": 13.50883373804155,
+      "ca_us": 9.823636534623802,
+      "future_us": 9.033144167068388,
+      "query_ms": 0.10973005555570126,
+      "active": [
+        0,
+        3
+      ],
+      "ca_active": [
+        0,
+        3
+      ],
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "correctness": [
+        "correctness shape=3x2048 S=8 N=4 groups=output,prefix,materialized,bank bad=0"
+      ],
+      "mmad": 0,
+      "trace": "runs/fusion21/attnres_h2048_3_4_Ascend950DT_9582/profile/OPPROF_20261119210205_REXOZABZKKIDLZQR/simulator/trace.json",
+      "trace_sha256": "45a10c95b6be072cf2cb817f74a15eddf367a5f97e562b9f824208edfc8f66df",
+      "cost": {
+        "seconds": 148.68230686010793,
+        "cpu_seconds": 3292.21,
+        "raw_bytes": 87515515,
+        "exit_code": 0,
+        "stop_reason": null,
+        "started_utc": "2026-11-19T13:02:05.453073+00:00",
+        "finished_utc": "2026-11-19T13:04:34.136164+00:00",
+        "command": [
+          "/home/l00925865/operator_sim/runs/fusion21/attnres_h2048_3_4_Ascend950DT_9582/cpu.txt",
+          "bash",
+          "/home/l00925865/operator_sim/scripts/cann-run.sh",
+          "bash",
+          "-c",
+          "export ASCEND_CUSTOM_OPP_PATH=\"$1\"; export LD_LIBRARY_PATH=\"$1/op_api/lib:$LD_LIBRARY_PATH\"; shift; exec \"$@\"",
+          "attn-res-vendor",
+          "/home/l00925865/operator_sim/runs/workloads19/sources/fastbuild/vendors/custom_transformer",
+          "msopprof",
+          "simulator",
+          "--soc-version=Ascend950DT_9582",
+          "--dump=true",
+          "--launch-count=1",
+          "--timeout=10",
+          "--output=/home/l00925865/operator_sim/runs/fusion21/attnres_h2048_3_4_Ascend950DT_9582/profile",
+          "/home/l00925865/operator_sim/build/smoke/attn_res_fwd19_h2048",
+          "3",
+          "4"
+        ]
+      }
+    },
+    {
+      "op": "attn_res_fwd",
+      "shape": [
+        3,
+        2048,
+        8,
+        4
+      ],
+      "attrs": {
+        "addend": true,
+        "materialize": true,
+        "write_idx": 4
+      },
+      "chip": "Ascend950PR_957b",
+      "pred_us": 9.888043412996355,
+      "old_us": 13.654515302107777,
+      "ca_us": 9.57878804486245,
+      "future_us": 9.033144167068388,
+      "query_ms": 0.09975000284612179,
+      "active": [
+        0,
+        3
+      ],
+      "ca_active": [
+        0,
+        3
+      ],
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "correctness": [
+        "correctness shape=3x2048 S=8 N=4 groups=output,prefix,materialized,bank bad=0"
+      ],
+      "mmad": 0,
+      "trace": "runs/fusion21/attnres_h2048_3_4_Ascend950PR_957b/profile/OPPROF_20261119210221_TCRBVHTWLUJMVHDK/simulator/trace.json",
+      "trace_sha256": "a903f8def59a4687ed279561433c2a2a8feecbe312f47335065e7a082dc87c9b",
+      "cost": {
+        "seconds": 111.2649989000056,
+        "cpu_seconds": 2352.0299999999997,
+        "raw_bytes": 87433989,
+        "exit_code": 0,
+        "stop_reason": null,
+        "started_utc": "2026-11-19T13:02:21.556479+00:00",
+        "finished_utc": "2026-11-19T13:04:12.822399+00:00",
+        "command": [
+          "/home/l00925865/operator_sim/runs/fusion21/attnres_h2048_3_4_Ascend950PR_957b/cpu.txt",
+          "bash",
+          "/home/l00925865/operator_sim/scripts/cann-run.sh",
+          "bash",
+          "-c",
+          "export ASCEND_CUSTOM_OPP_PATH=\"$1\"; export LD_LIBRARY_PATH=\"$1/op_api/lib:$LD_LIBRARY_PATH\"; shift; exec \"$@\"",
+          "attn-res-vendor",
+          "/home/l00925865/operator_sim/runs/workloads19/sources/fastbuild/vendors/custom_transformer",
+          "msopprof",
+          "simulator",
+          "--soc-version=Ascend950PR_957b",
+          "--dump=true",
+          "--launch-count=1",
+          "--timeout=10",
+          "--output=/home/l00925865/operator_sim/runs/fusion21/attnres_h2048_3_4_Ascend950PR_957b/profile",
+          "/home/l00925865/operator_sim/build/smoke/attn_res_fwd19_h2048",
+          "3",
+          "4"
+        ]
+      }
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "shape": [
+        193,
+        4
+      ],
+      "attrs": {
+        "num_iters": 12,
+        "return_intermediates": false
+      },
+      "chip": "Ascend950DT_9582",
+      "pred_us": 4.801200474743689,
+      "old_us": 4.80120047474369,
+      "ca_us": 6.0139389061369,
+      "future_us": 4.4373382467855125,
+      "query_ms": 0.1934301108121872,
+      "active": [
+        0,
+        49
+      ],
+      "ca_active": [
+        0,
+        49
+      ],
+      "kernel": "MhcSinkhorn_8997d9c5c22e82688b98bc25d8daa9cd_0",
+      "correctness": [
+        "correctness name=output count=3088 bad=0 max_abs_error=5.944e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ],
+      "mmad": 0,
+      "trace": "runs/fusion21/mhc_sinkhorn_193_4_Ascend950DT_9582/profile/OPPROF_20261119210413_KNOAIWRUGYOEZSBN/simulator/trace.json",
+      "trace_sha256": "66a8261d43f0c1695873d4ff0105dd5d50676e23a5af987045e6c7af880cd8f3",
+      "cost": {
+        "seconds": 92.31182650988922,
+        "raw_bytes": 472242804,
+        "cpu_seconds": 1862.0300000000002,
+        "exit_code": 0,
+        "stop_reason": null,
+        "started_utc": "2026-11-19T13:04:13.622910+00:00",
+        "finished_utc": "2026-11-19T13:05:45.939849+00:00",
+        "command": [
+          "bash",
+          "/home/l00925865/operator_sim/scripts/cann-run.sh",
+          "msopprof",
+          "simulator",
+          "--soc-version=Ascend950DT_9582",
+          "--dump=true",
+          "--launch-count=20",
+          "--timeout=10",
+          "--output=/home/l00925865/operator_sim/runs/fusion21/mhc_sinkhorn_193_4_Ascend950DT_9582/profile",
+          "/home/l00925865/operator_sim/build/smoke/extension_indexer_mhc",
+          "mhc_sinkhorn",
+          "193",
+          "4",
+          "12"
+        ]
+      }
+    },
+    {
+      "op": "mhc_sinkhorn",
+      "shape": [
+        193,
+        4
+      ],
+      "attrs": {
+        "num_iters": 12,
+        "return_intermediates": false
+      },
+      "chip": "Ascend950PR_957b",
+      "pred_us": 4.851037045871077,
+      "old_us": 4.86885881865909,
+      "ca_us": 5.952727082185447,
+      "future_us": 4.4373382467855125,
+      "query_ms": 0.17691007815301418,
+      "active": [
+        0,
+        49
+      ],
+      "ca_active": [
+        0,
+        49
+      ],
+      "kernel": "MhcSinkhorn_8997d9c5c22e82688b98bc25d8daa9cd_0",
+      "correctness": [
+        "correctness name=output count=3088 bad=0 max_abs_error=5.944e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ],
+      "mmad": 0,
+      "trace": "runs/fusion21/mhc_sinkhorn_193_4_Ascend950PR_957b/profile/OPPROF_20261119210435_BUWPDDYPPJIHLETF/simulator/trace.json",
+      "trace_sha256": "c011644deac759286951d50240be15a7f1901708c9b4ee6a47c5e27a760431d4",
+      "cost": {
+        "seconds": 94.50315355998464,
+        "raw_bytes": 472192021,
+        "cpu_seconds": 1920.23,
+        "exit_code": 0,
+        "stop_reason": null,
+        "started_utc": "2026-11-19T13:04:34.819813+00:00",
+        "finished_utc": "2026-11-19T13:06:09.327319+00:00",
+        "command": [
+          "bash",
+          "/home/l00925865/operator_sim/scripts/cann-run.sh",
+          "msopprof",
+          "simulator",
+          "--soc-version=Ascend950PR_957b",
+          "--dump=true",
+          "--launch-count=20",
+          "--timeout=10",
+          "--output=/home/l00925865/operator_sim/runs/fusion21/mhc_sinkhorn_193_4_Ascend950PR_957b/profile",
+          "/home/l00925865/operator_sim/build/smoke/extension_indexer_mhc",
+          "mhc_sinkhorn",
+          "193",
+          "4",
+          "12"
+        ]
+      }
     }
   ],
   "rejections": [
@@ -4319,7 +5119,187 @@
           "6"
         ]
       }
+    },
+    {
+      "op": "mhc_pre_sinkhorn",
+      "shape": [
+        56,
+        4,
+        4096
+      ],
+      "chip": "Ascend950PR_957b",
+      "attempt": "original",
+      "reason": "process/budget: raw cap",
+      "cost": {
+        "seconds": 178.45613657985814,
+        "raw_bytes": 2499880105,
+        "cpu_seconds": null,
+        "exit_code": -9,
+        "stop_reason": "raw cap",
+        "started_utc": "2026-11-19T12:52:45.019637+00:00",
+        "finished_utc": "2026-11-19T12:55:43.489764+00:00",
+        "command": [
+          "bash",
+          "/home/l00925865/operator_sim/scripts/cann-run.sh",
+          "msopprof",
+          "simulator",
+          "--soc-version=Ascend950PR_957b",
+          "--dump=true",
+          "--launch-count=20",
+          "--timeout=10",
+          "--output=/home/l00925865/operator_sim/runs/fusion21/mhc_pre_sinkhorn_56_4_4096_Ascend950PR_957b/profile",
+          "/home/l00925865/operator_sim/build/smoke/extension_indexer_mhc",
+          "mhc_pre_sinkhorn",
+          "56",
+          "4",
+          "4096"
+        ]
+      }
+    },
+    {
+      "op": "mhc_pre_sinkhorn",
+      "shape": [
+        64,
+        4,
+        4096
+      ],
+      "chip": "Ascend950DT_9582",
+      "attempt": "original",
+      "reason": "process/budget: raw cap",
+      "cost": {
+        "seconds": 190.78363550012,
+        "raw_bytes": 2648387900,
+        "cpu_seconds": null,
+        "exit_code": -9,
+        "stop_reason": "raw cap",
+        "started_utc": "2026-11-19T12:59:10.751873+00:00",
+        "finished_utc": "2026-11-19T13:02:21.553502+00:00",
+        "command": [
+          "bash",
+          "/home/l00925865/operator_sim/scripts/cann-run.sh",
+          "msopprof",
+          "simulator",
+          "--soc-version=Ascend950DT_9582",
+          "--dump=true",
+          "--launch-count=20",
+          "--timeout=10",
+          "--output=/home/l00925865/operator_sim/runs/fusion21/mhc_pre_sinkhorn_64_4_4096_Ascend950DT_9582/profile",
+          "/home/l00925865/operator_sim/build/smoke/extension_indexer_mhc",
+          "mhc_pre_sinkhorn",
+          "64",
+          "4",
+          "4096"
+        ]
+      }
+    },
+    {
+      "op": "mhc_pre_sinkhorn",
+      "shape": [
+        64,
+        4,
+        4096
+      ],
+      "chip": "Ascend950PR_957b",
+      "attempt": "original",
+      "reason": "process/budget: raw cap",
+      "cost": {
+        "seconds": 174.43333405000158,
+        "raw_bytes": 2682703977,
+        "cpu_seconds": null,
+        "exit_code": -9,
+        "stop_reason": "raw cap",
+        "started_utc": "2026-11-19T12:59:11.005867+00:00",
+        "finished_utc": "2026-11-19T13:02:05.450803+00:00",
+        "command": [
+          "bash",
+          "/home/l00925865/operator_sim/scripts/cann-run.sh",
+          "msopprof",
+          "simulator",
+          "--soc-version=Ascend950PR_957b",
+          "--dump=true",
+          "--launch-count=20",
+          "--timeout=10",
+          "--output=/home/l00925865/operator_sim/runs/fusion21/mhc_pre_sinkhorn_64_4_4096_Ascend950PR_957b/profile",
+          "/home/l00925865/operator_sim/build/smoke/extension_indexer_mhc",
+          "mhc_pre_sinkhorn",
+          "64",
+          "4",
+          "4096"
+        ]
+      }
+    },
+    {
+      "op": "mhc_pre_sinkhorn",
+      "shape": [
+        80,
+        4,
+        4096
+      ],
+      "chip": "Ascend950DT_9582",
+      "attempt": "original",
+      "reason": "process/budget: raw cap",
+      "cost": {
+        "seconds": 351.5948213201482,
+        "raw_bytes": 3760631159,
+        "cpu_seconds": null,
+        "exit_code": -9,
+        "stop_reason": "raw cap",
+        "started_utc": "2026-11-19T13:05:50.054087+00:00",
+        "finished_utc": "2026-11-19T13:11:41.664794+00:00",
+        "command": [
+          "bash",
+          "/home/l00925865/operator_sim/scripts/cann-run.sh",
+          "msopprof",
+          "simulator",
+          "--soc-version=Ascend950DT_9582",
+          "--dump=true",
+          "--launch-count=20",
+          "--timeout=10",
+          "--output=/home/l00925865/operator_sim/runs/fusion21/mhc_pre_sinkhorn_80_4_4096_Ascend950DT_9582/profile",
+          "/home/l00925865/operator_sim/build/smoke/extension_indexer_mhc",
+          "mhc_pre_sinkhorn",
+          "80",
+          "4",
+          "4096"
+        ]
+      }
+    },
+    {
+      "op": "mhc_pre_sinkhorn",
+      "shape": [
+        80,
+        4,
+        4096
+      ],
+      "chip": "Ascend950PR_957b",
+      "attempt": "original",
+      "reason": "process/budget: raw cap",
+      "cost": {
+        "seconds": 352.92651125998236,
+        "raw_bytes": 2786832888,
+        "cpu_seconds": null,
+        "exit_code": -9,
+        "stop_reason": "raw cap",
+        "started_utc": "2026-11-19T13:06:13.311033+00:00",
+        "finished_utc": "2026-11-19T13:12:06.246125+00:00",
+        "command": [
+          "bash",
+          "/home/l00925865/operator_sim/scripts/cann-run.sh",
+          "msopprof",
+          "simulator",
+          "--soc-version=Ascend950PR_957b",
+          "--dump=true",
+          "--launch-count=20",
+          "--timeout=10",
+          "--output=/home/l00925865/operator_sim/runs/fusion21/mhc_pre_sinkhorn_80_4_4096_Ascend950PR_957b/profile",
+          "/home/l00925865/operator_sim/build/smoke/extension_indexer_mhc",
+          "mhc_pre_sinkhorn",
+          "80",
+          "4",
+          "4096"
+        ]
+      }
     }
   ],
-  "queued": 14
+  "queued": 0
 }

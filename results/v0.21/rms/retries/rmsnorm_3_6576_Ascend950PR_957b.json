@@ -1,0 +1,132 @@
+{
+  "id": "rmsnorm_3_6576",
+  "op": "rmsnorm",
+  "shape": [
+    3,
+    6576
+  ],
+  "chip": "Ascend950PR_957b",
+  "original": {
+    "receipt": "results/v0.21/rms/receipts/rmsnorm_3_6576_Ascend950PR_957b.json",
+    "receipt_sha256": "f8455f9b1241ded810d65f63831ad312d9f83717fbdac8e9397243054bada43a",
+    "log": "runs/rms21/rmsnorm_3_6576_Ascend950PR_957b/run.log",
+    "log_sha256": "d200c8ad3f0361def92e4107a03a1f233ac5aab3f99dbbe8ffab2e045a1207a1",
+    "failure": "SMOKE_FAIL: invalid prefill contract",
+    "device_kernel_launched": false
+  },
+  "host_recovery": "results/v0.21/rms/host-recovery.json",
+  "qualified": true,
+  "observation": {
+    "op": "rmsnorm",
+    "shape": [
+      3,
+      6576
+    ],
+    "attrs": {},
+    "chip": "Ascend950PR_957b",
+    "ca_us": 3.7763638524338603,
+    "active_aic": 0,
+    "active_aiv": 3,
+    "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+    "api": "aclnnRmsNorm",
+    "correctness": [
+      "correctness count=19728 bad=0",
+      "correctness count=3 bad=0"
+    ],
+    "stages": [
+      {
+        "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+        "ca_us": 3.7763638524338603,
+        "active_aic": 0,
+        "active_aiv": 3,
+        "windows": {
+          "core0.veccore1": [
+            0.039999961853027344,
+            3.701211932115257
+          ],
+          "core0.veccore0": [
+            0.0,
+            3.7763638524338603
+          ],
+          "core16.veccore0": [
+            0.2024242877960205,
+            3.5727272061631083
+          ]
+        },
+        "trace": "runs/rms21-host-recovery/rmsnorm_3_6576_Ascend950PR_957b/profile/OPPROF_20261119210444_PCGAWTXEGLKYETXM/simulator/trace.json",
+        "trace_sha256": "63d8d5d727f777ee84d264d4f74cb1712d09084c507e9980ed8235c73546bb89",
+        "binary_sha256": "0926fe478e5f718ef49241c08ef00b665797690f0f7f22c67fdc25044e0cb54d",
+        "queue_events": {
+          "SCALAR": 3057,
+          "FLOWCTRL": 117,
+          "MTE2": 12,
+          "MTE3": 9,
+          "PUSHQ": 33,
+          "RVECLP": 66,
+          "RVECEX": 5970,
+          "RVECSU": 57,
+          "RVECLD": 1884,
+          "RVECST": 1023
+        },
+        "mmad": 0,
+        "total_events": 12228
+      }
+    ],
+    "trace": [
+      "runs/rms21-host-recovery/rmsnorm_3_6576_Ascend950PR_957b/profile/OPPROF_20261119210444_PCGAWTXEGLKYETXM/simulator/trace.json"
+    ],
+    "trace_sha256": [
+      "63d8d5d727f777ee84d264d4f74cb1712d09084c507e9980ed8235c73546bb89"
+    ],
+    "cost": {
+      "started_utc": "2026-11-19T13:04:44.359489+00:00",
+      "finished_utc": "2026-11-19T13:05:54.394802+00:00",
+      "seconds": 70.0352489000652,
+      "raw_bytes": 16221603,
+      "peak_bytes": 16248105,
+      "cpu_seconds": 803.12,
+      "exit_code": 0,
+      "stop_reason": null,
+      "command": [
+        "bash",
+        "/home/l00925865/operator_sim/scripts/cann-run.sh",
+        "msopprof",
+        "simulator",
+        "--soc-version=Ascend950PR_957b",
+        "--dump=false",
+        "--launch-count=1",
+        "--timeout=90",
+        "--output=/home/l00925865/operator_sim/runs/rms21-host-recovery/rmsnorm_3_6576_Ascend950PR_957b/profile",
+        "/home/l00925865/operator_sim/build/rms-host-recovery/large_vector_rms16",
+        "rmsnorm",
+        "3",
+        "6576"
+      ]
+    },
+    "case_id": "rmsnorm_3_6576",
+    "role": "frozen PR holdout",
+    "scope": "one all-core window",
+    "frozen": {
+      "dt_us": 2.9221871953028935,
+      "dt_first_us": 3.760335995270002,
+      "old_dt_us": 2.5763744971583065,
+      "pr_us": 2.870518398757794,
+      "pr_first_us": 3.556063268139062,
+      "old_pr_us": 3.5560632681390616,
+      "future_us": 2.661753928369306,
+      "future_first_us": 3.446569367186002,
+      "old_future_us": 3.4465693671860014
+    },
+    "dtype": "bf16",
+    "runner_sha256": "617de91f6eeaa4a7eb942989452b9fb51475578c4be4102a3030a30029ee303d",
+    "input_contract_log": [
+      "case=rmsnorm api=aclnnRmsNorm R=3 C=6576 dtype=BF16 epsilon=1e-6"
+    ],
+    "host_args": [
+      "rmsnorm",
+      "3",
+      "6576"
+    ],
+    "run_log": "runs/rms21-host-recovery/rmsnorm_3_6576_Ascend950PR_957b/run.log"
+  }
+}

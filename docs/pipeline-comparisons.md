@@ -8,6 +8,8 @@
 
 950DT，BF16 `[M,N,K]=[1280,2048,512]`，模型 **12.449 µs**、CA **12.219 µs**。首波每核一个 256×256 输出块，第二波每核一个 128×128 尾块。每块读两页 K，每页发起四条 MMAD。浅橙色的实测 FIXP 条包含已发起描述符等待依赖的时间。数据提取逐核核对 GM 地址、L1 页、L0 目的地、累加器初始化和全部 512 条 MMAD。[输入、参数和计算过程](examples/matmul.md) · [图上的全部区间](../results/v0.20/examples/matmul-tile-pages.json)
 
+同一个 shape 在 950PR 上只用 28 个 AIC，首波之后分出 24 个 128×256 矩形。预测和实测都有 416 条 MMAD；首条 MMAD 起点相差 0.059 µs，到了最后一页扩大到 0.586 µs。模型给出 **14.027 µs**，CA 给出 **13.218 µs**。[同一刻度并排看 DT 与 PR](examples/figures/matmul-tile-pages-dt-pr.png) · [950PR 上下对照原图](examples/figures/matmul-tile-pages-pr.png) · [两卡同形的逐页偏差](../results/v0.21/matmul-pages-pr/report.md)
+
 ## Addmm · 同一列偏置怎样穿过 L1 和 BT
 
 ![950PR Addmm，模型的一波与最后一个完成核的两次 MMAD](examples/figures/addmm-v21-pr-page.png)
@@ -32,6 +34,8 @@
 
 Kimi [524288,12] 在 950DT 预测 11.908 µs、实测 11.230 µs。上栏预测采集前已经固定，图中每个 UB 块可单独核对读发起与写退休。Flash Cast 的新 [393216,32] 在 DT 仍低估 21.0%。[两算子、两端的独立长 shape 图集](../results/v0.21/vector/independent-figures.md) · [开发集 PR 的 128k Kimi](examples/figures/v021-sigmoid-128ki-pr.png)
 
+Flash 的 32 列投影也新增了整批独立点：每卡 8 条、每条 196,608 token，Cast 输入 [1572864,32]。950DT 预测 68.143 µs，完整 CA 为 72.238 µs，低估 5.67%。此处 32 是 indexer 的投影输出列数，模型 hidden 仍为 5120。[该形状的逐块上下图](examples/figures/v021-holdout-cast_bf16_fp32_1572864_32-dt.png)
+
 ## 同为 Matmul，Flash 的 Stream-K 多出一段归并
 
 ![Flash indexer 的窄输出投影。预测上部只有 AIC，下部实测 AIV 在 Cube 完成后继续做归并](examples/figures/matmul-prefill-dt.png)
@@ -43,6 +47,12 @@ Kimi [524288,12] 在 950DT 预测 11.908 µs、实测 11.230 µs。上栏预测�
 ![950PR 的量化模型和末核按同一个 UB 块对齐](examples/figures/quant-chunk-pr-tiles.png)
 
 `DynamicMxQuant` 对 BF16 输入 `[2048,5120]` 生成 FP8 值和 E8M0 scale。一个 UB 块对应一次有效读、向量程序和两类输出。图的下栏用字节数及程序计数器把事件归回对应块；一次描述符可以在前一条结束前发起。[逐轮量化算例](examples/quant.md)
+
+## RMSNorm · 每核执行二十多轮的实测
+
+![950PR 的 25 轮 RMSNorm，首中末三个 UB 块及全核预测与实测对照](examples/figures/rms-wide-tiles-pr.png)
+
+BF16 [32768,1280] 共 41,943,040 个元素，两端都逐元素核对了 y 和 rstd。末核在 DT 处理 22 轮，PR 处理 25 轮，与分块预测逐轮吻合。PR 上整窗预测 61.616 µs，实测 69.729 µs。图中展开首、中、末块，PR 连续满块的 rstd 发起间隔中位数比实测短 0.776 µs。设备整窗和局部块各自采用图上标出的时间原点。[两卡模型公式与逐轮时间戳](../results/v0.21/wide-rms/report.md) · [DT 的 22 轮流水](examples/figures/rms-wide-tiles-dt.png) · [同宽度从 32 到 32,768 行的两卡实测](examples/rmsnorm.md)
 
 ## RMSNorm · 同一核新增一条向量通道
 
@@ -84,13 +94,13 @@ GMM1 和 GMM2 均用 `[8,256,128,2]`、专家分配 `[1,7]`。GMM1 的两份中�
 
 ### 各种图能看出什么
 
-20 条路线中，**11 条**可以按工作块、阶段或资源队列对到真实时间（Matmul、Addmm、量化、FA、Cast、Sigmoid、AttnResFwd、PreSinkhorn、Lightning Indexer、GMM1 和 GMM2）。**2 条**对应串行 kernel（mHC 链、MoE FFN）。**6 条**给出状态或阶段成本及真实 CA 队列（RMSNorm、mHC Post、mHC Pre、Sinkhorn、KDA recurrent、MoE 路由）。独占成本可以解释总误差来自哪个资源；该资源的逐条发起时刻只在有指令记录的一侧可见。KDA chunk 目前只有失败事件诊断，完整耗时为 N/A。[各算子示例](modeling-strategy.md#逐算子算例) · [误差明细](error-analysis.md)
+20 条路线中，**12 条**可以按工作块、阶段或资源队列核对预测与实测（Matmul、Addmm、量化、FA、Cast、Sigmoid、RMSNorm、AttnResFwd、PreSinkhorn、Lightning Indexer、GMM1 和 GMM2）。大 RMSNorm 的局部块用首笔 rstd 对齐，完整设备窗另列。**2 条**对应串行 kernel（mHC 链、MoE FFN）。**5 条**给出状态或阶段成本及真实 CA 队列（mHC Post、mHC Pre、Sinkhorn、KDA recurrent、MoE 路由）。独占成本可以解释总误差来自哪个资源；该资源的逐条发起时刻只在有指令记录的一侧可见。KDA chunk 目前只有失败事件诊断，完整耗时为 N/A。[各算子示例](modeling-strategy.md#逐算子算例) · [误差明细](error-analysis.md)
 
 ### 按算子打开图
 
 | 算例与推导 | 芯片与输入 | 流水图能核对的内容 |
 |---|---|---|
-| [Matmul](examples/matmul.md) | DT · 1280×2048×512 | [每个输出块的两页 K、逐条 MMAD](examples/figures/matmul-tile-pages.png) |
+| [Matmul](examples/matmul.md) | DT · 1280×2048×512 | [DT 每个输出块的两页 K](examples/figures/matmul-tile-pages.png) · [同形 PR 的矩形尾块](examples/figures/matmul-tile-pages-pr.png) |
 | [Addmm](examples/addmm.md) | PR · 512×512×256 | [偏置进 L1、BT，与矩阵读重叠](examples/figures/addmm-v21-pr-page.png) |
 | [DynamicMXQuant](examples/quant.md) | PR · 2048×5120 | [一个 UB 块的读、计算、值和 scale 写](examples/figures/quant-chunk-pr-tiles.png) |
 | [FA](examples/fa.md) | PR · Q=9，KV=32768，D=64 | [逐 KV 页 QK、PV 发起和稳态间隔](examples/figures/fa-pr-32k-pages.png) |
@@ -103,11 +113,11 @@ GMM1 和 GMM2 均用 `[8,256,128,2]`、专家分配 `[1,7]`。GMM1 的两份中�
 | [mHC PreSinkhorn](examples/mhc_pre_sinkhorn.md) | PR · 1×4×4096 | [AIC 与 AIV 的交接](examples/figures/mhc_pre_sinkhorn-v21-pr.png) |
 | [mHC 拆分链](examples/mhc.md) | PR · 1×4×128 | [三个串行 kernel 的独立设备窗](examples/figures/mhc-pr-pipeline.png) |
 | [MoE FFN](examples/moe_ffn.md) | PR · 2×64×64×1 | [GMM1 与 GMM2 两个设备窗](examples/figures/moe_ffn-pr-pipeline.png) |
-| [RMSNorm](examples/rmsnorm.md) | DT · 4×4608 | [扩出第二条 AIV 的候选预测与四个同址输出块](examples/figures/rms-expanding-sibling.png) |
+| [RMSNorm](examples/rmsnorm.md) | DT / PR · 32768×1280；DT · 4×4608 | [PR 25 轮 UB](examples/figures/rms-wide-tiles-pr.png) · [同核扩出第二条 AIV](examples/figures/rms-expanding-sibling.png) |
 | [mHC Post](examples/mhc_post.md) | DT · 16×4×256 | [隐藏调度历史如何改变读算写](examples/figures/mhc_post-v21-state.png) |
 | [mHC Pre](examples/mhc_pre.md) | PR · 1×4×128 | [末核控制等待、计算、搬运独占成本](examples/figures/mhc-pre-exclusive-pr.png) |
 | [mHC Sinkhorn](examples/mhc_sinkhorn.md) | PR · 64×4 | [每 AIV 两行共用发射的阶段成本](examples/figures/mhc_sinkhorn-v21-pr.png) |
-| [KDA recurrent](examples/kda_recurrent.md) | PR · 1×1×1×1×128×128 | [递推状态更新的阶段成本](examples/figures/kda_recurrent-pr-pipeline.png) |
+| [KDA recurrent](examples/kda_recurrent.md) | PR · 1×3×1×1×128×128 | [完整资源预算与六次实际状态更新](examples/figures/kda-recurrent-state-pr.png) |
 | [MoE 路由 Top-K](examples/moe_gating_top_k.md) | PR · 1×384×6 | [路由阶段成本和末核队列](examples/figures/moe_gating_top_k-pr-pipeline.png) |
 | [KDA chunk](examples/kda_chunk.md) | PR · 1×64×2×2×128×128 | [失败前事件记录，完整 CA 窗口 N/A](examples/figures/kda-chunk-pr-event.png) |
 
@@ -119,6 +129,8 @@ GMM1 和 GMM2 均用 `[8,256,128,2]`、专家分配 `[1,7]`。GMM1 的两份中�
 python development/validation/dispatch21/addmm_figure.py
 python development/validation/fusion21/indexer_figure.py --replot
 python development/validation/sku20/matmul_figure.py
+python development/validation/matmul_pages_pr/publish.py --replot
+python development/validation/matmul_pages_pr/paired.py
 python development/validation/sku20/quant_tile_figure.py
 python development/validation/rms_dispatch_audit/figure.py --replot
 python development/validation/sku20/fa_pages.py --replot

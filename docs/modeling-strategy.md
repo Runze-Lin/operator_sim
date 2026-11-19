@@ -44,7 +44,7 @@
 
 ### 逐算子算例
 
-[流水对照图集](pipeline-comparisons.md)汇集真实执行窗口。可以从三类算子的同轴图看起。Matmul 把模型和真实 MMAD 放回对应的输出块与 K 页，Quant 把五轮 UB 读、VF 和两路写放回对应的 tile，FA 把首个 QK/PV 和后续 KV 发起间隔对齐到核内流水。其余算例也标明阶段是否能定位到具体指令；只有总量时，上栏保留该粒度。[Matmul 两波两页](examples/matmul.md) · [Quant 五轮读写](examples/quant.md) · [FA 首页与稳态](examples/fa.md) · [Flash 真实几何下的窄输出 Matmul 与 AIV 归并](examples/matmul-prefill.md) · [B8×128k Flash Cast 的首末轮](../results/v0.20/large/flash-128ki-tiles.png) · [Kimi beta 各长度流水](../results/v0.20/newop/long-timelines.md)
+[流水对照图集](pipeline-comparisons.md)汇集真实执行窗口。可以从三类算子的同轴图看起。Matmul 把模型和真实 MMAD 放回对应的输出块与 K 页。同一 BF16 [1280,2048,512] 在 950DT 与 PR 上分别形成 32 个 128×128 或 24 个 128×256 尾块，两端与库 trace 逐块吻合，Quant 把五轮 UB 读、VF 和两路写放回对应的 tile，FA 把首个 QK/PV 和后续 KV 发起间隔对齐到核内流水。其余算例也标明阶段是否能定位到具体指令；只有总量时，上栏保留该粒度。[Matmul 两波两页与矩形尾块](examples/matmul.md) · [Quant 五轮读写](examples/quant.md) · [FA 首页与稳态](examples/fa.md) · [Flash 真实几何下的窄输出 Matmul 与 AIV 归并](examples/matmul-prefill.md) · [B8×128k Flash Cast 的首末轮](../results/v0.20/large/flash-128ki-tiles.png) · [Kimi beta 各长度流水](../results/v0.20/newop/long-timelines.md)
 
 整批 Cast 的双缓冲可以逐输入槽、输出槽分别检查可用时间。在 DT 与 PR 的 295 对读写描述符上，后续读都能早于前一块写回的完成时刻。按槽分别计价的候选已在六个双端均未启动的形状上冻结；系统端继续使用下文已发布的计算路径。[缓冲槽与缓存写回的证据](../results/cast-capacity/report.md)
 

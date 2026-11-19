@@ -1,0 +1,275 @@
+{
+  "id": "rmsnorm_32_1280",
+  "op": "rmsnorm",
+  "shape": [
+    32,
+    1280
+  ],
+  "chip": "Ascend950PR_957b",
+  "original": {
+    "is_control": true,
+    "receipt": "runs/sku20-rms/rmsnorm_32_1280_Ascend950PR_957b/qualified.json",
+    "receipt_sha256": "a85e2c98d63bfe9724b35035dbcdddfc164368a0b28842d31f6629b32dbb7984"
+  },
+  "host_recovery": "results/v0.21/rms/host-recovery.json",
+  "qualified": true,
+  "observation": {
+    "op": "rmsnorm",
+    "shape": [
+      32,
+      1280
+    ],
+    "attrs": {},
+    "chip": "Ascend950PR_957b",
+    "ca_us": 6.266060355119407,
+    "active_aic": 0,
+    "active_aiv": 32,
+    "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+    "api": "aclnnRmsNorm",
+    "correctness": [
+      "correctness count=40960 bad=0",
+      "correctness count=32 bad=0"
+    ],
+    "stages": [
+      {
+        "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+        "ca_us": 6.266060355119407,
+        "active_aic": 0,
+        "active_aiv": 32,
+        "windows": {
+          "core18.veccore1": [
+            0.19939374923706055,
+            3.9212121991440654
+          ],
+          "core22.veccore0": [
+            0.16424226760864258,
+            3.4321212796494365
+          ],
+          "core22.veccore1": [
+            0.15575742721557617,
+            3.510909083299339
+          ],
+          "core2.veccore1": [
+            0.11999988555908203,
+            5.506060126237571
+          ],
+          "core19.veccore0": [
+            0.2218179702758789,
+            4.738788130693138
+          ],
+          "core20.veccore0": [
+            0.28121185302734375,
+            3.6121211079880595
+          ],
+          "core1.veccore1": [
+            0.09575748443603516,
+            3.268484595231712
+          ],
+          "core0.veccore1": [
+            0.07454538345336914,
+            5.788485052995384
+          ],
+          "core21.veccore1": [
+            0.2612118721008301,
+            4.432120802812278
+          ],
+          "core16.veccore0": [
+            0.33090925216674805,
+            4.032121184282005
+          ],
+          "core2.veccore0": [
+            0.11818170547485352,
+            5.701212408952415
+          ],
+          "core5.veccore1": [
+            0.20181798934936523,
+            5.214545729570091
+          ],
+          "core17.veccore0": [
+            0.35272741317749023,
+            4.635757925920188
+          ],
+          "core3.veccore0": [
+            0.2157573699951172,
+            5.1157574681565166
+          ],
+          "core4.veccore1": [
+            0.15212106704711914,
+            5.882423880510032
+          ],
+          "core19.veccore1": [
+            0.24484825134277344,
+            4.5345454243943095
+          ],
+          "core6.veccore0": [
+            0.24242401123046875,
+            6.266060355119407
+          ],
+          "core0.veccore0": [
+            0.0,
+            5.976969244889915
+          ],
+          "core21.veccore0": [
+            0.2630300521850586,
+            4.332121375016868
+          ],
+          "core5.veccore0": [
+            0.1357574462890625,
+            5.312120917253196
+          ],
+          "core4.veccore0": [
+            0.13272714614868164,
+            6.0733332661911845
+          ],
+          "core18.veccore0": [
+            0.18848466873168945,
+            3.7145452527329326
+          ],
+          "core16.veccore1": [
+            0.32848453521728516,
+            3.4824242619797587
+          ],
+          "core3.veccore1": [
+            0.17333316802978516,
+            3.2557573346421123
+          ],
+          "core1.veccore0": [
+            0.0884847640991211,
+            5.021212103776634
+          ],
+          "core23.veccore0": [
+            0.11030292510986328,
+            4.2321209935471416
+          ],
+          "core17.veccore1": [
+            0.3812122344970703,
+            4.842423918657005
+          ],
+          "core20.veccore1": [
+            0.29212093353271484,
+            3.817575457505882
+          ],
+          "core23.veccore1": [
+            0.14181804656982422,
+            4.135757925920188
+          ],
+          "core6.veccore1": [
+            0.24848461151123047,
+            6.170909407548606
+          ],
+          "core7.veccore1": [
+            0.26363611221313477,
+            5.603636267594993
+          ],
+          "core7.veccore0": [
+            0.2569694519042969,
+            5.4109091786667705
+          ]
+        },
+        "trace": "runs/rms21-host-recovery/control/rmsnorm_32_1280_Ascend950PR_957b/profile/OPPROF_20261119210145_JEYHELTTRQJKXMEJ/simulator/trace.json",
+        "trace_sha256": "bc10af7d670fc295cbe8c4d19200b0292c0d0a2d207410abbacd9404a426df23",
+        "binary_sha256": "0926fe478e5f718ef49241c08ef00b665797690f0f7f22c67fdc25044e0cb54d",
+        "queue_events": {
+          "SCALAR": 32608,
+          "FLOWCTRL": 1248,
+          "MTE2": 128,
+          "MTE3": 96,
+          "PUSHQ": 352,
+          "RVECLP": 704,
+          "RVECEX": 13632,
+          "RVECSU": 608,
+          "RVECLD": 4160,
+          "RVECST": 2528
+        },
+        "mmad": 0,
+        "total_events": 56064
+      }
+    ],
+    "trace": [
+      "runs/rms21-host-recovery/control/rmsnorm_32_1280_Ascend950PR_957b/profile/OPPROF_20261119210145_JEYHELTTRQJKXMEJ/simulator/trace.json"
+    ],
+    "trace_sha256": [
+      "bc10af7d670fc295cbe8c4d19200b0292c0d0a2d207410abbacd9404a426df23"
+    ],
+    "cost": {
+      "started_utc": "2026-11-19T13:01:45.544720+00:00",
+      "finished_utc": "2026-11-19T13:02:55.589813+00:00",
+      "seconds": 70.04497925005853,
+      "raw_bytes": 76940694,
+      "peak_bytes": 76967186,
+      "cpu_seconds": 1031.93,
+      "exit_code": 0,
+      "stop_reason": null,
+      "command": [
+        "bash",
+        "/home/l00925865/operator_sim/scripts/cann-run.sh",
+        "msopprof",
+        "simulator",
+        "--soc-version=Ascend950PR_957b",
+        "--dump=false",
+        "--launch-count=1",
+        "--timeout=240",
+        "--output=/home/l00925865/operator_sim/runs/rms21-host-recovery/control/rmsnorm_32_1280_Ascend950PR_957b/profile",
+        "/home/l00925865/operator_sim/build/rms-host-recovery/large_vector_rms16",
+        "rmsnorm",
+        "32",
+        "1280"
+      ]
+    },
+    "case_id": "rmsnorm_32_1280",
+    "role": "frozen PR holdout",
+    "scope": "one all-core window",
+    "frozen": {
+      "dt_us": 6.07779548886933,
+      "dt_status": "extrapolated",
+      "dt_aiv": 32,
+      "dt_aic": 0,
+      "old_dt_us": 6.07779548886933,
+      "old_dt_status": "extrapolated",
+      "old_dt_aiv": 32,
+      "old_dt_aic": 0,
+      "pr_us": 5.864718804461554,
+      "pr_status": "extrapolated",
+      "pr_aiv": 32,
+      "pr_aic": 0,
+      "old_pr_us": 5.864718804461554,
+      "old_pr_status": "extrapolated",
+      "old_pr_aiv": 32,
+      "old_pr_aic": 0,
+      "future_us": 5.571276360569128,
+      "future_status": "extrapolated",
+      "future_aiv": 32,
+      "future_aic": 0,
+      "old_future_us": 5.571276360569128,
+      "old_future_status": "extrapolated",
+      "old_future_aiv": 32,
+      "old_future_aic": 0
+    },
+    "dtype": "bf16",
+    "runner_sha256": "617de91f6eeaa4a7eb942989452b9fb51475578c4be4102a3030a30029ee303d",
+    "input_contract_log": [
+      "case=rmsnorm api=aclnnRmsNorm R=32 C=1280 dtype=BF16 epsilon=1e-6"
+    ],
+    "host_args": [
+      "rmsnorm",
+      "32",
+      "1280"
+    ],
+    "run_log": "runs/rms21-host-recovery/control/rmsnorm_32_1280_Ascend950PR_957b/run.log"
+  },
+  "comparison": {
+    "original_us": 6.3090908555313945,
+    "repeat_us": 6.266060355119407,
+    "difference_us": -0.043030500411987305,
+    "original_aiv": 32,
+    "repeat_aiv": 32,
+    "original_trace_sha256": [
+      "e362561ccf5487b8848f849c97afcb8262c3bcec423786e32827e750abda4823"
+    ],
+    "repeat_trace_sha256": [
+      "bc10af7d670fc295cbe8c4d19200b0292c0d0a2d207410abbacd9404a426df23"
+    ],
+    "goldens_identical": true,
+    "elf_identical": true
+  }
+}

@@ -1,0 +1,118 @@
+{
+  "id": "addmm_17_80_96",
+  "op": "addmm",
+  "shape": [
+    17,
+    80,
+    96
+  ],
+  "chip": "Ascend950DT_9582",
+  "qualified": true,
+  "observation": {
+    "op": "addmm",
+    "shape": [
+      17,
+      80,
+      96
+    ],
+    "attrs": {
+      "self_shape": [
+        80
+      ],
+      "alpha": 1,
+      "beta": 1
+    },
+    "chip": "Ascend950DT_9582",
+    "ca_us": 3.556970000267029,
+    "active_aic": 4,
+    "active_aiv": 0,
+    "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+    "api": "aclnnAddmm",
+    "correctness": [
+      "correctness count=1360 bad=0 max_abs_error=0.0078125 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "stages": [
+      {
+        "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+        "ca_us": 3.556970000267029,
+        "active_aic": 4,
+        "active_aiv": 0,
+        "windows": {
+          "core16.cubecore0": [
+            0.16121244430541992,
+            3.5472729206085205
+          ],
+          "core1.cubecore0": [
+            0.015151500701904297,
+            3.1212120056152344
+          ],
+          "core0.cubecore0": [
+            0.0,
+            3.556970000267029
+          ],
+          "core17.cubecore0": [
+            0.12242412567138672,
+            3.0836365818977356
+          ]
+        },
+        "trace": "runs/dispatch21-retry/addmm_17_80_96_Ascend950DT_9582/profile/OPPROF_20261119205609_SUBZIHFPPIKUFVXK/simulator/trace.json",
+        "trace_sha256": "ae6b1fa412367ad800109c0857f68f750afdae07f4dce70ef45ddb70f51c7c5a",
+        "binary_sha256": "e6899fbaa2659b7778bee81deb00b64b009dafcb7ad350f06576767fdeba2bf7",
+        "queue_events": {
+          "SCALAR": 3328,
+          "MTE2": 24,
+          "MTE1": 16,
+          "FLOWCTRL": 188,
+          "FIXP": 8,
+          "CUBE": 4
+        },
+        "mmad": 4,
+        "total_events": 3568
+      }
+    ],
+    "trace": [
+      "runs/dispatch21-retry/addmm_17_80_96_Ascend950DT_9582/profile/OPPROF_20261119205609_SUBZIHFPPIKUFVXK/simulator/trace.json"
+    ],
+    "trace_sha256": [
+      "ae6b1fa412367ad800109c0857f68f750afdae07f4dce70ef45ddb70f51c7c5a"
+    ],
+    "cost": {
+      "started_utc": "2026-11-19T12:56:09.433962+00:00",
+      "finished_utc": "2026-11-19T12:57:03.572987+00:00",
+      "seconds": 54.13897349010222,
+      "raw_bytes": 6468914,
+      "peak_bytes": 39760673,
+      "cpu_seconds": 606.92,
+      "exit_code": 0,
+      "stop_reason": null,
+      "command": [
+        "bash",
+        "/home/l00925865/operator_sim/scripts/cann-run.sh",
+        "msopprof",
+        "simulator",
+        "--soc-version=Ascend950DT_9582",
+        "--dump=false",
+        "--launch-count=1",
+        "--timeout=30",
+        "--output=/home/l00925865/operator_sim/runs/dispatch21-retry/addmm_17_80_96_Ascend950DT_9582/profile",
+        "/home/l00925865/operator_sim/build/smoke/extension_norm_addmm",
+        "addmm",
+        "17",
+        "80",
+        "96",
+        "bias"
+      ]
+    },
+    "case_id": "addmm_17_80_96",
+    "role": "new paired DT CA",
+    "scope": "one all-core window",
+    "frozen": {
+      "dt_us": 3.4071172446300495,
+      "pr_us": 3.4071172446300495,
+      "future_us": 3.123170237583823,
+      "old_dt_us": 3.713328467085809,
+      "old_pr_us": 3.713604213851398,
+      "old_future_us": 3.403776748095348
+    }
+  }
+}

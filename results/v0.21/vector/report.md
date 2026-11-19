@@ -4,14 +4,14 @@
 |---|---|---|---:|---:|---:|
 |sigmoid_fp32|development replay|Ascend950DT_9582|13|26.52 / 55.54|6.24 / 11.44|
 |sigmoid_fp32|development replay|Ascend950PR_957b|10|75.37 / 120.50|15.53 / 24.72|
-|sigmoid_fp32|post-freeze independent|Ascend950DT_9582|4|40.12 / 46.68|5.56 / 11.47|
-|sigmoid_fp32|post-freeze independent|Ascend950PR_957b|4|98.98 / 105.31|21.43 / 26.96|
+|sigmoid_fp32|post-freeze independent|Ascend950DT_9582|8|33.38 / 46.68|5.58 / 11.47|
+|sigmoid_fp32|post-freeze independent|Ascend950PR_957b|7|91.19 / 105.31|20.25 / 26.96|
 |cast_bf16_fp32|development replay|Ascend950DT_9582|16|31.44 / 42.53|6.63 / 21.76|
 |cast_bf16_fp32|development replay|Ascend950PR_957b|16|9.02 / 19.83|11.08 / 29.95|
-|cast_bf16_fp32|post-freeze independent|Ascend950DT_9582|3|19.93 / 22.33|19.93 / 22.33|
-|cast_bf16_fp32|post-freeze independent|Ascend950PR_957b|3|1.17 / 1.27|1.17 / 1.27|
+|cast_bf16_fp32|post-freeze independent|Ascend950DT_9582|7|31.26 / 38.60|10.28 / 22.33|
+|cast_bf16_fp32|post-freeze independent|Ascend950PR_957b|7|7.22 / 9.73|5.83 / 9.73|
 
-误差单位为百分比。新留出完成 14 / 40 次。分母只包括通过时间窗和全元素校验的记录。每个 SKU 和算子分别统计。Sigmoid DT 的三个早期开发点用原版 v0.20 wheel 回放，逐组两版比较使用完全相同的 CA 窗口。
+误差单位为百分比。新留出完成 29 / 40 次。分母只包括通过时间窗和全元素校验的记录。每个 SKU 和算子分别统计。Sigmoid DT 的三个早期开发点用原版 v0.20 wheel 回放，逐组两版比较使用完全相同的 CA 窗口。
 
 |算子|数据角色|每卡 shape|SKU|v0.20 / µs|v0.21 / µs|CA / µs|v0.21 误差|970DT 外推 / µs|
 |---|---|---|---|---:|---:|---:|---:|---:|
@@ -84,5 +84,20 @@
 |cast_bf16_fp32|post-freeze independent|[3072, 5120]|Ascend950PR_957b|23.53|23.53|23.24|+1.3%|8.18|
 |sigmoid_fp32|post-freeze independent|[1572864, 12]|Ascend950DT_9582|41.49|30.14|28.56|+5.5%|15.41|
 |sigmoid_fp32|post-freeze independent|[1572864, 12]|Ascend950PR_957b|111.50|69.04|54.38|+27.0%|15.41|
+|cast_bf16_fp32|post-freeze independent|[1572864, 32]|Ascend950DT_9582|44.36|68.14|72.24|-5.7%|27.00|
+|sigmoid_fp32|post-freeze independent|[3, 96]|Ascend950DT_9582|2.72|2.72|3.04|-10.3%|2.49|
+|sigmoid_fp32|post-freeze independent|[3, 96]|Ascend950PR_957b|2.72|2.72|2.63|+3.6%|2.49|
+|cast_bf16_fp32|post-freeze independent|[3, 7168]|Ascend950DT_9582|2.20|2.20|2.38|-7.4%|2.02|
+|cast_bf16_fp32|post-freeze independent|[3, 7168]|Ascend950PR_957b|2.20|2.20|2.44|-9.7%|2.02|
+|sigmoid_fp32|post-freeze independent|[129, 12]|Ascend950DT_9582|2.93|2.93|2.93|-0.0%|2.68|
+|sigmoid_fp32|post-freeze independent|[129, 12]|Ascend950PR_957b|2.93|2.93|2.72|+7.8%|2.68|
+|cast_bf16_fp32|post-freeze independent|[17, 32]|Ascend950DT_9582|1.99|1.99|2.41|-17.1%|1.83|
+|cast_bf16_fp32|post-freeze independent|[17, 32]|Ascend950PR_957b|1.99|1.99|1.95|+2.2%|1.83|
+|sigmoid_fp32|post-freeze independent|[4545, 24]|Ascend950DT_9582|3.66|3.60|3.27|+10.3%|3.30|
+|sigmoid_fp32|post-freeze independent|[4545, 24]|Ascend950PR_957b|4.07|3.61|3.18|+13.5%|3.30|
+|cast_bf16_fp32|post-freeze independent|[111, 7168]|Ascend950DT_9582|3.53|3.53|3.17|+11.3%|3.34|
+|cast_bf16_fp32|post-freeze independent|[111, 7168]|Ascend950PR_957b|3.59|3.59|3.74|-4.1%|3.34|
+|sigmoid_fp32|post-freeze independent|[16385, 48]|Ascend950DT_9582|5.45|4.91|4.77|+3.0%|3.93|
+|cast_bf16_fp32|post-freeze independent|[1572864, 32]|Ascend950PR_957b|136.26|160.85|149.96|+7.3%|27.00|
 
 [冻结模型与预测](freeze.json) · [机器可读结果与 DT/PR 加速比](evaluation.json) · [参数来源](method.md) · [独立长 shape 流水](independent-figures.md)

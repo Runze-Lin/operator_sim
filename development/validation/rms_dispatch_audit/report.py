@@ -50,15 +50,24 @@ def publish():
         if path.exists():
             batch=read(path)
             if batch['qualified']:
-                ordered.update({(chip,r['i']):r for r in batch['rows']})
+                ordered.update({(chip,r['i']):(r,path,'complete host and parser') for r in batch['rows']})
             else:
-                failed.append(dict(chip=chip,protocol='ordered new sequence',reason=batch['reason']))
+                failed.append(dict(chip=chip,protocol='ordered new sequence',reason=batch['reason'],
+                                   source=str(path.relative_to(ROOT))))
+                recovery=OUT/('verified-ordered-'+chip+'.json')
+                if recovery.exists():
+                    verified=read(recovery)
+                    for row in verified['rows']:
+                        if row.get('timing_qualified'):
+                            ordered[chip,row['i']]=(row,recovery,'verified per-launch full instruction window')
     for r in reg['rows']:
         if r['chip'] not in reg['measured_skus']:
             continue
         if r['protocol']=='ordered new sequence':
-            outcome=ordered.get((r['chip'],r['i']))
-            if outcome is None:continue
+            recovered=ordered.get((r['chip'],r['i']))
+            if recovered is None:continue
+            outcome,source,quality=recovered
+            assert outcome['shape']==r['shape'] and outcome['chip']==r['chip']
             obs=outcome['stage'];checks=outcome['correctness']
         else:
             name='rmsnorm_'+'_'.join(map(str,r['shape']))+'_'+r['chip']+'.json'
@@ -66,11 +75,23 @@ def publish():
             if not path.is_file():continue
             result=read(path)
             if not result['qualified']:
-                failed.append(dict(chip=r['chip'],shape=r['shape'],protocol=r['protocol'],reason=result['error']))
-                continue
+                failed.append(dict(chip=r['chip'],shape=r['shape'],protocol=r['protocol'],reason=result['error'],
+                                   source=str(path.relative_to(ROOT))))
+                retry=ROOT/'results/v0.21/rms/retries'/name
+                if not retry.exists():
+                    continue
+                result=read(retry)
+                if not result['qualified']:
+                    failed.append(dict(chip=r['chip'],shape=r['shape'],protocol=r['protocol'],
+                                       reason=result.get('error',result.get('reason')),
+                                       source=str(retry.relative_to(ROOT))))
+                    continue
+                path=retry
+            source=path;quality='complete host and parser'
             obs=result['observation'];checks=obs['correctness']
         rows.append(dict(**r,ca_us=obs['ca_us'],trace=obs['trace'],kernel=obs['kernel'],
-                         trace_sha256=obs['trace_sha256'],correctness=checks))
+                         trace_sha256=obs['trace_sha256'],correctness=checks,
+                         source=str(source.relative_to(ROOT)),qualification=quality))
     grouped=defaultdict(list)
     for r in rows:grouped[r['chip'],r['protocol']].append(r)
     keys=('previous_known_us','candidate_known_us','previous_unknown_us','candidate_unknown_us')
@@ -109,6 +130,8 @@ def publish():
     for record in replay_earlier(reg['params']):
         txt.append(f"| v{record['version']} | {record['chip']} | {record['old']['shapes']} | {pair(record['old'],record['candidate'])} |")
     txt+=['','[早期逐形回放与前序来源](earlier-shape-only.json)']
+    if (OUT/'scope.md').exists():
+        txt+=['','连续调用的训练与预测均在采集前冻结。部分宿主在数值检查及设备执行完成后触及导出文件预算；只有与官方每核 duration、实际入口及 END 指令逐核相符的独立完整窗口计分。原进程终态与逐调用计时依据同时保留。[逐次恢复的证据与范围](scope.md)']
     txt+=['','[时间戳与原始数据库位置](core-windows.json) · [逐进程交叉回放](candidate.json) · [两个协议的事前预测](freeze.json) · [新回执](independent.json)']
     (OUT/'report.md').write_text('\n'.join(txt)+'\n')
 

@@ -1,5 +1,12 @@
 # Recurrent KDA 算例
 
+## 三个 token 怎样更新两个状态半片
+
+![950PR recurrent KDA，顶部为完整预测和资源预算，底部为按状态半片、token 对齐的实测](figures/kda-recurrent-state-pr.png)
+
+[B,T,Hq,Hv,K,V]=[1,3,1,1,128,128] 使用一个 AIV。上栏给出 T=1、2、3 各自完整的预测，T=3 预测 22.388 µs，实测 21.221 µs。下栏按 V 方向的两个 64 列状态半片，再按三个 token 展开。读取的两个状态片各为 32 KiB；六笔状态写回比接口逻辑输出多 128 KiB。这个差额是 DMA 描述符负载，实际进入 HBM 的字节量还取决于缓存。模型给出了各资源的耗时预算，六次更新的实测发起位置可以用来检验下一步的逐步预测。[状态地址、归约指令与全部校验](../../results/v0.21/recurrent-example/report.md)
+
+
 ## 模型与实际库流水对照
 
 ![950PR kda_recurrent 的模型与 CA 同轴对照](figures/kda_recurrent-pr-pipeline.png)

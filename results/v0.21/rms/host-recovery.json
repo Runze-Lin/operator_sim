@@ -1,0 +1,358 @@
+{
+  "utc": "2026-11-19T13:01:31.986918+00:00",
+  "scope": "Host-only repair. Original 10 frozen shapes/predictions and 20 endpoints remain intact. Retries for the 14 width-rejected endpoints only, after original receipts prove zero kernel execution. Six endpoints use original host. No model or kernel change.",
+  "exact_original_contract": "aclnnRmsNorm BF16 x alternating +/-1, BF16 gamma=1, ND [R,C], epsilon=1e-6. BF16 y bit exact +/-1, FP32 per-row rstd within 1e-4 of 1/sqrt(1+1e-6). Host checks all R*C outputs and R statistics.",
+  "change": {
+    "removed": "c<=0 || c>7168 || c%64",
+    "replacement": "c<=0 || (op==\"rmsnorm\" ? (c>8192 || c%16) : (c>7168 || c%64))",
+    "rows_gate_unchanged": [
+      1,
+      262144
+    ],
+    "quant_unchanged": true
+  },
+  "original_freeze": "results/v0.21/rms/freeze.json",
+  "original_utc": "2026-11-19T11:41:05.500531+00:00",
+  "files": {
+    "smoke/large_vector.cpp": "82715927932e28ea6ec8436e85db2eaf02fc595d56a6c335927b0f6616ebbf7d",
+    "build/rms-host-recovery/large_vector_rms16.cpp": "941ccf07906fdffa61e1df5ce479ce2b64591994261abed8714b83b4a01acc7a",
+    "build/rms-host-recovery/large_vector_rms16": "617de91f6eeaa4a7eb942989452b9fb51475578c4be4102a3030a30029ee303d",
+    "build/smoke/large_vector": "a2a780962fdacbe48e6403201dbae4f5fdfcfdb2f8b364a304cccbcc5f4b3ceb",
+    "results/v0.21/rms/freeze.json": "84a369b7efc454551db78a7f38b3fe6a1391638a8baf08856da2052cc6e5e52b",
+    "runs/sku20-rms/rmsnorm_32_1280_Ascend950PR_957b/qualified.json": "a85e2c98d63bfe9724b35035dbcdddfc164368a0b28842d31f6629b32dbb7984",
+    "development/validation/rms_host_recovery/recover.py": "7cfff66d005dc6e3fd770c513250ace4f6b69bf96de9839084ef908e37518565",
+    "development/validation/rms_host_recovery/build.py": "fc321bd44905cd7a42800cd794fee0cbe02f2f21d66bb40fd351d7a67b3c0bdc"
+  },
+  "new_runner": "build/rms-host-recovery/large_vector_rms16",
+  "original_runner": "build/smoke/large_vector",
+  "expected_kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+  "expected_elf": "0926fe478e5f718ef49241c08ef00b665797690f0f7f22c67fdc25044e0cb54d",
+  "control": {
+    "chip": "Ascend950PR_957b",
+    "shape": [
+      32,
+      1280
+    ],
+    "prior": "runs/sku20-rms/rmsnorm_32_1280_Ascend950PR_957b/qualified.json",
+    "role": "Historical successful old-host control; not a holdout. Compare numerical checks, exact kernel and AIV count, full all-core time, verify per-core windows."
+  },
+  "jobs": [
+    {
+      "id": "rmsnorm_3_6576",
+      "shape": [
+        3,
+        6576
+      ],
+      "outputs": [
+        {
+          "op": "rmsnorm",
+          "shape": [
+            3,
+            6576
+          ],
+          "attrs": {},
+          "indices": [
+            0
+          ],
+          "dt_us": 2.9221871953028935,
+          "dt_ms": 8.57257,
+          "dt_first_us": 3.760335995270002,
+          "old_dt_us": 2.5763744971583065,
+          "pr_us": 2.870518398757794,
+          "pr_ms": 0.47227,
+          "pr_first_us": 3.556063268139062,
+          "old_pr_us": 3.5560632681390616,
+          "future_us": 2.661753928369306,
+          "future_ms": 0.67792,
+          "future_first_us": 3.446569367186002,
+          "old_future_us": 3.4465693671860014
+        }
+      ],
+      "args": [
+        "rmsnorm",
+        "3",
+        "6576"
+      ],
+      "kernels": 1,
+      "wall_s": 5400,
+      "raw_mib": 1200,
+      "nchecks": 2,
+      "sides": [
+        "Ascend950DT_9582",
+        "Ascend950PR_957b"
+      ]
+    },
+    {
+      "id": "rmsnorm_2_5808",
+      "shape": [
+        2,
+        5808
+      ],
+      "outputs": [
+        {
+          "op": "rmsnorm",
+          "shape": [
+            2,
+            5808
+          ],
+          "attrs": {},
+          "indices": [
+            0
+          ],
+          "dt_us": 2.8241148738820754,
+          "dt_ms": 0.19382,
+          "dt_first_us": 3.6791401953672507,
+          "old_dt_us": 2.4540576203102606,
+          "pr_us": 2.7703042294959146,
+          "pr_ms": 0.16841,
+          "pr_first_us": 3.4737520836045666,
+          "old_pr_us": 3.473752083604566,
+          "future_us": 2.5800351417474867,
+          "future_ms": 0.14638,
+          "future_first_us": 3.3721866487662164,
+          "old_future_us": 3.372186648766217
+        }
+      ],
+      "args": [
+        "rmsnorm",
+        "2",
+        "5808"
+      ],
+      "kernels": 1,
+      "wall_s": 5400,
+      "raw_mib": 1200,
+      "nchecks": 2,
+      "sides": [
+        "Ascend950DT_9582",
+        "Ascend950PR_957b"
+      ]
+    },
+    {
+      "id": "rmsnorm_7_6320",
+      "shape": [
+        7,
+        6320
+      ],
+      "outputs": [
+        {
+          "op": "rmsnorm",
+          "shape": [
+            7,
+            6320
+          ],
+          "attrs": {},
+          "indices": [
+            0
+          ],
+          "dt_us": 3.072470691869741,
+          "dt_ms": 0.17417,
+          "dt_first_us": 3.8567609199917463,
+          "old_dt_us": 2.711212304611861,
+          "pr_us": 3.0218413487620808,
+          "pr_ms": 0.16231,
+          "pr_first_us": 3.6471350737104444,
+          "old_pr_us": 3.6471350737104444,
+          "future_us": 2.767981585829423,
+          "future_ms": 0.14482,
+          "future_first_us": 3.535183322186978,
+          "old_future_us": 3.5351833221869775
+        }
+      ],
+      "args": [
+        "rmsnorm",
+        "7",
+        "6320"
+      ],
+      "kernels": 1,
+      "wall_s": 5400,
+      "raw_mib": 1200,
+      "nchecks": 2,
+      "sides": [
+        "Ascend950DT_9582",
+        "Ascend950PR_957b"
+      ]
+    },
+    {
+      "id": "rmsnorm_19_7632",
+      "shape": [
+        19,
+        7632
+      ],
+      "outputs": [
+        {
+          "op": "rmsnorm",
+          "shape": [
+            19,
+            7632
+          ],
+          "attrs": {},
+          "indices": [
+            0
+          ],
+          "dt_us": 4.479193843026122,
+          "dt_ms": 0.17198,
+          "dt_first_us": 5.096811374315911,
+          "old_dt_us": 3.6189680321857303,
+          "pr_us": 4.439460180163621,
+          "pr_ms": 0.16021,
+          "pr_first_us": 4.8880482375662275,
+          "old_pr_us": 4.8880482375662275,
+          "future_us": 3.9784133220254962,
+          "future_ms": 0.14344,
+          "future_first_us": 4.671860067756371,
+          "old_future_us": 4.671860067756371
+        }
+      ],
+      "args": [
+        "rmsnorm",
+        "19",
+        "7632"
+      ],
+      "kernels": 1,
+      "wall_s": 5400,
+      "raw_mib": 1200,
+      "nchecks": 2,
+      "sides": [
+        "Ascend950DT_9582",
+        "Ascend950PR_957b"
+      ]
+    },
+    {
+      "id": "rmsnorm_51_1488",
+      "shape": [
+        51,
+        1488
+      ],
+      "outputs": [
+        {
+          "op": "rmsnorm",
+          "shape": [
+            51,
+            1488
+          ],
+          "attrs": {},
+          "indices": [
+            0
+          ],
+          "dt_us": 5.9619600434761475,
+          "dt_ms": 0.17076,
+          "dt_first_us": 6.257083526287193,
+          "old_dt_us": 5.132931653958553,
+          "pr_us": 5.959866791837543,
+          "pr_ms": 0.16104,
+          "pr_first_us": 6.044179383785741,
+          "old_pr_us": 6.044179383785741,
+          "future_us": 5.148060260241888,
+          "future_ms": 0.14393,
+          "future_first_us": 5.735616494023284,
+          "old_future_us": 5.735616494023284
+        }
+      ],
+      "args": [
+        "rmsnorm",
+        "51",
+        "1488"
+      ],
+      "kernels": 1,
+      "wall_s": 5400,
+      "raw_mib": 1200,
+      "nchecks": 2,
+      "sides": [
+        "Ascend950DT_9582",
+        "Ascend950PR_957b"
+      ]
+    },
+    {
+      "id": "rmsnorm_79_2192",
+      "shape": [
+        79,
+        2192
+      ],
+      "outputs": [
+        {
+          "op": "rmsnorm",
+          "shape": [
+            79,
+            2192
+          ],
+          "attrs": {},
+          "indices": [
+            0
+          ],
+          "dt_us": 4.462190114029984,
+          "dt_ms": 0.17749,
+          "dt_first_us": 4.867682586475795,
+          "old_dt_us": 4.074401654591781,
+          "pr_us": 4.452445141180823,
+          "pr_ms": 0.16314,
+          "pr_first_us": 4.656848946850227,
+          "old_pr_us": 4.656848946850227,
+          "future_us": 5.483498112368813,
+          "future_ms": 0.15287,
+          "future_first_us": 5.994608799767698,
+          "old_future_us": 5.994608799767698
+        }
+      ],
+      "args": [
+        "rmsnorm",
+        "79",
+        "2192"
+      ],
+      "kernels": 1,
+      "wall_s": 5400,
+      "raw_mib": 1200,
+      "nchecks": 2,
+      "sides": [
+        "Ascend950DT_9582",
+        "Ascend950PR_957b"
+      ]
+    },
+    {
+      "id": "rmsnorm_495_5040",
+      "shape": [
+        495,
+        5040
+      ],
+      "outputs": [
+        {
+          "op": "rmsnorm",
+          "shape": [
+            495,
+            5040
+          ],
+          "attrs": {},
+          "indices": [
+            0
+          ],
+          "dt_us": 6.489374027884967,
+          "dt_ms": 0.1778,
+          "dt_first_us": 6.684244193956508,
+          "old_dt_us": 5.229237027313067,
+          "pr_us": 6.80193862040308,
+          "pr_ms": 0.1685,
+          "pr_first_us": 6.844386935985591,
+          "old_pr_us": 6.8443869359855904,
+          "future_us": 5.388735699825348,
+          "future_ms": 0.14736,
+          "future_first_us": 5.848976904179571,
+          "old_future_us": 5.848976904179572
+        }
+      ],
+      "args": [
+        "rmsnorm",
+        "495",
+        "5040"
+      ],
+      "kernels": 1,
+      "wall_s": 5400,
+      "raw_mib": 5197,
+      "nchecks": 2,
+      "sides": [
+        "Ascend950DT_9582",
+        "Ascend950PR_957b"
+      ]
+    }
+  ],
+  "retention": "Original and retry receipts kept separately. Retry uses the original per-endpoint wall and byte caps, and only after a pre-ACL rejection. One serial slot released by the completed sku20-rms campaign. Same no-dump one-kernel command, all cores.",
+  "expected_endpoints": 14
+}

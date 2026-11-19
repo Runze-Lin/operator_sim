@@ -1,0 +1,76 @@
+{
+  "qualified": true,
+  "kernel": {
+    "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+    "ca_us": 11.686060192994773,
+    "active_aic": 0,
+    "active_aiv": 2,
+    "windows": {
+      "core16.veccore0": [
+        0.056969642639160156,
+        11.686060192994773
+      ],
+      "core0.veccore0": [
+        0.0,
+        11.528484585694969
+      ]
+    },
+    "trace": "runs/fusion21/retry_attnres_h7168_2_3_Ascend950PR_957b/profile/OPPROF_20261119211411_ENUWHELBEGCPIQGJ/simulator/trace.json",
+    "trace_sha256": "de978c0a8c33c3ada5948b7f41eb77cfde98d6803cfd361e806c760d2d6cb193",
+    "binary_sha256": "1597fd69d8978d7e29c87ced997e2e0f06b39d509732abba08235b3abac5f392",
+    "queue_events": {
+      "SCALAR": 4516,
+      "FLOWCTRL": 370,
+      "MTE2": 20,
+      "MTE3": 10,
+      "PUSHQ": 178,
+      "RVECLP": 770,
+      "RVECSU": 888,
+      "RVECLD": 14892,
+      "RVECEX": 39172,
+      "RVECST": 8616
+    },
+    "mmad": 0,
+    "total_events": 69432
+  },
+  "correctness": [
+    "correctness shape=2x7168 S=8 N=3 groups=output,prefix,materialized,bank bad=0"
+  ],
+  "shape": [
+    2,
+    7168,
+    8,
+    3
+  ],
+  "chip": "Ascend950PR_957b",
+  "cost": {
+    "seconds": 105.16669539990835,
+    "cpu_seconds": 1634.17,
+    "raw_bytes": 126858104,
+    "exit_code": 0,
+    "stop_reason": null,
+    "started_utc": "2026-11-19T13:14:11.702705+00:00",
+    "finished_utc": "2026-11-19T13:15:56.869952+00:00",
+    "command": [
+      "/home/l00925865/operator_sim/runs/fusion21/retry_attnres_h7168_2_3_Ascend950PR_957b/cpu.txt",
+      "bash",
+      "/home/l00925865/operator_sim/scripts/cann-run.sh",
+      "bash",
+      "-c",
+      "export ASCEND_CUSTOM_OPP_PATH=\"$1\"; export LD_LIBRARY_PATH=\"$1/op_api/lib:$LD_LIBRARY_PATH\"; shift; exec \"$@\"",
+      "attn-res-vendor",
+      "/home/l00925865/operator_sim/runs/workloads19/sources/fastbuild/vendors/custom_transformer",
+      "msopprof",
+      "simulator",
+      "--soc-version=Ascend950PR_957b",
+      "--dump=true",
+      "--launch-count=1",
+      "--timeout=10",
+      "--output=/home/l00925865/operator_sim/runs/fusion21/retry_attnres_h7168_2_3_Ascend950PR_957b/profile",
+      "/home/l00925865/operator_sim/build/smoke/attn_res_fwd19",
+      "2",
+      "3"
+    ]
+  },
+  "run_log": "runs/fusion21/retry_attnres_h7168_2_3_Ascend950PR_957b/run.log"
+}

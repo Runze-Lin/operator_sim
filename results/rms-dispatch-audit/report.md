@@ -37,10 +37,10 @@ DT [4,4608] 接在使用 3 个 AIV 的 RMSNorm 后。core16 的第一条 AIV 已
 
 | 协议 | 芯片 | 合格 / 登记 | 已知顺序 旧 → 候选 WAPE / 最大 | 仅 shape 旧 → 候选 WAPE / 最大 |
 |---|---|---:|---|---|
-| ordered new sequence | Ascend950DT_9582 | 0 / 10 | N/A | N/A |
-| ordered new sequence | Ascend950PR_957b | 0 / 10 | N/A | N/A |
-| isolated frozen v0.21 | Ascend950DT_9582 | 0 / 10 | N/A | N/A |
-| isolated frozen v0.21 | Ascend950PR_957b | 0 / 10 | N/A | N/A |
+| ordered new sequence | Ascend950DT_9582 | 9 / 10 | 17.86% / 47.26% → 6.60% / 15.64% | 18.80% / 37.80% → 13.99% / 37.43% |
+| ordered new sequence | Ascend950PR_957b | 9 / 10 | 17.32% / 52.16% → 7.60% / 14.47% | 16.37% / 38.10% → 17.84% / 36.44% |
+| isolated frozen v0.21 | Ascend950DT_9582 | 7 / 10 | 6.39% / 10.78% → 6.39% / 10.78% | 13.69% / 27.76% → 19.05% / 27.08% |
+| isolated frozen v0.21 | Ascend950PR_957b | 6 / 10 | 2.92% / 5.83% → 2.92% / 5.83% | 12.53% / 23.99% → 17.95% / 21.78% |
 
 ## 更早归档的仅输入预测
 
@@ -54,5 +54,7 @@ DT [4,4608] 接在使用 3 个 AIV 的 RMSNorm 后。core16 的第一条 AIV 已
 | v0.18 | Ascend950PR_957b | 10 | 13.06% / 24.11% → 19.64% / 30.34% |
 
 [早期逐形回放与前序来源](earlier-shape-only.json)
+
+连续调用的训练与预测均在采集前冻结。部分宿主在数值检查及设备执行完成后触及导出文件预算；只有与官方每核 duration、实际入口及 END 指令逐核相符的独立完整窗口计分。原进程终态与逐调用计时依据同时保留。[逐次恢复的证据与范围](scope.md)
 
 [时间戳与原始数据库位置](core-windows.json) · [逐进程交叉回放](candidate.json) · [两个协议的事前预测](freeze.json) · [新回执](independent.json)

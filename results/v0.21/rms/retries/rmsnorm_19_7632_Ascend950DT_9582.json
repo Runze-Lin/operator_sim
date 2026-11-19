@@ -1,0 +1,196 @@
+{
+  "id": "rmsnorm_19_7632",
+  "op": "rmsnorm",
+  "shape": [
+    19,
+    7632
+  ],
+  "chip": "Ascend950DT_9582",
+  "original": {
+    "receipt": "results/v0.21/rms/receipts/rmsnorm_19_7632_Ascend950DT_9582.json",
+    "receipt_sha256": "58e1451d2cca11addd95922e1834b9f74699958fa944e3932d900882a0a6b30f",
+    "log": "runs/rms21/rmsnorm_19_7632_Ascend950DT_9582/run.log",
+    "log_sha256": "25ecbd5d75bff20ca34a522b3b7c860685fda8cb299d3c1c05ae60599fc9fa95",
+    "failure": "SMOKE_FAIL: invalid prefill contract",
+    "device_kernel_launched": false
+  },
+  "host_recovery": "results/v0.21/rms/host-recovery.json",
+  "qualified": true,
+  "observation": {
+    "op": "rmsnorm",
+    "shape": [
+      19,
+      7632
+    ],
+    "attrs": {},
+    "chip": "Ascend950DT_9582",
+    "ca_us": 4.932121756486595,
+    "active_aic": 0,
+    "active_aiv": 19,
+    "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+    "api": "aclnnRmsNorm",
+    "correctness": [
+      "correctness count=145008 bad=0",
+      "correctness count=19 bad=0"
+    ],
+    "stages": [
+      {
+        "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+        "ca_us": 4.932121756486595,
+        "active_aic": 0,
+        "active_aiv": 19,
+        "windows": {
+          "core19.veccore0": [
+            0.23333358764648438,
+            4.855151656083763
+          ],
+          "core3.veccore1": [
+            0.14969730377197266,
+            3.8684849767014384
+          ],
+          "core17.veccore0": [
+            0.09878778457641602,
+            4.777575972490013
+          ],
+          "core1.veccore1": [
+            0.09090900421142578,
+            3.66242456715554
+          ],
+          "core16.veccore1": [
+            0.21515178680419922,
+            4.616364005021751
+          ],
+          "core2.veccore1": [
+            0.12303018569946289,
+            4.166060927323997
+          ],
+          "core16.veccore0": [
+            0.19696998596191406,
+            4.432121756486595
+          ],
+          "core0.veccore1": [
+            0.07636356353759766,
+            3.7072730092331767
+          ],
+          "core1.veccore0": [
+            0.07999992370605469,
+            3.7812123326584697
+          ],
+          "core4.veccore0": [
+            0.15878820419311523,
+            3.9672732381150126
+          ],
+          "core19.veccore1": [
+            0.24484872817993164,
+            4.700000288896263
+          ],
+          "core0.veccore0": [
+            0.0,
+            4.26242399495095
+          ],
+          "core18.veccore0": [
+            0.1593942642211914,
+            3.7454547910019755
+          ],
+          "core17.veccore1": [
+            0.13757610321044922,
+            4.932121756486595
+          ],
+          "core18.veccore1": [
+            0.16424274444580078,
+            4.524848463945091
+          ],
+          "core2.veccore0": [
+            0.10727262496948242,
+            4.0696969060227275
+          ],
+          "core3.veccore0": [
+            0.09212112426757812,
+            3.7060608891770244
+          ],
+          "core4.veccore1": [
+            0.17212152481079102,
+            3.8587880162522197
+          ],
+          "core20.veccore0": [
+            0.18242454528808594,
+            3.8163638142868876
+          ]
+        },
+        "trace": "runs/rms21-host-recovery/rmsnorm_19_7632_Ascend950DT_9582/profile/OPPROF_20261119211253_MDGHDCONYJKHDTBP/simulator/trace.json",
+        "trace_sha256": "057b6d54a6681f6d344b969a5e931550bcadc6497d7f1198087cdd749a6d9fc7",
+        "binary_sha256": "0926fe478e5f718ef49241c08ef00b665797690f0f7f22c67fdc25044e0cb54d",
+        "queue_events": {
+          "SCALAR": 19361,
+          "FLOWCTRL": 741,
+          "MTE2": 76,
+          "MTE3": 57,
+          "PUSHQ": 209,
+          "RVECLP": 418,
+          "RVECEX": 44270,
+          "RVECSU": 361,
+          "RVECLD": 13870,
+          "RVECST": 7125
+        },
+        "mmad": 0,
+        "total_events": 86488
+      }
+    ],
+    "trace": [
+      "runs/rms21-host-recovery/rmsnorm_19_7632_Ascend950DT_9582/profile/OPPROF_20261119211253_MDGHDCONYJKHDTBP/simulator/trace.json"
+    ],
+    "trace_sha256": [
+      "057b6d54a6681f6d344b969a5e931550bcadc6497d7f1198087cdd749a6d9fc7"
+    ],
+    "cost": {
+      "started_utc": "2026-11-19T13:12:53.722512+00:00",
+      "finished_utc": "2026-11-19T13:14:11.814244+00:00",
+      "seconds": 78.09167888993397,
+      "raw_bytes": 110836123,
+      "peak_bytes": 151225281,
+      "cpu_seconds": 1153.48,
+      "exit_code": 0,
+      "stop_reason": null,
+      "command": [
+        "bash",
+        "/home/l00925865/operator_sim/scripts/cann-run.sh",
+        "msopprof",
+        "simulator",
+        "--soc-version=Ascend950DT_9582",
+        "--dump=false",
+        "--launch-count=1",
+        "--timeout=90",
+        "--output=/home/l00925865/operator_sim/runs/rms21-host-recovery/rmsnorm_19_7632_Ascend950DT_9582/profile",
+        "/home/l00925865/operator_sim/build/rms-host-recovery/large_vector_rms16",
+        "rmsnorm",
+        "19",
+        "7632"
+      ]
+    },
+    "case_id": "rmsnorm_19_7632",
+    "role": "new paired DT CA",
+    "scope": "one all-core window",
+    "frozen": {
+      "dt_us": 4.479193843026122,
+      "dt_first_us": 5.096811374315911,
+      "old_dt_us": 3.6189680321857303,
+      "pr_us": 4.439460180163621,
+      "pr_first_us": 4.8880482375662275,
+      "old_pr_us": 4.8880482375662275,
+      "future_us": 3.9784133220254962,
+      "future_first_us": 4.671860067756371,
+      "old_future_us": 4.671860067756371
+    },
+    "dtype": "bf16",
+    "runner_sha256": "617de91f6eeaa4a7eb942989452b9fb51475578c4be4102a3030a30029ee303d",
+    "input_contract_log": [
+      "case=rmsnorm api=aclnnRmsNorm R=19 C=7632 dtype=BF16 epsilon=1e-6"
+    ],
+    "host_args": [
+      "rmsnorm",
+      "19",
+      "7632"
+    ],
+    "run_log": "runs/rms21-host-recovery/rmsnorm_19_7632_Ascend950DT_9582/run.log"
+  }
+}

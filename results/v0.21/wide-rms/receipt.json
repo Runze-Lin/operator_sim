@@ -1,0 +1,163 @@
+{
+  "shape": [
+    32768,
+    1280
+  ],
+  "dtype": "bf16",
+  "role": "independent for original v0.20; v0.21 post-result replay",
+  "api": "aclnnRmsNorm",
+  "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+  "freeze": "results/v0.20/rms/freeze.json",
+  "freeze_utc": "2026-11-19T08:35:30.314539+00:00",
+  "freeze_sha256": "59d7a41984467a57b0b0f6252201e9a35ab6eae4e3e1d1d9eb6f5b0b101c4312",
+  "runner_sha256": "a2a780962fdacbe48e6403201dbae4f5fdfcfdb2f8b364a304cccbcc5f4b3ceb",
+  "endpoints": {
+    "dt": {
+      "chip": "Ascend950DT_9582",
+      "ca_us": 44.584847453050315,
+      "prediction_us": {
+        "v019_frozen": 43.776448,
+        "v020_frozen": 39.56656872695264,
+        "v021_replay": 39.39327781005304
+      },
+      "signed_error_pct": {
+        "v019_frozen": -1.813170839939715,
+        "v020_frozen": -11.255570026076978,
+        "v021_replay": -11.644246733072727
+      },
+      "active_aiv": 64,
+      "active_aic": 0,
+      "last_core": "core21.veccore0",
+      "x_events": 19817856,
+      "queue_events": {
+        "SCALAR": 575936,
+        "FLOWCTRL": 21312,
+        "MTE2": 1600,
+        "MTE3": 2880,
+        "PUSHQ": 12800,
+        "RVECLP": 219136,
+        "RVECEX": 12203008,
+        "RVECSU": 277632,
+        "RVECLD": 4071680,
+        "RVECST": 2431872
+      },
+      "trace": "runs/sku20-rms/rmsnorm_32768_1280_Ascend950DT_9582/profile/OPPROF_20261119190954_DBCTFAYXMGYJPGCM/simulator/trace.json",
+      "trace_bytes": 8200964951,
+      "trace_sha256": "be6011c581dd9ee595ee838f4e4cfc9780a08993397a345426f6b3c6d70bd87d",
+      "binary_sha256": "0926fe478e5f718ef49241c08ef00b665797690f0f7f22c67fdc25044e0cb54d",
+      "qualified": "runs/sku20-rms/rmsnorm_32768_1280_Ascend950DT_9582/qualified.json",
+      "qualified_sha256": "1540fe41b667bfd5267fbaaa39d79d7321060af36a62afcb6edfb90196d4a9f1",
+      "correctness": [
+        "correctness count=41943040 bad=0",
+        "correctness count=32768 bad=0"
+      ],
+      "cost": {
+        "started_utc": "2026-11-19T11:09:54.228832+00:00",
+        "finished_utc": "2026-11-19T12:34:50.100833+00:00",
+        "seconds": 5095.872001,
+        "cpu_seconds": 135656.22999999998,
+        "raw_bytes": 24180663182,
+        "peak_bytes": 24180663182,
+        "peak_is_lower_bound": true
+      }
+    },
+    "pr": {
+      "chip": "Ascend950PR_957b",
+      "ca_us": 69.72908782958984,
+      "prediction_us": {
+        "v019_frozen": 121.61513281385281,
+        "v020_frozen": 61.602881385281385,
+        "v021_replay": 61.61632891242171
+      },
+      "signed_error_pct": {
+        "v019_frozen": 74.4109045439784,
+        "v020_frozen": -11.653969236150063,
+        "v021_replay": -11.634683845276761
+      },
+      "active_aiv": 56,
+      "active_aic": 0,
+      "last_core": "core5.veccore0",
+      "x_events": 19807494,
+      "queue_events": {
+        "SCALAR": 567024,
+        "FLOWCTRL": 20970,
+        "MTE2": 1566,
+        "MTE3": 2852,
+        "PUSHQ": 12694,
+        "RVECLP": 218976,
+        "RVECEX": 12202448,
+        "RVECSU": 277522,
+        "RVECLD": 4071620,
+        "RVECST": 2431822
+      },
+      "trace": "runs/sku20-rms/rmsnorm_32768_1280_Ascend950PR_957b/profile/OPPROF_20261119191042_OZQRVHYSTJXIHVRI/simulator/trace.json",
+      "trace_bytes": 8193852382,
+      "trace_sha256": "585ffbd3197912ecfa8b04800648793d194567b5d4a3301ad2f309d9c0224f5d",
+      "binary_sha256": "0926fe478e5f718ef49241c08ef00b665797690f0f7f22c67fdc25044e0cb54d",
+      "qualified": "runs/sku20-rms/rmsnorm_32768_1280_Ascend950PR_957b/qualified.json",
+      "qualified_sha256": "365c43a0da10cdeedf3d077274191fd9f4ae7cd83d2de17a533f68c470e87e53",
+      "correctness": [
+        "correctness count=41943040 bad=0",
+        "correctness count=32768 bad=0"
+      ],
+      "cost": {
+        "started_utc": "2026-11-19T11:10:42.456832+00:00",
+        "finished_utc": "2026-11-19T12:47:00.004833+00:00",
+        "seconds": 5777.548001,
+        "cpu_seconds": 119368.09000000001,
+        "raw_bytes": 24157988491,
+        "peak_bytes": 47608450104,
+        "peak_is_lower_bound": true
+      }
+    }
+  },
+  "dt_over_pr": {
+    "ca": 0.6394009851672051,
+    "v019_frozen": 0.35995888823313904,
+    "v020_frozen": 0.6422843840613951,
+    "v021_replay": 0.639331789241203
+  },
+  "future_us": {
+    "status": "extrapolation",
+    "v019": 21.822656070811902,
+    "v020": 21.822656070811902,
+    "v021": 21.43575091105675
+  },
+  "all_ten_pairs_errors": {
+    "dt": {
+      "v019_frozen": {
+        "n": 10,
+        "wape_pct": 3.9212536478272635,
+        "max_abs_pct": 12.897999907470492
+      },
+      "v020_frozen": {
+        "n": 10,
+        "wape_pct": 9.39566451654183,
+        "max_abs_pct": 12.897999907470492
+      },
+      "v021_replay": {
+        "n": 10,
+        "wape_pct": 10.766452594588461,
+        "max_abs_pct": 14.658219660057965
+      }
+    },
+    "pr": {
+      "v019_frozen": {
+        "n": 10,
+        "wape_pct": 59.35709246993894,
+        "max_abs_pct": 74.4109045439784
+      },
+      "v020_frozen": {
+        "n": 10,
+        "wape_pct": 13.010886696371546,
+        "max_abs_pct": 22.545795578209596
+      },
+      "v021_replay": {
+        "n": 10,
+        "wape_pct": 13.2733484494567,
+        "max_abs_pct": 22.902062819633176
+      }
+    }
+  },
+  "trace_audit": "Original qualifier streamed all complete events and the raw SHA256. This receipt reuses those results and checks the published endpoint against the host log, per-core windows, raw file size, binary digest, runner and preregistration."
+}

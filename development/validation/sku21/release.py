@@ -75,7 +75,7 @@ def changes(out,paired):
                 return f"{m['wape']:.2%} / {m['max_ape']:.2%}" if m else 'N/A'
             lines.append(f'| {NAMES[op]} | {side.upper()} | {len(group)} / 10 | {cell(old)} | {cell(new)} |')
     costs = []
-    for root in ('vector21','fusion21','dispatch21','rms21','fusion21-retry','dispatch21-retry'):
+    for root in ('vector21','fusion21','dispatch21','rms21','fusion21-retry','dispatch21-retry','rms21-host-recovery'):
         for p in sorted((ROOT/'runs'/root).glob('*/cost.json')):
             item = read(p)
             seconds = item.get('seconds',item.get('wall_s'))
@@ -92,6 +92,12 @@ def changes(out,paired):
         lines+=[f'目前收齐的 {len(times)} 份宿主成本回执（含失败）里，CA 墙钟中位 {median(times):.1f} 秒，最长 {max(times):.1f} 秒。多队列并行，按单任务计时。']
     lines+=['','### 大输入的采集范围','',
         'B8×32k 的全宽 Cast 输入为 [262144,5120]，读 2.5 GiB、写 5 GiB，预测在 64 个 DT AIV 上每核最多 993 轮。原 v0.20 预测 2014.328 µs 在启动前冻结；v0.21 的 2514.820 µs 是运行中的后续预测。记录全核 wrapper 从开始到完成的设备窗口，另要求 1,342,177,280 个输出逐元素校验。原 4 小时预算按同一进程增加 2.5 小时，原始数据仍限 8 GiB。']
+    if (OUT/'matmul-pages-pr/page-audit.json').is_file():
+        lines+=['同形 Matmul [1280,2048,512] 补做一次 PR 完整采集。预测 14.027 µs，CA 13.218 µs；逐核确认 24 个矩形尾块与 416 次 MMAD。DT 同形先前已经实测。[两卡逐页图与耗时比](matmul-pages-pr/report.md)']
+    if (OUT/'wide-rms/report.md').is_file():
+        lines+=['RMSNorm [32768,1280] 双端完整。最忙核的 22 / 25 轮与预测一致，PR 满块 rstd 发起比模型多等 0.776 µs（中位数之差）。[大输入的逐轮实测与模型](wide-rms/report.md)']
+    if (OUT/'rms/host-recovery.json').exists():
+        lines+=['原测试宿主在进入 ACL 前拒绝了七种已冻结的 RMS 列宽。补采沿用同一组 shape、预测、金标和设备库。对照形 [32,1280] 在 PR 上使用同一 ELF，原宿主 6.309 µs，修复后 6.266 µs，两组成对输出均通过。[补采登记与端点范围](rms/host-recovery.json)']
     terminal=OUT/'large/full-hidden-terminal.json'
     if terminal.exists():
         native=read(terminal)
@@ -112,9 +118,11 @@ def inputs():
              OUT/'coverage/supplement.json']
     for folder in ('dispatch','rms'):
         files.extend(sorted((OUT/folder/'receipts').glob('*.json')))
-    files.extend(sorted((OUT/'dispatch/retries').glob('*.json')))
+        files.extend(sorted((OUT/folder/'retries').glob('*.json')))
     files.extend(sorted((OUT/'large').glob('*terminal.json')))
+    files.extend(sorted((OUT/'matmul-pages-pr').glob('page-audit.json')))
     files.extend(sorted((ROOT/'results/rms-dispatch-audit').glob('ordered-Ascend*.json')))
+    files.extend(sorted((ROOT/'results/rms-dispatch-audit').glob('verified-ordered-Ascend*.json')))
     files.extend(sorted((ROOT/'results/post-candidate').glob('paired-Ascend*.json')))
     return sha256(b''.join(f.read_bytes() for f in files)).hexdigest()
 

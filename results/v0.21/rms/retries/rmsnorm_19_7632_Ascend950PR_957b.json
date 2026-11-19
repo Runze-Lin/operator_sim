@@ -1,0 +1,196 @@
+{
+  "id": "rmsnorm_19_7632",
+  "op": "rmsnorm",
+  "shape": [
+    19,
+    7632
+  ],
+  "chip": "Ascend950PR_957b",
+  "original": {
+    "receipt": "results/v0.21/rms/receipts/rmsnorm_19_7632_Ascend950PR_957b.json",
+    "receipt_sha256": "0080e8837cbea66f943171205a0d0c3d06c9b910dbc2dfee2b37ba29abf6e844",
+    "log": "runs/rms21/rmsnorm_19_7632_Ascend950PR_957b/run.log",
+    "log_sha256": "d200c8ad3f0361def92e4107a03a1f233ac5aab3f99dbbe8ffab2e045a1207a1",
+    "failure": "SMOKE_FAIL: invalid prefill contract",
+    "device_kernel_launched": false
+  },
+  "host_recovery": "results/v0.21/rms/host-recovery.json",
+  "qualified": true,
+  "observation": {
+    "op": "rmsnorm",
+    "shape": [
+      19,
+      7632
+    ],
+    "attrs": {},
+    "chip": "Ascend950PR_957b",
+    "ca_us": 4.8745455769822,
+    "active_aic": 0,
+    "active_aiv": 19,
+    "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+    "api": "aclnnRmsNorm",
+    "correctness": [
+      "correctness count=145008 bad=0",
+      "correctness count=19 bad=0"
+    ],
+    "stages": [
+      {
+        "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+        "ca_us": 4.8745455769822,
+        "active_aic": 0,
+        "active_aiv": 19,
+        "windows": {
+          "core3.veccore0": [
+            0.06181812286376953,
+            3.6018180875107646
+          ],
+          "core19.veccore1": [
+            0.27090930938720703,
+            4.056970122270286
+          ],
+          "core16.veccore1": [
+            0.32424259185791016,
+            4.536969664506614
+          ],
+          "core0.veccore0": [
+            0.0,
+            4.180606367997825
+          ],
+          "core1.veccore1": [
+            0.05575752258300781,
+            3.613333228044212
+          ],
+          "core3.veccore1": [
+            0.06848478317260742,
+            3.500606062822044
+          ],
+          "core19.veccore0": [
+            0.26424264907836914,
+            4.715757849626243
+          ],
+          "core4.veccore1": [
+            0.18060588836669922,
+            3.5769696263596416
+          ],
+          "core1.veccore0": [
+            0.049696922302246094,
+            3.7145452527329326
+          ],
+          "core16.veccore0": [
+            0.3042426109313965,
+            4.630909445695579
+          ],
+          "core18.veccore1": [
+            0.24848461151123047,
+            4.353332999162376
+          ],
+          "core0.veccore1": [
+            0.04181814193725586,
+            3.7072725323960185
+          ],
+          "core18.veccore0": [
+            0.21454524993896484,
+            4.444242003373802
+          ],
+          "core17.veccore0": [
+            0.3430304527282715,
+            4.792121413163841
+          ],
+          "core17.veccore1": [
+            0.35454559326171875,
+            4.8745455769822
+          ],
+          "core20.veccore0": [
+            0.29212141036987305,
+            3.9806060818955302
+          ],
+          "core2.veccore0": [
+            0.11939382553100586,
+            3.758181574754417
+          ],
+          "core2.veccore1": [
+            0.1290907859802246,
+            3.8096971539780498
+          ],
+          "core4.veccore0": [
+            0.17575740814208984,
+            3.6745452908799052
+          ]
+        },
+        "trace": "runs/rms21-host-recovery/rmsnorm_19_7632_Ascend950PR_957b/profile/OPPROF_20261119211412_UDPGLTAEVTNSKKNP/simulator/trace.json",
+        "trace_sha256": "58f12c7bbe644bf1a46e7a46100f74e8e213cb2309f3d85bb996fd49c6ae0543",
+        "binary_sha256": "0926fe478e5f718ef49241c08ef00b665797690f0f7f22c67fdc25044e0cb54d",
+        "queue_events": {
+          "SCALAR": 19361,
+          "FLOWCTRL": 741,
+          "MTE2": 76,
+          "MTE3": 57,
+          "PUSHQ": 209,
+          "RVECLP": 418,
+          "RVECEX": 44270,
+          "RVECSU": 361,
+          "RVECLD": 13870,
+          "RVECST": 7125
+        },
+        "mmad": 0,
+        "total_events": 86488
+      }
+    ],
+    "trace": [
+      "runs/rms21-host-recovery/rmsnorm_19_7632_Ascend950PR_957b/profile/OPPROF_20261119211412_UDPGLTAEVTNSKKNP/simulator/trace.json"
+    ],
+    "trace_sha256": [
+      "58f12c7bbe644bf1a46e7a46100f74e8e213cb2309f3d85bb996fd49c6ae0543"
+    ],
+    "cost": {
+      "started_utc": "2026-11-19T13:14:12.572096+00:00",
+      "finished_utc": "2026-11-19T13:15:42.614964+00:00",
+      "seconds": 90.04280319996178,
+      "raw_bytes": 110761046,
+      "peak_bytes": 110787546,
+      "cpu_seconds": 1195.81,
+      "exit_code": 0,
+      "stop_reason": null,
+      "command": [
+        "bash",
+        "/home/l00925865/operator_sim/scripts/cann-run.sh",
+        "msopprof",
+        "simulator",
+        "--soc-version=Ascend950PR_957b",
+        "--dump=false",
+        "--launch-count=1",
+        "--timeout=90",
+        "--output=/home/l00925865/operator_sim/runs/rms21-host-recovery/rmsnorm_19_7632_Ascend950PR_957b/profile",
+        "/home/l00925865/operator_sim/build/rms-host-recovery/large_vector_rms16",
+        "rmsnorm",
+        "19",
+        "7632"
+      ]
+    },
+    "case_id": "rmsnorm_19_7632",
+    "role": "frozen PR holdout",
+    "scope": "one all-core window",
+    "frozen": {
+      "dt_us": 4.479193843026122,
+      "dt_first_us": 5.096811374315911,
+      "old_dt_us": 3.6189680321857303,
+      "pr_us": 4.439460180163621,
+      "pr_first_us": 4.8880482375662275,
+      "old_pr_us": 4.8880482375662275,
+      "future_us": 3.9784133220254962,
+      "future_first_us": 4.671860067756371,
+      "old_future_us": 4.671860067756371
+    },
+    "dtype": "bf16",
+    "runner_sha256": "617de91f6eeaa4a7eb942989452b9fb51475578c4be4102a3030a30029ee303d",
+    "input_contract_log": [
+      "case=rmsnorm api=aclnnRmsNorm R=19 C=7632 dtype=BF16 epsilon=1e-6"
+    ],
+    "host_args": [
+      "rmsnorm",
+      "19",
+      "7632"
+    ],
+    "run_log": "runs/rms21-host-recovery/rmsnorm_19_7632_Ascend950PR_957b/run.log"
+  }
+}
