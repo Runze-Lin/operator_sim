@@ -1,5 +1,11 @@
 # Kimi K3 Attention Residual · 一个 decode token
 
+## 模型与实际库流水对照
+
+![950PR attn_res_fwd 的模型与 CA 同轴对照](figures/attn_res_fwd-pr-pipeline.png)
+
+本卡 shape 为 `[1, 7168, 8, 1]`，950PR 模型 **14.853 µs**，完整 CA **9.499 µs**，有符号误差 +56.36%。上栏画出当前预测器能够辨识的阶段时长。只返回一个阶段的路线保留整段预测；多个暴露阶段按贡献累计，模型尚未辨识它们的具体指令发起点。下栏用实际库 trace 的最后完成核逐队列展开，黑色刻度来自真实 DMA 或 MMAD 发起。 [图上每段的时间与 trace 指纹](../../results/v0.20/examples/attn_res_fwd-pr.json)
+
 一个本卡 token、H=7168、8 个 bank slot、其中 1 个有效，当前层融合 BF16 加法，将 raw prefix 写到 slot 1，同时保留加权输出并做输出 RMSNorm。
 
 ```python

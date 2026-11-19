@@ -15,7 +15,7 @@ class TestWorkloadAccounting(unittest.TestCase):
             "kda_recurrent": (1, 8, 1, 1, 128, 256),
             "kda_chunk": (1, 64, 1, 1, 128, 128),
             "moe_gating_top_k": (2, 896, 16), "cast_bf16_fp32": (4, 7168),
-            "attn_res_fwd": (9, 7168, 8, 6),
+            "attn_res_fwd": (9, 7168, 8, 6), "sigmoid_fp32": (262144, 12),
         }
         for op in ("grouped_matmul_swiglu_quant_v2", "moe_ffn", "gmm2"):
             shapes[op] = (32, 256, 128, 2)

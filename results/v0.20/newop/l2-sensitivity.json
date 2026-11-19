@@ -1,0 +1,70 @@
+{
+  "role": "after-freeze diagnostic, excluded from holdout accuracy and API",
+  "assumption": "All input remains live, spare L2 can absorb output through local MTE3 or documented L2 bandwidth; external fraction competes with input. Reuses the exact frozen control, tile and special-function prices.",
+  "cast_reference": "results/v0.20/large/cast_262144_32_native-dram.json",
+  "cases": [
+    {
+      "shape": [
+        262144,
+        12
+      ],
+      "Ascend950DT_9582": {
+        "frozen_us": 10.278606545454547,
+        "capacity_retention_us": 8.126307927272727,
+        "fraction": 1.0
+      },
+      "Ascend950PR_957b": {
+        "frozen_us": 21.72763645583699,
+        "capacity_retention_us": 13.046509692200623,
+        "fraction": 1.0
+      },
+      "Ascend970DT": {
+        "frozen_us": 5.426640557620089,
+        "capacity_retention_us": 5.39935910913524,
+        "fraction": 1.0
+      }
+    },
+    {
+      "shape": [
+        1048576,
+        12
+      ],
+      "Ascend950DT_9582": {
+        "frozen_us": 28.858062545454548,
+        "capacity_retention_us": 18.94309767272727,
+        "fraction": 1.0
+      },
+      "Ascend950PR_957b": {
+        "frozen_us": 75.59665337283303,
+        "capacity_retention_us": 40.33275199101485,
+        "fraction": 1.0
+      },
+      "Ascend970DT": {
+        "frozen_us": 10.655724118376359,
+        "capacity_retention_us": 10.0390123518833,
+        "fraction": 1.0
+      }
+    },
+    {
+      "shape": [
+        2097152,
+        12
+      ],
+      "Ascend950DT_9582": {
+        "frozen_us": 54.18498133333334,
+        "capacity_retention_us": 45.79637333333334,
+        "fraction": 0.3333333333333333
+      },
+      "Ascend950PR_957b": {
+        "frozen_us": 147.41730981552075,
+        "capacity_retention_us": 135.42968314885408,
+        "fraction": 0.16666666666666666
+      },
+      "Ascend970DT": {
+        "frozen_us": 17.84908065170969,
+        "capacity_retention_us": 16.368972412126357,
+        "fraction": 0.9868214925130209
+      }
+    }
+  ]
+}

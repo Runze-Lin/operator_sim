@@ -1,5 +1,11 @@
 # FlashAttentionScoreV2 算例
 
+## 首个 KV 页与后续 31 次发起间隔
+
+![950PR fa 的模型与 CA 同轴对照](figures/fa-pr-pipeline.png)
+
+本卡 shape 为 `[9, 8191, 64, 1, 1]`，950PR 模型 **26.725 µs**，完整 CA **25.197 µs**，有符号误差 +6.06%。上栏展开首个 KV 页的 K/V 字节服务、QK、Vector 更新和 PV，然后逐格显示 31 次发起间隔。下栏分别选最后完成的 AIC 和 AIV。两者保留同一全核时间原点，可以读出首次 MMAD 和末次写回；稳态白刻度是模型的 II，CA 侧黑刻度是描述符或 MMAD 的实际发起。 [图上每段的时间与 trace 指纹](../../results/v0.20/examples/fa-pr.json) · [同一 shape 的 950DT 图](figures/fa-dt-pipeline.png)
+
 输入轴顺序为 **Q,KV,D,B,H**。本例比较同一输入契约在 950DT、950PR 与假设的 970DT 上的设备指令窗口。
 
 ```python

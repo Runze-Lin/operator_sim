@@ -1,5 +1,11 @@
 # mHC Sinkhorn 算例
 
+## 模型与实际库流水对照
+
+![950PR mhc_sinkhorn 的模型与 CA 同轴对照](figures/mhc_sinkhorn-pr-pipeline.png)
+
+本卡 shape 为 `[1, 4]`，950PR 模型 **5.885 µs**，完整 CA **5.948 µs**，有符号误差 -1.07%。上栏画出当前预测器能够辨识的阶段时长。只返回一个阶段的路线保留整段预测；多个暴露阶段按贡献累计，模型尚未辨识它们的具体指令发起点。下栏用实际库 trace 的最后完成核逐队列展开，黑色刻度来自真实 DMA 或 MMAD 发起。 [图上每段的时间与 trace 指纹](../../results/v0.20/examples/mhc_sinkhorn-pr.json)
+
 输入轴顺序为 **T,N**。本例比较同一输入契约在 950DT、950PR 与假设的 970DT 上的设备指令窗口。
 
 ```python

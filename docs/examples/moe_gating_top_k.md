@@ -1,5 +1,11 @@
 # MoE Gating Top-K 算例 · Kimi 的两个 token
 
+## 模型与实际库流水对照
+
+![950PR moe_gating_top_k 的模型与 CA 同轴对照](figures/moe_gating_top_k-pr-pipeline.png)
+
+本卡 shape 为 `[1, 384, 6]`，950PR 模型 **4.353 µs**，完整 CA **4.094 µs**，有符号误差 +6.33%。上栏画出当前预测器能够辨识的阶段时长。只返回一个阶段的路线保留整段预测；多个暴露阶段按贡献累计，模型尚未辨识它们的具体指令发起点。下栏用实际库 trace 的最后完成核逐队列展开，黑色刻度来自真实 DMA 或 MMAD 发起。 [图上每段的时间与 trace 指纹](../../results/v0.20/examples/moe_gating_top_k-pr.json)
+
 输入为 FP32 路由 logits `[T=2,E=896]` 和 FP32 修正偏置 `[896]`。每行选 K=16 个全局专家，返回 `[2,16]` 的 FP32 权重与 int32 专家 ID。只测试一个专家组、sigmoid 激活、偏置参与排名、被选中的原始分数归一化、缩放系数 1、eps 为 1e-20 的分支。该样例来自冻结后的独立验证集。
 
 ```python

@@ -24,7 +24,7 @@ print(result.latency_us, result.status)
 
 | `timing_mode` | 适用范围与语义 |
 |---|---|
-| `auto`（默认） | 原 950DT 配置使用参考校准。其他配置的 Quant、RMSNorm、Matmul、FA 使用按目标芯片计价的资源模型。其余算子保留现有 DT 阶段投影。 |
+| `auto`（默认） | 950DT 默认在参考范围内使用校准路径。RMSNorm 超过 512 行、Quant 合并超过 1,048,576 行、BF16 Matmul 有轴超过 4096 时，自动采用目标资源路径。其他配置的 Quant、RMSNorm、Matmul、FA 使用按目标芯片计价的资源模型。其余算子保留现有 DT 阶段投影。 |
 | `resource` | 对四条已实现路线强制使用同一套资源调度，可在 DT、PR 或自定义芯片上调用。没有相应模型的算子返回 `unsupported`。 |
 | `calibrated` | 使用已登记配置的校准路线。DT 上沿用原接口，PR 上的三条路线复现 v0.15 的专属预测及其分支覆盖。自定义配置无对应校准时返回 `unsupported`。 |
 
@@ -106,6 +106,7 @@ def duration_seconds(op, local_shape, attrs, roofline_us, soc="Ascend950DT_9582"
 |---|---|---|
 | [quant](examples/quant.md) | (R,C) | dynamicMXquant，BF16 输入、block32 |
 | [moe_gating_top_k](examples/moe_gating_top_k.md) | (T,E,K) | FP32 logits，单分组 sigmoid 加 bias，挑选 K 个专家 |
+| [sigmoid_fp32](examples/sigmoid_fp32.md) | (T,H_local) | 独立连续 FP32 Sigmoid；Kimi KDA 的 beta 宽是本地 head 数，TP8 时为 12 |
 | [cast_bf16_fp32](examples/cast_bf16_fp32.md) | (T,D) | 连续 BF16 输入、FP32 输出 |
 | [attn_res_fwd](examples/attn_res_fwd.md) | (T,H,S,N) | Kimi BF16 prefix/addend、S 个 bank slot、N 个有效历史行 |
 | [rmsnorm](examples/rmsnorm.md) | (R,C) | BF16，输出含 rstd |
@@ -163,4 +164,4 @@ Kimi 的单组 sigmoid 专家选择使用 FP32 输入，调用 `estimate("moe_ga
 Kimi 的融合 Attention Residual 接收 `(tokens, hidden, bank_slots, valid_bank_rows)`。例如 `estimate("attn_res_fwd", (1,7168,8,1), {"addend":True,"write_idx":1,"materialize":True}, dtype="bf16", chip=chip)` 表示每个 token 使用一个历史 slot，并将结果写至下一个 slot。工作量、逻辑字节以及目标 tiling 随属性变化。只有已定价的单 token/核驻留分支返回设备时间。系统调度器遇到 `status="unavailable"` 应保留工作量并标出缺失时间。`latency_us=None` 不能作为零时长加入整网统计。[逐阶段算例与支持条件](examples/attn_res_fwd.md)
 
 
-在系统延迟的敏感性分析中，注意两个已量化的误差。对于 [2048,5120] 的 RMSNorm，PR 的全片冷读写估计使单次预测比完整 CA 高 77.64%。Kimi AttnResFwd 在 10 个驻留 shape 上，DT/PR 的耗时 WAPE 分别为 29.95%/33.10%，点估计未判中两张卡的相对方向。一个可计时分支仍有特定适用范围；模型的设备微秒数与置信程度分别查看。[全体逐算子误差与逐 shape 数据](error-analysis.md)
+在系统延迟的敏感性分析中，注意两个已量化的误差。对于 [2048,5120] 的 RMSNorm，PR 全写回情景高估 77.64%，默认按 L2 余量估计为 16.669 µs，比完整 CA 的 17.820 µs 低 6.46%。可通过芯片配置 `rms_output_retained_fraction` 做敏感性分析。Kimi AttnResFwd 在 10 个驻留 shape 上，DT/PR 的耗时 WAPE 分别为 29.95%/33.10%，点估计未判中两张卡的相对方向。一个可计时分支仍有特定适用范围；模型的设备微秒数与置信程度分别查看。[全体逐算子误差与逐 shape 数据](error-analysis.md)

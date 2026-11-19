@@ -17,7 +17,7 @@ def _costs():
     return json.loads(path.read_text())['parameters']
 
 
-def resource_quant(shape, chip):
+def resource_quant(shape, chip, *, explain_tiles=False):
     p = _costs()
     d = chip.details
     f = chip.frequency_ghz
@@ -155,4 +155,25 @@ def resource_quant(shape, chip):
                      read_bytes_per_cycle_per_core=read,write_bytes_per_cycle_per_core=write,
                      shared_bytes_per_cycle=shared,scale_granule_bytes=32,scale_peak_writers=writers,
                      scale_queue_cycles=scale_queue,fragment_wave=fragment_details,calibrated_on='arch35 work and scale service from 950DT; target launch and vector phases from chip details')
+    if explain_tiles and fragment is None and plan['iterations'] <= 32:
+        # Expand the same two-slot recurrence for offline figures only. All
+        # positions are relative to the earliest device instruction, in us.
+        intervals = []
+        read_port = last_vec = last_write = prev_vec = prev_write = 0.
+        for i in range(0, rows, tr):
+            for j in range(0, cols, tc):
+                h, w = min(tr, rows-i), min(tc, cols-j)
+                s = service(h, w)
+                rd = max(read_port, prev_vec)
+                vs = max(rd + s['simd_ready'], last_vec, prev_write)
+                ve = vs + s['compute_cycles']
+                ws = max(ve, last_write)
+                we = ws + s['write']
+                span = lambda a,b: [(launch+a)/clock, (launch+b)/clock]
+                intervals.append(dict(rows=h, cols=w, MTE2=span(rd,rd+s['read_latency']),
+                    SIMD=span(vs,ve), MTE3=span(ws,we)))
+                read_port = rd+s['read_ii']
+                prev_vec,last_vec = last_vec,ve
+                prev_write,last_write = last_write,we
+        diagnostics['tile_intervals_us'] = intervals
     return sum(stages.values()),0,active,diagnostics

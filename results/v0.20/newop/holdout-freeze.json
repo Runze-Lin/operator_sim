@@ -1,0 +1,863 @@
+{
+  "utc": "2026-11-19T08:37:00.342418+00:00",
+  "chips": [
+    "Ascend950DT_9582",
+    "Ascend950PR_957b"
+  ],
+  "jobs": [
+    {
+      "shape": [
+        262144,
+        12
+      ],
+      "op": "sigmoid_fp32",
+      "args": [
+        "262144",
+        "12"
+      ],
+      "batch": false,
+      "runner": "build/smoke/sigmoid20",
+      "kernels": 1,
+      "nchecks": 1,
+      "wall_s": 10800,
+      "raw_mib": 24576,
+      "predictions": {
+        "Ascend950DT_9582": {
+          "us": 10.278606545454547,
+          "aiv": 64,
+          "stages": {
+            "front": 2.5272727272727273,
+            "first_read": 1.7182322424242424,
+            "first_vector": 0.6466666666666666,
+            "first_write_and_flags": 1.1285352727272728,
+            "exposed_following_tiles": 4.257899636363637
+          },
+          "plan": {
+            "elements": 3145728,
+            "active_aic": 0,
+            "active_aiv": 64,
+            "block_elements": 49152,
+            "critical_core_elements": 49152,
+            "ub_tile_elements": 15872,
+            "critical_core_tiles": 4,
+            "last_tile_elements": 1536,
+            "vector_groups": 768
+          }
+        },
+        "Ascend950PR_957b": {
+          "us": 21.72763645583699,
+          "aiv": 56,
+          "stages": {
+            "front": 2.5047390908831018,
+            "first_read": 3.241944242424242,
+            "first_vector": 0.6642391304347824,
+            "first_write_and_flags": 2.6522472727272723,
+            "exposed_following_tiles": 12.66446671936759
+          },
+          "plan": {
+            "elements": 3145728,
+            "active_aic": 0,
+            "active_aiv": 56,
+            "block_elements": 56320,
+            "critical_core_elements": 56320,
+            "ub_tile_elements": 15872,
+            "critical_core_tiles": 4,
+            "last_tile_elements": 8704,
+            "vector_groups": 880
+          }
+        },
+        "Ascend970DT": {
+          "us": 5.426640557620089,
+          "aiv": 119,
+          "stages": {
+            "front": 2.412611015732463,
+            "first_read": 1.2775409444444443,
+            "first_vector": 0.592041015625,
+            "first_write_and_flags": 0.6550734000000001,
+            "exposed_following_tiles": 0.48937418181818176
+          },
+          "plan": {
+            "elements": 3145728,
+            "active_aic": 0,
+            "active_aiv": 119,
+            "block_elements": 26624,
+            "critical_core_elements": 26624,
+            "ub_tile_elements": 15872,
+            "critical_core_tiles": 2,
+            "last_tile_elements": 10752,
+            "vector_groups": 416
+          }
+        }
+      }
+    },
+    {
+      "shape": [
+        72,
+        12
+      ],
+      "op": "sigmoid_fp32",
+      "args": [
+        "72",
+        "12"
+      ],
+      "batch": false,
+      "runner": "build/smoke/sigmoid20",
+      "kernels": 1,
+      "nchecks": 1,
+      "wall_s": 1800,
+      "raw_mib": 4096,
+      "predictions": {
+        "Ascend950DT_9582": {
+          "us": 2.7903935204545456,
+          "aiv": 1,
+          "stages": {
+            "front": 1.8254545454545454,
+            "first_read": 0.7400531401515152,
+            "first_vector": 0.07939393939393939,
+            "first_write_and_flags": 0.14549189545454547,
+            "exposed_following_tiles": 1.2057694909868368e-16
+          },
+          "plan": {
+            "elements": 864,
+            "active_aic": 0,
+            "active_aiv": 1,
+            "block_elements": 1024,
+            "critical_core_elements": 864,
+            "ub_tile_elements": 15872,
+            "critical_core_tiles": 1,
+            "last_tile_elements": 864,
+            "vector_groups": 14
+          }
+        },
+        "Ascend950PR_957b": {
+          "us": 2.792550964459816,
+          "aiv": 1,
+          "stages": {
+            "front": 1.8254545454545454,
+            "first_read": 0.7400531401515152,
+            "first_vector": 0.08155138339920948,
+            "first_write_and_flags": 0.14549189545454547,
+            "exposed_following_tiles": 3.272802904107128e-16
+          },
+          "plan": {
+            "elements": 864,
+            "active_aic": 0,
+            "active_aiv": 1,
+            "block_elements": 1024,
+            "critical_core_elements": 864,
+            "ub_tile_elements": 15872,
+            "critical_core_tiles": 1,
+            "last_tile_elements": 864,
+            "vector_groups": 14
+          }
+        },
+        "Ascend970DT": {
+          "us": 2.5577702717487374,
+          "aiv": 1,
+          "stages": {
+            "front": 1.6733333333333333,
+            "first_read": 0.6783820451388889,
+            "first_vector": 0.07268732244318181,
+            "first_write_and_flags": 0.13336757083333334,
+            "exposed_following_tiles": 0.0
+          },
+          "plan": {
+            "elements": 864,
+            "active_aic": 0,
+            "active_aiv": 1,
+            "block_elements": 1024,
+            "critical_core_elements": 864,
+            "ub_tile_elements": 15872,
+            "critical_core_tiles": 1,
+            "last_tile_elements": 864,
+            "vector_groups": 14
+          }
+        }
+      }
+    },
+    {
+      "shape": [
+        1048576,
+        12
+      ],
+      "op": "sigmoid_fp32",
+      "args": [
+        "1048576",
+        "12"
+      ],
+      "batch": false,
+      "runner": "build/smoke/sigmoid20",
+      "kernels": 1,
+      "nchecks": 1,
+      "wall_s": 10800,
+      "raw_mib": 24576,
+      "predictions": {
+        "Ascend950DT_9582": {
+          "us": 28.858062545454548,
+          "aiv": 64,
+          "stages": {
+            "front": 2.5272727272727273,
+            "first_read": 1.7182322424242424,
+            "first_vector": 0.6466666666666666,
+            "first_write_and_flags": 1.1285352727272728,
+            "exposed_following_tiles": 22.837355636363636
+          },
+          "plan": {
+            "elements": 12582912,
+            "active_aic": 0,
+            "active_aiv": 64,
+            "block_elements": 196608,
+            "critical_core_elements": 196608,
+            "ub_tile_elements": 15872,
+            "critical_core_tiles": 13,
+            "last_tile_elements": 6144,
+            "vector_groups": 3072
+          }
+        },
+        "Ascend950PR_957b": {
+          "us": 75.59665337283303,
+          "aiv": 56,
+          "stages": {
+            "front": 2.5047390908831018,
+            "first_read": 3.241944242424242,
+            "first_vector": 0.6642391304347824,
+            "first_write_and_flags": 2.6522472727272723,
+            "exposed_following_tiles": 66.53348363636363
+          },
+          "plan": {
+            "elements": 12582912,
+            "active_aic": 0,
+            "active_aiv": 56,
+            "block_elements": 224768,
+            "critical_core_elements": 224768,
+            "ub_tile_elements": 15872,
+            "critical_core_tiles": 15,
+            "last_tile_elements": 2560,
+            "vector_groups": 3512
+          }
+        },
+        "Ascend970DT": {
+          "us": 10.655724118376359,
+          "aiv": 120,
+          "stages": {
+            "front": 2.413905491640247,
+            "first_read": 1.2775409444444443,
+            "first_vector": 0.592041015625,
+            "first_write_and_flags": 0.6550734000000001,
+            "exposed_following_tiles": 5.717163266666668
+          },
+          "plan": {
+            "elements": 12582912,
+            "active_aic": 0,
+            "active_aiv": 120,
+            "block_elements": 104960,
+            "critical_core_elements": 104960,
+            "ub_tile_elements": 15872,
+            "critical_core_tiles": 7,
+            "last_tile_elements": 9728,
+            "vector_groups": 1640
+          }
+        }
+      }
+    },
+    {
+      "shape": [
+        2048,
+        12
+      ],
+      "op": "sigmoid_fp32",
+      "args": [
+        "2048",
+        "12"
+      ],
+      "batch": false,
+      "runner": "build/smoke/sigmoid20",
+      "kernels": 1,
+      "nchecks": 1,
+      "wall_s": 1800,
+      "raw_mib": 4096,
+      "predictions": {
+        "Ascend950DT_9582": {
+          "us": 3.34457951675102,
+          "aiv": 24,
+          "stages": {
+            "front": 2.361756219781323,
+            "first_read": 0.7470214545454545,
+            "first_vector": 0.08424242424242424,
+            "first_write_and_flags": 0.15155941818181817,
+            "exposed_following_tiles": 1.3780222754135276e-16
+          },
+          "plan": {
+            "elements": 24576,
+            "active_aic": 0,
+            "active_aiv": 24,
+            "block_elements": 1024,
+            "critical_core_elements": 1024,
+            "ub_tile_elements": 15872,
+            "critical_core_tiles": 1,
+            "last_tile_elements": 1024,
+            "vector_groups": 16
+          }
+        },
+        "Ascend950PR_957b": {
+          "us": 3.4038736412004833,
+          "aiv": 24,
+          "stages": {
+            "front": 2.361756219781323,
+            "first_read": 0.7726413852813854,
+            "first_vector": 0.08653162055335967,
+            "first_write_and_flags": 0.18294441558441557,
+            "exposed_following_tiles": 0.0
+          },
+          "plan": {
+            "elements": 24576,
+            "active_aic": 0,
+            "active_aiv": 24,
+            "block_elements": 1024,
+            "critical_core_elements": 1024,
+            "ub_tile_elements": 15872,
+            "critical_core_tiles": 1,
+            "last_tile_elements": 1024,
+            "vector_groups": 16
+          }
+        },
+        "Ascend970DT": {
+          "us": 3.065768577697274,
+          "aiv": 24,
+          "stages": {
+            "front": 2.164943201466213,
+            "first_read": 0.6847696666666666,
+            "first_vector": 0.07712624289772727,
+            "first_write_and_flags": 0.13892946666666667,
+            "exposed_following_tiles": 9.473903143468003e-17
+          },
+          "plan": {
+            "elements": 24576,
+            "active_aic": 0,
+            "active_aiv": 24,
+            "block_elements": 1024,
+            "critical_core_elements": 1024,
+            "ub_tile_elements": 15872,
+            "critical_core_tiles": 1,
+            "last_tile_elements": 1024,
+            "vector_groups": 16
+          }
+        }
+      }
+    },
+    {
+      "shape": [
+        2097152,
+        12
+      ],
+      "op": "sigmoid_fp32",
+      "args": [
+        "2097152",
+        "12"
+      ],
+      "batch": false,
+      "runner": "build/smoke/sigmoid20",
+      "kernels": 1,
+      "nchecks": 1,
+      "wall_s": 10800,
+      "raw_mib": 24576,
+      "predictions": {
+        "Ascend950DT_9582": {
+          "us": 54.18498133333334,
+          "aiv": 64,
+          "stages": {
+            "front": 2.5272727272727273,
+            "first_read": 1.7182322424242424,
+            "first_vector": 0.6466666666666666,
+            "first_write_and_flags": 1.1285352727272728,
+            "exposed_following_tiles": 48.164274424242436
+          },
+          "plan": {
+            "elements": 25165824,
+            "active_aic": 0,
+            "active_aiv": 64,
+            "block_elements": 393216,
+            "critical_core_elements": 393216,
+            "ub_tile_elements": 15872,
+            "critical_core_tiles": 25,
+            "last_tile_elements": 12288,
+            "vector_groups": 6144
+          }
+        },
+        "Ascend950PR_957b": {
+          "us": 147.41730981552075,
+          "aiv": 56,
+          "stages": {
+            "front": 2.5047390908831018,
+            "first_read": 3.241944242424242,
+            "first_vector": 0.6642391304347824,
+            "first_write_and_flags": 2.6522472727272723,
+            "exposed_following_tiles": 138.35414007905135
+          },
+          "plan": {
+            "elements": 25165824,
+            "active_aic": 0,
+            "active_aiv": 56,
+            "block_elements": 449536,
+            "critical_core_elements": 449536,
+            "ub_tile_elements": 15872,
+            "critical_core_tiles": 29,
+            "last_tile_elements": 5120,
+            "vector_groups": 7024
+          }
+        },
+        "Ascend970DT": {
+          "us": 17.84908065170969,
+          "aiv": 120,
+          "stages": {
+            "front": 2.413905491640247,
+            "first_read": 1.2775409444444443,
+            "first_vector": 0.592041015625,
+            "first_write_and_flags": 0.6550734000000001,
+            "exposed_following_tiles": 12.910519799999998
+          },
+          "plan": {
+            "elements": 25165824,
+            "active_aic": 0,
+            "active_aiv": 120,
+            "block_elements": 209920,
+            "critical_core_elements": 209920,
+            "ub_tile_elements": 15872,
+            "critical_core_tiles": 14,
+            "last_tile_elements": 3584,
+            "vector_groups": 3280
+          }
+        }
+      }
+    },
+    {
+      "shape": [
+        32768,
+        12
+      ],
+      "op": "sigmoid_fp32",
+      "args": [
+        "32768",
+        "12"
+      ],
+      "batch": false,
+      "runner": "build/smoke/sigmoid20",
+      "kernels": 1,
+      "nchecks": 1,
+      "wall_s": 1800,
+      "raw_mib": 4096,
+      "predictions": {
+        "Ascend950DT_9582": {
+          "us": 4.40703806060606,
+          "aiv": 64,
+          "stages": {
+            "front": 2.5272727272727273,
+            "first_read": 1.0956402424242424,
+            "first_vector": 0.2781818181818182,
+            "first_write_and_flags": 0.5059432727272727,
+            "exposed_following_tiles": 0.0
+          },
+          "plan": {
+            "elements": 393216,
+            "active_aic": 0,
+            "active_aiv": 64,
+            "block_elements": 6144,
+            "critical_core_elements": 6144,
+            "ub_tile_elements": 15872,
+            "critical_core_tiles": 1,
+            "last_tile_elements": 6144,
+            "vector_groups": 96
+          }
+        },
+        "Ascend950PR_957b": {
+          "us": 5.895232958322424,
+          "aiv": 55,
+          "stages": {
+            "front": 2.5016984392183392,
+            "first_read": 1.8288242424242425,
+            "first_vector": 0.3255830039525691,
+            "first_write_and_flags": 1.2391272727272726,
+            "exposed_following_tiles": 5.512089101654111e-16
+          },
+          "plan": {
+            "elements": 393216,
+            "active_aic": 0,
+            "active_aiv": 55,
+            "block_elements": 7168,
+            "critical_core_elements": 7168,
+            "ub_tile_elements": 15872,
+            "critical_core_tiles": 1,
+            "last_tile_elements": 7168,
+            "vector_groups": 112
+          }
+        },
+        "Ascend970DT": {
+          "us": 3.5812418546054468,
+          "aiv": 110,
+          "stages": {
+            "front": 2.4004457915056996,
+            "first_read": 0.7869716111111111,
+            "first_vector": 0.16590465198863635,
+            "first_write_and_flags": 0.22791979999999998,
+            "exposed_following_tiles": 0.0
+          },
+          "plan": {
+            "elements": 393216,
+            "active_aic": 0,
+            "active_aiv": 110,
+            "block_elements": 3584,
+            "critical_core_elements": 3584,
+            "ub_tile_elements": 15872,
+            "critical_core_tiles": 1,
+            "last_tile_elements": 3584,
+            "vector_groups": 56
+          }
+        }
+      }
+    },
+    {
+      "shape": [
+        9,
+        96
+      ],
+      "op": "sigmoid_fp32",
+      "args": [
+        "9",
+        "96"
+      ],
+      "batch": false,
+      "runner": "build/smoke/sigmoid20",
+      "kernels": 1,
+      "nchecks": 1,
+      "wall_s": 1800,
+      "raw_mib": 4096,
+      "predictions": {
+        "Ascend950DT_9582": {
+          "us": 2.7903935204545456,
+          "aiv": 1,
+          "stages": {
+            "front": 1.8254545454545454,
+            "first_read": 0.7400531401515152,
+            "first_vector": 0.07939393939393939,
+            "first_write_and_flags": 0.14549189545454547,
+            "exposed_following_tiles": 1.2057694909868368e-16
+          },
+          "plan": {
+            "elements": 864,
+            "active_aic": 0,
+            "active_aiv": 1,
+            "block_elements": 1024,
+            "critical_core_elements": 864,
+            "ub_tile_elements": 15872,
+            "critical_core_tiles": 1,
+            "last_tile_elements": 864,
+            "vector_groups": 14
+          }
+        },
+        "Ascend950PR_957b": {
+          "us": 2.792550964459816,
+          "aiv": 1,
+          "stages": {
+            "front": 1.8254545454545454,
+            "first_read": 0.7400531401515152,
+            "first_vector": 0.08155138339920948,
+            "first_write_and_flags": 0.14549189545454547,
+            "exposed_following_tiles": 3.272802904107128e-16
+          },
+          "plan": {
+            "elements": 864,
+            "active_aic": 0,
+            "active_aiv": 1,
+            "block_elements": 1024,
+            "critical_core_elements": 864,
+            "ub_tile_elements": 15872,
+            "critical_core_tiles": 1,
+            "last_tile_elements": 864,
+            "vector_groups": 14
+          }
+        },
+        "Ascend970DT": {
+          "us": 2.5577702717487374,
+          "aiv": 1,
+          "stages": {
+            "front": 1.6733333333333333,
+            "first_read": 0.6783820451388889,
+            "first_vector": 0.07268732244318181,
+            "first_write_and_flags": 0.13336757083333334,
+            "exposed_following_tiles": 0.0
+          },
+          "plan": {
+            "elements": 864,
+            "active_aic": 0,
+            "active_aiv": 1,
+            "block_elements": 1024,
+            "critical_core_elements": 864,
+            "ub_tile_elements": 15872,
+            "critical_core_tiles": 1,
+            "last_tile_elements": 864,
+            "vector_groups": 14
+          }
+        }
+      }
+    },
+    {
+      "shape": [
+        4096,
+        24
+      ],
+      "op": "sigmoid_fp32",
+      "args": [
+        "4096",
+        "24"
+      ],
+      "batch": false,
+      "runner": "build/smoke/sigmoid20",
+      "kernels": 1,
+      "nchecks": 1,
+      "wall_s": 1800,
+      "raw_mib": 4096,
+      "predictions": {
+        "Ascend950DT_9582": {
+          "us": 3.6426686060606066,
+          "aiv": 64,
+          "stages": {
+            "front": 2.5272727272727273,
+            "first_read": 0.8007282424242423,
+            "first_vector": 0.10363636363636364,
+            "first_write_and_flags": 0.2110312727272727,
+            "exposed_following_tiles": 4.823077963947347e-16
+          },
+          "plan": {
+            "elements": 98304,
+            "active_aic": 0,
+            "active_aiv": 64,
+            "block_elements": 1536,
+            "critical_core_elements": 1536,
+            "ub_tile_elements": 15872,
+            "critical_core_tiles": 1,
+            "last_tile_elements": 1536,
+            "vector_groups": 24
+          }
+        },
+        "Ascend950PR_957b": {
+          "us": 3.98198809254624,
+          "aiv": 48,
+          "stages": {
+            "front": 2.4787259167510203,
+            "first_read": 0.9832928138528138,
+            "first_vector": 0.12637351778656122,
+            "first_write_and_flags": 0.39359584415584414,
+            "exposed_following_tiles": 4.823077963947347e-16
+          },
+          "plan": {
+            "elements": 98304,
+            "active_aic": 0,
+            "active_aiv": 48,
+            "block_elements": 2048,
+            "critical_core_elements": 2048,
+            "ub_tile_elements": 15872,
+            "critical_core_tiles": 1,
+            "last_tile_elements": 2048,
+            "vector_groups": 32
+          }
+        },
+        "Ascend970DT": {
+          "us": 3.280213022141718,
+          "aiv": 96,
+          "stages": {
+            "front": 2.3793876459106573,
+            "first_read": 0.6847696666666666,
+            "first_vector": 0.07712624289772727,
+            "first_write_and_flags": 0.13892946666666667,
+            "exposed_following_tiles": 9.473903143468003e-17
+          },
+          "plan": {
+            "elements": 98304,
+            "active_aic": 0,
+            "active_aiv": 96,
+            "block_elements": 1024,
+            "critical_core_elements": 1024,
+            "ub_tile_elements": 15872,
+            "critical_core_tiles": 1,
+            "last_tile_elements": 1024,
+            "vector_groups": 16
+          }
+        }
+      }
+    },
+    {
+      "shape": [
+        16384,
+        48
+      ],
+      "op": "sigmoid_fp32",
+      "args": [
+        "16384",
+        "48"
+      ],
+      "batch": false,
+      "runner": "build/smoke/sigmoid20",
+      "kernels": 1,
+      "nchecks": 1,
+      "wall_s": 1800,
+      "raw_mib": 4096,
+      "predictions": {
+        "Ascend950DT_9582": {
+          "us": 5.4261973333333335,
+          "aiv": 64,
+          "stages": {
+            "front": 2.5272727272727273,
+            "first_read": 1.4888562424242424,
+            "first_vector": 0.5109090909090909,
+            "first_write_and_flags": 0.8991592727272727,
+            "exposed_following_tiles": 0.0
+          },
+          "plan": {
+            "elements": 786432,
+            "active_aic": 0,
+            "active_aiv": 64,
+            "block_elements": 12288,
+            "critical_core_elements": 12288,
+            "ub_tile_elements": 15872,
+            "critical_core_tiles": 1,
+            "last_tile_elements": 12288,
+            "vector_groups": 192
+          }
+        },
+        "Ascend950PR_957b": {
+          "us": 8.426926238954835,
+          "aiv": 55,
+          "stages": {
+            "front": 2.5016984392183392,
+            "first_read": 2.9552242424242423,
+            "first_vector": 0.60447628458498,
+            "first_write_and_flags": 2.3655272727272725,
+            "exposed_following_tiles": 5.512089101654111e-16
+          },
+          "plan": {
+            "elements": 786432,
+            "active_aic": 0,
+            "active_aiv": 55,
+            "block_elements": 14336,
+            "critical_core_elements": 14336,
+            "ub_tile_elements": 15872,
+            "critical_core_tiles": 1,
+            "last_tile_elements": 14336,
+            "vector_groups": 224
+          }
+        },
+        "Ascend970DT": {
+          "us": 3.9293719030746344,
+          "aiv": 119,
+          "stages": {
+            "front": 2.412611015732463,
+            "first_read": 0.9096139444444444,
+            "first_vector": 0.27243874289772724,
+            "first_write_and_flags": 0.3347082,
+            "exposed_following_tiles": 0.0
+          },
+          "plan": {
+            "elements": 786432,
+            "active_aic": 0,
+            "active_aiv": 119,
+            "block_elements": 6656,
+            "critical_core_elements": 6656,
+            "ub_tile_elements": 15872,
+            "critical_core_tiles": 1,
+            "last_tile_elements": 6656,
+            "vector_groups": 104
+          }
+        }
+      }
+    },
+    {
+      "shape": [
+        131072,
+        12
+      ],
+      "op": "sigmoid_fp32",
+      "args": [
+        "131072",
+        "12"
+      ],
+      "batch": false,
+      "runner": "build/smoke/sigmoid20",
+      "kernels": 1,
+      "nchecks": 1,
+      "wall_s": 10800,
+      "raw_mib": 24576,
+      "predictions": {
+        "Ascend950DT_9582": {
+          "us": 6.863303757575757,
+          "aiv": 64,
+          "stages": {
+            "front": 2.5272727272727273,
+            "first_read": 1.7182322424242424,
+            "first_vector": 0.6466666666666666,
+            "first_write_and_flags": 1.1285352727272728,
+            "exposed_following_tiles": 0.8425968484848482
+          },
+          "plan": {
+            "elements": 1572864,
+            "active_aic": 0,
+            "active_aiv": 64,
+            "block_elements": 24576,
+            "critical_core_elements": 24576,
+            "ub_tile_elements": 15872,
+            "critical_core_tiles": 2,
+            "last_tile_elements": 8704,
+            "vector_groups": 384
+          }
+        },
+        "Ascend950PR_957b": {
+          "us": 12.855883096153192,
+          "aiv": 56,
+          "stages": {
+            "front": 2.5047390908831018,
+            "first_read": 3.241944242424242,
+            "first_vector": 0.6642391304347824,
+            "first_write_and_flags": 2.6522472727272723,
+            "exposed_following_tiles": 3.7927133596837947
+          },
+          "plan": {
+            "elements": 1572864,
+            "active_aic": 0,
+            "active_aiv": 56,
+            "block_elements": 28160,
+            "critical_core_elements": 28160,
+            "ub_tile_elements": 15872,
+            "critical_core_tiles": 2,
+            "last_tile_elements": 12288,
+            "vector_groups": 440
+          }
+        },
+        "Ascend970DT": {
+          "us": 4.65729568893322,
+          "aiv": 119,
+          "stages": {
+            "front": 2.412611015732463,
+            "first_read": 1.1753390000000001,
+            "first_vector": 0.5032626065340908,
+            "first_write_and_flags": 0.5660830666666667,
+            "exposed_following_tiles": 0.0
+          },
+          "plan": {
+            "elements": 1572864,
+            "active_aic": 0,
+            "active_aiv": 119,
+            "block_elements": 13312,
+            "critical_core_elements": 13312,
+            "ub_tile_elements": 15872,
+            "critical_core_tiles": 1,
+            "last_tile_elements": 13312,
+            "vector_groups": 208
+          }
+        }
+      }
+    }
+  ],
+  "runner_sha256": "1f82b297b3ddf60fba0345ac8009b8e8445fe927f522cd347e19084592f7ea2a",
+  "max_workers": 2,
+  "policy": "Full CANN official all-AIV window and full numerical reference. Longest inputs first; 3 hours and 24 GiB per large launch.",
+  "module_sha256": "387fa3f360306ef0887604774ae2c2d14f0efe88039d808d18651d1c5da686dc"
+}

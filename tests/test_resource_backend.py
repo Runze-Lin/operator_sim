@@ -26,6 +26,28 @@ class ResourceBackendTest(TestCase):
         unknown = replace(load_chip('Ascend950PR_957b'),name='other')
         self.assertEqual(estimate('quant',[1,128],chip=unknown,timing_mode='calibrated').status,'unsupported')
 
+    def test_explained_ub_tiles_match_compressed_quant_latency(self):
+        for name in ('Ascend950DT_9582','Ascend950PR_957b'):
+            chip=load_chip(name)
+            for shape in ((2048,5120),(1024,7168),(448,6592)):
+                us,_,_,diag=resource_quant(shape,chip,explain_tiles=True)
+                tiles=diag['tile_intervals_us']
+                self.assertEqual(len(tiles),diag['target_plan']['iterations'])
+                body=max(tiles[-1]['MTE3'][1],diag['stages_us']['dispatch']
+                         +diag['chip_floor_after_launch_cycles']/(1000*chip.frequency_ghz))
+                self.assertAlmostEqual(us,body+diag['stages_us']['drain'])
+                for t in tiles:
+                    self.assertLessEqual(t['MTE2'][1], t['SIMD'][0])
+                    self.assertLessEqual(t['SIMD'][1], t['MTE3'][0])
+
+    def test_monolithic_prefill_uses_bounded_resource_schedule(self):
+        for op,shape in [('quant',(8*262144,7168)),('matmul',(8*32768,32,5120))]:
+            auto=estimate(op,shape)
+            self.assertEqual(auto.status,'extrapolated')
+            self.assertEqual(auto,estimate(op,shape,timing_mode='resource'))
+            self.assertEqual(estimate(op,shape,timing_mode='calibrated').status,'unsupported')
+        self.assertGreater(estimate('quant',(8*262144,7168)).projection['target_plan']['iterations'],100)
+
     def test_quant_slow_resources_and_long_repeats(self):
         chip=load_chip()
         shape=(1024,4096)

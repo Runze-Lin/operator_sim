@@ -1,5 +1,11 @@
 # MoE FFN 两段链 算例
 
+## 模型与实际库流水对照
+
+![950PR moe_ffn 的模型与 CA 同轴对照](figures/moe_ffn-pr-pipeline.png)
+
+本卡 shape 为 `[2, 64, 64, 1]`，950PR 模型 **10.682 µs**，完整 CA **9.992 µs**，有符号误差 +6.91%。上栏按两个串行 kernel 分别给出预测。下栏拼接两次真实设备窗口，并标出各次尾核的指令。两次调用之间的 host 空闲由系统层另计。 [图上每段的时间与 trace 指纹](../../results/v0.20/examples/moe_ffn-pr.json)
+
 输入轴顺序为 **T,K,F（SwiGLU 中间宽度）,E**。本例比较同一输入契约在 950DT、950PR 与假设的 970DT 上的设备指令窗口。
 
 ```python

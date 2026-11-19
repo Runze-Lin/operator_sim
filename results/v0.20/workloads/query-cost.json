@@ -1,0 +1,87 @@
+{
+  "scope": "Same process after package import, no exporter price cache; estimate resource per shape+attrs+SKU. Package parameter caches can warm after first query.",
+  "repeats": 3,
+  "unique_op_shape_attrs": 140,
+  "chips": [
+    "Ascend950DT_9582",
+    "Ascend950PR_957b",
+    "Ascend970DT"
+  ],
+  "summary": [
+    {
+      "op": "attn_res_fwd",
+      "kind": "work_only",
+      "queries": 900,
+      "wall_p50_ms": 0.0657,
+      "wall_max_ms": 3.16326,
+      "slowest_shape": [
+        1048576,
+        7168,
+        8,
+        1
+      ],
+      "slowest_chip": "Ascend950DT_9582"
+    },
+    {
+      "op": "cast_bf16_fp32",
+      "kind": "timed",
+      "queries": 144,
+      "wall_p50_ms": 0.07154,
+      "wall_max_ms": 1.81534,
+      "slowest_shape": [
+        1048576,
+        32
+      ],
+      "slowest_chip": "Ascend950DT_9582"
+    },
+    {
+      "op": "moe_gating_top_k",
+      "kind": "timed",
+      "queries": 36,
+      "wall_p50_ms": 0.05613,
+      "wall_max_ms": 0.51653,
+      "slowest_shape": [
+        1048576,
+        896,
+        16
+      ],
+      "slowest_chip": "Ascend950DT_9582"
+    },
+    {
+      "op": "quant",
+      "kind": "timed",
+      "queries": 36,
+      "wall_p50_ms": 1.21499,
+      "wall_max_ms": 1.95953,
+      "slowest_shape": [
+        1048576,
+        7168
+      ],
+      "slowest_chip": "Ascend950DT_9582"
+    },
+    {
+      "op": "rmsnorm",
+      "kind": "timed",
+      "queries": 72,
+      "wall_p50_ms": 0.15296,
+      "wall_max_ms": 2.52071,
+      "slowest_shape": [
+        1048576,
+        5120
+      ],
+      "slowest_chip": "Ascend950DT_9582"
+    },
+    {
+      "op": "sigmoid_fp32",
+      "kind": "timed",
+      "queries": 72,
+      "wall_p50_ms": 0.07566,
+      "wall_max_ms": 0.58681,
+      "slowest_shape": [
+        2048,
+        12
+      ],
+      "slowest_chip": "Ascend970DT"
+    }
+  ]
+}

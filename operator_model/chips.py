@@ -13,7 +13,7 @@ _DIRECTORY = Path(__file__).resolve().parents[1] / 'configs/chips'
 _BITS = {'32', '16', '8', '4'}
 _DETAILS = {'ub_bytes', 'l1_bytes', 'l2_bytes', 'l0a_bytes', 'l0b_bytes', 'l0c_bytes',
             'l2_bandwidth_gbs', 'mte1_bandwidth_gbs', 'mte2_bandwidth_gbs', 'mte3_bandwidth_gbs',
-            'rms_first_scalar_cycles', 'rms_first_payload_cycles',
+            'rms_first_scalar_cycles', 'rms_first_payload_cycles', 'rms_output_retained_fraction',
             'fa_read_latency_cycles', 'fa_issue_cycles', 'fa_mte_bytes_per_cycle',
             'matmul_launch_cycles', 'matmul_read_latency_cycles', 'matmul_read_ii_cycles',
             'matmul_mmad_latency_cycles', 'matmul_mmad_ii_cycles', 'matmul_l0_latency_cycles',
@@ -64,7 +64,7 @@ class ChipConfig:
             raise ValueError('Unknown chip detail field')
         for field, value in self.details.items():
             if value is not None:
-                if field in ('matmul_output_retained_fraction', 'quant_output_retained_fraction'):
+                if field.endswith('_output_retained_fraction'):
                     if type(value) not in (int, float) or not 0 <= value <= 1:
                         raise ValueError(f'{field} must be in [0,1]')
                 else:

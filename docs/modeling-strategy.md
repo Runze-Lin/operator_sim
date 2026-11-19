@@ -2,6 +2,8 @@
 
 系统仿真器输入每卡 shape、dtype、布局和算子属性，预测一次设备指令窗口的微秒数。后端按 **Vector、Cube、Cube + Vector（CV）** 三类选择方法。算法给出工作量与依赖，库实现决定分块、分核和缓冲复用，硬件配置与校准给出阶段服务时间。在线调用只做分块计算和流水调度。单次进程内查询的验收目标为 **100 ms 以内**，预测出来的设备时间和离线 CA 采集成本分别记录。
 
+公式里的行数指这次调度交给该 rank 的 token 数。8 条请求每条 32k 若整批提交，逐 token 算子是 262,144 行；若调度器每步共放 2,048 个 token，首个 kernel 就只有 2,048 行，attention 的 KV 长度还会随步骤增加。DeepSeek 的 512 维 head、Kimi 的 128 维 KDA head 和 192 维 MLA QK 不能共用一个通用 dense FA shape。[三模型逐算子 shape、层号和并行推导](prefill-shapes.md)
+
 **950DT 是校准参考，系统目标由调用方选择。** 同一算子分为四层。算法层由 shape、dtype、布局及专家分布确定有效工作和张量字节。实现层按库路线产生可分配的 tile 与依赖。芯片层从独立 JSON 提供峰值、核数、频率和存储参数。调度层将工作映射到该芯片，重新计算每核服务、可重叠区段、尾波和净设备时间。对 960、970、980，调用方可以假设沿用 950 的实现族，并分别提供自己的配置。更换 dtype 仍须有对应的 kernel 合同。下面三类方法决定哪些工作能随芯片资源扩展。
 
 ### Vector 算子怎样建模
@@ -30,11 +32,13 @@
 
 ### 逐算子算例
 
+可以先看三张同一时间轴上的图。Matmul 把模型和真实 MMAD 放回对应的输出块与 K 页，Quant 把五轮 UB 读、VF 和两路写放回对应的 tile，FA 把首个 QK/PV 和后续 KV 发起间隔对齐到核内流水。其余算例也标明阶段是否能定位到具体指令；只有总量时，上栏保留该粒度。[Matmul 两波两页](examples/matmul.md) · [Quant 五轮读写](examples/quant.md) · [FA 首页与稳态](examples/fa.md)
+
 每页从一个具体的本卡 shape 和输入属性出发，给出工作量、分块、耗时的数字推导，以及相应库窗口的校验范围。
 
 | 路线 | 算例 |
 |---|---|
-| Vector | [quant](examples/quant.md) · [rmsnorm](examples/rmsnorm.md) · [mhc_sinkhorn](examples/mhc_sinkhorn.md) · [mhc_post](examples/mhc_post.md) · [kda_recurrent](examples/kda_recurrent.md) · [MoE sigmoid Top-K](examples/moe_gating_top_k.md) · [Cast BF16→FP32](examples/cast_bf16_fp32.md) · [Kimi AttnResFwd](examples/attn_res_fwd.md) |
+| Vector | [quant](examples/quant.md) · [rmsnorm](examples/rmsnorm.md) · [mhc_sinkhorn](examples/mhc_sinkhorn.md) · [mhc_post](examples/mhc_post.md) · [kda_recurrent](examples/kda_recurrent.md) · [MoE sigmoid Top-K](examples/moe_gating_top_k.md) · [Cast BF16→FP32](examples/cast_bf16_fp32.md) · [Kimi AttnResFwd](examples/attn_res_fwd.md) · [Kimi KDA beta Sigmoid](examples/sigmoid_fp32.md) |
 | Cube | [matmul](examples/matmul.md) · [addmm](examples/addmm.md) · [gmm2](examples/gmm2.md) |
 | CV 与组合 | [fa](examples/fa.md) · [lightning_indexer](examples/lightning_indexer.md) · [mhc_pre](examples/mhc_pre.md) · [mhc_pre_sinkhorn](examples/mhc_pre_sinkhorn.md) · [mhc](examples/mhc.md) · [grouped_matmul_swiglu_quant_v2](examples/grouped_matmul_swiglu_quant_v2.md) · [moe_ffn](examples/moe_ffn.md) |
 | 结构可用、时延待校准 | [kda_chunk](examples/kda_chunk.md) |
@@ -133,7 +137,7 @@ v0.18 的 10 个 shape 在 DT、PR 上都是独立进程内首次调用。旧版
 2. 每个向量组覆盖 128 列，G=W⌈D/128⌉。ρ 为参考单 AIV 每周期 FP32 吞吐除以目标同一量；从全卡 TOPS 乘 1000，除以核数和 GHz 得 op/cycle/AIV。首次、扩核、热态向量服务周期分别为 `(515.377, 324.392, 302.773)[状态] + 11.2877 Gρ`。该项继承 v0.12 DT 向量占用刻度，缺失目标吞吐时继承 ρ=1。
 3. 当前芯片上，每行 rstd 写 4 B。按相邻行归属推得同一 128 B 区段预计有 N=max(0,min(A,32/W)−1) 个其他写者。每 tile 的统计量完成延迟 s=133+147.58824N 个周期。它是有效写者代理。一个写者时可直接测到指令完成延迟；实际物理仲裁区段仍未证实。对于含 n 行的 tile，先发 rstd，过 Δ=75.458+6.04932n⌈D/128⌉ρ 周期发主写，主写服务 y=302.496+16.01826×(2Dn/1024) 周期。该次主写完成时刻为 max(s,Δ+y)。下一轮还需 270.869+4.49056n⌈D/128⌉ρ 周期规约发起。将所有写的时间区间取并集 U，早于末轮主写发起的并集为 O；暴露写为 max(U−min(O,SIMD),每核总输出 KiB×写周期/KiB−SIMD)。有目标 MTE3 单核带宽时，实际斜率替换为 1024f/B₃ 周期/KiB，其中 B₃ 用 GB/s。
 4. 首次到达为 14.625(A−1) 周期，首次独占 SCALAR 为 2933.5 周期，未归属小间隙为 6.30 周期。读启动 L=1388.654 周期，目标每 KiB 周期 c₂ 取 1024f/B₂ 或继承 DT 的 18.39635。令 k=2D min(m,W)/1024 为最前一轮的输入 KiB，K=2D(W+1)/1024 再计本核的 gamma 与全部行，R=L+c₂k；暴露读为 R+max(0,c₂K−R−SIMD)。这保留首轮数据依赖和本核端口需求，其余预取可被 SIMD 隐藏。扩核及热态继承对应 DT 到达、SCALAR 与读启动截距，其余字节和写者定价相同。一次多 tile 的 γ 只收费一份。返回的读写字节是逻辑量及描述符量，HBM 总线实际事务量未知。
-5. 在 10 个旧 DT 的隔离核 trace 中，从全片首条指令到首个实际输入描述符发起的中位数为 2970 周期。设状态下的输入释放 S=2970×(该状态 SCALAR/2933.5)，热态比例为推断。设 B=min(HBM 带宽, 已知 L2 带宽)，单位 GB/s，冷数据路径需要的周期 Q=f[2D(T+1)+2DT+4T]/B。取 max(分阶段本地总周期, S+Q) 除以 1000f 得 µs。只有共享资源超过原全片窗口的部分会拉长时间，逻辑冷流量假设没有测到命中率或实际 HBM 利用率。小网格另受局部发起、每核端口与字节服务约束，同一 HBM 峰值不会均分给一两个核。
+5. 在 10 个旧 DT 的隔离核 trace 中，从全片首条指令到首个实际输入描述符发起的中位数为 2970 周期。设状态下的输入释放 S=2970×(该状态 SCALAR/2933.5)，热态比例为推断。设 $X=2D(T+1)$、$Y=2DT+4T$ 字节，分别是去重输入和最终输出。令 $R=2D[1+\min(T,2A\min(m,W))]$，为一份 gamma 加全部活跃核双缓冲的输入预留；小 shape 的预留不超过实际输入。令 $K$ 为目标 L2 容量（字节）、$r$ 为可留输出的假设比例，$Y_s=r\min(Y,\max(0,K-R))$。写入 L2 的全部输出仍经过本核 MTE3，只有超出可留上限的部分必须在指令退休前到达片外。在频率 $f$ GHz 下，整片共享下界为 $Q=\max[f(X+Y-Y_s)/B_H, f(X+Y)/B_L]$ 个周期；$B_H,B_L$ 为整片片外、L2 带宽（十进制 GB/s）。缺 L2 带宽时只用片外项，缺容量且显式禁用继承时取零保留。取 $\max(C_{local},S+Q)/(1000f)$ 得设备微秒。这样小网格仍受局部发起和每核端口限制，超长输入的脏输出超过 L2 后会逐步恢复写回竞争。芯片配置 `rms_output_retained_fraction` 默认 1，改成 0 可得全写回情景。容量和时钟来自配置，双缓冲预留和脏输出保留是待检验的机制假设，尚无 HBM 事务观测。
 6. 多整轮时，用两轮相同 tile 的写并集差估计下一完整轮的增量，尾块单列。所有迭代数由目标 UB 与每核行数决定。超过 32 轮只返回整轮数、每整轮行数、尾块行数；定价最多物化三个 tile。长流水的启动费用只付一次，稳态耗时随输入字节及工作组数近似线性，分核与最后一轮产生台阶。在 8×32k token 整批假设下这可能达到每核上千轮；额外实测的 [2048,5120] 达到 DT 7 轮、PR 最忙核 8 轮。数百轮整批仍属外推。
 
 #### 参数来源及可辨识范围
@@ -149,7 +153,15 @@ v0.18 的 10 个 shape 在 DT、PR 上都是独立进程内首次调用。旧版
 
 使用源码根目录的 `python development/validation/sku19/rms_raw.py` 可从已归档的 v0.18 原始文件重建 DT 启动证据。随后 `python development/validation/sku19/rms_calibrate.py` 可重算参数，`python development/validation/sku19/rms_replay.py` 可重算开发回放和绘图。v0.19 资源代码中冻结的是这些可复核的周期开销，在线查询无需 CANN 或 CA。已读 CANNBot 知识卡 `common/platforms/concepts/ascend_910_95` 用于核对 950 的 AIV、UB 和 MTE 方向；本文周期、写者与缓存假设来自工程 trace。[参数和逐形状开发回放](../results/v0.19/rms-replay.json) · [原始 trace 的阶段提取](../results/v0.19/rms-startup.json) · [可复核算例](examples/rmsnorm.md) · [独立留出结果](error-analysis.md)
 
-**目标芯片的首次启动价格。** 首次调用时 $P_s$ 为最晚完成 AIV 在首轮的独占 SCALAR 周期，$P_r$ 为芯片首条指令至首笔有效输入发起的周期。DT 取 2933.5 和 2970 周期。用 7 组同分核、同 tile、同二进制的旧 DT/PR 双端 trace 对每个 shape 求阶段差，再取中位数，得到 PR 的 $P_s=2580.5$、$P_r=2776$。设 $C_{local}$ 为按上文计算的首次本核路径周期，$Q$ 为全片冷读写按目标带宽所需的周期，当前首次时间为 $\max(C_{local}-2933.5+P_s, P_r+Q)/(1000f)$ µs。这样分别计入控制准备和整片首读起点。目标芯片可以独立给这两个价格；970DT 的相应阶段沿用 DT。热态和扩核没有配对的首次阶段证据，仍使用各自已有的条件价格。大输入的共享流量目前按冷读写计，写何时经 L2 到达 HBM 的比例尚不可辨识。[阶段证据与留一检验](../results/v0.19/rms-followup/evidence.md) · [两版逐项代入](examples/rmsnorm.md)
+**目标芯片的首次启动价格。** 首次调用时 $P_s$ 为最晚完成 AIV 在首轮的独占 SCALAR 周期，$P_r$ 为芯片首条指令至首笔有效输入发起的周期。DT 取 2933.5 和 2970 周期。用 7 组同分核、同 tile、同二进制的旧 DT/PR 双端 trace 对每个 shape 求阶段差，再取中位数，得到 PR 的 $P_s=2580.5$、$P_r=2776$。设 $C_{local}$ 为按上文计算的首次本核路径周期，$Q$ 为以上按层级区分的全片带宽下界，当前首次时间为 $\max(C_{local}-2933.5+P_s, P_r+Q)/(1000f)$ µs。这样分别计入控制准备和整片首读起点。目标芯片可以独立给这两个价格；970DT 的相应阶段沿用 DT。热态和扩核没有配对的首次阶段证据，仍使用各自已有的条件价格。大输入的冷读、L2 全写和片外溢出分别计价，实际写回比例尚不可辨识。[阶段证据与留一检验](../results/v0.19/rms-followup/evidence.md) · [两版逐项代入](examples/rmsnorm.md)
+
+### Kimi KDA 的独立 FP32 Sigmoid
+
+Kimi K3 的 beta 对每个 token、每个本地 KDA head 取一个标量。令 T 为本 rank 本次提交的 token 数，h 为 96 个 KDA head 经 attention TP 切分后的数量，元素数 N=Th。输入 FP32 已就绪后，算子计算 $1/(1+\exp(-x))$，每个元素各访问 4 B 输入、4 B 输出，负号、exp、加法、除法各一次。若调用方的编译图已融合该操作，应将这笔独立费用留给融合 kernel。[实际调用分支与逐步算例](examples/sigmoid_fp32.md)
+
+分核先以 $c=\min(C,\lceil N/1024\rceil)$ 个候选 AIV，取 $b=512\lceil N/(512c)\rceil$ 个元素为每核分块，激活 $A=\lceil N/b\rceil$ 个核。C 是目标 AIV 数，1024 与 512 分别是参考库的最小工作粒度和对齐单位。输入、输出各用双缓冲，单 tile 最多容纳 $64\lfloor U/(16×64)\rfloor$ 个元素。U 为目标 UB 字节数，64 是 256 B 向量寄存器的 FP32 宽度。
+
+单 tile 含 n 个元素，令 $r=4nf/B_2$、$w=4nf/B_3$ 为单核读写周期，$q=4nAf/B_s$ 为候选共享服务。f 为 GHz，$B_2,B_3$ 是本核端口的十进制 GB/s，$B_s$ 为整片外存与已知 L2 带宽中的较小值。冻结版取 $R=1159+\max(r,q)$、$W=159+\max(w,q)$，向量服务 $V=(79+4(\lceil n/64\rceil-1))s$。s 为参考与目标每核 FP32 每周期算力之比，作为 exp/div 流水的代理。第一笔读在 $3012+193\log_2 A$ 周期发起，后续满 tile 间隔为 $\max(r,w,2q,V,(R+V)/2,(V+W)/2)$。尾 tile 还要等上一块的计算和写口释放。读、写、启动、向量延迟取自三个 DT 开发 shape 的指令和描述符，阈值与四缓冲来自 950 实现族。模型只求首轮、稳态、末轮，复杂度 O(1)。长张量对外存写回假设敏感。具体每项参数的由来、两端实测与假设替换见 [完整推导及上下同轴图](examples/sigmoid_fp32.md)。
 
 ### Kimi 的 FP32 MoE sigmoid Top-K
 
@@ -206,7 +218,8 @@ BF16 连续输入 [T,D] 与同形 FP32 输出，固定向量转换合同。
 
 总计 **4773 周期 / 1650 周期/µs = 2.893 µs**，与校准 trace 的全核窗口一致；该点用于取阶段价格。每 KiB 读写斜率借自 DT 的 RMSNorm 描述符，Cast 的单个完成样例不足以分别识别固定延迟与通道吞吐。输入分配记录能证实部分网格，不能证明所有 shape 的库分片完全一致。
 
-目标配置若给出单核 MTE 带宽 B（GB/s），将相应字节价格替换为 1024f/B，f 为 GHz。全卡共享周期下界为 1753+6Nf/min(HBM 带宽,可用 L2 带宽)，1753 为实测整片首次输入读发起。总时间取单核依赖路径和该全卡窗口的最大值，最后除以 1000f。一个 UB 轮次的可容纳元素取 64⌊UB/(12×64)⌋，12 B 来自双缓冲的 (2+4) B 输入/输出。超过单轮的元素以读端口、写端口、SIMD 三者中最慢的稳态服务延长时间；实际库 UB 预留和多轮发起间隔仍待专门采集。
+目标配置若给出单核 MTE 带宽 B（GB/s），将相应字节价格替换为 1024f/B，f 为 GHz。每轮可容纳 $u=64\lfloor U/(12×64)\rfloor$ 个元素，U 为目标 UB 字节，12 B 来自输入输出各两份的 $(2+4)×2$。多轮时，首轮以后取本核读、写、SIMD 服务中的最长时间。全片首次输入读发起为 1753 周期，来自 DT trace。对 $N$ 个元素，读 $X=2N$ B、写 $Y=4N$ B，最忙核首轮为 $b=\min(u,X_{core})$ 个元素，$X_{core}$ 是上述每核最多元素数。双缓冲的输入暂占 $R=\min(X,4Ab)$ B；L2 容量为 K 时，窗口内片外写 $Y_e=Y-\min(Y,\max(0,K-R))$。片外与 L2 的整片服务周期分别为 $f(X+Y_e)/B_H$、$f(X+Y)/B_L$，后者仅在 L2 带宽已知时生效，$B_H,B_L$ 均为十进制 GB/s。共享下界取 1753 加两者中的最大值，再与本核路径取最大，除以 $1000f$ 得 µs。每个输出仍付本核 MTE3 和已知的 L2 服务。独立调用预留之后的可用 L2 都分配给输出；持续共存张量和并发 kernel 会缩小可留容量。DT 物理控制器在 $[262144,32]$ 的 128 个通道共读 16,822,272 B、写命令为 0，张量逻辑上写了 32 MiB。不同芯片和超过容量时的实际逐行回写策略仍须验证。[完整实测、读写计数与新预测冻结](../results/v0.20/large/report.md)
+
 
 | 同一 [64,4096] | 设备时间 µs | CA µs | 活跃 AIV |
 |---|---:|---:|---:|
@@ -1160,5 +1173,7 @@ WAPE=\sum_i|\widehat T_i-T_i|/\sum_iT_i.
 对未发布的目标采用本页开头的跨芯片迁移公式。950 校准的有效发起间隔包含当时的反压。若新库引入新的融合、指令或不同缓冲策略，需要补充对应分支和测量。现有验证范围见[逐 SKU 误差](error-analysis.md)。
 
 ## 13. 系统接入与校验
+
+当前 v0.20 在独立安装的 wheel 上对三种芯片做了 1,089 个不同的单次查询。中位 0.083 ms，P95 0.548 ms，最慢 2.933 ms。包括 8×256k 的整批输入。[逐算子调用开销](../results/v0.20/wheel-smoke.json)
 
 系统框架使用 `operator_model.estimate(op, shape, attrs)` 取得设备微秒数和适用状态。当前首先覆盖 CANN 9.2.1 的 Ascend950DT_9582。可用输入、可选上下文、缺少合格时延时的调度器回退见[系统接入指南](integration.md)。各条路径的独立样本、实际库入口、误差及 CPU 端所需查询时间见[当前 CA 校验](error-analysis.md)。采集、冻结和复现实验的流程见[开发维护指南](../development/README.md)。

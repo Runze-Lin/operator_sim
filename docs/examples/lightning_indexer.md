@@ -1,5 +1,11 @@
 # Lightning Indexer 算例
 
+## 模型与实际库流水对照
+
+![950PR lightning_indexer 的模型与 CA 同轴对照](figures/lightning_indexer-pr-pipeline.png)
+
+本卡 shape 为 `[1, 1, 512, 8, 128]`，950PR 模型 **5.790 µs**，完整 CA **5.779 µs**，有符号误差 +0.20%。上栏画出当前预测器能够辨识的阶段时长。只返回一个阶段的路线保留整段预测；多个暴露阶段按贡献累计，模型尚未辨识它们的具体指令发起点。下栏用实际库 trace 的最后完成核逐队列展开，黑色刻度来自真实 DMA 或 MMAD 发起。 [图上每段的时间与 trace 指纹](../../results/v0.20/examples/lightning_indexer-pr.json)
+
 输入轴顺序为 **B,Q,KV,查询头数,D**。本例比较同一输入契约在 950DT、950PR 与假设的 970DT 上的设备指令窗口。
 
 ```python

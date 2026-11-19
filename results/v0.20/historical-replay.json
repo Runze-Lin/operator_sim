@@ -1,0 +1,1575 @@
+{
+  "role": "v0.19 matched small-shape replay, excluded from independent v0.20 totals",
+  "rows": [
+    {
+      "op": "rmsnorm",
+      "shape": [
+        3,
+        6080
+      ],
+      "role": "历史重放",
+      "dt_us": 3.7127663447666523,
+      "pr_us": 3.507750027881216,
+      "future_us": 3.4029950307742003,
+      "old_dt_us": 3.7127663447666523,
+      "old_pr_us": 3.507750027881216,
+      "dt_ca_us": 3.8684854535385966,
+      "pr_ca_us": 3.603636267594993,
+      "id": "rmsnorm_3_6080",
+      "dt_observation": {
+        "chip": "Ascend950DT_9582",
+        "ca_us": 3.8684854535385966,
+        "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+        "api": "aclnnRmsNorm",
+        "correctness": [
+          "correctness count=18240 bad=0 max_abs_error=0.00131491 atol=0.015625 rtol=0.015625 hard_limit=1",
+          "correctness count=3 bad=0 max_abs_error=1.79014e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+        ],
+        "active_aic": 0,
+        "active_aiv": 3,
+        "backend": "official paired second RMS freeze, dump=false",
+        "role": "new paired DT CA",
+        "trace": [
+          "runs/sku19-rms-confirmation/rmsnorm_3_6080_Ascend950DT_9582/profile/OPPROF_20261119155742_KGCDCJITWKXMYFSS/simulator/trace.json"
+        ],
+        "trace_sha256": [
+          "ad1c1bcfb185648896a6252679b32abc4c82f772d6973445516732ef7349128e"
+        ],
+        "source_hash_match": null,
+        "launch_context": null,
+        "scope": "one all-core window",
+        "run_log": "runs/sku19-rms-confirmation/rmsnorm_3_6080_Ascend950DT_9582/run.log",
+        "runner_sha256": "6bbb68803743f607002b47dad03e93aee5cbf030335f9d3e8ad1ca3950b53561",
+        "input_contract_log": [
+          "case=rmsnorm api=aclnnRmsNorm R=3 C=6080 dtype=BF16 epsilon=1e-06 workspace=16777472"
+        ],
+        "active_aic_per_launch": null,
+        "active_aiv_per_launch": null,
+        "stages": [
+          {
+            "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+            "ca_us": 3.8684854535385966,
+            "active_aic": 0,
+            "active_aiv": 3,
+            "total_events": 11556,
+            "mmad": 0,
+            "binary_sha256": "0926fe478e5f718ef49241c08ef00b665797690f0f7f22c67fdc25044e0cb54d"
+          }
+        ]
+      },
+      "pr_observation": {
+        "chip": "Ascend950PR_957b",
+        "ca_us": 3.603636267594993,
+        "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+        "api": "aclnnRmsNorm",
+        "correctness": [
+          "correctness count=18240 bad=0 max_abs_error=0.00131491 atol=0.015625 rtol=0.015625 hard_limit=1",
+          "correctness count=3 bad=0 max_abs_error=1.79014e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+        ],
+        "active_aic": 0,
+        "active_aiv": 3,
+        "backend": "official paired second RMS freeze, dump=false",
+        "role": "frozen PR holdout",
+        "trace": [
+          "runs/sku19-rms-confirmation/rmsnorm_3_6080_Ascend950PR_957b/profile/OPPROF_20261119155742_HXDSIKQNXYEYCJWD/simulator/trace.json"
+        ],
+        "trace_sha256": [
+          "2e8c165578875e52ac84dda94c5c202899ba27fda70d1d85e43172c4f2dd07e3"
+        ],
+        "source_hash_match": null,
+        "launch_context": null,
+        "scope": "one all-core window",
+        "run_log": "runs/sku19-rms-confirmation/rmsnorm_3_6080_Ascend950PR_957b/run.log",
+        "runner_sha256": "6bbb68803743f607002b47dad03e93aee5cbf030335f9d3e8ad1ca3950b53561",
+        "input_contract_log": [
+          "case=rmsnorm api=aclnnRmsNorm R=3 C=6080 dtype=BF16 epsilon=1e-06 workspace=16777472"
+        ],
+        "active_aic_per_launch": null,
+        "active_aiv_per_launch": null,
+        "stages": [
+          {
+            "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+            "ca_us": 3.603636267594993,
+            "active_aic": 0,
+            "active_aiv": 3,
+            "total_events": 11556,
+            "mmad": 0,
+            "binary_sha256": "0926fe478e5f718ef49241c08ef00b665797690f0f7f22c67fdc25044e0cb54d"
+          }
+        ]
+      },
+      "speedup_pred": 1.058446672441272,
+      "speedup_ca": 1.0734949829218916,
+      "speedup_old": 1.058446672441272,
+      "pr_reuse_us": 3.7127663447666523
+    },
+    {
+      "op": "rmsnorm",
+      "shape": [
+        7,
+        7360
+      ],
+      "role": "历史重放",
+      "dt_us": 3.9048061103828964,
+      "pr_us": 3.6958704317268896,
+      "future_us": 3.5791958099966585,
+      "old_dt_us": 3.9048061103828964,
+      "old_pr_us": 3.6958704317268896,
+      "dt_ca_us": 4.049697401933372,
+      "pr_ca_us": 3.766060355119407,
+      "id": "rmsnorm_7_7360",
+      "dt_observation": {
+        "chip": "Ascend950DT_9582",
+        "ca_us": 4.049697401933372,
+        "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+        "api": "aclnnRmsNorm",
+        "correctness": [
+          "correctness count=51520 bad=0 max_abs_error=0.00137499 atol=0.015625 rtol=0.015625 hard_limit=1",
+          "correctness count=7 bad=0 max_abs_error=2.34756e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+        ],
+        "active_aic": 0,
+        "active_aiv": 7,
+        "backend": "official paired second RMS freeze, dump=false",
+        "role": "new paired DT CA",
+        "trace": [
+          "runs/sku19-rms-confirmation/rmsnorm_7_7360_Ascend950DT_9582/profile/OPPROF_20261119155742_LXCEVLWNRVCUMFEB/simulator/trace.json"
+        ],
+        "trace_sha256": [
+          "7aaaaea326ffabad56fbd341e7d10edde0af83eff218fc2306b12fe4f814c83a"
+        ],
+        "source_hash_match": null,
+        "launch_context": null,
+        "scope": "one all-core window",
+        "run_log": "runs/sku19-rms-confirmation/rmsnorm_7_7360_Ascend950DT_9582/run.log",
+        "runner_sha256": "6bbb68803743f607002b47dad03e93aee5cbf030335f9d3e8ad1ca3950b53561",
+        "input_contract_log": [
+          "case=rmsnorm api=aclnnRmsNorm R=7 C=7360 dtype=BF16 epsilon=1e-06 workspace=16777472"
+        ],
+        "active_aic_per_launch": null,
+        "active_aiv_per_launch": null,
+        "stages": [
+          {
+            "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+            "ca_us": 4.049697401933372,
+            "active_aic": 0,
+            "active_aiv": 7,
+            "total_events": 30884,
+            "mmad": 0,
+            "binary_sha256": "0926fe478e5f718ef49241c08ef00b665797690f0f7f22c67fdc25044e0cb54d"
+          }
+        ]
+      },
+      "pr_observation": {
+        "chip": "Ascend950PR_957b",
+        "ca_us": 3.766060355119407,
+        "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+        "api": "aclnnRmsNorm",
+        "correctness": [
+          "correctness count=51520 bad=0 max_abs_error=0.00137499 atol=0.015625 rtol=0.015625 hard_limit=1",
+          "correctness count=7 bad=0 max_abs_error=2.34756e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+        ],
+        "active_aic": 0,
+        "active_aiv": 7,
+        "backend": "official paired second RMS freeze, dump=false",
+        "role": "frozen PR holdout",
+        "trace": [
+          "runs/sku19-rms-confirmation/rmsnorm_7_7360_Ascend950PR_957b/profile/OPPROF_20261119155840_RGQQUUGNUOJQSUQP/simulator/trace.json"
+        ],
+        "trace_sha256": [
+          "8dd5a913ee8f66a09432dd015ef910f9ece437089058e2c3c78b6107dd98a9d5"
+        ],
+        "source_hash_match": null,
+        "launch_context": null,
+        "scope": "one all-core window",
+        "run_log": "runs/sku19-rms-confirmation/rmsnorm_7_7360_Ascend950PR_957b/run.log",
+        "runner_sha256": "6bbb68803743f607002b47dad03e93aee5cbf030335f9d3e8ad1ca3950b53561",
+        "input_contract_log": [
+          "case=rmsnorm api=aclnnRmsNorm R=7 C=7360 dtype=BF16 epsilon=1e-06 workspace=16777472"
+        ],
+        "active_aic_per_launch": null,
+        "active_aiv_per_launch": null,
+        "stages": [
+          {
+            "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+            "ca_us": 3.766060355119407,
+            "active_aic": 0,
+            "active_aiv": 7,
+            "total_events": 30884,
+            "mmad": 0,
+            "binary_sha256": "0926fe478e5f718ef49241c08ef00b665797690f0f7f22c67fdc25044e0cb54d"
+          }
+        ]
+      },
+      "speedup_pred": 1.0565321978991515,
+      "speedup_ca": 1.0753139939534961,
+      "speedup_old": 1.0565321978991515,
+      "pr_reuse_us": 3.9048061103828964
+    },
+    {
+      "op": "rmsnorm",
+      "shape": [
+        18,
+        4992
+      ],
+      "role": "历史重放",
+      "dt_us": 4.874341533416983,
+      "pr_us": 4.663766706650901,
+      "future_us": 4.4680053391439785,
+      "old_dt_us": 4.874341533416983,
+      "old_pr_us": 4.663766706650901,
+      "dt_ca_us": 4.9951519994065166,
+      "pr_ca_us": 5.027878764085472,
+      "id": "rmsnorm_18_4992",
+      "dt_observation": {
+        "chip": "Ascend950DT_9582",
+        "ca_us": 4.9951519994065166,
+        "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+        "api": "aclnnRmsNorm",
+        "correctness": [
+          "correctness count=89856 bad=0 max_abs_error=0.00142176 atol=0.015625 rtol=0.015625 hard_limit=1",
+          "correctness count=18 bad=0 max_abs_error=1.56969e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+        ],
+        "active_aic": 0,
+        "active_aiv": 18,
+        "backend": "official paired second RMS freeze, dump=false",
+        "role": "new paired DT CA",
+        "trace": [
+          "runs/sku19-rms-confirmation/rmsnorm_18_4992_Ascend950DT_9582/profile/OPPROF_20261119155844_UJFJQGDKNVUSXHNY/simulator/trace.json"
+        ],
+        "trace_sha256": [
+          "f4fa0fa7b391c439fe0ca3cd92ab5b1af60f5504e580745798fc6d10e8f152f4"
+        ],
+        "source_hash_match": null,
+        "launch_context": null,
+        "scope": "one all-core window",
+        "run_log": "runs/sku19-rms-confirmation/rmsnorm_18_4992_Ascend950DT_9582/run.log",
+        "runner_sha256": "6bbb68803743f607002b47dad03e93aee5cbf030335f9d3e8ad1ca3950b53561",
+        "input_contract_log": [
+          "case=rmsnorm api=aclnnRmsNorm R=18 C=4992 dtype=BF16 epsilon=1e-06 workspace=16777472"
+        ],
+        "active_aic_per_launch": null,
+        "active_aiv_per_launch": null,
+        "stages": [
+          {
+            "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+            "ca_us": 4.9951519994065166,
+            "active_aic": 0,
+            "active_aiv": 18,
+            "total_events": 60768,
+            "mmad": 0,
+            "binary_sha256": "0926fe478e5f718ef49241c08ef00b665797690f0f7f22c67fdc25044e0cb54d"
+          }
+        ]
+      },
+      "pr_observation": {
+        "chip": "Ascend950PR_957b",
+        "ca_us": 5.027878764085472,
+        "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+        "api": "aclnnRmsNorm",
+        "correctness": [
+          "correctness count=89856 bad=0 max_abs_error=0.00142176 atol=0.015625 rtol=0.015625 hard_limit=1",
+          "correctness count=18 bad=0 max_abs_error=1.56969e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+        ],
+        "active_aic": 0,
+        "active_aiv": 18,
+        "backend": "official paired second RMS freeze, dump=false",
+        "role": "frozen PR holdout",
+        "trace": [
+          "runs/sku19-rms-confirmation/rmsnorm_18_4992_Ascend950PR_957b/profile/OPPROF_20261119155847_NKWFBGDKCIGDXMAO/simulator/trace.json"
+        ],
+        "trace_sha256": [
+          "f56702a2834f988b52f82272218a2392d8460a3c3fcc9f1a8f031f459591b143"
+        ],
+        "source_hash_match": null,
+        "launch_context": null,
+        "scope": "one all-core window",
+        "run_log": "runs/sku19-rms-confirmation/rmsnorm_18_4992_Ascend950PR_957b/run.log",
+        "runner_sha256": "6bbb68803743f607002b47dad03e93aee5cbf030335f9d3e8ad1ca3950b53561",
+        "input_contract_log": [
+          "case=rmsnorm api=aclnnRmsNorm R=18 C=4992 dtype=BF16 epsilon=1e-06 workspace=16777472"
+        ],
+        "active_aic_per_launch": null,
+        "active_aiv_per_launch": null,
+        "stages": [
+          {
+            "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+            "ca_us": 5.027878764085472,
+            "active_aic": 0,
+            "active_aiv": 18,
+            "total_events": 60768,
+            "mmad": 0,
+            "binary_sha256": "0926fe478e5f718ef49241c08ef00b665797690f0f7f22c67fdc25044e0cb54d"
+          }
+        ]
+      },
+      "speedup_pred": 1.0451512350447945,
+      "speedup_ca": 0.9934909399739856,
+      "speedup_old": 1.0451512350447945,
+      "pr_reuse_us": 4.874341533416983
+    },
+    {
+      "op": "rmsnorm",
+      "shape": [
+        38,
+        2624
+      ],
+      "role": "历史重放",
+      "dt_us": 6.195166709345608,
+      "pr_us": 5.983039005422613,
+      "future_us": 5.678826858021849,
+      "old_dt_us": 6.195166709345608,
+      "old_pr_us": 5.983039005422613,
+      "dt_ca_us": 6.329697134904563,
+      "pr_ca_us": 6.238181593827903,
+      "id": "rmsnorm_38_2624",
+      "dt_observation": {
+        "chip": "Ascend950DT_9582",
+        "ca_us": 6.329697134904563,
+        "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+        "api": "aclnnRmsNorm",
+        "correctness": [
+          "correctness count=99712 bad=0 max_abs_error=0.0018562 atol=0.015625 rtol=0.015625 hard_limit=1",
+          "correctness count=38 bad=0 max_abs_error=1.90771e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+        ],
+        "active_aic": 0,
+        "active_aiv": 38,
+        "backend": "official paired second RMS freeze, dump=false",
+        "role": "new paired DT CA",
+        "trace": [
+          "runs/sku19-rms-confirmation/rmsnorm_38_2624_Ascend950DT_9582/profile/OPPROF_20261119155943_GPORMBSPEBOFLXJL/simulator/trace.json"
+        ],
+        "trace_sha256": [
+          "b7d14edb6bc91e014abc2508cb602412acc86633b3b416044f1b66415e3b9205"
+        ],
+        "source_hash_match": null,
+        "launch_context": null,
+        "scope": "one all-core window",
+        "run_log": "runs/sku19-rms-confirmation/rmsnorm_38_2624_Ascend950DT_9582/run.log",
+        "runner_sha256": "6bbb68803743f607002b47dad03e93aee5cbf030335f9d3e8ad1ca3950b53561",
+        "input_contract_log": [
+          "case=rmsnorm api=aclnnRmsNorm R=38 C=2624 dtype=BF16 epsilon=1e-06 workspace=16777472"
+        ],
+        "active_aic_per_launch": null,
+        "active_aiv_per_launch": null,
+        "stages": [
+          {
+            "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+            "ca_us": 6.329697134904563,
+            "active_aic": 0,
+            "active_aiv": 38,
+            "total_events": 88920,
+            "mmad": 0,
+            "binary_sha256": "0926fe478e5f718ef49241c08ef00b665797690f0f7f22c67fdc25044e0cb54d"
+          }
+        ]
+      },
+      "pr_observation": {
+        "chip": "Ascend950PR_957b",
+        "ca_us": 6.238181593827903,
+        "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+        "api": "aclnnRmsNorm",
+        "correctness": [
+          "correctness count=99712 bad=0 max_abs_error=0.0018562 atol=0.015625 rtol=0.015625 hard_limit=1",
+          "correctness count=38 bad=0 max_abs_error=1.90771e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+        ],
+        "active_aic": 0,
+        "active_aiv": 38,
+        "backend": "official paired second RMS freeze, dump=false",
+        "role": "frozen PR holdout",
+        "trace": [
+          "runs/sku19-rms-confirmation/rmsnorm_38_2624_Ascend950PR_957b/profile/OPPROF_20261119155950_XGPHGHXSMROPPTIN/simulator/trace.json"
+        ],
+        "trace_sha256": [
+          "e02b54464a6d7152cdeb7a594e7d410fbcafbe5463db2bdfb84abe4943208d8f"
+        ],
+        "source_hash_match": null,
+        "launch_context": null,
+        "scope": "one all-core window",
+        "run_log": "runs/sku19-rms-confirmation/rmsnorm_38_2624_Ascend950PR_957b/run.log",
+        "runner_sha256": "6bbb68803743f607002b47dad03e93aee5cbf030335f9d3e8ad1ca3950b53561",
+        "input_contract_log": [
+          "case=rmsnorm api=aclnnRmsNorm R=38 C=2624 dtype=BF16 epsilon=1e-06 workspace=16777472"
+        ],
+        "active_aic_per_launch": null,
+        "active_aiv_per_launch": null,
+        "stages": [
+          {
+            "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+            "ca_us": 6.238181593827903,
+            "active_aic": 0,
+            "active_aiv": 38,
+            "total_events": 88920,
+            "mmad": 0,
+            "binary_sha256": "0926fe478e5f718ef49241c08ef00b665797690f0f7f22c67fdc25044e0cb54d"
+          }
+        ]
+      },
+      "speedup_pred": 1.0354548422182668,
+      "speedup_ca": 1.014670227164789,
+      "speedup_old": 1.0354548422182668,
+      "pr_reuse_us": 6.195166709345608
+    },
+    {
+      "op": "rmsnorm",
+      "shape": [
+        57,
+        2304
+      ],
+      "role": "历史重放",
+      "dt_us": 6.347083172631692,
+      "pr_us": 4.564226766925984,
+      "future_us": 5.81809446730242,
+      "old_dt_us": 6.347083172631692,
+      "old_pr_us": 4.564226766925984,
+      "dt_ca_us": 6.393939497880638,
+      "pr_ca_us": 4.591515543870628,
+      "id": "rmsnorm_57_2304",
+      "dt_observation": {
+        "chip": "Ascend950DT_9582",
+        "ca_us": 6.393939497880638,
+        "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+        "api": "aclnnRmsNorm",
+        "correctness": [
+          "correctness count=131328 bad=0 max_abs_error=0.00165088 atol=0.015625 rtol=0.015625 hard_limit=1",
+          "correctness count=57 bad=0 max_abs_error=1.65057e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+        ],
+        "active_aic": 0,
+        "active_aiv": 57,
+        "backend": "official paired second RMS freeze, dump=false",
+        "role": "new paired DT CA",
+        "trace": [
+          "runs/sku19-rms-confirmation/rmsnorm_57_2304_Ascend950DT_9582/profile/OPPROF_20261119155950_EXFZHIHCKYJPTHBO/simulator/trace.json"
+        ],
+        "trace_sha256": [
+          "bc9f653bb77ba16fcbed89d573738105cfb6c3738280e5feb9cfc04a607093ee"
+        ],
+        "source_hash_match": null,
+        "launch_context": null,
+        "scope": "one all-core window",
+        "run_log": "runs/sku19-rms-confirmation/rmsnorm_57_2304_Ascend950DT_9582/run.log",
+        "runner_sha256": "6bbb68803743f607002b47dad03e93aee5cbf030335f9d3e8ad1ca3950b53561",
+        "input_contract_log": [
+          "case=rmsnorm api=aclnnRmsNorm R=57 C=2304 dtype=BF16 epsilon=1e-06 workspace=16777472"
+        ],
+        "active_aic_per_launch": null,
+        "active_aiv_per_launch": null,
+        "stages": [
+          {
+            "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+            "ca_us": 6.393939497880638,
+            "active_aic": 0,
+            "active_aiv": 57,
+            "total_events": 125400,
+            "mmad": 0,
+            "binary_sha256": "0926fe478e5f718ef49241c08ef00b665797690f0f7f22c67fdc25044e0cb54d"
+          }
+        ]
+      },
+      "pr_observation": {
+        "chip": "Ascend950PR_957b",
+        "ca_us": 4.591515543870628,
+        "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+        "api": "aclnnRmsNorm",
+        "correctness": [
+          "correctness count=131328 bad=0 max_abs_error=0.00165088 atol=0.015625 rtol=0.015625 hard_limit=1",
+          "correctness count=57 bad=0 max_abs_error=1.65057e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+        ],
+        "active_aic": 0,
+        "active_aiv": 29,
+        "backend": "official paired second RMS freeze, dump=false",
+        "role": "frozen PR holdout",
+        "trace": [
+          "runs/sku19-rms-confirmation/rmsnorm_57_2304_Ascend950PR_957b/profile/OPPROF_20261119160054_VOCBMNAVZTXKECFR/simulator/trace.json"
+        ],
+        "trace_sha256": [
+          "2e7a2aed94c0c37185b44d9a8f45afc1aa3a7ce7f39b4e5886959d3808d2ed80"
+        ],
+        "source_hash_match": null,
+        "launch_context": null,
+        "scope": "one all-core window",
+        "run_log": "runs/sku19-rms-confirmation/rmsnorm_57_2304_Ascend950PR_957b/run.log",
+        "runner_sha256": "6bbb68803743f607002b47dad03e93aee5cbf030335f9d3e8ad1ca3950b53561",
+        "input_contract_log": [
+          "case=rmsnorm api=aclnnRmsNorm R=57 C=2304 dtype=BF16 epsilon=1e-06 workspace=16777472"
+        ],
+        "active_aic_per_launch": null,
+        "active_aiv_per_launch": null,
+        "stages": [
+          {
+            "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+            "ca_us": 4.591515543870628,
+            "active_aic": 0,
+            "active_aiv": 29,
+            "total_events": 92640,
+            "mmad": 0,
+            "binary_sha256": "0926fe478e5f718ef49241c08ef00b665797690f0f7f22c67fdc25044e0cb54d"
+          }
+        ]
+      },
+      "speedup_pred": 1.390615211896333,
+      "speedup_ca": 1.3925553418666148,
+      "speedup_old": 1.390615211896333,
+      "pr_reuse_us": 6.347083172631692
+    },
+    {
+      "op": "rmsnorm",
+      "shape": [
+        69,
+        3328
+      ],
+      "role": "历史重放",
+      "dt_us": 4.923635774076277,
+      "pr_us": 4.7141824697012975,
+      "future_us": 5.959287574035711,
+      "old_dt_us": 4.923635774076277,
+      "old_pr_us": 4.7141824697012975,
+      "dt_ca_us": 4.867272856645286,
+      "pr_ca_us": 4.788485052995384,
+      "id": "rmsnorm_69_3328",
+      "dt_observation": {
+        "chip": "Ascend950DT_9582",
+        "ca_us": 4.867272856645286,
+        "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+        "api": "aclnnRmsNorm",
+        "correctness": [
+          "correctness count=229632 bad=0 max_abs_error=0.00154522 atol=0.015625 rtol=0.015625 hard_limit=1",
+          "correctness count=69 bad=0 max_abs_error=1.36248e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+        ],
+        "active_aic": 0,
+        "active_aiv": 35,
+        "backend": "official paired second RMS freeze, dump=false",
+        "role": "new paired DT CA",
+        "trace": [
+          "runs/sku19-rms-confirmation/rmsnorm_69_3328_Ascend950DT_9582/profile/OPPROF_20261119160100_VRFYQZFIDVBDICOH/simulator/trace.json"
+        ],
+        "trace_sha256": [
+          "017544a9c8b0b4ba9e09982666b0df45c88678e65f0f1fa5cdb6192a37b96773"
+        ],
+        "source_hash_match": null,
+        "launch_context": null,
+        "scope": "one all-core window",
+        "run_log": "runs/sku19-rms-confirmation/rmsnorm_69_3328_Ascend950DT_9582/run.log",
+        "runner_sha256": "6bbb68803743f607002b47dad03e93aee5cbf030335f9d3e8ad1ca3950b53561",
+        "input_contract_log": [
+          "case=rmsnorm api=aclnnRmsNorm R=69 C=3328 dtype=BF16 epsilon=1e-06 workspace=16777472"
+        ],
+        "active_aic_per_launch": null,
+        "active_aiv_per_launch": null,
+        "stages": [
+          {
+            "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+            "ca_us": 4.867272856645286,
+            "active_aic": 0,
+            "active_aiv": 35,
+            "total_events": 142932,
+            "mmad": 0,
+            "binary_sha256": "0926fe478e5f718ef49241c08ef00b665797690f0f7f22c67fdc25044e0cb54d"
+          }
+        ]
+      },
+      "pr_observation": {
+        "chip": "Ascend950PR_957b",
+        "ca_us": 4.788485052995384,
+        "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+        "api": "aclnnRmsNorm",
+        "correctness": [
+          "correctness count=229632 bad=0 max_abs_error=0.00154522 atol=0.015625 rtol=0.015625 hard_limit=1",
+          "correctness count=69 bad=0 max_abs_error=1.36248e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+        ],
+        "active_aic": 0,
+        "active_aiv": 35,
+        "backend": "official paired second RMS freeze, dump=false",
+        "role": "frozen PR holdout",
+        "trace": [
+          "runs/sku19-rms-confirmation/rmsnorm_69_3328_Ascend950PR_957b/profile/OPPROF_20261119160103_WWOTMYDUCONGNKUG/simulator/trace.json"
+        ],
+        "trace_sha256": [
+          "f6e176afb63c27c42242eece1c8004e1baa5113eac3e757dbf68cccf89ff6f10"
+        ],
+        "source_hash_match": null,
+        "launch_context": null,
+        "scope": "one all-core window",
+        "run_log": "runs/sku19-rms-confirmation/rmsnorm_69_3328_Ascend950PR_957b/run.log",
+        "runner_sha256": "6bbb68803743f607002b47dad03e93aee5cbf030335f9d3e8ad1ca3950b53561",
+        "input_contract_log": [
+          "case=rmsnorm api=aclnnRmsNorm R=69 C=3328 dtype=BF16 epsilon=1e-06 workspace=16777472"
+        ],
+        "active_aic_per_launch": null,
+        "active_aiv_per_launch": null,
+        "stages": [
+          {
+            "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+            "ca_us": 4.788485052995384,
+            "active_aic": 0,
+            "active_aiv": 35,
+            "total_events": 142932,
+            "mmad": 0,
+            "binary_sha256": "0926fe478e5f718ef49241c08ef00b665797690f0f7f22c67fdc25044e0cb54d"
+          }
+        ]
+      },
+      "speedup_pred": 1.0444304618502072,
+      "speedup_ca": 1.0164535970725475,
+      "speedup_old": 1.0444304618502072,
+      "pr_reuse_us": 4.923635774076277
+    },
+    {
+      "op": "rmsnorm",
+      "shape": [
+        103,
+        2944
+      ],
+      "role": "历史重放",
+      "dt_us": 5.038545011254505,
+      "pr_us": 4.828574081160556,
+      "future_us": 6.219152659010728,
+      "old_dt_us": 5.038545011254505,
+      "old_pr_us": 4.828574081160556,
+      "dt_ca_us": 5.104242327623069,
+      "pr_ca_us": 4.838787558488548,
+      "id": "rmsnorm_103_2944",
+      "dt_observation": {
+        "chip": "Ascend950DT_9582",
+        "ca_us": 5.104242327623069,
+        "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+        "api": "aclnnRmsNorm",
+        "correctness": [
+          "correctness count=303232 bad=0 max_abs_error=0.00178986 atol=0.015625 rtol=0.015625 hard_limit=1",
+          "correctness count=103 bad=0 max_abs_error=1.38556e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+        ],
+        "active_aic": 0,
+        "active_aiv": 52,
+        "backend": "official paired second RMS freeze, dump=false",
+        "role": "new paired DT CA",
+        "trace": [
+          "runs/sku19-rms-confirmation/rmsnorm_103_2944_Ascend950DT_9582/profile/OPPROF_20261119160158_TELHSLNJLBVKZUQE/simulator/trace.json"
+        ],
+        "trace_sha256": [
+          "1e49fad2eb701cfbc645103f22bd8528be072491484b475b094d96959de17179"
+        ],
+        "source_hash_match": null,
+        "launch_context": null,
+        "scope": "one all-core window",
+        "run_log": "runs/sku19-rms-confirmation/rmsnorm_103_2944_Ascend950DT_9582/run.log",
+        "runner_sha256": "6bbb68803743f607002b47dad03e93aee5cbf030335f9d3e8ad1ca3950b53561",
+        "input_contract_log": [
+          "case=rmsnorm api=aclnnRmsNorm R=103 C=2944 dtype=BF16 epsilon=1e-06 workspace=16777472"
+        ],
+        "active_aic_per_launch": null,
+        "active_aiv_per_launch": null,
+        "stages": [
+          {
+            "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+            "ca_us": 5.104242327623069,
+            "active_aic": 0,
+            "active_aiv": 52,
+            "total_events": 195770,
+            "mmad": 0,
+            "binary_sha256": "0926fe478e5f718ef49241c08ef00b665797690f0f7f22c67fdc25044e0cb54d"
+          }
+        ]
+      },
+      "pr_observation": {
+        "chip": "Ascend950PR_957b",
+        "ca_us": 4.838787558488548,
+        "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+        "api": "aclnnRmsNorm",
+        "correctness": [
+          "correctness count=303232 bad=0 max_abs_error=0.00178986 atol=0.015625 rtol=0.015625 hard_limit=1",
+          "correctness count=103 bad=0 max_abs_error=1.38556e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+        ],
+        "active_aic": 0,
+        "active_aiv": 52,
+        "backend": "official paired second RMS freeze, dump=false",
+        "role": "frozen PR holdout",
+        "trace": [
+          "runs/sku19-rms-confirmation/rmsnorm_103_2944_Ascend950PR_957b/profile/OPPROF_20261119160218_QZIOTQHSFOYFYVDK/simulator/trace.json"
+        ],
+        "trace_sha256": [
+          "2cf64332081d256cb9a076b15cebe2ca9869cf7f5b62ae1e05ba39427cce4a97"
+        ],
+        "source_hash_match": null,
+        "launch_context": null,
+        "scope": "one all-core window",
+        "run_log": "runs/sku19-rms-confirmation/rmsnorm_103_2944_Ascend950PR_957b/run.log",
+        "runner_sha256": "6bbb68803743f607002b47dad03e93aee5cbf030335f9d3e8ad1ca3950b53561",
+        "input_contract_log": [
+          "case=rmsnorm api=aclnnRmsNorm R=103 C=2944 dtype=BF16 epsilon=1e-06 workspace=16777472"
+        ],
+        "active_aic_per_launch": null,
+        "active_aiv_per_launch": null,
+        "stages": [
+          {
+            "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+            "ca_us": 4.838787558488548,
+            "active_aic": 0,
+            "active_aiv": 52,
+            "total_events": 195770,
+            "mmad": 0,
+            "binary_sha256": "0926fe478e5f718ef49241c08ef00b665797690f0f7f22c67fdc25044e0cb54d"
+          }
+        ]
+      },
+      "speedup_pred": 1.0434850799769613,
+      "speedup_ca": 1.05485976929672,
+      "speedup_old": 1.0434850799769613,
+      "pr_reuse_us": 5.038545011254505
+    },
+    {
+      "op": "rmsnorm",
+      "shape": [
+        229,
+        3968
+      ],
+      "role": "历史重放",
+      "dt_us": 5.119080917019678,
+      "pr_us": 5.2013081679888105,
+      "future_us": 5.217761087668861,
+      "old_dt_us": 5.119080917019678,
+      "old_pr_us": 5.2013081679888105,
+      "dt_ca_us": 5.58666658680886,
+      "pr_ca_us": 5.426666262559593,
+      "id": "rmsnorm_229_3968",
+      "dt_observation": {
+        "chip": "Ascend950DT_9582",
+        "ca_us": 5.58666658680886,
+        "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+        "api": "aclnnRmsNorm",
+        "correctness": [
+          "correctness count=908672 bad=0 max_abs_error=0.00166545 atol=0.015625 rtol=0.015625 hard_limit=1",
+          "correctness count=229 bad=0 max_abs_error=2.53108e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+        ],
+        "active_aic": 0,
+        "active_aiv": 58,
+        "backend": "official paired second RMS freeze, dump=false",
+        "role": "new paired DT CA",
+        "trace": [
+          "runs/sku19-rms-confirmation/rmsnorm_229_3968_Ascend950DT_9582/profile/OPPROF_20261119160218_TCQLTQOIHMQXVJYQ/simulator/trace.json"
+        ],
+        "trace_sha256": [
+          "dcdf623ac94e6a4f2cb110b2e975995590a7620b2355e5dcb8fc5356029871e9"
+        ],
+        "source_hash_match": null,
+        "launch_context": null,
+        "scope": "one all-core window",
+        "run_log": "runs/sku19-rms-confirmation/rmsnorm_229_3968_Ascend950DT_9582/run.log",
+        "runner_sha256": "6bbb68803743f607002b47dad03e93aee5cbf030335f9d3e8ad1ca3950b53561",
+        "input_contract_log": [
+          "case=rmsnorm api=aclnnRmsNorm R=229 C=3968 dtype=BF16 epsilon=1e-06 workspace=16777472"
+        ],
+        "active_aic_per_launch": null,
+        "active_aiv_per_launch": null,
+        "stages": [
+          {
+            "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+            "ca_us": 5.58666658680886,
+            "active_aic": 0,
+            "active_aiv": 58,
+            "total_events": 470442,
+            "mmad": 0,
+            "binary_sha256": "0926fe478e5f718ef49241c08ef00b665797690f0f7f22c67fdc25044e0cb54d"
+          }
+        ]
+      },
+      "pr_observation": {
+        "chip": "Ascend950PR_957b",
+        "ca_us": 5.426666262559593,
+        "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+        "api": "aclnnRmsNorm",
+        "correctness": [
+          "correctness count=908672 bad=0 max_abs_error=0.00166545 atol=0.015625 rtol=0.015625 hard_limit=1",
+          "correctness count=229 bad=0 max_abs_error=2.53108e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+        ],
+        "active_aic": 0,
+        "active_aiv": 46,
+        "backend": "official paired second RMS freeze, dump=false",
+        "role": "frozen PR holdout",
+        "trace": [
+          "runs/sku19-rms-confirmation/rmsnorm_229_3968_Ascend950PR_957b/profile/OPPROF_20261119160316_SFQSKYODPXBVTAOH/simulator/trace.json"
+        ],
+        "trace_sha256": [
+          "1e5bba8ce6db6917fb66600d25dee93d18fa24f8bbafdda8a9cd9519c0245572"
+        ],
+        "source_hash_match": null,
+        "launch_context": null,
+        "scope": "one all-core window",
+        "run_log": "runs/sku19-rms-confirmation/rmsnorm_229_3968_Ascend950PR_957b/run.log",
+        "runner_sha256": "6bbb68803743f607002b47dad03e93aee5cbf030335f9d3e8ad1ca3950b53561",
+        "input_contract_log": [
+          "case=rmsnorm api=aclnnRmsNorm R=229 C=3968 dtype=BF16 epsilon=1e-06 workspace=16777472"
+        ],
+        "active_aic_per_launch": null,
+        "active_aiv_per_launch": null,
+        "stages": [
+          {
+            "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+            "ca_us": 5.426666262559593,
+            "active_aic": 0,
+            "active_aiv": 46,
+            "total_events": 456402,
+            "mmad": 0,
+            "binary_sha256": "0926fe478e5f718ef49241c08ef00b665797690f0f7f22c67fdc25044e0cb54d"
+          }
+        ]
+      },
+      "speedup_pred": 0.98419104419246,
+      "speedup_ca": 1.0294840914307122,
+      "speedup_old": 0.98419104419246,
+      "pr_reuse_us": 5.119080917019678
+    },
+    {
+      "op": "rmsnorm",
+      "shape": [
+        367,
+        5312
+      ],
+      "role": "历史重放",
+      "dt_us": 6.062700208126847,
+      "pr_us": 6.211685892280381,
+      "future_us": 5.444104688753223,
+      "old_dt_us": 6.062700208126847,
+      "old_pr_us": 7.261072813852813,
+      "dt_ca_us": 6.6648483304306865,
+      "pr_ca_us": 7.617575648240745,
+      "id": "rmsnorm_367_5312",
+      "dt_observation": {
+        "chip": "Ascend950DT_9582",
+        "ca_us": 6.6648483304306865,
+        "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+        "api": "aclnnRmsNorm",
+        "correctness": [
+          "correctness count=1949504 bad=0 max_abs_error=0.00156115 atol=0.015625 rtol=0.015625 hard_limit=1",
+          "correctness count=367 bad=0 max_abs_error=2.1086e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+        ],
+        "active_aic": 0,
+        "active_aiv": 62,
+        "backend": "official paired second RMS freeze, dump=false",
+        "role": "new paired DT CA",
+        "trace": [
+          "runs/sku19-rms-confirmation/rmsnorm_367_5312_Ascend950DT_9582/profile/OPPROF_20261119160341_RDPWGJTRATNKQCAL/simulator/trace.json"
+        ],
+        "trace_sha256": [
+          "e1b975d8eb8f89a78ab2d91e24c99200feb0ac8f8acc3d1ccdaf91fbb7be1c74"
+        ],
+        "source_hash_match": null,
+        "launch_context": null,
+        "scope": "one all-core window",
+        "run_log": "runs/sku19-rms-confirmation/rmsnorm_367_5312_Ascend950DT_9582/run.log",
+        "runner_sha256": "6bbb68803743f607002b47dad03e93aee5cbf030335f9d3e8ad1ca3950b53561",
+        "input_contract_log": [
+          "case=rmsnorm api=aclnnRmsNorm R=367 C=5312 dtype=BF16 epsilon=1e-06 workspace=16777472"
+        ],
+        "active_aic_per_launch": null,
+        "active_aiv_per_launch": null,
+        "stages": [
+          {
+            "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+            "ca_us": 6.6648483304306865,
+            "active_aic": 0,
+            "active_aiv": 62,
+            "total_events": 964022,
+            "mmad": 0,
+            "binary_sha256": "0926fe478e5f718ef49241c08ef00b665797690f0f7f22c67fdc25044e0cb54d"
+          }
+        ]
+      },
+      "pr_observation": {
+        "chip": "Ascend950PR_957b",
+        "ca_us": 7.617575648240745,
+        "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+        "api": "aclnnRmsNorm",
+        "correctness": [
+          "correctness count=1949504 bad=0 max_abs_error=0.00156115 atol=0.015625 rtol=0.015625 hard_limit=1",
+          "correctness count=367 bad=0 max_abs_error=2.1086e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+        ],
+        "active_aic": 0,
+        "active_aiv": 53,
+        "backend": "official paired second RMS freeze, dump=false",
+        "role": "frozen PR holdout",
+        "trace": [
+          "runs/sku19-rms-confirmation/rmsnorm_367_5312_Ascend950PR_957b/profile/OPPROF_20261119160430_UHGTWGSGKIUSGYFL/simulator/trace.json"
+        ],
+        "trace_sha256": [
+          "594856895c3d19b3d209aac526b044005e848daf94f00424c6ce9f2be5fdef5f"
+        ],
+        "source_hash_match": null,
+        "launch_context": null,
+        "scope": "one all-core window",
+        "run_log": "runs/sku19-rms-confirmation/rmsnorm_367_5312_Ascend950PR_957b/run.log",
+        "runner_sha256": "6bbb68803743f607002b47dad03e93aee5cbf030335f9d3e8ad1ca3950b53561",
+        "input_contract_log": [
+          "case=rmsnorm api=aclnnRmsNorm R=367 C=5312 dtype=BF16 epsilon=1e-06 workspace=16777472"
+        ],
+        "active_aic_per_launch": null,
+        "active_aiv_per_launch": null,
+        "stages": [
+          {
+            "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+            "ca_us": 7.617575648240745,
+            "active_aic": 0,
+            "active_aiv": 53,
+            "total_events": 948992,
+            "mmad": 0,
+            "binary_sha256": "0926fe478e5f718ef49241c08ef00b665797690f0f7f22c67fdc25044e0cb54d"
+          }
+        ]
+      },
+      "speedup_pred": 0.9760152578966224,
+      "speedup_ca": 0.8749303765653987,
+      "speedup_old": 0.8349592909411833,
+      "pr_reuse_us": 6.062700208126847
+    },
+    {
+      "op": "rmsnorm",
+      "shape": [
+        495,
+        6912
+      ],
+      "role": "历史重放",
+      "dt_us": 7.741290196876038,
+      "pr_us": 7.531891420869087,
+      "future_us": 6.023688139047805,
+      "old_dt_us": 7.741290196876038,
+      "old_pr_us": 11.46925567099567,
+      "dt_ca_us": 7.846061232499778,
+      "pr_ca_us": 10.059393408708274,
+      "id": "rmsnorm_495_6912",
+      "dt_observation": {
+        "chip": "Ascend950DT_9582",
+        "ca_us": 7.846061232499778,
+        "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+        "api": "aclnnRmsNorm",
+        "correctness": [
+          "correctness count=3421440 bad=0 max_abs_error=0.00145417 atol=0.015625 rtol=0.015625 hard_limit=1",
+          "correctness count=495 bad=0 max_abs_error=1.2954e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+        ],
+        "active_aic": 0,
+        "active_aiv": 62,
+        "backend": "official paired second RMS freeze, dump=false",
+        "role": "new paired DT CA",
+        "trace": [
+          "runs/sku19-rms-confirmation/rmsnorm_495_6912_Ascend950DT_9582/profile/OPPROF_20261119160519_XOOTPXZMTIGJCGVL/simulator/trace.json"
+        ],
+        "trace_sha256": [
+          "3e778daaf719927daf89d526e9b795593e90edbb722a467c9bca4ef14710aaa4"
+        ],
+        "source_hash_match": null,
+        "launch_context": null,
+        "scope": "one all-core window",
+        "run_log": "runs/sku19-rms-confirmation/rmsnorm_495_6912_Ascend950DT_9582/run.log",
+        "runner_sha256": "6bbb68803743f607002b47dad03e93aee5cbf030335f9d3e8ad1ca3950b53561",
+        "input_contract_log": [
+          "case=rmsnorm api=aclnnRmsNorm R=495 C=6912 dtype=BF16 epsilon=1e-06 workspace=16777472"
+        ],
+        "active_aic_per_launch": null,
+        "active_aiv_per_launch": null,
+        "stages": [
+          {
+            "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+            "ca_us": 7.846061232499778,
+            "active_aic": 0,
+            "active_aiv": 62,
+            "total_events": 1611310,
+            "mmad": 0,
+            "binary_sha256": "0926fe478e5f718ef49241c08ef00b665797690f0f7f22c67fdc25044e0cb54d"
+          }
+        ]
+      },
+      "pr_observation": {
+        "chip": "Ascend950PR_957b",
+        "ca_us": 10.059393408708274,
+        "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+        "api": "aclnnRmsNorm",
+        "correctness": [
+          "correctness count=3421440 bad=0 max_abs_error=0.00145417 atol=0.015625 rtol=0.015625 hard_limit=1",
+          "correctness count=495 bad=0 max_abs_error=1.2954e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+        ],
+        "active_aic": 0,
+        "active_aiv": 55,
+        "backend": "official paired second RMS freeze, dump=false",
+        "role": "frozen PR holdout",
+        "trace": [
+          "runs/sku19-rms-confirmation/rmsnorm_495_6912_Ascend950PR_957b/profile/OPPROF_20261119160717_SXBOGPWYROCVULZU/simulator/trace.json"
+        ],
+        "trace_sha256": [
+          "b78ffee548988303eb2f50b1650263972a12e8c6f9b349a891092928fa11c59d"
+        ],
+        "source_hash_match": null,
+        "launch_context": null,
+        "scope": "one all-core window",
+        "run_log": "runs/sku19-rms-confirmation/rmsnorm_495_6912_Ascend950PR_957b/run.log",
+        "runner_sha256": "6bbb68803743f607002b47dad03e93aee5cbf030335f9d3e8ad1ca3950b53561",
+        "input_contract_log": [
+          "case=rmsnorm api=aclnnRmsNorm R=495 C=6912 dtype=BF16 epsilon=1e-06 workspace=16777472"
+        ],
+        "active_aic_per_launch": null,
+        "active_aiv_per_launch": null,
+        "stages": [
+          {
+            "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+            "ca_us": 10.059393408708274,
+            "active_aic": 0,
+            "active_aiv": 55,
+            "total_events": 1627120,
+            "mmad": 0,
+            "binary_sha256": "0926fe478e5f718ef49241c08ef00b665797690f0f7f22c67fdc25044e0cb54d"
+          }
+        ]
+      },
+      "speedup_pred": 1.0278016190497326,
+      "speedup_ca": 0.7799735942037572,
+      "speedup_old": 0.6749601211221409,
+      "pr_reuse_us": 7.741290196876038
+    },
+    {
+      "op": "cast_bf16_fp32",
+      "shape": [
+        32,
+        4096
+      ],
+      "role": "历史重放",
+      "dt_us": 2.7362233454545457,
+      "pr_us": 2.681144127831498,
+      "future_us": 2.508165720154672,
+      "old_dt_us": 2.7362233454545457,
+      "old_pr_us": 2.681144127831498,
+      "dt_ca_us": 2.7709090737625957,
+      "pr_ca_us": 2.867272856645286,
+      "id": "cast_32_4096",
+      "dt_observation": {
+        "kernel": "Cast_b2717900ea7de2d41ea9c63d23aa269b_high_performance_0",
+        "ca_us": 2.7709090737625957,
+        "active_aic": 0,
+        "active_aiv": 64,
+        "trace": "runs/workloads19/cast_32_4096_Ascend950DT_9582/profile/OPPROF_20261119152130_UJFHUVXSVPLXIBLS/simulator/trace.json",
+        "trace_sha256": "d8f6901117d7e0601f56b773bf4cb965c5ba1fe96519de175ca3677c286e6c08",
+        "binary_sha256": "b4281f94c2b846460a173db1ab578880e18faeeab8b719e3de5ee0da44096953",
+        "total_events": 42624,
+        "correctness": [
+          "correctness count=131072 bad=0 exact=bf16_widen_to_fp32"
+        ]
+      },
+      "pr_observation": {
+        "kernel": "Cast_b2717900ea7de2d41ea9c63d23aa269b_high_performance_0",
+        "ca_us": 2.867272856645286,
+        "active_aic": 0,
+        "active_aiv": 56,
+        "trace": "runs/workloads19/cast_32_4096_Ascend950PR_957b/profile/OPPROF_20261119152130_YKCRVAZKNUGFQEED/simulator/trace.json",
+        "trace_sha256": "7aa2dccc5bb301e5891b7a4e19de11f043238542e62630bdcaafc52a70b35851",
+        "binary_sha256": "b4281f94c2b846460a173db1ab578880e18faeeab8b719e3de5ee0da44096953",
+        "total_events": 39512,
+        "correctness": [
+          "correctness count=131072 bad=0 exact=bf16_widen_to_fp32"
+        ]
+      },
+      "speedup_pred": 1.0205431767174693,
+      "speedup_ca": 0.966391833738685,
+      "speedup_old": 1.0205431767174693,
+      "pr_reuse_us": 2.7362233454545457
+    },
+    {
+      "op": "cast_bf16_fp32",
+      "shape": [
+        1,
+        64
+      ],
+      "role": "历史重放",
+      "dt_us": 1.9573374386363633,
+      "pr_us": 1.9573665167819498,
+      "future_us": 1.7942247662548334,
+      "old_dt_us": 1.9573374386363638,
+      "old_pr_us": 1.95736651678195,
+      "dt_ca_us": 2.1721212891861796,
+      "pr_ca_us": 1.9957575825974345,
+      "id": "cast_1_64",
+      "dt_observation": {
+        "kernel": "Cast_b2717900ea7de2d41ea9c63d23aa269b_high_performance_0",
+        "ca_us": 2.1721212891861796,
+        "active_aic": 0,
+        "active_aiv": 1,
+        "trace": "runs/workloads19/cast_1_64_Ascend950DT_9582/profile/OPPROF_20261119152248_DNNCQRNUNMDVAEVB/simulator/trace.json",
+        "trace_sha256": "7d98301bf0a02f1be644ebe9d8a9995ecd939c3ec67b2f134bec0ba3170443e8",
+        "binary_sha256": "b4281f94c2b846460a173db1ab578880e18faeeab8b719e3de5ee0da44096953",
+        "total_events": 418,
+        "correctness": [
+          "correctness count=64 bad=0 exact=bf16_widen_to_fp32"
+        ]
+      },
+      "pr_observation": {
+        "kernel": "Cast_b2717900ea7de2d41ea9c63d23aa269b_high_performance_0",
+        "ca_us": 1.9957575825974345,
+        "active_aic": 0,
+        "active_aiv": 1,
+        "trace": "runs/workloads19/cast_1_64_Ascend950PR_957b/profile/OPPROF_20261119152250_HXZDJREQKJRMTJRN/simulator/trace.json",
+        "trace_sha256": "2905a793f48d425f2e7e246954e279ed8bbe275a92b911e946287faffcbf2b82",
+        "binary_sha256": "b4281f94c2b846460a173db1ab578880e18faeeab8b719e3de5ee0da44096953",
+        "total_events": 418,
+        "correctness": [
+          "correctness count=64 bad=0 exact=bf16_widen_to_fp32"
+        ]
+      },
+      "speedup_pred": 0.9999851442510449,
+      "speedup_ca": 1.0883693030288837,
+      "speedup_old": 0.999985144251045,
+      "pr_reuse_us": 1.9573374386363633
+    },
+    {
+      "op": "cast_bf16_fp32",
+      "shape": [
+        72,
+        4096
+      ],
+      "role": "历史重放",
+      "dt_us": 2.9318532545454548,
+      "pr_us": 2.9065009499905887,
+      "future_us": 3.0488994537301726,
+      "old_dt_us": 2.9318532545454548,
+      "old_pr_us": 2.906500949990589,
+      "dt_ca_us": 2.8509087590500712,
+      "pr_ca_us": 2.975151780061424,
+      "id": "cast_72_4096",
+      "dt_observation": {
+        "kernel": "Cast_b2717900ea7de2d41ea9c63d23aa269b_high_performance_0",
+        "ca_us": 2.8509087590500712,
+        "active_aic": 0,
+        "active_aiv": 64,
+        "trace": "runs/workloads19/cast_72_4096_Ascend950DT_9582/profile/OPPROF_20261119152356_UNOPESBGPKEFXYSP/simulator/trace.json",
+        "trace_sha256": "aefd88c7094ff7b9b9bd7f75ffd94600dcb6b673308b579b80e362bf681755ff",
+        "binary_sha256": "b4281f94c2b846460a173db1ab578880e18faeeab8b719e3de5ee0da44096953",
+        "total_events": 63104,
+        "correctness": [
+          "correctness count=294912 bad=0 exact=bf16_widen_to_fp32"
+        ]
+      },
+      "pr_observation": {
+        "kernel": "Cast_b2717900ea7de2d41ea9c63d23aa269b_high_performance_0",
+        "ca_us": 2.975151780061424,
+        "active_aic": 0,
+        "active_aiv": 56,
+        "trace": "runs/workloads19/cast_72_4096_Ascend950PR_957b/profile/OPPROF_20261119152400_RGQYXUEOLYACHOYK/simulator/trace.json",
+        "trace_sha256": "ade0a802f9005f6156e282417e12ecf957e9cf314fdd35d4a19f1b7c92bcf62a",
+        "binary_sha256": "b4281f94c2b846460a173db1ab578880e18faeeab8b719e3de5ee0da44096953",
+        "total_events": 60104,
+        "correctness": [
+          "correctness count=294912 bad=0 exact=bf16_widen_to_fp32"
+        ]
+      },
+      "speedup_pred": 1.0087226204260997,
+      "speedup_ca": 0.9582397705407865,
+      "speedup_old": 1.0087226204260995,
+      "pr_reuse_us": 2.9318532545454548
+    },
+    {
+      "op": "cast_bf16_fp32",
+      "shape": [
+        1,
+        3584
+      ],
+      "role": "历史重放",
+      "dt_us": 2.0993443372294376,
+      "pr_us": 2.100158525305854,
+      "future_us": 1.9243648392623218,
+      "old_dt_us": 2.099344337229437,
+      "old_pr_us": 2.1001585253058535,
+      "dt_ca_us": 2.216363432817161,
+      "pr_ca_us": 2.103636267594993,
+      "id": "cast_1_3584",
+      "dt_observation": {
+        "kernel": "Cast_b2717900ea7de2d41ea9c63d23aa269b_high_performance_0",
+        "ca_us": 2.216363432817161,
+        "active_aic": 0,
+        "active_aiv": 2,
+        "trace": "runs/workloads19/cast_1_3584_Ascend950DT_9582/profile/OPPROF_20261119152509_GROAONCXRIFHYOJW/simulator/trace.json",
+        "trace_sha256": "09dbddabdaa8de84706f387a4684b57fde94657b39bc4fe4870fcf23a6b25bde",
+        "binary_sha256": "b4281f94c2b846460a173db1ab578880e18faeeab8b719e3de5ee0da44096953",
+        "total_events": 1268,
+        "correctness": [
+          "correctness count=3584 bad=0 exact=bf16_widen_to_fp32"
+        ]
+      },
+      "pr_observation": {
+        "kernel": "Cast_b2717900ea7de2d41ea9c63d23aa269b_high_performance_0",
+        "ca_us": 2.103636267594993,
+        "active_aic": 0,
+        "active_aiv": 2,
+        "trace": "runs/workloads19/cast_1_3584_Ascend950PR_957b/profile/OPPROF_20261119152519_TEARZNSPREWGMNVY/simulator/trace.json",
+        "trace_sha256": "ccc9e8d840a6987a90252d1e8f5ff1f915500e245e0bda83d4e1414718017e50",
+        "binary_sha256": "b4281f94c2b846460a173db1ab578880e18faeeab8b719e3de5ee0da44096953",
+        "total_events": 1268,
+        "correctness": [
+          "correctness count=3584 bad=0 exact=bf16_widen_to_fp32"
+        ]
+      },
+      "speedup_pred": 0.9996123206574143,
+      "speedup_ca": 1.0535868139177142,
+      "speedup_old": 0.9996123206574143,
+      "pr_reuse_us": 2.0993443372294376
+    },
+    {
+      "op": "cast_bf16_fp32",
+      "shape": [
+        96,
+        7168
+      ],
+      "role": "历史重放",
+      "dt_us": 3.4013650363636363,
+      "pr_us": 3.4446723061170714,
+      "future_us": 3.278355303386403,
+      "old_dt_us": 3.4013650363636363,
+      "old_pr_us": 4.011544242424242,
+      "dt_ca_us": 3.095757487230003,
+      "pr_ca_us": 2.874545581638813,
+      "id": "cast_96_7168",
+      "dt_observation": {
+        "kernel": "Cast_b2717900ea7de2d41ea9c63d23aa269b_high_performance_0",
+        "ca_us": 3.095757487230003,
+        "active_aic": 0,
+        "active_aiv": 64,
+        "trace": "runs/workloads19/cast_96_7168_Ascend950DT_9582/profile/OPPROF_20261119152637_CXILBTFPXEMGGEMT/simulator/trace.json",
+        "trace_sha256": "a27017a8b17a8b3fc136116b4f2ebe3ae585ca6a6a98679aa1d6690ba895804b",
+        "binary_sha256": "b4281f94c2b846460a173db1ab578880e18faeeab8b719e3de5ee0da44096953",
+        "total_events": 112256,
+        "correctness": [
+          "correctness count=688128 bad=0 exact=bf16_widen_to_fp32"
+        ]
+      },
+      "pr_observation": {
+        "kernel": "Cast_b2717900ea7de2d41ea9c63d23aa269b_high_performance_0",
+        "ca_us": 2.874545581638813,
+        "active_aic": 0,
+        "active_aiv": 56,
+        "trace": "runs/workloads19/cast_96_7168_Ascend950PR_957b/profile/OPPROF_20261119152653_PRWAFYWKOGMEGLYA/simulator/trace.json",
+        "trace_sha256": "ac753e7c9e7d1a450c90588c202d3334d02a3c0aba4b6b6d0a3b0100cbf242cc",
+        "binary_sha256": "b4281f94c2b846460a173db1ab578880e18faeeab8b719e3de5ee0da44096953",
+        "total_events": 108567,
+        "correctness": [
+          "correctness count=688128 bad=0 exact=bf16_widen_to_fp32"
+        ]
+      },
+      "speedup_pred": 0.9874277533812056,
+      "speedup_ca": 1.0769554349752473,
+      "speedup_old": 0.8478941850852267,
+      "pr_reuse_us": 3.4013650363636363
+    },
+    {
+      "op": "cast_bf16_fp32",
+      "shape": [
+        9,
+        4096
+      ],
+      "role": "历史重放",
+      "dt_us": 2.2782146874458875,
+      "pr_us": 2.2791451881046494,
+      "future_us": 2.088324450313402,
+      "old_dt_us": 2.2782146874458875,
+      "old_pr_us": 2.279145188104649,
+      "dt_ca_us": 2.3254547147080302,
+      "pr_ca_us": 2.220000031404197,
+      "id": "cast_9_4096",
+      "dt_observation": {
+        "kernel": "Cast_b2717900ea7de2d41ea9c63d23aa269b_high_performance_0",
+        "ca_us": 2.3254547147080302,
+        "active_aic": 0,
+        "active_aiv": 18,
+        "trace": "runs/workloads19/cast_9_4096_Ascend950DT_9582/profile/OPPROF_20261119152845_SQFRDSEFFUPFJKPB/simulator/trace.json",
+        "trace_sha256": "b4a2bd7d5ea6918b14d3c38506536f0aef1eb4e9a6025eac20d6d83d4de0cea9",
+        "binary_sha256": "b4281f94c2b846460a173db1ab578880e18faeeab8b719e3de5ee0da44096953",
+        "total_events": 11988,
+        "correctness": [
+          "correctness count=36864 bad=0 exact=bf16_widen_to_fp32"
+        ]
+      },
+      "pr_observation": {
+        "kernel": "Cast_b2717900ea7de2d41ea9c63d23aa269b_high_performance_0",
+        "ca_us": 2.220000031404197,
+        "active_aic": 0,
+        "active_aiv": 18,
+        "trace": "runs/workloads19/cast_9_4096_Ascend950PR_957b/profile/OPPROF_20261119153003_QHMYDQOJZHUCIZSO/simulator/trace.json",
+        "trace_sha256": "5e0dd2860212925b5cb65ec9a3db57ceb771789f9d21bcba89d1345a60557a7f",
+        "binary_sha256": "b4281f94c2b846460a173db1ab578880e18faeeab8b719e3de5ee0da44096953",
+        "total_events": 11988,
+        "correctness": [
+          "correctness count=36864 bad=0 exact=bf16_widen_to_fp32"
+        ]
+      },
+      "speedup_pred": 0.999591732609393,
+      "speedup_ca": 1.0475021089243546,
+      "speedup_old": 0.9995917326093933,
+      "pr_reuse_us": 2.2782146874458875
+    },
+    {
+      "op": "cast_bf16_fp32",
+      "shape": [
+        48,
+        7168
+      ],
+      "role": "历史重放",
+      "dt_us": 2.9905422272727273,
+      "pr_us": 2.9723690223226047,
+      "future_us": 3.0775423925786183,
+      "old_dt_us": 2.9905422272727273,
+      "old_pr_us": 2.9723690223226047,
+      "dt_ca_us": 2.891515257768333,
+      "pr_ca_us": 2.913939240388572,
+      "id": "cast_48_7168",
+      "dt_observation": {
+        "kernel": "Cast_b2717900ea7de2d41ea9c63d23aa269b_high_performance_0",
+        "ca_us": 2.891515257768333,
+        "active_aic": 0,
+        "active_aiv": 64,
+        "trace": "runs/workloads19/cast_48_7168_Ascend950DT_9582/profile/OPPROF_20261119153009_AQTLUOZGPWMTFKYN/simulator/trace.json",
+        "trace_sha256": "ec6ad0945a9647dc055300b1ba6e4dee1b78d57bfa04b9e6079d45ead1a3a38f",
+        "binary_sha256": "b4281f94c2b846460a173db1ab578880e18faeeab8b719e3de5ee0da44096953",
+        "total_events": 69248,
+        "correctness": [
+          "correctness count=344064 bad=0 exact=bf16_widen_to_fp32"
+        ]
+      },
+      "pr_observation": {
+        "kernel": "Cast_b2717900ea7de2d41ea9c63d23aa269b_high_performance_0",
+        "ca_us": 2.913939240388572,
+        "active_aic": 0,
+        "active_aiv": 56,
+        "trace": "runs/workloads19/cast_48_7168_Ascend950PR_957b/profile/OPPROF_20261119153103_YANJLTCZSLIHRZAU/simulator/trace.json",
+        "trace_sha256": "9f01d818dfafa3bfb4462ac14a6d8a9d909ce5eb1ce65347886e2795dc960561",
+        "binary_sha256": "b4281f94c2b846460a173db1ab578880e18faeeab8b719e3de5ee0da44096953",
+        "total_events": 65968,
+        "correctness": [
+          "correctness count=344064 bad=0 exact=bf16_widen_to_fp32"
+        ]
+      },
+      "speedup_pred": 1.0061140473520083,
+      "speedup_ca": 0.9923045812659947,
+      "speedup_old": 1.0061140473520083,
+      "pr_reuse_us": 2.9905422272727273
+    },
+    {
+      "op": "cast_bf16_fp32",
+      "shape": [
+        16,
+        7168
+      ],
+      "role": "历史重放",
+      "dt_us": 2.6565696658008657,
+      "pr_us": 2.6575001664596276,
+      "future_us": 2.435149847138799,
+      "old_dt_us": 2.6565696658008657,
+      "old_pr_us": 2.6575001664596276,
+      "dt_ca_us": 2.721818449907005,
+      "pr_ca_us": 2.8296968964859843,
+      "id": "cast_16_7168",
+      "dt_observation": {
+        "kernel": "Cast_b2717900ea7de2d41ea9c63d23aa269b_high_performance_0",
+        "ca_us": 2.721818449907005,
+        "active_aic": 0,
+        "active_aiv": 56,
+        "trace": "runs/workloads19/cast_16_7168_Ascend950DT_9582/profile/OPPROF_20261119153118_TOPOZMUQABVETDHM/simulator/trace.json",
+        "trace_sha256": "5fa04202a3451e38d33032098431dc176a52124834ece488b66f60de8a1a9def",
+        "binary_sha256": "b4281f94c2b846460a173db1ab578880e18faeeab8b719e3de5ee0da44096953",
+        "total_events": 37296,
+        "correctness": [
+          "correctness count=114688 bad=0 exact=bf16_widen_to_fp32"
+        ]
+      },
+      "pr_observation": {
+        "kernel": "Cast_b2717900ea7de2d41ea9c63d23aa269b_high_performance_0",
+        "ca_us": 2.8296968964859843,
+        "active_aic": 0,
+        "active_aiv": 56,
+        "trace": "runs/workloads19/cast_16_7168_Ascend950PR_957b/profile/OPPROF_20261119153229_ANBKOZOJVRAJSASO/simulator/trace.json",
+        "trace_sha256": "83585b756ff4ffe34753fa4edb875dfc75071740cf68035a2037e720e4ae5666",
+        "binary_sha256": "b4281f94c2b846460a173db1ab578880e18faeeab8b719e3de5ee0da44096953",
+        "total_events": 37296,
+        "correctness": [
+          "correctness count=114688 bad=0 exact=bf16_widen_to_fp32"
+        ]
+      },
+      "speedup_pred": 0.9996498586639784,
+      "speedup_ca": 0.9618763243819695,
+      "speedup_old": 0.9996498586639784,
+      "pr_reuse_us": 2.6565696658008657
+    },
+    {
+      "op": "cast_bf16_fp32",
+      "shape": [
+        128,
+        5120
+      ],
+      "role": "历史重放",
+      "dt_us": 3.3622390545454546,
+      "pr_us": 3.40039387326134,
+      "future_us": 3.259551867707347,
+      "old_dt_us": 3.3622390545454546,
+      "old_pr_us": 3.8711099567099563,
+      "dt_ca_us": 3.0636360673233867,
+      "pr_ca_us": 3.5624241856858134,
+      "id": "cast_128_5120",
+      "dt_observation": {
+        "kernel": "Cast_b2717900ea7de2d41ea9c63d23aa269b_high_performance_0",
+        "ca_us": 3.0636360673233867,
+        "active_aic": 0,
+        "active_aiv": 64,
+        "trace": "runs/workloads19/cast_128_5120_Ascend950DT_9582/profile/OPPROF_20261119153418_VLTZJOOKBRFVIEBQ/simulator/trace.json",
+        "trace_sha256": "93bb14f55a3b086d2b5d7b545828fc9b1209230febc618c8615fc0e16497ee45",
+        "binary_sha256": "b4281f94c2b846460a173db1ab578880e18faeeab8b719e3de5ee0da44096953",
+        "total_events": 108160,
+        "correctness": [
+          "correctness count=655360 bad=0 exact=bf16_widen_to_fp32"
+        ]
+      },
+      "pr_observation": {
+        "kernel": "Cast_b2717900ea7de2d41ea9c63d23aa269b_high_performance_0",
+        "ca_us": 3.5624241856858134,
+        "active_aic": 0,
+        "active_aiv": 56,
+        "trace": "runs/workloads19/cast_128_5120_Ascend950PR_957b/profile/OPPROF_20261119153431_HQKNVSWMDVNDKYFS/simulator/trace.json",
+        "trace_sha256": "a17010b49e21af7cfb9afa7e7021854d14dcd1818d67ef8049029b5064cd93db",
+        "binary_sha256": "b4281f94c2b846460a173db1ab578880e18faeeab8b719e3de5ee0da44096953",
+        "total_events": 104936,
+        "correctness": [
+          "correctness count=655360 bad=0 exact=bf16_widen_to_fp32"
+        ]
+      },
+      "speedup_pred": 0.9887792943588353,
+      "speedup_ca": 0.859986320448135,
+      "speedup_old": 0.8685465130530703,
+      "pr_reuse_us": 3.3622390545454546
+    },
+    {
+      "op": "cast_bf16_fp32",
+      "shape": [
+        144,
+        6144
+      ],
+      "role": "历史重放",
+      "dt_us": 3.6361209272727275,
+      "pr_us": 3.7152627291243174,
+      "future_us": 3.3931352846926295,
+      "old_dt_us": 3.6361209272727275,
+      "old_pr_us": 4.854149956709956,
+      "dt_ca_us": 3.521818402223289,
+      "pr_ca_us": 4.110908987931907,
+      "id": "cast_144_6144",
+      "dt_observation": {
+        "kernel": "Cast_b2717900ea7de2d41ea9c63d23aa269b_high_performance_0",
+        "ca_us": 3.521818402223289,
+        "active_aic": 0,
+        "active_aiv": 64,
+        "trace": "runs/workloads19/cast_144_6144_Ascend950DT_9582/profile/OPPROF_20261119153547_EGFPHJZKYLAEPUCI/simulator/trace.json",
+        "trace_sha256": "d576063f28a2612213d9e3744a3f25978a6ae4a46b7f3bf65a72fa23619e147b",
+        "binary_sha256": "b4281f94c2b846460a173db1ab578880e18faeeab8b719e3de5ee0da44096953",
+        "total_events": 136832,
+        "correctness": [
+          "correctness count=884736 bad=0 exact=bf16_widen_to_fp32"
+        ]
+      },
+      "pr_observation": {
+        "kernel": "Cast_b2717900ea7de2d41ea9c63d23aa269b_high_performance_0",
+        "ca_us": 4.110908987931907,
+        "active_aic": 0,
+        "active_aiv": 56,
+        "trace": "runs/workloads19/cast_144_6144_Ascend950PR_957b/profile/OPPROF_20261119153730_LTPISMURJXPXDHCZ/simulator/trace.json",
+        "trace_sha256": "5cb7718c44e4a6efb4bee0c9ddf00d6b4798070b304e1c5c6f174124626b52a9",
+        "binary_sha256": "b4281f94c2b846460a173db1ab578880e18faeeab8b719e3de5ee0da44096953",
+        "total_events": 133608,
+        "correctness": [
+          "correctness count=884736 bad=0 exact=bf16_widen_to_fp32"
+        ]
+      },
+      "speedup_pred": 0.9786981950882802,
+      "speedup_ca": 0.8567006500416409,
+      "speedup_old": 0.7490747009672557,
+      "pr_reuse_us": 3.6361209272727275
+    }
+  ],
+  "summary": {
+    "rmsnorm": {
+      "dt": {
+        "n": 10,
+        "wape": 0.034096336779652237,
+        "max_ape": 0.09034686049111162,
+        "worst": "rmsnorm_367_5312"
+      },
+      "pr": {
+        "n": 10,
+        "wape": 0.09035114157982058,
+        "max_ape": 0.2512578925137936,
+        "worst": "rmsnorm_495_6912"
+      },
+      "speed": {
+        "n": 10,
+        "wape": 0.052572607924114,
+        "max_ape": 0.31773899358602353,
+        "worst": "rmsnorm_495_6912"
+      },
+      "v019_dt": {
+        "n": 10,
+        "wape": 0.034096336779652237,
+        "max_ape": 0.09034686049111162,
+        "worst": "rmsnorm_367_5312"
+      },
+      "v019_pr": {
+        "n": 10,
+        "wape": 0.0516253175897451,
+        "max_ape": 0.1401538050064628,
+        "worst": "rmsnorm_495_6912"
+      },
+      "v019_speed": {
+        "n": 10,
+        "wape": 0.032783781422349126,
+        "max_ape": 0.13463721574936172,
+        "worst": "rmsnorm_495_6912"
+      },
+      "dt_reuse_pr": {
+        "n": 10,
+        "wape": 0.12000868671956495,
+        "max_ape": 0.38235036165882774,
+        "worst": "rmsnorm_57_2304"
+      }
+    },
+    "cast_bf16_fp32": {
+      "dt": {
+        "n": 10,
+        "wape": 0.0498533083589529,
+        "max_ape": 0.09888207054509768,
+        "worst": "cast_1_64"
+      },
+      "pr": {
+        "n": 10,
+        "wape": 0.06024683669336855,
+        "max_ape": 0.19833629639409733,
+        "worst": "cast_96_7168"
+      },
+      "speed": {
+        "n": 10,
+        "wape": 0.06964210820950455,
+        "max_ape": 0.1497616541662974,
+        "worst": "cast_128_5120"
+      },
+      "v019_dt": {
+        "n": 10,
+        "wape": 0.0498533083589529,
+        "max_ape": 0.09888207054509746,
+        "worst": "cast_1_64"
+      },
+      "v019_pr": {
+        "n": 10,
+        "wape": 0.09754025639821633,
+        "max_ape": 0.3955403135883524,
+        "worst": "cast_96_7168"
+      },
+      "v019_speed": {
+        "n": 10,
+        "wape": 0.07014192918210417,
+        "max_ape": 0.21269334129437334,
+        "worst": "cast_96_7168"
+      },
+      "dt_reuse_pr": {
+        "n": 10,
+        "wape": 0.060688763817578206,
+        "max_ape": 0.183270516943578,
+        "worst": "cast_96_7168"
+      }
+    }
+  }
+}

@@ -69,7 +69,7 @@ def _rates(work, latency_us, chip):
     }
 
 
-_RESOURCE_ONLY = {'moe_gating_top_k', 'cast_bf16_fp32', 'attn_res_fwd'}
+_RESOURCE_ONLY = {'moe_gating_top_k', 'cast_bf16_fp32', 'attn_res_fwd', 'sigmoid_fp32'}
 _RESOURCE_OPS = {'quant', 'matmul', 'fa', 'rmsnorm'} | _RESOURCE_ONLY
 
 
@@ -87,6 +87,11 @@ def _price_resource(op, shape, target, call, dtype):
     elif op == 'rmsnorm':
         from .rms_target_cost import configured_rms
         us, aic, aiv, diag = configured_rms(shape, target, call)
+    elif op == 'sigmoid_fp32':
+        if call:
+            raise ValueError('Sigmoid expects contiguous FP32 input without attributes')
+        from .sigmoid_resource import resource_sigmoid
+        us, aic, aiv, diag = resource_sigmoid(shape, target)
     elif op == 'cast_bf16_fp32':
         if call:
             raise ValueError('Cast expects a contiguous BF16 to FP32 conversion')
@@ -100,7 +105,14 @@ def _price_resource(op, shape, target, call, dtype):
     else:
         if call:
             raise ValueError('This validated route has fixed attributes')
-        Case(op, shape)
+        if op == 'fa':
+            Case(op, shape)  # Dense noncausal SBH proxy retains its original contract.
+        else:
+            rank = 2 if op == 'quant' else 3
+            if len(shape) != rank or any(type(x) is not int or x <= 0 for x in shape):
+                raise ValueError(f'{op} requires {rank} positive integer dimensions')
+            if op == 'quant' and (shape[1] % 64 or shape[1] > 65536):
+                raise ValueError('Quant cols must be a multiple of 64, at most 65536')
         price = {'quant': resource_quant, 'matmul': resource_matmul, 'fa': resource_fa}[op]
         us, aic, aiv, diag = price(shape, target)
     if work is None:
@@ -122,6 +134,9 @@ def _price_resource(op, shape, target, call, dtype):
         if 0 < h < aiv and reference_active > 1:
             mapped = min(mapped, reference_active - 1)
         projected['resident_aiv_mapping'] = {'target':h,'reference':mapped}
+    if op == 'sigmoid_fp32' and target == load_chip() and 12 <= shape[0]*shape[1] <= 3072*96:
+        return Estimate(us, 'estimated', 'DT stage calibration range', aiv, aic, target.name,
+                        work, projected, _rates(work, us, target))
     if op in ('moe_gating_top_k', 'cast_bf16_fp32') and target == load_chip():
         if op == 'cast_bf16_fp32':
             inside = shape[0]*shape[1] == 64*4096  # Single DT stage calibration size.
@@ -156,7 +171,12 @@ def _evaluate(op, shape, attrs, soc, chip, dtype, timing_mode='auto'):
         if timing_mode not in ('auto','resource','calibrated'):
             raise ValueError('timing_mode must be auto, resource or calibrated')
         large_rms = op == 'rmsnorm' and len(shape) == 2 and type(shape[0]) is int and shape[0] > 512
-        auto_resource = op in _RESOURCE_ONLY or large_rms or (not same and op in _RESOURCE_OPS)
+        # A batch contains multiple request contexts. The reference surrogate's
+        # historical dimension limit does not bound the aggregate token axis.
+        large_matrix = op == 'matmul' and any(type(n) is int and n > 4096 for n in shape)
+        large_quant = op == 'quant' and len(shape) == 2 and type(shape[0]) is int and shape[0] > 1048576
+        auto_resource = (op in _RESOURCE_ONLY or large_rms or large_matrix or large_quant
+                         or (not same and op in _RESOURCE_OPS))
         use_resource = timing_mode == 'resource' or (timing_mode == 'auto' and auto_resource)
         if use_resource or (timing_mode == 'calibrated' and same and op in _RESOURCE_ONLY):
             if op not in _RESOURCE_OPS:

@@ -55,12 +55,31 @@ def resource_cast(shape, chip):
     remaining = local-first
     stages['steady_tiles'] = max(2*remaining/1024*rprice,4*remaining/1024*wprice,
                                  (113/64)*((remaining+63)//64)*vec_price)
-    bandwidth = min(chip.hbm_bandwidth_gbs,chip.details.get('l2_bandwidth_gbs') or float('inf'))
-    shared = 1753 + chip.frequency_ghz*6*n/bandwidth
+    # An AIV store can retire at L2. The 950DT memory-controller counters
+    # show a cold input read and zero external writes when the output fits.
+    # Reserve both live input tiles per active AIV, then let dirty output
+    # spill once it exhausts the remaining cache. Assigning all this spare
+    # capacity to Cast assumes an isolated launch with no competing tensors.
+    input_bytes, output_bytes = 2*n, 4*n
+    input_reserve = min(input_bytes, 2*active*2*first)
+    cache_bytes = chip.details.get('l2_bytes') or 0
+    retained = min(output_bytes, max(0, cache_bytes-input_reserve))
+    spilled = output_bytes-retained
+    external_bytes = input_bytes+spilled
+    external_cycles = external_bytes*chip.frequency_ghz/chip.hbm_bandwidth_gbs
+    l2_rate = chip.details.get('l2_bandwidth_gbs')
+    l2_cycles = (input_bytes+output_bytes)*chip.frequency_ghz/l2_rate if l2_rate else 0.
+    shared = 1753 + max(external_cycles,l2_cycles)
     stages['shared_io'] = max(0.,shared-sum(stages.values()))
     times = {k:v/cycles_per_us for k,v in stages.items()}
     plan = dict(active_aic=0,active_aiv=active,elements=n,busy_core_elements=local,
                 minimum_elements_per_core=grain,busy_core_waves=waves,ub_tile_elements=cap)
     return sum(times.values()),0,active,dict(target_plan=plan,stages_us=times,
                                             read_cycles_per_kib=rprice,write_cycles_per_kib=wprice,
+                                            l2_input_reserve_bytes=input_reserve,
+                                            assumed_retained_write_bytes=retained,
+                                            modeled_external_write_bytes=spilled,
+                                            modeled_external_bytes=external_bytes,
+                                            external_floor_cycles=external_cycles,
+                                            l2_floor_cycles=l2_cycles if l2_rate else None,
                                             standalone_first_launch=True)

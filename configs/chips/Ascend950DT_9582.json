@@ -20,6 +20,7 @@
   "hbm_bandwidth_gbs": 4000,
   "details": {
     "ub_bytes": 253952,
+    "rms_output_retained_fraction": 1.0,
     "l1_bytes": 524288,
     "l2_bytes": 134217728,
     "l0a_bytes": 65536,
@@ -40,6 +41,7 @@
     "cube_tops,vector_tops": "Huawei 950 NPU architecture white paper table 3-1, matched by core count. Cube 16=BF16/FP16, 8=FP8/INT8, 4=MXFP4. Vector 32=FP32, 16=FP16/BF16, 8=INT8. Unquoted formats are unknown (null). TF32 is distinct from strict FP32.",
     "hbm_bandwidth_gbs": "DT family peak, white paper table 3-1, GB/s decimal.",
     "white_paper": "https://public-download.obs.cn-east-2.myhuaweicloud.com/ascend/%E6%98%87%E8%85%BE950%20NPU%E6%9E%B6%E6%9E%84%E7%99%BD%E7%9A%AE%E4%B9%A6.pdf",
+    "details.rms_output_retained_fraction": "Scenario assumption. Dirty RMS outputs may remain in available L2 at kernel retirement. No direct writeback counter. Use 0 for forced external drain; 1 is capped by target spare L2 after active input buffers.",
     "details.quant_*": "v0.19 stage calibration from archived Ascend950DT_9582 official CA (results/v0.19/quant-dma-samples.json and development/validation/sku19/quant_prices.py). Earliest payload issue conditioned on single tile vs pipelined, response cycles and SIMD entry/exit clocks. quant_loop_work_ops is the common DT stage slope converted to peak-equivalent operations. These prices also include simulator dispatch behaviour."
   }
 }

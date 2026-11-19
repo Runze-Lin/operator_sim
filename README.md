@@ -8,7 +8,7 @@
 | 某个算子为什么需要这么久？不同 shape 如何改变结果？ | [建模方法：Vector、Cube、CV 三类流程，含逐算子公式与算例](docs/modeling-strategy.md) |
 | 哪些算子、shape 和库实现实测过？偏差多大？预测有多快？ | [CA 校验与误差：逐算子摘要、逐 shape 数据及查询墙钟](docs/error-analysis.md) |
 
-从具体输入开始看，可比较 [DynamicMXQuant 的 scale 写竞争](docs/examples/quant.md)、[Matmul 的多波分块](docs/examples/matmul.md)、[FA 的 Cube/Vector 绑定](docs/examples/fa.md)。[全部 19 条路线的算例入口](docs/modeling-strategy.md#逐算子算例)
+按同一设备时间轴查看上栏预测、下栏真实流水，可比较 [DynamicMXQuant 五轮 UB 读算写](docs/examples/quant.md)、[Matmul 两波、两页 K 的 MMAD](docs/examples/matmul.md)、[FA 的首个 QK/PV 与长循环](docs/examples/fa.md)。[逐算子的算例入口](docs/modeling-strategy.md#逐算子算例)
 
 ## 试一次预测
 
@@ -33,17 +33,17 @@ print(result.latency_us, result.work["cube_ops"], result.work["logical_read_byte
 
 维护 960、970、980 等架构情景时，每个目标使用一份 JSON，分别填写按位宽区分的两类算力、核数、频率、外存容量和带宽。内置 `Ascend970DT` 情景为 120 Cube / 120 Vector、1.8 GHz、288 GB、14.4 TB/s；其中 16 位 Vector 峰值 110.592 TOP/s 已含双发射。这些是架构假设。调用方通过 `extrapolated` 状态识别外推，并决定是否将其交给事件调度器。[970DT 配置及逐项来源](configs/chips/Ascend970DT.json) · [自定义芯片示例](configs/chips/scenario-example.json) · [字段、单位和返回合同](docs/integration.md)
 
-隔离安装 v0.19 wheel 后对三种芯片做了 614 次查询，中位 0.152 ms、P95 0.616 ms、最大 5.875 ms。测试含 8×32k prefill 场景和新增的路由、类型转换及融合残差。导入单列，设备时间另计。[部署验证](results/v0.19/wheel-smoke.json)
+隔离安装 v0.20 wheel 后，对三种芯片做了 1,089 个不同的单次查询。中位 0.083 ms，P95 0.548 ms，最慢 2.933 ms；导入另计 13.19 ms。覆盖 8×32k 至 8×256k 的按模型形状、10 组新 RMSNorm、10 组 Kimi beta Sigmoid 以及缺少时延的结构查询。[部署验证](results/v0.20/wheel-smoke.json)
 
 ## 可预测的算子
 
 | 方法 | 路线 |
 |---|---|
-| Vector | DynamicMXQuant、RMSNorm、mHC Sinkhorn、mHC Post、KDA recurrent、MoE sigmoid Top-K、BF16→FP32 Cast、Kimi AttnResFwd 单 token/核驻留分支 |
+| Vector | DynamicMXQuant、RMSNorm、mHC Sinkhorn、mHC Post、KDA recurrent、Kimi beta FP32 Sigmoid、MoE sigmoid Top-K、BF16→FP32 Cast、Kimi AttnResFwd 单 token/核驻留分支 |
 | Cube | Matmul、Addmm、MoE GMM2 |
 | Cube + Vector（CV） | FA、Lightning Indexer、mHC Pre / PreSinkhorn、mHC 组合、GMM1–SwiGLU–MX 量化及 MoE FFN 组合 |
 
-三个模型的逐层假跑、并行配置及待校准的算子路径见[工作负载覆盖](docs/workload-coverage.md)。
+三个模型的 B8 整批与 chunked prefill 输入可直接查每个 rank 的张量形状、dtype、层号和适用的独立 kernel。覆盖每请求 32k、128k、256k，以及 attention TP8 或 DP8、MoE EP8 两种拓扑。[逐模型真实维度与导出器](docs/prefill-shapes.md) · [场景索引](results/v0.20/workloads/index.csv) · [工作负载覆盖](docs/workload-coverage.md)
 
 KDA chunk 可查询任务结构；其 CA 同步检查尚未通过，系统层应单独处理该路线的耗时。组合路线和组成它的单算子是两种记账粒度，一条路径上只能选一种。各路线的 dtype、布局和分支限制见[建模方法](docs/modeling-strategy.md)。模型配置、本地 batch、TP/EP 切分和实际路由共同决定输入 shape，见[如何推导每卡 shape](docs/model-configs.md)。
 

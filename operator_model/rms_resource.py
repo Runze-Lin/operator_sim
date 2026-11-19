@@ -78,8 +78,18 @@ def resource_rms(shape, chip, attrs=None):
     read_floor = local_read * read_price / 1024
     x_and_gamma = 2 * width * (tokens + 1)
     outputs = 2 * width * tokens + 4 * tokens
-    bandwidth = min(chip.hbm_bandwidth_gbs, chip.details.get('l2_bandwidth_gbs') or float('inf'))
-    io_floor = (x_and_gamma + outputs) * chip.frequency_ghz / bandwidth
+    # Both ping-pong input tiles of every active AIV and the shared weight
+    # compete for L2. Dirty output that fits may retire before external drain.
+    input_reserve = 2 * width * (1 + min(tokens, 2 * min(rows, cap) * active))
+    cache_bytes = chip.details.get('l2_bytes') or 0
+    retention = chip.details.get('rms_output_retained_fraction')
+    retained = (1. if retention is None else retention) * min(outputs, max(0, cache_bytes - input_reserve))
+    logical_bytes = x_and_gamma + outputs
+    external_bytes = logical_bytes - retained
+    external_cycles = external_bytes * chip.frequency_ghz / chip.hbm_bandwidth_gbs
+    l2_rate = chip.details.get('l2_bandwidth_gbs')
+    l2_cycles = logical_bytes * chip.frequency_ghz / l2_rate if l2_rate else 0.
+    io_floor = max(external_cycles, l2_cycles)
 
     def conditional(state):
         simd = params['simd'][STATES.index(state)] + params['simd'][3]*groups*vec_price
@@ -119,6 +129,8 @@ def resource_rms(shape, chip, attrs=None):
                 statistic_neighbours=neighbours,local_read_bytes=local_read,
                 local_read_port_floor_cycles=read_floor,read_cycles_per_kib=read_price,
                 write_cycles_per_kib=write_price,cold_read_bytes=x_and_gamma,
-                write_bytes=outputs,shared_io_floor_cycles=io_floor,
+                write_bytes=outputs,shared_io_floor_cycles=io_floor,l2_input_reserve_bytes=input_reserve,
+                assumed_retained_write_bytes=retained,modeled_external_bytes=external_bytes,
+                external_floor_cycles=external_cycles,l2_floor_cycles=l2_cycles,
                 calibrated_on='950DT critical-AIV phases, startup spread and descriptor intervals')
     return sum(times.values()),0,active,diag

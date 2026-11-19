@@ -37,8 +37,25 @@ class RmsResourceTest(unittest.TestCase):
         self.assertEqual(plan['full_tile_count']*plan['full_tile_rows']+plan['tail_tile_rows'], 4096)
         self.assertNotIn('ub_tile_rows',plan)
         self.assertGreaterEqual(r.latency_us*1e3*chip.hbm_bandwidth_gbs,
-                                (2*7168*(2*8*32768+1)+4*8*32768)*(1-1e-12))
+                                r.projection['timing_diagnostics']['modeled_external_bytes']*(1-1e-12))
         self.assertEqual(estimate('rmsnorm',(262144,16),chip=chip,timing_mode='resource').status,'unsupported')
+
+    def test_write_retirement_depends_on_capacity_and_bandwidth(self):
+        chip = load_chip('Ascend950PR_957b')
+        def diag(shape, **hardware):
+            target = replace(chip, details={**chip.details, **hardware})
+            return estimate('rmsnorm', shape, chip=target).projection['timing_diagnostics']
+        fits = diag((2048, 5120))
+        self.assertEqual(fits['assumed_retained_write_bytes'], fits['write_bytes'])
+        for detail in ({'l2_bytes': None}, {'rms_output_retained_fraction': 0}):
+            cold = diag((2048, 5120), **detail)
+            self.assertEqual(cold['modeled_external_bytes'], cold['cold_read_bytes'] + cold['write_bytes'])
+            self.assertGreater(cold['shared_io_floor_cycles'], fits['shared_io_floor_cycles'])
+        spill = diag((262144, 5120), l2_bandwidth_gbs=100)
+        self.assertLess(spill['assumed_retained_write_bytes'], spill['write_bytes'])
+        self.assertEqual(spill['shared_io_floor_cycles'], spill['l2_floor_cycles'])
+        with self.assertRaises(ValueError):
+            replace(chip, details={**chip.details, 'rms_output_retained_fraction': 1.1})
 
     def test_context_contract_and_clock(self):
         chip=load_chip('Ascend950PR_957b')

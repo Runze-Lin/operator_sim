@@ -1,5 +1,11 @@
 # DynamicMXQuant 算例 · 两个 UB tile 的预取与写回
 
+## 同一 UB tile 的读、计算和两次写
+
+![950PR quant 的模型与 CA 同轴对照](figures/quant-chunk-pr-tiles.png)
+
+本卡 shape 为 `[2048, 5120]`，950PR 模型 **17.834 µs**，完整 CA **18.504 µs**，有符号误差 -3.62%。上栏按双缓冲槽位和前驱依赖给出每一轮的 MTE2、SIMD、MTE3。下栏用输入、输出和 scale 的实际字节数识别同一 tile，并核对每轮 3 条 VF 的 PC 次序。竖线标出各描述符发起；VF 从发起到完成包含等待，和上栏紫色计算预算的口径有别。 [图上每段的时间与 trace 指纹](../../results/v0.20/examples/quant-chunk-pr.json) · [同一 shape 的 950DT 图](figures/quant-chunk-dt-tiles.png) · [实际 PC 和逐 tile 指令](../../results/v0.20/examples/quant-chunk-pr-tiles.json)
+
 输入取单卡 BF16 [448,6592]，末轴 block size 32。调用 CANN 9.2.1 ops-nn 的 aclnnDynamicMxQuant，kernel 为 DynamicMxQuant_bf16toe4m3_high_performance_33_mix_aiv。两个 950 端的 E4M3FN 数据和 E8M0 scale 均通过逐字节检查。该组旧 trace 已用于阶段校准，角色为开发回放。
 
 ```python

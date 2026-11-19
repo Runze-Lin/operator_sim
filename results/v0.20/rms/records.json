@@ -1,0 +1,795 @@
+[
+  {
+    "op": "rmsnorm",
+    "shape": [
+      32,
+      1280
+    ],
+    "attrs": {},
+    "chip": "Ascend950DT_9582",
+    "ca_us": 6.391514780931175,
+    "active_aic": 0,
+    "active_aiv": 32,
+    "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+    "api": "aclnnRmsNorm",
+    "correctness": [
+      "correctness count=40960 bad=0",
+      "correctness count=32 bad=0"
+    ],
+    "stages": [
+      {
+        "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+        "ca_us": 6.391514780931175,
+        "active_aic": 0,
+        "active_aiv": 32,
+        "windows": {
+          "core1.veccore0": [
+            0.1527271270751953,
+            4.327878954820335
+          ],
+          "core6.veccore0": [
+            0.18060588836669922,
+            6.29575729649514
+          ],
+          "core5.veccore0": [
+            0.21696972846984863,
+            6.109090807847679
+          ],
+          "core0.veccore0": [
+            0.0,
+            5.929090502671897
+          ],
+          "core0.veccore1": [
+            0.07272720336914062,
+            6.015757563523948
+          ],
+          "core16.veccore0": [
+            0.29818177223205566,
+            3.533333304338157
+          ],
+          "core17.veccore0": [
+            0.3193938732147217,
+            5.071515086106956
+          ],
+          "core4.veccore1": [
+            0.3054544925689697,
+            6.391514780931175
+          ],
+          "core18.veccore1": [
+            0.23393940925598145,
+            3.44424248021096
+          ],
+          "core7.veccore1": [
+            0.2739393711090088,
+            5.5557575253769755
+          ],
+          "core19.veccore0": [
+            0.2260606288909912,
+            4.4569697408005595
+          ],
+          "core7.veccore0": [
+            0.260606050491333,
+            5.454545023851097
+          ],
+          "core16.veccore1": [
+            0.30666661262512207,
+            4.853333475999534
+          ],
+          "core17.veccore1": [
+            0.3254544734954834,
+            4.964241984300315
+          ],
+          "core5.veccore1": [
+            0.2369697093963623,
+            5.838181498460472
+          ],
+          "core1.veccore1": [
+            0.15696954727172852,
+            3.261817934922874
+          ],
+          "core6.veccore1": [
+            0.200606107711792,
+            6.2030305890366435
+          ],
+          "core22.veccore1": [
+            0.1527271270751953,
+            3.641818049363792
+          ],
+          "core2.veccore1": [
+            0.13939380645751953,
+            5.651515009813011
+          ],
+          "core21.veccore0": [
+            0.10363626480102539,
+            3.9533333806321025
+          ],
+          "core21.veccore1": [
+            0.13939380645751953,
+            3.7466664342209697
+          ],
+          "core23.veccore0": [
+            0.2624242305755615,
+            4.749091151170433
+          ],
+          "core2.veccore0": [
+            0.13393926620483398,
+            5.7418184308335185
+          ],
+          "core18.veccore0": [
+            0.16666650772094727,
+            3.423030379228294
+          ],
+          "core20.veccore1": [
+            0.24727272987365723,
+            3.5018181828781962
+          ],
+          "core3.veccore1": [
+            0.08666658401489258,
+            5.251515391282737
+          ],
+          "core19.veccore1": [
+            0.19757556915283203,
+            4.053333285264671
+          ],
+          "core22.veccore0": [
+            0.1466665267944336,
+            3.8503031758591533
+          ],
+          "core23.veccore1": [
+            0.281818151473999,
+            4.652121546678245
+          ],
+          "core3.veccore0": [
+            0.07696962356567383,
+            5.351514819078147
+          ],
+          "core20.veccore0": [
+            0.24424242973327637,
+            4.5557575253769755
+          ],
+          "core4.veccore0": [
+            0.28545451164245605,
+            4.231514933519065
+          ]
+        },
+        "trace": "runs/sku20-rms/rmsnorm_32_1280_Ascend950DT_9582/profile/OPPROF_20261119163547_RQIPXKJXKFGHISZE/simulator/trace.json",
+        "trace_sha256": "11e27e43294aabf1f6dc69b06d726f82d7cf558671d253742db8b454e6596bde",
+        "binary_sha256": "0926fe478e5f718ef49241c08ef00b665797690f0f7f22c67fdc25044e0cb54d",
+        "queue_events": {
+          "SCALAR": 32608,
+          "FLOWCTRL": 1248,
+          "MTE2": 128,
+          "MTE3": 96,
+          "PUSHQ": 352,
+          "RVECLP": 704,
+          "RVECEX": 13632,
+          "RVECSU": 608,
+          "RVECLD": 4160,
+          "RVECST": 2528
+        },
+        "mmad": 0,
+        "total_events": 56064
+      }
+    ],
+    "trace": [
+      "runs/sku20-rms/rmsnorm_32_1280_Ascend950DT_9582/profile/OPPROF_20261119163547_RQIPXKJXKFGHISZE/simulator/trace.json"
+    ],
+    "trace_sha256": [
+      "11e27e43294aabf1f6dc69b06d726f82d7cf558671d253742db8b454e6596bde"
+    ],
+    "cost": {
+      "started_utc": "2026-11-19T08:35:47.299237+00:00",
+      "finished_utc": "2026-11-19T08:37:45.826317+00:00",
+      "seconds": 118.5270249499008,
+      "raw_bytes": 77032849,
+      "peak_bytes": 148729816,
+      "cpu_seconds": 2309.73,
+      "exit_code": 0,
+      "stop_reason": null,
+      "command": [
+        "bash",
+        "/home/l00925865/operator_sim/scripts/cann-run.sh",
+        "msopprof",
+        "simulator",
+        "--soc-version=Ascend950DT_9582",
+        "--dump=false",
+        "--launch-count=1",
+        "--timeout=240",
+        "--output=/home/l00925865/operator_sim/runs/sku20-rms/rmsnorm_32_1280_Ascend950DT_9582/profile",
+        "/home/l00925865/operator_sim/build/smoke/large_vector",
+        "rmsnorm",
+        "32",
+        "1280"
+      ]
+    },
+    "case_id": "rmsnorm_32_1280",
+    "role": "v0.20 frozen RMS holdout",
+    "scope": "one all-core window",
+    "frozen": {
+      "dt_us": 6.07779548886933,
+      "dt_status": "extrapolated",
+      "dt_aiv": 32,
+      "dt_aic": 0,
+      "old_dt_us": 6.07779548886933,
+      "old_dt_status": "extrapolated",
+      "old_dt_aiv": 32,
+      "old_dt_aic": 0,
+      "pr_us": 5.864718804461554,
+      "pr_status": "extrapolated",
+      "pr_aiv": 32,
+      "pr_aic": 0,
+      "old_pr_us": 5.864718804461554,
+      "old_pr_status": "extrapolated",
+      "old_pr_aiv": 32,
+      "old_pr_aic": 0,
+      "future_us": 5.571276360569128,
+      "future_status": "extrapolated",
+      "future_aiv": 32,
+      "future_aic": 0,
+      "old_future_us": 5.571276360569128,
+      "old_future_status": "extrapolated",
+      "old_future_aiv": 32,
+      "old_future_aic": 0
+    },
+    "dtype": "bf16",
+    "runner_sha256": "a2a780962fdacbe48e6403201dbae4f5fdfcfdb2f8b364a304cccbcc5f4b3ceb"
+  },
+  {
+    "op": "rmsnorm",
+    "shape": [
+      32,
+      1280
+    ],
+    "attrs": {},
+    "chip": "Ascend950PR_957b",
+    "ca_us": 6.3090908555313945,
+    "active_aic": 0,
+    "active_aiv": 32,
+    "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+    "api": "aclnnRmsNorm",
+    "correctness": [
+      "correctness count=40960 bad=0",
+      "correctness count=32 bad=0"
+    ],
+    "stages": [
+      {
+        "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+        "ca_us": 6.3090908555313945,
+        "active_aic": 0,
+        "active_aiv": 32,
+        "windows": {
+          "core16.veccore1": [
+            0.3515150547027588,
+            3.75757575314492
+          ],
+          "core21.veccore0": [
+            0.4248483180999756,
+            5.073939087800682
+          ],
+          "core3.veccore0": [
+            0.19757556915283203,
+            4.8339393166825175
+          ],
+          "core17.veccore0": [
+            0.3836362361907959,
+            4.970302822999656
+          ],
+          "core5.veccore0": [
+            0.24666666984558105,
+            5.543636563234031
+          ],
+          "core6.veccore0": [
+            0.19212102890014648,
+            5.945454838685691
+          ],
+          "core0.veccore1": [
+            0.0430302619934082,
+            6.129090550355613
+          ],
+          "core18.veccore0": [
+            0.2763636112213135,
+            3.6478788880631328
+          ],
+          "core7.veccore1": [
+            0.1012120246887207,
+            5.253939392976463
+          ],
+          "core21.veccore1": [
+            0.43636345863342285,
+            4.357575657777488
+          ],
+          "core4.veccore0": [
+            0.10909080505371094,
+            5.8478786973282695
+          ],
+          "core22.veccore0": [
+            0.2587878704071045,
+            3.4290907410904765
+          ],
+          "core16.veccore0": [
+            0.34121203422546387,
+            3.385454419068992
+          ],
+          "core19.veccore0": [
+            0.3636362552642822,
+            4.556363346986473
+          ],
+          "core7.veccore0": [
+            0.07878780364990234,
+            5.356363537721336
+          ],
+          "core2.veccore1": [
+            0.27878785133361816,
+            6.3090908555313945
+          ],
+          "core17.veccore1": [
+            0.39757561683654785,
+            4.253939392976463
+          ],
+          "core20.veccore1": [
+            0.34363627433776855,
+            3.9575755624100566
+          ],
+          "core4.veccore1": [
+            0.17393922805786133,
+            5.745454075746238
+          ],
+          "core1.veccore1": [
+            0.05878782272338867,
+            3.0703027276322246
+          ],
+          "core19.veccore1": [
+            0.37636351585388184,
+            4.457575562410057
+          ],
+          "core1.veccore0": [
+            0.050302982330322266,
+            3.0939395455643535
+          ],
+          "core2.veccore0": [
+            0.2799999713897705,
+            6.217575314454734
+          ],
+          "core23.veccore1": [
+            0.2527272701263428,
+            4.152727368287742
+          ],
+          "core0.veccore0": [
+            0.0,
+            5.451515438966453
+          ],
+          "core5.veccore1": [
+            0.2648484706878662,
+            5.644242527894676
+          ],
+          "core18.veccore1": [
+            0.2848484516143799,
+            3.5387876061722636
+          ],
+          "core20.veccore0": [
+            0.2999999523162842,
+            3.8612120179459453
+          ],
+          "core23.veccore0": [
+            0.2090909481048584,
+            4.053939106874168
+          ],
+          "core6.veccore1": [
+            0.2024242877960205,
+            6.038788083009422
+          ],
+          "core22.veccore1": [
+            0.2648484706878662,
+            3.321212056092918
+          ],
+          "core3.veccore1": [
+            0.21636366844177246,
+            4.736363652162254
+          ]
+        },
+        "trace": "runs/sku20-rms/rmsnorm_32_1280_Ascend950PR_957b/profile/OPPROF_20261119163547_XSFACYWAZURINOKV/simulator/trace.json",
+        "trace_sha256": "e362561ccf5487b8848f849c97afcb8262c3bcec423786e32827e750abda4823",
+        "binary_sha256": "0926fe478e5f718ef49241c08ef00b665797690f0f7f22c67fdc25044e0cb54d",
+        "queue_events": {
+          "SCALAR": 32608,
+          "FLOWCTRL": 1248,
+          "MTE2": 128,
+          "MTE3": 96,
+          "PUSHQ": 352,
+          "RVECLP": 704,
+          "RVECEX": 13632,
+          "RVECSU": 608,
+          "RVECLD": 4160,
+          "RVECST": 2528
+        },
+        "mmad": 0,
+        "total_events": 56064
+      }
+    ],
+    "trace": [
+      "runs/sku20-rms/rmsnorm_32_1280_Ascend950PR_957b/profile/OPPROF_20261119163547_XSFACYWAZURINOKV/simulator/trace.json"
+    ],
+    "trace_sha256": [
+      "e362561ccf5487b8848f849c97afcb8262c3bcec423786e32827e750abda4823"
+    ],
+    "cost": {
+      "started_utc": "2026-11-19T08:35:47.299079+00:00",
+      "finished_utc": "2026-11-19T08:37:31.538579+00:00",
+      "seconds": 104.23943795007654,
+      "raw_bytes": 76952712,
+      "peak_bytes": 76979222,
+      "cpu_seconds": 1752.22,
+      "exit_code": 0,
+      "stop_reason": null,
+      "command": [
+        "bash",
+        "/home/l00925865/operator_sim/scripts/cann-run.sh",
+        "msopprof",
+        "simulator",
+        "--soc-version=Ascend950PR_957b",
+        "--dump=false",
+        "--launch-count=1",
+        "--timeout=240",
+        "--output=/home/l00925865/operator_sim/runs/sku20-rms/rmsnorm_32_1280_Ascend950PR_957b/profile",
+        "/home/l00925865/operator_sim/build/smoke/large_vector",
+        "rmsnorm",
+        "32",
+        "1280"
+      ]
+    },
+    "case_id": "rmsnorm_32_1280",
+    "role": "v0.20 frozen RMS holdout",
+    "scope": "one all-core window",
+    "frozen": {
+      "dt_us": 6.07779548886933,
+      "dt_status": "extrapolated",
+      "dt_aiv": 32,
+      "dt_aic": 0,
+      "old_dt_us": 6.07779548886933,
+      "old_dt_status": "extrapolated",
+      "old_dt_aiv": 32,
+      "old_dt_aic": 0,
+      "pr_us": 5.864718804461554,
+      "pr_status": "extrapolated",
+      "pr_aiv": 32,
+      "pr_aic": 0,
+      "old_pr_us": 5.864718804461554,
+      "old_pr_status": "extrapolated",
+      "old_pr_aiv": 32,
+      "old_pr_aic": 0,
+      "future_us": 5.571276360569128,
+      "future_status": "extrapolated",
+      "future_aiv": 32,
+      "future_aic": 0,
+      "old_future_us": 5.571276360569128,
+      "old_future_status": "extrapolated",
+      "old_future_aiv": 32,
+      "old_future_aic": 0
+    },
+    "dtype": "bf16",
+    "runner_sha256": "a2a780962fdacbe48e6403201dbae4f5fdfcfdb2f8b364a304cccbcc5f4b3ceb"
+  },
+  {
+    "op": "rmsnorm",
+    "shape": [
+      1024,
+      5120
+    ],
+    "attrs": {},
+    "chip": "Ascend950PR_957b",
+    "ca_us": 12.05090928543359,
+    "active_aic": 0,
+    "active_aiv": 54,
+    "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+    "api": "aclnnRmsNorm",
+    "correctness": [
+      "correctness count=5242880 bad=0",
+      "correctness count=1024 bad=0"
+    ],
+    "stages": [
+      {
+        "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+        "ca_us": 12.05090928543359,
+        "active_aic": 0,
+        "active_aiv": 54,
+        "windows": {
+          "core3.veccore1": [
+            0.09151530265808105,
+            10.461211922578514
+          ],
+          "core11.veccore0": [
+            0.26848483085632324,
+            9.881211998872459
+          ],
+          "core7.veccore1": [
+            0.3727271556854248,
+            10.327273133210838
+          ],
+          "core6.veccore0": [
+            0.16121220588684082,
+            10.546060326509178
+          ],
+          "core22.veccore0": [
+            0.20727276802062988,
+            10.638181450776756
+          ],
+          "core3.veccore0": [
+            0.08969712257385254,
+            9.916363480500877
+          ],
+          "core23.veccore1": [
+            0.3363635540008545,
+            11.103636506013572
+          ],
+          "core11.veccore1": [
+            0.2860605716705322,
+            10.615151169709861
+          ],
+          "core19.veccore1": [
+            0.35030293464660645,
+            11.582423928193748
+          ],
+          "core25.veccore1": [
+            0.5060608386993408,
+            11.101212265901268
+          ],
+          "core12.veccore0": [
+            0.4351513385772705,
+            10.756363633088768
+          ],
+          "core23.veccore0": [
+            0.33272719383239746,
+            11.957575562410057
+          ],
+          "core7.veccore0": [
+            0.355757474899292,
+            9.872727158479393
+          ],
+          "core27.veccore1": [
+            0.14121222496032715,
+            11.090303185395896
+          ],
+          "core24.veccore0": [
+            0.2200000286102295,
+            10.586060288362205
+          ],
+          "core1.veccore1": [
+            0.415757417678833,
+            10.496363404206932
+          ],
+          "core26.veccore0": [
+            0.16484856605529785,
+            11.13393950741738
+          ],
+          "core22.veccore1": [
+            0.17333340644836426,
+            10.41757560055703
+          ],
+          "core12.veccore1": [
+            0.44727301597595215,
+            10.961211922578514
+          ],
+          "core2.veccore0": [
+            0.45151543617248535,
+            10.910302880220115
+          ],
+          "core28.veccore1": [
+            0.14727282524108887,
+            10.613939049653709
+          ],
+          "core5.veccore1": [
+            0.22363638877868652,
+            10.261212113313377
+          ],
+          "core21.veccore0": [
+            0.47757601737976074,
+            11.77151483297348
+          ],
+          "core24.veccore1": [
+            0.26363635063171387,
+            10.816364052705467
+          ],
+          "core25.veccore0": [
+            0.4975759983062744,
+            12.05090928543359
+          ],
+          "core28.veccore0": [
+            0.1769697666168213,
+            10.847272637300193
+          ],
+          "core21.veccore1": [
+            0.485454797744751,
+            11.737576249055564
+          ],
+          "core4.veccore0": [
+            0.17333340644836426,
+            10.656363251619041
+          ],
+          "core29.veccore0": [
+            0.2672727108001709,
+            10.436363938264549
+          ],
+          "core10.veccore1": [
+            0.485454797744751,
+            10.790302994661033
+          ],
+          "core0.veccore1": [
+            0.08363652229309082,
+            10.33515143673867
+          ],
+          "core18.veccore1": [
+            0.28969693183898926,
+            10.842424157075584
+          ],
+          "core0.veccore0": [
+            0.0,
+            10.146060707978904
+          ],
+          "core16.veccore1": [
+            0.4048483371734619,
+            11.136363747529685
+          ],
+          "core26.veccore1": [
+            0.20727276802062988,
+            10.576363327912986
+          ],
+          "core27.veccore0": [
+            0.09757590293884277,
+            11.186060669831932
+          ],
+          "core6.veccore1": [
+            0.1660606861114502,
+            10.41272712033242
+          ],
+          "core19.veccore0": [
+            0.3575756549835205,
+            11.769091370515525
+          ],
+          "core18.veccore0": [
+            0.2799999713897705,
+            11.089091065339744
+          ],
+          "core10.veccore0": [
+            0.47696995735168457,
+            11.033939125947654
+          ],
+          "core20.veccore1": [
+            0.4284846782684326,
+            11.144848587922752
+          ],
+          "core20.veccore0": [
+            0.4199998378753662,
+            11.379999878816307
+          ],
+          "core8.veccore0": [
+            0.1466667652130127,
+            10.362424614839256
+          ],
+          "core2.veccore1": [
+            0.471515417098999,
+            11.381211998872459
+          ],
+          "core4.veccore1": [
+            0.239393949508667,
+            10.477576020173728
+          ],
+          "core17.veccore1": [
+            0.471515417098999,
+            11.904848816804588
+          ],
+          "core13.veccore0": [
+            0.31757569313049316,
+            9.344848397187889
+          ],
+          "core17.veccore0": [
+            0.4315149784088135,
+            11.687272789888084
+          ],
+          "core5.veccore0": [
+            0.20363640785217285,
+            9.951514962129295
+          ],
+          "core1.veccore0": [
+            0.3896968364715576,
+            10.207878830842674
+          ],
+          "core8.veccore1": [
+            0.14606070518493652,
+            10.590303185395896
+          ],
+          "core16.veccore0": [
+            0.3624241352081299,
+            11.452727082185447
+          ],
+          "core9.veccore0": [
+            0.2933332920074463,
+            9.916363480500877
+          ],
+          "core9.veccore1": [
+            0.3430302143096924,
+            10.712727311067283
+          ]
+        },
+        "trace": "runs/sku20-rms/rmsnorm_1024_5120_Ascend950PR_957b/profile/OPPROF_20261119163746_UOCTZMBYZJNUYMPT/simulator/trace.json",
+        "trace_sha256": "b7aa311ff129d42fe03de2c210c0adecac2599cf0a173a7e72bcd2539bb9b114",
+        "binary_sha256": "0926fe478e5f718ef49241c08ef00b665797690f0f7f22c67fdc25044e0cb54d",
+        "queue_events": {
+          "SCALAR": 116586,
+          "FLOWCTRL": 4368,
+          "MTE2": 378,
+          "MTE3": 484,
+          "PUSHQ": 2051,
+          "RVECLP": 9600,
+          "RVECEX": 1521463,
+          "RVECSU": 10568,
+          "RVECLD": 496911,
+          "RVECST": 298031
+        },
+        "mmad": 0,
+        "total_events": 2460440
+      }
+    ],
+    "trace": [
+      "runs/sku20-rms/rmsnorm_1024_5120_Ascend950PR_957b/profile/OPPROF_20261119163746_UOCTZMBYZJNUYMPT/simulator/trace.json"
+    ],
+    "trace_sha256": [
+      "b7aa311ff129d42fe03de2c210c0adecac2599cf0a173a7e72bcd2539bb9b114"
+    ],
+    "cost": {
+      "started_utc": "2026-11-19T08:37:46.762252+00:00",
+      "finished_utc": "2026-11-19T08:51:56.474055+00:00",
+      "seconds": 849.7117641598452,
+      "raw_bytes": 3016937812,
+      "peak_bytes": 5979623664,
+      "cpu_seconds": 21609.33,
+      "exit_code": 0,
+      "stop_reason": null,
+      "command": [
+        "bash",
+        "/home/l00925865/operator_sim/scripts/cann-run.sh",
+        "msopprof",
+        "simulator",
+        "--soc-version=Ascend950PR_957b",
+        "--dump=false",
+        "--launch-count=1",
+        "--timeout=240",
+        "--output=/home/l00925865/operator_sim/runs/sku20-rms/rmsnorm_1024_5120_Ascend950PR_957b/profile",
+        "/home/l00925865/operator_sim/build/smoke/large_vector",
+        "rmsnorm",
+        "1024",
+        "5120"
+      ]
+    },
+    "case_id": "rmsnorm_1024_5120",
+    "role": "v0.20 frozen RMS holdout",
+    "scope": "one all-core window",
+    "frozen": {
+      "dt_us": 8.710200011686553,
+      "dt_status": "extrapolated",
+      "dt_aiv": 64,
+      "dt_aic": 0,
+      "old_dt_us": 8.710200011686553,
+      "old_dt_status": "extrapolated",
+      "old_dt_aiv": 64,
+      "old_dt_aic": 0,
+      "pr_us": 9.661070487338323,
+      "pr_status": "extrapolated",
+      "pr_aiv": 54,
+      "pr_aic": 0,
+      "old_pr_us": 16.672321385281386,
+      "old_pr_status": "extrapolated",
+      "old_pr_aiv": 54,
+      "old_pr_aic": 0,
+      "future_us": 6.898901847630766,
+      "future_status": "extrapolated",
+      "future_aiv": 114,
+      "future_aic": 0,
+      "old_future_us": 6.898901847630767,
+      "old_future_status": "extrapolated",
+      "old_future_aiv": 114,
+      "old_future_aic": 0
+    },
+    "dtype": "bf16",
+    "runner_sha256": "a2a780962fdacbe48e6403201dbae4f5fdfcfdb2f8b364a304cccbcc5f4b3ceb"
+  }
+]

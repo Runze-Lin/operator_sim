@@ -19,7 +19,7 @@ def default_dtype(op):
     op = ALIASES.get(op, op)
     if op in _MOE:
         return "fp8_e4m3fn"
-    return "fp32" if op in ("mhc_sinkhorn", "moe_gating_top_k") else "bf16"
+    return "fp32" if op in ("mhc_sinkhorn", "moe_gating_top_k", "sigmoid_fp32") else "bf16"
 
 
 def _counts(dtype, read, write, cube=None, vec=None, *, classes=None, notes=()):
@@ -155,6 +155,9 @@ def account_work(op, shape, attrs=None):
         from .chips import load_chip
         from .attention_residual_timing import resource_attention
         return resource_attention(shape, load_chip(), attrs)[1]
+    if op == "sigmoid_fp32":
+        from .sigmoid_resource import sigmoid_work
+        return sigmoid_work(shape)
     if op == "cast_bf16_fp32":
         from .cast_resource import cast_work
         return cast_work(shape)
