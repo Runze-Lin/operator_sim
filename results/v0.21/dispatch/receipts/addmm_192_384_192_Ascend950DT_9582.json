@@ -1,0 +1,198 @@
+{
+  "id": "addmm_192_384_192",
+  "op": "addmm",
+  "shape": [
+    192,
+    384,
+    192
+  ],
+  "chip": "Ascend950DT_9582",
+  "qualified": true,
+  "observation": {
+    "op": "addmm",
+    "shape": [
+      192,
+      384,
+      192
+    ],
+    "attrs": {
+      "self_shape": [
+        384
+      ],
+      "alpha": 1,
+      "beta": 1
+    },
+    "chip": "Ascend950DT_9582",
+    "ca_us": 3.8400001525878906,
+    "active_aic": 24,
+    "active_aiv": 0,
+    "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+    "api": "aclnnAddmm",
+    "correctness": [
+      "correctness count=73728 bad=0 max_abs_error=0.015625 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "stages": [
+      {
+        "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+        "ca_us": 3.8400001525878906,
+        "active_aic": 24,
+        "active_aiv": 0,
+        "windows": {
+          "core24.cubecore0": [
+            0.25575733184814453,
+            3.7715152502059937
+          ],
+          "core23.cubecore0": [
+            0.20363616943359375,
+            3.8187880516052246
+          ],
+          "core0.cubecore0": [
+            0.0,
+            3.8199998140335083
+          ],
+          "core10.cubecore0": [
+            0.033939361572265625,
+            3.779999852180481
+          ],
+          "core1.cubecore0": [
+            0.04787874221801758,
+            3.786666512489319
+          ],
+          "core11.cubecore0": [
+            0.037575721740722656,
+            3.7466665506362915
+          ],
+          "core22.cubecore0": [
+            0.18848466873168945,
+            3.8127273321151733
+          ],
+          "core19.cubecore0": [
+            0.24484825134277344,
+            3.7993940114974976
+          ],
+          "core17.cubecore0": [
+            0.30666637420654297,
+            3.7739394903182983
+          ],
+          "core16.cubecore0": [
+            0.28545427322387695,
+            3.7927273511886597
+          ],
+          "core2.cubecore0": [
+            0.046666622161865234,
+            3.7969695329666138
+          ],
+          "core5.cubecore0": [
+            0.04787874221801758,
+            3.6527271270751953
+          ],
+          "core20.cubecore0": [
+            0.2563633918762207,
+            3.8400001525878906
+          ],
+          "core7.cubecore0": [
+            0.04424238204956055,
+            3.598787784576416
+          ],
+          "core21.cubecore0": [
+            0.2648482322692871,
+            3.8242424726486206
+          ],
+          "core18.cubecore0": [
+            0.22545433044433594,
+            3.7363637685775757
+          ],
+          "core8.cubecore0": [
+            0.04121208190917969,
+            3.7830300331115723
+          ],
+          "core9.cubecore0": [
+            0.028484821319580078,
+            3.769696831703186
+          ],
+          "core4.cubecore0": [
+            0.03818178176879883,
+            3.709696650505066
+          ],
+          "core25.cubecore0": [
+            0.2975754737854004,
+            3.765454649925232
+          ],
+          "core26.cubecore0": [
+            0.2133331298828125,
+            3.7466667890548706
+          ],
+          "core3.cubecore0": [
+            0.04545450210571289,
+            3.776363492012024
+          ],
+          "core27.cubecore0": [
+            0.15030288696289062,
+            3.7109087705612183
+          ],
+          "core6.cubecore0": [
+            0.04484844207763672,
+            3.6630300283432007
+          ]
+        },
+        "trace": "runs/dispatch21/addmm_192_384_192_Ascend950DT_9582/profile/OPPROF_20261119203049_YCHGYFRHENLSTWPK/simulator/trace.json",
+        "trace_sha256": "5ff89eb2f2bf107410bb3d07213e2d7ff9877ad2ab60a19763938ad48bc5731f",
+        "binary_sha256": "e6899fbaa2659b7778bee81deb00b64b009dafcb7ad350f06576767fdeba2bf7",
+        "queue_events": {
+          "SCALAR": 19968,
+          "MTE1": 96,
+          "MTE2": 144,
+          "FLOWCTRL": 1128,
+          "FIXP": 48,
+          "CUBE": 24
+        },
+        "mmad": 24,
+        "total_events": 21408
+      }
+    ],
+    "trace": [
+      "runs/dispatch21/addmm_192_384_192_Ascend950DT_9582/profile/OPPROF_20261119203049_YCHGYFRHENLSTWPK/simulator/trace.json"
+    ],
+    "trace_sha256": [
+      "5ff89eb2f2bf107410bb3d07213e2d7ff9877ad2ab60a19763938ad48bc5731f"
+    ],
+    "cost": {
+      "started_utc": "2026-11-19T12:30:49.752370+00:00",
+      "finished_utc": "2026-11-19T12:31:55.929941+00:00",
+      "seconds": 66.17752168979496,
+      "raw_bytes": 31960982,
+      "peak_bytes": 65258266,
+      "cpu_seconds": 899.3399999999999,
+      "exit_code": 0,
+      "stop_reason": null,
+      "command": [
+        "bash",
+        "/home/l00925865/operator_sim/scripts/cann-run.sh",
+        "msopprof",
+        "simulator",
+        "--soc-version=Ascend950DT_9582",
+        "--dump=false",
+        "--launch-count=1",
+        "--timeout=30",
+        "--output=/home/l00925865/operator_sim/runs/dispatch21/addmm_192_384_192_Ascend950DT_9582/profile",
+        "/home/l00925865/operator_sim/build/smoke/extension_norm_addmm",
+        "addmm",
+        "192",
+        "384",
+        "192",
+        "bias"
+      ]
+    },
+    "case_id": "addmm_192_384_192",
+    "role": "new paired DT CA",
+    "scope": "one all-core window",
+    "frozen": {
+      "dt_us": 3.842160637036776,
+      "pr_us": 3.8461502474263862,
+      "future_us": 3.5304785292936263,
+      "old_dt_us": 4.177854218731506,
+      "old_pr_us": 4.183101106416401,
+      "old_future_us": 3.8278665016631184
+    }
+  }
+}

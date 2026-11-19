@@ -57,9 +57,13 @@ def archive(rows,op,shape,attrs,sku,ca,cohort,src,obs):
 def collect():
     rows=[]; rejected=[]; extdata=read(ROOT/V12)['rows']
     for r in extdata:
-        if r['role']!='validation':
+        op=r['op']
+        if r['role']=='validation':
+            cohort='primary' if op in EXT else 'DT v0.12 holdout replay'
+        elif r['role']=='development':
+            cohort='DT v0.12 development replay'
+        else:
             continue
-        op=r['op'];cohort='primary' if op in EXT else 'DT v0.12 holdout replay'
         archive(rows,op,r['shape'],r.get('attrs',{}),'dt',r['reference_us'],cohort,V12,
                 dict(kernel=r['kernel'],trace=r['source'],trace_sha256=r.get('trace_or_db_sha256',r.get('db_sha256')),correctness=r['correctness']))
     for r in read(ROOT/V19)['rows']:
@@ -72,6 +76,18 @@ def collect():
                 cohort='primary'
             # Older reused DT observations keep their explicit origin in detailed output.
             archive(rows,op,r['shape'],r.get('attrs',{}),side,r.get(side+'_ca_us'),cohort,V19,r.get(side+'_observation') or {})
+    for version in ('0.17','0.18'):
+        filename=f'results/v{version}/evaluation.json'
+        for r in read(ROOT/filename)['rows']:
+            if r['op']=='rmsnorm':
+                for side in SIDES:
+                    obs=r[side+'_observation']
+                    if obs['ca_us']!=r[side+'_ca_us'] or obs['api']!='aclnnRmsNorm':
+                        raise ValueError((version,side,r['shape']))
+                    archive(rows,'rmsnorm',r['shape'],r.get('attrs',{}),side,obs['ca_us'],
+                            f'v{version} historical RMS replay',filename,obs)
+                    rows[-1]['original_role']=r.get(side+'_role',r.get('role'))
+                    rows[-1]['launch_context']=obs.get('launch_context')
     h=read(ROOT/V20)['prefill_matmul']
     for side in SIDES:
         archive(rows,'matmul',h['shape'],{},side,h.get(side+'_ca_us'),'primary',V20,h.get(side+'_observation') or {})
@@ -125,6 +141,7 @@ def collect():
                      source=str(path.relative_to(ROOT)),cohort='primary')
             if side+'_first_us' in y:row.update(first_us=y[side+'_first_us'],protocol='isolated first launch')
             rows.append(row)
+    rows.extend(read(OUT/'coverage/supplement.json'))
     return rows,rejected
 
 
@@ -148,6 +165,8 @@ def analyze():
                 state = '待验证（暂超）' if bad else '待验证'
             else:
                 state = '达标'
+            if op=='kda_chunk' and primary is None:
+                state='缺完整 CA'
             summary[op][side]=dict(status=state,primary=primary,cohorts=metrics,outside=bad)
     out=dict(thresholds={'wape':0.2,'max_ape':0.4,'minimum_distinct_shapes':10},
              policy='Each SKU and route separately. Any violating tracked cohort is disclosed. The primary for modified models is a new frozen cohort. Prior releases are replayed through the public auto entry point.',
@@ -172,7 +191,7 @@ def report():
     lines+=['',
         '每一格独立核对 WAPE＝Σ|预测−CA|/ΣCA ≤20%，以及 max＝max(|预测−CA|/CA) ≤40%。未满十个不同 shape 时，已完成的结果只表示进度。旧留出一旦用于开发即转作回放；历史回放超限会保留在验收结论。组合算子按该合同中串行 kernel 的设备窗口相加，排除宿主间隙。970DT 始终为配置外推。','',
         '[逐 shape 的三芯片结果与误差](../results/v0.21/shape-errors.md) · [同形 DT/PR 加速比与旧版](../results/v0.21/pairs.md) · [带 kernel、trace 和角色的机器可读结果](../results/v0.21/evaluation.json) · [逐块的模型与 CA 同轴图](pipeline-comparisons.md)','',
-        '重复使用的 950DT 归档有些来自调参批次。对于 Indexer、mHC Pre、mHC 拆分链、KDA Recurrent、GMM 与 MoE FFN，DT 主表采用原始 v0.12 明确标记 validation 的十形，PR 采用 v0.17 冻结十形。Matmul、FA 复用 v0.17 资源模型验证合同，DT 包含历史同形对照。RMSNorm 的历史设备窗口用于启动状态开发，本轮十个新形在原有大样本之后串行验证。主表全部使用公开默认入口 auto；970DT 外推单列。','',
+        'v0.12 的 development 与 validation 分组保留，曾参与校准的旧样本只按回放计分。对于 Indexer、mHC Pre、mHC 拆分链、KDA Recurrent、GMM 与 MoE FFN，DT 主表采用原始 v0.12 明确标记 validation 的十形，PR 采用 v0.17 冻结十形。Matmul、FA 复用 v0.17 资源模型验证合同，DT 包含历史同形对照。RMSNorm 的历史设备窗口用于启动状态开发，本轮十个新形在原有大样本之后串行验证。公开默认入口 auto 用于主表。Quant、Matmul、FA 另对 270 个不同 trace 的完整窗口逐一核对；补充归档保留原角色，跨组可能重用同一个窗口。970DT 外推单列。[三条核心路线的全窗口审计](../results/v0.21/coverage/report.md)','',
         '### 当前超限的数据组','',
         '| 算子 | 芯片 | 数据组 | WAPE / 最大 | 最大误差 shape | 预测 / CA µs |','|---|---|---|---:|---|---:|']
     for op,by in out['summary'].items():
@@ -187,8 +206,11 @@ def report():
     for r in read(OUT/'dispatch/stream-replay.json')['summary']:
         a,b=r['unknown'],r['stream']
         lines.append(f"| {NAMES[r['op']]} | {r['chip'].split('_')[0][6:]} | {protocols[r['protocol']]} | {a['n']} | {a['wape']:.2%} / {a['max_ape']:.2%} | {b['wape']:.2%} / {b['max_ape']:.2%} |")
-    lines+=['','[按实际派发顺序的逐条预测](../results/v0.21/dispatch/stream-replay.json) · [mHC Post 同形跨状态对照](../results/v0.21/dispatch/post-identifiability.json) · [45 个进程的阶段审计与未启用候选](../results/post-candidate/report.md)','',
-             '数据角色 primary 表示上表该路线的主验证组。当前未合格的采集保留在分项报告；N/A 不进入 WAPE 分母。KDA chunk 的运行时 SKU、同步错误和校验状态逐次保留。[KDA chunk 审计](examples/kda_chunk.md) · [融合路线的拒收回执](../results/v0.21/fusion/evaluation.json)','','## v0.20 完成时的报告与历史校准明细','']
+    lines+=['','RMSNorm 的 43 个 DT 旧开发形状也纳入公开默认入口的压力回放。部分已热的短宽形被当成了可能首发，新增 AIV 也可能是同核另一通道。按输出地址恢复的 1,418 个 AIV 窗口支持在已知前序时细分启动和统计量写回，候选的仅 shape 和有顺序误差分别保留，等待独立实测。[RMSNorm 逐块证据和候选验证](../results/rms-dispatch-audit/report.md)','',
+        'mHC Post 的 DT 同形 [1,4,128]、同 ELF 在单独首发与真实前序生产链后分别耗时 4.752、2.672 µs。任何仅依赖本次输入的单值预测，在这两次观测各计一次时的 WAPE 至少为 (4.752−2.672)/(4.752+2.672)＝28.03%。该下界只适用于这一配对；完整算子样本集的 WAPE 仍以逐形数据计算。[两端完整配对与 WAPE 可行域](../results/post-candidate/protocol-feasibility.json)','',
+        '[按实际派发顺序的逐条预测](../results/v0.21/dispatch/stream-replay.json) · [mHC Post 同形跨状态对照](../results/v0.21/dispatch/post-identifiability.json) · [45 个进程的阶段审计与未启用候选](../results/post-candidate/report.md)','',
+        '在大 Cast 上，DT 的最大历史误差发生在一个 96 MiB 工作集，实测没有物理写入 HBM。把输入、输出双缓冲分别计价后，该形状由 13.33 升至 16.59 µs，CA 为 17.04 µs。12 个双端大窗口的历史回放及另行冻结的 6 个新形状单独计分。[Cast 的物理读写计数与候选验证](../results/cast-capacity/report.md)','',
+        '数据角色 primary 表示上表该路线的主验证组。未合格的采集保留在分项报告，N/A 不进入 WAPE 分母。KDA chunk 的运行时 SKU、同步错误和校验状态逐次保留。[KDA chunk 算例](examples/kda_chunk.md) · [KDA 库版本与事件核对](../results/chunk-recovery/report.md) · [融合路线的拒收回执](../results/v0.21/fusion/evaluation.json)','','## v0.20 完成时的报告与历史校准明细','']
     doc=ROOT/'docs/error-analysis.md'
     text=doc.read_text();marker='## v0.20 完成时的报告与历史校准明细\n'
     history=text.split(marker,1)[1].lstrip() if marker in text else text.split('\n',1)[1].lstrip()

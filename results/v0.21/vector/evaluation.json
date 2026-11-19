@@ -35,13 +35,13 @@
       "role": "post-freeze independent",
       "chip": "Ascend950DT_9582",
       "old_us": {
-        "n": 3,
-        "wape_pct": 32.84106852697341,
+        "n": 4,
+        "wape_pct": 40.11606740527548,
         "max_pct": 46.68034727995796
       },
       "us": {
-        "n": 3,
-        "wape_pct": 5.601411098200783,
+        "n": 4,
+        "wape_pct": 5.557304464900739,
         "max_pct": 11.466357981766627
       }
     },
@@ -50,14 +50,14 @@
       "role": "post-freeze independent",
       "chip": "Ascend950PR_957b",
       "old_us": {
-        "n": 2,
-        "wape_pct": 56.02281175413502,
-        "max_pct": 69.48071797711557
+        "n": 4,
+        "wape_pct": 98.98446974131443,
+        "max_pct": 105.30804936171054
       },
       "us": {
-        "n": 2,
-        "wape_pct": 9.668090366537418,
-        "max_pct": 16.660335772440614
+        "n": 4,
+        "wape_pct": 21.428554077263097,
+        "max_pct": 26.961101108442165
       }
     },
     {
@@ -95,14 +95,14 @@
       "role": "post-freeze independent",
       "chip": "Ascend950DT_9582",
       "old_us": {
-        "n": 2,
-        "wape_pct": 17.592853146475637,
-        "max_pct": 20.974494243143017
+        "n": 3,
+        "wape_pct": 19.930576574226187,
+        "max_pct": 22.32707844283287
       },
       "us": {
-        "n": 2,
-        "wape_pct": 17.592853146475637,
-        "max_pct": 20.974494243143017
+        "n": 3,
+        "wape_pct": 19.930576574226187,
+        "max_pct": 22.32707844283287
       }
     },
     {
@@ -110,14 +110,14 @@
       "role": "post-freeze independent",
       "chip": "Ascend950PR_957b",
       "old_us": {
-        "n": 2,
-        "wape_pct": 1.0715653947068786,
-        "max_pct": 1.1258476629109282
+        "n": 3,
+        "wape_pct": 1.1736577003225341,
+        "max_pct": 1.269271545183015
       },
       "us": {
-        "n": 2,
-        "wape_pct": 1.0715653947068786,
-        "max_pct": 1.1258476629109282
+        "n": 3,
+        "wape_pct": 1.1736577003225341,
+        "max_pct": 1.269271545183015
       }
     }
   ],
@@ -140,14 +140,14 @@
       "op": "sigmoid_fp32",
       "role": "post-freeze independent",
       "old_us": {
-        "n": 2,
-        "wape_pct": 17.650072072759823,
+        "n": 4,
+        "wape_pct": 21.87517407091415,
         "max_pct": 30.656954742973397
       },
       "us": {
-        "n": 2,
-        "wape_pct": 6.002085981906077,
-        "max_pct": 8.097777657327644
+        "n": 4,
+        "wape_pct": 7.8739374537787,
+        "max_pct": 16.883071988164556
       }
     },
     {
@@ -168,19 +168,19 @@
       "op": "cast_bf16_fp32",
       "role": "post-freeze independent",
       "old_us": {
-        "n": 2,
-        "wape_pct": 10.820404997026483,
-        "max_pct": 21.854295827237358
+        "n": 3,
+        "wape_pct": 14.375856349087133,
+        "max_pct": 23.30060207600878
       },
       "us": {
-        "n": 2,
-        "wape_pct": 10.820404997026483,
-        "max_pct": 21.854295827237358
+        "n": 3,
+        "wape_pct": 14.375856349087133,
+        "max_pct": 23.30060207600878
       }
     }
   ],
-  "completed": 9,
-  "qualified": 9,
+  "completed": 14,
+  "qualified": 14,
   "registered": 40,
   "rows": [
     {
@@ -1085,6 +1085,81 @@
       "ca_us": 7.585454705171287,
       "projected_970_us": 4.65729568893322,
       "wall_s": 322.1893405299634,
+      "role": "post-freeze independent",
+      "source": "results/v0.21/vector/holdout.json"
+    },
+    {
+      "op": "cast_bf16_fp32",
+      "shape": [
+        3072,
+        5120
+      ],
+      "chip": "Ascend950DT_9582",
+      "old_us": 12.712468077272728,
+      "us": 12.712468077272728,
+      "ca_us": 16.36666655819863,
+      "projected_970_us": 8.17703759187283,
+      "wall_s": 1167.7998092700727,
+      "role": "post-freeze independent",
+      "source": "results/v0.21/vector/holdout.json"
+    },
+    {
+      "op": "sigmoid_fp32",
+      "shape": [
+        524288,
+        12
+      ],
+      "chip": "Ascend950PR_957b",
+      "old_us": 39.87953337283303,
+      "us": 21.814855603136067,
+      "ca_us": 19.42424249649048,
+      "projected_970_us": 7.556282259117099,
+      "wall_s": 2859.391564989928,
+      "role": "post-freeze independent",
+      "source": "results/v0.21/vector/holdout.json"
+    },
+    {
+      "op": "cast_bf16_fp32",
+      "shape": [
+        3072,
+        5120
+      ],
+      "chip": "Ascend950PR_957b",
+      "old_us": 23.53190995670996,
+      "us": 23.53190995670996,
+      "ca_us": 23.23696971219033,
+      "projected_970_us": 8.17703759187283,
+      "wall_s": 863.2718088000547,
+      "role": "post-freeze independent",
+      "source": "results/v0.21/vector/holdout.json"
+    },
+    {
+      "op": "sigmoid_fp32",
+      "shape": [
+        1572864,
+        12
+      ],
+      "chip": "Ascend950DT_9582",
+      "old_us": 41.4857056969697,
+      "us": 30.13955108686869,
+      "ca_us": 28.561210873536766,
+      "projected_970_us": 15.40790591029555,
+      "wall_s": 932.8745733599644,
+      "role": "post-freeze independent",
+      "source": "results/v0.21/vector/holdout.json"
+    },
+    {
+      "op": "sigmoid_fp32",
+      "shape": [
+        1572864,
+        12
+      ],
+      "chip": "Ascend950PR_957b",
+      "old_us": 111.49650791828756,
+      "us": 69.04067868192394,
+      "ca_us": 54.379395010881126,
+      "projected_970_us": 15.40790591029555,
+      "wall_s": 973.1838997700252,
       "role": "post-freeze independent",
       "source": "results/v0.21/vector/holdout.json"
     }

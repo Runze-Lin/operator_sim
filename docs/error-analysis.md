@@ -5,39 +5,43 @@
 | DynamicMXQuant | 10 · 4.1% / 8.2% | 10 · 5.2% / 14.1% | 历史冻结合同 | 达标 / 达标 |
 | Matmul | 11 · 5.5% / 9.1% | 11 · 6.4% / 12.6% | 历史冻结合同 | 达标 / 达标 |
 | FA | 10 · 5.0% / 23.1% | 10 · 5.0% / 8.1% | 历史冻结合同 | 达标 / 达标 |
-| RMSNorm | 0 · N/A | 0 · N/A | v0.21 冻结独立 | 待验证 / 待验证 |
-| Addmm | 0 · N/A | 2 · 3.0% / 5.3% | v0.21 冻结独立 | 待验证 / 待验证 |
+| RMSNorm | 0 · N/A | 0 · N/A | v0.21 冻结独立 | 超门槛 / 待验证 |
+| Addmm | 9 · 8.0% / 12.8% | 10 · 5.6% / 13.5% | v0.21 冻结独立 | 待验证 / 达标 |
 | Lightning Indexer | 10 · 14.6% / 31.7% | 10 · 11.9% / 26.5% | 历史冻结合同 | 达标 / 达标 |
 | mHC Pre | 10 · 3.0% / 6.1% | 10 · 6.1% / 10.7% | 历史冻结合同 | 达标 / 达标 |
-| mHC Sinkhorn | 3 · 15.4% / 17.6% | 3 · 7.2% / 9.2% | v0.21 冻结独立 | 待验证 / 待验证 |
-| mHC PreSinkhorn | 2 · 8.8% / 13.7% | 2 · 9.4% / 9.9% | v0.21 冻结独立 | 待验证 / 待验证 |
-| mHC Post | 2 · 33.0% / 37.9% | 1 · 24.3% / 24.3% | v0.21 冻结独立 | 超门槛 / 超门槛 |
+| mHC Sinkhorn | 7 · 17.2% / 29.2% | 7 · 11.2% / 19.3% | v0.21 冻结独立 | 待验证 / 待验证 |
+| mHC PreSinkhorn | 6 · 6.9% / 13.7% | 6 · 8.9% / 14.7% | v0.21 冻结独立 | 待验证 / 待验证 |
+| mHC Post | 9 · 26.5% / 42.0% | 7 · 22.1% / 35.1% | v0.21 冻结独立 | 超门槛 / 超门槛 |
 | mHC 拆分链 | 10 · 2.3% / 5.0% | 10 · 4.2% / 9.4% | 历史冻结合同 | 达标 / 达标 |
 | KDA recurrent | 10 · 7.9% / 17.5% | 10 · 4.3% / 10.4% | 历史冻结合同 | 达标 / 达标 |
-| KDA chunk | 0 · N/A | 0 · N/A | 无合格耗时 | 待验证 / 待验证 |
+| KDA chunk | 0 · N/A | 0 · N/A | 无合格耗时 | 缺完整 CA / 缺完整 CA |
 | GMM1–SwiGLU–MXQuant | 10 · 10.6% / 32.7% | 10 · 10.8% / 34.8% | 历史冻结合同 | 达标 / 达标 |
 | MoE GMM2 | 10 · 9.5% / 26.9% | 10 · 7.9% / 20.6% | 历史冻结合同 | 达标 / 达标 |
 | MoE FFN 组合 | 10 · 7.3% / 23.0% | 10 · 7.8% / 23.6% | 历史冻结合同 | 达标 / 达标 |
 | MoE sigmoid Top-K | 10 · 9.1% / 16.2% | 10 · 5.7% / 11.0% | 历史冻结合同 | 达标 / 达标 |
-| Cast BF16→FP32 | 2 · 17.6% / 21.0% | 2 · 1.1% / 1.1% | v0.21 冻结独立 | 待验证 / 待验证 |
-| Kimi KDA beta Sigmoid | 3 · 5.6% / 11.5% | 2 · 9.7% / 16.7% | v0.21 冻结独立 | 待验证 / 待验证 |
-| Kimi AttnResFwd | 1 · 6.0% / 6.0% | 1 · 8.2% / 8.2% | v0.21 冻结独立 | 待验证 / 待验证 |
+| Cast BF16→FP32 | 3 · 19.9% / 22.3% | 3 · 1.2% / 1.3% | v0.21 冻结独立 | 待验证 / 待验证 |
+| Kimi KDA beta Sigmoid | 4 · 5.6% / 11.5% | 4 · 21.4% / 27.0% | v0.21 冻结独立 | 待验证 / 待验证（暂超） |
+| Kimi AttnResFwd | 5 · 5.2% / 6.7% | 6 · 4.1% / 8.2% | v0.21 冻结独立 | 待验证 / 待验证 |
 
 每一格独立核对 WAPE＝Σ|预测−CA|/ΣCA ≤20%，以及 max＝max(|预测−CA|/CA) ≤40%。未满十个不同 shape 时，已完成的结果只表示进度。旧留出一旦用于开发即转作回放；历史回放超限会保留在验收结论。组合算子按该合同中串行 kernel 的设备窗口相加，排除宿主间隙。970DT 始终为配置外推。
 
 [逐 shape 的三芯片结果与误差](../results/v0.21/shape-errors.md) · [同形 DT/PR 加速比与旧版](../results/v0.21/pairs.md) · [带 kernel、trace 和角色的机器可读结果](../results/v0.21/evaluation.json) · [逐块的模型与 CA 同轴图](pipeline-comparisons.md)
 
-重复使用的 950DT 归档有些来自调参批次。对于 Indexer、mHC Pre、mHC 拆分链、KDA Recurrent、GMM 与 MoE FFN，DT 主表采用原始 v0.12 明确标记 validation 的十形，PR 采用 v0.17 冻结十形。Matmul、FA 复用 v0.17 资源模型验证合同，DT 包含历史同形对照。RMSNorm 的历史设备窗口用于启动状态开发，本轮十个新形在原有大样本之后串行验证。主表全部使用公开默认入口 auto；970DT 外推单列。
+v0.12 的 development 与 validation 分组保留，曾参与校准的旧样本只按回放计分。对于 Indexer、mHC Pre、mHC 拆分链、KDA Recurrent、GMM 与 MoE FFN，DT 主表采用原始 v0.12 明确标记 validation 的十形，PR 采用 v0.17 冻结十形。Matmul、FA 复用 v0.17 资源模型验证合同，DT 包含历史同形对照。RMSNorm 的历史设备窗口用于启动状态开发，本轮十个新形在原有大样本之后串行验证。公开默认入口 auto 用于主表。Quant、Matmul、FA 另对 270 个不同 trace 的完整窗口逐一核对；补充归档保留原角色，跨组可能重用同一个窗口。970DT 外推单列。[三条核心路线的全窗口审计](../results/v0.21/coverage/report.md)
 
 ### 当前超限的数据组
 
 | 算子 | 芯片 | 数据组 | WAPE / 最大 | 最大误差 shape | 预测 / CA µs |
 |---|---|---|---:|---|---:|
+| RMSNorm | DT | DT v0.12 development replay | 24.70% / 54.94% | [128, 1024] | 4.787 / 3.090 |
+| RMSNorm | DT | v0.17 historical RMS replay | 23.77% / 43.22% | [4, 512] | 2.437 / 4.292 |
+| mHC Post | DT | DT v0.12 development replay | 28.34% / 47.06% | [34, 4, 512] | 2.811 / 1.912 |
 | mHC Post | DT | DT v0.12 holdout replay | 26.36% / 36.97% | [31, 4, 256] | 3.120 / 2.278 |
 | mHC Post | DT | prior published pair replay | 31.86% / 43.97% | [36, 4, 128] | 2.550 / 1.772 |
-| mHC Post | DT | primary | 33.02% / 37.89% | [5, 4, 288] | 3.082 / 4.962 |
+| mHC Post | DT | primary | 26.55% / 42.02% | [7, 4, 1728] | 3.120 / 5.380 |
 | mHC Post | PR | prior published pair replay | 26.85% / 33.54% | [9, 4, 1024] | 3.124 / 4.700 |
-| mHC Post | PR | primary | 24.25% / 24.25% | [37, 4, 144] | 2.580 / 3.407 |
+| mHC Post | PR | primary | 22.10% / 35.15% | [7, 4, 1728] | 3.124 / 4.816 |
+| Kimi KDA beta Sigmoid | PR | primary | 21.43% / 26.96% | [1572864, 12] | 69.041 / 54.379 |
 
 ### 系统调度提供的额外信息
 
@@ -52,9 +56,15 @@
 | RMSNorm | 950DT | 连续同族调用 | 50 | 23.23% / 54.94% | 13.55% / 44.03% |
 | RMSNorm | 950PR | 独立首发 | 10 | 14.23% / 25.55% | 9.04% / 25.13% |
 
+RMSNorm 的 43 个 DT 旧开发形状也纳入公开默认入口的压力回放。部分已热的短宽形被当成了可能首发，新增 AIV 也可能是同核另一通道。按输出地址恢复的 1,418 个 AIV 窗口支持在已知前序时细分启动和统计量写回，候选的仅 shape 和有顺序误差分别保留，等待独立实测。[RMSNorm 逐块证据和候选验证](../results/rms-dispatch-audit/report.md)
+
+mHC Post 的 DT 同形 [1,4,128]、同 ELF 在单独首发与真实前序生产链后分别耗时 4.752、2.672 µs。任何仅依赖本次输入的单值预测，在这两次观测各计一次时的 WAPE 至少为 (4.752−2.672)/(4.752+2.672)＝28.03%。该下界只适用于这一配对；完整算子样本集的 WAPE 仍以逐形数据计算。[两端完整配对与 WAPE 可行域](../results/post-candidate/protocol-feasibility.json)
+
 [按实际派发顺序的逐条预测](../results/v0.21/dispatch/stream-replay.json) · [mHC Post 同形跨状态对照](../results/v0.21/dispatch/post-identifiability.json) · [45 个进程的阶段审计与未启用候选](../results/post-candidate/report.md)
 
-数据角色 primary 表示上表该路线的主验证组。当前未合格的采集保留在分项报告；N/A 不进入 WAPE 分母。KDA chunk 的运行时 SKU、同步错误和校验状态逐次保留。[KDA chunk 审计](examples/kda_chunk.md) · [融合路线的拒收回执](../results/v0.21/fusion/evaluation.json)
+在大 Cast 上，DT 的最大历史误差发生在一个 96 MiB 工作集，实测没有物理写入 HBM。把输入、输出双缓冲分别计价后，该形状由 13.33 升至 16.59 µs，CA 为 17.04 µs。12 个双端大窗口的历史回放及另行冻结的 6 个新形状单独计分。[Cast 的物理读写计数与候选验证](../results/cast-capacity/report.md)
+
+数据角色 primary 表示上表该路线的主验证组。未合格的采集保留在分项报告，N/A 不进入 WAPE 分母。KDA chunk 的运行时 SKU、同步错误和校验状态逐次保留。[KDA chunk 算例](examples/kda_chunk.md) · [KDA 库版本与事件核对](../results/chunk-recovery/report.md) · [融合路线的拒收回执](../results/v0.21/fusion/evaluation.json)
 
 ## v0.20 完成时的报告与历史校准明细
 | 算子 | 计时资格与数据角色 | DT N | DT WAPE / 最大 | PR N | PR WAPE / 最大 | DT/PR 倍速 WAPE / 最大 | 970DT 外推范围 µs |

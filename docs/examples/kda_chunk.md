@@ -93,3 +93,7 @@ print(r.status, r.latency_us, r.work["logical_read_bytes"], r.work["logical_writ
 同一固定长度对照在 950DT compact 采集中也报出了完全相同的三个 PC；主 kernel 数据库有表结构，已提交的指令行数为 0。950PR 的原始退休记录及安装包对应的 ELF 代码段 SHA-256 一致。Kimi 上游的 BF16 raw gate 与 FP32 gate 在安装包中有不同 dispatch 名，但在 FP32 beta 条件下两份 ELF 的整个代码段逐字节一致；具体控制流还由调用参数和 tiling 决定。上述固定长度证据不能替代 Kimi 变长合同的计时。[双端对照与二进制哈希](../../results/v0.21/chunk/pr-flag-audit.json)
 
 对 Kimi-K3 的 12 头 BF16 gate 合同，新的 950DT/PR 尝试分别用了 1,802.0/1,755.6 秒。DT 记录到两个完整辅助窗口 3.674 和 6.558 µs；PR 只记录到第一个转置。两个主算子都没有取得数值校验和完整窗口。另一个 DT 单 token 尾块在主算子中复现重复 SET。这些采集在误差表计为 0 个合格样本。[逐次合同与终态](../../results/v0.21/chunk/report.md)
+
+## 为什么 CA 栏只有失败前的事件
+
+在 950PR 的 BF16 MIX 主核中，退休记录显示 AIC 对同一 M→MTE1 本地事件重复发出 SET，直至停止都没有完整的 MMAD 窗口。图下栏的短段可以定位同步异常，无法用于校准整算子耗时。包内核名、ELF 身份、已退休指令与静态反汇编分别保留；950DT 的 FP16 generic 分支在登记的 25 分钟内报告 116 次重复 SET，涉及 25 个 PC，缺少数值回执与完整设备窗。[二进制、源码版本及跨分派核查](../../results/chunk-recovery/report.md)

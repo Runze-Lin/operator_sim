@@ -44,6 +44,12 @@ Kimi [524288,12] 在 950DT 预测 11.908 µs、实测 11.230 µs。上栏预测�
 
 `DynamicMxQuant` 对 BF16 输入 `[2048,5120]` 生成 FP8 值和 E8M0 scale。一个 UB 块对应一次有效读、向量程序和两类输出。图的下栏用字节数及程序计数器把事件归回对应块；一次描述符可以在前一条结束前发起。[逐轮量化算例](examples/quant.md)
 
+## RMSNorm · 同一核新增一条向量通道
+
+![上栏预测分块启动、规约和两路写回，下栏按输出地址对齐真实的四个分块](examples/figures/rms-expanding-sibling.png)
+
+950DT 的 BF16 [4,4608] 紧随一次使用 3 个 AIV 的调用。最后一行对应 core16 的新通道，图上的蓝条是 4 B 统计量写回，橙条是该行归一化输出写回。给出相同的前序信息时，v0.21 预测 3.792 µs，候选模型预测 2.924 µs，CA 为 2.633 µs。候选仍把这一行的首笔统计量写发起得晚了 0.270 µs。该样本属于剔除整个进程后的历史回放。上栏三个已热通道的先后按统计顺序放置，新通道可以由输出地址唯一识别。[完整推导与独立校准状态](examples/rmsnorm.md)
+
 ## CV 融合 · 长 KV 循环的首、中、末页
 
 ![950PR 上 Q 等于 9、KV 等于 32768 的逐页 QK 与 PV 对比](examples/figures/fa-pr-32k-pages.png)
@@ -97,7 +103,7 @@ GMM1 和 GMM2 均用 `[8,256,128,2]`、专家分配 `[1,7]`。GMM1 的两份中�
 | [mHC PreSinkhorn](examples/mhc_pre_sinkhorn.md) | PR · 1×4×4096 | [AIC 与 AIV 的交接](examples/figures/mhc_pre_sinkhorn-v21-pr.png) |
 | [mHC 拆分链](examples/mhc.md) | PR · 1×4×128 | [三个串行 kernel 的独立设备窗](examples/figures/mhc-pr-pipeline.png) |
 | [MoE FFN](examples/moe_ffn.md) | PR · 2×64×64×1 | [GMM1 与 GMM2 两个设备窗](examples/figures/moe_ffn-pr-pipeline.png) |
-| [RMSNorm](examples/rmsnorm.md) | DT · 3×6656 | [首次或热态的阶段预算和末核指令](examples/figures/rmsnorm-v21-state.png) |
+| [RMSNorm](examples/rmsnorm.md) | DT · 4×4608 | [扩出第二条 AIV 的候选预测与四个同址输出块](examples/figures/rms-expanding-sibling.png) |
 | [mHC Post](examples/mhc_post.md) | DT · 16×4×256 | [隐藏调度历史如何改变读算写](examples/figures/mhc_post-v21-state.png) |
 | [mHC Pre](examples/mhc_pre.md) | PR · 1×4×128 | [末核控制等待、计算、搬运独占成本](examples/figures/mhc-pre-exclusive-pr.png) |
 | [mHC Sinkhorn](examples/mhc_sinkhorn.md) | PR · 64×4 | [每 AIV 两行共用发射的阶段成本](examples/figures/mhc_sinkhorn-v21-pr.png) |
@@ -114,6 +120,7 @@ python development/validation/dispatch21/addmm_figure.py
 python development/validation/fusion21/indexer_figure.py --replot
 python development/validation/sku20/matmul_figure.py
 python development/validation/sku20/quant_tile_figure.py
+python development/validation/rms_dispatch_audit/figure.py --replot
 python development/validation/sku20/fa_pages.py --replot
 python development/validation/sku20/fa_pages.py --dt128k --replot
 ```

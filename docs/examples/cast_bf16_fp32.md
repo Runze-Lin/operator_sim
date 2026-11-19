@@ -8,6 +8,8 @@ DeepSeek V4.1 Flash 的 indexer 投影给每个 token 产生 32 个复制系数�
 
 ![950PR 同一个 Flash Cast 的逐 tile 模型和 CA](figures/v021-cast-256ki-pr.png)
 
+128ki 与 256ki 两个相邻长度都有原始控制器读写计数。DT 的物理写由 30.833 增至 169.716 MiB，增长 5.50 倍；末核又允许新一轮读在前一轮写完成前发起。已另外冻结输入槽与输出槽分别周转的候选，供后续相同 CA 窗口检验。图上的 v0.21 预测仍可逐轮复算。[读写证据、候选与独立验证登记](../../results/cast-capacity/report.md)
+
 ## 从 dtype 和 shape 算出设备时间
 
 ```python

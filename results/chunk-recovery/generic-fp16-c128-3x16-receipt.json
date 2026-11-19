@@ -1,0 +1,46 @@
+{
+  "seconds": 1502.4084359300323,
+  "cmd": [
+    "bash",
+    "/home/l00925865/operator_sim/scripts/cann-run.sh",
+    "env",
+    "OPERATOR_SIM_TARGET_SOC=Ascend950DT_9582",
+    "CAMODEL_CONFIG_PATH=/home/l00925865/operator_sim/configs/camodel-single-thread.json",
+    "LD_PRELOAD=/home/l00925865/operator_sim/build/capture/libsim_soc_adapter.so",
+    "npusim",
+    "record",
+    "/home/l00925865/operator_sim/runs/chunk-recovery/fp16",
+    "-s",
+    "Ascend950DT",
+    "-o",
+    "/home/l00925865/operator_sim/runs/chunk-recovery/generic-fp16-c128-3x16/profile"
+  ],
+  "exit": -9,
+  "stop": "wall budget",
+  "log_sha256": "fbf62f01341c5c570385171e2ae63055450f95cb05c555fd565f016f20145073",
+  "sku_verified": true,
+  "checks": [],
+  "numeric": false,
+  "duplicate_count": 116,
+  "first_faults": [
+    "0x9155be9df8",
+    "0x9155be9e00",
+    "0x9155be9e20",
+    "0x9155bea520",
+    "0x9155bea524",
+    "0x9155bea528",
+    "0x9155beb1a8",
+    "0x9155beaf98"
+  ],
+  "windows": [
+    {
+      "db": "runs/chunk-recovery/generic-fp16-c128-3x16/profile/npusim_20261119202213_fp16/record/0000_entry_kernel_1.db",
+      "db_sha256": "1690157178c0c4868247185687d79a26ea41237a2ef903c574bbbd49a637436c",
+      "rows": 0,
+      "kernel_info": {},
+      "verified": false
+    }
+  ],
+  "timing_qualified": false,
+  "ca_us": null
+}

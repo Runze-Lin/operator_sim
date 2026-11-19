@@ -1,0 +1,72 @@
+{
+  "qualified": true,
+  "kernel": {
+    "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+    "ca_us": 11.573333266191185,
+    "active_aic": 0,
+    "active_aiv": 1,
+    "windows": {
+      "core0.veccore0": [
+        0.0,
+        11.573333266191185
+      ]
+    },
+    "trace": "runs/fusion21/attnres_h1024_1_7_Ascend950DT_9582/profile/OPPROF_20261119201920_HKSLLIGHQNPCIZNK/simulator/trace.json",
+    "trace_sha256": "159c1705d9f9cd69c6d342c747ee2dad723f7548c4642c9790c1d1037a514d73",
+    "binary_sha256": "1597fd69d8978d7e29c87ced997e2e0f06b39d509732abba08235b3abac5f392",
+    "queue_events": {
+      "SCALAR": 2938,
+      "FLOWCTRL": 277,
+      "MTE2": 14,
+      "MTE3": 5,
+      "PUSHQ": 141,
+      "RVECLP": 289,
+      "RVECSU": 764,
+      "RVECLD": 1846,
+      "RVECEX": 7750,
+      "RVECST": 1012
+    },
+    "mmad": 0,
+    "total_events": 15036
+  },
+  "correctness": [
+    "correctness shape=1x1024 S=8 N=7 groups=output,prefix,materialized,bank bad=0"
+  ],
+  "shape": [
+    1,
+    1024,
+    8,
+    7
+  ],
+  "chip": "Ascend950DT_9582",
+  "cost": {
+    "seconds": 176.41001951997168,
+    "cpu_seconds": 4025.1600000000003,
+    "raw_bytes": 28604501,
+    "exit_code": 0,
+    "stop_reason": null,
+    "started_utc": "2026-11-19T12:19:20.134399+00:00",
+    "finished_utc": "2026-11-19T12:22:16.545354+00:00",
+    "command": [
+      "/home/l00925865/operator_sim/runs/fusion21/attnres_h1024_1_7_Ascend950DT_9582/cpu.txt",
+      "bash",
+      "/home/l00925865/operator_sim/scripts/cann-run.sh",
+      "bash",
+      "-c",
+      "export ASCEND_CUSTOM_OPP_PATH=\"$1\"; export LD_LIBRARY_PATH=\"$1/op_api/lib:$LD_LIBRARY_PATH\"; shift; exec \"$@\"",
+      "attn-res-vendor",
+      "/home/l00925865/operator_sim/runs/workloads19/sources/fastbuild/vendors/custom_transformer",
+      "msopprof",
+      "simulator",
+      "--soc-version=Ascend950DT_9582",
+      "--dump=true",
+      "--launch-count=1",
+      "--timeout=10",
+      "--output=/home/l00925865/operator_sim/runs/fusion21/attnres_h1024_1_7_Ascend950DT_9582/profile",
+      "/home/l00925865/operator_sim/build/smoke/attn_res_fwd19_h1024",
+      "1",
+      "7"
+    ]
+  },
+  "run_log": "runs/fusion21/attnres_h1024_1_7_Ascend950DT_9582/run.log"
+}

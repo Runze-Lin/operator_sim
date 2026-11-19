@@ -1,0 +1,320 @@
+{
+  "scope": "v0.12/v0.17 archive only. Equal counts within each first vs after-producer-chain pair. Same chip, inputs/attrs, ELF hash and number of active AIV. CANN 9.2.1 BF16 N=4, mandatory residual. No v0.21 holdout labels used.",
+  "method": "Exact rational arithmetic on archived microsecond decimal strings. For low=a, high=b, p clamp to [a,b]. Under max 40%, per-shape interval [l,u]=[max(a,.6b),min(b,1.4a)]. Dual WAPE <=20 iff max(sum(l),.8*sum(b)) <= min(sum(u),1.2*sum(a)). For minimax WAPE clamp 2AB/(A+B) to [sum(l),sum(u)], A=sum(a),B=sum(b). This ORACLE feasibility assigns one free p per observed shape and does not establish a generalizable estimator.",
+  "exact_same_elf_pairs": {
+    "Ascend950DT_9582": {
+      "exact_pair_set": {
+        "groups": [
+          {
+            "shape": [
+              1,
+              4,
+              128
+            ],
+            "low_us": 2.6715159444138408,
+            "high_us": 4.752121451310813,
+            "kernel": "MhcPost_59130ccee6717ff2c0f15b485e731162_5",
+            "binary_sha256": "36851e45520023382742d07d871519f65e57e9c49ec3594583e361b0bb9b6677",
+            "active_aiv": 1,
+            "low_trace_sha256": "d7a5c879fab7b635a0ce9bcd7fb61baae39e2b983a3040fb79b32f10ee5b872c",
+            "high_trace_sha256": "7d7e565eba0f6c634c920e624c83263432bde475153f960439375d2b2bb64bb7"
+          }
+        ],
+        "independent_shape_variables": 1,
+        "low_total_us": 2.6715159444138408,
+        "high_total_us": 4.752121451310813,
+        "per_protocol_feasible": false,
+        "required_sum_interval_us": [
+          3.8016971610486503,
+          3.205819133296609
+        ],
+        "signed_feasibility_margin_us": -0.5958780277520415,
+        "minimum_worst_protocol_wape_pct_at_max40": 28.026766340920872,
+        "pooled_wape_pct_for_between_endpoints": 28.026766340920872,
+        "witness_sum_us": 3.4202554759151536,
+        "witness_us": [
+          3.4202554759151536
+        ],
+        "witness_low_wape_pct": 28.026766340920872,
+        "witness_high_wape_pct": 28.026766340920872,
+        "witness_largest_err_pct": 28.026766340920872,
+        "min_worst_single_shape_relative_pct": [
+          28.026766340920872
+        ]
+      },
+      "individual": [
+        {
+          "groups": [
+            {
+              "shape": [
+                1,
+                4,
+                128
+              ],
+              "low_us": 2.6715159444138408,
+              "high_us": 4.752121451310813,
+              "kernel": "MhcPost_59130ccee6717ff2c0f15b485e731162_5",
+              "binary_sha256": "36851e45520023382742d07d871519f65e57e9c49ec3594583e361b0bb9b6677",
+              "active_aiv": 1,
+              "low_trace_sha256": "d7a5c879fab7b635a0ce9bcd7fb61baae39e2b983a3040fb79b32f10ee5b872c",
+              "high_trace_sha256": "7d7e565eba0f6c634c920e624c83263432bde475153f960439375d2b2bb64bb7"
+            }
+          ],
+          "independent_shape_variables": 1,
+          "low_total_us": 2.6715159444138408,
+          "high_total_us": 4.752121451310813,
+          "per_protocol_feasible": false,
+          "required_sum_interval_us": [
+            3.8016971610486503,
+            3.205819133296609
+          ],
+          "signed_feasibility_margin_us": -0.5958780277520415,
+          "minimum_worst_protocol_wape_pct_at_max40": 28.026766340920872,
+          "pooled_wape_pct_for_between_endpoints": 28.026766340920872,
+          "witness_sum_us": 3.4202554759151536,
+          "witness_us": [
+            3.4202554759151536
+          ],
+          "witness_low_wape_pct": 28.026766340920872,
+          "witness_high_wape_pct": 28.026766340920872,
+          "witness_largest_err_pct": 28.026766340920872,
+          "min_worst_single_shape_relative_pct": [
+            28.026766340920872
+          ]
+        }
+      ]
+    },
+    "Ascend950PR_957b": {
+      "exact_pair_set": {
+        "groups": [
+          {
+            "shape": [
+              1,
+              4,
+              64
+            ],
+            "low_us": 2.6539397267624736,
+            "high_us": 4.132121088914573,
+            "kernel": "MhcPost_59130ccee6717ff2c0f15b485e731162_5",
+            "binary_sha256": "36851e45520023382742d07d871519f65e57e9c49ec3594583e361b0bb9b6677",
+            "active_aiv": 1,
+            "low_trace_sha256": "c9de79c6bf7cc229d574cbbf8276b89568d88309cedbeb6a45e54d4453ddddb0",
+            "high_trace_sha256": "124f8f4478a35b0a65d0a843ad23ddf3b4695ffe801314df551b7ae41a806eab"
+          },
+          {
+            "shape": [
+              1,
+              4,
+              128
+            ],
+            "low_us": 2.6654543904587626,
+            "high_us": 4.25454521458596,
+            "kernel": "MhcPost_59130ccee6717ff2c0f15b485e731162_5",
+            "binary_sha256": "36851e45520023382742d07d871519f65e57e9c49ec3594583e361b0bb9b6677",
+            "active_aiv": 1,
+            "low_trace_sha256": "662655fcd6f6aacc557ecdc7bef4b8d77b2f523565f571480731e409a2b7feb1",
+            "high_trace_sha256": "244801a61da6c88e52959c201fbe9644b45bc21a0b13500ee654e2e10244b7a4"
+          },
+          {
+            "shape": [
+              9,
+              4,
+              1024
+            ],
+            "low_us": 3.5848498372361064,
+            "high_us": 4.7000000504776835,
+            "kernel": "MhcPost_59130ccee6717ff2c0f15b485e731162_5",
+            "binary_sha256": "36851e45520023382742d07d871519f65e57e9c49ec3594583e361b0bb9b6677",
+            "active_aiv": 36,
+            "low_trace_sha256": "d196a680e05024674479cbd68cdd90469206e5bb83fc4f2a6afdeaec4172ff5e",
+            "high_trace_sha256": "ec18d3f22eb701ba1157ff88521d90ac48177002b6f513f47342016226bd83f0"
+          }
+        ],
+        "independent_shape_variables": 3,
+        "low_total_us": 8.904243954457343,
+        "high_total_us": 13.086666353978217,
+        "per_protocol_feasible": true,
+        "required_sum_interval_us": [
+          10.469333083182573,
+          10.685092745348811
+        ],
+        "signed_feasibility_margin_us": 0.21575966216623793,
+        "minimum_worst_protocol_wape_pct_at_max40": 19.018868891100546,
+        "pooled_wape_pct_for_between_endpoints": 19.018868891100546,
+        "witness_sum_us": 10.597730437899331,
+        "witness_us": [
+          3.208307750646039,
+          3.22222765410517,
+          4.167195033148122
+        ],
+        "witness_low_wape_pct": 19.018868891100546,
+        "witness_high_wape_pct": 19.018868891100546,
+        "witness_largest_err_pct": 24.26387565330533,
+        "min_worst_single_shape_relative_pct": [
+          21.782612951791254,
+          22.963741543695182,
+          13.46011368166507
+        ]
+      },
+      "individual": [
+        {
+          "groups": [
+            {
+              "shape": [
+                1,
+                4,
+                64
+              ],
+              "low_us": 2.6539397267624736,
+              "high_us": 4.132121088914573,
+              "kernel": "MhcPost_59130ccee6717ff2c0f15b485e731162_5",
+              "binary_sha256": "36851e45520023382742d07d871519f65e57e9c49ec3594583e361b0bb9b6677",
+              "active_aiv": 1,
+              "low_trace_sha256": "c9de79c6bf7cc229d574cbbf8276b89568d88309cedbeb6a45e54d4453ddddb0",
+              "high_trace_sha256": "124f8f4478a35b0a65d0a843ad23ddf3b4695ffe801314df551b7ae41a806eab"
+            }
+          ],
+          "independent_shape_variables": 1,
+          "low_total_us": 2.6539397267624736,
+          "high_total_us": 4.132121088914573,
+          "per_protocol_feasible": false,
+          "required_sum_interval_us": [
+            3.3056968711316586,
+            3.184727672114968
+          ],
+          "signed_feasibility_margin_us": -0.12096919901669008,
+          "minimum_worst_protocol_wape_pct_at_max40": 21.782612951791254,
+          "pooled_wape_pct_for_between_endpoints": 21.782612951791254,
+          "witness_sum_us": 3.2320371454169696,
+          "witness_us": [
+            3.2320371454169696
+          ],
+          "witness_low_wape_pct": 21.782612951791254,
+          "witness_high_wape_pct": 21.782612951791254,
+          "witness_largest_err_pct": 21.782612951791254,
+          "min_worst_single_shape_relative_pct": [
+            21.782612951791254
+          ]
+        },
+        {
+          "groups": [
+            {
+              "shape": [
+                1,
+                4,
+                128
+              ],
+              "low_us": 2.6654543904587626,
+              "high_us": 4.25454521458596,
+              "kernel": "MhcPost_59130ccee6717ff2c0f15b485e731162_5",
+              "binary_sha256": "36851e45520023382742d07d871519f65e57e9c49ec3594583e361b0bb9b6677",
+              "active_aiv": 1,
+              "low_trace_sha256": "662655fcd6f6aacc557ecdc7bef4b8d77b2f523565f571480731e409a2b7feb1",
+              "high_trace_sha256": "244801a61da6c88e52959c201fbe9644b45bc21a0b13500ee654e2e10244b7a4"
+            }
+          ],
+          "independent_shape_variables": 1,
+          "low_total_us": 2.6654543904587626,
+          "high_total_us": 4.25454521458596,
+          "per_protocol_feasible": false,
+          "required_sum_interval_us": [
+            3.403636171668768,
+            3.198545268550515
+          ],
+          "signed_feasibility_margin_us": -0.20509090311825287,
+          "minimum_worst_protocol_wape_pct_at_max40": 22.963741543695182,
+          "pooled_wape_pct_for_between_endpoints": 22.963741543695182,
+          "witness_sum_us": 3.2775424476487887,
+          "witness_us": [
+            3.2775424476487887
+          ],
+          "witness_low_wape_pct": 22.963741543695182,
+          "witness_high_wape_pct": 22.963741543695182,
+          "witness_largest_err_pct": 22.963741543695182,
+          "min_worst_single_shape_relative_pct": [
+            22.963741543695182
+          ]
+        },
+        {
+          "groups": [
+            {
+              "shape": [
+                9,
+                4,
+                1024
+              ],
+              "low_us": 3.5848498372361064,
+              "high_us": 4.7000000504776835,
+              "kernel": "MhcPost_59130ccee6717ff2c0f15b485e731162_5",
+              "binary_sha256": "36851e45520023382742d07d871519f65e57e9c49ec3594583e361b0bb9b6677",
+              "active_aiv": 36,
+              "low_trace_sha256": "d196a680e05024674479cbd68cdd90469206e5bb83fc4f2a6afdeaec4172ff5e",
+              "high_trace_sha256": "ec18d3f22eb701ba1157ff88521d90ac48177002b6f513f47342016226bd83f0"
+            }
+          ],
+          "independent_shape_variables": 1,
+          "low_total_us": 3.5848498372361064,
+          "high_total_us": 4.7000000504776835,
+          "per_protocol_feasible": true,
+          "required_sum_interval_us": [
+            3.7600000403821467,
+            4.301819804683328
+          ],
+          "signed_feasibility_margin_us": 0.5418197643011808,
+          "minimum_worst_protocol_wape_pct_at_max40": 13.46011368166507,
+          "pooled_wape_pct_for_between_endpoints": 13.46011368166507,
+          "witness_sum_us": 4.067374700645072,
+          "witness_us": [
+            4.067374700645072
+          ],
+          "witness_low_wape_pct": 13.46011368166507,
+          "witness_high_wape_pct": 13.46011368166507,
+          "witness_largest_err_pct": 13.46011368166507,
+          "min_worst_single_shape_relative_pct": [
+            13.46011368166507
+          ]
+        }
+      ]
+    }
+  },
+  "compact_post_only_separate": {
+    "groups": [
+      {
+        "shape": [
+          2,
+          4,
+          6144
+        ],
+        "low_us": 2.904848484848485,
+        "high_us": 4.837575757575758,
+        "kernel": "entry_kernel_5",
+        "binary_sha256": null,
+        "active_aiv": 64,
+        "low_trace_sha256": "4af5a10f2bda551ad0de9737cd7e17cbac52b712c55c84d5f211d1eadd1add87",
+        "high_trace_sha256": "3fa147bc04ae11f0cd61af97be6d14c2694cb71409d446675a4219c8e0f9d2b5"
+      }
+    ],
+    "independent_shape_variables": 1,
+    "low_total_us": 2.904848484848485,
+    "high_total_us": 4.837575757575758,
+    "per_protocol_feasible": false,
+    "required_sum_interval_us": [
+      3.870060606060606,
+      3.485818181818182
+    ],
+    "signed_feasibility_margin_us": -0.3842424242424244,
+    "minimum_worst_protocol_wape_pct_at_max40": 24.962818003913895,
+    "pooled_wape_pct_for_between_endpoints": 24.962818003913895,
+    "witness_sum_us": 3.6299805254106627,
+    "witness_us": [
+      3.6299805254106627
+    ],
+    "witness_low_wape_pct": 24.962818003913895,
+    "witness_high_wape_pct": 24.962818003913895,
+    "witness_largest_err_pct": 24.962818003913895,
+    "min_worst_single_shape_relative_pct": [
+      24.962818003913895
+    ]
+  },
+  "limitations": "A producer chain Post is a distinct launch history from repeated identical Post. No same-ELF repeated Post-only first/reuse pair on either chip with verified hash in this historical corpus. Compact DT Post-only example has same API and entry suffix and no per-launch ELF hash. Conditional prediction can distinguish histories; single forecast theorem applies only when history is withheld."
+}

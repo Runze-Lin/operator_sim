@@ -6,6 +6,25 @@
 
 | 数据组 | 芯片 | shape | v0.20 | 当前 | CA | 有符号误差 | 970DT 外推 |
 |---|---|---|---:|---:|---:|---:|---:|
+| DT v0.12 development replay | 950DT | [1, 128] | — | 4.231 | 4.325 | -2.2% | 3.693 |
+| DT v0.12 development replay | 950DT | [36, 512] | — | 5.430 | 5.646 | -3.8% | 6.119 |
+| DT v0.12 development replay | 950DT | [9, 5120] | — | 4.980 | 4.867 | +2.3% | 7.084 |
+| DT v0.12 development replay | 950DT | [144, 7168] | — | 6.207 | 6.332 | -2.0% | 5.022 |
+| DT v0.12 development replay | 950DT | [512, 5120] | — | 6.364 | 6.299 | +1.0% | 5.727 |
+| DT v0.12 development replay | 950DT | [1152, 5120] | — | 8.942 | 8.684 | +3.0% | 5.893 |
+| DT v0.12 development replay | 950DT | [512, 256] | — | 5.430 | 5.208 | +4.3% | 4.734 |
+| DT v0.12 development replay | 950DT | [576, 4096] | — | 7.470 | 6.948 | +7.5% | 5.440 |
+| DT v0.12 development replay | 950DT | [768, 4096] | — | 6.743 | 7.202 | -6.4% | 5.984 |
+| DT v0.12 development replay | 950DT | [1, 64] | — | 4.231 | 4.326 | -2.2% | 3.692 |
+| DT v0.12 development replay | 950DT | [65, 256] | — | 5.430 | 4.898 | +10.9% | 5.846 |
+| DT v0.12 development replay | 950DT | [1024, 4096] | — | 7.502 | 8.047 | -6.8% | 6.352 |
+| DT v0.12 development replay | 950DT | [1, 4096] | — | 5.430 | 5.686 | -4.5% | 4.532 |
+| DT v0.12 development replay | 950DT | [640, 4096] | — | 6.364 | 6.218 | +2.4% | 5.727 |
+| DT v0.12 development replay | 950DT | [33, 768] | — | 5.430 | 5.210 | +4.2% | 7.042 |
+| DT v0.12 development replay | 950DT | [4, 256] | — | 4.759 | 4.588 | +3.7% | 4.268 |
+| DT v0.12 development replay | 950DT | [17, 512] | — | 5.430 | 5.790 | -6.2% | 4.876 |
+| DT v0.12 development replay | 950DT | [8, 384] | — | 5.430 | 5.760 | -5.7% | 4.871 |
+| DT v0.12 development replay | 950DT | [64, 1024] | — | 5.214 | 5.532 | -5.7% | 5.870 |
 | DT v0.12 holdout replay | 950DT | [36, 5120] | — | 5.292 | 5.584 | -5.2% | 4.769 |
 | DT v0.12 holdout replay | 950DT | [288, 7168] | — | 7.181 | 6.876 | +4.4% | 5.526 |
 | DT v0.12 holdout replay | 950DT | [1024, 7168] | — | 9.586 | 9.332 | +2.7% | 6.713 |
@@ -36,11 +55,103 @@
 | primary | 950PR | [641, 5120] | — | 7.813 | 9.092 | -14.1% | 6.040 |
 | primary | 950DT | [1023, 7168] | — | 9.811 | 9.311 | +5.4% | 6.713 |
 | primary | 950PR | [1023, 7168] | — | 14.026 | 14.080 | -0.4% | 6.713 |
+| historical coverage replay | 950DT | [1, 64] | — | 4.231 | 4.326 | -2.2% | 3.692 |
+| historical coverage replay | 950DT | [1, 128] | — | 4.231 | 4.325 | -2.2% | 3.693 |
+| historical coverage replay | 950DT | [1, 256] | — | 4.231 | 4.493 | -5.8% | 3.693 |
+| historical coverage replay | 950DT | [1, 704] | — | 4.630 | 4.332 | +6.9% | 4.076 |
+| historical coverage replay | 950DT | [1, 4096] | — | 5.430 | 5.686 | -4.5% | 4.532 |
+| historical coverage replay | 950DT | [3, 1920] | — | 5.430 | 5.788 | -6.2% | 4.657 |
+| historical coverage replay | 950DT | [4, 256] | — | 4.759 | 4.588 | +3.7% | 4.268 |
+| historical coverage replay | 950DT | [4, 256] | — | 4.759 | 4.620 | +3.0% | 4.268 |
+| historical coverage replay | 950DT | [5, 320] | — | 5.214 | 4.662 | +11.8% | 4.842 |
+| historical coverage replay | 950DT | [7, 4480] | — | 5.430 | 5.748 | -5.5% | 5.840 |
+| historical coverage replay | 950DT | [8, 384] | — | 5.430 | 5.760 | -5.7% | 4.871 |
+| historical coverage replay | 950DT | [9, 4096] | — | 5.430 | 5.465 | -0.6% | 6.127 |
+| historical coverage replay | 950DT | [9, 5120] | — | 4.980 | 4.867 | +2.3% | 7.084 |
+| historical coverage replay | 950DT | [17, 512] | — | 5.430 | 5.790 | -6.2% | 4.876 |
+| historical coverage replay | 950DT | [19, 1024] | — | 5.430 | 6.230 | -12.8% | 6.256 |
+| historical coverage replay | 950DT | [27, 576] | — | 5.430 | 6.130 | -11.4% | 6.561 |
+| historical coverage replay | 950DT | [30, 768] | — | 5.430 | 5.472 | -0.8% | 6.734 |
+| historical coverage replay | 950DT | [33, 768] | — | 5.430 | 5.210 | +4.2% | 7.042 |
+| historical coverage replay | 950DT | [36, 512] | — | 5.430 | 5.646 | -3.8% | 6.119 |
+| historical coverage replay | 950DT | [55, 1152] | — | 5.180 | 5.900 | -12.2% | 6.542 |
+| historical coverage replay | 950DT | [56, 4096] | — | 5.430 | 6.285 | -13.6% | 4.581 |
+| historical coverage replay | 950DT | [57, 3200] | — | 5.331 | 4.945 | +7.8% | 4.970 |
+| historical coverage replay | 950DT | [64, 1024] | — | 5.214 | 5.532 | -5.7% | 5.870 |
+| historical coverage replay | 950DT | [65, 256] | — | 5.430 | 4.898 | +10.9% | 5.846 |
+| historical coverage replay | 950DT | [65, 2624] | — | 5.194 | 5.306 | -2.1% | 4.942 |
+| historical coverage replay | 950DT | [144, 5120] | — | 5.886 | 5.905 | -0.3% | 4.728 |
+| historical coverage replay | 950DT | [144, 7168] | — | 6.207 | 6.332 | -2.0% | 5.022 |
+| historical coverage replay | 950DT | [255, 5440] | — | 6.522 | 5.747 | +13.5% | 5.612 |
+| historical coverage replay | 950DT | [384, 4096] | — | 6.695 | 6.673 | +0.3% | 5.091 |
+| historical coverage replay | 950DT | [448, 6592] | — | 6.726 | 6.300 | +6.8% | 6.381 |
+| historical coverage replay | 950DT | [512, 256] | — | 5.430 | 5.208 | +4.3% | 4.734 |
+| historical coverage replay | 950DT | [512, 5120] | — | 6.364 | 6.299 | +1.0% | 5.727 |
+| historical coverage replay | 950DT | [513, 5504] | — | 6.845 | 6.751 | +1.4% | 6.009 |
+| historical coverage replay | 950DT | [576, 4096] | — | 7.470 | 6.948 | +7.5% | 5.440 |
+| historical coverage replay | 950DT | [640, 4096] | — | 6.364 | 6.218 | +2.4% | 5.727 |
+| historical coverage replay | 950DT | [768, 4096] | — | 6.743 | 7.202 | -6.4% | 5.984 |
+| historical coverage replay | 950DT | [1024, 4096] | — | 7.502 | 8.047 | -6.8% | 6.352 |
+| historical coverage replay | 950DT | [1152, 5120] | — | 8.942 | 8.684 | +3.0% | 5.893 |
+| historical coverage replay | 950DT | [2048, 5120] | — | 11.531 | 11.364 | +1.5% | 7.733 |
+| historical coverage replay | 950PR | [1, 64] | — | 3.591 | 3.946 | -9.0% | 3.692 |
+| historical coverage replay | 950PR | [1, 128] | — | 3.592 | 3.828 | -6.2% | 3.693 |
+| historical coverage replay | 950PR | [1, 192] | — | 3.592 | 3.833 | -6.3% | 3.693 |
+| historical coverage replay | 950PR | [1, 256] | — | 3.592 | 3.859 | -6.9% | 3.693 |
+| historical coverage replay | 950PR | [1, 704] | — | 4.010 | 3.964 | +1.2% | 4.076 |
+| historical coverage replay | 950PR | [1, 4096] | — | 4.507 | 4.945 | -8.9% | 4.532 |
+| historical coverage replay | 950PR | [3, 1920] | — | 4.643 | 5.315 | -12.6% | 4.657 |
+| historical coverage replay | 950PR | [4, 256] | — | 4.219 | 4.157 | +1.5% | 4.268 |
+| historical coverage replay | 950PR | [5, 320] | — | 4.846 | 4.592 | +5.5% | 4.842 |
+| historical coverage replay | 950PR | [7, 320] | — | 5.004 | 5.042 | -0.8% | 4.987 |
+| historical coverage replay | 950PR | [7, 4480] | — | 4.865 | 4.559 | +6.7% | 5.840 |
+| historical coverage replay | 950PR | [8, 384] | — | 4.877 | 5.136 | -5.0% | 4.871 |
+| historical coverage replay | 950PR | [9, 4096] | — | 5.072 | 4.825 | +5.1% | 6.127 |
+| historical coverage replay | 950PR | [9, 5120] | — | 4.377 | 5.025 | -12.9% | 7.084 |
+| historical coverage replay | 950PR | [17, 512] | — | 4.882 | 5.432 | -10.1% | 4.876 |
+| historical coverage replay | 950PR | [17, 1024] | — | 4.966 | 5.311 | -6.5% | 5.982 |
+| historical coverage replay | 950PR | [19, 1024] | — | 5.102 | 5.983 | -14.7% | 6.256 |
+| historical coverage replay | 950PR | [27, 576] | — | 5.711 | 5.547 | +3.0% | 6.561 |
+| historical coverage replay | 950PR | [30, 768] | — | 4.770 | 4.917 | -3.0% | 6.734 |
+| historical coverage replay | 950PR | [33, 768] | — | 4.845 | 4.915 | -1.4% | 7.042 |
+| historical coverage replay | 950PR | [36, 512] | — | 4.906 | 5.795 | -15.3% | 6.119 |
+| historical coverage replay | 950PR | [36, 3072] | — | 4.448 | 5.170 | -14.0% | 7.373 |
+| historical coverage replay | 950PR | [36, 5120] | — | 4.547 | 5.052 | -10.0% | 4.769 |
+| historical coverage replay | 950PR | [55, 1152] | — | 4.873 | 5.336 | -8.7% | 6.542 |
+| historical coverage replay | 950PR | [56, 4096] | — | 4.554 | 4.513 | +0.9% | 4.581 |
+| historical coverage replay | 950PR | [57, 3200] | — | 4.776 | 4.430 | +7.8% | 4.970 |
+| historical coverage replay | 950PR | [64, 1024] | — | 4.599 | 5.373 | -14.4% | 5.870 |
+| historical coverage replay | 950PR | [65, 256] | — | 4.757 | 4.609 | +3.2% | 5.846 |
+| historical coverage replay | 950PR | [65, 2624] | — | 4.753 | 4.736 | +0.4% | 4.942 |
+| historical coverage replay | 950PR | [128, 5120] | — | 5.192 | 5.730 | -9.4% | 4.904 |
+| historical coverage replay | 950PR | [144, 5120] | — | 5.180 | 5.984 | -13.4% | 4.728 |
+| historical coverage replay | 950PR | [144, 7168] | — | 5.434 | 6.415 | -15.3% | 5.022 |
+| historical coverage replay | 950PR | [255, 5440] | — | 6.694 | 6.868 | -2.5% | 5.612 |
+| historical coverage replay | 950PR | [288, 7168] | — | 7.203 | 8.009 | -10.1% | 5.526 |
+| historical coverage replay | 950PR | [384, 4096] | — | 6.397 | 7.332 | -12.8% | 5.091 |
+| historical coverage replay | 950PR | [448, 6592] | — | 7.560 | 8.222 | -8.0% | 6.381 |
+| historical coverage replay | 950PR | [512, 256] | — | 4.667 | 5.090 | -8.3% | 4.734 |
+| historical coverage replay | 950PR | [512, 5120] | — | 6.870 | 7.690 | -10.7% | 5.727 |
+| historical coverage replay | 950PR | [513, 5504] | — | 6.845 | 8.230 | -16.8% | 6.009 |
+| historical coverage replay | 950PR | [576, 4096] | — | 6.425 | 7.692 | -16.5% | 5.440 |
+| historical coverage replay | 950PR | [576, 7168] | — | 9.614 | 10.007 | -3.9% | 6.553 |
+| historical coverage replay | 950PR | [640, 4096] | — | 6.912 | 8.108 | -14.8% | 5.727 |
+| historical coverage replay | 950PR | [2048, 5120] | — | 17.834 | 18.504 | -3.6% | 7.733 |
 
 ## Matmul
 
 | 数据组 | 芯片 | shape | v0.20 | 当前 | CA | 有符号误差 | 970DT 外推 |
 |---|---|---|---:|---:|---:|---:|---:|
+| DT v0.12 development replay | 950DT | [1, 256, 1024] | — | 5.127 | 4.624 | +10.9% | 4.700 |
+| DT v0.12 development replay | 950DT | [65, 128, 129] | — | 3.554 | 3.712 | -4.2% | 3.258 |
+| DT v0.12 development replay | 950DT | [128, 512, 512] | — | 4.541 | 4.382 | +3.6% | 4.137 |
+| DT v0.12 development replay | 950DT | [129, 256, 256] | — | 3.936 | 3.664 | +7.4% | 3.608 |
+| DT v0.12 development replay | 950DT | [17, 256, 1024] | — | 5.190 | 4.742 | +9.5% | 4.758 |
+| DT v0.12 development replay | 950DT | [128, 256, 512] | — | 4.463 | 4.393 | +1.6% | 4.087 |
+| DT v0.12 development replay | 950DT | [1, 128, 128] | — | 3.414 | 3.356 | +1.7% | 3.129 |
+| DT v0.12 development replay | 950DT | [32, 64, 64] | — | 3.278 | 3.292 | -0.4% | 3.005 |
+| DT v0.12 development replay | 950DT | [48, 128, 192] | — | 3.651 | 3.575 | +2.1% | 3.347 |
+| DT v0.12 development replay | 950DT | [17, 96, 128] | — | 3.476 | 3.494 | -0.5% | 3.187 |
 | DT v0.12 holdout replay | 950DT | [128, 192, 256] | — | 3.906 | 3.798 | +2.8% | 3.579 |
 | DT v0.12 holdout replay | 950DT | [1, 32, 16] | — | 3.091 | 3.030 | +2.0% | 2.833 |
 | DT v0.12 holdout replay | 950DT | [256, 512, 256] | — | 4.086 | 4.192 | -2.5% | 3.693 |
@@ -73,12 +184,73 @@
 | primary | 950PR | [1280, 2048, 16] | — | 4.762 | 4.633 | +2.8% | 3.481 |
 | primary | 950DT | [2048, 32, 5120] | — | 12.123 | 13.023 | -6.9% | 7.287 |
 | primary | 950PR | [2048, 32, 5120] | — | 19.016 | 20.822 | -8.7% | 7.287 |
+| historical coverage replay | 950DT | [1, 128, 128] | — | 3.414 | 3.356 | +1.7% | 3.129 |
+| historical coverage replay | 950DT | [1, 256, 1024] | — | 5.127 | 4.624 | +10.9% | 4.700 |
+| historical coverage replay | 950DT | [17, 96, 128] | — | 3.476 | 3.494 | -0.5% | 3.187 |
+| historical coverage replay | 950DT | [17, 256, 1024] | — | 5.190 | 4.742 | +9.5% | 4.758 |
+| historical coverage replay | 950DT | [32, 64, 64] | — | 3.278 | 3.292 | -0.4% | 3.005 |
+| historical coverage replay | 950DT | [32, 64, 64] | — | 3.278 | 3.281 | -0.1% | 3.005 |
+| historical coverage replay | 950DT | [48, 128, 192] | — | 3.651 | 3.575 | +2.1% | 3.347 |
+| historical coverage replay | 950DT | [65, 128, 129] | — | 3.554 | 3.712 | -4.2% | 3.258 |
+| historical coverage replay | 950DT | [128, 256, 512] | — | 4.463 | 4.393 | +1.6% | 4.087 |
+| historical coverage replay | 950DT | [128, 512, 512] | — | 4.541 | 4.382 | +3.6% | 4.137 |
+| historical coverage replay | 950DT | [129, 256, 256] | — | 3.936 | 3.664 | +7.4% | 3.608 |
+| historical coverage replay | 950DT | [1280, 2048, 16] | — | 4.630 | 4.472 | +3.5% | 3.481 |
+| historical coverage replay | 950DT | [1280, 2048, 512] | — | 12.449 | 12.219 | +1.9% | 6.350 |
+| historical coverage replay | 950PR | [1, 32, 16] | — | 3.091 | 2.734 | +13.1% | 2.833 |
+| historical coverage replay | 950PR | [1, 128, 128] | — | 3.414 | 3.138 | +8.8% | 3.129 |
+| historical coverage replay | 950PR | [1, 256, 1024] | — | 5.127 | 4.612 | +11.2% | 4.700 |
+| historical coverage replay | 950PR | [2, 32, 32] | — | 3.109 | 2.813 | +10.5% | 2.850 |
+| historical coverage replay | 950PR | [4, 80, 48] | — | 3.237 | 3.341 | -3.1% | 2.967 |
+| historical coverage replay | 950PR | [9, 128, 256] | — | 3.703 | 3.595 | +3.0% | 3.394 |
+| historical coverage replay | 950PR | [16, 192, 384] | — | 4.039 | 3.724 | +8.5% | 3.703 |
+| historical coverage replay | 950PR | [17, 96, 128] | — | 3.476 | 3.414 | +1.8% | 3.187 |
+| historical coverage replay | 950PR | [17, 256, 1024] | — | 5.190 | 4.687 | +10.7% | 4.758 |
+| historical coverage replay | 950PR | [31, 64, 257] | — | 3.781 | 3.801 | -0.5% | 3.466 |
+| historical coverage replay | 950PR | [32, 64, 64] | — | 3.278 | 3.158 | +3.8% | 3.005 |
+| historical coverage replay | 950PR | [48, 128, 192] | — | 3.651 | 3.481 | +4.9% | 3.347 |
+| historical coverage replay | 950PR | [64, 128, 512] | — | 4.348 | 4.275 | +1.7% | 3.985 |
+| historical coverage replay | 950PR | [65, 128, 129] | — | 3.554 | 3.733 | -4.8% | 3.258 |
+| historical coverage replay | 950PR | [128, 192, 256] | — | 3.907 | 3.815 | +2.4% | 3.579 |
+| historical coverage replay | 950PR | [128, 256, 512] | — | 4.477 | 4.368 | +2.5% | 4.087 |
+| historical coverage replay | 950PR | [128, 512, 512] | — | 4.600 | 4.604 | -0.1% | 4.137 |
+| historical coverage replay | 950PR | [129, 256, 256] | — | 3.936 | 3.609 | +9.1% | 3.608 |
+| historical coverage replay | 950PR | [192, 384, 256] | — | 4.006 | 4.040 | -0.8% | 3.659 |
+| historical coverage replay | 950PR | [224, 512, 256] | — | 4.225 | 4.115 | +2.7% | 3.692 |
+| historical coverage replay | 950PR | [255, 512, 256] | — | 4.390 | 4.183 | +4.9% | 3.693 |
+| historical coverage replay | 950PR | [256, 512, 256] | — | 4.390 | 4.239 | +3.5% | 3.693 |
+| historical coverage replay | 950PR | [257, 512, 256] | — | 4.390 | 4.197 | +4.6% | 3.702 |
+| historical coverage replay | 950PR | [384, 512, 256] | — | 4.734 | 4.504 | +5.1% | 3.723 |
+| historical coverage replay | 950PR | [448, 512, 256] | — | 4.760 | 4.515 | +5.4% | 3.735 |
+| historical coverage replay | 950PR | [511, 512, 256] | — | 4.852 | 4.612 | +5.2% | 3.759 |
+| historical coverage replay | 950PR | [512, 384, 256] | — | 4.734 | 4.541 | +4.3% | 3.723 |
+| historical coverage replay | 950PR | [512, 512, 256] | — | 4.852 | 4.656 | +4.2% | 3.759 |
+| historical coverage replay | 950PR | [513, 384, 256] | — | 4.743 | 4.515 | +5.1% | 3.727 |
+| historical coverage replay | 950PR | [768, 512, 128] | — | 4.312 | 4.068 | +6.0% | 3.737 |
+| historical coverage replay | 950PR | [1024, 2048, 32] | — | 4.823 | 4.464 | +8.0% | 3.547 |
+| historical coverage replay | 950PR | [1536, 2048, 16] | — | 4.969 | 4.755 | +4.5% | 3.540 |
 
 ## FA
 
 | 数据组 | 芯片 | shape | v0.20 | 当前 | CA | 有符号误差 | 970DT 外推 |
 |---|---|---|---:|---:|---:|---:|---:|
 | DT v0.12 holdout replay | 950DT | [9, 256, 128, 4, 1] | — | 9.767 | 9.690 | +0.8% | 8.658 |
+| DT v0.12 development replay | 950DT | [32, 129, 64, 1, 4] | — | 9.720 | 9.150 | +6.2% | 8.423 |
+| DT v0.12 development replay | 950DT | [17, 257, 128, 1, 1] | — | 10.471 | 9.551 | +9.6% | 9.057 |
+| DT v0.12 development replay | 950DT | [17, 1153, 64, 1, 1] | — | 12.322 | 12.487 | -1.3% | 12.447 |
+| DT v0.12 development replay | 950DT | [128, 128, 64, 1, 1] | — | 9.248 | 9.498 | -2.6% | 9.001 |
+| DT v0.12 development replay | 950DT | [16, 1025, 64, 1, 1] | — | 12.313 | 12.384 | -0.6% | 12.046 |
+| DT v0.12 development replay | 950DT | [16, 128, 64, 1, 4] | — | 8.894 | 8.758 | +1.6% | 8.063 |
+| DT v0.12 development replay | 950DT | [16, 128, 128, 1, 1] | — | 8.829 | 8.715 | +1.3% | 8.293 |
+| DT v0.12 development replay | 950DT | [129, 128, 64, 1, 1] | — | 9.081 | 8.871 | +2.4% | 9.001 |
+| DT v0.12 development replay | 950DT | [16, 128, 64, 1, 8] | — | 8.992 | 9.402 | -4.4% | 8.063 |
+| DT v0.12 development replay | 950DT | [17, 192, 128, 1, 1] | — | 9.653 | 9.050 | +6.7% | 8.670 |
+| DT v0.12 development replay | 950DT | [17, 96, 64, 1, 1] | — | 8.692 | 9.162 | -5.1% | 8.050 |
+| DT v0.12 development replay | 950DT | [16, 64, 64, 1, 1] | — | 8.657 | 9.052 | -4.4% | 7.997 |
+| DT v0.12 development replay | 950DT | [8, 192, 64, 1, 1] | — | 9.425 | 8.805 | +7.0% | 8.247 |
+| DT v0.12 development replay | 950DT | [64, 256, 64, 1, 1] | — | 9.703 | 9.409 | +3.1% | 10.464 |
+| DT v0.12 development replay | 950DT | [1, 128, 64, 1, 1] | — | 8.718 | 8.784 | -0.7% | 7.963 |
+| DT v0.12 development replay | 950DT | [9, 32768, 64, 1, 1] | — | 76.184 | 75.980 | +0.3% | 70.033 |
 | DT v0.12 holdout replay | 950DT | [9, 131072, 64, 1, 1] | — | 274.794 | 274.821 | -0.0% | 252.093 |
 | DT v0.12 holdout replay | 950DT | [9, 16385, 64, 1, 1] | — | 43.599 | 43.219 | +0.9% | 39.927 |
 | DT v0.12 holdout replay | 950DT | [17, 384, 64, 1, 2] | — | 10.301 | 9.757 | +5.6% | 8.865 |
@@ -110,11 +282,105 @@
 | primary | 950PR | [9, 8191, 64, 1, 1] | — | 26.725 | 25.197 | +6.1% | 24.518 |
 | primary | 950DT | [9, 16384, 64, 1, 1] | — | 43.082 | 42.932 | +0.4% | 39.690 |
 | primary | 950PR | [9, 16384, 64, 1, 1] | — | 43.276 | 41.556 | +4.1% | 39.690 |
+| historical coverage replay | 950DT | [1, 128, 64, 1, 1] | — | 8.718 | 8.784 | -0.7% | 7.963 |
+| historical coverage replay | 950DT | [8, 192, 64, 1, 1] | — | 9.425 | 8.805 | +7.0% | 8.247 |
+| historical coverage replay | 950DT | [9, 32768, 64, 1, 1] | — | 76.184 | 75.980 | +0.3% | 70.033 |
+| historical coverage replay | 950DT | [16, 64, 64, 1, 1] | — | 8.657 | 9.052 | -4.4% | 7.997 |
+| historical coverage replay | 950DT | [16, 64, 64, 1, 1] | — | 8.657 | 8.856 | -2.2% | 7.997 |
+| historical coverage replay | 950DT | [16, 128, 64, 1, 4] | — | 8.894 | 8.758 | +1.6% | 8.063 |
+| historical coverage replay | 950DT | [16, 128, 64, 1, 8] | — | 8.992 | 9.402 | -4.4% | 8.063 |
+| historical coverage replay | 950DT | [16, 128, 128, 1, 1] | — | 8.829 | 8.715 | +1.3% | 8.293 |
+| historical coverage replay | 950DT | [16, 1025, 64, 1, 1] | — | 12.313 | 12.384 | -0.6% | 12.046 |
+| historical coverage replay | 950DT | [17, 96, 64, 1, 1] | — | 8.692 | 9.162 | -5.1% | 8.050 |
+| historical coverage replay | 950DT | [17, 257, 128, 1, 1] | — | 10.471 | 9.551 | +9.6% | 9.057 |
+| historical coverage replay | 950DT | [17, 1153, 64, 1, 1] | — | 12.322 | 12.150 | +1.4% | 12.447 |
+| historical coverage replay | 950DT | [17, 1153, 64, 1, 1] | — | 12.322 | 12.024 | +2.5% | 12.447 |
+| historical coverage replay | 950DT | [17, 1153, 64, 1, 1] | — | 12.322 | 12.556 | -1.9% | 12.447 |
+| historical coverage replay | 950DT | [17, 1153, 64, 1, 1] | — | 12.322 | 12.553 | -1.8% | 12.447 |
+| historical coverage replay | 950DT | [17, 1153, 64, 1, 1] | — | 12.322 | 12.487 | -1.3% | 12.447 |
+| historical coverage replay | 950DT | [32, 129, 64, 1, 4] | — | 9.720 | 9.150 | +6.2% | 8.423 |
+| historical coverage replay | 950DT | [64, 256, 64, 1, 1] | — | 9.703 | 9.409 | +3.1% | 10.464 |
+| historical coverage replay | 950DT | [128, 128, 64, 1, 1] | — | 9.248 | 9.498 | -2.6% | 9.001 |
+| historical coverage replay | 950DT | [129, 128, 64, 1, 1] | — | 9.081 | 8.871 | +2.4% | 9.001 |
+| historical coverage replay | 950PR | [1, 64, 64, 1, 1] | — | 8.616 | 8.535 | +0.9% | 7.898 |
+| historical coverage replay | 950PR | [1, 128, 64, 1, 1] | — | 8.687 | 8.190 | +6.1% | 7.963 |
+| historical coverage replay | 950PR | [1, 224, 64, 1, 1] | — | 8.946 | 8.634 | +3.6% | 8.200 |
+| historical coverage replay | 950PR | [4, 256, 128, 1, 1] | — | 9.353 | 8.520 | +9.8% | 8.594 |
+| historical coverage replay | 950PR | [8, 192, 64, 1, 1] | — | 8.974 | 8.552 | +4.9% | 8.247 |
+| historical coverage replay | 950PR | [9, 256, 64, 4, 2] | — | 8.981 | 9.164 | -2.0% | 8.253 |
+| historical coverage replay | 950PR | [9, 256, 128, 4, 1] | — | 9.401 | 9.058 | +3.8% | 8.658 |
+| historical coverage replay | 950PR | [9, 384, 128, 2, 2] | — | 9.897 | 9.421 | +5.1% | 9.113 |
+| historical coverage replay | 950PR | [9, 2048, 64, 1, 1] | — | 14.312 | 13.273 | +7.8% | 13.139 |
+| historical coverage replay | 950PR | [9, 2049, 64, 1, 1] | — | 14.570 | 13.146 | +10.8% | 13.376 |
+| historical coverage replay | 950PR | [9, 4096, 64, 1, 1] | — | 18.449 | 16.880 | +9.3% | 16.932 |
+| historical coverage replay | 950PR | [9, 8192, 64, 1, 1] | — | 26.725 | 25.149 | +6.3% | 24.518 |
+| historical coverage replay | 950PR | [9, 12289, 64, 1, 1] | — | 35.259 | 33.039 | +6.7% | 32.341 |
+| historical coverage replay | 950PR | [9, 16385, 64, 1, 1] | — | 43.534 | 41.293 | +5.4% | 39.927 |
+| historical coverage replay | 950PR | [9, 32767, 64, 1, 1] | — | 76.377 | 73.035 | +4.6% | 70.033 |
+| historical coverage replay | 950PR | [9, 32768, 64, 1, 1] | — | 76.377 | 72.856 | +4.8% | 70.033 |
+| historical coverage replay | 950PR | [16, 64, 64, 1, 1] | — | 8.679 | 8.472 | +2.4% | 7.997 |
+| historical coverage replay | 950PR | [16, 128, 64, 1, 4] | — | 8.751 | 8.539 | +2.5% | 8.063 |
+| historical coverage replay | 950PR | [16, 128, 64, 1, 8] | — | 8.751 | 8.731 | +0.2% | 8.063 |
+| historical coverage replay | 950PR | [16, 128, 128, 1, 1] | — | 8.957 | 8.224 | +8.9% | 8.293 |
+| historical coverage replay | 950PR | [16, 1025, 64, 1, 1] | — | 12.529 | 11.365 | +10.2% | 12.046 |
+| historical coverage replay | 950PR | [17, 96, 64, 1, 1] | — | 8.737 | 8.736 | +0.0% | 8.050 |
+| historical coverage replay | 950PR | [17, 257, 128, 1, 1] | — | 9.765 | 9.144 | +6.8% | 9.057 |
+| historical coverage replay | 950PR | [17, 384, 64, 1, 2] | — | 9.295 | 9.347 | -0.6% | 8.865 |
+| historical coverage replay | 950PR | [17, 1153, 64, 1, 1] | — | 12.834 | 11.489 | +11.7% | 12.447 |
+| historical coverage replay | 950PR | [32, 129, 64, 1, 4] | — | 9.099 | 8.850 | +2.8% | 8.423 |
+| historical coverage replay | 950PR | [32, 512, 64, 1, 1] | — | 10.072 | 9.345 | +7.8% | 10.382 |
+| historical coverage replay | 950PR | [64, 256, 64, 1, 1] | — | 9.865 | 8.935 | +10.4% | 10.464 |
+| historical coverage replay | 950PR | [64, 320, 128, 1, 1] | — | 11.280 | 9.582 | +17.7% | 12.691 |
+| historical coverage replay | 950PR | [128, 128, 64, 1, 1] | — | 9.043 | 8.793 | +2.8% | 9.001 |
+| historical coverage replay | 950PR | [129, 128, 64, 1, 1] | — | 9.043 | 8.508 | +6.3% | 9.001 |
 
 ## RMSNorm
 
 | 数据组 | 芯片 | shape | v0.20 | 当前 | CA | 有符号误差 | 970DT 外推 |
 |---|---|---|---:|---:|---:|---:|---:|
+| DT v0.12 development replay | 950DT | [9, 5120] | — | 3.241 | 4.188 | -22.6% | 2.907 |
+| DT v0.12 development replay | 950DT | [36, 7168] | — | 5.952 | 6.614 | -10.0% | 5.228 |
+| DT v0.12 development replay | 950DT | [1, 128] | — | 2.226 | 3.454 | -35.6% | 2.040 |
+| DT v0.12 development replay | 950DT | [1, 256] | — | 2.239 | 3.637 | -38.4% | 2.052 |
+| DT v0.12 development replay | 950DT | [4, 512] | — | 2.437 | 4.292 | -43.2% | 2.208 |
+| DT v0.12 development replay | 950DT | [16, 1024] | — | 3.832 | 3.815 | +0.5% | 3.402 |
+| DT v0.12 development replay | 950DT | [9, 7168] | — | 3.339 | 2.790 | +19.7% | 2.998 |
+| DT v0.12 development replay | 950DT | [36, 5120] | — | 5.856 | 5.289 | +10.7% | 5.140 |
+| DT v0.12 development replay | 950DT | [32, 4096] | — | 5.734 | 4.581 | +25.2% | 5.052 |
+| DT v0.12 development replay | 950DT | [64, 2048] | — | 6.220 | 4.352 | +42.9% | 5.312 |
+| DT v0.12 development replay | 950DT | [65, 128] | — | 4.130 | 3.084 | +33.9% | 5.241 |
+| DT v0.12 development replay | 950DT | [128, 1024] | — | 4.787 | 3.090 | +54.9% | 3.985 |
+| DT v0.12 development replay | 950DT | [1, 8192] | — | 3.034 | 2.055 | +47.6% | 2.780 |
+| DT v0.12 development replay | 950DT | [2, 128] | — | 2.249 | 3.407 | -34.0% | 2.053 |
+| DT v0.12 development replay | 950DT | [3, 384] | — | 2.312 | 2.870 | -19.4% | 2.101 |
+| DT v0.12 development replay | 950DT | [8, 1536] | — | 2.953 | 3.772 | -21.7% | 2.650 |
+| DT v0.12 development replay | 950DT | [15, 3072] | — | 3.818 | 3.682 | +3.7% | 3.396 |
+| DT v0.12 development replay | 950DT | [17, 7168] | — | 4.235 | 3.867 | +9.5% | 3.767 |
+| DT v0.12 development replay | 950DT | [24, 4096] | — | 4.861 | 4.310 | +12.8% | 4.297 |
+| DT v0.12 development replay | 950DT | [63, 512] | — | 6.131 | 4.432 | +38.3% | 5.235 |
+| DT v0.12 development replay | 950DT | [66, 256] | — | 4.142 | 2.831 | +46.3% | 5.257 |
+| DT v0.12 development replay | 950DT | [96, 2048] | — | 4.592 | 3.448 | +33.2% | 5.658 |
+| DT v0.12 development replay | 950DT | [1, 6144] | — | 2.831 | 1.937 | +46.1% | 2.595 |
+| DT v0.12 development replay | 950DT | [2, 4608] | — | 2.700 | 3.819 | -29.3% | 2.466 |
+| DT v0.12 development replay | 950DT | [7, 640] | — | 2.794 | 3.388 | -17.5% | 2.511 |
+| DT v0.12 development replay | 950DT | [1, 5120] | — | 2.729 | 1.927 | +41.6% | 2.501 |
+| DT v0.12 development replay | 950DT | [34, 1536] | — | 5.651 | 5.576 | +1.3% | 4.963 |
+| DT v0.12 development replay | 950DT | [4, 8192] | — | 3.099 | 2.395 | +29.4% | 2.816 |
+| DT v0.12 development replay | 950DT | [64, 768] | — | 6.160 | 4.410 | +39.7% | 5.257 |
+| DT v0.12 development replay | 950DT | [65, 384] | — | 4.154 | 3.073 | +35.2% | 5.252 |
+| DT v0.12 development replay | 950DT | [2, 7168] | — | 2.954 | 2.127 | +38.9% | 2.699 |
+| DT v0.12 development replay | 950DT | [96, 1280] | — | 4.520 | 3.601 | +25.5% | 5.625 |
+| DT v0.12 development replay | 950DT | [3, 3072] | — | 2.569 | 1.840 | +39.6% | 2.338 |
+| DT v0.12 development replay | 950DT | [3, 5120] | — | 2.773 | 3.808 | -27.2% | 2.525 |
+| DT v0.12 development replay | 950DT | [2, 5376] | — | 2.777 | 1.979 | +40.3% | 2.537 |
+| DT v0.12 development replay | 950DT | [4, 4608] | — | 2.745 | 2.633 | +4.3% | 2.490 |
+| DT v0.12 development replay | 950DT | [1, 6912] | — | 2.907 | 2.008 | +44.7% | 2.664 |
+| DT v0.12 development replay | 950DT | [33, 1536] | — | 5.632 | 5.548 | +1.5% | 4.952 |
+| DT v0.12 development replay | 950DT | [38, 1536] | — | 5.725 | 4.921 | +16.3% | 5.007 |
+| DT v0.12 development replay | 950DT | [64, 4096] | — | 6.315 | 6.457 | -2.2% | 5.401 |
+| DT v0.12 development replay | 950DT | [128, 4096] | — | 5.074 | 3.838 | +32.2% | 4.251 |
+| DT v0.12 development replay | 950DT | [256, 4096] | — | 5.042 | 3.589 | +40.5% | 4.227 |
+| DT v0.12 development replay | 950DT | [512, 4096] | — | 6.005 | 4.851 | +23.8% | 5.002 |
 | DT v0.12 holdout replay | 950DT | [1, 4352] | — | 2.652 | 3.837 | -30.9% | 2.431 |
 | DT v0.12 holdout replay | 950DT | [2, 5888] | — | 2.828 | 4.542 | -37.8% | 2.583 |
 | DT v0.12 holdout replay | 950DT | [4, 5632] | — | 2.846 | 2.841 | +0.2% | 2.584 |
@@ -145,6 +411,46 @@
 | prior published pair replay | 950PR | [367, 5312] | — | 6.148 | 7.618 | -19.3% | 4.963 |
 | prior published pair replay | 950DT | [495, 6912] | — | 7.547 | 7.846 | -3.8% | 5.564 |
 | prior published pair replay | 950PR | [495, 6912] | — | 7.489 | 10.059 | -25.5% | 5.564 |
+| v0.17 historical RMS replay | 950DT | [9, 5120] | — | 3.241 | 4.161 | -22.1% | 2.907 |
+| v0.17 historical RMS replay | 950PR | [9, 5120] | — | 3.191 | 3.748 | -14.9% | 2.907 |
+| v0.17 historical RMS replay | 950DT | [36, 7168] | — | 5.952 | 6.614 | -10.0% | 5.228 |
+| v0.17 historical RMS replay | 950PR | [36, 7168] | — | 5.932 | 6.468 | -8.3% | 5.228 |
+| v0.17 historical RMS replay | 950DT | [1, 128] | — | 2.226 | 3.454 | -35.6% | 2.040 |
+| v0.17 historical RMS replay | 950PR | [1, 128] | — | 2.169 | 3.129 | -30.7% | 2.040 |
+| v0.17 historical RMS replay | 950DT | [1, 256] | — | 2.239 | 3.637 | -38.4% | 2.052 |
+| v0.17 historical RMS replay | 950PR | [1, 256] | — | 2.183 | 3.155 | -30.8% | 2.052 |
+| v0.17 historical RMS replay | 950DT | [4, 512] | — | 2.437 | 4.292 | -43.2% | 2.208 |
+| v0.17 historical RMS replay | 950PR | [4, 512] | — | 2.384 | 3.473 | -31.3% | 2.208 |
+| v0.17 historical RMS replay | 950DT | [16, 1024] | — | 3.832 | 3.815 | +0.5% | 3.402 |
+| v0.17 historical RMS replay | 950PR | [16, 1024] | — | 3.787 | 4.242 | -10.7% | 3.402 |
+| v0.17 historical RMS replay | 950DT | [9, 7168] | — | 3.339 | 2.790 | +19.7% | 2.998 |
+| v0.17 historical RMS replay | 950PR | [9, 7168] | — | 3.290 | 3.776 | -12.9% | 2.998 |
+| v0.17 historical RMS replay | 950DT | [36, 5120] | — | 5.856 | 5.289 | +10.7% | 5.140 |
+| v0.17 historical RMS replay | 950PR | [36, 5120] | — | 5.835 | 6.183 | -5.6% | 5.140 |
+| v0.17 historical RMS replay | 950DT | [32, 4096] | — | 5.734 | 4.581 | +25.2% | 5.052 |
+| v0.17 historical RMS replay | 950PR | [32, 4096] | — | 5.707 | 6.096 | -6.4% | 5.052 |
+| v0.17 historical RMS replay | 950DT | [64, 2048] | — | 6.220 | 4.352 | +42.9% | 5.312 |
+| v0.17 historical RMS replay | 950PR | [64, 2048] | — | 4.271 | 4.568 | -6.5% | 5.312 |
+| v0.18 historical RMS replay | 950DT | [1, 5504] | — | 2.767 | 3.763 | -26.5% | 2.536 |
+| v0.18 historical RMS replay | 950PR | [1, 5504] | — | 2.711 | 3.573 | -24.1% | 2.536 |
+| v0.18 historical RMS replay | 950DT | [3, 7552] | — | 3.014 | 3.728 | -19.2% | 2.746 |
+| v0.18 historical RMS replay | 950PR | [3, 7552] | — | 2.963 | 3.841 | -22.9% | 2.746 |
+| v0.18 historical RMS replay | 950DT | [8, 6016] | — | 3.170 | 3.844 | -17.5% | 2.850 |
+| v0.18 historical RMS replay | 950PR | [8, 6016] | — | 3.120 | 3.685 | -15.3% | 2.850 |
+| v0.18 historical RMS replay | 950DT | [18, 6912] | — | 4.333 | 4.897 | -11.5% | 3.851 |
+| v0.18 historical RMS replay | 950PR | [18, 6912] | — | 4.292 | 4.553 | -5.7% | 3.851 |
+| v0.18 historical RMS replay | 950DT | [55, 1728] | — | 6.046 | 6.044 | +0.0% | 5.202 |
+| v0.18 historical RMS replay | 950PR | [55, 1728] | — | 6.049 | 5.736 | +5.5% | 5.202 |
+| v0.18 historical RMS replay | 950DT | [57, 1536] | — | 6.071 | 6.085 | -0.2% | 5.214 |
+| v0.18 historical RMS replay | 950PR | [57, 1536] | — | 4.160 | 4.451 | -6.5% | 5.214 |
+| v0.18 historical RMS replay | 950DT | [65, 2816] | — | 4.383 | 4.912 | -10.8% | 5.356 |
+| v0.18 historical RMS replay | 950PR | [65, 2816] | — | 4.364 | 4.593 | -5.0% | 5.356 |
+| v0.18 historical RMS replay | 950DT | [113, 2112] | — | 4.766 | 5.076 | -6.1% | 5.844 |
+| v0.18 historical RMS replay | 950PR | [113, 2112] | — | 4.026 | 4.367 | -7.8% | 5.844 |
+| v0.18 historical RMS replay | 950DT | [393, 3840] | — | 5.907 | 6.088 | -3.0% | 4.514 |
+| v0.18 historical RMS replay | 950PR | [393, 3840] | — | 5.619 | 6.853 | -18.0% | 4.514 |
+| v0.18 historical RMS replay | 950DT | [511, 3968] | — | 5.920 | 6.613 | -10.5% | 4.947 |
+| v0.18 historical RMS replay | 950PR | [511, 3968] | — | 6.292 | 7.773 | -19.1% | 4.947 |
 | v0.20 frozen RMS replay | 950DT | [32, 1280] | — | 5.602 | 6.392 | -12.4% | 4.930 |
 | v0.20 frozen RMS replay | 950PR | [32, 1280] | — | 5.573 | 6.309 | -11.7% | 4.930 |
 | v0.20 frozen RMS replay | 950DT | [96, 1536] | — | 4.544 | 4.819 | -5.7% | 5.636 |
@@ -168,6 +474,19 @@
 
 | 数据组 | 芯片 | shape | v0.20 | 当前 | CA | 有符号误差 | 970DT 外推 |
 |---|---|---|---:|---:|---:|---:|---:|
+| DT v0.12 development replay | 950DT | [16, 64, 256] | — | 3.653 | 3.447 | +6.0% | 3.348 |
+| DT v0.12 development replay | 950DT | [9, 64, 128] | — | 3.364 | 3.342 | +0.7% | 3.084 |
+| DT v0.12 development replay | 950DT | [2, 16, 16] | — | 3.083 | 2.992 | +3.0% | 2.826 |
+| DT v0.12 development replay | 950DT | [128, 192, 256] | — | 3.908 | 3.763 | +3.8% | 3.581 |
+| DT v0.12 development replay | 950DT | [16, 192, 384] | — | 4.042 | 3.877 | +4.2% | 3.705 |
+| DT v0.12 development replay | 950DT | [256, 512, 256] | — | 4.088 | 4.327 | -5.5% | 3.695 |
+| DT v0.12 development replay | 950DT | [4, 80, 48] | — | 3.239 | 3.625 | -10.7% | 2.969 |
+| DT v0.12 development replay | 950DT | [512, 512, 256] | — | 4.773 | 4.479 | +6.6% | 3.761 |
+| DT v0.12 development replay | 950DT | [64, 128, 512] | — | 4.350 | 4.519 | -3.8% | 3.987 |
+| DT v0.12 development replay | 950DT | [1, 32, 16] | — | 3.092 | 3.288 | -6.0% | 2.834 |
+| DT v0.12 development replay | 950DT | [2, 32, 32] | — | 3.110 | 3.408 | -8.8% | 2.851 |
+| DT v0.12 development replay | 950DT | [31, 64, 257] | — | 3.783 | 4.253 | -11.0% | 3.468 |
+| DT v0.12 development replay | 950DT | [9, 128, 256] | — | 3.705 | 3.756 | -1.4% | 3.396 |
 | DT v0.12 holdout replay | 950DT | [128, 256, 384] | — | 4.235 | 4.275 | -0.9% | 3.878 |
 | DT v0.12 holdout replay | 950DT | [17, 128, 128] | — | 3.478 | 3.393 | +2.5% | 3.188 |
 | DT v0.12 holdout replay | 950DT | [1, 64, 32] | — | 3.147 | 3.145 | +0.0% | 2.884 |
@@ -199,12 +518,32 @@
 | prior published pair replay | 950DT | [1, 32, 16] | — | 3.092 | 3.288 | -6.0% | 2.834 |
 | prior published pair replay | 950PR | [1, 32, 16] | — | 3.092 | 3.002 | +3.0% | 2.834 |
 | primary | 950PR | [17, 80, 96] | 3.714 | 3.407 | 3.410 | -0.1% | 3.123 |
+| primary | 950DT | [272, 480, 192] | 4.679 | 4.044 | 4.538 | -10.9% | 3.564 |
 | primary | 950PR | [272, 480, 192] | 4.688 | 4.175 | 4.410 | -5.3% | 3.564 |
+| primary | 950DT | [511, 384, 192] | 4.661 | 4.333 | 4.158 | +4.2% | 3.585 |
+| primary | 950PR | [511, 384, 192] | 4.671 | 4.448 | 4.253 | +4.6% | 3.585 |
+| primary | 950DT | [1, 48, 80] | 3.511 | 3.208 | 3.078 | +4.2% | 2.941 |
+| primary | 950PR | [1, 48, 80] | 3.511 | 3.208 | 2.828 | +13.5% | 2.941 |
+| primary | 950DT | [31, 144, 160] | 3.752 | 3.582 | 4.082 | -12.2% | 3.283 |
+| primary | 950PR | [31, 144, 160] | 3.752 | 3.582 | 3.818 | -6.2% | 3.283 |
+| primary | 950DT | [96, 176, 320] | 3.853 | 4.069 | 4.580 | -11.1% | 3.730 |
+| primary | 950PR | [96, 176, 320] | 3.856 | 4.069 | 4.499 | -9.6% | 3.730 |
+| primary | 950DT | [192, 384, 192] | 4.178 | 3.842 | 3.840 | +0.1% | 3.530 |
+| primary | 950PR | [192, 384, 192] | 4.183 | 3.846 | 3.794 | +1.4% | 3.530 |
+| primary | 950DT | [257, 256, 192] | 4.190 | 3.839 | 3.645 | +5.3% | 3.526 |
+| primary | 950PR | [257, 256, 192] | 4.195 | 3.843 | 3.750 | +2.5% | 3.526 |
+| primary | 950DT | [384, 480, 256] | 4.694 | 4.428 | 5.079 | -12.8% | 3.725 |
+| primary | 950PR | [384, 480, 256] | 4.707 | 4.731 | 5.075 | -6.8% | 3.725 |
+| primary | 950DT | [1024, 192, 256] | 4.713 | 4.585 | 4.252 | +7.9% | 3.725 |
+| primary | 950PR | [1024, 192, 256] | 7.101 | 4.736 | 4.449 | +6.4% | 3.725 |
 
 ## Lightning Indexer
 
 | 数据组 | 芯片 | shape | v0.20 | 当前 | CA | 有符号误差 | 970DT 外推 |
 |---|---|---|---:|---:|---:|---:|---:|
+| DT v0.12 development replay | 950DT | [1, 1, 512, 8, 128] | — | 5.771 | 6.093 | -5.3% | 5.288 |
+| DT v0.12 development replay | 950DT | [1, 1, 1024, 8, 128] | — | 6.755 | 6.741 | +0.2% | 6.178 |
+| DT v0.12 development replay | 950DT | [1, 2, 768, 8, 128] | — | 6.682 | 6.365 | +5.0% | 6.120 |
 | primary | 950DT | [1, 1, 640, 8, 128] | — | 6.652 | 6.200 | +7.3% | 6.093 |
 | primary | 950DT | [1, 1, 896, 8, 128] | — | 6.711 | 6.439 | +4.2% | 6.146 |
 | primary | 950DT | [1, 2, 1024, 8, 128] | — | 6.755 | 6.516 | +3.7% | 6.178 |
@@ -240,6 +579,19 @@
 
 | 数据组 | 芯片 | shape | v0.20 | 当前 | CA | 有符号误差 | 970DT 外推 |
 |---|---|---|---:|---:|---:|---:|---:|
+| DT v0.12 development replay | 950DT | [1, 4, 128] | — | 8.378 | 8.271 | +1.3% | 7.679 |
+| DT v0.12 development replay | 950DT | [8, 4, 128] | — | 8.394 | 8.542 | -1.7% | 7.694 |
+| DT v0.12 development replay | 950DT | [3, 4, 128] | — | 8.382 | 8.312 | +0.8% | 7.684 |
+| DT v0.12 development replay | 950DT | [1, 4, 64] | — | 9.579 | 9.482 | +1.0% | 8.780 |
+| DT v0.12 development replay | 950DT | [2, 4, 128] | — | 8.380 | 8.005 | +4.7% | 7.681 |
+| DT v0.12 development replay | 950DT | [4, 4, 256] | — | 8.505 | 8.421 | +1.0% | 7.796 |
+| DT v0.12 development replay | 950DT | [16, 4, 128] | — | 8.412 | 9.308 | -9.6% | 7.711 |
+| DT v0.12 development replay | 950DT | [1, 4, 512] | — | 8.717 | 8.544 | +2.0% | 7.989 |
+| DT v0.12 development replay | 950DT | [4, 4, 1024] | — | 9.226 | 8.730 | +5.7% | 8.450 |
+| DT v0.12 development replay | 950DT | [9, 4, 1024] | — | 9.318 | 9.024 | +3.3% | 8.533 |
+| DT v0.12 development replay | 950DT | [16, 4, 512] | — | 8.856 | 9.385 | -5.6% | 8.115 |
+| DT v0.12 development replay | 950DT | [32, 4, 1024] | — | 10.996 | 11.368 | -3.3% | 10.064 |
+| DT v0.12 development replay | 950DT | [1, 4, 80] | — | 9.705 | 9.802 | -1.0% | 8.896 |
 | primary | 950DT | [2, 4, 64] | — | 9.589 | 9.962 | -3.7% | 8.790 |
 | primary | 950DT | [4, 4, 96] | — | 9.879 | 9.312 | +6.1% | 9.055 |
 | primary | 950DT | [6, 4, 128] | — | 8.389 | 8.410 | -0.2% | 7.690 |
@@ -275,6 +627,19 @@
 
 | 数据组 | 芯片 | shape | v0.20 | 当前 | CA | 有符号误差 | 970DT 外推 |
 |---|---|---|---:|---:|---:|---:|---:|
+| DT v0.12 development replay | 950DT | [1, 4] | — | 5.786 | 6.296 | -8.1% | 5.300 |
+| DT v0.12 development replay | 950DT | [64, 4] | — | 6.040 | 7.598 | -20.5% | 5.533 |
+| DT v0.12 development replay | 950DT | [17, 4] | — | 5.959 | 6.532 | -8.8% | 5.459 |
+| DT v0.12 development replay | 950DT | [2, 4] | — | 3.077 | 3.593 | -14.4% | 2.820 |
+| DT v0.12 development replay | 950DT | [4, 4] | — | 3.578 | 2.945 | +21.5% | 3.279 |
+| DT v0.12 development replay | 950DT | [8, 4] | — | 4.385 | 4.995 | -12.2% | 4.017 |
+| DT v0.12 development replay | 950DT | [9, 4] | — | 5.920 | 6.212 | -4.7% | 5.423 |
+| DT v0.12 development replay | 950DT | [16, 4] | — | 7.789 | 8.156 | -4.5% | 7.135 |
+| DT v0.12 development replay | 950DT | [31, 4] | — | 5.996 | 6.333 | -5.3% | 5.493 |
+| DT v0.12 development replay | 950DT | [32, 4] | — | 5.998 | 5.336 | +12.4% | 5.494 |
+| DT v0.12 development replay | 950DT | [63, 4] | — | 3.747 | 4.101 | -8.6% | 3.434 |
+| DT v0.12 development replay | 950DT | [65, 4] | — | 4.471 | 3.258 | +37.2% | 4.135 |
+| DT v0.12 development replay | 950DT | [128, 4] | — | 6.040 | 5.475 | +10.3% | 5.533 |
 | DT v0.12 holdout replay | 950DT | [3, 4] | — | 3.102 | 3.730 | -16.8% | 2.843 |
 | DT v0.12 holdout replay | 950DT | [5, 4] | — | 3.744 | 4.066 | -7.9% | 3.431 |
 | DT v0.12 holdout replay | 950DT | [7, 4] | — | 4.682 | 5.142 | -8.9% | 4.290 |
@@ -311,6 +676,14 @@
 | primary | 950PR | [6, 4] | 3.169 | 3.153 | 3.438 | -8.3% | 2.882 |
 | primary | 950DT | [14, 4] | 3.960 | 3.960 | 4.636 | -14.6% | 3.629 |
 | primary | 950PR | [14, 4] | 4.006 | 3.989 | 4.395 | -9.2% | 3.629 |
+| primary | 950DT | [28, 4] | 5.225 | 5.225 | 5.886 | -11.2% | 4.787 |
+| primary | 950PR | [28, 4] | 5.304 | 5.288 | 5.691 | -7.1% | 4.787 |
+| primary | 950DT | [54, 4] | 6.030 | 6.030 | 7.551 | -20.1% | 5.524 |
+| primary | 950PR | [54, 4] | 6.129 | 6.113 | 7.287 | -16.1% | 5.524 |
+| primary | 950DT | [55, 4] | 7.865 | 7.865 | 9.274 | -15.2% | 7.204 |
+| primary | 950PR | [55, 4] | 8.014 | 7.998 | 9.111 | -12.2% | 7.204 |
+| primary | 950DT | [56, 4] | 3.587 | 3.587 | 5.068 | -29.2% | 3.287 |
+| primary | 950PR | [56, 4] | 3.620 | 3.603 | 4.464 | -19.3% | 3.287 |
 | fusion distinct historical windows | 950DT | [1, 4] | — | 5.786 | 6.296 | -8.1% | 5.300 |
 | fusion distinct historical windows | 950DT | [64, 4] | — | 6.040 | 7.598 | -20.5% | 5.533 |
 | fusion distinct historical windows | 950DT | [17, 4] | — | 5.959 | 6.532 | -8.8% | 5.459 |
@@ -350,6 +723,9 @@
 
 | 数据组 | 芯片 | shape | v0.20 | 当前 | CA | 有符号误差 | 970DT 外推 |
 |---|---|---|---:|---:|---:|---:|---:|
+| DT v0.12 development replay | 950DT | [1, 4, 4096] | — | 9.939 | 9.701 | +2.5% | 9.109 |
+| DT v0.12 development replay | 950DT | [4, 4, 4096] | — | 9.939 | 9.939 | +0.0% | 9.109 |
+| DT v0.12 development replay | 950DT | [2, 4, 4096] | — | 9.939 | 10.648 | -6.7% | 9.109 |
 | DT v0.12 holdout replay | 950DT | [3, 4, 4096] | — | 9.939 | 10.373 | -4.2% | 9.109 |
 | DT v0.12 holdout replay | 950DT | [5, 4, 4096] | — | 9.939 | 9.761 | +1.8% | 9.109 |
 | DT v0.12 holdout replay | 950DT | [6, 4, 4096] | — | 9.939 | 9.785 | +1.6% | 9.109 |
@@ -384,6 +760,14 @@
 | primary | 950PR | [20, 4, 4096] | 11.161 | 10.115 | 11.231 | -9.9% | 9.109 |
 | primary | 950DT | [33, 4, 4096] | 19.879 | 11.739 | 11.301 | +3.9% | 10.754 |
 | primary | 950PR | [22, 4, 4096] | 11.173 | 10.115 | 11.103 | -8.9% | 9.109 |
+| primary | 950DT | [26, 4, 4096] | 9.939 | 9.939 | 11.182 | -11.1% | 9.109 |
+| primary | 950PR | [26, 4, 4096] | 11.195 | 10.115 | 10.893 | -7.1% | 9.109 |
+| primary | 950DT | [30, 4, 4096] | 9.939 | 9.939 | 11.050 | -10.0% | 9.109 |
+| primary | 950PR | [30, 4, 4096] | 11.218 | 10.115 | 10.511 | -3.8% | 9.109 |
+| primary | 950DT | [36, 4, 4096] | 19.879 | 11.739 | 11.522 | +1.9% | 10.754 |
+| primary | 950PR | [36, 4, 4096] | 21.537 | 12.272 | 10.701 | +14.7% | 10.754 |
+| primary | 950DT | [48, 4, 4096] | 19.879 | 11.739 | 11.890 | -1.3% | 10.754 |
+| primary | 950PR | [48, 4, 4096] | 21.608 | 12.272 | 11.271 | +8.9% | 10.754 |
 | fusion distinct historical windows | 950DT | [1, 4, 4096] | — | 9.939 | 9.701 | +2.5% | 9.109 |
 | fusion distinct historical windows | 950DT | [4, 4, 4096] | — | 9.939 | 9.939 | +0.0% | 9.109 |
 | fusion distinct historical windows | 950DT | [2, 4, 4096] | — | 9.939 | 10.648 | -6.7% | 9.109 |
@@ -413,6 +797,49 @@
 
 | 数据组 | 芯片 | shape | v0.20 | 当前 | CA | 有符号误差 | 970DT 外推 |
 |---|---|---|---:|---:|---:|---:|---:|
+| DT v0.12 development replay | 950DT | [1, 4, 128] | — | 3.044 | 4.646 | -34.5% | 2.791 |
+| DT v0.12 development replay | 950DT | [32, 4, 128] | — | 2.550 | 3.408 | -25.2% | 2.791 |
+| DT v0.12 development replay | 950DT | [9, 4, 128] | — | 3.044 | 4.613 | -34.0% | 2.791 |
+| DT v0.12 development replay | 950DT | [1, 4, 64] | — | 3.007 | 4.588 | -34.5% | 2.756 |
+| DT v0.12 development replay | 950DT | [2, 4, 256] | — | 3.120 | 5.276 | -40.9% | 2.859 |
+| DT v0.12 development replay | 950DT | [4, 4, 512] | — | 3.120 | 4.108 | -24.1% | 2.859 |
+| DT v0.12 development replay | 950DT | [9, 4, 1024] | — | 3.120 | 3.966 | -21.3% | 2.859 |
+| DT v0.12 development replay | 950DT | [16, 4, 256] | — | 3.120 | 2.214 | +40.9% | 2.859 |
+| DT v0.12 development replay | 950DT | [32, 4, 512] | — | 2.811 | 2.388 | +17.7% | 2.859 |
+| DT v0.12 development replay | 950DT | [36, 4, 128] | — | 2.550 | 1.772 | +44.0% | 2.791 |
+| DT v0.12 development replay | 950DT | [64, 4, 256] | — | 2.638 | 3.007 | -12.3% | 2.418 |
+| DT v0.12 development replay | 950DT | [65, 4, 128] | — | 2.751 | 2.110 | +30.4% | 2.338 |
+| DT v0.12 development replay | 950DT | [1, 4, 7168] | — | 3.120 | 2.430 | +28.4% | 2.859 |
+| DT v0.12 development replay | 950DT | [1, 4, 96] | — | 3.044 | 4.745 | -35.8% | 2.791 |
+| DT v0.12 development replay | 950DT | [3, 4, 256] | — | 3.120 | 5.496 | -43.2% | 2.859 |
+| DT v0.12 development replay | 950DT | [6, 4, 512] | — | 3.120 | 3.996 | -21.9% | 2.859 |
+| DT v0.12 development replay | 950DT | [11, 4, 1024] | — | 3.120 | 4.087 | -23.7% | 2.859 |
+| DT v0.12 development replay | 950DT | [17, 4, 256] | — | 3.120 | 2.276 | +37.0% | 2.859 |
+| DT v0.12 development replay | 950DT | [31, 4, 512] | — | 3.120 | 3.996 | -21.9% | 2.859 |
+| DT v0.12 development replay | 950DT | [33, 4, 256] | — | 2.638 | 2.483 | +6.2% | 2.859 |
+| DT v0.12 development replay | 950DT | [63, 4, 512] | — | 2.811 | 2.502 | +12.3% | 2.577 |
+| DT v0.12 development replay | 950DT | [66, 4, 128] | — | 2.751 | 2.018 | +36.3% | 2.338 |
+| DT v0.12 development replay | 950DT | [2, 4, 4096] | — | 3.120 | 2.130 | +46.4% | 2.859 |
+| DT v0.12 development replay | 950DT | [2, 4, 6144] | — | 3.082 | 4.838 | -36.3% | 2.825 |
+| DT v0.12 development replay | 950DT | [7, 4, 384] | — | 3.082 | 2.144 | +43.8% | 2.825 |
+| DT v0.12 development replay | 950DT | [1, 4, 4096] | — | 3.120 | 2.256 | +38.3% | 2.859 |
+| DT v0.12 development replay | 950DT | [30, 4, 768] | — | 3.195 | 2.719 | +17.5% | 2.825 |
+| DT v0.12 development replay | 950DT | [4, 4, 8192] | — | 3.269 | 2.794 | +17.0% | 2.996 |
+| DT v0.12 development replay | 950DT | [32, 4, 384] | — | 2.725 | 2.292 | +18.9% | 2.825 |
+| DT v0.12 development replay | 950DT | [34, 4, 512] | — | 2.811 | 1.912 | +47.1% | 2.859 |
+| DT v0.12 development replay | 950DT | [3, 4, 3072] | — | 3.082 | 2.238 | +37.7% | 2.825 |
+| DT v0.12 development replay | 950DT | [72, 4, 256] | — | 2.924 | 2.221 | +31.7% | 2.418 |
+| DT v0.12 development replay | 950DT | [1, 4, 5120] | — | 3.082 | 2.167 | +42.2% | 2.825 |
+| DT v0.12 development replay | 950DT | [3, 4, 4352] | — | 3.157 | 5.288 | -40.3% | 2.825 |
+| DT v0.12 development replay | 950DT | [8, 4, 640] | — | 3.082 | 2.332 | +32.2% | 2.825 |
+| DT v0.12 development replay | 950DT | [2, 4, 3328] | — | 3.120 | 2.573 | +21.3% | 2.859 |
+| DT v0.12 development replay | 950DT | [4, 4, 6144] | — | 3.195 | 4.095 | -22.0% | 2.928 |
+| DT v0.12 development replay | 950DT | [1, 4, 2304] | — | 3.082 | 2.349 | +31.2% | 2.825 |
+| DT v0.12 development replay | 950DT | [1, 4, 7680] | — | 3.120 | 2.298 | +35.7% | 2.859 |
+| DT v0.12 development replay | 950DT | [64, 4, 1024] | — | 3.155 | 3.019 | +4.5% | 2.892 |
+| DT v0.12 development replay | 950DT | [128, 4, 1024] | — | 3.946 | 3.715 | +6.2% | 3.616 |
+| DT v0.12 development replay | 950DT | [192, 4, 1024] | — | 4.728 | 4.177 | +13.2% | 3.616 |
+| DT v0.12 development replay | 950DT | [256, 4, 1024] | — | 5.505 | 4.646 | +18.5% | 4.333 |
 | DT v0.12 holdout replay | 950DT | [1, 4, 3456] | — | 3.120 | 4.797 | -35.0% | 2.859 |
 | DT v0.12 holdout replay | 950DT | [2, 4, 4480] | — | 3.082 | 4.292 | -28.2% | 2.825 |
 | DT v0.12 holdout replay | 950DT | [3, 4, 3840] | — | 3.120 | 2.892 | +7.9% | 2.859 |
@@ -446,11 +873,37 @@
 | primary | 950DT | [5, 4, 288] | 3.082 | 3.082 | 4.962 | -37.9% | 2.825 |
 | primary | 950DT | [37, 4, 144] | 2.057 | 2.579 | 3.489 | -26.1% | 2.825 |
 | primary | 950PR | [37, 4, 144] | 2.079 | 2.580 | 3.407 | -24.3% | 2.825 |
+| primary | 950DT | [7, 4, 1728] | 3.120 | 3.120 | 5.380 | -42.0% | 2.859 |
+| primary | 950PR | [7, 4, 1728] | 3.173 | 3.124 | 4.816 | -35.1% | 2.859 |
+| primary | 950DT | [15, 4, 240] | 4.211 | 3.120 | 4.658 | -33.0% | 2.859 |
+| primary | 950PR | [15, 4, 240] | 4.243 | 3.124 | 4.758 | -34.3% | 2.859 |
+| primary | 950DT | [29, 4, 640] | 3.157 | 3.157 | 5.098 | -38.1% | 2.825 |
+| primary | 950PR | [29, 4, 640] | 5.043 | 2.904 | 3.558 | -18.4% | 2.825 |
+| primary | 950DT | [55, 4, 352] | 2.185 | 2.714 | 3.848 | -29.5% | 2.825 |
+| primary | 950PR | [55, 4, 352] | 2.252 | 2.718 | 3.789 | -28.3% | 2.825 |
+| primary | 950DT | [71, 4, 1280] | 3.695 | 4.283 | 4.550 | -5.9% | 3.048 |
+| primary | 950PR | [71, 4, 1280] | 4.046 | 4.307 | 4.333 | -0.6% | 3.048 |
+| primary | 950DT | [129, 4, 1664] | 5.360 | 5.978 | 5.202 | +14.9% | 4.386 |
+| primary | 950PR | [129, 4, 1664] | 6.218 | 6.024 | 5.305 | +13.5% | 4.386 |
+| primary | 950DT | [191, 4, 2112] | 6.220 | 6.848 | 6.072 | +12.8% | 4.921 |
 
 ## mHC 拆分链
 
 | 数据组 | 芯片 | shape | v0.20 | 当前 | CA | 有符号误差 | 970DT 外推 |
 |---|---|---|---:|---:|---:|---:|---:|
+| DT v0.12 development replay | 950DT | [1, 4, 128] | — | 16.903 | 15.970 | +5.8% | 15.494 |
+| DT v0.12 development replay | 950DT | [8, 4, 128] | — | 17.040 | 16.791 | +1.5% | 15.620 |
+| DT v0.12 development replay | 950DT | [3, 4, 128] | — | 16.942 | 16.835 | +0.6% | 15.530 |
+| DT v0.12 development replay | 950DT | [1, 4, 64] | — | 18.002 | 17.143 | +5.0% | 16.502 |
+| DT v0.12 development replay | 950DT | [2, 4, 128] | — | 16.923 | 16.416 | +3.1% | 15.512 |
+| DT v0.12 development replay | 950DT | [4, 4, 256] | — | 17.300 | 17.344 | -0.3% | 15.857 |
+| DT v0.12 development replay | 950DT | [16, 4, 128] | — | 17.196 | 18.202 | -5.5% | 15.762 |
+| DT v0.12 development replay | 950DT | [1, 4, 512] | — | 17.457 | 17.343 | +0.7% | 16.000 |
+| DT v0.12 development replay | 950DT | [4, 4, 1024] | — | 18.127 | 18.220 | -0.5% | 16.608 |
+| DT v0.12 development replay | 950DT | [9, 4, 1024] | — | 18.458 | 18.482 | -0.1% | 16.909 |
+| DT v0.12 development replay | 950DT | [16, 4, 512] | — | 18.051 | 18.691 | -3.4% | 16.541 |
+| DT v0.12 development replay | 950DT | [32, 4, 1024] | — | 19.558 | 20.070 | -2.5% | 17.913 |
+| DT v0.12 development replay | 950DT | [1, 4, 80] | — | 18.230 | 17.559 | +3.8% | 16.710 |
 | primary | 950DT | [2, 4, 64] | — | 18.028 | 17.935 | +0.5% | 16.525 |
 | primary | 950DT | [4, 4, 96] | — | 18.452 | 17.570 | +5.0% | 16.913 |
 | primary | 950DT | [6, 4, 128] | — | 17.001 | 17.016 | -0.1% | 15.584 |
@@ -486,6 +939,9 @@
 
 | 数据组 | 芯片 | shape | v0.20 | 当前 | CA | 有符号误差 | 970DT 外推 |
 |---|---|---|---:|---:|---:|---:|---:|
+| DT v0.12 development replay | 950DT | [1, 1, 1, 1, 128, 128] | — | 15.072 | 15.219 | -1.0% | 13.804 |
+| DT v0.12 development replay | 950DT | [1, 2, 1, 1, 128, 128] | — | 18.547 | 18.467 | +0.4% | 16.987 |
+| DT v0.12 development replay | 950DT | [1, 4, 1, 1, 128, 128] | — | 25.498 | 25.430 | +0.3% | 23.352 |
 | primary | 950DT | [1, 3, 1, 1, 128, 128] | — | 22.022 | 21.932 | +0.4% | 20.169 |
 | primary | 950DT | [1, 5, 1, 1, 128, 128] | — | 28.973 | 24.648 | +17.5% | 26.534 |
 | primary | 950DT | [1, 6, 1, 1, 128, 128] | — | 32.449 | 28.441 | +14.1% | 29.716 |
@@ -527,6 +983,10 @@
 
 | 数据组 | 芯片 | shape | v0.20 | 当前 | CA | 有符号误差 | 970DT 外推 |
 |---|---|---|---:|---:|---:|---:|---:|
+| DT v0.12 development replay | 950DT | [2, 64, 64, 1] | — | 7.272 | 7.005 | +3.8% | 6.666 |
+| DT v0.12 development replay | 950DT | [2, 64, 128, 1] | — | 7.272 | 7.280 | -0.1% | 6.666 |
+| DT v0.12 development replay | 950DT | [4, 128, 64, 2] | — | 7.858 | 7.364 | +6.7% | 7.202 |
+| DT v0.12 development replay | 950DT | [6, 128, 128, 2] | — | 7.858 | 7.390 | +6.3% | 7.201 |
 | primary | 950DT | [1, 64, 64, 1] | — | 7.272 | 7.044 | +3.2% | 6.666 |
 | primary | 950DT | [3, 64, 64, 2] | — | 7.272 | 7.081 | +2.7% | 6.666 |
 | primary | 950DT | [8, 64, 128, 1] | — | 7.272 | 7.405 | -1.8% | 6.666 |
@@ -562,6 +1022,10 @@
 
 | 数据组 | 芯片 | shape | v0.20 | 当前 | CA | 有符号误差 | 970DT 外推 |
 |---|---|---|---:|---:|---:|---:|---:|
+| DT v0.12 development replay | 950DT | [2, 64, 64, 1] | — | 3.410 | 3.248 | +5.0% | 3.126 |
+| DT v0.12 development replay | 950DT | [2, 64, 128, 1] | — | 3.695 | 3.545 | +4.2% | 3.387 |
+| DT v0.12 development replay | 950DT | [4, 128, 64, 2] | — | 3.410 | 3.707 | -8.0% | 3.125 |
+| DT v0.12 development replay | 950DT | [6, 128, 128, 2] | — | 3.695 | 3.697 | -0.0% | 3.386 |
 | primary | 950DT | [1, 64, 64, 1] | — | 3.410 | 3.151 | +8.2% | 3.126 |
 | primary | 950DT | [3, 64, 64, 2] | — | 3.410 | 3.771 | -9.6% | 3.125 |
 | primary | 950DT | [8, 64, 128, 1] | — | 3.695 | 3.228 | +14.5% | 3.387 |
@@ -597,6 +1061,10 @@
 
 | 数据组 | 芯片 | shape | v0.20 | 当前 | CA | 有符号误差 | 970DT 外推 |
 |---|---|---|---:|---:|---:|---:|---:|
+| DT v0.12 development replay | 950DT | [2, 64, 64, 1] | — | 10.682 | 10.253 | +4.2% | 9.792 |
+| DT v0.12 development replay | 950DT | [2, 64, 128, 1] | — | 10.967 | 10.825 | +1.3% | 10.053 |
+| DT v0.12 development replay | 950DT | [4, 128, 64, 2] | — | 11.268 | 11.070 | +1.8% | 10.328 |
+| DT v0.12 development replay | 950DT | [6, 128, 128, 2] | — | 11.553 | 11.087 | +4.2% | 10.588 |
 | primary | 950DT | [1, 64, 64, 1] | — | 10.682 | 10.195 | +4.8% | 9.792 |
 | primary | 950DT | [3, 64, 64, 2] | — | 10.682 | 10.852 | -1.6% | 9.792 |
 | primary | 950DT | [8, 64, 128, 1] | — | 10.967 | 10.633 | +3.1% | 10.053 |
@@ -693,6 +1161,8 @@
 | primary | 950PR | [65, 5120] | 2.958 | 2.958 | 2.936 | +0.7% | 3.071 |
 | primary | 950DT | [393216, 32] | 10.849 | 10.849 | 13.728 | -21.0% | 7.266 |
 | primary | 950PR | [393216, 32] | 19.038 | 19.038 | 18.826 | +1.1% | 7.266 |
+| primary | 950DT | [3072, 5120] | 12.712 | 12.712 | 16.367 | -22.3% | 8.177 |
+| primary | 950PR | [3072, 5120] | 23.532 | 23.532 | 23.237 | +1.3% | 8.177 |
 
 ## Kimi KDA beta Sigmoid
 
@@ -726,6 +1196,9 @@
 | primary | 950DT | [524288, 12] | 16.472 | 11.908 | 11.230 | +6.0% | 7.556 |
 | primary | 950DT | [65537, 24] | 6.895 | 5.768 | 5.867 | -1.7% | 4.657 |
 | primary | 950PR | [65537, 24] | 12.856 | 8.114 | 7.585 | +7.0% | 4.657 |
+| primary | 950PR | [524288, 12] | 39.880 | 21.815 | 19.424 | +12.3% | 7.556 |
+| primary | 950DT | [1572864, 12] | 41.486 | 30.140 | 28.561 | +5.5% | 15.408 |
+| primary | 950PR | [1572864, 12] | 111.497 | 69.041 | 54.379 | +27.0% | 15.408 |
 
 ## Kimi AttnResFwd
 
@@ -753,6 +1226,15 @@
 | prior published pair replay | 950PR | [1, 256, 8, 2] | — | 7.253 | 6.583 | +10.2% | 6.645 |
 | primary | 950DT | [2, 4096, 8, 1] | 10.949 | 8.603 | 8.113 | +6.0% | 7.885 |
 | primary | 950PR | [2, 4096, 8, 1] | 11.066 | 8.643 | 7.984 | +8.2% | 7.885 |
+| primary | 950PR | [4, 256, 8, 6] | 9.832 | 9.583 | 9.181 | +4.4% | 8.780 |
+| primary | 950DT | [1, 1024, 8, 7] | 13.945 | 11.009 | 11.573 | -4.9% | 10.091 |
+| primary | 950PR | [1, 1024, 8, 7] | 14.061 | 11.031 | 10.764 | +2.5% | 10.091 |
+| primary | 950DT | [2, 2048, 8, 3] | 11.833 | 9.094 | 9.490 | -4.2% | 8.335 |
+| primary | 950PR | [2, 2048, 8, 3] | 11.950 | 9.122 | 9.085 | +0.4% | 8.335 |
+| primary | 950DT | [5, 512, 8, 4] | 9.142 | 8.620 | 9.237 | -6.7% | 7.901 |
+| primary | 950PR | [5, 512, 8, 4] | 9.178 | 8.628 | 8.473 | +1.8% | 7.901 |
+| primary | 950DT | [3, 7168, 8, 1] | 14.648 | 10.152 | 9.712 | +4.5% | 9.303 |
+| primary | 950PR | [3, 7168, 8, 1] | 14.853 | 10.221 | 9.474 | +7.9% | 9.303 |
 | fusion distinct historical windows | 950DT | [1, 7168, 8, 1] | — | 10.152 | 9.505 | +6.8% | 9.303 |
 | fusion distinct historical windows | 950PR | [1, 7168, 8, 1] | — | 10.221 | 9.499 | +7.6% | 9.303 |
 | fusion distinct historical windows | 950DT | [2, 512, 8, 1] | — | 6.797 | 7.122 | -4.6% | 6.230 |

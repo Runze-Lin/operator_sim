@@ -1,0 +1,86 @@
+"""Build the large-case coverage report from compact, portable receipts."""
+import json
+from pathlib import Path
+
+from audit import DT, PR, ROOT, OUT, read
+
+name = {'quant':'DynamicMXQuant', 'fa':'FlashAttentionScoreV2', 'matmul':'Matmul'}
+fmt = lambda x: f'{x:.3f}'
+pct = lambda x: f'{x:.2%}'
+signed = lambda x: f'{x:+.2%}'
+
+
+def table(header,rows):
+    return ['|'+'|'.join(header)+'|','|'+'|'.join('---' for _ in header)+'|']+['|'+'|'.join(str(v) for v in row)+'|' for row in rows]
+
+
+def build():
+    doc=json.loads((OUT/'audit.json').read_text())
+    rs=doc['rows']
+    m=doc['metrics']
+    def case(op,shape,chip,trace_prefix=None):
+        matches=[r for r in rs if r['op']==op and r['shape']==shape and r['chip']==chip]
+        if trace_prefix:
+            matches=[r for r in matches if r['trace_sha256'].startswith(trace_prefix)]
+        assert len(matches)==1, (op,shape,chip,len(matches))
+        return matches[0]
+    title=['# FA、DynamicMXQuant、Matmul 的历史设备窗口覆盖','',
+       f'从历版校准和验证记录复算出 **{len(rs)} 个唯一完整窗口**，其中 {sum(not r["previous_gate"] for r in rs)} 个未出现在 v0.21 本轮审计前的验收表。三条路线分 SKU 复算后，最大的单窗误差为 950DT FA 的 23.15%。较大数据量的验证仍局限于特定调用，例如 FA 的 128k 点是单头 Q=9 校验，quant 的 5120 宽点为 2048 个 token 的一个 chunk。','',
+       '所有观测使用全核从首条指令到最后一条指令结束的微秒数。相同 trace/DB 散列只计一次，独立采集产生的新散列分别保留。下表全部属于本轮历史回放；本轮在这三条路线上新增的独立 CA 数为 0。JSON 逐行保留原收据、原留出或开发角色、基线验收是否已覆盖、实际库 kernel、数值核对和原始指纹。','']
+    title+=table(['算子','SKU','全窗 / 不同 shape','全部 WAPE / 最大','原表未收录全窗','其中大维度窗','补入大维度 WAPE / 最大'],[
+        (name[o],sku, f'{d["all"]["windows"]} / {d["all"]["shapes"]}',f'{pct(d["all"]["wape"])} / {pct(d["all"]["max_ape"])}',d['omitted']['windows'],d['omitted_large']['windows'],f'{pct(d["omitted_large"]["wape"])} / {pct(d["omitted_large"]["max_ape"])}') for o in ('fa','quant','matmul') for sku,chip in [('DT',DT),('PR',PR)] for d in [m[o][chip]] ])
+    title+=['','大维度只用于切片展示。FA 取 KV ≥ 32,767（含 32k−1 分块边界），quant 取元素数 ≥ 2²⁰ 或行数 ≥128 且宽度 ≥5120，Matmul 取任一轴 ≥1024 或运算量 $2MNK$ ≥ 2²⁶。三者对应的检验对象分别是长循环、张量容量与跨 tile 流水。WAPE＝Σ|预测−CA|/ΣCA，最大误差取同组单窗的最大相对绝对误差；同形复测会增加窗口数，不增加独立 shape 数。','',
+            '## 哪些大输入已有完整 CA','',
+            '下列数字全部重走公开默认入口。误差列使用（auto / CA − 1）；最后一列表示原验收表对该窗口的覆盖情况。','']
+    selected=[('fa',[9,32768,64,1,1],DT),('fa',[9,32768,64,1,1],PR),('fa',[9,32767,64,1,1],PR),('fa',[9,131072,64,1,1],DT),('quant',[2048,5120],DT),('quant',[2048,5120],PR),('quant',[1023,7168],DT),('quant',[1023,7168],PR),('matmul',[2048,32,5120],DT),('matmul',[2048,32,5120],PR),('matmul',[1280,2048,16],DT,'4e282871'),('matmul',[1280,2048,512],DT)]
+    selected_rows=[case(*i) for i in selected]
+    title+=table(['算子','输入 shape','SKU','auto / CA µs','误差','970DT 外推 µs','CA 墙钟 min','原表收录'],[
+        (name[r['op']],r['shape'],'DT' if r['chip']==DT else 'PR', f'{fmt(r["us"])} / {fmt(r["ca_us"])}',signed(r['signed_fraction']),fmt(r['future_us']),f'{r["wall_s"]/60:.1f}' if 'wall_s' in r else '无记录','是' if r['previous_gate'] else '否') for r in selected_rows ])
+    title+=['','| 同形 DT/PR 耗时比 | 模型 | CA | 有符号误差 |','|---|---:|---:|---:|']
+    for op,s in [('fa',[9,32768,64,1,1]),('quant',[2048,5120]),('matmul',[2048,32,5120])]:
+        d=case(op,s,DT);p=case(op,s,PR);a,b=d['us']/p['us'],d['ca_us']/p['ca_us']
+        title+=[f'| {name[op]} {s} | {a:.3f} | {b:.3f} | {a/b-1:+.2%} |']
+    title+=['','**FA。** DT 的 32k 收据最初是 v0.4 的独立点（当时 +47.39%），随后用于修正长循环。128k 是 v0.5 冻结后首次采集，后来用于逐页诊断。128k 整窗 274.821 µs，公开 auto 274.794 µs；算例图显式调用资源调度得到 274.987 µs，两者与同一份数据库比较。PR 有 32k−1 和 32k 两个独立采集。服务端模型类型、causal mask、Q 长度、并行绑定共同决定实际注意力合同；这四行测的是普通 BF16、SBH、非因果、单头、Q=9 校验。[FA 双端图与逐页证据](../../../docs/examples/fa.md)','',
+            '**DynamicMXQuant。** [2048,5120] 共 10,485,760 个输入，DT 和 PR 对 E4M3FN 输出和 E8M0 scale 都完成了逐字节检查。以 batch=8、32ki tokens 的完整 prefill 计，这次调用覆盖单卡 262,144 tokens 中的一个 2048-token 调度块。DT/PR 的 AIV 数与每核满块发起间隔会在两端产生不同耗时。完整单次 launch 是否仍按同一斜率增长需要单独校验。[quant 两端逐 tile 图](../../../docs/examples/quant.md)','',
+            '**Matmul。** [M,N,K]=[2048,32,5120] 对应 Flash indexer 的小输出投影几何，两端运行相同 BF16 ND MatMulV3 4098 MIX 库 kernel，检查全部 65,536 个结果。K=16 与 K=512 的另外两次采集检查同一 [1280,2048] 输出面积在两波调度下的浅 K 和分页 K。页图只使用后一个原始窗口。[Matmul 逐波逐页图](../../../docs/examples/matmul.md) · [BF16 indexer 投影的两端收据](../../v0.20/matmul-prefill/pair.json)','',
+            '## 审计前漏记的较大偏差','',
+            '每格列出该算子 × SKU 在原表未收录窗口中的最大绝对相对误差。全部历史回放的最大值另见开头汇总。','']
+    worst=[]
+    for o in ('fa','quant','matmul'):
+        for c in (DT,PR):
+            r=max((r for r in rs if r['op']==o and r['chip']==c and not r['previous_gate']),key=lambda r:abs(r['signed_fraction']))
+            worst.append((name[o],'DT' if c==DT else 'PR',r['shape'],f'{fmt(r["us"])} / {fmt(r["ca_us"])}',signed(r['signed_fraction']),r['origins'][0]['receipt'].replace('results/','')))
+    title+=table(['算子','芯片','shape','auto / CA µs','有符号误差','首次证据'],worst)
+    title+=['','PR quant 的 [513,5504] 和 [576,4096] 分别低估 16.83% 和 16.47%，[2048,5120] 低估 3.62%。只用一条按总元素数线性的误差修正会掩盖分块边界差异。这里提供偏差观测，是否来自尾轮写回、读写重叠或带宽仍需按同一核的指令时序区分。PR FA 最大漏项是 Q=64、D=128 的短 KV，不能由单头长 KV 页的误差推断。','',
+            '## 完整 prefill、部分捕获和不同计时指标','',
+            '单卡 batch=8 时，32ki、128ki、256ki 的完整 prefill 分别有 262,144、1,048,576、2,097,152 个 token；chunk=2048 时一次调用的 token 数有上限。模型宽度和实际派发必须保留。下表提供长期缺口以及与正式指令窗口不同的采集指标。','']
+    excluded=[
+      ('FA', '[9,131072,64,1,1] PR；KV=262144/524288 两端','没有匹配的完整 CA；DT 的 128k 仅覆盖一端','[v0.5 长度与外推记录](../../v0.5/evaluation.json)'),
+      ('FA', '[128,2048,128,1,2] DT','本机补充 capture 达 361.2 s 上限，进程退出 −9，没有 golden 和全核结束','[保留的本机成本收据](local-exclusions.json)'),
+      ('FA', '[9,4096,64,1,1] PR','同形官方窗口 16.880 µs，native 运行窗口 17.222 µs；原采集链协议未通过该控制比较，后者单列','[双采集链对照](../../v0.15/sku/preflight.json)'),
+      ('Quant','[768,4096] / [1024,4096] PR','有输出校验，官方 profiler 达 raw cap；片段只支持队列诊断','[v0.16 原始拒收](../../v0.16/sku/multiub-incomplete.json)'),
+      ('Quant','[262144,5120] DT','退出 −9，900.5 s 墙钟，未完成数值校验，设备时间 N/A','[v0.19 原始成本与原因](../../v0.19/prefill/quant_262144_5120.json)'),
+      ('Quant','[262144,7168] DT','Kimi 32ki×8 的登记合同采用 wrapper start→done 口径。该登记本身不能产生整窗时延或误差','[条件、输出与冻结](../../v0.20/full-quant/freeze.json)'),
+      ('Matmul','[262144/1048576/2097152,32,5120] 两端','只有完整上下文投影；已测 BF16 indexer 几何为一个 2048-token chunk','[原冻结与场景](../../v0.20/matmul-prefill/freeze.json)'),
+      ('Cast / Sigmoid','32ki / 128ki / 256ki × batch8','完整 CA 测得其他库 kernel；各算子单独验收','[Cast 收据](../../v0.20/large/report.md) · [Sigmoid 收据](../../v0.20/newop/long-context.md)')]
+    title+=table(['路线','合同','证据与计时资格','来源'],excluded)
+    title+=['','[按配置派生的各模型单卡合同](../../v0.20/workloads/contracts.jsonl.gz) · [归档配置和实现版本](../../v0.20/workloads/source-lock.json)','',
+        '### 复算','',
+        '在仓库根目录运行以下命令。输入包括各版已提交收据、旧验收表核心路线的只读快照，以及本机历史收据的精简副本；每个本机副本保留原文件 SHA256。无需启动 CANN 或 CA。','',
+        '```bash','python3 development/validation/coverage21/audit.py','python3 development/validation/coverage21/report.py','```','',
+        '[八份大输入原始 trace/DB 的逐文件散列核对](verified-raw.json) · [270 个历史窗口与算子合同](audit.json) · [接入旧验收表的增量窗口](supplement.json) · [旧主表范围快照](gate-before-audit.json) · [本机原始收据摘要](local-receipts.json)']
+    (OUT/'report.md').write_text('\n'.join(title)+'\n')
+    supplemental=[dict(op=r['op'],shape=r['shape'],attrs=r['attrs'],chip=r['chip'],us=r['us'],ca_us=r['ca_us'],future_us=r['future_us'],
+        cohort='historical coverage replay',source='results/v0.21/coverage/audit.json',large_stress=r['large_stress'],
+        receipt={k:r[k] for k in ['api','library','kernel','trace','trace_sha256','correctness','active_aic','active_aiv','binary_sha256'] if k in r}) for r in rs if not r['previous_gate']]
+    (OUT/'supplement.json').write_text(json.dumps(supplemental,indent=2)+'\n')
+    # Pin the exclusion itself so portable checkouts need never access runs/.
+    path='runs/dt-fa-prefill-128-2048-128-1-2/capture/cost.json'
+    if (ROOT/path).is_file():
+        from hashlib import sha256
+        cost=read(path)
+        (OUT/'local-exclusions.json').write_text(json.dumps(dict(source=path,sha256=sha256((ROOT/path).read_bytes()).hexdigest(),seconds=cost['seconds'],shape=[128,2048,128,1,2],op='fa',chip=DT,raw_bytes=cost['raw_bytes'],stop_reason=cost['stop_reason'],exit_code=cost['exit_code'],ca_us=None),indent=2)+'\n')
+
+
+if __name__=='__main__':
+    build()

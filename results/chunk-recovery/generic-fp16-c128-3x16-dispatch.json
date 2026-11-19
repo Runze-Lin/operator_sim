@@ -1,0 +1,141 @@
+{
+  "inputs": [
+    "float16",
+    "float16",
+    "float16",
+    "float32",
+    "float32"
+  ],
+  "fault_messages_total": 116,
+  "distinct_fault_pcs": 25,
+  "metadata_match": {
+    "tilingKey": 1,
+    "kernelType": "MIX_AIC",
+    "crossCoreSync": 1,
+    "taskRation": "1:2",
+    "kernelName": "ChunkKdaFwd_2abd624f2831d861ffa7ac1b0049c12a_1"
+  },
+  "metadata_sha256": "ff1845f42d0dc1610c8ddb6fae7a17263466b6c47ff0776ded869c373b1987da",
+  "package_elf": "ChunkKdaFwd_2abd624f2831d861ffa7ac1b0049c12a.o",
+  "package_elf_sha256": "febf38f8b3fda28a791d3506cc1558815e0d9b8bfb3f0e4863cdb6efde706d80",
+  "expected_symbol_offsets": {
+    "aic": "0x0",
+    "aiv": "0x127800"
+  },
+  "wrapper_subcore_entry_pcs": {
+    "0": "0x9155bdb000",
+    "1": "0x9155d02800",
+    "2": "0x9155d02800"
+  },
+  "faults_in_aic_segment": {
+    "0x9155be9df8": {
+      "offset": "0xedf8",
+      "opcode": "SET_FLAG.M.MTE1"
+    },
+    "0x9155be9e00": {
+      "offset": "0xee00",
+      "opcode": "SET_FLAG.M.MTE1"
+    },
+    "0x9155be9e20": {
+      "offset": "0xee20",
+      "opcode": "SET_FLAG.M.MTE1"
+    },
+    "0x9155bea520": {
+      "offset": "0xf520",
+      "opcode": "SET_FLAG.M.MTE1"
+    },
+    "0x9155bea524": {
+      "offset": "0xf524",
+      "opcode": "SET_FLAG.M.MTE1"
+    },
+    "0x9155bea528": {
+      "offset": "0xf528",
+      "opcode": "SET_FLAG.M.MTE1"
+    },
+    "0x9155beb1a8": {
+      "offset": "0x101a8",
+      "opcode": "SET_FLAG.M.MTE1"
+    },
+    "0x9155beaf98": {
+      "offset": "0xff98",
+      "opcode": "SET_FLAG.M.MTE1"
+    },
+    "0x9155beb7d0": {
+      "offset": "0x107d0",
+      "opcode": "SET_FLAG.M.MTE1"
+    },
+    "0x9155becd1c": {
+      "offset": "0x11d1c",
+      "opcode": "SET_FLAG.M.MTE1"
+    },
+    "0x9155becd24": {
+      "offset": "0x11d24",
+      "opcode": "SET_FLAG.M.MTE1"
+    },
+    "0x9155becd44": {
+      "offset": "0x11d44",
+      "opcode": "SET_FLAG.M.MTE1"
+    },
+    "0x9155bed4b4": {
+      "offset": "0x124b4",
+      "opcode": "SET_FLAG.M.MTE1"
+    },
+    "0x9155bed4bc": {
+      "offset": "0x124bc",
+      "opcode": "SET_FLAG.M.MTE1"
+    },
+    "0x9155bed4d0": {
+      "offset": "0x124d0",
+      "opcode": "SET_FLAG.M.MTE1"
+    },
+    "0x9155bedc90": {
+      "offset": "0x12c90",
+      "opcode": "SET_FLAG.M.MTE1"
+    },
+    "0x9155beda9c": {
+      "offset": "0x12a9c",
+      "opcode": "SET_FLAG.M.MTE1"
+    },
+    "0x9155bee254": {
+      "offset": "0x13254",
+      "opcode": "SET_FLAG.M.MTE1"
+    },
+    "0x9155bee258": {
+      "offset": "0x13258",
+      "opcode": "SET_FLAG.M.MTE1"
+    },
+    "0x9155bee26c": {
+      "offset": "0x1326c",
+      "opcode": "SET_FLAG.M.MTE1"
+    },
+    "0x9155bee96c": {
+      "offset": "0x1396c",
+      "opcode": "SET_FLAG.M.MTE1"
+    },
+    "0x9155bee978": {
+      "offset": "0x13978",
+      "opcode": "SET_FLAG.M.MTE1"
+    },
+    "0x9155bee980": {
+      "offset": "0x13980",
+      "opcode": "SET_FLAG.M.MTE1"
+    },
+    "0x9155bef0e0": {
+      "offset": "0x140e0",
+      "opcode": "SET_FLAG.M.MTE1"
+    },
+    "0x9155beeeec": {
+      "offset": "0x13eec",
+      "opcode": "SET_FLAG.M.MTE1"
+    }
+  },
+  "expected_numerical_checks": {
+    "output": 48,
+    "aqk": 384,
+    "akk": 384
+  },
+  "entry_delta_bytes": 1210368,
+  "config_sha256": "8a8fda01cd807b445045eb1d3bb54d343b1558e1f4edc8315f5f7ffb7ae9cc74",
+  "wrapper_path": "runs/chunk-recovery/generic-fp16-c128-3x16/profile/npusim_20261119202213_fp16/record/log_ca/core0.wrapper_log.dump",
+  "scope": "Observed one AIC and both Vector subcores at the addresses expected by the FP16 generic family. Exact file selection is inferred from dispatch metadata; entry addresses do not distinguish all same-family blobs."
+}

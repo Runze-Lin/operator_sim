@@ -25,3 +25,27 @@
 ![模型与独立 CA 逐块同轴流水](../../../docs/examples/figures/v021-holdout-cast_bf16_fp32_393216_32-pr.png)
 
 [完整时间戳、分块与 trace 哈希](holdout-cast_bf16_fp32_393216_32-pr.json)
+
+## sigmoid_fp32 · [524288, 12] · Ascend950PR_957b
+
+冻结模型 21.815 µs；完整 CA 19.424 µs；相对误差 +12.3%。
+
+![模型与独立 CA 逐块同轴流水](../../../docs/examples/figures/v021-holdout-sigmoid_fp32_524288_12-pr.png)
+
+[完整时间戳、分块与 trace 哈希](holdout-sigmoid_fp32_524288_12-pr.json)
+
+## sigmoid_fp32 · [1572864, 12] · Ascend950DT_9582
+
+冻结模型 30.140 µs；完整 CA 28.561 µs；相对误差 +5.5%。
+
+![模型与独立 CA 逐块同轴流水](../../../docs/examples/figures/v021-holdout-sigmoid_fp32_1572864_12-dt.png)
+
+[完整时间戳、分块与 trace 哈希](holdout-sigmoid_fp32_1572864_12-dt.json)
+
+## sigmoid_fp32 · [1572864, 12] · Ascend950PR_957b
+
+冻结模型 69.041 µs；完整 CA 54.379 µs；相对误差 +27.0%。
+
+![模型与独立 CA 逐块同轴流水](../../../docs/examples/figures/v021-holdout-sigmoid_fp32_1572864_12-pr.png)
+
+[完整时间戳、分块与 trace 哈希](holdout-sigmoid_fp32_1572864_12-pr.json)

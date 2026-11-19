@@ -1,4 +1,5 @@
 """Time ordinary estimates from an isolated installed wheel and compare frozen forecasts."""
+import argparse
 from hashlib import sha256
 from importlib.metadata import version
 import json
@@ -15,6 +16,10 @@ SIDES=dict(zip(CHIPS,('dt','pr','future')))
 
 
 def main():
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--output',type=Path,default=OUT/'wheel-check.json',
+                        help='Write a separate timing receipt when replaying a larger archive.')
+    report_path=parser.parse_args().output
     start=perf_counter_ns()
     from operator_model import estimate, __version__, __file__ as source
     import_ms=(perf_counter_ns()-start)/1e6
@@ -55,7 +60,7 @@ def main():
     wheel,=(ROOT/'build/wheels/v021').glob('ascend_operator_model-0.21.0-*.whl')
     out=dict(version=version('ascend-operator-model'),wheel_sha256=sha256(wheel.read_bytes()).hexdigest(),
         import_ms=import_ms,per_op={k:stats(v) for k,v in wall.items()},overall=stats(sum(wall.values(),[])))
-    (OUT/'wheel-check.json').write_text(json.dumps(out,indent=2)+'\n')
+    report_path.write_text(json.dumps(out,indent=2)+'\n')
     print(out['overall'])
 
 

@@ -1,0 +1,271 @@
+{
+  "utc": "2026-11-19T12:46:49.886786+00:00",
+  "sku": "Ascend950PR_957b",
+  "shape": [
+    1280,
+    2048,
+    512
+  ],
+  "attrs": {},
+  "dtype": "bf16",
+  "kernel_contract": "aclnnMatmul contiguous BF16 ND, ordinary non-transposed narrow-precision output",
+  "job": {
+    "id": "matmul_1280_2048_512",
+    "op": "matmul",
+    "shape": [
+      1280,
+      2048,
+      512
+    ],
+    "runner": "runs/dt-matmul-two-tiles-two-k-pages-runner/three_ops",
+    "runner_sha256": "0bbf997172164c521bc1130d4082e8249abcb3da799345dcd077d3f473139d8d",
+    "args": [
+      "matmul",
+      "1280",
+      "2048",
+      "512"
+    ],
+    "outputs": [
+      {
+        "op": "matmul",
+        "shape": [
+          1280,
+          2048,
+          512
+        ],
+        "attrs": {},
+        "indices": [
+          0
+        ],
+        "dt_us": 12.449142690111714,
+        "dt_status": "extrapolated",
+        "dt_aic": 32,
+        "dt_aiv": 0,
+        "pr_us": 14.026598759615077,
+        "pr_status": "extrapolated",
+        "pr_aic": 28,
+        "pr_aiv": 0,
+        "future_us": 6.349537538318032,
+        "future_status": "extrapolated",
+        "future_aic": 117,
+        "future_aiv": 0
+      }
+    ],
+    "nchecks": 1,
+    "kernels": 1,
+    "batch": null,
+    "wall_s": 3600,
+    "raw_mib": 6144
+  },
+  "resource_model": {
+    "latency_us": 14.026598759615077,
+    "launch_us": 2.315160188637076,
+    "model_tiles": [
+      {
+        "rect": [
+          256,
+          256
+        ],
+        "pages": [
+          {
+            "MTE2": [
+              2.315160188637076,
+              4.7111981828375225
+            ],
+            "MTE1": [
+              4.7111981828375225,
+              4.841543665340044
+            ],
+            "MMAD": [
+              4.841543665340044,
+              7.565651948168327
+            ]
+          },
+          {
+            "MTE2": [
+              5.039268471465358,
+              7.435306465665805
+            ],
+            "MTE1": [
+              7.435306465665805,
+              7.565651948168327
+            ],
+            "MMAD": [
+              7.565651948168327,
+              10.28976023099661
+            ]
+          }
+        ],
+        "write": [
+          10.28976023099661,
+          11.084135988572367,
+          11.315536104878989
+        ]
+      },
+      {
+        "rect": [
+          128,
+          256
+        ],
+        "pages": [
+          {
+            "MTE2": [
+              6.724120709655029,
+              9.120158703855475
+            ],
+            "MTE1": [
+              9.120158703855475,
+              9.250504186357997
+            ],
+            "MMAD": [
+              10.288548109784488,
+              11.76989965187203
+            ]
+          },
+          {
+            "MTE2": [
+              8.408972947844699,
+              10.805010942045145
+            ],
+            "MTE1": [
+              10.805010942045145,
+              10.935356424547667
+            ],
+            "MMAD": [
+              11.97340034797416,
+              13.4547518900617
+            ]
+          }
+        ],
+        "write": [
+          13.4547518900617,
+          13.795198643308455,
+          14.026598759615077
+        ]
+      }
+    ],
+    "diagnostics": {
+      "model": "target_resource_matmul",
+      "target_plan": {
+        "active_aic": 28,
+        "active_aiv": 0,
+        "tile": [
+          256,
+          256,
+          64
+        ],
+        "read_page_k": 256,
+        "waves": 2,
+        "iterations": 1,
+        "branch": "coarse_tile",
+        "mmads_total": 416,
+        "output_tiles": 40,
+        "units": {
+          "read": 512.0,
+          "cube": 512.0,
+          "fix": 128.0,
+          "vector": 0.0,
+          "write": 0.0
+        },
+        "tail_split_mn": [
+          2,
+          1
+        ],
+        "effective_output_tiles": 52,
+        "tail_wave_pieces": 24,
+        "tail_wave_histogram": [
+          [
+            128,
+            256,
+            24
+          ]
+        ]
+      },
+      "stages_us": {
+        "read_fill": 2.396037994200446,
+        "l0_lead": 0.1303454825025222,
+        "page_intervals": 2.7241082828282823,
+        "last_mmad": 2.7241082828282823,
+        "write_tail": 1.0257758738823788,
+        "additional_output_waves": 2.7110626547360868,
+        "shared_link_floor": 0.0,
+        "launch": 2.315160188637076
+      },
+      "logical_cube_ops": 2684354560,
+      "physical_ops_per_full_mmad": 8388608,
+      "mmads_total": 416,
+      "hbm_read_bytes_scenario": 3407872,
+      "l2_to_l1_read_bytes": 24117248,
+      "l1_to_l0_operand_bytes": 24117248,
+      "write_bytes": 5242880,
+      "logical_read_bytes": 3407872,
+      "read_page_k": 256,
+      "mmad_k": 64,
+      "pages_per_output_tile": 2,
+      "rate_units": "bytes/cycle; MTE per core, HBM/L2 per chip; BF16 arithmetic ops/cycle/core",
+      "rates": {
+        "mte2": 47.148096406916586,
+        "mte1": 180.65473073384752,
+        "write": 158.29847138083917,
+        "l2": 2800,
+        "hbm": 848.4848484848485,
+        "cube": 8181.818181818183
+      },
+      "shared_traffic": {
+        "hbm_read_bytes": 3407872,
+        "hbm_write_bytes_exposed": 0.0,
+        "eventual_write_bytes": 5242880,
+        "l2_write_bytes": 5242880,
+        "output_retained_fraction_assumption": 1.0,
+        "hbm_efficiency_cap": 1.0,
+        "l2_efficiency_cap": 1.0,
+        "hbm_effective_gbs": 242.95783021981305,
+        "l2_effective_gbs": 2093.1751526630046,
+        "hbm_payload_fraction_of_nominal": 0.17354130729986644,
+        "l2_payload_fraction_of_nominal": 0.4530682148621222
+      },
+      "wave_cost_cycles": {
+        "full": {
+          "R": 3953.462690430736,
+          "L": 215.07004612916165,
+          "P": 4494.778666666666,
+          "C": 4494.778666666666,
+          "W": 1692.530191905925,
+          "Ri": 7274.784859679622,
+          "Ci": 8987.557333333332,
+          "Wi": 1310.72,
+          "write_bytes": 3670016.0
+        },
+        "tail": {
+          "R": 3953.462690430736,
+          "L": 215.07004612916165,
+          "P": 2780.006193012956,
+          "C": 2444.2300444444445,
+          "W": 943.5473347630679,
+          "Ri": 5560.012386025912,
+          "Ci": 5222.2362374574,
+          "Wi": 561.7371428571429,
+          "write_bytes": 1572864.0
+        }
+      },
+      "calibrated_on": "DT-only phase costs; 950 library scheduling assumptions, checked on historical DT/PR"
+    }
+  },
+  "sources": {
+    "runs/dt-matmul-two-tiles-two-k-pages-runner/three_ops": "0bbf997172164c521bc1130d4082e8249abcb3da799345dcd077d3f473139d8d",
+    "runs/dt-matmul-two-tiles-two-k-pages-runner/three_ops.cpp": "f8acee0d9cc56b6c3ea1e374bc335f3b2dec37c3a44c48a7e2d67016826b4ed0",
+    "results/v0.20/examples/matmul-tile-pages.json": "3ce332b24d4409cfe9b398e0ab619b3df65768fae1a760dd9ebf1b93293deb48",
+    "development/validation/matmul_pages_pr/freeze.py": "e958faa463f47e90a80b40420c90ac4a2177bc86004dedd1c31fc08d978f80fd",
+    "configs/chips/Ascend950PR_957b.json": "2bb5b0b34b8d04e255e24ea5d12c73407ace6bb7154ba6aa603b338fc252ada7",
+    "operator_model/matmul_resource.py": "4ff5f1e2bc2581ed16d609e18900879ccaf1a80f65433de8f85de7e513140b19",
+    "operator_model/matmul_v15.py": "c5edb6d59c184f63db0d1208cdec38a79368d4f6eb246cb077ed0faba069fa02",
+    "operator_model/matmul_waves.py": "97f615daae6563e51df26591565909d8bea044c3b72bf5f67bb8aa1e6b5b292b",
+    "operator_model/chips.py": "b07bf963f537889a87906e08a5123393d9b3c3644a1ae9c250636054cb06bc69",
+    "scripts/cann-run.sh": "d529513abc0bc340a56c91365a9e72d5e434d2cb4841be1692930294cd0624df",
+    "development/validation/sku17/campaign_collect.py": "128913632124b4ff430595a34d239e53742f2cb4d1a16ea82a581180bfb3f792"
+  },
+  "admission": "One new PR capture after completed KDA compact slot; no retries. 60 min, 6 GiB raw maximum.",
+  "original_dt_trace_sha256": "47c28890d2298730f34763ba429723d61acaf93f8848c9b969a5140afb4bcf6a",
+  "future_us": 6.349537538318032,
+  "scope": "Full all-core instruction makespan; compulsory output count and numeric golden, runtime SKU, target memory configuration, completed official parse, all-core duration check."
+}

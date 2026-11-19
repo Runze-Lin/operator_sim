@@ -5,6 +5,7 @@ from pathlib import Path
 from statistics import median
 import argparse
 import json
+import os
 import sys
 import time
 
@@ -82,6 +83,10 @@ def changes(out,paired):
                 costs.append(dict(source=str(p.relative_to(ROOT)),seconds=seconds,stop=item.get('stop_reason')))
     write(OUT/'collection-cost.json',dict(scope='available terminal host cost records in campaign run folders, includes failures; concurrent wall times do not add to elapsed time',rows=costs))
     lines+=['',f"隔离安装的公开 Python 入口共 {stats['n']} 种输入，中位 {stats['median_ms']:.3f} ms，P95 {stats['p95_ms']:.3f} ms，最慢 {stats['max_ms']:.3f} ms。"]
+    coverage_wheel=OUT/'coverage/wheel-check.json'
+    if coverage_wheel.exists():
+        checked=read(coverage_wheel)['overall']
+        lines.append(f"扩展归档后，独立安装再验 {checked['n']} 种输入，单次预测中位 {checked['median_ms']:.3f} ms，P95 {checked['p95_ms']:.3f} ms，最大 {checked['max_ms']:.3f} ms。[扩展归档开销](coverage/wheel-check.json)")
     if costs:
         times=[r['seconds'] for r in costs]
         lines+=[f'目前收齐的 {len(times)} 份宿主成本回执（含失败）里，CA 墙钟中位 {median(times):.1f} 秒，最长 {max(times):.1f} 秒。多队列并行，按单任务计时。']
@@ -96,21 +101,27 @@ def changes(out,paired):
     lines+=['同一低开销队列登记 Kimi 的动态量化 [262144,7168]，独立于已经取到全指令窗口的窄输出 Cast、Sigmoid。[全宽 Cast 续测依据](large/full-hidden-continuation.json) · [Kimi 量化采集合同](../v0.20/full-quant/freeze.json)','',
             '另以 Addmm [16,64,256] 检查单 CPU worker 能否替代默认采集。DT 的数值、二进制、核数和 MMAD 计数一致，但全指令窗口由 3.588 µs 变成 3.448 µs，超过事前设定的一个设备时钟容差。PR 单 worker 在 420 秒上限前未完成。本次独立统计继续使用原来的采集口径。[DT 对照](dispatch/host-workers-dt.json) · [PR 对照](dispatch/host-workers-pr.json)']
     lines+=['','无历史输入的 mHC Post 在历史批次仍超误差门槛。KDA chunk 缺少通过校验的主 kernel 设备窗口，所有芯片耗时填 N/A。完整大 hidden 的 B8×32k 和稀疏注意力分支按实际采集状态披露；长序列小宽度的投影、Cast、Sigmoid 有单独的完整 CA。970DT 全部为架构情景外推。','',
+        '[RMSNorm 扩核的按地址流水验证](../rms-dispatch-audit/report.md) · [Post 不同前序的读响应](../post-candidate/issue-response.md) · [大 Cast 的双缓冲与物理写回](../cast-capacity/report.md) · [核心三路线 270 个完整窗口](coverage/report.md) · [Chunk KDA 版本与事件核对](../chunk-recovery/report.md)','',
         '[建模方法](../../docs/modeling-strategy.md) · [总体误差与超限样本](../../docs/error-analysis.md) · [按 tile 或阶段上下对照](../../docs/pipeline-comparisons.md) · [双端耗时与加速比](pairs.md) · [预测开销](wheel-check.json) · [CA 成本](collection-cost.json) · [模型指纹](model.json)']
     (OUT/'changes.md').write_text('\n'.join(lines)+'\n')
 
 
 def inputs():
     files = [OUT/'fusion/evaluation.json',OUT/'vector/evaluation.json',OUT/'vector/holdout.json',
-             ROOT/'results/v0.20/rms/records.json',OUT/'wheel-check.json',OUT/'dispatch/stream-replay.json']
+             ROOT/'results/v0.20/rms/records.json',OUT/'wheel-check.json',OUT/'dispatch/stream-replay.json',
+             OUT/'coverage/supplement.json']
     for folder in ('dispatch','rms'):
         files.extend(sorted((OUT/folder/'receipts').glob('*.json')))
     files.extend(sorted((OUT/'dispatch/retries').glob('*.json')))
     files.extend(sorted((OUT/'large').glob('*terminal.json')))
+    files.extend(sorted((ROOT/'results/rms-dispatch-audit').glob('ordered-Ascend*.json')))
+    files.extend(sorted((ROOT/'results/post-candidate').glob('paired-Ascend*.json')))
     return sha256(b''.join(f.read_bytes() for f in files)).hexdigest()
 
 
 def refresh():
+    from development.validation.rms_dispatch_audit.report import publish
+    publish()
     result=report()
     paired=pairs(result)
     changes(result,paired)
@@ -122,7 +133,12 @@ def main():
     parser.add_argument('--follow',action='store_true')
     follow=parser.parse_args().follow
     previous=None
+    sources=[Path(__file__),Path(__file__).with_name('acceptance.py'),
+             ROOT/'development/validation/rms_dispatch_audit/report.py']
+    loaded=[digest(p) for p in sources]
     while (ROOT/'operator_model/__init__.py').read_text().find("0.21.0")>=0:
+        if follow and [digest(p) for p in sources]!=loaded:
+            os.execv(sys.executable,[sys.executable,*sys.argv])
         current=inputs()
         if previous!=current:
             refresh()

@@ -1,0 +1,222 @@
+{
+  "id": "addmm_1024_192_256",
+  "op": "addmm",
+  "shape": [
+    1024,
+    192,
+    256
+  ],
+  "chip": "Ascend950DT_9582",
+  "qualified": true,
+  "observation": {
+    "op": "addmm",
+    "shape": [
+      1024,
+      192,
+      256
+    ],
+    "attrs": {
+      "self_shape": [
+        192
+      ],
+      "alpha": 1,
+      "beta": 1
+    },
+    "chip": "Ascend950DT_9582",
+    "ca_us": 4.251514911651611,
+    "active_aic": 30,
+    "active_aiv": 0,
+    "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+    "api": "aclnnAddmm",
+    "correctness": [
+      "correctness count=196608 bad=0 max_abs_error=0.03125 atol=0.015625 rtol=0.015625 hard_limit=1"
+    ],
+    "stages": [
+      {
+        "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+        "ca_us": 4.251514911651611,
+        "active_aic": 30,
+        "active_aiv": 0,
+        "windows": {
+          "core6.cubecore0": [
+            0.05515146255493164,
+            4.250303268432617
+          ],
+          "core29.cubecore0": [
+            0.20606088638305664,
+            4.217575907707214
+          ],
+          "core21.cubecore0": [
+            0.27272748947143555,
+            4.241212248802185
+          ],
+          "core13.cubecore0": [
+            0.05878782272338867,
+            4.2127275466918945
+          ],
+          "core20.cubecore0": [
+            0.36969709396362305,
+            4.211515307426453
+          ],
+          "core7.cubecore0": [
+            0.06484842300415039,
+            4.207878589630127
+          ],
+          "core24.cubecore0": [
+            0.2818183898925781,
+            3.630303144454956
+          ],
+          "core0.cubecore0": [
+            0.0,
+            4.249091148376465
+          ],
+          "core4.cubecore0": [
+            0.05090904235839844,
+            4.207879066467285
+          ],
+          "core25.cubecore0": [
+            0.2412123680114746,
+            4.207878947257996
+          ],
+          "core12.cubecore0": [
+            0.06787872314453125,
+            4.224242687225342
+          ],
+          "core27.cubecore0": [
+            0.2866668701171875,
+            4.226666808128357
+          ],
+          "core3.cubecore0": [
+            0.05757570266723633,
+            4.251514911651611
+          ],
+          "core1.cubecore0": [
+            0.04121208190917969,
+            4.192727088928223
+          ],
+          "core16.cubecore0": [
+            0.3296971321105957,
+            4.201212167739868
+          ],
+          "core26.cubecore0": [
+            0.34424257278442383,
+            4.224242448806763
+          ],
+          "core18.cubecore0": [
+            0.17272710800170898,
+            3.5690910816192627
+          ],
+          "core23.cubecore0": [
+            0.3496971130371094,
+            4.2284849882125854
+          ],
+          "core2.cubecore0": [
+            0.06606054306030273,
+            4.238787651062012
+          ],
+          "core30.cubecore0": [
+            0.24303054809570312,
+            3.629090905189514
+          ],
+          "core5.cubecore0": [
+            0.056363582611083984,
+            4.199999809265137
+          ],
+          "core9.cubecore0": [
+            0.06484842300415039,
+            4.23272705078125
+          ],
+          "core19.cubecore0": [
+            0.30666685104370117,
+            4.232727289199829
+          ],
+          "core28.cubecore0": [
+            0.21818208694458008,
+            4.222424387931824
+          ],
+          "core14.cubecore0": [
+            0.037575721740722656,
+            4.236363887786865
+          ],
+          "core22.cubecore0": [
+            0.2242426872253418,
+            4.240000009536743
+          ],
+          "core11.cubecore0": [
+            0.0690908432006836,
+            4.218787670135498
+          ],
+          "core10.cubecore0": [
+            0.04181814193725586,
+            4.233939170837402
+          ],
+          "core17.cubecore0": [
+            0.2563638687133789,
+            4.218788027763367
+          ],
+          "core8.cubecore0": [
+            0.02909088134765625,
+            4.243030548095703
+          ]
+        },
+        "trace": "runs/dispatch21/addmm_1024_192_256_Ascend950DT_9582/profile/OPPROF_20261119204520_UCCJYEZBANNIUFIL/simulator/trace.json",
+        "trace_sha256": "65cdf12ca20f5ea0e65e6545aedcc271e7b5f8b570eec8fc1637c734c8b6940c",
+        "binary_sha256": "e6899fbaa2659b7778bee81deb00b64b009dafcb7ad350f06576767fdeba2bf7",
+        "queue_events": {
+          "SCALAR": 27528,
+          "MTE2": 180,
+          "MTE1": 180,
+          "FLOWCTRL": 1512,
+          "FIXP": 60,
+          "CUBE": 60
+        },
+        "mmad": 60,
+        "total_events": 29520
+      }
+    ],
+    "trace": [
+      "runs/dispatch21/addmm_1024_192_256_Ascend950DT_9582/profile/OPPROF_20261119204520_UCCJYEZBANNIUFIL/simulator/trace.json"
+    ],
+    "trace_sha256": [
+      "65cdf12ca20f5ea0e65e6545aedcc271e7b5f8b570eec8fc1637c734c8b6940c"
+    ],
+    "cost": {
+      "started_utc": "2026-11-19T12:45:19.907996+00:00",
+      "finished_utc": "2026-11-19T12:46:45.167219+00:00",
+      "seconds": 85.25912948022597,
+      "raw_bytes": 43042047,
+      "peak_bytes": 80393667,
+      "cpu_seconds": 1164.6599999999999,
+      "exit_code": 0,
+      "stop_reason": null,
+      "command": [
+        "bash",
+        "/home/l00925865/operator_sim/scripts/cann-run.sh",
+        "msopprof",
+        "simulator",
+        "--soc-version=Ascend950DT_9582",
+        "--dump=false",
+        "--launch-count=1",
+        "--timeout=30",
+        "--output=/home/l00925865/operator_sim/runs/dispatch21/addmm_1024_192_256_Ascend950DT_9582/profile",
+        "/home/l00925865/operator_sim/build/smoke/extension_norm_addmm",
+        "addmm",
+        "1024",
+        "192",
+        "256",
+        "bias"
+      ]
+    },
+    "case_id": "addmm_1024_192_256",
+    "role": "new paired DT CA",
+    "scope": "one all-core window",
+    "frozen": {
+      "dt_us": 4.585281929922825,
+      "pr_us": 4.735997425773693,
+      "future_us": 3.7248583087963416,
+      "old_dt_us": 4.712782771803708,
+      "old_pr_us": 7.1007483035201036,
+      "old_future_us": 4.314323400558088
+    }
+  }
+}

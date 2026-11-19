@@ -10,6 +10,10 @@
 
 **[流水对照图集](docs/pipeline-comparisons.md)**（[按算子选图](docs/pipeline-comparisons.md#按算子打开图)） 按同一设备时间轴查看上栏预测和下栏实测，可比较 [DynamicMXQuant 五轮 UB 读算写](docs/examples/quant.md)、[Matmul 两波、两页 K 的 MMAD](docs/examples/matmul.md)、[FA 的首个 QK/PV 与长循环](docs/examples/fa.md)。[逐算子的算例入口](docs/modeling-strategy.md#逐算子算例)
 
+![950DT MatMulV3。上栏按输出块和 K 页预测，下栏为最后完成核的 CA 指令，同一设备时间轴](docs/examples/figures/matmul-tile-pages.png)
+
+读图举例：左侧第一行是 256×256 输出块的第一个 K 页。首条 MMAD 预测在 4.852 µs 发起，CA 在 5.215 µs 发起；到尾块第二页，这个差距缩到 0.031 µs。整窗预测 12.449 µs、CA 12.219 µs。[逐页的预测、实测与误差](docs/examples/matmul.md#逐页核对偏差)
+
 在真实模型维度上也能逐段核对。Flash 的窄输出投影在 950DT 预测 12.123 µs、CA 为 13.023 µs。两侧都是 640 条 MMAD，实际 kernel 多用了 64 个 AIV，图上可以直接看到末段归并。整批 B8×128k 的 Flash Cast 和 Kimi Sigmoid 分别展开首轮和末轮。[Flash 投影](docs/examples/matmul-prefill.md) · [Flash Cast 两端流水](results/v0.20/large/flash-128ki-tiles.png) · [Kimi beta 两端流水](results/v0.20/newop/long-timelines.md)
 
 需要核对大 prefill 输入时，可直接打开 8 条请求、每条 32k / 128k / 256k 的逐节点张量表，查看本卡 hidden、head、专家工作量及同形 CA 状态。[DeepSeek V4.1 Flash](docs/workloads/deepseek-flash.md) · [DeepSeek V4 Pro](docs/workloads/deepseek-pro.md) · [Kimi K3](docs/workloads/kimi-k3.md)
@@ -39,7 +43,7 @@ print(result.latency_us, result.work["cube_ops"], result.work["logical_read_byte
 
 维护 960、970、980 等架构情景时，每个目标使用一份 JSON，分别填写按位宽区分的两类算力、核数、频率、外存容量和带宽。内置 `Ascend970DT` 情景为 120 Cube / 120 Vector、1.8 GHz、288 GB、14.4 TB/s；其中 16 位 Vector 峰值 110.592 TOP/s 已含双发射。这些是架构假设。调用方通过 `extrapolated` 状态识别外推，并决定是否将其交给事件调度器。[970DT 配置及逐项来源](configs/chips/Ascend970DT.json) · [自定义芯片示例](configs/chips/scenario-example.json) · [字段、单位和返回合同](docs/integration.md)
 
-隔离安装 v0.21 wheel 后，对三种芯片做了 1,126 个不同的单次查询。中位 0.129 ms，P95 0.510 ms，最慢 4.234 ms；导入另计 13.35 ms。包括 8×32k 至 8×256k 的模型形状，以及 KDA chunk 仅返回工作量的查询。[各算子实测开销](results/v0.21/wheel-check.json) · [本版变化](results/v0.21/changes.md)
+隔离安装 v0.21 wheel 后，扩大归档覆盖并测试三种芯片的 1,589 个不同输入。单次预测中位 0.114 ms，P95 0.505 ms，最慢 3.950 ms；导入另计 13.86 ms。包括 8×32k 至 8×256k 的模型形状和 KDA chunk 的工作量查询。[扩展归档的各算子开销](results/v0.21/coverage/wheel-check.json) · [首轮冻结的基准](results/v0.21/wheel-check.json) · [本版变化](results/v0.21/changes.md)
 
 ## 可预测的算子
 
