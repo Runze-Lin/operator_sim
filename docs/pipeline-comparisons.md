@@ -10,6 +10,18 @@
 
 同一个 shape 在 950PR 上只用 28 个 AIC，首波之后分出 24 个 128×256 矩形。预测和实测都有 416 条 MMAD；首条 MMAD 起点相差 0.059 µs，到了最后一页扩大到 0.586 µs。模型给出 **14.027 µs**，CA 给出 **13.218 µs**。[同一刻度并排看 DT 与 PR](examples/figures/matmul-tile-pages-dt-pr.png) · [950PR 上下对照原图](examples/figures/matmul-tile-pages-pr.png) · [两卡同形的逐页偏差](../results/v0.21/matmul-pages-pr/report.md)
 
+## 大 prefill · 第一块还没读完，第二块已经发起
+
+![950PR Flash 单卡 8×256Ki，首四块的模型与 CA 末核共享坐标](../results/v0.26/memory/flash-256ki-pr-head.png)
+
+上栏三角是从空闲 UB 槽预估的发起时间，青色服务条是该块分到的读预算。下栏前两条青线在 1.165 和 1.221 µs 发起，首读在 3.302 µs 才返回。相同的 384 MiB 逻辑数据量在 Pro 模型上来自 [1048576,64]，也可以用同一刻度比较。[Pro 8×128Ki](../results/v0.26/memory/pro-128ki-pr-head.png) · [参数与逐块数字](../results/v0.26/memory/README.md)
+
+## mHC · 末核是 Vector 时，Cube 等待算在哪里
+
+![950PR 融合 PreSinkhorn 的模型与 CA 分段同轴对照](../results/v0.26/presink/pr-t80.png)
+
+在 [80,4,4096] 上，预测与实测都是 22 AIC、44 AIV。选定同一个工作阶段，能看到从 FIXP 发起到退休的长条覆盖了好几次还未完成的 MMAD；最后退休的是第二段 AIV。模型在这个开发回放上由 16.640 降至 14.616 µs，实测 13.653 µs。[MMAD 次数、两段 VF 与参数来源](../results/v0.26/presink/README.md) · [独立 Sinkhorn 超过一波时十次迭代的首发实测](../results/v0.26/sink/independent-950dt-67-first.png) · [Post 同行两个通道片](../results/v0.26/post/split-width-repeat.png)
+
 ## FA · 同一个 KV 页从 QK 看到 PV
 
 ![八页的同轴图，上栏为独立预测，下栏是逐条 MMAD，虚线是整窗](../results/v0.25/coverage/fa-dt-1008-pages.png)
@@ -189,6 +201,8 @@ GMM1 和 GMM2 均用 `[8,256,128,2]`、专家分配 `[1,7]`。GMM1 的两份中�
 最初的 20 条路线中，**12 条**可以按工作块、阶段或资源队列核对预测与实测（Matmul、Addmm、量化、FA、Cast、Sigmoid、RMSNorm、AttnResFwd、PreSinkhorn、Lightning Indexer、GMM1 和 GMM2）。大 RMSNorm 的局部块用首笔 rstd 对齐，完整设备窗另列。**2 条**对应串行 kernel（mHC 链、MoE FFN）。**5 条**给出状态或阶段成本及真实 CA 队列（mHC Post、mHC Pre、Sinkhorn、KDA recurrent、MoE 路由）。独占成本可以解释总误差来自哪个资源；该资源的逐条发起时刻只在有指令记录的一侧可见。融合 KDA V1 的全窗为 N/A；显式 FLA V2 分成三个 kernel，可用上面同形的新图核对。[各算子示例](modeling-strategy.md#逐算子算例) · [误差明细](error-analysis.md)
 
 ### 按算子打开图
+
+长上下文上可以先看 [Flash 8×256Ki 的前四块](../results/v0.26/memory/flash-256ki-pr-head.png)，再看 [Pro 8×128Ki 的第 28–30 块](../results/v0.25/pro-128ki-pr-middle.png)。同样的颜色和 µs 刻度适用于同一张图的上下栏。
 
 | 算例与推导 | 芯片与输入 | 流水图能核对的内容 |
 |---|---|---|

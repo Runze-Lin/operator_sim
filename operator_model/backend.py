@@ -112,6 +112,15 @@ def _price_resource(op, shape, target, call, dtype):
             raise ValueError('Cast expects a contiguous BF16 to FP32 conversion')
         from .cast_resource import resource_cast
         us, aic, aiv, diag = resource_cast(shape, target)
+        # The kernel can issue its first two reads to different UB slots before
+        # either retires. These are issue markers, separate from bandwidth time.
+        stages = diag['stages_us']
+        first = stages['arrival'] + stages['control_to_read']
+        paired = diag['target_plan']['busy_core_waves'] >= 2
+        spacing = target.details.get('cast_initial_read_pair_cycles', 91)
+        second = first + spacing/(1000*target.frequency_ghz) if paired and spacing is not None else None
+        diag['initial_read_issue_us'] = [first] if second is None else [first, second]
+        diag['initial_read_pair_cycles'] = spacing if paired else None
     elif op == 'moe_gating_top_k':
         if call:
             raise ValueError('Router expects the fixed sigmoid/bias, one-group contract')

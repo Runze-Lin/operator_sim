@@ -1,0 +1,113 @@
+{
+  "op": "fa",
+  "shape": [
+    65,
+    257,
+    64,
+    1,
+    1
+  ],
+  "attrs": {},
+  "chip": "Ascend950DT_9582",
+  "ca_us": 9.704848292283714,
+  "active_aic": 2,
+  "active_aiv": 4,
+  "kernel": "FlashAttentionScore_50348df09d0b3ee451d3693a6b2ab3f5_2328361008425337376_mix_aic",
+  "api": "aclnnFlashAttentionScoreV2",
+  "correctness": [
+    "correctness elements=4160 bad=0 max_abs_error=8.74803586e-05 atol=0.002 rtol=0.01"
+  ],
+  "stages": [
+    {
+      "kernel": "FlashAttentionScore_50348df09d0b3ee451d3693a6b2ab3f5_2328361008425337376_mix_aic",
+      "ca_us": 9.704848292283714,
+      "active_aic": 2,
+      "active_aiv": 4,
+      "windows": {
+        "core16.veccore1": [
+          0.31999969482421875,
+          8.819394114427269
+        ],
+        "core16.cubecore0": [
+          0.11757564544677734,
+          8.80969667667523
+        ],
+        "core16.veccore0": [
+          0.27515125274658203,
+          9.344242098741233
+        ],
+        "core0.cubecore0": [
+          0.0,
+          9.162424566689879
+        ],
+        "core0.veccore0": [
+          0.12969684600830078,
+          9.704848292283714
+        ],
+        "core0.veccore1": [
+          0.16424226760864258,
+          9.704242709092796
+        ]
+      },
+      "trace": "results/v0.25/coverage/raw/supplement/fa-supp-Ascend950DT_9582-65-257-64-1-1/profile/OPPROF_20261120011057_OYTZXRTIRBERMPVL/simulator/trace.json",
+      "trace_sha256": "16b3a7cff3ab1cb06e4365d04f6e3176eeed354d422357a13c9afd7465d19697",
+      "binary_sha256": "ac006aee669c8696aeab3bb3fe64fc29e5f3c8e2d172bf75f46db7176a2d4580",
+      "queue_events": {
+        "SCALAR": 22257,
+        "FLOWCTRL": 1288,
+        "MTE2": 38,
+        "MTE3": 22,
+        "PUSHQ": 80,
+        "MTE1": 26,
+        "CUBE": 12,
+        "FIXP": 24,
+        "RVECLP": 114,
+        "RVECEX": 4688,
+        "RVECSU": 153,
+        "RVECLD": 2623,
+        "RVECST": 2360
+      },
+      "mmad": 12,
+      "total_events": 33685
+    }
+  ],
+  "trace": [
+    "results/v0.25/coverage/raw/supplement/fa-supp-Ascend950DT_9582-65-257-64-1-1/profile/OPPROF_20261120011057_OYTZXRTIRBERMPVL/simulator/trace.json"
+  ],
+  "trace_sha256": [
+    "16b3a7cff3ab1cb06e4365d04f6e3176eeed354d422357a13c9afd7465d19697"
+  ],
+  "cost": {
+    "seconds": 102.56649882998317,
+    "raw_bytes": 143265307,
+    "cpu_seconds": 2118.39,
+    "exit_code": 0,
+    "stop_reason": null,
+    "started_utc": "2026-11-19T17:10:57.181853+00:00",
+    "finished_utc": "2026-11-19T17:12:39.749578+00:00",
+    "command": [
+      "bash",
+      "/home/l00925865/operator_sim/scripts/cann-run.sh",
+      "msopprof",
+      "simulator",
+      "--soc-version=Ascend950DT_9582",
+      "--dump=true",
+      "--launch-count=20",
+      "--timeout=12",
+      "--output=/home/l00925865/operator_sim/results/v0.25/coverage/raw/supplement/fa-supp-Ascend950DT_9582-65-257-64-1-1/profile",
+      "/home/l00925865/operator_sim/build/smoke/three_ops",
+      "fa",
+      "65",
+      "257",
+      "64",
+      "1",
+      "1"
+    ]
+  },
+  "case_id": "fa-supp-Ascend950DT_9582-65-257-64-1-1",
+  "role": "v0.25 seven-shape prospective supplement",
+  "scope": "one all-core window",
+  "frozen": {},
+  "qualified": true,
+  "registration_sha256": "46c243adbb69e79b2e075ea19b9ed417ba917e85ff16fb248110a118b4cf9bf4"
+}

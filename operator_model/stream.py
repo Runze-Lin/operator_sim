@@ -23,9 +23,14 @@ class OperatorStream:
 
     Successive launches establish a lower bound on warm AIVs. A verified
     AIC-only dispatch can carry the RMSNorm prefix across a family switch.
+    experimental_post_repeats enables the frozen per-row schedule for two
+    adjacent, identical built-in BF16 Post launches in this stream.
     """
 
-    def __init__(self, chip=REFERENCE_NAME):
+    def __init__(self, chip=REFERENCE_NAME, *, experimental_post_repeats=False):
+        if not isinstance(experimental_post_repeats, bool):
+            raise TypeError('experimental_post_repeats must be a boolean')
+        self._post_repeats = experimental_post_repeats
         self.chip = load_chip(chip)
         self.reset()
 
@@ -35,6 +40,7 @@ class OperatorStream:
         self._resident = 0
         self._exact = True
         self._rms_prefix = None
+        self._last_post = None
 
     def forget_history(self):
         """Attach to a running stream, or record an unmodeled completed dispatch.
@@ -46,6 +52,7 @@ class OperatorStream:
         self._resident = 0
         self._exact = False
         self._rms_prefix = None
+        self._last_post = None
 
     def _prefix(self, family):
         if family == 'rmsnorm' and self._rms_prefix is not None:
@@ -70,6 +77,14 @@ class OperatorStream:
                        shape_only_us=point, endpoint_scenario_aiv=selected)
         return replace(forecast, projection={**forecast.projection, 'partial_history': context})
 
+    def _with_history(self, family, op, shape, options, dtype):
+        result = estimate(op, shape, options, chip=self.chip, dtype=dtype)
+        if (self._last_post is not None and family == 'mhc_post' and
+                result.latency_us is not None and self._last_post == (self.chip, tuple(shape))):
+            from .post_repeat import price_repeat
+            return price_repeat(result, shape, self.chip)
+        return result
+
     def preview(self, op, shape, attrs=None, *, dtype=None):
         """Price a candidate without changing the next call."""
         family = _kernel_family(op, attrs)
@@ -77,7 +92,7 @@ class OperatorStream:
             return estimate(op, shape, attrs, chip=self.chip, dtype=dtype)
         options = dict(attrs or {})
         if 'resident_aiv' in options:
-            return estimate(op, shape, options, chip=self.chip, dtype=dtype)
+            return self._with_history(family, op, shape, options, dtype)
         resident, exact = self._prefix(family)
         if not exact:
             forecast = estimate(op, shape, options, chip=self.chip, dtype=dtype)
@@ -87,7 +102,7 @@ class OperatorStream:
             if forecast.active_aiv is None or forecast.active_aiv > resident:
                 return forecast
         options['resident_aiv'] = resident
-        return estimate(op, shape, options, chip=self.chip, dtype=dtype)
+        return self._with_history(family, op, shape, options, dtype)
 
     def advance(self, op, shape, attrs=None, *, dtype=None, aic_only=False):
         """Price a dispatch and record its AIV footprint on success.
@@ -114,4 +129,7 @@ class OperatorStream:
         if self._resident == self.chip.vector_cores:
             self._exact = True
         self._last_family = family
+        # Successful validation fixes BF16, contiguous ND, four streams and hRes for
+        # the built-in kernel. Other kernels, including vLLM HcPost, clear this key.
+        self._last_post = (self.chip, tuple(shape)) if self._post_repeats and family == 'mhc_post' else None
         return result

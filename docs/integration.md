@@ -203,3 +203,18 @@ after_cube = rank0.preview("rmsnorm", [2, 2944])
 
 
 从中途接入一条已执行的流，或外部后端确实执行了一次未建模的 kernel，调用 `rank0.forget_history()`。随后第一个可见 RMSNorm 按未知历史估计，`advance` 记录它实际要求的活跃核数。若下次增加用核数，可查 `result.projection["partial_history"]` 中的 `minimum_resident_aiv`、`possible_us`、`shape_only_us` 和 `endpoint_scenario_aiv`。范围描述模型的可行前序，CA 波动仍可能超出。新进程明确从空流开始时使用 `reset()`；仅用 `preview()` 试算不会推进状态。
+
+### 读取 Cast 的发起时刻与试用 Post 的有序重复
+
+```python
+from operator_model import OperatorStream, estimate
+
+cast = estimate("cast_bf16_fp32", [2097152, 32], dtype="bf16", chip="Ascend950PR_957b")
+issue_us = cast.projection["timing_diagnostics"]["initial_read_issue_us"]
+
+stream = OperatorStream("Ascend950DT_9582", experimental_post_repeats=True)
+first = stream.advance("mhc_post", [65, 4, 5120], dtype="bf16")
+repeat = stream.advance("mhc_post", [65, 4, 5120], dtype="bf16")
+```
+
+`issue_us` 是忙核第一个 UB 块（以及第二个空槽，如有）的读发起时间，相对全片首条设备指令计时。其余时间由 `latency_us` 和阶段诊断描述。若换了指令实现，在芯片 config 的 `details.cast_initial_read_pair_cycles` 覆写同一核连续发出两笔读的周期数；不确定时可传 null。在同一系统流上只有紧邻成功重复的内置 token 分核 Post 才会使用可选定价。前序丢失时调用 `forget_history()`，分支探索使用 `preview()`。[Cast 同轴读图](../results/v0.26/memory/README.md) · [Post 支持范围及实际重复的样本数](../results/v0.26/post/report.md)

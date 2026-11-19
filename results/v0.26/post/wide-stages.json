@@ -1,0 +1,181 @@
+{
+  "rule": "Same disjoint time allocation as public v0.12 stage calibration; when multiple queues overlap assign SIMD > MTE3 > MTE2 > SCALAR > other. Arrival is global first dispatch to terminal AIV first instruction. Not a direct intrinsic hardware bandwidth.",
+  "rows": [
+    {
+      "sku": "Ascend950DT_9582",
+      "shape": [
+        65,
+        4,
+        5120
+      ],
+      "state": "reuse",
+      "role": "entry",
+      "prior_aiv": 61,
+      "active_aiv": 33,
+      "core": "core18.veccore0",
+      "public_us": 8.613116318976369,
+      "ca_us": 5.433333333333334,
+      "opt_in_us": 8.613116318976369,
+      "public_model_stages": {
+        "arrival": 0.33844259077033856,
+        "SCALAR": 0.7709634189969299,
+        "MTE2": 3.5678214017593617,
+        "SIMD": 3.6021620499240994,
+        "MTE3": 0.3236778653689054,
+        "other": 0.010048992156733359,
+        "shared_link_floor": 0.0
+      },
+      "ca_exposed_stages": {
+        "other": 0.005454545454545455,
+        "SCALAR": 0.7036363636363636,
+        "SIMD": 3.395757575757576,
+        "MTE2": 1.0545454545454545,
+        "MTE3": 0.22606060606060607,
+        "arrival": 0.04787878787878788
+      },
+      "public_minus_ca": {
+        "arrival": 0.2905638028915507,
+        "SCALAR": 0.06732705536056627,
+        "MTE2": 2.5132759472139075,
+        "SIMD": 0.2064044741665234,
+        "MTE3": 0.09761725930829934,
+        "other": 0.004594446702187904,
+        "shared_link_floor": 0.0
+      },
+      "trace": "runs/post25/width-Ascend950DT_9582/profile/OPPROF_20261120004915_JGOWACSLTAVZUDPK/MhcPost_59130ccee6717ff2c0f15b485e731162_6/4/simulator/trace.json",
+      "sha256": "bb04f9846420b87179571b2ab1bfb033fe06f632e4fad1e470e90f9a0d7ec26e"
+    },
+    {
+      "sku": "Ascend950DT_9582",
+      "shape": [
+        65,
+        4,
+        5120
+      ],
+      "state": "reuse",
+      "role": "repeat",
+      "prior_aiv": 61,
+      "active_aiv": 33,
+      "core": "core17.veccore0",
+      "public_us": 8.613116318976369,
+      "ca_us": 5.241818181818182,
+      "opt_in_us": 5.397185470452125,
+      "public_model_stages": {
+        "arrival": 0.33844259077033856,
+        "SCALAR": 0.7709634189969299,
+        "MTE2": 3.5678214017593617,
+        "SIMD": 3.6021620499240994,
+        "MTE3": 0.3236778653689054,
+        "other": 0.010048992156733359,
+        "shared_link_floor": 0.0
+      },
+      "ca_exposed_stages": {
+        "other": 0.005454545454545455,
+        "SCALAR": 0.8696969696969697,
+        "SIMD": 3.386060606060606,
+        "MTE2": 0.6890909090909091,
+        "MTE3": 0.2406060606060606,
+        "arrival": 0.05090909090909091
+      },
+      "public_minus_ca": {
+        "arrival": 0.28753349986124765,
+        "SCALAR": -0.09873355070003986,
+        "MTE2": 2.8787304926684527,
+        "SIMD": 0.21610144386349317,
+        "MTE3": 0.08307180476284481,
+        "other": 0.004594446702187904,
+        "shared_link_floor": 0.0
+      },
+      "trace": "runs/post25/width-Ascend950DT_9582/profile/OPPROF_20261120004915_JGOWACSLTAVZUDPK/MhcPost_59130ccee6717ff2c0f15b485e731162_6/5/simulator/trace.json",
+      "sha256": "58c618e5a638683ec18711a4dbc27e8ae3b3b1377396cd689e9bed8730403133"
+    },
+    {
+      "sku": "Ascend950PR_957b",
+      "shape": [
+        65,
+        4,
+        5120
+      ],
+      "state": "reuse",
+      "role": "entry",
+      "prior_aiv": 41,
+      "active_aiv": 33,
+      "core": "core17.veccore1",
+      "public_us": 8.707056106458838,
+      "ca_us": 5.538181818181818,
+      "opt_in_us": 8.707056106458838,
+      "public_model_stages": {
+        "arrival": 0.33844259077033856,
+        "SCALAR": 0.7709634189969299,
+        "MTE2": 3.5678214017593617,
+        "SIMD": 3.6961018374065695,
+        "MTE3": 0.3236778653689054,
+        "other": 0.010048992156733359,
+        "shared_link_floor": 0.0
+      },
+      "ca_exposed_stages": {
+        "other": 0.005454545454545455,
+        "SCALAR": 0.7672727272727272,
+        "SIMD": 3.386060606060606,
+        "MTE2": 0.9387878787878788,
+        "MTE3": 0.3890909090909091,
+        "arrival": 0.051515151515151514
+      },
+      "public_minus_ca": {
+        "arrival": 0.28692743925518704,
+        "SCALAR": 0.003690691724202666,
+        "MTE2": 2.6290335229714827,
+        "SIMD": 0.3100412313459633,
+        "MTE3": -0.06541304372200368,
+        "other": 0.004594446702187904,
+        "shared_link_floor": 0.0
+      },
+      "trace": "runs/post25/width-Ascend950PR_957b/profile/OPPROF_20261120005944_MLTXMFLLHUGEDKVN/MhcPost_59130ccee6717ff2c0f15b485e731162_6/4/simulator/trace.json",
+      "sha256": "f52af7c9f3b6cbb79a1d0046e40ec1ae3709e99b414d89a4a957fdf1442500e3"
+    },
+    {
+      "sku": "Ascend950PR_957b",
+      "shape": [
+        65,
+        4,
+        5120
+      ],
+      "state": "reuse",
+      "role": "repeat",
+      "prior_aiv": 41,
+      "active_aiv": 33,
+      "core": "core17.veccore0",
+      "public_us": 8.707056106458838,
+      "ca_us": 5.277575757575757,
+      "opt_in_us": 5.480915107244194,
+      "public_model_stages": {
+        "arrival": 0.33844259077033856,
+        "SCALAR": 0.7709634189969299,
+        "MTE2": 3.5678214017593617,
+        "SIMD": 3.6961018374065695,
+        "MTE3": 0.3236778653689054,
+        "other": 0.010048992156733359,
+        "shared_link_floor": 0.0
+      },
+      "ca_exposed_stages": {
+        "other": 0.005454545454545455,
+        "SCALAR": 0.8454545454545455,
+        "SIMD": 3.386060606060606,
+        "MTE2": 0.6927272727272727,
+        "MTE3": 0.29757575757575755,
+        "arrival": 0.0503030303030303
+      },
+      "public_minus_ca": {
+        "arrival": 0.28813956046730826,
+        "SCALAR": -0.07449112645761558,
+        "MTE2": 2.875094129032089,
+        "SIMD": 0.3100412313459633,
+        "MTE3": 0.026102107793147866,
+        "other": 0.004594446702187904,
+        "shared_link_floor": 0.0
+      },
+      "trace": "runs/post25/width-Ascend950PR_957b/profile/OPPROF_20261120005944_MLTXMFLLHUGEDKVN/MhcPost_59130ccee6717ff2c0f15b485e731162_6/5/simulator/trace.json",
+      "sha256": "283d2f90aed40fe8b13b72d9df79cb8ef25c50feb5b0ff4bf50ed3704d2ddf92"
+    }
+  ]
+}

@@ -1,5 +1,11 @@
 # BF16 → FP32 Cast · 从双缓冲到大 prefill
 
+## 先给两个空槽发读，再进入稳态
+
+![950PR DeepSeek V4.1 Flash 单卡 B8×256Ki 的 Cast 前四块](../../results/v0.26/memory/flash-256ki-pr-head.png)
+
+输入 [2097152,32]，输出宽度相同、dtype 从 BF16 变成 FP32。56 个 AIV 各用两个输入槽；末核完成 57 个 UB 块。总预测 232.748 µs，完整 CA 223.493 µs。新公开诊断把预测的首两笔发起列为 1.376、1.431 µs；实测 1.165、1.221 µs。二者间隔都是 91 周期，最初的 0.211 µs 偏移来自首发。第 29 块的读起点仍晚 24.745 µs。[全部输入输出、公式、同数据量的 Pro 对照及未完成的 256Ki 实验](../../results/v0.26/memory/README.md)
+
 ## Pro 单卡 8×128k，950PR 真实末核的第 28–30 块
 
 ![950PR 的 Pro 大 prefill，中间三个 UB 块共用相同设备时间坐标](../../results/v0.25/pro-128ki-pr-middle.png)

@@ -1,0 +1,482 @@
+{
+  "utc": "2026-11-19T17:03:56.418525+00:00",
+  "jobs": [
+    {
+      "id": "fused-t72-pr",
+      "sku": "Ascend950PR_957b",
+      "op": "mhc_pre_sinkhorn",
+      "shape": [
+        72,
+        4,
+        4096
+      ],
+      "attrs": {
+        "num_iters": 20,
+        "need_backward": false
+      },
+      "api": "aclnnMhcPreSinkhorn",
+      "dtype": "bf16",
+      "runner": "build/smoke/extension_indexer_mhc",
+      "args": [
+        "mhc_pre_sinkhorn",
+        "72",
+        "4",
+        "4096"
+      ],
+      "kernels": 1,
+      "nchecks": 3,
+      "wall_s": 2700,
+      "raw_mib": 10240,
+      "kernel": "MhcPreSinkhorn_bd8e37c67f2294e1437f03bb2bace96c_1000_mix_aic",
+      "elf": "280a1947dc8e2070b7563e06eed75c04683f7d684e1e618da650051ff5eda9b2",
+      "predictions": {
+        "Ascend950DT_9582": {
+          "v025_us": 15.752121212121212,
+          "candidate_us": 13.526333718930623,
+          "target_plan": {
+            "active_aic": 32,
+            "active_aiv": 64,
+            "m_blocks": 1,
+            "k_blocks": 32,
+            "tile": [
+              80,
+              512
+            ],
+            "stage2_payload_aiv": 36,
+            "rows_per_aiv": 2,
+            "largest_k": 512,
+            "critical_aiv_stage1_elements": 18432,
+            "critical_aic_mmad": 6,
+            "l1_k": 384,
+            "l0_k": 96,
+            "critical_aic_padded_mac": 1310720,
+            "stage2_rows": 2
+          },
+          "stages_us": {
+            "dispatch_and_handoff": 7.738910250582205,
+            "stage1_cast": 1.1249416473393254,
+            "stage1_cube": 0.6636939354773079,
+            "stage2_rows": 3.998787885531783,
+            "exposed_hbm_floor": 0.0
+          },
+          "schedule": "k_split_cv2_joint_sinkhorn"
+        },
+        "Ascend950PR_957b": {
+          "v025_us": 16.64,
+          "candidate_us": 14.422952570011677,
+          "target_plan": {
+            "active_aic": 22,
+            "active_aiv": 44,
+            "m_blocks": 1,
+            "k_blocks": 22,
+            "tile": [
+              80,
+              768
+            ],
+            "stage2_payload_aiv": 36,
+            "rows_per_aiv": 2,
+            "largest_k": 768,
+            "critical_aiv_stage1_elements": 27648,
+            "critical_aic_mmad": 8,
+            "l1_k": 384,
+            "l0_k": 96,
+            "critical_aic_padded_mac": 1966080,
+            "stage2_rows": 2
+          },
+          "stages_us": {
+            "dispatch_and_handoff": 7.6330732210405365,
+            "stage1_cast": 1.7332660707646672,
+            "stage1_cube": 0.9491626783939344,
+            "stage2_rows": 4.107450599812538,
+            "exposed_hbm_floor": 0.0
+          },
+          "schedule": "k_split_cv2_joint_sinkhorn"
+        },
+        "Ascend970DT": {
+          "v025_us": 14.378333333333332,
+          "candidate_us": 14.378333333333332,
+          "target_plan": {
+            "active_aic": 120,
+            "active_aiv": 120,
+            "m_blocks": 1,
+            "k_blocks": 64,
+            "tile": [
+              80,
+              256
+            ],
+            "stage2_payload_aiv": 72,
+            "rows_per_aiv": 1
+          },
+          "stages_us": {
+            "overlap_window": 14.378333333333332,
+            "exposed_hbm_floor": 0.0
+          },
+          "schedule": "prior_overlap_template"
+        }
+      }
+    },
+    {
+      "id": "fused-t72-dt",
+      "sku": "Ascend950DT_9582",
+      "op": "mhc_pre_sinkhorn",
+      "shape": [
+        72,
+        4,
+        4096
+      ],
+      "attrs": {
+        "num_iters": 20,
+        "need_backward": false
+      },
+      "api": "aclnnMhcPreSinkhorn",
+      "dtype": "bf16",
+      "runner": "build/smoke/extension_indexer_mhc",
+      "args": [
+        "mhc_pre_sinkhorn",
+        "72",
+        "4",
+        "4096"
+      ],
+      "kernels": 1,
+      "nchecks": 3,
+      "wall_s": 2700,
+      "raw_mib": 10240,
+      "kernel": "MhcPreSinkhorn_bd8e37c67f2294e1437f03bb2bace96c_1000_mix_aic",
+      "elf": "280a1947dc8e2070b7563e06eed75c04683f7d684e1e618da650051ff5eda9b2",
+      "predictions": {
+        "Ascend950DT_9582": {
+          "v025_us": 15.752121212121212,
+          "candidate_us": 13.526333718930623,
+          "target_plan": {
+            "active_aic": 32,
+            "active_aiv": 64,
+            "m_blocks": 1,
+            "k_blocks": 32,
+            "tile": [
+              80,
+              512
+            ],
+            "stage2_payload_aiv": 36,
+            "rows_per_aiv": 2,
+            "largest_k": 512,
+            "critical_aiv_stage1_elements": 18432,
+            "critical_aic_mmad": 6,
+            "l1_k": 384,
+            "l0_k": 96,
+            "critical_aic_padded_mac": 1310720,
+            "stage2_rows": 2
+          },
+          "stages_us": {
+            "dispatch_and_handoff": 7.738910250582205,
+            "stage1_cast": 1.1249416473393254,
+            "stage1_cube": 0.6636939354773079,
+            "stage2_rows": 3.998787885531783,
+            "exposed_hbm_floor": 0.0
+          },
+          "schedule": "k_split_cv2_joint_sinkhorn"
+        },
+        "Ascend950PR_957b": {
+          "v025_us": 16.64,
+          "candidate_us": 14.422952570011677,
+          "target_plan": {
+            "active_aic": 22,
+            "active_aiv": 44,
+            "m_blocks": 1,
+            "k_blocks": 22,
+            "tile": [
+              80,
+              768
+            ],
+            "stage2_payload_aiv": 36,
+            "rows_per_aiv": 2,
+            "largest_k": 768,
+            "critical_aiv_stage1_elements": 27648,
+            "critical_aic_mmad": 8,
+            "l1_k": 384,
+            "l0_k": 96,
+            "critical_aic_padded_mac": 1966080,
+            "stage2_rows": 2
+          },
+          "stages_us": {
+            "dispatch_and_handoff": 7.6330732210405365,
+            "stage1_cast": 1.7332660707646672,
+            "stage1_cube": 0.9491626783939344,
+            "stage2_rows": 4.107450599812538,
+            "exposed_hbm_floor": 0.0
+          },
+          "schedule": "k_split_cv2_joint_sinkhorn"
+        },
+        "Ascend970DT": {
+          "v025_us": 14.378333333333332,
+          "candidate_us": 14.378333333333332,
+          "target_plan": {
+            "active_aic": 120,
+            "active_aiv": 120,
+            "m_blocks": 1,
+            "k_blocks": 64,
+            "tile": [
+              80,
+              256
+            ],
+            "stage2_payload_aiv": 72,
+            "rows_per_aiv": 1
+          },
+          "stages_us": {
+            "overlap_window": 14.378333333333332,
+            "exposed_hbm_floor": 0.0
+          },
+          "schedule": "prior_overlap_template"
+        }
+      }
+    },
+    {
+      "id": "fused-t113-pr",
+      "sku": "Ascend950PR_957b",
+      "op": "mhc_pre_sinkhorn",
+      "shape": [
+        113,
+        4,
+        4096
+      ],
+      "attrs": {
+        "num_iters": 20,
+        "need_backward": false
+      },
+      "api": "aclnnMhcPreSinkhorn",
+      "dtype": "bf16",
+      "runner": "build/smoke/extension_indexer_mhc",
+      "args": [
+        "mhc_pre_sinkhorn",
+        "113",
+        "4",
+        "4096"
+      ],
+      "kernels": 1,
+      "nchecks": 3,
+      "wall_s": 2700,
+      "raw_mib": 10240,
+      "kernel": "MhcPreSinkhorn_bd8e37c67f2294e1437f03bb2bace96c_1000_mix_aic",
+      "elf": "280a1947dc8e2070b7563e06eed75c04683f7d684e1e618da650051ff5eda9b2",
+      "predictions": {
+        "Ascend950DT_9582": {
+          "v025_us": 21.69030303030303,
+          "candidate_us": 14.506560881449703,
+          "target_plan": {
+            "active_aic": 32,
+            "active_aiv": 64,
+            "m_blocks": 1,
+            "k_blocks": 32,
+            "tile": [
+              128,
+              512
+            ],
+            "stage2_payload_aiv": 57,
+            "rows_per_aiv": 2,
+            "largest_k": 512,
+            "critical_aiv_stage1_elements": 29184,
+            "critical_aic_mmad": 8,
+            "l1_k": 256,
+            "l0_k": 64,
+            "critical_aic_padded_mac": 2097152,
+            "stage2_rows": 2
+          },
+          "stages_us": {
+            "dispatch_and_handoff": 7.738910250582205,
+            "stage1_cast": 1.781157608287265,
+            "stage1_cube": 0.9877051370484489,
+            "stage2_rows": 3.998787885531783,
+            "exposed_hbm_floor": 0.0
+          },
+          "schedule": "k_split_cv2_joint_sinkhorn"
+        },
+        "Ascend950PR_957b": {
+          "v025_us": 23.165454545454544,
+          "candidate_us": 18.020144771709408,
+          "target_plan": {
+            "active_aic": 22,
+            "active_aiv": 44,
+            "m_blocks": 1,
+            "k_blocks": 22,
+            "tile": [
+              128,
+              768
+            ],
+            "stage2_payload_aiv": 38,
+            "rows_per_aiv": 3,
+            "largest_k": 768,
+            "critical_aiv_stage1_elements": 43776,
+            "critical_aic_mmad": 12,
+            "l1_k": 256,
+            "l0_k": 64,
+            "critical_aic_padded_mac": 3145728,
+            "stage2_rows": 3
+          },
+          "stages_us": {
+            "dispatch_and_handoff": 7.6330732210405365,
+            "stage1_cast": 2.74433794537739,
+            "stage1_cube": 1.4815577055726732,
+            "stage2_rows": 6.161175899718808,
+            "exposed_hbm_floor": 0.0
+          },
+          "schedule": "k_split_cv2_joint_sinkhorn"
+        },
+        "Ascend970DT": {
+          "v025_us": 19.815,
+          "candidate_us": 19.815,
+          "target_plan": {
+            "active_aic": 120,
+            "active_aiv": 120,
+            "m_blocks": 1,
+            "k_blocks": 64,
+            "tile": [
+              128,
+              256
+            ],
+            "stage2_payload_aiv": 113,
+            "rows_per_aiv": 1
+          },
+          "stages_us": {
+            "overlap_window": 19.815,
+            "exposed_hbm_floor": 0.0
+          },
+          "schedule": "prior_overlap_template"
+        }
+      }
+    },
+    {
+      "id": "fused-t113-dt",
+      "sku": "Ascend950DT_9582",
+      "op": "mhc_pre_sinkhorn",
+      "shape": [
+        113,
+        4,
+        4096
+      ],
+      "attrs": {
+        "num_iters": 20,
+        "need_backward": false
+      },
+      "api": "aclnnMhcPreSinkhorn",
+      "dtype": "bf16",
+      "runner": "build/smoke/extension_indexer_mhc",
+      "args": [
+        "mhc_pre_sinkhorn",
+        "113",
+        "4",
+        "4096"
+      ],
+      "kernels": 1,
+      "nchecks": 3,
+      "wall_s": 2700,
+      "raw_mib": 10240,
+      "kernel": "MhcPreSinkhorn_bd8e37c67f2294e1437f03bb2bace96c_1000_mix_aic",
+      "elf": "280a1947dc8e2070b7563e06eed75c04683f7d684e1e618da650051ff5eda9b2",
+      "predictions": {
+        "Ascend950DT_9582": {
+          "v025_us": 21.69030303030303,
+          "candidate_us": 14.506560881449703,
+          "target_plan": {
+            "active_aic": 32,
+            "active_aiv": 64,
+            "m_blocks": 1,
+            "k_blocks": 32,
+            "tile": [
+              128,
+              512
+            ],
+            "stage2_payload_aiv": 57,
+            "rows_per_aiv": 2,
+            "largest_k": 512,
+            "critical_aiv_stage1_elements": 29184,
+            "critical_aic_mmad": 8,
+            "l1_k": 256,
+            "l0_k": 64,
+            "critical_aic_padded_mac": 2097152,
+            "stage2_rows": 2
+          },
+          "stages_us": {
+            "dispatch_and_handoff": 7.738910250582205,
+            "stage1_cast": 1.781157608287265,
+            "stage1_cube": 0.9877051370484489,
+            "stage2_rows": 3.998787885531783,
+            "exposed_hbm_floor": 0.0
+          },
+          "schedule": "k_split_cv2_joint_sinkhorn"
+        },
+        "Ascend950PR_957b": {
+          "v025_us": 23.165454545454544,
+          "candidate_us": 18.020144771709408,
+          "target_plan": {
+            "active_aic": 22,
+            "active_aiv": 44,
+            "m_blocks": 1,
+            "k_blocks": 22,
+            "tile": [
+              128,
+              768
+            ],
+            "stage2_payload_aiv": 38,
+            "rows_per_aiv": 3,
+            "largest_k": 768,
+            "critical_aiv_stage1_elements": 43776,
+            "critical_aic_mmad": 12,
+            "l1_k": 256,
+            "l0_k": 64,
+            "critical_aic_padded_mac": 3145728,
+            "stage2_rows": 3
+          },
+          "stages_us": {
+            "dispatch_and_handoff": 7.6330732210405365,
+            "stage1_cast": 2.74433794537739,
+            "stage1_cube": 1.4815577055726732,
+            "stage2_rows": 6.161175899718808,
+            "exposed_hbm_floor": 0.0
+          },
+          "schedule": "k_split_cv2_joint_sinkhorn"
+        },
+        "Ascend970DT": {
+          "v025_us": 19.815,
+          "candidate_us": 19.815,
+          "target_plan": {
+            "active_aic": 120,
+            "active_aiv": 120,
+            "m_blocks": 1,
+            "k_blocks": 64,
+            "tile": [
+              128,
+              256
+            ],
+            "stage2_payload_aiv": 113,
+            "rows_per_aiv": 1
+          },
+          "stages_us": {
+            "overlap_window": 19.815,
+            "exposed_hbm_floor": 0.0
+          },
+          "schedule": "prior_overlap_template"
+        }
+      }
+    }
+  ],
+  "hashes": {
+    "development/validation/presink26/campaign.py": "7831d2a4166ec5bc07701a6709e0dfc149443f80261442e03d93c9c99ae6cfe8",
+    "development/validation/presink26/prices.py": "ea8fb08fb18c4d798812655cf259161769d9ef444139d00219644092f6f6f99b",
+    "operator_model/mhc_pre_sink_resource.py": "81a9784423f3c9d6a89537467cf7d758138ec780d357a7a8d9b209330ec67ab4",
+    "operator_model/mhc_sink_resource.py": "077b34acca1838dc576ef4825bc5d4a4e312b48bac0e5e2dcbf39f6019550f14",
+    "results/v0.26/presink/archive.json": "d3dae936713b3aca6f9323b5a7d7fb2e1e8a2064348528ab3d92d9be63de3136",
+    "results/v0.26/presink/prices.json": "95edd9ad15547ee8bebbe78c1d046e1847fd3c0c7877b1b37c5b6f51118bf23d",
+    "build/smoke/extension_indexer_mhc": "01a52e113e6d5bc91f6764913c986c5d2df39a2f2751389cac64bd04b0a5648d",
+    "smoke/extension_indexer_mhc.cpp": "a1536bfd32a9c7ffec7fb2434d00cbecb8afa21a14e73c2040d54d2f2cb9b5e5",
+    "results/v0.8/fusion/model.json": "8684a4254e7b53b7bb8f6ced2a7b934b1a19c59c71a814d01e204079560ca4a8",
+    "development/validation/pro_prefill23/evidence.py": "cfaf82d19934f80e6d6eb1b512f88be8d6b5ccdc50ac13c0ba5e362b89bc8603",
+    "development/validation/sku19/collect.py": "f16296c2d5fb3ec14e5afd65a4f57ff99b9f2623cfaa599c49d5cf5ea3234266",
+    "development/validation/sku17/campaign_collect.py": "128913632124b4ff430595a34d239e53742f2cb4d1a16ea82a581180bfb3f792",
+    "scripts/cann-run.sh": "d529513abc0bc340a56c91365a9e72d5e434d2cb4841be1692930294cd0624df",
+    "configs/chips/Ascend950PR_957b.json": "2bb5b0b34b8d04e255e24ea5d12c73407ace6bb7154ba6aa603b338fc252ada7",
+    "configs/chips/Ascend950DT_9582.json": "54d68c49374f8fab57ae16b05923d7ea2874cc48083e0728bcbc60f467bb71ec",
+    "configs/chips/Ascend970DT.json": "837796ec9f3b39888950cfe6f703b63c4bf9ced22a366b66f300f1389a8006f2"
+  },
+  "role": "Two unseen token counts after freezing DT-only phase calibrations and the previous resource baseline. T72: two local post rows on each SKU. T113: two DT / three PR post rows. 970DT projection only.",
+  "budget": "One process, nice +10, 16 logical CPUs, require load <0.70 of available logical CPUs and 25 GiB free. Per run 45 min / 10 GiB. No retries automatically.",
+  "gates": "Expected SKU, memory model, one actual MIX ELF, three complete all-element goldens, official roster and duration table with all core instruction ends; fixed launch input attributes. No timing for missing absolute start/end."
+}

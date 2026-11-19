@@ -1,0 +1,599 @@
+{
+  "qualified": false,
+  "actual_sku_verified": true,
+  "memory_model": "lpddr5_6400M_bailu.ini",
+  "host_api_verified": true,
+  "golden_qualified": false,
+  "output_groups": {
+    "attention": [
+      31744,
+      0
+    ],
+    "aqk": [
+      15872,
+      0
+    ],
+    "akk": [
+      15872,
+      1
+    ],
+    "state_vk": [
+      16384,
+      0
+    ]
+  },
+  "correct_initial_state": true,
+  "sync_errors": 0,
+  "sync_examples": [],
+  "exact_stage_elfs": true,
+  "full_windows": true,
+  "chronological": true,
+  "process_complete": false,
+  "observed_kernels": [
+    "ChunkKdaFwdPrepare_171e9a19df4c0d44ca00a177d8fe300c_32513546_mix_aic",
+    "ChunkFwdH_72371232203476155baf45810c33a7f9_7710_mix_aic",
+    "ChunkKdaFwdFinalize_c0d447f32579acd296e1c16d6d9c7d38_0"
+  ],
+  "stages": [
+    {
+      "kernel": "ChunkKdaFwdPrepare_171e9a19df4c0d44ca00a177d8fe300c_32513546_mix_aic",
+      "ordinal": 0,
+      "family": "chunk_kda_fwd_prepare",
+      "label": "official FLA V2 stage",
+      "first_tick": 5906,
+      "last_tick": 38724,
+      "ca_us": 19.88969696969697,
+      "active_aic": 4,
+      "active_aiv": 8,
+      "mmads": 32,
+      "resource": {
+        "descriptor_bytes": {
+          "OUT->UB": 511344,
+          "OUT->L1": 524288,
+          "L1->L0A": 196608,
+          "L1->L0B": 327680,
+          "L0C->UB": 81920,
+          "L0C->OUT": 285696,
+          "L0C->L1": 16384,
+          "UB->OUT": 952320
+        },
+        "mmad_issued_shapes": {
+          "32x16x128": 4,
+          "32x32x128": 4,
+          "32x48x128": 4,
+          "32x64x128": 4,
+          "32x32x32": 8,
+          "64x128x64": 8
+        },
+        "issued_mmad_ops": 14155776,
+        "queue_instruction_counts": {
+          "SCALAR": 23372,
+          "FLOWCTRL": 1824,
+          "MTE2": 160,
+          "MTE3": 68,
+          "PUSHQ": 92,
+          "MTE1": 80,
+          "CUBE": 32,
+          "FIXP": 64,
+          "RVECEX": 99136,
+          "RVECSU": 4596,
+          "RVECLD": 32324,
+          "RVECLP": 592,
+          "RVECST": 11680
+        }
+      },
+      "cores": {
+        "core1.veccore1": {
+          "first_tick": 5968,
+          "last_tick": 18309,
+          "end": [
+            "0x915a3293ac",
+            18302,
+            18302
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              18304,
+              18309
+            ]
+          ],
+          "official_us": "7.48",
+          "mmads": 0,
+          "phys_digest": "12e198a03de085a6edddfc9717c86dc591e891c5240b420b2415320f5242e0e9",
+          "sync_digest": "eb793fc3c5a2f3f0da400de3f6f83d62d72ffbb9cbe9e628a3a3150d18b44668",
+          "shard_sha256": "84e93bd9ee24b3162e2d8f00938dd0d2ffe6f611841127a351b190e47c6c21f3"
+        },
+        "core1.cubecore0": {
+          "first_tick": 6227,
+          "last_tick": 38617,
+          "end": [
+            "0x9159287908",
+            32156,
+            32156
+          ],
+          "end_labels": [],
+          "official_us": "19.63",
+          "mmads": 8,
+          "phys_digest": "eb83b067e90b6385a547f14e24d9829ff0893544391182142d2ce08a6923c18b",
+          "sync_digest": "3700641521af019f9edb29a469e4e5e0bda64f0a887ac5e17a0f85a650f7aea7",
+          "shard_sha256": "0d178192ed5ed30484318f2beb601a52456c31d78a046c8cc99344f018685bb0"
+        },
+        "core17.veccore1": {
+          "first_tick": 6275,
+          "last_tick": 18326,
+          "end": [
+            "0x915a3293ac",
+            18319,
+            18319
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              18321,
+              18326
+            ]
+          ],
+          "official_us": "7.3",
+          "mmads": 0,
+          "phys_digest": "b579569323291a5538855f3a8c42be2aa4a680d5c9569e59649d4432bf3b1387",
+          "sync_digest": "9df0f7aad7f12d891a5b614cc25f1b5ba3f649c6e4b648da3a1c76998db2aaad",
+          "shard_sha256": "596bce75d6094ed757cdc60eae584a838aa37786a3c7b3e1fec354d3176a9a43"
+        },
+        "core0.veccore1": {
+          "first_tick": 5983,
+          "last_tick": 18365,
+          "end": [
+            "0x915a3293ac",
+            18358,
+            18358
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              18360,
+              18365
+            ]
+          ],
+          "official_us": "7.5",
+          "mmads": 0,
+          "phys_digest": "14d48520035f69f2bc078a10f6a4fe83f8d91a75c397150125e0d6c1fd3f834b",
+          "sync_digest": "774f4782c0b4df517a9dd52aadab268f6b78e60e65d9635c2b0b0efe6bfafadf",
+          "shard_sha256": "bec9c3a5446f377352483dabfc1b6d885533b741ce97ef3e3308aa40787c3f32"
+        },
+        "core16.veccore1": {
+          "first_tick": 6270,
+          "last_tick": 18394,
+          "end": [
+            "0x915a3293ac",
+            18387,
+            18387
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              18389,
+              18394
+            ]
+          ],
+          "official_us": "7.35",
+          "mmads": 0,
+          "phys_digest": "301ad46334a64a2764d17ffbc1342ac9d55f445c8640ea43c45bd7dc464d318f",
+          "sync_digest": "812714ea17d368e84d1780a01daa518fa526d30074c0c2e98c639f6dfd70db93",
+          "shard_sha256": "c3c0436821a65330f58c469c2145ee10f94be31093ee67ca2ffc1c1dbd4808b0"
+        },
+        "core0.cubecore0": {
+          "first_tick": 6104,
+          "last_tick": 38724,
+          "end": [
+            "0x9159287908",
+            32255,
+            32255
+          ],
+          "end_labels": [],
+          "official_us": "19.77",
+          "mmads": 8,
+          "phys_digest": "11d83b276e01fa4dfe22edccc95d2489600f801043f01fe4afd19e4abe9b557c",
+          "sync_digest": "88483071fd1ee2dfe5e11eeb618804d6dea4ed5e0d4e3c947c7591e860f6c5fc",
+          "shard_sha256": "08cfe8c621e124671cbb09e54c3cc87d93fc777af9f33ee79dc31fc67a64573e"
+        },
+        "core16.cubecore0": {
+          "first_tick": 6304,
+          "last_tick": 38378,
+          "end": [
+            "0x9159287908",
+            31973,
+            31973
+          ],
+          "end_labels": [],
+          "official_us": "19.44",
+          "mmads": 8,
+          "phys_digest": "a6a462c8fea0e6ac22dd67636f9278abb58414388f88a8703170e7447a7046f3",
+          "sync_digest": "c909855de3797865735d86056ef422879e030f7e760cac2afca02f330c359bbd",
+          "shard_sha256": "d8d99766ee59144620253ac54a418570c50da7fecb8ea6bec5d0a857520db5dd"
+        },
+        "core17.cubecore0": {
+          "first_tick": 6362,
+          "last_tick": 37841,
+          "end": [
+            "0x9159287908",
+            31945,
+            31945
+          ],
+          "end_labels": [],
+          "official_us": "19.08",
+          "mmads": 8,
+          "phys_digest": "e7cf069aaccedb0c84461979d279d751aac95088214f08332a25a4bf2d34ade2",
+          "sync_digest": "a8bbc71dd684312dcf1aafb2666eaaf028626268e8b4011bb3be6a6e7ed39706",
+          "shard_sha256": "e07695d7d758d21aa6a9fa83dbe498607ebba992d4ab2e36f554b03b31d43292"
+        },
+        "core1.veccore0": {
+          "first_tick": 5974,
+          "last_tick": 37203,
+          "end": [
+            "0x915a3293ac",
+            37196,
+            37196
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              37198,
+              37203
+            ]
+          ],
+          "official_us": "18.93",
+          "mmads": 0,
+          "phys_digest": "185d2bd5b77c3caa81c98030136fa4d4c0d26c6e4958c087582bbfb86976ccbc",
+          "sync_digest": "2af2bb8456114004f2746cfd909e455271eff2a6b9acb588bfc5f87db5a9a256",
+          "shard_sha256": "73b89d02eb3a52d919eaf51ca50a71745beceb08e32183b1ffc92dde3e5def57"
+        },
+        "core17.veccore0": {
+          "first_tick": 6255,
+          "last_tick": 36490,
+          "end": [
+            "0x915a3293ac",
+            36483,
+            36483
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              36485,
+              36490
+            ]
+          ],
+          "official_us": "18.32",
+          "mmads": 0,
+          "phys_digest": "738eff36400e56cdd3b2cc943ca4fd74b7c28fc3460543ac89de1b53659664df",
+          "sync_digest": "b41397c5d898cf9e4836067bf414d5c91e587690ae8cac30de04377a2b1ef234",
+          "shard_sha256": "3ed2b1097f4691ab779f282bb8cb72e10b2f15c52902f27ec428a225d5021c86"
+        },
+        "core16.veccore0": {
+          "first_tick": 6194,
+          "last_tick": 36982,
+          "end": [
+            "0x915a3293ac",
+            36975,
+            36975
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              36977,
+              36982
+            ]
+          ],
+          "official_us": "18.66",
+          "mmads": 0,
+          "phys_digest": "f6293e41aeb001d297d2517f4139a8e835a892490aabb691361eb850a2f80533",
+          "sync_digest": "1e58c8db5505e40f2b1ddc15fdc762011b7b6cc651e6f52a1acc88c227c70829",
+          "shard_sha256": "94bb21be6ebb7c49673504b90577e53013828e93fa8d19beccf3460e1c8c1f87"
+        },
+        "core0.veccore0": {
+          "first_tick": 5906,
+          "last_tick": 37308,
+          "end": [
+            "0x915a3293ac",
+            37301,
+            37301
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              37303,
+              37308
+            ]
+          ],
+          "official_us": "19.03",
+          "mmads": 0,
+          "phys_digest": "88ab818b52ea974cbd755ab6a9cf38f31f3605cb07f0b57d4b03eaaf4bc3fb71",
+          "sync_digest": "d411421e48a87af6a3d8400d6a19994fbefd2dff5476d779e22d880c8770b4b5",
+          "shard_sha256": "a3029a87f5e05aeb3e4a6b25874bb49c42a9f15e6ff3d81ddc480daf57e6a5f0"
+        }
+      },
+      "captured_binary": "results/v0.24/kda-prefetch/raw/prospective26-Ascend950PR_957b-248-1/profile/OPPROF_20261120010553_OQIXRRLGZBPUCCJI/ChunkKdaFwdPrepare_171e9a19df4c0d44ca00a177d8fe300c_32513546_mix_aic/0/dump/aicore_binary.o",
+      "device_text_sha256": "3cdc897359178d665df362b3fcb2bdacb830af2357a2e0b6f7d1f9c79f3d136a",
+      "published_names": [
+        "ChunkKdaFwdPrepare_9a5c7ba661140e04d3bf3c972e6629a6.o",
+        "ChunkKdaFwdPrepare_ab956e5eb2ff99416b2f5173e788663a.o",
+        "ChunkKdaFwdPrepare_375ce9d41fcc2d706267f3750942ed8e.o",
+        "ChunkKdaFwdPrepare_171e9a19df4c0d44ca00a177d8fe300c.o"
+      ],
+      "aggregate": "results/v0.24/kda-prefetch/raw/prospective26-Ascend950PR_957b-248-1/profile/OPPROF_20261120010553_OQIXRRLGZBPUCCJI/ChunkKdaFwdPrepare_171e9a19df4c0d44ca00a177d8fe300c_32513546_mix_aic/0/simulator/trace.json",
+      "aggregate_sha256": "423a23beef66189be44a16626a9a2980280cb848a47d15049243395e22be3947"
+    },
+    {
+      "kernel": "ChunkFwdH_72371232203476155baf45810c33a7f9_7710_mix_aic",
+      "ordinal": 0,
+      "family": "chunk_fwd_h",
+      "label": "official FLA V2 stage",
+      "first_tick": 47111,
+      "last_tick": 71718,
+      "ca_us": 14.913333333333334,
+      "active_aic": 1,
+      "active_aiv": 2,
+      "mmads": 8,
+      "resource": {
+        "descriptor_bytes": {
+          "OUT->L1": 321536,
+          "L1->L0A": 131072,
+          "L1->L0B": 196608,
+          "L0C->UB": 389120,
+          "OUT->UB": 196608,
+          "UB->OUT": 323584
+        },
+        "mmad_issued_shapes": {
+          "64x128x128": 4,
+          "128x128x64": 4
+        },
+        "issued_mmad_ops": 16777216,
+        "queue_instruction_counts": {
+          "SCALAR": 3581,
+          "FLOWCTRL": 349,
+          "MTE2": 48,
+          "MTE1": 19,
+          "CUBE": 8,
+          "FIXP": 16,
+          "PUSHQ": 18,
+          "RVECLP": 35,
+          "RVECEX": 10706,
+          "RVECLD": 3313,
+          "RVECST": 3049,
+          "RVECSU": 18,
+          "MTE3": 13
+        }
+      },
+      "cores": {
+        "core0.veccore1": {
+          "first_tick": 47170,
+          "last_tick": 48760,
+          "end": [
+            "0x9000d75724",
+            48753,
+            48753
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              48755,
+              48760
+            ]
+          ],
+          "official_us": "0.96",
+          "mmads": 0,
+          "phys_digest": "dfde49cfffd27f3a0e9d4ea0bc9e3d0694de3fea274ef50606eb862bf335bded",
+          "sync_digest": "1e3fd4d5f2aa2ec2dea9d5e1c341745798af8cb948470f31f06cbdc5389aa80e",
+          "shard_sha256": "279338aa493a4f06251cefb17abd4a2a11ef1fb19e9b90492d0078ac603a5978"
+        },
+        "core0.cubecore0": {
+          "first_tick": 47236,
+          "last_tick": 70760,
+          "end": [
+            "0x9000d36578",
+            67296,
+            67296
+          ],
+          "end_labels": [],
+          "official_us": "14.26",
+          "mmads": 8,
+          "phys_digest": "0cb20baf8ca8151a55ee29b77d29e6bf60ab531c36a1ab334c40fb04098d2fb8",
+          "sync_digest": "2741004e9313382548015446e9db2f24ce5c9030e81bf45eaee8ad40204e21f8",
+          "shard_sha256": "a777521b4505b8db217c1e065b5883c30b44e46ca1e43b010f23049a225fa931"
+        },
+        "core0.veccore0": {
+          "first_tick": 47111,
+          "last_tick": 71718,
+          "end": [
+            "0x9000d75724",
+            61457,
+            61457
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              71713,
+              71718
+            ]
+          ],
+          "official_us": "14.91",
+          "mmads": 0,
+          "phys_digest": "276d90e96ab06ccbfc098c818b57cd33918f4500b07974b430b98d91472e7a8d",
+          "sync_digest": "393e8a31228084670b1596275278d6d6df1df9556d04cdbe19b3305e8dc5e45b",
+          "shard_sha256": "1b9b5b42ab4547f5607511b60b5f9bc8894fdb13d74c69bd23ee29720a52c8ca"
+        }
+      },
+      "captured_binary": "results/v0.24/kda-prefetch/raw/prospective26-Ascend950PR_957b-248-1/profile/OPPROF_20261120010553_OQIXRRLGZBPUCCJI/ChunkFwdH_72371232203476155baf45810c33a7f9_7710_mix_aic/0/dump/aicore_binary.o",
+      "device_text_sha256": "db5714f85fe237be6eed9641dec19c925c9e44d729fbdadf62b38cf4ce966da5",
+      "published_names": [
+        "ChunkFwdH_72371232203476155baf45810c33a7f9.o"
+      ],
+      "aggregate": "results/v0.24/kda-prefetch/raw/prospective26-Ascend950PR_957b-248-1/profile/OPPROF_20261120010553_OQIXRRLGZBPUCCJI/ChunkFwdH_72371232203476155baf45810c33a7f9_7710_mix_aic/0/simulator/trace.json",
+      "aggregate_sha256": "cb8718db56a9276e35efecd53f06cdea12ef4058bee10cd86febd6a85d104844"
+    },
+    {
+      "kernel": "ChunkKdaFwdFinalize_c0d447f32579acd296e1c16d6d9c7d38_0",
+      "ordinal": 0,
+      "family": "chunk_kda_fwd_finalize",
+      "label": "official FLA V2 stage",
+      "first_tick": 73837,
+      "last_tick": 79636,
+      "ca_us": 3.5145454545454546,
+      "active_aic": 4,
+      "active_aiv": 0,
+      "mmads": 8,
+      "resource": {
+        "descriptor_bytes": {
+          "OUT->L1": 288896,
+          "L1->L0A": 98304,
+          "L1->L0B": 196608,
+          "L0C->OUT": 126976
+        },
+        "mmad_issued_shapes": {
+          "64x128x128": 3,
+          "64x128x64": 3,
+          "56x128x128": 1,
+          "56x128x56": 1
+        },
+        "issued_mmad_ops": 12075008,
+        "queue_instruction_counts": {
+          "SCALAR": 4225,
+          "FLOWCTRL": 333,
+          "MTE2": 40,
+          "MTE1": 24,
+          "CUBE": 8,
+          "FIXP": 8
+        }
+      },
+      "cores": {
+        "core16.cubecore0": {
+          "first_tick": 74075,
+          "last_tick": 79636,
+          "end": [
+            "0x9000d7c3f0",
+            78482,
+            78482
+          ],
+          "end_labels": [],
+          "official_us": "3.37",
+          "mmads": 2,
+          "phys_digest": "9e7fd45cd03314a388d97aa13cf20008ee96837bfc714feae839f7880a5d1a54",
+          "sync_digest": "89d0b30f2109af5f98c24231b13caad775daf390298a596193542b6e595c9249",
+          "shard_sha256": "b8f5010057f2d7859fface40339e7c1d10bc9b22197d05ffb625ca5cb9c0cf31"
+        },
+        "core1.cubecore0": {
+          "first_tick": 73888,
+          "last_tick": 79399,
+          "end": [
+            "0x9000d7c3f0",
+            78009,
+            78009
+          ],
+          "end_labels": [],
+          "official_us": "3.34",
+          "mmads": 2,
+          "phys_digest": "ccd2b6a295b48e6c34a4f2d4d1bc7253b89c25375187f1077b26e7bf93490dc7",
+          "sync_digest": "4d7093d4908586a8e22de098c907ddee882fc6ecf32da1b491243379de49613a",
+          "shard_sha256": "eb928ad0ae607fc047c75c67aa0b54e7dd742b1950a816941b4be606cac9dc0f"
+        },
+        "core17.cubecore0": {
+          "first_tick": 74142,
+          "last_tick": 79609,
+          "end": [
+            "0x9000d7c3f0",
+            78407,
+            78407
+          ],
+          "end_labels": [],
+          "official_us": "3.31",
+          "mmads": 2,
+          "phys_digest": "b8408972353ff71e913380d2db78ba797a3f7e92e7a6838e36b356e2df50a37b",
+          "sync_digest": "02b9cf8878a46076958cfcd926c52edadf1fd41e4cb474d993f6dbc9c21bffeb",
+          "shard_sha256": "d1110ad8001b9fc1e5f90cdcc5f75dbdfe391232a20002df17b5ac2514dc09fa"
+        },
+        "core0.cubecore0": {
+          "first_tick": 73837,
+          "last_tick": 79054,
+          "end": [
+            "0x9000d7c3f0",
+            77940,
+            77940
+          ],
+          "end_labels": [],
+          "official_us": "3.16",
+          "mmads": 2,
+          "phys_digest": "0cd6dea260bbc3a6f3ba1314c4f0a32527898a6a4b8437625d49c31de4ed3ce5",
+          "sync_digest": "a352932fbc33d106edceb1627a00dd418063a57a78efe5ca6829489e8244dd09",
+          "shard_sha256": "7f0ec4e74fd8faba0d2cb21d9e785b0a1d634651ebd8a06c5f8b3ec485659b12"
+        }
+      },
+      "captured_binary": "results/v0.24/kda-prefetch/raw/prospective26-Ascend950PR_957b-248-1/profile/OPPROF_20261120010553_OQIXRRLGZBPUCCJI/ChunkKdaFwdFinalize_c0d447f32579acd296e1c16d6d9c7d38_0/0/dump/aicore_binary.o",
+      "device_text_sha256": "2460a5a34f6e593d84d8b72b0d118ac867a1b7713386da64d39b107f40d64d7e",
+      "published_names": [
+        "ChunkKdaFwdFinalize_c0d447f32579acd296e1c16d6d9c7d38.o"
+      ],
+      "aggregate": "results/v0.24/kda-prefetch/raw/prospective26-Ascend950PR_957b-248-1/profile/OPPROF_20261120010553_OQIXRRLGZBPUCCJI/ChunkKdaFwdFinalize_c0d447f32579acd296e1c16d6d9c7d38_0/0/simulator/trace.json",
+      "aggregate_sha256": "85a07b0a9ade4b2dfeabb44b0dabe746ed2af813691d0a084aa205795bc20b13"
+    }
+  ],
+  "serialized_device_us": null,
+  "main_stages_us": null,
+  "device_span_us": null,
+  "log_sha256": "6bfbef0598a8cc61b67ab08712924a09cee7657cad05a7d80ca090c8ac495548",
+  "actual_aux_bf16": {
+    "aqk": {
+      "bytes": 31744,
+      "sha256": "8a30f12f8ead6c4dfb44724b09975c56d2755425aa3d886490dba89583de674f"
+    },
+    "akk": {
+      "bytes": 31744,
+      "sha256": "fd743c20bb5298160221832ceadd31898e0309dce41b25b31620dc02092172c1"
+    }
+  },
+  "case": {
+    "id": "prospective26-Ascend950PR_957b-248-1",
+    "shape": [
+      1,
+      248,
+      1,
+      1,
+      128,
+      128
+    ],
+    "sku": "Ascend950PR_957b",
+    "oracle": {
+      "attention": 31744,
+      "aqk": 15872,
+      "akk": 15872,
+      "state_vk": 16384
+    }
+  },
+  "cost": {
+    "exit_code": 0,
+    "stop": null,
+    "seconds": 192.1818387398962,
+    "peak_bytes": 389915084,
+    "began": "2026-11-19T17:05:53.370911+00:00",
+    "finished": "2026-11-19T17:09:05.552783+00:00",
+    "command": [
+      "bash",
+      "/home/l00925865/operator_sim/scripts/cann-run.sh",
+      "bash",
+      "-c",
+      "source \"$1/bin/set_env.bash\"; shift; exec \"$@\"",
+      "fla",
+      "/home/l00925865/operator_sim/results/chunk-recovery/fla2691/raw/fla_npu/opp/vendors/fla_npu_transformer",
+      "msopprof",
+      "simulator",
+      "--soc-version=Ascend950PR_957b",
+      "--dump=false",
+      "--launch-count=32",
+      "--timeout=15",
+      "--output=/home/l00925865/operator_sim/results/v0.24/kda-prefetch/raw/prospective26-Ascend950PR_957b-248-1/profile",
+      "/home/l00925865/operator_sim/results/v0.24/kda-prefetch/raw/host-kda",
+      "248",
+      "1"
+    ]
+  },
+  "registration_sha256": "d0823e029cbe4d9f6111e47c4ff4a9f6f21219d4d583211ec557af56f0eb9e04"
+}

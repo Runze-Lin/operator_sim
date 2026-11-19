@@ -1,0 +1,761 @@
+{
+  "calibration_status": "Workload-sized extrapolation on all three SKUs; no CA at these shapes. The actual upstream DeepSeek binding selects a separate HcPost implementation.",
+  "rows": [
+    {
+      "shape": [
+        262144,
+        4,
+        5120
+      ],
+      "batch": 8,
+      "context": 32768,
+      "chip": "Ascend950DT_9582",
+      "rows_per_longest_aiv": 4096,
+      "active": 64,
+      "channel_tiles": {
+        "count": 2,
+        "inner": 2560,
+        "tail": 2560,
+        "ub_bytes": 253952,
+        "inherited_ub": false
+      },
+      "first_us": 13871.491192613776,
+      "repeat_us": 6312.726830640547,
+      "query_ms": 0.822,
+      "work": {
+        "dtype": "bf16",
+        "cube_ops": 0,
+        "vec_ops": 53687091200,
+        "cube_ops_by_dtype": {},
+        "vec_ops_by_dtype": {
+          "fp32": 53687091200
+        },
+        "vec_ops_by_class": {
+          "alu": 48318382080,
+          "cast": 5368709120
+        },
+        "logical_read_bytes": 13442744320,
+        "logical_write_bytes": 10737418240,
+        "physical_hbm_bytes": null,
+        "scope": "Useful scalar-equivalent work (FMA=2), one logical read/write per tensor per kernel; excludes padding, cache traffic and ISA expansion.",
+        "notes": [
+          "Output cast counted once per element against FP32 source precision."
+        ]
+      }
+    },
+    {
+      "shape": [
+        262144,
+        4,
+        5120
+      ],
+      "batch": 8,
+      "context": 32768,
+      "chip": "Ascend950PR_957b",
+      "rows_per_longest_aiv": 4682,
+      "active": 56,
+      "channel_tiles": {
+        "count": 2,
+        "inner": 2560,
+        "tail": 2560,
+        "ub_bytes": 253952,
+        "inherited_ub": false
+      },
+      "first_us": 17187.658605714285,
+      "repeat_us": 17187.658605714285,
+      "query_ms": 0.18743,
+      "work": {
+        "dtype": "bf16",
+        "cube_ops": 0,
+        "vec_ops": 53687091200,
+        "cube_ops_by_dtype": {},
+        "vec_ops_by_dtype": {
+          "fp32": 53687091200
+        },
+        "vec_ops_by_class": {
+          "alu": 48318382080,
+          "cast": 5368709120
+        },
+        "logical_read_bytes": 13442744320,
+        "logical_write_bytes": 10737418240,
+        "physical_hbm_bytes": null,
+        "scope": "Useful scalar-equivalent work (FMA=2), one logical read/write per tensor per kernel; excludes padding, cache traffic and ISA expansion.",
+        "notes": [
+          "Output cast counted once per element against FP32 source precision."
+        ]
+      }
+    },
+    {
+      "shape": [
+        262144,
+        4,
+        5120
+      ],
+      "batch": 8,
+      "context": 32768,
+      "chip": "Ascend970DT",
+      "rows_per_longest_aiv": 2185,
+      "active": 120,
+      "channel_tiles": {
+        "count": 2,
+        "inner": 2560,
+        "tail": 2560,
+        "ub_bytes": 253952,
+        "inherited_ub": false
+      },
+      "first_us": 6780.148682491271,
+      "repeat_us": 3084.048947247901,
+      "query_ms": 0.17808,
+      "work": {
+        "dtype": "bf16",
+        "cube_ops": 0,
+        "vec_ops": 53687091200,
+        "cube_ops_by_dtype": {},
+        "vec_ops_by_dtype": {
+          "fp32": 53687091200
+        },
+        "vec_ops_by_class": {
+          "alu": 48318382080,
+          "cast": 5368709120
+        },
+        "logical_read_bytes": 13442744320,
+        "logical_write_bytes": 10737418240,
+        "physical_hbm_bytes": null,
+        "scope": "Useful scalar-equivalent work (FMA=2), one logical read/write per tensor per kernel; excludes padding, cache traffic and ISA expansion.",
+        "notes": [
+          "Output cast counted once per element against FP32 source precision."
+        ]
+      }
+    },
+    {
+      "shape": [
+        1048576,
+        4,
+        5120
+      ],
+      "batch": 8,
+      "context": 131072,
+      "chip": "Ascend950DT_9582",
+      "rows_per_longest_aiv": 16384,
+      "active": 64,
+      "channel_tiles": {
+        "count": 2,
+        "inner": 2560,
+        "tail": 2560,
+        "ub_bytes": 253952,
+        "inherited_ub": false
+      },
+      "first_us": 55476.24941160941,
+      "repeat_us": 25243.930725618193,
+      "query_ms": 0.17181,
+      "work": {
+        "dtype": "bf16",
+        "cube_ops": 0,
+        "vec_ops": 214748364800,
+        "cube_ops_by_dtype": {},
+        "vec_ops_by_dtype": {
+          "fp32": 214748364800
+        },
+        "vec_ops_by_class": {
+          "alu": 193273528320,
+          "cast": 21474836480
+        },
+        "logical_read_bytes": 53770977280,
+        "logical_write_bytes": 42949672960,
+        "physical_hbm_bytes": null,
+        "scope": "Useful scalar-equivalent work (FMA=2), one logical read/write per tensor per kernel; excludes padding, cache traffic and ISA expansion.",
+        "notes": [
+          "Output cast counted once per element against FP32 source precision."
+        ]
+      }
+    },
+    {
+      "shape": [
+        1048576,
+        4,
+        5120
+      ],
+      "batch": 8,
+      "context": 131072,
+      "chip": "Ascend950PR_957b",
+      "rows_per_longest_aiv": 18725,
+      "active": 56,
+      "channel_tiles": {
+        "count": 2,
+        "inner": 2560,
+        "tail": 2560,
+        "ub_bytes": 253952,
+        "inherited_ub": false
+      },
+      "first_us": 69002.29266285714,
+      "repeat_us": 69002.29266285714,
+      "query_ms": 0.18307,
+      "work": {
+        "dtype": "bf16",
+        "cube_ops": 0,
+        "vec_ops": 214748364800,
+        "cube_ops_by_dtype": {},
+        "vec_ops_by_dtype": {
+          "fp32": 214748364800
+        },
+        "vec_ops_by_class": {
+          "alu": 193273528320,
+          "cast": 21474836480
+        },
+        "logical_read_bytes": 53770977280,
+        "logical_write_bytes": 42949672960,
+        "physical_hbm_bytes": null,
+        "scope": "Useful scalar-equivalent work (FMA=2), one logical read/write per tensor per kernel; excludes padding, cache traffic and ISA expansion.",
+        "notes": [
+          "Output cast counted once per element against FP32 source precision."
+        ]
+      }
+    },
+    {
+      "shape": [
+        1048576,
+        4,
+        5120
+      ],
+      "batch": 8,
+      "context": 131072,
+      "chip": "Ascend970DT",
+      "rows_per_longest_aiv": 8739,
+      "active": 120,
+      "channel_tiles": {
+        "count": 2,
+        "inner": 2560,
+        "tail": 2560,
+        "ub_bytes": 253952,
+        "inherited_ub": false
+      },
+      "first_us": 27108.58730009995,
+      "repeat_us": 12328.365042934123,
+      "query_ms": 0.17487,
+      "work": {
+        "dtype": "bf16",
+        "cube_ops": 0,
+        "vec_ops": 214748364800,
+        "cube_ops_by_dtype": {},
+        "vec_ops_by_dtype": {
+          "fp32": 214748364800
+        },
+        "vec_ops_by_class": {
+          "alu": 193273528320,
+          "cast": 21474836480
+        },
+        "logical_read_bytes": 53770977280,
+        "logical_write_bytes": 42949672960,
+        "physical_hbm_bytes": null,
+        "scope": "Useful scalar-equivalent work (FMA=2), one logical read/write per tensor per kernel; excludes padding, cache traffic and ISA expansion.",
+        "notes": [
+          "Output cast counted once per element against FP32 source precision."
+        ]
+      }
+    },
+    {
+      "shape": [
+        2097152,
+        4,
+        5120
+      ],
+      "batch": 8,
+      "context": 262144,
+      "chip": "Ascend950DT_9582",
+      "rows_per_longest_aiv": 32768,
+      "active": 64,
+      "channel_tiles": {
+        "count": 2,
+        "inner": 2560,
+        "tail": 2560,
+        "ub_bytes": 253952,
+        "inherited_ub": false
+      },
+      "first_us": 110949.26037027025,
+      "repeat_us": 50485.53591892173,
+      "query_ms": 0.16685,
+      "work": {
+        "dtype": "bf16",
+        "cube_ops": 0,
+        "vec_ops": 429496729600,
+        "cube_ops_by_dtype": {},
+        "vec_ops_by_dtype": {
+          "fp32": 429496729600
+        },
+        "vec_ops_by_class": {
+          "alu": 386547056640,
+          "cast": 42949672960
+        },
+        "logical_read_bytes": 107541954560,
+        "logical_write_bytes": 85899345920,
+        "physical_hbm_bytes": null,
+        "scope": "Useful scalar-equivalent work (FMA=2), one logical read/write per tensor per kernel; excludes padding, cache traffic and ISA expansion.",
+        "notes": [
+          "Output cast counted once per element against FP32 source precision."
+        ]
+      }
+    },
+    {
+      "shape": [
+        2097152,
+        4,
+        5120
+      ],
+      "batch": 8,
+      "context": 262144,
+      "chip": "Ascend950PR_957b",
+      "rows_per_longest_aiv": 37450,
+      "active": 56,
+      "channel_tiles": {
+        "count": 2,
+        "inner": 2560,
+        "tail": 2560,
+        "ub_bytes": 253952,
+        "inherited_ub": false
+      },
+      "first_us": 138088.47140571428,
+      "repeat_us": 138088.47140571428,
+      "query_ms": 0.15299,
+      "work": {
+        "dtype": "bf16",
+        "cube_ops": 0,
+        "vec_ops": 429496729600,
+        "cube_ops_by_dtype": {},
+        "vec_ops_by_dtype": {
+          "fp32": 429496729600
+        },
+        "vec_ops_by_class": {
+          "alu": 386547056640,
+          "cast": 42949672960
+        },
+        "logical_read_bytes": 107541954560,
+        "logical_write_bytes": 85899345920,
+        "physical_hbm_bytes": null,
+        "scope": "Useful scalar-equivalent work (FMA=2), one logical read/write per tensor per kernel; excludes padding, cache traffic and ISA expansion.",
+        "notes": [
+          "Output cast counted once per element against FP32 source precision."
+        ]
+      }
+    },
+    {
+      "shape": [
+        2097152,
+        4,
+        5120
+      ],
+      "batch": 8,
+      "context": 262144,
+      "chip": "Ascend970DT",
+      "rows_per_longest_aiv": 17477,
+      "active": 120,
+      "channel_tiles": {
+        "count": 2,
+        "inner": 2560,
+        "tail": 2560,
+        "ub_bytes": 253952,
+        "inherited_ub": false
+      },
+      "first_us": 54211.10433407381,
+      "repeat_us": 24653.179514112973,
+      "query_ms": 0.28315,
+      "work": {
+        "dtype": "bf16",
+        "cube_ops": 0,
+        "vec_ops": 429496729600,
+        "cube_ops_by_dtype": {},
+        "vec_ops_by_dtype": {
+          "fp32": 429496729600
+        },
+        "vec_ops_by_class": {
+          "alu": 386547056640,
+          "cast": 42949672960
+        },
+        "logical_read_bytes": 107541954560,
+        "logical_write_bytes": 85899345920,
+        "physical_hbm_bytes": null,
+        "scope": "Useful scalar-equivalent work (FMA=2), one logical read/write per tensor per kernel; excludes padding, cache traffic and ISA expansion.",
+        "notes": [
+          "Output cast counted once per element against FP32 source precision."
+        ]
+      }
+    },
+    {
+      "shape": [
+        262144,
+        4,
+        7168
+      ],
+      "batch": 8,
+      "context": 32768,
+      "chip": "Ascend950DT_9582",
+      "rows_per_longest_aiv": 4096,
+      "active": 64,
+      "channel_tiles": {
+        "count": 2,
+        "inner": 3584,
+        "tail": 3584,
+        "ub_bytes": 253952,
+        "inherited_ub": false
+      },
+      "first_us": 19243.055460304327,
+      "repeat_us": 8837.221067401204,
+      "query_ms": 0.16355,
+      "work": {
+        "dtype": "bf16",
+        "cube_ops": 0,
+        "vec_ops": 75161927680,
+        "cube_ops_by_dtype": {},
+        "vec_ops_by_dtype": {
+          "fp32": 75161927680
+        },
+        "vec_ops_by_class": {
+          "alu": 67645734912,
+          "cast": 7516192768
+        },
+        "logical_read_bytes": 18811453440,
+        "logical_write_bytes": 15032385536,
+        "physical_hbm_bytes": null,
+        "scope": "Useful scalar-equivalent work (FMA=2), one logical read/write per tensor per kernel; excludes padding, cache traffic and ISA expansion.",
+        "notes": [
+          "Output cast counted once per element against FP32 source precision."
+        ]
+      }
+    },
+    {
+      "shape": [
+        262144,
+        4,
+        7168
+      ],
+      "batch": 8,
+      "context": 32768,
+      "chip": "Ascend950PR_957b",
+      "rows_per_longest_aiv": 4682,
+      "active": 56,
+      "channel_tiles": {
+        "count": 2,
+        "inner": 3584,
+        "tail": 3584,
+        "ub_bytes": 253952,
+        "inherited_ub": false
+      },
+      "first_us": 24090.284617142857,
+      "repeat_us": 24090.284617142857,
+      "query_ms": 0.1541,
+      "work": {
+        "dtype": "bf16",
+        "cube_ops": 0,
+        "vec_ops": 75161927680,
+        "cube_ops_by_dtype": {},
+        "vec_ops_by_dtype": {
+          "fp32": 75161927680
+        },
+        "vec_ops_by_class": {
+          "alu": 67645734912,
+          "cast": 7516192768
+        },
+        "logical_read_bytes": 18811453440,
+        "logical_write_bytes": 15032385536,
+        "physical_hbm_bytes": null,
+        "scope": "Useful scalar-equivalent work (FMA=2), one logical read/write per tensor per kernel; excludes padding, cache traffic and ISA expansion.",
+        "notes": [
+          "Output cast counted once per element against FP32 source precision."
+        ]
+      }
+    },
+    {
+      "shape": [
+        262144,
+        4,
+        7168
+      ],
+      "batch": 8,
+      "context": 32768,
+      "chip": "Ascend970DT",
+      "rows_per_longest_aiv": 2185,
+      "active": 120,
+      "channel_tiles": {
+        "count": 2,
+        "inner": 3584,
+        "tail": 3584,
+        "ub_bytes": 253952,
+        "inherited_ub": false
+      },
+      "first_us": 9405.086586485111,
+      "repeat_us": 4317.118398931064,
+      "query_ms": 0.16437,
+      "work": {
+        "dtype": "bf16",
+        "cube_ops": 0,
+        "vec_ops": 75161927680,
+        "cube_ops_by_dtype": {},
+        "vec_ops_by_dtype": {
+          "fp32": 75161927680
+        },
+        "vec_ops_by_class": {
+          "alu": 67645734912,
+          "cast": 7516192768
+        },
+        "logical_read_bytes": 18811453440,
+        "logical_write_bytes": 15032385536,
+        "physical_hbm_bytes": null,
+        "scope": "Useful scalar-equivalent work (FMA=2), one logical read/write per tensor per kernel; excludes padding, cache traffic and ISA expansion.",
+        "notes": [
+          "Output cast counted once per element against FP32 source precision."
+        ]
+      }
+    },
+    {
+      "shape": [
+        1048576,
+        4,
+        7168
+      ],
+      "batch": 8,
+      "context": 131072,
+      "chip": "Ascend950DT_9582",
+      "rows_per_longest_aiv": 16384,
+      "active": 64,
+      "channel_tiles": {
+        "count": 2,
+        "inner": 3584,
+        "tail": 3584,
+        "ub_bytes": 253952,
+        "inherited_ub": false
+      },
+      "first_us": 76962.50648237162,
+      "repeat_us": 35340.90652036992,
+      "query_ms": 0.16527,
+      "work": {
+        "dtype": "bf16",
+        "cube_ops": 0,
+        "vec_ops": 300647710720,
+        "cube_ops_by_dtype": {},
+        "vec_ops_by_dtype": {
+          "fp32": 300647710720
+        },
+        "vec_ops_by_class": {
+          "alu": 270582939648,
+          "cast": 30064771072
+        },
+        "logical_read_bytes": 75245813760,
+        "logical_write_bytes": 60129542144,
+        "physical_hbm_bytes": null,
+        "scope": "Useful scalar-equivalent work (FMA=2), one logical read/write per tensor per kernel; excludes padding, cache traffic and ISA expansion.",
+        "notes": [
+          "Output cast counted once per element against FP32 source precision."
+        ]
+      }
+    },
+    {
+      "shape": [
+        1048576,
+        4,
+        7168
+      ],
+      "batch": 8,
+      "context": 131072,
+      "chip": "Ascend950PR_957b",
+      "rows_per_longest_aiv": 18725,
+      "active": 56,
+      "channel_tiles": {
+        "count": 2,
+        "inner": 3584,
+        "tail": 3584,
+        "ub_bytes": 253952,
+        "inherited_ub": false
+      },
+      "first_us": 96612.79670857143,
+      "repeat_us": 96612.79670857143,
+      "query_ms": 0.1832,
+      "work": {
+        "dtype": "bf16",
+        "cube_ops": 0,
+        "vec_ops": 300647710720,
+        "cube_ops_by_dtype": {},
+        "vec_ops_by_dtype": {
+          "fp32": 300647710720
+        },
+        "vec_ops_by_class": {
+          "alu": 270582939648,
+          "cast": 30064771072
+        },
+        "logical_read_bytes": 75245813760,
+        "logical_write_bytes": 60129542144,
+        "physical_hbm_bytes": null,
+        "scope": "Useful scalar-equivalent work (FMA=2), one logical read/write per tensor per kernel; excludes padding, cache traffic and ISA expansion.",
+        "notes": [
+          "Output cast counted once per element against FP32 source precision."
+        ]
+      }
+    },
+    {
+      "shape": [
+        1048576,
+        4,
+        7168
+      ],
+      "batch": 8,
+      "context": 131072,
+      "chip": "Ascend970DT",
+      "rows_per_longest_aiv": 8739,
+      "active": 120,
+      "channel_tiles": {
+        "count": 2,
+        "inner": 3584,
+        "tail": 3584,
+        "ub_bytes": 253952,
+        "inherited_ub": false
+      },
+      "first_us": 37607.13757149683,
+      "repeat_us": 17259.160932891777,
+      "query_ms": 0.18417,
+      "work": {
+        "dtype": "bf16",
+        "cube_ops": 0,
+        "vec_ops": 300647710720,
+        "cube_ops_by_dtype": {},
+        "vec_ops_by_dtype": {
+          "fp32": 300647710720
+        },
+        "vec_ops_by_class": {
+          "alu": 270582939648,
+          "cast": 30064771072
+        },
+        "logical_read_bytes": 75245813760,
+        "logical_write_bytes": 60129542144,
+        "physical_hbm_bytes": null,
+        "scope": "Useful scalar-equivalent work (FMA=2), one logical read/write per tensor per kernel; excludes padding, cache traffic and ISA expansion.",
+        "notes": [
+          "Output cast counted once per element against FP32 source precision."
+        ]
+      }
+    },
+    {
+      "shape": [
+        2097152,
+        4,
+        7168
+      ],
+      "batch": 8,
+      "context": 262144,
+      "chip": "Ascend950DT_9582",
+      "rows_per_longest_aiv": 32768,
+      "active": 64,
+      "channel_tiles": {
+        "count": 2,
+        "inner": 3584,
+        "tail": 3584,
+        "ub_bytes": 253952,
+        "inherited_ub": false
+      },
+      "first_us": 153921.77451179468,
+      "repeat_us": 70679.15379099487,
+      "query_ms": 0.16303,
+      "work": {
+        "dtype": "bf16",
+        "cube_ops": 0,
+        "vec_ops": 601295421440,
+        "cube_ops_by_dtype": {},
+        "vec_ops_by_dtype": {
+          "fp32": 601295421440
+        },
+        "vec_ops_by_class": {
+          "alu": 541165879296,
+          "cast": 60129542144
+        },
+        "logical_read_bytes": 150491627520,
+        "logical_write_bytes": 120259084288,
+        "physical_hbm_bytes": null,
+        "scope": "Useful scalar-equivalent work (FMA=2), one logical read/write per tensor per kernel; excludes padding, cache traffic and ISA expansion.",
+        "notes": [
+          "Output cast counted once per element against FP32 source precision."
+        ]
+      }
+    },
+    {
+      "shape": [
+        2097152,
+        4,
+        7168
+      ],
+      "batch": 8,
+      "context": 262144,
+      "chip": "Ascend950PR_957b",
+      "rows_per_longest_aiv": 37450,
+      "active": 56,
+      "channel_tiles": {
+        "count": 2,
+        "inner": 3584,
+        "tail": 3584,
+        "ub_bytes": 253952,
+        "inherited_ub": false
+      },
+      "first_us": 193309.47949714286,
+      "repeat_us": 193309.47949714286,
+      "query_ms": 0.15464,
+      "work": {
+        "dtype": "bf16",
+        "cube_ops": 0,
+        "vec_ops": 601295421440,
+        "cube_ops_by_dtype": {},
+        "vec_ops_by_dtype": {
+          "fp32": 601295421440
+        },
+        "vec_ops_by_class": {
+          "alu": 541165879296,
+          "cast": 60129542144
+        },
+        "logical_read_bytes": 150491627520,
+        "logical_write_bytes": 120259084288,
+        "physical_hbm_bytes": null,
+        "scope": "Useful scalar-equivalent work (FMA=2), one logical read/write per tensor per kernel; excludes padding, cache traffic and ISA expansion.",
+        "notes": [
+          "Output cast counted once per element against FP32 source precision."
+        ]
+      }
+    },
+    {
+      "shape": [
+        2097152,
+        4,
+        7168
+      ],
+      "batch": 8,
+      "context": 262144,
+      "chip": "Ascend970DT",
+      "rows_per_longest_aiv": 17477,
+      "active": 120,
+      "channel_tiles": {
+        "count": 2,
+        "inner": 3584,
+        "tail": 3584,
+        "ub_bytes": 253952,
+        "inherited_ub": false
+      },
+      "first_us": 75207.00353228906,
+      "repeat_us": 34513.90119254218,
+      "query_ms": 0.14798,
+      "work": {
+        "dtype": "bf16",
+        "cube_ops": 0,
+        "vec_ops": 601295421440,
+        "cube_ops_by_dtype": {},
+        "vec_ops_by_dtype": {
+          "fp32": 601295421440
+        },
+        "vec_ops_by_class": {
+          "alu": 541165879296,
+          "cast": 60129542144
+        },
+        "logical_read_bytes": 150491627520,
+        "logical_write_bytes": 120259084288,
+        "physical_hbm_bytes": null,
+        "scope": "Useful scalar-equivalent work (FMA=2), one logical read/write per tensor per kernel; excludes padding, cache traffic and ISA expansion.",
+        "notes": [
+          "Output cast counted once per element against FP32 source precision."
+        ]
+      }
+    }
+  ]
+}

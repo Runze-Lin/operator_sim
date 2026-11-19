@@ -1,5 +1,11 @@
 # mHC PreSinkhorn · 950PR 的 22 组 K 分块
 
+## T=80 的 21 个满分片与 1 个尾分片
+
+![融合 PreSinkhorn 同一阶段在模型与实际 CA 上的窗口](../../results/v0.26/presink/pr-t80.png)
+
+950PR 目标 N=4、D=4096，归约 K=16384。21 个满分片各发 8 条 MMAD，尾片发 3 条。真实 FIXP 在首条 MMAD 前已发起，最后 MMAD 到 FIXP 返回只剩 0.353 µs。分开的两段 Vector 与 Cube 候选得到 14.616 µs，CA 实测 13.653 µs。这个旧窗属于开发回放，目标芯片的 1:1 合同仍走原投影。[库身份、逐步公式与新形验证状态](../../results/v0.26/presink/README.md)
+
 ![950PR PreSinkhorn 模型重定价流水与官方 CA 同轴对照](figures/mhc_pre_sinkhorn-v21-pr.png)
 
 一个 BF16 token，4 个通道，每通道宽 4096。模型预测 950PR **9.990 µs**，实际 `aclnnMhcPreSinkhorn` 的 CA 窗口 **8.763 µs**，高估 **14.00%**。上栏保留 DT 校准核各指令队列的相对重叠，用目标 tile 工作量和芯片资源重新计价；下栏分别取 PR 最晚结束的 AIC 和 AIV。两栏都从各自设备首条指令起算。[图数据、参考 DB 与 PR trace 指纹](../../results/v0.21/fusion/mhc_pre_sinkhorn-figure.json)

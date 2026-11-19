@@ -13,6 +13,7 @@ PRO=ROOT/'results/v0.23/pro-prefill'
 sys.path.insert(0,str(ROOT/'development/validation/cache25'))
 from prefix import prefix
 from shadow import predict
+from read_issue import predict as issue_times
 SKUS=('Ascend950DT_9582','Ascend950PR_957b','Ascend970DT')
 POLICIES=('uniform','pressure')
 COLORS={'Read':'#167886','Vector':'#7655a6','Write':'#b84c2b'}
@@ -51,18 +52,19 @@ def freeze():
                       sources={str(p.relative_to(ROOT)):digest(p) for p in sources},cases=cases))
 
 
-def summarize(d,src,stage):
+def summarize(d,src,stage,issues_us):
     rows=d['ca_tiles']
     m=d['model_tiles']
-    assert len(m)==len(rows)==57 and d['ca_tile_elements']==d['model_tile_elements']
+    assert len(m)==len(rows) and len(m)>=4 and d['ca_tile_elements'][:-1]==d['model_tile_elements'][:-1]
     delta=lambda i,k,n:m[i][k][n]-rows[i][k][n]
-    return dict(shape=d['shape'],origin=d['origin'],source=str(src.relative_to(ROOT)),sha256=digest(src),trace_sha256=d['trace_sha256'],
-                tiles=len(rows),tile_elements=d['ca_tile_elements'],core=d['ca_core'],active=d['active_aiv'],stage=stage,
+    return dict(shape=d['shape'],sku_short=d['chip'].split('_')[0].removeprefix('Ascend'),origin=d['origin'],source=str(src.relative_to(ROOT)),sha256=digest(src),trace_sha256=d['trace_sha256'],
+                tiles=len(rows),full_tile_elements=d['ca_tile_elements'][0],predicted_tail_elements=d['model_tile_elements'][-1],
+                actual_tail_elements=d['ca_tile_elements'][-1],core=d['ca_core'],active=d['active_aiv'],stage=stage,
                 full_model_us=d['model_us'],full_ca_us=d['ca_us'],future_us=d['projection_970dt_us'],
                 first_two_model_read_gap=m[1]['Read'][0]-m[0]['Read'][0],first_two_ca_read_gap=rows[1]['Read'][0]-rows[0]['Read'][0],
                 first_ca_read_latency=rows[0]['Read'][1]-rows[0]['Read'][0],
                 middle_model_minus_ca_read_start_us=delta(28,'Read',0),middle_model_minus_ca_write_end_us=delta(28,'Write',1),
-                model=m[:4],ca=rows[:4],last_block_write_model_minus_ca_us=delta(-1,'Write',1))
+                model=m[:4],ca=rows[:4],initial_issue_us=issues_us,last_block_write_model_minus_ca_us=delta(-1,'Write',1))
 
 
 def draw(name,d,xmax):
@@ -71,14 +73,15 @@ def draw(name,d,xmax):
     matplotlib.use('Agg')
     from matplotlib import pyplot as plt
     from matplotlib.patches import Patch
+    from matplotlib.lines import Line2D
     fig,axs=plt.subplots(2,1,figsize=(11,7.6),sharex=True)
     left=.168
     fig.subplots_adjust(left=left,right=.975,top=.765,bottom=.14,hspace=.55)
     ink='#182e3b'
-    fig.text(left,.945,f"950PR Cast  |  {d['stage']} prefill",fontsize=23,weight='bold',color=ink)
-    fig.text(left,.895,f"BF16 → FP32   ·   [{d['shape'][0]:,}, {d['shape'][1]}]   ·   56 AIVs   ·   first four of 57 UB blocks",fontsize=12,color='#405e6a')
-    fig.legend([Patch(color=c) for c in COLORS.values()],['MTE2 / GM → UB','Vector / BF16 → FP32','MTE3 / UB → GM'],
-               frameon=False,loc='upper left',bbox_to_anchor=(left-.008,.88),ncol=3,fontsize=11)
+    fig.text(left,.945,f"{d['sku_short']} Cast  |  {d['stage']} prefill",fontsize=23,weight='bold',color=ink)
+    fig.text(left,.895,f"BF16 → FP32   ·   [{d['shape'][0]:,}, {d['shape'][1]}]   ·   {d['active']} AIVs   ·   first four of {d['tiles']} UB blocks",fontsize=12,color='#405e6a')
+    fig.legend([Patch(color=c) for c in COLORS.values()]+[Line2D([],[],marker='v',ls='',color='#233a49')],['MTE2 / GM → UB','Vector / BF16 → FP32','MTE3 / UB → GM','Read issue (first pair)'],
+               frameon=False,loc='upper left',bbox_to_anchor=(left-.008,.88),ncol=4,fontsize=10)
     for ax,key,title,stop in zip(axs,('model','ca'),('Resource model · shared-link service',f"CA trace · {d['core']} (last to finish)"),(d['full_model_us'],d['full_ca_us'])):
         for i,row in enumerate(d[key]):
             for off,(stage,col) in zip((-.21,0,.21),COLORS.items()):
@@ -86,6 +89,8 @@ def draw(name,d,xmax):
                 ax.barh(i+off,b-a,left=a,height=.15,color=col,zorder=3)
                 if stage=='Read':
                     ax.vlines(a,i+off-.12,i+off+.12,color=col,lw=.8)
+        issues=d['initial_issue_us'] if key=='model' else [r['Read'][0] for r in d[key][:2]]
+        ax.scatter(issues,[-.33,.67],marker='v',s=36,color='#233a49',zorder=5)
         ax.set_title(title,loc='left',fontsize=14,color=ink,weight='bold',pad=7)
         ax.set_title(f'full {stop:.3f} µs',loc='right',fontsize=13,weight='bold',color=ink,pad=7)
         ax.set_yticks(range(4),[f'UB {i+1}  ·  slot {i%2}' for i in range(4)],fontsize=11)
@@ -95,7 +100,7 @@ def draw(name,d,xmax):
             ax.axhline(i,color='#e0e7eb',lw=.8,zorder=1)
     axs[-1].set_xlabel('Device time from the first instruction on any AIV (µs)',labelpad=8,fontsize=11)
     fig.text(left,.048,'Top prices each block at its share of sustained service. Bottom follows real GM/UB descriptors and conversion instructions.',fontsize=10,color='#46626f')
-    fig.text(left,.019,'Read ticks mark issue. Wide CA bars include waiting until retirement. Both panels use the same time origin and scale.',fontsize=10,color='#46626f')
+    fig.text(left,.019,'Triangles mark read issue to the first two free slots. CA bars include waiting until retirement. The time origin is shared.',fontsize=10,color='#46626f')
     fig.savefig(OUT/(name+'.png'),dpi=150,facecolor='white');plt.close(fig)
 
 
@@ -103,9 +108,11 @@ def replay():
     by={}
     for name,stage,src in [('flash-256ki-pr-head','Flash B8 × 256Ki',ROOT/'results/v0.23/prefill/flash-256ki-pr.json'),
                            ('pro-128ki-pr-head','Pro B8 × 128Ki',PRO/'pro-b8-128ki-pr-blocks.json')]:
-        by[name]=summarize(read(src),src,stage)
+        data=read(src)
+        issues=issue_times(data['shape'],data['chip'])['issues_us']
+        by[name]=summarize(data,src,stage,issues)
     a,b=by.values()
-    assert a['model']==b['model'] and a['tile_elements']==b['tile_elements'] and a['full_model_us']==b['full_model_us']
+    assert a['model']==b['model'] and a['full_tile_elements']==b['full_tile_elements'] and a['full_model_us']==b['full_model_us']
     end=max(x[1] for d in by.values() for key in ('model','ca') for r in d[key] for x in r.values())
     xmax=2*int(end//2+1)
     for name,d in by.items():

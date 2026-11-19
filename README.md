@@ -22,6 +22,8 @@ Pro 的同一批 8×128k 在 950PR 也已取得完整 CA。模型 232.748 µs，
 
 **逐块读图。** 在 FA 图中选一个 KV 页，可以上下对照 QK 和 PV 的发起与完成。在 RMSNorm 图中选一个相同的 UB 块，可以看到前序调度怎样改变它的首读和末写。两栏共享微秒刻度，指令数据附在各自算例下。[FA 八个 KV 页](docs/examples/fa.md) · [RMSNorm 首发、连续与跨 Cube 复用](docs/examples/rmsnorm.md) · [Matmul 两波两页](docs/examples/matmul.md)
 
+**首读、响应与持续带宽。** 大 prefill 可以看同一条 MTE2 是何时发起、何时退休。950PR Flash 8×256Ki 和 Pro 8×128Ki 各有 67,108,864 个系数，前两笔读在两个空槽上只隔 91 周期。公开 Cast 诊断现返回这两个发起时刻；同一组图保留每一块的资源服务预算及真实末核的描述符。[Flash 与 Pro 的同刻度对比](results/v0.26/memory/README.md) · [融合 PreSinkhorn](results/v0.26/presink/pr-t80.png) · [KDA 的四个状态更新](results/v0.26/kda/pr-four-chunks.png) · [全部算子的误差与样本资格](docs/error-analysis.md)
+
 ## 试一次预测
 
 在仓库根目录用系统仿真器的 Python 环境安装（Python 3.10 或更新版本）。安装后可在任意工作目录查询。下面的 `9` 表示这个 rank 上的一次 RMSNorm 同时处理 9 个 token，`7168` 是每个 token 的通道数。
