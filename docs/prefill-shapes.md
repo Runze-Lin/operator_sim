@@ -13,6 +13,8 @@
 
 固定版 vLLM Ascend 的外层 decoder 另用符号张量重跑了 27 组完整及分块场景。每组核对 token 数、hidden、各类层数以及路由/残差的实际调用次数。B8×32k 的 Flash 执行 80 次 mHC post、40 次主注意力；Pro 为 122 和 61 次；Kimi 的 decoder 内执行 186 次 AttnResFwd、69 次 KDA 和 24 次 MLA，另有模型末端一次 AttnResFwd。探针运行 decoder 方法，设备 leaf 由记录模块代替，物理 kernel 与调度仍需要 CA 或真实服务 trace。[源码假跑与逐场景断言](../results/v0.20/workloads/decoder-check.json)
 
+**逐节点查实际数值。** 下面三页分别列出 B8、TP8 下 32k、128k、256k 的所有导出节点，写出每个张量的本卡轴长度、层号、可用预测和已经取得的同形 CA 窗口。[DeepSeek V4.1 Flash 的全部形状](workloads/deepseek-flash.md) · [DeepSeek V4 Pro 的全部形状](workloads/deepseek-pro.md) · [Kimi K3 的全部形状](workloads/kimi-k3.md)
+
 ## 同一个 T 对应什么矩阵
 
 以下表格采用整批 32k、attention TP8、EP8、单 attention 副本。Q 的头数按 TP 切，所有副本内的 TP rank 看到同一批 token。两种 DeepSeek 的 indexer 都用复制投影，权重和 indexer Q 的头数保持完整。三种模型都包含 KV、投影和专家分支，表中列出能区分其实际算子路径的维度。[DeepSeek Flash](https://github.com/vllm-project/vllm-ascend/blob/c09d3e20b9c45c80b34ae3781440d90904a44023/vllm_ascend/models/deepseek_v41/model.py) · [DeepSeek Pro](https://github.com/vllm-project/vllm-ascend/blob/c09d3e20b9c45c80b34ae3781440d90904a44023/vllm_ascend/models/deepseek_v4/model.py) · [Kimi decoder](https://github.com/vllm-project/vllm-ascend/blob/c09d3e20b9c45c80b34ae3781440d90904a44023/vllm_ascend/models/kimi_k3.py)

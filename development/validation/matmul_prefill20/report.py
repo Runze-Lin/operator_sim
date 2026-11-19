@@ -97,7 +97,10 @@ PR 预测在 DT 第一次采集前已冻结为 19.016 µs。查看同形 DT 的 
     mm=" / ".join("×".join(map(str,g)) for g in sorted(geo))
     add,cast=vec["RV_VADD"],vec["RV_VCVT_F2F"]
     label=f" · MMAD {mm}" if len(geo)==1 else f" · {len(geo)} MMAD shapes"
-    if cast and add and add%cast==0:label+=f" · AIV add:cast {add//cast}:1"
+    if len(geo)>1 and len({(m,n) for m,n,k in geo})==1:
+        m,n,_=next(iter(geo))
+        label=f" · MMAD {m}×{n}×"+"/".join(str(k) for k in sorted({k for m,n,k in geo},reverse=True))
+    if cast and add and add%cast==0: label+=f" · add:cast {add//cast}:1"
     rendering=dict(obj,ca=[dict(obj["ca"][0],terminal=station+label)])
     timelines.draw(rendering,PHOTO.with_name("matmul-prefill-pr.png"))
     (OUT/"timeline-pr.json").write_text(json.dumps(obj,separators=(",",":"))+"\n")
@@ -123,6 +126,8 @@ PR 预测在 DT 第一次采集前已冻结为 19.016 µs。查看同形 DT 的 
     doc+=f'\nDT/PR 定义为 DT 耗时除以 PR 耗时。实际比值 **{speedup:.3f}×**，冻结预测 **{pred_speedup:.3f}×**，速度比相对误差 **{(pred_speedup/speedup-1)*100:+.2f}%**。预测更快的是 **{"DT" if pred_speedup<1 else "PR"}**，CA 更快的是 **{"DT" if speedup<1 else "PR"}**。970DT 预测 {pair["future_model_us"]:.3f} µs，沿用 950 系列的服务成本假设，缺少同形 CA。 [两端数值与速度比](../../results/v0.20/matmul-prefill/pair.json)\n'
     doc+=f'\nDT 与 PR 捕获的 ELF SHA-256 {"一致" if pair["same_binary"] else "不同"}；平台日志分别加载 HBM3 与 LPDDR5。相同的 API、kernel 名和输入也允许两端选择不同的 tilingData，所以按芯片逐条检查 MMAD。\n'
     doc+=f'\n![950PR 单波模型与 CA 终端核实际指令](figures/matmul-prefill-pr.png)\n\nPR 实际 kernel 为 `{stages["pr"]["kernel"]}`，最后结束的是 `{station}`。逐条读取全部 AIC 的 MMAD 参数，归并得到 '+ "，".join(f'**{m}×{n}×{k}** 有 {count:,} 条' for (m,n,k),count in sorted(geo.items()))+'。每核 MMAD 数的分布为 '+ "，".join(f'{cores} 个核各 {num} 条' for num,cores in sorted(per.items()))+f'。全部 AIV 的 RV_VADD 为 {add:,} 条，RV_VCVT_F2F 为 {cast:,} 条。以下按终端 AIC {cube["core"]} 与整算子结束点切分冻结模型误差。[PR 时间轴和指令几何](../../results/v0.20/matmul-prefill/timeline-pr.json)\n'
+    if geo=={(256,32,64):624,(256,32,43):16,(256,32,42):8} and per=={27:24}:
+        doc+="\n**PR 的分 K 可以重构。** 有指令记录的 28 个 AIC 中仅 24 个发起 MMAD，均执行 27 条。26×64+43=1,707，26×64+42=1,706；两份 1,707 加一份 1,706 恰为 K=5,120。总计 8 个 256 行块各用 3 个计算 AIC。AIV 的加法与转型次数比为 2:1，支持三份部分和归并。核数、指令形状和次数为直接观测，部分和归并角色来自计数及 Stream-K 机制推断。DT 对同一形状复用了同一二进制，实际为 4 路分 K。窗口内出现的核数、真正发出 MMAD 的核数和每核工作量须分别记录。\n"
     doc+="\n| PR 阶段 | 预测 µs | CA µs | 预测减 CA µs |\n|---|---:|---:|---:|\n"
     doc+="\n".join(f"| {tag} | {a:.3f} | {b:.3f} | {a-b:+.3f} |" for tag,a,b in phases)
     doc+=f'\n\nPR 采集墙钟 {pr["cost"]["seconds"]:.1f} 秒，峰值原始目录 {pr["cost"]["peak_bytes"]/2**20:.1f} MiB；所有 65,536 个 BF16 输出逐位通过。配对结果只覆盖这一完整通道 chunk 的 ND 单算子，整批 32k 至 256k 仍是冻结外推。[PR 数值、时窗及开销](../../results/v0.20/matmul-prefill/ca-pr.json)\n'

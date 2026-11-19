@@ -12,6 +12,8 @@
 
 在真实模型维度上也能逐段核对。Flash 的窄输出投影在 950DT 预测 12.123 µs、CA 为 13.023 µs。两侧都是 640 条 MMAD，实际 kernel 多用了 64 个 AIV，图上可以直接看到末段归并。整批 B8×128k 的 Flash Cast 和 Kimi Sigmoid 分别展开首轮和末轮。[Flash 投影](docs/examples/matmul-prefill.md) · [Flash Cast 两端流水](results/v0.20/large/flash-128ki-tiles.png) · [Kimi beta 两端流水](results/v0.20/newop/long-timelines.md)
 
+需要核对大 prefill 输入时，可直接打开 8 条请求、每条 32k / 128k / 256k 的逐节点张量表，查看本卡 hidden、head、专家工作量及同形 CA 状态。[DeepSeek V4.1 Flash](docs/workloads/deepseek-flash.md) · [DeepSeek V4 Pro](docs/workloads/deepseek-pro.md) · [Kimi K3](docs/workloads/kimi-k3.md)
+
 ## 试一次预测
 
 在仓库根目录用系统仿真器的 Python 环境安装（Python 3.10 或更新版本）。安装后可在任意工作目录查询。下面的 `9` 表示这个 rank 上的一次 RMSNorm 同时处理 9 个 token，`7168` 是每个 token 的通道数。

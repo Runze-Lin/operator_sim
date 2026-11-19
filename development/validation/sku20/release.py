@@ -10,10 +10,12 @@ import time
 ROOT=Path(__file__).resolve().parents[3]
 sys.path.insert(0,str(ROOT))
 from development.validation.sku20.report import render, summary, display, CHIPS, V, LABEL, read, write
+from development.validation.sku20.workload_tables import grid
 
 
 def release():
     rows=render()
+    grid(ROOT,rows)
     wheel=read(V/'wheel-smoke.json');q=wheel['overall']
     frozen=[V/'rms/freeze.json',V/'large/cast-v20-freeze.json',V/'newop/holdout-freeze.json',
             V/'large/pro-freeze.json',V/'large/native-freeze.json',V/'matmul-prefill/freeze.json',V/'full-quant/freeze.json']

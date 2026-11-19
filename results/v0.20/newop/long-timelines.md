@@ -36,10 +36,18 @@
 
 ## 950DT · B8 × 256k
 
-等待独立 CA 完成并通过全核时间窗与全部数值检查。
+实际 64 个 AIV，每核典型满 tile 搬入 63,488 B。终止核 `core21.veccore1` 有 25 个 tile；模型 54.185 µs，CA 42.686 µs（+26.9%）。离线 CA 26.1 分钟。
+
+![950DT 256k 预测与实测流水](../../../docs/examples/figures/sigmoid-prefill256k.png)
+
+[完整分块时间戳与校验哈希](timeline-prefill256k.json)
 
 ## 950PR · B8 × 256k
 
-等待独立 CA 完成并通过全核时间窗与全部数值检查。
+实际 56 个 AIV，每核典型满 tile 搬入 63,488 B。终止核 `core27.veccore0` 有 29 个 tile；模型 147.417 µs，CA 88.593 µs（+66.4%）。离线 CA 37.8 分钟。
+
+![950PR 256k 预测与实测流水](../../../docs/examples/figures/sigmoid-prefill256k-pr.png)
+
+[完整分块时间戳与校验哈希](timeline-prefill256k-pr.json)
 
 [场景增长曲线与实测比值](long-context.md) · [计价方法、工作量和参数](../../../docs/examples/sigmoid_fp32.md)

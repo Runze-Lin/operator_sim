@@ -149,8 +149,39 @@ def scaling(rows):
                 return f'{cur:.3f}'+(f' · {cur/prev:.2f}×' if prev else '')
             lines.append(f"| {LABEL[op]} · {width} | {k}k | {cell('dt')} | {cell('pr')} |")
             previous=case
+    lines+=['','若 128k 以后的增量成本保持不变，可以用 32k 和 128k 的两个实测点推算 256k。'
+            '固定 B=8、宽度不变，直线给出 $t_{256}=t_{128}+(256-128)(t_{128}-t_{32})/(128-32)$。'
+            '这里的 $t$ 是同一张 950 卡的正式 CA 设备时间。这个两点直线仅作同卡规模诊断，需要两个目标卡实测点，'
+            '系统上线的资源模型始终使用采集前的冻结参数。','',
+            '| 256k 整批 | 平台 | 两点直线 µs | 冻结资源模型 µs | 完整 CA µs | 直线 / 资源模型的有符号误差 |',
+            '|---|---|---:|---:|---:|---:|']
+    for op,width in [('cast_bf16_fp32',32),('sigmoid_fp32',12)]:
+        cases={r['shape'][0]:r for r in rows if r['op']==op and r['shape'][1]==width}
+        for side in ('dt','pr'):
+            measured=side+'_ca_us';low,mid,end=[cases[k*8*1024][measured] for k in (32,128,256)]
+            linear=mid+4*(mid-low)/3 if low and mid else None
+            pred=cases[256*8*1024][side+'_us']
+            errs=f'{linear/end-1:+.1%} / {pred/end-1:+.1%}' if linear and end else '—'
+            lines.append(f'| {LABEL[op]} | 950{side.upper()} | {display(linear)} | {pred:.3f} | {display(end)} | {errs} |')
     lines+=['','Flash 的 128k 在 DT 上已出现片外写。实测 128 个控制器共 94.876 MiB、188,258 条写命令，冻结模型按容量推得约 69.16 MiB 的片外流量。该点的完整 UB 块读 42,240 B、写 84,480 B，末核连续读发起的中位间隔为 DT 1.233 µs、PR 2.319 µs。冻结模型的每核服务均为 0.801 µs，加上共享链路约束后，分别为 0.801 和 2.231 µs。DT 的局部发起仍定价过快，PR 的稳态已更接近实测。单个规模区间不足以确定全程按字节线性增长。[128k 同轴图](../results/v0.20/large/flash-128ki-tiles.png) · [末核发起及在途时间](../results/v0.20/large/tile-intervals.json) · [128k 物理事务](../results/v0.20/large/cast_1048576_32_Ascend950DT_9582-official-dram.json)','',
-            'Kimi 128k 的 sigmoid 在 950DT 上预测 28.858 µs、实测 18.553 µs。128 个控制器合计 50,377,472 B，逻辑 FP32 输入 50,331,648 B，外存写命令只有 6 条。冻结模型要求全部输出在设备窗内写回 HBM；允许输出在 L2 接收的事后敏感性预测为 18.943 µs（+2.1%）。PR 具有更低的名义 HBM 带宽，旧假设放大了误差，PR 的物理写回事务尚缺同样的证据。敏感性单列，保留原预测用于独立统计。[两端 128k 首尾各两轮](../results/v0.20/newop/long-timelines.md) · [控制器](../results/v0.20/newop/controller-snapshots.json)','']
+            'Kimi 128k 的 sigmoid 在 950DT 上预测 28.858 µs、实测 18.553 µs。128 个控制器到共同采样时标累计 50,377,472 B，采样截止和 kernel 末指令仍有边界差异。逻辑 FP32 输入 50,331,648 B，外存写命令只有 6 条。冻结模型要求全部输出在设备窗内写回 HBM；允许输出在 L2 接收的事后敏感性预测为 18.943 µs（+2.1%）。PR 具有更低的名义 HBM 带宽，旧假设放大了误差，PR 的物理写回事务尚缺同样的证据。敏感性单列，保留原预测用于独立统计。[两端 128k 首尾各两轮](../results/v0.20/newop/long-timelines.md) · [控制器](../results/v0.20/newop/controller-snapshots.json)','']
+    kimi=next(r for r in rows if r['op']=='sigmoid_fp32' and r['shape']==[2097152,12])
+    if kimi['dt_ca_us']:
+        lines+=['Kimi 的整批 256k 实测把这个容量假设推过了拐点。输入与输出各 96 MiB，DT 共 128 个通道到共同采样时标'
+                '累计 132,268,160 B、184,186 条写命令，128k 时相应的是 6 条写命令。逻辑工作量翻倍，'
+                f"DT 从 18.553 增至 {kimi['dt_ca_us']:.3f} µs（{kimi['dt_ca_us']/18.553:.2f}×）。"
+                '按前两点拟合直线会低估这次耗时；长循环的有限启动成本和输出溢出 L2 分别影响斜率。'
+                '真实 HBM 写字节量不能由命令数乘固定常数得到。[256k 上下流水图](../results/v0.20/newop/long-timelines.md) · '
+                '[同形芯片与控制器记录](../results/v0.20/newop/controller-snapshots.json)','']
+    flash=next(r for r in rows if r['op']=='cast_bf16_fp32' and r['shape']==[2097152,32])
+    if flash['dt_ca_us']:
+        lines += ['Flash Cast 的 DT 独立 256k 结果揭示了此次修改的局限。逻辑读写分别是 128、256 MiB，'
+            f"v0.19 预测 {flash['old_dt_us']:.3f} µs，当前 {flash['dt_us']:.3f} µs，CA {flash['dt_ca_us']:.3f} µs。"
+            '旧版在此点更准。当前模型预计 273,842,176 B 离开片上接口，128 个物理通道累计观测 312,226,048 B。'
+            '即使用观测字节除以配置的 4 TB/s，也只得到约 78.06 µs。满块发起间隔按共享资源折算为 1.379 µs，'
+            '末核实际读、写均为 1.971 µs。由此可分别检验驻留量和竞争下的服务速度，单一峰值带宽无法解释全部偏差。'
+            '[256k 同轴流水](../results/v0.20/large/flash-256ki-tiles.png) · '
+            '[控制器及整个进程的采样范围](../results/v0.20/large/cast_2097152_32_Ascend950DT_9582-official-dram.json)','']
     native=V/'large/cast_262144_5120_native.json'
     if native.is_file() and read(native).get('qualified_core_envelope'):
         n=read(native)
@@ -246,13 +277,18 @@ def render():
                     f"{pr['n']} | {metrics(pr)} | {metrics(speeds)} | {min(projection):.3f}–{max(projection):.3f} |")
         obs=cube['dt_observation'];shape='×'.join(map(str,cube['shape']))
         detail=f"模型 {cube['dt_us']:.3f} µs、CA {cube['dt_ca_us']:.3f} µs（{cube['dt_us']/cube['dt_ca_us']-1:+.1%}）"
+        pr_detail=''
+        if cube['pr_ca_us'] is not None:
+            pr_detail=(f"同形 DT/PR 耗时比预测 {cube['speedup_pred']:.4f}、CA {cube['speedup_ca']:.4f}。"
+                       '两端 ELF 相同，DT 的 MMAD 几何及 AIV 归并指令支持四路分 K，PR 支持三路。'
+                       'PR 虽有 28 个活动 AIC，仅 24 个发出 MMAD；56 个 AIV 参与末段。')
         extra=(f"\n### Flash prefill 投影的 Cube 验证\n\n每次调度总计 2,048 token，"
                f"BF16 ND `[M,N,K]=[{shape}]`。950DT {detail}，kernel 为 `{obs['kernel']}`。"
                f"950PR 预测 {cube['pr_us']:.3f} µs，CA {display(cube['pr_ca_us'])} µs。该配对是在 DT 完成后选择，沿用最初冻结的 PR 预测。970DT 外推 {cube['future_us']:.3f} µs。"
                "该实验检查 indexer 投影的真实维度，RHS 使用连续 ND。整网权重布局和最终派发仍以实际部署为准。"
                "DT 分核预测 32 AIC，实际另有 64 个 AIV。模型和实测各 640 次 MMAD，但单条的 [m,n,k] 分别为 [64,32,256] 和 [256,32,64]。"
                "实际 tiling key 4098 对应 Stream-K，末个 AIC 的 Cube 结束后到整窗结束，预测 0.256 µs、实测 2.756 µs。"
-               "[分块、首次发起与终端核对照](examples/matmul-prefill.md)\n\n")
+               +pr_detail+"[分块、首次发起与终端核对照](examples/matmul-prefill.md)\n\n")
     text='\n'.join(lines)+'\n'
     anchor='## 芯片资源及模拟条件'
     text=text.replace(anchor,A+'\n'+sections(rows)+extra+B+'\n\n'+anchor,1)
