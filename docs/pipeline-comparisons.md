@@ -2,6 +2,26 @@
 
 先看同一行、同一颜色的起止位置，再看右侧整窗差值。模型图给出它能够解释的分块和依赖；CA 图从全核最早的指令开始计时。末核由实际退休时刻选出，因此一次 Matmul 的末核也可能是 AIV。时间单位均为设备微秒。
 
+## Matmul · 每个输出块的两页 K
+
+![上栏模型按输出块与 K 页排程，下栏 core30 的实际 MTE2、MTE1、MMAD、FIXP](examples/figures/matmul-tile-pages.png)
+
+950DT，BF16 `[M,N,K]=[1280,2048,512]`，模型 **12.449 µs**、CA **12.219 µs**。首波每核一个 256×256 输出块，第二波每核一个 128×128 尾块。每块读两页 K，每页发起四条 MMAD。浅橙色的实测 FIXP 条包含已发起描述符等待依赖的时间。数据提取逐核核对 GM 地址、L1 页、L0 目的地、累加器初始化和全部 512 条 MMAD。[输入、参数和计算过程](examples/matmul.md) · [图上的全部区间](../results/v0.20/examples/matmul-tile-pages.json)
+
+同一个 shape 在 950PR 上只用 28 个 AIC，首波之后分出 24 个 128×256 矩形。预测和实测都有 416 条 MMAD；首条 MMAD 起点相差 0.059 µs，到了最后一页扩大到 0.586 µs。模型给出 **14.027 µs**，CA 给出 **13.218 µs**。[同一刻度并排看 DT 与 PR](examples/figures/matmul-tile-pages-dt-pr.png) · [950PR 上下对照原图](examples/figures/matmul-tile-pages-pr.png) · [两卡同形的逐页偏差](../results/v0.21/matmul-pages-pr/report.md)
+
+## 整批 prefill · 从一笔搬运看到每核几十轮
+
+![Pro 的 B8×32k 投影 Cast，模型和真实末核按 UB 块对齐](examples/figures/prefill-pro-32ki-pr.png)
+
+950PR 的 DeepSeek V4 Pro，8 条 32k 一次提交，indexer 系数张量为 BF16 [262144,64]。模型 **25.030 µs**，CA **23.762 µs**。下栏第一、第二块只隔 0.055 µs 就发起了读，写回也发生重叠。每栏最下方 15 根刻度保留所有读发起。相同画法覆盖 Flash 和 Kimi 的 B8×256k；两者在 PR 的实际末核分别跑了 57 轮和 29 轮。[三模型六张图及逐块偏差](../results/v0.23/prefill/README.md)
+
+## KDA V2 · 三个 kernel 分别在哪里产生偏差
+
+![KDA V2，三个阶段各自按同一个时间轴对齐模型与 CA](../results/kda-resource23/950dt-t5-holdout-comparison.png)
+
+T=5、两个本地头时，950DT 在 Prepare 低估约 1.49 µs，在 FwdH 高估约 0.98 µs，整窗误差只有 0.55 µs。每列独立计时，竖线标实际 MMAD 发起，下栏保留对应的 MTE、Cube 和 Vector。该样本在模型冻结后采集。[950PR 同形流水](../results/kda-resource23/950pr-t5-holdout-comparison.png) · [公式、计时口径与完整算例](examples/kda_chunk.md)
+
 ## 同一个 UB 槽何时可以复用
 
 ![上面为三个 UB 块的模型，下面为同一时间轴上 PR 末核的实测读、转换和写](examples/figures/v022-cast-ub-pr.png)
@@ -13,14 +33,6 @@ BF16 → FP32 Cast `[511,5120]`，第三个块开始读取输入槽 0 时，第�
 ![两个 950DT RMSNorm 的模型关键路径在上，CA 末核和同扇区写操作在下](examples/figures/rms-v022-lane-sector.png)
 
 `[4,4800]` 的最后一行以 BF16 `y` 写回结束。`[34,1904]` 里有 32 个通道向同一 128 B 区域写 FP32 `rstd`，预估的末段换成了扇区写队列。下栏的细竖线给出实际各通道的写退休时刻。[从系统调用到全核窗口](examples/rmsnorm.md)
-
-## Matmul · 每个输出块的两页 K
-
-![上栏模型按输出块与 K 页排程，下栏 core30 的实际 MTE2、MTE1、MMAD、FIXP](examples/figures/matmul-tile-pages.png)
-
-950DT，BF16 `[M,N,K]=[1280,2048,512]`，模型 **12.449 µs**、CA **12.219 µs**。首波每核一个 256×256 输出块，第二波每核一个 128×128 尾块。每块读两页 K，每页发起四条 MMAD。浅橙色的实测 FIXP 条包含已发起描述符等待依赖的时间。数据提取逐核核对 GM 地址、L1 页、L0 目的地、累加器初始化和全部 512 条 MMAD。[输入、参数和计算过程](examples/matmul.md) · [图上的全部区间](../results/v0.20/examples/matmul-tile-pages.json)
-
-同一个 shape 在 950PR 上只用 28 个 AIC，首波之后分出 24 个 128×256 矩形。预测和实测都有 416 条 MMAD；首条 MMAD 起点相差 0.059 µs，到了最后一页扩大到 0.586 µs。模型给出 **14.027 µs**，CA 给出 **13.218 µs**。[同一刻度并排看 DT 与 PR](examples/figures/matmul-tile-pages-dt-pr.png) · [950PR 上下对照原图](examples/figures/matmul-tile-pages-pr.png) · [两卡同形的逐页偏差](../results/v0.21/matmul-pages-pr/report.md)
 
 ## Addmm · 同一列偏置怎样穿过 L1 和 BT
 
@@ -93,7 +105,7 @@ DT、PR 采用相同的逻辑输入。下表的当前模型在归档窗口上回
 | Flash，每条 32k | Cast [262144,32] | 8.363 / 9.970 | 13.046 / 14.080 |
 | Flash，每条 128k | Cast [1048576,32] | 36.368 / 35.535 | 88.943 / 70.711 |
 | Flash，每条 256k | Cast [2097152,32] | 99.918 / 106.757 | 232.748 / 223.493 |
-| Pro，每条 32k | Cast [262144,64] | 13.334 / 17.041 | 25.030 / 23.762 |
+| Pro，每条 32k | Cast [262144,64] | 16.592 / 17.041 | 25.030 / 23.762 |
 | Kimi，每条 32k | Sigmoid [262144,12] | 8.002 / 7.759 | 12.344 / 11.428 |
 | Kimi，每条 128k | Sigmoid [1048576,12] | 19.720 / 18.553 | 39.630 / 34.285 |
 | Kimi，每条 256k | Sigmoid [2097152,12] | 45.897 / 42.686 | 104.717 / 88.593 |
@@ -110,7 +122,7 @@ GMM1 和 GMM2 均用 `[8,256,128,2]`、专家分配 `[1,7]`。GMM1 的两份中�
 
 ### 各种图能看出什么
 
-20 条路线中，**12 条**可以按工作块、阶段或资源队列核对预测与实测（Matmul、Addmm、量化、FA、Cast、Sigmoid、RMSNorm、AttnResFwd、PreSinkhorn、Lightning Indexer、GMM1 和 GMM2）。大 RMSNorm 的局部块用首笔 rstd 对齐，完整设备窗另列。**2 条**对应串行 kernel（mHC 链、MoE FFN）。**5 条**给出状态或阶段成本及真实 CA 队列（mHC Post、mHC Pre、Sinkhorn、KDA recurrent、MoE 路由）。独占成本可以解释总误差来自哪个资源；该资源的逐条发起时刻只在有指令记录的一侧可见。KDA chunk 目前只有失败事件诊断，完整耗时为 N/A。[各算子示例](modeling-strategy.md#逐算子算例) · [误差明细](error-analysis.md)
+20 条路线中，**12 条**可以按工作块、阶段或资源队列核对预测与实测（Matmul、Addmm、量化、FA、Cast、Sigmoid、RMSNorm、AttnResFwd、PreSinkhorn、Lightning Indexer、GMM1 和 GMM2）。大 RMSNorm 的局部块用首笔 rstd 对齐，完整设备窗另列。**2 条**对应串行 kernel（mHC 链、MoE FFN）。**5 条**给出状态或阶段成本及真实 CA 队列（mHC Post、mHC Pre、Sinkhorn、KDA recurrent、MoE 路由）。独占成本可以解释总误差来自哪个资源；该资源的逐条发起时刻只在有指令记录的一侧可见。融合 KDA V1 的全窗为 N/A；显式 FLA V2 分成三个 kernel，可用上面同形的新图核对。[各算子示例](modeling-strategy.md#逐算子算例) · [误差明细](error-analysis.md)
 
 ### 按算子打开图
 
@@ -135,7 +147,7 @@ GMM1 和 GMM2 均用 `[8,256,128,2]`、专家分配 `[1,7]`。GMM1 的两份中�
 | [mHC Sinkhorn](examples/mhc_sinkhorn.md) | PR · 64×4 | [每 AIV 两行共用发射的阶段成本](examples/figures/mhc_sinkhorn-v21-pr.png) |
 | [KDA recurrent](examples/kda_recurrent.md) | PR · 1×3×1×1×128×128 | [完整资源预算与六次实际状态更新](examples/figures/kda-recurrent-state-pr.png) |
 | [MoE 路由 Top-K](examples/moe_gating_top_k.md) | PR · 1×384×6 | [路由阶段成本和末核队列](examples/figures/moe_gating_top_k-pr-pipeline.png) |
-| [KDA chunk](examples/kda_chunk.md) | PR · 1×64×2×2×128×128 | [失败前事件记录，完整 CA 窗口 N/A](examples/figures/kda-chunk-pr-event.png) |
+| [KDA chunk](examples/kda_chunk.md) | PR · 1×64×2×2×128×128 | [V1 失败事件](examples/figures/kda-chunk-pr-event.png) · [V2 完整的 PR 独立观测](../results/kda-resource23/950pr-t5-holdout-comparison.png) |
 
 ### 从仓内数据重画
 

@@ -27,3 +27,8 @@ print(r.projection['target_plan'], r.projection['timing_diagnostics']['schedule_
 本例复用旧 trace 诊断误差，归入开发回放。冻结后另在 DT、PR 各登记 10 个新 shape，分别列出独立窗口与两版误差。[逐形状结果](../../results/v0.21/vector/report.md) · [v0.20 原始留出](../../results/v0.20/newop/measurements.md)
 
 [冻结后的独立长 shape 逐块对照](../../results/v0.21/vector/independent-figures.md)
+
+
+## 256k 时误差从哪轮开始累积
+
+B8×256k、TP8 时输入为 [2097152,12]，FP32 读写各 96 MiB。PR 每个满块 15,872 个元素，最长核处理 28 个满块和 5,120 个尾部元素。模型首笔读发起晚 0.424 µs，到第 15 块晚 20.262 µs。最后预测 104.717 µs，CA 为 88.593 µs。图的每栏底部保留该核全部 29 次读发起。DT 走 25 轮，模型 / CA 为 45.897 / 42.686 µs。[950PR 逐块图](figures/prefill-kimi-256ki-pr.png) · [950DT 逐块图](figures/prefill-kimi-256ki-dt.png) · [阶段值与源码](../../results/v0.23/prefill/README.md)

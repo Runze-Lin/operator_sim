@@ -1,0 +1,69 @@
+{
+  "shape": [
+    1,
+    3,
+    4,
+    5120
+  ],
+  "chip": "Ascend950PR_957b",
+  "api": "aclnnHcPost",
+  "qualified": true,
+  "role": "source geometry and development CA only",
+  "cost": {
+    "started_utc": "2026-11-19T14:29:12.742409+00:00",
+    "finished_utc": "2026-11-19T14:30:20.827750+00:00",
+    "seconds": 68.08541508996859,
+    "exit_code": 0,
+    "stop_reason": null,
+    "raw_bytes": 59122716
+  },
+  "raw": "runs/hcpost23/Ascend950PR_957b-3-5120-222912",
+  "stage": {
+    "kernel": "HcPost_d2fe6614722b27afa6f8d964c215447e_1",
+    "ca_us": 5.024242403917015,
+    "active_aic": 0,
+    "active_aiv": 3,
+    "windows": {
+      "core0.veccore0": [
+        0.0,
+        5.010302546434104
+      ],
+      "core16.veccore0": [
+        0.08787870407104492,
+        4.65636349003762
+      ],
+      "core0.veccore1": [
+        0.08303022384643555,
+        5.024242403917015
+      ]
+    },
+    "trace": "runs/hcpost23/Ascend950PR_957b-3-5120-222912/profile/OPPROF_20261119222913_BTCJRMKOCBJVEYFT/simulator/trace.json",
+    "trace_sha256": "b0794a5ba32a4a68a496717b8ada977aa442b4ad90d059838569255c91c50306",
+    "binary_sha256": "4508230c80160f04172e3ff47bff1c4a211459c0d4cd270fb88425289e5deb41",
+    "queue_events": {
+      "SCALAR": 3486,
+      "MTE3": 9,
+      "MTE2": 24,
+      "PUSHQ": 48,
+      "FLOWCTRL": 102,
+      "RVECLP": 156,
+      "RVECSU": 48,
+      "RVECLD": 12924,
+      "RVECEX": 25392,
+      "RVECST": 5004
+    },
+    "mmad": 0,
+    "total_events": 47193
+  },
+  "checks": [
+    "correctness name=output count=61440 bad=0 comparison=bf16_rne_exact"
+  ],
+  "ca_us": 5.024242403917015,
+  "text_sha256": "2a258948267cabc2b70a1dfc1131a92165c9d8e48008f915caa5792bb9c2766b",
+  "bindings": [
+    "1710688:\tbinding file /home/l00925865/operator_sim/build/hcpost23/host_probe [0] to /home/l00925865/operator_sim/build/hcpost23/vendors/hcpost/op_api/lib/libcust_opapi.so [0]: normal symbol `aclnnHcPostGetWorkspaceSize'",
+    "1710688:\tbinding file /home/l00925865/operator_sim/build/hcpost23/host_probe [0] to /home/l00925865/operator_sim/build/hcpost23/vendors/hcpost/op_api/lib/libcust_opapi.so [0]: normal symbol `aclnnHcPost'"
+  ],
+  "all_shards_end": true,
+  "chrome_sync_pairs": 6
+}

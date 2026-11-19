@@ -1,0 +1,27 @@
+{
+  "utc": "2026-11-19T14:17:39.213336+00:00",
+  "files": {
+    "development/validation/rms_unknown23/collect.py": "f1815642d0fc77a08a323825eb610437e1f7def8c293097fe4615d07663eec40",
+    "development/validation/rms_dispatch_audit/ordered_ca.py": "3ff3608e325dae887acd9e85efc4ef1c15492e8117d5b4607f2a66ef2ef29720",
+    "development/validation/rms_ordered_verify/prefix.py": "e5c361ea888382c0044a21a4e5e4528f7fb6f2918ef80899363f7c9f42673807",
+    "development/validation/rms_ordered_verify/verify.py": "6880244f8a43a62658b773fba3a1e677d06fd6eba7265790cfa839a30220d31c",
+    "scripts/cann-run.sh": "d529513abc0bc340a56c91365a9e72d5e434d2cb4841be1692930294cd0624df",
+    "toolchains/cann/9.2.1/cann-9.2.1/opp/built-in/op_impl/ai_core/tbe/kernel/ascend950/ops_nn/rms_norm/RmsNorm_normal_all_bf16_high_performance.o": "0926fe478e5f718ef49241c08ef00b665797690f0f7f22c67fdc25044e0cb54d",
+    "results/rms-unknown23/freeze.json": "dd57ff71c1421b2e7a583a3f57e1a01343a903d6f42f52af9d894a5f2eca07e0"
+  },
+  "process_order": [
+    "wide",
+    "sector",
+    "two-rows",
+    "multi-UB"
+  ],
+  "chips": [
+    "Ascend950DT_9582",
+    "Ascend950PR_957b"
+  ],
+  "slots": 1,
+  "wall_per_batch_s": 3600,
+  "raw_mib_per_batch": 12288,
+  "implementation": "ordered_ca.capture with dump=false and no automatic remeasurement",
+  "conditions": "Same NORM process+stream, confirmed input order, two all-element goldens per call, official install ELF, full aggregate/shard/timing-table identity, per-core END+END_LABEL and total write volumes. Qualify each separately, compare identical deterministic inputs in pairs."
+}

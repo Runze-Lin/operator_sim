@@ -1,0 +1,266 @@
+{
+  "utc": "2026-11-19T14:09:00.877136+00:00",
+  "role": "mechanism development only; zero post-freeze holdouts",
+  "max_concurrency": 1,
+  "budget_per_capture_seconds": 900,
+  "budget_per_capture_bytes": 3221225472,
+  "budget_total_capture_seconds": 5400,
+  "reused_control": {
+    "sku": "Ascend950DT_9582",
+    "shape": [
+      1,
+      2,
+      1,
+      1,
+      128,
+      128
+    ],
+    "receipt": "results/chunk-recovery/fla2691/v2/verified.json"
+  },
+  "contract": {
+    "B": 1,
+    "S": 2,
+    "Hq": 1,
+    "Hv": 1,
+    "K": 128,
+    "V": 128,
+    "chunk": 64,
+    "layout": "BSND",
+    "raw_gate": "BF16",
+    "qkv": "BF16",
+    "beta": "FP32",
+    "scale": 0.08838834764831845,
+    "safe_gate": true,
+    "lower_bound": -5.0,
+    "use_gate_in_kernel": true,
+    "state_v_first": true,
+    "initial_state": "nonzero FP32 VK",
+    "epsilon": 1e-06,
+    "use_qk_l2norm_in_kernel": false,
+    "use_beta_sigmoid_in_kernel": false,
+    "allow_neg_eigval": false,
+    "use_exp2": true,
+    "cu": [
+      0,
+      2
+    ],
+    "indices": [
+      0,
+      0
+    ],
+    "optional_return": [
+      "final_state_vk",
+      "aqk",
+      "akk"
+    ],
+    "direct_api": "aclnnChunkKdaFwdV2",
+    "default_wrapper_choice": "aclnnChunkKdaFwd",
+    "work_items": 1
+  },
+  "axes_overridden_by_case": [
+    "S",
+    "Hq",
+    "Hv",
+    "cu=[0,S]",
+    "indices=[[0,i] for i in range(ceil(S/64))]"
+  ],
+  "source_hashes": {
+    "development/validation/kda_v23/series.py": "0c1b686c9c2dddae06ac8bf022878aa573f653234a0286d0adda78969daed371",
+    "development/validation/kda_v23/qualify.py": "56bafa44fe50ae0003c0fae0f1562840745313ee1f967b8fcc59e1aab079ae15",
+    "results/chunk-recovery/fla2691/v2/register.json": "bf9ac39c99bda0455b078d20fa329fdedfd58b2322c790876ae3ebbf0293d8a5",
+    "results/chunk-recovery/fla2691/raw/fla_npu/opp/vendors/fla_npu_transformer/op_api/lib/libcust_opapi.so": "f229fc7ce9bfe486aad870bf31d6f02bc5b4b9204f7d0f4382bf655d63060e75",
+    "results/chunk-recovery/fla2691/v2/raw/kimi-v2": "aa3b659e54535f13db1176f2513ef89be6ba44ce89d78fefa511194c255a2d69",
+    "results/chunk-recovery/fla2691/v2/raw/kimi-v2.cpp": "57f50181682336a0c7ac9967384b5ef5579c277baf9237b4423e3b23960cb3c5",
+    "development/validation/chunk_recovery/fla2691/v2/verify_chrome.py": "0362d7a7d028d6dc3fce4f7311cfedbf6b96f9861feaa1b8f48af0f84f0f3e84",
+    "development/validation/chunk_recovery/fla2691/probe.py": "efdf6f4f93a2aeefef00fa57c5645b322b641f7a9217dae23f2b8fdbda72e3d2",
+    "scripts/cann-run.sh": "d529513abc0bc340a56c91365a9e72d5e434d2cb4841be1692930294cd0624df",
+    "results/chunk-recovery/fla2691/v2/verified.json": "6ae8ec8f56e8023bf87e1b6c99814a22c24602edacb87d2de6784005483b4175",
+    "configs/chips/Ascend950DT_9582.json": "54d68c49374f8fab57ae16b05923d7ea2874cc48083e0728bcbc60f467bb71ec",
+    "configs/chips/Ascend950PR_957b.json": "2bb5b0b34b8d04e255e24ea5d12c73407ace6bb7154ba6aa603b338fc252ada7"
+  },
+  "published_device_text": {
+    "chunk_kda_fwd_prepare": {
+      "ChunkKdaFwdPrepare_9a5c7ba661140e04d3bf3c972e6629a6.o": "3cdc897359178d665df362b3fcb2bdacb830af2357a2e0b6f7d1f9c79f3d136a",
+      "ChunkKdaFwdPrepare_ab956e5eb2ff99416b2f5173e788663a.o": "3cdc897359178d665df362b3fcb2bdacb830af2357a2e0b6f7d1f9c79f3d136a",
+      "ChunkKdaFwdPrepare_375ce9d41fcc2d706267f3750942ed8e.o": "3cdc897359178d665df362b3fcb2bdacb830af2357a2e0b6f7d1f9c79f3d136a",
+      "ChunkKdaFwdPrepare_171e9a19df4c0d44ca00a177d8fe300c.o": "3cdc897359178d665df362b3fcb2bdacb830af2357a2e0b6f7d1f9c79f3d136a"
+    },
+    "chunk_fwd_h": {
+      "ChunkFwdH_72371232203476155baf45810c33a7f9.o": "db5714f85fe237be6eed9641dec19c925c9e44d729fbdadf62b38cf4ce966da5"
+    },
+    "chunk_kda_fwd_finalize": {
+      "ChunkKdaFwdFinalize_c0d447f32579acd296e1c16d6d9c7d38.o": "2460a5a34f6e593d84d8b72b0d118ac867a1b7713386da64d39b107f40d64d7e"
+    }
+  },
+  "protocol": "Same frozen host and release, direct V2. Verify selected SKU and its physical memory config, all four numerical groups, unmodified initial state, no CA sync errors, same three primary release families, captured ELFs, full official roster and per-core durations, physical END and merged Chrome B/E versus shard signatures on every launch. Record every auxiliary launch.",
+  "cases": [
+    {
+      "id": "ascend950pr-t2-h1",
+      "sku": "Ascend950PR_957b",
+      "physical_memory": "lpddr5_6400M_bailu.ini",
+      "shape": [
+        1,
+        2,
+        1,
+        1,
+        128,
+        128
+      ],
+      "work_items": 1,
+      "purpose": "paired control with previous DT",
+      "oracle": {
+        "attention": 256,
+        "aqk": 128,
+        "akk": 128,
+        "state_vk": 16384
+      }
+    },
+    {
+      "id": "ascend950dt-t64-h1",
+      "sku": "Ascend950DT_9582",
+      "physical_memory": "hbm3_8000M.ini",
+      "shape": [
+        1,
+        64,
+        1,
+        1,
+        128,
+        128
+      ],
+      "work_items": 1,
+      "purpose": "first full chunk",
+      "oracle": {
+        "attention": 8192,
+        "aqk": 4096,
+        "akk": 4096,
+        "state_vk": 16384
+      }
+    },
+    {
+      "id": "ascend950dt-t65-h1",
+      "sku": "Ascend950DT_9582",
+      "physical_memory": "hbm3_8000M.ini",
+      "shape": [
+        1,
+        65,
+        1,
+        1,
+        128,
+        128
+      ],
+      "work_items": 2,
+      "purpose": "second chunk at one head",
+      "oracle": {
+        "attention": 8320,
+        "aqk": 4160,
+        "akk": 4160,
+        "state_vk": 16384
+      }
+    },
+    {
+      "id": "ascend950pr-t65-h1",
+      "sku": "Ascend950PR_957b",
+      "physical_memory": "lpddr5_6400M_bailu.ini",
+      "shape": [
+        1,
+        65,
+        1,
+        1,
+        128,
+        128
+      ],
+      "work_items": 2,
+      "purpose": "paired second-chunk anchor",
+      "oracle": {
+        "attention": 8320,
+        "aqk": 4160,
+        "akk": 4160,
+        "state_vk": 16384
+      }
+    },
+    {
+      "id": "ascend950dt-t15-h1",
+      "sku": "Ascend950DT_9582",
+      "physical_memory": "hbm3_8000M.ini",
+      "shape": [
+        1,
+        15,
+        1,
+        1,
+        128,
+        128
+      ],
+      "work_items": 1,
+      "purpose": "short one-head reference",
+      "oracle": {
+        "attention": 1920,
+        "aqk": 960,
+        "akk": 960,
+        "state_vk": 16384
+      }
+    },
+    {
+      "id": "ascend950dt-t15-h2",
+      "sku": "Ascend950DT_9582",
+      "physical_memory": "hbm3_8000M.ini",
+      "shape": [
+        1,
+        15,
+        2,
+        2,
+        128,
+        128
+      ],
+      "work_items": 2,
+      "purpose": "head-count contrast",
+      "oracle": {
+        "attention": 3840,
+        "aqk": 1920,
+        "akk": 1920,
+        "state_vk": 32768
+      }
+    },
+    {
+      "id": "ascend950pr-t15-h2",
+      "sku": "Ascend950PR_957b",
+      "physical_memory": "lpddr5_6400M_bailu.ini",
+      "shape": [
+        1,
+        15,
+        2,
+        2,
+        128,
+        128
+      ],
+      "work_items": 2,
+      "purpose": "paired two-head check",
+      "oracle": {
+        "attention": 3840,
+        "aqk": 1920,
+        "akk": 1920,
+        "state_vk": 32768
+      }
+    },
+    {
+      "id": "ascend950dt-t63-h1",
+      "sku": "Ascend950DT_9582",
+      "physical_memory": "hbm3_8000M.ini",
+      "shape": [
+        1,
+        63,
+        1,
+        1,
+        128,
+        128
+      ],
+      "work_items": 1,
+      "purpose": "one row before chunk boundary",
+      "oracle": {
+        "attention": 8064,
+        "aqk": 4032,
+        "akk": 4032,
+        "state_vk": 16384
+      }
+    }
+  ]
+}

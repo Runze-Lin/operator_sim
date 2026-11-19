@@ -160,6 +160,11 @@ def account_work(op, shape, attrs=None):
     op = ALIASES.get(op, op)
     attrs = attrs or {}
     dtype = str(attrs.get("dtype", default_dtype(op))).lower()
+    if op == "mhc_post" and attrs.get("implementation") == "vllm_hc_post":
+        if dtype != "bf16":
+            raise ValueError("vLLM HcPost accounting expects BF16 activations and FP32 coefficients")
+        from .hc_post_layout import hc_post_work
+        return hc_post_work(shape, {k: v for k,v in attrs.items() if k != "dtype"})
     if op == "attn_res_fwd":
         from .chips import load_chip
         from .attention_residual_timing import resource_attention

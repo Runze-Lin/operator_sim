@@ -24,6 +24,10 @@
 
 默认 Matmul 和 Addmm 会在目标卡重新选择 tile 和波次。验收表分别给出每个算子在 950DT、950PR 的 WAPE、最坏 shape 和完整采集数量。当前仍有超限及未获得合格 CA 的路线。[逐算子验收](docs/error-analysis.md) · [同轴流水图](docs/pipeline-comparisons.md)
 
+![950DT Matmul，预测关键路径与 CA 末核按输出块和 K 页上下对齐](docs/examples/figures/matmul-tile-pages.png)
+
+同一 BF16 Matmul [1280,2048,512]，上栏给出每个输出块的两页 K，下栏竖线标出实际 MMAD 发起。32 个 AIC 的预测为 12.449 µs，完整 CA 为 12.219 µs。大 prefill 的图用相同的上下栏对齐每个 UB 块。[Matmul 的逐页推导](docs/examples/matmul.md) · [三个模型的大 prefill 六张对照图](results/v0.23/prefill/README.md)
+
 ## 试一次预测
 
 在仓库根目录用系统仿真器的 Python 环境安装（Python 3.10 或更新版本）。安装后可在任意工作目录查询。下面的 `9` 表示这个 rank 上的一次 RMSNorm 同时处理 9 个 token，`7168` 是每个 token 的通道数。
@@ -47,7 +51,7 @@ print(result.latency_us, result.work["cube_ops"], result.work["logical_read_byte
 
 维护 960、970、980 等架构情景时，每个目标使用一份 JSON，分别填写按位宽区分的两类算力、核数、频率、外存容量和带宽。内置 `Ascend970DT` 情景为 120 Cube / 120 Vector、1.8 GHz、288 GB、14.4 TB/s；其中 16 位 Vector 峰值 110.592 TOP/s 已含双发射。这些是架构假设。调用方通过 `extrapolated` 状态识别外推，并决定是否将其交给事件调度器。[970DT 配置及逐项来源](configs/chips/Ascend970DT.json) · [自定义芯片示例](configs/chips/scenario-example.json) · [字段、单位和返回合同](docs/integration.md)
 
-已从隔离安装的 v0.22 wheel 检查三种芯片的独立输入、完整的有序调用，以及每卡 B8×32k／128k／256k 的大 shape。设备预测时间与测量 Python 查询所花的墙钟分别记录。[查询开销、P95 和最大值](results/v0.22/wheel-check.json) · [本版变化与校准](results/v0.22/changes.md)
+已从隔离安装的 v0.23 wheel 检查三种芯片上既有计时、RMSNorm 前序区间、显式 KDA V2，以及每卡 B8×32k／128k／256k 的大 shape。设备预测时间与测量 Python 查询所花的墙钟分别记录。[查询开销、P95 和最大值](results/v0.23/wheel-check.json) · [本版变化与校准](results/v0.23/changes.md)
 
 ## 可预测的算子
 
@@ -59,7 +63,7 @@ print(result.latency_us, result.work["cube_ops"], result.work["logical_read_byte
 
 三个模型的 B8 整批与 chunked prefill 输入可直接查每个 rank 的张量形状、dtype、层号和适用的独立 kernel。覆盖每请求 32k、128k、256k，以及 attention TP8 或 DP8、MoE EP8 两种拓扑。[逐模型真实维度与导出器](docs/prefill-shapes.md) · [场景索引](results/v0.20/workloads/index.csv) · [工作负载覆盖](docs/workload-coverage.md)
 
-KDA chunk 可查询任务结构。Kimi 默认小形使用的融合 V1 出现重复置位；公开 V2 直接入口在 950DT 有一个完整的三段实测，耗时模型仍待校准。系统层可通过 `latency_us is None` 识别这条路线。[V1 与 V2 校准状态](docs/examples/kda_chunk.md)组合路线和组成它的单算子是两种记账粒度，一条路径上只能选一种。各路线的 dtype、布局和分支限制见[建模方法](docs/modeling-strategy.md)。模型配置、本地 batch、TP/EP 切分和实际路由共同决定输入 shape，见[如何推导每卡 shape](docs/model-configs.md)。
+Kimi 的 FLA 26.9.1 三段 KDA V2 可显式预测阶段耗时、工作量和分核，已在 DT、PR 用新 shape 实测。默认小形使用的融合 V1，完整耗时仍为 `None`。DeepSeek 扩展 `aclnnHcPost` 已支持结构查询。组合路线与组成它的单个 kernel 在同一调用中只计一次。[KDA 冻结模型与 CA 同轴图](docs/examples/kda_chunk.md) · [DeepSeek HcPost](docs/examples/hc_post_vllm.md) 各路线的 dtype、布局和分支限制见[建模方法](docs/modeling-strategy.md)。模型配置、本地 batch、TP/EP 切分和实际路由共同决定输入 shape，见[如何推导每卡 shape](docs/model-configs.md)。
 
 ## 硬件与计时边界
 

@@ -1,0 +1,131 @@
+{
+  "utc": "2026-11-19T14:20:44.489848+00:00",
+  "role": "development",
+  "contract": {
+    "B": 1,
+    "S": 2,
+    "Hq": 1,
+    "Hv": 1,
+    "K": 128,
+    "V": 128,
+    "chunk": 64,
+    "layout": "BSND",
+    "raw_gate": "BF16",
+    "qkv": "BF16",
+    "beta": "FP32",
+    "scale": 0.08838834764831845,
+    "safe_gate": true,
+    "lower_bound": -5.0,
+    "use_gate_in_kernel": true,
+    "state_v_first": true,
+    "initial_state": "nonzero FP32 VK",
+    "epsilon": 1e-06,
+    "use_qk_l2norm_in_kernel": false,
+    "use_beta_sigmoid_in_kernel": false,
+    "allow_neg_eigval": false,
+    "use_exp2": true,
+    "cu": [
+      0,
+      2
+    ],
+    "indices": [
+      0,
+      0
+    ],
+    "optional_return": [
+      "final_state_vk",
+      "aqk",
+      "akk"
+    ],
+    "direct_api": "aclnnChunkKdaFwdV2",
+    "default_wrapper_choice": "aclnnChunkKdaFwd",
+    "work_items": 1
+  },
+  "shape_fields": "case.shape=[B,T,Hq,Hv,K,V]; cu=[0,T], chunk_indices=[(0,i)] for i=0..ceil(T/64)-1",
+  "public_reference": {
+    "repository": "https://github.com/flashserve/flash-linear-attention-npu",
+    "commit": "5cc699069c7f91a35aabd583032c8720a0b626fa",
+    "path": "tests/atk/chunk_kda_fwd_prepare/executor_chunk_kda_fwd_prepare.py",
+    "blob": "46286c0a61d19341c7ca9ffd020c56c77467c336"
+  },
+  "protocol": "Input generation, mixed signs, host ABI, descriptors and device ELFs unchanged. Store actual auxiliary BF16 outputs; keep coordinate and deviation against math and published reference. Actual all four numerics must pass the original strict thresholds. Each launch must satisfy the primary exact-ELF/roster/B-E checks. Stop the new series at the first failure.",
+  "primary_register_sha256": "c76f6dac6f0b0d6ea0bf948293785299175ee05bbded277249d76cbe0864382c",
+  "source_hashes": {
+    "development/validation/kda_v23/precision_cases.py": "a5519cf560e66d72733705ac13d3500131bf9223a797627f31108eff8b2a076d",
+    "development/validation/kda_v23/qualify.py": "56bafa44fe50ae0003c0fae0f1562840745313ee1f967b8fcc59e1aab079ae15",
+    "development/validation/kda_v23/reference.py": "78e9c36e0aebaf5fd2ab95d9d6642d1dd86e76c48554ca5c7c6024a749ee5054",
+    "development/validation/kda_v23/precise_host.hpp": "9aebd0d23d27da2f524a354bcdb6ea65c3990d524195c1a5611b2238520d2057",
+    "results/kda-v23/raw/precision-host/kimi-v2-aux.cpp": "e087dcaff59efca491a285dff686166ccfb97bc46e8861fb45ecc2a2fdb49440",
+    "results/kda-v23/raw/precision-host/kimi-v2-aux": "733a5ea817a6297db54770a4a65ef70b44071e204d0ee98137dd3cc3e387b2ad",
+    "results/kda-v23/raw/vendor-prepare-oracle.py": "8083ae75537118386a1927327f881fc43eabecdedd559804a8247a9d5af3e8f5",
+    "results/kda-v23/development-register.json": "c76f6dac6f0b0d6ea0bf948293785299175ee05bbded277249d76cbe0864382c",
+    "results/chunk-recovery/fla2691/v2/raw/kimi-v2": "aa3b659e54535f13db1176f2513ef89be6ba44ce89d78fefa511194c255a2d69",
+    "results/chunk-recovery/fla2691/v2/raw/kimi-v2.cpp": "57f50181682336a0c7ac9967384b5ef5579c277baf9237b4423e3b23960cb3c5",
+    "results/kda-v23/raw/precision-host/65-1/akk.bin": "5d82dce8b7b238e70647c5e8001294aa930dd1c62de1b0a6bce70b55fa86932f",
+    "results/kda-v23/raw/precision-host/65-1/aqk.bin": "814c1c9794a036bf7f1eb9242d2a447e6d2155a0930bf2bc422ca346f140c85f",
+    "results/kda-v23/raw/precision-host/65-1/math-vs-published.json": "7a2be4f75ee0061392f83f87eac499d2ddca8aa5229b4565ba14a3360846ba9d"
+  },
+  "frozen_prediction_files": [],
+  "budget_per_capture_seconds": 900,
+  "budget_per_capture_bytes": 3221225472,
+  "maximum_new_cases": 2,
+  "max_concurrency": 1,
+  "published_device_text": {
+    "chunk_kda_fwd_prepare": {
+      "ChunkKdaFwdPrepare_9a5c7ba661140e04d3bf3c972e6629a6.o": "3cdc897359178d665df362b3fcb2bdacb830af2357a2e0b6f7d1f9c79f3d136a",
+      "ChunkKdaFwdPrepare_ab956e5eb2ff99416b2f5173e788663a.o": "3cdc897359178d665df362b3fcb2bdacb830af2357a2e0b6f7d1f9c79f3d136a",
+      "ChunkKdaFwdPrepare_375ce9d41fcc2d706267f3750942ed8e.o": "3cdc897359178d665df362b3fcb2bdacb830af2357a2e0b6f7d1f9c79f3d136a",
+      "ChunkKdaFwdPrepare_171e9a19df4c0d44ca00a177d8fe300c.o": "3cdc897359178d665df362b3fcb2bdacb830af2357a2e0b6f7d1f9c79f3d136a"
+    },
+    "chunk_fwd_h": {
+      "ChunkFwdH_72371232203476155baf45810c33a7f9.o": "db5714f85fe237be6eed9641dec19c925c9e44d729fbdadf62b38cf4ce966da5"
+    },
+    "chunk_kda_fwd_finalize": {
+      "ChunkKdaFwdFinalize_c0d447f32579acd296e1c16d6d9c7d38.o": "2460a5a34f6e593d84d8b72b0d118ac867a1b7713386da64d39b107f40d64d7e"
+    }
+  },
+  "cases": [
+    {
+      "id": "development-ascend950dt-t65-h1",
+      "sku": "Ascend950DT_9582",
+      "shape": [
+        1,
+        65,
+        1,
+        1,
+        128,
+        128
+      ],
+      "work_items": 2,
+      "physical_memory": "hbm3_8000M.ini",
+      "numerical_reference": "Independent rounded Prepare Aqk/Akk, original full mathematical recurrence for attention and state. All original per-output thresholds preserved.",
+      "oracle": {
+        "attention": 8320,
+        "aqk": 4160,
+        "akk": 4160,
+        "state_vk": 16384
+      }
+    },
+    {
+      "id": "development-ascend950pr-t65-h1",
+      "sku": "Ascend950PR_957b",
+      "shape": [
+        1,
+        65,
+        1,
+        1,
+        128,
+        128
+      ],
+      "work_items": 2,
+      "physical_memory": "lpddr5_6400M_bailu.ini",
+      "numerical_reference": "Independent rounded Prepare Aqk/Akk, original full mathematical recurrence for attention and state. All original per-output thresholds preserved.",
+      "oracle": {
+        "attention": 8320,
+        "aqk": 4160,
+        "akk": 4160,
+        "state_vk": 16384
+      }
+    }
+  ]
+}

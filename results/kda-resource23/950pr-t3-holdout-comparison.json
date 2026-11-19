@@ -1,0 +1,730 @@
+{
+  "view": "registered holdout, stage-local cycles",
+  "receipt": "results/kda-v23/holdout-ascend950pr-t3-h1.json",
+  "sku": "Ascend950PR_957b",
+  "shape": [
+    1,
+    3,
+    1,
+    1,
+    128,
+    128
+  ],
+  "model_freeze_sha256": "7e278842c78dca05192219b2e8a36512b9e3b4180d277dc2cd1200081b0b61f1",
+  "stages": {
+    "chunk_kda_fwd_prepare": {
+      "family": "chunk_kda_fwd_prepare",
+      "kernel": "ChunkKdaFwdPrepare_171e9a19df4c0d44ca00a177d8fe300c_32513546_mix_aic",
+      "text_sha256": "3cdc897359178d665df362b3fcb2bdacb830af2357a2e0b6f7d1f9c79f3d136a",
+      "aggregate": "results/kda-v23/raw/holdout-ascend950pr-t3-h1/profile/OPPROF_20261119223049_VVFUVSJRCXPJYECP/ChunkKdaFwdPrepare_171e9a19df4c0d44ca00a177d8fe300c_32513546_mix_aic/0/simulator/trace.json",
+      "sha256": "016dd772381e54972ee14f64fec12afc5f3086f51c00c321c47c544e5094919c",
+      "ca_window_ticks": [
+        6140,
+        30313
+      ],
+      "actual_aic": 1,
+      "actual_aiv": 2,
+      "mmads": [
+        {
+          "begin": 16055,
+          "end": 16146,
+          "core": "core0.cubecore0",
+          "mnk": [
+            32,
+            16,
+            128
+          ]
+        },
+        {
+          "begin": 23327,
+          "end": 23426,
+          "core": "core0.cubecore0",
+          "mnk": [
+            32,
+            128,
+            32
+          ]
+        },
+        {
+          "begin": 23402,
+          "end": 23459,
+          "core": "core0.cubecore0",
+          "mnk": [
+            32,
+            128,
+            32
+          ]
+        }
+      ],
+      "vfs": [
+        {
+          "begin": 11557,
+          "end": 12097,
+          "core": "core0.veccore0",
+          "counts": {
+            "RVECEX": 200,
+            "RVECSU": 79,
+            "RVECLD": 34,
+            "RVECLP": 9,
+            "RVECST": 45
+          }
+        },
+        {
+          "begin": 12700,
+          "end": 13765,
+          "core": "core0.veccore0",
+          "counts": {
+            "RVECSU": 206,
+            "RVECLP": 34,
+            "RVECEX": 258,
+            "RVECLD": 55,
+            "RVECST": 577
+          }
+        },
+        {
+          "begin": 16374,
+          "end": 20233,
+          "core": "core0.veccore0",
+          "counts": {
+            "RVECSU": 345,
+            "RVECLP": 95,
+            "RVECEX": 4406,
+            "RVECLD": 4212,
+            "RVECST": 707
+          }
+        },
+        {
+          "begin": 21710,
+          "end": 22459,
+          "core": "core0.veccore0",
+          "counts": {
+            "RVECEX": 372,
+            "RVECSU": 9,
+            "RVECLP": 10,
+            "RVECLD": 56,
+            "RVECST": 153
+          }
+        }
+      ],
+      "transfers": [
+        {
+          "begin": 1034,
+          "end": 1395,
+          "core": "core0.veccore0",
+          "route": "OUT->UB",
+          "size": 48
+        },
+        {
+          "begin": 1041,
+          "end": 1376,
+          "core": "core0.veccore1",
+          "route": "OUT->UB",
+          "size": 48
+        },
+        {
+          "begin": 9334,
+          "end": 10402,
+          "core": "core0.veccore0",
+          "route": "OUT->UB",
+          "size": 768
+        },
+        {
+          "begin": 9346,
+          "end": 10414,
+          "core": "core0.veccore0",
+          "route": "OUT->UB",
+          "size": 768
+        },
+        {
+          "begin": 9363,
+          "end": 10416,
+          "core": "core0.veccore0",
+          "route": "OUT->UB",
+          "size": 768
+        },
+        {
+          "begin": 9960,
+          "end": 10462,
+          "core": "core0.veccore0",
+          "route": "OUT->UB",
+          "size": 12
+        },
+        {
+          "begin": 10339,
+          "end": 10944,
+          "core": "core0.veccore0",
+          "route": "OUT->UB",
+          "size": 512
+        },
+        {
+          "begin": 11197,
+          "end": 11489,
+          "core": "core0.veccore0",
+          "route": "OUT->UB",
+          "size": 4
+        },
+        {
+          "begin": 12101,
+          "end": 12639,
+          "core": "core0.veccore0",
+          "route": "UB->OUT",
+          "size": 768
+        },
+        {
+          "begin": 12102,
+          "end": 12641,
+          "core": "core0.veccore0",
+          "route": "UB->OUT",
+          "size": 768
+        },
+        {
+          "begin": 12138,
+          "end": 12643,
+          "core": "core0.veccore0",
+          "route": "UB->OUT",
+          "size": 1536
+        },
+        {
+          "begin": 13769,
+          "end": 14381,
+          "core": "core0.veccore0",
+          "route": "UB->OUT",
+          "size": 32768
+        },
+        {
+          "begin": 13770,
+          "end": 14831,
+          "core": "core0.veccore0",
+          "route": "UB->OUT",
+          "size": 40960
+        },
+        {
+          "begin": 14847,
+          "end": 15473,
+          "core": "core0.cubecore0",
+          "route": "OUT->L1",
+          "size": 16384
+        },
+        {
+          "begin": 14850,
+          "end": 15605,
+          "core": "core0.cubecore0",
+          "route": "OUT->L1",
+          "size": 16384
+        },
+        {
+          "begin": 14852,
+          "end": 15642,
+          "core": "core0.cubecore0",
+          "route": "OUT->L1",
+          "size": 4096
+        },
+        {
+          "begin": 14947,
+          "end": 15711,
+          "core": "core0.cubecore0",
+          "route": "OUT->L1",
+          "size": 8192
+        },
+        {
+          "begin": 15110,
+          "end": 15812,
+          "core": "core0.cubecore0",
+          "route": "OUT->L1",
+          "size": 12288
+        },
+        {
+          "begin": 15151,
+          "end": 15969,
+          "core": "core0.cubecore0",
+          "route": "OUT->L1",
+          "size": 16384
+        },
+        {
+          "begin": 15973,
+          "end": 16018,
+          "core": "core0.cubecore0",
+          "route": "L1->L0A",
+          "size": 4096
+        },
+        {
+          "begin": 15974,
+          "end": 16035,
+          "core": "core0.cubecore0",
+          "route": "L1->L0A",
+          "size": 4096
+        },
+        {
+          "begin": 15975,
+          "end": 16051,
+          "core": "core0.cubecore0",
+          "route": "L1->L0B",
+          "size": 4096
+        },
+        {
+          "begin": 16154,
+          "end": 16215,
+          "core": "core0.cubecore0",
+          "route": "L0C->UB",
+          "size": 2048
+        },
+        {
+          "begin": 20237,
+          "end": 20588,
+          "core": "core0.veccore0",
+          "route": "UB->OUT",
+          "size": 384
+        },
+        {
+          "begin": 20238,
+          "end": 20590,
+          "core": "core0.veccore0",
+          "route": "UB->OUT",
+          "size": 4096
+        },
+        {
+          "begin": 20239,
+          "end": 20592,
+          "core": "core0.veccore0",
+          "route": "UB->OUT",
+          "size": 4096
+        },
+        {
+          "begin": 20241,
+          "end": 20594,
+          "core": "core0.veccore0",
+          "route": "UB->OUT",
+          "size": 4096
+        },
+        {
+          "begin": 20245,
+          "end": 20596,
+          "core": "core0.veccore0",
+          "route": "UB->OUT",
+          "size": 8192
+        },
+        {
+          "begin": 20278,
+          "end": 20598,
+          "core": "core0.veccore0",
+          "route": "UB->OUT",
+          "size": 384
+        },
+        {
+          "begin": 20614,
+          "end": 20920,
+          "core": "core0.cubecore0",
+          "route": "OUT->L1",
+          "size": 8192
+        },
+        {
+          "begin": 20934,
+          "end": 21145,
+          "core": "core0.veccore0",
+          "route": "OUT->UB",
+          "size": 768
+        },
+        {
+          "begin": 20935,
+          "end": 21149,
+          "core": "core0.veccore0",
+          "route": "OUT->UB",
+          "size": 768
+        },
+        {
+          "begin": 20936,
+          "end": 21151,
+          "core": "core0.veccore0",
+          "route": "OUT->UB",
+          "size": 1536
+        },
+        {
+          "begin": 21155,
+          "end": 21706,
+          "core": "core0.veccore0",
+          "route": "OUT->UB",
+          "size": 768
+        },
+        {
+          "begin": 22463,
+          "end": 22782,
+          "core": "core0.veccore0",
+          "route": "UB->OUT",
+          "size": 768
+        },
+        {
+          "begin": 22464,
+          "end": 22834,
+          "core": "core0.veccore0",
+          "route": "UB->OUT",
+          "size": 768
+        },
+        {
+          "begin": 22465,
+          "end": 22836,
+          "core": "core0.veccore0",
+          "route": "UB->OUT",
+          "size": 8192
+        },
+        {
+          "begin": 22467,
+          "end": 22838,
+          "core": "core0.veccore0",
+          "route": "UB->OUT",
+          "size": 8192
+        },
+        {
+          "begin": 22853,
+          "end": 23148,
+          "core": "core0.cubecore0",
+          "route": "OUT->L1",
+          "size": 8192
+        },
+        {
+          "begin": 22856,
+          "end": 23217,
+          "core": "core0.cubecore0",
+          "route": "OUT->L1",
+          "size": 8192
+        },
+        {
+          "begin": 23221,
+          "end": 23258,
+          "core": "core0.cubecore0",
+          "route": "L1->L0A",
+          "size": 2048
+        },
+        {
+          "begin": 23222,
+          "end": 23290,
+          "core": "core0.cubecore0",
+          "route": "L1->L0B",
+          "size": 8192
+        },
+        {
+          "begin": 23223,
+          "end": 23323,
+          "core": "core0.cubecore0",
+          "route": "L1->L0B",
+          "size": 8192
+        },
+        {
+          "begin": 23435,
+          "end": 23831,
+          "core": "core0.cubecore0",
+          "route": "L0C->OUT",
+          "size": 1536
+        },
+        {
+          "begin": 23833,
+          "end": 24173,
+          "core": "core0.cubecore0",
+          "route": "L0C->OUT",
+          "size": 1536
+        }
+      ]
+    },
+    "chunk_fwd_h": {
+      "family": "chunk_fwd_h",
+      "kernel": "ChunkFwdH_72371232203476155baf45810c33a7f9_7710_mix_aic",
+      "text_sha256": "db5714f85fe237be6eed9641dec19c925c9e44d729fbdadf62b38cf4ce966da5",
+      "aggregate": "results/kda-v23/raw/holdout-ascend950pr-t3-h1/profile/OPPROF_20261119223049_VVFUVSJRCXPJYECP/ChunkFwdH_72371232203476155baf45810c33a7f9_7710_mix_aic/0/simulator/trace.json",
+      "sha256": "ca14489e8171a39b1a30609d398b2d6f21d40df7b25748f957c191940eaf3e30",
+      "ca_window_ticks": [
+        34876,
+        42632
+      ],
+      "actual_aic": 1,
+      "actual_aiv": 2,
+      "mmads": [
+        {
+          "begin": 4053,
+          "end": 4184,
+          "core": "core0.cubecore0",
+          "mnk": [
+            16,
+            128,
+            128
+          ]
+        },
+        {
+          "begin": 5449,
+          "end": 5580,
+          "core": "core0.cubecore0",
+          "mnk": [
+            128,
+            128,
+            16
+          ]
+        }
+      ],
+      "vfs": [
+        {
+          "begin": 2122,
+          "end": 2434,
+          "core": "core0.veccore0",
+          "counts": {
+            "RVECLP": 4,
+            "RVECEX": 772,
+            "RVECLD": 257,
+            "RVECST": 257,
+            "RVECSU": 2
+          }
+        },
+        {
+          "begin": 4270,
+          "end": 4343,
+          "core": "core0.veccore0",
+          "counts": {
+            "RVECLP": 4,
+            "RVECEX": 46,
+            "RVECLD": 13,
+            "RVECST": 13,
+            "RVECSU": 2
+          }
+        },
+        {
+          "begin": 6206,
+          "end": 6794,
+          "core": "core0.veccore0",
+          "counts": {
+            "RVECLP": 3,
+            "RVECLD": 515,
+            "RVECEX": 1034,
+            "RVECST": 257,
+            "RVECSU": 2
+          }
+        }
+      ],
+      "transfers": [
+        {
+          "begin": 872,
+          "end": 2119,
+          "core": "core0.veccore0",
+          "route": "OUT->UB",
+          "size": 65536
+        },
+        {
+          "begin": 1219,
+          "end": 1799,
+          "core": "core0.cubecore0",
+          "route": "OUT->L1",
+          "size": 768
+        },
+        {
+          "begin": 2436,
+          "end": 3165,
+          "core": "core0.veccore0",
+          "route": "UB->OUT",
+          "size": 32768
+        },
+        {
+          "begin": 3168,
+          "end": 3655,
+          "core": "core0.veccore0",
+          "route": "OUT->UB",
+          "size": 768
+        },
+        {
+          "begin": 3180,
+          "end": 3872,
+          "core": "core0.cubecore0",
+          "route": "OUT->L1",
+          "size": 32768
+        },
+        {
+          "begin": 3876,
+          "end": 3921,
+          "core": "core0.cubecore0",
+          "route": "L1->L0A",
+          "size": 4096
+        },
+        {
+          "begin": 3877,
+          "end": 4049,
+          "core": "core0.cubecore0",
+          "route": "L1->L0B",
+          "size": 32768
+        },
+        {
+          "begin": 4132,
+          "end": 4703,
+          "core": "core0.cubecore0",
+          "route": "OUT->L1",
+          "size": 768
+        },
+        {
+          "begin": 4191,
+          "end": 4256,
+          "core": "core0.cubecore0",
+          "route": "L0C->UB",
+          "size": 1536
+        },
+        {
+          "begin": 4345,
+          "end": 4699,
+          "core": "core0.veccore0",
+          "route": "UB->OUT",
+          "size": 768
+        },
+        {
+          "begin": 4346,
+          "end": 4866,
+          "core": "core0.veccore0",
+          "route": "UB->OUT",
+          "size": 768
+        },
+        {
+          "begin": 4869,
+          "end": 5713,
+          "core": "core0.veccore0",
+          "route": "OUT->UB",
+          "size": 65536
+        },
+        {
+          "begin": 4870,
+          "end": 5721,
+          "core": "core0.veccore0",
+          "route": "OUT->UB",
+          "size": 512
+        },
+        {
+          "begin": 4962,
+          "end": 5382,
+          "core": "core0.cubecore0",
+          "route": "OUT->L1",
+          "size": 768
+        },
+        {
+          "begin": 5384,
+          "end": 5429,
+          "core": "core0.cubecore0",
+          "route": "L1->L0A",
+          "size": 4096
+        },
+        {
+          "begin": 5385,
+          "end": 5445,
+          "core": "core0.cubecore0",
+          "route": "L1->L0B",
+          "size": 4096
+        },
+        {
+          "begin": 5587,
+          "end": 6191,
+          "core": "core0.cubecore0",
+          "route": "L0C->UB",
+          "size": 65536
+        },
+        {
+          "begin": 6796,
+          "end": 7743,
+          "core": "core0.veccore0",
+          "route": "UB->OUT",
+          "size": 65536
+        }
+      ]
+    },
+    "chunk_kda_fwd_finalize": {
+      "family": "chunk_kda_fwd_finalize",
+      "kernel": "ChunkKdaFwdFinalize_c0d447f32579acd296e1c16d6d9c7d38_0",
+      "text_sha256": "2460a5a34f6e593d84d8b72b0d118ac867a1b7713386da64d39b107f40d64d7e",
+      "aggregate": "results/kda-v23/raw/holdout-ascend950pr-t3-h1/profile/OPPROF_20261119223049_VVFUVSJRCXPJYECP/ChunkKdaFwdFinalize_c0d447f32579acd296e1c16d6d9c7d38_0/0/simulator/trace.json",
+      "sha256": "3ca2d4b89bd5e91e058a98799fbed7f18e6b0c183531a1e3e9b2d4d1a80a66e0",
+      "ca_window_ticks": [
+        44430,
+        49247
+      ],
+      "actual_aic": 1,
+      "actual_aiv": 0,
+      "mmads": [
+        {
+          "begin": 4166,
+          "end": 4333,
+          "core": "core0.cubecore0",
+          "mnk": [
+            3,
+            128,
+            128
+          ]
+        },
+        {
+          "begin": 4335,
+          "end": 4437,
+          "core": "core0.cubecore0",
+          "mnk": [
+            3,
+            128,
+            3
+          ]
+        }
+      ],
+      "vfs": [],
+      "transfers": [
+        {
+          "begin": 3109,
+          "end": 3282,
+          "core": "core0.cubecore0",
+          "route": "OUT->L1",
+          "size": 768
+        },
+        {
+          "begin": 3284,
+          "end": 3803,
+          "core": "core0.cubecore0",
+          "route": "OUT->L1",
+          "size": 32768
+        },
+        {
+          "begin": 3309,
+          "end": 3971,
+          "core": "core0.cubecore0",
+          "route": "OUT->L1",
+          "size": 18
+        },
+        {
+          "begin": 3328,
+          "end": 3986,
+          "core": "core0.cubecore0",
+          "route": "OUT->L1",
+          "size": 768
+        },
+        {
+          "begin": 3990,
+          "end": 4035,
+          "core": "core0.cubecore0",
+          "route": "L1->L0A",
+          "size": 4096
+        },
+        {
+          "begin": 4000,
+          "end": 4163,
+          "core": "core0.cubecore0",
+          "route": "L1->L0B",
+          "size": 32768
+        },
+        {
+          "begin": 4041,
+          "end": 4167,
+          "core": "core0.cubecore0",
+          "route": "L1->L0A",
+          "size": 512
+        },
+        {
+          "begin": 4049,
+          "end": 4183,
+          "core": "core0.cubecore0",
+          "route": "L1->L0B",
+          "size": 4096
+        },
+        {
+          "begin": 4446,
+          "end": 4817,
+          "core": "core0.cubecore0",
+          "route": "L0C->OUT",
+          "size": 1536
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,369 @@
+{
+  "case": {
+    "id": "ascend950dt-t15-h1",
+    "sku": "Ascend950DT_9582",
+    "physical_memory": "hbm3_8000M.ini",
+    "shape": [
+      1,
+      15,
+      1,
+      1,
+      128,
+      128
+    ],
+    "work_items": 1,
+    "purpose": "short one-head reference",
+    "oracle": {
+      "attention": 1920,
+      "aqk": 960,
+      "akk": 960,
+      "state_vk": 16384
+    }
+  },
+  "cost": {
+    "exit_code": 0,
+    "stop": null,
+    "seconds": 102.4714341298677,
+    "peak_bytes": 267015036,
+    "began": "2026-11-19T14:16:39.245711+00:00",
+    "finished": "2026-11-19T14:18:21.717182+00:00",
+    "command": [
+      "bash",
+      "/home/l00925865/operator_sim/scripts/cann-run.sh",
+      "bash",
+      "-c",
+      "source \"$1/bin/set_env.bash\"; shift; exec \"$@\"",
+      "fla",
+      "/home/l00925865/operator_sim/results/chunk-recovery/fla2691/raw/fla_npu/opp/vendors/fla_npu_transformer",
+      "msopprof",
+      "simulator",
+      "--soc-version=Ascend950DT_9582",
+      "--dump=false",
+      "--launch-count=32",
+      "--timeout=15",
+      "--output=/home/l00925865/operator_sim/results/kda-v23/raw/ascend950dt-t15-h1/profile",
+      "/home/l00925865/operator_sim/results/chunk-recovery/fla2691/v2/raw/kimi-v2",
+      "15",
+      "1"
+    ]
+  },
+  "registration_sha256": "c76f6dac6f0b0d6ea0bf948293785299175ee05bbded277249d76cbe0864382c",
+  "qualified": false,
+  "actual_sku_verified": true,
+  "memory_model": "hbm3_8000M.ini",
+  "host_api_verified": true,
+  "golden_qualified": false,
+  "output_groups": {
+    "attention": [
+      1920,
+      0
+    ],
+    "aqk": [
+      960,
+      12
+    ],
+    "akk": [
+      960,
+      1
+    ],
+    "state_vk": [
+      16384,
+      0
+    ]
+  },
+  "correct_initial_state": true,
+  "sync_errors": 0,
+  "sync_examples": [],
+  "exact_stage_elfs": true,
+  "full_windows": true,
+  "chronological": true,
+  "process_complete": false,
+  "observed_kernels": [
+    "ChunkKdaFwdPrepare_171e9a19df4c0d44ca00a177d8fe300c_32513546_mix_aic",
+    "ChunkFwdH_72371232203476155baf45810c33a7f9_7710_mix_aic",
+    "ChunkKdaFwdFinalize_c0d447f32579acd296e1c16d6d9c7d38_0"
+  ],
+  "stages": [
+    {
+      "kernel": "ChunkKdaFwdPrepare_171e9a19df4c0d44ca00a177d8fe300c_32513546_mix_aic",
+      "ordinal": 0,
+      "family": "chunk_kda_fwd_prepare",
+      "label": "official FLA V2 stage",
+      "first_tick": 6143,
+      "last_tick": 32275,
+      "ca_us": 15.837575757575758,
+      "active_aic": 1,
+      "active_aiv": 2,
+      "mmads": 3,
+      "resource": {
+        "descriptor_bytes": {
+          "OUT->UB": 31392,
+          "OUT->L1": 98304,
+          "L1->L0A": 10240,
+          "L1->L0B": 20480,
+          "L0C->UB": 2048,
+          "L0C->OUT": 15360,
+          "UB->OUT": 137472
+        },
+        "mmad_issued_shapes": {
+          "32x16x128": 1,
+          "32x128x32": 2
+        },
+        "issued_mmad_ops": 655360,
+        "queue_instruction_counts": {
+          "SCALAR": 5447,
+          "FLOWCTRL": 422,
+          "MTE2": 33,
+          "MTE3": 17,
+          "PUSHQ": 23,
+          "MTE1": 7,
+          "CUBE": 3,
+          "FIXP": 6,
+          "RVECEX": 8548,
+          "RVECSU": 791,
+          "RVECLD": 4957,
+          "RVECLP": 148,
+          "RVECST": 1746
+        }
+      },
+      "cores": {
+        "core0.veccore1": {
+          "first_tick": 6435,
+          "last_tick": 18423,
+          "end": [
+            "0x915a1193ac",
+            18416,
+            18416
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              18418,
+              18423
+            ]
+          ],
+          "official_us": "7.27",
+          "mmads": 0,
+          "phys_digest": "c70ec15a66033f023ccfc7804f618bd20eb9276928c3c32e3e42781daa4b4fd5",
+          "sync_digest": "2dd88b716199487ee204b21698458d536963a9e99588da8f8f4f296c6361d154",
+          "shard_sha256": "e12c69c048caa1cb7bed78d8243e1259ad78213416ef77f9b6071b51adc402f3"
+        },
+        "core0.cubecore0": {
+          "first_tick": 6143,
+          "last_tick": 32275,
+          "end": [
+            "0x9159077908",
+            23139,
+            23139
+          ],
+          "end_labels": [],
+          "official_us": "15.84",
+          "mmads": 3,
+          "phys_digest": "b536081156fdc616d065b03e40f41128cce01ea0f1111566fddb03bdcc12f940",
+          "sync_digest": "fe97de8f3882f4b1726a0e5fd049c30f4f8e9cc212a5ca0e397c79aab3088d90",
+          "shard_sha256": "f89d43099c77b290c4af414e3a5e2666f210ed5e953dd46d3da57af867ac7fb2"
+        },
+        "core0.veccore0": {
+          "first_tick": 6362,
+          "last_tick": 31247,
+          "end": [
+            "0x915a1193ac",
+            31240,
+            31240
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              31242,
+              31247
+            ]
+          ],
+          "official_us": "15.08",
+          "mmads": 0,
+          "phys_digest": "b5fe616ad6b4114768cedbde487d2d40db138a9f51154290317139d4db639700",
+          "sync_digest": "be304d0e9a81771828e8fa6263b067bc2372bf230692ddf1cebea1efae24a876",
+          "shard_sha256": "81eb3eb115b06e0ec47bc061816534b4b8b9f7d1d7f384f778befbb360a8012e"
+        }
+      },
+      "captured_binary": "results/kda-v23/raw/ascend950dt-t15-h1/profile/OPPROF_20261119221639_JQRIPVKTXCOFARDM/ChunkKdaFwdPrepare_171e9a19df4c0d44ca00a177d8fe300c_32513546_mix_aic/0/dump/aicore_binary.o",
+      "device_text_sha256": "3cdc897359178d665df362b3fcb2bdacb830af2357a2e0b6f7d1f9c79f3d136a",
+      "published_names": [
+        "ChunkKdaFwdPrepare_9a5c7ba661140e04d3bf3c972e6629a6.o",
+        "ChunkKdaFwdPrepare_ab956e5eb2ff99416b2f5173e788663a.o",
+        "ChunkKdaFwdPrepare_375ce9d41fcc2d706267f3750942ed8e.o",
+        "ChunkKdaFwdPrepare_171e9a19df4c0d44ca00a177d8fe300c.o"
+      ],
+      "aggregate": "results/kda-v23/raw/ascend950dt-t15-h1/profile/OPPROF_20261119221639_JQRIPVKTXCOFARDM/ChunkKdaFwdPrepare_171e9a19df4c0d44ca00a177d8fe300c_32513546_mix_aic/0/simulator/trace.json",
+      "aggregate_sha256": "5c336147c1f871a952cf6631cbdea62e920abb77235403c06a4747de7994e4e1"
+    },
+    {
+      "kernel": "ChunkFwdH_72371232203476155baf45810c33a7f9_7710_mix_aic",
+      "ordinal": 0,
+      "family": "chunk_fwd_h",
+      "label": "official FLA V2 stage",
+      "first_tick": 37384,
+      "last_tick": 44722,
+      "ca_us": 4.447272727272727,
+      "active_aic": 1,
+      "active_aiv": 2,
+      "mmads": 2,
+      "resource": {
+        "descriptor_bytes": {
+          "OUT->L1": 44288,
+          "L1->L0A": 8192,
+          "L1->L0B": 36864,
+          "L0C->UB": 73216,
+          "OUT->UB": 135424,
+          "UB->OUT": 105984
+        },
+        "mmad_issued_shapes": {
+          "16x128x128": 1,
+          "128x128x16": 1
+        },
+        "issued_mmad_ops": 1048576,
+        "queue_instruction_counts": {
+          "SCALAR": 1754,
+          "FLOWCTRL": 160,
+          "MTE2": 18,
+          "MTE1": 7,
+          "CUBE": 2,
+          "FIXP": 4,
+          "PUSHQ": 6,
+          "RVECLP": 11,
+          "RVECEX": 2020,
+          "RVECLD": 833,
+          "RVECST": 575,
+          "RVECSU": 6,
+          "MTE3": 4
+        }
+      },
+      "cores": {
+        "core0.veccore1": {
+          "first_tick": 37443,
+          "last_tick": 38921,
+          "end": [
+            "0x9000d75724",
+            38914,
+            38914
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              38916,
+              38921
+            ]
+          ],
+          "official_us": "0.9",
+          "mmads": 0,
+          "phys_digest": "7068f63638ab49b22019f527c657bdbdc58771882380d56584e171dac3d3cb9b",
+          "sync_digest": "47f0934c1202f64ad6d162e38fda789f566367335b6bcfe90b6ead2ebd1563e8",
+          "shard_sha256": "3f58b82cb30d28986a57f78384bfa8f192528b4898cb25bde5f3470a05614598"
+        },
+        "core0.cubecore0": {
+          "first_tick": 37501,
+          "last_tick": 43997,
+          "end": [
+            "0x9000d36578",
+            41082,
+            41082
+          ],
+          "end_labels": [],
+          "official_us": "3.94",
+          "mmads": 2,
+          "phys_digest": "850385fb33a49f796c049e955215ef5908dbbf1c1abaad50932a9ef363a36561",
+          "sync_digest": "5d36457a7464556ee6a6cbbac962a5dbbe64b67b152064ed3e385f2f0fe63503",
+          "shard_sha256": "dcd8fb5dc570c6832a66d9bcc39a9a500a40e1b8fa8e2bf93eee19ad591ba2fd"
+        },
+        "core0.veccore0": {
+          "first_tick": 37384,
+          "last_tick": 44722,
+          "end": [
+            "0x9000d75724",
+            39745,
+            39745
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              44717,
+              44722
+            ]
+          ],
+          "official_us": "4.45",
+          "mmads": 0,
+          "phys_digest": "f5f00fa07abb37d38cb450e47d9bd1c3f387ebeed59da91bcc30a131c995e3e3",
+          "sync_digest": "4bf3faca8bfae69417db1f5c5265b00bcd6e10efd2514a5f2c7154fc0f80c287",
+          "shard_sha256": "3b02205b50e7c0cd63944a3200b82b4997a33b72d3ab46902be729445dbc7a88"
+        }
+      },
+      "captured_binary": "results/kda-v23/raw/ascend950dt-t15-h1/profile/OPPROF_20261119221639_JQRIPVKTXCOFARDM/ChunkFwdH_72371232203476155baf45810c33a7f9_7710_mix_aic/0/dump/aicore_binary.o",
+      "device_text_sha256": "db5714f85fe237be6eed9641dec19c925c9e44d729fbdadf62b38cf4ce966da5",
+      "published_names": [
+        "ChunkFwdH_72371232203476155baf45810c33a7f9.o"
+      ],
+      "aggregate": "results/kda-v23/raw/ascend950dt-t15-h1/profile/OPPROF_20261119221639_JQRIPVKTXCOFARDM/ChunkFwdH_72371232203476155baf45810c33a7f9_7710_mix_aic/0/simulator/trace.json",
+      "aggregate_sha256": "a7f2213f995f38daf4bb505d1eeb8845ef4259ebe5c77517b459cf6398b102d7"
+    },
+    {
+      "kernel": "ChunkKdaFwdFinalize_c0d447f32579acd296e1c16d6d9c7d38_0",
+      "ordinal": 0,
+      "family": "chunk_kda_fwd_finalize",
+      "label": "official FLA V2 stage",
+      "first_tick": 47293,
+      "last_tick": 52213,
+      "ca_us": 2.981818181818182,
+      "active_aic": 1,
+      "active_aiv": 0,
+      "mmads": 2,
+      "resource": {
+        "descriptor_bytes": {
+          "OUT->L1": 40898,
+          "L1->L0A": 4608,
+          "L1->L0B": 36864,
+          "L0C->OUT": 7680
+        },
+        "mmad_issued_shapes": {
+          "15x128x128": 1,
+          "15x128x15": 1
+        },
+        "issued_mmad_ops": 549120,
+        "queue_instruction_counts": {
+          "SCALAR": 1057,
+          "FLOWCTRL": 85,
+          "MTE2": 10,
+          "MTE1": 6,
+          "CUBE": 2,
+          "FIXP": 2
+        }
+      },
+      "cores": {
+        "core0.cubecore0": {
+          "first_tick": 47293,
+          "last_tick": 52213,
+          "end": [
+            "0x9000d7c3f0",
+            51499,
+            51499
+          ],
+          "end_labels": [],
+          "official_us": "2.98",
+          "mmads": 2,
+          "phys_digest": "244cebb8c5d7ef86cf7d2a57192afa71035135c29ead03b13dc0bd37972abdc1",
+          "sync_digest": "006d645e6ede22807b58101ae921694b502c3d29453ab212d08e67c9daaadedc",
+          "shard_sha256": "e77e0e39207ea0c2c99f20179b0e82fdc15b29f3245ac1927dea7045ec7fbd4b"
+        }
+      },
+      "captured_binary": "results/kda-v23/raw/ascend950dt-t15-h1/profile/OPPROF_20261119221639_JQRIPVKTXCOFARDM/ChunkKdaFwdFinalize_c0d447f32579acd296e1c16d6d9c7d38_0/0/dump/aicore_binary.o",
+      "device_text_sha256": "2460a5a34f6e593d84d8b72b0d118ac867a1b7713386da64d39b107f40d64d7e",
+      "published_names": [
+        "ChunkKdaFwdFinalize_c0d447f32579acd296e1c16d6d9c7d38.o"
+      ],
+      "aggregate": "results/kda-v23/raw/ascend950dt-t15-h1/profile/OPPROF_20261119221639_JQRIPVKTXCOFARDM/ChunkKdaFwdFinalize_c0d447f32579acd296e1c16d6d9c7d38_0/0/simulator/trace.json",
+      "aggregate_sha256": "18462983952d745211b8983bce5c5af6c5a848a5bc4708e8392e4b6e850720ba"
+    }
+  ],
+  "serialized_device_us": null,
+  "main_stages_us": null,
+  "device_span_us": null,
+  "log_sha256": "b6fb1925e32c33d1a694ce4f1ded2269c4daf3a7dc49dbe7146ec177ae824603"
+}

@@ -2,6 +2,23 @@
 
 输入轴顺序为 **B,T,Hq,Hv,K,V**。本例比较同一输入契约在 950DT、950PR 与假设的 970DT 上的设备指令窗口。
 
+## 三段 V2 的冻结独立对比
+
+![950DT 两个头的 KDA V2，上栏为模型阶段预算，下栏为实际源相位上的 DMA、VF 和 MMAD](../../results/kda-resource23/950dt-t5-holdout-comparison.png)
+
+同一输入 B=1、T=5、Hq=Hv=2、K=V=128。三个 kernel 各自以全核首指令为零；上方对应最忙工作组，下方各自取最后完成的物理工作组。DT 的总和为模型 22.275 µs、CA 22.822 µs。单看总数只差约半个微秒，但 Prepare 低估 1.491 µs、FwdH 高估 0.976 µs。在 PR 上总预测 22.306 µs、CA 22.397 µs。这次 PR 实际略快，模型预计略慢。该例直接选择 V2 ABI，生产小 shape 的自动分派另见下文。[950PR 同形对照](../../results/kda-resource23/950pr-t5-holdout-comparison.png) · [DT 每段时间戳与 trace SHA](../../results/kda-resource23/950dt-t5-holdout-comparison.json)
+
+```python
+from operator_model import estimate
+r = estimate("kda_chunk", [1,5,2,2,128,128], {"implementation":"fla_26_9_1_v2"},
+             chip="Ascend950DT_9582", dtype="bf16")
+print(r.status, r.latency_us)
+for stage in r.projection["target_plan"]["stages"]:
+    print(stage["family"], stage["active_aic"], stage["device_us"], stage["dma_bytes"])
+```
+
+同一源码合同还可传入 [8,32768,12,12,128,128]。DT、PR、970DT 分别给出约 33.16、39.40、16.45 ms，三者都属于未取得同形 CA 的工作负载预测，970DT 同时还有跨代外推的不确定性。[每一段公式、参数与来源](../../results/kda-resource23/modeling.md) · [独立样本和剩余误差](../../results/kda-resource23/report.md)
+
 ## Kimi 的实际分派与校准边界
 
 FLA 26.9.1 的 A5 包同时发布融合 `aclnnChunkKdaFwd` 和三段 `aclnnChunkKdaFwdV2`。对 Kimi 默认 BF16、64-token 块与 128 维 QK/V，把每条序列在本次调用的 token 长度记作 $S_i$、本卡 value 头数记作 $H_v$，工作项数为 $H_v\sum_i\lceil S_i/64\rceil$。达到 4096 项时进入 Prepare、FwdH、Finalize 三段。B8 每条 32k、TP8 后 12 个 value 头，共 49,152 项；若每条本次只交 512 token，则为 768 项。直接调 V2 在 DT 测得 `[1,2,1,1,128,128]` 三段依次 15.281、4.739、3.221 µs，合计 23.241 µs；每段均有独立库 ELF、完整全核窗口和数值金标，下面的 V1 接口仅展示工作量。正式 FLA V1 主核到达设备任务终点，但出现重复置位，整个调用未返回四组数值金标，不能把局部主核窗标成 Kimi prefill 耗时。[发行版分派源码、实际绑定与设备记录](../../results/chunk-recovery/fla2691/report.md)

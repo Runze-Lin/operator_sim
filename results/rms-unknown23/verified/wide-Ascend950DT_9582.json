@@ -1,0 +1,771 @@
+{
+  "chip": "Ascend950DT_9582",
+  "process": "wide",
+  "registration_sha256": "dd57ff71c1421b2e7a583a3f57e1a01343a903d6f42f52af9d894a5f2eca07e0",
+  "cost": {
+    "started_utc": "2026-11-19T14:17:54.975235+00:00",
+    "finished_utc": "2026-11-19T14:19:31.111656+00:00",
+    "seconds": 96.13643905008212,
+    "exit_code": 0,
+    "peak_bytes": 197078683,
+    "raw_bytes": 79450681,
+    "stop_reason": null,
+    "command": [
+      "bash",
+      "/home/l00925865/operator_sim/scripts/cann-run.sh",
+      "msopprof",
+      "simulator",
+      "--soc-version=Ascend950DT_9582",
+      "--dump=false",
+      "--launch-count=7",
+      "--timeout=60",
+      "--output=/home/l00925865/operator_sim/runs/rms-unknown23/wide-Ascend950DT_9582/profile",
+      "/home/l00925865/operator_sim/build/vector-v8/NORM",
+      "/home/l00925865/operator_sim/runs/rms-unknown23/wide-Ascend950DT_9582/inputs.txt"
+    ]
+  },
+  "qualified": true,
+  "rows": [
+    {
+      "process": "wide",
+      "i": 0,
+      "role": "prefix",
+      "chip": "Ascend950DT_9582",
+      "shape": [
+        1,
+        672
+      ],
+      "prior_aiv": 0,
+      "known_us": 3.1874103435534575,
+      "runtime_ms": 0.20166,
+      "measurement": "planned CA",
+      "candidate_us": 2.1470810436546377,
+      "previous_us": 2.2868072848237024,
+      "active_aiv": 1,
+      "conditional_us_by_H": [
+        3.1874103435534575,
+        1.6187440344372745
+      ],
+      "extreme_H": [
+        1,
+        0
+      ],
+      "lower_us": 1.6187440344372745,
+      "upper_us": 3.1874103435534575,
+      "model_relative_radius": 0.32638700003056953,
+      "all_state_tolerance_intersection": null,
+      "policy": "relative minimax",
+      "timing_qualified": true,
+      "correctness": [
+        "correctness count=672 bad=0 max_abs_error=0.00122116 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness count=1 bad=0 max_abs_error=9.29942e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ],
+      "host_task": {
+        "begin_tick": 2490,
+        "done_tick": 8150,
+        "full_task_id": 0,
+        "raw_stream_id": 0
+      },
+      "stage": {
+        "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+        "ca_us": 3.3727272727272726,
+        "active_aiv": 1,
+        "active_aic": 0,
+        "windows": {
+          "core0.veccore0": [
+            0.0,
+            3.3727272727272726
+          ]
+        },
+        "trace": "runs/rms-unknown23/wide-Ascend950DT_9582/profile/OPPROF_20261119221755_DOSTMPQGCIEJFDTO/RmsNorm_normal_all_bf16_high_performance_5000/0/simulator/trace.json",
+        "trace_sha256": "bee39cf12eb7ad68df88c5c39a194e9c293f0695082520572c78a7e8a8e25f2f",
+        "binary_sha256": "0926fe478e5f718ef49241c08ef00b665797690f0f7f22c67fdc25044e0cb54d",
+        "first_tick": 7732,
+        "last_tick": 13297,
+        "physical_last_tick": 13294,
+        "physical_ca_us": 3.370909090909091,
+        "cores": {
+          "core0.veccore0": {
+            "first_tick": 7732,
+            "last_tick": 13297,
+            "physical_last_tick": 13294,
+            "physical_end_tick": 13290,
+            "official_duration_us": "3.37",
+            "official_running_us": "3.37",
+            "instruction_events_without_sync": 1500,
+            "signature128": "d68ec28ac207bea734f061fd0ae9b126",
+            "rows_written": 1,
+            "shard_sha256": "6b5a22ded7a6339cc380c45b06b583027e083fbf462f334b74479eb93608fa6d"
+          }
+        },
+        "ordinal": 0
+      },
+      "active_count_matches": true
+    },
+    {
+      "process": "wide",
+      "i": 1,
+      "role": "entry",
+      "chip": "Ascend950DT_9582",
+      "shape": [
+        2,
+        2944
+      ],
+      "prior_aiv": 1,
+      "known_us": 4.316849551096786,
+      "runtime_ms": 0.19563,
+      "measurement": "planned CA",
+      "candidate_us": 2.5901544458101182,
+      "previous_us": 2.533805683710542,
+      "active_aiv": 2,
+      "conditional_us_by_H": [
+        3.405125861080948,
+        4.316849551096786,
+        1.8501240070852416
+      ],
+      "extreme_H": [
+        2,
+        1
+      ],
+      "lower_us": 1.8501240070852416,
+      "upper_us": 4.316849551096786,
+      "model_relative_radius": 0.39998964171636797,
+      "all_state_tolerance_intersection": null,
+      "policy": "relative minimax",
+      "timing_qualified": true,
+      "correctness": [
+        "correctness count=5888 bad=0 max_abs_error=0.00168894 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness count=2 bad=0 max_abs_error=1.07539e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ],
+      "host_task": {
+        "begin_tick": 8626,
+        "done_tick": 13428,
+        "full_task_id": 1,
+        "raw_stream_id": 1
+      },
+      "stage": {
+        "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+        "ca_us": 4.627878787878788,
+        "active_aiv": 2,
+        "active_aic": 0,
+        "windows": {
+          "core0.veccore0": [
+            0.0,
+            2.067878787878788
+          ],
+          "core16.veccore0": [
+            1.4054545454545455,
+            4.627878787878788
+          ]
+        },
+        "trace": "runs/rms-unknown23/wide-Ascend950DT_9582/profile/OPPROF_20261119221755_DOSTMPQGCIEJFDTO/RmsNorm_normal_all_bf16_high_performance_5000/1/simulator/trace.json",
+        "trace_sha256": "106918c303a57dae00636b35d1f241142cc0f35a994dd27551d2b61ad5f43830",
+        "binary_sha256": "0926fe478e5f718ef49241c08ef00b665797690f0f7f22c67fdc25044e0cb54d",
+        "first_tick": 14323,
+        "last_tick": 21959,
+        "physical_last_tick": 21956,
+        "physical_ca_us": 4.626060606060606,
+        "cores": {
+          "core0.veccore0": {
+            "first_tick": 14323,
+            "last_tick": 17735,
+            "physical_last_tick": 17732,
+            "physical_end_tick": 17728,
+            "official_duration_us": "2.07",
+            "official_running_us": "2.06",
+            "instruction_events_without_sync": 2480,
+            "signature128": "d98f21fda58008c418ff493f9bf69381",
+            "rows_written": 1,
+            "shard_sha256": "3bb6a7b245d9327ae173eebfb692274b9feacdf9b5f0f9408404fefcf248d0dd"
+          },
+          "core16.veccore0": {
+            "first_tick": 16642,
+            "last_tick": 21959,
+            "physical_last_tick": 21956,
+            "physical_end_tick": 21952,
+            "official_duration_us": "3.22",
+            "official_running_us": "3.22",
+            "instruction_events_without_sync": 2480,
+            "signature128": "3d822b7bddf521d14ee7bea1b6de1674",
+            "rows_written": 1,
+            "shard_sha256": "111b1f7c4bfe071cfadcc21611eea7d9e9d86dc86d203358ee6e154ab70771c5"
+          }
+        },
+        "ordinal": 1
+      },
+      "active_count_matches": true
+    },
+    {
+      "process": "wide",
+      "i": 2,
+      "role": "immediate_repeat",
+      "chip": "Ascend950DT_9582",
+      "shape": [
+        2,
+        2944
+      ],
+      "prior_aiv": 2,
+      "known_us": 1.8501240070852416,
+      "runtime_ms": 0.19378,
+      "measurement": "planned CA",
+      "candidate_us": 2.5901544458101182,
+      "previous_us": 2.533805683710542,
+      "active_aiv": 2,
+      "conditional_us_by_H": [
+        3.405125861080948,
+        4.316849551096786,
+        1.8501240070852416
+      ],
+      "extreme_H": [
+        2,
+        1
+      ],
+      "lower_us": 1.8501240070852416,
+      "upper_us": 4.316849551096786,
+      "model_relative_radius": 0.39998964171636797,
+      "all_state_tolerance_intersection": null,
+      "policy": "relative minimax",
+      "timing_qualified": true,
+      "correctness": [
+        "correctness count=5888 bad=0 max_abs_error=0.00168894 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness count=2 bad=0 max_abs_error=1.07539e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ],
+      "host_task": {
+        "begin_tick": 14110,
+        "done_tick": 15889,
+        "full_task_id": 2,
+        "raw_stream_id": 2
+      },
+      "stage": {
+        "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+        "ca_us": 1.6042424242424242,
+        "active_aiv": 2,
+        "active_aic": 0,
+        "windows": {
+          "core0.veccore0": [
+            0.0,
+            1.6042424242424242
+          ],
+          "core16.veccore0": [
+            0.0496969696969697,
+            1.6042424242424242
+          ]
+        },
+        "trace": "runs/rms-unknown23/wide-Ascend950DT_9582/profile/OPPROF_20261119221755_DOSTMPQGCIEJFDTO/RmsNorm_normal_all_bf16_high_performance_5000/2/simulator/trace.json",
+        "trace_sha256": "6a25168cabbb87735e38a3880fdab30863b96d78373797576bfb7be490d1b1b1",
+        "binary_sha256": "0926fe478e5f718ef49241c08ef00b665797690f0f7f22c67fdc25044e0cb54d",
+        "first_tick": 23371,
+        "last_tick": 26018,
+        "physical_last_tick": 26015,
+        "physical_ca_us": 1.6024242424242425,
+        "cores": {
+          "core0.veccore0": {
+            "first_tick": 23371,
+            "last_tick": 26018,
+            "physical_last_tick": 26015,
+            "physical_end_tick": 26011,
+            "official_duration_us": "1.6",
+            "official_running_us": "1.6",
+            "instruction_events_without_sync": 2480,
+            "signature128": "279f434d9474a0a29f09856da64125b9",
+            "rows_written": 1,
+            "shard_sha256": "664d133d4ba39d81a2777d12e52dc98e1ebbfbfccbedc26db3e34d186a0cbe79"
+          },
+          "core16.veccore0": {
+            "first_tick": 23453,
+            "last_tick": 26018,
+            "physical_last_tick": 26015,
+            "physical_end_tick": 26011,
+            "official_duration_us": "1.55",
+            "official_running_us": "1.55",
+            "instruction_events_without_sync": 2480,
+            "signature128": "26598b6eba99ce707266113d15e21ece",
+            "rows_written": 1,
+            "shard_sha256": "81ce3e3b757f3a27c05856d7e98966e97afa1b40916ea905bc2c80914ff6d72a"
+          }
+        },
+        "ordinal": 2
+      },
+      "active_count_matches": true
+    },
+    {
+      "process": "wide",
+      "i": 3,
+      "role": "entry",
+      "chip": "Ascend950DT_9582",
+      "shape": [
+        3,
+        3264
+      ],
+      "prior_aiv": 2,
+      "known_us": 2.7280403786116345,
+      "runtime_ms": 0.26612,
+      "measurement": "planned CA",
+      "candidate_us": 2.651601905867703,
+      "previous_us": 2.5921003629312436,
+      "active_aiv": 3,
+      "conditional_us_by_H": [
+        3.4475484117898993,
+        4.343751727096484,
+        2.7280403786116345,
+        1.908231979260985
+      ],
+      "extreme_H": [
+        3,
+        1
+      ],
+      "lower_us": 1.908231979260985,
+      "upper_us": 4.343751727096484,
+      "model_relative_radius": 0.3895595161834613,
+      "all_state_tolerance_intersection": null,
+      "policy": "relative minimax",
+      "timing_qualified": true,
+      "correctness": [
+        "correctness count=9792 bad=0 max_abs_error=0.00141111 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness count=3 bad=0 max_abs_error=1.32753e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ],
+      "host_task": {
+        "begin_tick": 16194,
+        "done_tick": 19080,
+        "full_task_id": 3,
+        "raw_stream_id": 3
+      },
+      "stage": {
+        "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+        "ca_us": 2.74,
+        "active_aiv": 3,
+        "active_aic": 0,
+        "windows": {
+          "core0.veccore0": [
+            0.0,
+            1.8387878787878789
+          ],
+          "core0.veccore1": [
+            0.11575757575757575,
+            2.74
+          ],
+          "core16.veccore0": [
+            0.04909090909090909,
+            1.946060606060606
+          ]
+        },
+        "trace": "runs/rms-unknown23/wide-Ascend950DT_9582/profile/OPPROF_20261119221755_DOSTMPQGCIEJFDTO/RmsNorm_normal_all_bf16_high_performance_5000/3/simulator/trace.json",
+        "trace_sha256": "e90c11d3d6909ce61c4d3a4af48af012405e93848528d0af80f0d854ba95309e",
+        "binary_sha256": "0926fe478e5f718ef49241c08ef00b665797690f0f7f22c67fdc25044e0cb54d",
+        "first_tick": 26810,
+        "last_tick": 31331,
+        "physical_last_tick": 31328,
+        "physical_ca_us": 2.7381818181818183,
+        "cores": {
+          "core0.veccore0": {
+            "first_tick": 26810,
+            "last_tick": 29844,
+            "physical_last_tick": 29841,
+            "physical_end_tick": 29837,
+            "official_duration_us": "1.84",
+            "official_running_us": "1.83",
+            "instruction_events_without_sync": 2620,
+            "signature128": "8465fe856a374f8208ccf34ce559117d",
+            "rows_written": 1,
+            "shard_sha256": "fb6b05a8fe5f78944a73b715087f6f036eb83d9661631612ee8b609e710cad81"
+          },
+          "core0.veccore1": {
+            "first_tick": 27001,
+            "last_tick": 31331,
+            "physical_last_tick": 31328,
+            "physical_end_tick": 31324,
+            "official_duration_us": "2.62",
+            "official_running_us": "2.62",
+            "instruction_events_without_sync": 2620,
+            "signature128": "c4b6fc73d75d64daa11fc5e34238dfa2",
+            "rows_written": 1,
+            "shard_sha256": "bbad4a0812bf672e0f6fa3a2ad59b884765338685d575b948c73d0cce5f4ac8f"
+          },
+          "core16.veccore0": {
+            "first_tick": 26891,
+            "last_tick": 30021,
+            "physical_last_tick": 30018,
+            "physical_end_tick": 30014,
+            "official_duration_us": "1.9",
+            "official_running_us": "1.89",
+            "instruction_events_without_sync": 2620,
+            "signature128": "7d25c65e6d7c1399f73694f9727e1711",
+            "rows_written": 1,
+            "shard_sha256": "1051605400fa5e2fd9feb86d5d4ec5e1af63c58a15fa16f8c2f361250d19490e"
+          }
+        },
+        "ordinal": 3
+      },
+      "active_count_matches": true
+    },
+    {
+      "process": "wide",
+      "i": 4,
+      "role": "immediate_repeat",
+      "chip": "Ascend950DT_9582",
+      "shape": [
+        3,
+        3264
+      ],
+      "prior_aiv": 3,
+      "known_us": 1.908231979260985,
+      "runtime_ms": 0.25766,
+      "measurement": "planned CA",
+      "candidate_us": 2.651601905867703,
+      "previous_us": 2.5921003629312436,
+      "active_aiv": 3,
+      "conditional_us_by_H": [
+        3.4475484117898993,
+        4.343751727096484,
+        2.7280403786116345,
+        1.908231979260985
+      ],
+      "extreme_H": [
+        3,
+        1
+      ],
+      "lower_us": 1.908231979260985,
+      "upper_us": 4.343751727096484,
+      "model_relative_radius": 0.3895595161834613,
+      "all_state_tolerance_intersection": null,
+      "policy": "relative minimax",
+      "timing_qualified": true,
+      "correctness": [
+        "correctness count=9792 bad=0 max_abs_error=0.00141111 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness count=3 bad=0 max_abs_error=1.32753e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ],
+      "host_task": {
+        "begin_tick": 19838,
+        "done_tick": 21811,
+        "full_task_id": 4,
+        "raw_stream_id": 4
+      },
+      "stage": {
+        "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+        "ca_us": 1.8266666666666667,
+        "active_aiv": 3,
+        "active_aic": 0,
+        "windows": {
+          "core0.veccore0": [
+            0.0,
+            1.8266666666666667
+          ],
+          "core0.veccore1": [
+            0.0,
+            1.6442424242424243
+          ],
+          "core16.veccore0": [
+            0.048484848484848485,
+            1.6393939393939394
+          ]
+        },
+        "trace": "runs/rms-unknown23/wide-Ascend950DT_9582/profile/OPPROF_20261119221755_DOSTMPQGCIEJFDTO/RmsNorm_normal_all_bf16_high_performance_5000/4/simulator/trace.json",
+        "trace_sha256": "104396ec39ab855557039aee107fc860c20c6afe5ddbbb06523a9cfc97fe1777",
+        "binary_sha256": "0926fe478e5f718ef49241c08ef00b665797690f0f7f22c67fdc25044e0cb54d",
+        "first_tick": 32823,
+        "last_tick": 35837,
+        "physical_last_tick": 35834,
+        "physical_ca_us": 1.824848484848485,
+        "cores": {
+          "core0.veccore0": {
+            "first_tick": 32823,
+            "last_tick": 35837,
+            "physical_last_tick": 35834,
+            "physical_end_tick": 35830,
+            "official_duration_us": "1.83",
+            "official_running_us": "1.82",
+            "instruction_events_without_sync": 2620,
+            "signature128": "65de849b7c3129b673627dfacea1b5bb",
+            "rows_written": 1,
+            "shard_sha256": "39d223184636d3d2b544cc57eaf3972f450d34dc1eb85dd223a4e58bc08e101f"
+          },
+          "core0.veccore1": {
+            "first_tick": 32823,
+            "last_tick": 35536,
+            "physical_last_tick": 35533,
+            "physical_end_tick": 35529,
+            "official_duration_us": "1.64",
+            "official_running_us": "1.64",
+            "instruction_events_without_sync": 2620,
+            "signature128": "a14b3a7dc1037d6e93679402ee72dc74",
+            "rows_written": 1,
+            "shard_sha256": "3542bbd83527e8064271ccb5f8e6266bca1557e5765149d3a5c90d7c11877211"
+          },
+          "core16.veccore0": {
+            "first_tick": 32903,
+            "last_tick": 35528,
+            "physical_last_tick": 35525,
+            "physical_end_tick": 35521,
+            "official_duration_us": "1.59",
+            "official_running_us": "1.59",
+            "instruction_events_without_sync": 2620,
+            "signature128": "845d487c28bddccc3ab26eb90a1c8d44",
+            "rows_written": 1,
+            "shard_sha256": "5c0dcb2ae8402d55f8f4b336b697d1e0b222e378a5aaebc7f5a24725822069b8"
+          }
+        },
+        "ordinal": 4
+      },
+      "active_count_matches": true
+    },
+    {
+      "process": "wide",
+      "i": 5,
+      "role": "entry",
+      "chip": "Ascend950DT_9582",
+      "shape": [
+        4,
+        6080
+      ],
+      "prior_aiv": 3,
+      "known_us": 2.9486480068829177,
+      "runtime_ms": 0.35003,
+      "measurement": "planned CA",
+      "candidate_us": 2.9294148368669375,
+      "previous_us": 2.8941302048703132,
+      "active_aiv": 4,
+      "conditional_us_by_H": [
+        3.7216299811302886,
+        4.594965415973826,
+        3.0295570977920088,
+        2.9486480068829177,
+        2.1500719549348655
+      ],
+      "extreme_H": [
+        4,
+        1
+      ],
+      "lower_us": 2.1500719549348655,
+      "upper_us": 4.594965415973826,
+      "model_relative_radius": 0.36247293033301375,
+      "all_state_tolerance_intersection": null,
+      "policy": "relative minimax",
+      "timing_qualified": true,
+      "correctness": [
+        "correctness count=24320 bad=0 max_abs_error=0.00141985 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness count=4 bad=0 max_abs_error=1.81281e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ],
+      "host_task": {
+        "begin_tick": 22193,
+        "done_tick": 25619,
+        "full_task_id": 5,
+        "raw_stream_id": 5
+      },
+      "stage": {
+        "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+        "ca_us": 3.252727272727273,
+        "active_aiv": 4,
+        "active_aic": 0,
+        "windows": {
+          "core0.veccore0": [
+            0.0,
+            2.246060606060606
+          ],
+          "core0.veccore1": [
+            0.0,
+            2.1818181818181817
+          ],
+          "core16.veccore0": [
+            0.04909090909090909,
+            2.1715151515151514
+          ],
+          "core16.veccore1": [
+            0.1478787878787879,
+            3.252727272727273
+          ]
+        },
+        "trace": "runs/rms-unknown23/wide-Ascend950DT_9582/profile/OPPROF_20261119221755_DOSTMPQGCIEJFDTO/RmsNorm_normal_all_bf16_high_performance_5000/5/simulator/trace.json",
+        "trace_sha256": "8cbdc61c2d255130df402e7c7b6338cf25e7806e70c51ed4af6a4e2e375dd88d",
+        "binary_sha256": "0926fe478e5f718ef49241c08ef00b665797690f0f7f22c67fdc25044e0cb54d",
+        "first_tick": 36708,
+        "last_tick": 42075,
+        "physical_last_tick": 42072,
+        "physical_ca_us": 3.250909090909091,
+        "cores": {
+          "core0.veccore0": {
+            "first_tick": 36708,
+            "last_tick": 40414,
+            "physical_last_tick": 40411,
+            "physical_end_tick": 40407,
+            "official_duration_us": "2.25",
+            "official_running_us": "2.24",
+            "instruction_events_without_sync": 3852,
+            "signature128": "ca0be4b3d3fa8c54d66b10dfff77d556",
+            "rows_written": 1,
+            "shard_sha256": "ca17cbc3bc337dc09f660a29f9dc671f93bde7eb691216afaf268a8742490857"
+          },
+          "core0.veccore1": {
+            "first_tick": 36708,
+            "last_tick": 40308,
+            "physical_last_tick": 40305,
+            "physical_end_tick": 40301,
+            "official_duration_us": "2.18",
+            "official_running_us": "2.18",
+            "instruction_events_without_sync": 3852,
+            "signature128": "f0bf3cbc3110600b87b50664c6774099",
+            "rows_written": 1,
+            "shard_sha256": "42639f7f6e52a0e3f9cb0ffed0003c652f253a620c788ba211f221234ab1197f"
+          },
+          "core16.veccore0": {
+            "first_tick": 36789,
+            "last_tick": 40291,
+            "physical_last_tick": 40288,
+            "physical_end_tick": 40284,
+            "official_duration_us": "2.12",
+            "official_running_us": "2.12",
+            "instruction_events_without_sync": 3852,
+            "signature128": "942a8b7dc67f160f653d57ad9bd1f132",
+            "rows_written": 1,
+            "shard_sha256": "195b928b89014393ddbd76b699c0e342167ec6e83f16ddc0e0d86d44416914a3"
+          },
+          "core16.veccore1": {
+            "first_tick": 36952,
+            "last_tick": 42075,
+            "physical_last_tick": 42072,
+            "physical_end_tick": 42068,
+            "official_duration_us": "3.1",
+            "official_running_us": "3.1",
+            "instruction_events_without_sync": 3852,
+            "signature128": "ec28255b07a4bf702140c501edb27985",
+            "rows_written": 1,
+            "shard_sha256": "2a4638001101d948b7d38ea08f46011999585d1007fbd82bcfdd6960c47dbecc"
+          }
+        },
+        "ordinal": 5
+      },
+      "active_count_matches": true
+    },
+    {
+      "process": "wide",
+      "i": 6,
+      "role": "immediate_repeat",
+      "chip": "Ascend950DT_9582",
+      "shape": [
+        4,
+        6080
+      ],
+      "prior_aiv": 4,
+      "known_us": 2.1500719549348655,
+      "runtime_ms": 0.35445,
+      "measurement": "planned CA",
+      "candidate_us": 2.9294148368669375,
+      "previous_us": 2.8941302048703132,
+      "active_aiv": 4,
+      "conditional_us_by_H": [
+        3.7216299811302886,
+        4.594965415973826,
+        3.0295570977920088,
+        2.9486480068829177,
+        2.1500719549348655
+      ],
+      "extreme_H": [
+        4,
+        1
+      ],
+      "lower_us": 2.1500719549348655,
+      "upper_us": 4.594965415973826,
+      "model_relative_radius": 0.36247293033301375,
+      "all_state_tolerance_intersection": null,
+      "policy": "relative minimax",
+      "timing_qualified": true,
+      "correctness": [
+        "correctness count=24320 bad=0 max_abs_error=0.00141985 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness count=4 bad=0 max_abs_error=1.81281e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ],
+      "host_task": {
+        "begin_tick": 26318,
+        "done_tick": 28469,
+        "full_task_id": 6,
+        "raw_stream_id": 6
+      },
+      "stage": {
+        "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+        "ca_us": 2.015151515151515,
+        "active_aiv": 4,
+        "active_aic": 0,
+        "windows": {
+          "core0.veccore0": [
+            0.0,
+            2.015151515151515
+          ],
+          "core0.veccore1": [
+            0.0,
+            2.0042424242424244
+          ],
+          "core16.veccore0": [
+            0.048484848484848485,
+            1.9054545454545455
+          ],
+          "core16.veccore1": [
+            0.048484848484848485,
+            1.9896969696969697
+          ]
+        },
+        "trace": "runs/rms-unknown23/wide-Ascend950DT_9582/profile/OPPROF_20261119221755_DOSTMPQGCIEJFDTO/RmsNorm_normal_all_bf16_high_performance_5000/6/simulator/trace.json",
+        "trace_sha256": "fce317f93db1a466dedd690125532a808a87d73b1f3ba8ea0a4441604b36f6be",
+        "binary_sha256": "0926fe478e5f718ef49241c08ef00b665797690f0f7f22c67fdc25044e0cb54d",
+        "first_tick": 43515,
+        "last_tick": 46840,
+        "physical_last_tick": 46837,
+        "physical_ca_us": 2.013333333333333,
+        "cores": {
+          "core0.veccore0": {
+            "first_tick": 43515,
+            "last_tick": 46840,
+            "physical_last_tick": 46837,
+            "physical_end_tick": 46833,
+            "official_duration_us": "2.02",
+            "official_running_us": "2.01",
+            "instruction_events_without_sync": 3852,
+            "signature128": "989d270104fc9f1fca2b4e29d5db5761",
+            "rows_written": 1,
+            "shard_sha256": "7fc353085f1409b3292cf37ceea1ec509c144e9be34118446867272c77e231e5"
+          },
+          "core0.veccore1": {
+            "first_tick": 43515,
+            "last_tick": 46822,
+            "physical_last_tick": 46819,
+            "physical_end_tick": 46815,
+            "official_duration_us": "2",
+            "official_running_us": "2",
+            "instruction_events_without_sync": 3852,
+            "signature128": "243620569fc31a32e22166d5e9886bad",
+            "rows_written": 1,
+            "shard_sha256": "57ff972656ed3b487e0aa3e83cf096250323da55f63cafde6f499cb686e4bc19"
+          },
+          "core16.veccore0": {
+            "first_tick": 43595,
+            "last_tick": 46659,
+            "physical_last_tick": 46656,
+            "physical_end_tick": 46652,
+            "official_duration_us": "1.86",
+            "official_running_us": "1.85",
+            "instruction_events_without_sync": 3852,
+            "signature128": "4616aeea66464f89f194ffe8a1d75b0e",
+            "rows_written": 1,
+            "shard_sha256": "794a3eb09667309d7506e40bf2f90bca9ade5b6adae288fdfbba53848528c118"
+          },
+          "core16.veccore1": {
+            "first_tick": 43595,
+            "last_tick": 46798,
+            "physical_last_tick": 46795,
+            "physical_end_tick": 46791,
+            "official_duration_us": "1.94",
+            "official_running_us": "1.93",
+            "instruction_events_without_sync": 3852,
+            "signature128": "7f6d4f2014599b17732ac1cae7682aaa",
+            "rows_written": 1,
+            "shard_sha256": "dab4860e8120c0f48d8465a954c0a0d84d6a29d03ea154aa58f6845bee1b6d20"
+          }
+        },
+        "ordinal": 6
+      },
+      "active_count_matches": true
+    }
+  ],
+  "original_qualification_sha256": "502e5d949a4468a64b41e82812979619fc35363ba4e6e5149161ec5bfe2a94a1",
+  "host_numeric_groups": 14,
+  "elf_text_sha256": "c801d87f4298a8b399bce6678bafac249504eb176705aea81e826085edfe6456",
+  "log_sha256": "ac53746c5881d1710f7b0638324cacc6eedd05f453323ce018733d2ab1247bab",
+  "inputs_sha256": "d6c71f20689ef34a4143a50f54d55fa5c84501044210d38f3d385ae70cb8b016"
+}

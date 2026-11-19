@@ -188,6 +188,21 @@ def _evaluate(op, shape, attrs, soc, chip, dtype, timing_mode='auto'):
         call, chosen_dtype = _call_attrs(op, attrs, dtype)
         if timing_mode not in ('auto','resource','calibrated'):
             raise ValueError('timing_mode must be auto, resource or calibrated')
+        if op == 'mhc_post' and call.get('implementation') == 'vllm_hc_post':
+            from .hc_post_layout import layout
+            work, plan = layout(shape, target, call)
+            return Estimate(None, 'unavailable', 'vLLM aclnnHcPost has verified 950 device windows; latency pricing is pending',
+                            plan['active_aiv'], 0, target.name, work,
+                            {'implementation': 'vllm_hc_post', 'qualification': 'structural', 'target_plan': plan}), raw
+        if op == 'kda_chunk' and 'implementation' in call:
+            from .kda_fla_v2 import IMPLEMENTATION, resource
+            if call['implementation'] != IMPLEMENTATION:
+                raise ValueError('Unknown explicit chunk KDA implementation')
+            if timing_mode == 'calibrated':
+                raise ValueError('The FLA 26.9.1 V2 experimental route has no qualified calibration policy')
+            us, aic, aiv, work, projected = resource(shape, target, call)
+            return Estimate(us, 'extrapolated', 'Explicit experimental FLA 26.9.1 V2 resource model',
+                            aiv, aic, target.name, work, projected, _rates(work, us, target)), raw
         # A batch contains multiple request contexts. The reference surrogate's
         # historical dimension limit does not bound the aggregate token axis.
         large_quant = op == 'quant' and len(shape) == 2 and type(shape[0]) is int and shape[0] > 1048576

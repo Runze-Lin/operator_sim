@@ -1,0 +1,1015 @@
+{
+  "case_id": "supplement-ascend950dt-t31-h2",
+  "sku": "Ascend950DT_9582",
+  "shape": [
+    1,
+    31,
+    2,
+    2,
+    128,
+    128
+  ],
+  "receipt_sha256": "e24989bfddd88b27586598fdb7adb0b3694a4902a910ff190cd7bc0e79d9b13d",
+  "unit": "tick, 1650 ticks/us; all per-instruction timestamps relative to earliest core event in the same stage",
+  "traffic_scope": "OUT is a GM instruction address space; no claim that these bytes all miss L2 or reach physical HBM/LPDDR. pipelined descriptor lifetime is distinct from issue spacing.",
+  "stages": [
+    {
+      "kernel": "ChunkKdaFwdPrepare_171e9a19df4c0d44ca00a177d8fe300c_32513546_mix_aic",
+      "family": "chunk_kda_fwd_prepare",
+      "active_aic": 2,
+      "active_aiv": 4,
+      "ca_ticks": 28627,
+      "last_cores": [
+        "core0.cubecore0"
+      ],
+      "cores": {
+        "core0.cubecore0": {
+          "mmad": [
+            {
+              "start_tick": 18842,
+              "end_tick": 18933,
+              "m": 32,
+              "n": 16,
+              "k": 128,
+              "pc_offset": "0x3b7d64"
+            },
+            {
+              "start_tick": 19035,
+              "end_tick": 19150,
+              "m": 32,
+              "n": 32,
+              "k": 128,
+              "pc_offset": "0x3b7d64"
+            },
+            {
+              "start_tick": 27612,
+              "end_tick": 27711,
+              "m": 32,
+              "n": 128,
+              "k": 32,
+              "pc_offset": "0x3b8b14"
+            },
+            {
+              "start_tick": 27687,
+              "end_tick": 27744,
+              "m": 32,
+              "n": 128,
+              "k": 32,
+              "pc_offset": "0x3b8b28"
+            }
+          ],
+          "mmad_issue_intervals_ticks": {
+            "count": 3,
+            "minimum": 75,
+            "median": 193,
+            "maximum": 8577
+          },
+          "memory": {
+            "L0C->OUT": {
+              "count": 2,
+              "bytes": 31744,
+              "first_issue": 27720,
+              "last_retire": 28627,
+              "descriptor_latency_ticks": {
+                "count": 2,
+                "minimum": 423,
+                "median": 452.5,
+                "maximum": 482
+              },
+              "consecutive_issue_ticks": {
+                "count": 1,
+                "minimum": 484,
+                "median": 484,
+                "maximum": 484
+              },
+              "busy_union_ticks": 905
+            },
+            "L0C->UB": {
+              "count": 2,
+              "bytes": 6144,
+              "first_issue": 18941,
+              "last_retire": 19237,
+              "descriptor_latency_ticks": {
+                "count": 2,
+                "minimum": 61,
+                "median": 70.0,
+                "maximum": 79
+              },
+              "consecutive_issue_ticks": {
+                "count": 1,
+                "minimum": 217,
+                "median": 217,
+                "maximum": 217
+              },
+              "busy_union_ticks": 140
+            },
+            "L1->L0A": {
+              "count": 5,
+              "bytes": 18432,
+              "first_issue": 18760,
+              "last_retire": 27543,
+              "descriptor_latency_ticks": {
+                "count": 5,
+                "minimum": 37,
+                "median": 45,
+                "maximum": 61
+              },
+              "consecutive_issue_ticks": {
+                "count": 4,
+                "minimum": 1,
+                "median": 88.5,
+                "maximum": 8568
+              },
+              "busy_union_ticks": 161
+            },
+            "L1->L0B": {
+              "count": 4,
+              "bytes": 28672,
+              "first_issue": 18762,
+              "last_retire": 27608,
+              "descriptor_latency_ticks": {
+                "count": 4,
+                "minimum": 68,
+                "median": 84.0,
+                "maximum": 100
+              },
+              "consecutive_issue_ticks": {
+                "count": 3,
+                "minimum": 1,
+                "median": 177,
+                "maximum": 8568
+              },
+              "busy_union_ticks": 269
+            },
+            "OUT->L1": {
+              "count": 9,
+              "bytes": 98304,
+              "first_issue": 17614,
+              "last_retire": 27502,
+              "descriptor_latency_ticks": {
+                "count": 9,
+                "minimum": 298,
+                "median": 732,
+                "maximum": 838
+              },
+              "consecutive_issue_ticks": {
+                "count": 8,
+                "minimum": 2,
+                "median": 68.0,
+                "maximum": 5959
+              },
+              "busy_union_ticks": 1811
+            }
+          },
+          "vector_subpipe_instructions": {},
+          "scalar_instructions": 1508
+        },
+        "core0.veccore1": {
+          "mmad": [],
+          "mmad_issue_intervals_ticks": null,
+          "memory": {
+            "OUT->UB": {
+              "count": 1,
+              "bytes": 48,
+              "first_issue": 1144,
+              "last_retire": 1487,
+              "descriptor_latency_ticks": {
+                "count": 1,
+                "minimum": 343,
+                "median": 343,
+                "maximum": 343
+              },
+              "consecutive_issue_ticks": null,
+              "busy_union_ticks": 343
+            }
+          },
+          "vector_subpipe_instructions": {},
+          "scalar_instructions": 1438
+        },
+        "core16.veccore1": {
+          "mmad": [],
+          "mmad_issue_intervals_ticks": null,
+          "memory": {
+            "OUT->UB": {
+              "count": 1,
+              "bytes": 48,
+              "first_issue": 1372,
+              "last_retire": 1673,
+              "descriptor_latency_ticks": {
+                "count": 1,
+                "minimum": 301,
+                "median": 301,
+                "maximum": 301
+              },
+              "consecutive_issue_ticks": null,
+              "busy_union_ticks": 301
+            }
+          },
+          "vector_subpipe_instructions": {},
+          "scalar_instructions": 1438
+        },
+        "core16.cubecore0": {
+          "mmad": [
+            {
+              "start_tick": 18554,
+              "end_tick": 18645,
+              "m": 32,
+              "n": 16,
+              "k": 128,
+              "pc_offset": "0x3b7d64"
+            },
+            {
+              "start_tick": 18747,
+              "end_tick": 18862,
+              "m": 32,
+              "n": 32,
+              "k": 128,
+              "pc_offset": "0x3b7d64"
+            },
+            {
+              "start_tick": 27477,
+              "end_tick": 27576,
+              "m": 32,
+              "n": 128,
+              "k": 32,
+              "pc_offset": "0x3b8b14"
+            },
+            {
+              "start_tick": 27552,
+              "end_tick": 27609,
+              "m": 32,
+              "n": 128,
+              "k": 32,
+              "pc_offset": "0x3b8b28"
+            }
+          ],
+          "mmad_issue_intervals_ticks": {
+            "count": 3,
+            "minimum": 75,
+            "median": 193,
+            "maximum": 8730
+          },
+          "memory": {
+            "L0C->OUT": {
+              "count": 2,
+              "bytes": 31744,
+              "first_issue": 27585,
+              "last_retire": 28430,
+              "descriptor_latency_ticks": {
+                "count": 2,
+                "minimum": 421,
+                "median": 421.5,
+                "maximum": 422
+              },
+              "consecutive_issue_ticks": {
+                "count": 1,
+                "minimum": 423,
+                "median": 423,
+                "maximum": 423
+              },
+              "busy_union_ticks": 843
+            },
+            "L0C->UB": {
+              "count": 2,
+              "bytes": 6144,
+              "first_issue": 18653,
+              "last_retire": 18949,
+              "descriptor_latency_ticks": {
+                "count": 2,
+                "minimum": 61,
+                "median": 70.0,
+                "maximum": 79
+              },
+              "consecutive_issue_ticks": {
+                "count": 1,
+                "minimum": 217,
+                "median": 217,
+                "maximum": 217
+              },
+              "busy_union_ticks": 140
+            },
+            "L1->L0A": {
+              "count": 5,
+              "bytes": 18432,
+              "first_issue": 18472,
+              "last_retire": 27408,
+              "descriptor_latency_ticks": {
+                "count": 5,
+                "minimum": 37,
+                "median": 45,
+                "maximum": 61
+              },
+              "consecutive_issue_ticks": {
+                "count": 4,
+                "minimum": 1,
+                "median": 88.5,
+                "maximum": 8721
+              },
+              "busy_union_ticks": 161
+            },
+            "L1->L0B": {
+              "count": 4,
+              "bytes": 28672,
+              "first_issue": 18474,
+              "last_retire": 27473,
+              "descriptor_latency_ticks": {
+                "count": 4,
+                "minimum": 68,
+                "median": 84.0,
+                "maximum": 100
+              },
+              "consecutive_issue_ticks": {
+                "count": 3,
+                "minimum": 1,
+                "median": 177,
+                "maximum": 8721
+              },
+              "busy_union_ticks": 269
+            },
+            "OUT->L1": {
+              "count": 9,
+              "bytes": 98304,
+              "first_issue": 17405,
+              "last_retire": 27367,
+              "descriptor_latency_ticks": {
+                "count": 9,
+                "minimum": 295,
+                "median": 652,
+                "maximum": 751
+              },
+              "consecutive_issue_ticks": {
+                "count": 8,
+                "minimum": 2,
+                "median": 72.0,
+                "maximum": 6002
+              },
+              "busy_union_ticks": 1726
+            }
+          },
+          "vector_subpipe_instructions": {},
+          "scalar_instructions": 1508
+        },
+        "core16.veccore0": {
+          "mmad": [],
+          "mmad_issue_intervals_ticks": null,
+          "memory": {
+            "OUT->UB": {
+              "count": 11,
+              "bytes": 64176,
+              "first_issue": 1407,
+              "last_retire": 24919,
+              "descriptor_latency_ticks": {
+                "count": 11,
+                "minimum": 254,
+                "median": 718,
+                "maximum": 1087
+              },
+              "consecutive_issue_ticks": {
+                "count": 10,
+                "minimum": 1,
+                "median": 296.5,
+                "maximum": 11896
+              },
+              "busy_union_ticks": 3597
+            },
+            "UB->OUT": {
+              "count": 15,
+              "bytes": 166144,
+              "first_issue": 14324,
+              "last_retire": 26984,
+              "descriptor_latency_ticks": {
+                "count": 15,
+                "minimum": 335,
+                "median": 430,
+                "maximum": 774
+              },
+              "consecutive_issue_ticks": {
+                "count": 14,
+                "minimum": 1,
+                "median": 1.5,
+                "maximum": 6551
+              },
+              "busy_union_ticks": 2324
+            }
+          },
+          "vector_subpipe_instructions": {
+            "RVECEX": 13508,
+            "RVECSU": 831,
+            "RVECLD": 5848,
+            "RVECLP": 148,
+            "RVECST": 2141
+          },
+          "scalar_instructions": 2659
+        },
+        "core0.veccore0": {
+          "mmad": [],
+          "mmad_issue_intervals_ticks": null,
+          "memory": {
+            "OUT->UB": {
+              "count": 11,
+              "bytes": 64176,
+              "first_issue": 1156,
+              "last_retire": 25092,
+              "descriptor_latency_ticks": {
+                "count": 11,
+                "minimum": 249,
+                "median": 731,
+                "maximum": 997
+              },
+              "consecutive_issue_ticks": {
+                "count": 10,
+                "minimum": 1,
+                "median": 300.0,
+                "maximum": 11906
+              },
+              "busy_union_ticks": 3534
+            },
+            "UB->OUT": {
+              "count": 15,
+              "bytes": 166144,
+              "first_issue": 14427,
+              "last_retire": 27116,
+              "descriptor_latency_ticks": {
+                "count": 15,
+                "minimum": 304,
+                "median": 440,
+                "maximum": 789
+              },
+              "consecutive_issue_ticks": {
+                "count": 14,
+                "minimum": 1,
+                "median": 1.5,
+                "maximum": 6512
+              },
+              "busy_union_ticks": 2414
+            }
+          },
+          "vector_subpipe_instructions": {
+            "RVECEX": 13508,
+            "RVECSU": 831,
+            "RVECLD": 5848,
+            "RVECLP": 148,
+            "RVECST": 2141
+          },
+          "scalar_instructions": 2659
+        }
+      }
+    },
+    {
+      "kernel": "ChunkFwdH_72371232203476155baf45810c33a7f9_7710_mix_aic",
+      "family": "chunk_fwd_h",
+      "active_aic": 2,
+      "active_aiv": 4,
+      "ca_ticks": 7953,
+      "last_cores": [
+        "core16.veccore0"
+      ],
+      "cores": {
+        "core16.veccore1": {
+          "mmad": [],
+          "mmad_issue_intervals_ticks": null,
+          "memory": {},
+          "vector_subpipe_instructions": {},
+          "scalar_instructions": 371
+        },
+        "core0.cubecore0": {
+          "mmad": [
+            {
+              "start_tick": 3799,
+              "end_tick": 3994,
+              "m": 32,
+              "n": 128,
+              "k": 128,
+              "pc_offset": "0x28da4"
+            },
+            {
+              "start_tick": 5764,
+              "end_tick": 5959,
+              "m": 128,
+              "n": 128,
+              "k": 32,
+              "pc_offset": "0x28870"
+            }
+          ],
+          "mmad_issue_intervals_ticks": {
+            "count": 1,
+            "minimum": 1965,
+            "median": 1965,
+            "maximum": 1965
+          },
+          "memory": {
+            "L0C->UB": {
+              "count": 2,
+              "bytes": 81408,
+              "first_issue": 4001,
+              "last_retire": 6529,
+              "descriptor_latency_ticks": {
+                "count": 2,
+                "minimum": 177,
+                "median": 370.0,
+                "maximum": 563
+              },
+              "consecutive_issue_ticks": {
+                "count": 1,
+                "minimum": 1965,
+                "median": 1965,
+                "maximum": 1965
+              },
+              "busy_union_ticks": 740
+            },
+            "L1->L0A": {
+              "count": 2,
+              "bytes": 16384,
+              "first_issue": 3606,
+              "last_retire": 5728,
+              "descriptor_latency_ticks": {
+                "count": 2,
+                "minimum": 61,
+                "median": 61.0,
+                "maximum": 61
+              },
+              "consecutive_issue_ticks": {
+                "count": 1,
+                "minimum": 2061,
+                "median": 2061,
+                "maximum": 2061
+              },
+              "busy_union_ticks": 122
+            },
+            "L1->L0B": {
+              "count": 2,
+              "bytes": 40960,
+              "first_issue": 3607,
+              "last_retire": 5760,
+              "descriptor_latency_ticks": {
+                "count": 2,
+                "minimum": 92,
+                "median": 140.0,
+                "maximum": 188
+              },
+              "consecutive_issue_ticks": {
+                "count": 1,
+                "minimum": 2061,
+                "median": 2061,
+                "maximum": 2061
+              },
+              "busy_union_ticks": 280
+            },
+            "OUT->L1": {
+              "count": 4,
+              "bytes": 56576,
+              "first_issue": 1239,
+              "last_retire": 5665,
+              "descriptor_latency_ticks": {
+                "count": 4,
+                "minimum": 565,
+                "median": 582.5,
+                "maximum": 658
+              },
+              "consecutive_issue_ticks": {
+                "count": 3,
+                "minimum": 873,
+                "median": 1219,
+                "maximum": 1766
+              },
+              "busy_union_ticks": 2388
+            }
+          },
+          "vector_subpipe_instructions": {},
+          "scalar_instructions": 647
+        },
+        "core0.veccore1": {
+          "mmad": [],
+          "mmad_issue_intervals_ticks": null,
+          "memory": {},
+          "vector_subpipe_instructions": {},
+          "scalar_instructions": 371
+        },
+        "core16.cubecore0": {
+          "mmad": [
+            {
+              "start_tick": 3988,
+              "end_tick": 4183,
+              "m": 32,
+              "n": 128,
+              "k": 128,
+              "pc_offset": "0x28da4"
+            },
+            {
+              "start_tick": 5868,
+              "end_tick": 6063,
+              "m": 128,
+              "n": 128,
+              "k": 32,
+              "pc_offset": "0x28870"
+            }
+          ],
+          "mmad_issue_intervals_ticks": {
+            "count": 1,
+            "minimum": 1880,
+            "median": 1880,
+            "maximum": 1880
+          },
+          "memory": {
+            "L0C->UB": {
+              "count": 2,
+              "bytes": 81408,
+              "first_issue": 4190,
+              "last_retire": 6633,
+              "descriptor_latency_ticks": {
+                "count": 2,
+                "minimum": 177,
+                "median": 370.0,
+                "maximum": 563
+              },
+              "consecutive_issue_ticks": {
+                "count": 1,
+                "minimum": 1880,
+                "median": 1880,
+                "maximum": 1880
+              },
+              "busy_union_ticks": 740
+            },
+            "L1->L0A": {
+              "count": 2,
+              "bytes": 16384,
+              "first_issue": 3795,
+              "last_retire": 5832,
+              "descriptor_latency_ticks": {
+                "count": 2,
+                "minimum": 61,
+                "median": 61.0,
+                "maximum": 61
+              },
+              "consecutive_issue_ticks": {
+                "count": 1,
+                "minimum": 1976,
+                "median": 1976,
+                "maximum": 1976
+              },
+              "busy_union_ticks": 122
+            },
+            "L1->L0B": {
+              "count": 2,
+              "bytes": 40960,
+              "first_issue": 3796,
+              "last_retire": 5864,
+              "descriptor_latency_ticks": {
+                "count": 2,
+                "minimum": 92,
+                "median": 140.0,
+                "maximum": 188
+              },
+              "consecutive_issue_ticks": {
+                "count": 1,
+                "minimum": 1976,
+                "median": 1976,
+                "maximum": 1976
+              },
+              "busy_union_ticks": 280
+            },
+            "OUT->L1": {
+              "count": 4,
+              "bytes": 56576,
+              "first_issue": 1542,
+              "last_retire": 5769,
+              "descriptor_latency_ticks": {
+                "count": 4,
+                "minimum": 528,
+                "median": 556.5,
+                "maximum": 653
+              },
+              "consecutive_issue_ticks": {
+                "count": 3,
+                "minimum": 860,
+                "median": 1174,
+                "maximum": 1665
+              },
+              "busy_union_ticks": 2294
+            }
+          },
+          "vector_subpipe_instructions": {},
+          "scalar_instructions": 647
+        },
+        "core0.veccore0": {
+          "mmad": [],
+          "mmad_issue_intervals_ticks": null,
+          "memory": {
+            "OUT->UB": {
+              "count": 4,
+              "bytes": 139520,
+              "first_issue": 900,
+              "last_retire": 5919,
+              "descriptor_latency_ticks": {
+                "count": 4,
+                "minimum": 541,
+                "median": 913.5,
+                "maximum": 1349
+              },
+              "consecutive_issue_ticks": {
+                "count": 3,
+                "minimum": 1,
+                "median": 2011,
+                "maximum": 2093
+              },
+              "busy_union_ticks": 2805
+            },
+            "UB->OUT": {
+              "count": 4,
+              "bytes": 114176,
+              "first_issue": 2566,
+              "last_retire": 7830,
+              "descriptor_latency_ticks": {
+                "count": 4,
+                "minimum": 356,
+                "median": 526.0,
+                "maximum": 696
+              },
+              "consecutive_issue_ticks": {
+                "count": 3,
+                "minimum": 1,
+                "median": 1806,
+                "maximum": 2761
+              },
+              "busy_union_ticks": 1749
+            }
+          },
+          "vector_subpipe_instructions": {
+            "RVECLP": 11,
+            "RVECEX": 2244,
+            "RVECLD": 894,
+            "RVECST": 642,
+            "RVECSU": 6
+          },
+          "scalar_instructions": 736
+        },
+        "core16.veccore0": {
+          "mmad": [],
+          "mmad_issue_intervals_ticks": null,
+          "memory": {
+            "OUT->UB": {
+              "count": 4,
+              "bytes": 139520,
+              "first_issue": 1104,
+              "last_retire": 6043,
+              "descriptor_latency_ticks": {
+                "count": 4,
+                "minimum": 514,
+                "median": 893.5,
+                "maximum": 1351
+              },
+              "consecutive_issue_ticks": {
+                "count": 3,
+                "minimum": 1,
+                "median": 1953,
+                "maximum": 2091
+              },
+              "busy_union_ticks": 2760
+            },
+            "UB->OUT": {
+              "count": 4,
+              "bytes": 114176,
+              "first_issue": 2772,
+              "last_retire": 7940,
+              "descriptor_latency_ticks": {
+                "count": 4,
+                "minimum": 332,
+                "median": 501.5,
+                "maximum": 702
+              },
+              "consecutive_issue_ticks": {
+                "count": 3,
+                "minimum": 1,
+                "median": 1789,
+                "maximum": 2676
+              },
+              "busy_union_ticks": 1706
+            }
+          },
+          "vector_subpipe_instructions": {
+            "RVECLP": 11,
+            "RVECEX": 2244,
+            "RVECLD": 894,
+            "RVECST": 642,
+            "RVECSU": 6
+          },
+          "scalar_instructions": 736
+        }
+      }
+    },
+    {
+      "kernel": "ChunkKdaFwdFinalize_c0d447f32579acd296e1c16d6d9c7d38_0",
+      "family": "chunk_kda_fwd_finalize",
+      "active_aic": 2,
+      "active_aiv": 0,
+      "ca_ticks": 5125,
+      "last_cores": [
+        "core16.cubecore0"
+      ],
+      "cores": {
+        "core0.cubecore0": {
+          "mmad": [
+            {
+              "start_tick": 4191,
+              "end_tick": 4415,
+              "m": 31,
+              "n": 128,
+              "k": 128,
+              "pc_offset": "0x2184"
+            },
+            {
+              "start_tick": 4417,
+              "end_tick": 4543,
+              "m": 31,
+              "n": 128,
+              "k": 31,
+              "pc_offset": "0x2244"
+            }
+          ],
+          "mmad_issue_intervals_ticks": {
+            "count": 1,
+            "minimum": 226,
+            "median": 226,
+            "maximum": 226
+          },
+          "memory": {
+            "L0C->OUT": {
+              "count": 1,
+              "bytes": 15872,
+              "first_issue": 4552,
+              "last_retire": 4993,
+              "descriptor_latency_ticks": {
+                "count": 1,
+                "minimum": 441,
+                "median": 441,
+                "maximum": 441
+              },
+              "consecutive_issue_ticks": null,
+              "busy_union_ticks": 441
+            },
+            "L1->L0A": {
+              "count": 2,
+              "bytes": 10240,
+              "first_issue": 3999,
+              "last_retire": 4198,
+              "descriptor_latency_ticks": {
+                "count": 2,
+                "minimum": 61,
+                "median": 121.0,
+                "maximum": 181
+              },
+              "consecutive_issue_ticks": {
+                "count": 1,
+                "minimum": 18,
+                "median": 18,
+                "maximum": 18
+              },
+              "busy_union_ticks": 199
+            },
+            "L1->L0B": {
+              "count": 2,
+              "bytes": 40960,
+              "first_issue": 4000,
+              "last_retire": 4230,
+              "descriptor_latency_ticks": {
+                "count": 2,
+                "minimum": 188,
+                "median": 193.5,
+                "maximum": 199
+              },
+              "consecutive_issue_ticks": {
+                "count": 1,
+                "minimum": 31,
+                "median": 31,
+                "maximum": 31
+              },
+              "busy_union_ticks": 230
+            },
+            "OUT->L1": {
+              "count": 4,
+              "bytes": 50562,
+              "first_issue": 3033,
+              "last_retire": 3995,
+              "descriptor_latency_ticks": {
+                "count": 4,
+                "minimum": 291,
+                "median": 612.0,
+                "maximum": 753
+              },
+              "consecutive_issue_ticks": {
+                "count": 3,
+                "minimum": 19,
+                "median": 25,
+                "maximum": 165
+              },
+              "busy_union_ticks": 962
+            }
+          },
+          "vector_subpipe_instructions": {},
+          "scalar_instructions": 1057
+        },
+        "core16.cubecore0": {
+          "mmad": [
+            {
+              "start_tick": 4331,
+              "end_tick": 4559,
+              "m": 31,
+              "n": 128,
+              "k": 128,
+              "pc_offset": "0x2184"
+            },
+            {
+              "start_tick": 4561,
+              "end_tick": 4687,
+              "m": 31,
+              "n": 128,
+              "k": 31,
+              "pc_offset": "0x2244"
+            }
+          ],
+          "mmad_issue_intervals_ticks": {
+            "count": 1,
+            "minimum": 230,
+            "median": 230,
+            "maximum": 230
+          },
+          "memory": {
+            "L0C->OUT": {
+              "count": 1,
+              "bytes": 15872,
+              "first_issue": 4696,
+              "last_retire": 5125,
+              "descriptor_latency_ticks": {
+                "count": 1,
+                "minimum": 429,
+                "median": 429,
+                "maximum": 429
+              },
+              "consecutive_issue_ticks": null,
+              "busy_union_ticks": 429
+            },
+            "L1->L0A": {
+              "count": 2,
+              "bytes": 10240,
+              "first_issue": 3945,
+              "last_retire": 4338,
+              "descriptor_latency_ticks": {
+                "count": 2,
+                "minimum": 61,
+                "median": 93.0,
+                "maximum": 125
+              },
+              "consecutive_issue_ticks": {
+                "count": 1,
+                "minimum": 268,
+                "median": 268,
+                "maximum": 268
+              },
+              "busy_union_ticks": 186
+            },
+            "L1->L0B": {
+              "count": 2,
+              "bytes": 40960,
+              "first_issue": 4172,
+              "last_retire": 4370,
+              "descriptor_latency_ticks": {
+                "count": 2,
+                "minimum": 143,
+                "median": 149.5,
+                "maximum": 156
+              },
+              "consecutive_issue_ticks": {
+                "count": 1,
+                "minimum": 55,
+                "median": 55,
+                "maximum": 55
+              },
+              "busy_union_ticks": 198
+            },
+            "OUT->L1": {
+              "count": 4,
+              "bytes": 50562,
+              "first_issue": 2796,
+              "last_retire": 3941,
+              "descriptor_latency_ticks": {
+                "count": 4,
+                "minimum": 287,
+                "median": 598.5,
+                "maximum": 728
+              },
+              "consecutive_issue_ticks": {
+                "count": 3,
+                "minimum": 19,
+                "median": 25,
+                "maximum": 373
+              },
+              "busy_union_ticks": 1059
+            }
+          },
+          "vector_subpipe_instructions": {},
+          "scalar_instructions": 1057
+        }
+      }
+    }
+  ]
+}

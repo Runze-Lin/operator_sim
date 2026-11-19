@@ -1,0 +1,1927 @@
+{
+  "chip": "Ascend950PR_957b",
+  "process": "multi-UB",
+  "registration_sha256": "dd57ff71c1421b2e7a583a3f57e1a01343a903d6f42f52af9d894a5f2eca07e0",
+  "cost": {
+    "started_utc": "2026-11-19T14:36:25.246257+00:00",
+    "finished_utc": "2026-11-19T14:43:13.655588+00:00",
+    "seconds": 408.40934802009724,
+    "exit_code": 0,
+    "peak_bytes": 3929376583,
+    "raw_bytes": 2724375115,
+    "stop_reason": null,
+    "command": [
+      "bash",
+      "/home/l00925865/operator_sim/scripts/cann-run.sh",
+      "msopprof",
+      "simulator",
+      "--soc-version=Ascend950PR_957b",
+      "--dump=false",
+      "--launch-count=2",
+      "--timeout=60",
+      "--output=/home/l00925865/operator_sim/runs/rms-unknown23/multi-UB-Ascend950PR_957b/profile",
+      "/home/l00925865/operator_sim/build/vector-v8/NORM",
+      "/home/l00925865/operator_sim/runs/rms-unknown23/multi-UB-Ascend950PR_957b/inputs.txt"
+    ]
+  },
+  "qualified": true,
+  "rows": [
+    {
+      "process": "multi-UB",
+      "i": 0,
+      "role": "entry",
+      "chip": "Ascend950PR_957b",
+      "shape": [
+        563,
+        4048
+      ],
+      "prior_aiv": 0,
+      "known_us": 6.754632840697171,
+      "runtime_ms": 0.18633,
+      "measurement": "planned CA",
+      "candidate_us": 6.134558891225447,
+      "previous_us": 6.680926064804728,
+      "active_aiv": 52,
+      "conditional_us_by_H": [
+        6.754632840697171,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        5.1121324093545395
+      ],
+      "extreme_H": [
+        52,
+        1
+      ],
+      "lower_us": 5.1121324093545395,
+      "upper_us": 6.755543653846953,
+      "model_relative_radius": 0.13847793247308077,
+      "all_state_tolerance_intersection": [
+        5.404434923077563,
+        6.134558891225447
+      ],
+      "policy": "feasible-state projection",
+      "timing_qualified": true,
+      "correctness": [
+        "correctness count=2279024 bad=0 max_abs_error=0.00162108 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness count=563 bad=0 max_abs_error=1.69107e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ],
+      "host_task": {
+        "begin_tick": 2110,
+        "done_tick": 12267,
+        "full_task_id": 0,
+        "raw_stream_id": 0
+      },
+      "stage": {
+        "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+        "ca_us": 8.21030303030303,
+        "active_aiv": 52,
+        "active_aic": 0,
+        "windows": {
+          "core0.veccore0": [
+            0.0,
+            7.292727272727273
+          ],
+          "core0.veccore1": [
+            0.056363636363636366,
+            7.6860606060606065
+          ],
+          "core1.veccore0": [
+            0.3612121212121212,
+            7.888484848484849
+          ],
+          "core1.veccore1": [
+            0.3696969696969697,
+            7.373939393939394
+          ],
+          "core10.veccore0": [
+            0.3212121212121212,
+            8.21030303030303
+          ],
+          "core10.veccore1": [
+            0.3424242424242424,
+            7.581212121212121
+          ],
+          "core11.veccore0": [
+            0.22484848484848485,
+            7.078787878787879
+          ],
+          "core11.veccore1": [
+            0.23757575757575758,
+            7.2684848484848485
+          ],
+          "core12.veccore0": [
+            0.13818181818181818,
+            7.406060606060606
+          ],
+          "core12.veccore1": [
+            0.17636363636363636,
+            7.607272727272727
+          ],
+          "core16.veccore0": [
+            0.23515151515151514,
+            7.127272727272727
+          ],
+          "core16.veccore1": [
+            0.2496969696969697,
+            6.743636363636363
+          ],
+          "core17.veccore0": [
+            0.09151515151515152,
+            7.361212121212121
+          ],
+          "core17.veccore1": [
+            0.18242424242424243,
+            7.383636363636364
+          ],
+          "core18.veccore0": [
+            0.33090909090909093,
+            6.588484848484849
+          ],
+          "core18.veccore1": [
+            0.3339393939393939,
+            6.970303030303031
+          ],
+          "core19.veccore0": [
+            0.34545454545454546,
+            7.8127272727272725
+          ],
+          "core19.veccore1": [
+            0.3490909090909091,
+            7.907272727272727
+          ],
+          "core2.veccore0": [
+            0.06606060606060606,
+            7.388484848484849
+          ],
+          "core2.veccore1": [
+            0.07393939393939394,
+            7.411515151515151
+          ],
+          "core20.veccore0": [
+            0.15636363636363637,
+            6.971515151515152
+          ],
+          "core20.veccore1": [
+            0.16484848484848486,
+            7.164848484848485
+          ],
+          "core21.veccore0": [
+            0.4127272727272727,
+            7.78
+          ],
+          "core21.veccore1": [
+            0.41878787878787876,
+            7.6
+          ],
+          "core22.veccore0": [
+            0.3424242424242424,
+            7.806060606060606
+          ],
+          "core22.veccore1": [
+            0.3496969696969697,
+            7.846060606060606
+          ],
+          "core23.veccore0": [
+            0.3618181818181818,
+            7.777575757575757
+          ],
+          "core23.veccore1": [
+            0.3709090909090909,
+            7.584848484848485
+          ],
+          "core24.veccore0": [
+            0.13575757575757577,
+            6.53030303030303
+          ],
+          "core24.veccore1": [
+            0.1406060606060606,
+            6.724848484848485
+          ],
+          "core25.veccore0": [
+            0.21636363636363637,
+            7.402424242424242
+          ],
+          "core25.veccore1": [
+            0.2290909090909091,
+            7.662424242424242
+          ],
+          "core26.veccore0": [
+            0.43393939393939396,
+            7.0224242424242425
+          ],
+          "core26.veccore1": [
+            0.43757575757575756,
+            7.111515151515151
+          ],
+          "core27.veccore0": [
+            0.2496969696969697,
+            7.338181818181818
+          ],
+          "core27.veccore1": [
+            0.26121212121212123,
+            7.531515151515151
+          ],
+          "core28.veccore0": [
+            0.15757575757575756,
+            6.611515151515151
+          ],
+          "core28.veccore1": [
+            0.1684848484848485,
+            4.91030303030303
+          ],
+          "core3.veccore0": [
+            0.18242424242424243,
+            7.213939393939394
+          ],
+          "core3.veccore1": [
+            0.14606060606060606,
+            6.996969696969697
+          ],
+          "core4.veccore0": [
+            0.2775757575757576,
+            7.356363636363636
+          ],
+          "core4.veccore1": [
+            0.2963636363636364,
+            7.151515151515151
+          ],
+          "core5.veccore0": [
+            0.3987878787878788,
+            7.502424242424242
+          ],
+          "core5.veccore1": [
+            0.4084848484848485,
+            7.307272727272728
+          ],
+          "core6.veccore0": [
+            0.463030303030303,
+            7.386060606060606
+          ],
+          "core6.veccore1": [
+            0.4721212121212121,
+            7.011515151515152
+          ],
+          "core7.veccore0": [
+            0.09393939393939393,
+            7.407272727272727
+          ],
+          "core7.veccore1": [
+            0.11272727272727273,
+            7.218787878787879
+          ],
+          "core8.veccore0": [
+            0.24848484848484848,
+            7.727878787878788
+          ],
+          "core8.veccore1": [
+            0.2672727272727273,
+            7.916363636363636
+          ],
+          "core9.veccore0": [
+            0.3812121212121212,
+            6.947272727272727
+          ],
+          "core9.veccore1": [
+            0.38606060606060605,
+            7.33030303030303
+          ]
+        },
+        "trace": "runs/rms-unknown23/multi-UB-Ascend950PR_957b/profile/OPPROF_20261119223625_FSPSCPCXRIPUIFHX/RmsNorm_normal_all_bf16_high_performance_5000/0/simulator/trace.json",
+        "trace_sha256": "fdc6db9ea516550792f841b842e684c6fb47025bf77365e883808647aced5ab2",
+        "binary_sha256": "0926fe478e5f718ef49241c08ef00b665797690f0f7f22c67fdc25044e0cb54d",
+        "first_tick": 6581,
+        "last_tick": 20128,
+        "physical_last_tick": 20125,
+        "physical_ca_us": 8.208484848484849,
+        "cores": {
+          "core0.veccore0": {
+            "first_tick": 6581,
+            "last_tick": 18614,
+            "physical_last_tick": 18611,
+            "physical_end_tick": 18607,
+            "official_duration_us": "7.29",
+            "official_running_us": "7.29",
+            "instruction_events_without_sync": 21624,
+            "signature128": "0cbde68f6456071cc92ca101945f0613",
+            "rows_written": 11,
+            "shard_sha256": "e81277d56d26f33da976de1877edcc111df6e90c6e89dc4a7acd6b1627bd8731"
+          },
+          "core0.veccore1": {
+            "first_tick": 6674,
+            "last_tick": 19263,
+            "physical_last_tick": 19260,
+            "physical_end_tick": 19256,
+            "official_duration_us": "7.63",
+            "official_running_us": "7.62",
+            "instruction_events_without_sync": 21624,
+            "signature128": "8e478a13b71dfe1e75361c92ba5991e2",
+            "rows_written": 11,
+            "shard_sha256": "1910cd059466e098172676a97ca716b56923c580b03f0ddf3a3f912df93e645e"
+          },
+          "core1.veccore0": {
+            "first_tick": 7177,
+            "last_tick": 19597,
+            "physical_last_tick": 19594,
+            "physical_end_tick": 19590,
+            "official_duration_us": "7.53",
+            "official_running_us": "7.52",
+            "instruction_events_without_sync": 21624,
+            "signature128": "8fd1913c2e64a4c16e775c4236fba716",
+            "rows_written": 11,
+            "shard_sha256": "5f2a0eaf6956488a0b680d3973c52df8a3c891b2dceaf6eab9049833e2487b5a"
+          },
+          "core1.veccore1": {
+            "first_tick": 7191,
+            "last_tick": 18748,
+            "physical_last_tick": 18745,
+            "physical_end_tick": 18741,
+            "official_duration_us": "7",
+            "official_running_us": "7",
+            "instruction_events_without_sync": 21624,
+            "signature128": "e3a483a23d31e219b7eb2274e410e0de",
+            "rows_written": 11,
+            "shard_sha256": "9cbb71836f49e3256d1836581f6ce42686c748072adb1502852011e6363ace2e"
+          },
+          "core10.veccore0": {
+            "first_tick": 7111,
+            "last_tick": 20128,
+            "physical_last_tick": 20125,
+            "physical_end_tick": 20121,
+            "official_duration_us": "7.89",
+            "official_running_us": "7.88",
+            "instruction_events_without_sync": 21624,
+            "signature128": "31f998cde5585d37a4357e1449613450",
+            "rows_written": 11,
+            "shard_sha256": "d742ec6afaf7382c008c7f780bea73eaae61a214f6a90cdfed78f1e14f7b375e"
+          },
+          "core10.veccore1": {
+            "first_tick": 7146,
+            "last_tick": 19090,
+            "physical_last_tick": 19087,
+            "physical_end_tick": 19083,
+            "official_duration_us": "7.24",
+            "official_running_us": "7.23",
+            "instruction_events_without_sync": 21624,
+            "signature128": "2a4a64539167f7c7586414eec16d2f3a",
+            "rows_written": 11,
+            "shard_sha256": "6e211bb671a34da386907269edd109443c67a345ff0f1a7cce509565fd2276bb"
+          },
+          "core11.veccore0": {
+            "first_tick": 6952,
+            "last_tick": 18261,
+            "physical_last_tick": 18258,
+            "physical_end_tick": 18254,
+            "official_duration_us": "6.85",
+            "official_running_us": "6.85",
+            "instruction_events_without_sync": 21624,
+            "signature128": "1817904492414961f317f91adec05386",
+            "rows_written": 11,
+            "shard_sha256": "f03d48aae292499abc583d7d4e90ae7bba6b6cc3ebc5bea30b66dd908bda157c"
+          },
+          "core11.veccore1": {
+            "first_tick": 6973,
+            "last_tick": 18574,
+            "physical_last_tick": 18571,
+            "physical_end_tick": 18567,
+            "official_duration_us": "7.03",
+            "official_running_us": "7.03",
+            "instruction_events_without_sync": 21624,
+            "signature128": "e7331c0b4158f80ae11389907c075745",
+            "rows_written": 11,
+            "shard_sha256": "4173f38f7afce33c1f4b647a7375ee5ebffbcc72fb06330aeb4bb522174246b3"
+          },
+          "core12.veccore0": {
+            "first_tick": 6809,
+            "last_tick": 18801,
+            "physical_last_tick": 18798,
+            "physical_end_tick": 18794,
+            "official_duration_us": "7.27",
+            "official_running_us": "7.26",
+            "instruction_events_without_sync": 21624,
+            "signature128": "3bb326f3c540323a266c97dc9164436e",
+            "rows_written": 11,
+            "shard_sha256": "263dc7c1f96bfb0028d14426c2a6998af03ebac1fdc50dddc7f28a0e3d194dca"
+          },
+          "core12.veccore1": {
+            "first_tick": 6872,
+            "last_tick": 19133,
+            "physical_last_tick": 19130,
+            "physical_end_tick": 19126,
+            "official_duration_us": "7.43",
+            "official_running_us": "7.43",
+            "instruction_events_without_sync": 21624,
+            "signature128": "ba2a005bb58f33fd1f97ab06ae58c41e",
+            "rows_written": 11,
+            "shard_sha256": "12ed0297aca3ec812e64e96ed3e334ff0c657e2dfa398fdae458c01159bde9e3"
+          },
+          "core16.veccore0": {
+            "first_tick": 6969,
+            "last_tick": 18341,
+            "physical_last_tick": 18338,
+            "physical_end_tick": 18334,
+            "official_duration_us": "6.89",
+            "official_running_us": "6.89",
+            "instruction_events_without_sync": 21624,
+            "signature128": "a831d5b87956f510a3a96f717a2612d9",
+            "rows_written": 11,
+            "shard_sha256": "03a00c0ac7bbeea88cc116535d03ecbc056773c0d419321af1df79619130a6d9"
+          },
+          "core16.veccore1": {
+            "first_tick": 6993,
+            "last_tick": 17708,
+            "physical_last_tick": 17705,
+            "physical_end_tick": 17701,
+            "official_duration_us": "6.49",
+            "official_running_us": "6.49",
+            "instruction_events_without_sync": 21624,
+            "signature128": "3c868f706d95d961d28bed98850d0d71",
+            "rows_written": 11,
+            "shard_sha256": "6fbef2991e8f389d7fe6638b9429d2a407a517c76c1333999d5cff299dc11f6c"
+          },
+          "core17.veccore0": {
+            "first_tick": 6732,
+            "last_tick": 18727,
+            "physical_last_tick": 18724,
+            "physical_end_tick": 18720,
+            "official_duration_us": "7.27",
+            "official_running_us": "7.26",
+            "instruction_events_without_sync": 21624,
+            "signature128": "f3c51b3517ea9e247dfad69c6077eafe",
+            "rows_written": 11,
+            "shard_sha256": "f2ae866e7af5d7356656d56e4b14deefc3fa5c92524e95fd3a8449a76adc1456"
+          },
+          "core17.veccore1": {
+            "first_tick": 6882,
+            "last_tick": 18764,
+            "physical_last_tick": 18761,
+            "physical_end_tick": 18757,
+            "official_duration_us": "7.2",
+            "official_running_us": "7.2",
+            "instruction_events_without_sync": 21624,
+            "signature128": "284f5383d65191a643a79ccf4d2dd1e9",
+            "rows_written": 11,
+            "shard_sha256": "9c102c76709c91189d1c30c33991bbacd43169fc364825c4523d93e5a8e6a860"
+          },
+          "core18.veccore0": {
+            "first_tick": 7127,
+            "last_tick": 17452,
+            "physical_last_tick": 17449,
+            "physical_end_tick": 17445,
+            "official_duration_us": "6.26",
+            "official_running_us": "6.25",
+            "instruction_events_without_sync": 21624,
+            "signature128": "d5d0e25dafdaf5e927928ca58aa9f800",
+            "rows_written": 11,
+            "shard_sha256": "6e5b36f51ef703152c06313c5fb2abef32f6da3a1ffcef1e0eac7ddffe40e8bc"
+          },
+          "core18.veccore1": {
+            "first_tick": 7132,
+            "last_tick": 18082,
+            "physical_last_tick": 18079,
+            "physical_end_tick": 18075,
+            "official_duration_us": "6.64",
+            "official_running_us": "6.63",
+            "instruction_events_without_sync": 21624,
+            "signature128": "c3014b767b182b4b130a52efdac89838",
+            "rows_written": 11,
+            "shard_sha256": "680cdd5b128961d8ce86a39ca6e7cafa5d991a50ee093f4b79e3f8675a2126a7"
+          },
+          "core19.veccore0": {
+            "first_tick": 7151,
+            "last_tick": 19472,
+            "physical_last_tick": 19469,
+            "physical_end_tick": 19465,
+            "official_duration_us": "7.47",
+            "official_running_us": "7.46",
+            "instruction_events_without_sync": 21624,
+            "signature128": "799a9e672c62fe5ef29b8054c93ad0f7",
+            "rows_written": 11,
+            "shard_sha256": "acbd77833e0a6fa898b38e23acc8e761ffe20d8d1027e33b2cf7e5981d2a93b8"
+          },
+          "core19.veccore1": {
+            "first_tick": 7157,
+            "last_tick": 19628,
+            "physical_last_tick": 19625,
+            "physical_end_tick": 19621,
+            "official_duration_us": "7.56",
+            "official_running_us": "7.55",
+            "instruction_events_without_sync": 21624,
+            "signature128": "f108b87a3d7c702d62c6579e432ee12b",
+            "rows_written": 11,
+            "shard_sha256": "30f30878431af6849fb1c481a4f78294a5fb440a1ab92e166e40d7389ffed12f"
+          },
+          "core2.veccore0": {
+            "first_tick": 6690,
+            "last_tick": 18772,
+            "physical_last_tick": 18769,
+            "physical_end_tick": 18765,
+            "official_duration_us": "7.32",
+            "official_running_us": "7.32",
+            "instruction_events_without_sync": 21624,
+            "signature128": "a124a208f2a26e381e6e650f1b4cbb52",
+            "rows_written": 11,
+            "shard_sha256": "cfdf8c9b7a81318a2b179119a7432200f032341edf42d0f31d2e394758d7e70e"
+          },
+          "core2.veccore1": {
+            "first_tick": 6703,
+            "last_tick": 18810,
+            "physical_last_tick": 18807,
+            "physical_end_tick": 18803,
+            "official_duration_us": "7.34",
+            "official_running_us": "7.33",
+            "instruction_events_without_sync": 21624,
+            "signature128": "c945afeaf0b4c347bf940137096b8a74",
+            "rows_written": 11,
+            "shard_sha256": "ada17d8258c058881928f0e504514bd48a90424038a5078bf67f249f619aabcf"
+          },
+          "core20.veccore0": {
+            "first_tick": 6839,
+            "last_tick": 18084,
+            "physical_last_tick": 18081,
+            "physical_end_tick": 18077,
+            "official_duration_us": "6.82",
+            "official_running_us": "6.81",
+            "instruction_events_without_sync": 21624,
+            "signature128": "38c25b176919745bbd33837c43fb1ef1",
+            "rows_written": 11,
+            "shard_sha256": "0610de37be7acd97500506a01306652877e4cf5f7f83ee47b09112477950e17d"
+          },
+          "core20.veccore1": {
+            "first_tick": 6853,
+            "last_tick": 18403,
+            "physical_last_tick": 18400,
+            "physical_end_tick": 18396,
+            "official_duration_us": "7",
+            "official_running_us": "6.99",
+            "instruction_events_without_sync": 21624,
+            "signature128": "34a34f544e369aa34600f6010ea6b2c9",
+            "rows_written": 11,
+            "shard_sha256": "249468aeccc8ec0fd74565486870b40ff2b40d2bd745a14895f257deec52358b"
+          },
+          "core21.veccore0": {
+            "first_tick": 7262,
+            "last_tick": 19418,
+            "physical_last_tick": 19415,
+            "physical_end_tick": 19411,
+            "official_duration_us": "7.37",
+            "official_running_us": "7.36",
+            "instruction_events_without_sync": 21624,
+            "signature128": "50b0ce2e9bac2cff202824ac5947bf8e",
+            "rows_written": 11,
+            "shard_sha256": "7e3677883a621ee5f081bc7b690cae3301ffd538a1864b3b923a2f7a92f42f3a"
+          },
+          "core21.veccore1": {
+            "first_tick": 7272,
+            "last_tick": 19121,
+            "physical_last_tick": 19118,
+            "physical_end_tick": 19114,
+            "official_duration_us": "7.18",
+            "official_running_us": "7.18",
+            "instruction_events_without_sync": 21624,
+            "signature128": "968e07cb1b4e6a2bd41f084bf23349d8",
+            "rows_written": 11,
+            "shard_sha256": "810f0c6f175db7eafaaf80b73965c99df8ee2ad0f0a77a966b6fead1525ac720"
+          },
+          "core22.veccore0": {
+            "first_tick": 7146,
+            "last_tick": 19461,
+            "physical_last_tick": 19458,
+            "physical_end_tick": 19454,
+            "official_duration_us": "7.46",
+            "official_running_us": "7.46",
+            "instruction_events_without_sync": 21624,
+            "signature128": "db77be8661894652047d74dd0fead5b4",
+            "rows_written": 11,
+            "shard_sha256": "c673aec3ca006438ecce6a3795473e13b248a2e384a960beeb8952a9b6bd3638"
+          },
+          "core22.veccore1": {
+            "first_tick": 7158,
+            "last_tick": 19527,
+            "physical_last_tick": 19524,
+            "physical_end_tick": 19520,
+            "official_duration_us": "7.5",
+            "official_running_us": "7.49",
+            "instruction_events_without_sync": 21624,
+            "signature128": "c6addbe95fa4303720c5e8cdc3eaa688",
+            "rows_written": 11,
+            "shard_sha256": "6254657d28ccbf47763e82dc48671f4fe6b59ff658a6fc0a419bd0aa310018d1"
+          },
+          "core23.veccore0": {
+            "first_tick": 7178,
+            "last_tick": 19414,
+            "physical_last_tick": 19411,
+            "physical_end_tick": 19407,
+            "official_duration_us": "7.42",
+            "official_running_us": "7.41",
+            "instruction_events_without_sync": 21624,
+            "signature128": "2622ceaa12563e0c662650edf48b43c6",
+            "rows_written": 11,
+            "shard_sha256": "6d3dca9081384e48230135cb5234394e84d7512863ef5d3e177eff5247216ed6"
+          },
+          "core23.veccore1": {
+            "first_tick": 7193,
+            "last_tick": 19096,
+            "physical_last_tick": 19093,
+            "physical_end_tick": 19089,
+            "official_duration_us": "7.21",
+            "official_running_us": "7.21",
+            "instruction_events_without_sync": 21624,
+            "signature128": "d53ff6e6d32d44f7d95554bacfa39dd6",
+            "rows_written": 11,
+            "shard_sha256": "b4c76609a19c27ad34fbe5b737e72737b086fad03693c6c8047131b23ecb8e27"
+          },
+          "core24.veccore0": {
+            "first_tick": 6805,
+            "last_tick": 17356,
+            "physical_last_tick": 17353,
+            "physical_end_tick": 17349,
+            "official_duration_us": "6.39",
+            "official_running_us": "6.39",
+            "instruction_events_without_sync": 21624,
+            "signature128": "06022f3cd0bf635da83889cd75eef297",
+            "rows_written": 11,
+            "shard_sha256": "6851be2703b08207938b2211ce4104c428dc460d59d2700e0a54fdad2e0d8f1b"
+          },
+          "core24.veccore1": {
+            "first_tick": 6813,
+            "last_tick": 17677,
+            "physical_last_tick": 17674,
+            "physical_end_tick": 17670,
+            "official_duration_us": "6.58",
+            "official_running_us": "6.58",
+            "instruction_events_without_sync": 21624,
+            "signature128": "c3bc6b23d0df460b628dcdd20c6ed5bd",
+            "rows_written": 11,
+            "shard_sha256": "b5fda3e9e3995d61316fdd06391d961c84052537184864778d1150136526d461"
+          },
+          "core25.veccore0": {
+            "first_tick": 6938,
+            "last_tick": 18795,
+            "physical_last_tick": 18792,
+            "physical_end_tick": 18788,
+            "official_duration_us": "7.19",
+            "official_running_us": "7.18",
+            "instruction_events_without_sync": 21624,
+            "signature128": "f8831a49b2f8ad63955878a6e041a2f2",
+            "rows_written": 11,
+            "shard_sha256": "58726ebeff064e9dbed1b44872383e2c993865de0b1cff5adebd7e3a3cfb195d"
+          },
+          "core25.veccore1": {
+            "first_tick": 6959,
+            "last_tick": 19224,
+            "physical_last_tick": 19221,
+            "physical_end_tick": 19217,
+            "official_duration_us": "7.43",
+            "official_running_us": "7.43",
+            "instruction_events_without_sync": 21624,
+            "signature128": "abecba6141661493bf4836b78a453660",
+            "rows_written": 11,
+            "shard_sha256": "5c2c62660061284d23ddf591477340aa1f02764b501f1ec5de3cdadc10503e5d"
+          },
+          "core26.veccore0": {
+            "first_tick": 7297,
+            "last_tick": 18168,
+            "physical_last_tick": 18165,
+            "physical_end_tick": 18161,
+            "official_duration_us": "6.59",
+            "official_running_us": "6.58",
+            "instruction_events_without_sync": 21624,
+            "signature128": "813e93bd11e1b56aa00e3ee022902367",
+            "rows_written": 11,
+            "shard_sha256": "e3a537ee82ef113343c0ec84ce96b51c438d507af5879ff322c24a7355bdf653"
+          },
+          "core26.veccore1": {
+            "first_tick": 7303,
+            "last_tick": 18315,
+            "physical_last_tick": 18312,
+            "physical_end_tick": 18308,
+            "official_duration_us": "6.67",
+            "official_running_us": "6.67",
+            "instruction_events_without_sync": 21624,
+            "signature128": "d33f0b4da24cd4daa9424d27c02324c5",
+            "rows_written": 11,
+            "shard_sha256": "8fd09d7395fae01ccef2d880820a3986210d44037b2fd3bf7367920c4637fe8b"
+          },
+          "core27.veccore0": {
+            "first_tick": 6993,
+            "last_tick": 18689,
+            "physical_last_tick": 18686,
+            "physical_end_tick": 18682,
+            "official_duration_us": "7.09",
+            "official_running_us": "7.08",
+            "instruction_events_without_sync": 21624,
+            "signature128": "358da85112ca69eee1d0915333d6b7c8",
+            "rows_written": 11,
+            "shard_sha256": "ca53bc931f0fdbd41f63366afc949381d76eab2fc4f874cca72ea0ab6fd9df73"
+          },
+          "core27.veccore1": {
+            "first_tick": 7012,
+            "last_tick": 19008,
+            "physical_last_tick": 19005,
+            "physical_end_tick": 19001,
+            "official_duration_us": "7.27",
+            "official_running_us": "7.27",
+            "instruction_events_without_sync": 21624,
+            "signature128": "aeecf35d0a489b02c589df523a089acf",
+            "rows_written": 11,
+            "shard_sha256": "946d74bb518ca0063de4cb364aaf27fae025157151097839f1a4849e4d9d9ae0"
+          },
+          "core28.veccore0": {
+            "first_tick": 6841,
+            "last_tick": 17490,
+            "physical_last_tick": 17487,
+            "physical_end_tick": 17483,
+            "official_duration_us": "6.45",
+            "official_running_us": "6.45",
+            "instruction_events_without_sync": 21624,
+            "signature128": "c0b79341d49e07f5c81479d9af1e5962",
+            "rows_written": 11,
+            "shard_sha256": "21f42db8d5072a5c62536a7017fd76b8ae275aa05c49335c36a9d879fd28a30c"
+          },
+          "core28.veccore1": {
+            "first_tick": 6859,
+            "last_tick": 14683,
+            "physical_last_tick": 14680,
+            "physical_end_tick": 14676,
+            "official_duration_us": "4.74",
+            "official_running_us": "4.63",
+            "instruction_events_without_sync": 4798,
+            "signature128": "3a80ff2c8a58fff7a0669e106740d7be",
+            "rows_written": 2,
+            "shard_sha256": "61d434b4f77c34945a3fb35cea7c20f8327d38b5ff38f154de85f09cf9ed566f"
+          },
+          "core3.veccore0": {
+            "first_tick": 6882,
+            "last_tick": 18484,
+            "physical_last_tick": 18481,
+            "physical_end_tick": 18477,
+            "official_duration_us": "7.03",
+            "official_running_us": "7.03",
+            "instruction_events_without_sync": 21624,
+            "signature128": "19597a6c9cafe4001a308466e803313f",
+            "rows_written": 11,
+            "shard_sha256": "008571bf7991a59ebc12c9d1d939e4f2264d5062a5d5a3fee9d657568e3af871"
+          },
+          "core3.veccore1": {
+            "first_tick": 6822,
+            "last_tick": 18126,
+            "physical_last_tick": 18123,
+            "physical_end_tick": 18119,
+            "official_duration_us": "6.85",
+            "official_running_us": "6.85",
+            "instruction_events_without_sync": 21624,
+            "signature128": "b690f50ab45a37436412b60838770caa",
+            "rows_written": 11,
+            "shard_sha256": "c8d1cc26abbbae3339f275a976fa19111928dfc4341f7f23553ebbb3f7f0ad73"
+          },
+          "core4.veccore0": {
+            "first_tick": 7039,
+            "last_tick": 18719,
+            "physical_last_tick": 18716,
+            "physical_end_tick": 18712,
+            "official_duration_us": "7.08",
+            "official_running_us": "7.07",
+            "instruction_events_without_sync": 21624,
+            "signature128": "d742089ab1cb391a3a879574d23e874e",
+            "rows_written": 11,
+            "shard_sha256": "3e8daf38855145dbc093cc16904999a99f1a474e5311c2691232a4fd437ade47"
+          },
+          "core4.veccore1": {
+            "first_tick": 7070,
+            "last_tick": 18381,
+            "physical_last_tick": 18378,
+            "physical_end_tick": 18374,
+            "official_duration_us": "6.86",
+            "official_running_us": "6.85",
+            "instruction_events_without_sync": 21624,
+            "signature128": "90912f0b909053f8dc20734302a8769b",
+            "rows_written": 11,
+            "shard_sha256": "d7e312187afb1bf93aa68322aad65cbea531c1e4cb7b02aaac4e9421a5d53768"
+          },
+          "core5.veccore0": {
+            "first_tick": 7239,
+            "last_tick": 18960,
+            "physical_last_tick": 18957,
+            "physical_end_tick": 18953,
+            "official_duration_us": "7.1",
+            "official_running_us": "7.1",
+            "instruction_events_without_sync": 21624,
+            "signature128": "2d7bff2a8d3f5f2c755bd0e6aab37d7b",
+            "rows_written": 11,
+            "shard_sha256": "f43957c0e3da71980901a813f9e27ddc51bd0ae1c61f4f828e8206adf8370aca"
+          },
+          "core5.veccore1": {
+            "first_tick": 7255,
+            "last_tick": 18638,
+            "physical_last_tick": 18635,
+            "physical_end_tick": 18631,
+            "official_duration_us": "6.9",
+            "official_running_us": "6.89",
+            "instruction_events_without_sync": 21624,
+            "signature128": "b80cb0047912ce70e4cd24157ca253ba",
+            "rows_written": 11,
+            "shard_sha256": "440070195f2d0bf12f5cd0bd0b459d3a47396315ee2f59d3cbd2af4362b878d3"
+          },
+          "core6.veccore0": {
+            "first_tick": 7345,
+            "last_tick": 18768,
+            "physical_last_tick": 18765,
+            "physical_end_tick": 18761,
+            "official_duration_us": "6.92",
+            "official_running_us": "6.92",
+            "instruction_events_without_sync": 21624,
+            "signature128": "521f74cdaa7c2cd2caa0c0f7f0c580dd",
+            "rows_written": 11,
+            "shard_sha256": "3c5b86c62694c3564d081e1dd0574592d289b1cbc8d9cbc5de38cc3a65c1db79"
+          },
+          "core6.veccore1": {
+            "first_tick": 7360,
+            "last_tick": 18150,
+            "physical_last_tick": 18147,
+            "physical_end_tick": 18143,
+            "official_duration_us": "6.54",
+            "official_running_us": "6.53",
+            "instruction_events_without_sync": 21624,
+            "signature128": "279cce5a9c780c6f44d3228672bb45c8",
+            "rows_written": 11,
+            "shard_sha256": "b0bf74eac664cfeb5b25e83d48195d3bda7f84d3d856ca0ee5de9d769757f83a"
+          },
+          "core7.veccore0": {
+            "first_tick": 6736,
+            "last_tick": 18803,
+            "physical_last_tick": 18800,
+            "physical_end_tick": 18796,
+            "official_duration_us": "7.31",
+            "official_running_us": "7.31",
+            "instruction_events_without_sync": 21624,
+            "signature128": "8af828e22f85df0520697becc47faabf",
+            "rows_written": 11,
+            "shard_sha256": "211511803fedceae113f89c6a30c1349bf5eddd73161572c94e197bdfa8545d1"
+          },
+          "core7.veccore1": {
+            "first_tick": 6767,
+            "last_tick": 18492,
+            "physical_last_tick": 18489,
+            "physical_end_tick": 18485,
+            "official_duration_us": "7.11",
+            "official_running_us": "7.1",
+            "instruction_events_without_sync": 21624,
+            "signature128": "051851109d466f6eadc0ab4039f29710",
+            "rows_written": 11,
+            "shard_sha256": "13cbf73e004699f9a7cff65ef66e2942381595b7f225b4c548c52545a6f5f1a6"
+          },
+          "core8.veccore0": {
+            "first_tick": 6991,
+            "last_tick": 19332,
+            "physical_last_tick": 19329,
+            "physical_end_tick": 19325,
+            "official_duration_us": "7.48",
+            "official_running_us": "7.47",
+            "instruction_events_without_sync": 21624,
+            "signature128": "065d321af05795a54fc9ce381a68db81",
+            "rows_written": 11,
+            "shard_sha256": "0a2f4546e0141c7561f265924a413a602fd94ff55a15d0972c7b42222f2cc293"
+          },
+          "core8.veccore1": {
+            "first_tick": 7022,
+            "last_tick": 19643,
+            "physical_last_tick": 19640,
+            "physical_end_tick": 19636,
+            "official_duration_us": "7.65",
+            "official_running_us": "7.64",
+            "instruction_events_without_sync": 21624,
+            "signature128": "737599b9275ffe716878565aa89321d2",
+            "rows_written": 11,
+            "shard_sha256": "7f2255056169a96204f55af56e8b8519ba2b941a939968cf6592685274cf390f"
+          },
+          "core9.veccore0": {
+            "first_tick": 7210,
+            "last_tick": 18044,
+            "physical_last_tick": 18041,
+            "physical_end_tick": 18037,
+            "official_duration_us": "6.57",
+            "official_running_us": "6.56",
+            "instruction_events_without_sync": 21624,
+            "signature128": "82edaac71a789a3153c66ebc6b16c4b2",
+            "rows_written": 11,
+            "shard_sha256": "76cb78fdbf7a614fa5b4c1e0a3d078db4be36a0939b9386b756b15c1261e802a"
+          },
+          "core9.veccore1": {
+            "first_tick": 7218,
+            "last_tick": 18676,
+            "physical_last_tick": 18673,
+            "physical_end_tick": 18669,
+            "official_duration_us": "6.94",
+            "official_running_us": "6.94",
+            "instruction_events_without_sync": 21624,
+            "signature128": "9b05fd1c891b4bbfeea912885c4f9b1c",
+            "rows_written": 11,
+            "shard_sha256": "5489c93ab6ead2ddf72859534b9e8b42cab516f3f54fedd00d5ba90f77a3308f"
+          }
+        },
+        "ordinal": 0
+      },
+      "active_count_matches": true
+    },
+    {
+      "process": "multi-UB",
+      "i": 1,
+      "role": "immediate_repeat",
+      "chip": "Ascend950PR_957b",
+      "shape": [
+        563,
+        4048
+      ],
+      "prior_aiv": 52,
+      "known_us": 5.1121324093545395,
+      "runtime_ms": 0.12976,
+      "measurement": "planned CA",
+      "candidate_us": 6.134558891225447,
+      "previous_us": 6.680926064804728,
+      "active_aiv": 52,
+      "conditional_us_by_H": [
+        6.754632840697171,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        6.755543653846953,
+        5.1121324093545395
+      ],
+      "extreme_H": [
+        52,
+        1
+      ],
+      "lower_us": 5.1121324093545395,
+      "upper_us": 6.755543653846953,
+      "model_relative_radius": 0.13847793247308077,
+      "all_state_tolerance_intersection": [
+        5.404434923077563,
+        6.134558891225447
+      ],
+      "policy": "feasible-state projection",
+      "timing_qualified": true,
+      "correctness": [
+        "correctness count=2279024 bad=0 max_abs_error=0.00162108 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness count=563 bad=0 max_abs_error=1.69107e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ],
+      "host_task": {
+        "begin_tick": 79700,
+        "done_tick": 85071,
+        "full_task_id": 1,
+        "raw_stream_id": 1
+      },
+      "stage": {
+        "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+        "ca_us": 5.196969696969697,
+        "active_aiv": 52,
+        "active_aic": 0,
+        "windows": {
+          "core0.veccore0": [
+            0.0006060606060606061,
+            5.069696969696969
+          ],
+          "core0.veccore1": [
+            0.0006060606060606061,
+            4.86060606060606
+          ],
+          "core1.veccore0": [
+            0.0024242424242424242,
+            4.993333333333333
+          ],
+          "core1.veccore1": [
+            0.0024242424242424242,
+            4.918181818181818
+          ],
+          "core10.veccore0": [
+            0.0048484848484848485,
+            5.0593939393939396
+          ],
+          "core10.veccore1": [
+            0.0048484848484848485,
+            4.623636363636364
+          ],
+          "core11.veccore0": [
+            0.0,
+            4.779393939393939
+          ],
+          "core11.veccore1": [
+            0.0,
+            4.988484848484848
+          ],
+          "core12.veccore0": [
+            0.0006060606060606061,
+            4.998181818181818
+          ],
+          "core12.veccore1": [
+            0.0006060606060606061,
+            4.752121212121212
+          ],
+          "core16.veccore0": [
+            0.0496969696969697,
+            5.153333333333333
+          ],
+          "core16.veccore1": [
+            0.0496969696969697,
+            4.9818181818181815
+          ],
+          "core17.veccore0": [
+            0.0503030303030303,
+            5.152121212121212
+          ],
+          "core17.veccore1": [
+            0.0503030303030303,
+            4.966060606060606
+          ],
+          "core18.veccore0": [
+            0.04787878787878788,
+            5.1036363636363635
+          ],
+          "core18.veccore1": [
+            0.04787878787878788,
+            4.8951515151515155
+          ],
+          "core19.veccore0": [
+            0.0496969696969697,
+            5.096969696969697
+          ],
+          "core19.veccore1": [
+            0.0496969696969697,
+            4.916363636363636
+          ],
+          "core2.veccore0": [
+            0.0,
+            4.961818181818182
+          ],
+          "core2.veccore1": [
+            0.0,
+            4.781818181818182
+          ],
+          "core20.veccore0": [
+            0.05272727272727273,
+            5.113333333333333
+          ],
+          "core20.veccore1": [
+            0.05272727272727273,
+            4.961212121212121
+          ],
+          "core21.veccore0": [
+            0.0496969696969697,
+            4.993333333333333
+          ],
+          "core21.veccore1": [
+            0.0496969696969697,
+            5.066060606060606
+          ],
+          "core22.veccore0": [
+            0.04787878787878788,
+            5.047272727272727
+          ],
+          "core22.veccore1": [
+            0.04787878787878788,
+            4.627272727272727
+          ],
+          "core23.veccore0": [
+            0.0503030303030303,
+            5.196969696969697
+          ],
+          "core23.veccore1": [
+            0.0503030303030303,
+            5.013939393939394
+          ],
+          "core24.veccore0": [
+            0.0496969696969697,
+            4.627272727272727
+          ],
+          "core24.veccore1": [
+            0.0496969696969697,
+            5.055757575757576
+          ],
+          "core25.veccore0": [
+            0.0496969696969697,
+            5.1460606060606064
+          ],
+          "core25.veccore1": [
+            0.0496969696969697,
+            4.732121212121212
+          ],
+          "core26.veccore0": [
+            0.05272727272727273,
+            5.000606060606061
+          ],
+          "core26.veccore1": [
+            0.05272727272727273,
+            4.817575757575757
+          ],
+          "core27.veccore0": [
+            0.04787878787878788,
+            4.963030303030303
+          ],
+          "core27.veccore1": [
+            0.04787878787878788,
+            4.673333333333333
+          ],
+          "core28.veccore0": [
+            0.0496969696969697,
+            4.598181818181819
+          ],
+          "core28.veccore1": [
+            0.0496969696969697,
+            1.989090909090909
+          ],
+          "core3.veccore0": [
+            0.0006060606060606061,
+            4.756969696969697
+          ],
+          "core3.veccore1": [
+            0.0006060606060606061,
+            4.912121212121212
+          ],
+          "core4.veccore0": [
+            0.0048484848484848485,
+            4.857575757575757
+          ],
+          "core4.veccore1": [
+            0.0048484848484848485,
+            4.644848484848485
+          ],
+          "core5.veccore0": [
+            0.0006060606060606061,
+            4.955757575757576
+          ],
+          "core5.veccore1": [
+            0.0006060606060606061,
+            4.692121212121212
+          ],
+          "core6.veccore0": [
+            0.0,
+            4.972121212121212
+          ],
+          "core6.veccore1": [
+            0.0,
+            4.710909090909091
+          ],
+          "core7.veccore0": [
+            0.0024242424242424242,
+            4.838787878787879
+          ],
+          "core7.veccore1": [
+            0.0024242424242424242,
+            5.040606060606061
+          ],
+          "core8.veccore0": [
+            0.0006060606060606061,
+            5.038181818181818
+          ],
+          "core8.veccore1": [
+            0.0006060606060606061,
+            4.841818181818182
+          ],
+          "core9.veccore0": [
+            0.0006060606060606061,
+            5.081818181818182
+          ],
+          "core9.veccore1": [
+            0.0006060606060606061,
+            4.850909090909091
+          ]
+        },
+        "trace": "runs/rms-unknown23/multi-UB-Ascend950PR_957b/profile/OPPROF_20261119223625_FSPSCPCXRIPUIFHX/RmsNorm_normal_all_bf16_high_performance_5000/1/simulator/trace.json",
+        "trace_sha256": "b8a75e6b5b031f7ce8c5fb9f1590a2ae024f12ab13fc1f6bafa8b65365b60b16",
+        "binary_sha256": "0926fe478e5f718ef49241c08ef00b665797690f0f7f22c67fdc25044e0cb54d",
+        "first_tick": 131594,
+        "last_tick": 140169,
+        "physical_last_tick": 140166,
+        "physical_ca_us": 5.195151515151515,
+        "cores": {
+          "core0.veccore0": {
+            "first_tick": 131595,
+            "last_tick": 139959,
+            "physical_last_tick": 139956,
+            "physical_end_tick": 139952,
+            "official_duration_us": "5.07",
+            "official_running_us": "5.06",
+            "instruction_events_without_sync": 21624,
+            "signature128": "981e09e5703dd759142237e00b8e6260",
+            "rows_written": 11,
+            "shard_sha256": "6a9f9917446c06a3d12fa58429cdbd87607a3c1bb96ff63e4e5f5738a439b484"
+          },
+          "core0.veccore1": {
+            "first_tick": 131595,
+            "last_tick": 139614,
+            "physical_last_tick": 139611,
+            "physical_end_tick": 139607,
+            "official_duration_us": "4.86",
+            "official_running_us": "4.85",
+            "instruction_events_without_sync": 21624,
+            "signature128": "8f01b3f2f2a68ee62395a8abcae6f2a9",
+            "rows_written": 11,
+            "shard_sha256": "60b3b80345d4ff1833d919c4d8a0972848574919a1b5d93800e53f4ca228d49c"
+          },
+          "core1.veccore0": {
+            "first_tick": 131598,
+            "last_tick": 139833,
+            "physical_last_tick": 139830,
+            "physical_end_tick": 139826,
+            "official_duration_us": "4.99",
+            "official_running_us": "4.99",
+            "instruction_events_without_sync": 21624,
+            "signature128": "94f84fb7943689267e8f0c023327097f",
+            "rows_written": 11,
+            "shard_sha256": "e05351ead33910af41826974e87ce73624f017449ab8c96b6b5c59031c792f36"
+          },
+          "core1.veccore1": {
+            "first_tick": 131598,
+            "last_tick": 139709,
+            "physical_last_tick": 139706,
+            "physical_end_tick": 139702,
+            "official_duration_us": "4.92",
+            "official_running_us": "4.91",
+            "instruction_events_without_sync": 21624,
+            "signature128": "13cae3e09764f422d544c0c1dd05705f",
+            "rows_written": 11,
+            "shard_sha256": "4ec4412117a957bc800cf30008bd3b8f6ba188bde1151b740ba78e7d8dfcb36a"
+          },
+          "core10.veccore0": {
+            "first_tick": 131602,
+            "last_tick": 139942,
+            "physical_last_tick": 139939,
+            "physical_end_tick": 139935,
+            "official_duration_us": "5.05",
+            "official_running_us": "5.05",
+            "instruction_events_without_sync": 21624,
+            "signature128": "677c13528bcfb471a03be652d463b706",
+            "rows_written": 11,
+            "shard_sha256": "98169b68347f7e03e7307dba19f9a9d04320c07ff87065a28a470c7b8f99ce28"
+          },
+          "core10.veccore1": {
+            "first_tick": 131602,
+            "last_tick": 139223,
+            "physical_last_tick": 139220,
+            "physical_end_tick": 139216,
+            "official_duration_us": "4.62",
+            "official_running_us": "4.61",
+            "instruction_events_without_sync": 21624,
+            "signature128": "3ca691658f7d9de714c548994a480043",
+            "rows_written": 11,
+            "shard_sha256": "b8937dba1d0457f0f993a5dc261006cc7aec03669e72e9ac2c7a252d7dfaca16"
+          },
+          "core11.veccore0": {
+            "first_tick": 131594,
+            "last_tick": 139480,
+            "physical_last_tick": 139477,
+            "physical_end_tick": 139473,
+            "official_duration_us": "4.78",
+            "official_running_us": "4.77",
+            "instruction_events_without_sync": 21624,
+            "signature128": "5ebe188dc15b795fda56c0814a8d0b5f",
+            "rows_written": 11,
+            "shard_sha256": "1798861d67a11d02708a1fd5c94453462ca4964d261d757b436aed4146db634b"
+          },
+          "core11.veccore1": {
+            "first_tick": 131594,
+            "last_tick": 139825,
+            "physical_last_tick": 139822,
+            "physical_end_tick": 139818,
+            "official_duration_us": "4.99",
+            "official_running_us": "4.98",
+            "instruction_events_without_sync": 21624,
+            "signature128": "52def9ee762c0837141ccad99b1cf4ad",
+            "rows_written": 11,
+            "shard_sha256": "487b305e2b114eb9b93ad35278c0d112a6523ac4d41fbb46d31dd3d493040c8a"
+          },
+          "core12.veccore0": {
+            "first_tick": 131595,
+            "last_tick": 139841,
+            "physical_last_tick": 139838,
+            "physical_end_tick": 139834,
+            "official_duration_us": "5",
+            "official_running_us": "4.99",
+            "instruction_events_without_sync": 21624,
+            "signature128": "c7a6550aa04c3eb27883b7af937ef5ce",
+            "rows_written": 11,
+            "shard_sha256": "956e444020d4d5361632363540f0ceee5acca2590ab2ef6ee8001e525fac90ac"
+          },
+          "core12.veccore1": {
+            "first_tick": 131595,
+            "last_tick": 139435,
+            "physical_last_tick": 139432,
+            "physical_end_tick": 139428,
+            "official_duration_us": "4.75",
+            "official_running_us": "4.75",
+            "instruction_events_without_sync": 21624,
+            "signature128": "0320d618f753f3ba13061ac39507f2ff",
+            "rows_written": 11,
+            "shard_sha256": "fa1e915d5604a9cb70e519a93afa11ecdbd5c5fe7ecdd5d1c23b3ebdaa079420"
+          },
+          "core16.veccore0": {
+            "first_tick": 131676,
+            "last_tick": 140097,
+            "physical_last_tick": 140094,
+            "physical_end_tick": 140090,
+            "official_duration_us": "5.1",
+            "official_running_us": "5.1",
+            "instruction_events_without_sync": 21624,
+            "signature128": "2ad3b9300c864e73b446b526772ff332",
+            "rows_written": 11,
+            "shard_sha256": "1e25e2a28e29e63a840749f6422d5f924c1c7de8253c67917adcf04167f2a821"
+          },
+          "core16.veccore1": {
+            "first_tick": 131676,
+            "last_tick": 139814,
+            "physical_last_tick": 139811,
+            "physical_end_tick": 139807,
+            "official_duration_us": "4.93",
+            "official_running_us": "4.93",
+            "instruction_events_without_sync": 21624,
+            "signature128": "f28ed248043606011802e72ba7a4c7df",
+            "rows_written": 11,
+            "shard_sha256": "0c69b5f5080608969af22f6d04acfeda7a8b15053c9034e8ebd7bb54573b9c8a"
+          },
+          "core17.veccore0": {
+            "first_tick": 131677,
+            "last_tick": 140095,
+            "physical_last_tick": 140092,
+            "physical_end_tick": 140088,
+            "official_duration_us": "5.1",
+            "official_running_us": "5.1",
+            "instruction_events_without_sync": 21624,
+            "signature128": "04c4cdcbde555b24edcd9ca62de8cb05",
+            "rows_written": 11,
+            "shard_sha256": "5c039136d2b439579d333b0882175f566a91bf7f684fbab5692267dd74c1aa30"
+          },
+          "core17.veccore1": {
+            "first_tick": 131677,
+            "last_tick": 139788,
+            "physical_last_tick": 139785,
+            "physical_end_tick": 139781,
+            "official_duration_us": "4.92",
+            "official_running_us": "4.91",
+            "instruction_events_without_sync": 21624,
+            "signature128": "0f10d128d24f408f0f01a436025de678",
+            "rows_written": 11,
+            "shard_sha256": "67b03beea3d56d8a1ff677be76aeffae0289058d36f3399f1d41a09290911c22"
+          },
+          "core18.veccore0": {
+            "first_tick": 131673,
+            "last_tick": 140015,
+            "physical_last_tick": 140012,
+            "physical_end_tick": 140008,
+            "official_duration_us": "5.06",
+            "official_running_us": "5.05",
+            "instruction_events_without_sync": 21624,
+            "signature128": "f07f9a63ab1eb190d006ebfca2309d42",
+            "rows_written": 11,
+            "shard_sha256": "3cf6b1c56c771eb45c239350c158b70e629f6defb47b8cc2504ec51381f24c1e"
+          },
+          "core18.veccore1": {
+            "first_tick": 131673,
+            "last_tick": 139671,
+            "physical_last_tick": 139668,
+            "physical_end_tick": 139664,
+            "official_duration_us": "4.85",
+            "official_running_us": "4.84",
+            "instruction_events_without_sync": 21624,
+            "signature128": "66ee4198e98003c93e3475cfa0422d1e",
+            "rows_written": 11,
+            "shard_sha256": "3e66d6948af1bb40c3e8bc069944a5682182973826e0c726e62c4cbcbf74aa3d"
+          },
+          "core19.veccore0": {
+            "first_tick": 131676,
+            "last_tick": 140004,
+            "physical_last_tick": 140001,
+            "physical_end_tick": 139997,
+            "official_duration_us": "5.05",
+            "official_running_us": "5.04",
+            "instruction_events_without_sync": 21624,
+            "signature128": "5b099980272ac5d60981df22975c2d84",
+            "rows_written": 11,
+            "shard_sha256": "2f88bfc1b00b0209ba8ca9017cb4a3c41cda1dfc2408a3d702a05d638c30c9d1"
+          },
+          "core19.veccore1": {
+            "first_tick": 131676,
+            "last_tick": 139706,
+            "physical_last_tick": 139703,
+            "physical_end_tick": 139699,
+            "official_duration_us": "4.87",
+            "official_running_us": "4.86",
+            "instruction_events_without_sync": 21624,
+            "signature128": "56ccb760e79c62723399d0a2d7b06ec5",
+            "rows_written": 11,
+            "shard_sha256": "bcaee272f21e95564514e761bd8ec4355974544546edd33b9f8fbf004667422d"
+          },
+          "core2.veccore0": {
+            "first_tick": 131594,
+            "last_tick": 139781,
+            "physical_last_tick": 139778,
+            "physical_end_tick": 139774,
+            "official_duration_us": "4.96",
+            "official_running_us": "4.96",
+            "instruction_events_without_sync": 21624,
+            "signature128": "8440b67e3b6b54ca02f4cd86920eda37",
+            "rows_written": 11,
+            "shard_sha256": "866cb4c9018cc90788238b7e7c5acb6c4f90c6f4b61033ee0e971c4653615b4a"
+          },
+          "core2.veccore1": {
+            "first_tick": 131594,
+            "last_tick": 139484,
+            "physical_last_tick": 139481,
+            "physical_end_tick": 139477,
+            "official_duration_us": "4.78",
+            "official_running_us": "4.78",
+            "instruction_events_without_sync": 21624,
+            "signature128": "170f3283fa0c29ef5ff94f648649d0a0",
+            "rows_written": 11,
+            "shard_sha256": "a32512c9af960f45a22b8cd1ed85c673b763c55ba018b084b647290c39dece8c"
+          },
+          "core20.veccore0": {
+            "first_tick": 131681,
+            "last_tick": 140031,
+            "physical_last_tick": 140028,
+            "physical_end_tick": 140024,
+            "official_duration_us": "5.06",
+            "official_running_us": "5.06",
+            "instruction_events_without_sync": 21624,
+            "signature128": "c16e6be0dff8e71b81fcfcb1817575f6",
+            "rows_written": 11,
+            "shard_sha256": "c168845d28830b12d8bd55e55e3ee6e7565a2f3db3b47c556cf9889c58cb4867"
+          },
+          "core20.veccore1": {
+            "first_tick": 131681,
+            "last_tick": 139780,
+            "physical_last_tick": 139777,
+            "physical_end_tick": 139773,
+            "official_duration_us": "4.91",
+            "official_running_us": "4.9",
+            "instruction_events_without_sync": 21624,
+            "signature128": "bec8bf7f855beb1c1a4946ad2bb37ef1",
+            "rows_written": 11,
+            "shard_sha256": "7445af1875b7a50196fc59107ddda7d7f3bee064c1ebdddd3afe37e88bf33957"
+          },
+          "core21.veccore0": {
+            "first_tick": 131676,
+            "last_tick": 139833,
+            "physical_last_tick": 139830,
+            "physical_end_tick": 139826,
+            "official_duration_us": "4.94",
+            "official_running_us": "4.94",
+            "instruction_events_without_sync": 21624,
+            "signature128": "eacb6b6d71948b8ded7d4f78c8a49ce9",
+            "rows_written": 11,
+            "shard_sha256": "dde238e1cd5c0f4d3bbd83e88fb99fdaa71dd66eb510536c75105f0273ac0708"
+          },
+          "core21.veccore1": {
+            "first_tick": 131676,
+            "last_tick": 139953,
+            "physical_last_tick": 139950,
+            "physical_end_tick": 139946,
+            "official_duration_us": "5.02",
+            "official_running_us": "5.01",
+            "instruction_events_without_sync": 21624,
+            "signature128": "b746d25baa5f5ca6f3e5111b60338c11",
+            "rows_written": 11,
+            "shard_sha256": "0070d6499d3dd43ce172e89a1066a063b0b5d4a1417228b3598cfd71e30db338"
+          },
+          "core22.veccore0": {
+            "first_tick": 131673,
+            "last_tick": 139922,
+            "physical_last_tick": 139919,
+            "physical_end_tick": 139915,
+            "official_duration_us": "5",
+            "official_running_us": "4.99",
+            "instruction_events_without_sync": 21624,
+            "signature128": "d662c3b63744d453e003205d6e71ef40",
+            "rows_written": 11,
+            "shard_sha256": "4354d8f8f24d0ef67919d43d0b886700c0f8c578cfac31f3d322c68b91053402"
+          },
+          "core22.veccore1": {
+            "first_tick": 131673,
+            "last_tick": 139229,
+            "physical_last_tick": 139226,
+            "physical_end_tick": 139222,
+            "official_duration_us": "4.58",
+            "official_running_us": "4.57",
+            "instruction_events_without_sync": 21624,
+            "signature128": "f964f5fa8291c1aac6694b34ea8182c1",
+            "rows_written": 11,
+            "shard_sha256": "bdacb6d2a22c104fefc21daeaf28a0e3f6c6c25ca6544bfc03be75740aadeeea"
+          },
+          "core23.veccore0": {
+            "first_tick": 131677,
+            "last_tick": 140169,
+            "physical_last_tick": 140166,
+            "physical_end_tick": 140162,
+            "official_duration_us": "5.15",
+            "official_running_us": "5.14",
+            "instruction_events_without_sync": 21624,
+            "signature128": "069401335c76e2e72c798f7dd766d443",
+            "rows_written": 11,
+            "shard_sha256": "4ddc74b6826085426c12c24f8b5a47834db86608e5e1a75e13c358653729d114"
+          },
+          "core23.veccore1": {
+            "first_tick": 131677,
+            "last_tick": 139867,
+            "physical_last_tick": 139864,
+            "physical_end_tick": 139860,
+            "official_duration_us": "4.96",
+            "official_running_us": "4.96",
+            "instruction_events_without_sync": 21624,
+            "signature128": "522b319b846ab5f8dee973a52bc0307c",
+            "rows_written": 11,
+            "shard_sha256": "df836c2c656895b5b88e70042e33bfa7a42fdc6082c4766ee0eb36996b742acf"
+          },
+          "core24.veccore0": {
+            "first_tick": 131676,
+            "last_tick": 139229,
+            "physical_last_tick": 139226,
+            "physical_end_tick": 139222,
+            "official_duration_us": "4.58",
+            "official_running_us": "4.57",
+            "instruction_events_without_sync": 21624,
+            "signature128": "127fabf6244d24474c2ece2fff29677f",
+            "rows_written": 11,
+            "shard_sha256": "f8ab858110d2ba917f96a84a97d5ca01b0b2b8bd918382e16b7865394ee288c8"
+          },
+          "core24.veccore1": {
+            "first_tick": 131676,
+            "last_tick": 139936,
+            "physical_last_tick": 139933,
+            "physical_end_tick": 139929,
+            "official_duration_us": "5.01",
+            "official_running_us": "5",
+            "instruction_events_without_sync": 21624,
+            "signature128": "157f60f5755472793209f4768d55feea",
+            "rows_written": 11,
+            "shard_sha256": "cf59b6c523e948860207bfa7b9f02f99c1e594ebe86b84445e7de9d6954d90da"
+          },
+          "core25.veccore0": {
+            "first_tick": 131676,
+            "last_tick": 140085,
+            "physical_last_tick": 140082,
+            "physical_end_tick": 140078,
+            "official_duration_us": "5.1",
+            "official_running_us": "5.09",
+            "instruction_events_without_sync": 21624,
+            "signature128": "b39a0a2846f319006c66631afd1bd7e4",
+            "rows_written": 11,
+            "shard_sha256": "db574beee4da639db840894da40567bb6f214c5130118f70cc43261b8688cbd0"
+          },
+          "core25.veccore1": {
+            "first_tick": 131676,
+            "last_tick": 139402,
+            "physical_last_tick": 139399,
+            "physical_end_tick": 139395,
+            "official_duration_us": "4.68",
+            "official_running_us": "4.68",
+            "instruction_events_without_sync": 21624,
+            "signature128": "1ba9c853f0085d6cef3128a9f6e2edd6",
+            "rows_written": 11,
+            "shard_sha256": "c6aedaf50aa9ace4c6541b93107cb07933838799eae31aad8c4db22a5c0fa155"
+          },
+          "core26.veccore0": {
+            "first_tick": 131681,
+            "last_tick": 139845,
+            "physical_last_tick": 139842,
+            "physical_end_tick": 139838,
+            "official_duration_us": "4.95",
+            "official_running_us": "4.94",
+            "instruction_events_without_sync": 21624,
+            "signature128": "6c91e69b650129399ae94d5d78dec283",
+            "rows_written": 11,
+            "shard_sha256": "b79f89728f128a442e605eefa7482c198c8f3e0d01c90ec96a21091bed5d19e1"
+          },
+          "core26.veccore1": {
+            "first_tick": 131681,
+            "last_tick": 139543,
+            "physical_last_tick": 139540,
+            "physical_end_tick": 139536,
+            "official_duration_us": "4.76",
+            "official_running_us": "4.76",
+            "instruction_events_without_sync": 21624,
+            "signature128": "46519316695878100eb266dd9a52291b",
+            "rows_written": 11,
+            "shard_sha256": "a042e7f678121a968319c27d3abfdb41f88a417c657685799d2bf4dfb554d0aa"
+          },
+          "core27.veccore0": {
+            "first_tick": 131673,
+            "last_tick": 139783,
+            "physical_last_tick": 139780,
+            "physical_end_tick": 139776,
+            "official_duration_us": "4.92",
+            "official_running_us": "4.91",
+            "instruction_events_without_sync": 21624,
+            "signature128": "3c56d40e9ae7c86b430f12418763e3dd",
+            "rows_written": 11,
+            "shard_sha256": "97689c8139cb61b077f8c6706bc0df4ca4e2a0f383b82f90fc0404f35044f5ce"
+          },
+          "core27.veccore1": {
+            "first_tick": 131673,
+            "last_tick": 139305,
+            "physical_last_tick": 139302,
+            "physical_end_tick": 139298,
+            "official_duration_us": "4.63",
+            "official_running_us": "4.62",
+            "instruction_events_without_sync": 21624,
+            "signature128": "70dad341898d6801fe236ea1a96a3405",
+            "rows_written": 11,
+            "shard_sha256": "d66452d8ca1743974c053e2177981097cce16c2d402d60c80bd5fedcdb27ae6b"
+          },
+          "core28.veccore0": {
+            "first_tick": 131676,
+            "last_tick": 139181,
+            "physical_last_tick": 139178,
+            "physical_end_tick": 139174,
+            "official_duration_us": "4.55",
+            "official_running_us": "4.54",
+            "instruction_events_without_sync": 21624,
+            "signature128": "e8afe8562d5ea7a6b5d0c5f28d5b8ec5",
+            "rows_written": 11,
+            "shard_sha256": "91b5f86f07cb5ef95e821099a37ccbeaedffaec79babd3d6cbef21d2c36bec55"
+          },
+          "core28.veccore1": {
+            "first_tick": 131676,
+            "last_tick": 134876,
+            "physical_last_tick": 134873,
+            "physical_end_tick": 134869,
+            "official_duration_us": "1.94",
+            "official_running_us": "1.93",
+            "instruction_events_without_sync": 4798,
+            "signature128": "3c6f82021632d02718e38a5705dd7015",
+            "rows_written": 2,
+            "shard_sha256": "4bb3c30af8c743df76406d5219a71a01eec093e2e3db79c7b1bd1730379748cb"
+          },
+          "core3.veccore0": {
+            "first_tick": 131595,
+            "last_tick": 139443,
+            "physical_last_tick": 139440,
+            "physical_end_tick": 139436,
+            "official_duration_us": "4.76",
+            "official_running_us": "4.75",
+            "instruction_events_without_sync": 21624,
+            "signature128": "2edf714bf8822473d71b278fa2bcddc9",
+            "rows_written": 11,
+            "shard_sha256": "047004c6e6f552e48dd133215ea9dc7157ca7e9d958a39a2de6448090394a9fe"
+          },
+          "core3.veccore1": {
+            "first_tick": 131595,
+            "last_tick": 139699,
+            "physical_last_tick": 139696,
+            "physical_end_tick": 139692,
+            "official_duration_us": "4.91",
+            "official_running_us": "4.91",
+            "instruction_events_without_sync": 21624,
+            "signature128": "efceea81d0733d0f1f99e7dd32a20103",
+            "rows_written": 11,
+            "shard_sha256": "4e2423ea60bc9f67ef66a7e79a484e7b63c6d628592de96c108a2d367432e4a3"
+          },
+          "core4.veccore0": {
+            "first_tick": 131602,
+            "last_tick": 139609,
+            "physical_last_tick": 139606,
+            "physical_end_tick": 139602,
+            "official_duration_us": "4.85",
+            "official_running_us": "4.85",
+            "instruction_events_without_sync": 21624,
+            "signature128": "dce4c49ddd04e1bb391e825eb25d9309",
+            "rows_written": 11,
+            "shard_sha256": "ec783627e9dc0cd1f393b546483e633184540f5676f5e373d29ceb6a89595f0e"
+          },
+          "core4.veccore1": {
+            "first_tick": 131602,
+            "last_tick": 139258,
+            "physical_last_tick": 139255,
+            "physical_end_tick": 139251,
+            "official_duration_us": "4.64",
+            "official_running_us": "4.64",
+            "instruction_events_without_sync": 21624,
+            "signature128": "c19da146212f4b36430aa7c980892aaf",
+            "rows_written": 11,
+            "shard_sha256": "0d3bd9212a71fc8940e3befa6f80969fb6bf4bdebd858cfb95f8791893b4e3d6"
+          },
+          "core5.veccore0": {
+            "first_tick": 131595,
+            "last_tick": 139771,
+            "physical_last_tick": 139768,
+            "physical_end_tick": 139764,
+            "official_duration_us": "4.96",
+            "official_running_us": "4.95",
+            "instruction_events_without_sync": 21624,
+            "signature128": "5eb6753636d93c9991ecf7181dd39d3b",
+            "rows_written": 11,
+            "shard_sha256": "e97f7382cac36d0e2c188d849630557428625347dc89d532b9fee6daa93ba2c5"
+          },
+          "core5.veccore1": {
+            "first_tick": 131595,
+            "last_tick": 139336,
+            "physical_last_tick": 139333,
+            "physical_end_tick": 139329,
+            "official_duration_us": "4.69",
+            "official_running_us": "4.69",
+            "instruction_events_without_sync": 21624,
+            "signature128": "a3af0955746575f19ddbf7e4ee986ad8",
+            "rows_written": 11,
+            "shard_sha256": "4daa556687bfe8982a82868bb827152a4ad36e762d59ee4fd90cbdadfc89ef78"
+          },
+          "core6.veccore0": {
+            "first_tick": 131594,
+            "last_tick": 139798,
+            "physical_last_tick": 139795,
+            "physical_end_tick": 139791,
+            "official_duration_us": "4.97",
+            "official_running_us": "4.97",
+            "instruction_events_without_sync": 21624,
+            "signature128": "16200c7e76893360f85450218bdbcf23",
+            "rows_written": 11,
+            "shard_sha256": "1f0e6767a0bed82bd20d7d14f62799df644a91b26186fa317d842695cfaeb464"
+          },
+          "core6.veccore1": {
+            "first_tick": 131594,
+            "last_tick": 139367,
+            "physical_last_tick": 139364,
+            "physical_end_tick": 139360,
+            "official_duration_us": "4.71",
+            "official_running_us": "4.71",
+            "instruction_events_without_sync": 21624,
+            "signature128": "06afcb6e38999046cb82e349010cbf08",
+            "rows_written": 11,
+            "shard_sha256": "6ea003205617f50cf232d99d83247c38d1b9fd45da39782f70de1f925b25d9d5"
+          },
+          "core7.veccore0": {
+            "first_tick": 131598,
+            "last_tick": 139578,
+            "physical_last_tick": 139575,
+            "physical_end_tick": 139571,
+            "official_duration_us": "4.84",
+            "official_running_us": "4.83",
+            "instruction_events_without_sync": 21624,
+            "signature128": "857b8c614991d5255bbeef698ec77973",
+            "rows_written": 11,
+            "shard_sha256": "7504e1e7c376d8837f02e8c6b7d802e68daa76893348a4b9de3dc4d580197cde"
+          },
+          "core7.veccore1": {
+            "first_tick": 131598,
+            "last_tick": 139911,
+            "physical_last_tick": 139908,
+            "physical_end_tick": 139904,
+            "official_duration_us": "5.04",
+            "official_running_us": "5.03",
+            "instruction_events_without_sync": 21624,
+            "signature128": "8b5f6b231255894059f4266e0d2184c2",
+            "rows_written": 11,
+            "shard_sha256": "dc438fd17340b75a7146c5922fcee2ef27fd4e588b72d183b6a8ba36803246f4"
+          },
+          "core8.veccore0": {
+            "first_tick": 131595,
+            "last_tick": 139907,
+            "physical_last_tick": 139904,
+            "physical_end_tick": 139900,
+            "official_duration_us": "5.04",
+            "official_running_us": "5.03",
+            "instruction_events_without_sync": 21624,
+            "signature128": "9d8e29a74ac41a441f0ec37f97b29879",
+            "rows_written": 11,
+            "shard_sha256": "27e7b0833fc1b958acbdb0c521e9f29c78b57f5301ef01d93b7fe5158e746784"
+          },
+          "core8.veccore1": {
+            "first_tick": 131595,
+            "last_tick": 139583,
+            "physical_last_tick": 139580,
+            "physical_end_tick": 139576,
+            "official_duration_us": "4.84",
+            "official_running_us": "4.84",
+            "instruction_events_without_sync": 21624,
+            "signature128": "ea559490ef8b78302e4fa8e70676259a",
+            "rows_written": 11,
+            "shard_sha256": "02d509987886d756707778bb4a0e8d83b1fe1561eb07e8e0696a45ba673c2aa5"
+          },
+          "core9.veccore0": {
+            "first_tick": 131595,
+            "last_tick": 139979,
+            "physical_last_tick": 139976,
+            "physical_end_tick": 139972,
+            "official_duration_us": "5.08",
+            "official_running_us": "5.08",
+            "instruction_events_without_sync": 21624,
+            "signature128": "6bde4e30aee3348539e4e3a2f42f4013",
+            "rows_written": 11,
+            "shard_sha256": "38c7d8fb8be712eccd701841f7424d7615452f417e754485bab024ea3a38454e"
+          },
+          "core9.veccore1": {
+            "first_tick": 131595,
+            "last_tick": 139598,
+            "physical_last_tick": 139595,
+            "physical_end_tick": 139591,
+            "official_duration_us": "4.85",
+            "official_running_us": "4.84",
+            "instruction_events_without_sync": 21624,
+            "signature128": "2b5aa78b153fefe23336f1bb52e72a31",
+            "rows_written": 11,
+            "shard_sha256": "3d066214f0480c390e840764616afa22073e3d1aeb7933e60a2787f765e688d7"
+          }
+        },
+        "ordinal": 1
+      },
+      "active_count_matches": true
+    }
+  ],
+  "original_qualification_sha256": "759d703f9e6a468773f0993d2fb25509144ae79aa54bfdf3aad1e0efb2199082",
+  "host_numeric_groups": 4,
+  "elf_text_sha256": "c801d87f4298a8b399bce6678bafac249504eb176705aea81e826085edfe6456",
+  "log_sha256": "f2cacafbb00256c07cfa8b20afe6f81852c3d1a61d625c163beebbfd15551071",
+  "inputs_sha256": "ff7a72b69250c0fb36d305c3501d2e6e6df728da0ac59b1dc0bfa3a0462f3953"
+}

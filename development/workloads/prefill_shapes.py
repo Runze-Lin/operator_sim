@@ -137,7 +137,8 @@ def contracts(s, histogram=None):
                 iterations=c["hc_sinkhorn_iters"], parameter_dtype="fp32", variant="hc_pre_v3/pre_mix" if flash else "hc_pre_v2")
             add(f"mhc.{stage}.post", all_layers, {"x": [1,t,h], "residual": [1,t,streams,h],
                 "post": [1,t,streams], "mix": [1,t,streams,streams], "out": [1,t,streams,h]},
-                evidence="_C_ascend.npu_hc_post binding unsqueezes the batch axis")
+                call=("mhc_post", [1,t,streams,h], {"implementation": "vllm_hc_post"}),
+                evidence="vLLM _C_ascend.npu_hc_post unsqueezes the batch axis and calls aclnnHcPost")
         add("input_layernorm", all_layers, {"x": [t, h], "weight": [h], "out": [t, h]},
             call=("rmsnorm", [t, h]), evidence="standalone BF16 equivalent")
         add("post_attention_layernorm", all_layers, {"x": [t, h], "weight": [h], "out": [t, h]},

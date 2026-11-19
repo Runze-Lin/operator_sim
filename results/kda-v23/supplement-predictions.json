@@ -1,0 +1,4408 @@
+{
+  "utc": "2026-11-19T14:36:42.789074+00:00",
+  "role": "frozen before any supplemental CA; 970DT projection only",
+  "model_freeze_sha256": "7e278842c78dca05192219b2e8a36512b9e3b4180d277dc2cd1200081b0b61f1",
+  "predictions": [
+    {
+      "shape": [
+        1,
+        16,
+        1,
+        1,
+        128,
+        128
+      ],
+      "chip": "Ascend950DT_9582",
+      "dtype": "bf16",
+      "stages": [
+        {
+          "family": "chunk_kda_fwd_prepare",
+          "active_aic": 1,
+          "launched_aiv": 2,
+          "aiv_mover": false,
+          "issued_mmad_ops": 655360,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "32x128x32:bf16": 2,
+            "32x16x128:bf16": 1
+          },
+          "dma_bytes": {
+            "L0C->OUT": 16384,
+            "L0C->UB": 2048,
+            "L1->L0A": 10240,
+            "L1->L0B": 20480,
+            "OUT->L1": 98304,
+            "OUT->UB": 33444,
+            "UB->OUT": 139264
+          },
+          "dma_descriptors": {
+            "L0C->OUT": 2,
+            "L0C->UB": 1,
+            "L1->L0A": 3,
+            "L1->L0B": 3,
+            "OUT->L1": 9,
+            "OUT->UB": 12,
+            "UB->OUT": 15
+          },
+          "estimated_rvec_subqueue_records": {
+            "RVECEX": 8738,
+            "RVECLD": 4996,
+            "RVECLP": 148,
+            "RVECST": 1800,
+            "RVECSU": 734
+          },
+          "first_payload_cycles": 9952,
+          "max_core_head_chunks": 1,
+          "device_us": 14.761955817651646,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "16": 1
+          },
+          "representative_tile_phase_cycles": {
+            "16": {
+              "V0 gate and prefix": 1864.1420771092442,
+              "V1 score packing": 2177.018679816274,
+              "C2 triangular bands": 2187.016050628906,
+              "V3 invert two 32-row blocks": 4433.016629030523,
+              "C4/C5 quadrant and V6 RHS": 2394.341142823607,
+              "C7 W and U": 1349.6925197166602
+            }
+          }
+        },
+        {
+          "family": "chunk_fwd_h",
+          "active_aic": 1,
+          "launched_aiv": 2,
+          "aiv_mover": false,
+          "issued_mmad_ops": 1048576,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "128x128x16:bf16": 1,
+            "16x128x128:bf16": 1
+          },
+          "dma_bytes": {
+            "L0C->UB": 73728,
+            "L1->L0A": 8192,
+            "L1->L0B": 36864,
+            "OUT->L1": 45056,
+            "OUT->UB": 135680,
+            "UB->OUT": 106496
+          },
+          "dma_descriptors": {
+            "L0C->UB": 2,
+            "L1->L0A": 2,
+            "L1->L0B": 2,
+            "OUT->L1": 4,
+            "OUT->UB": 4,
+            "UB->OUT": 4
+          },
+          "estimated_rvec_subqueue_records": {
+            "RVECEX": 2034,
+            "RVECLD": 837,
+            "RVECLP": 11,
+            "RVECST": 579,
+            "RVECSU": 6
+          },
+          "first_payload_cycles": 895,
+          "max_core_head_chunks": 1,
+          "device_us": 5.549507869557593,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "(16, True, True)": 1
+          },
+          "representative_tile_phase_cycles": {
+            "(16, True, True)": {
+              "FP32 initial state to BF16 H": 2594.7186134694352,
+              "S0 W times H": 1633.0503063474662,
+              "S1 corrected value": 943.3396851017371,
+              "S2 outer product": 1759.8110418327435,
+              "S3 update recurrent state": 1330.768338018649
+            }
+          }
+        },
+        {
+          "family": "chunk_kda_fwd_finalize",
+          "active_aic": 1,
+          "launched_aiv": 0,
+          "aiv_mover": false,
+          "issued_mmad_ops": 589824,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "16x128x128:bf16": 1,
+            "16x128x16:bf16": 1
+          },
+          "dma_bytes": {
+            "L0C->OUT": 8192,
+            "L1->L0A": 4608,
+            "L1->L0B": 36864,
+            "OUT->L1": 41472
+          },
+          "dma_descriptors": {
+            "L0C->OUT": 1,
+            "L1->L0A": 2,
+            "L1->L0B": 2,
+            "OUT->L1": 4
+          },
+          "estimated_rvec_subqueue_records": {},
+          "first_payload_cycles": 3121,
+          "max_core_head_chunks": 1,
+          "device_us": 3.06045759539631,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "16": 1
+          },
+          "representative_tile_phase_cycles": {
+            "16": {
+              "Q, H, Aqk and value": 1276.7519353165487,
+              "QH plus AqkV": 424.72154801444043,
+              "output": 227.28154907292196
+            }
+          }
+        }
+      ],
+      "serialized_device_us": 23.371921282605552,
+      "scope": "three main V2 kernels only, no auxiliary launches or inter-launch intervals",
+      "uncalibrated": [
+        "cross-head overlap",
+        "TF32 throughput",
+        "HBM spill and cache reuse",
+        "AIV input-mover finalization",
+        "970 physical mapping"
+      ]
+    },
+    {
+      "shape": [
+        1,
+        16,
+        1,
+        1,
+        128,
+        128
+      ],
+      "chip": "Ascend950PR_957b",
+      "dtype": "bf16",
+      "stages": [
+        {
+          "family": "chunk_kda_fwd_prepare",
+          "active_aic": 1,
+          "launched_aiv": 2,
+          "aiv_mover": false,
+          "issued_mmad_ops": 655360,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "32x128x32:bf16": 2,
+            "32x16x128:bf16": 1
+          },
+          "dma_bytes": {
+            "L0C->OUT": 16384,
+            "L0C->UB": 2048,
+            "L1->L0A": 10240,
+            "L1->L0B": 20480,
+            "OUT->L1": 98304,
+            "OUT->UB": 33444,
+            "UB->OUT": 139264
+          },
+          "dma_descriptors": {
+            "L0C->OUT": 2,
+            "L0C->UB": 1,
+            "L1->L0A": 3,
+            "L1->L0B": 3,
+            "OUT->L1": 9,
+            "OUT->UB": 12,
+            "UB->OUT": 15
+          },
+          "estimated_rvec_subqueue_records": {
+            "RVECEX": 8738,
+            "RVECLD": 4996,
+            "RVECLP": 148,
+            "RVECST": 1800,
+            "RVECSU": 734
+          },
+          "first_payload_cycles": 9952,
+          "max_core_head_chunks": 1,
+          "device_us": 14.79793243161739,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "16": 1
+          },
+          "representative_tile_phase_cycles": {
+            "16": {
+              "V0 gate and prefix": 1870.7996858048962,
+              "V1 score packing": 2185.429005903231,
+              "C2 triangular bands": 2187.016050628906,
+              "V3 invert two 32-row blocks": 4464.185107291392,
+              "C4/C5 quadrant and V6 RHS": 2407.466142823607,
+              "C7 W and U": 1349.6925197166602
+            }
+          }
+        },
+        {
+          "family": "chunk_fwd_h",
+          "active_aic": 1,
+          "launched_aiv": 2,
+          "aiv_mover": false,
+          "issued_mmad_ops": 1048576,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "128x128x16:bf16": 1,
+            "16x128x128:bf16": 1
+          },
+          "dma_bytes": {
+            "L0C->UB": 73728,
+            "L1->L0A": 8192,
+            "L1->L0B": 36864,
+            "OUT->L1": 45056,
+            "OUT->UB": 135680,
+            "UB->OUT": 106496
+          },
+          "dma_descriptors": {
+            "L0C->UB": 2,
+            "L1->L0A": 2,
+            "L1->L0B": 2,
+            "OUT->L1": 4,
+            "OUT->UB": 4,
+            "UB->OUT": 4
+          },
+          "estimated_rvec_subqueue_records": {
+            "RVECEX": 2034,
+            "RVECLD": 837,
+            "RVECLP": 11,
+            "RVECST": 579,
+            "RVECSU": 6
+          },
+          "first_payload_cycles": 895,
+          "max_core_head_chunks": 1,
+          "device_us": 5.557882375486448,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "(16, True, True)": 1
+          },
+          "representative_tile_phase_cycles": {
+            "(16, True, True)": {
+              "FP32 initial state to BF16 H": 2599.9631786868267,
+              "S0 W times H": 1633.0503063474662,
+              "S1 corrected value": 944.8885981452154,
+              "S2 outer product": 1759.8110418327435,
+              "S3 update recurrent state": 1337.792794540388
+            }
+          }
+        },
+        {
+          "family": "chunk_kda_fwd_finalize",
+          "active_aic": 1,
+          "launched_aiv": 0,
+          "aiv_mover": false,
+          "issued_mmad_ops": 589824,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "16x128x128:bf16": 1,
+            "16x128x16:bf16": 1
+          },
+          "dma_bytes": {
+            "L0C->OUT": 8192,
+            "L1->L0A": 4608,
+            "L1->L0B": 36864,
+            "OUT->L1": 41472
+          },
+          "dma_descriptors": {
+            "L0C->OUT": 1,
+            "L1->L0A": 2,
+            "L1->L0B": 2,
+            "OUT->L1": 4
+          },
+          "estimated_rvec_subqueue_records": {},
+          "first_payload_cycles": 3121,
+          "max_core_head_chunks": 1,
+          "device_us": 3.06045759539631,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "16": 1
+          },
+          "representative_tile_phase_cycles": {
+            "16": {
+              "Q, H, Aqk and value": 1276.7519353165487,
+              "QH plus AqkV": 424.72154801444043,
+              "output": 227.28154907292196
+            }
+          }
+        }
+      ],
+      "serialized_device_us": 23.41627240250015,
+      "scope": "three main V2 kernels only, no auxiliary launches or inter-launch intervals",
+      "uncalibrated": [
+        "cross-head overlap",
+        "TF32 throughput",
+        "HBM spill and cache reuse",
+        "AIV input-mover finalization",
+        "970 physical mapping"
+      ]
+    },
+    {
+      "shape": [
+        1,
+        16,
+        1,
+        1,
+        128,
+        128
+      ],
+      "chip": "Ascend970DT",
+      "dtype": "bf16",
+      "stages": [
+        {
+          "family": "chunk_kda_fwd_prepare",
+          "active_aic": 1,
+          "launched_aiv": 2,
+          "aiv_mover": false,
+          "issued_mmad_ops": 655360,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "32x128x32:bf16": 2,
+            "32x16x128:bf16": 1
+          },
+          "dma_bytes": {
+            "L0C->OUT": 16384,
+            "L0C->UB": 2048,
+            "L1->L0A": 10240,
+            "L1->L0B": 20480,
+            "OUT->L1": 98304,
+            "OUT->UB": 33444,
+            "UB->OUT": 139264
+          },
+          "dma_descriptors": {
+            "L0C->OUT": 2,
+            "L0C->UB": 1,
+            "L1->L0A": 3,
+            "L1->L0B": 3,
+            "OUT->L1": 9,
+            "OUT->UB": 12,
+            "UB->OUT": 15
+          },
+          "estimated_rvec_subqueue_records": {
+            "RVECEX": 8738,
+            "RVECLD": 4996,
+            "RVECLP": 148,
+            "RVECST": 1800,
+            "RVECSU": 734
+          },
+          "first_payload_cycles": 9952,
+          "max_core_head_chunks": 1,
+          "device_us": 13.530215871709807,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "16": 1
+          },
+          "representative_tile_phase_cycles": {
+            "16": {
+              "V0 gate and prefix": 1863.8375671660622,
+              "V1 score packing": 2176.634002969683,
+              "C2 triangular bands": 2186.991366636439,
+              "V3 invert two 32-row blocks": 4431.591025337341,
+              "C4/C5 quadrant and V6 RHS": 2393.7408232213343,
+              "C7 W and U": 1349.5937837467923
+            }
+          }
+        },
+        {
+          "family": "chunk_fwd_h",
+          "active_aic": 1,
+          "launched_aiv": 2,
+          "aiv_mover": false,
+          "issued_mmad_ops": 1048576,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "128x128x16:bf16": 1,
+            "16x128x128:bf16": 1
+          },
+          "dma_bytes": {
+            "L0C->UB": 73728,
+            "L1->L0A": 8192,
+            "L1->L0B": 36864,
+            "OUT->L1": 45056,
+            "OUT->UB": 135680,
+            "UB->OUT": 106496
+          },
+          "dma_descriptors": {
+            "L0C->UB": 2,
+            "L1->L0A": 2,
+            "L1->L0B": 2,
+            "OUT->L1": 4,
+            "OUT->UB": 4,
+            "UB->OUT": 4
+          },
+          "estimated_rvec_subqueue_records": {
+            "RVECEX": 2034,
+            "RVECLD": 837,
+            "RVECLP": 11,
+            "RVECST": 579,
+            "RVECSU": 6
+          },
+          "first_payload_cycles": 895,
+          "max_core_head_chunks": 1,
+          "device_us": 5.086642908503247,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "(16, True, True)": 1
+          },
+          "representative_tile_phase_cycles": {
+            "(16, True, True)": {
+              "FP32 initial state to BF16 H": 2594.4787342080717,
+              "S0 W times H": 1632.951570377598,
+              "S1 corrected value": 943.2688399312826,
+              "S2 outer product": 1759.8110418327435,
+              "S3 update recurrent state": 1330.447048956149
+            }
+          }
+        },
+        {
+          "family": "chunk_kda_fwd_finalize",
+          "active_aic": 1,
+          "launched_aiv": 0,
+          "aiv_mover": false,
+          "issued_mmad_ops": 589824,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "16x128x128:bf16": 1,
+            "16x128x16:bf16": 1
+          },
+          "dma_bytes": {
+            "L0C->OUT": 8192,
+            "L1->L0A": 4608,
+            "L1->L0B": 36864,
+            "OUT->L1": 41472
+          },
+          "dma_descriptors": {
+            "L0C->OUT": 1,
+            "L1->L0A": 2,
+            "L1->L0B": 2,
+            "OUT->L1": 4
+          },
+          "estimated_rvec_subqueue_records": {},
+          "first_payload_cycles": 3121,
+          "max_core_head_chunks": 1,
+          "device_us": 2.80535775246545,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "16": 1
+          },
+          "representative_tile_phase_cycles": {
+            "16": {
+              "Q, H, Aqk and value": 1276.7519353165487,
+              "QH plus AqkV": 424.6104700483388,
+              "output": 227.28154907292196
+            }
+          }
+        }
+      ],
+      "serialized_device_us": 21.422216532678505,
+      "scope": "three main V2 kernels only, no auxiliary launches or inter-launch intervals",
+      "uncalibrated": [
+        "cross-head overlap",
+        "TF32 throughput",
+        "HBM spill and cache reuse",
+        "AIV input-mover finalization",
+        "970 physical mapping"
+      ]
+    },
+    {
+      "shape": [
+        1,
+        17,
+        1,
+        1,
+        128,
+        128
+      ],
+      "chip": "Ascend950DT_9582",
+      "dtype": "bf16",
+      "stages": [
+        {
+          "family": "chunk_kda_fwd_prepare",
+          "active_aic": 1,
+          "launched_aiv": 2,
+          "aiv_mover": false,
+          "issued_mmad_ops": 917504,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "32x128x32:bf16": 2,
+            "32x16x128:bf16": 1,
+            "32x32x128:bf16": 1
+          },
+          "dma_bytes": {
+            "L0C->OUT": 17408,
+            "L0C->UB": 6144,
+            "L1->L0A": 18432,
+            "L1->L0B": 28672,
+            "OUT->L1": 98304,
+            "OUT->UB": 35496,
+            "UB->OUT": 141056
+          },
+          "dma_descriptors": {
+            "L0C->OUT": 2,
+            "L0C->UB": 2,
+            "L1->L0A": 5,
+            "L1->L0B": 4,
+            "OUT->L1": 9,
+            "OUT->UB": 12,
+            "UB->OUT": 15
+          },
+          "estimated_rvec_subqueue_records": {
+            "RVECEX": 9615,
+            "RVECLD": 5182,
+            "RVECLP": 148,
+            "RVECST": 1824,
+            "RVECSU": 741
+          },
+          "first_payload_cycles": 9952,
+          "max_core_head_chunks": 1,
+          "device_us": 14.99983412144822,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "17": 1
+          },
+          "representative_tile_phase_cycles": {
+            "17": {
+              "V0 gate and prefix": 1901.984807677316,
+              "V1 score packing": 2347.768679816274,
+              "C2 triangular bands": 2298.9536360783127,
+              "V3 invert two 32-row blocks": 4438.133827211699,
+              "C4/C5 quadrant and V6 RHS": 2454.7240371646008,
+              "C7 W and U": 1356.1613124413634
+            }
+          }
+        },
+        {
+          "family": "chunk_fwd_h",
+          "active_aic": 1,
+          "launched_aiv": 2,
+          "aiv_mover": false,
+          "issued_mmad_ops": 2097152,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "128x128x32:bf16": 1,
+            "32x128x128:bf16": 1
+          },
+          "dma_bytes": {
+            "L0C->UB": 74240,
+            "L1->L0A": 16384,
+            "L1->L0B": 40960,
+            "OUT->L1": 45824,
+            "OUT->UB": 135936,
+            "UB->OUT": 107008
+          },
+          "dma_descriptors": {
+            "L0C->UB": 2,
+            "L1->L0A": 2,
+            "L1->L0B": 2,
+            "OUT->L1": 4,
+            "OUT->UB": 4,
+            "UB->OUT": 4
+          },
+          "estimated_rvec_subqueue_records": {
+            "RVECEX": 2048,
+            "RVECLD": 841,
+            "RVECLP": 11,
+            "RVECST": 583,
+            "RVECSU": 6
+          },
+          "first_payload_cycles": 895,
+          "max_core_head_chunks": 1,
+          "device_us": 5.600967164321597,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "(17, True, True)": 1
+          },
+          "representative_tile_phase_cycles": {
+            "(17, True, True)": {
+              "FP32 initial state to BF16 H": 2594.7186134694352,
+              "S0 W times H": 1705.7940467499905,
+              "S1 corrected value": 955.5037810598172,
+              "S2 outer product": 1759.8110418327435,
+              "S3 update recurrent state": 1330.768338018649
+            }
+          }
+        },
+        {
+          "family": "chunk_kda_fwd_finalize",
+          "active_aic": 1,
+          "launched_aiv": 0,
+          "aiv_mover": false,
+          "issued_mmad_ops": 631040,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "17x128x128:bf16": 1,
+            "17x128x17:bf16": 1
+          },
+          "dma_bytes": {
+            "L0C->OUT": 8704,
+            "L1->L0A": 10240,
+            "L1->L0B": 40960,
+            "OUT->L1": 42050
+          },
+          "dma_descriptors": {
+            "L0C->OUT": 1,
+            "L1->L0A": 2,
+            "L1->L0B": 2,
+            "OUT->L1": 4
+          },
+          "estimated_rvec_subqueue_records": {},
+          "first_payload_cycles": 3121,
+          "max_core_head_chunks": 1,
+          "device_us": 3.123247383936882,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "17": 1
+          },
+          "representative_tile_phase_cycles": {
+            "17": {
+              "Q, H, Aqk and value": 1289.0111789350294,
+              "QH plus AqkV": 512.8310591255515,
+              "output": 230.51594543527352
+            }
+          }
+        }
+      ],
+      "serialized_device_us": 23.7240486697067,
+      "scope": "three main V2 kernels only, no auxiliary launches or inter-launch intervals",
+      "uncalibrated": [
+        "cross-head overlap",
+        "TF32 throughput",
+        "HBM spill and cache reuse",
+        "AIV input-mover finalization",
+        "970 physical mapping"
+      ]
+    },
+    {
+      "shape": [
+        1,
+        17,
+        1,
+        1,
+        128,
+        128
+      ],
+      "chip": "Ascend950PR_957b",
+      "dtype": "bf16",
+      "stages": [
+        {
+          "family": "chunk_kda_fwd_prepare",
+          "active_aic": 1,
+          "launched_aiv": 2,
+          "aiv_mover": false,
+          "issued_mmad_ops": 917504,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "32x128x32:bf16": 2,
+            "32x16x128:bf16": 1,
+            "32x32x128:bf16": 1
+          },
+          "dma_bytes": {
+            "L0C->OUT": 17408,
+            "L0C->UB": 6144,
+            "L1->L0A": 18432,
+            "L1->L0B": 28672,
+            "OUT->L1": 98304,
+            "OUT->UB": 35496,
+            "UB->OUT": 141056
+          },
+          "dma_descriptors": {
+            "L0C->OUT": 2,
+            "L0C->UB": 2,
+            "L1->L0A": 5,
+            "L1->L0B": 4,
+            "OUT->L1": 9,
+            "OUT->UB": 12,
+            "UB->OUT": 15
+          },
+          "estimated_rvec_subqueue_records": {
+            "RVECEX": 9615,
+            "RVECLD": 5182,
+            "RVECLP": 148,
+            "RVECST": 1824,
+            "RVECSU": 741
+          },
+          "first_payload_cycles": 9952,
+          "max_core_head_chunks": 1,
+          "device_us": 15.039421572041109,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "17": 1
+          },
+          "representative_tile_phase_cycles": {
+            "17": {
+              "V0 gate and prefix": 1909.0500250686202,
+              "V1 score packing": 2360.8189515554045,
+              "C2 triangular bands": 2298.9536360783127,
+              "V3 invert two 32-row blocks": 4469.397414168221,
+              "C4/C5 quadrant and V6 RHS": 2468.664254555905,
+              "C7 W and U": 1356.1613124413634
+            }
+          }
+        },
+        {
+          "family": "chunk_fwd_h",
+          "active_aic": 1,
+          "launched_aiv": 2,
+          "aiv_mover": false,
+          "issued_mmad_ops": 2097152,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "128x128x32:bf16": 1,
+            "32x128x128:bf16": 1
+          },
+          "dma_bytes": {
+            "L0C->UB": 74240,
+            "L1->L0A": 16384,
+            "L1->L0B": 40960,
+            "OUT->L1": 45824,
+            "OUT->UB": 135936,
+            "UB->OUT": 107008
+          },
+          "dma_descriptors": {
+            "L0C->UB": 2,
+            "L1->L0A": 2,
+            "L1->L0B": 2,
+            "OUT->L1": 4,
+            "OUT->UB": 4,
+            "UB->OUT": 4
+          },
+          "estimated_rvec_subqueue_records": {
+            "RVECEX": 2048,
+            "RVECLD": 841,
+            "RVECLP": 11,
+            "RVECST": 583,
+            "RVECSU": 6
+          },
+          "first_payload_cycles": 895,
+          "max_core_head_chunks": 1,
+          "device_us": 5.609399311884179,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "(17, True, True)": 1
+          },
+          "representative_tile_phase_cycles": {
+            "(17, True, True)": {
+              "FP32 initial state to BF16 H": 2599.9631786868267,
+              "S0 W times H": 1705.7940467499905,
+              "S1 corrected value": 957.1478027989476,
+              "S2 outer product": 1759.8110418327435,
+              "S3 update recurrent state": 1337.792794540388
+            }
+          }
+        },
+        {
+          "family": "chunk_kda_fwd_finalize",
+          "active_aic": 1,
+          "launched_aiv": 0,
+          "aiv_mover": false,
+          "issued_mmad_ops": 631040,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "17x128x128:bf16": 1,
+            "17x128x17:bf16": 1
+          },
+          "dma_bytes": {
+            "L0C->OUT": 8704,
+            "L1->L0A": 10240,
+            "L1->L0B": 40960,
+            "OUT->L1": 42050
+          },
+          "dma_descriptors": {
+            "L0C->OUT": 1,
+            "L1->L0A": 2,
+            "L1->L0B": 2,
+            "OUT->L1": 4
+          },
+          "estimated_rvec_subqueue_records": {},
+          "first_payload_cycles": 3121,
+          "max_core_head_chunks": 1,
+          "device_us": 3.123247383936882,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "17": 1
+          },
+          "representative_tile_phase_cycles": {
+            "17": {
+              "Q, H, Aqk and value": 1289.0111789350294,
+              "QH plus AqkV": 512.8310591255515,
+              "output": 230.51594543527352
+            }
+          }
+        }
+      ],
+      "serialized_device_us": 23.77206826786217,
+      "scope": "three main V2 kernels only, no auxiliary launches or inter-launch intervals",
+      "uncalibrated": [
+        "cross-head overlap",
+        "TF32 throughput",
+        "HBM spill and cache reuse",
+        "AIV input-mover finalization",
+        "970 physical mapping"
+      ]
+    },
+    {
+      "shape": [
+        1,
+        17,
+        1,
+        1,
+        128,
+        128
+      ],
+      "chip": "Ascend970DT",
+      "dtype": "bf16",
+      "stages": [
+        {
+          "family": "chunk_kda_fwd_prepare",
+          "active_aic": 1,
+          "launched_aiv": 2,
+          "aiv_mover": false,
+          "issued_mmad_ops": 917504,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "32x128x32:bf16": 2,
+            "32x16x128:bf16": 1,
+            "32x32x128:bf16": 1
+          },
+          "dma_bytes": {
+            "L0C->OUT": 17408,
+            "L0C->UB": 6144,
+            "L1->L0A": 18432,
+            "L1->L0B": 28672,
+            "OUT->L1": 98304,
+            "OUT->UB": 35496,
+            "UB->OUT": 141056
+          },
+          "dma_descriptors": {
+            "L0C->OUT": 2,
+            "L0C->UB": 2,
+            "L1->L0A": 5,
+            "L1->L0B": 4,
+            "OUT->L1": 9,
+            "OUT->UB": 12,
+            "UB->OUT": 15
+          },
+          "estimated_rvec_subqueue_records": {
+            "RVECEX": 9615,
+            "RVECLD": 5182,
+            "RVECLP": 148,
+            "RVECST": 1824,
+            "RVECSU": 741
+          },
+          "first_payload_cycles": 9952,
+          "max_core_head_chunks": 1,
+          "device_us": 13.748092165016867,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "17": 1
+          },
+          "representative_tile_phase_cycles": {
+            "17": {
+              "V0 gate and prefix": 1901.661654268225,
+              "V1 score packing": 2347.1717781827515,
+              "C2 triangular bands": 2298.8795841009114,
+              "V3 invert two 32-row blocks": 4436.703873376472,
+              "C4/C5 quadrant and V6 RHS": 2454.0864306305098,
+              "C7 W and U": 1356.0625764714953
+            }
+          }
+        },
+        {
+          "family": "chunk_fwd_h",
+          "active_aic": 1,
+          "launched_aiv": 2,
+          "aiv_mover": false,
+          "issued_mmad_ops": 2097152,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "128x128x32:bf16": 1,
+            "32x128x128:bf16": 1
+          },
+          "dma_bytes": {
+            "L0C->UB": 74240,
+            "L1->L0A": 16384,
+            "L1->L0B": 40960,
+            "OUT->L1": 45824,
+            "OUT->UB": 135936,
+            "UB->OUT": 107008
+          },
+          "dma_descriptors": {
+            "L0C->UB": 2,
+            "L1->L0A": 2,
+            "L1->L0B": 2,
+            "OUT->L1": 4,
+            "OUT->UB": 4,
+            "UB->OUT": 4
+          },
+          "estimated_rvec_subqueue_records": {
+            "RVECEX": 2048,
+            "RVECLD": 841,
+            "RVECLP": 11,
+            "RVECST": 583,
+            "RVECSU": 6
+          },
+          "first_payload_cycles": 895,
+          "max_core_head_chunks": 1,
+          "device_us": 5.133756658641408,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "(17, True, True)": 1
+          },
+          "representative_tile_phase_cycles": {
+            "(17, True, True)": {
+              "FP32 initial state to BF16 H": 2594.4787342080717,
+              "S0 W times H": 1705.5965748102542,
+              "S1 corrected value": 955.4285857473172,
+              "S2 outer product": 1759.8110418327435,
+              "S3 update recurrent state": 1330.447048956149
+            }
+          }
+        },
+        {
+          "family": "chunk_kda_fwd_finalize",
+          "active_aic": 1,
+          "launched_aiv": 0,
+          "aiv_mover": false,
+          "issued_mmad_ops": 631040,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "17x128x128:bf16": 1,
+            "17x128x17:bf16": 1
+          },
+          "dma_bytes": {
+            "L0C->OUT": 8704,
+            "L1->L0A": 10240,
+            "L1->L0B": 40960,
+            "OUT->L1": 42050
+          },
+          "dma_descriptors": {
+            "L0C->OUT": 1,
+            "L1->L0A": 2,
+            "L1->L0B": 2,
+            "OUT->L1": 4
+          },
+          "estimated_rvec_subqueue_records": {},
+          "first_payload_cycles": 3121,
+          "max_core_head_chunks": 1,
+          "device_us": 2.8628396353173247,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "17": 1
+          },
+          "representative_tile_phase_cycles": {
+            "17": {
+              "Q, H, Aqk and value": 1289.0111789350294,
+              "QH plus AqkV": 512.5842192008812,
+              "output": 230.51594543527352
+            }
+          }
+        }
+      ],
+      "serialized_device_us": 21.7446884589756,
+      "scope": "three main V2 kernels only, no auxiliary launches or inter-launch intervals",
+      "uncalibrated": [
+        "cross-head overlap",
+        "TF32 throughput",
+        "HBM spill and cache reuse",
+        "AIV input-mover finalization",
+        "970 physical mapping"
+      ]
+    },
+    {
+      "shape": [
+        1,
+        31,
+        2,
+        2,
+        128,
+        128
+      ],
+      "chip": "Ascend950DT_9582",
+      "dtype": "bf16",
+      "stages": [
+        {
+          "family": "chunk_kda_fwd_prepare",
+          "active_aic": 2,
+          "launched_aiv": 4,
+          "aiv_mover": false,
+          "issued_mmad_ops": 1835008,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "32x128x32:bf16": 4,
+            "32x16x128:bf16": 2,
+            "32x32x128:bf16": 2
+          },
+          "dma_bytes": {
+            "L0C->OUT": 63488,
+            "L0C->UB": 12288,
+            "L1->L0A": 36864,
+            "L1->L0B": 57344,
+            "OUT->L1": 196608,
+            "OUT->UB": 128448,
+            "UB->OUT": 332288
+          },
+          "dma_descriptors": {
+            "L0C->OUT": 4,
+            "L0C->UB": 4,
+            "L1->L0A": 10,
+            "L1->L0B": 8,
+            "OUT->L1": 18,
+            "OUT->UB": 24,
+            "UB->OUT": 30
+          },
+          "estimated_rvec_subqueue_records": {
+            "RVECEX": 26788,
+            "RVECLD": 11744,
+            "RVECLP": 296,
+            "RVECST": 4328,
+            "RVECSU": 1686
+          },
+          "first_payload_cycles": 9952,
+          "max_core_head_chunks": 1,
+          "device_us": 16.09262964957502,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "31": 1
+          },
+          "representative_tile_phase_cycles": {
+            "31": {
+              "V0 gate and prefix": 2431.7830356303193,
+              "V1 score packing": 2613.518679816274,
+              "C2 triangular bands": 2298.9536360783127,
+              "V3 invert two 32-row blocks": 4509.77460174816,
+              "C4/C5 quadrant and V6 RHS": 3300.0845579385127,
+              "C7 W and U": 1446.7244105872073
+            }
+          }
+        },
+        {
+          "family": "chunk_fwd_h",
+          "active_aic": 2,
+          "launched_aiv": 4,
+          "aiv_mover": false,
+          "issued_mmad_ops": 4194304,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "128x128x32:bf16": 2,
+            "32x128x128:bf16": 2
+          },
+          "dma_bytes": {
+            "L0C->UB": 162816,
+            "L1->L0A": 32768,
+            "L1->L0B": 81920,
+            "OUT->L1": 113152,
+            "OUT->UB": 279040,
+            "UB->OUT": 228352
+          },
+          "dma_descriptors": {
+            "L0C->UB": 4,
+            "L1->L0A": 4,
+            "L1->L0B": 4,
+            "OUT->L1": 8,
+            "OUT->UB": 8,
+            "UB->OUT": 8
+          },
+          "estimated_rvec_subqueue_records": {
+            "RVECEX": 4488,
+            "RVECLD": 1794,
+            "RVECLP": 22,
+            "RVECST": 1278,
+            "RVECSU": 12
+          },
+          "first_payload_cycles": 895,
+          "max_core_head_chunks": 1,
+          "device_us": 5.777691216943561,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "(31, True, True)": 1
+          },
+          "representative_tile_phase_cycles": {
+            "(31, True, True)": {
+              "FP32 initial state to BF16 H": 2594.7186134694352,
+              "S0 W times H": 1827.0913901631106,
+              "S1 corrected value": 1125.8011244729373,
+              "S2 outer product": 1759.8110418327435,
+              "S3 update recurrent state": 1330.768338018649
+            }
+          }
+        },
+        {
+          "family": "chunk_kda_fwd_finalize",
+          "active_aic": 2,
+          "launched_aiv": 0,
+          "aiv_mover": false,
+          "issued_mmad_ops": 2523648,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "31x128x128:bf16": 2,
+            "31x128x31:bf16": 2
+          },
+          "dma_bytes": {
+            "L0C->OUT": 31744,
+            "L1->L0A": 20480,
+            "L1->L0B": 81920,
+            "OUT->L1": 101124
+          },
+          "dma_descriptors": {
+            "L0C->OUT": 2,
+            "L1->L0A": 4,
+            "L1->L0B": 4,
+            "OUT->L1": 8
+          },
+          "estimated_rvec_subqueue_records": {},
+          "first_payload_cycles": 3121,
+          "max_core_head_chunks": 1,
+          "device_us": 3.260107420682876,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "31": 1
+          },
+          "representative_tile_phase_cycles": {
+            "31": {
+              "Q, H, Aqk and value": 1469.5486904929994,
+              "QH plus AqkV": 512.8310591255515,
+              "output": 275.7974945081955
+            }
+          }
+        }
+      ],
+      "serialized_device_us": 25.130428287201457,
+      "scope": "three main V2 kernels only, no auxiliary launches or inter-launch intervals",
+      "uncalibrated": [
+        "cross-head overlap",
+        "TF32 throughput",
+        "HBM spill and cache reuse",
+        "AIV input-mover finalization",
+        "970 physical mapping"
+      ]
+    },
+    {
+      "shape": [
+        1,
+        31,
+        2,
+        2,
+        128,
+        128
+      ],
+      "chip": "Ascend950PR_957b",
+      "dtype": "bf16",
+      "stages": [
+        {
+          "family": "chunk_kda_fwd_prepare",
+          "active_aic": 2,
+          "launched_aiv": 4,
+          "aiv_mover": false,
+          "issued_mmad_ops": 1835008,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "32x128x32:bf16": 4,
+            "32x16x128:bf16": 2,
+            "32x32x128:bf16": 2
+          },
+          "dma_bytes": {
+            "L0C->OUT": 63488,
+            "L0C->UB": 12288,
+            "L1->L0A": 36864,
+            "L1->L0B": 57344,
+            "OUT->L1": 196608,
+            "OUT->UB": 128448,
+            "UB->OUT": 332288
+          },
+          "dma_descriptors": {
+            "L0C->OUT": 4,
+            "L0C->UB": 4,
+            "L1->L0A": 10,
+            "L1->L0B": 8,
+            "OUT->L1": 18,
+            "OUT->UB": 24,
+            "UB->OUT": 30
+          },
+          "estimated_rvec_subqueue_records": {
+            "RVECEX": 26788,
+            "RVECLD": 11744,
+            "RVECLP": 296,
+            "RVECST": 4328,
+            "RVECSU": 1686
+          },
+          "first_payload_cycles": 9952,
+          "max_core_head_chunks": 1,
+          "device_us": 16.147776224015075,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "31": 1
+          },
+          "representative_tile_phase_cycles": {
+            "31": {
+              "V0 gate and prefix": 2444.5547747607543,
+              "V1 score packing": 2633.790418946709,
+              "C2 triangular bands": 2298.9536360783127,
+              "V3 invert two 32-row blocks": 4542.369710443812,
+              "C4/C5 quadrant and V6 RHS": 3325.4378188080777,
+              "C7 W and U": 1446.7244105872073
+            }
+          }
+        },
+        {
+          "family": "chunk_fwd_h",
+          "active_aic": 2,
+          "launched_aiv": 4,
+          "aiv_mover": false,
+          "issued_mmad_ops": 4194304,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "128x128x32:bf16": 2,
+            "32x128x128:bf16": 2
+          },
+          "dma_bytes": {
+            "L0C->UB": 162816,
+            "L1->L0A": 32768,
+            "L1->L0B": 81920,
+            "OUT->L1": 113152,
+            "OUT->UB": 279040,
+            "UB->OUT": 228352
+          },
+          "dma_descriptors": {
+            "L0C->UB": 4,
+            "L1->L0A": 4,
+            "L1->L0B": 4,
+            "OUT->L1": 8,
+            "OUT->UB": 8,
+            "UB->OUT": 8
+          },
+          "estimated_rvec_subqueue_records": {
+            "RVECEX": 4488,
+            "RVECLD": 1794,
+            "RVECLP": 22,
+            "RVECST": 1278,
+            "RVECSU": 12
+          },
+          "first_payload_cycles": 895,
+          "max_core_head_chunks": 1,
+          "device_us": 5.786930347378344,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "(31, True, True)": 1
+          },
+          "representative_tile_phase_cycles": {
+            "(31, True, True)": {
+              "FP32 initial state to BF16 H": 2599.9631786868267,
+              "S0 W times H": 1827.0913901631106,
+              "S1 corrected value": 1128.776667951198,
+              "S2 outer product": 1759.8110418327435,
+              "S3 update recurrent state": 1337.792794540388
+            }
+          }
+        },
+        {
+          "family": "chunk_kda_fwd_finalize",
+          "active_aic": 2,
+          "launched_aiv": 0,
+          "aiv_mover": false,
+          "issued_mmad_ops": 2523648,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "31x128x128:bf16": 2,
+            "31x128x31:bf16": 2
+          },
+          "dma_bytes": {
+            "L0C->OUT": 31744,
+            "L1->L0A": 20480,
+            "L1->L0B": 81920,
+            "OUT->L1": 101124
+          },
+          "dma_descriptors": {
+            "L0C->OUT": 2,
+            "L1->L0A": 4,
+            "L1->L0B": 4,
+            "OUT->L1": 8
+          },
+          "estimated_rvec_subqueue_records": {},
+          "first_payload_cycles": 3121,
+          "max_core_head_chunks": 1,
+          "device_us": 3.260107420682876,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "31": 1
+          },
+          "representative_tile_phase_cycles": {
+            "31": {
+              "Q, H, Aqk and value": 1469.5486904929994,
+              "QH plus AqkV": 512.8310591255515,
+              "output": 275.7974945081955
+            }
+          }
+        }
+      ],
+      "serialized_device_us": 25.194813992076295,
+      "scope": "three main V2 kernels only, no auxiliary launches or inter-launch intervals",
+      "uncalibrated": [
+        "cross-head overlap",
+        "TF32 throughput",
+        "HBM spill and cache reuse",
+        "AIV input-mover finalization",
+        "970 physical mapping"
+      ]
+    },
+    {
+      "shape": [
+        1,
+        31,
+        2,
+        2,
+        128,
+        128
+      ],
+      "chip": "Ascend970DT",
+      "dtype": "bf16",
+      "stages": [
+        {
+          "family": "chunk_kda_fwd_prepare",
+          "active_aic": 2,
+          "launched_aiv": 4,
+          "aiv_mover": false,
+          "issued_mmad_ops": 1835008,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "32x128x32:bf16": 4,
+            "32x16x128:bf16": 2,
+            "32x32x128:bf16": 2
+          },
+          "dma_bytes": {
+            "L0C->OUT": 63488,
+            "L0C->UB": 12288,
+            "L1->L0A": 36864,
+            "L1->L0B": 57344,
+            "OUT->L1": 196608,
+            "OUT->UB": 128448,
+            "UB->OUT": 332288
+          },
+          "dma_descriptors": {
+            "L0C->OUT": 4,
+            "L0C->UB": 4,
+            "L1->L0A": 10,
+            "L1->L0B": 8,
+            "OUT->L1": 18,
+            "OUT->UB": 24,
+            "UB->OUT": 30
+          },
+          "estimated_rvec_subqueue_records": {
+            "RVECEX": 26788,
+            "RVECLD": 11744,
+            "RVECLP": 296,
+            "RVECST": 4328,
+            "RVECSU": 1686
+          },
+          "first_payload_cycles": 9952,
+          "max_core_head_chunks": 1,
+          "device_us": 14.74916905045097,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "31": 1
+          },
+          "representative_tile_phase_cycles": {
+            "31": {
+              "V0 gate and prefix": 2431.1988736985013,
+              "V1 score packing": 2612.591478111729,
+              "C2 triangular bands": 2298.8795841009114,
+              "V3 invert two 32-row blocks": 4508.283745924296,
+              "C4/C5 quadrant and V6 RHS": 3298.9249343589668,
+              "C7 W and U": 1446.6256746173392
+            }
+          }
+        },
+        {
+          "family": "chunk_fwd_h",
+          "active_aic": 2,
+          "launched_aiv": 4,
+          "aiv_mover": false,
+          "issued_mmad_ops": 4194304,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "128x128x32:bf16": 2,
+            "32x128x128:bf16": 2
+          },
+          "dma_bytes": {
+            "L0C->UB": 162816,
+            "L1->L0A": 32768,
+            "L1->L0B": 81920,
+            "OUT->L1": 113152,
+            "OUT->UB": 279040,
+            "UB->OUT": 228352
+          },
+          "dma_descriptors": {
+            "L0C->UB": 4,
+            "L1->L0A": 4,
+            "L1->L0B": 4,
+            "OUT->L1": 8,
+            "OUT->UB": 8,
+            "UB->OUT": 8
+          },
+          "estimated_rvec_subqueue_records": {
+            "RVECEX": 4488,
+            "RVECLD": 1794,
+            "RVECLP": 22,
+            "RVECST": 1278,
+            "RVECSU": 12
+          },
+          "first_payload_cycles": 895,
+          "max_core_head_chunks": 1,
+          "device_us": 5.295719872440077,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "(31, True, True)": 1
+          },
+          "representative_tile_phase_cycles": {
+            "(31, True, True)": {
+              "FP32 initial state to BF16 H": 2594.4787342080717,
+              "S0 W times H": 1826.8939182233742,
+              "S1 corrected value": 1125.6650271718008,
+              "S2 outer product": 1759.8110418327435,
+              "S3 update recurrent state": 1330.447048956149
+            }
+          }
+        },
+        {
+          "family": "chunk_kda_fwd_finalize",
+          "active_aic": 2,
+          "launched_aiv": 0,
+          "aiv_mover": false,
+          "issued_mmad_ops": 2523648,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "31x128x128:bf16": 2,
+            "31x128x31:bf16": 2
+          },
+          "dma_bytes": {
+            "L0C->OUT": 31744,
+            "L1->L0A": 20480,
+            "L1->L0B": 81920,
+            "OUT->L1": 101124
+          },
+          "dma_descriptors": {
+            "L0C->OUT": 2,
+            "L1->L0A": 4,
+            "L1->L0B": 4,
+            "OUT->L1": 8
+          },
+          "estimated_rvec_subqueue_records": {},
+          "first_payload_cycles": 3121,
+          "max_core_head_chunks": 1,
+          "device_us": 2.9882946690011534,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "31": 1
+          },
+          "representative_tile_phase_cycles": {
+            "31": {
+              "Q, H, Aqk and value": 1469.5486904929994,
+              "QH plus AqkV": 512.5842192008812,
+              "output": 275.7974945081955
+            }
+          }
+        }
+      ],
+      "serialized_device_us": 23.0331835918922,
+      "scope": "three main V2 kernels only, no auxiliary launches or inter-launch intervals",
+      "uncalibrated": [
+        "cross-head overlap",
+        "TF32 throughput",
+        "HBM spill and cache reuse",
+        "AIV input-mover finalization",
+        "970 physical mapping"
+      ]
+    },
+    {
+      "shape": [
+        1,
+        32,
+        1,
+        1,
+        128,
+        128
+      ],
+      "chip": "Ascend950DT_9582",
+      "dtype": "bf16",
+      "stages": [
+        {
+          "family": "chunk_kda_fwd_prepare",
+          "active_aic": 1,
+          "launched_aiv": 2,
+          "aiv_mover": false,
+          "issued_mmad_ops": 917504,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "32x128x32:bf16": 2,
+            "32x16x128:bf16": 1,
+            "32x32x128:bf16": 1
+          },
+          "dma_bytes": {
+            "L0C->OUT": 32768,
+            "L0C->UB": 6144,
+            "L1->L0A": 18432,
+            "L1->L0B": 28672,
+            "OUT->L1": 98304,
+            "OUT->UB": 66276,
+            "UB->OUT": 167936
+          },
+          "dma_descriptors": {
+            "L0C->OUT": 2,
+            "L0C->UB": 2,
+            "L1->L0A": 5,
+            "L1->L0B": 4,
+            "OUT->L1": 9,
+            "OUT->UB": 12,
+            "UB->OUT": 15
+          },
+          "estimated_rvec_subqueue_records": {
+            "RVECEX": 13664,
+            "RVECLD": 5921,
+            "RVECLP": 148,
+            "RVECST": 2188,
+            "RVECSU": 850
+          },
+          "first_payload_cycles": 9952,
+          "max_core_head_chunks": 1,
+          "device_us": 16.170697295523475,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "32": 1
+          },
+          "representative_tile_phase_cycles": {
+            "32": {
+              "V0 gate and prefix": 2469.625766198391,
+              "V1 score packing": 2632.518679816274,
+              "C2 triangular bands": 2298.9536360783127,
+              "V3 invert two 32-row blocks": 4514.891799929336,
+              "C4/C5 quadrant and V6 RHS": 3360.4674522795062,
+              "C7 W and U": 1453.1932033119106
+            }
+          }
+        },
+        {
+          "family": "chunk_fwd_h",
+          "active_aic": 1,
+          "launched_aiv": 2,
+          "aiv_mover": false,
+          "issued_mmad_ops": 2097152,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "128x128x32:bf16": 1,
+            "32x128x128:bf16": 1
+          },
+          "dma_bytes": {
+            "L0C->UB": 81920,
+            "L1->L0A": 16384,
+            "L1->L0B": 40960,
+            "OUT->L1": 57344,
+            "OUT->UB": 139776,
+            "UB->OUT": 114688
+          },
+          "dma_descriptors": {
+            "L0C->UB": 2,
+            "L1->L0A": 2,
+            "L1->L0B": 2,
+            "OUT->L1": 4,
+            "OUT->UB": 4,
+            "UB->OUT": 4
+          },
+          "estimated_rvec_subqueue_records": {
+            "RVECEX": 2258,
+            "RVECLD": 901,
+            "RVECLP": 11,
+            "RVECST": 643,
+            "RVECSU": 6
+          },
+          "first_payload_cycles": 895,
+          "max_core_head_chunks": 1,
+          "device_us": 5.790314363559415,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "(32, True, True)": 1
+          },
+          "representative_tile_phase_cycles": {
+            "(32, True, True)": {
+              "FP32 initial state to BF16 H": 2594.7186134694352,
+              "S0 W times H": 1835.7554861211906,
+              "S1 corrected value": 1137.965220431017,
+              "S2 outer product": 1759.8110418327435,
+              "S3 update recurrent state": 1330.768338018649
+            }
+          }
+        },
+        {
+          "family": "chunk_kda_fwd_finalize",
+          "active_aic": 1,
+          "launched_aiv": 0,
+          "aiv_mover": false,
+          "issued_mmad_ops": 1310720,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "32x128x128:bf16": 1,
+            "32x128x32:bf16": 1
+          },
+          "dma_bytes": {
+            "L0C->OUT": 16384,
+            "L1->L0A": 10240,
+            "L1->L0B": 40960,
+            "OUT->L1": 51200
+          },
+          "dma_descriptors": {
+            "L0C->OUT": 1,
+            "L1->L0A": 2,
+            "L1->L0B": 2,
+            "OUT->L1": 4
+          },
+          "estimated_rvec_subqueue_records": {},
+          "first_payload_cycles": 3121,
+          "max_core_head_chunks": 1,
+          "device_us": 3.270268769666865,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "32": 1
+          },
+          "representative_tile_phase_cycles": {
+            "32": {
+              "Q, H, Aqk and value": 1483.0805199542292,
+              "QH plus AqkV": 512.8310591255515,
+              "output": 279.03189087054704
+            }
+          }
+        }
+      ],
+      "serialized_device_us": 25.231280428749756,
+      "scope": "three main V2 kernels only, no auxiliary launches or inter-launch intervals",
+      "uncalibrated": [
+        "cross-head overlap",
+        "TF32 throughput",
+        "HBM spill and cache reuse",
+        "AIV input-mover finalization",
+        "970 physical mapping"
+      ]
+    },
+    {
+      "shape": [
+        1,
+        32,
+        1,
+        1,
+        128,
+        128
+      ],
+      "chip": "Ascend950PR_957b",
+      "dtype": "bf16",
+      "stages": [
+        {
+          "family": "chunk_kda_fwd_prepare",
+          "active_aic": 1,
+          "launched_aiv": 2,
+          "aiv_mover": false,
+          "issued_mmad_ops": 917504,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "32x128x32:bf16": 2,
+            "32x16x128:bf16": 1,
+            "32x32x128:bf16": 1
+          },
+          "dma_bytes": {
+            "L0C->OUT": 32768,
+            "L0C->UB": 6144,
+            "L1->L0A": 18432,
+            "L1->L0B": 28672,
+            "OUT->L1": 98304,
+            "OUT->UB": 66276,
+            "UB->OUT": 167936
+          },
+          "dma_descriptors": {
+            "L0C->OUT": 2,
+            "L0C->UB": 2,
+            "L1->L0A": 5,
+            "L1->L0B": 4,
+            "OUT->L1": 9,
+            "OUT->UB": 12,
+            "UB->OUT": 15
+          },
+          "estimated_rvec_subqueue_records": {
+            "RVECEX": 13664,
+            "RVECLD": 5921,
+            "RVECLP": 148,
+            "RVECST": 2188,
+            "RVECSU": 850
+          },
+          "first_payload_cycles": 9952,
+          "max_core_head_chunks": 1,
+          "device_us": 16.226955530042577,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "32": 1
+          },
+          "representative_tile_phase_cycles": {
+            "32": {
+              "V0 gate and prefix": 2482.805114024478,
+              "V1 score packing": 2653.306723294535,
+              "C2 triangular bands": 2298.9536360783127,
+              "V3 invert two 32-row blocks": 4547.58201732064,
+              "C4/C5 quadrant and V6 RHS": 3386.6359305403757,
+              "C7 W and U": 1453.1932033119106
+            }
+          }
+        },
+        {
+          "family": "chunk_fwd_h",
+          "active_aic": 1,
+          "launched_aiv": 2,
+          "aiv_mover": false,
+          "issued_mmad_ops": 2097152,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "128x128x32:bf16": 1,
+            "32x128x128:bf16": 1
+          },
+          "dma_bytes": {
+            "L0C->UB": 81920,
+            "L1->L0A": 16384,
+            "L1->L0B": 40960,
+            "OUT->L1": 57344,
+            "OUT->UB": 139776,
+            "UB->OUT": 114688
+          },
+          "dma_descriptors": {
+            "L0C->UB": 2,
+            "L1->L0A": 2,
+            "L1->L0B": 2,
+            "OUT->L1": 4,
+            "OUT->UB": 4,
+            "UB->OUT": 4
+          },
+          "estimated_rvec_subqueue_records": {
+            "RVECEX": 2258,
+            "RVECLD": 901,
+            "RVECLP": 11,
+            "RVECST": 643,
+            "RVECSU": 6
+          },
+          "first_payload_cycles": 895,
+          "max_core_head_chunks": 1,
+          "device_us": 5.799611135627926,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "(32, True, True)": 1
+          },
+          "representative_tile_phase_cycles": {
+            "(32, True, True)": {
+              "FP32 initial state to BF16 H": 2599.9631786868267,
+              "S0 W times H": 1835.7554861211906,
+              "S1 corrected value": 1141.03587260493,
+              "S2 outer product": 1759.8110418327435,
+              "S3 update recurrent state": 1337.792794540388
+            }
+          }
+        },
+        {
+          "family": "chunk_kda_fwd_finalize",
+          "active_aic": 1,
+          "launched_aiv": 0,
+          "aiv_mover": false,
+          "issued_mmad_ops": 1310720,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "32x128x128:bf16": 1,
+            "32x128x32:bf16": 1
+          },
+          "dma_bytes": {
+            "L0C->OUT": 16384,
+            "L1->L0A": 10240,
+            "L1->L0B": 40960,
+            "OUT->L1": 51200
+          },
+          "dma_descriptors": {
+            "L0C->OUT": 1,
+            "L1->L0A": 2,
+            "L1->L0B": 2,
+            "OUT->L1": 4
+          },
+          "estimated_rvec_subqueue_records": {},
+          "first_payload_cycles": 3121,
+          "max_core_head_chunks": 1,
+          "device_us": 3.270268769666865,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "32": 1
+          },
+          "representative_tile_phase_cycles": {
+            "32": {
+              "Q, H, Aqk and value": 1483.0805199542292,
+              "QH plus AqkV": 512.8310591255515,
+              "output": 279.03189087054704
+            }
+          }
+        }
+      ],
+      "serialized_device_us": 25.29683543533737,
+      "scope": "three main V2 kernels only, no auxiliary launches or inter-launch intervals",
+      "uncalibrated": [
+        "cross-head overlap",
+        "TF32 throughput",
+        "HBM spill and cache reuse",
+        "AIV input-mover finalization",
+        "970 physical mapping"
+      ]
+    },
+    {
+      "shape": [
+        1,
+        32,
+        1,
+        1,
+        128,
+        128
+      ],
+      "chip": "Ascend970DT",
+      "dtype": "bf16",
+      "stages": [
+        {
+          "family": "chunk_kda_fwd_prepare",
+          "active_aic": 1,
+          "launched_aiv": 2,
+          "aiv_mover": false,
+          "issued_mmad_ops": 917504,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "32x128x32:bf16": 2,
+            "32x16x128:bf16": 1,
+            "32x32x128:bf16": 1
+          },
+          "dma_bytes": {
+            "L0C->OUT": 32768,
+            "L0C->UB": 6144,
+            "L1->L0A": 18432,
+            "L1->L0B": 28672,
+            "OUT->L1": 98304,
+            "OUT->UB": 66276,
+            "UB->OUT": 167936
+          },
+          "dma_descriptors": {
+            "L0C->OUT": 2,
+            "L0C->UB": 2,
+            "L1->L0A": 5,
+            "L1->L0B": 4,
+            "OUT->L1": 9,
+            "OUT->UB": 12,
+            "UB->OUT": 15
+          },
+          "estimated_rvec_subqueue_records": {
+            "RVECEX": 13664,
+            "RVECLD": 5921,
+            "RVECLP": 148,
+            "RVECST": 2188,
+            "RVECSU": 850
+          },
+          "first_payload_cycles": 9952,
+          "max_core_head_chunks": 1,
+          "device_us": 14.820684450572276,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "32": 1
+          },
+          "representative_tile_phase_cycles": {
+            "32": {
+              "V0 gate and prefix": 2469.022960800664,
+              "V1 score packing": 2631.5678630549105,
+              "C2 triangular bands": 2298.8795841009114,
+              "V3 invert two 32-row blocks": 4513.396593963427,
+              "C4/C5 quadrant and V6 RHS": 3359.2705417681423,
+              "C7 W and U": 1453.0944673420422
+            }
+          }
+        },
+        {
+          "family": "chunk_fwd_h",
+          "active_aic": 1,
+          "launched_aiv": 2,
+          "aiv_mover": false,
+          "issued_mmad_ops": 2097152,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "128x128x32:bf16": 1,
+            "32x128x128:bf16": 1
+          },
+          "dma_bytes": {
+            "L0C->UB": 81920,
+            "L1->L0A": 16384,
+            "L1->L0B": 40960,
+            "OUT->L1": 57344,
+            "OUT->UB": 139776,
+            "UB->OUT": 114688
+          },
+          "dma_descriptors": {
+            "L0C->UB": 2,
+            "L1->L0A": 2,
+            "L1->L0B": 2,
+            "OUT->L1": 4,
+            "OUT->UB": 4,
+            "UB->OUT": 4
+          },
+          "estimated_rvec_subqueue_records": {
+            "RVECEX": 2258,
+            "RVECLD": 901,
+            "RVECLP": 11,
+            "RVECST": 643,
+            "RVECSU": 6
+          },
+          "first_payload_cycles": 895,
+          "max_core_head_chunks": 1,
+          "device_us": 5.307288673425697,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "(32, True, True)": 1
+          },
+          "representative_tile_phase_cycles": {
+            "(32, True, True)": {
+              "FP32 initial state to BF16 H": 2594.4787342080717,
+              "S0 W times H": 1835.558014181454,
+              "S1 corrected value": 1137.8247729878353,
+              "S2 outer product": 1759.8110418327435,
+              "S3 update recurrent state": 1330.447048956149
+            }
+          }
+        },
+        {
+          "family": "chunk_kda_fwd_finalize",
+          "active_aic": 1,
+          "launched_aiv": 0,
+          "aiv_mover": false,
+          "issued_mmad_ops": 1310720,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "32x128x128:bf16": 1,
+            "32x128x32:bf16": 1
+          },
+          "dma_bytes": {
+            "L0C->OUT": 16384,
+            "L1->L0A": 10240,
+            "L1->L0B": 40960,
+            "OUT->L1": 51200
+          },
+          "dma_descriptors": {
+            "L0C->OUT": 1,
+            "L1->L0A": 2,
+            "L1->L0B": 2,
+            "OUT->L1": 4
+          },
+          "estimated_rvec_subqueue_records": {},
+          "first_payload_cycles": 3121,
+          "max_core_head_chunks": 1,
+          "device_us": 2.997609238903143,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "32": 1
+          },
+          "representative_tile_phase_cycles": {
+            "32": {
+              "Q, H, Aqk and value": 1483.0805199542292,
+              "QH plus AqkV": 512.5842192008812,
+              "output": 279.03189087054704
+            }
+          }
+        }
+      ],
+      "serialized_device_us": 23.125582362901117,
+      "scope": "three main V2 kernels only, no auxiliary launches or inter-launch intervals",
+      "uncalibrated": [
+        "cross-head overlap",
+        "TF32 throughput",
+        "HBM spill and cache reuse",
+        "AIV input-mover finalization",
+        "970 physical mapping"
+      ]
+    },
+    {
+      "shape": [
+        1,
+        33,
+        2,
+        2,
+        128,
+        128
+      ],
+      "chip": "Ascend950DT_9582",
+      "dtype": "bf16",
+      "stages": [
+        {
+          "family": "chunk_kda_fwd_prepare",
+          "active_aic": 2,
+          "launched_aiv": 4,
+          "aiv_mover": false,
+          "issued_mmad_ops": 6029312,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "32x16x128:bf16": 2,
+            "32x32x128:bf16": 2,
+            "32x32x32:f32_tf32": 4,
+            "32x48x128:bf16": 2,
+            "64x128x64:bf16": 4
+          },
+          "dma_bytes": {
+            "L0C->L1": 8192,
+            "L0C->OUT": 76032,
+            "L0C->UB": 24576,
+            "L1->L0A": 81920,
+            "L1->L0B": 131072,
+            "OUT->L1": 262144,
+            "OUT->UB": 136656,
+            "UB->OUT": 372224
+          },
+          "dma_descriptors": {
+            "L0C->L1": 2,
+            "L0C->OUT": 8,
+            "L0C->UB": 6,
+            "L1->L0A": 18,
+            "L1->L0B": 14,
+            "OUT->L1": 26,
+            "OUT->UB": 24,
+            "UB->OUT": 30
+          },
+          "estimated_rvec_subqueue_records": {
+            "RVECEX": 30296,
+            "RVECLD": 12488,
+            "RVECLP": 296,
+            "RVECST": 4424,
+            "RVECSU": 1714
+          },
+          "first_payload_cycles": 9952,
+          "max_core_head_chunks": 1,
+          "device_us": 16.958722148251148,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "33": 1
+          },
+          "representative_tile_phase_cycles": {
+            "33": {
+              "V0 gate and prefix": 2507.468496766463,
+              "V1 score packing": 2955.018679816274,
+              "C2 triangular bands": 2432.950297660892,
+              "V3 invert two 32-row blocks": 4520.008998110512,
+              "C4/C5 quadrant and V6 RHS": 3524.35103021575,
+              "C7 W and U": 2090.094042044501
+            }
+          }
+        },
+        {
+          "family": "chunk_fwd_h",
+          "active_aic": 2,
+          "launched_aiv": 4,
+          "aiv_mover": false,
+          "issued_mmad_ops": 6291456,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "128x128x48:bf16": 2,
+            "48x128x128:bf16": 2
+          },
+          "dma_bytes": {
+            "L0C->UB": 164864,
+            "L1->L0A": 49152,
+            "L1->L0B": 90112,
+            "OUT->L1": 116224,
+            "OUT->UB": 280064,
+            "UB->OUT": 230400
+          },
+          "dma_descriptors": {
+            "L0C->UB": 4,
+            "L1->L0A": 4,
+            "L1->L0B": 4,
+            "OUT->L1": 8,
+            "OUT->UB": 8,
+            "UB->OUT": 8
+          },
+          "estimated_rvec_subqueue_records": {
+            "RVECEX": 4544,
+            "RVECLD": 1810,
+            "RVECLP": 22,
+            "RVECST": 1294,
+            "RVECSU": 12
+          },
+          "first_payload_cycles": 895,
+          "max_core_head_chunks": 1,
+          "device_us": 5.841773658323418,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "(33, True, True)": 1
+          },
+          "representative_tile_phase_cycles": {
+            "(33, True, True)": {
+              "FP32 initial state to BF16 H": 2594.7186134694352,
+              "S0 W times H": 1908.4992265237147,
+              "S1 corrected value": 1150.129316389097,
+              "S2 outer product": 1759.8110418327435,
+              "S3 update recurrent state": 1330.768338018649
+            }
+          }
+        },
+        {
+          "family": "chunk_kda_fwd_finalize",
+          "active_aic": 2,
+          "launched_aiv": 0,
+          "aiv_mover": false,
+          "issued_mmad_ops": 2720256,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "33x128x128:bf16": 2,
+            "33x128x33:bf16": 2
+          },
+          "dma_bytes": {
+            "L0C->OUT": 33792,
+            "L1->L0A": 33792,
+            "L1->L0B": 90112,
+            "OUT->L1": 103684
+          },
+          "dma_descriptors": {
+            "L0C->OUT": 2,
+            "L1->L0A": 4,
+            "L1->L0B": 4,
+            "OUT->L1": 8
+          },
+          "estimated_rvec_subqueue_records": {},
+          "first_payload_cycles": 3121,
+          "max_core_head_chunks": 1,
+          "device_us": 3.343590277001403,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "33": 1
+          },
+          "representative_tile_phase_cycles": {
+            "33": {
+              "Q, H, Aqk and value": 1496.6971884716418,
+              "QH plus AqkV": 616.9604813477738,
+              "output": 282.2662872328986
+            }
+          }
+        }
+      ],
+      "serialized_device_us": 26.14408608357597,
+      "scope": "three main V2 kernels only, no auxiliary launches or inter-launch intervals",
+      "uncalibrated": [
+        "cross-head overlap",
+        "TF32 throughput",
+        "HBM spill and cache reuse",
+        "AIV input-mover finalization",
+        "970 physical mapping"
+      ]
+    },
+    {
+      "shape": [
+        1,
+        33,
+        2,
+        2,
+        128,
+        128
+      ],
+      "chip": "Ascend950PR_957b",
+      "dtype": "bf16",
+      "stages": [
+        {
+          "family": "chunk_kda_fwd_prepare",
+          "active_aic": 2,
+          "launched_aiv": 4,
+          "aiv_mover": false,
+          "issued_mmad_ops": 6029312,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "32x16x128:bf16": 2,
+            "32x32x128:bf16": 2,
+            "32x32x32:f32_tf32": 4,
+            "32x48x128:bf16": 2,
+            "64x128x64:bf16": 4
+          },
+          "dma_bytes": {
+            "L0C->L1": 8192,
+            "L0C->OUT": 76032,
+            "L0C->UB": 24576,
+            "L1->L0A": 81920,
+            "L1->L0B": 131072,
+            "OUT->L1": 262144,
+            "OUT->UB": 136656,
+            "UB->OUT": 372224
+          },
+          "dma_descriptors": {
+            "L0C->L1": 2,
+            "L0C->OUT": 8,
+            "L0C->UB": 6,
+            "L1->L0A": 18,
+            "L1->L0B": 14,
+            "OUT->L1": 26,
+            "OUT->UB": 24,
+            "UB->OUT": 30
+          },
+          "estimated_rvec_subqueue_records": {
+            "RVECEX": 30296,
+            "RVECLD": 12488,
+            "RVECLP": 296,
+            "RVECST": 4424,
+            "RVECSU": 1714
+          },
+          "first_payload_cycles": 9952,
+          "max_core_head_chunks": 1,
+          "device_us": 17.021090395945482,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "33": 1
+          },
+          "representative_tile_phase_cycles": {
+            "33": {
+              "V0 gate and prefix": 2521.055453288202,
+              "V1 score packing": 2984.570310251056,
+              "C2 triangular bands": 2432.950297660892,
+              "V3 invert two 32-row blocks": 4552.794324197468,
+              "C4/C5 quadrant and V6 RHS": 3551.334725867924,
+              "C7 W and U": 2090.094042044501
+            }
+          }
+        },
+        {
+          "family": "chunk_fwd_h",
+          "active_aic": 2,
+          "launched_aiv": 4,
+          "aiv_mover": false,
+          "issued_mmad_ops": 6291456,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "128x128x48:bf16": 2,
+            "48x128x128:bf16": 2
+          },
+          "dma_bytes": {
+            "L0C->UB": 164864,
+            "L1->L0A": 49152,
+            "L1->L0B": 90112,
+            "OUT->L1": 116224,
+            "OUT->UB": 280064,
+            "UB->OUT": 230400
+          },
+          "dma_descriptors": {
+            "L0C->UB": 4,
+            "L1->L0A": 4,
+            "L1->L0B": 4,
+            "OUT->L1": 8,
+            "OUT->UB": 8,
+            "UB->OUT": 8
+          },
+          "estimated_rvec_subqueue_records": {
+            "RVECEX": 4544,
+            "RVECLD": 1810,
+            "RVECLP": 22,
+            "RVECST": 1294,
+            "RVECSU": 12
+          },
+          "first_payload_cycles": 895,
+          "max_core_head_chunks": 1,
+          "device_us": 5.8511280720256575,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "(33, True, True)": 1
+          },
+          "representative_tile_phase_cycles": {
+            "(33, True, True)": {
+              "FP32 initial state to BF16 H": 2599.9631786868267,
+              "S0 W times H": 1908.4992265237147,
+              "S1 corrected value": 1153.2950772586623,
+              "S2 outer product": 1759.8110418327435,
+              "S3 update recurrent state": 1337.792794540388
+            }
+          }
+        },
+        {
+          "family": "chunk_kda_fwd_finalize",
+          "active_aic": 2,
+          "launched_aiv": 0,
+          "aiv_mover": false,
+          "issued_mmad_ops": 2720256,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "33x128x128:bf16": 2,
+            "33x128x33:bf16": 2
+          },
+          "dma_bytes": {
+            "L0C->OUT": 33792,
+            "L1->L0A": 33792,
+            "L1->L0B": 90112,
+            "OUT->L1": 103684
+          },
+          "dma_descriptors": {
+            "L0C->OUT": 2,
+            "L1->L0A": 4,
+            "L1->L0B": 4,
+            "OUT->L1": 8
+          },
+          "estimated_rvec_subqueue_records": {},
+          "first_payload_cycles": 3121,
+          "max_core_head_chunks": 1,
+          "device_us": 3.343590277001403,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "33": 1
+          },
+          "representative_tile_phase_cycles": {
+            "33": {
+              "Q, H, Aqk and value": 1496.6971884716418,
+              "QH plus AqkV": 616.9604813477738,
+              "output": 282.2662872328986
+            }
+          }
+        }
+      ],
+      "serialized_device_us": 26.21580874497254,
+      "scope": "three main V2 kernels only, no auxiliary launches or inter-launch intervals",
+      "uncalibrated": [
+        "cross-head overlap",
+        "TF32 throughput",
+        "HBM spill and cache reuse",
+        "AIV input-mover finalization",
+        "970 physical mapping"
+      ]
+    },
+    {
+      "shape": [
+        1,
+        33,
+        2,
+        2,
+        128,
+        128
+      ],
+      "chip": "Ascend970DT",
+      "dtype": "bf16",
+      "stages": [
+        {
+          "family": "chunk_kda_fwd_prepare",
+          "active_aic": 2,
+          "launched_aiv": 4,
+          "aiv_mover": false,
+          "issued_mmad_ops": 6029312,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "32x16x128:bf16": 2,
+            "32x32x128:bf16": 2,
+            "32x32x32:f32_tf32": 4,
+            "32x48x128:bf16": 2,
+            "64x128x64:bf16": 4
+          },
+          "dma_bytes": {
+            "L0C->L1": 8192,
+            "L0C->OUT": 76032,
+            "L0C->UB": 24576,
+            "L1->L0A": 81920,
+            "L1->L0B": 131072,
+            "OUT->L1": 262144,
+            "OUT->UB": 136656,
+            "UB->OUT": 372224
+          },
+          "dma_descriptors": {
+            "L0C->L1": 2,
+            "L0C->OUT": 8,
+            "L0C->UB": 6,
+            "L1->L0A": 18,
+            "L1->L0B": 14,
+            "OUT->L1": 26,
+            "OUT->UB": 24,
+            "UB->OUT": 30
+          },
+          "estimated_rvec_subqueue_records": {
+            "RVECEX": 30296,
+            "RVECLD": 12488,
+            "RVECLP": 296,
+            "RVECST": 4424,
+            "RVECSU": 1714
+          },
+          "first_payload_cycles": 9952,
+          "max_core_head_chunks": 1,
+          "device_us": 15.542619830591295,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "33": 1
+          },
+          "representative_tile_phase_cycles": {
+            "33": {
+              "V0 gate and prefix": 2506.8470479028265,
+              "V1 score packing": 2953.667028537865,
+              "C2 triangular bands": 2432.8762456834907,
+              "V3 invert two 32-row blocks": 4518.509442002557,
+              "C4/C5 quadrant and V6 RHS": 3523.116832772568,
+              "C7 W and U": 2089.699098165028
+            }
+          }
+        },
+        {
+          "family": "chunk_fwd_h",
+          "active_aic": 2,
+          "launched_aiv": 4,
+          "aiv_mover": false,
+          "issued_mmad_ops": 6291456,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "128x128x48:bf16": 2,
+            "48x128x128:bf16": 2
+          },
+          "dma_bytes": {
+            "L0C->UB": 164864,
+            "L1->L0A": 49152,
+            "L1->L0B": 90112,
+            "OUT->L1": 116224,
+            "OUT->UB": 280064,
+            "UB->OUT": 230400
+          },
+          "dma_descriptors": {
+            "L0C->UB": 4,
+            "L1->L0A": 4,
+            "L1->L0B": 4,
+            "OUT->L1": 8,
+            "OUT->UB": 8,
+            "UB->OUT": 8
+          },
+          "estimated_rvec_subqueue_records": {
+            "RVECEX": 4544,
+            "RVECLD": 1810,
+            "RVECLP": 22,
+            "RVECST": 1294,
+            "RVECSU": 12
+          },
+          "first_payload_cycles": 895,
+          "max_core_head_chunks": 1,
+          "device_us": 5.354402423563858,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "(33, True, True)": 1
+          },
+          "representative_tile_phase_cycles": {
+            "(33, True, True)": {
+              "FP32 initial state to BF16 H": 2594.4787342080717,
+              "S0 W times H": 1908.2030186141103,
+              "S1 corrected value": 1149.9845188038698,
+              "S2 outer product": 1759.8110418327435,
+              "S3 update recurrent state": 1330.447048956149
+            }
+          }
+        },
+        {
+          "family": "chunk_kda_fwd_finalize",
+          "active_aic": 2,
+          "launched_aiv": 0,
+          "aiv_mover": false,
+          "issued_mmad_ops": 2720256,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "33x128x128:bf16": 2,
+            "33x128x33:bf16": 2
+          },
+          "dma_bytes": {
+            "L0C->OUT": 33792,
+            "L1->L0A": 33792,
+            "L1->L0B": 90112,
+            "OUT->L1": 103684
+          },
+          "dma_descriptors": {
+            "L0C->OUT": 2,
+            "L1->L0A": 4,
+            "L1->L0B": 4,
+            "OUT->L1": 8
+          },
+          "estimated_rvec_subqueue_records": {},
+          "first_payload_cycles": 3121,
+          "max_core_head_chunks": 1,
+          "device_us": 3.064731483987005,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "33": 1
+          },
+          "representative_tile_phase_cycles": {
+            "33": {
+              "Q, H, Aqk and value": 1496.6971884716418,
+              "QH plus AqkV": 616.5531954720675,
+              "output": 282.2662872328986
+            }
+          }
+        }
+      ],
+      "serialized_device_us": 23.961753738142157,
+      "scope": "three main V2 kernels only, no auxiliary launches or inter-launch intervals",
+      "uncalibrated": [
+        "cross-head overlap",
+        "TF32 throughput",
+        "HBM spill and cache reuse",
+        "AIV input-mover finalization",
+        "970 physical mapping"
+      ]
+    },
+    {
+      "shape": [
+        1,
+        64,
+        2,
+        2,
+        128,
+        128
+      ],
+      "chip": "Ascend950DT_9582",
+      "dtype": "bf16",
+      "stages": [
+        {
+          "family": "chunk_kda_fwd_prepare",
+          "active_aic": 2,
+          "launched_aiv": 4,
+          "aiv_mover": false,
+          "issued_mmad_ops": 7077888,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "32x16x128:bf16": 2,
+            "32x32x128:bf16": 2,
+            "32x32x32:f32_tf32": 4,
+            "32x48x128:bf16": 2,
+            "32x64x128:bf16": 2,
+            "64x128x64:bf16": 4
+          },
+          "dma_bytes": {
+            "L0C->L1": 8192,
+            "L0C->OUT": 147456,
+            "L0C->UB": 40960,
+            "L1->L0A": 98304,
+            "L1->L0B": 163840,
+            "OUT->L1": 262144,
+            "OUT->UB": 263880,
+            "UB->OUT": 483328
+          },
+          "dma_descriptors": {
+            "L0C->L1": 2,
+            "L0C->OUT": 8,
+            "L0C->UB": 8,
+            "L1->L0A": 22,
+            "L1->L0B": 16,
+            "OUT->L1": 26,
+            "OUT->UB": 24,
+            "UB->OUT": 30
+          },
+          "estimated_rvec_subqueue_records": {
+            "RVECEX": 50672,
+            "RVECLD": 16362,
+            "RVECLP": 296,
+            "RVECST": 5928,
+            "RVECSU": 2162
+          },
+          "first_payload_cycles": 9952,
+          "max_core_head_chunks": 1,
+          "device_us": 19.749411142635836,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "64": 1
+          },
+          "representative_tile_phase_cycles": {
+            "64": {
+              "V0 gate and prefix": 3680.593144376685,
+              "V1 score packing": 3998.518679816274,
+              "C2 triangular bands": 2589.9270481323597,
+              "V3 invert two 32-row blocks": 4678.642141726961,
+              "C4/C5 quadrant and V6 RHS": 5396.2207547865555,
+              "C7 W and U": 2290.626616510298
+            }
+          }
+        },
+        {
+          "family": "chunk_fwd_h",
+          "active_aic": 2,
+          "launched_aiv": 4,
+          "aiv_mover": false,
+          "issued_mmad_ops": 8388608,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "128x128x64:bf16": 2,
+            "64x128x128:bf16": 2
+          },
+          "dma_bytes": {
+            "L0C->UB": 196608,
+            "L1->L0A": 65536,
+            "L1->L0B": 98304,
+            "OUT->L1": 163840,
+            "OUT->UB": 295936,
+            "UB->OUT": 262144
+          },
+          "dma_descriptors": {
+            "L0C->UB": 4,
+            "L1->L0A": 4,
+            "L1->L0B": 4,
+            "OUT->L1": 8,
+            "OUT->UB": 8,
+            "UB->OUT": 8
+          },
+          "estimated_rvec_subqueue_records": {
+            "RVECEX": 5412,
+            "RVECLD": 2058,
+            "RVECLP": 22,
+            "RVECST": 1542,
+            "RVECSU": 12
+          },
+          "first_payload_cycles": 895,
+          "max_core_head_chunks": 1,
+          "device_us": 6.42354132632175,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "(64, True, True)": 1
+          },
+          "representative_tile_phase_cycles": {
+            "(64, True, True)": {
+              "FP32 initial state to BF16 H": 2594.7186134694352,
+              "S0 W times H": 2241.1658456686396,
+              "S1 corrected value": 1527.216291089577,
+              "S2 outer product": 2009.974100184586,
+              "S3 update recurrent state": 1330.768338018649
+            }
+          }
+        },
+        {
+          "family": "chunk_kda_fwd_finalize",
+          "active_aic": 2,
+          "launched_aiv": 0,
+          "aiv_mover": false,
+          "issued_mmad_ops": 6291456,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "64x128x128:bf16": 2,
+            "64x128x64:bf16": 2
+          },
+          "dma_bytes": {
+            "L0C->OUT": 65536,
+            "L1->L0A": 49152,
+            "L1->L0B": 98304,
+            "OUT->L1": 147456
+          },
+          "dma_descriptors": {
+            "L0C->OUT": 2,
+            "L1->L0A": 4,
+            "L1->L0B": 4,
+            "OUT->L1": 8
+          },
+          "estimated_rvec_subqueue_records": {},
+          "first_payload_cycles": 3121,
+          "max_core_head_chunks": 1,
+          "device_us": 3.7585069536516578,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "64": 1
+          },
+          "representative_tile_phase_cycles": {
+            "64": {
+              "Q, H, Aqk and value": 1960.8940843783307,
+              "QH plus AqkV": 737.1098146811072,
+              "output": 382.5325744657972
+            }
+          }
+        }
+      ],
+      "serialized_device_us": 29.931459422609244,
+      "scope": "three main V2 kernels only, no auxiliary launches or inter-launch intervals",
+      "uncalibrated": [
+        "cross-head overlap",
+        "TF32 throughput",
+        "HBM spill and cache reuse",
+        "AIV input-mover finalization",
+        "970 physical mapping"
+      ]
+    },
+    {
+      "shape": [
+        1,
+        64,
+        2,
+        2,
+        128,
+        128
+      ],
+      "chip": "Ascend950PR_957b",
+      "dtype": "bf16",
+      "stages": [
+        {
+          "family": "chunk_kda_fwd_prepare",
+          "active_aic": 2,
+          "launched_aiv": 4,
+          "aiv_mover": false,
+          "issued_mmad_ops": 7077888,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "32x16x128:bf16": 2,
+            "32x32x128:bf16": 2,
+            "32x32x32:f32_tf32": 4,
+            "32x48x128:bf16": 2,
+            "32x64x128:bf16": 2,
+            "64x128x64:bf16": 4
+          },
+          "dma_bytes": {
+            "L0C->L1": 8192,
+            "L0C->OUT": 147456,
+            "L0C->UB": 40960,
+            "L1->L0A": 98304,
+            "L1->L0B": 163840,
+            "OUT->L1": 262144,
+            "OUT->UB": 263880,
+            "UB->OUT": 483328
+          },
+          "dma_descriptors": {
+            "L0C->L1": 2,
+            "L0C->OUT": 8,
+            "L0C->UB": 8,
+            "L1->L0A": 22,
+            "L1->L0B": 16,
+            "OUT->L1": 26,
+            "OUT->UB": 24,
+            "UB->OUT": 30
+          },
+          "estimated_rvec_subqueue_records": {
+            "RVECEX": 50672,
+            "RVECLD": 16362,
+            "RVECLP": 296,
+            "RVECST": 5928,
+            "RVECSU": 2162
+          },
+          "first_payload_cycles": 9952,
+          "max_core_head_chunks": 1,
+          "device_us": 19.853726030646378,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "64": 1
+          },
+          "representative_tile_phase_cycles": {
+            "64": {
+              "V0 gate and prefix": 3706.815970463641,
+              "V1 score packing": 4056.426288511926,
+              "C2 triangular bands": 2589.9270481323597,
+              "V3 invert two 32-row blocks": 4714.375837379135,
+              "C4/C5 quadrant and V6 RHS": 5448.476189569164,
+              "C7 W and U": 2290.626616510298
+            }
+          }
+        },
+        {
+          "family": "chunk_fwd_h",
+          "active_aic": 2,
+          "launched_aiv": 4,
+          "aiv_mover": false,
+          "issued_mmad_ops": 8388608,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "128x128x64:bf16": 2,
+            "64x128x128:bf16": 2
+          },
+          "dma_bytes": {
+            "L0C->UB": 196608,
+            "L1->L0A": 65536,
+            "L1->L0B": 98304,
+            "OUT->L1": 163840,
+            "OUT->UB": 295936,
+            "UB->OUT": 262144
+          },
+          "dma_descriptors": {
+            "L0C->UB": 4,
+            "L1->L0A": 4,
+            "L1->L0B": 4,
+            "OUT->L1": 8,
+            "OUT->UB": 8,
+            "UB->OUT": 8
+          },
+          "estimated_rvec_subqueue_records": {
+            "RVECEX": 5412,
+            "RVECLD": 2058,
+            "RVECLP": 22,
+            "RVECST": 1542,
+            "RVECSU": 12
+          },
+          "first_payload_cycles": 895,
+          "max_core_head_chunks": 1,
+          "device_us": 6.434682630669576,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "(64, True, True)": 1
+          },
+          "representative_tile_phase_cycles": {
+            "(64, True, True)": {
+              "FP32 initial state to BF16 H": 2599.9631786868267,
+              "S0 W times H": 2241.1658456686396,
+              "S1 corrected value": 1533.3304215243595,
+              "S2 outer product": 2009.974100184586,
+              "S3 update recurrent state": 1337.792794540388
+            }
+          }
+        },
+        {
+          "family": "chunk_kda_fwd_finalize",
+          "active_aic": 2,
+          "launched_aiv": 0,
+          "aiv_mover": false,
+          "issued_mmad_ops": 6291456,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "64x128x128:bf16": 2,
+            "64x128x64:bf16": 2
+          },
+          "dma_bytes": {
+            "L0C->OUT": 65536,
+            "L1->L0A": 49152,
+            "L1->L0B": 98304,
+            "OUT->L1": 147456
+          },
+          "dma_descriptors": {
+            "L0C->OUT": 2,
+            "L1->L0A": 4,
+            "L1->L0B": 4,
+            "OUT->L1": 8
+          },
+          "estimated_rvec_subqueue_records": {},
+          "first_payload_cycles": 3121,
+          "max_core_head_chunks": 1,
+          "device_us": 3.7585069536516578,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "64": 1
+          },
+          "representative_tile_phase_cycles": {
+            "64": {
+              "Q, H, Aqk and value": 1960.8940843783307,
+              "QH plus AqkV": 737.1098146811072,
+              "output": 382.5325744657972
+            }
+          }
+        }
+      ],
+      "serialized_device_us": 30.046915614967613,
+      "scope": "three main V2 kernels only, no auxiliary launches or inter-launch intervals",
+      "uncalibrated": [
+        "cross-head overlap",
+        "TF32 throughput",
+        "HBM spill and cache reuse",
+        "AIV input-mover finalization",
+        "970 physical mapping"
+      ]
+    },
+    {
+      "shape": [
+        1,
+        64,
+        2,
+        2,
+        128,
+        128
+      ],
+      "chip": "Ascend970DT",
+      "dtype": "bf16",
+      "stages": [
+        {
+          "family": "chunk_kda_fwd_prepare",
+          "active_aic": 2,
+          "launched_aiv": 4,
+          "aiv_mover": false,
+          "issued_mmad_ops": 7077888,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "32x16x128:bf16": 2,
+            "32x32x128:bf16": 2,
+            "32x32x32:f32_tf32": 4,
+            "32x48x128:bf16": 2,
+            "32x64x128:bf16": 2,
+            "64x128x64:bf16": 4
+          },
+          "dma_bytes": {
+            "L0C->L1": 8192,
+            "L0C->OUT": 147456,
+            "L0C->UB": 40960,
+            "L1->L0A": 98304,
+            "L1->L0B": 163840,
+            "OUT->L1": 262144,
+            "OUT->UB": 263880,
+            "UB->OUT": 483328
+          },
+          "dma_descriptors": {
+            "L0C->L1": 2,
+            "L0C->OUT": 8,
+            "L0C->UB": 8,
+            "L1->L0A": 22,
+            "L1->L0B": 16,
+            "OUT->L1": 26,
+            "OUT->UB": 24,
+            "UB->OUT": 30
+          },
+          "estimated_rvec_subqueue_records": {
+            "RVECEX": 50672,
+            "RVECLD": 16362,
+            "RVECLP": 296,
+            "RVECST": 5928,
+            "RVECSU": 2162
+          },
+          "first_payload_cycles": 9952,
+          "max_core_head_chunks": 1,
+          "device_us": 18.098978995164025,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "64": 1
+          },
+          "representative_tile_phase_cycles": {
+            "64": {
+              "V0 gate and prefix": 3679.393748069867,
+              "V1 score packing": 3995.870064759456,
+              "C2 triangular bands": 2589.828312162492,
+              "V3 invert two 32-row blocks": 4677.007731215597,
+              "C4/C5 quadrant and V6 RHS": 5393.83066245701,
+              "C7 W and U": 2290.2316726308254
+            }
+          }
+        },
+        {
+          "family": "chunk_fwd_h",
+          "active_aic": 2,
+          "launched_aiv": 4,
+          "aiv_mover": false,
+          "issued_mmad_ops": 8388608,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "128x128x64:bf16": 2,
+            "64x128x128:bf16": 2
+          },
+          "dma_bytes": {
+            "L0C->UB": 196608,
+            "L1->L0A": 65536,
+            "L1->L0B": 98304,
+            "OUT->L1": 163840,
+            "OUT->UB": 295936,
+            "UB->OUT": 262144
+          },
+          "dma_descriptors": {
+            "L0C->UB": 4,
+            "L1->L0A": 4,
+            "L1->L0B": 4,
+            "OUT->L1": 8,
+            "OUT->UB": 8,
+            "UB->OUT": 8
+          },
+          "estimated_rvec_subqueue_records": {
+            "RVECEX": 5412,
+            "RVECLD": 2058,
+            "RVECLP": 22,
+            "RVECST": 1542,
+            "RVECSU": 12
+          },
+          "first_payload_cycles": 895,
+          "max_core_head_chunks": 1,
+          "device_us": 5.887340266866357,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "(64, True, True)": 1
+          },
+          "representative_tile_phase_cycles": {
+            "(64, True, True)": {
+              "FP32 initial state to BF16 H": 2594.4787342080717,
+              "S0 W times H": 2240.7709017891666,
+              "S1 corrected value": 1526.9366391009407,
+              "S2 outer product": 2009.5791563051134,
+              "S3 update recurrent state": 1330.447048956149
+            }
+          }
+        },
+        {
+          "family": "chunk_kda_fwd_finalize",
+          "active_aic": 2,
+          "launched_aiv": 0,
+          "aiv_mover": false,
+          "issued_mmad_ops": 6291456,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "64x128x128:bf16": 2,
+            "64x128x64:bf16": 2
+          },
+          "dma_bytes": {
+            "L0C->OUT": 65536,
+            "L1->L0A": 49152,
+            "L1->L0B": 98304,
+            "OUT->L1": 147456
+          },
+          "dma_descriptors": {
+            "L0C->OUT": 2,
+            "L1->L0A": 4,
+            "L1->L0B": 4,
+            "OUT->L1": 8
+          },
+          "estimated_rvec_subqueue_records": {},
+          "first_payload_cycles": 3121,
+          "max_core_head_chunks": 1,
+          "device_us": 3.444968920947792,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "64": 1
+          },
+          "representative_tile_phase_cycles": {
+            "64": {
+              "Q, H, Aqk and value": 1960.8940843783307,
+              "QH plus AqkV": 736.5173988618981,
+              "output": 382.5325744657972
+            }
+          }
+        }
+      ],
+      "serialized_device_us": 27.43128818297817,
+      "scope": "three main V2 kernels only, no auxiliary launches or inter-launch intervals",
+      "uncalibrated": [
+        "cross-head overlap",
+        "TF32 throughput",
+        "HBM spill and cache reuse",
+        "AIV input-mover finalization",
+        "970 physical mapping"
+      ]
+    },
+    {
+      "shape": [
+        1,
+        65,
+        2,
+        2,
+        128,
+        128
+      ],
+      "chip": "Ascend950DT_9582",
+      "dtype": "bf16",
+      "stages": [
+        {
+          "family": "chunk_kda_fwd_prepare",
+          "active_aic": 4,
+          "launched_aiv": 8,
+          "aiv_mover": false,
+          "issued_mmad_ops": 8388608,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "32x128x32:bf16": 4,
+            "32x16x128:bf16": 4,
+            "32x32x128:bf16": 2,
+            "32x32x32:f32_tf32": 4,
+            "32x48x128:bf16": 2,
+            "32x64x128:bf16": 2,
+            "64x128x64:bf16": 4
+          },
+          "dma_bytes": {
+            "L0C->L1": 8192,
+            "L0C->OUT": 149504,
+            "L0C->UB": 45056,
+            "L1->L0A": 118784,
+            "L1->L0B": 204800,
+            "OUT->L1": 458752,
+            "OUT->UB": 269208,
+            "UB->OUT": 708096
+          },
+          "dma_descriptors": {
+            "L0C->L1": 2,
+            "L0C->OUT": 12,
+            "L0C->UB": 10,
+            "L1->L0A": 28,
+            "L1->L0B": 22,
+            "OUT->L1": 44,
+            "OUT->UB": 48,
+            "UB->OUT": 60
+          },
+          "estimated_rvec_subqueue_records": {
+            "RVECEX": 60052,
+            "RVECLD": 24878,
+            "RVECLP": 592,
+            "RVECST": 8800,
+            "RVECSU": 3414
+          },
+          "first_payload_cycles": 9952,
+          "max_core_head_chunks": 1,
+          "device_us": 19.749411142635836,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "64": 1
+          },
+          "representative_tile_phase_cycles": {
+            "64": {
+              "V0 gate and prefix": 3680.593144376685,
+              "V1 score packing": 3998.518679816274,
+              "C2 triangular bands": 2589.9270481323597,
+              "V3 invert two 32-row blocks": 4678.642141726961,
+              "C4/C5 quadrant and V6 RHS": 5396.2207547865555,
+              "C7 W and U": 2290.626616510298
+            },
+            "1": {
+              "V0 gate and prefix": 1296.501118588169,
+              "V1 score packing": 1892.5186798162742,
+              "C2 triangular bands": 2187.016050628906,
+              "V3 invert two 32-row blocks": 4356.258656312887,
+              "C4/C5 quadrant and V6 RHS": 1488.597727708701,
+              "C7 W and U": 1252.6606288461132
+            }
+          }
+        },
+        {
+          "family": "chunk_fwd_h",
+          "active_aic": 2,
+          "launched_aiv": 4,
+          "aiv_mover": false,
+          "issued_mmad_ops": 10485760,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "128x128x16:bf16": 2,
+            "128x128x64:bf16": 2,
+            "16x128x128:bf16": 2,
+            "64x128x128:bf16": 2
+          },
+          "dma_bytes": {
+            "L0C->UB": 328704,
+            "L1->L0A": 81920,
+            "L1->L0B": 172032,
+            "OUT->L1": 230912,
+            "OUT->UB": 297472,
+            "UB->OUT": 328704
+          },
+          "dma_descriptors": {
+            "L0C->UB": 8,
+            "L1->L0A": 8,
+            "L1->L0B": 8,
+            "OUT->L1": 16,
+            "OUT->UB": 12,
+            "UB->OUT": 14
+          },
+          "estimated_rvec_subqueue_records": {
+            "RVECEX": 7516,
+            "RVECLD": 3098,
+            "RVECLP": 36,
+            "RVECST": 2066,
+            "RVECSU": 20
+          },
+          "first_payload_cycles": 895,
+          "max_core_head_chunks": 2,
+          "device_us": 9.122515779299611,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "(64, True, False)": 1,
+            "(1, False, True)": 1
+          },
+          "representative_tile_phase_cycles": {
+            "(64, True, False)": {
+              "FP32 initial state to BF16 H": 2594.7186134694352,
+              "S0 W times H": 2241.1658456686396,
+              "S1 corrected value": 1527.216291089577,
+              "S2 outer product": 2009.974100184586,
+              "S3 update recurrent state": 1123.7669708281487
+            },
+            "(1, False, True)": {
+              "S0 W times H": 1503.0888669762662,
+              "S1 corrected value": 760.8782457305372,
+              "S2 outer product": 1065.5737638785197,
+              "S3 update recurrent state": 1330.768338018649
+            }
+          }
+        },
+        {
+          "family": "chunk_kda_fwd_finalize",
+          "active_aic": 4,
+          "launched_aiv": 0,
+          "aiv_mover": false,
+          "issued_mmad_ops": 6357504,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "1x128x128:bf16": 2,
+            "1x128x1:bf16": 2,
+            "64x128x128:bf16": 2,
+            "64x128x64:bf16": 2
+          },
+          "dma_bytes": {
+            "L0C->OUT": 66560,
+            "L1->L0A": 58368,
+            "L1->L0B": 172032,
+            "OUT->L1": 214020
+          },
+          "dma_descriptors": {
+            "L0C->OUT": 4,
+            "L1->L0A": 8,
+            "L1->L0B": 8,
+            "OUT->L1": 16
+          },
+          "estimated_rvec_subqueue_records": {},
+          "first_payload_cycles": 3121,
+          "max_core_head_chunks": 1,
+          "device_us": 3.7585069536516578,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "64": 1
+          },
+          "representative_tile_phase_cycles": {
+            "64": {
+              "Q, H, Aqk and value": 1960.8940843783307,
+              "QH plus AqkV": 737.1098146811072,
+              "output": 382.5325744657972
+            },
+            "1": {
+              "Q, H, Aqk and value": 1103.0439677813306,
+              "QH plus AqkV": 424.72154801444043,
+              "output": 178.76560363764844
+            }
+          }
+        }
+      ],
+      "serialized_device_us": 32.6304338755871,
+      "scope": "three main V2 kernels only, no auxiliary launches or inter-launch intervals",
+      "uncalibrated": [
+        "cross-head overlap",
+        "TF32 throughput",
+        "HBM spill and cache reuse",
+        "AIV input-mover finalization",
+        "970 physical mapping"
+      ]
+    },
+    {
+      "shape": [
+        1,
+        65,
+        2,
+        2,
+        128,
+        128
+      ],
+      "chip": "Ascend950PR_957b",
+      "dtype": "bf16",
+      "stages": [
+        {
+          "family": "chunk_kda_fwd_prepare",
+          "active_aic": 4,
+          "launched_aiv": 8,
+          "aiv_mover": false,
+          "issued_mmad_ops": 8388608,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "32x128x32:bf16": 4,
+            "32x16x128:bf16": 4,
+            "32x32x128:bf16": 2,
+            "32x32x32:f32_tf32": 4,
+            "32x48x128:bf16": 2,
+            "32x64x128:bf16": 2,
+            "64x128x64:bf16": 4
+          },
+          "dma_bytes": {
+            "L0C->L1": 8192,
+            "L0C->OUT": 149504,
+            "L0C->UB": 45056,
+            "L1->L0A": 118784,
+            "L1->L0B": 204800,
+            "OUT->L1": 458752,
+            "OUT->UB": 269208,
+            "UB->OUT": 708096
+          },
+          "dma_descriptors": {
+            "L0C->L1": 2,
+            "L0C->OUT": 12,
+            "L0C->UB": 10,
+            "L1->L0A": 28,
+            "L1->L0B": 22,
+            "OUT->L1": 44,
+            "OUT->UB": 48,
+            "UB->OUT": 60
+          },
+          "estimated_rvec_subqueue_records": {
+            "RVECEX": 60052,
+            "RVECLD": 24878,
+            "RVECLP": 592,
+            "RVECST": 8800,
+            "RVECSU": 3414
+          },
+          "first_payload_cycles": 9952,
+          "max_core_head_chunks": 1,
+          "device_us": 19.853726030646378,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "64": 1
+          },
+          "representative_tile_phase_cycles": {
+            "64": {
+              "V0 gate and prefix": 3706.815970463641,
+              "V1 score packing": 4056.426288511926,
+              "C2 triangular bands": 2589.9270481323597,
+              "V3 invert two 32-row blocks": 4714.375837379135,
+              "C4/C5 quadrant and V6 RHS": 5448.476189569164,
+              "C7 W and U": 2290.626616510298
+            },
+            "1": {
+              "V0 gate and prefix": 1297.0445968490385,
+              "V1 score packing": 1893.1980276423612,
+              "C2 triangular bands": 2187.016050628906,
+              "V3 invert two 32-row blocks": 4386.000504138974,
+              "C4/C5 quadrant and V6 RHS": 1489.4944668391358,
+              "C7 W and U": 1252.6606288461132
+            }
+          }
+        },
+        {
+          "family": "chunk_fwd_h",
+          "active_aic": 2,
+          "launched_aiv": 4,
+          "aiv_mover": false,
+          "issued_mmad_ops": 10485760,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "128x128x16:bf16": 2,
+            "128x128x64:bf16": 2,
+            "16x128x128:bf16": 2,
+            "64x128x128:bf16": 2
+          },
+          "dma_bytes": {
+            "L0C->UB": 328704,
+            "L1->L0A": 81920,
+            "L1->L0B": 172032,
+            "OUT->L1": 230912,
+            "OUT->UB": 297472,
+            "UB->OUT": 328704
+          },
+          "dma_descriptors": {
+            "L0C->UB": 8,
+            "L1->L0A": 8,
+            "L1->L0B": 8,
+            "OUT->L1": 16,
+            "OUT->UB": 12,
+            "UB->OUT": 14
+          },
+          "estimated_rvec_subqueue_records": {
+            "RVECEX": 7516,
+            "RVECLD": 3098,
+            "RVECLP": 36,
+            "RVECST": 2066,
+            "RVECSU": 20
+          },
+          "first_payload_cycles": 895,
+          "max_core_head_chunks": 2,
+          "device_us": 9.137988440696187,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "(64, True, False)": 1,
+            "(1, False, True)": 1
+          },
+          "representative_tile_phase_cycles": {
+            "(64, True, False)": {
+              "FP32 initial state to BF16 H": 2599.9631786868267,
+              "S0 W times H": 2241.1658456686396,
+              "S1 corrected value": 1533.3304215243595,
+              "S2 outer product": 2009.974100184586,
+              "S3 update recurrent state": 1130.7914273498877
+            },
+            "(1, False, True)": {
+              "S0 W times H": 1503.0888669762662,
+              "S1 corrected value": 761.0005283392329,
+              "S2 outer product": 1065.5737638785197,
+              "S3 update recurrent state": 1337.792794540388
+            }
+          }
+        },
+        {
+          "family": "chunk_kda_fwd_finalize",
+          "active_aic": 4,
+          "launched_aiv": 0,
+          "aiv_mover": false,
+          "issued_mmad_ops": 6357504,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "1x128x128:bf16": 2,
+            "1x128x1:bf16": 2,
+            "64x128x128:bf16": 2,
+            "64x128x64:bf16": 2
+          },
+          "dma_bytes": {
+            "L0C->OUT": 66560,
+            "L1->L0A": 58368,
+            "L1->L0B": 172032,
+            "OUT->L1": 214020
+          },
+          "dma_descriptors": {
+            "L0C->OUT": 4,
+            "L1->L0A": 8,
+            "L1->L0B": 8,
+            "OUT->L1": 16
+          },
+          "estimated_rvec_subqueue_records": {},
+          "first_payload_cycles": 3121,
+          "max_core_head_chunks": 1,
+          "device_us": 3.7585069536516578,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "64": 1
+          },
+          "representative_tile_phase_cycles": {
+            "64": {
+              "Q, H, Aqk and value": 1960.8940843783307,
+              "QH plus AqkV": 737.1098146811072,
+              "output": 382.5325744657972
+            },
+            "1": {
+              "Q, H, Aqk and value": 1103.0439677813306,
+              "QH plus AqkV": 424.72154801444043,
+              "output": 178.76560363764844
+            }
+          }
+        }
+      ],
+      "serialized_device_us": 32.75022142499422,
+      "scope": "three main V2 kernels only, no auxiliary launches or inter-launch intervals",
+      "uncalibrated": [
+        "cross-head overlap",
+        "TF32 throughput",
+        "HBM spill and cache reuse",
+        "AIV input-mover finalization",
+        "970 physical mapping"
+      ]
+    },
+    {
+      "shape": [
+        1,
+        65,
+        2,
+        2,
+        128,
+        128
+      ],
+      "chip": "Ascend970DT",
+      "dtype": "bf16",
+      "stages": [
+        {
+          "family": "chunk_kda_fwd_prepare",
+          "active_aic": 4,
+          "launched_aiv": 8,
+          "aiv_mover": false,
+          "issued_mmad_ops": 8388608,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "32x128x32:bf16": 4,
+            "32x16x128:bf16": 4,
+            "32x32x128:bf16": 2,
+            "32x32x32:f32_tf32": 4,
+            "32x48x128:bf16": 2,
+            "32x64x128:bf16": 2,
+            "64x128x64:bf16": 4
+          },
+          "dma_bytes": {
+            "L0C->L1": 8192,
+            "L0C->OUT": 149504,
+            "L0C->UB": 45056,
+            "L1->L0A": 118784,
+            "L1->L0B": 204800,
+            "OUT->L1": 458752,
+            "OUT->UB": 269208,
+            "UB->OUT": 708096
+          },
+          "dma_descriptors": {
+            "L0C->L1": 2,
+            "L0C->OUT": 12,
+            "L0C->UB": 10,
+            "L1->L0A": 28,
+            "L1->L0B": 22,
+            "OUT->L1": 44,
+            "OUT->UB": 48,
+            "UB->OUT": 60
+          },
+          "estimated_rvec_subqueue_records": {
+            "RVECEX": 60052,
+            "RVECLD": 24878,
+            "RVECLP": 592,
+            "RVECST": 8800,
+            "RVECSU": 3414
+          },
+          "first_payload_cycles": 9952,
+          "max_core_head_chunks": 1,
+          "device_us": 18.098978995164025,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "64": 1
+          },
+          "representative_tile_phase_cycles": {
+            "64": {
+              "V0 gate and prefix": 3679.393748069867,
+              "V1 score packing": 3995.870064759456,
+              "C2 triangular bands": 2589.828312162492,
+              "V3 invert two 32-row blocks": 4677.007731215597,
+              "C4/C5 quadrant and V6 RHS": 5393.83066245701,
+              "C7 W and U": 2290.2316726308254
+            },
+            "1": {
+              "V0 gate and prefix": 1296.4762606336235,
+              "V1 score packing": 1892.4876073730925,
+              "C2 triangular bands": 2186.991366636439,
+              "V3 invert two 32-row blocks": 4354.898304750387,
+              "C4/C5 quadrant and V6 RHS": 1488.556712083701,
+              "C7 W and U": 1252.561892876245
+            }
+          }
+        },
+        {
+          "family": "chunk_fwd_h",
+          "active_aic": 2,
+          "launched_aiv": 4,
+          "aiv_mover": false,
+          "issued_mmad_ops": 10485760,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "128x128x16:bf16": 2,
+            "128x128x64:bf16": 2,
+            "16x128x128:bf16": 2,
+            "64x128x128:bf16": 2
+          },
+          "dma_bytes": {
+            "L0C->UB": 328704,
+            "L1->L0A": 81920,
+            "L1->L0B": 172032,
+            "OUT->L1": 230912,
+            "OUT->UB": 297472,
+            "UB->OUT": 328704
+          },
+          "dma_descriptors": {
+            "L0C->UB": 8,
+            "L1->L0A": 8,
+            "L1->L0B": 8,
+            "OUT->L1": 16,
+            "OUT->UB": 12,
+            "UB->OUT": 14
+          },
+          "estimated_rvec_subqueue_records": {
+            "RVECEX": 7516,
+            "RVECLD": 3098,
+            "RVECLP": 36,
+            "RVECST": 2066,
+            "RVECSU": 20
+          },
+          "first_payload_cycles": 895,
+          "max_core_head_chunks": 2,
+          "device_us": 8.361108874294947,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "(64, True, False)": 1,
+            "(1, False, True)": 1
+          },
+          "representative_tile_phase_cycles": {
+            "(64, True, False)": {
+              "FP32 initial state to BF16 H": 2594.4787342080717,
+              "S0 W times H": 2240.7709017891666,
+              "S1 corrected value": 1526.9366391009407,
+              "S2 outer product": 2009.5791563051134,
+              "S3 update recurrent state": 1123.4456817656487
+            },
+            "(1, False, True)": {
+              "S0 W times H": 1502.990131006398,
+              "S1 corrected value": 760.8726526907644,
+              "S2 outer product": 1065.4750279086516,
+              "S3 update recurrent state": 1330.447048956149
+            }
+          }
+        },
+        {
+          "family": "chunk_kda_fwd_finalize",
+          "active_aic": 4,
+          "launched_aiv": 0,
+          "aiv_mover": false,
+          "issued_mmad_ops": 6357504,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "1x128x128:bf16": 2,
+            "1x128x1:bf16": 2,
+            "64x128x128:bf16": 2,
+            "64x128x64:bf16": 2
+          },
+          "dma_bytes": {
+            "L0C->OUT": 66560,
+            "L1->L0A": 58368,
+            "L1->L0B": 172032,
+            "OUT->L1": 214020
+          },
+          "dma_descriptors": {
+            "L0C->OUT": 4,
+            "L1->L0A": 8,
+            "L1->L0B": 8,
+            "OUT->L1": 16
+          },
+          "estimated_rvec_subqueue_records": {},
+          "first_payload_cycles": 3121,
+          "max_core_head_chunks": 1,
+          "device_us": 3.444968920947792,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "64": 1
+          },
+          "representative_tile_phase_cycles": {
+            "64": {
+              "Q, H, Aqk and value": 1960.8940843783307,
+              "QH plus AqkV": 736.5173988618981,
+              "output": 382.5325744657972
+            },
+            "1": {
+              "Q, H, Aqk and value": 1103.0439677813306,
+              "QH plus AqkV": 424.6104700483388,
+              "output": 178.76560363764844
+            }
+          }
+        }
+      ],
+      "serialized_device_us": 29.905056790406768,
+      "scope": "three main V2 kernels only, no auxiliary launches or inter-launch intervals",
+      "uncalibrated": [
+        "cross-head overlap",
+        "TF32 throughput",
+        "HBM spill and cache reuse",
+        "AIV input-mover finalization",
+        "970 physical mapping"
+      ]
+    },
+    {
+      "shape": [
+        1,
+        129,
+        3,
+        3,
+        128,
+        128
+      ],
+      "chip": "Ascend950DT_9582",
+      "dtype": "bf16",
+      "stages": [
+        {
+          "family": "chunk_kda_fwd_prepare",
+          "active_aic": 9,
+          "launched_aiv": 18,
+          "aiv_mover": false,
+          "issued_mmad_ops": 23199744,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "32x128x32:bf16": 6,
+            "32x16x128:bf16": 9,
+            "32x32x128:bf16": 6,
+            "32x32x32:f32_tf32": 12,
+            "32x48x128:bf16": 6,
+            "32x64x128:bf16": 6,
+            "64x128x64:bf16": 12
+          },
+          "dma_bytes": {
+            "L0C->L1": 24576,
+            "L0C->OUT": 445440,
+            "L0C->UB": 129024,
+            "L1->L0A": 325632,
+            "L1->L0B": 552960,
+            "OUT->L1": 1081344,
+            "OUT->UB": 799632,
+            "UB->OUT": 1787136
+          },
+          "dma_descriptors": {
+            "L0C->L1": 6,
+            "L0C->OUT": 30,
+            "L0C->UB": 27,
+            "L1->L0A": 75,
+            "L1->L0B": 57,
+            "OUT->L1": 105,
+            "OUT->UB": 108,
+            "UB->OUT": 135
+          },
+          "estimated_rvec_subqueue_records": {
+            "RVECEX": 166086,
+            "RVECLD": 61860,
+            "RVECLP": 1332,
+            "RVECST": 22092,
+            "RVECSU": 8364
+          },
+          "first_payload_cycles": 9952,
+          "max_core_head_chunks": 1,
+          "device_us": 19.749411142635836,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "64": 1
+          },
+          "representative_tile_phase_cycles": {
+            "64": {
+              "V0 gate and prefix": 3680.593144376685,
+              "V1 score packing": 3998.518679816274,
+              "C2 triangular bands": 2589.9270481323597,
+              "V3 invert two 32-row blocks": 4678.642141726961,
+              "C4/C5 quadrant and V6 RHS": 5396.2207547865555,
+              "C7 W and U": 2290.626616510298
+            },
+            "1": {
+              "V0 gate and prefix": 1296.501118588169,
+              "V1 score packing": 1892.5186798162742,
+              "C2 triangular bands": 2187.016050628906,
+              "V3 invert two 32-row blocks": 4356.258656312887,
+              "C4/C5 quadrant and V6 RHS": 1488.597727708701,
+              "C7 W and U": 1252.6606288461132
+            }
+          }
+        },
+        {
+          "family": "chunk_fwd_h",
+          "active_aic": 3,
+          "launched_aiv": 6,
+          "aiv_mover": false,
+          "issued_mmad_ops": 28311552,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "128x128x16:bf16": 3,
+            "128x128x64:bf16": 6,
+            "16x128x128:bf16": 3,
+            "64x128x128:bf16": 6
+          },
+          "dma_bytes": {
+            "L0C->UB": 787968,
+            "L1->L0A": 221184,
+            "L1->L0B": 405504,
+            "OUT->L1": 592128,
+            "OUT->UB": 496896,
+            "UB->OUT": 689664
+          },
+          "dma_descriptors": {
+            "L0C->UB": 18,
+            "L1->L0A": 18,
+            "L1->L0B": 18,
+            "OUT->L1": 36,
+            "OUT->UB": 24,
+            "UB->OUT": 30
+          },
+          "estimated_rvec_subqueue_records": {
+            "RVECEX": 17076,
+            "RVECLD": 6963,
+            "RVECLP": 75,
+            "RVECST": 4641,
+            "RVECSU": 42
+          },
+          "first_payload_cycles": 895,
+          "max_core_head_chunks": 3,
+          "device_us": 13.305620753706249,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "(64, True, False)": 1,
+            "(64, False, False)": 1,
+            "(1, False, True)": 1
+          },
+          "representative_tile_phase_cycles": {
+            "(64, True, False)": {
+              "FP32 initial state to BF16 H": 2594.7186134694352,
+              "S0 W times H": 2241.1658456686396,
+              "S1 corrected value": 1527.216291089577,
+              "S2 outer product": 2009.974100184586,
+              "S3 update recurrent state": 1123.7669708281487
+            },
+            "(64, False, False)": {
+              "S0 W times H": 2241.1658456686396,
+              "S1 corrected value": 1527.216291089577,
+              "S2 outer product": 2009.974100184586,
+              "S3 update recurrent state": 1123.7669708281487
+            },
+            "(1, False, True)": {
+              "S0 W times H": 1503.0888669762662,
+              "S1 corrected value": 760.8782457305372,
+              "S2 outer product": 1065.5737638785197,
+              "S3 update recurrent state": 1330.768338018649
+            }
+          }
+        },
+        {
+          "family": "chunk_kda_fwd_finalize",
+          "active_aic": 9,
+          "launched_aiv": 0,
+          "aiv_mover": false,
+          "issued_mmad_ops": 18973440,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "1x128x128:bf16": 3,
+            "1x128x1:bf16": 3,
+            "64x128x128:bf16": 6,
+            "64x128x64:bf16": 6
+          },
+          "dma_bytes": {
+            "L0C->OUT": 198144,
+            "L1->L0A": 161280,
+            "L1->L0B": 405504,
+            "OUT->L1": 542214
+          },
+          "dma_descriptors": {
+            "L0C->OUT": 9,
+            "L1->L0A": 18,
+            "L1->L0B": 18,
+            "OUT->L1": 36
+          },
+          "estimated_rvec_subqueue_records": {},
+          "first_payload_cycles": 3121,
+          "max_core_head_chunks": 1,
+          "device_us": 3.7585069536516578,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "64": 1
+          },
+          "representative_tile_phase_cycles": {
+            "64": {
+              "Q, H, Aqk and value": 1960.8940843783307,
+              "QH plus AqkV": 737.1098146811072,
+              "output": 382.5325744657972
+            },
+            "1": {
+              "Q, H, Aqk and value": 1103.0439677813306,
+              "QH plus AqkV": 424.72154801444043,
+              "output": 178.76560363764844
+            }
+          }
+        }
+      ],
+      "serialized_device_us": 36.81353884999375,
+      "scope": "three main V2 kernels only, no auxiliary launches or inter-launch intervals",
+      "uncalibrated": [
+        "cross-head overlap",
+        "TF32 throughput",
+        "HBM spill and cache reuse",
+        "AIV input-mover finalization",
+        "970 physical mapping"
+      ]
+    },
+    {
+      "shape": [
+        1,
+        129,
+        3,
+        3,
+        128,
+        128
+      ],
+      "chip": "Ascend950PR_957b",
+      "dtype": "bf16",
+      "stages": [
+        {
+          "family": "chunk_kda_fwd_prepare",
+          "active_aic": 9,
+          "launched_aiv": 18,
+          "aiv_mover": false,
+          "issued_mmad_ops": 23199744,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "32x128x32:bf16": 6,
+            "32x16x128:bf16": 9,
+            "32x32x128:bf16": 6,
+            "32x32x32:f32_tf32": 12,
+            "32x48x128:bf16": 6,
+            "32x64x128:bf16": 6,
+            "64x128x64:bf16": 12
+          },
+          "dma_bytes": {
+            "L0C->L1": 24576,
+            "L0C->OUT": 445440,
+            "L0C->UB": 129024,
+            "L1->L0A": 325632,
+            "L1->L0B": 552960,
+            "OUT->L1": 1081344,
+            "OUT->UB": 799632,
+            "UB->OUT": 1787136
+          },
+          "dma_descriptors": {
+            "L0C->L1": 6,
+            "L0C->OUT": 30,
+            "L0C->UB": 27,
+            "L1->L0A": 75,
+            "L1->L0B": 57,
+            "OUT->L1": 105,
+            "OUT->UB": 108,
+            "UB->OUT": 135
+          },
+          "estimated_rvec_subqueue_records": {
+            "RVECEX": 166086,
+            "RVECLD": 61860,
+            "RVECLP": 1332,
+            "RVECST": 22092,
+            "RVECSU": 8364
+          },
+          "first_payload_cycles": 9952,
+          "max_core_head_chunks": 1,
+          "device_us": 19.853726030646378,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "64": 1
+          },
+          "representative_tile_phase_cycles": {
+            "64": {
+              "V0 gate and prefix": 3706.815970463641,
+              "V1 score packing": 4056.426288511926,
+              "C2 triangular bands": 2589.9270481323597,
+              "V3 invert two 32-row blocks": 4714.375837379135,
+              "C4/C5 quadrant and V6 RHS": 5448.476189569164,
+              "C7 W and U": 2290.626616510298
+            },
+            "1": {
+              "V0 gate and prefix": 1297.0445968490385,
+              "V1 score packing": 1893.1980276423612,
+              "C2 triangular bands": 2187.016050628906,
+              "V3 invert two 32-row blocks": 4386.000504138974,
+              "C4/C5 quadrant and V6 RHS": 1489.4944668391358,
+              "C7 W and U": 1252.6606288461132
+            }
+          }
+        },
+        {
+          "family": "chunk_fwd_h",
+          "active_aic": 3,
+          "launched_aiv": 6,
+          "aiv_mover": false,
+          "issued_mmad_ops": 28311552,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "128x128x16:bf16": 3,
+            "128x128x64:bf16": 6,
+            "16x128x128:bf16": 3,
+            "64x128x128:bf16": 6
+          },
+          "dma_bytes": {
+            "L0C->UB": 787968,
+            "L1->L0A": 221184,
+            "L1->L0B": 405504,
+            "OUT->L1": 592128,
+            "OUT->UB": 496896,
+            "UB->OUT": 689664
+          },
+          "dma_descriptors": {
+            "L0C->UB": 18,
+            "L1->L0A": 18,
+            "L1->L0B": 18,
+            "OUT->L1": 36,
+            "OUT->UB": 24,
+            "UB->OUT": 30
+          },
+          "estimated_rvec_subqueue_records": {
+            "RVECEX": 17076,
+            "RVECLD": 6963,
+            "RVECLP": 75,
+            "RVECST": 4641,
+            "RVECSU": 42
+          },
+          "first_payload_cycles": 895,
+          "max_core_head_chunks": 3,
+          "device_us": 13.329056195076474,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "(64, True, False)": 1,
+            "(64, False, False)": 1,
+            "(1, False, True)": 1
+          },
+          "representative_tile_phase_cycles": {
+            "(64, True, False)": {
+              "FP32 initial state to BF16 H": 2599.9631786868267,
+              "S0 W times H": 2241.1658456686396,
+              "S1 corrected value": 1533.3304215243595,
+              "S2 outer product": 2009.974100184586,
+              "S3 update recurrent state": 1130.7914273498877
+            },
+            "(64, False, False)": {
+              "S0 W times H": 2241.1658456686396,
+              "S1 corrected value": 1533.3304215243595,
+              "S2 outer product": 2009.974100184586,
+              "S3 update recurrent state": 1130.7914273498877
+            },
+            "(1, False, True)": {
+              "S0 W times H": 1503.0888669762662,
+              "S1 corrected value": 761.0005283392329,
+              "S2 outer product": 1065.5737638785197,
+              "S3 update recurrent state": 1337.792794540388
+            }
+          }
+        },
+        {
+          "family": "chunk_kda_fwd_finalize",
+          "active_aic": 9,
+          "launched_aiv": 0,
+          "aiv_mover": false,
+          "issued_mmad_ops": 18973440,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "1x128x128:bf16": 3,
+            "1x128x1:bf16": 3,
+            "64x128x128:bf16": 6,
+            "64x128x64:bf16": 6
+          },
+          "dma_bytes": {
+            "L0C->OUT": 198144,
+            "L1->L0A": 161280,
+            "L1->L0B": 405504,
+            "OUT->L1": 542214
+          },
+          "dma_descriptors": {
+            "L0C->OUT": 9,
+            "L1->L0A": 18,
+            "L1->L0B": 18,
+            "OUT->L1": 36
+          },
+          "estimated_rvec_subqueue_records": {},
+          "first_payload_cycles": 3121,
+          "max_core_head_chunks": 1,
+          "device_us": 3.7585069536516578,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "64": 1
+          },
+          "representative_tile_phase_cycles": {
+            "64": {
+              "Q, H, Aqk and value": 1960.8940843783307,
+              "QH plus AqkV": 737.1098146811072,
+              "output": 382.5325744657972
+            },
+            "1": {
+              "Q, H, Aqk and value": 1103.0439677813306,
+              "QH plus AqkV": 424.72154801444043,
+              "output": 178.76560363764844
+            }
+          }
+        }
+      ],
+      "serialized_device_us": 36.94128917937451,
+      "scope": "three main V2 kernels only, no auxiliary launches or inter-launch intervals",
+      "uncalibrated": [
+        "cross-head overlap",
+        "TF32 throughput",
+        "HBM spill and cache reuse",
+        "AIV input-mover finalization",
+        "970 physical mapping"
+      ]
+    },
+    {
+      "shape": [
+        1,
+        129,
+        3,
+        3,
+        128,
+        128
+      ],
+      "chip": "Ascend970DT",
+      "dtype": "bf16",
+      "stages": [
+        {
+          "family": "chunk_kda_fwd_prepare",
+          "active_aic": 9,
+          "launched_aiv": 18,
+          "aiv_mover": false,
+          "issued_mmad_ops": 23199744,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "32x128x32:bf16": 6,
+            "32x16x128:bf16": 9,
+            "32x32x128:bf16": 6,
+            "32x32x32:f32_tf32": 12,
+            "32x48x128:bf16": 6,
+            "32x64x128:bf16": 6,
+            "64x128x64:bf16": 12
+          },
+          "dma_bytes": {
+            "L0C->L1": 24576,
+            "L0C->OUT": 445440,
+            "L0C->UB": 129024,
+            "L1->L0A": 325632,
+            "L1->L0B": 552960,
+            "OUT->L1": 1081344,
+            "OUT->UB": 799632,
+            "UB->OUT": 1787136
+          },
+          "dma_descriptors": {
+            "L0C->L1": 6,
+            "L0C->OUT": 30,
+            "L0C->UB": 27,
+            "L1->L0A": 75,
+            "L1->L0B": 57,
+            "OUT->L1": 105,
+            "OUT->UB": 108,
+            "UB->OUT": 135
+          },
+          "estimated_rvec_subqueue_records": {
+            "RVECEX": 166086,
+            "RVECLD": 61860,
+            "RVECLP": 1332,
+            "RVECST": 22092,
+            "RVECSU": 8364
+          },
+          "first_payload_cycles": 9952,
+          "max_core_head_chunks": 1,
+          "device_us": 18.098978995164025,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "64": 1
+          },
+          "representative_tile_phase_cycles": {
+            "64": {
+              "V0 gate and prefix": 3679.393748069867,
+              "V1 score packing": 3995.870064759456,
+              "C2 triangular bands": 2589.828312162492,
+              "V3 invert two 32-row blocks": 4677.007731215597,
+              "C4/C5 quadrant and V6 RHS": 5393.83066245701,
+              "C7 W and U": 2290.2316726308254
+            },
+            "1": {
+              "V0 gate and prefix": 1296.4762606336235,
+              "V1 score packing": 1892.4876073730925,
+              "C2 triangular bands": 2186.991366636439,
+              "V3 invert two 32-row blocks": 4354.898304750387,
+              "C4/C5 quadrant and V6 RHS": 1488.556712083701,
+              "C7 W and U": 1252.561892876245
+            }
+          }
+        },
+        {
+          "family": "chunk_fwd_h",
+          "active_aic": 3,
+          "launched_aiv": 6,
+          "aiv_mover": false,
+          "issued_mmad_ops": 28311552,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "128x128x16:bf16": 3,
+            "128x128x64:bf16": 6,
+            "16x128x128:bf16": 3,
+            "64x128x128:bf16": 6
+          },
+          "dma_bytes": {
+            "L0C->UB": 787968,
+            "L1->L0A": 221184,
+            "L1->L0B": 405504,
+            "OUT->L1": 592128,
+            "OUT->UB": 496896,
+            "UB->OUT": 689664
+          },
+          "dma_descriptors": {
+            "L0C->UB": 18,
+            "L1->L0A": 18,
+            "L1->L0B": 18,
+            "OUT->L1": 36,
+            "OUT->UB": 24,
+            "UB->OUT": 30
+          },
+          "estimated_rvec_subqueue_records": {
+            "RVECEX": 17076,
+            "RVECLD": 6963,
+            "RVECLP": 75,
+            "RVECST": 4641,
+            "RVECSU": 42
+          },
+          "first_payload_cycles": 895,
+          "max_core_head_chunks": 3,
+          "device_us": 12.194849084828764,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "(64, True, False)": 1,
+            "(64, False, False)": 1,
+            "(1, False, True)": 1
+          },
+          "representative_tile_phase_cycles": {
+            "(64, True, False)": {
+              "FP32 initial state to BF16 H": 2594.4787342080717,
+              "S0 W times H": 2240.7709017891666,
+              "S1 corrected value": 1526.9366391009407,
+              "S2 outer product": 2009.5791563051134,
+              "S3 update recurrent state": 1123.4456817656487
+            },
+            "(64, False, False)": {
+              "S0 W times H": 2240.7709017891666,
+              "S1 corrected value": 1526.9366391009407,
+              "S2 outer product": 2009.5791563051134,
+              "S3 update recurrent state": 1123.4456817656487
+            },
+            "(1, False, True)": {
+              "S0 W times H": 1502.990131006398,
+              "S1 corrected value": 760.8726526907644,
+              "S2 outer product": 1065.4750279086516,
+              "S3 update recurrent state": 1330.447048956149
+            }
+          }
+        },
+        {
+          "family": "chunk_kda_fwd_finalize",
+          "active_aic": 9,
+          "launched_aiv": 0,
+          "aiv_mover": false,
+          "issued_mmad_ops": 18973440,
+          "timing_evidence": "resource candidate",
+          "chip_group_assumption": "two physical AIV per mixed workgroup",
+          "mmads": {
+            "1x128x128:bf16": 3,
+            "1x128x1:bf16": 3,
+            "64x128x128:bf16": 6,
+            "64x128x64:bf16": 6
+          },
+          "dma_bytes": {
+            "L0C->OUT": 198144,
+            "L1->L0A": 161280,
+            "L1->L0B": 405504,
+            "OUT->L1": 542214
+          },
+          "dma_descriptors": {
+            "L0C->OUT": 9,
+            "L1->L0A": 18,
+            "L1->L0B": 18,
+            "OUT->L1": 36
+          },
+          "estimated_rvec_subqueue_records": {},
+          "first_payload_cycles": 3121,
+          "max_core_head_chunks": 1,
+          "device_us": 3.444968920947792,
+          "hbm_spill_scenario_us": 0.0,
+          "critical_core": 0,
+          "critical_core_head_chunks": {
+            "64": 1
+          },
+          "representative_tile_phase_cycles": {
+            "64": {
+              "Q, H, Aqk and value": 1960.8940843783307,
+              "QH plus AqkV": 736.5173988618981,
+              "output": 382.5325744657972
+            },
+            "1": {
+              "Q, H, Aqk and value": 1103.0439677813306,
+              "QH plus AqkV": 424.6104700483388,
+              "output": 178.76560363764844
+            }
+          }
+        }
+      ],
+      "serialized_device_us": 33.73879700094058,
+      "scope": "three main V2 kernels only, no auxiliary launches or inter-launch intervals",
+      "uncalibrated": [
+        "cross-head overlap",
+        "TF32 throughput",
+        "HBM spill and cache reuse",
+        "AIV input-mover finalization",
+        "970 physical mapping"
+      ]
+    }
+  ]
+}

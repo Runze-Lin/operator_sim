@@ -36,6 +36,9 @@
 
 先冻结芯片配置、输入张量、分块、每类资源价格和预测，再在同一 SKU 调实际库算子，校验数值，算全核最早指令至最后退休的微秒数。上图由这些冻结量产生，下图将末核的指令按同一页或 UB 块归行；两图使用同一时标。对于只能观测互斥资源贡献的路线，只报告阶段预算和可能的状态窗口。在线函数只读取芯片配置和已打包的参数。[模型与 CA 对照图集](pipeline-comparisons.md)
 
+**同轴图的读法。** 横轴取全核第一条设备指令为零。上栏独立使用目标芯片的分核和阶段预算，下栏取真实最后退休核的对应工作块；刻度表示发起，条宽表示服务或描述符的发起至退休。对反馈等待、重叠与尾部，可先核对对应块的首次读或首次 MMAD，再沿着同一个块看到最后写回。多个串行 kernel 各有独立的计时原点，整次设备耗时按各完整窗口求和。大 shape 只展开部分行时，保留每一轮的发起刻度和完整时间轴。Flash 的 PR Cast 展示了一个细节：真实末核和预测最忙核均跑 57 轮，尾部却分别为 15,656 和 15,664 个元素。两栏分别标注各自数量。[Matmul 的两波两页](examples/matmul.md) · [三个模型的六张长 prefill 算例](../results/v0.23/prefill/README.md) · [KDA V2 三个串行 kernel 的独立实测图](../results/kda-resource23/950dt-t5-holdout-comparison.png)
+
+
 本版默认 Matmul 与融合列偏置 Addmm 都在目标卡重新分波。对只给 shape 的 RMSNorm 和 mHC Post，先计算初次、扩核和热态三种窗口，再折合一个估计值。已知前序调用时，系统可选用与本次调度匹配的状态。每条路线、每个 SKU 分别用 WAPE ≤20%、最大绝对相对误差 ≤40% 验收；开发回放、未满十形和缺 CA 分别记录。[当前逐算子验收](error-analysis.md)
 
 隔离部署 v0.22 wheel 后，用逐算子 CA 台账、每卡 B8×32k／128k／256k 和有序 RMS 调用检查在线延迟。每个不同输入首次进入常规 API 时单独计时，导入开销另记录。[逐路线的中位、P95、最大值](../results/v0.22/wheel-check.json)
@@ -921,7 +924,21 @@ Post 的 J 是对每个 token 进一步沿 D 切出的片数。初值为 1；当
 
 单次打包 T 超过 256、其余属性成立且 D≤16384 时，系统入口保留原有整段流水重叠估计，并标记 `extrapolation`。本轮独立误差只适用于新测范围。
 
+### vLLM HcPost 的 token 分核
+
+在 DeepSeek 的 attention 与 FFN 之后，锁定的 vLLM 实际进入 `aclnnHcPost`。公开 `estimate("mhc_post", [B,S,4,D], {"implementation":"vllm_hc_post"})` 返回这条路的工作量和分核。令 T=BS、H=4、D=hidden。输出共 THD 个 BF16，每个输出是一路子层输出和 H 路残差的线性组合，共 THD(2H+1) 次有效 FP32 乘加操作（乘和加分别计一次）。读写字节分别为 2TD(1+H)+4T(H+H²) 与 2THD；FP32 系数在一行内复用。A=min(T,AIV数) 个核按整行分配，每核最多 ⌈T/A⌉ 行，每行固定拆成 ⌊D/4096⌋ 个满块及最多一个尾块。4096 来自 arch35 源码，尾块写有效数据，但 BF16 转换仍处理整块缓冲。换芯片可替换核数；新代实现继续用此分块是一个假设。该合同的全窗和真实 ELF 已在双端核验，公开接口尚仅返回工作量。CANN ops-transformer 的 `aclnnMhcPost` 小 token 分通道规则另见本章此前小节。[Flash 与 Pro 的真实接口、完整输入输出和 CA](examples/hc_post_vllm.md)
+
 ## 9. KDA：状态递推与chunk前向
+
+### FLA 26.9.1 的三段 Chunk KDA
+
+显式选择 `implementation=fla_26_9_1_v2` 时，公开接口按 BF16、块长 64、QK/V 维度各 128 的三段 ABI 计时。模型实现和芯片参数随 wheel 安装。默认小形融合 V1 的数值与计时资格单独维护。对 Kimi 真实 dispatch，用本次提交的每条长度与本地头数判断是否进入 V2。小形直接调用 V2 用于核对该 ABI 的阶段计数；真实业务触发 V2 的大 prefill 仍属外推。
+
+- **工作量与分核。** 对每个实际长度 n≤64 的块，Prepare 按 16 行 band 生成三角得分和 32 行对角块的求逆，按源码的 m/n/k 枚举 MMAD；FwdH 按序列×头分配整条状态链，同一头的连续块串行；Finalize 按有效行计算最终 QH 和 AqkV。V2 的三段可以用不同的 AIC/AIV 数。B8、32k、TP8 后 12 头对应 49,152 个头×块。Finalize 的大输入有另一个 AIV 搬运分支。
+- **资源时间。** 指令组每方向的 DMA 周期为 `L + Σb/R + 2(k−1)`，b 为描述符字节、R 为目标核每周期服务字节、L 为 DT 小样本残余响应周期、k 为组内描述符数。矩阵按实际发射几何对齐，以每核每周期指定精度的算力计价；向量和控制分开计价。块内按可重叠的数据搬运与计算、跨段按依赖串行，分别算出三段最忙核的设备窗，再把三段相加。FP32 逆矩阵分支明确关闭 HF32；缺原生 FP32 MMAD 速率时，模型暂取 BF16 的一半。970DT 暂沿用每混合组两个 AIV 与未知的端口/响应参数。每项价格、阶段公式、芯片假设和局限见算例。[开发参数、阶段计算和外推边界](../results/kda-resource23/modeling.md)
+- **算例。** B1、5 token、两个本地头，950DT 预测 Prepare 13.904、FwdH 5.411、Finalize 2.961 µs。CA 各为 15.395、4.435、2.992 µs，准备阶段低估与状态阶段高估互相抵消。上方工作块直接对应下方同一工作组的 MMAD/VF/DMA，整窗比较不含 kernel 间的主机调度间隙。[图与可直接运行的输入](examples/kda_chunk.md)
+
+
 
 ### 9.1 Recurrent
 
@@ -1157,3 +1174,8 @@ WAPE=\sum_i|\widehat T_i-T_i|/\sum_iT_i.
 v0.20 的独立安装基准在 wheel 上对三种芯片做了 1,089 个不同的单次查询。中位 0.083 ms，P95 0.548 ms，最慢 2.933 ms。包括 8×256k 的整批输入。[逐算子调用开销](../results/v0.20/wheel-smoke.json)
 
 系统框架使用 `operator_model.estimate(op, shape, attrs)` 取得设备微秒数和适用状态。当前首先覆盖 CANN 9.2.1 的 Ascend950DT_9582。可用输入、可选上下文、缺少合格时延时的调度器回退见[系统接入指南](integration.md)。各条路径的独立样本、实际库入口、误差及 CPU 端所需查询时间见[当前 CA 校验](error-analysis.md)。采集、冻结和复现实验的流程见[开发维护指南](../development/README.md)。
+
+
+### RMSNorm 的可选前序范围
+
+`estimate_rms_history_band(shape, chip=...)` 逐一给出 H=0…A 的预测 T(H)。H 表示之前同流同族已经覆盖的 AIV 数；A 是这个输入的活跃 AIV 数。以 0 表示冷启动，超过 A 的前缀等价于 H=A。调用者可读回所有 T(H) 及最小、最大值。实现对具有相同工作量与分区状态的通道复用资源服务计算。区间只覆盖已建模的历史条件，CA 仍会有残差。日常系统仿真优先在每个 rank/流使用 `OperatorStream` 随调用顺序维护历史。[同形配对、模型范围和调用示范](examples/rmsnorm.md)

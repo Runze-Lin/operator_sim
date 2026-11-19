@@ -1,0 +1,388 @@
+{
+  "qualified": true,
+  "actual_sku_verified": true,
+  "memory_model": "lpddr5_6400M_bailu.ini",
+  "host_api_verified": true,
+  "golden_qualified": true,
+  "output_groups": {
+    "attention": [
+      2176,
+      0
+    ],
+    "aqk": [
+      1088,
+      0
+    ],
+    "akk": [
+      1088,
+      0
+    ],
+    "state_vk": [
+      16384,
+      0
+    ]
+  },
+  "correct_initial_state": true,
+  "sync_errors": 0,
+  "sync_examples": [],
+  "exact_stage_elfs": true,
+  "full_windows": true,
+  "chronological": true,
+  "process_complete": true,
+  "observed_kernels": [
+    "ChunkKdaFwdPrepare_171e9a19df4c0d44ca00a177d8fe300c_32513546_mix_aic",
+    "ChunkFwdH_72371232203476155baf45810c33a7f9_7710_mix_aic",
+    "ChunkKdaFwdFinalize_c0d447f32579acd296e1c16d6d9c7d38_0"
+  ],
+  "stages": [
+    {
+      "kernel": "ChunkKdaFwdPrepare_171e9a19df4c0d44ca00a177d8fe300c_32513546_mix_aic",
+      "ordinal": 0,
+      "family": "chunk_kda_fwd_prepare",
+      "label": "official FLA V2 stage",
+      "first_tick": 6127,
+      "last_tick": 32403,
+      "ca_us": 15.924848484848486,
+      "active_aic": 1,
+      "active_aiv": 2,
+      "mmads": 4,
+      "resource": {
+        "descriptor_bytes": {
+          "OUT->UB": 35496,
+          "OUT->L1": 98304,
+          "L1->L0A": 18432,
+          "L1->L0B": 28672,
+          "L0C->UB": 6144,
+          "L0C->OUT": 17408,
+          "UB->OUT": 141056
+        },
+        "mmad_issued_shapes": {
+          "32x16x128": 1,
+          "32x32x128": 1,
+          "32x128x32": 2
+        },
+        "issued_mmad_ops": 917504,
+        "queue_instruction_counts": {
+          "SCALAR": 5502,
+          "FLOWCTRL": 427,
+          "MTE2": 33,
+          "MTE3": 17,
+          "PUSHQ": 23,
+          "MTE1": 10,
+          "CUBE": 4,
+          "FIXP": 8,
+          "RVECEX": 9644,
+          "RVECSU": 827,
+          "RVECLD": 5187,
+          "RVECLP": 148,
+          "RVECST": 1794
+        }
+      },
+      "cores": {
+        "core0.veccore1": {
+          "first_tick": 6223,
+          "last_tick": 17878,
+          "end": [
+            "0x915a11b3ac",
+            17871,
+            17871
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              17873,
+              17878
+            ]
+          ],
+          "official_us": "7.06",
+          "mmads": 0,
+          "phys_digest": "83b4898b5cde0b9bc7d7372695f457997c252399bc4c22771f1e6e24033c4ad6",
+          "sync_digest": "c05e4a384b00efbb502dd449397fe7103411b0092eaabdabe6fa388fbaa447ee",
+          "shard_sha256": "d7e92f922f155aaffddb031f235034025c46040388b0fd6ab2fb2aa2c3588bcc"
+        },
+        "core0.cubecore0": {
+          "first_tick": 6127,
+          "last_tick": 32403,
+          "end": [
+            "0x9159079908",
+            22976,
+            22976
+          ],
+          "end_labels": [],
+          "official_us": "15.92",
+          "mmads": 4,
+          "phys_digest": "c7711982d30697c8ea401a33cfe0b3203e44c2d1ac279e2d8754b83a5e85f174",
+          "sync_digest": "f7fac276168ff4d95122cf3561bfab9121c52b456a40b9801db77bc01dcd6a49",
+          "shard_sha256": "a859452e6c603bba4c60768f116a594bf12b414fd00c73c021d86dffc1b0f252"
+        },
+        "core0.veccore0": {
+          "first_tick": 6171,
+          "last_tick": 31318,
+          "end": [
+            "0x915a11b3ac",
+            31311,
+            31311
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              31313,
+              31318
+            ]
+          ],
+          "official_us": "15.24",
+          "mmads": 0,
+          "phys_digest": "125807a60358fac03c2fd79fe26c583d5af8c0a92c62bc2e0e144f39f3c59ee8",
+          "sync_digest": "211de4059a8ae6569eb3cccef26e439d59c0a0ed45d307dd7f1b1db1a49b05ba",
+          "shard_sha256": "90b1943695de0c8ccc5837cfd3295f019970de9424c114633a7a8904ce84c71b"
+        }
+      },
+      "captured_binary": "results/kda-v23/raw/supplement-ascend950pr-t17-h1/profile/OPPROF_20261119224209_RCXBPCPOSYTGVRGU/ChunkKdaFwdPrepare_171e9a19df4c0d44ca00a177d8fe300c_32513546_mix_aic/0/dump/aicore_binary.o",
+      "device_text_sha256": "3cdc897359178d665df362b3fcb2bdacb830af2357a2e0b6f7d1f9c79f3d136a",
+      "published_names": [
+        "ChunkKdaFwdPrepare_9a5c7ba661140e04d3bf3c972e6629a6.o",
+        "ChunkKdaFwdPrepare_ab956e5eb2ff99416b2f5173e788663a.o",
+        "ChunkKdaFwdPrepare_375ce9d41fcc2d706267f3750942ed8e.o",
+        "ChunkKdaFwdPrepare_171e9a19df4c0d44ca00a177d8fe300c.o"
+      ],
+      "aggregate": "results/kda-v23/raw/supplement-ascend950pr-t17-h1/profile/OPPROF_20261119224209_RCXBPCPOSYTGVRGU/ChunkKdaFwdPrepare_171e9a19df4c0d44ca00a177d8fe300c_32513546_mix_aic/0/simulator/trace.json",
+      "aggregate_sha256": "060817a9a7fe034bfbc1b725c9f3ba7fd1db810550775bbab2d17cac46522393"
+    },
+    {
+      "kernel": "ChunkFwdH_72371232203476155baf45810c33a7f9_7710_mix_aic",
+      "ordinal": 0,
+      "family": "chunk_fwd_h",
+      "label": "official FLA V2 stage",
+      "first_tick": 37349,
+      "last_tick": 45353,
+      "ca_us": 4.850909090909091,
+      "active_aic": 1,
+      "active_aiv": 2,
+      "mmads": 2,
+      "resource": {
+        "descriptor_bytes": {
+          "OUT->L1": 45824,
+          "L1->L0A": 16384,
+          "L1->L0B": 40960,
+          "L0C->UB": 74240,
+          "OUT->UB": 135936,
+          "UB->OUT": 107008
+        },
+        "mmad_issued_shapes": {
+          "32x128x128": 1,
+          "128x128x32": 1
+        },
+        "issued_mmad_ops": 2097152,
+        "queue_instruction_counts": {
+          "SCALAR": 1754,
+          "FLOWCTRL": 160,
+          "MTE1": 7,
+          "MTE2": 18,
+          "CUBE": 2,
+          "FIXP": 4,
+          "PUSHQ": 6,
+          "RVECLP": 11,
+          "RVECEX": 2048,
+          "RVECLD": 841,
+          "RVECST": 583,
+          "RVECSU": 6,
+          "MTE3": 4
+        }
+      },
+      "cores": {
+        "core0.veccore1": {
+          "first_tick": 37415,
+          "last_tick": 38881,
+          "end": [
+            "0x9000d75724",
+            38874,
+            38874
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              38876,
+              38881
+            ]
+          ],
+          "official_us": "0.89",
+          "mmads": 0,
+          "phys_digest": "0143c875b874e0438ddf8b9cb0d99509c21229f1c89d97a1b11bb376c71f7e37",
+          "sync_digest": "f5504630a1bca9e1f0028f0f4daf92c154c2830bfd32a2c081674c905d0451f4",
+          "shard_sha256": "ac94ef73ca69acd26523dc216b603b36626b9bfe08e7e2376ba60f9ad27793e6"
+        },
+        "core0.cubecore0": {
+          "first_tick": 37489,
+          "last_tick": 44376,
+          "end": [
+            "0x9000d36578",
+            41219,
+            41219
+          ],
+          "end_labels": [],
+          "official_us": "4.17",
+          "mmads": 2,
+          "phys_digest": "fd86c546a6b8399070b69bf9675a1939b77ba21080e468a442bfe6d6b1115904",
+          "sync_digest": "6210bbc867bed11edd52f6023aa77a1390a2d40f6a2328b8479d009c783fa267",
+          "shard_sha256": "1248ef40bf8d8ffeab52f079867681a77e07094cf4984a04c823bdd47743b49a"
+        },
+        "core0.veccore0": {
+          "first_tick": 37349,
+          "last_tick": 45353,
+          "end": [
+            "0x9000d75724",
+            39288,
+            39288
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              45348,
+              45353
+            ]
+          ],
+          "official_us": "4.85",
+          "mmads": 0,
+          "phys_digest": "f4f82419a3ff66ef066a2b2f56c52c58aee1e6c3ec04fa9354477bb68ef585bc",
+          "sync_digest": "c83ca5df9da6ca5d6e07124698cdbb30b587aa5889f391ec9b80a8e16652cd32",
+          "shard_sha256": "c8ae55c5a7ec7d6c50183ccfaf6f523ec6c3a2443a6a41867de06d862ef900bd"
+        }
+      },
+      "captured_binary": "results/kda-v23/raw/supplement-ascend950pr-t17-h1/profile/OPPROF_20261119224209_RCXBPCPOSYTGVRGU/ChunkFwdH_72371232203476155baf45810c33a7f9_7710_mix_aic/0/dump/aicore_binary.o",
+      "device_text_sha256": "db5714f85fe237be6eed9641dec19c925c9e44d729fbdadf62b38cf4ce966da5",
+      "published_names": [
+        "ChunkFwdH_72371232203476155baf45810c33a7f9.o"
+      ],
+      "aggregate": "results/kda-v23/raw/supplement-ascend950pr-t17-h1/profile/OPPROF_20261119224209_RCXBPCPOSYTGVRGU/ChunkFwdH_72371232203476155baf45810c33a7f9_7710_mix_aic/0/simulator/trace.json",
+      "aggregate_sha256": "4699de8b2c214259e85497da9b84ee004dd9edfa740b92ac9507ac202b6c980f"
+    },
+    {
+      "kernel": "ChunkKdaFwdFinalize_c0d447f32579acd296e1c16d6d9c7d38_0",
+      "ordinal": 0,
+      "family": "chunk_kda_fwd_finalize",
+      "label": "official FLA V2 stage",
+      "first_tick": 47342,
+      "last_tick": 52335,
+      "ca_us": 3.026060606060606,
+      "active_aic": 1,
+      "active_aiv": 0,
+      "mmads": 2,
+      "resource": {
+        "descriptor_bytes": {
+          "OUT->L1": 42050,
+          "L1->L0A": 10240,
+          "L1->L0B": 40960,
+          "L0C->OUT": 8704
+        },
+        "mmad_issued_shapes": {
+          "17x128x128": 1,
+          "17x128x17": 1
+        },
+        "issued_mmad_ops": 631040,
+        "queue_instruction_counts": {
+          "SCALAR": 1057,
+          "FLOWCTRL": 85,
+          "MTE1": 6,
+          "MTE2": 10,
+          "CUBE": 2,
+          "FIXP": 2
+        }
+      },
+      "cores": {
+        "core0.cubecore0": {
+          "first_tick": 47342,
+          "last_tick": 52335,
+          "end": [
+            "0x9000d7c3f0",
+            51463,
+            51463
+          ],
+          "end_labels": [],
+          "official_us": "3.03",
+          "mmads": 2,
+          "phys_digest": "01e0c9ccc5cb3777945dec04cdd27960cbc01448852d6440d0710e34e4e51a3a",
+          "sync_digest": "f94d37630af8d998e9e9915120a96ed181c73160423c0ca580024b3d3ef01a93",
+          "shard_sha256": "ebeeb30b5774a3dcaf1d83866a160e03353b2f7535f263b4894d6898d3abfc3e"
+        }
+      },
+      "captured_binary": "results/kda-v23/raw/supplement-ascend950pr-t17-h1/profile/OPPROF_20261119224209_RCXBPCPOSYTGVRGU/ChunkKdaFwdFinalize_c0d447f32579acd296e1c16d6d9c7d38_0/0/dump/aicore_binary.o",
+      "device_text_sha256": "2460a5a34f6e593d84d8b72b0d118ac867a1b7713386da64d39b107f40d64d7e",
+      "published_names": [
+        "ChunkKdaFwdFinalize_c0d447f32579acd296e1c16d6d9c7d38.o"
+      ],
+      "aggregate": "results/kda-v23/raw/supplement-ascend950pr-t17-h1/profile/OPPROF_20261119224209_RCXBPCPOSYTGVRGU/ChunkKdaFwdFinalize_c0d447f32579acd296e1c16d6d9c7d38_0/0/simulator/trace.json",
+      "aggregate_sha256": "1e4b1c718d11ea4034240bea7d5102bf99d9e457634daa7ece5da150317c8940"
+    }
+  ],
+  "serialized_device_us": 23.801818181818184,
+  "main_stages_us": 23.801818181818184,
+  "device_span_us": 28.004848484848484,
+  "log_sha256": "eac7eb599971567cc4864671326af74fc52ba8ee35c0adcbea327f295de698ae",
+  "case": {
+    "id": "supplement-ascend950pr-t17-h1",
+    "sku": "Ascend950PR_957b",
+    "shape": [
+      1,
+      17,
+      1,
+      1,
+      128,
+      128
+    ],
+    "work_items": 1,
+    "physical_memory": "lpddr5_6400M_bailu.ini",
+    "numerical_reference": "Independent rounded Prepare Aqk/Akk, original full mathematical recurrence for attention and state. All original per-output thresholds preserved.",
+    "oracle": {
+      "attention": 2176,
+      "aqk": 1088,
+      "akk": 1088,
+      "state_vk": 16384
+    }
+  },
+  "cost": {
+    "exit_code": 0,
+    "stop": null,
+    "seconds": 106.18703750008717,
+    "peak_bytes": 134705196,
+    "began": "2026-11-19T14:42:09.308908+00:00",
+    "finished": "2026-11-19T14:43:55.496009+00:00",
+    "command": [
+      "bash",
+      "/home/l00925865/operator_sim/scripts/cann-run.sh",
+      "bash",
+      "-c",
+      "source \"$1/bin/set_env.bash\"; shift; exec \"$@\"",
+      "fla",
+      "/home/l00925865/operator_sim/results/chunk-recovery/fla2691/raw/fla_npu/opp/vendors/fla_npu_transformer",
+      "msopprof",
+      "simulator",
+      "--soc-version=Ascend950PR_957b",
+      "--dump=false",
+      "--launch-count=32",
+      "--timeout=15",
+      "--output=/home/l00925865/operator_sim/results/kda-v23/raw/supplement-ascend950pr-t17-h1/profile",
+      "/home/l00925865/operator_sim/results/kda-v23/raw/precision-host/kimi-v2-aux",
+      "17",
+      "1"
+    ]
+  },
+  "registration_sha256": "bd78218dfb643b9360fc7cf05ee47723531bfc3c6dad4c5a77b5c0001f1a95f4",
+  "auxiliary_diagnostics": [
+    "auxiliary name=aqk reference=mathematical count=1088 bad=26 finite=1 max_abs=5.51548855541794e-05 h=0 t=10 column=9 got=-0.00738525390625 expected=-0.00733009902069582 max_rel_nonzero=0.835146250163917 rel_index=714",
+    "auxiliary name=akk reference=mathematical count=1088 bad=2 finite=1 max_abs=0.000352603408782334 h=0 t=9 column=4 got=-0.09521484375 expected=-0.0955674471587823 max_rel_nonzero=0.0684693559789741 rel_index=640",
+    "auxiliary name=aqk reference=published count=1088 bad=0 finite=1 max_abs=0 h=0 t=0 column=0 got=0.00787353515625 expected=0.00787353515625 max_rel_nonzero=0 rel_index=0",
+    "auxiliary name=akk reference=published count=1088 bad=0 finite=1 max_abs=0 h=0 t=0 column=0 got=1 expected=1 max_rel_nonzero=0 rel_index=0"
+  ],
+  "actual_aux_bf16": {
+    "aqk": {
+      "bytes": 2176,
+      "sha256": "9e9eabc2c59ece844957051806c1477a412e01ee195812ffef4dada30ea00161",
+      "path": "results/kda-v23/raw/supplement-ascend950pr-t17-h1/aqk.bf16"
+    },
+    "akk": {
+      "bytes": 2176,
+      "sha256": "a888a5f35734b52019944da5d026bfa171491f5f37c78ab3dfa89799344e33aa",
+      "path": "results/kda-v23/raw/supplement-ascend950pr-t17-h1/akk.bf16"
+    }
+  }
+}

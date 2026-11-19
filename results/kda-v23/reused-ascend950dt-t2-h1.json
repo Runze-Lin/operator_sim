@@ -1,0 +1,370 @@
+{
+  "case": {
+    "id": "reused-ascend950dt-t2-h1",
+    "sku": "Ascend950DT_9582",
+    "physical_memory": "hbm3_8000M.ini",
+    "shape": [
+      1,
+      2,
+      1,
+      1,
+      128,
+      128
+    ],
+    "work_items": 1,
+    "purpose": "reused matched DT baseline; zero new CA",
+    "oracle": {
+      "attention": 256,
+      "aqk": 128,
+      "akk": 128,
+      "state_vk": 16384
+    }
+  },
+  "cost": {
+    "seconds": 110.51540115987882,
+    "peak_bytes": 260991662,
+    "exit_code": 0,
+    "stop": null,
+    "command": [
+      "bash",
+      "/home/l00925865/operator_sim/scripts/cann-run.sh",
+      "bash",
+      "-c",
+      "source \"$1/bin/set_env.bash\"; shift; exec \"$@\"",
+      "fla",
+      "/home/l00925865/operator_sim/results/chunk-recovery/fla2691/raw/fla_npu/opp/vendors/fla_npu_transformer",
+      "msopprof",
+      "simulator",
+      "--soc-version=Ascend950DT_9582",
+      "--dump=false",
+      "--launch-count=32",
+      "--timeout=20",
+      "--output=/home/l00925865/operator_sim/results/chunk-recovery/fla2691/v2/raw/profile",
+      "/home/l00925865/operator_sim/results/chunk-recovery/fla2691/v2/raw/kimi-v2",
+      "2",
+      "1"
+    ]
+  },
+  "incremental_ca_seconds": 0,
+  "original": "results/chunk-recovery/fla2691/v2/verified.json",
+  "original_receipt_sha256": "6ae8ec8f56e8023bf87e1b6c99814a22c24602edacb87d2de6784005483b4175",
+  "registration_sha256": "c76f6dac6f0b0d6ea0bf948293785299175ee05bbded277249d76cbe0864382c",
+  "qualified": true,
+  "actual_sku_verified": true,
+  "memory_model": "hbm3_8000M.ini",
+  "host_api_verified": true,
+  "golden_qualified": true,
+  "output_groups": {
+    "attention": [
+      256,
+      0
+    ],
+    "aqk": [
+      128,
+      0
+    ],
+    "akk": [
+      128,
+      0
+    ],
+    "state_vk": [
+      16384,
+      0
+    ]
+  },
+  "correct_initial_state": true,
+  "sync_errors": 0,
+  "sync_examples": [],
+  "exact_stage_elfs": true,
+  "full_windows": true,
+  "chronological": true,
+  "process_complete": true,
+  "observed_kernels": [
+    "ChunkKdaFwdPrepare_171e9a19df4c0d44ca00a177d8fe300c_32513546_mix_aic",
+    "ChunkFwdH_72371232203476155baf45810c33a7f9_7710_mix_aic",
+    "ChunkKdaFwdFinalize_c0d447f32579acd296e1c16d6d9c7d38_0"
+  ],
+  "stages": [
+    {
+      "kernel": "ChunkKdaFwdPrepare_171e9a19df4c0d44ca00a177d8fe300c_32513546_mix_aic",
+      "ordinal": 0,
+      "family": "chunk_kda_fwd_prepare",
+      "label": "official FLA V2 stage",
+      "first_tick": 7219,
+      "last_tick": 32432,
+      "ca_us": 15.280606060606061,
+      "active_aic": 1,
+      "active_aiv": 2,
+      "mmads": 3,
+      "resource": {
+        "descriptor_bytes": {
+          "OUT->UB": 4716,
+          "OUT->L1": 98304,
+          "L1->L0A": 10240,
+          "L1->L0B": 20480,
+          "L0C->UB": 2048,
+          "L0C->OUT": 2048,
+          "UB->OUT": 114176
+        },
+        "mmad_issued_shapes": {
+          "32x16x128": 1,
+          "32x128x32": 2
+        },
+        "issued_mmad_ops": 655360,
+        "queue_instruction_counts": {
+          "SCALAR": 5447,
+          "FLOWCTRL": 422,
+          "MTE2": 33,
+          "MTE3": 17,
+          "PUSHQ": 23,
+          "MTE1": 7,
+          "CUBE": 3,
+          "FIXP": 6,
+          "RVECEX": 4960,
+          "RVECSU": 713,
+          "RVECLD": 4307,
+          "RVECLP": 148,
+          "RVECST": 1460
+        }
+      },
+      "cores": {
+        "core0.veccore1": {
+          "first_tick": 7357,
+          "last_tick": 20246,
+          "end": [
+            "0x915a10f3ac",
+            20239,
+            20239
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              20241,
+              20246
+            ]
+          ],
+          "official_us": "7.81",
+          "mmads": 0,
+          "phys_digest": "59a4d6bf536e4c3ce7a703afa0a3bb9e8bc021c7ec3725eb67f66e2c5ff43f87",
+          "sync_digest": "f6ff476bf4584b4b0329ecf4920d6030695ac1406395038dfe3015d94cf39ed2",
+          "shard_sha256": "4f09ccd5736a10dc933b8c0bed0ee4f316c06873ab9f59192a1504c80f467b6c"
+        },
+        "core0.cubecore0": {
+          "first_tick": 7219,
+          "last_tick": 32432,
+          "end": [
+            "0x915906d908",
+            23496,
+            23496
+          ],
+          "end_labels": [],
+          "official_us": "15.28",
+          "mmads": 3,
+          "phys_digest": "1592a13f36d6fc34c6c324705a8d0177a1e19705acb551b3b41a9988eca4295b",
+          "sync_digest": "0d9a0bee858b4bcfa8b451e10f8827b7885502fd930378fccdc55cf99d464b64",
+          "shard_sha256": "88191bcb592b58d5729ec346f0a1efa86e9b1a835c685fbc25d728d4f08358aa"
+        },
+        "core0.veccore0": {
+          "first_tick": 7281,
+          "last_tick": 31871,
+          "end": [
+            "0x915a10f3ac",
+            31864,
+            31864
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              31866,
+              31871
+            ]
+          ],
+          "official_us": "14.9",
+          "mmads": 0,
+          "phys_digest": "9925a45a7ea6851bf0a3e06c236eb75160e2db106575f3e66d7f04fa06ef0870",
+          "sync_digest": "e4bce3fa63b435e73d5e2edcc1b8e9bae2e56f1b2d6e9275c61924550cf38280",
+          "shard_sha256": "c7f625f88087184dd277d95f526c2d4485479c3bb9af03c3f30d629d7c72657c"
+        }
+      },
+      "captured_binary": "results/chunk-recovery/fla2691/v2/raw/profile/OPPROF_20261119215307_UYLEWHAZNTNUHYJI/ChunkKdaFwdPrepare_171e9a19df4c0d44ca00a177d8fe300c_32513546_mix_aic/0/dump/aicore_binary.o",
+      "device_text_sha256": "3cdc897359178d665df362b3fcb2bdacb830af2357a2e0b6f7d1f9c79f3d136a",
+      "published_names": [
+        "ChunkKdaFwdPrepare_9a5c7ba661140e04d3bf3c972e6629a6.o",
+        "ChunkKdaFwdPrepare_ab956e5eb2ff99416b2f5173e788663a.o",
+        "ChunkKdaFwdPrepare_375ce9d41fcc2d706267f3750942ed8e.o",
+        "ChunkKdaFwdPrepare_171e9a19df4c0d44ca00a177d8fe300c.o"
+      ],
+      "aggregate": "results/chunk-recovery/fla2691/v2/raw/profile/OPPROF_20261119215307_UYLEWHAZNTNUHYJI/ChunkKdaFwdPrepare_171e9a19df4c0d44ca00a177d8fe300c_32513546_mix_aic/0/simulator/trace.json",
+      "aggregate_sha256": "2c94a074f7b0832568c6cf6258155dd4dab7374d0b8ec4cc67e8e9698e86878d"
+    },
+    {
+      "kernel": "ChunkFwdH_72371232203476155baf45810c33a7f9_7710_mix_aic",
+      "ordinal": 0,
+      "family": "chunk_fwd_h",
+      "label": "official FLA V2 stage",
+      "first_tick": 37817,
+      "last_tick": 45637,
+      "ca_us": 4.739393939393939,
+      "active_aic": 1,
+      "active_aiv": 2,
+      "mmads": 2,
+      "resource": {
+        "descriptor_bytes": {
+          "OUT->L1": 34304,
+          "L1->L0A": 8192,
+          "L1->L0B": 36864,
+          "L0C->UB": 66560,
+          "OUT->UB": 132096,
+          "UB->OUT": 99328
+        },
+        "mmad_issued_shapes": {
+          "16x128x128": 1,
+          "128x128x16": 1
+        },
+        "issued_mmad_ops": 1048576,
+        "queue_instruction_counts": {
+          "SCALAR": 1754,
+          "FLOWCTRL": 160,
+          "MTE1": 7,
+          "MTE2": 18,
+          "CUBE": 2,
+          "FIXP": 4,
+          "PUSHQ": 6,
+          "RVECLP": 11,
+          "RVECEX": 1838,
+          "RVECLD": 781,
+          "RVECST": 523,
+          "RVECSU": 6,
+          "MTE3": 4
+        }
+      },
+      "cores": {
+        "core0.cubecore0": {
+          "first_tick": 37928,
+          "last_tick": 44942,
+          "end": [
+            "0x9000d36578",
+            42232,
+            42232
+          ],
+          "end_labels": [],
+          "official_us": "4.25",
+          "mmads": 2,
+          "phys_digest": "f1c6035cf209ca013b5073718d1ee7d6bfe1351dbf51560372ea59aab104356b",
+          "sync_digest": "bc1d6dcd760ec4b1287bd7e3e5c716bb3077a2ab2613279ce74d12b170ffdd0c",
+          "shard_sha256": "f10c83e6abbe5f3be2b25f2c4c34dfd4a847de86f20da516d4a0070ff5c695dd"
+        },
+        "core0.veccore1": {
+          "first_tick": 37867,
+          "last_tick": 39492,
+          "end": [
+            "0x9000d75724",
+            39485,
+            39485
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              39487,
+              39492
+            ]
+          ],
+          "official_us": "0.98",
+          "mmads": 0,
+          "phys_digest": "edd64ee06530740771e27085deeda4dc5d0fb482e815d75875042dc93beda32f",
+          "sync_digest": "e127a247535f664fcec1e4015052c6cd7f271520f6a4e20281bfb82101da1662",
+          "shard_sha256": "ad2b76c9469e44478bc9ce7b1bbd2f837a90fe25abc04f4474c1bf445ddad14d"
+        },
+        "core0.veccore0": {
+          "first_tick": 37817,
+          "last_tick": 45637,
+          "end": [
+            "0x9000d75724",
+            39781,
+            39781
+          ],
+          "end_labels": [
+            [
+              "0x11111111",
+              45632,
+              45637
+            ]
+          ],
+          "official_us": "4.74",
+          "mmads": 0,
+          "phys_digest": "e91859a6dda7533eb191f1421bef640646ba7d56400fd24023278ff67e5c1701",
+          "sync_digest": "50ac5af95f2112cc99898e86b483cc193c541ec189b512b8301f1fdcd9d674bc",
+          "shard_sha256": "51edd464dae6799b4606dce6279ca94ac97f2e3aa57733641753dca2cd62ac5d"
+        }
+      },
+      "captured_binary": "results/chunk-recovery/fla2691/v2/raw/profile/OPPROF_20261119215307_UYLEWHAZNTNUHYJI/ChunkFwdH_72371232203476155baf45810c33a7f9_7710_mix_aic/0/dump/aicore_binary.o",
+      "device_text_sha256": "db5714f85fe237be6eed9641dec19c925c9e44d729fbdadf62b38cf4ce966da5",
+      "published_names": [
+        "ChunkFwdH_72371232203476155baf45810c33a7f9.o"
+      ],
+      "aggregate": "results/chunk-recovery/fla2691/v2/raw/profile/OPPROF_20261119215307_UYLEWHAZNTNUHYJI/ChunkFwdH_72371232203476155baf45810c33a7f9_7710_mix_aic/0/simulator/trace.json",
+      "aggregate_sha256": "95c79022dc5a3a3cf733ac6b548731130cc79944e1a6f625edf8f4e3de93ac0d"
+    },
+    {
+      "kernel": "ChunkKdaFwdFinalize_c0d447f32579acd296e1c16d6d9c7d38_0",
+      "ordinal": 0,
+      "family": "chunk_kda_fwd_finalize",
+      "label": "official FLA V2 stage",
+      "first_tick": 48161,
+      "last_tick": 53475,
+      "ca_us": 3.2206060606060607,
+      "active_aic": 1,
+      "active_aiv": 0,
+      "mmads": 2,
+      "resource": {
+        "descriptor_bytes": {
+          "OUT->L1": 33800,
+          "L1->L0A": 4608,
+          "L1->L0B": 36864,
+          "L0C->OUT": 1024
+        },
+        "mmad_issued_shapes": {
+          "2x128x128": 1,
+          "2x128x2": 1
+        },
+        "issued_mmad_ops": 66560,
+        "queue_instruction_counts": {
+          "SCALAR": 1057,
+          "FLOWCTRL": 85,
+          "MTE2": 10,
+          "MTE1": 6,
+          "CUBE": 2,
+          "FIXP": 2
+        }
+      },
+      "cores": {
+        "core0.cubecore0": {
+          "first_tick": 48161,
+          "last_tick": 53475,
+          "end": [
+            "0x9000d7c3f0",
+            52783,
+            52783
+          ],
+          "end_labels": [],
+          "official_us": "3.22",
+          "mmads": 2,
+          "phys_digest": "af542b2dd8d10e10120104fc12ef65868c14ac65f85defdefee1da5ba01b49e1",
+          "sync_digest": "9cedb32453b2ef2fcae3e73d20f04fc0edf1aca4fa006bb14cb38ab11ec3d1a1",
+          "shard_sha256": "1046d07c771b74d5b413d7ec26681621b61a8bf0aeb874c82d5c4845a71c587e"
+        }
+      },
+      "captured_binary": "results/chunk-recovery/fla2691/v2/raw/profile/OPPROF_20261119215307_UYLEWHAZNTNUHYJI/ChunkKdaFwdFinalize_c0d447f32579acd296e1c16d6d9c7d38_0/0/dump/aicore_binary.o",
+      "device_text_sha256": "2460a5a34f6e593d84d8b72b0d118ac867a1b7713386da64d39b107f40d64d7e",
+      "published_names": [
+        "ChunkKdaFwdFinalize_c0d447f32579acd296e1c16d6d9c7d38.o"
+      ],
+      "aggregate": "results/chunk-recovery/fla2691/v2/raw/profile/OPPROF_20261119215307_UYLEWHAZNTNUHYJI/ChunkKdaFwdFinalize_c0d447f32579acd296e1c16d6d9c7d38_0/0/simulator/trace.json",
+      "aggregate_sha256": "fdbdbeb0506f15c60320398cf33930e133d6d5c0a8e8e5803980a956fe4e2c85"
+    }
+  ],
+  "serialized_device_us": 23.240606060606062,
+  "main_stages_us": 23.240606060606062,
+  "device_span_us": 28.033939393939395,
+  "log_sha256": "8bcd4cdb12f6e4e0eead05e97e7f4c3b46d6d19611342a219078bbe66b75cfe6"
+}

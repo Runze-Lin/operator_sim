@@ -87,3 +87,16 @@ $F_j$ 是第 $j$ 笔完成时间。单笔响应 $L=273$ 周期来自单个写者
 ![早期整进程留出模型与同核第二条通道的 CA，同一时间轴](figures/rms-expanding-sibling.png)
 
 这张历史图取 950DT [4,4608]、H=3，图上的 **2.924 µs** 来源于剔除整个被测进程及同 shape 后重新校准的交叉回放。v0.22 正式参数包含开发阶段的全部训练样本，对该条归档给出 **2.831 µs**；图中的真实 CA 为 **2.633 µs**。它可用于检查四个 rstd 地址和核间先后。独立留出应使用本页开头的 [4,4800] 等十形。v0.21 对 [3,6656] 的旧三状态图也保留作复核；实际前序 H=4 时，v0.21 为 2.341 µs，v0.22 为 2.172 µs，CA 为 2.119 µs。[早期逐块数据](../../results/rms-dispatch-audit/expanding-sibling.json) · [v0.21 三状态图](figures/rmsnorm-v21-state.png)
+
+
+## 看同一输入在不同前序下的偏差
+
+![两端相同输入第一次扩核和立即复跑的模型与实测](../../results/rms-unknown23/paired-2944.png)
+
+在 [2,2944]，最晚核在 950DT 从已有一核扩到两核时，第一笔 x 读为 3.243–4.083 µs；立即复跑为 1.018–1.160 µs。两次实际核数、ELF、每次 5,888 B 读负载均相同。在完整设备窗上分别为 4.628 和 1.604 µs，PR 则为 4.361 和 1.610 µs。只知道 shape 的单点估计对两窗必有至少 (L−S)/(L+S) 的最大相对误差；L 为较长的窗，S 为较短的窗。两端下界分别达 48.52% 和 46.07%。这解释了某些输入上仅调带宽系数无法满足 40% 的最大误差目标。[数据、逐形误差和来源](../../results/rms-unknown23/independent.md)
+
+```python
+from operator_model import estimate_rms_history_band
+band = estimate_rms_history_band([2,2944], chip="Ascend950DT_9582")
+print(band.by_resident_aiv_us)  # H=0,1,2，约 (3.405,4.317,1.850) µs
+```
