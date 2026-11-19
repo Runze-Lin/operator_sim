@@ -60,6 +60,10 @@ BF16 [32768,1280] 共 41,943,040 个元素，两端都逐元素核对了 y 和 r
 
 950DT 的 BF16 [4,4608] 紧随一次使用 3 个 AIV 的调用。最后一行对应 core16 的新通道，图上的蓝条是 4 B 统计量写回，橙条是该行归一化输出写回。给出相同的前序信息时，v0.21 预测 3.792 µs，候选模型预测 2.924 µs，CA 为 2.633 µs。候选仍把这一行的首笔统计量写发起得晚了 0.270 µs。该样本属于剔除整个进程后的历史回放。上栏三个已热通道的先后按统计顺序放置，新通道可以由输出地址唯一识别。[完整推导与独立校准状态](examples/rmsnorm.md)
 
+## mHC Post · 同一 shape 的首次与再次派发
+
+同流连续运行两次 [3,4,5376]，相同 dtype、同一 ELF、同样使用 48 个 AIV。950DT 两次实测相差 3.247 µs，950PR 相差 2.908 µs，均超过只给一个耗时能覆盖 40% 最大误差的范围。模型在同一流里读取历史，DT 的两次时延预测为 4.855、2.380 µs，PR 为 4.861、2.386 µs。下栏的末核指令可以看出时间差有多少出现在首次向量装载之前。[双芯片首发与复用的完整上下图](examples/figures/mhc-post-repeat-paired.png) · [可行误差区间与逐段解释](examples/mhc_post.md)
+
 ## CV 融合 · 长 KV 循环的首、中、末页
 
 ![950PR 上 Q 等于 9、KV 等于 32768 的逐页 QK 与 PV 对比](examples/figures/fa-pr-32k-pages.png)
@@ -114,7 +118,7 @@ GMM1 和 GMM2 均用 `[8,256,128,2]`、专家分配 `[1,7]`。GMM1 的两份中�
 | [mHC 拆分链](examples/mhc.md) | PR · 1×4×128 | [三个串行 kernel 的独立设备窗](examples/figures/mhc-pr-pipeline.png) |
 | [MoE FFN](examples/moe_ffn.md) | PR · 2×64×64×1 | [GMM1 与 GMM2 两个设备窗](examples/figures/moe_ffn-pr-pipeline.png) |
 | [RMSNorm](examples/rmsnorm.md) | DT / PR · 32768×1280；DT · 4×4608 | [PR 25 轮 UB](examples/figures/rms-wide-tiles-pr.png) · [同核扩出第二条 AIV](examples/figures/rms-expanding-sibling.png) |
-| [mHC Post](examples/mhc_post.md) | DT · 16×4×256 | [隐藏调度历史如何改变读算写](examples/figures/mhc_post-v21-state.png) |
+| [mHC Post](examples/mhc_post.md) | DT / PR · 3×4×5376 | [首次和连续再次派发的模型与真实指令](examples/figures/mhc-post-repeat-paired.png) |
 | [mHC Pre](examples/mhc_pre.md) | PR · 1×4×128 | [末核控制等待、计算、搬运独占成本](examples/figures/mhc-pre-exclusive-pr.png) |
 | [mHC Sinkhorn](examples/mhc_sinkhorn.md) | PR · 64×4 | [每 AIV 两行共用发射的阶段成本](examples/figures/mhc_sinkhorn-v21-pr.png) |
 | [KDA recurrent](examples/kda_recurrent.md) | PR · 1×3×1×1×128×128 | [完整资源预算与六次实际状态更新](examples/figures/kda-recurrent-state-pr.png) |

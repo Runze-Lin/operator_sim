@@ -482,8 +482,11 @@
 | primary | 950PR | [19, 7632] | 4.888 | 4.439 | 4.875 | -8.9% | 3.978 |
 | primary | 950DT | [51, 1488] | 5.133 | 5.962 | 5.829 | +2.3% | 5.148 |
 | primary | 950PR | [51, 1488] | 6.044 | 5.960 | 6.308 | -5.5% | 5.148 |
+| primary | 950DT | [79, 2192] | 4.074 | 4.462 | 4.680 | -4.7% | 5.483 |
+| primary | 950PR | [79, 2192] | 4.657 | 4.452 | 5.116 | -13.0% | 5.483 |
 | primary | 950DT | [157, 3136] | 3.820 | 4.458 | 4.838 | -7.8% | 4.336 |
 | primary | 950PR | [157, 3136] | 4.532 | 4.468 | 4.665 | -4.2% | 4.336 |
+| primary | 950DT | [495, 5040] | 5.229 | 6.489 | 6.909 | -6.1% | 5.389 |
 | primary | 950DT | [1537, 5120] | 11.544 | 11.351 | 12.939 | -12.3% | 7.451 |
 | frozen ordered RMS sequence, shape-only forecast | 950DT | [1, 7040] | — | 2.920 | 3.796 | -23.1% | 2.676 |
 | frozen ordered RMS sequence, shape-only forecast | 950DT | [2, 6688] | — | 2.912 | 4.682 | -37.8% | 2.661 |
@@ -503,6 +506,26 @@
 | frozen ordered RMS sequence, shape-only forecast | 950PR | [64, 1984] | — | 4.268 | 3.309 | +29.0% | 5.311 |
 | frozen ordered RMS sequence, shape-only forecast | 950PR | [135, 2992] | — | 4.292 | 4.062 | +5.7% | 4.203 |
 | frozen ordered RMS sequence, shape-only forecast | 950PR | [504, 5056] | — | 6.824 | 7.976 | -14.4% | 5.413 |
+| ordered RMS plus matched-prefix target, original plus recovery | 950DT | [1, 7040] | — | 2.920 | 3.796 | -23.1% | 2.676 |
+| ordered RMS plus matched-prefix target, original plus recovery | 950DT | [2, 6688] | — | 2.912 | 4.682 | -37.8% | 2.661 |
+| ordered RMS plus matched-prefix target, original plus recovery | 950DT | [3, 5440] | — | 2.809 | 2.987 | -6.0% | 2.558 |
+| ordered RMS plus matched-prefix target, original plus recovery | 950DT | [4, 4800] | — | 2.767 | 2.590 | +6.9% | 2.511 |
+| ordered RMS plus matched-prefix target, original plus recovery | 950DT | [16, 1776] | — | 3.868 | 3.941 | -1.8% | 3.435 |
+| ordered RMS plus matched-prefix target, original plus recovery | 950DT | [34, 1904] | — | 5.669 | 4.915 | +15.3% | 4.979 |
+| ordered RMS plus matched-prefix target, original plus recovery | 950DT | [65, 1808] | — | 4.293 | 3.239 | +32.6% | 5.316 |
+| ordered RMS plus matched-prefix target, original plus recovery | 950DT | [135, 2992] | — | 4.291 | 3.443 | +24.6% | 4.203 |
+| ordered RMS plus matched-prefix target, original plus recovery | 950DT | [504, 5056] | — | 6.510 | 5.621 | +15.8% | 5.413 |
+| ordered RMS plus matched-prefix target, original plus recovery | 950DT | [64, 1984] | — | 6.218 | 4.711 | +32.0% | 5.311 |
+| ordered RMS plus matched-prefix target, original plus recovery | 950PR | [1, 7040] | — | 2.864 | 3.876 | -26.1% | 2.676 |
+| ordered RMS plus matched-prefix target, original plus recovery | 950PR | [2, 6688] | — | 2.859 | 4.618 | -38.1% | 2.661 |
+| ordered RMS plus matched-prefix target, original plus recovery | 950PR | [3, 5440] | — | 2.757 | 2.854 | -3.4% | 2.558 |
+| ordered RMS plus matched-prefix target, original plus recovery | 950PR | [4, 4800] | — | 2.717 | 2.511 | +8.2% | 2.511 |
+| ordered RMS plus matched-prefix target, original plus recovery | 950PR | [16, 1776] | — | 3.824 | 4.084 | -6.4% | 3.435 |
+| ordered RMS plus matched-prefix target, original plus recovery | 950PR | [34, 1904] | — | 5.643 | 5.044 | +11.9% | 4.979 |
+| ordered RMS plus matched-prefix target, original plus recovery | 950PR | [64, 1984] | — | 4.268 | 3.309 | +29.0% | 5.311 |
+| ordered RMS plus matched-prefix target, original plus recovery | 950PR | [135, 2992] | — | 4.292 | 4.062 | +5.7% | 4.203 |
+| ordered RMS plus matched-prefix target, original plus recovery | 950PR | [504, 5056] | — | 6.824 | 7.976 | -14.4% | 5.413 |
+| ordered RMS plus matched-prefix target, original plus recovery | 950PR | [65, 1808] | — | 4.274 | 3.104 | +37.7% | 5.316 |
 
 ## Addmm
 
@@ -800,6 +823,8 @@
 | primary | 950DT | [20, 4, 4096] | 9.939 | 9.939 | 11.519 | -13.7% | 9.109 |
 | primary | 950PR | [20, 4, 4096] | 11.161 | 10.115 | 11.231 | -9.9% | 9.109 |
 | primary | 950DT | [33, 4, 4096] | 19.879 | 11.739 | 11.301 | +3.9% | 10.754 |
+| primary | 950PR | [33, 4, 4096] | 21.519 | 12.272 | 10.855 | +13.0% | 10.754 |
+| primary | 950DT | [22, 4, 4096] | 9.939 | 9.939 | 11.058 | -10.1% | 9.109 |
 | primary | 950PR | [22, 4, 4096] | 11.173 | 10.115 | 11.103 | -8.9% | 9.109 |
 | primary | 950DT | [26, 4, 4096] | 9.939 | 9.939 | 11.182 | -11.1% | 9.109 |
 | primary | 950PR | [26, 4, 4096] | 11.195 | 10.115 | 10.893 | -7.1% | 9.109 |
@@ -929,6 +954,10 @@
 | primary | 950DT | [129, 4, 1664] | 5.360 | 5.978 | 5.202 | +14.9% | 4.386 |
 | primary | 950PR | [129, 4, 1664] | 6.218 | 6.024 | 5.305 | +13.5% | 4.386 |
 | primary | 950DT | [191, 4, 2112] | 6.220 | 6.848 | 6.072 | +12.8% | 4.921 |
+| same-stream repeated Post, shape-only forecast | 950DT | [3, 4, 5376] | — | 3.195 | 5.370 | -40.5% | 2.825 |
+| same-stream repeated Post, shape-only forecast | 950DT | [3, 4, 5376] | — | 3.195 | 2.122 | +50.5% | 2.825 |
+| same-stream repeated Post, shape-only forecast | 950PR | [3, 4, 5376] | — | 3.201 | 4.995 | -35.9% | 2.825 |
+| same-stream repeated Post, shape-only forecast | 950PR | [3, 4, 5376] | — | 3.201 | 2.086 | +53.4% | 2.825 |
 
 ## mHC 拆分链
 
@@ -1214,6 +1243,11 @@
 | primary | 950DT | [111, 7168] | 3.531 | 3.531 | 3.172 | +11.3% | 3.341 |
 | primary | 950PR | [111, 7168] | 3.592 | 3.592 | 3.744 | -4.1% | 3.341 |
 | primary | 950PR | [1572864, 32] | 136.263 | 160.845 | 149.959 | +7.3% | 27.001 |
+| primary | 950DT | [511, 5120] | 4.943 | 4.943 | 5.380 | -8.1% | 4.379 |
+| primary | 950PR | [511, 5120] | 5.094 | 5.094 | 6.576 | -22.5% | 4.379 |
+| primary | 950DT | [32769, 32] | 3.834 | 3.834 | 3.676 | +4.3% | 3.489 |
+| primary | 950PR | [32769, 32] | 3.941 | 3.941 | 4.479 | -12.0% | 3.489 |
+| primary | 950DT | [98305, 64] | 7.121 | 7.121 | 8.234 | -13.5% | 5.443 |
 
 ## Kimi KDA beta Sigmoid
 
@@ -1257,6 +1291,11 @@
 | primary | 950DT | [4545, 24] | 3.658 | 3.604 | 3.267 | +10.3% | 3.297 |
 | primary | 950PR | [4545, 24] | 4.072 | 3.607 | 3.178 | +13.5% | 3.297 |
 | primary | 950DT | [16385, 48] | 5.455 | 4.910 | 4.769 | +3.0% | 3.929 |
+| primary | 950PR | [16385, 48] | 8.427 | 6.015 | 5.723 | +5.1% | 3.929 |
+| primary | 950DT | [4097, 96] | 4.428 | 4.171 | 3.696 | +12.9% | 3.581 |
+| primary | 950PR | [4097, 96] | 5.895 | 4.338 | 4.248 | +2.1% | 3.581 |
+| primary | 950DT | [98304, 12] | 6.281 | 5.476 | 5.523 | -0.9% | 4.317 |
+| primary | 950PR | [98304, 12] | 10.341 | 6.685 | 6.867 | -2.7% | 4.317 |
 
 ## Kimi AttnResFwd
 
@@ -1285,8 +1324,10 @@
 | primary | 950DT | [2, 7168, 8, 3] | 23.593 | 12.701 | 11.745 | +8.1% | 11.639 |
 | primary | 950PR | [2, 7168, 8, 3] | 24.002 | 12.799 | 11.686 | +9.5% | 11.639 |
 | primary | 950DT | [3, 512, 8, 3] | 8.305 | 8.012 | 8.479 | -5.5% | 7.344 |
+| primary | 950PR | [3, 512, 8, 3] | 8.335 | 8.019 | 7.776 | +3.1% | 7.344 |
 | primary | 950DT | [2, 4096, 8, 1] | 10.949 | 8.603 | 8.113 | +6.0% | 7.885 |
 | primary | 950PR | [2, 4096, 8, 1] | 11.066 | 8.643 | 7.984 | +8.2% | 7.885 |
+| primary | 950DT | [4, 256, 8, 6] | 9.806 | 9.578 | 9.449 | +1.4% | 8.780 |
 | primary | 950PR | [4, 256, 8, 6] | 9.832 | 9.583 | 9.181 | +4.4% | 8.780 |
 | primary | 950DT | [1, 1024, 8, 7] | 13.945 | 11.009 | 11.573 | -4.9% | 10.091 |
 | primary | 950PR | [1, 1024, 8, 7] | 14.061 | 11.031 | 10.764 | +2.5% | 10.091 |

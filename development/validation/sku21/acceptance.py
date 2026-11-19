@@ -142,16 +142,37 @@ def collect():
             if side+'_first_us' in y:row.update(first_us=y[side+'_first_us'],protocol='isolated first launch')
             rows.append(row)
     rows.extend(read(OUT/'coverage/supplement.json'))
+    for path in sorted((ROOT/'results/post-candidate').glob('paired-Ascend*.json')):
+        pair=read(path)
+        if not pair['qualified']:
+            rejected.append(dict(source=str(path.relative_to(ROOT)),reason=pair.get('reason')))
+            continue
+        attrs=dict(dtype='bf16',has_h_res=True)
+        future=estimate('mhc_post',pair['shape'],attrs,chip=CHIPS['future']).latency_us
+        for result in pair['rows']:
+            stage=result['stage']
+            rows.append(dict(op='mhc_post',shape=pair['shape'],attrs=attrs,chip=pair['chip'],
+                             cohort='same-stream repeated Post, shape-only forecast',protocol=result['condition'],
+                             us=result['current_unknown_us'],first_or_reuse_us=result['current_us'],
+                             future_us=future,ca_us=stage['ca_us'],source=str(path.relative_to(ROOT)),
+                             receipt=receipt({**stage,'api':'aclnnMhcPost','correctness':result['correctness']})))
     audit=ROOT/'results/rms-dispatch-audit'
     sequence=read(audit/'independent.json')['rows']
     future={(r['protocol'],r['i']):r['previous_unknown_us']
             for r in read(audit/'freeze.json')['rows'] if r['chip']==CHIPS['future']}
-    for r in sequence:
-        if r['protocol']=='ordered new sequence':
-            rows.append(dict(op='rmsnorm',shape=r['shape'],attrs={},chip=r['chip'],
-                             us=r['previous_unknown_us'],ca_us=r['ca_us'],future_us=future[r['protocol'],r['i']],
-                             cohort='frozen ordered RMS sequence, shape-only forecast',source=r['source'],
-                             qualification=r['qualification'],receipt=receipt({**r,'api':'aclnnRmsNorm'})))
+    ordered=[(r,'frozen ordered RMS sequence, shape-only forecast')
+             for r in sequence if r['protocol']=='ordered new sequence']
+    prefix=audit/'prefix-recovery/comparison.json'
+    if prefix.is_file():
+        combined=read(prefix)['rows']
+        updated_skus={r['chip'] for r in combined if r['qualification']=='subsequent matched-prefix target'}
+        ordered.extend((r,'ordered RMS plus matched-prefix target, original plus recovery')
+                       for r in combined if r['chip'] in updated_skus)
+    for r,cohort in ordered:
+        rows.append(dict(op='rmsnorm',shape=r['shape'],attrs={},chip=r['chip'],
+                         us=r['previous_unknown_us'],ca_us=r['ca_us'],future_us=future[r['protocol'],r['i']],
+                         cohort=cohort,source=r['source'],qualification=r['qualification'],
+                         receipt=receipt({**r,'api':'aclnnRmsNorm'})))
     pages=OUT/'matmul-pages-pr/observation.json'
     if pages.exists():
         rec=read(pages)
@@ -231,8 +252,9 @@ def report():
         a,b=r['unknown'],r['stream']
         lines.append(f"| {NAMES[r['op']]} | {r['chip'].split('_')[0][6:]} | {protocols[r['protocol']]} | {a['n']} | {a['wape']:.2%} / {a['max_ape']:.2%} | {b['wape']:.2%} / {b['max_ape']:.2%} |")
     lines+=['','RMSNorm 的 43 个 DT 旧开发形状也纳入公开默认入口的压力回放。部分已热的短宽形被当成了可能首发，新增 AIV 也可能是同核另一通道。按输出地址恢复的 1,418 个 AIV 窗口支持在已知前序时细分启动和统计量写回，候选的仅 shape 和有顺序误差分别保留，等待独立实测。[RMSNorm 逐块证据和候选验证](../results/rms-dispatch-audit/report.md)','',
-        '同一 stream 上十个新形的原采集在导出时达到磁盘预算；每端九个窗口满足全核完整性。已知派发顺序时，RMS 候选在 DT 的 WAPE / 最大误差为 6.60% / 15.64%，PR 为 7.60% / 14.47%；旧模型在同组分别为 17.86% / 47.26% 和 17.32% / 52.16%。仅凭 shape 时，候选在 PR 的 WAPE 从 16.37% 变为 17.84%。候选仍单独报告，主表使用已发布版本。[原始进程状态与逐核恢复](../results/rms-dispatch-audit/scope.md) · [两种输入方式的同集比较](../results/rms-dispatch-audit/report.md)','',
+        '同一 stream 的十个新 shape 已取得完整双端时延。原采集在导出时达到磁盘预算，每端直接恢复九个完整窗口；另一个沿完全相同的前序重新采集，十三个重复前缀只用于核对。给出实际派发顺序，十形同集上 v0.21 → RMS 候选的 WAPE / 最大误差为 DT 19.17% / 47.26% → 6.02% / 15.64%，PR 16.07% / 52.16% → 7.03% / 14.47%。只给 shape，DT 的 WAPE 从 20.36% 降至 14.75%，PR 从 17.97% 升至 18.52%。主表继续使用已发布版本。[逐核恢复](../results/rms-dispatch-audit/scope.md) · [两条补采及原始前缀](../results/rms-dispatch-audit/prefix-recovery/report.md) · [十形完整同集比较](../results/rms-dispatch-audit/report.md)','',
         '每核多轮的 RMSNorm [32768,1280] 含 41,943,040 个 BF16 元素。v0.21 在 DT 按最忙核 512 行、22 轮预测 39.393 µs，实测 44.585 µs；在 PR 按 586 行、25 轮预测 61.616 µs，实测 69.729 µs。这是 v0.20 登记的大 shape；v0.21 用于后续回放，970DT 的 21.436 µs 为外推。[PR 的 25 轮对照图](examples/figures/rms-wide-tiles-pr.png) · [两端全核计时、输出与采集开销](../results/v0.21/wide-rms/receipt.json)','',
+        '同流连续两次 mHC Post [3,4,5376] 的同值输入、库二进制及 48 个 AIV 均相同。DT 首次 / 再次为 5.370 / 2.122 µs，PR 为 4.995 / 2.086 µs。据此得到无历史单值模型最坏相对误差的严格下界：DT 43.34%，PR 41.08%。两端都超过 40%，这个逐点最大误差的限制适用于包含该对窗口的任何样本集。公开流式 API 在本对的最大误差为 DT 12.15%、PR 14.37%；整个算子 WAPE 仍按各自完整样本计分。[同流双端完整证据](../results/post-candidate/paired-result.md)','',
         'mHC Post 的 DT 同形 [1,4,128]、同 ELF 在单独首发与真实前序生产链后分别耗时 4.752、2.672 µs。任何仅依赖本次输入的单值预测，在这两次观测各计一次时的 WAPE 至少为 (4.752−2.672)/(4.752+2.672)＝28.03%。该下界只适用于这一配对；完整算子样本集的 WAPE 仍以逐形数据计算。[两端完整配对与 WAPE 可行域](../results/post-candidate/protocol-feasibility.json)','',
         '[按实际派发顺序的逐条预测](../results/v0.21/dispatch/stream-replay.json) · [mHC Post 同形跨状态对照](../results/v0.21/dispatch/post-identifiability.json) · [45 个进程的阶段审计与未启用候选](../results/post-candidate/report.md)','',
         '在大 Cast 上，DT 的最大历史误差发生在一个 96 MiB 工作集，实测没有物理写入 HBM。把输入、输出双缓冲分别计价后，该形状由 13.33 升至 16.59 µs，CA 为 17.04 µs。12 个双端大窗口的历史回放及另行冻结的 6 个新形状单独计分。[Cast 的物理读写计数与候选验证](../results/cast-capacity/report.md)','',

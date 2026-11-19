@@ -1,0 +1,1233 @@
+{
+  "preregistered": "results/post-candidate/paired-freeze.json",
+  "registration_sha256": "e7f004104e1326dbf78aa444667b6ca6e4aa0c4fe59fd6f250c54929eef982e8",
+  "registered_utc": "2026-11-19T12:13:41.785075+00:00",
+  "sample_role": "Frozen unseen shape; one paired process per 950 SKU. These 2 ordinals per SKU are not independent shapes.",
+  "kernel_correctness": "Same package ELF and CANN host executable. Complete per-ordinal numerical golden and all vendor core windows rechecked from raw files.",
+  "proof": "For first b > repeated a, tolerance e requires b*(1-e)<=p<=a*(1+e), hence e >= (b-a)/(b+a), equality p=2ab/(a+b).",
+  "physical_scope": "Per-launch origin = earliest device instruction, terminal core = latest to finish. Model stage durations are additive contributions only. CA queue spans union of actual service descriptors/instructions, removing waits/sync/excluded durations; individual queues can overlap.",
+  "chips": {
+    "Ascend950DT_9582": {
+      "shape": [
+        3,
+        4,
+        5376
+      ],
+      "target_plan": {
+        "active_aiv": 48,
+        "active_aic": 0,
+        "route": "post_channel",
+        "channel_slices": 16,
+        "fragment_width": 336,
+        "rows_per_core": 1
+      },
+      "rows": [
+        {
+          "ordinal": 0,
+          "condition": "first",
+          "ca_us": 5.369697096757591,
+          "predictions_us": {
+            "current_us": 4.855324256409521,
+            "current_unknown_us": 3.1945351310317887,
+            "candidate_us": 4.827332305731369,
+            "candidate_unknown_us": 3.330506906561757
+          },
+          "signed_error_pct": {
+            "current_us": -9.579177951372086,
+            "current_unknown_us": -40.508094339981305,
+            "candidate_us": -10.100472731575872,
+            "candidate_unknown_us": -37.975888647930766
+          },
+          "model_contributions_us": {
+            "arrival": 0.052210806535105354,
+            "SCALAR": 1.9578265662305838,
+            "MTE2": 1.2270297669730037,
+            "SIMD": 1.3529205241894648,
+            "MTE3": 0.25623808099834355,
+            "other": 0.009098511483019251,
+            "shared_link_floor": 0.0
+          },
+          "ca_milestones": {
+            "phase_us": {
+              "arrival": 0.48606061935424805,
+              "control": 1.8072724342346191,
+              "read": 0.8296971321105957,
+              "body": 1.904848575592041,
+              "retire": 0.34181833546608686
+            },
+            "raw_queue_instruction_counts": {
+              "SIMD": 1847,
+              "SCALAR": 1528,
+              "MTE2": 5,
+              "MTE3": 5
+            },
+            "raw_nonwait_service_us": {
+              "SIMD": 6.491515115485527,
+              "SCALAR": 40.12666641222313,
+              "MTE2": 1.1812121151015162,
+              "MTE3": 1.492121192626655
+            },
+            "dma_read": [
+              {
+                "start_us": 1.0084848403930664,
+                "end_us": 1.2103030234575272,
+                "bytes": 96
+              },
+              {
+                "start_us": 2.293333053588867,
+                "end_us": 2.8515148758888245,
+                "bytes": 672
+              },
+              {
+                "start_us": 2.6890907287597656,
+                "end_us": 3.1072725355625153,
+                "bytes": 2688
+              }
+            ],
+            "dma_write": [
+              {
+                "start_us": 4.115151405334473,
+                "end_us": 4.33515140414238,
+                "bytes": 672
+              },
+              {
+                "start_us": 4.270302772521973,
+                "end_us": 4.856363356113434,
+                "bytes": 672
+              },
+              {
+                "start_us": 4.510302543640137,
+                "end_us": 4.8575752675533295,
+                "bytes": 672
+              },
+              {
+                "start_us": 5.027878761291504,
+                "end_us": 5.363636344671249,
+                "bytes": 672
+              }
+            ],
+            "simd_core_instructions": {
+              "RV_VLD": 534,
+              "RV_VST": 342,
+              "RV_VMULS": 48
+            },
+            "read_bytes": 3360,
+            "write_bytes": 2688,
+            "first_vector_operand_us": 3.123030185699463
+          },
+          "terminal_core": "core16.veccore1",
+          "terminal_trace": "runs/post-candidate-repeat/Ascend950DT_9582/profile/OPPROF_20261119211746_EMSYOOKJPUUORJPT/MhcPost_59130ccee6717ff2c0f15b485e731162_5/0/simulator/core16.veccore1/trace.json",
+          "terminal_trace_sha256": "e573da622a3335e8590e0836652709b829687c9c38cb22c50f1460f9489eda14",
+          "terminal_arrives_us": 0.48606061935424805,
+          "nonwait_queue_union_us": {
+            "SCALAR": [
+              [
+                0.48606061935424805,
+                1.7763633751310408
+              ],
+              [
+                1.7775754928588867,
+                2.31454517506063
+              ],
+              [
+                2.654545307159424,
+                2.7424240317195654
+              ],
+              [
+                2.795757293701172,
+                3.193939059972763
+              ],
+              [
+                3.193939208984375,
+                3.4563634395599365
+              ],
+              [
+                3.4563636779785156,
+                3.4890909218229353
+              ],
+              [
+                3.4909090995788574,
+                3.527272703591734
+              ],
+              [
+                3.5290908813476562,
+                3.5987877869047225
+              ],
+              [
+                3.6006059646606445,
+                3.6369695686735213
+              ],
+              [
+                3.6387877464294434,
+                3.7084846519865096
+              ],
+              [
+                3.7103028297424316,
+                3.7466664337553084
+              ],
+              [
+                3.7484846115112305,
+                3.8181815170682967
+              ],
+              [
+                3.8199996948242188,
+                3.8563632988370955
+              ],
+              [
+                3.8581814765930176,
+                3.8933334373869
+              ],
+              [
+                3.8963637351989746,
+                3.9290909972041845
+              ],
+              [
+                5.36545467376709,
+                5.369697096757591
+              ]
+            ],
+            "MTE2": [
+              [
+                1.0084848403930664,
+                1.2103030234575272
+              ],
+              [
+                2.293333053588867,
+                3.1072725355625153
+              ]
+            ],
+            "SIMD": [
+              [
+                0.975151538848877,
+                0.9872727449983358
+              ],
+              [
+                2.8042421340942383,
+                2.8066663765348494
+              ],
+              [
+                2.807272434234619,
+                2.8096966766752303
+              ],
+              [
+                3.109090805053711,
+                3.1624241396784782
+              ],
+              [
+                3.1951513290405273,
+                4.2678785771131516
+              ],
+              [
+                4.336969375610352,
+                4.507878348231316
+              ],
+              [
+                4.858181953430176,
+                5.025454565882683
+              ]
+            ],
+            "MTE3": [
+              [
+                4.115151405334473,
+                4.8575752675533295
+              ],
+              [
+                5.027878761291504,
+                5.363636344671249
+              ]
+            ]
+          },
+          "correctness": "correctness name=output count=64512 bad=0 max_abs_error=0 atol=0.015625 rtol=0.015625 hard_limit=1",
+          "kernel": "MhcPost_59130ccee6717ff2c0f15b485e731162_5",
+          "binary_sha256": "36851e45520023382742d07d871519f65e57e9c49ec3594583e361b0bb9b6677",
+          "trace": "runs/post-candidate-repeat/Ascend950DT_9582/profile/OPPROF_20261119211746_EMSYOOKJPUUORJPT/MhcPost_59130ccee6717ff2c0f15b485e731162_5/0/simulator/trace.json",
+          "trace_sha256": "ee6491f1941c5a71a5d258b6228bcbb378aa1d244bd1b0616ada5033d8416583",
+          "cores": [
+            "core0.veccore0",
+            "core0.veccore1",
+            "core1.veccore0",
+            "core1.veccore1",
+            "core10.veccore0",
+            "core10.veccore1",
+            "core11.veccore0",
+            "core11.veccore1",
+            "core16.veccore0",
+            "core16.veccore1",
+            "core17.veccore0",
+            "core17.veccore1",
+            "core18.veccore0",
+            "core18.veccore1",
+            "core19.veccore0",
+            "core19.veccore1",
+            "core2.veccore0",
+            "core2.veccore1",
+            "core20.veccore0",
+            "core20.veccore1",
+            "core21.veccore0",
+            "core21.veccore1",
+            "core22.veccore0",
+            "core22.veccore1",
+            "core23.veccore0",
+            "core23.veccore1",
+            "core24.veccore0",
+            "core24.veccore1",
+            "core25.veccore0",
+            "core25.veccore1",
+            "core26.veccore0",
+            "core26.veccore1",
+            "core27.veccore0",
+            "core27.veccore1",
+            "core3.veccore0",
+            "core3.veccore1",
+            "core4.veccore0",
+            "core4.veccore1",
+            "core5.veccore0",
+            "core5.veccore1",
+            "core6.veccore0",
+            "core6.veccore1",
+            "core7.veccore0",
+            "core7.veccore1",
+            "core8.veccore0",
+            "core8.veccore1",
+            "core9.veccore0",
+            "core9.veccore1"
+          ]
+        },
+        {
+          "ordinal": 1,
+          "condition": "reuse",
+          "ca_us": 2.1224236516281962,
+          "predictions_us": {
+            "current_us": 2.3803305745113907,
+            "current_unknown_us": 3.1945351310317887,
+            "candidate_us": 2.5422300225131313,
+            "candidate_unknown_us": 3.330506906561757
+          },
+          "signed_error_pct": {
+            "current_us": 12.151528875271623,
+            "current_unknown_us": 50.51354749939452,
+            "candidate_us": 19.77957466516569,
+            "candidate_unknown_us": 56.91998645071599
+          },
+          "model_contributions_us": {
+            "arrival": 0.02597671371162371,
+            "SCALAR": 0.9766123824907671,
+            "MTE2": 0.3429162236061571,
+            "SIMD": 0.7694886622214802,
+            "MTE3": 0.25623808099834355,
+            "other": 0.009098511483019251,
+            "shared_link_floor": 0.0
+          },
+          "ca_milestones": {
+            "phase_us": {
+              "arrival": 0.05030345916748047,
+              "control": 0.9030303955078125,
+              "read": 0.18605995178222656,
+              "body": 0.7945461273193359,
+              "retire": 0.18848371785134077
+            },
+            "raw_queue_instruction_counts": {
+              "SIMD": 1847,
+              "SCALAR": 1528,
+              "MTE2": 5,
+              "MTE3": 5
+            },
+            "raw_nonwait_service_us": {
+              "SIMD": 5.748484805808403,
+              "SCALAR": 20.080605996074155,
+              "MTE2": 0.5139393983408809,
+              "MTE3": 0.7133333412930369
+            },
+            "dma_read": [
+              {
+                "start_us": 0.21454524993896484,
+                "end_us": 0.484848290681839,
+                "bytes": 96
+              },
+              {
+                "start_us": 0.953333854675293,
+                "end_us": 1.061818704009056,
+                "bytes": 672
+              },
+              {
+                "start_us": 0.9915151596069336,
+                "end_us": 1.1236363649368286,
+                "bytes": 2688
+              }
+            ],
+            "dma_write": [
+              {
+                "start_us": 1.426060676574707,
+                "end_us": 1.5987879484891891,
+                "bytes": 672
+              },
+              {
+                "start_us": 1.581212043762207,
+                "end_us": 1.739999920129776,
+                "bytes": 672
+              },
+              {
+                "start_us": 1.7787885665893555,
+                "end_us": 1.9751522094011307,
+                "bytes": 672
+              },
+              {
+                "start_us": 1.9339399337768555,
+                "end_us": 2.1163641810417175,
+                "bytes": 672
+              }
+            ],
+            "simd_core_instructions": {
+              "RV_VLD": 534,
+              "RV_VST": 342,
+              "RV_VMULS": 48
+            },
+            "read_bytes": 3360,
+            "write_bytes": 2688,
+            "first_vector_operand_us": 1.1393938064575195
+          },
+          "terminal_core": "core16.veccore1",
+          "terminal_trace": "runs/post-candidate-repeat/Ascend950DT_9582/profile/OPPROF_20261119211746_EMSYOOKJPUUORJPT/MhcPost_59130ccee6717ff2c0f15b485e731162_5/1/simulator/core16.veccore1/trace.json",
+          "terminal_trace_sha256": "55c671068417dac6db54dcee0d2298abe5c343fb21c526409b51ffcce06e0724",
+          "terminal_arrives_us": 0.05030345916748047,
+          "nonwait_queue_union_us": {
+            "SCALAR": [
+              [
+                0.05030345916748047,
+                0.40666645765304565
+              ],
+              [
+                0.4854545593261719,
+                0.5478787627071142
+              ],
+              [
+                0.5478792190551758,
+                0.5539398216642439
+              ],
+              [
+                0.5551519393920898,
+                1.2787881940603256
+              ],
+              [
+                1.2787885665893555,
+                1.3115148567594588
+              ],
+              [
+                1.3133344650268555,
+                1.3496980690397322
+              ],
+              [
+                1.351515769958496,
+                1.421212198678404
+              ],
+              [
+                1.423029899597168,
+                1.4593935036100447
+              ],
+              [
+                1.4612131118774414,
+                1.5309095405973494
+              ],
+              [
+                1.5327272415161133,
+                1.56909084552899
+              ],
+              [
+                1.570908546447754,
+                1.6406068825162947
+              ],
+              [
+                1.6424245834350586,
+                1.6787881874479353
+              ],
+              [
+                1.6806058883666992,
+                1.71575832599774
+              ],
+              [
+                1.7187871932983398,
+                1.751514932140708
+              ],
+              [
+                2.1181821823120117,
+                2.1224236516281962
+              ]
+            ],
+            "MTE2": [
+              [
+                0.21454524993896484,
+                0.484848290681839
+              ],
+              [
+                0.953333854675293,
+                1.1236363649368286
+              ]
+            ],
+            "SIMD": [
+              [
+                0.1812124252319336,
+                0.19333363138139248
+              ],
+              [
+                1.0333337783813477,
+                1.0357580208219588
+              ],
+              [
+                1.0363636016845703,
+                1.0387878441251814
+              ],
+              [
+                1.1254549026489258,
+                1.2036362066864967
+              ],
+              [
+                1.2787885665893555,
+                1.578787848353386
+              ],
+              [
+                1.5993947982788086,
+                1.9315157383680344
+              ]
+            ],
+            "MTE3": [
+              [
+                1.426060676574707,
+                1.739999920129776
+              ],
+              [
+                1.7787885665893555,
+                2.1163641810417175
+              ]
+            ]
+          },
+          "correctness": "correctness name=output count=64512 bad=0 max_abs_error=0 atol=0.015625 rtol=0.015625 hard_limit=1",
+          "kernel": "MhcPost_59130ccee6717ff2c0f15b485e731162_5",
+          "binary_sha256": "36851e45520023382742d07d871519f65e57e9c49ec3594583e361b0bb9b6677",
+          "trace": "runs/post-candidate-repeat/Ascend950DT_9582/profile/OPPROF_20261119211746_EMSYOOKJPUUORJPT/MhcPost_59130ccee6717ff2c0f15b485e731162_5/1/simulator/trace.json",
+          "trace_sha256": "80c7de8878543a6df7ffc30ab289c336d35228e6ccb4c64b3820870749968d50",
+          "cores": [
+            "core0.veccore0",
+            "core0.veccore1",
+            "core1.veccore0",
+            "core1.veccore1",
+            "core10.veccore0",
+            "core10.veccore1",
+            "core11.veccore0",
+            "core11.veccore1",
+            "core16.veccore0",
+            "core16.veccore1",
+            "core17.veccore0",
+            "core17.veccore1",
+            "core18.veccore0",
+            "core18.veccore1",
+            "core19.veccore0",
+            "core19.veccore1",
+            "core2.veccore0",
+            "core2.veccore1",
+            "core20.veccore0",
+            "core20.veccore1",
+            "core21.veccore0",
+            "core21.veccore1",
+            "core22.veccore0",
+            "core22.veccore1",
+            "core23.veccore0",
+            "core23.veccore1",
+            "core24.veccore0",
+            "core24.veccore1",
+            "core25.veccore0",
+            "core25.veccore1",
+            "core26.veccore0",
+            "core26.veccore1",
+            "core27.veccore0",
+            "core27.veccore1",
+            "core3.veccore0",
+            "core3.veccore1",
+            "core4.veccore0",
+            "core4.veccore1",
+            "core5.veccore0",
+            "core5.veccore1",
+            "core6.veccore0",
+            "core6.veccore1",
+            "core7.veccore0",
+            "core7.veccore1",
+            "core8.veccore0",
+            "core8.veccore1",
+            "core9.veccore0",
+            "core9.veccore1"
+          ]
+        }
+      ],
+      "unknown_model_budget_us": {
+        "arrival": 0.03460700560662217,
+        "SCALAR": 1.2994047456254882,
+        "MTE2": 0.6337651581935828,
+        "SIMD": 0.9614216291247328,
+        "MTE3": 0.25623808099834355,
+        "other": 0.00909851148301925,
+        "shared_link_floor": 0.0
+      },
+      "cost": {
+        "started_utc": "2026-11-19T13:17:46.115727+00:00",
+        "finished_utc": "2026-11-19T13:19:42.349986+00:00",
+        "seconds": 116.23421338992193,
+        "peak_bytes": 511527551,
+        "cpu_seconds": 2812.6200000000003,
+        "exit_code": 0,
+        "stop_reason": null,
+        "command": [
+          "bash",
+          "/home/l00925865/operator_sim/scripts/cann-run.sh",
+          "msopprof",
+          "simulator",
+          "--soc-version=Ascend950DT_9582",
+          "--dump=false",
+          "--launch-count=2",
+          "--timeout=60",
+          "--output=/home/l00925865/operator_sim/runs/post-candidate-repeat/Ascend950DT_9582/profile",
+          "/home/l00925865/operator_sim/build/vector-v8/MHC",
+          "/home/l00925865/operator_sim/runs/post-candidate-repeat/Ascend950DT_9582/cases.txt"
+        ]
+      },
+      "first_over_repeat": 2.5299836310428794,
+      "pair_only_metrics": {
+        "current_us": {
+          "wape_pct": 10.307892640380308,
+          "max_absolute_error_pct": 12.151528875271623
+        },
+        "current_unknown_us": {
+          "wape_pct": 43.342513477629616,
+          "max_absolute_error_pct": 50.51354749939452
+        },
+        "candidate_us": {
+          "wape_pct": 12.842440668330939,
+          "max_absolute_error_pct": 19.77957466516569
+        },
+        "candidate_unknown_us": {
+          "wape_pct": 43.342513477629616,
+          "max_absolute_error_pct": 56.91998645071599
+        }
+      },
+      "first_40pc_interval_us": [
+        3.2218182580545545,
+        7.517575935460626
+      ],
+      "repeat_40pc_interval_us": [
+        1.2734541909769177,
+        2.9713931122794746
+      ],
+      "intersects": false,
+      "minimax_unknown_us": 3.0423354088875456,
+      "min_possible_max_relative_error_pct": 43.342513477629616,
+      "before_first_vector_saving_us": 1.9836363792419434,
+      "input_sha_check": "same host ELF and source; batch ordinal only printed as ID; same per-element functions in post(stream,T,N,D), separate tensor allocation for each call",
+      "receipt": "results/post-candidate/paired-Ascend950DT_9582.json",
+      "receipt_sha256": "34cfaf237c04d9aa9e870954a249afaaaf5f2485418215f65e3b3837c84f1315",
+      "run_log_sha256": "a577dfba6d6d1f0b2b42d64b451379f8bc80ecc92d58d9a4a749fbedf07e18f9"
+    },
+    "Ascend950PR_957b": {
+      "shape": [
+        3,
+        4,
+        5376
+      ],
+      "target_plan": {
+        "active_aiv": 48,
+        "active_aic": 0,
+        "route": "post_channel",
+        "channel_slices": 16,
+        "fragment_width": 336,
+        "rows_per_core": 1
+      },
+      "rows": [
+        {
+          "ordinal": 0,
+          "condition": "first",
+          "ca_us": 4.99454593937844,
+          "predictions_us": {
+            "current_us": 4.860785315346709,
+            "current_unknown_us": 3.200634180603523,
+            "candidate_us": 4.835413128518825,
+            "candidate_unknown_us": 3.3393629620829706
+          },
+          "signed_error_pct": {
+            "current_us": -2.678133821477635,
+            "current_unknown_us": -35.91741432651966,
+            "candidate_us": -3.186131688267524,
+            "candidate_unknown_us": -33.13980885120167
+          },
+          "model_contributions_us": {
+            "arrival": 0.052210806535105354,
+            "SCALAR": 1.9578265662305838,
+            "MTE2": 1.2270297669730037,
+            "SIMD": 1.3583815831266532,
+            "MTE3": 0.25623808099834355,
+            "other": 0.009098511483019251,
+            "shared_link_floor": 0.0
+          },
+          "ca_milestones": {
+            "phase_us": {
+              "arrival": 0.5993938446044922,
+              "control": 1.813333511352539,
+              "read": 0.8303031921386719,
+              "body": 1.4987874031066895,
+              "retire": 0.2527279881760478
+            },
+            "raw_queue_instruction_counts": {
+              "SIMD": 1847,
+              "SCALAR": 1528,
+              "MTE2": 5,
+              "MTE3": 5
+            },
+            "raw_nonwait_service_us": {
+              "SIMD": 6.391515117720701,
+              "SCALAR": 37.51757563720457,
+              "MTE2": 1.7436363426968455,
+              "MTE3": 0.9836363820359111
+            },
+            "dma_read": [
+              {
+                "start_us": 1.182424545288086,
+                "end_us": 1.632727563381195,
+                "bytes": 96
+              },
+              {
+                "start_us": 2.4127273559570312,
+                "end_us": 3.226060688495636,
+                "bytes": 672
+              },
+              {
+                "start_us": 2.750303268432617,
+                "end_us": 3.2272729575634003,
+                "bytes": 2688
+              }
+            ],
+            "dma_write": [
+              {
+                "start_us": 4.071515083312988,
+                "end_us": 4.2751514464616776,
+                "bytes": 672
+              },
+              {
+                "start_us": 4.2266669273376465,
+                "end_us": 4.558788150548935,
+                "bytes": 672
+              },
+              {
+                "start_us": 4.446667194366455,
+                "end_us": 4.644849017262459,
+                "bytes": 672
+              },
+              {
+                "start_us": 4.741817951202393,
+                "end_us": 4.988484621047974,
+                "bytes": 672
+              }
+            ],
+            "simd_core_instructions": {
+              "RV_VLD": 534,
+              "RV_VST": 342,
+              "RV_VMULS": 48
+            },
+            "read_bytes": 3360,
+            "write_bytes": 2688,
+            "first_vector_operand_us": 3.243030548095703
+          },
+          "terminal_core": "core16.veccore0",
+          "terminal_trace": "runs/post-candidate-repeat/Ascend950PR_957b/profile/OPPROF_20261119211559_JMOGQKEMFOGHAOFW/MhcPost_59130ccee6717ff2c0f15b485e731162_5/0/simulator/core16.veccore0/trace.json",
+          "terminal_trace_sha256": "ccb5ec30db6f3ce14f3f43d6d47e446cdc4d6954c3a3e14e35e5a4f4d4f7dd18",
+          "terminal_arrives_us": 0.5993938446044922,
+          "nonwait_queue_union_us": {
+            "SCALAR": [
+              [
+                0.5993938446044922,
+                1.9145455383695662
+              ],
+              [
+                1.915757656097412,
+                2.433939477428794
+              ],
+              [
+                2.7157578468322754,
+                2.803636571392417
+              ],
+              [
+                2.8612122535705566,
+                3.2575758397579193
+              ],
+              [
+                3.2575759887695312,
+                3.5666666054166853
+              ],
+              [
+                3.5684847831726074,
+                3.604848387185484
+              ],
+              [
+                3.6066665649414062,
+                3.6763639473356307
+              ],
+              [
+                3.6781821250915527,
+                3.7145457291044295
+              ],
+              [
+                3.7163639068603516,
+                3.7860608124174178
+              ],
+              [
+                3.78787899017334,
+                3.8242425941862166
+              ],
+              [
+                3.8260607719421387,
+                3.895757677499205
+              ],
+              [
+                3.897575855255127,
+                3.9339394592680037
+              ],
+              [
+                3.935757637023926,
+                3.97090912098065
+              ],
+              [
+                3.9739394187927246,
+                4.0066666807979345
+              ],
+              [
+                4.9903035163879395,
+                4.99454593937844
+              ]
+            ],
+            "MTE2": [
+              [
+                1.182424545288086,
+                1.632727563381195
+              ],
+              [
+                2.4127273559570312,
+                3.2272729575634003
+              ]
+            ],
+            "SIMD": [
+              [
+                1.1490907669067383,
+                1.1551513727754354
+              ],
+              [
+                1.1551518440246582,
+                1.1612124498933554
+              ],
+              [
+                2.869697093963623,
+                2.872121336404234
+              ],
+              [
+                2.872727394104004,
+                2.875151636544615
+              ],
+              [
+                3.229091167449951,
+                4.224242731928825
+              ],
+              [
+                4.276969909667969,
+                4.444242522120476
+              ],
+              [
+                4.560606479644775,
+                4.7393937557935715
+              ]
+            ],
+            "MTE3": [
+              [
+                4.071515083312988,
+                4.644849017262459
+              ],
+              [
+                4.741817951202393,
+                4.988484621047974
+              ]
+            ]
+          },
+          "correctness": "correctness name=output count=64512 bad=0 max_abs_error=0 atol=0.015625 rtol=0.015625 hard_limit=1",
+          "kernel": "MhcPost_59130ccee6717ff2c0f15b485e731162_5",
+          "binary_sha256": "36851e45520023382742d07d871519f65e57e9c49ec3594583e361b0bb9b6677",
+          "trace": "runs/post-candidate-repeat/Ascend950PR_957b/profile/OPPROF_20261119211559_JMOGQKEMFOGHAOFW/MhcPost_59130ccee6717ff2c0f15b485e731162_5/0/simulator/trace.json",
+          "trace_sha256": "69feb95249312ed66abc197e0c2ccb5899e04032c8d75cdc1ef8a80032c802c2",
+          "cores": [
+            "core0.veccore0",
+            "core0.veccore1",
+            "core1.veccore0",
+            "core1.veccore1",
+            "core10.veccore0",
+            "core10.veccore1",
+            "core11.veccore0",
+            "core11.veccore1",
+            "core16.veccore0",
+            "core16.veccore1",
+            "core17.veccore0",
+            "core17.veccore1",
+            "core18.veccore0",
+            "core18.veccore1",
+            "core19.veccore0",
+            "core19.veccore1",
+            "core2.veccore0",
+            "core2.veccore1",
+            "core20.veccore0",
+            "core20.veccore1",
+            "core21.veccore0",
+            "core21.veccore1",
+            "core22.veccore0",
+            "core22.veccore1",
+            "core23.veccore0",
+            "core23.veccore1",
+            "core24.veccore0",
+            "core24.veccore1",
+            "core25.veccore0",
+            "core25.veccore1",
+            "core26.veccore0",
+            "core26.veccore1",
+            "core27.veccore0",
+            "core27.veccore1",
+            "core3.veccore0",
+            "core3.veccore1",
+            "core4.veccore0",
+            "core4.veccore1",
+            "core5.veccore0",
+            "core5.veccore1",
+            "core6.veccore0",
+            "core6.veccore1",
+            "core7.veccore0",
+            "core7.veccore1",
+            "core8.veccore0",
+            "core8.veccore1",
+            "core9.veccore0",
+            "core9.veccore1"
+          ]
+        },
+        {
+          "ordinal": 1,
+          "condition": "reuse",
+          "ca_us": 2.0860610036179423,
+          "predictions_us": {
+            "current_us": 2.385791633448579,
+            "current_unknown_us": 3.200634180603523,
+            "candidate_us": 2.550310845300587,
+            "candidate_unknown_us": 3.3393629620829706
+          },
+          "signed_error_pct": {
+            "current_us": 14.368258133908917,
+            "current_unknown_us": 53.42955815062598,
+            "candidate_us": 22.254854526184854,
+            "candidate_unknown_us": 60.07983257878722
+          },
+          "model_contributions_us": {
+            "arrival": 0.02597671371162371,
+            "SCALAR": 0.9766123824907671,
+            "MTE2": 0.3429162236061571,
+            "SIMD": 0.7749497211586686,
+            "MTE3": 0.25623808099834355,
+            "other": 0.009098511483019251,
+            "shared_link_floor": 0.0
+          },
+          "ca_milestones": {
+            "phase_us": {
+              "arrival": 0.05030345916748047,
+              "control": 0.8933334350585938,
+              "read": 0.18181800842285156,
+              "body": 0.8224239349365234,
+              "retire": 0.13818216603249311
+            },
+            "raw_queue_instruction_counts": {
+              "SIMD": 1847,
+              "SCALAR": 1528,
+              "MTE2": 5,
+              "MTE3": 5
+            },
+            "raw_nonwait_service_us": {
+              "SIMD": 5.737575714127161,
+              "SCALAR": 18.6006060175132,
+              "MTE2": 0.35818182211369276,
+              "MTE3": 0.5545454500243068
+            },
+            "dma_read": [
+              {
+                "start_us": 0.3454551696777344,
+                "end_us": 0.4515157788991928,
+                "bytes": 96
+              },
+              {
+                "start_us": 0.9436368942260742,
+                "end_us": 1.0648490190505981,
+                "bytes": 672
+              },
+              {
+                "start_us": 0.9818181991577148,
+                "end_us": 1.1096969842910767,
+                "bytes": 2688
+              }
+            ],
+            "dma_write": [
+              {
+                "start_us": 1.4557580947875977,
+                "end_us": 1.6212126463651657,
+                "bytes": 672
+              },
+              {
+                "start_us": 1.6109094619750977,
+                "end_us": 1.7363640069961548,
+                "bytes": 672
+              },
+              {
+                "start_us": 1.7927274703979492,
+                "end_us": 1.9212123155593872,
+                "bytes": 672
+              },
+              {
+                "start_us": 1.9478788375854492,
+                "end_us": 2.0800000429153442,
+                "bytes": 672
+              }
+            ],
+            "simd_core_instructions": {
+              "RV_VLD": 534,
+              "RV_VST": 342,
+              "RV_VMULS": 48
+            },
+            "read_bytes": 3360,
+            "write_bytes": 2688,
+            "first_vector_operand_us": 1.1254549026489258
+          },
+          "terminal_core": "core21.veccore1",
+          "terminal_trace": "runs/post-candidate-repeat/Ascend950PR_957b/profile/OPPROF_20261119211559_JMOGQKEMFOGHAOFW/MhcPost_59130ccee6717ff2c0f15b485e731162_5/1/simulator/core21.veccore1/trace.json",
+          "terminal_trace_sha256": "a13d51f57cb6f2c39bbef8073ade4e8397e064172ace4d233a15f368f64daa63",
+          "terminal_arrives_us": 0.05030345916748047,
+          "nonwait_queue_union_us": {
+            "SCALAR": [
+              [
+                0.05030345916748047,
+                0.5799999260343611
+              ],
+              [
+                0.581212043762207,
+                1.3412122749723494
+              ],
+              [
+                1.3430309295654297,
+                1.3793945335783064
+              ],
+              [
+                1.3812122344970703,
+                1.4509096168912947
+              ],
+              [
+                1.4527273178100586,
+                1.4890909218229353
+              ],
+              [
+                1.4909095764160156,
+                1.5606060051359236
+              ],
+              [
+                1.562424659729004,
+                1.5987882637418807
+              ],
+              [
+                1.6006059646606445,
+                1.670303347054869
+              ],
+              [
+                1.6721210479736328,
+                1.7084846519865096
+              ],
+              [
+                1.7103033065795898,
+                1.7454547905363142
+              ],
+              [
+                1.7484846115112305,
+                1.7812123503535986
+              ],
+              [
+                2.0818185806274414,
+                2.0860610036179423
+              ]
+            ],
+            "MTE2": [
+              [
+                0.3454551696777344,
+                0.4515157788991928
+              ],
+              [
+                0.9436368942260742,
+                1.1096969842910767
+              ]
+            ],
+            "SIMD": [
+              [
+                0.3121213912963867,
+                0.3242425974458456
+              ],
+              [
+                1.023636817932129,
+                1.02606106037274
+              ],
+              [
+                1.0266666412353516,
+                1.0290908836759627
+              ],
+              [
+                1.1115150451660156,
+                1.2030301429331303
+              ],
+              [
+                1.3084850311279297,
+                1.6084852665662766
+              ],
+              [
+                1.623030662536621,
+                1.9454546421766281
+              ]
+            ],
+            "MTE3": [
+              [
+                1.4557580947875977,
+                1.7363640069961548
+              ],
+              [
+                1.7927274703979492,
+                1.9212123155593872
+              ],
+              [
+                1.9478788375854492,
+                2.0800000429153442
+              ]
+            ]
+          },
+          "correctness": "correctness name=output count=64512 bad=0 max_abs_error=0 atol=0.015625 rtol=0.015625 hard_limit=1",
+          "kernel": "MhcPost_59130ccee6717ff2c0f15b485e731162_5",
+          "binary_sha256": "36851e45520023382742d07d871519f65e57e9c49ec3594583e361b0bb9b6677",
+          "trace": "runs/post-candidate-repeat/Ascend950PR_957b/profile/OPPROF_20261119211559_JMOGQKEMFOGHAOFW/MhcPost_59130ccee6717ff2c0f15b485e731162_5/1/simulator/trace.json",
+          "trace_sha256": "54ae220a6209dc282c2aee1181886865ff413b2fd31334d1274ce90e98032a7b",
+          "cores": [
+            "core0.veccore0",
+            "core0.veccore1",
+            "core1.veccore0",
+            "core1.veccore1",
+            "core10.veccore0",
+            "core10.veccore1",
+            "core11.veccore0",
+            "core11.veccore1",
+            "core16.veccore0",
+            "core16.veccore1",
+            "core17.veccore0",
+            "core17.veccore1",
+            "core18.veccore0",
+            "core18.veccore1",
+            "core19.veccore0",
+            "core19.veccore1",
+            "core2.veccore0",
+            "core2.veccore1",
+            "core20.veccore0",
+            "core20.veccore1",
+            "core21.veccore0",
+            "core21.veccore1",
+            "core22.veccore0",
+            "core22.veccore1",
+            "core23.veccore0",
+            "core23.veccore1",
+            "core24.veccore0",
+            "core24.veccore1",
+            "core25.veccore0",
+            "core25.veccore1",
+            "core26.veccore0",
+            "core26.veccore1",
+            "core27.veccore0",
+            "core27.veccore1",
+            "core3.veccore0",
+            "core3.veccore1",
+            "core4.veccore0",
+            "core4.veccore1",
+            "core5.veccore0",
+            "core5.veccore1",
+            "core6.veccore0",
+            "core6.veccore1",
+            "core7.veccore0",
+            "core7.veccore1",
+            "core8.veccore0",
+            "core8.veccore1",
+            "core9.veccore0",
+            "core9.veccore1"
+          ]
+        }
+      ],
+      "unknown_model_budget_us": {
+        "arrival": 0.0346137680907649,
+        "SCALAR": 1.299657677770038,
+        "MTE2": 0.6339930602543712,
+        "SIMD": 0.9670330820069859,
+        "MTE3": 0.25623808099834355,
+        "other": 0.009098511483019251,
+        "shared_link_floor": 0.0
+      },
+      "cost": {
+        "started_utc": "2026-11-19T13:15:59.114198+00:00",
+        "finished_utc": "2026-11-19T13:17:43.216679+00:00",
+        "seconds": 104.10249031987041,
+        "peak_bytes": 414065901,
+        "cpu_seconds": 2359.31,
+        "exit_code": 0,
+        "stop_reason": null,
+        "command": [
+          "bash",
+          "/home/l00925865/operator_sim/scripts/cann-run.sh",
+          "msopprof",
+          "simulator",
+          "--soc-version=Ascend950PR_957b",
+          "--dump=false",
+          "--launch-count=2",
+          "--timeout=60",
+          "--output=/home/l00925865/operator_sim/runs/post-candidate-repeat/Ascend950PR_957b/profile",
+          "/home/l00925865/operator_sim/build/vector-v8/MHC",
+          "/home/l00925865/operator_sim/runs/post-candidate-repeat/Ascend950PR_957b/cases.txt"
+        ]
+      },
+      "first_over_repeat": 2.3942473066301475,
+      "pair_only_metrics": {
+        "current_us": {
+          "wape_pct": 6.122232985848004,
+          "max_absolute_error_pct": 14.368258133908917
+        },
+        "current_unknown_us": {
+          "wape_pct": 41.07677433835468,
+          "max_absolute_error_pct": 53.42955815062598
+        },
+        "candidate_us": {
+          "wape_pct": 8.804084982557384,
+          "max_absolute_error_pct": 22.254854526184854
+        },
+        "candidate_unknown_us": {
+          "wape_pct": 41.07677433835468,
+          "max_absolute_error_pct": 60.07983257878722
+        }
+      },
+      "first_40pc_interval_us": [
+        2.996727563627064,
+        6.992364315129816
+      ],
+      "repeat_40pc_interval_us": [
+        1.2516366021707654,
+        2.920485405065119
+      ],
+      "intersects": false,
+      "minimax_unknown_us": 2.9429475746345015,
+      "min_possible_max_relative_error_pct": 41.07677433835468,
+      "before_first_vector_saving_us": 2.1175756454467773,
+      "input_sha_check": "same host ELF and source; batch ordinal only printed as ID; same per-element functions in post(stream,T,N,D), separate tensor allocation for each call",
+      "receipt": "results/post-candidate/paired-Ascend950PR_957b.json",
+      "receipt_sha256": "c42e27c46f04634c8bf578285355577e295b460e89b09f447923c1f25c390d48",
+      "run_log_sha256": "60cd061bf6e3d93079b0e9c346a14b81619869c9d5a24e59d7364fc6d23ff784"
+    }
+  }
+}

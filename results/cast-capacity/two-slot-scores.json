@@ -16,13 +16,13 @@
       },
       "prospective": {
         "baseline_us": {
-          "n": 3,
-          "wape": 0.11896318205876766,
+          "n": 6,
+          "wape": 0.10513471105856467,
           "max_ape": 0.1710296062933493
         },
         "candidate_us": {
-          "n": 3,
-          "wape": 0.11896318205876766,
+          "n": 6,
+          "wape": 0.053220378915447134,
           "max_ape": 0.1710296062933493
         }
       },
@@ -46,14 +46,14 @@
       },
       "prospective": {
         "baseline_us": {
-          "n": 3,
-          "wape": 0.053046432901857246,
-          "max_ape": 0.09734474236938173
+          "n": 5,
+          "wape": 0.12771585884243797,
+          "max_ape": 0.22527378429897227
         },
         "candidate_us": {
-          "n": 3,
-          "wape": 0.053046432901857246,
-          "max_ape": 0.09734474236938173
+          "n": 5,
+          "wape": 0.10938215496542028,
+          "max_ape": 0.1717630252244523
         }
       },
       "awaiting paired start confirmation": {
@@ -248,6 +248,161 @@
       "v020_us": 3.592267082302842,
       "sensitive": false,
       "projected_970_us": 3.341102830954072
+    },
+    {
+      "id": "cast_bf16_fp32_511_5120",
+      "shape": [
+        511,
+        5120
+      ],
+      "chip": "Ascend950DT_9582",
+      "targets": {
+        "baseline_us": 4.943005225,
+        "candidate_us": 5.2101188667042635,
+        "active_aiv": 64,
+        "waves": 2,
+        "slot_floor_us": 1.0864109814167022,
+        "local_two_slot_us": 5.2101188667042635,
+        "v020_us": 4.943005225
+      },
+      "role": "prospective",
+      "ca_us": 5.3799996403977275,
+      "trace_sha256": "4449015feeb8180eb9aa9a1d245d7b0c677900cc593d7638af4c594e6ae1d726",
+      "api": "aclnnCast",
+      "correctness": [
+        "correctness count=2616320 bad=0"
+      ],
+      "started_utc": "2026-11-19T13:18:05.656905+00:00",
+      "source": "results/v0.21/vector/holdout.json",
+      "baseline_us": 4.943005225,
+      "candidate_us": 5.2101188667042635,
+      "v020_us": 4.943005225,
+      "sensitive": true,
+      "projected_970_us": 4.387337661239726
+    },
+    {
+      "id": "cast_bf16_fp32_511_5120",
+      "shape": [
+        511,
+        5120
+      ],
+      "chip": "Ascend950PR_957b",
+      "targets": {
+        "baseline_us": 5.094411912935253,
+        "candidate_us": 5.446285701345484,
+        "active_aiv": 56,
+        "waves": 3,
+        "slot_floor_us": 1.0912088754384413,
+        "local_two_slot_us": 5.446285701345484,
+        "v020_us": 5.094411912935254
+      },
+      "role": "prospective",
+      "ca_us": 6.575757744722068,
+      "trace_sha256": "61c11ffa033a0a5c49ad71a511d14c23be54457f265528337a62127d6c539a0c",
+      "api": "aclnnCast",
+      "correctness": [
+        "correctness count=2616320 bad=0"
+      ],
+      "started_utc": "2026-11-19T13:19:07.910788+00:00",
+      "source": "results/v0.21/vector/holdout.json",
+      "baseline_us": 5.094411912935253,
+      "candidate_us": 5.446285701345484,
+      "v020_us": 5.094411912935254,
+      "sensitive": true,
+      "projected_970_us": 4.387337661239726
+    },
+    {
+      "id": "cast_bf16_fp32_32769_32",
+      "shape": [
+        32769,
+        32
+      ],
+      "chip": "Ascend950DT_9582",
+      "targets": {
+        "baseline_us": 3.8337760801136365,
+        "candidate_us": 3.8337760801136365,
+        "active_aiv": 64,
+        "waves": 1,
+        "slot_floor_us": null,
+        "local_two_slot_us": 3.8337760801136365,
+        "v020_us": 3.8337760801136365
+      },
+      "role": "prospective",
+      "ca_us": 3.6757576493546367,
+      "trace_sha256": "1b10c43231fc14a28be5ec418fdee340bb687c5e96edbd0c15524a36ca78141b",
+      "api": "aclnnCast",
+      "correctness": [
+        "correctness count=1048608 bad=0"
+      ],
+      "started_utc": "2026-11-19T13:21:26.675204+00:00",
+      "source": "results/v0.21/vector/holdout.json",
+      "baseline_us": 3.8337760801136365,
+      "candidate_us": 3.8337760801136365,
+      "v020_us": 3.8337760801136365,
+      "sensitive": false,
+      "projected_970_us": 3.4890077173635774
+    },
+    {
+      "id": "cast_bf16_fp32_32769_32",
+      "shape": [
+        32769,
+        32
+      ],
+      "chip": "Ascend950PR_957b",
+      "targets": {
+        "baseline_us": 3.940619551283408,
+        "candidate_us": 3.940619551283408,
+        "active_aiv": 56,
+        "waves": 1,
+        "slot_floor_us": null,
+        "local_two_slot_us": 3.940619551283408,
+        "v020_us": 3.9406195512834086
+      },
+      "role": "prospective",
+      "ca_us": 4.478787901811302,
+      "trace_sha256": "d28f372ee866e0edfa0a9e0f60c1205a5df07311cde19b713ed2e5b2eb2c9328",
+      "api": "aclnnCast",
+      "correctness": [
+        "correctness count=1048608 bad=0"
+      ],
+      "started_utc": "2026-11-19T13:22:34.215742+00:00",
+      "source": "results/v0.21/vector/holdout.json",
+      "baseline_us": 3.940619551283408,
+      "candidate_us": 3.940619551283408,
+      "v020_us": 3.9406195512834086,
+      "sensitive": false,
+      "projected_970_us": 3.4890077173635774
+    },
+    {
+      "id": "cast_bf16_fp32_98305_64",
+      "shape": [
+        98305,
+        64
+      ],
+      "chip": "Ascend950DT_9582",
+      "targets": {
+        "baseline_us": 7.121245884090909,
+        "candidate_us": 8.16482752070878,
+        "active_aiv": 64,
+        "waves": 5,
+        "slot_floor_us": 1.0864109814167022,
+        "local_two_slot_us": 8.16482752070878,
+        "v020_us": 7.121245884090909
+      },
+      "role": "prospective",
+      "ca_us": 8.23393917363137,
+      "trace_sha256": "25ad3ff5e2dfab70968b1f9ff2c0ba865fdf318b403dda788cca5155d1ce3399",
+      "api": "aclnnCast",
+      "correctness": [
+        "correctness count=6291520 bad=0"
+      ],
+      "started_utc": "2026-11-19T13:25:15.356084+00:00",
+      "source": "results/v0.21/vector/holdout.json",
+      "baseline_us": 7.121245884090909,
+      "candidate_us": 8.16482752070878,
+      "v020_us": 7.121245884090909,
+      "sensitive": true,
+      "projected_970_us": 5.831067239570839
     },
     {
       "id": "cast_bf16_fp32_65_5120",
@@ -500,91 +655,6 @@
   ],
   "unqualified": [],
   "pending": [
-    {
-      "id": "cast_bf16_fp32_511_5120",
-      "shape": [
-        511,
-        5120
-      ],
-      "chip": "Ascend950DT_9582",
-      "targets": {
-        "baseline_us": 4.943005225,
-        "candidate_us": 5.2101188667042635,
-        "active_aiv": 64,
-        "waves": 2,
-        "slot_floor_us": 1.0864109814167022,
-        "local_two_slot_us": 5.2101188667042635,
-        "v020_us": 4.943005225
-      }
-    },
-    {
-      "id": "cast_bf16_fp32_511_5120",
-      "shape": [
-        511,
-        5120
-      ],
-      "chip": "Ascend950PR_957b",
-      "targets": {
-        "baseline_us": 5.094411912935253,
-        "candidate_us": 5.446285701345484,
-        "active_aiv": 56,
-        "waves": 3,
-        "slot_floor_us": 1.0912088754384413,
-        "local_two_slot_us": 5.446285701345484,
-        "v020_us": 5.094411912935254
-      }
-    },
-    {
-      "id": "cast_bf16_fp32_32769_32",
-      "shape": [
-        32769,
-        32
-      ],
-      "chip": "Ascend950DT_9582",
-      "targets": {
-        "baseline_us": 3.8337760801136365,
-        "candidate_us": 3.8337760801136365,
-        "active_aiv": 64,
-        "waves": 1,
-        "slot_floor_us": null,
-        "local_two_slot_us": 3.8337760801136365,
-        "v020_us": 3.8337760801136365
-      }
-    },
-    {
-      "id": "cast_bf16_fp32_32769_32",
-      "shape": [
-        32769,
-        32
-      ],
-      "chip": "Ascend950PR_957b",
-      "targets": {
-        "baseline_us": 3.940619551283408,
-        "candidate_us": 3.940619551283408,
-        "active_aiv": 56,
-        "waves": 1,
-        "slot_floor_us": null,
-        "local_two_slot_us": 3.940619551283408,
-        "v020_us": 3.9406195512834086
-      }
-    },
-    {
-      "id": "cast_bf16_fp32_98305_64",
-      "shape": [
-        98305,
-        64
-      ],
-      "chip": "Ascend950DT_9582",
-      "targets": {
-        "baseline_us": 7.121245884090909,
-        "candidate_us": 8.16482752070878,
-        "active_aiv": 64,
-        "waves": 5,
-        "slot_floor_us": 1.0864109814167022,
-        "local_two_slot_us": 8.16482752070878,
-        "v020_us": 7.121245884090909
-      }
-    },
     {
       "id": "cast_bf16_fp32_98305_64",
       "shape": [

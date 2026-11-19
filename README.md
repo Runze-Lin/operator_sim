@@ -18,6 +18,8 @@
 
 需要核对大 prefill 输入时，可直接打开 8 条请求、每条 32k / 128k / 256k 的逐节点张量表，查看本卡 hidden、head、专家工作量及同形 CA 状态。[DeepSeek V4.1 Flash](docs/workloads/deepseek-flash.md) · [DeepSeek V4 Pro](docs/workloads/deepseek-pro.md) · [Kimi K3](docs/workloads/kimi-k3.md)
 
+系统仿真器处理连续调用时，可给每个 rank 的每条流维护一个 `OperatorStream`。例如 mHC Post [3,4,5376] 的两次相同输入在 DT 实测耗时相差 3.247 µs。带派发顺序的最坏误差为 12.15%，只给 shape 的任何单值至少为 43.34%。[调用方式](docs/integration.md#从系统的调用顺序恢复启动状态) · [两芯片首发与复用实测](docs/examples/mhc_post.md)
+
 默认 Matmul 和 Addmm 会在目标卡重新选择 tile 和波次。验收表分别给出每个算子在 950DT、950PR 的 WAPE、最坏 shape 和完整采集数量。当前仍有超限及未获得合格 CA 的路线。[逐算子验收](docs/error-analysis.md) · [同轴流水图](docs/pipeline-comparisons.md)
 
 ## 试一次预测

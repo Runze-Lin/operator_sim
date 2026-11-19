@@ -98,6 +98,9 @@ def changes(out,paired):
         lines+=['RMSNorm [32768,1280] 双端完整。最忙核的 22 / 25 轮与预测一致，PR 满块 rstd 发起比模型多等 0.776 µs（中位数之差）。[大输入的逐轮实测与模型](wide-rms/report.md)']
     if (OUT/'rms/host-recovery.json').exists():
         lines+=['原测试宿主在进入 ACL 前拒绝了七种已冻结的 RMS 列宽。补采沿用同一组 shape、预测、金标和设备库。对照形 [32,1280] 在 PR 上使用同一 ELF，原宿主 6.309 µs，修复后 6.266 µs，两组成对输出均通过。[补采登记与端点范围](rms/host-recovery.json)']
+    prefix=ROOT/'results/rms-dispatch-audit/prefix-recovery/verification-status.json'
+    if prefix.exists() and read(prefix).get('scored_count')==2:
+        lines+=['按同一实际时间顺序，RMSNorm 候选在十个完全配对的新形上的 WAPE / 最大误差为 DT 6.02% / 15.64%、PR 7.03% / 14.47%。较早的 18 个完整窗口直接复用，另两个只补采缺口；无历史模式的 PR WAPE 略增。[十形条件与逐端结果](../rms-dispatch-audit/report.md)']
     terminal=OUT/'large/full-hidden-terminal.json'
     if terminal.exists():
         native=read(terminal)
@@ -106,8 +109,8 @@ def changes(out,paired):
         lines.append('全宽 Cast 仍在进行，CA 时间待测。')
     lines+=['同一低开销队列登记 Kimi 的动态量化 [262144,7168]，独立于已经取到全指令窗口的窄输出 Cast、Sigmoid。[全宽 Cast 续测依据](large/full-hidden-continuation.json) · [Kimi 量化采集合同](../v0.20/full-quant/freeze.json)','',
             '另以 Addmm [16,64,256] 检查单 CPU worker 能否替代默认采集。DT 的数值、二进制、核数和 MMAD 计数一致，但全指令窗口由 3.588 µs 变成 3.448 µs，超过事前设定的一个设备时钟容差。PR 单 worker 在 420 秒上限前未完成。本次独立统计继续使用原来的采集口径。[DT 对照](dispatch/host-workers-dt.json) · [PR 对照](dispatch/host-workers-pr.json)']
-    lines+=['','无历史输入的 mHC Post 在历史批次仍超误差门槛。KDA chunk 缺少通过校验的主 kernel 设备窗口，所有芯片耗时填 N/A。完整大 hidden 的 B8×32k 和稀疏注意力分支按实际采集状态披露；长序列小宽度的投影、Cast、Sigmoid 有单独的完整 CA。970DT 全部为架构情景外推。','',
-        '[RMSNorm 扩核的按地址流水验证](../rms-dispatch-audit/report.md) · [Post 不同前序的读响应](../post-candidate/issue-response.md) · [大 Cast 的双缓冲与物理写回](../cast-capacity/report.md) · [核心三路线 270 个完整窗口](coverage/report.md) · [Chunk KDA 版本与事件核对](../chunk-recovery/report.md)','',
+    lines+=['','同流连续调用的 mHC Post [3,4,5376] 已取得双端完整窗口。无历史单值的最坏误差下界为 DT 43.34%、PR 41.08%，均超过 40%；流式 API 在这两次调用各自的最大误差是 12.15%、14.37%。KDA chunk 缺少通过校验的主 kernel 设备窗口，所有芯片耗时填 N/A。完整大 hidden 的 B8×32k 和稀疏注意力分支按实际采集状态披露；长序列小宽度的投影、Cast、Sigmoid 有单独的完整 CA。970DT 全部为架构情景外推。','',
+        '[RMSNorm 扩核的按地址流水验证](../rms-dispatch-audit/report.md) · [Post 连续两次派发的可辨识性与流水](../post-candidate/paired-result.md) · [Post 不同前序的读响应](../post-candidate/issue-response.md) · [大 Cast 的双缓冲与物理写回](../cast-capacity/report.md) · [核心三路线 270 个完整窗口](coverage/report.md) · [Chunk KDA 版本与事件核对](../chunk-recovery/report.md)','',
         '[建模方法](../../docs/modeling-strategy.md) · [总体误差与超限样本](../../docs/error-analysis.md) · [按 tile 或阶段上下对照](../../docs/pipeline-comparisons.md) · [双端耗时与加速比](pairs.md) · [预测开销](wheel-check.json) · [CA 成本](collection-cost.json) · [模型指纹](model.json)']
     (OUT/'changes.md').write_text('\n'.join(lines)+'\n')
 
@@ -123,6 +126,8 @@ def inputs():
     files.extend(sorted((OUT/'matmul-pages-pr').glob('page-audit.json')))
     files.extend(sorted((ROOT/'results/rms-dispatch-audit').glob('ordered-Ascend*.json')))
     files.extend(sorted((ROOT/'results/rms-dispatch-audit').glob('verified-ordered-Ascend*.json')))
+    files.extend(sorted((ROOT/'results/rms-dispatch-audit/prefix-recovery').glob('Ascend*.json')))
+    files.extend(sorted((ROOT/'results/rms-dispatch-audit/prefix-recovery').glob('verified-published-Ascend*.json')))
     files.extend(sorted((ROOT/'results/post-candidate').glob('paired-Ascend*.json')))
     return sha256(b''.join(f.read_bytes() for f in files)).hexdigest()
 

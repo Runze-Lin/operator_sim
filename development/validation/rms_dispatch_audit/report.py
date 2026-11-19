@@ -40,6 +40,40 @@ def replay_earlier(params):
     return summary
 
 
+def prefix_summary(rows,reg):
+    folder=OUT/'prefix-recovery'
+    if not (folder/'register.json').is_file():
+        return []
+    text=['','## 同顺序补采的目标窗口','',
+          '每端只计原序列中缺失的那个 shape。补采保留从流开始至目标的全部前序，重复前缀仅用作核对。下表保留原有完整窗口并加入通过逐核核对的补采目标。[事前登记](prefix-recovery/register.json)','',
+          '| 芯片 | 原完整 + 补采 | 已知前序 v0.21 → 候选 WAPE / 最大 | 仅 shape v0.21 → 候选 WAPE / 最大 |','|---|---:|---:|---:|']
+    combined=[]
+    for chip in reg['measured_skus']:
+        initial=[r for r in rows if r['chip']==chip and r['protocol']=='ordered new sequence']
+        extra=[]
+        published=folder/('verified-published-'+chip+'.json')
+        receipt=published if published.exists() else folder/(chip+'.json')
+        if receipt.exists():
+            result=read(receipt)
+            for item in result['scored_rows']:
+                assert result['qualified'] and item['timing_qualified'] and item['i']==result['target_index']
+                assert item['i'] not in {r['i'] for r in initial}
+                forecast=next(r for r in reg['rows'] if r['protocol']=='ordered new sequence'
+                              and r['chip']==chip and r['i']==item['i'])
+                assert forecast['shape']==item['shape']
+                extra.append(dict(**forecast,ca_us=item['stage']['ca_us'],trace_sha256=item['stage']['trace_sha256'],
+                                  trace=item['stage']['trace'],kernel=item['stage']['kernel'],correctness=item['correctness'],
+                                  source=str(receipt.relative_to(ROOT)),qualification='subsequent matched-prefix target'))
+        group=initial+extra
+        combined.extend(group)
+        def cell(key):
+            result=score(group,key)
+            return f"{result['wape']:.2%} / {result['max_ape']:.2%}" if result else 'N/A'
+        text.append(f"| {chip} | {len(initial)} + {len(extra)} | {cell('previous_known_us')} → {cell('candidate_known_us')} | {cell('previous_unknown_us')} → {cell('candidate_unknown_us')} |")
+    write(folder/'comparison.json',dict(role='Original complete ordered cases plus separately verified target only',rows=combined))
+    return text+['','[包括原预测、候选预测和实际时延的逐形表](prefix-recovery/comparison.json)']
+
+
 def publish():
     reg=read(OUT/'freeze.json')
     rows=[];failed=[]
@@ -132,6 +166,7 @@ def publish():
     txt+=['','[早期逐形回放与前序来源](earlier-shape-only.json)']
     if (OUT/'scope.md').exists():
         txt+=['','连续调用的训练与预测均在采集前冻结。部分宿主在数值检查及设备执行完成后触及导出文件预算；只有与官方每核 duration、实际入口及 END 指令逐核相符的独立完整窗口计分。原进程终态与逐调用计时依据同时保留。[逐次恢复的证据与范围](scope.md)']
+    txt+=prefix_summary(rows,reg)
     txt+=['','[时间戳与原始数据库位置](core-windows.json) · [逐进程交叉回放](candidate.json) · [两个协议的事前预测](freeze.json) · [新回执](independent.json)']
     (OUT/'report.md').write_text('\n'.join(txt)+'\n')
 
