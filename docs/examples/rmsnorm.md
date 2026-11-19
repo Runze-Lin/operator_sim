@@ -6,6 +6,30 @@ RMSNorm 对每行计算 $r_t=(D^{-1}\sum_d x_{td}^2+\epsilon)^{-1/2}$，输出 $
 
 两列共用设备时间刻度，各次启动均从全核最早指令计零。上方只画正式 API 返回的关键依赖链，空白行表示该项没有决定预测窗。下方横条是最后结束的实际 AIV 的非等待指令及读写描述符区间，写描述符会包括等待完成的时间。最下方竖线覆盖向该地址扇区写 rstd 的**所有核**。算例直接取独立有序验证的第 4 和第 6 次派发，两组数值金标通过，包内 kernel 都是 `RmsNorm_normal_all_bf16_high_performance_5000`。完整设备窗按每核首末时间、END 指令和供应商各核 duration 表核实。原 10 次宿主任务曾触及整批导出预算，这里使用其中完整且已独立核对的两个窗口。[图中各阶段、退休时刻与 trace 指纹](../../results/v0.22/rms-lane-example.json) · [逐形完整性回执](../../results/rms-dispatch-audit/verified-ordered-Ascend950DT_9582.json) · [重绘脚本](../../development/validation/rms_lane_example/figure.py)
 
+## 同一个 tile，在纯 Cube 调用前后变了多少
+
+![950DT RMSNorm，三个派发分别在同一横轴上对照模型与真实末核](../../results/v0.25/mixed-stream/dt-rms-tile.png)
+
+输入是 BF16 的两行，每行 2944 列。两个 AIV 各负责一行、一个 UB 块。每行需读取 5888 B 的 x 和 5888 B 的 gamma，写 5888 B 的 y 和 4 B 的 rstd。图中三次都用同一个安装包 `aclnnRmsNorm`。两次中间穿插的 `aclnnAddmm` 使用列偏置，实际窗口只有一个 AIC。模型从已执行的 RMS 决定下一次进入哪个通道状态。这里 $H$ 是这个流此前覆盖的 RMS AIV 数，取值来自调度记录，使用前序不需要目标芯片的 CA。
+
+| 本次 RMS 的前序 | H | 950DT 模型 / CA µs | 950PR 模型 / CA µs |
+|---|---:|---:|---:|
+| 新流只执行过 Addmm | 0 | 3.405 / 4.107 | 3.195 / 4.090 |
+| 刚执行过同一个 RMS | 2 | 1.850 / 1.605 | 1.852 / 1.607 |
+| 两个 RMS 中间执行过纯 AIC Addmm | 2 | 1.850 / 1.717 | 1.852 / 1.744 |
+
+后两次在 DT 上归一化 VF 的实测发起只差 0.006 µs。隔开 Addmm 后，末核写 y 的描述符占用从 0.109 拉长到 0.224 µs，解释了整窗多出的 0.112 µs。模型复用同一热态，能解释首发到热态的变化，仍缺少这两次写响应的差别。首发还低估 0.702 µs；上栏是暴露在关键路径上的阶段预算，下栏能看见实际两路输入和两笔写之间的重叠。这三个固定顺序的观测不能单独识别 Addmm 对缓存、地址和写队列的各自影响。[950PR 对照图](../../results/v0.25/mixed-stream/pr-rms-tile.png) · [逐条指令时间和哈希](../../results/v0.25/mixed-stream/dt-rms-tile.json) · [另十形的冻结报告](../../results/v0.25/mixed-stream/README.md)
+
+```python
+from operator_model import OperatorStream
+
+stream = OperatorStream('Ascend950DT_9582')
+stream.advance('rmsnorm', [2, 2944])
+# 系统仿真器已知这次列偏置实现只发 AIC。
+stream.advance('addmm', [16, 64, 256], {'self_shape': [64]}, aic_only=True)
+print(stream.advance('rmsnorm', [2, 2944]).latency_us)  # 1.850 µs
+```
+
 ## 两个输出在同一逻辑行上的写回
 
 ![950PR 上按实际 GM 地址配到各输出行的两笔写，设备时间同轴](../../results/v0.24/rms-prefix/pr-rms-output-rows.png)

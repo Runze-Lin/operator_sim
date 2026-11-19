@@ -1,5 +1,11 @@
 # FlashAttentionScoreV2 算例
 
+## 八个 KV 页，误差从哪一页开始积累
+
+![950DT 在同一行比较每页 QK、PV，末页为 112 token](../../results/v0.25/coverage/fa-dt-1008-pages.png)
+
+BF16，单卡 B=H=1，主模型校验 Q=9，KV=1008，D=64，dense 非因果。目标路线按 128 token 一页切出七个整页和一个 112-token 尾页，模型、CA 都有 16 次 MMAD。紫色是 QK，绿色是 PV；短竖线标发起。首个 QK 的模型仅晚 0.013 µs，首个 PV 早 0.185 µs。继续往下看，第八页 PV 已经早 1.080 µs。模型整窗 10.532 µs，CA 为 11.415 µs，低估 7.73%。最后退出的是 AIV，预测与实测两栏均给全核整窗，图中也按地址、有效页长配对了 K/V 的 MTE2 搬运；其余控制和 softmax 时间包含在整窗内。[逐页起止、真实库和原始指纹](../../results/v0.25/coverage/fa-dt-1008-pages.json) · [双端三形冻结验证](../../results/v0.25/coverage/report.md)
+
 ## 首个 KV 页与后续 31 次发起间隔
 
 ![950PR fa 的模型与 CA 同轴对照](figures/fa-pr-pipeline.png)

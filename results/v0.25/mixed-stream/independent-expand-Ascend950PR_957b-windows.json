@@ -1,0 +1,549 @@
+{
+  "cost": {
+    "started_utc": "2026-11-19T16:25:15.945805+00:00",
+    "finished_utc": "2026-11-19T16:27:28.061281+00:00",
+    "wall_s": 132.11548525001854,
+    "exit_code": 0,
+    "stop": null,
+    "bytes": 148324075,
+    "peak_bytes": 149246374,
+    "file": "runs/mixed-history25/independent-expand-Ascend950PR_957b",
+    "plan_sha256": "28e8081ad961faf87aef067a53b38dd39ebe166ed5ce18d9940749c16d9bf136",
+    "inputs_sha256": "7129c718650483610ef1d881217c69ee1a95dfb7e9ecaadaab8040e54d895233"
+  },
+  "role": "independent",
+  "chip": "Ascend950PR_957b",
+  "group": "expand",
+  "rows": [
+    {
+      "op": "addmm",
+      "chip": "Ascend950PR_957b",
+      "group": "expand",
+      "i": 0,
+      "shape": [
+        16,
+        64,
+        256
+      ],
+      "previous_aiv": 0,
+      "target": false,
+      "public_us": 3.652744885892764,
+      "preserve_us": 3.652744885892764,
+      "active_aic": 1,
+      "active_aiv": 0,
+      "ca_us": 3.22,
+      "core_windows": {
+        "core0.cubecore0": [
+          6079,
+          11392
+        ]
+      },
+      "trace": "runs/mixed-history25/independent-expand-Ascend950PR_957b/profile/OPPROF_20261120002516_XJPYVYCCHJPJFRSM/MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2/0/simulator/trace.json",
+      "trace_sha256": "267f795559215b2c3cbb286d630aaf9b331ef843db05aaaf75a254a55341d00b",
+      "elf_text_sha256": "da7b67ccf08a12c0c376cd1cb6f56eeaf09d519ed9b89a7240349c9352412e80",
+      "shards": {
+        "core0.cubecore0": "eba82f8c40b781c6a289665e9922b8cef80618aea9c278a61b9760f0286d12f5"
+      },
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "first_tick": 6079,
+      "last_tick": 11392,
+      "observed_aic": 1,
+      "observed_aiv": 0,
+      "mmads": 1,
+      "goldens": [
+        "correctness count=1024 bad=0 max_abs_error=0.03125 atol=0.015625 rtol=0.015625 hard_limit=1"
+      ],
+      "qualified": true
+    },
+    {
+      "op": "rmsnorm",
+      "chip": "Ascend950PR_957b",
+      "group": "expand",
+      "i": 1,
+      "shape": [
+        1,
+        2352
+      ],
+      "previous_aiv": 0,
+      "target": true,
+      "public_us": 2.39961361174878,
+      "preserve_us": 3.1343744804720632,
+      "active_aic": 0,
+      "active_aiv": 1,
+      "ca_us": 3.0721212121212123,
+      "core_windows": {
+        "core0.veccore0": [
+          15095,
+          20164
+        ]
+      },
+      "trace": "runs/mixed-history25/independent-expand-Ascend950PR_957b/profile/OPPROF_20261120002516_XJPYVYCCHJPJFRSM/RmsNorm_normal_all_bf16_high_performance_5000/0/simulator/trace.json",
+      "trace_sha256": "cdeb13e5c983c7b6a4d0a49c36bfc5f08524e38257444e3a440b553b8500fe9a",
+      "elf_text_sha256": "c801d87f4298a8b399bce6678bafac249504eb176705aea81e826085edfe6456",
+      "shards": {
+        "core0.veccore0": "fe7905f8c93e68bdea7ff8a08eb2defec5fbe96f454b043810892ac7e3f8a57e"
+      },
+      "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+      "first_tick": 15095,
+      "last_tick": 20164,
+      "observed_aic": 0,
+      "observed_aiv": 1,
+      "mmads": 0,
+      "goldens": [
+        "correctness count=2352 bad=0 max_abs_error=0.00165953 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness count=1 bad=0 max_abs_error=3.57891e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ],
+      "qualified": true
+    },
+    {
+      "op": "addmm",
+      "chip": "Ascend950PR_957b",
+      "group": "expand",
+      "i": 2,
+      "shape": [
+        16,
+        64,
+        256
+      ],
+      "previous_aiv": 1,
+      "target": false,
+      "public_us": 3.652744885892764,
+      "preserve_us": 3.652744885892764,
+      "active_aic": 1,
+      "active_aiv": 0,
+      "ca_us": 1.6151515151515152,
+      "core_windows": {
+        "core0.cubecore0": [
+          21263,
+          23928
+        ]
+      },
+      "trace": "runs/mixed-history25/independent-expand-Ascend950PR_957b/profile/OPPROF_20261120002516_XJPYVYCCHJPJFRSM/MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2/1/simulator/trace.json",
+      "trace_sha256": "e06ecf8d1acc589987722928b6b4f53c18261ae2223d61d1907705f8700ac8fc",
+      "elf_text_sha256": "da7b67ccf08a12c0c376cd1cb6f56eeaf09d519ed9b89a7240349c9352412e80",
+      "shards": {
+        "core0.cubecore0": "d5a4ad838f1cec51f54ec6a6fd3a45ab8aca5ed53c0a1b15631cdc76fe275fb4"
+      },
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "first_tick": 21263,
+      "last_tick": 23928,
+      "observed_aic": 1,
+      "observed_aiv": 0,
+      "mmads": 1,
+      "goldens": [
+        "correctness count=1024 bad=0 max_abs_error=0.03125 atol=0.015625 rtol=0.015625 hard_limit=1"
+      ],
+      "qualified": true
+    },
+    {
+      "op": "rmsnorm",
+      "chip": "Ascend950PR_957b",
+      "group": "expand",
+      "i": 3,
+      "shape": [
+        3,
+        4848
+      ],
+      "previous_aiv": 1,
+      "target": true,
+      "public_us": 2.6950992401466416,
+      "preserve_us": 4.4702544789472665,
+      "active_aic": 0,
+      "active_aiv": 3,
+      "ca_us": 4.500606060606061,
+      "core_windows": {
+        "core0.veccore0": [
+          24647,
+          27704
+        ],
+        "core0.veccore1": [
+          24845,
+          29243
+        ],
+        "core16.veccore0": [
+          27032,
+          32073
+        ]
+      },
+      "trace": "runs/mixed-history25/independent-expand-Ascend950PR_957b/profile/OPPROF_20261120002516_XJPYVYCCHJPJFRSM/RmsNorm_normal_all_bf16_high_performance_5000/1/simulator/trace.json",
+      "trace_sha256": "e0ed99c16302c0f4e9247f4937fd9fae1867c5b2657f7d1a9b65a87b2b0a8d44",
+      "elf_text_sha256": "c801d87f4298a8b399bce6678bafac249504eb176705aea81e826085edfe6456",
+      "shards": {
+        "core0.veccore0": "a8a572b296202d634427c9acc8eb62e603e5ca1ec1c2c00b24f1a5df0a67cd8e",
+        "core0.veccore1": "4ea9b4b6e125fb4453c23938645845ba556e081a8db4c6f2430b992a1dd11e9e",
+        "core16.veccore0": "49622d419da36ca81efdd91c1db0c80884f3f9eb1f3a3b22a2b7d1387b3a1972"
+      },
+      "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+      "first_tick": 24647,
+      "last_tick": 32073,
+      "observed_aic": 0,
+      "observed_aiv": 3,
+      "mmads": 0,
+      "goldens": [
+        "correctness count=14544 bad=0 max_abs_error=0.00157988 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness count=3 bad=0 max_abs_error=7.73142e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ],
+      "qualified": true
+    },
+    {
+      "op": "addmm",
+      "chip": "Ascend950PR_957b",
+      "group": "expand",
+      "i": 4,
+      "shape": [
+        16,
+        64,
+        256
+      ],
+      "previous_aiv": 3,
+      "target": false,
+      "public_us": 3.652744885892764,
+      "preserve_us": 3.652744885892764,
+      "active_aic": 1,
+      "active_aiv": 0,
+      "ca_us": 1.6163636363636364,
+      "core_windows": {
+        "core0.cubecore0": [
+          33275,
+          35942
+        ]
+      },
+      "trace": "runs/mixed-history25/independent-expand-Ascend950PR_957b/profile/OPPROF_20261120002516_XJPYVYCCHJPJFRSM/MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2/2/simulator/trace.json",
+      "trace_sha256": "d5ddf8e59f4ab507ce91b3afcf59e8807c96a22a382f086c40a3b20aea58631a",
+      "elf_text_sha256": "da7b67ccf08a12c0c376cd1cb6f56eeaf09d519ed9b89a7240349c9352412e80",
+      "shards": {
+        "core0.cubecore0": "5241eaabdec7ae11c157f40f0136314af099b9ae9cf36da2efbf3b6f23d40988"
+      },
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "first_tick": 33275,
+      "last_tick": 35942,
+      "observed_aic": 1,
+      "observed_aiv": 0,
+      "mmads": 1,
+      "goldens": [
+        "correctness count=1024 bad=0 max_abs_error=0.03125 atol=0.015625 rtol=0.015625 hard_limit=1"
+      ],
+      "qualified": true
+    },
+    {
+      "op": "rmsnorm",
+      "chip": "Ascend950PR_957b",
+      "group": "expand",
+      "i": 5,
+      "shape": [
+        9,
+        1552
+      ],
+      "previous_aiv": 3,
+      "target": true,
+      "public_us": 3.0211476709611196,
+      "preserve_us": 3.4082797459313383,
+      "active_aic": 0,
+      "active_aiv": 9,
+      "ca_us": 3.3715151515151516,
+      "core_windows": {
+        "core0.veccore0": [
+          36634,
+          39347
+        ],
+        "core0.veccore1": [
+          36634,
+          39434
+        ],
+        "core1.veccore0": [
+          37495,
+          41335
+        ],
+        "core1.veccore1": [
+          37497,
+          41172
+        ],
+        "core16.veccore0": [
+          36715,
+          39609
+        ],
+        "core16.veccore1": [
+          36850,
+          40589
+        ],
+        "core17.veccore0": [
+          37688,
+          42185
+        ],
+        "core17.veccore1": [
+          37714,
+          42197
+        ],
+        "core2.veccore0": [
+          37515,
+          41773
+        ]
+      },
+      "trace": "runs/mixed-history25/independent-expand-Ascend950PR_957b/profile/OPPROF_20261120002516_XJPYVYCCHJPJFRSM/RmsNorm_normal_all_bf16_high_performance_5000/2/simulator/trace.json",
+      "trace_sha256": "65e7cf7c0a0b5303e53d34fedc8b4251e3e7387e887af4c241feea6db4de0869",
+      "elf_text_sha256": "c801d87f4298a8b399bce6678bafac249504eb176705aea81e826085edfe6456",
+      "shards": {
+        "core0.veccore0": "664512169bc0bbbd80cd0425aa3b1e5f722e46466745c5dadc4aaa03de30b51f",
+        "core0.veccore1": "ef70875dce89d78885baa503fc620dd184047ff738e04c8a4b2760fccd93542d",
+        "core1.veccore0": "a82098c756f73f884bf69c256e8567da572c93ecfcf9f0afe7582241cac1e40a",
+        "core1.veccore1": "86cc4abc405348a3922091f9effb8e164dd6f7ac036db6a71dcb0e9464d6f725",
+        "core16.veccore0": "fc517eabedf14b6a0f17e8c7dbfcc5aa8762c58cdcca06a21c1e83e699c89b20",
+        "core16.veccore1": "7fb86d815e39f2a23ceaf715b78108c862b9ca727785d04f48eb78fc01f3aa17",
+        "core17.veccore0": "1b66dbf6528192f10bf481f321a5f5317e4949b1ba597b35e1e914afc81fb9b5",
+        "core17.veccore1": "6fa39e1a7064dbd2165c827f8234c0f7a6ecfb0b40a060d4a6d8025cc250e877",
+        "core2.veccore0": "8ea176d8b8f5060c0bfc065cabdb962a4964eecc2a9fc307ce71c0d4671a629d"
+      },
+      "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+      "first_tick": 36634,
+      "last_tick": 42197,
+      "observed_aic": 0,
+      "observed_aiv": 9,
+      "mmads": 0,
+      "goldens": [
+        "correctness count=13968 bad=0 max_abs_error=0.00188994 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness count=9 bad=0 max_abs_error=1.96468e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ],
+      "qualified": true
+    },
+    {
+      "op": "addmm",
+      "chip": "Ascend950PR_957b",
+      "group": "expand",
+      "i": 6,
+      "shape": [
+        16,
+        64,
+        256
+      ],
+      "previous_aiv": 9,
+      "target": false,
+      "public_us": 3.652744885892764,
+      "preserve_us": 3.652744885892764,
+      "active_aic": 1,
+      "active_aiv": 0,
+      "ca_us": 1.6206060606060606,
+      "core_windows": {
+        "core0.cubecore0": [
+          43749,
+          46423
+        ]
+      },
+      "trace": "runs/mixed-history25/independent-expand-Ascend950PR_957b/profile/OPPROF_20261120002516_XJPYVYCCHJPJFRSM/MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2/3/simulator/trace.json",
+      "trace_sha256": "085b959d16b7ff2cf371f22ad57a38dba92f0e1267cb9fbcd1cafbc20feb5ff7",
+      "elf_text_sha256": "da7b67ccf08a12c0c376cd1cb6f56eeaf09d519ed9b89a7240349c9352412e80",
+      "shards": {
+        "core0.cubecore0": "722d256f4aa39c6c220e6f6b2eb75db0a3df43a234949633d5ea0d7a19a63098"
+      },
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "first_tick": 43749,
+      "last_tick": 46423,
+      "observed_aic": 1,
+      "observed_aiv": 0,
+      "mmads": 1,
+      "goldens": [
+        "correctness count=1024 bad=0 max_abs_error=0.03125 atol=0.015625 rtol=0.015625 hard_limit=1"
+      ],
+      "qualified": true
+    },
+    {
+      "op": "rmsnorm",
+      "chip": "Ascend950PR_957b",
+      "group": "expand",
+      "i": 7,
+      "shape": [
+        33,
+        2256
+      ],
+      "previous_aiv": 9,
+      "target": true,
+      "public_us": 5.640767422068694,
+      "preserve_us": 4.8196206427042165,
+      "active_aic": 0,
+      "active_aiv": 33,
+      "ca_us": 5.338787878787879,
+      "core_windows": {
+        "core0.veccore0": [
+          47141,
+          51683
+        ],
+        "core0.veccore1": [
+          47141,
+          51499
+        ],
+        "core1.veccore0": [
+          47145,
+          50619
+        ],
+        "core1.veccore1": [
+          47145,
+          51338
+        ],
+        "core16.veccore0": [
+          47222,
+          50340
+        ],
+        "core16.veccore1": [
+          47222,
+          50513
+        ],
+        "core17.veccore0": [
+          47224,
+          51047
+        ],
+        "core17.veccore1": [
+          47224,
+          50864
+        ],
+        "core18.veccore0": [
+          48235,
+          54160
+        ],
+        "core18.veccore1": [
+          48297,
+          52718
+        ],
+        "core19.veccore0": [
+          48161,
+          53784
+        ],
+        "core19.veccore1": [
+          48177,
+          53978
+        ],
+        "core2.veccore0": [
+          47139,
+          50464
+        ],
+        "core2.veccore1": [
+          47325,
+          51854
+        ],
+        "core20.veccore0": [
+          48171,
+          52893
+        ],
+        "core20.veccore1": [
+          48210,
+          52526
+        ],
+        "core21.veccore0": [
+          48288,
+          54496
+        ],
+        "core21.veccore1": [
+          48327,
+          54325
+        ],
+        "core22.veccore0": [
+          48200,
+          53089
+        ],
+        "core22.veccore1": [
+          48250,
+          52500
+        ],
+        "core23.veccore0": [
+          48248,
+          54669
+        ],
+        "core23.veccore1": [
+          48228,
+          53083
+        ],
+        "core3.veccore0": [
+          48058,
+          52260
+        ],
+        "core3.veccore1": [
+          48124,
+          52139
+        ],
+        "core4.veccore0": [
+          48058,
+          55416
+        ],
+        "core4.veccore1": [
+          48144,
+          55115
+        ],
+        "core5.veccore0": [
+          48153,
+          55265
+        ],
+        "core5.veccore1": [
+          48214,
+          53525
+        ],
+        "core6.veccore0": [
+          48032,
+          55766
+        ],
+        "core6.veccore1": [
+          48035,
+          55581
+        ],
+        "core7.veccore0": [
+          48076,
+          53372
+        ],
+        "core7.veccore1": [
+          48099,
+          54964
+        ],
+        "core8.veccore0": [
+          48144,
+          55948
+        ]
+      },
+      "trace": "runs/mixed-history25/independent-expand-Ascend950PR_957b/profile/OPPROF_20261120002516_XJPYVYCCHJPJFRSM/RmsNorm_normal_all_bf16_high_performance_5000/3/simulator/trace.json",
+      "trace_sha256": "db072cbeb8663a3c31b6b31a8795ace103a0283ab7d11a00385e34327c94456d",
+      "elf_text_sha256": "c801d87f4298a8b399bce6678bafac249504eb176705aea81e826085edfe6456",
+      "shards": {
+        "core0.veccore0": "878b229322009b12de8dadc165bcfabab3a4c03c960baa41b4459cb3e0e8bd26",
+        "core0.veccore1": "e625582f652ddcd36bc24c29e68f08223cd1f2b96770748899132766fadacdd9",
+        "core1.veccore0": "2308f7db07a05b9a2220323c0839b4a8643e298b31965072e2e9a6ba2c1d2675",
+        "core1.veccore1": "cbac7e2f0b61c6d45745ba92f9a57c12712e0f5945e364507be2d6b97700416e",
+        "core16.veccore0": "428ce12566b445f1e544f3174c86513c7171e52eacc9659e834e20c1d43022d7",
+        "core16.veccore1": "15dc5d176b8c48914c270f26c9392035597a21fa02b7c587c0c08a603f8e130f",
+        "core17.veccore0": "7075c7a6097a545d2a6fc7ceb6caeb7fa742e0e0e8833d0210bf0631eddafa80",
+        "core17.veccore1": "6c169dfe55e8151e526e9c8cc5955636a56c44a5e4264cd652fd53f2e9e0b637",
+        "core18.veccore0": "83d637da6b113fbf66862f1d26673429161dbc40d492e42168be6aa1e8f6c5ad",
+        "core18.veccore1": "c27cc2c4f3609109772d9b3b4d551e6a3b2d5e16810ce2610a1616d7245e4621",
+        "core19.veccore0": "574714240cec22ed36e87689f5c86308337b204dc4295c86e9ebd39482aebabb",
+        "core19.veccore1": "c966d2b6f21c6ee2d64414317e1ed6877056942ffe6d130282897028e38f3c37",
+        "core2.veccore0": "e28b1eb5e3f2f7a4ea3b30be85b503df086c149b5b5d5da06261c60b1b9ea830",
+        "core2.veccore1": "56781ad983e4ca874f46abfb08989b2499459f0a482b3d04b1f71b74c8e0ca32",
+        "core20.veccore0": "e4a52a9c1a2e85b9d8297e07e7acb759d718569ce9b340bbe7d07f4973b2509b",
+        "core20.veccore1": "bf9cb952fc080fc7639c3c6c11ac2fd86c3fe5cf9c4b8f2c8f5d1f4cc7642ff8",
+        "core21.veccore0": "776a4efdf7027a9b9cb2c433668fcfa7ca72f8e2eae27e6fdbf6db67fa3e6756",
+        "core21.veccore1": "fd9955f738a6cab4bc01cfc3f1a34d8021ca66838fb5138099e01430b235703a",
+        "core22.veccore0": "56a323d3f489e73956f8f864931c713e528fb69faf45c7fa1a87b5e80b710bc9",
+        "core22.veccore1": "41ad448d72e3b54c9333c96c3d28afed5849ca884b7b2b86cb37550762a1169c",
+        "core23.veccore0": "7b2377e4cc8333358076fdd6b62e2fba9fcada1cb680ca52667fb5f4b8010ebe",
+        "core23.veccore1": "4dfc55258d133fba53b9c652f82095c9fa175fe6e8f0f23b685aa4e003d639dc",
+        "core3.veccore0": "7f49f438ce9da44f2e8e50f73d4b72fba0471686d829acd1f04258868014d643",
+        "core3.veccore1": "ab2ace663743879302df4ad23d62379c08ed97bdc53d8952d73a1fa8ed0fd32a",
+        "core4.veccore0": "a2f1fbf73e06b089fffd8f12b9c8731846ede135643f3e07b161319c4e2fd94f",
+        "core4.veccore1": "41ee5fb0f31fcaf34c9542146ffb77f0e803312c928994d544b20a327596ca16",
+        "core5.veccore0": "492152cc4022e1d7feba6695bd092cb54243e22dba3e67e0736233deb9dffb2d",
+        "core5.veccore1": "f87da51d980ba4b9302c20e745c034e60e8d207c7b4ef7774f5e48619d57c822",
+        "core6.veccore0": "11d4a7cbfbd89ecce1c1f3df0833638a149947dfabbde8ff015c7a7e95bf9c60",
+        "core6.veccore1": "347209699fc891e6422a2e6b794271307352a0e1d8e3e4316bd1e6cf4bdff655",
+        "core7.veccore0": "6101ddb9d7cdeba838261452fe8a426668922f81a27b86ccfb84f0e8c5e8d13b",
+        "core7.veccore1": "f48404578a88c13fcdd258b4bf542103f211a0c669aecccd0925a2b2f9165e70",
+        "core8.veccore0": "5175a28f0fa823912df8039926e4ebd59fde70e14beac41faa256b1e0852ce0a"
+      },
+      "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+      "first_tick": 47139,
+      "last_tick": 55948,
+      "observed_aic": 0,
+      "observed_aiv": 33,
+      "mmads": 0,
+      "goldens": [
+        "correctness count=74448 bad=0 max_abs_error=0.00155242 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness count=33 bad=0 max_abs_error=1.57657e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ],
+      "qualified": true
+    }
+  ]
+}

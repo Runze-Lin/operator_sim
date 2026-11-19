@@ -24,8 +24,8 @@ print(result.latency_us, result.status)
 
 | `timing_mode` | 适用范围与语义 |
 |---|---|
-| `auto`（默认） | 950DT 默认在参考范围内使用校准路径。RMSNorm 超过 512 行、Quant 合并超过 1,048,576 行、BF16 Matmul 有轴超过 4096 时，自动采用目标资源路径。其他配置的 Quant、RMSNorm、Matmul、FA 使用按目标芯片计价的资源模型。其余算子保留现有 DT 阶段投影。 |
-| `resource` | 对四条已实现路线强制使用同一套资源调度，可在 DT、PR 或自定义芯片上调用。没有相应模型的算子返回 `unsupported`。 |
+| `auto`（默认） | FA、Matmul、列偏置 Addmm、RMSNorm、mHC Post 及已建模的资源路线在所选芯片上定价。Quant 在参考 DT 的原有范围内采用校准路径，合并 token 超过 1,048,576 行或换到其他芯片配置时用目标资源模型。其余路线见[计时方法](modeling-strategy.md)。 |
+| `resource` | 请求该算子的目标资源排程，可在 DT、PR 或自定义芯片上调用。没有相应模型的算子返回 `unsupported`。 |
 | `calibrated` | 使用已登记配置的校准路线。DT 上沿用原接口，PR 上的三条路线复现 v0.15 的专属预测及其分支覆盖。自定义配置无对应校准时返回 `unsupported`。 |
 
 例如 `estimate("fa", (9, 32768, 64), chip=chip, timing_mode="resource")`。CLI 对应 `--timing-mode resource`。`projection.method == "target_resource_schedule"` 表示按目标资源计价，`stages_us` 是可相加的关键路径阶段，`timing_diagnostics` 内含操作数、搬运量、局部吞吐或流水约束。具体单位由字段和算子公式给出。目标资源路径不调用 DT 时延预测，`reference_latency_us` 为 `None`。[三类算法、参数和算例](modeling-strategy.md)
@@ -184,6 +184,18 @@ assert candidate == executed
 
 对于 RMSNorm，前序覆盖已知且每核只执行一个 UB 块时，`projection.timing_diagnostics.lane_schedule` 提供末核通道类型、竞争扇区和获胜的写回路径。可以在相同输入下对 `stream.preview()` 与 `advance()` 核对，只用实际提交的调用推进状态。跨族 Post 的实测表明，直接继承前一算子的活动 AIV 数会把 PR 的 WAPE 从 6.93% 提高到 24.29%。[逐行 RMS 例子](examples/rmsnorm.md) · [混合序列的实测](../results/v0.22/post-stream/report.md)
 
+
+### 中间运行了纯 AIC 内核
+
+系统调度记录能确认中间的实现只发射到 AIC 时，给对应的 `advance` 传 `aic_only=True`，下一次 RMSNorm 仍使用之前的 AIV 覆盖。该值属于本次内核的执行合同，与算子名称、Cube FLOPs 和模型返回的预测核数独立。带 Vector 归并的 Stream-K Matmul 应走普通调用。首次接入运行中的 rank 先调用 `forget_history()`；失败或仅试算的候选不会改变记录。
+
+```python
+rank0.advance("rmsnorm", [2, 2944])
+rank0.advance("addmm", [16, 64, 256], {"self_shape": [64]}, aic_only=True)
+after_cube = rank0.preview("rmsnorm", [2, 2944])
+```
+
+这条纯 AIC 声明在包含 AIV 的已建模路线上会触发 `ValueError`。未提供声明时，跨族按未知前序处理。已验证的跨族例子来自 CANN 的 BF16 列偏置 Addmm，采集时另外用实际核掩码和全输出数值独立复核。[计算示范及逐形 CA](examples/rmsnorm.md)
 
 ### 按实际库选择扩展
 

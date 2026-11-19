@@ -10,6 +10,24 @@
 
 同一个 shape 在 950PR 上只用 28 个 AIC，首波之后分出 24 个 128×256 矩形。预测和实测都有 416 条 MMAD；首条 MMAD 起点相差 0.059 µs，到了最后一页扩大到 0.586 µs。模型给出 **14.027 µs**，CA 给出 **13.218 µs**。[同一刻度并排看 DT 与 PR](examples/figures/matmul-tile-pages-dt-pr.png) · [950PR 上下对照原图](examples/figures/matmul-tile-pages-pr.png) · [两卡同形的逐页偏差](../results/v0.21/matmul-pages-pr/report.md)
 
+## FA · 同一个 KV 页从 QK 看到 PV
+
+![八页的同轴图，上栏为独立预测，下栏是逐条 MMAD，虚线是整窗](../results/v0.25/coverage/fa-dt-1008-pages.png)
+
+950DT 的 1008 个 KV token 被切成七个 128-token 页和一个 112-token 尾页。第一页 QK 模型晚 0.013 µs，最后一页 PV 早约 1.080 µs。这种逐页比较能直接看出循环的发起间隔还有偏差。[逐页说明](examples/fa.md) · [八页区间](../results/v0.25/coverage/fa-dt-1008-pages.json)
+
+## mHC Post · 末核连续执行四行
+
+![950DT 每一行对应同一 token，上栏为候选，下栏为实际指令](../results/v0.25/post/four-token-repeat.png)
+
+内置 Post [196,4,1536]，49 个活动 AIV，图中末核处理第 108–111 个 token。紧邻重复时模型候选给出 3.586 µs，实测 3.800 µs。[四行的输入、地址及计时](examples/mhc_post.md)
+
+## RMSNorm · 同一 UB 块在三种前序下的读、算、写
+
+![模型与 CA 在相同的行展示首次、立即重复和间隔纯 Cube 后重复的结果](../results/v0.25/mixed-stream/dt-rms-tile.png)
+
+[2,2944] 每个 AIV 一行。中间插入纯 Cube 后再跑 RMS，实际归一化 VF 的发起仍与立即重复相差不到 0.01 µs，主要的时间差发生在最后一笔 y 写回。[逐阶段算例和 950PR 对照](examples/rmsnorm.md)
+
 ## 整批 prefill · 从一笔搬运看到每核几十轮
 
 ![Pro 的 B8×32k 投影 Cast，模型和真实末核按 UB 块对齐](examples/figures/prefill-pro-32ki-pr.png)
@@ -25,6 +43,18 @@
 ![末两块的放大图，上下栏保留相同的全核时间原点](../results/v0.24/pro-128ki-tail.png)
 
 这次独立库调用覆盖全部 67,108,864 个系数。沿尾块看，模型在 **97.747 µs** 发起读，末核 core7.veccore0 在 **102.408 µs** 发起。模型总共低估 5.456 µs，其中 4.661 µs 在尾块开始读之前已积累。上栏的稳态读写条分摊整卡共享带宽，下栏来自真实地址配对的 MTE2、转换和 MTE3 指令。[逐块原始地址与时间](../results/v0.23/pro-prefill/pro-b8-128ki-dt-blocks.json) · [完整库调用与金标](../results/v0.23/pro-prefill/pro-b8-128ki-dt.json)
+
+### Flash · 把 128Ki 末三块的预测与真实描述符放大
+
+![Flash 950PR 两栏按相同块对照读、转换和写](../results/v0.25/cache/flash-128ki-pr-tail.png)
+
+每行是同一 UB 块。在第 29 块，模型读起点偏晚 19.870 µs，读描述符的时长却短估 1.585 µs。单看设备整窗，无法定位这两类符号相反的偏差。[全核读写证据](../results/v0.25/cache/README.md) · [按累积数据量定价的候选](../results/v0.25/cache/flash-128ki-pr-prefix.png)
+
+### Pro · 950PR 同形的 57 轮，放大中间三块
+
+![Pro 8×128k 的第 28 到 30 块，上下两栏的时间原点都是全片第一条指令](../results/v0.25/pro-128ki-pr-middle.png)
+
+50 轮的 DT 和 57 轮的 PR 都完成全尺寸 CA。同样是读 128 MiB、写 256 MiB，两卡时间分别为 105.374 与 224.719 µs。PR 模型高估整窗 3.57%，第 29 块却因读发起偏晚、在途写窗口过短而出现符号相反的阶段误差。[逐块计算与误差](examples/cast_bf16_fp32.md) · [完整 57 轮](../results/v0.23/pro-prefill/pro-b8-128ki-pr-plot.png) · [同一 Flash 8×128k 场景的最后三块](../results/v0.25/cache/flash-128ki-pr-tail.png)
 
 ## KDA V2 · 三个 kernel 分别在哪里产生偏差
 

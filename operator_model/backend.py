@@ -163,6 +163,12 @@ def _price_resource(op, shape, target, call, dtype):
         return Estimate(us, 'estimated' if inside else 'extrapolated',
                         'DT-calibrated stage schedule' if inside else 'Outside DT timing coverage', aiv, aic,
                         target.name, work, projected, _rates(work, us, target))
+    if op == 'fa' and shape[1] > 131072:
+        return Estimate(us, 'extrapolated', 'KV length exceeds the longest complete 950DT FA reference',
+                        aiv, aic, target.name, work, projected, _rates(work, us, target))
+    if op == 'fa' and target == load_chip():
+        return Estimate(us, 'estimated', 'Dense BF16 FA resource prices calibrated on 950DT',
+                        aiv, aic, target.name, work, projected, _rates(work, us, target))
     return Estimate(us,'extrapolated','Target resource schedule with inherited 950 phase defaults',
                     aiv,aic,target.name,work,projected,_rates(work,us,target))
 
@@ -215,7 +221,7 @@ def _evaluate(op, shape, attrs, soc, chip, dtype, timing_mode='auto'):
         # A batch contains multiple request contexts. The reference surrogate's
         # historical dimension limit does not bound the aggregate token axis.
         large_quant = op == 'quant' and len(shape) == 2 and type(shape[0]) is int and shape[0] > 1048576
-        auto_resource = (op in _RESOURCE_ONLY or op in ('matmul', 'addmm', 'mhc_post', 'rmsnorm') or large_quant
+        auto_resource = (op in _RESOURCE_ONLY or op in ('fa', 'matmul', 'addmm', 'mhc_post', 'rmsnorm') or large_quant
                          or (not same and op in _RESOURCE_OPS))
         use_resource = timing_mode == 'resource' or (timing_mode == 'auto' and auto_resource)
         if use_resource or (timing_mode == 'calibrated' and same and op in _RESOURCE_ONLY):

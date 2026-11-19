@@ -1,0 +1,2136 @@
+{
+  "chip": "Ascend950PR_957b",
+  "group": "boundary",
+  "cost": {
+    "started_utc": "2026-11-19T16:24:16.092232+00:00",
+    "finished_utc": "2026-11-19T16:28:20.822135+00:00",
+    "seconds": 244.7298656499479,
+    "exit_code": 0,
+    "stop_reason": null,
+    "raw_bytes": 1355933308,
+    "peak_bytes": 2201041178,
+    "cpu_seconds": 7162.55
+  },
+  "freeze_sha256": "8762cefa7c638166dc68fdb6ed58b4a611ecb27e1d3e2d41006cb56d049667fd",
+  "rows": [
+    {
+      "chip": "Ascend950PR_957b",
+      "group": "boundary",
+      "i": 0,
+      "role": "entry",
+      "shape": [
+        57,
+        4,
+        192
+      ],
+      "prior_aiv": 0,
+      "previous_shape": null,
+      "old_known_us": 3.702388884215931,
+      "old_unknown_us": 2.8415075716233447,
+      "candidate_unknown_us": 2.5440916407901177,
+      "state": "first",
+      "predict_ms": 0.11091,
+      "us": 3.829549132917796,
+      "baseline": 3.702388884215931,
+      "active": 29,
+      "mode": "first",
+      "plan": {
+        "active_aiv": 29,
+        "active_aic": 0,
+        "route": "post_token",
+        "channel_slices": 1,
+        "fragment_width": 192,
+        "rows_per_core": 2
+      },
+      "pipeline": {
+        "us": 3.829549132917796,
+        "stages_us": {
+          "arrival": 0.28595470991580935,
+          "control_to_first_read": 1.8821213245391846,
+          "first_read_to_ready": 0.7005486229570566,
+          "ready_to_first_write": 0.13432659120781257,
+          "overlapping_rows": 0.6205540339888919,
+          "last_write_response": 0.19998339655918643,
+          "exit_after_write": 0.006060453749854533,
+          "shared_link_floor": 0.0
+        },
+        "active_aiv": 29,
+        "rows_per_core": 2,
+        "state": "first",
+        "row_work_floor_cycles": 97.91657712602665,
+        "gap_cycles": {
+          "read_gap_first": 1330.500304698944,
+          "read_ii": 706.0009002685547,
+          "write_gap_first": 906.4999222755432,
+          "write_ii": 616.9999999999957
+        },
+        "timeline": []
+      },
+      "all_output_elements": 43776,
+      "timing_qualified": true,
+      "stage": {
+        "kernel": "MhcPost_59130ccee6717ff2c0f15b485e731162_6",
+        "ca_us": 3.8012121212121213,
+        "first_tick": 6228,
+        "last_tick": 12500,
+        "active_aic": 0,
+        "active_aiv": 29,
+        "writes_bytes": 87552,
+        "per_core_writes": {
+          "core22.veccore1": 1536,
+          "core21.veccore1": 3072,
+          "core1.veccore1": 3072,
+          "core16.veccore0": 3072,
+          "core0.veccore0": 3072,
+          "core22.veccore0": 3072,
+          "core1.veccore0": 3072,
+          "core20.veccore0": 3072,
+          "core18.veccore0": 3072,
+          "core3.veccore0": 3072,
+          "core2.veccore1": 3072,
+          "core0.veccore1": 3072,
+          "core20.veccore1": 3072,
+          "core2.veccore0": 3072,
+          "core17.veccore0": 3072,
+          "core19.veccore0": 3072,
+          "core19.veccore1": 3072,
+          "core6.veccore1": 3072,
+          "core7.veccore0": 3072,
+          "core18.veccore1": 3072,
+          "core21.veccore0": 3072,
+          "core16.veccore1": 3072,
+          "core5.veccore1": 3072,
+          "core17.veccore1": 3072,
+          "core4.veccore0": 3072,
+          "core4.veccore1": 3072,
+          "core3.veccore1": 3072,
+          "core5.veccore0": 3072,
+          "core6.veccore0": 3072
+        },
+        "windows": {
+          "core22.veccore1": [
+            0.3933333333333333,
+            3.241212121212121
+          ],
+          "core21.veccore1": [
+            0.26545454545454544,
+            3.764242424242424
+          ],
+          "core1.veccore1": [
+            0.09636363636363636,
+            3.313939393939394
+          ],
+          "core16.veccore0": [
+            0.39636363636363636,
+            3.713939393939394
+          ],
+          "core0.veccore0": [
+            0.0,
+            3.3127272727272725
+          ],
+          "core22.veccore0": [
+            0.3812121212121212,
+            3.757575757575758
+          ],
+          "core1.veccore0": [
+            0.09575757575757576,
+            3.2812121212121212
+          ],
+          "core20.veccore0": [
+            0.34363636363636363,
+            3.633939393939394
+          ],
+          "core18.veccore0": [
+            0.3115151515151515,
+            3.687878787878788
+          ],
+          "core3.veccore0": [
+            0.045454545454545456,
+            3.3478787878787877
+          ],
+          "core2.veccore1": [
+            0.08484848484848485,
+            3.3715151515151516
+          ],
+          "core0.veccore1": [
+            0.10363636363636364,
+            3.33030303030303
+          ],
+          "core20.veccore1": [
+            0.37393939393939396,
+            3.556363636363636
+          ],
+          "core2.veccore0": [
+            0.0903030303030303,
+            3.3915151515151516
+          ],
+          "core17.veccore0": [
+            0.20242424242424242,
+            3.8012121212121213
+          ],
+          "core19.veccore0": [
+            0.2509090909090909,
+            3.7515151515151515
+          ],
+          "core19.veccore1": [
+            0.2587878787878788,
+            3.7315151515151515
+          ],
+          "core6.veccore1": [
+            0.04606060606060606,
+            3.3963636363636365
+          ],
+          "core7.veccore0": [
+            0.08,
+            3.3412121212121213
+          ],
+          "core18.veccore1": [
+            0.32242424242424245,
+            3.7515151515151515
+          ],
+          "core21.veccore0": [
+            0.3103030303030303,
+            3.7363636363636363
+          ],
+          "core16.veccore1": [
+            0.4351515151515152,
+            3.7266666666666666
+          ],
+          "core5.veccore1": [
+            0.09454545454545454,
+            3.335151515151515
+          ],
+          "core17.veccore1": [
+            0.2787878787878788,
+            3.7812121212121212
+          ],
+          "core4.veccore0": [
+            0.02666666666666667,
+            3.315151515151515
+          ],
+          "core4.veccore1": [
+            0.07818181818181819,
+            3.3230303030303032
+          ],
+          "core3.veccore1": [
+            0.06363636363636363,
+            3.3515151515151516
+          ],
+          "core5.veccore0": [
+            0.07757575757575758,
+            3.3212121212121213
+          ],
+          "core6.veccore0": [
+            0.058787878787878785,
+            3.3363636363636364
+          ]
+        },
+        "trace": "runs/post25/boundary-Ascend950PR_957b/profile/OPPROF_20261120002416_CDXJDTWCSEUFHGHK/MhcPost_59130ccee6717ff2c0f15b485e731162_6/0/simulator/trace.json",
+        "trace_sha256": "bfe408f78b8c73931aaf093d9b202e36822948b47d5a1fd0bbbbdaee9338e1d3",
+        "binary_sha256": "36851e45520023382742d07d871519f65e57e9c49ec3594583e361b0bb9b6677",
+        "queue_events": {
+          "SCALAR": 46766,
+          "MTE3": 86,
+          "MTE2": 286,
+          "PUSHQ": 400,
+          "FLOWCTRL": 1459,
+          "RVECLP": 969,
+          "RVECLD": 10602,
+          "RVECSU": 798,
+          "RVECEX": 17784,
+          "RVECST": 2850
+        }
+      },
+      "active_matches": true,
+      "ca_milestones": {
+        "phase_us": {
+          "arrival": 0.20242424242424262,
+          "control": 1.9412121772766113,
+          "read": 0.6751513481140137,
+          "body": 0.7745456695556641,
+          "retire": 0.20787868384158958
+        },
+        "raw_queue_instruction_counts": {
+          "SIMD": 1172,
+          "SCALAR": 1685,
+          "MTE2": 11,
+          "MTE3": 3
+        },
+        "raw_nonwait_service_us": {
+          "SIMD": 3.293939371826127,
+          "SCALAR": 50.957575873238966,
+          "MTE2": 2.8569697020575404,
+          "MTE3": 0.40787878911942244
+        },
+        "dma_read": [
+          {
+            "start_us": 0.6624242805712153,
+            "end_us": 0.9830303334467341,
+            "bytes": 96
+          },
+          {
+            "start_us": 2.143636419700854,
+            "end_us": 2.552121266054385,
+            "bytes": 64
+          },
+          {
+            "start_us": 2.2399999641649653,
+            "end_us": 2.7133332931272913,
+            "bytes": 16
+          },
+          {
+            "start_us": 2.3933331512682368,
+            "end_us": 2.73575739495682,
+            "bytes": 384
+          },
+          {
+            "start_us": 2.423030092643969,
+            "end_us": 2.8018179678194453,
+            "bytes": 1536
+          },
+          {
+            "start_us": 2.9557573341600825,
+            "end_us": 3.0672724836342264,
+            "bytes": 64
+          },
+          {
+            "start_us": 2.988485052513354,
+            "end_us": 3.0824244462721277,
+            "bytes": 16
+          },
+          {
+            "start_us": 3.063030435966723,
+            "end_us": 3.4224243902437617,
+            "bytes": 384
+          },
+          {
+            "start_us": 3.0927273773424555,
+            "end_us": 3.458181931900256,
+            "bytes": 1536
+          }
+        ],
+        "dma_write": [
+          {
+            "start_us": 2.9696967148058344,
+            "end_us": 3.1727270179264475,
+            "bytes": 1536
+          },
+          {
+            "start_us": 3.5933334373705317,
+            "end_us": 3.7951516204349924,
+            "bytes": 1536
+          }
+        ],
+        "simd_core_instructions": {
+          "RV_VLD": 368,
+          "RV_VMUL": 48,
+          "RV_VST": 96
+        },
+        "read_bytes": 4000,
+        "write_bytes": 3072,
+        "first_vector_operand_us": 2.8187877678148676
+      }
+    },
+    {
+      "chip": "Ascend950PR_957b",
+      "group": "boundary",
+      "i": 1,
+      "role": "repeat",
+      "shape": [
+        57,
+        4,
+        192
+      ],
+      "prior_aiv": 29,
+      "previous_shape": [
+        57,
+        4,
+        192
+      ],
+      "old_known_us": 2.305444471587823,
+      "old_unknown_us": 2.8415075716233447,
+      "candidate_unknown_us": 2.5440916407901177,
+      "state": "reuse",
+      "predict_ms": 0.09443,
+      "us": 1.9047333955241146,
+      "baseline": 2.305444471587823,
+      "active": 29,
+      "mode": "repeat",
+      "plan": {
+        "active_aiv": 29,
+        "active_aic": 0,
+        "route": "post_token",
+        "channel_slices": 1,
+        "fragment_width": 192,
+        "rows_per_core": 2
+      },
+      "pipeline": {
+        "us": 1.9047333955241146,
+        "stages_us": {
+          "arrival": 0.04879037210365833,
+          "control_to_first_read": 0.9345455169677734,
+          "first_read_to_ready": 0.37758941495750886,
+          "ready_to_first_write": 0.13498292294297534,
+          "overlapping_rows": 0.3343349566597342,
+          "last_write_response": 0.0684295153592283,
+          "exit_after_write": 0.006060696533236154,
+          "shared_link_floor": 0.0
+        },
+        "active_aiv": 29,
+        "rows_per_core": 2,
+        "state": "repeat",
+        "row_work_floor_cycles": 97.91657712602665,
+        "gap_cycles": {
+          "read_gap_first": 783.5004329681396,
+          "read_ii": 555.0018310546875,
+          "write_gap_first": 543.4990882873535,
+          "write_ii": 554.498291015625
+        },
+        "timeline": []
+      },
+      "all_output_elements": 43776,
+      "timing_qualified": true,
+      "stage": {
+        "kernel": "MhcPost_59130ccee6717ff2c0f15b485e731162_6",
+        "ca_us": 1.930909090909091,
+        "first_tick": 19949,
+        "last_tick": 23135,
+        "active_aic": 0,
+        "active_aiv": 29,
+        "writes_bytes": 87552,
+        "per_core_writes": {
+          "core20.veccore1": 3072,
+          "core2.veccore0": 3072,
+          "core5.veccore1": 3072,
+          "core3.veccore1": 3072,
+          "core3.veccore0": 3072,
+          "core4.veccore0": 3072,
+          "core22.veccore0": 3072,
+          "core4.veccore1": 3072,
+          "core19.veccore0": 3072,
+          "core20.veccore0": 3072,
+          "core22.veccore1": 1536,
+          "core6.veccore1": 3072,
+          "core17.veccore0": 3072,
+          "core0.veccore0": 3072,
+          "core16.veccore0": 3072,
+          "core1.veccore0": 3072,
+          "core16.veccore1": 3072,
+          "core6.veccore0": 3072,
+          "core1.veccore1": 3072,
+          "core0.veccore1": 3072,
+          "core21.veccore0": 3072,
+          "core18.veccore0": 3072,
+          "core19.veccore1": 3072,
+          "core2.veccore1": 3072,
+          "core17.veccore1": 3072,
+          "core21.veccore1": 3072,
+          "core5.veccore0": 3072,
+          "core7.veccore0": 3072,
+          "core18.veccore1": 3072
+        },
+        "windows": {
+          "core20.veccore1": [
+            0.05333333333333334,
+            1.832121212121212
+          ],
+          "core2.veccore0": [
+            0.0,
+            1.812121212121212
+          ],
+          "core5.veccore1": [
+            0.0012121212121212121,
+            1.7957575757575757
+          ],
+          "core3.veccore1": [
+            0.0012121212121212121,
+            1.721818181818182
+          ],
+          "core3.veccore0": [
+            0.0012121212121212121,
+            1.7115151515151514
+          ],
+          "core4.veccore0": [
+            0.005454545454545455,
+            1.7418181818181817
+          ],
+          "core22.veccore0": [
+            0.048484848484848485,
+            1.716969696969697
+          ],
+          "core4.veccore1": [
+            0.005454545454545455,
+            1.6696969696969697
+          ],
+          "core19.veccore0": [
+            0.0503030303030303,
+            1.7769696969696969
+          ],
+          "core20.veccore0": [
+            0.05333333333333334,
+            1.7642424242424242
+          ],
+          "core22.veccore1": [
+            0.048484848484848485,
+            1.3606060606060606
+          ],
+          "core6.veccore1": [
+            0.0,
+            1.7266666666666666
+          ],
+          "core17.veccore0": [
+            0.051515151515151514,
+            1.930909090909091
+          ],
+          "core0.veccore0": [
+            0.0012121212121212121,
+            1.7648484848484849
+          ],
+          "core16.veccore0": [
+            0.0503030303030303,
+            1.9018181818181819
+          ],
+          "core1.veccore0": [
+            0.0036363636363636364,
+            1.803030303030303
+          ],
+          "core16.veccore1": [
+            0.0503030303030303,
+            1.8496969696969696
+          ],
+          "core6.veccore0": [
+            0.0,
+            1.7357575757575758
+          ],
+          "core1.veccore1": [
+            0.0036363636363636364,
+            1.7993939393939393
+          ],
+          "core0.veccore1": [
+            0.0012121212121212121,
+            1.8206060606060606
+          ],
+          "core21.veccore0": [
+            0.0503030303030303,
+            1.7793939393939393
+          ],
+          "core18.veccore0": [
+            0.048484848484848485,
+            1.8133333333333332
+          ],
+          "core19.veccore1": [
+            0.0503030303030303,
+            1.8454545454545455
+          ],
+          "core2.veccore1": [
+            0.0,
+            1.8357575757575757
+          ],
+          "core17.veccore1": [
+            0.051515151515151514,
+            1.9042424242424243
+          ],
+          "core21.veccore1": [
+            0.0503030303030303,
+            1.8054545454545454
+          ],
+          "core5.veccore0": [
+            0.0012121212121212121,
+            1.7842424242424242
+          ],
+          "core7.veccore0": [
+            0.0036363636363636364,
+            1.790909090909091
+          ],
+          "core18.veccore1": [
+            0.048484848484848485,
+            1.7951515151515152
+          ]
+        },
+        "trace": "runs/post25/boundary-Ascend950PR_957b/profile/OPPROF_20261120002416_CDXJDTWCSEUFHGHK/MhcPost_59130ccee6717ff2c0f15b485e731162_6/1/simulator/trace.json",
+        "trace_sha256": "3aebcdd41dde02666c6f117b5893a9e1e1da124b3d70371bb091ba054d2975c5",
+        "binary_sha256": "36851e45520023382742d07d871519f65e57e9c49ec3594583e361b0bb9b6677",
+        "queue_events": {
+          "SCALAR": 46766,
+          "MTE3": 86,
+          "MTE2": 286,
+          "PUSHQ": 400,
+          "FLOWCTRL": 1459,
+          "RVECLP": 969,
+          "RVECLD": 10602,
+          "RVECSU": 798,
+          "RVECEX": 17784,
+          "RVECST": 2850
+        }
+      },
+      "active_matches": true,
+      "ca_milestones": {
+        "phase_us": {
+          "arrival": 0.05151515151515085,
+          "control": 0.8921213150024414,
+          "read": 0.4218177795410156,
+          "body": 0.4721212387084961,
+          "retire": 0.0933336061419876
+        },
+        "raw_queue_instruction_counts": {
+          "SIMD": 1172,
+          "SCALAR": 1685,
+          "MTE2": 11,
+          "MTE3": 3
+        },
+        "raw_nonwait_service_us": {
+          "SIMD": 3.2612121005076915,
+          "SCALAR": 25.16181820887141,
+          "MTE2": 1.032727281562984,
+          "MTE3": 0.17393939476460218
+        },
+        "dma_read": [
+          {
+            "start_us": 0.2503028407241352,
+            "end_us": 0.35696950997366983,
+            "bytes": 96
+          },
+          {
+            "start_us": 0.9436364665175923,
+            "end_us": 1.0569698035265453,
+            "bytes": 64
+          },
+          {
+            "start_us": 1.0412126078750141,
+            "end_us": 1.131515641465331,
+            "bytes": 16
+          },
+          {
+            "start_us": 1.1951518550063618,
+            "end_us": 1.3187882199431904,
+            "bytes": 384
+          },
+          {
+            "start_us": 1.224848319544936,
+            "end_us": 1.3484846844817646,
+            "bytes": 1536
+          },
+          {
+            "start_us": 1.4236369624282368,
+            "end_us": 1.536364231958533,
+            "bytes": 64
+          },
+          {
+            "start_us": 1.45636420394435,
+            "end_us": 1.5490914776469715,
+            "bytes": 16
+          },
+          {
+            "start_us": 1.530909110560561,
+            "end_us": 1.655757595553542,
+            "bytes": 384
+          },
+          {
+            "start_us": 1.5606065287734516,
+            "end_us": 1.7024247094537266,
+            "bytes": 1536
+          }
+        ],
+        "dma_write": [
+          {
+            "start_us": 1.4836364283706196,
+            "end_us": 1.5672727942015179,
+            "bytes": 1536
+          },
+          {
+            "start_us": 1.837575484767104,
+            "end_us": 1.9248482107664593,
+            "bytes": 1536
+          }
+        ],
+        "simd_core_instructions": {
+          "RV_VLD": 368,
+          "RV_VMUL": 48,
+          "RV_VST": 96
+        },
+        "read_bytes": 4000,
+        "write_bytes": 3072,
+        "first_vector_operand_us": 1.3654542460586079
+      }
+    },
+    {
+      "chip": "Ascend950PR_957b",
+      "group": "boundary",
+      "i": 2,
+      "role": "entry",
+      "shape": [
+        67,
+        4,
+        384
+      ],
+      "prior_aiv": 29,
+      "previous_shape": [
+        57,
+        4,
+        192
+      ],
+      "old_known_us": 3.182117470588533,
+      "old_unknown_us": 3.10337195066246,
+      "candidate_unknown_us": 2.6453640546075023,
+      "state": "expand",
+      "predict_ms": 0.09205,
+      "us": 3.7021581790817377,
+      "baseline": 3.182117470588533,
+      "active": 34,
+      "mode": "expand",
+      "plan": {
+        "active_aiv": 34,
+        "active_aic": 0,
+        "route": "post_token",
+        "channel_slices": 1,
+        "fragment_width": 384,
+        "rows_per_core": 2
+      },
+      "pipeline": {
+        "us": 3.7021581790817377,
+        "stages_us": {
+          "arrival": 0.5541418002793351,
+          "control_to_first_read": 1.609090606227067,
+          "first_read_to_ready": 0.7161264217798091,
+          "ready_to_first_write": 0.1961701644100006,
+          "overlapping_rows": 0.44091033935546875,
+          "last_write_response": 0.18056733128249428,
+          "exit_after_write": 0.005151515747562563,
+          "shared_link_floor": 0.0
+        },
+        "active_aiv": 34,
+        "rows_per_core": 2,
+        "state": "expand",
+        "row_work_floor_cycles": 195.8331542520533,
+        "gap_cycles": {
+          "read_gap_first": 936.5010738372803,
+          "read_ii": 813.5004043579102,
+          "write_gap_first": 727.5020599365234,
+          "write_ii": 606.9986343383789
+        },
+        "timeline": []
+      },
+      "all_output_elements": 102912,
+      "timing_qualified": true,
+      "stage": {
+        "kernel": "MhcPost_59130ccee6717ff2c0f15b485e731162_6",
+        "ca_us": 3.763030303030303,
+        "first_tick": 30815,
+        "last_tick": 37024,
+        "active_aic": 0,
+        "active_aiv": 34,
+        "writes_bytes": 205824,
+        "per_core_writes": {
+          "core24.veccore0": 3072,
+          "core7.veccore0": 6144,
+          "core8.veccore0": 6144,
+          "core6.veccore1": 6144,
+          "core5.veccore1": 6144,
+          "core0.veccore1": 6144,
+          "core5.veccore0": 6144,
+          "core1.veccore1": 6144,
+          "core20.veccore0": 6144,
+          "core17.veccore0": 6144,
+          "core17.veccore1": 6144,
+          "core0.veccore0": 6144,
+          "core16.veccore1": 6144,
+          "core18.veccore1": 6144,
+          "core3.veccore1": 6144,
+          "core21.veccore0": 6144,
+          "core2.veccore0": 6144,
+          "core23.veccore0": 6144,
+          "core1.veccore0": 6144,
+          "core4.veccore0": 6144,
+          "core23.veccore1": 6144,
+          "core3.veccore0": 6144,
+          "core7.veccore1": 6144,
+          "core2.veccore1": 6144,
+          "core22.veccore1": 6144,
+          "core16.veccore0": 6144,
+          "core4.veccore1": 6144,
+          "core20.veccore1": 6144,
+          "core18.veccore0": 6144,
+          "core22.veccore0": 6144,
+          "core19.veccore1": 6144,
+          "core19.veccore0": 6144,
+          "core6.veccore0": 6144,
+          "core21.veccore1": 6144
+        },
+        "windows": {
+          "core24.veccore0": [
+            0.6024242424242424,
+            3.067878787878788
+          ],
+          "core7.veccore0": [
+            0.0030303030303030303,
+            2.2466666666666666
+          ],
+          "core8.veccore0": [
+            0.5642424242424242,
+            3.6315151515151514
+          ],
+          "core6.veccore1": [
+            0.0,
+            2.0787878787878786
+          ],
+          "core5.veccore1": [
+            0.0006060606060606061,
+            2.1763636363636363
+          ],
+          "core0.veccore1": [
+            0.0006060606060606061,
+            2.1175757575757577
+          ],
+          "core5.veccore0": [
+            0.0006060606060606061,
+            2.1254545454545455
+          ],
+          "core1.veccore1": [
+            0.0030303030303030303,
+            2.2466666666666666
+          ],
+          "core20.veccore0": [
+            0.05272727272727273,
+            2.1824242424242426
+          ],
+          "core17.veccore0": [
+            0.05090909090909091,
+            2.3
+          ],
+          "core17.veccore1": [
+            0.05090909090909091,
+            2.28
+          ],
+          "core0.veccore0": [
+            0.0006060606060606061,
+            2.229090909090909
+          ],
+          "core16.veccore1": [
+            0.0496969696969697,
+            2.14
+          ],
+          "core18.veccore1": [
+            0.04787878787878788,
+            2.2163636363636363
+          ],
+          "core3.veccore1": [
+            0.0006060606060606061,
+            2.0715151515151513
+          ],
+          "core21.veccore0": [
+            0.0496969696969697,
+            2.1703030303030304
+          ],
+          "core2.veccore0": [
+            0.0,
+            2.2115151515151514
+          ],
+          "core23.veccore0": [
+            0.5987878787878788,
+            3.6587878787878787
+          ],
+          "core1.veccore0": [
+            0.0030303030303030303,
+            2.2224242424242426
+          ],
+          "core4.veccore0": [
+            0.0048484848484848485,
+            2.1187878787878787
+          ],
+          "core23.veccore1": [
+            0.6090909090909091,
+            3.763030303030303
+          ],
+          "core3.veccore0": [
+            0.0006060606060606061,
+            2.12
+          ],
+          "core7.veccore1": [
+            0.09757575757575758,
+            2.689090909090909
+          ],
+          "core2.veccore1": [
+            0.0,
+            2.1503030303030304
+          ],
+          "core22.veccore1": [
+            0.04787878787878788,
+            2.1115151515151513
+          ],
+          "core16.veccore0": [
+            0.0496969696969697,
+            2.4515151515151516
+          ],
+          "core4.veccore1": [
+            0.0048484848484848485,
+            2.075151515151515
+          ],
+          "core20.veccore1": [
+            0.05272727272727273,
+            2.193939393939394
+          ],
+          "core18.veccore0": [
+            0.04787878787878788,
+            2.2224242424242426
+          ],
+          "core22.veccore0": [
+            0.04787878787878788,
+            2.112727272727273
+          ],
+          "core19.veccore1": [
+            0.0496969696969697,
+            2.1824242424242426
+          ],
+          "core19.veccore0": [
+            0.0496969696969697,
+            2.241212121212121
+          ],
+          "core6.veccore0": [
+            0.0,
+            2.1224242424242425
+          ],
+          "core21.veccore1": [
+            0.0496969696969697,
+            2.213939393939394
+          ]
+        },
+        "trace": "runs/post25/boundary-Ascend950PR_957b/profile/OPPROF_20261120002416_CDXJDTWCSEUFHGHK/MhcPost_59130ccee6717ff2c0f15b485e731162_6/2/simulator/trace.json",
+        "trace_sha256": "830c5aa30d55888026ada118536ca1cfda80e3f5dfb91298bbd7d148281024ff",
+        "binary_sha256": "36851e45520023382742d07d871519f65e57e9c49ec3594583e361b0bb9b6677",
+        "queue_events": {
+          "SCALAR": 54931,
+          "MTE3": 101,
+          "MTE2": 336,
+          "PUSHQ": 470,
+          "FLOWCTRL": 1714,
+          "RVECLP": 1139,
+          "RVECLD": 22110,
+          "RVECSU": 938,
+          "RVECEX": 41808,
+          "RVECST": 6566
+        }
+      },
+      "active_matches": true,
+      "ca_milestones": {
+        "phase_us": {
+          "arrival": 0.6090909090909093,
+          "control": 1.6012115478515625,
+          "read": 0.6527271270751953,
+          "body": 0.6830310821533203,
+          "retire": 0.21696963685931436
+        },
+        "raw_queue_instruction_counts": {
+          "SIMD": 2180,
+          "SCALAR": 1685,
+          "MTE2": 11,
+          "MTE3": 3
+        },
+        "raw_nonwait_service_us": {
+          "SIMD": 5.959393906639889,
+          "SCALAR": 46.69757575984113,
+          "MTE2": 2.5436363918706775,
+          "MTE3": 0.4254545448347926
+        },
+        "dma_read": [
+          {
+            "start_us": 0.8654538241299718,
+            "end_us": 1.0945447382601827,
+            "bytes": 96
+          },
+          {
+            "start_us": 2.210302456942472,
+            "end_us": 2.5563630607995123,
+            "bytes": 64
+          },
+          {
+            "start_us": 2.2999993410977453,
+            "end_us": 2.5575750914486974,
+            "bytes": 16
+          },
+          {
+            "start_us": 2.4484845248135656,
+            "end_us": 2.777575447884473,
+            "bytes": 768
+          },
+          {
+            "start_us": 2.4781819430264562,
+            "end_us": 2.838181957331571,
+            "bytes": 3072
+          },
+          {
+            "start_us": 2.7472725954922765,
+            "end_us": 2.8581816849383443,
+            "bytes": 64
+          },
+          {
+            "start_us": 2.7799988833340734,
+            "end_us": 2.881817064908418,
+            "bytes": 16
+          },
+          {
+            "start_us": 2.854545697298917,
+            "end_us": 3.191515400734815,
+            "bytes": 768
+          },
+          {
+            "start_us": 2.884241208163175,
+            "end_us": 3.353332116928968,
+            "bytes": 3072
+          }
+        ],
+        "dma_write": [
+          {
+            "start_us": 3.0387879458340734,
+            "end_us": 3.250303104248914,
+            "bytes": 3072
+          },
+          {
+            "start_us": 3.5460606661709875,
+            "end_us": 3.756969749656591,
+            "bytes": 3072
+          }
+        ],
+        "simd_core_instructions": {
+          "RV_VLD": 656,
+          "RV_VMUL": 96,
+          "RV_VST": 192
+        },
+        "read_bytes": 7840,
+        "write_bytes": 6144,
+        "first_vector_operand_us": 2.863029584017667
+      }
+    },
+    {
+      "chip": "Ascend950PR_957b",
+      "group": "boundary",
+      "i": 3,
+      "role": "repeat",
+      "shape": [
+        67,
+        4,
+        384
+      ],
+      "prior_aiv": 34,
+      "previous_shape": [
+        67,
+        4,
+        384
+      ],
+      "old_known_us": 2.5548579119074732,
+      "old_unknown_us": 3.10337195066246,
+      "candidate_unknown_us": 2.6453640546075023,
+      "state": "reuse",
+      "predict_ms": 0.09327,
+      "us": 1.992725979892072,
+      "baseline": 2.5548579119074732,
+      "active": 34,
+      "mode": "repeat",
+      "plan": {
+        "active_aiv": 34,
+        "active_aic": 0,
+        "route": "post_token",
+        "channel_slices": 1,
+        "fragment_width": 384,
+        "rows_per_core": 2
+      },
+      "pipeline": {
+        "us": 1.992725979892072,
+        "stages_us": {
+          "arrival": 0.05109513712324035,
+          "control_to_first_read": 0.9345455169677734,
+          "first_read_to_ready": 0.3943133695029635,
+          "ready_to_first_write": 0.19432630301935516,
+          "overlapping_rows": 0.3293933868408203,
+          "last_write_response": 0.08299156990468284,
+          "exit_after_write": 0.006060696533236154,
+          "shared_link_floor": 0.0
+        },
+        "active_aiv": 34,
+        "rows_per_core": 2,
+        "state": "repeat",
+        "row_work_floor_cycles": 195.8331542520533,
+        "gap_cycles": {
+          "read_gap_first": 783.5004329681396,
+          "read_ii": 555.0018310546875,
+          "write_gap_first": 543.4990882873535,
+          "write_ii": 554.498291015625
+        },
+        "timeline": []
+      },
+      "all_output_elements": 102912,
+      "timing_qualified": true,
+      "stage": {
+        "kernel": "MhcPost_59130ccee6717ff2c0f15b485e731162_6",
+        "ca_us": 2.0290909090909093,
+        "first_tick": 46849,
+        "last_tick": 50197,
+        "active_aic": 0,
+        "active_aiv": 34,
+        "writes_bytes": 205824,
+        "per_core_writes": {
+          "core24.veccore0": 3072,
+          "core5.veccore1": 6144,
+          "core18.veccore0": 6144,
+          "core19.veccore0": 6144,
+          "core17.veccore0": 6144,
+          "core19.veccore1": 6144,
+          "core1.veccore1": 6144,
+          "core0.veccore1": 6144,
+          "core0.veccore0": 6144,
+          "core16.veccore0": 6144,
+          "core1.veccore0": 6144,
+          "core17.veccore1": 6144,
+          "core23.veccore1": 6144,
+          "core23.veccore0": 6144,
+          "core3.veccore0": 6144,
+          "core2.veccore0": 6144,
+          "core3.veccore1": 6144,
+          "core18.veccore1": 6144,
+          "core21.veccore0": 6144,
+          "core22.veccore1": 6144,
+          "core21.veccore1": 6144,
+          "core4.veccore0": 6144,
+          "core20.veccore0": 6144,
+          "core2.veccore1": 6144,
+          "core6.veccore0": 6144,
+          "core16.veccore1": 6144,
+          "core4.veccore1": 6144,
+          "core22.veccore0": 6144,
+          "core6.veccore1": 6144,
+          "core7.veccore0": 6144,
+          "core5.veccore0": 6144,
+          "core20.veccore1": 6144,
+          "core8.veccore0": 6144,
+          "core7.veccore1": 6144
+        },
+        "windows": {
+          "core24.veccore0": [
+            0.0503030303030303,
+            1.4648484848484848
+          ],
+          "core5.veccore1": [
+            0.0012121212121212121,
+            1.847878787878788
+          ],
+          "core18.veccore0": [
+            0.04787878787878788,
+            1.98
+          ],
+          "core19.veccore0": [
+            0.0503030303030303,
+            1.927878787878788
+          ],
+          "core17.veccore0": [
+            0.05090909090909091,
+            1.9624242424242424
+          ],
+          "core19.veccore1": [
+            0.0503030303030303,
+            1.9
+          ],
+          "core1.veccore1": [
+            0.0030303030303030303,
+            1.9224242424242424
+          ],
+          "core0.veccore1": [
+            0.0012121212121212121,
+            1.8915151515151516
+          ],
+          "core0.veccore0": [
+            0.0012121212121212121,
+            1.8690909090909091
+          ],
+          "core16.veccore0": [
+            0.0503030303030303,
+            1.8927272727272728
+          ],
+          "core1.veccore0": [
+            0.0030303030303030303,
+            1.9666666666666666
+          ],
+          "core17.veccore1": [
+            0.05090909090909091,
+            2.0290909090909093
+          ],
+          "core23.veccore1": [
+            0.05090909090909091,
+            1.9878787878787878
+          ],
+          "core23.veccore0": [
+            0.05090909090909091,
+            1.9066666666666667
+          ],
+          "core3.veccore0": [
+            0.0012121212121212121,
+            1.7751515151515151
+          ],
+          "core2.veccore0": [
+            0.0,
+            1.8896969696969697
+          ],
+          "core3.veccore1": [
+            0.0012121212121212121,
+            1.8054545454545454
+          ],
+          "core18.veccore1": [
+            0.04787878787878788,
+            1.949090909090909
+          ],
+          "core21.veccore0": [
+            0.0503030303030303,
+            1.8387878787878789
+          ],
+          "core22.veccore1": [
+            0.04787878787878788,
+            1.8012121212121213
+          ],
+          "core21.veccore1": [
+            0.0503030303030303,
+            1.8824242424242423
+          ],
+          "core4.veccore0": [
+            0.005454545454545455,
+            1.7587878787878788
+          ],
+          "core20.veccore0": [
+            0.05333333333333334,
+            1.8327272727272728
+          ],
+          "core2.veccore1": [
+            0.0,
+            1.833939393939394
+          ],
+          "core6.veccore0": [
+            0.0,
+            1.7878787878787878
+          ],
+          "core16.veccore1": [
+            0.0503030303030303,
+            1.9303030303030304
+          ],
+          "core4.veccore1": [
+            0.005454545454545455,
+            1.7903030303030303
+          ],
+          "core22.veccore0": [
+            0.04787878787878788,
+            1.7836363636363637
+          ],
+          "core6.veccore1": [
+            0.0,
+            1.8236363636363637
+          ],
+          "core7.veccore0": [
+            0.0030303030303030303,
+            1.8315151515151515
+          ],
+          "core5.veccore0": [
+            0.0012121212121212121,
+            1.878787878787879
+          ],
+          "core20.veccore1": [
+            0.05333333333333334,
+            1.872121212121212
+          ],
+          "core8.veccore0": [
+            0.0012121212121212121,
+            1.9012121212121211
+          ],
+          "core7.veccore1": [
+            0.0030303030303030303,
+            1.8715151515151516
+          ]
+        },
+        "trace": "runs/post25/boundary-Ascend950PR_957b/profile/OPPROF_20261120002416_CDXJDTWCSEUFHGHK/MhcPost_59130ccee6717ff2c0f15b485e731162_6/3/simulator/trace.json",
+        "trace_sha256": "fe544b85da332edf95772cbc4e310c66c4dc85fbdcbbccb3076e6d1561ca293e",
+        "binary_sha256": "36851e45520023382742d07d871519f65e57e9c49ec3594583e361b0bb9b6677",
+        "queue_events": {
+          "SCALAR": 54931,
+          "MTE3": 101,
+          "MTE2": 336,
+          "PUSHQ": 470,
+          "FLOWCTRL": 1714,
+          "RVECLP": 1139,
+          "RVECLD": 22110,
+          "RVECSU": 938,
+          "RVECEX": 41808,
+          "RVECST": 6566
+        }
+      },
+      "active_matches": true,
+      "ca_milestones": {
+        "phase_us": {
+          "arrival": 0.05090909090909079,
+          "control": 0.9260597229003906,
+          "read": 0.4157581329345703,
+          "body": 0.5206069946289062,
+          "retire": 0.11575696771794952
+        },
+        "raw_queue_instruction_counts": {
+          "SIMD": 2180,
+          "SCALAR": 1685,
+          "MTE2": 11,
+          "MTE3": 3
+        },
+        "raw_nonwait_service_us": {
+          "SIMD": 5.951515126274899,
+          "SCALAR": 25.227878804085776,
+          "MTE2": 0.9903030199930072,
+          "MTE3": 0.2139393938705325
+        },
+        "dma_read": [
+          {
+            "start_us": 0.28242497530850486,
+            "end_us": 0.390909824642268,
+            "bytes": 96
+          },
+          {
+            "start_us": 0.9769688138094814,
+            "end_us": 1.0666657799211414,
+            "bytes": 64
+          },
+          {
+            "start_us": 1.0745449551669033,
+            "end_us": 1.1781813168254764,
+            "bytes": 16
+          },
+          {
+            "start_us": 1.2260609158602627,
+            "end_us": 1.355757881077853,
+            "bytes": 768
+          },
+          {
+            "start_us": 1.2557583340731533,
+            "end_us": 1.3757583313909443,
+            "bytes": 3072
+          },
+          {
+            "start_us": 1.4545460232821377,
+            "end_us": 1.541818749281493,
+            "bytes": 64
+          },
+          {
+            "start_us": 1.4872723111239345,
+            "end_us": 1.593332920345393,
+            "bytes": 16
+          },
+          {
+            "start_us": 1.5618172177401455,
+            "end_us": 1.6751505547490986,
+            "bytes": 768
+          },
+          {
+            "start_us": 1.591514635953036,
+            "end_us": 1.7206055411425503,
+            "bytes": 3072
+          }
+        ],
+        "dma_write": [
+          {
+            "start_us": 1.568485308560458,
+            "end_us": 1.6696974301067264,
+            "bytes": 3072
+          },
+          {
+            "start_us": 1.913333941372958,
+            "end_us": 2.0230309107628734,
+            "bytes": 3072
+          }
+        ],
+        "simd_core_instructions": {
+          "RV_VLD": 656,
+          "RV_VMUL": 96,
+          "RV_VST": 192
+        },
+        "read_bytes": 7840,
+        "write_bytes": 6144,
+        "first_vector_operand_us": 1.3927269467440517
+      }
+    },
+    {
+      "chip": "Ascend950PR_957b",
+      "group": "boundary",
+      "i": 4,
+      "role": "entry",
+      "shape": [
+        113,
+        4,
+        768
+      ],
+      "prior_aiv": 34,
+      "previous_shape": [
+        67,
+        4,
+        384
+      ],
+      "old_known_us": 4.287032479532861,
+      "old_unknown_us": 4.246304791375135,
+      "candidate_unknown_us": 3.237218526884529,
+      "state": "expand",
+      "predict_ms": 0.09052,
+      "us": 4.2687732137986965,
+      "baseline": 4.287032479532861,
+      "active": 38,
+      "mode": "expand",
+      "plan": {
+        "active_aiv": 38,
+        "active_aic": 0,
+        "route": "post_token",
+        "channel_slices": 1,
+        "fragment_width": 768,
+        "rows_per_core": 3
+      },
+      "pipeline": {
+        "us": 4.2687732137986965,
+        "stages_us": {
+          "arrival": 0.5716200964566385,
+          "control_to_first_read": 1.609090606227067,
+          "first_read_to_ready": 0.7495743308707182,
+          "ready_to_first_write": 0.31485692456276027,
+          "overlapping_rows": 0.8087882995605469,
+          "last_write_response": 0.20969144037340337,
+          "exit_after_write": 0.005151515747562563,
+          "shared_link_floor": 0.0
+        },
+        "active_aiv": 38,
+        "rows_per_core": 3,
+        "state": "expand",
+        "row_work_floor_cycles": 391.6663085041066,
+        "gap_cycles": {
+          "read_gap_first": 936.5010738372803,
+          "read_ii": 813.5004043579102,
+          "write_gap_first": 727.5020599365234,
+          "write_ii": 606.9986343383789
+        },
+        "timeline": []
+      },
+      "all_output_elements": 347136,
+      "timing_qualified": true,
+      "stage": {
+        "kernel": "MhcPost_59130ccee6717ff2c0f15b485e731162_6",
+        "ca_us": 4.001818181818182,
+        "first_tick": 66768,
+        "last_tick": 73371,
+        "active_aic": 0,
+        "active_aiv": 38,
+        "writes_bytes": 694272,
+        "per_core_writes": {
+          "core25.veccore0": 12288,
+          "core4.veccore0": 18432,
+          "core20.veccore0": 18432,
+          "core21.veccore0": 18432,
+          "core9.veccore0": 18432,
+          "core6.veccore1": 18432,
+          "core7.veccore0": 18432,
+          "core5.veccore0": 18432,
+          "core22.veccore0": 18432,
+          "core7.veccore1": 18432,
+          "core8.veccore0": 18432,
+          "core4.veccore1": 18432,
+          "core6.veccore0": 18432,
+          "core23.veccore1": 18432,
+          "core24.veccore1": 18432,
+          "core5.veccore1": 18432,
+          "core18.veccore1": 18432,
+          "core19.veccore0": 18432,
+          "core1.veccore0": 18432,
+          "core2.veccore1": 18432,
+          "core17.veccore0": 18432,
+          "core18.veccore0": 18432,
+          "core2.veccore0": 18432,
+          "core19.veccore1": 18432,
+          "core21.veccore1": 18432,
+          "core20.veccore1": 18432,
+          "core3.veccore1": 18432,
+          "core1.veccore1": 18432,
+          "core8.veccore1": 18432,
+          "core23.veccore0": 18432,
+          "core3.veccore0": 18432,
+          "core0.veccore1": 18432,
+          "core17.veccore1": 18432,
+          "core22.veccore1": 18432,
+          "core16.veccore1": 18432,
+          "core0.veccore0": 18432,
+          "core16.veccore0": 18432,
+          "core24.veccore0": 18432
+        },
+        "windows": {
+          "core25.veccore0": [
+            0.5812121212121212,
+            3.7854545454545456
+          ],
+          "core4.veccore0": [
+            0.0048484848484848485,
+            2.5703030303030303
+          ],
+          "core20.veccore0": [
+            0.05333333333333334,
+            2.792727272727273
+          ],
+          "core21.veccore0": [
+            0.0496969696969697,
+            2.7745454545454544
+          ],
+          "core9.veccore0": [
+            0.5612121212121212,
+            4.001818181818182
+          ],
+          "core6.veccore1": [
+            0.0,
+            2.6472727272727274
+          ],
+          "core7.veccore0": [
+            0.0030303030303030303,
+            2.678181818181818
+          ],
+          "core5.veccore0": [
+            0.0012121212121212121,
+            2.612727272727273
+          ],
+          "core22.veccore0": [
+            0.04787878787878788,
+            2.6618181818181816
+          ],
+          "core7.veccore1": [
+            0.0030303030303030303,
+            2.629090909090909
+          ],
+          "core8.veccore0": [
+            0.0012121212121212121,
+            2.6254545454545455
+          ],
+          "core4.veccore1": [
+            0.0048484848484848485,
+            2.607878787878788
+          ],
+          "core6.veccore0": [
+            0.0,
+            2.7018181818181817
+          ],
+          "core23.veccore1": [
+            0.05090909090909091,
+            2.9115151515151516
+          ],
+          "core24.veccore1": [
+            0.1478787878787879,
+            3.2818181818181817
+          ],
+          "core5.veccore1": [
+            0.0012121212121212121,
+            2.6715151515151514
+          ],
+          "core18.veccore1": [
+            0.04787878787878788,
+            2.792727272727273
+          ],
+          "core19.veccore0": [
+            0.0496969696969697,
+            2.7593939393939393
+          ],
+          "core1.veccore0": [
+            0.0030303030303030303,
+            2.7393939393939393
+          ],
+          "core2.veccore1": [
+            0.0,
+            2.7903030303030305
+          ],
+          "core17.veccore0": [
+            0.05090909090909091,
+            2.855757575757576
+          ],
+          "core18.veccore0": [
+            0.04787878787878788,
+            2.716969696969697
+          ],
+          "core2.veccore0": [
+            0.0,
+            2.6981818181818182
+          ],
+          "core19.veccore1": [
+            0.0496969696969697,
+            2.8866666666666667
+          ],
+          "core21.veccore1": [
+            0.0496969696969697,
+            2.815757575757576
+          ],
+          "core20.veccore1": [
+            0.05333333333333334,
+            2.820606060606061
+          ],
+          "core3.veccore1": [
+            0.0012121212121212121,
+            2.639393939393939
+          ],
+          "core1.veccore1": [
+            0.0030303030303030303,
+            2.7618181818181817
+          ],
+          "core8.veccore1": [
+            0.09878787878787879,
+            3.303030303030303
+          ],
+          "core23.veccore0": [
+            0.05090909090909091,
+            2.861818181818182
+          ],
+          "core3.veccore0": [
+            0.0012121212121212121,
+            2.601818181818182
+          ],
+          "core0.veccore1": [
+            0.0012121212121212121,
+            2.7806060606060607
+          ],
+          "core17.veccore1": [
+            0.05090909090909091,
+            2.8254545454545457
+          ],
+          "core22.veccore1": [
+            0.04787878787878788,
+            2.8666666666666667
+          ],
+          "core16.veccore1": [
+            0.0496969696969697,
+            2.792727272727273
+          ],
+          "core0.veccore0": [
+            0.0012121212121212121,
+            2.6557575757575758
+          ],
+          "core16.veccore0": [
+            0.0496969696969697,
+            2.749090909090909
+          ],
+          "core24.veccore0": [
+            0.0496969696969697,
+            2.83030303030303
+          ]
+        },
+        "trace": "runs/post25/boundary-Ascend950PR_957b/profile/OPPROF_20261120002416_CDXJDTWCSEUFHGHK/MhcPost_59130ccee6717ff2c0f15b485e731162_6/4/simulator/trace.json",
+        "trace_sha256": "ac67bb8578759772d4605005e5dae417699832df242ee398704e4459e36e67ec",
+        "binary_sha256": "36851e45520023382742d07d871519f65e57e9c49ec3594583e361b0bb9b6677",
+        "queue_events": {
+          "SCALAR": 83921,
+          "MTE3": 151,
+          "MTE2": 528,
+          "PUSHQ": 754,
+          "FLOWCTRL": 2678,
+          "RVECLP": 1921,
+          "RVECLD": 69834,
+          "RVECSU": 1582,
+          "RVECEX": 141024,
+          "RVECST": 21922
+        }
+      },
+      "active_matches": true,
+      "ca_milestones": {
+        "phase_us": {
+          "arrival": 0.5612121212121224,
+          "control": 1.4939384460449219,
+          "read": 0.6115150451660156,
+          "body": 1.1012115478515625,
+          "retire": 0.23394102154355778
+        },
+        "raw_queue_instruction_counts": {
+          "SIMD": 6293,
+          "SCALAR": 2296,
+          "MTE2": 15,
+          "MTE3": 4
+        },
+        "raw_nonwait_service_us": {
+          "SIMD": 17.04484842310194,
+          "SCALAR": 43.93878791597672,
+          "MTE2": 3.684848460368812,
+          "MTE3": 0.6721212295815349
+        },
+        "dma_read": [
+          {
+            "start_us": 0.7781806575890755,
+            "end_us": 0.95212004955971,
+            "bytes": 96
+          },
+          {
+            "start_us": 2.0551505672570443,
+            "end_us": 2.3624232995148873,
+            "bytes": 64
+          },
+          {
+            "start_us": 2.135148583614466,
+            "end_us": 2.363633437716601,
+            "bytes": 16
+          },
+          {
+            "start_us": 2.2751479732629036,
+            "end_us": 2.648481308185694,
+            "bytes": 1536
+          },
+          {
+            "start_us": 2.3048453914757943,
+            "end_us": 2.6496938752766823,
+            "bytes": 6144
+          },
+          {
+            "start_us": 2.5939384090539193,
+            "end_us": 2.7030293184157586,
+            "bytes": 64
+          },
+          {
+            "start_us": 2.626664696895716,
+            "end_us": 2.7333313661452507,
+            "bytes": 16
+          },
+          {
+            "start_us": 2.70121151086056,
+            "end_us": 3.0775751459237313,
+            "bytes": 1536
+          },
+          {
+            "start_us": 2.7309089290734505,
+            "end_us": 3.0787877130147194,
+            "bytes": 6144
+          },
+          {
+            "start_us": 2.9624229061242318,
+            "end_us": 3.182422904932139,
+            "bytes": 64
+          },
+          {
+            "start_us": 2.9636359798547005,
+            "end_us": 3.2509087013837075,
+            "bytes": 16
+          },
+          {
+            "start_us": 3.0375724422570443,
+            "end_us": 3.4551481890317177,
+            "bytes": 1536
+          },
+          {
+            "start_us": 3.067269860469935,
+            "end_us": 3.456360756122706,
+            "bytes": 6144
+          }
+        ],
+        "dma_write": [
+          {
+            "start_us": 2.961209832393763,
+            "end_us": 3.1757552909489846,
+            "bytes": 6144
+          },
+          {
+            "start_us": 3.3903022396203255,
+            "end_us": 3.6169689136382317,
+            "bytes": 6144
+          },
+          {
+            "start_us": 3.7678771602746224,
+            "end_us": 3.995755954348681,
+            "bytes": 6144
+          }
+        ],
+        "simd_core_instructions": {
+          "RV_VLD": 1848,
+          "RV_VMUL": 288,
+          "RV_VST": 576
+        },
+        "read_bytes": 23280,
+        "write_bytes": 18432,
+        "first_vector_operand_us": 2.66666561242306
+      }
+    },
+    {
+      "chip": "Ascend950PR_957b",
+      "group": "boundary",
+      "i": 5,
+      "role": "repeat",
+      "shape": [
+        113,
+        4,
+        768
+      ],
+      "prior_aiv": 38,
+      "previous_shape": [
+        113,
+        4,
+        768
+      ],
+      "old_known_us": 3.659772920851802,
+      "old_unknown_us": 4.246304791375135,
+      "candidate_unknown_us": 3.237218526884529,
+      "state": "reuse",
+      "predict_ms": 0.09009,
+      "us": 2.5116559303699613,
+      "baseline": 3.659772920851802,
+      "active": 38,
+      "mode": "repeat",
+      "plan": {
+        "active_aiv": 38,
+        "active_aic": 0,
+        "route": "post_token",
+        "channel_slices": 1,
+        "fragment_width": 768,
+        "rows_per_core": 3
+      },
+      "pipeline": {
+        "us": 2.5116559303699613,
+        "stages_us": {
+          "arrival": 0.05270673895405287,
+          "control_to_first_read": 0.9345455169677734,
+          "first_read_to_ready": 0.42776127859387253,
+          "ready_to_first_write": 0.31301306317211475,
+          "overlapping_rows": 0.6654529571533203,
+          "last_write_response": 0.11211567899559194,
+          "exit_after_write": 0.006060696533236154,
+          "shared_link_floor": 0.0
+        },
+        "active_aiv": 38,
+        "rows_per_core": 3,
+        "state": "repeat",
+        "row_work_floor_cycles": 391.6663085041066,
+        "gap_cycles": {
+          "read_gap_first": 783.5004329681396,
+          "read_ii": 555.0018310546875,
+          "write_gap_first": 543.4990882873535,
+          "write_ii": 554.498291015625
+        },
+        "timeline": []
+      },
+      "all_output_elements": 347136,
+      "timing_qualified": true,
+      "stage": {
+        "kernel": "MhcPost_59130ccee6717ff2c0f15b485e731162_6",
+        "ca_us": 2.5,
+        "first_tick": 116651,
+        "last_tick": 120776,
+        "active_aic": 0,
+        "active_aiv": 38,
+        "writes_bytes": 694272,
+        "per_core_writes": {
+          "core21.veccore0": 18432,
+          "core18.veccore0": 18432,
+          "core20.veccore0": 18432,
+          "core25.veccore0": 12288,
+          "core4.veccore1": 18432,
+          "core6.veccore1": 18432,
+          "core8.veccore1": 18432,
+          "core5.veccore1": 18432,
+          "core4.veccore0": 18432,
+          "core7.veccore1": 18432,
+          "core6.veccore0": 18432,
+          "core8.veccore0": 18432,
+          "core5.veccore0": 18432,
+          "core7.veccore0": 18432,
+          "core9.veccore0": 18432,
+          "core22.veccore0": 18432,
+          "core3.veccore1": 18432,
+          "core18.veccore1": 18432,
+          "core17.veccore0": 18432,
+          "core19.veccore1": 18432,
+          "core1.veccore1": 18432,
+          "core0.veccore1": 18432,
+          "core21.veccore1": 18432,
+          "core24.veccore0": 18432,
+          "core1.veccore0": 18432,
+          "core3.veccore0": 18432,
+          "core24.veccore1": 18432,
+          "core19.veccore0": 18432,
+          "core23.veccore0": 18432,
+          "core23.veccore1": 18432,
+          "core17.veccore1": 18432,
+          "core16.veccore1": 18432,
+          "core16.veccore0": 18432,
+          "core2.veccore0": 18432,
+          "core22.veccore1": 18432,
+          "core2.veccore1": 18432,
+          "core0.veccore0": 18432,
+          "core20.veccore1": 18432
+        },
+        "windows": {
+          "core21.veccore0": [
+            0.0496969696969697,
+            2.3812121212121213
+          ],
+          "core18.veccore0": [
+            0.04787878787878788,
+            2.387272727272727
+          ],
+          "core20.veccore0": [
+            0.05272727272727273,
+            2.3733333333333335
+          ],
+          "core25.veccore0": [
+            0.0496969696969697,
+            2.058181818181818
+          ],
+          "core4.veccore1": [
+            0.0048484848484848485,
+            2.296969696969697
+          ],
+          "core6.veccore1": [
+            0.0,
+            2.3333333333333335
+          ],
+          "core8.veccore1": [
+            0.0012121212121212121,
+            2.2896969696969696
+          ],
+          "core5.veccore1": [
+            0.0012121212121212121,
+            2.253939393939394
+          ],
+          "core4.veccore0": [
+            0.0048484848484848485,
+            2.2224242424242426
+          ],
+          "core7.veccore1": [
+            0.0030303030303030303,
+            2.3836363636363638
+          ],
+          "core6.veccore0": [
+            0.0,
+            2.3
+          ],
+          "core8.veccore0": [
+            0.0012121212121212121,
+            2.330909090909091
+          ],
+          "core5.veccore0": [
+            0.0012121212121212121,
+            2.292121212121212
+          ],
+          "core7.veccore0": [
+            0.0030303030303030303,
+            2.415151515151515
+          ],
+          "core9.veccore0": [
+            0.0012121212121212121,
+            2.4145454545454546
+          ],
+          "core22.veccore0": [
+            0.04787878787878788,
+            2.2515151515151515
+          ],
+          "core3.veccore1": [
+            0.0012121212121212121,
+            2.3133333333333335
+          ],
+          "core18.veccore1": [
+            0.04787878787878788,
+            2.3424242424242423
+          ],
+          "core17.veccore0": [
+            0.05090909090909091,
+            2.433333333333333
+          ],
+          "core19.veccore1": [
+            0.0496969696969697,
+            2.3484848484848486
+          ],
+          "core1.veccore1": [
+            0.0030303030303030303,
+            2.444848484848485
+          ],
+          "core0.veccore1": [
+            0.0012121212121212121,
+            2.3896969696969697
+          ],
+          "core21.veccore1": [
+            0.0496969696969697,
+            2.32
+          ],
+          "core24.veccore0": [
+            0.0496969696969697,
+            2.3854545454545453
+          ],
+          "core1.veccore0": [
+            0.0030303030303030303,
+            2.3781818181818184
+          ],
+          "core3.veccore0": [
+            0.0012121212121212121,
+            2.286060606060606
+          ],
+          "core24.veccore1": [
+            0.0496969696969697,
+            2.3424242424242423
+          ],
+          "core19.veccore0": [
+            0.0496969696969697,
+            2.3896969696969697
+          ],
+          "core23.veccore0": [
+            0.05090909090909091,
+            2.4854545454545454
+          ],
+          "core23.veccore1": [
+            0.05090909090909091,
+            2.4254545454545453
+          ],
+          "core17.veccore1": [
+            0.05090909090909091,
+            2.5
+          ],
+          "core16.veccore1": [
+            0.0496969696969697,
+            2.436969696969697
+          ],
+          "core16.veccore0": [
+            0.0496969696969697,
+            2.355757575757576
+          ],
+          "core2.veccore0": [
+            0.0,
+            2.361818181818182
+          ],
+          "core22.veccore1": [
+            0.04787878787878788,
+            2.2896969696969696
+          ],
+          "core2.veccore1": [
+            0.0,
+            2.307272727272727
+          ],
+          "core0.veccore0": [
+            0.0012121212121212121,
+            2.367272727272727
+          ],
+          "core20.veccore1": [
+            0.05272727272727273,
+            2.333939393939394
+          ]
+        },
+        "trace": "runs/post25/boundary-Ascend950PR_957b/profile/OPPROF_20261120002416_CDXJDTWCSEUFHGHK/MhcPost_59130ccee6717ff2c0f15b485e731162_6/5/simulator/trace.json",
+        "trace_sha256": "32f8cbf1abf3081577f10aca66a8ffb499187b0e35aa3ffad21deedd9c87d5a3",
+        "binary_sha256": "36851e45520023382742d07d871519f65e57e9c49ec3594583e361b0bb9b6677",
+        "queue_events": {
+          "SCALAR": 83921,
+          "MTE3": 151,
+          "MTE2": 528,
+          "PUSHQ": 754,
+          "FLOWCTRL": 2678,
+          "RVECLP": 1921,
+          "RVECLD": 69834,
+          "RVECSU": 1582,
+          "RVECEX": 141024,
+          "RVECST": 21922
+        }
+      },
+      "active_matches": true,
+      "ca_milestones": {
+        "phase_us": {
+          "arrival": 0.05090909090908724,
+          "control": 0.94061279296875,
+          "read": 0.426055908203125,
+          "body": 0.9721221923828125,
+          "retire": 0.11030001553622526
+        },
+        "raw_queue_instruction_counts": {
+          "SIMD": 6293,
+          "SCALAR": 2296,
+          "MTE2": 15,
+          "MTE3": 4
+        },
+        "raw_nonwait_service_us": {
+          "SIMD": 17.04484842310194,
+          "SCALAR": 27.090303193079308,
+          "MTE2": 1.4660606188699603,
+          "MTE3": 0.31333332788199186
+        },
+        "dma_read": [
+          {
+            "start_us": 0.30303006258877474,
+            "end_us": 0.4406058230725165,
+            "bytes": 96
+          },
+          {
+            "start_us": 0.9915218838778372,
+            "end_us": 1.085461277636611,
+            "bytes": 64
+          },
+          {
+            "start_us": 1.091520357998931,
+            "end_us": 1.1781870239702101,
+            "bytes": 16
+          },
+          {
+            "start_us": 1.2430325039950247,
+            "end_us": 1.3581840210882064,
+            "bytes": 1536
+          },
+          {
+            "start_us": 1.272733736905181,
+            "end_us": 1.4006125220385428,
+            "bytes": 6144
+          },
+          {
+            "start_us": 1.4715176114168997,
+            "end_us": 1.5666691252318259,
+            "bytes": 64
+          },
+          {
+            "start_us": 1.5042477139559622,
+            "end_us": 1.5939446800676222,
+            "bytes": 16
+          },
+          {
+            "start_us": 1.578794527920806,
+            "end_us": 1.7200066485730048,
+            "bytes": 1536
+          },
+          {
+            "start_us": 1.608488131436431,
+            "end_us": 1.7454578318920966,
+            "bytes": 6144
+          },
+          {
+            "start_us": 1.8078823575106497,
+            "end_us": 1.9006096312132712,
+            "bytes": 64
+          },
+          {
+            "start_us": 1.8406124600497122,
+            "end_us": 1.9315215536681052,
+            "bytes": 16
+          },
+          {
+            "start_us": 1.9151516446200247,
+            "end_us": 2.036969829472625,
+            "bytes": 1536
+          },
+          {
+            "start_us": 1.944852877530181,
+            "end_us": 2.0781862178173895,
+            "bytes": 6144
+          }
+        ],
+        "dma_write": [
+          {
+            "start_us": 1.712125826748931,
+            "end_us": 1.8212167361107703,
+            "bytes": 6144
+          },
+          {
+            "start_us": 2.056974459561431,
+            "end_us": 2.1539441534605857,
+            "bytes": 6144
+          },
+          {
+            "start_us": 2.3896999844637747,
+            "end_us": 2.493942406150424,
+            "bytes": 6144
+          }
+        ],
+        "simd_core_instructions": {
+          "RV_VLD": 1848,
+          "RV_VMUL": 288,
+          "RV_VST": 576
+        },
+        "read_bytes": 23280,
+        "write_bytes": 18432,
+        "first_vector_operand_us": 1.4175777920809622
+      }
+    }
+  ],
+  "qualified": 6
+}

@@ -1,5 +1,18 @@
 # mHC Post 算例
 
+## 末核上的四个连续 token
+
+![950DT，4 行对齐已冻结的读写流水和 CA 原始描述符](../../results/v0.25/post/four-token-repeat.png)
+
+[196,4,1536] 由 49 个 AIV 分担，同形紧邻重复时，core17.veccore0 最后退休。该核处理第 108–111 个 token，四行的 16 个输入 DMA 和 4 笔输出可按 GM 地址一一配对。候选预测 3.586 µs，CA 为 3.800 µs（−5.62%）。同形重复可观察到稳态的读写发起间隔，其它前序另行比较。[逐 token 地址与各阶段时间](../../results/v0.25/post/four-token-repeat.json) · [已冻结的部署条件](../../results/v0.25/post/repeat-policy.md)
+
+## 每核处理两个 token 时，第二个读能否盖住前一个写
+
+![两轮的逐 token 搬运，上栏为候选流水，下栏真实末核按地址归行](../../results/v0.25/post/two-token-repeat.png)
+
+950DT，内置 `aclnnMhcPost`，BF16 输入 [67,4,384]。末核的两个 token 对应第 40、41 行。每一行的四组读是 64 B、16 B、768 B 和 3072 B，写 3072 B。把每轮读至写的响应时间简单求和，会重复计算仍在途的描述符。逐行候选分开估读发起间隔、返回延迟和末笔写完成，在紧邻同形重复的这一窗给出 1.990 µs，实测 1.998 µs。普通复用时，同一 shape 却是 3.071 / 2.407 µs。两种前序各自进入冻结统计，候选资格及其余 shape 在明细表更新。[逐行地址和时间](../../results/v0.25/post/two-token-repeat.json) · [公开模型和候选的同集对照](../../results/v0.25/post/report.md)
+
+
 ## 同一个 token 的四条输出流
 
 ![950DT 内置 MhcPost 同一 token 与 448 列通道片的首发和热重复，模型在上、CA 在下](../../results/v0.24/post/post-ordered-pipeline.png)

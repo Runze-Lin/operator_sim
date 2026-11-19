@@ -21,8 +21,8 @@ def _kernel_family(op, attrs):
 class OperatorStream:
     """Track AIV residency when the order of successfully dispatched calls is known.
 
-    A switch of kernel family discards the exact high-water mark. Successive
-    launches in the new family can still establish a lower bound on warm AIVs.
+    Successive launches establish a lower bound on warm AIVs. A verified
+    AIC-only dispatch can carry the RMSNorm prefix across a family switch.
     """
 
     def __init__(self, chip=REFERENCE_NAME):
@@ -34,6 +34,7 @@ class OperatorStream:
         self._last_family = None
         self._resident = 0
         self._exact = True
+        self._rms_prefix = None
 
     def forget_history(self):
         """Attach to a running stream, or record an unmodeled completed dispatch.
@@ -44,20 +45,28 @@ class OperatorStream:
         self._last_family = None
         self._resident = 0
         self._exact = False
+        self._rms_prefix = None
 
-    def _partial_rms(self, shape, options, dtype, forecast):
+    def _prefix(self, family):
+        if family == 'rmsnorm' and self._rms_prefix is not None:
+            return self._rms_prefix
+        if self._last_family in (None, family):
+            return self._resident, self._exact
+        return 0, False
+
+    def _partial_rms(self, shape, options, dtype, forecast, resident):
         """Restrict a shape-only point to times allowed by the observed prefix."""
         band = estimate_rms_history_band(shape, chip=self.chip, dtype=dtype)
-        times = band.by_resident_aiv_us[self._resident:]
+        times = band.by_resident_aiv_us[resident:]
         lower, upper = min(times), max(times)
         point = forecast.latency_us
         selected = None
         if point < lower or point > upper:
             endpoint = lower if point < lower else upper
-            selected = self._resident + times.index(endpoint)
+            selected = resident + times.index(endpoint)
             forecast = estimate('rmsnorm', shape, {**options, 'resident_aiv': selected},
                                 chip=self.chip, dtype=dtype)
-        context = dict(minimum_resident_aiv=self._resident, possible_us=[lower, upper],
+        context = dict(minimum_resident_aiv=resident, possible_us=[lower, upper],
                        shape_only_us=point, endpoint_scenario_aiv=selected)
         return replace(forecast, projection={**forecast.projection, 'partial_history': context})
 
@@ -67,32 +76,40 @@ class OperatorStream:
         if family not in _STATEFUL or (attrs is not None and not isinstance(attrs, Mapping)):
             return estimate(op, shape, attrs, chip=self.chip, dtype=dtype)
         options = dict(attrs or {})
-        continuing = self._last_family in (None, family)
-        if 'resident_aiv' in options or not continuing:
+        if 'resident_aiv' in options:
             return estimate(op, shape, options, chip=self.chip, dtype=dtype)
-        if not self._exact:
+        resident, exact = self._prefix(family)
+        if not exact:
             forecast = estimate(op, shape, options, chip=self.chip, dtype=dtype)
             if (family == 'rmsnorm' and forecast.latency_us is not None and
-                    forecast.active_aiv is not None and 0 < self._resident < forecast.active_aiv):
-                return self._partial_rms(shape, options, dtype, forecast)
-            if forecast.active_aiv is None or forecast.active_aiv > self._resident:
+                    forecast.active_aiv is not None and 0 < resident < forecast.active_aiv):
+                return self._partial_rms(shape, options, dtype, forecast, resident)
+            if forecast.active_aiv is None or forecast.active_aiv > resident:
                 return forecast
-        options['resident_aiv'] = self._resident
+        options['resident_aiv'] = resident
         return estimate(op, shape, options, chip=self.chip, dtype=dtype)
 
-    def advance(self, op, shape, attrs=None, *, dtype=None):
-        """Price a dispatch and record its AIV footprint on success."""
+    def advance(self, op, shape, attrs=None, *, dtype=None, aic_only=False):
+        """Price a dispatch and record its AIV footprint on success.
+
+        Set aic_only=True when the implementation's launch contract guarantees
+        zero AIVs. The modeled footprint alone cannot establish this contract.
+        """
+        if not isinstance(aic_only, bool):
+            raise TypeError('aic_only must be a boolean')
         result = self.preview(op, shape, attrs, dtype=dtype)
         if result.latency_us is None:
             return result
         family = _kernel_family(op, attrs)
+        if aic_only and (not result.active_aic or result.active_aiv != 0):
+            raise ValueError('aic_only conflicts with the modeled engine footprint')
+        saved_rms = self._prefix('rmsnorm') if aic_only else None
+        self._resident, self._exact = self._prefix(family)
+        self._rms_prefix = saved_rms
         explicit = (attrs or {}).get('resident_aiv') if family in _STATEFUL else None
         if explicit is not None:
             self._resident = explicit
             self._exact = True
-        elif self._last_family not in (None, family):
-            self._resident = 0
-            self._exact = False
         self._resident = max(self._resident, result.active_aiv or 0)
         if self._resident == self.chip.vector_cores:
             self._exact = True

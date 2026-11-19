@@ -1,0 +1,3432 @@
+{
+  "utc": "2026-11-19T16:18:43.649423+00:00",
+  "inputs": {
+    "development/validation/post25/freeze.py": "5ffb8eadd817d9a582021fcffe9e37165535cc81e7edae4e281c0a76715a5e9a",
+    "development/validation/post25/calibrate.py": "f91e15f9757cfc6c583641c437025491459f2d7767ab1c3c8223de871cfee7ae",
+    "development/validation/post25/collect.py": "0bb8c0028103f1c6be1a4f4deb4fbc5f83c37ebe9e6fea2bc6ca4a0d871d0195",
+    "results/v0.25/post/prices.json": "911abfb2788ec25616d3e6200c159f289f19af2f1335d0341164ddce21c0aef5",
+    "results/v0.25/post/archive.json": "d69540719321fc4558b54b7f4d23218d77d96fde4e475ff4488865eb130f7cde",
+    "operator_model/post_token_pipeline.py": "30340c2ec9318d604b013b5c9d17bfbfc8e505afb8ef8f22f21bfbf0577985b2",
+    "operator_model/post_resource.py": "1c3d9f3e2b70ba1991f4111a3dcd4cd080fc92e270838a1e6895993df4a43fab",
+    "operator_model/rms_resource.py": "a2dea4908805c5fb576087ea9db85d08f93849441800ffdd912fc4cfc4ac07b5",
+    "operator_model/post_v12.py": "57c506e8926152f85116ef7604c5f4248877e54b46751a8adcc0c0b3b1b9264d",
+    "operator_model/wide_v10.py": "8b89296b26c00dbdc5994ddaca7ce52e15f240309a5d2212b21449a81aa3e292",
+    "results/v0.12/post/profile.json": "04a00fa0004f2bae7d795aa0535741e83347e2278b2fa42d2d182d10deedb558",
+    "development/validation/post24/collect.py": "980663759c0f29da1ac7fa62aec96b6856027c2b71a1826db894f68be6cddfad",
+    "development/validation/post24/physical.py": "4838d02b24e2db8db1baa544b0b05210cb10f7d13245e8dd8f4483083b30d907",
+    "development/validation/post_candidate/extract.py": "1306476bff874a1c98b9609d422b41c09cb62e59ec12f1319d1d6cf66706f5e4",
+    "development/validation/rms_ordered_verify/verify.py": "6880244f8a43a62658b773fba3a1e677d06fd6eba7265790cfa839a30220d31c",
+    "smoke/vector_v8.cpp": "476f4200a3f1684b90ad753e7c79b46e2df427ad27ddfa0c454b2bdd5cd4b3f1",
+    "smoke/extension_indexer_mhc.cpp": "a1536bfd32a9c7ffec7fb2434d00cbecb8afa21a14e73c2040d54d2f2cb9b5e5",
+    "scripts/cann-run.sh": "d529513abc0bc340a56c91365a9e72d5e434d2cb4841be1692930294cd0624df",
+    "toolchains/cann/9.2.1/cann-9.2.1/opp/built-in/op_impl/ai_core/tbe/kernel/ascend950/ops_transformer/mhc_post_apt/MhcPost_59130ccee6717ff2c0f15b485e731162.o": "36851e45520023382742d07d871519f65e57e9c49ec3594583e361b0bb9b6677",
+    "build/vector-v8/MHC": "a7d3a4da5264a489830c2899954eb252bb823974b23baee733ba513788a2c6d0",
+    "configs/chips/Ascend950DT_9582.json": "54d68c49374f8fab57ae16b05923d7ea2874cc48083e0728bcbc60f467bb71ec",
+    "configs/chips/Ascend950PR_957b.json": "2bb5b0b34b8d04e255e24ea5d12c73407ace6bb7154ba6aa603b338fc252ada7",
+    "configs/chips/Ascend970DT.json": "837796ec9f3b39888950cfe6f703b63c4bf9ced22a366b66f300f1389a8006f2"
+  },
+  "archive_shapes": 83,
+  "measured": [
+    "Ascend950DT_9582",
+    "Ascend950PR_957b"
+  ],
+  "extrapolated": [
+    "Ascend970DT"
+  ],
+  "groups": [
+    "boundary",
+    "steady",
+    "width",
+    "many"
+  ],
+  "primary": "All active AIVs earliest instruction through last END_LABEL incl. one real END and all numerically checked output values; same definition as published v0.24. If the synthetic marker is incomplete, the full ELF-entry to physical END envelope is an optional separate measure.",
+  "wall_s": 5400,
+  "mib": 12288,
+  "schedule": "One serial simulator host across the four groups and two SKUs; each group has its own new stream, with an immediate exact repeat of each input. Feasibility error targets WAPE<=20%, max<=40%. Both signed and absolute error reported. 970DT predicts only.",
+  "rows": [
+    {
+      "chip": "Ascend950DT_9582",
+      "group": "boundary",
+      "i": 0,
+      "role": "entry",
+      "shape": [
+        57,
+        4,
+        192
+      ],
+      "prior_aiv": 0,
+      "previous_shape": null,
+      "old_known_us": 3.468659545375081,
+      "old_unknown_us": 2.5940752703521333,
+      "candidate_unknown_us": 2.1282003101329883,
+      "state": "first",
+      "predict_ms": 0.38416,
+      "us": 3.264811112320079,
+      "baseline": 3.468659545375081,
+      "active": 57,
+      "mode": "first",
+      "plan": {
+        "active_aiv": 57,
+        "active_aic": 0,
+        "route": "post_token",
+        "channel_slices": 1,
+        "fragment_width": 192,
+        "rows_per_core": 1
+      },
+      "pipeline": {
+        "us": 3.264811112320079,
+        "stages_us": {
+          "arrival": 0.34334065399683583,
+          "control_to_first_read": 1.8821213245391846,
+          "first_read_to_ready": 0.7005486229570566,
+          "ready_to_first_write": 0.13275666051796123,
+          "overlapping_rows": 0.0,
+          "last_write_response": 0.19998339655918643,
+          "exit_after_write": 0.006060453749854533,
+          "shared_link_floor": 0.0
+        },
+        "active_aiv": 57,
+        "rows_per_core": 1,
+        "state": "first",
+        "row_work_floor_cycles": 95.326191487772,
+        "gap_cycles": {
+          "read_gap_first": 1330.500304698944,
+          "read_ii": 706.0009002685547,
+          "write_gap_first": 906.4999222755432,
+          "write_ii": 616.9999999999957
+        },
+        "timeline": []
+      }
+    },
+    {
+      "chip": "Ascend950DT_9582",
+      "group": "boundary",
+      "i": 1,
+      "role": "repeat",
+      "shape": [
+        57,
+        4,
+        192
+      ],
+      "prior_aiv": 57,
+      "previous_shape": [
+        57,
+        4,
+        192
+      ],
+      "old_known_us": 2.0717151327469727,
+      "old_unknown_us": 2.5940752703521333,
+      "candidate_unknown_us": 2.1282003101329883,
+      "state": "reuse",
+      "predict_ms": 0.13313,
+      "us": 1.578619854384764,
+      "baseline": 2.0717151327469727,
+      "active": 57,
+      "mode": "repeat",
+      "plan": {
+        "active_aiv": 57,
+        "active_aic": 0,
+        "route": "post_token",
+        "channel_slices": 1,
+        "fragment_width": 192,
+        "rows_per_core": 1
+      },
+      "pipeline": {
+        "us": 1.578619854384764,
+        "stages_us": {
+          "arrival": 0.05858171831389333,
+          "control_to_first_read": 0.9345455169677734,
+          "first_read_to_ready": 0.37758941495750886,
+          "ready_to_first_write": 0.13341299225312406,
+          "overlapping_rows": 0.0,
+          "last_write_response": 0.0684295153592283,
+          "exit_after_write": 0.006060696533236154,
+          "shared_link_floor": 0.0
+        },
+        "active_aiv": 57,
+        "rows_per_core": 1,
+        "state": "repeat",
+        "row_work_floor_cycles": 95.326191487772,
+        "gap_cycles": {
+          "read_gap_first": 783.5004329681396,
+          "read_ii": 555.0018310546875,
+          "write_gap_first": 543.4990882873535,
+          "write_ii": 554.498291015625
+        },
+        "timeline": []
+      }
+    },
+    {
+      "chip": "Ascend950DT_9582",
+      "group": "boundary",
+      "i": 2,
+      "role": "entry",
+      "shape": [
+        67,
+        4,
+        384
+      ],
+      "prior_aiv": 57,
+      "previous_shape": [
+        57,
+        4,
+        192
+      ],
+      "old_known_us": 2.5478124278462877,
+      "old_unknown_us": 3.096001009040264,
+      "candidate_unknown_us": 2.641887045255302,
+      "state": "reuse",
+      "predict_ms": 0.10285,
+      "us": 3.0714812770725253,
+      "baseline": 2.5478124278462877,
+      "active": 34,
+      "mode": "reuse",
+      "plan": {
+        "active_aiv": 34,
+        "active_aic": 0,
+        "route": "post_token",
+        "channel_slices": 1,
+        "fragment_width": 384,
+        "rows_per_core": 2
+      },
+      "pipeline": {
+        "us": 3.0714812770725253,
+        "stages_us": {
+          "arrival": 0.3674387625771914,
+          "control_to_first_read": 0.9772729700261883,
+          "first_read_to_ready": 0.5435763046817192,
+          "ready_to_first_write": 0.19469456265096513,
+          "overlapping_rows": 0.7885042104697941,
+          "last_write_response": 0.19575204242424113,
+          "exit_after_write": 0.004242424242425713,
+          "shared_link_floor": 0.0
+        },
+        "active_aiv": 34,
+        "rows_per_core": 2,
+        "state": "reuse",
+        "row_work_floor_cycles": 190.652382975544,
+        "gap_cycles": {
+          "read_gap_first": 1349.499999999999,
+          "read_ii": 833.0000000000016,
+          "write_gap_first": 1113.4999999999984,
+          "write_ii": 684.5000000000018
+        },
+        "timeline": []
+      }
+    },
+    {
+      "chip": "Ascend950DT_9582",
+      "group": "boundary",
+      "i": 3,
+      "role": "repeat",
+      "shape": [
+        67,
+        4,
+        384
+      ],
+      "prior_aiv": 57,
+      "previous_shape": [
+        67,
+        4,
+        384
+      ],
+      "old_known_us": 2.5478124278462877,
+      "old_unknown_us": 3.096001009040264,
+      "candidate_unknown_us": 2.641887045255302,
+      "state": "reuse",
+      "predict_ms": 0.09546,
+      "us": 1.9895861185123693,
+      "baseline": 2.5478124278462877,
+      "active": 34,
+      "mode": "repeat",
+      "plan": {
+        "active_aiv": 34,
+        "active_aic": 0,
+        "route": "post_token",
+        "channel_slices": 1,
+        "fragment_width": 384,
+        "rows_per_core": 2
+      },
+      "pipeline": {
+        "us": 1.9895861185123693,
+        "stages_us": {
+          "arrival": 0.05109513712324035,
+          "control_to_first_read": 0.9345455169677734,
+          "first_read_to_ready": 0.3943133695029635,
+          "ready_to_first_write": 0.19118644163965257,
+          "overlapping_rows": 0.3293933868408203,
+          "last_write_response": 0.08299156990468284,
+          "exit_after_write": 0.006060696533236154,
+          "shared_link_floor": 0.0
+        },
+        "active_aiv": 34,
+        "rows_per_core": 2,
+        "state": "repeat",
+        "row_work_floor_cycles": 190.652382975544,
+        "gap_cycles": {
+          "read_gap_first": 783.5004329681396,
+          "read_ii": 555.0018310546875,
+          "write_gap_first": 543.4990882873535,
+          "write_ii": 554.498291015625
+        },
+        "timeline": []
+      }
+    },
+    {
+      "chip": "Ascend950DT_9582",
+      "group": "boundary",
+      "i": 4,
+      "role": "entry",
+      "shape": [
+        113,
+        4,
+        768
+      ],
+      "prior_aiv": 57,
+      "previous_shape": [
+        67,
+        4,
+        384
+      ],
+      "old_known_us": 3.0395938244244025,
+      "old_unknown_us": 3.6075537768131705,
+      "candidate_unknown_us": 2.854916540828478,
+      "state": "reuse",
+      "predict_ms": 0.09137,
+      "us": 3.303438196692746,
+      "baseline": 3.0395938244244025,
+      "active": 57,
+      "mode": "reuse",
+      "plan": {
+        "active_aiv": 57,
+        "active_aic": 0,
+        "route": "post_token",
+        "channel_slices": 1,
+        "fragment_width": 768,
+        "rows_per_core": 2
+      },
+      "pipeline": {
+        "us": 3.303438196692746,
+        "stages_us": {
+          "arrival": 0.4212767652425369,
+          "control_to_first_read": 0.9772729700261884,
+          "first_read_to_ready": 0.5770242137726282,
+          "ready_to_first_write": 0.3102414614240221,
+          "overlapping_rows": 0.7885042104697938,
+          "last_write_response": 0.22487615151515022,
+          "exit_after_write": 0.004242424242425713,
+          "shared_link_floor": 0.0
+        },
+        "active_aiv": 57,
+        "rows_per_core": 2,
+        "state": "reuse",
+        "row_work_floor_cycles": 381.304765951088,
+        "gap_cycles": {
+          "read_gap_first": 1349.499999999999,
+          "read_ii": 833.0000000000016,
+          "write_gap_first": 1113.4999999999984,
+          "write_ii": 684.5000000000018
+        },
+        "timeline": []
+      }
+    },
+    {
+      "chip": "Ascend950DT_9582",
+      "group": "boundary",
+      "i": 5,
+      "role": "repeat",
+      "shape": [
+        113,
+        4,
+        768
+      ],
+      "prior_aiv": 57,
+      "previous_shape": [
+        113,
+        4,
+        768
+      ],
+      "old_known_us": 3.0395938244244025,
+      "old_unknown_us": 3.6075537768131705,
+      "candidate_unknown_us": 2.854916540828478,
+      "state": "reuse",
+      "predict_ms": 0.09215,
+      "us": 2.175191616657897,
+      "baseline": 3.0395938244244025,
+      "active": 57,
+      "mode": "repeat",
+      "plan": {
+        "active_aiv": 57,
+        "active_aic": 0,
+        "route": "post_token",
+        "channel_slices": 1,
+        "fragment_width": 768,
+        "rows_per_core": 2
+      },
+      "pipeline": {
+        "us": 2.175191616657897,
+        "stages_us": {
+          "arrival": 0.05858171831389333,
+          "control_to_first_read": 0.9345455169677734,
+          "first_read_to_ready": 0.42776127859387253,
+          "ready_to_first_write": 0.30673334041270955,
+          "overlapping_rows": 0.3293933868408203,
+          "last_write_response": 0.11211567899559194,
+          "exit_after_write": 0.006060696533236154,
+          "shared_link_floor": 0.0
+        },
+        "active_aiv": 57,
+        "rows_per_core": 2,
+        "state": "repeat",
+        "row_work_floor_cycles": 381.304765951088,
+        "gap_cycles": {
+          "read_gap_first": 783.5004329681396,
+          "read_ii": 555.0018310546875,
+          "write_gap_first": 543.4990882873535,
+          "write_ii": 554.498291015625
+        },
+        "timeline": []
+      }
+    },
+    {
+      "chip": "Ascend950DT_9582",
+      "group": "steady",
+      "i": 0,
+      "role": "entry",
+      "shape": [
+        181,
+        4,
+        1024
+      ],
+      "prior_aiv": 0,
+      "previous_shape": null,
+      "old_known_us": 5.527362277874469,
+      "old_unknown_us": 4.727859935076986,
+      "candidate_unknown_us": 3.3747891488204385,
+      "state": "first",
+      "predict_ms": 0.09106,
+      "us": 4.704928374274606,
+      "baseline": 5.527362277874469,
+      "active": 61,
+      "mode": "first",
+      "plan": {
+        "active_aiv": 61,
+        "active_aic": 0,
+        "route": "post_token",
+        "channel_slices": 1,
+        "fragment_width": 1024,
+        "rows_per_core": 3
+      },
+      "pipeline": {
+        "us": 4.704928374274606,
+        "stages_us": {
+          "arrival": 0.34910022839748045,
+          "control_to_first_read": 1.8821213245391846,
+          "first_read_to_ready": 0.7730190926540261,
+          "ready_to_first_write": 0.3831082745262514,
+          "overlapping_rows": 1.0484333674849855,
+          "last_write_response": 0.26308563292282283,
+          "exit_after_write": 0.006060453749854533,
+          "shared_link_floor": 0.0
+        },
+        "active_aiv": 61,
+        "rows_per_core": 3,
+        "state": "first",
+        "row_work_floor_cycles": 508.40635460145063,
+        "gap_cycles": {
+          "read_gap_first": 1330.500304698944,
+          "read_ii": 706.0009002685547,
+          "write_gap_first": 906.4999222755432,
+          "write_ii": 616.9999999999957
+        },
+        "timeline": []
+      }
+    },
+    {
+      "chip": "Ascend950DT_9582",
+      "group": "steady",
+      "i": 1,
+      "role": "repeat",
+      "shape": [
+        181,
+        4,
+        1024
+      ],
+      "prior_aiv": 61,
+      "previous_shape": [
+        181,
+        4,
+        1024
+      ],
+      "old_known_us": 4.130417865246361,
+      "old_unknown_us": 4.727859935076986,
+      "candidate_unknown_us": 3.3747891488204385,
+      "state": "reuse",
+      "predict_ms": 0.09154,
+      "us": 2.630979845891522,
+      "baseline": 4.130417865246361,
+      "active": 61,
+      "mode": "repeat",
+      "plan": {
+        "active_aiv": 61,
+        "active_aic": 0,
+        "route": "post_token",
+        "channel_slices": 1,
+        "fragment_width": 1024,
+        "rows_per_core": 3
+      },
+      "pipeline": {
+        "us": 2.630979845891522,
+        "stages_us": {
+          "arrival": 0.05956443259843474,
+          "control_to_first_read": 0.9345455169677734,
+          "first_read_to_ready": 0.4500598846544786,
+          "ready_to_first_write": 0.3837646062614141,
+          "overlapping_rows": 0.6654529571533203,
+          "last_write_response": 0.13153175172286466,
+          "exit_after_write": 0.006060696533236154,
+          "shared_link_floor": 0.0
+        },
+        "active_aiv": 61,
+        "rows_per_core": 3,
+        "state": "repeat",
+        "row_work_floor_cycles": 508.40635460145063,
+        "gap_cycles": {
+          "read_gap_first": 783.5004329681396,
+          "read_ii": 555.0018310546875,
+          "write_gap_first": 543.4990882873535,
+          "write_ii": 554.498291015625
+        },
+        "timeline": []
+      }
+    },
+    {
+      "chip": "Ascend950DT_9582",
+      "group": "steady",
+      "i": 2,
+      "role": "entry",
+      "shape": [
+        196,
+        4,
+        1536
+      ],
+      "prior_aiv": 61,
+      "previous_shape": [
+        181,
+        4,
+        1024
+      ],
+      "old_known_us": 6.204804699224549,
+      "old_unknown_us": 6.832605624396483,
+      "candidate_unknown_us": 4.31665503174426,
+      "state": "reuse",
+      "predict_ms": 0.09247,
+      "us": 4.653615076516347,
+      "baseline": 6.204804699224549,
+      "active": 49,
+      "mode": "reuse",
+      "plan": {
+        "active_aiv": 49,
+        "active_aic": 0,
+        "route": "post_token",
+        "channel_slices": 1,
+        "fragment_width": 1536,
+        "rows_per_core": 4
+      },
+      "pipeline": {
+        "us": 4.653615076516347,
+        "stages_us": {
+          "arrival": 0.4055188414594162,
+          "control_to_first_read": 0.9772729700261885,
+          "first_read_to_ready": 0.6439200319544464,
+          "ready_to_first_write": 0.5413352589701361,
+          "overlapping_rows": 1.7982011801667663,
+          "last_write_response": 0.2831243696969684,
+          "exit_after_write": 0.004242424242425713,
+          "shared_link_floor": 0.0
+        },
+        "active_aiv": 49,
+        "rows_per_core": 4,
+        "state": "reuse",
+        "row_work_floor_cycles": 762.609531902176,
+        "gap_cycles": {
+          "read_gap_first": 1349.499999999999,
+          "read_ii": 833.0000000000016,
+          "write_gap_first": 1113.4999999999984,
+          "write_ii": 762.609531902176
+        },
+        "timeline": []
+      }
+    },
+    {
+      "chip": "Ascend950DT_9582",
+      "group": "steady",
+      "i": 3,
+      "role": "repeat",
+      "shape": [
+        196,
+        4,
+        1536
+      ],
+      "prior_aiv": 61,
+      "previous_shape": [
+        196,
+        4,
+        1536
+      ],
+      "old_known_us": 6.204804699224549,
+      "old_unknown_us": 6.832605624396483,
+      "candidate_unknown_us": 4.31665503174426,
+      "state": "reuse",
+      "predict_ms": 0.08984,
+      "us": 3.586407590599447,
+      "baseline": 6.204804699224549,
+      "active": 49,
+      "mode": "repeat",
+      "plan": {
+        "active_aiv": 49,
+        "active_aic": 0,
+        "route": "post_token",
+        "channel_slices": 1,
+        "fragment_width": 1536,
+        "rows_per_core": 4
+      },
+      "pipeline": {
+        "us": 3.586407590599447,
+        "stages_us": {
+          "arrival": 0.0563904599098294,
+          "control_to_first_read": 0.9345455169677734,
+          "first_read_to_ready": 0.49465709677569075,
+          "ready_to_first_write": 0.5378271379588234,
+          "overlapping_rows": 1.3865627852766838,
+          "last_write_response": 0.17036389717741013,
+          "exit_after_write": 0.006060696533236154,
+          "shared_link_floor": 0.0
+        },
+        "active_aiv": 49,
+        "rows_per_core": 4,
+        "state": "repeat",
+        "row_work_floor_cycles": 762.609531902176,
+        "gap_cycles": {
+          "read_gap_first": 783.5004329681396,
+          "read_ii": 762.609531902176,
+          "write_gap_first": 762.609531902176,
+          "write_ii": 762.609531902176
+        },
+        "timeline": []
+      }
+    },
+    {
+      "chip": "Ascend950DT_9582",
+      "group": "width",
+      "i": 0,
+      "role": "entry",
+      "shape": [
+        65,
+        4,
+        320
+      ],
+      "prior_aiv": 0,
+      "previous_shape": null,
+      "old_known_us": 3.8627932743780433,
+      "old_unknown_us": 3.0101447337099954,
+      "candidate_unknown_us": 2.6080268425821997,
+      "state": "first",
+      "predict_ms": 0.09029,
+      "us": 3.898324986279631,
+      "baseline": 3.8627932743780433,
+      "active": 33,
+      "mode": "first",
+      "plan": {
+        "active_aiv": 33,
+        "active_aic": 0,
+        "route": "post_token",
+        "channel_slices": 1,
+        "fragment_width": 320,
+        "rows_per_core": 2
+      },
+      "pipeline": {
+        "us": 3.898324986279631,
+        "stages_us": {
+          "arrival": 0.29692752164920344,
+          "control_to_first_read": 1.8821213245391846,
+          "first_read_to_ready": 0.7116979259873595,
+          "ready_to_first_write": 0.17127229344231362,
+          "overlapping_rows": 0.620554033988893,
+          "last_write_response": 0.2096914329228228,
+          "exit_after_write": 0.006060453749854533,
+          "shared_link_floor": 0.0
+        },
+        "active_aiv": 33,
+        "rows_per_core": 2,
+        "state": "first",
+        "row_work_floor_cycles": 158.8769858129533,
+        "gap_cycles": {
+          "read_gap_first": 1330.500304698944,
+          "read_ii": 706.0009002685547,
+          "write_gap_first": 906.4999222755432,
+          "write_ii": 616.9999999999957
+        },
+        "timeline": []
+      }
+    },
+    {
+      "chip": "Ascend950DT_9582",
+      "group": "width",
+      "i": 1,
+      "role": "repeat",
+      "shape": [
+        65,
+        4,
+        320
+      ],
+      "prior_aiv": 33,
+      "previous_shape": [
+        65,
+        4,
+        320
+      ],
+      "old_known_us": 2.4658488617499352,
+      "old_unknown_us": 3.0101447337099954,
+      "candidate_unknown_us": 2.6080268425821997,
+      "state": "reuse",
+      "predict_ms": 0.08981,
+      "us": 1.9594670783829131,
+      "baseline": 2.4658488617499352,
+      "active": 33,
+      "mode": "repeat",
+      "plan": {
+        "active_aiv": 33,
+        "active_aic": 0,
+        "route": "post_token",
+        "channel_slices": 1,
+        "fragment_width": 320,
+        "rows_per_core": 2
+      },
+      "pipeline": {
+        "us": 1.9594670783829131,
+        "stages_us": {
+          "arrival": 0.050662583152930124,
+          "control_to_first_read": 0.9345455169677734,
+          "first_read_to_ready": 0.38873871798781195,
+          "ready_to_first_write": 0.17192862517747637,
+          "overlapping_rows": 0.3293933868408203,
+          "last_write_response": 0.07813755172286466,
+          "exit_after_write": 0.006060696533236154,
+          "shared_link_floor": 0.0
+        },
+        "active_aiv": 33,
+        "rows_per_core": 2,
+        "state": "repeat",
+        "row_work_floor_cycles": 158.8769858129533,
+        "gap_cycles": {
+          "read_gap_first": 783.5004329681396,
+          "read_ii": 555.0018310546875,
+          "write_gap_first": 543.4990882873535,
+          "write_ii": 554.498291015625
+        },
+        "timeline": []
+      }
+    },
+    {
+      "chip": "Ascend950DT_9582",
+      "group": "width",
+      "i": 2,
+      "role": "entry",
+      "shape": [
+        121,
+        4,
+        1216
+      ],
+      "prior_aiv": 33,
+      "previous_shape": [
+        65,
+        4,
+        320
+      ],
+      "old_known_us": 4.240598345779929,
+      "old_unknown_us": 4.198665165885111,
+      "candidate_unknown_us": 3.1144048155307535,
+      "state": "expand",
+      "predict_ms": 0.09159,
+      "us": 4.176794639858761,
+      "baseline": 4.240598345779929,
+      "active": 61,
+      "mode": "expand",
+      "plan": {
+        "active_aiv": 61,
+        "active_aic": 0,
+        "route": "post_token",
+        "channel_slices": 1,
+        "fragment_width": 1216,
+        "rows_per_core": 2
+      },
+      "pipeline": {
+        "us": 4.176794639858761,
+        "stages_us": {
+          "arrival": 0.6459938023671653,
+          "control_to_first_read": 1.6090906062270667,
+          "first_read_to_ready": 0.7885968914767788,
+          "ready_to_first_write": 0.4433819170385881,
+          "overlapping_rows": 0.44091033935546875,
+          "last_write_response": 0.24366956764613065,
+          "exit_after_write": 0.005151515747562563,
+          "shared_link_floor": 0.0
+        },
+        "active_aiv": 61,
+        "rows_per_core": 2,
+        "state": "expand",
+        "row_work_floor_cycles": 603.7325460892226,
+        "gap_cycles": {
+          "read_gap_first": 936.5010738372803,
+          "read_ii": 813.5004043579102,
+          "write_gap_first": 727.5020599365234,
+          "write_ii": 606.9986343383789
+        },
+        "timeline": []
+      }
+    },
+    {
+      "chip": "Ascend950DT_9582",
+      "group": "width",
+      "i": 3,
+      "role": "repeat",
+      "shape": [
+        121,
+        4,
+        1216
+      ],
+      "prior_aiv": 61,
+      "previous_shape": [
+        121,
+        4,
+        1216
+      ],
+      "old_known_us": 3.6133387870988694,
+      "old_unknown_us": 4.198665165885111,
+      "candidate_unknown_us": 3.1144048155307535,
+      "state": "reuse",
+      "predict_ms": 0.08981,
+      "us": 2.420484859996986,
+      "baseline": 3.6133387870988694,
+      "active": 61,
+      "mode": "repeat",
+      "plan": {
+        "active_aiv": 61,
+        "active_aic": 0,
+        "route": "post_token",
+        "channel_slices": 1,
+        "fragment_width": 1216,
+        "rows_per_core": 2
+      },
+      "pipeline": {
+        "us": 2.420484859996986,
+        "stages_us": {
+          "arrival": 0.05956443259843474,
+          "control_to_first_read": 0.9345455169677734,
+          "first_read_to_ready": 0.4667838391999331,
+          "ready_to_first_write": 0.4415380556479426,
+          "overlapping_rows": 0.365898512781347,
+          "last_write_response": 0.14609380626831922,
+          "exit_after_write": 0.006060696533236154,
+          "shared_link_floor": 0.0
+        },
+        "active_aiv": 61,
+        "rows_per_core": 2,
+        "state": "repeat",
+        "row_work_floor_cycles": 603.7325460892226,
+        "gap_cycles": {
+          "read_gap_first": 783.5004329681396,
+          "read_ii": 603.7325460892226,
+          "write_gap_first": 603.7325460892226,
+          "write_ii": 603.7325460892226
+        },
+        "timeline": []
+      }
+    },
+    {
+      "chip": "Ascend950DT_9582",
+      "group": "width",
+      "i": 4,
+      "role": "entry",
+      "shape": [
+        65,
+        4,
+        5120
+      ],
+      "prior_aiv": 61,
+      "previous_shape": [
+        121,
+        4,
+        1216
+      ],
+      "old_known_us": 8.613116318976369,
+      "old_unknown_us": 9.259195378657259,
+      "candidate_unknown_us": 6.11193221281727,
+      "state": "reuse",
+      "predict_ms": 0.08979,
+      "us": 6.0172917483532915,
+      "baseline": 8.613116318976369,
+      "active": 33,
+      "mode": "reuse",
+      "plan": {
+        "active_aiv": 33,
+        "active_aic": 0,
+        "route": "post_token",
+        "channel_slices": 1,
+        "fragment_width": 5120,
+        "rows_per_core": 2
+      },
+      "pipeline": {
+        "us": 6.0172917483532915,
+        "stages_us": {
+          "arrival": 0.3643281515768668,
+          "control_to_first_read": 0.9772729700261883,
+          "first_read_to_ready": 0.9561005168029312,
+          "ready_to_first_write": 1.6197729808520007,
+          "overlapping_rows": 1.5406253169740927,
+          "last_write_response": 0.5549493878787866,
+          "exit_after_write": 0.004242424242425713,
+          "shared_link_floor": 0.0
+        },
+        "active_aiv": 33,
+        "rows_per_core": 2,
+        "state": "reuse",
+        "row_work_floor_cycles": 2542.031773007253,
+        "gap_cycles": {
+          "read_gap_first": 2542.031773007253,
+          "read_ii": 2542.031773007253,
+          "write_gap_first": 2542.031773007253,
+          "write_ii": 2542.031773007253
+        },
+        "timeline": []
+      }
+    },
+    {
+      "chip": "Ascend950DT_9582",
+      "group": "width",
+      "i": 5,
+      "role": "repeat",
+      "shape": [
+        65,
+        4,
+        5120
+      ],
+      "prior_aiv": 61,
+      "previous_shape": [
+        65,
+        4,
+        5120
+      ],
+      "old_known_us": 8.613116318976369,
+      "old_unknown_us": 9.259195378657259,
+      "candidate_unknown_us": 6.11193221281727,
+      "state": "reuse",
+      "predict_ms": 0.09069,
+      "us": 5.397185470452125,
+      "baseline": 8.613116318976369,
+      "active": 33,
+      "mode": "repeat",
+      "plan": {
+        "active_aiv": 33,
+        "active_aic": 0,
+        "route": "post_token",
+        "channel_slices": 1,
+        "fragment_width": 5120,
+        "rows_per_core": 2
+      },
+      "pipeline": {
+        "us": 5.397185470452125,
+        "stages_us": {
+          "arrival": 0.050662583152930124,
+          "control_to_first_read": 0.9345455169677734,
+          "first_read_to_ready": 0.8068375816241755,
+          "ready_to_first_write": 1.6162648598406884,
+          "overlapping_rows": 1.5406253169740927,
+          "last_write_response": 0.44218891535922833,
+          "exit_after_write": 0.006060696533236154,
+          "shared_link_floor": 0.0
+        },
+        "active_aiv": 33,
+        "rows_per_core": 2,
+        "state": "repeat",
+        "row_work_floor_cycles": 2542.031773007253,
+        "gap_cycles": {
+          "read_gap_first": 2542.031773007253,
+          "read_ii": 2542.031773007253,
+          "write_gap_first": 2542.031773007253,
+          "write_ii": 2542.031773007253
+        },
+        "timeline": []
+      }
+    },
+    {
+      "chip": "Ascend950DT_9582",
+      "group": "many",
+      "i": 0,
+      "role": "entry",
+      "shape": [
+        193,
+        4,
+        896
+      ],
+      "prior_aiv": 0,
+      "previous_shape": null,
+      "old_known_us": 5.962477789925608,
+      "old_unknown_us": 5.171326460224586,
+      "candidate_unknown_us": 3.6891879498134763,
+      "state": "first",
+      "predict_ms": 0.09,
+      "us": 5.05483244978993,
+      "baseline": 5.962477789925608,
+      "active": 49,
+      "mode": "first",
+      "plan": {
+        "active_aiv": 49,
+        "active_aic": 0,
+        "route": "post_token",
+        "channel_slices": 1,
+        "fragment_width": 896,
+        "rows_per_core": 4
+      },
+      "pipeline": {
+        "us": 5.05483244978993,
+        "stages_us": {
+          "arrival": 0.3304979427350027,
+          "control_to_first_read": 1.8821213245391846,
+          "first_read_to_ready": 0.7618697896237231,
+          "ready_to_first_write": 0.344592641601899,
+          "overlapping_rows": 1.47631270098108,
+          "last_write_response": 0.2533775965591864,
+          "exit_after_write": 0.006060453749854533,
+          "shared_link_floor": 0.0
+        },
+        "active_aiv": 49,
+        "rows_per_core": 4,
+        "state": "first",
+        "row_work_floor_cycles": 444.85556027626933,
+        "gap_cycles": {
+          "read_gap_first": 1330.500304698944,
+          "read_ii": 706.0009002685547,
+          "write_gap_first": 906.4999222755432,
+          "write_ii": 616.9999999999957
+        },
+        "timeline": []
+      }
+    },
+    {
+      "chip": "Ascend950DT_9582",
+      "group": "many",
+      "i": 1,
+      "role": "repeat",
+      "shape": [
+        193,
+        4,
+        896
+      ],
+      "prior_aiv": 49,
+      "previous_shape": [
+        193,
+        4,
+        896
+      ],
+      "old_known_us": 4.5655333772975,
+      "old_unknown_us": 5.171326460224586,
+      "candidate_unknown_us": 3.6891879498134763,
+      "state": "reuse",
+      "predict_ms": 0.2607,
+      "us": 2.904492471197125,
+      "baseline": 4.5655333772975,
+      "active": 49,
+      "mode": "repeat",
+      "plan": {
+        "active_aiv": 49,
+        "active_aic": 0,
+        "route": "post_token",
+        "channel_slices": 1,
+        "fragment_width": 896,
+        "rows_per_core": 4
+      },
+      "pipeline": {
+        "us": 2.904492471197125,
+        "stages_us": {
+          "arrival": 0.0563904599098294,
+          "control_to_first_read": 0.9345455169677734,
+          "first_read_to_ready": 0.43891058162417557,
+          "ready_to_first_write": 0.3452489733370619,
+          "overlapping_rows": 1.0015125274658203,
+          "last_write_response": 0.12182371535922831,
+          "exit_after_write": 0.006060696533236154,
+          "shared_link_floor": 0.0
+        },
+        "active_aiv": 49,
+        "rows_per_core": 4,
+        "state": "repeat",
+        "row_work_floor_cycles": 444.85556027626933,
+        "gap_cycles": {
+          "read_gap_first": 783.5004329681396,
+          "read_ii": 555.0018310546875,
+          "write_gap_first": 543.4990882873535,
+          "write_ii": 554.498291015625
+        },
+        "timeline": []
+      }
+    },
+    {
+      "chip": "Ascend950DT_9582",
+      "group": "many",
+      "i": 2,
+      "role": "entry",
+      "shape": [
+        449,
+        4,
+        512
+      ],
+      "prior_aiv": 49,
+      "previous_shape": [
+        193,
+        4,
+        896
+      ],
+      "old_known_us": 5.9496921910268865,
+      "old_unknown_us": 5.939876581933303,
+      "candidate_unknown_us": 5.048345924826254,
+      "state": "expand",
+      "predict_ms": 0.09279,
+      "us": 6.638421429266386,
+      "baseline": 5.9496921910268865,
+      "active": 57,
+      "mode": "expand",
+      "plan": {
+        "active_aiv": 57,
+        "active_aic": 0,
+        "route": "post_token",
+        "channel_slices": 1,
+        "fragment_width": 512,
+        "rows_per_core": 8
+      },
+      "pipeline": {
+        "us": 6.638421429266386,
+        "stages_us": {
+          "arrival": 0.6353359767215953,
+          "control_to_first_read": 1.609090606227067,
+          "first_read_to_ready": 0.7272757248101122,
+          "ready_to_first_write": 0.2315459359546503,
+          "overlapping_rows": 3.2397463021592685,
+          "last_write_response": 0.19027536764613062,
+          "exit_after_write": 0.005151515747562563,
+          "shared_link_floor": 0.0
+        },
+        "active_aiv": 57,
+        "rows_per_core": 8,
+        "state": "expand",
+        "row_work_floor_cycles": 254.20317730072532,
+        "gap_cycles": {
+          "read_gap_first": 936.5010738372803,
+          "read_ii": 813.5004043579102,
+          "write_gap_first": 727.5020599365234,
+          "write_ii": 606.9986343383789
+        },
+        "timeline": []
+      }
+    },
+    {
+      "chip": "Ascend950DT_9582",
+      "group": "many",
+      "i": 3,
+      "role": "repeat",
+      "shape": [
+        449,
+        4,
+        512
+      ],
+      "prior_aiv": 57,
+      "previous_shape": [
+        449,
+        4,
+        512
+      ],
+      "old_known_us": 5.322432632345826,
+      "old_unknown_us": 5.939876581933303,
+      "candidate_unknown_us": 5.048345924826254,
+      "state": "reuse",
+      "predict_ms": 0.09051,
+      "us": 4.072803093896313,
+      "baseline": 5.322432632345826,
+      "active": 57,
+      "mode": "repeat",
+      "plan": {
+        "active_aiv": 57,
+        "active_aic": 0,
+        "route": "post_token",
+        "channel_slices": 1,
+        "fragment_width": 512,
+        "rows_per_core": 8
+      },
+      "pipeline": {
+        "us": 4.072803093896313,
+        "stages_us": {
+          "arrival": 0.05858171831389333,
+          "control_to_first_read": 0.9345455169677734,
+          "first_read_to_ready": 0.4054626725332665,
+          "ready_to_first_write": 0.2297020745640048,
+          "overlapping_rows": 2.3457508087158208,
+          "last_write_response": 0.0926996062683192,
+          "exit_after_write": 0.006060696533236154,
+          "shared_link_floor": 0.0
+        },
+        "active_aiv": 57,
+        "rows_per_core": 8,
+        "state": "repeat",
+        "row_work_floor_cycles": 254.20317730072532,
+        "gap_cycles": {
+          "read_gap_first": 783.5004329681396,
+          "read_ii": 555.0018310546875,
+          "write_gap_first": 543.4990882873535,
+          "write_ii": 554.498291015625
+        },
+        "timeline": []
+      }
+    },
+    {
+      "chip": "Ascend950PR_957b",
+      "group": "boundary",
+      "i": 0,
+      "role": "entry",
+      "shape": [
+        57,
+        4,
+        192
+      ],
+      "prior_aiv": 0,
+      "previous_shape": null,
+      "old_known_us": 3.702388884215931,
+      "old_unknown_us": 2.8415075716233447,
+      "candidate_unknown_us": 2.5440916407901177,
+      "state": "first",
+      "predict_ms": 0.11091,
+      "us": 3.829549132917796,
+      "baseline": 3.702388884215931,
+      "active": 29,
+      "mode": "first",
+      "plan": {
+        "active_aiv": 29,
+        "active_aic": 0,
+        "route": "post_token",
+        "channel_slices": 1,
+        "fragment_width": 192,
+        "rows_per_core": 2
+      },
+      "pipeline": {
+        "us": 3.829549132917796,
+        "stages_us": {
+          "arrival": 0.28595470991580935,
+          "control_to_first_read": 1.8821213245391846,
+          "first_read_to_ready": 0.7005486229570566,
+          "ready_to_first_write": 0.13432659120781257,
+          "overlapping_rows": 0.6205540339888919,
+          "last_write_response": 0.19998339655918643,
+          "exit_after_write": 0.006060453749854533,
+          "shared_link_floor": 0.0
+        },
+        "active_aiv": 29,
+        "rows_per_core": 2,
+        "state": "first",
+        "row_work_floor_cycles": 97.91657712602665,
+        "gap_cycles": {
+          "read_gap_first": 1330.500304698944,
+          "read_ii": 706.0009002685547,
+          "write_gap_first": 906.4999222755432,
+          "write_ii": 616.9999999999957
+        },
+        "timeline": []
+      }
+    },
+    {
+      "chip": "Ascend950PR_957b",
+      "group": "boundary",
+      "i": 1,
+      "role": "repeat",
+      "shape": [
+        57,
+        4,
+        192
+      ],
+      "prior_aiv": 29,
+      "previous_shape": [
+        57,
+        4,
+        192
+      ],
+      "old_known_us": 2.305444471587823,
+      "old_unknown_us": 2.8415075716233447,
+      "candidate_unknown_us": 2.5440916407901177,
+      "state": "reuse",
+      "predict_ms": 0.09443,
+      "us": 1.9047333955241146,
+      "baseline": 2.305444471587823,
+      "active": 29,
+      "mode": "repeat",
+      "plan": {
+        "active_aiv": 29,
+        "active_aic": 0,
+        "route": "post_token",
+        "channel_slices": 1,
+        "fragment_width": 192,
+        "rows_per_core": 2
+      },
+      "pipeline": {
+        "us": 1.9047333955241146,
+        "stages_us": {
+          "arrival": 0.04879037210365833,
+          "control_to_first_read": 0.9345455169677734,
+          "first_read_to_ready": 0.37758941495750886,
+          "ready_to_first_write": 0.13498292294297534,
+          "overlapping_rows": 0.3343349566597342,
+          "last_write_response": 0.0684295153592283,
+          "exit_after_write": 0.006060696533236154,
+          "shared_link_floor": 0.0
+        },
+        "active_aiv": 29,
+        "rows_per_core": 2,
+        "state": "repeat",
+        "row_work_floor_cycles": 97.91657712602665,
+        "gap_cycles": {
+          "read_gap_first": 783.5004329681396,
+          "read_ii": 555.0018310546875,
+          "write_gap_first": 543.4990882873535,
+          "write_ii": 554.498291015625
+        },
+        "timeline": []
+      }
+    },
+    {
+      "chip": "Ascend950PR_957b",
+      "group": "boundary",
+      "i": 2,
+      "role": "entry",
+      "shape": [
+        67,
+        4,
+        384
+      ],
+      "prior_aiv": 29,
+      "previous_shape": [
+        57,
+        4,
+        192
+      ],
+      "old_known_us": 3.182117470588533,
+      "old_unknown_us": 3.10337195066246,
+      "candidate_unknown_us": 2.6453640546075023,
+      "state": "expand",
+      "predict_ms": 0.09205,
+      "us": 3.7021581790817377,
+      "baseline": 3.182117470588533,
+      "active": 34,
+      "mode": "expand",
+      "plan": {
+        "active_aiv": 34,
+        "active_aic": 0,
+        "route": "post_token",
+        "channel_slices": 1,
+        "fragment_width": 384,
+        "rows_per_core": 2
+      },
+      "pipeline": {
+        "us": 3.7021581790817377,
+        "stages_us": {
+          "arrival": 0.5541418002793351,
+          "control_to_first_read": 1.609090606227067,
+          "first_read_to_ready": 0.7161264217798091,
+          "ready_to_first_write": 0.1961701644100006,
+          "overlapping_rows": 0.44091033935546875,
+          "last_write_response": 0.18056733128249428,
+          "exit_after_write": 0.005151515747562563,
+          "shared_link_floor": 0.0
+        },
+        "active_aiv": 34,
+        "rows_per_core": 2,
+        "state": "expand",
+        "row_work_floor_cycles": 195.8331542520533,
+        "gap_cycles": {
+          "read_gap_first": 936.5010738372803,
+          "read_ii": 813.5004043579102,
+          "write_gap_first": 727.5020599365234,
+          "write_ii": 606.9986343383789
+        },
+        "timeline": []
+      }
+    },
+    {
+      "chip": "Ascend950PR_957b",
+      "group": "boundary",
+      "i": 3,
+      "role": "repeat",
+      "shape": [
+        67,
+        4,
+        384
+      ],
+      "prior_aiv": 34,
+      "previous_shape": [
+        67,
+        4,
+        384
+      ],
+      "old_known_us": 2.5548579119074732,
+      "old_unknown_us": 3.10337195066246,
+      "candidate_unknown_us": 2.6453640546075023,
+      "state": "reuse",
+      "predict_ms": 0.09327,
+      "us": 1.992725979892072,
+      "baseline": 2.5548579119074732,
+      "active": 34,
+      "mode": "repeat",
+      "plan": {
+        "active_aiv": 34,
+        "active_aic": 0,
+        "route": "post_token",
+        "channel_slices": 1,
+        "fragment_width": 384,
+        "rows_per_core": 2
+      },
+      "pipeline": {
+        "us": 1.992725979892072,
+        "stages_us": {
+          "arrival": 0.05109513712324035,
+          "control_to_first_read": 0.9345455169677734,
+          "first_read_to_ready": 0.3943133695029635,
+          "ready_to_first_write": 0.19432630301935516,
+          "overlapping_rows": 0.3293933868408203,
+          "last_write_response": 0.08299156990468284,
+          "exit_after_write": 0.006060696533236154,
+          "shared_link_floor": 0.0
+        },
+        "active_aiv": 34,
+        "rows_per_core": 2,
+        "state": "repeat",
+        "row_work_floor_cycles": 195.8331542520533,
+        "gap_cycles": {
+          "read_gap_first": 783.5004329681396,
+          "read_ii": 555.0018310546875,
+          "write_gap_first": 543.4990882873535,
+          "write_ii": 554.498291015625
+        },
+        "timeline": []
+      }
+    },
+    {
+      "chip": "Ascend950PR_957b",
+      "group": "boundary",
+      "i": 4,
+      "role": "entry",
+      "shape": [
+        113,
+        4,
+        768
+      ],
+      "prior_aiv": 34,
+      "previous_shape": [
+        67,
+        4,
+        384
+      ],
+      "old_known_us": 4.287032479532861,
+      "old_unknown_us": 4.246304791375135,
+      "candidate_unknown_us": 3.237218526884529,
+      "state": "expand",
+      "predict_ms": 0.09052,
+      "us": 4.2687732137986965,
+      "baseline": 4.287032479532861,
+      "active": 38,
+      "mode": "expand",
+      "plan": {
+        "active_aiv": 38,
+        "active_aic": 0,
+        "route": "post_token",
+        "channel_slices": 1,
+        "fragment_width": 768,
+        "rows_per_core": 3
+      },
+      "pipeline": {
+        "us": 4.2687732137986965,
+        "stages_us": {
+          "arrival": 0.5716200964566385,
+          "control_to_first_read": 1.609090606227067,
+          "first_read_to_ready": 0.7495743308707182,
+          "ready_to_first_write": 0.31485692456276027,
+          "overlapping_rows": 0.8087882995605469,
+          "last_write_response": 0.20969144037340337,
+          "exit_after_write": 0.005151515747562563,
+          "shared_link_floor": 0.0
+        },
+        "active_aiv": 38,
+        "rows_per_core": 3,
+        "state": "expand",
+        "row_work_floor_cycles": 391.6663085041066,
+        "gap_cycles": {
+          "read_gap_first": 936.5010738372803,
+          "read_ii": 813.5004043579102,
+          "write_gap_first": 727.5020599365234,
+          "write_ii": 606.9986343383789
+        },
+        "timeline": []
+      }
+    },
+    {
+      "chip": "Ascend950PR_957b",
+      "group": "boundary",
+      "i": 5,
+      "role": "repeat",
+      "shape": [
+        113,
+        4,
+        768
+      ],
+      "prior_aiv": 38,
+      "previous_shape": [
+        113,
+        4,
+        768
+      ],
+      "old_known_us": 3.659772920851802,
+      "old_unknown_us": 4.246304791375135,
+      "candidate_unknown_us": 3.237218526884529,
+      "state": "reuse",
+      "predict_ms": 0.09009,
+      "us": 2.5116559303699613,
+      "baseline": 3.659772920851802,
+      "active": 38,
+      "mode": "repeat",
+      "plan": {
+        "active_aiv": 38,
+        "active_aic": 0,
+        "route": "post_token",
+        "channel_slices": 1,
+        "fragment_width": 768,
+        "rows_per_core": 3
+      },
+      "pipeline": {
+        "us": 2.5116559303699613,
+        "stages_us": {
+          "arrival": 0.05270673895405287,
+          "control_to_first_read": 0.9345455169677734,
+          "first_read_to_ready": 0.42776127859387253,
+          "ready_to_first_write": 0.31301306317211475,
+          "overlapping_rows": 0.6654529571533203,
+          "last_write_response": 0.11211567899559194,
+          "exit_after_write": 0.006060696533236154,
+          "shared_link_floor": 0.0
+        },
+        "active_aiv": 38,
+        "rows_per_core": 3,
+        "state": "repeat",
+        "row_work_floor_cycles": 391.6663085041066,
+        "gap_cycles": {
+          "read_gap_first": 783.5004329681396,
+          "read_ii": 555.0018310546875,
+          "write_gap_first": 543.4990882873535,
+          "write_ii": 554.498291015625
+        },
+        "timeline": []
+      }
+    },
+    {
+      "chip": "Ascend950PR_957b",
+      "group": "steady",
+      "i": 0,
+      "role": "entry",
+      "shape": [
+        181,
+        4,
+        1024
+      ],
+      "prior_aiv": 0,
+      "previous_shape": null,
+      "old_known_us": 6.327907969304006,
+      "old_unknown_us": 5.54277282845562,
+      "candidate_unknown_us": 3.7596155310148274,
+      "state": "first",
+      "predict_ms": 0.08865,
+      "us": 5.117213159386735,
+      "baseline": 6.327907969304006,
+      "active": 46,
+      "mode": "first",
+      "plan": {
+        "active_aiv": 46,
+        "active_aic": 0,
+        "route": "post_token",
+        "channel_slices": 1,
+        "fragment_width": 1024,
+        "rows_per_core": 4
+      },
+      "pipeline": {
+        "us": 5.117213159386735,
+        "stages_us": {
+          "arrival": 0.3251327163343104,
+          "control_to_first_read": 1.8821213245391846,
+          "first_read_to_ready": 0.7730190926540261,
+          "ready_to_first_write": 0.3914812382054584,
+          "overlapping_rows": 1.47631270098108,
+          "last_write_response": 0.26308563292282283,
+          "exit_after_write": 0.006060453749854533,
+          "shared_link_floor": 0.0
+        },
+        "active_aiv": 46,
+        "rows_per_core": 4,
+        "state": "first",
+        "row_work_floor_cycles": 522.2217446721421,
+        "gap_cycles": {
+          "read_gap_first": 1330.500304698944,
+          "read_ii": 706.0009002685547,
+          "write_gap_first": 906.4999222755432,
+          "write_ii": 616.9999999999957
+        },
+        "timeline": []
+      }
+    },
+    {
+      "chip": "Ascend950PR_957b",
+      "group": "steady",
+      "i": 1,
+      "role": "repeat",
+      "shape": [
+        181,
+        4,
+        1024
+      ],
+      "prior_aiv": 46,
+      "previous_shape": [
+        181,
+        4,
+        1024
+      ],
+      "old_known_us": 4.930963556675898,
+      "old_unknown_us": 5.54277282845562,
+      "candidate_unknown_us": 3.7596155310148274,
+      "state": "reuse",
+      "predict_ms": 0.0948,
+      "us": 2.971322977640806,
+      "baseline": 4.930963556675898,
+      "active": 46,
+      "mode": "repeat",
+      "plan": {
+        "active_aiv": 46,
+        "active_aic": 0,
+        "route": "post_token",
+        "channel_slices": 1,
+        "fragment_width": 1024,
+        "rows_per_core": 4
+      },
+      "pipeline": {
+        "us": 2.971322977640806,
+        "stages_us": {
+          "arrival": 0.05547503035601223,
+          "control_to_first_read": 0.9345455169677734,
+          "first_read_to_ready": 0.4500598846544786,
+          "ready_to_first_write": 0.39213756994062104,
+          "overlapping_rows": 1.0015125274658203,
+          "last_write_response": 0.13153175172286466,
+          "exit_after_write": 0.006060696533236154,
+          "shared_link_floor": 0.0
+        },
+        "active_aiv": 46,
+        "rows_per_core": 4,
+        "state": "repeat",
+        "row_work_floor_cycles": 522.2217446721421,
+        "gap_cycles": {
+          "read_gap_first": 783.5004329681396,
+          "read_ii": 555.0018310546875,
+          "write_gap_first": 543.4990882873535,
+          "write_ii": 554.498291015625
+        },
+        "timeline": []
+      }
+    },
+    {
+      "chip": "Ascend950PR_957b",
+      "group": "steady",
+      "i": 2,
+      "role": "entry",
+      "shape": [
+        196,
+        4,
+        1536
+      ],
+      "prior_aiv": 46,
+      "previous_shape": [
+        181,
+        4,
+        1024
+      ],
+      "old_known_us": 6.8884281303950905,
+      "old_unknown_us": 6.889541840661456,
+      "candidate_unknown_us": 4.364941841306432,
+      "state": "expand",
+      "predict_ms": 0.08756,
+      "us": 5.2866946306882605,
+      "baseline": 6.8884281303950905,
+      "active": 49,
+      "mode": "expand",
+      "plan": {
+        "active_aiv": 49,
+        "active_aic": 0,
+        "route": "post_token",
+        "channel_slices": 1,
+        "fragment_width": 1536,
+        "rows_per_core": 4
+      },
+      "pipeline": {
+        "us": 5.2866946306882605,
+        "stages_us": {
+          "arrival": 0.6115711344044795,
+          "control_to_first_read": 1.609090606227067,
+          "first_read_to_ready": 0.8164701490525363,
+          "ready_to_first_write": 0.5522304448682792,
+          "overlapping_rows": 1.4242411218331141,
+          "last_write_response": 0.26793965855522156,
+          "exit_after_write": 0.005151515747562563,
+          "shared_link_floor": 0.0
+        },
+        "active_aiv": 49,
+        "rows_per_core": 4,
+        "state": "expand",
+        "row_work_floor_cycles": 783.3326170082132,
+        "gap_cycles": {
+          "read_gap_first": 936.5010738372803,
+          "read_ii": 813.5004043579102,
+          "write_gap_first": 783.3326170082132,
+          "write_ii": 783.3326170082132
+        },
+        "timeline": []
+      }
+    },
+    {
+      "chip": "Ascend950PR_957b",
+      "group": "steady",
+      "i": 3,
+      "role": "repeat",
+      "shape": [
+        196,
+        4,
+        1536
+      ],
+      "prior_aiv": 49,
+      "previous_shape": [
+        196,
+        4,
+        1536
+      ],
+      "old_known_us": 6.26116857171403,
+      "old_unknown_us": 6.889541840661456,
+      "candidate_unknown_us": 4.364941841306432,
+      "state": "reuse",
+      "predict_ms": 0.09117,
+      "us": 3.6366453726746886,
+      "baseline": 6.26116857171403,
+      "active": 49,
+      "mode": "repeat",
+      "plan": {
+        "active_aiv": 49,
+        "active_aic": 0,
+        "route": "post_token",
+        "channel_slices": 1,
+        "fragment_width": 1536,
+        "rows_per_core": 4
+      },
+      "pipeline": {
+        "us": 3.6366453726746886,
+        "stages_us": {
+          "arrival": 0.0563904599098294,
+          "control_to_first_read": 0.9345455169677734,
+          "first_read_to_ready": 0.49465709677569075,
+          "ready_to_first_write": 0.5503865834776338,
+          "overlapping_rows": 1.4242411218331146,
+          "last_write_response": 0.17036389717741013,
+          "exit_after_write": 0.006060696533236154,
+          "shared_link_floor": 0.0
+        },
+        "active_aiv": 49,
+        "rows_per_core": 4,
+        "state": "repeat",
+        "row_work_floor_cycles": 783.3326170082132,
+        "gap_cycles": {
+          "read_gap_first": 783.5004329681396,
+          "read_ii": 783.3326170082132,
+          "write_gap_first": 783.3326170082132,
+          "write_ii": 783.3326170082132
+        },
+        "timeline": []
+      }
+    },
+    {
+      "chip": "Ascend950PR_957b",
+      "group": "width",
+      "i": 0,
+      "role": "entry",
+      "shape": [
+        65,
+        4,
+        320
+      ],
+      "prior_aiv": 0,
+      "previous_shape": null,
+      "old_known_us": 3.868664511095698,
+      "old_unknown_us": 3.0163015069718795,
+      "candidate_unknown_us": 2.6109297887664082,
+      "state": "first",
+      "predict_ms": 0.08871,
+      "us": 3.9009415374293828,
+      "baseline": 3.868664511095698,
+      "active": 33,
+      "mode": "first",
+      "plan": {
+        "active_aiv": 33,
+        "active_aic": 0,
+        "route": "post_token",
+        "channel_slices": 1,
+        "fragment_width": 320,
+        "rows_per_core": 2
+      },
+      "pipeline": {
+        "us": 3.9009415374293828,
+        "stages_us": {
+          "arrival": 0.29692752164920344,
+          "control_to_first_read": 1.8821213245391846,
+          "first_read_to_ready": 0.7116979259873595,
+          "ready_to_first_write": 0.1738888445920658,
+          "overlapping_rows": 0.6205540339888924,
+          "last_write_response": 0.2096914329228228,
+          "exit_after_write": 0.006060453749854533,
+          "shared_link_floor": 0.0
+        },
+        "active_aiv": 33,
+        "rows_per_core": 2,
+        "state": "first",
+        "row_work_floor_cycles": 163.1942952100444,
+        "gap_cycles": {
+          "read_gap_first": 1330.500304698944,
+          "read_ii": 706.0009002685547,
+          "write_gap_first": 906.4999222755432,
+          "write_ii": 616.9999999999957
+        },
+        "timeline": []
+      }
+    },
+    {
+      "chip": "Ascend950PR_957b",
+      "group": "width",
+      "i": 1,
+      "role": "repeat",
+      "shape": [
+        65,
+        4,
+        320
+      ],
+      "prior_aiv": 33,
+      "previous_shape": [
+        65,
+        4,
+        320
+      ],
+      "old_known_us": 2.4717200984675896,
+      "old_unknown_us": 3.0163015069718795,
+      "candidate_unknown_us": 2.6109297887664082,
+      "state": "reuse",
+      "predict_ms": 0.08985,
+      "us": 1.9620836295326651,
+      "baseline": 2.4717200984675896,
+      "active": 33,
+      "mode": "repeat",
+      "plan": {
+        "active_aiv": 33,
+        "active_aic": 0,
+        "route": "post_token",
+        "channel_slices": 1,
+        "fragment_width": 320,
+        "rows_per_core": 2
+      },
+      "pipeline": {
+        "us": 1.9620836295326651,
+        "stages_us": {
+          "arrival": 0.050662583152930124,
+          "control_to_first_read": 0.9345455169677734,
+          "first_read_to_ready": 0.38873871798781195,
+          "ready_to_first_write": 0.17454517632722855,
+          "overlapping_rows": 0.3293933868408203,
+          "last_write_response": 0.07813755172286466,
+          "exit_after_write": 0.006060696533236154,
+          "shared_link_floor": 0.0
+        },
+        "active_aiv": 33,
+        "rows_per_core": 2,
+        "state": "repeat",
+        "row_work_floor_cycles": 163.1942952100444,
+        "gap_cycles": {
+          "read_gap_first": 783.5004329681396,
+          "read_ii": 555.0018310546875,
+          "write_gap_first": 543.4990882873535,
+          "write_ii": 554.498291015625
+        },
+        "timeline": []
+      }
+    },
+    {
+      "chip": "Ascend950PR_957b",
+      "group": "width",
+      "i": 2,
+      "role": "entry",
+      "shape": [
+        121,
+        4,
+        1216
+      ],
+      "prior_aiv": 33,
+      "previous_shape": [
+        65,
+        4,
+        320
+      ],
+      "old_known_us": 5.159979520651636,
+      "old_unknown_us": 5.137931701588145,
+      "candidate_unknown_us": 3.5370095457941524,
+      "state": "expand",
+      "predict_ms": 0.08853,
+      "us": 4.500145865756255,
+      "baseline": 5.159979520651636,
+      "active": 41,
+      "mode": "expand",
+      "plan": {
+        "active_aiv": 41,
+        "active_aic": 0,
+        "route": "post_token",
+        "channel_slices": 1,
+        "fragment_width": 1216,
+        "rows_per_core": 3
+      },
+      "pipeline": {
+        "us": 4.500145865756255,
+        "stages_us": {
+          "arrival": 0.5835607267451955,
+          "control_to_first_read": 1.609090606227067,
+          "first_read_to_ready": 0.7885968914767788,
+          "ready_to_first_write": 0.4533248114076463,
+          "overlapping_rows": 0.8167517465058743,
+          "last_write_response": 0.24366956764613065,
+          "exit_after_write": 0.005151515747562563,
+          "shared_link_floor": 0.0
+        },
+        "active_aiv": 41,
+        "rows_per_core": 3,
+        "state": "expand",
+        "row_work_floor_cycles": 620.1383217981688,
+        "gap_cycles": {
+          "read_gap_first": 936.5010738372803,
+          "read_ii": 813.5004043579102,
+          "write_gap_first": 727.5020599365234,
+          "write_ii": 620.1383217981688
+        },
+        "timeline": []
+      }
+    },
+    {
+      "chip": "Ascend950PR_957b",
+      "group": "width",
+      "i": 3,
+      "role": "repeat",
+      "shape": [
+        121,
+        4,
+        1216
+      ],
+      "prior_aiv": 41,
+      "previous_shape": [
+        121,
+        4,
+        1216
+      ],
+      "old_known_us": 4.532719961970576,
+      "old_unknown_us": 5.137931701588145,
+      "candidate_unknown_us": 3.5370095457941524,
+      "state": "reuse",
+      "predict_ms": 0.08845,
+      "us": 2.8104553586677166,
+      "baseline": 4.532719961970576,
+      "active": 41,
+      "mode": "repeat",
+      "plan": {
+        "active_aiv": 41,
+        "active_aic": 0,
+        "route": "post_token",
+        "channel_slices": 1,
+        "fragment_width": 1216,
+        "rows_per_core": 3
+      },
+      "pipeline": {
+        "us": 2.8104553586677166,
+        "stages_us": {
+          "arrival": 0.05380773538064296,
+          "control_to_first_read": 0.9345455169677734,
+          "first_read_to_ready": 0.4667838391999331,
+          "ready_to_first_write": 0.4514809500170009,
+          "overlapping_rows": 0.7516828143008107,
+          "last_write_response": 0.14609380626831922,
+          "exit_after_write": 0.006060696533236154,
+          "shared_link_floor": 0.0
+        },
+        "active_aiv": 41,
+        "rows_per_core": 3,
+        "state": "repeat",
+        "row_work_floor_cycles": 620.1383217981688,
+        "gap_cycles": {
+          "read_gap_first": 783.5004329681396,
+          "read_ii": 620.1383217981688,
+          "write_gap_first": 620.1383217981688,
+          "write_ii": 620.1383217981688
+        },
+        "timeline": []
+      }
+    },
+    {
+      "chip": "Ascend950PR_957b",
+      "group": "width",
+      "i": 4,
+      "role": "entry",
+      "shape": [
+        65,
+        4,
+        5120
+      ],
+      "prior_aiv": 41,
+      "previous_shape": [
+        121,
+        4,
+        1216
+      ],
+      "old_known_us": 8.707056106458838,
+      "old_unknown_us": 9.353658454241852,
+      "candidate_unknown_us": 6.197110763769569,
+      "state": "reuse",
+      "predict_ms": 0.0897,
+      "us": 6.101021385145361,
+      "baseline": 8.707056106458838,
+      "active": 33,
+      "mode": "reuse",
+      "plan": {
+        "active_aiv": 33,
+        "active_aic": 0,
+        "route": "post_token",
+        "channel_slices": 1,
+        "fragment_width": 5120,
+        "rows_per_core": 2
+      },
+      "pipeline": {
+        "us": 6.101021385145361,
+        "stages_us": {
+          "arrival": 0.3643281515768668,
+          "control_to_first_read": 0.9772729700261883,
+          "first_read_to_ready": 0.9561005168029312,
+          "ready_to_first_write": 1.6616377992480356,
+          "overlapping_rows": 1.5824901353701275,
+          "last_write_response": 0.5549493878787866,
+          "exit_after_write": 0.004242424242425713,
+          "shared_link_floor": 0.0
+        },
+        "active_aiv": 33,
+        "rows_per_core": 2,
+        "state": "reuse",
+        "row_work_floor_cycles": 2611.1087233607104,
+        "gap_cycles": {
+          "read_gap_first": 2611.1087233607104,
+          "read_ii": 2611.1087233607104,
+          "write_gap_first": 2611.1087233607104,
+          "write_ii": 2611.1087233607104
+        },
+        "timeline": []
+      }
+    },
+    {
+      "chip": "Ascend950PR_957b",
+      "group": "width",
+      "i": 5,
+      "role": "repeat",
+      "shape": [
+        65,
+        4,
+        5120
+      ],
+      "prior_aiv": 41,
+      "previous_shape": [
+        65,
+        4,
+        5120
+      ],
+      "old_known_us": 8.707056106458838,
+      "old_unknown_us": 9.353658454241852,
+      "candidate_unknown_us": 6.197110763769569,
+      "state": "reuse",
+      "predict_ms": 0.08846,
+      "us": 5.480915107244194,
+      "baseline": 8.707056106458838,
+      "active": 33,
+      "mode": "repeat",
+      "plan": {
+        "active_aiv": 33,
+        "active_aic": 0,
+        "route": "post_token",
+        "channel_slices": 1,
+        "fragment_width": 5120,
+        "rows_per_core": 2
+      },
+      "pipeline": {
+        "us": 5.480915107244194,
+        "stages_us": {
+          "arrival": 0.050662583152930124,
+          "control_to_first_read": 0.9345455169677734,
+          "first_read_to_ready": 0.8068375816241755,
+          "ready_to_first_write": 1.6581296782367232,
+          "overlapping_rows": 1.5824901353701275,
+          "last_write_response": 0.44218891535922833,
+          "exit_after_write": 0.006060696533236154,
+          "shared_link_floor": 0.0
+        },
+        "active_aiv": 33,
+        "rows_per_core": 2,
+        "state": "repeat",
+        "row_work_floor_cycles": 2611.1087233607104,
+        "gap_cycles": {
+          "read_gap_first": 2611.1087233607104,
+          "read_ii": 2611.1087233607104,
+          "write_gap_first": 2611.1087233607104,
+          "write_ii": 2611.1087233607104
+        },
+        "timeline": []
+      }
+    },
+    {
+      "chip": "Ascend950PR_957b",
+      "group": "many",
+      "i": 0,
+      "role": "entry",
+      "shape": [
+        193,
+        4,
+        896
+      ],
+      "prior_aiv": 0,
+      "previous_shape": null,
+      "old_known_us": 5.995356715544473,
+      "old_unknown_us": 5.204780665519447,
+      "candidate_unknown_us": 3.6970480582542247,
+      "state": "first",
+      "predict_ms": 0.0884,
+      "us": 5.062158793009235,
+      "baseline": 5.995356715544473,
+      "active": 49,
+      "mode": "first",
+      "plan": {
+        "active_aiv": 49,
+        "active_aic": 0,
+        "route": "post_token",
+        "channel_slices": 1,
+        "fragment_width": 896,
+        "rows_per_core": 4
+      },
+      "pipeline": {
+        "us": 5.062158793009235,
+        "stages_us": {
+          "arrival": 0.3304979427350027,
+          "control_to_first_read": 1.8821213245391846,
+          "first_read_to_ready": 0.7618697896237231,
+          "ready_to_first_write": 0.3519189848212052,
+          "overlapping_rows": 1.4763127009810793,
+          "last_write_response": 0.2533775965591864,
+          "exit_after_write": 0.006060453749854533,
+          "shared_link_floor": 0.0
+        },
+        "active_aiv": 49,
+        "rows_per_core": 4,
+        "state": "first",
+        "row_work_floor_cycles": 456.94402658812436,
+        "gap_cycles": {
+          "read_gap_first": 1330.500304698944,
+          "read_ii": 706.0009002685547,
+          "write_gap_first": 906.4999222755432,
+          "write_ii": 616.9999999999957
+        },
+        "timeline": []
+      }
+    },
+    {
+      "chip": "Ascend950PR_957b",
+      "group": "many",
+      "i": 1,
+      "role": "repeat",
+      "shape": [
+        193,
+        4,
+        896
+      ],
+      "prior_aiv": 49,
+      "previous_shape": [
+        193,
+        4,
+        896
+      ],
+      "old_known_us": 4.598412302916365,
+      "old_unknown_us": 5.204780665519447,
+      "candidate_unknown_us": 3.6970480582542247,
+      "state": "reuse",
+      "predict_ms": 0.0908,
+      "us": 2.9118188144164314,
+      "baseline": 4.598412302916365,
+      "active": 49,
+      "mode": "repeat",
+      "plan": {
+        "active_aiv": 49,
+        "active_aic": 0,
+        "route": "post_token",
+        "channel_slices": 1,
+        "fragment_width": 896,
+        "rows_per_core": 4
+      },
+      "pipeline": {
+        "us": 2.9118188144164314,
+        "stages_us": {
+          "arrival": 0.0563904599098294,
+          "control_to_first_read": 0.9345455169677734,
+          "first_read_to_ready": 0.43891058162417557,
+          "ready_to_first_write": 0.3525753165563679,
+          "overlapping_rows": 1.0015125274658203,
+          "last_write_response": 0.12182371535922831,
+          "exit_after_write": 0.006060696533236154,
+          "shared_link_floor": 0.0
+        },
+        "active_aiv": 49,
+        "rows_per_core": 4,
+        "state": "repeat",
+        "row_work_floor_cycles": 456.94402658812436,
+        "gap_cycles": {
+          "read_gap_first": 783.5004329681396,
+          "read_ii": 555.0018310546875,
+          "write_gap_first": 543.4990882873535,
+          "write_ii": 554.498291015625
+        },
+        "timeline": []
+      }
+    },
+    {
+      "chip": "Ascend950PR_957b",
+      "group": "many",
+      "i": 2,
+      "role": "entry",
+      "shape": [
+        449,
+        4,
+        512
+      ],
+      "prior_aiv": 49,
+      "previous_shape": [
+        193,
+        4,
+        896
+      ],
+      "old_known_us": 6.427080607445137,
+      "old_unknown_us": 6.423217630780631,
+      "candidate_unknown_us": 5.4459496933869245,
+      "state": "expand",
+      "predict_ms": 0.08687,
+      "us": 7.115048324781088,
+      "baseline": 6.427080607445137,
+      "active": 50,
+      "mode": "expand",
+      "plan": {
+        "active_aiv": 50,
+        "active_aic": 0,
+        "route": "post_token",
+        "channel_slices": 1,
+        "fragment_width": 512,
+        "rows_per_core": 9
+      },
+      "pipeline": {
+        "us": 7.115048324781088,
+        "stages_us": {
+          "arrival": 0.6147458423009914,
+          "control_to_first_read": 1.609090606227067,
+          "first_read_to_ready": 0.7272757248101122,
+          "ready_to_first_write": 0.23573241779425383,
+          "overlapping_rows": 3.732776850254971,
+          "last_write_response": 0.19027536764613062,
+          "exit_after_write": 0.005151515747562563,
+          "shared_link_floor": 0.0
+        },
+        "active_aiv": 50,
+        "rows_per_core": 9,
+        "state": "expand",
+        "row_work_floor_cycles": 261.11087233607105,
+        "gap_cycles": {
+          "read_gap_first": 936.5010738372803,
+          "read_ii": 813.5004043579102,
+          "write_gap_first": 727.5020599365234,
+          "write_ii": 606.9986343383789
+        },
+        "timeline": []
+      }
+    },
+    {
+      "chip": "Ascend950PR_957b",
+      "group": "many",
+      "i": 3,
+      "role": "repeat",
+      "shape": [
+        449,
+        4,
+        512
+      ],
+      "prior_aiv": 50,
+      "previous_shape": [
+        449,
+        4,
+        512
+      ],
+      "old_known_us": 5.799821048764077,
+      "old_unknown_us": 6.423217630780631,
+      "candidate_unknown_us": 5.4459496933869245,
+      "state": "reuse",
+      "predict_ms": 0.08682,
+      "us": 4.4111506144070995,
+      "baseline": 5.799821048764077,
+      "active": 50,
+      "mode": "repeat",
+      "plan": {
+        "active_aiv": 50,
+        "active_aic": 0,
+        "route": "post_token",
+        "channel_slices": 1,
+        "fragment_width": 512,
+        "rows_per_core": 9
+      },
+      "pipeline": {
+        "us": 4.4111506144070995,
+        "stages_us": {
+          "arrival": 0.0566831866725763,
+          "control_to_first_read": 0.9345455169677734,
+          "first_read_to_ready": 0.4054626725332665,
+          "ready_to_first_write": 0.2338885564036083,
+          "overlapping_rows": 2.6818103790283203,
+          "last_write_response": 0.0926996062683192,
+          "exit_after_write": 0.006060696533236154,
+          "shared_link_floor": 0.0
+        },
+        "active_aiv": 50,
+        "rows_per_core": 9,
+        "state": "repeat",
+        "row_work_floor_cycles": 261.11087233607105,
+        "gap_cycles": {
+          "read_gap_first": 783.5004329681396,
+          "read_ii": 555.0018310546875,
+          "write_gap_first": 543.4990882873535,
+          "write_ii": 554.498291015625
+        },
+        "timeline": []
+      }
+    },
+    {
+      "chip": "Ascend970DT",
+      "group": "boundary",
+      "i": 0,
+      "role": "entry",
+      "shape": [
+        57,
+        4,
+        192
+      ],
+      "prior_aiv": 0,
+      "previous_shape": null,
+      "old_known_us": 4.358489557831575,
+      "old_unknown_us": 2.8250004582636765,
+      "candidate_unknown_us": 2.8250004582636765,
+      "state": "first",
+      "predict_ms": 0.03812,
+      "us": 4.358489557831575,
+      "baseline": 4.358489557831575,
+      "active": 57,
+      "mode": "public channel fallback",
+      "plan": {
+        "active_aiv": 57,
+        "active_aic": 0,
+        "route": "post_channel",
+        "channel_slices": 1,
+        "fragment_width": 192,
+        "rows_per_core": 1
+      }
+    },
+    {
+      "chip": "Ascend970DT",
+      "group": "boundary",
+      "i": 1,
+      "role": "repeat",
+      "shape": [
+        57,
+        4,
+        192
+      ],
+      "prior_aiv": 57,
+      "previous_shape": [
+        57,
+        4,
+        192
+      ],
+      "old_known_us": 2.0897453494249563,
+      "old_unknown_us": 2.8250004582636765,
+      "candidate_unknown_us": 2.8250004582636765,
+      "state": "reuse",
+      "predict_ms": 0.0263,
+      "us": 2.0897453494249563,
+      "baseline": 2.0897453494249563,
+      "active": 57,
+      "mode": "public channel fallback",
+      "plan": {
+        "active_aiv": 57,
+        "active_aic": 0,
+        "route": "post_channel",
+        "channel_slices": 1,
+        "fragment_width": 192,
+        "rows_per_core": 1
+      }
+    },
+    {
+      "chip": "Ascend970DT",
+      "group": "boundary",
+      "i": 2,
+      "role": "entry",
+      "shape": [
+        67,
+        4,
+        384
+      ],
+      "prior_aiv": 57,
+      "previous_shape": [
+        57,
+        4,
+        192
+      ],
+      "old_known_us": 2.5866123388928357,
+      "old_unknown_us": 2.4973062460631485,
+      "candidate_unknown_us": 2.04657294274844,
+      "state": "expand",
+      "predict_ms": 0.10029,
+      "us": 3.084179357963653,
+      "baseline": 2.5866123388928357,
+      "active": 67,
+      "mode": "expand",
+      "plan": {
+        "active_aiv": 67,
+        "active_aic": 0,
+        "route": "post_token",
+        "channel_slices": 1,
+        "fragment_width": 384,
+        "rows_per_core": 1
+      },
+      "pipeline": {
+        "us": 3.084179357963653,
+        "stages_us": {
+          "arrival": 0.6056753399650799,
+          "control_to_first_read": 1.4749997223748115,
+          "first_read_to_ready": 0.6564492199648251,
+          "ready_to_first_write": 0.17681279921471793,
+          "overlapping_rows": 0.0,
+          "last_write_response": 0.16552005367561975,
+          "exit_after_write": 0.004722222768599016,
+          "shared_link_floor": 0.0
+        },
+        "active_aiv": 67,
+        "rows_per_core": 1,
+        "state": "expand",
+        "row_work_floor_cycles": 190.41542156204454,
+        "gap_cycles": {
+          "read_gap_first": 936.5010738372803,
+          "read_ii": 813.5004043579102,
+          "write_gap_first": 727.5020599365234,
+          "write_ii": 606.9986343383789
+        },
+        "timeline": []
+      }
+    },
+    {
+      "chip": "Ascend970DT",
+      "group": "boundary",
+      "i": 3,
+      "role": "repeat",
+      "shape": [
+        67,
+        4,
+        384
+      ],
+      "prior_aiv": 67,
+      "previous_shape": [
+        67,
+        4,
+        384
+      ],
+      "old_known_us": 2.0116244101018643,
+      "old_unknown_us": 2.4973062460631485,
+      "candidate_unknown_us": 2.04657294274844,
+      "state": "reuse",
+      "predict_ms": 0.09097,
+      "us": 1.530721316050577,
+      "baseline": 2.0116244101018643,
+      "active": 67,
+      "mode": "repeat",
+      "plan": {
+        "active_aiv": 67,
+        "active_aic": 0,
+        "route": "post_token",
+        "channel_slices": 1,
+        "fragment_width": 384,
+        "rows_per_core": 1
+      },
+      "pipeline": {
+        "us": 1.530721316050577,
+        "stages_us": {
+          "arrival": 0.05584683294434925,
+          "control_to_first_read": 0.8566667238871256,
+          "first_read_to_ready": 0.3614539220443832,
+          "ready_to_first_write": 0.17512259293995952,
+          "overlapping_rows": 0.0,
+          "last_write_response": 0.07607560574595927,
+          "exit_after_write": 0.005555638488799808,
+          "shared_link_floor": 0.0
+        },
+        "active_aiv": 67,
+        "rows_per_core": 1,
+        "state": "repeat",
+        "row_work_floor_cycles": 190.41542156204454,
+        "gap_cycles": {
+          "read_gap_first": 783.5004329681396,
+          "read_ii": 555.0018310546875,
+          "write_gap_first": 543.4990882873535,
+          "write_ii": 554.498291015625
+        },
+        "timeline": []
+      }
+    },
+    {
+      "chip": "Ascend970DT",
+      "group": "boundary",
+      "i": 4,
+      "role": "entry",
+      "shape": [
+        113,
+        4,
+        768
+      ],
+      "prior_aiv": 67,
+      "previous_shape": [
+        67,
+        4,
+        384
+      ],
+      "old_known_us": 2.811864447359126,
+      "old_unknown_us": 2.734660796091379,
+      "candidate_unknown_us": 2.249912251805253,
+      "state": "expand",
+      "predict_ms": 0.09086,
+      "us": 3.3226163084002542,
+      "baseline": 2.811864447359126,
+      "active": 113,
+      "mode": "expand",
+      "plan": {
+        "active_aiv": 113,
+        "active_aic": 0,
+        "route": "post_token",
+        "channel_slices": 1,
+        "fragment_width": 768,
+        "rows_per_core": 1
+      },
+      "pipeline": {
+        "us": 3.3226163084002542,
+        "stages_us": {
+          "arrival": 0.6809682617561013,
+          "control_to_first_read": 1.4749997223748115,
+          "first_read_to_ready": 0.6871098032981584,
+          "ready_to_first_write": 0.28259914452696494,
+          "overlapping_rows": 0.0,
+          "last_write_response": 0.19221715367561976,
+          "exit_after_write": 0.004722222768599016,
+          "shared_link_floor": 0.0
+        },
+        "active_aiv": 113,
+        "rows_per_core": 1,
+        "state": "expand",
+        "row_work_floor_cycles": 380.8308431240891,
+        "gap_cycles": {
+          "read_gap_first": 936.5010738372803,
+          "read_ii": 813.5004043579102,
+          "write_gap_first": 727.5020599365234,
+          "write_ii": 606.9986343383789
+        },
+        "timeline": []
+      }
+    },
+    {
+      "chip": "Ascend970DT",
+      "group": "boundary",
+      "i": 5,
+      "role": "repeat",
+      "shape": [
+        113,
+        4,
+        768
+      ],
+      "prior_aiv": 113,
+      "previous_shape": [
+        113,
+        4,
+        768
+      ],
+      "old_known_us": 2.236876518568155,
+      "old_unknown_us": 2.734660796091379,
+      "candidate_unknown_us": 2.249912251805253,
+      "state": "reuse",
+      "predict_ms": 0.08911,
+      "us": 1.7008077954576453,
+      "baseline": 2.236876518568155,
+      "active": 113,
+      "mode": "repeat",
+      "plan": {
+        "active_aiv": 113,
+        "active_aic": 0,
+        "route": "post_token",
+        "channel_slices": 1,
+        "fragment_width": 768,
+        "rows_per_core": 1
+      },
+      "pipeline": {
+        "us": 1.7008077954576453,
+        "stages_us": {
+          "arrival": 0.06278928370583733,
+          "control_to_first_read": 0.8566667238871256,
+          "first_read_to_ready": 0.39211450537771647,
+          "ready_to_first_write": 0.2809089382522065,
+          "overlapping_rows": 0.0,
+          "last_write_response": 0.10277270574595929,
+          "exit_after_write": 0.005555638488799808,
+          "shared_link_floor": 0.0
+        },
+        "active_aiv": 113,
+        "rows_per_core": 1,
+        "state": "repeat",
+        "row_work_floor_cycles": 380.8308431240891,
+        "gap_cycles": {
+          "read_gap_first": 783.5004329681396,
+          "read_ii": 555.0018310546875,
+          "write_gap_first": 543.4990882873535,
+          "write_ii": 554.498291015625
+        },
+        "timeline": []
+      }
+    },
+    {
+      "chip": "Ascend970DT",
+      "group": "steady",
+      "i": 0,
+      "role": "entry",
+      "shape": [
+        181,
+        4,
+        1024
+      ],
+      "prior_aiv": 0,
+      "previous_shape": null,
+      "old_known_us": 4.366572068725142,
+      "old_unknown_us": 3.6162932273480726,
+      "candidate_unknown_us": 2.749845339324063,
+      "state": "first",
+      "predict_ms": 0.09184,
+      "us": 3.9514138790079327,
+      "baseline": 4.366572068725142,
+      "active": 91,
+      "mode": "first",
+      "plan": {
+        "active_aiv": 91,
+        "active_aic": 0,
+        "route": "post_token",
+        "channel_slices": 1,
+        "fragment_width": 1024,
+        "rows_per_core": 2
+      },
+      "pipeline": {
+        "us": 3.9514138790079327,
+        "stages_us": {
+          "arrival": 0.3511451882712455,
+          "control_to_first_read": 1.725277880827586,
+          "first_read_to_ready": 0.7086008349328573,
+          "ready_to_first_write": 0.350831531036472,
+          "overlapping_rows": 0.5688411978231513,
+          "last_write_response": 0.24116183017925424,
+          "exit_after_write": 0.005555415937366655,
+          "shared_link_floor": 0.0
+        },
+        "active_aiv": 91,
+        "rows_per_core": 2,
+        "state": "first",
+        "row_work_floor_cycles": 507.77445749878547,
+        "gap_cycles": {
+          "read_gap_first": 1330.500304698944,
+          "read_ii": 706.0009002685547,
+          "write_gap_first": 906.4999222755432,
+          "write_ii": 616.9999999999957
+        },
+        "timeline": []
+      }
+    },
+    {
+      "chip": "Ascend970DT",
+      "group": "steady",
+      "i": 1,
+      "role": "repeat",
+      "shape": [
+        181,
+        4,
+        1024
+      ],
+      "prior_aiv": 91,
+      "previous_shape": [
+        181,
+        4,
+        1024
+      ],
+      "old_known_us": 3.086039690482709,
+      "old_unknown_us": 3.6162932273480726,
+      "candidate_unknown_us": 2.749845339324063,
+      "state": "reuse",
+      "predict_ms": 0.09133,
+      "us": 2.1086384846794988,
+      "baseline": 3.086039690482709,
+      "active": 91,
+      "mode": "repeat",
+      "plan": {
+        "active_aiv": 91,
+        "active_aic": 0,
+        "route": "post_token",
+        "channel_slices": 1,
+        "fragment_width": 1024,
+        "rows_per_core": 2
+      },
+      "pipeline": {
+        "us": 2.1086384846794988,
+        "stages_us": {
+          "arrival": 0.05991334922655191,
+          "control_to_first_read": 0.8566667238871256,
+          "first_read_to_ready": 0.41255489426660535,
+          "ready_to_first_write": 0.35143316846037126,
+          "overlapping_rows": 0.30194393793741864,
+          "last_write_response": 0.12057077241262594,
+          "exit_after_write": 0.005555638488799808,
+          "shared_link_floor": 0.0
+        },
+        "active_aiv": 91,
+        "rows_per_core": 2,
+        "state": "repeat",
+        "row_work_floor_cycles": 507.77445749878547,
+        "gap_cycles": {
+          "read_gap_first": 783.5004329681396,
+          "read_ii": 555.0018310546875,
+          "write_gap_first": 543.4990882873535,
+          "write_ii": 554.498291015625
+        },
+        "timeline": []
+      }
+    },
+    {
+      "chip": "Ascend970DT",
+      "group": "steady",
+      "i": 2,
+      "role": "entry",
+      "shape": [
+        196,
+        4,
+        1536
+      ],
+      "prior_aiv": 91,
+      "previous_shape": [
+        181,
+        4,
+        1024
+      ],
+      "old_known_us": 4.261699908517122,
+      "old_unknown_us": 4.232237502974998,
+      "candidate_unknown_us": 3.0865335670167386,
+      "state": "expand",
+      "predict_ms": 0.09025,
+      "us": 4.051534457077137,
+      "baseline": 4.261699908517122,
+      "active": 98,
+      "mode": "expand",
+      "plan": {
+        "active_aiv": 98,
+        "active_aic": 0,
+        "route": "post_token",
+        "channel_slices": 1,
+        "fragment_width": 1536,
+        "rows_per_core": 2
+      },
+      "pipeline": {
+        "us": 4.051534457077137,
+        "stages_us": {
+          "arrival": 0.6604529718928354,
+          "control_to_first_read": 1.474999722374811,
+          "first_read_to_ready": 0.7484309699648249,
+          "ready_to_first_write": 0.4941718351514588,
+          "overlapping_rows": 0.4231453812489877,
+          "last_write_response": 0.24561135367561976,
+          "exit_after_write": 0.004722222768599016,
+          "shared_link_floor": 0.0
+        },
+        "active_aiv": 98,
+        "rows_per_core": 2,
+        "state": "expand",
+        "row_work_floor_cycles": 761.6616862481782,
+        "gap_cycles": {
+          "read_gap_first": 936.5010738372803,
+          "read_ii": 813.5004043579102,
+          "write_gap_first": 761.6616862481782,
+          "write_ii": 761.6616862481782
+        },
+        "timeline": []
+      }
+    },
+    {
+      "chip": "Ascend970DT",
+      "group": "steady",
+      "i": 3,
+      "role": "repeat",
+      "shape": [
+        196,
+        4,
+        1536
+      ],
+      "prior_aiv": 98,
+      "previous_shape": [
+        196,
+        4,
+        1536
+      ],
+      "old_known_us": 3.686711979726151,
+      "old_unknown_us": 4.232237502974998,
+      "candidate_unknown_us": 3.0865335670167386,
+      "state": "reuse",
+      "predict_ms": 0.0882,
+      "us": 2.448349603465395,
+      "baseline": 3.686711979726151,
+      "active": 98,
+      "mode": "repeat",
+      "plan": {
+        "active_aiv": 98,
+        "active_aic": 0,
+        "route": "post_token",
+        "channel_slices": 1,
+        "fragment_width": 1536,
+        "rows_per_core": 2
+      },
+      "pipeline": {
+        "us": 2.448349603465395,
+        "stages_us": {
+          "arrival": 0.06089765317343896,
+          "control_to_first_read": 0.8566667238871256,
+          "first_read_to_ready": 0.4534356720443832,
+          "ready_to_first_write": 0.4924816288767005,
+          "overlapping_rows": 0.4231453812489877,
+          "last_write_response": 0.1561669057459593,
+          "exit_after_write": 0.005555638488799808,
+          "shared_link_floor": 0.0
+        },
+        "active_aiv": 98,
+        "rows_per_core": 2,
+        "state": "repeat",
+        "row_work_floor_cycles": 761.6616862481782,
+        "gap_cycles": {
+          "read_gap_first": 783.5004329681396,
+          "read_ii": 761.6616862481782,
+          "write_gap_first": 761.6616862481782,
+          "write_ii": 761.6616862481782
+        },
+        "timeline": []
+      }
+    },
+    {
+      "chip": "Ascend970DT",
+      "group": "width",
+      "i": 0,
+      "role": "entry",
+      "shape": [
+        65,
+        4,
+        320
+      ],
+      "prior_aiv": 0,
+      "previous_shape": null,
+      "old_known_us": 3.2546147702665813,
+      "old_unknown_us": 2.4575443983029204,
+      "candidate_unknown_us": 2.015383197455179,
+      "state": "first",
+      "predict_ms": 0.08764,
+      "us": 3.057282813235361,
+      "baseline": 3.2546147702665813,
+      "active": 65,
+      "mode": "first",
+      "plan": {
+        "active_aiv": 65,
+        "active_aic": 0,
+        "route": "post_token",
+        "channel_slices": 1,
+        "fragment_width": 320,
+        "rows_per_core": 1
+      },
+      "pipeline": {
+        "us": 3.057282813235361,
+        "stages_us": {
+          "arrival": 0.3249527061720557,
+          "control_to_first_read": 1.725277880827586,
+          "first_read_to_ready": 0.6523897654884129,
+          "ready_to_first_write": 0.1568898979640192,
+          "overlapping_rows": 0.0,
+          "last_write_response": 0.1922171468459209,
+          "exit_after_write": 0.005555415937366655,
+          "shared_link_floor": 0.0
+        },
+        "active_aiv": 65,
+        "rows_per_core": 1,
+        "state": "first",
+        "row_work_floor_cycles": 158.67951796837045,
+        "gap_cycles": {
+          "read_gap_first": 1330.500304698944,
+          "read_ii": 706.0009002685547,
+          "write_gap_first": 906.4999222755432,
+          "write_ii": 616.9999999999957
+        },
+        "timeline": []
+      }
+    },
+    {
+      "chip": "Ascend970DT",
+      "group": "width",
+      "i": 1,
+      "role": "repeat",
+      "shape": [
+        65,
+        4,
+        320
+      ],
+      "prior_aiv": 65,
+      "previous_shape": [
+        65,
+        4,
+        320
+      ],
+      "old_known_us": 1.9740823920241493,
+      "old_unknown_us": 2.4575443983029204,
+      "candidate_unknown_us": 2.015383197455179,
+      "state": "reuse",
+      "predict_ms": 0.0887,
+      "us": 1.5031281281967273,
+      "baseline": 1.9740823920241493,
+      "active": 65,
+      "mode": "repeat",
+      "plan": {
+        "active_aiv": 65,
+        "active_aic": 0,
+        "route": "post_token",
+        "channel_slices": 1,
+        "fragment_width": 320,
+        "rows_per_core": 1
+      },
+      "pipeline": {
+        "us": 1.5031281281967273,
+        "stages_us": {
+          "arrival": 0.055444316531429894,
+          "control_to_first_read": 0.8566667238871256,
+          "first_read_to_ready": 0.356343824822161,
+          "ready_to_first_write": 0.1574915353879184,
+          "overlapping_rows": 0.0,
+          "last_write_response": 0.0716260890792926,
+          "exit_after_write": 0.005555638488799808,
+          "shared_link_floor": 0.0
+        },
+        "active_aiv": 65,
+        "rows_per_core": 1,
+        "state": "repeat",
+        "row_work_floor_cycles": 158.67951796837045,
+        "gap_cycles": {
+          "read_gap_first": 783.5004329681396,
+          "read_ii": 555.0018310546875,
+          "write_gap_first": 543.4990882873535,
+          "write_ii": 554.498291015625
+        },
+        "timeline": []
+      }
+    },
+    {
+      "chip": "Ascend970DT",
+      "group": "width",
+      "i": 2,
+      "role": "entry",
+      "shape": [
+        121,
+        4,
+        1216
+      ],
+      "prior_aiv": 65,
+      "previous_shape": [
+        65,
+        4,
+        320
+      ],
+      "old_known_us": 3.3112917989489996,
+      "old_unknown_us": 3.8478164273568414,
+      "candidate_unknown_us": 2.8540748108708196,
+      "state": "reuse",
+      "predict_ms": 0.09008,
+      "us": 3.2247011371414214,
+      "baseline": 3.3112917989489996,
+      "active": 61,
+      "mode": "reuse",
+      "plan": {
+        "active_aiv": 61,
+        "active_aic": 0,
+        "route": "post_token",
+        "channel_slices": 1,
+        "fragment_width": 1216,
+        "rows_per_core": 2
+      },
+      "pipeline": {
+        "us": 3.2247011371414214,
+        "stages_us": {
+          "arrival": 0.3926484153516632,
+          "control_to_first_read": 0.8958335558573393,
+          "first_read_to_ready": 0.5647095431804648,
+          "ready_to_first_write": 0.407542118710198,
+          "overlapping_rows": 0.7227955262639777,
+          "last_write_response": 0.23728308888888772,
+          "exit_after_write": 0.003888888888890237,
+          "shared_link_floor": 0.0
+        },
+        "active_aiv": 61,
+        "rows_per_core": 2,
+        "state": "reuse",
+        "row_work_floor_cycles": 602.9821682798078,
+        "gap_cycles": {
+          "read_gap_first": 1349.499999999999,
+          "read_ii": 833.0000000000016,
+          "write_gap_first": 1113.4999999999984,
+          "write_ii": 684.5000000000018
+        },
+        "timeline": []
+      }
+    },
+    {
+      "chip": "Ascend970DT",
+      "group": "width",
+      "i": 3,
+      "role": "repeat",
+      "shape": [
+        121,
+        4,
+        1216
+      ],
+      "prior_aiv": 65,
+      "previous_shape": [
+        121,
+        4,
+        1216
+      ],
+      "old_known_us": 3.3112917989489996,
+      "old_unknown_us": 3.8478164273568414,
+      "candidate_unknown_us": 2.8540748108708196,
+      "state": "reuse",
+      "predict_ms": 0.08968,
+      "us": 2.217944035208999,
+      "baseline": 3.3112917989489996,
+      "active": 61,
+      "mode": "repeat",
+      "plan": {
+        "active_aiv": 61,
+        "active_aic": 0,
+        "route": "post_token",
+        "channel_slices": 1,
+        "fragment_width": 1216,
+        "rows_per_core": 2
+      },
+      "pipeline": {
+        "us": 2.217944035208999,
+        "stages_us": {
+          "arrival": 0.05460072988189851,
+          "control_to_first_read": 0.8566667238871256,
+          "first_read_to_ready": 0.427885185933272,
+          "ready_to_first_write": 0.40432634111649474,
+          "overlapping_rows": 0.33499009348878217,
+          "last_write_response": 0.13391932241262594,
+          "exit_after_write": 0.005555638488799808,
+          "shared_link_floor": 0.0
+        },
+        "active_aiv": 61,
+        "rows_per_core": 2,
+        "state": "repeat",
+        "row_work_floor_cycles": 602.9821682798078,
+        "gap_cycles": {
+          "read_gap_first": 783.5004329681396,
+          "read_ii": 602.9821682798078,
+          "write_gap_first": 602.9821682798078,
+          "write_ii": 602.9821682798078
+        },
+        "timeline": []
+      }
+    },
+    {
+      "chip": "Ascend970DT",
+      "group": "width",
+      "i": 4,
+      "role": "entry",
+      "shape": [
+        65,
+        4,
+        5120
+      ],
+      "prior_aiv": 65,
+      "previous_shape": [
+        121,
+        4,
+        1216
+      ],
+      "old_known_us": 4.789733747852783,
+      "old_unknown_us": 5.354504394121331,
+      "candidate_unknown_us": 4.179709930784515,
+      "state": "reuse",
+      "predict_ms": 0.12892,
+      "us": 4.166603025429001,
+      "baseline": 4.789733747852783,
+      "active": 65,
+      "mode": "reuse",
+      "plan": {
+        "active_aiv": 65,
+        "active_aic": 0,
+        "route": "post_token",
+        "channel_slices": 1,
+        "fragment_width": 5120,
+        "rows_per_core": 1
+      },
+      "pipeline": {
+        "us": 4.166603025429001,
+        "stages_us": {
+          "arrival": 0.39871487200648775,
+          "control_to_first_read": 0.8958335558573395,
+          "first_read_to_ready": 0.8764254737360203,
+          "ready_to_first_write": 1.4830366293847088,
+          "overlapping_rows": 0.0,
+          "last_write_response": 0.5087036055555544,
+          "exit_after_write": 0.003888888888890237,
+          "shared_link_floor": 0.0
+        },
+        "active_aiv": 65,
+        "rows_per_core": 1,
+        "state": "reuse",
+        "row_work_floor_cycles": 2538.872287493927,
+        "gap_cycles": {
+          "read_gap_first": 2538.872287493927,
+          "read_ii": 2538.872287493927,
+          "write_gap_first": 2538.872287493927,
+          "write_ii": 2538.872287493927
+        },
+        "timeline": []
+      }
+    },
+    {
+      "chip": "Ascend970DT",
+      "group": "width",
+      "i": 5,
+      "role": "repeat",
+      "shape": [
+        65,
+        4,
+        5120
+      ],
+      "prior_aiv": 65,
+      "previous_shape": [
+        65,
+        4,
+        5120
+      ],
+      "old_known_us": 4.789733747852783,
+      "old_unknown_us": 5.354504394121331,
+      "candidate_unknown_us": 4.179709930784515,
+      "state": "reuse",
+      "predict_ms": 0.08725,
+      "us": 3.542428486266481,
+      "baseline": 4.789733747852783,
+      "active": 65,
+      "mode": "repeat",
+      "plan": {
+        "active_aiv": 65,
+        "active_aic": 0,
+        "route": "post_token",
+        "channel_slices": 1,
+        "fragment_width": 5120,
+        "rows_per_core": 1
+      },
+      "pipeline": {
+        "us": 3.542428486266481,
+        "stages_us": {
+          "arrival": 0.055444316531429894,
+          "control_to_first_read": 0.8566667238871256,
+          "first_read_to_ready": 0.7396011164888275,
+          "ready_to_first_write": 1.4798208517910054,
+          "overlapping_rows": 0.0,
+          "last_write_response": 0.4053398390792926,
+          "exit_after_write": 0.005555638488799808,
+          "shared_link_floor": 0.0
+        },
+        "active_aiv": 65,
+        "rows_per_core": 1,
+        "state": "repeat",
+        "row_work_floor_cycles": 2538.872287493927,
+        "gap_cycles": {
+          "read_gap_first": 2538.872287493927,
+          "read_ii": 2538.872287493927,
+          "write_gap_first": 2538.872287493927,
+          "write_ii": 2538.872287493927
+        },
+        "timeline": []
+      }
+    },
+    {
+      "chip": "Ascend970DT",
+      "group": "many",
+      "i": 0,
+      "role": "entry",
+      "shape": [
+        193,
+        4,
+        896
+      ],
+      "prior_aiv": 0,
+      "previous_shape": null,
+      "old_known_us": 4.2164039964142805,
+      "old_unknown_us": 3.4615055377827053,
+      "candidate_unknown_us": 2.6922548476962214,
+      "state": "first",
+      "predict_ms": 0.09204,
+      "us": 3.902003016168671,
+      "baseline": 4.2164039964142805,
+      "active": 97,
+      "mode": "first",
+      "plan": {
+        "active_aiv": 97,
+        "active_aic": 0,
+        "route": "post_token",
+        "channel_slices": 1,
+        "fragment_width": 896,
+        "rows_per_core": 2
+      },
+      "pipeline": {
+        "us": 3.902003016168671,
+        "stages_us": {
+          "arrival": 0.35611566831384395,
+          "control_to_first_read": 1.725277880827586,
+          "first_read_to_ready": 0.6983806404884129,
+          "ready_to_first_write": 0.31556941593238963,
+          "overlapping_rows": 0.5688411978231509,
+          "last_write_response": 0.23226279684592088,
+          "exit_after_write": 0.005555415937366655,
+          "shared_link_floor": 0.0
+        },
+        "active_aiv": 97,
+        "rows_per_core": 2,
+        "state": "first",
+        "row_work_floor_cycles": 444.30265031143733,
+        "gap_cycles": {
+          "read_gap_first": 1330.500304698944,
+          "read_ii": 706.0009002685547,
+          "write_gap_first": 906.4999222755432,
+          "write_ii": 616.9999999999957
+        },
+        "timeline": []
+      }
+    },
+    {
+      "chip": "Ascend970DT",
+      "group": "many",
+      "i": 1,
+      "role": "repeat",
+      "shape": [
+        193,
+        4,
+        896
+      ],
+      "prior_aiv": 97,
+      "previous_shape": [
+        193,
+        4,
+        896
+      ],
+      "old_known_us": 2.935871618171849,
+      "old_unknown_us": 3.4615055377827053,
+      "candidate_unknown_us": 2.6922548476962214,
+      "state": "reuse",
+      "predict_ms": 0.0886,
+      "us": 2.0551052186517795,
+      "baseline": 2.935871618171849,
+      "active": 97,
+      "mode": "repeat",
+      "plan": {
+        "active_aiv": 97,
+        "active_aic": 0,
+        "route": "post_token",
+        "channel_slices": 1,
+        "fragment_width": 896,
+        "rows_per_core": 2
+      },
+      "pipeline": {
+        "us": 2.0551052186517795,
+        "stages_us": {
+          "arrival": 0.06076142608069284,
+          "control_to_first_read": 0.8566667238871256,
+          "first_read_to_ready": 0.4023346998221609,
+          "ready_to_first_write": 0.316171053356289,
+          "overlapping_rows": 0.30194393793741864,
+          "last_write_response": 0.11167173907929262,
+          "exit_after_write": 0.005555638488799808,
+          "shared_link_floor": 0.0
+        },
+        "active_aiv": 97,
+        "rows_per_core": 2,
+        "state": "repeat",
+        "row_work_floor_cycles": 444.30265031143733,
+        "gap_cycles": {
+          "read_gap_first": 783.5004329681396,
+          "read_ii": 555.0018310546875,
+          "write_gap_first": 543.4990882873535,
+          "write_ii": 554.498291015625
+        },
+        "timeline": []
+      }
+    },
+    {
+      "chip": "Ascend970DT",
+      "group": "many",
+      "i": 2,
+      "role": "entry",
+      "shape": [
+        449,
+        4,
+        512
+      ],
+      "prior_aiv": 97,
+      "previous_shape": [
+        193,
+        4,
+        896
+      ],
+      "old_known_us": 3.857673239994184,
+      "old_unknown_us": 3.8184534475450604,
+      "candidate_unknown_us": 3.231598661054759,
+      "state": "expand",
+      "predict_ms": 0.08834,
+      "us": 4.375842389931619,
+      "baseline": 3.857673239994184,
+      "active": 113,
+      "mode": "expand",
+      "plan": {
+        "active_aiv": 113,
+        "active_aic": 0,
+        "route": "post_token",
+        "channel_slices": 1,
+        "fragment_width": 512,
+        "rows_per_core": 4
+      },
+      "pipeline": {
+        "us": 4.375842389931619,
+        "stages_us": {
+          "arrival": 0.6809682617561013,
+          "control_to_first_read": 1.4749997223748115,
+          "first_read_to_ready": 0.6666694144092695,
+          "ready_to_first_write": 0.21207491431880018,
+          "overlapping_rows": 1.1619887672950846,
+          "last_write_response": 0.1744190870089531,
+          "exit_after_write": 0.004722222768599016,
+          "shared_link_floor": 0.0
+        },
+        "active_aiv": 113,
+        "rows_per_core": 4,
+        "state": "expand",
+        "row_work_floor_cycles": 253.88722874939273,
+        "gap_cycles": {
+          "read_gap_first": 936.5010738372803,
+          "read_ii": 813.5004043579102,
+          "write_gap_first": 727.5020599365234,
+          "write_ii": 606.9986343383789
+        },
+        "timeline": []
+      }
+    },
+    {
+      "chip": "Ascend970DT",
+      "group": "many",
+      "i": 3,
+      "role": "repeat",
+      "shape": [
+        449,
+        4,
+        512
+      ],
+      "prior_aiv": 113,
+      "previous_shape": [
+        449,
+        4,
+        512
+      ],
+      "old_known_us": 3.282685311203213,
+      "old_unknown_us": 3.8184534475450604,
+      "candidate_unknown_us": 3.231598661054759,
+      "state": "reuse",
+      "predict_ms": 0.08758,
+      "us": 2.5100982598709267,
+      "baseline": 3.282685311203213,
+      "active": 113,
+      "mode": "repeat",
+      "plan": {
+        "active_aiv": 113,
+        "active_aic": 0,
+        "route": "post_token",
+        "channel_slices": 1,
+        "fragment_width": 512,
+        "rows_per_core": 4
+      },
+      "pipeline": {
+        "us": 2.5100982598709267,
+        "stages_us": {
+          "arrival": 0.06278928370583733,
+          "control_to_first_read": 0.8566667238871256,
+          "first_read_to_ready": 0.37167411648882764,
+          "ready_to_first_write": 0.2103847080440419,
+          "overlapping_rows": 0.918053150177002,
+          "last_write_response": 0.0849746390792926,
+          "exit_after_write": 0.005555638488799808,
+          "shared_link_floor": 0.0
+        },
+        "active_aiv": 113,
+        "rows_per_core": 4,
+        "state": "repeat",
+        "row_work_floor_cycles": 253.88722874939273,
+        "gap_cycles": {
+          "read_gap_first": 783.5004329681396,
+          "read_ii": 555.0018310546875,
+          "write_gap_first": 543.4990882873535,
+          "write_ii": 554.498291015625
+        },
+        "timeline": []
+      }
+    }
+  ]
+}

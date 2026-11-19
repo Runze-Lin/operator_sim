@@ -1,0 +1,131 @@
+{
+  "utc": "2026-11-19T16:15:42.912374+00:00",
+  "role": "development, different published release. No replacement of pinned Kimi 26.9.1 data.",
+  "cases": [
+    {
+      "id": "dt-t2-h1-varlen",
+      "shape": [
+        1,
+        2,
+        1,
+        1,
+        128,
+        128
+      ],
+      "metadata": "varlen",
+      "sku": "Ascend950DT_9582",
+      "physical_memory": "hbm3_8000M.ini",
+      "oracle": {
+        "attention": 256,
+        "aqk": 128,
+        "akk": 128,
+        "state_vk": 16384
+      }
+    },
+    {
+      "id": "pr-t2-h1-varlen",
+      "shape": [
+        1,
+        2,
+        1,
+        1,
+        128,
+        128
+      ],
+      "metadata": "varlen",
+      "sku": "Ascend950PR_957b",
+      "physical_memory": "lpddr5_6400M_bailu.ini",
+      "oracle": {
+        "attention": 256,
+        "aqk": 128,
+        "akk": 128,
+        "state_vk": 16384
+      }
+    }
+  ],
+  "published_kda_text": {
+    "ChunkKdaFwd_1abcbd578c0aecb0d613ba7f77626658.o": "c759265a9ab0ea9c453aa8021e16d47ae24e56581efe0974a53a82db8c6fe2f5",
+    "ChunkKdaFwd_3d0869ad99fc0117a05ebce5fc52f4ef.o": "d7d3b5a5bb5337a1abbbf86d3e55236fac247a254090f110b6dae6c34ec5e12b",
+    "ChunkKdaFwd_5e864108d5688e456abb78f238c67b16.o": "d7d3b5a5bb5337a1abbbf86d3e55236fac247a254090f110b6dae6c34ec5e12b",
+    "ChunkKdaFwd_ab840dfc4cfa173688cbf30179316228.o": "4edcd956e29dc1788439bb1a78ab2b3fda53be733b11ef4a89a71c3d2c5a8b05",
+    "ChunkKdaFwd_bdc078c5221f705217d250323b8feb82.o": "4edcd956e29dc1788439bb1a78ab2b3fda53be733b11ef4a89a71c3d2c5a8b05",
+    "ChunkKdaFwd_c4ae0e35839222ca5076179abc74a4f5.o": "e3141a70e45ee442c8e7c89907ddf8fc5ad5c997aad1e082142a5c78c3d4043e",
+    "ChunkKdaFwd_ec37fa71324acfcc6979b4d975461463.o": "c759265a9ab0ea9c453aa8021e16d47ae24e56581efe0974a53a82db8c6fe2f5",
+    "ChunkKdaFwd_fc61fbaf568f8d0a23b644397f403111.o": "e3141a70e45ee442c8e7c89907ddf8fc5ad5c997aad1e082142a5c78c3d4043e"
+  },
+  "builtin_text": {
+    "ChunkKdaFwd_e1f47b7ed74c47416550f45ace82d988.o": "bab4def46047afb93f7e4ef6554da85623b43074611d3ae7f9b466fda83d8329",
+    "ChunkKdaFwd_2abd624f2831d861ffa7ac1b0049c12a.o": "fa936b1653b1ad1682edea6cec5a7342bd1f359738df68ea4b8e893b262bedc2",
+    "ChunkKdaFwd_5fc9a4d54f054c7c0081057a92293b10.o": "247d431053dbef3f328c5f45ddc0d3109db10273451ccfec78f8842a13e74bee",
+    "ChunkKdaFwd_ec5c70105c2ca6873f26879e62efa878.o": "fa936b1653b1ad1682edea6cec5a7342bd1f359738df68ea4b8e893b262bedc2",
+    "ChunkKdaFwd_fa73d2b349dc97ef1ea5da4e484ceccf.o": "d6d3136972a6a6eff562a4933b08d434b937adb0b4fe61018f6ae79181fc9a81",
+    "ChunkKdaFwd_739e9f97dc2733c698e3a00e12fb80ab.o": "bab4def46047afb93f7e4ef6554da85623b43074611d3ae7f9b466fda83d8329",
+    "ChunkKdaFwd_6476ca0e1178d6f9989248428cab5a3c.o": "247d431053dbef3f328c5f45ddc0d3109db10273451ccfec78f8842a13e74bee",
+    "ChunkKdaFwd_c7537eac07b2e805494bc8b22c2da1a4.o": "d6d3136972a6a6eff562a4933b08d434b937adb0b4fe61018f6ae79181fc9a81"
+  },
+  "contract": "B=1,T=2,Hq=Hv=1,K=V=128; cu=[0,2], idx=[0,0]; raw gate and QKV BF16, other fixtures, host sources and math/V1 reference goldens byte-identical to v0.24. New header/lib first; both public symbols must bind to isolated 26.10 wheel. Exactly one released fused ELF plus complete auxiliary windows required.",
+  "gate": "Run DT only. PR may start only if DT passes the registered four goldens, sync, whole-process, release identity, and every physical window. No identical feature repeat.",
+  "budget_seconds": 1200,
+  "budget_bytes": 3221225472,
+  "max_concurrency": 1,
+  "wheel": {
+    "name": "flash_linear_attention_npu_a5-26.10.0-py3-none-manylinux_2_34_aarch64.whl",
+    "digest": "sha256:c31cb92b285e4fe2c5f83697bbfcf2ab937f735c2506f65d76b109d39cc50213",
+    "size": 122550684,
+    "browser_download_url": "https://github.com/flashserve/flash-linear-attention-npu/releases/download/v26.10.0-release/flash_linear_attention_npu_a5-26.10.0-py3-none-manylinux_2_34_aarch64.whl",
+    "id": 750319049
+  },
+  "build": [
+    "bash",
+    "/home/l00925865/operator_sim/scripts/cann-run.sh",
+    "g++",
+    "-std=c++17",
+    "-O2",
+    "-fPIE",
+    "-pie",
+    "/home/l00925865/operator_sim/results/v0.24/kda-v1/raw/kimi-v1-default.cpp",
+    "-I/home/l00925865/operator_sim/results/v0.25/kda-v1/raw/release/fla_npu/opp/vendors/fla_npu_transformer/op_api/include",
+    "-I/home/l00925865/operator_sim/toolchains/cann/9.2.1/cann-9.2.1/include",
+    "-I/home/l00925865/operator_sim/toolchains/cann/9.2.1/cann-9.2.1/include/aclnnop",
+    "-L/home/l00925865/operator_sim/results/v0.25/kda-v1/raw/release/fla_npu/opp/vendors/fla_npu_transformer/op_api/lib",
+    "-Wl,-rpath,/home/l00925865/operator_sim/results/v0.25/kda-v1/raw/release/fla_npu/opp/vendors/fla_npu_transformer/op_api/lib",
+    "-L/home/l00925865/operator_sim/toolchains/cann/9.2.1/cann-9.2.1/lib64",
+    "-Wl,-rpath-link,/home/l00925865/operator_sim/toolchains/cann/9.2.1/cann-9.2.1/lib64",
+    "/home/l00925865/operator_sim/toolchains/envs/cann-9.2.1/lib/libstdc++.so.6",
+    "-lcust_opapi",
+    "-lopapi",
+    "-lnnopbase",
+    "-lascendcl",
+    "-ldl",
+    "-o",
+    "/home/l00925865/operator_sim/results/v0.25/kda-v1/raw/fla26100-v1"
+  ],
+  "sources": {
+    "development/validation/kda_v1_25/verify_candidate.py": "edfe3cd4fa923e0e9ee45b22079f347d7c22f0fcbf7edee8ac136fef8aa55395",
+    "development/validation/kda_v1_25/packages.py": "e22303af5d0b0123ed337a984ad12a3da80127637d0e7d3fddd706914b64ce16",
+    "results/v0.24/kda-v1/register.json": "ce564a7e697a023417d2b2676185718e7b7f05b56f4e77a144b723a9555a672f",
+    "results/v0.24/kda-v1/raw/kimi-v1-default.cpp": "383c382bd6af2e67038e49256e90bfc1c42452efb6f1002e200a46030990e4a8",
+    "results/v0.25/kda-v1/raw/fla26100-v1": "0748f472548e2e166cc478dfe244f29a9801d0e7d95328e6c981e2ae3875fe20",
+    "results/v0.25/kda-v1/packages.json": "e43ce8cea35166a47ecaf84fadcde864f2125d64ab1ed907835f31652e391338",
+    "smoke/extension_kda.cpp": "e0859cda502617c6e76c2cfb0d6da57120a9a3d42f0e63bee192e7a5b3427138",
+    "development/validation/kda_v23/precise_host.hpp": "9aebd0d23d27da2f524a354bcdb6ea65c3990d524195c1a5611b2238520d2057",
+    "development/validation/kda_v1_24/investigate.py": "d715cb2586cedcc5e1b10c86475f44e7c5b1a81067abb610eb3a1cdf30995d0a",
+    "results/v0.24/kda-v1/raw/oracles/2-1/attention.bin": "726b79521c8c3e6149e51f0b88557ce0990e832e992a70b6143270ecb0037385",
+    "results/v0.24/kda-v1/raw/oracles/2-1/aqk.bin": "ccfb43784bc422beca111c098b5a40e13090844e557ca2278b401ea5a74c4d7e",
+    "results/v0.24/kda-v1/raw/oracles/2-1/akk.bin": "ffa123f533271027306f7b0cfdb184ee522803ea83eff4f255ed9728a7436c6f",
+    "results/v0.24/kda-v1/raw/oracles/2-1/state_vk.bin": "a01cf3a3794db6a1cbe302a7a6e847b702cae92b893f940ff3cabcbbf0bd1de3",
+    "results/v0.25/kda-v1/raw/release/fla_npu/opp/vendors/fla_npu_transformer/op_api/lib/libcust_opapi.so": "26c8f25332efdcd76b434c0d2da50bd06a10113a4801ecee1c84a47a146b4209",
+    "results/v0.25/kda-v1/raw/release/fla_npu/opp/vendors/fla_npu_transformer/op_api/include/aclnnop/aclnn_chunk_kda_fwd.h": "1c07e029155af72e8ba169e2ac5427a3f1a47ef97eaa9c19168e3497619ba66b",
+    "results/v0.25/kda-v1/raw/release/fla_npu/opp/vendors/fla_npu_transformer/bin/set_env.bash": "1b1d0e0d6356f990494590bea3e48edf399e4bb86bdc988f529ccec37b18e3cb",
+    "results/v0.25/kda-v1/raw/release/fla_npu/opp/vendors/fla_npu_transformer/version.info": "0718fa82b283051068b67c873caac96f75689c4dae62d16321cf56b0c5398327",
+    "results/v0.25/kda-v1/raw/release/fla_npu/ops/ascendc/_aclnn_ctypes.py": "5b75a990f0cf3d5179f03721039dee9c4fbead71d8f82ac1781fbc8ac9857864",
+    "results/v0.25/kda-v1/raw/release/fla_npu/opp/vendors/fla_npu_transformer/op_impl/ai_core/tbe/kernel/ascend950/chunk_kda_fwd/ChunkKdaFwd_ab840dfc4cfa173688cbf30179316228.o": "0d2f4396cab3cf7d38c70e6a86f53f4fb326456c0f59300d3f3d424e3b7ecddd",
+    "results/v0.25/kda-v1/raw/release/fla_npu/opp/vendors/fla_npu_transformer/op_impl/ai_core/tbe/kernel/ascend950/chunk_kda_fwd/ChunkKdaFwd_5e864108d5688e456abb78f238c67b16.o": "1c2087d30529db71be6cff466966f41445041c46c49e7e41739448b7dac0a34f",
+    "results/v0.25/kda-v1/raw/release/fla_npu/opp/vendors/fla_npu_transformer/op_impl/ai_core/tbe/kernel/ascend950/chunk_kda_fwd/ChunkKdaFwd_bdc078c5221f705217d250323b8feb82.o": "6791afc821d42021a2ebf073726bf26c6501d632f2f1d3fbea4304bd514894d8",
+    "results/v0.25/kda-v1/raw/release/fla_npu/opp/vendors/fla_npu_transformer/op_impl/ai_core/tbe/kernel/ascend950/chunk_kda_fwd/ChunkKdaFwd_c4ae0e35839222ca5076179abc74a4f5.o": "0243907d7bfe9fc9f9f3a8d0e37ceb055711e5193eff45d6be62e6e8f08f4064",
+    "results/v0.25/kda-v1/raw/release/fla_npu/opp/vendors/fla_npu_transformer/op_impl/ai_core/tbe/kernel/ascend950/chunk_kda_fwd/ChunkKdaFwd_3d0869ad99fc0117a05ebce5fc52f4ef.o": "08765532fb46e9429e874209973d604ceae31ff739bece6b0927fd1d45f9aa5e",
+    "results/v0.25/kda-v1/raw/release/fla_npu/opp/vendors/fla_npu_transformer/op_impl/ai_core/tbe/kernel/ascend950/chunk_kda_fwd/ChunkKdaFwd_ec37fa71324acfcc6979b4d975461463.o": "7b8526600c9c3e5ed0ae1fbc804648861264eb80ee7c638fb470088c942710c1",
+    "results/v0.25/kda-v1/raw/release/fla_npu/opp/vendors/fla_npu_transformer/op_impl/ai_core/tbe/kernel/ascend950/chunk_kda_fwd/ChunkKdaFwd_1abcbd578c0aecb0d613ba7f77626658.o": "3360f08761e5d37c8b17c6415a80e82aaedecdf14a3d5f18f40ff6a79735ab59",
+    "results/v0.25/kda-v1/raw/release/fla_npu/opp/vendors/fla_npu_transformer/op_impl/ai_core/tbe/kernel/ascend950/chunk_kda_fwd/ChunkKdaFwd_fc61fbaf568f8d0a23b644397f403111.o": "8884db302893a7f9627ba33c8418246d3deff427d3028130d582011597185bed"
+  }
+}

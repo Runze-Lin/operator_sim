@@ -46,3 +46,27 @@ class StreamTest(TestCase):
         self.assertEqual(stream.preview('rmsnorm',[34,1664]),estimate('rmsnorm',[34,1664],chip=stream.chip))
         stream.reset()
         self.assertEqual(stream.preview('rmsnorm',[34,1664]),estimate('rmsnorm',[34,1664],{'resident_aiv':0},chip=stream.chip))
+
+    def test_known_cube_only_preserves_rms_prefix_on_an_ordered_stream(self):
+        stream = OperatorStream()
+        bias = {'self_shape': [64], 'alpha': 1, 'beta': 1}
+        stream.advance('addmm', [16,64,256], bias, aic_only=True)
+        shape = [2,2944]
+        self.assertEqual(stream.advance('rmsnorm', shape), estimate('rmsnorm', shape, {'resident_aiv':0}))
+        stream.advance('addmm', [16,64,256], bias, aic_only=True)
+        self.assertEqual(stream.preview('rms_norm', shape), estimate('rmsnorm', shape, {'resident_aiv':2}))
+        self.assertEqual(stream.preview('mhc_post', [1,4,128]), estimate('mhc_post', [1,4,128]))
+        with self.assertRaises(ValueError):
+            stream.advance('rmsnorm', [6,1536], aic_only=True)
+        self.assertEqual(stream.advance('rmsnorm', shape), estimate('rmsnorm', shape, {'resident_aiv':2}))
+        stream.advance('matmul', [2048,32,5120])
+        self.assertEqual(stream.preview('rmsnorm', shape), estimate('rmsnorm', shape))
+
+    def test_cube_only_preserves_a_lower_bound_and_forget_clears_it(self):
+        stream = OperatorStream('Ascend950PR_957b')
+        stream.forget_history()
+        stream.advance('rmsnorm', [17,2400])
+        stream.advance('addmm', [16,64,256], {'self_shape':[64]}, aic_only=True)
+        self.assertEqual(stream.preview('rmsnorm', [34,1664]).projection['partial_history']['minimum_resident_aiv'], 17)
+        stream.forget_history()
+        self.assertEqual(stream.preview('rmsnorm', [34,1664]), estimate('rmsnorm', [34,1664], chip=stream.chip))
