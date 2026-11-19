@@ -1,12 +1,12 @@
 {
-  "utc": "2026-11-19T16:47:07.937784+00:00",
+  "utc": "2026-11-19T16:49:58.154571+00:00",
   "shape_query": "BF16 with hRes, N=4",
   "unique_shapes": {
     "Ascend950DT_9582": 5,
-    "Ascend950PR_957b": 3
+    "Ascend950PR_957b": 5
   },
-  "qualified": 14,
-  "receipts": 3,
+  "qualified": 18,
+  "receipts": 4,
   "rows": [
     {
       "chip": "Ascend950DT_9582",
@@ -567,6 +567,166 @@
         "exit_after_write": 0.006060696533236154,
         "shared_link_floor": 0.0
       }
+    },
+    {
+      "chip": "Ascend950PR_957b",
+      "group": "steady",
+      "i": 0,
+      "shape": [
+        181,
+        4,
+        1024
+      ],
+      "prior_aiv": 0,
+      "role": "entry",
+      "known_state": "first",
+      "mode": "first",
+      "active": 46,
+      "ca_aiv": 46,
+      "rows_per_core": 4,
+      "ca_us": 5.570909090909091,
+      "candidate_us": 5.117213159386735,
+      "public_us": 6.327907969304006,
+      "old_shadow_us": 5.247460603569202,
+      "candidate_unknown_us": 3.7596155310148274,
+      "public_unknown_us": 5.54277282845562,
+      "future_us": 3.9514138790079327,
+      "kernel": "MhcPost_59130ccee6717ff2c0f15b485e731162_6",
+      "matched_kernel": true,
+      "trace": "runs/post25/steady-Ascend950PR_957b/profile/OPPROF_20261120003856_KKCTVQJSQQWGIHAO/MhcPost_59130ccee6717ff2c0f15b485e731162_6/0/simulator/trace.json",
+      "hash": "904ca5d68f2323d8c4f55f7cb0d3905def05049c57521b411b0213e5251be4cc",
+      "elements_checked": 741376,
+      "query_ms": 0.08865,
+      "stages": {
+        "arrival": 0.3251327163343104,
+        "control_to_first_read": 1.8821213245391846,
+        "first_read_to_ready": 0.7730190926540261,
+        "ready_to_first_write": 0.3914812382054584,
+        "overlapping_rows": 1.47631270098108,
+        "last_write_response": 0.26308563292282283,
+        "exit_after_write": 0.006060453749854533,
+        "shared_link_floor": 0.0
+      }
+    },
+    {
+      "chip": "Ascend950PR_957b",
+      "group": "steady",
+      "i": 1,
+      "shape": [
+        181,
+        4,
+        1024
+      ],
+      "prior_aiv": 46,
+      "role": "repeat",
+      "known_state": "reuse",
+      "mode": "repeat",
+      "active": 46,
+      "ca_aiv": 46,
+      "rows_per_core": 4,
+      "ca_us": 3.1157575757575757,
+      "candidate_us": 2.971322977640806,
+      "public_us": 4.930963556675898,
+      "old_shadow_us": 4.930963556675898,
+      "candidate_unknown_us": 3.7596155310148274,
+      "public_unknown_us": 5.54277282845562,
+      "future_us": 2.1086384846794988,
+      "kernel": "MhcPost_59130ccee6717ff2c0f15b485e731162_6",
+      "matched_kernel": true,
+      "trace": "runs/post25/steady-Ascend950PR_957b/profile/OPPROF_20261120003856_KKCTVQJSQQWGIHAO/MhcPost_59130ccee6717ff2c0f15b485e731162_6/1/simulator/trace.json",
+      "hash": "9876ccfd8ae0999337d8ab03e5eaf1d22b58b15bf5c5ce86d3c56e50b0568bd3",
+      "elements_checked": 741376,
+      "query_ms": 0.0948,
+      "stages": {
+        "arrival": 0.05547503035601223,
+        "control_to_first_read": 0.9345455169677734,
+        "first_read_to_ready": 0.4500598846544786,
+        "ready_to_first_write": 0.39213756994062104,
+        "overlapping_rows": 1.0015125274658203,
+        "last_write_response": 0.13153175172286466,
+        "exit_after_write": 0.006060696533236154,
+        "shared_link_floor": 0.0
+      }
+    },
+    {
+      "chip": "Ascend950PR_957b",
+      "group": "steady",
+      "i": 2,
+      "shape": [
+        196,
+        4,
+        1536
+      ],
+      "prior_aiv": 46,
+      "role": "entry",
+      "known_state": "expand",
+      "mode": "expand",
+      "active": 49,
+      "ca_aiv": 49,
+      "rows_per_core": 4,
+      "ca_us": 5.2727272727272725,
+      "candidate_us": 5.2866946306882605,
+      "public_us": 6.8884281303950905,
+      "old_shadow_us": 6.8884281303950905,
+      "candidate_unknown_us": 4.364941841306432,
+      "public_unknown_us": 6.889541840661456,
+      "future_us": 4.051534457077137,
+      "kernel": "MhcPost_59130ccee6717ff2c0f15b485e731162_6",
+      "matched_kernel": true,
+      "trace": "runs/post25/steady-Ascend950PR_957b/profile/OPPROF_20261120003856_KKCTVQJSQQWGIHAO/MhcPost_59130ccee6717ff2c0f15b485e731162_6/2/simulator/trace.json",
+      "hash": "2cfdf80a2e77211b13c1eb5ccff218f86d5ab71bf2065b42b4d298d54fe065e1",
+      "elements_checked": 1204224,
+      "query_ms": 0.08756,
+      "stages": {
+        "arrival": 0.6115711344044795,
+        "control_to_first_read": 1.609090606227067,
+        "first_read_to_ready": 0.8164701490525363,
+        "ready_to_first_write": 0.5522304448682792,
+        "overlapping_rows": 1.4242411218331141,
+        "last_write_response": 0.26793965855522156,
+        "exit_after_write": 0.005151515747562563,
+        "shared_link_floor": 0.0
+      }
+    },
+    {
+      "chip": "Ascend950PR_957b",
+      "group": "steady",
+      "i": 3,
+      "shape": [
+        196,
+        4,
+        1536
+      ],
+      "prior_aiv": 49,
+      "role": "repeat",
+      "known_state": "reuse",
+      "mode": "repeat",
+      "active": 49,
+      "ca_aiv": 49,
+      "rows_per_core": 4,
+      "ca_us": 3.8654545454545453,
+      "candidate_us": 3.6366453726746886,
+      "public_us": 6.26116857171403,
+      "old_shadow_us": 6.26116857171403,
+      "candidate_unknown_us": 4.364941841306432,
+      "public_unknown_us": 6.889541840661456,
+      "future_us": 2.448349603465395,
+      "kernel": "MhcPost_59130ccee6717ff2c0f15b485e731162_6",
+      "matched_kernel": true,
+      "trace": "runs/post25/steady-Ascend950PR_957b/profile/OPPROF_20261120003856_KKCTVQJSQQWGIHAO/MhcPost_59130ccee6717ff2c0f15b485e731162_6/3/simulator/trace.json",
+      "hash": "de4069e1b4973cf56fff5ac3f40fc11bc5bf7e87ea79f4f3448d7d98fc35d453",
+      "elements_checked": 1204224,
+      "query_ms": 0.09117,
+      "stages": {
+        "arrival": 0.0563904599098294,
+        "control_to_first_read": 0.9345455169677734,
+        "first_read_to_ready": 0.49465709677569075,
+        "ready_to_first_write": 0.5503865834776338,
+        "overlapping_rows": 1.4242411218331146,
+        "last_write_response": 0.17036389717741013,
+        "exit_after_write": 0.006060696533236154,
+        "shared_link_floor": 0.0
+      }
     }
   ],
   "summary": {
@@ -744,83 +904,83 @@
     "Ascend950PR_957b": {
       "all": {
         "candidate_us": {
-          "n": 6,
-          "wape": 2.387436345597531,
-          "maximum": 6.6708435978774645
+          "n": 10,
+          "wape": 3.5459847886838167,
+          "maximum": 8.144019658527927
         },
         "public_us": {
-          "n": 6,
-          "wape": 16.781401869261902,
-          "maximum": 46.39091683407209
+          "n": 10,
+          "wape": 26.801678558206472,
+          "maximum": 61.97755006786062
         },
         "old_shadow_us": {
-          "n": 6,
-          "wape": 17.572966542547206,
-          "maximum": 46.39091683407209
+          "n": 10,
+          "wape": 25.990367295290113,
+          "maximum": 61.97755006786062
         },
         "candidate_unknown_us": {
-          "n": 6,
-          "wape": 28.32599267054433,
+          "n": 10,
+          "wape": 25.016059776177435,
           "maximum": 33.071568761101815
         },
         "public_unknown_us": {
-          "n": 6,
-          "wape": 31.038583234838264,
-          "maximum": 69.85219165500538
+          "n": 10,
+          "wape": 35.399624515198894,
+          "maximum": 78.23367885060213
         }
       },
       "first": {
         "candidate_us": {
-          "n": 1,
-          "wape": 0.7454730439152307,
-          "maximum": 0.7454730439152307
+          "n": 2,
+          "wape": 5.143264073501361,
+          "maximum": 8.144019658527927
         },
         "public_us": {
-          "n": 1,
-          "wape": 2.5997822232734964,
-          "maximum": 2.5997822232734964
+          "n": 2,
+          "wape": 9.13157326949898,
+          "maximum": 13.588426341945265
         },
         "old_shadow_us": {
-          "n": 1,
-          "wape": 6.3535303223686554,
+          "n": 2,
+          "wape": 6.0280873378801045,
           "maximum": 6.3535303223686554
         },
         "candidate_unknown_us": {
-          "n": 1,
-          "wape": 33.071568761101815,
+          "n": 2,
+          "wape": 32.73980319789084,
           "maximum": 33.071568761101815
         },
         "public_unknown_us": {
-          "n": 1,
-          "wape": 25.24732950927107,
+          "n": 2,
+          "wape": 10.540205250062783,
           "maximum": 25.247329509271065
         }
       },
       "expand": {
         "candidate_us": {
-          "n": 2,
-          "wape": 4.221938864213096,
+          "n": 3,
+          "wape": 2.621610951648439,
           "maximum": 6.6708435978774645
         },
         "public_us": {
-          "n": 2,
-          "wape": 11.154462728365141,
-          "maximum": 15.437367909952021
+          "n": 3,
+          "wape": 19.03596216023634,
+          "maximum": 30.642602473010346
         },
         "old_shadow_us": {
-          "n": 2,
-          "wape": 11.154462728365141,
-          "maximum": 15.437367909952021
+          "n": 3,
+          "wape": 19.03596216023634,
+          "maximum": 30.642602473010346
         },
         "candidate_unknown_us": {
-          "n": 2,
-          "wape": 24.24085810597993,
+          "n": 3,
+          "wape": 21.40007764216501,
           "maximum": 29.70122902073798
         },
         "public_unknown_us": {
-          "n": 2,
-          "wape": 11.644077327317461,
-          "maximum": 17.529977152632327
+          "n": 3,
+          "wape": 19.336106472049632,
+          "maximum": 30.663724564269007
         }
       },
       "reuse": {
@@ -832,29 +992,29 @@
       },
       "repeat": {
         "candidate_us": {
-          "n": 3,
-          "wape": 1.1485534822565768,
-          "maximum": 1.7921784103369622
+          "n": 5,
+          "wape": 3.3288688684875205,
+          "maximum": 5.919334197032981
         },
         "public_us": {
-          "n": 3,
-          "wape": 31.889710593608328,
-          "maximum": 46.39091683407209
+          "n": 5,
+          "wape": 46.654983605447256,
+          "maximum": 61.97755006786062
         },
         "old_shadow_us": {
-          "n": 3,
-          "wape": 31.889710593608328,
-          "maximum": 46.39091683407209
+          "n": 5,
+          "wape": 46.654983605447256,
+          "maximum": 61.97755006786062
         },
         "candidate_unknown_us": {
-          "n": 3,
-          "wape": 30.44387340994038,
+          "n": 5,
+          "wape": 23.13793908871685,
           "maximum": 31.75615842133378
         },
         "public_unknown_us": {
-          "n": 3,
-          "wape": 57.75827110930246,
-          "maximum": 69.85219165500538
+          "n": 5,
+          "wape": 68.31442565417858,
+          "maximum": 78.23367885060213
         }
       },
       "one-row": {
@@ -866,29 +1026,29 @@
       },
       "multi-row": {
         "candidate_us": {
-          "n": 6,
-          "wape": 2.387436345597531,
-          "maximum": 6.6708435978774645
+          "n": 10,
+          "wape": 3.5459847886838167,
+          "maximum": 8.144019658527927
         },
         "public_us": {
-          "n": 6,
-          "wape": 16.781401869261902,
-          "maximum": 46.39091683407209
+          "n": 10,
+          "wape": 26.801678558206472,
+          "maximum": 61.97755006786062
         },
         "old_shadow_us": {
-          "n": 6,
-          "wape": 17.572966542547206,
-          "maximum": 46.39091683407209
+          "n": 10,
+          "wape": 25.990367295290113,
+          "maximum": 61.97755006786062
         },
         "candidate_unknown_us": {
-          "n": 6,
-          "wape": 28.32599267054433,
+          "n": 10,
+          "wape": 25.016059776177435,
           "maximum": 33.071568761101815
         },
         "public_unknown_us": {
-          "n": 6,
-          "wape": 31.038583234838264,
-          "maximum": 69.85219165500538
+          "n": 10,
+          "wape": 35.399624515198894,
+          "maximum": 78.23367885060213
         }
       }
     }
@@ -973,32 +1133,80 @@
       "old_shadow_us": 0.8305416456595196,
       "candidate_unknown_us": 0.8819041770331226,
       "public_unknown_us": 0.8495748548574844
+    },
+    {
+      "shape": [
+        181,
+        4,
+        1024
+      ],
+      "group": "steady",
+      "i": 0,
+      "role": "entry",
+      "ca_us": 0.9215622280243689,
+      "candidate_us": 0.9194317742351895,
+      "public_us": 0.8734896753693485,
+      "old_shadow_us": 0.8960137791061323,
+      "candidate_unknown_us": 0.8976420915862869,
+      "public_unknown_us": 0.8529773962239595
+    },
+    {
+      "shape": [
+        196,
+        4,
+        1536
+      ],
+      "group": "steady",
+      "i": 2,
+      "role": "entry",
+      "ca_us": 0.7501149425287357,
+      "candidate_us": 0.8802504024921345,
+      "public_us": 0.9007577028852107,
+      "old_shadow_us": 0.9007577028852107,
+      "candidate_unknown_us": 0.9889375823738995,
+      "public_unknown_us": 0.9917358486846047
+    },
+    {
+      "shape": [
+        196,
+        4,
+        1536
+      ],
+      "group": "steady",
+      "i": 3,
+      "role": "repeat",
+      "ca_us": 0.9830667920978363,
+      "candidate_us": 0.986185680228069,
+      "public_us": 0.9909978669566387,
+      "old_shadow_us": 0.9909978669566387,
+      "candidate_unknown_us": 0.9889375823738995,
+      "public_unknown_us": 0.9917358486846047
     }
   ],
   "ratio_errors": {
     "candidate_us": {
-      "n": 5,
-      "wape": 9.092368615577191,
+      "n": 8,
+      "wape": 7.582314143898932,
       "maximum": 29.68965106991378
     },
     "public_us": {
-      "n": 5,
-      "wape": 7.379411117851637,
+      "n": 8,
+      "wape": 7.532446504114683,
       "maximum": 25.15945511587749
     },
     "old_shadow_us": {
-      "n": 5,
-      "wape": 7.55724324092131,
+      "n": 8,
+      "wape": 7.322129736263237,
       "maximum": 25.15945511587749
     },
     "candidate_unknown_us": {
-      "n": 5,
-      "wape": 12.797301244614006,
+      "n": 8,
+      "wape": 11.784057016898297,
       "maximum": 56.11377201823823
     },
     "public_unknown_us": {
-      "n": 5,
-      "wape": 12.341283628441555,
+      "n": 8,
+      "wape": 12.216559427435762,
       "maximum": 55.947954637620775
     }
   },
@@ -1114,13 +1322,25 @@
       "raw_bytes": 3934466897,
       "peak_bytes": 7334966429,
       "cpu_seconds": 20719.589999999997
+    },
+    {
+      "sku": "Ascend950PR_957b",
+      "group": "steady",
+      "started_utc": "2026-11-19T16:38:56.596920+00:00",
+      "finished_utc": "2026-11-19T16:48:42.090461+00:00",
+      "seconds": 585.4935504798777,
+      "exit_code": 0,
+      "stop_reason": null,
+      "raw_bytes": 3907585472,
+      "peak_bytes": 7108739618,
+      "cpu_seconds": 19130.53
     }
   ],
   "query": {
     "n": 480,
-    "p50_ms": 0.08938499999999999,
-    "p95_ms": 0.11113,
-    "max_ms": 0.1848,
+    "p50_ms": 0.081765,
+    "p95_ms": 0.09519,
+    "max_ms": 0.40832,
     "first_frozen_max_ms": 0.38416
   }
 }

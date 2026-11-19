@@ -35,7 +35,7 @@ def main():
            '','19 条可计时路线的去重回放含 848 个历史窗和 6 个新 FA 窗；内置 Post、RMS 与 V1 有单独的资格与误差统计。PR Cast/Sigmoid 在 L2 到两倍 L2 容量的两形组仍有 27.60% / 21.53% WAPE。新采集登记了同为 156 MiB 逻辑体量、读写比例不同的 Cast 和 Sigmoid，各在两种 950 上验证。970DT 只给情景外推。[大输入的尾三块](cache/flash-128ki-pr-tail.png) · [新形及冻结参数](cache/freeze.json) · [历史逐形与来源](coverage/report.md)',
            '',f"Pro PR 完整 CA 墙钟 30.28 分钟，FA 六次共 10.42 分钟，RMS 已核验的独立原始及复采进程合计 {sum(c['wall_s'] for c in mixed['cost'])/60:.2f} 分钟。"
            +f"已安装 wheel 的 {perf['predictions']['n']:,} 个常规调用最大 {perf['predictions']['max_ms']:.3f} ms，带流历史的额外调用最大 {max(perf['mixed']['max_ms'],perf['partial']['max_ms']):.3f} ms。"
-           +' Pro B8×256Ki 与全 hidden 长作业继续按预算排队，等待期间不填入误差统计。[安装件基准](wheel-check.json) · [Pro 256k 队列状态](../v0.23/pro-prefill/state.json)',
+           +' Pro B8×256Ki 的 950DT CA 已开始，950PR 排在其后。FA 的另七个新形已冻结，含 29 个本卡头和 Q9/KV32769 的 129 页。[FA 补充登记与当前计分](coverage/supplement/score.json)。未完成窗口留空。[安装件基准](wheel-check.json) · [Pro 256k 队列状态](../v0.23/pro-prefill/state.json)',
            '','[建模方法](../../docs/modeling-strategy.md) · [全模型误差和超限子组](../../docs/error-analysis.md) · [逐形测量与 970 外推](shape-errors.md) · [逐算子流水图](../../docs/pipeline-comparisons.md)']
     (OUT/'changes.md').write_text('\n'.join(lines)+'\n')
 

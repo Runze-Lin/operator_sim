@@ -30,7 +30,7 @@ def main():
     freezes=[OUT/p for p in ['coverage/fa-freeze.json','mixed-stream/independent-freeze.json','mixed-stream/development-freeze.json',
                              'post/freeze.json','kda-v1/registration.json']]
     freezes+=list(sorted(OUT.glob('mixed-stream/recovery-*-freeze.json')))
-    freezes+=[p for p in [OUT/'post/repeat-policy-freeze.json',OUT/'cache/freeze.json'] if p.is_file()]
+    freezes+=[p for p in [OUT/'post/repeat-policy-freeze.json',OUT/'cache/freeze.json',OUT/'coverage/supplement/register.json'] if p.is_file()]
     freezes+=[ROOT/'results/v0.23/pro-prefill/freeze.json',ROOT/'results/v0.24/kda-prefetch/supplement/register.json']
     write(OUT/'model.json',dict(version='0.25.0',freezes=[stamp(p) for p in freezes],sources=[stamp(p) for p in sorted((ROOT/'operator_model').glob('*.py'))],
                                  chips=[stamp(p) for p in sorted((ROOT/'configs/chips').glob('Ascend*.json'))]))
@@ -39,9 +39,9 @@ def main():
         evidence.append(dict(op=op,role=role,chip=chip,shape=shape,model_us=pred,ca_us=ca,
                              signed_pct=100*(pred/ca-1) if pred is not None and ca is not None else None,
                              future_970_us=future,receipt=str(receipt.relative_to(ROOT)),**fields))
-    for r in audit['rows']:
-        if r['role']=='prospective v0.25':
-            add(r['op'],r['role'],r['chip'],r['shape'],r['current_us'],r['ca_us'],r['future_970dt_us'],OUT/'coverage/fa-scores.json',v024_us=r['v024_us'])
+    fa=read(OUT/'coverage/supplement/score.json')
+    for r in fa['rows']:
+        add('fa','冻结后独立 '+r['cohort'],r['sku'],r['shape'],r['candidate'],r['ca'],r['future_us'],ROOT/r['receipt'],v024_us=r['old'])
     for r in mixed['rows']:
         add('rmsnorm','独立，纯 AIC 后，'+r['state'],r['chip'],r['shape'],r['preserve_us'],r['ca_us'],r['future_us'],OUT/'mixed-stream/comparison.json',v024_us=r['public_us'])
     for r in post['rows']:
@@ -76,7 +76,15 @@ def main():
     def a_metric(c,role):
         return next(m['current'] for m in audit['summary'] if m['op']=='fa' and m['sku']==c and m['role']==role)
     row('FA',[f"{m['shapes']} · {m['wape']:.2f}% / {m['max_ape']:.2f}%" for m in [a_metric(DT,'development replay v0.25'),a_metric(PR,'development replay v0.25')]]+['当前资源模型，全部历史回放，40 / 41 窗','回放达标 / 回放达标'])
-    row('FA（新形）',[f"{m['shapes']} · {m['wape']:.2f}% / {m['max_ape']:.2f}%" for m in [a_metric(DT,'prospective v0.25'),a_metric(PR,'prospective v0.25')]]+['冻结后双端三形','样本待补 / 样本待补'],'FA')
+    cells=[]
+    verdict=[]
+    for chip in (DT,PR):
+        group=fa['timing_by_sku'][chip]
+        n=group['shapes']
+        cur=group['metrics']['candidate']
+        cells.append(f"{n} · {cur['wape_pct']:.2f}% / {cur['max_ape_pct']:.2f}%")
+        verdict.append('样本待补' if n<10 else '本组达标' if cur['wape_pct']<=20 and cur['max_ape_pct']<=40 else '超限')
+    row('FA（新形）',cells+['两批前向独立，同一冻结资源模型',' / '.join(verdict)],'FA')
     ks=[kda['metrics'][c]['total']['candidate'] for c in (DT,PR)]
     row('KDA chunk，FLA 26.9.1 三段 V2',[f"{m['n']} · {m['wape']:.2f}% / {m['maximum']:.2f}%" for m in ks]+['两批前向独立，同一冻结模型',' / '.join('本组达标' if m['n']==10 and m['wape']<=20 and m['maximum']<=40 else '见累计进度' for m in ks)])
     for label,verdict in [('Cast BF16→FP32','达标 / 容量组超限'),('Kimi KDA beta Sigmoid','达标 / 容量组超限'),('mHC Sinkhorn','多 token 组超限 / 达标'),('mHC PreSinkhorn','达标 / 多 token 组超限')]:
