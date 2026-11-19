@@ -44,7 +44,7 @@ def phases(file):
 def publish():
     out=OUT/'independent-stage-errors.json'
     previous=read(out) if out.exists() else {}
-    for f in sorted(OUT.glob('holdout-Ascend*.json')):
+    for f in sorted([*OUT.glob('holdout-Ascend*.json'),*OUT.glob('supplement-Ascend*.json')]):
         if f.name in previous:continue
         if read(f)['qualified']:previous[f.name]=phases(f)
     tmp=out.with_suffix('.tmp');tmp.write_text(json.dumps(previous,indent=2)+'\n');tmp.replace(out)

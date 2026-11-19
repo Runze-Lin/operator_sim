@@ -94,7 +94,7 @@ def duration_seconds(op, local_shape, attrs, roofline_us, soc="Ascend950DT_9582"
 | estimated | 当前模型接受这次调用的属性并给出设备时间估计。新 shape 可能没有逐点 CA；适用范围和独立误差见校准报告。 | µs |
 | extrapolated | 目标芯片与参考配置不同，或已显式标记的 shape 外推，例如 KV 超过已完整验证的 128k 的 DT 参考 FA，或 T>256 的 mHC 拆分链兼容路径；显式资源法在 DT 上也返回此状态。 | µs |
 | unsupported | 算子名、目标 SoC、shape 或调用属性未被该路线接受。 | None |
-| unavailable | 有结构模型，缺少可信的完整耗时；例如默认的融合 KDA chunk V1，或仅返回结构的 vLLM HcPost。 | None |
+| unavailable | 有结构模型，缺少可信的完整耗时；例如默认的融合 KDA chunk V1，或实际内核铺开后末片只有 16 列且数值失败的 vLLM HcPost。 | None |
 
 `reason` 给出不可用或显式外推的原因。各模型能识别的外推分支不同；需要精确判别某个输入是否已测时，查[逐 shape 校准结果](error-analysis.md)。`latency_us` 是同一 kernel 的跨核设备指令窗口，串行组合取实际 kernel 窗口之和。调度器单独处理主机发射、设备排队、kernel 间空闲、通信和跨流重叠。后端在 CPU 上计算这个估计的墙钟用于衡量仿真效率，请勿加入设备时间线。
 
@@ -187,4 +187,4 @@ assert candidate == executed
 
 ### 按实际库选择扩展
 
-对于锁定的 FLA 26.9.1 三段 KDA，传 `estimate("kda_chunk", [B,S,H,H,128,128], {"implementation":"fla_26_9_1_v2"}, chip=...)`；每段的工作组、核数、分层字节和耗时见 `projection["target_plan"]["stages"]`。返回状态为 `extrapolated`。对 Flash/Pro 的 batched HcPost，传 `estimate("mhc_post", [1,T,4,D], {"implementation":"vllm_hc_post"}, chip=...)`，可查询工作和目标分核，耗时为 `None`。默认三维 `mhc_post` 对应 CANN 安装包的 `aclnnMhcPost`。对 BF16 RMSNorm，`estimate_rms_history_band([T,D], chip=...).by_resident_aiv_us` 返回各个可区分历史 H 下的场景值。该区间用于敏感性分析；需要一条连续执行轨迹时使用 `OperatorStream`。[KDA V2](examples/kda_chunk.md) · [vLLM HcPost](examples/hc_post_vllm.md) · [RMSNorm](examples/rmsnorm.md)
+对于锁定的 FLA 26.9.1 三段 KDA，传 `estimate("kda_chunk", [B,S,H,H,128,128], {"implementation":"fla_26_9_1_v2"}, chip=...)`；每段的工作组、核数、分层字节和耗时见 `projection["target_plan"]["stages"]`。返回状态为 `extrapolated`。对 Flash/Pro 的 batched HcPost，传 `estimate("mhc_post", [1,T,4,D], {"implementation":"vllm_hc_post"}, chip=...)`，可查询目标分核、有效 FP32 算量、读写字节与双槽竞争后的设备时间。适用 BF16 路径返回 `extrapolated`；真实内核涉及短尾片数值风险或缺少必要资源时，时延为 `None`、工作量仍可用。默认三维 `mhc_post` 对应 CANN 安装包的 `aclnnMhcPost`。对 BF16 RMSNorm，`estimate_rms_history_band([T,D], chip=...).by_resident_aiv_us` 返回各个可区分历史 H 下的场景值。该区间用于敏感性分析；需要一条连续执行轨迹时使用 `OperatorStream`。[KDA V2](examples/kda_chunk.md) · [vLLM HcPost](examples/hc_post_vllm.md) · [RMSNorm](examples/rmsnorm.md)

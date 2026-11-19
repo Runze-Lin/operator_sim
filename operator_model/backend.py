@@ -189,11 +189,20 @@ def _evaluate(op, shape, attrs, soc, chip, dtype, timing_mode='auto'):
         if timing_mode not in ('auto','resource','calibrated'):
             raise ValueError('timing_mode must be auto, resource or calibrated')
         if op == 'mhc_post' and call.get('implementation') == 'vllm_hc_post':
-            from .hc_post_layout import layout
-            work, plan = layout(shape, target, call)
-            return Estimate(None, 'unavailable', 'vLLM aclnnHcPost has verified 950 device windows; latency pricing is pending',
-                            plan['active_aiv'], 0, target.name, work,
-                            {'implementation': 'vllm_hc_post', 'qualification': 'structural', 'target_plan': plan}), raw
+            if timing_mode == 'calibrated':
+                from .hc_post_layout import layout
+                work, plan = layout(shape, target, call)
+                projection = {'implementation': 'vllm_hc_post', 'qualification': 'structural', 'target_plan': plan}
+                return Estimate(None, 'unavailable', 'The vLLM HcPost schedule is experimental',
+                                plan['active_aiv'], 0, target.name, work, projection), raw
+            from .hc_post_timing import resource_hc_post
+            us, work, diag = resource_hc_post(shape, target, call)
+            diag['implementation'] = 'vllm_hc_post'
+            if us is None:
+                return Estimate(None, 'unavailable', ' '.join(diag['warnings']),
+                                diag['active_aiv'], 0, target.name, work, diag), raw
+            return Estimate(us, 'extrapolated', 'Explicit experimental arch35 vLLM HcPost resource model',
+                            diag['active_aiv'], 0, target.name, work, diag, _rates(work, us, target)), raw
         if op == 'kda_chunk' and 'implementation' in call:
             from .kda_fla_v2 import IMPLEMENTATION, resource
             if call['implementation'] != IMPLEMENTATION:

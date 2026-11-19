@@ -1,0 +1,94 @@
+{
+  "shape": [
+    1,
+    9,
+    4,
+    4160
+  ],
+  "chip": "Ascend950PR_957b",
+  "role": "supplement",
+  "api": "aclnnHcPost",
+  "qualified": true,
+  "raw": "results/v0.23/hc-timing/raw/supplement-Ascend950PR_957b-t9-d4160",
+  "cost": {
+    "exit_code": 0,
+    "stop_reason": null,
+    "started_utc": "2026-11-19T15:24:36.258874+00:00",
+    "finished_utc": "2026-11-19T15:25:42.351306+00:00",
+    "seconds": 66.09248457988724,
+    "raw_bytes": 155029552
+  },
+  "registration_sha256": "86444b27f22b4533a003a7ce6265e240c85e5a81085d737022f666533026ed0f",
+  "stage": {
+    "kernel": "HcPost_d2fe6614722b27afa6f8d964c215447e_1",
+    "ca_us": 4.843030455522239,
+    "active_aic": 0,
+    "active_aiv": 9,
+    "windows": {
+      "core2.veccore0": [
+        0.11393928527832031,
+        4.60545492451638
+      ],
+      "core17.veccore1": [
+        0.14545440673828125,
+        4.843030455522239
+      ],
+      "core17.veccore0": [
+        0.13939380645751953,
+        4.566667082719505
+      ],
+      "core16.veccore1": [
+        0.18181800842285156,
+        4.670302870683372
+      ],
+      "core0.veccore0": [
+        0.0,
+        4.743030074052513
+      ],
+      "core16.veccore0": [
+        0.056969642639160156,
+        4.678787711076438
+      ],
+      "core1.veccore1": [
+        0.09151506423950195,
+        4.7630305318161845
+      ],
+      "core1.veccore0": [
+        0.06727266311645508,
+        4.733939650468528
+      ],
+      "core0.veccore1": [
+        0.05515146255493164,
+        4.7987875966355205
+      ]
+    },
+    "trace": "results/v0.23/hc-timing/raw/supplement-Ascend950PR_957b-t9-d4160/profile/OPPROF_20261119232436_EXBEIQFCQUTUFUBF/simulator/trace.json",
+    "trace_sha256": "151a57dd805057a17b50bfc19b3d71cb35507de49f95dcf04c71da74a9eb5f13",
+    "binary_sha256": "4508230c80160f04172e3ff47bff1c4a211459c0d4cd270fb88425289e5deb41",
+    "queue_events": {
+      "SCALAR": 10458,
+      "MTE3": 27,
+      "MTE2": 72,
+      "PUSHQ": 144,
+      "FLOWCTRL": 306,
+      "RVECLP": 468,
+      "RVECSU": 144,
+      "RVECLD": 33372,
+      "RVECEX": 65376,
+      "RVECST": 13932
+    },
+    "mmad": 0,
+    "total_events": 124299
+  },
+  "checks": [
+    "correctness name=output count=149760 bad=0 comparison=bf16_rne_exact"
+  ],
+  "ca_us": 4.843030455522239,
+  "text_sha256": "2a258948267cabc2b70a1dfc1131a92165c9d8e48008f915caa5792bb9c2766b",
+  "bindings": [
+    "2001806:\tbinding file /home/l00925865/operator_sim/results/v0.23/hc-timing/raw/build/host_probe [0] to /home/l00925865/operator_sim/build/hcpost23/vendors/hcpost/op_api/lib/libcust_opapi.so [0]: normal symbol `aclnnHcPostGetWorkspaceSize'",
+    "2001806:\tbinding file /home/l00925865/operator_sim/results/v0.23/hc-timing/raw/build/host_probe [0] to /home/l00925865/operator_sim/build/hcpost23/vendors/hcpost/op_api/lib/libcust_opapi.so [0]: normal symbol `aclnnHcPost'"
+  ],
+  "all_shards_end": true,
+  "chrome_sync_pairs": 18
+}

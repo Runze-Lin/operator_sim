@@ -2,6 +2,8 @@
 
 from hashlib import sha256
 import json
+import os
+import subprocess
 from pathlib import Path
 import re
 import sys
@@ -54,6 +56,13 @@ def controls():
     evidence = {"controls": rows, "qualified_control_interchange": comparison["eligible_for_redirect"],
                 "archive_reference_us": archive["core_envelope_us"]}
     if all(r["qualified"] for r in rows):
+        a_us, b_us = [r["core_us"] for r in rows]
+        archive_us = evidence["archive_reference_us"]
+        evidence["signed_relative_differences"] = {
+            "redirect_vs_fresh": b_us/a_us-1,
+            "redirect_vs_archive": b_us/archive_us-1,
+            "fresh_vs_archive_context_only": a_us/archive_us-1,
+        }
         compare_lanes = []
         a, b = [r["evidence"]["wrapper"] for r in receipts]
         for lane in sorted(a.keys() & b.keys(), key=int):
@@ -101,6 +110,9 @@ def main():
         tm = "N/A" if row["core_us"] is None else f"{row['core_us']:.6f}"
         lines.append(f"| {name} | {tm} | {row['active_aiv']} | {row['golden_elements']} | {row['periodic_file_bytes']/2**20:.2f} | {row['wall_seconds']:.1f} |")
     lines += ["", f"预登记的重定向门槛{'通过' if cmp['eligible_for_redirect'] else '未通过'}。两次短控分别观察到 {rows[0]['names_seen']} 和 {rows[1]['names_seen']} 个周期文件，以写入方式打开的检查结果分别是 {rows[0]['only_write_opens']} 和 {rows[1]['only_write_opens']}。"]
+    if ev.get("signed_relative_differences"):
+        d = ev["signed_relative_differences"]
+        lines.append(f"冻结程序要求重定向对本次全输出及既有全输出的相对窗口差均在 ±5% 内，实测分别 {d['redirect_vs_fresh']*100:+.3f}% 和 {d['redirect_vs_archive']*100:+.3f}%。另列本次全输出对既有全输出 {d['fresh_vs_archive_context_only']*100:+.3f}%，用于观察运行间窗口变动。")
     if ev.get("same_roster_and_blocks"):
         lines += [f"两个完整设备窗均覆盖相同的 64 个核及 block，{ev['exact_equal_lanes']} 个核的开始和结束 tick 均逐项相等。"]
     if rows[0]['native_object_opens'] and rows[0]['native_object_opens'] == rows[1]['native_object_opens']:
@@ -119,13 +131,21 @@ def main():
         lines += ["", "### 完整输入终态", "",
                   f"宿主耗费 {cost['seconds']/3600:.3f} 小时，原始输出 {cost['raw_bytes']/2**30:.3f} GiB。"]
         if full["qualified_core_envelope"]:
+            plotter = Path(__file__).with_name("partial_plot.py")
+            subprocess.run([str(ROOT / "toolchains/envs/cann-9.2.1/bin/python"), str(plotter), str(terminal)],
+                           env={**os.environ, "MPLCONFIGDIR": "/tmp/full-hidden23-mpl"}, check=True)
+            lines += ["", "![上方冻结资源模型，下方完整核集合的 CA wrapper 窗](cast-full-hidden-complete.png)", ""]
             us = full["core_envelope_us"]
             pred = reg["previous_frozen_us"]["v021_before_retry"]["dt"]
             lines.append(f"{full['active_aiv']} 个活动 AIV 提供完整 wrapper 窗，逐项正确 {full['correct_elements']:,}。实测设备窗口 {us:.3f} µs，相对该冻结 DT 预测的有符号差为 {(pred/us-1)*100:+.2f}%。原生采集仍仅覆盖 wrapper 口径。")
         else:
             lines.append(f"完整数值和计时资格未取得。退出码 {cost['exit_code']}，预算终止原因 {cost['stop_reason']}。完整窗及误差 N/A。")
         lines.append("[完整输入回执](v2/flash-retry.json)")
-    (OUT / "report.md").write_text("\n".join(lines) + "\n")
+    if ACTIVE.name == "v3":
+        lines += ["", "首次短控把 102 个宿主线程限制在 16 个 CPU 上，全输出对照触及 900 秒墙钟；随后的未完成重定向对照已保留并中止。新短控保留 nice 19 和全部相同的设备、kernel、输入、数值、计时门槛，使用宿主完整可调度 CPU 集合，以便 CA 线程通过同步屏障。[前次回执](../full-hidden/v2/control-original.json)"]
+    lines += ["", "[同一冻结总时延的逐阶段预算](stage-budgets.json)"]
+    message = "\n".join(lines).replace("(v2/", f"({ACTIVE.name}/") + "\n"
+    (OUT / "report.md").write_text(message)
 
 
 def follow():
@@ -140,7 +160,9 @@ def follow():
 
 
 if __name__ == "__main__":
-    if sys.argv[1:] == ["follow"]:
+    if "v3" in sys.argv[1:]:
+        ACTIVE = OUT / "v3"
+    if "follow" in sys.argv[1:]:
         follow()
     else:
         main()

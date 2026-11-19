@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "implementation": "vllm_hc_post",
+  "source_revision": "c09d3e20b9c45c80b34ae3781440d90904a44023",
+  "kernel_text_sha256": "2a258948267cabc2b70a1dfc1131a92165c9d8e48008f915caa5792bb9c2766b",
+  "freeze_sha256": "7fc0d619cd8bc0263a160c313f642a06a52dcdc622a589f43cc830ac8ab294ee",
+  "calibration_parameters_sha256": "08cfb6ad7136054f5f52e777dc00a1c707d7427e4c7f293020115af66abb565e",
+  "prices": {
+    "vector_reference_ops32_cycle": 255.6818181818182,
+    "first_coeff": 3183,
+    "issue_fanout_per_aiv": 16.654689754689755,
+    "first_vf_admission": 18,
+    "admission_fanout_per_aiv": 11.975468975468974,
+    "warm_dispatch": 46.0,
+    "cast_body": 418.0,
+    "cast_head_overlap": 52.0,
+    "next_head_overlap": 47.0,
+    "triple_slot_release": 2.0,
+    "coeff_issue_gap": 47,
+    "payload_after_coeff": 129,
+    "split_descriptor_extra": 12,
+    "initial_read_issue_gap": 47,
+    "full_read_issue_extra": 2,
+    "second_fragment_issue": 232,
+    "tail_descriptor_extra": 20,
+    "next_row_coeff_issue": 386,
+    "input_ready": 3,
+    "cast_to_write": 4,
+    "return_after_write": 10,
+    "arith_body": {
+      "setup": 75.4,
+      "ticks_per_unit": 26.9
+    },
+    "dma": {
+      "x": {
+        "setup": 702.7878787878788,
+        "ticks_per_unit": 0.10392992424242425
+      },
+      "res": {
+        "setup": 699.6732954545455,
+        "ticks_per_unit": 0.04190757057883523
+      },
+      "write": {
+        "setup": 306.3411458333333,
+        "ticks_per_unit": 0.013982137044270834
+      },
+      "first_x": {
+        "setup": 731.5666666666667,
+        "ticks_per_unit": 0.05162760416666667
+      },
+      "first_res": {
+        "setup": 750.0666666666667,
+        "ticks_per_unit": 0.021940104166666665
+      }
+    }
+  },
+  "min_ub_bytes": 213184,
+  "source": {
+    "prices": "Nine stage-qualified 950DT/PR development windows; development/validation/hc_post_timing23/calibrate.py and results/v0.23/hc-timing/parameters.json. DMA intercepts in core cycles; slopes in cycles/byte. No kernel-duration regression.",
+    "dma_override": "The dominant first residual read and output write give effective reference bytes per cycle = reciprocal of first_res and write slopes. If supplied, target MTE GB/s is per AIV; ratio uses target GB/s / GHz in bytes per cycle. Applies only to byte-dependent terms. Neither reference is an independently measured physical port peak.",
+    "ub": "Source reserves two BF16 x, residual and output queue slots and two FP32 post/comb slots plus one FP32 accumulator. 4096 tile \u00d7 52 bytes, plus 2 \u00d7 (32-byte rounded post + 64-byte comb). Excludes runtime-reserved space.",
+    "scope": "Dense BF16 payload / FP32 coefficients; width must be divisible by 16. A nonzero final tile shorter than 64 elements is excluded after both 950 endpoints failed the numerical golden at a 16-element tail. A different ISA, compiler revision, tiling, residency or bank arrangement requires new evidence."
+  }
+}

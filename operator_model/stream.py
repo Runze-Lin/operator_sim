@@ -9,6 +9,13 @@ from .predictor import ALIASES
 _STATEFUL = {'rmsnorm', 'mhc_post'}
 
 
+def _kernel_family(op, attrs):
+    family = ALIASES.get(op, op) if isinstance(op, str) else None
+    if family == 'mhc_post' and isinstance(attrs, Mapping) and attrs.get('implementation') == 'vllm_hc_post':
+        return 'vllm_hc_post'
+    return family
+
+
 class OperatorStream:
     """Track AIV residency when the order of successfully dispatched calls is known.
 
@@ -28,7 +35,7 @@ class OperatorStream:
 
     def preview(self, op, shape, attrs=None, *, dtype=None):
         """Price a candidate without changing the next call."""
-        family = ALIASES.get(op, op) if isinstance(op, str) else None
+        family = _kernel_family(op, attrs)
         if family not in _STATEFUL or (attrs is not None and not isinstance(attrs, Mapping)):
             return estimate(op, shape, attrs, chip=self.chip, dtype=dtype)
         options = dict(attrs or {})
@@ -47,7 +54,7 @@ class OperatorStream:
         result = self.preview(op, shape, attrs, dtype=dtype)
         if result.latency_us is None:
             return result
-        family = ALIASES.get(op, op)
+        family = _kernel_family(op, attrs)
         explicit = (attrs or {}).get('resident_aiv') if family in _STATEFUL else None
         if explicit is not None:
             self._resident = explicit

@@ -38,6 +38,14 @@ def main():
     for row in read(ROOT/"results/kda-resource23/freeze.json")["predictions"]:
         r=call("kda_chunk",row["shape"],{"implementation":"fla_26_9_1_v2"},row["chip"])
         assert isclose(r.latency_us,row["serialized_device_us"],rel_tol=1e-12)
+    for name in ("holdout-register.json","supplement-register.json"):
+        for row in read(OUT/"hc-timing"/name)["cases"]:
+            for chip, prediction in row["predictions"].items():
+                r=call("mhc_post",row["shape"],{"implementation":"vllm_hc_post"},chip)
+                if 0 < row["shape"][-1] % 4096 < 64:
+                    assert r.status=="unavailable" and r.latency_us is None
+                else:
+                    assert isclose(r.latency_us,prediction["device_us"],rel_tol=1e-12)
     for chip in CHIPS:
         for seq in (32768,131072,262144):
             for op,shape,attrs in [("mhc_post",[1,8*seq,4,5120],{"implementation":"vllm_hc_post"}),

@@ -34,11 +34,6 @@ def draw(file, prefix):
         for idx,tile in enumerate(row['tiles']):
             for key in ['x','res','arith','cast','write']:
                 e=tile[key];actual.append([row_id,idx,tile['width'],key,e['begin'],e['end']])
-    def lane(entries):
-        return [(r,i,w) for r,i,w,k,a,b in entries if k in ('post','x')]
-    # The selected panels have the same local row geometry.
-    lanes=lane(actual)
-    if lanes!=lane(model['bars']):raise ValueError('Different model/CA critical-core workload; choose a different source or explicitly map both profiles')
     factor=1650
     assert abs(rc['ca_us']-data['window_ticks']/factor)<0.001
     record=dict(shape=data['shape'],sku=chip,role=rc['role'],source=str(file.relative_to(ROOT)),
@@ -46,7 +41,28 @@ def draw(file, prefix):
                 lane_order=['local_row','fragment','useful_width','stage','issue_tick','end_tick'],cycles_per_us=factor,
                 zero='earliest instruction on any active core',model=model,ca={'core':name,'first_rvec_tick':critical['first_rvec'],
                 'full_us':rc['ca_us'],'bars':actual,'start_tick':critical['start'],'end_tick':critical['end'],'meta':critical['meta']})
+    if rc['role'] in ('holdout','supplement'):
+        register=OUT/(rc['role']+'-register.json')
+        assert sha(register)==rc['registration_sha256']
+        frozen=next(c['predictions'][chip] for c in read(register)['cases'] if c['chip']==chip and c['shape']==data['shape'])
+        assert model['device_us']==frozen['device_us']
+        record['prediction_register_sha256']=rc['registration_sha256']
     (OUT/(prefix+'.json')).write_text(json.dumps(record,indent=2)+'\n')
+    render(record,prefix)
+
+
+def render(record,prefix):
+    model=record['model'];critical=record['ca'];chip=record['sku']
+    _,t,_,d=record['shape'];factor=record['cycles_per_us']
+    actual=critical['bars'];name=critical['core'];ca_us=critical['full_us']
+    receipt=read(ROOT/record['source'])
+    assert record['trace_sha256']==receipt['stage']['trace_sha256'] and abs(receipt['ca_us']-ca_us)<1e-9
+    assert predict(t,d,chip,timeline=True)==model
+    def lane(entries):
+        return [(r,i,w) for r,i,w,k,a,b in entries if k in ('post','x')]
+    # The selected panels have the same local row geometry.
+    lanes=lane(actual)
+    if lanes!=lane(model['bars']):raise ValueError('Different model/CA critical-core workload; choose a different source or explicitly map both profiles')
     labels=['Row coefficients' if w==0 else f'Fragment {i+1}  ·  {w:,} D' for r,i,w in lanes]
     fig,axs=plt.subplots(2,1,figsize=(13.5,8.3),sharex=True)
     fig.subplots_adjust(left=.18,right=.96,top=.795,bottom=.16,hspace=.48)
@@ -54,9 +70,9 @@ def draw(file, prefix):
     fig.text(.18,.92,f'{model["active_aiv"]} AIVs    ·    BF16 activations / FP32 coefficients    ·    {len(lanes)-1} feature fragments per row',size=12,color='#496273')
     tags={'post':'post / comb (MTE2)','x':'x (MTE2)','res':'residual (MTE2)','arith':'MulAdd VF','cast':'CAST VF','write':'output (MTE3)'}
     fig.legend([Patch(color=COLORS[k]) for k in tags],tags.values(),loc='upper left',bbox_to_anchor=(.175,.894),frameon=False,ncol=6,fontsize=10,columnspacing=1.5,handlelength=1.7)
-    end=max(model['device_us'],rc['ca_us'])
+    end=max(model['device_us'],ca_us)
     xmax=math.ceil(end*1.025/(1 if end<14 else 2))*(1 if end<14 else 2)
-    for ax,bars,title,stop in zip(axs,[model['bars'],actual],['Resource model · critical cohort',f'CA trace · {name} (last to finish)'],[model['device_us'],rc['ca_us']]):
+    for ax,bars,title,stop in zip(axs,[model['bars'],actual],['Resource model · critical cohort',f'CA trace · {name} (last to finish)'],[model['device_us'],ca_us]):
         for row,idx,w,k,begin,finish in bars:
             y=lanes.index((row,idx,w))+OFF[k]
             ax.barh(y,(finish-begin)/factor,left=begin/factor,height=.105 if idx or w else .18,color=COLORS[k],linewidth=0,zorder=3)
@@ -66,8 +82,8 @@ def draw(file, prefix):
         else:
             m=critical['meta']
             ax.barh(-.28,(m['end']-m['begin'])/factor,left=m['begin']/factor,height=.10,color='#899eaa',linewidth=0)
-            ax.axvline(critical['start']/factor,color='#899eaa',lw=.7,ls=':')
-            ax.plot(critical['first_rvec']/factor,1+OFF['arith'],'|',color='black',ms=7,mew=1.25,zorder=4)
+            ax.axvline(critical['start_tick']/factor,color='#899eaa',lw=.7,ls=':')
+            ax.plot(critical['first_rvec_tick']/factor,1+OFF['arith'],'|',color='black',ms=7,mew=1.25,zorder=4)
         for y in range(1,len(lanes)):ax.axhline(y-.5,color='#e5ebef',lw=.65,zorder=0)
         ax.axvline(stop,color='#334e60',dashes=[3,3],lw=1.1,zorder=4)
         ax.set_title(title,loc='left',fontsize=13,weight='bold',pad=9,color='#193342')
@@ -76,7 +92,7 @@ def draw(file, prefix):
         ax.spines[:].set_visible(False);ax.tick_params(length=0,pad=6,labelsize=10)
         ax.grid(axis='x',color='#d5e0e6',lw=.8);ax.set_axisbelow(True)
     axs[-1].set_xlabel('Time since earliest device instruction (µs)',size=12,labelpad=8)
-    delta=(model['device_us']/rc['ca_us']-1)*100
+    delta=(model['device_us']/ca_us-1)*100
     fig.text(.18,.07,f'Full device window   {delta:+.2f}% prediction error.  Colors track issue-to-retirement intervals; overlapping VF descriptors include dispatch.',fontsize=10,color='#405b6a')
     fig.text(.18,.039,'Grey CA segment = 96-byte tiling read.  Black tick = first RVEC child.  Every output CAST converts 16,384 entries, including the short final fragment.',fontsize=9.4,color='#405b6a')
     fig.savefig(OUT/(prefix+'.png'),dpi=140,bbox_inches='tight',facecolor='white')
@@ -85,4 +101,7 @@ def draw(file, prefix):
 
 if __name__=='__main__':
     parser=argparse.ArgumentParser();parser.add_argument('receipt');parser.add_argument('prefix')
-    args=parser.parse_args();draw(Path(args.receipt).resolve(),args.prefix)
+    parser.add_argument('--snapshot',action='store_true',help='redraw from published stage JSON without a local raw trace')
+    args=parser.parse_args();p=Path(args.receipt).resolve()
+    if args.snapshot:render(read(p),args.prefix)
+    else:draw(p,args.prefix)

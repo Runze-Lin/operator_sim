@@ -24,6 +24,12 @@
 
 T=5、两个本地头时，950DT 在 Prepare 低估约 1.49 µs，在 FwdH 高估约 0.98 µs，整窗误差只有 0.55 µs。每列独立计时，竖线标实际 MMAD 发起，下栏保留对应的 MTE、Cube 和 Vector。该样本在模型冻结后采集。[950PR 同形流水](../results/kda-resource23/950pr-t5-holdout-comparison.png) · [公式、计时口径与完整算例](examples/kda_chunk.md)
 
+### 129 个 token 如何串成三次状态更新
+
+![950PR 独立留出，模型与真实最后完成的 workgroup 按 64、64、1 三块对齐](../results/v0.23/kda-multiblock/950pr-t129-h3-fwdh.png)
+
+B=1、H=3，每个头的 128×128 状态沿时间递推，三个头可以并行。上栏按同一个头展开，下栏通过上一次的 GM 写地址和下一次的读地址对齐实际 head 2 的状态链。点线连接同地址的写和读，紫色竖线是六次实际 MMAD。尾块只有一个有效 token，但矩阵指令仍按 16 行计算。FwdH 单段预测 **13.329 µs**，实测 **11.079 µs**。沿着第 2 行能看到下一步使用的权重读在上一步状态产生前就已启动，冻结排程中的部分等待可以重叠。[逐块原始区间与价格](../results/v0.23/kda-multiblock/950pr-t129-h3-fwdh.json) · [KDA 输入与三段设备时间](examples/kda_chunk.md)
+
 ## 同一个 UB 槽何时可以复用
 
 ![上面为三个 UB 块的模型，下面为同一时间轴上 PR 末核的实测读、转换和写](examples/figures/v022-cast-ub-pr.png)
@@ -151,7 +157,7 @@ GMM1 和 GMM2 均用 `[8,256,128,2]`、专家分配 `[1,7]`。GMM1 的两份中�
 | [MoE 路由 Top-K](examples/moe_gating_top_k.md) | PR · 1×384×6 | [路由阶段成本和末核队列](examples/figures/moe_gating_top_k-pr-pipeline.png) |
 | [KDA chunk，融合 V1](examples/kda_chunk.md) | PR · 1×64×2×2×128×128 | [V1 同步失败事件，整窗无合格结果](examples/figures/kda-chunk-pr-event.png) |
 | [KDA chunk，三段 V2](examples/kda_chunk.md) | PR · 1×5×2×2×128×128 | [V2 完整的 PR 独立观测](../results/kda-resource23/950pr-t5-holdout-comparison.png) |
-| [DeepSeek 扩展 HcPost](examples/hc_post_vllm.md) | DT · 1×2×4×16448 | [双槽、五个 D 块和尾片的整块转换](../results/v0.23/hc-timing/dt-16448-timeline.png) |
+| [DeepSeek 扩展 HcPost](examples/hc_post_vllm.md) | DT · 1×2×4×16448 | [双槽、五个 D 块和尾片的整块转换](../results/v0.23/hc-timing/dt-16448-timeline.png) · [独立 33 行×7168 的两片](../results/v0.23/hc-timing/dt-7168-independent.png) |
 
 ### 从仓内数据重画
 

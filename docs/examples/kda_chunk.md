@@ -118,3 +118,9 @@ print(r.status, r.latency_us, r.work["logical_read_bytes"], r.work["logical_writ
 ## 为什么 CA 栏只有失败前的事件
 
 在 950PR 的 BF16 MIX 主核中，退休记录显示 AIC 对同一 M→MTE1 本地事件重复发出 SET，直至停止都没有完整的 MMAD 窗口。图下栏的短段可以定位同步异常，无法用于校准整算子耗时。包内核名、ELF 身份、已退休指令与静态反汇编分别保留；950DT 的 FP16 generic 分支在登记的 25 分钟内报告 116 次重复 SET，涉及 25 个 PC，缺少数值回执与完整设备窗。[二进制、源码版本及跨分派核查](../../results/chunk-recovery/report.md)
+
+最终两份冻结清单共 10 个不同 shape，DT 的 WAPE / 最大为 3.84% / 7.87%，PR 为 2.48% / 6.99%。T=129、H=3 时有三个时间块，DT 与 PR 的 CA 分别为 34.128 和 34.527 µs。十对 DT/PR 比值的 WAPE 为 1.88%，快慢方向只命中 4 对。该误差统计适用于显式三段 V2 的实测域；B8×长上下文仍为外推。[完整逐形设备与指令窗](../../results/kda-v23/mechanisms.md)
+
+![950PR 的 129-token 独立留出，逐块对齐三次状态更新](../../results/v0.23/kda-multiblock/950pr-t129-h3-fwdh.png)
+
+FwdH 在 head 2 的工作组上依次处理 64、64、1 个有效 token。两次 32,768 B 中间状态写入后，下一块的状态读取命中相同 GM 地址。末块 MMAD 的有效行与物理发射几何不同。该段模型 13.329 µs，CA 11.079 µs（+20.3%）；全算子还包含 Prepare 和 Finalize。图只复用已归档的独立窗口。[每一块的真实地址、队列、指令与设备时钟](../../results/v0.23/kda-multiblock/950pr-t129-h3-fwdh.json)

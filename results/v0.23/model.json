@@ -6,7 +6,7 @@
     "operator_model/addmm_v9.py": "cba81374c9abe6991020463b63b5b24d9fc52be917a694471f1c4710aad736d4",
     "operator_model/attention_residual.py": "427d34dc4ca547c89eea0b9f4071446e7567a19348bf87174a8728e62df17f03",
     "operator_model/attention_residual_timing.py": "c0f73f8a7ff8ae7c549a4385ab65d2dcf4e1fd6bcff955247e8565d471e65dd2",
-    "operator_model/backend.py": "a640846cbb9a7f056a12634d0098a008c9f3360c4cb6fcfb31bd37e4dcfe5668",
+    "operator_model/backend.py": "f9b6b4d5a3ced39b998e79de341d3c2c3d08e1674a99fe5791d510a96175aca7",
     "operator_model/ca.py": "150e55d09622a2ae1a96f2dceeb0cd95909124c1655876a976db863388e584ee",
     "operator_model/cast_resource.py": "bd254541550cbda10edd5af5575cab3bfdde443d819b3ba69e36a6827d41a24c",
     "operator_model/chips.py": "b07bf963f537889a87906e08a5123393d9b3c3644a1ae9c250636054cb06bc69",
@@ -25,6 +25,7 @@
     "operator_model/fast_query.py": "e885a4fc425be7f15254d11517745dbf22591188dbe879c8877d321cccb07a07",
     "operator_model/fusion_v8.py": "d8f70aa9f0bbd69f3a1da83ba9abf8039020e8c4f5d7741e942cb6f1ddd020b8",
     "operator_model/hc_post_layout.py": "83fe559e1a895c3502f05cf3016592472bc4b9b1ee8076e27a96d9fea6a8bf76",
+    "operator_model/hc_post_timing.py": "ea0534692c46aae9d4f5d5c3aed5c0baaf959b0fb33f5d2e85db26c309adb912",
     "operator_model/kda_fla_v2.py": "5661941fa214bc16a4f674ae1c4df45d717c6172d0eb990d9bd146ae3d273e83",
     "operator_model/matmul_resource.py": "4ff5f1e2bc2581ed16d609e18900879ccaf1a80f65433de8f85de7e513140b19",
     "operator_model/matmul_v15.py": "c5edb6d59c184f63db0d1208cdec38a79368d4f6eb246cb077ed0faba069fa02",
@@ -59,7 +60,7 @@
     "operator_model/rms_v11.py": "5ef2b57c980d98e7acbd63c1e13b7634b79fa079ffa78164d594ce10ab6a7f93",
     "operator_model/rms_v12.py": "f8637e8dd846b3a23549b0fd05b090a15ce09ad462fff6605b31430559ac9dd2",
     "operator_model/sigmoid_resource.py": "103977a99a86870bf75b092570fee616358aa013ac3c2c34435bb04fe62c4517",
-    "operator_model/stream.py": "96140f0c20e5a7c478f881d3af0f81dd73d6d2f3150af3aa3c26c1828262f922",
+    "operator_model/stream.py": "8417ac2e682ebafec1d1f25d766955b8a3cf1ec4b69a15678bf2f010e4041b1b",
     "operator_model/target_tiling.py": "3b244b8b0a61e3ed6c139123b2c87e1474da2bac3efd647f01e2b82e71a93b4b",
     "operator_model/transfer.py": "af3e04282b93a8939e46db385bfeb25a3216df0b8e21aeae0e5c0f130dfa9a3b",
     "operator_model/vector_memory.py": "c2d2badc3d1de4551544962f0018599ddcb5834469f878a9cfa623a46ed2ca96",
@@ -67,14 +68,19 @@
     "operator_model/vector_v9.py": "fc8dd88a971d79af3144ef6c06660af701b4343d64d0fbeaca73bb598b86ad3f",
     "operator_model/wide_v10.py": "8b89296b26c00dbdc5994ddaca7ce52e15f240309a5d2212b21449a81aa3e292",
     "operator_model/workload.py": "6cd81ea68b14cc628c9960678cf123fec551ce2c04d52b4dfebc388ba0bdeb7b",
-    "MANIFEST.in": "476d6691c3206b7390b6e076422cd38843f61437b600eeaad6a3745ce3fe52df",
+    "MANIFEST.in": "31a37becd81aee578d88bece26d7016311016097d19c81c387b79c7be97d0b3d",
     "pyproject.toml": "9ceaee271338b59ae88909da80816304572662339906ced703911d0757e8ca5e",
     "configs/kda-fla-v2-26.9.1.json": "f4f7167b338838712fee62b021742f2b4c7770cf310485d1d085eee845faea33",
+    "configs/vllm-hc-post-arch35.json": "569e07e29a6cb82f0e90392cffca3d3e5a01ef876ba4bb3b0d05926109787be7",
     "configs/chips/Ascend950DT_9582.json": "54d68c49374f8fab57ae16b05923d7ea2874cc48083e0728bcbc60f467bb71ec",
     "configs/chips/Ascend950PR_957b.json": "2bb5b0b34b8d04e255e24ea5d12c73407ace6bb7154ba6aa603b338fc252ada7",
     "configs/chips/Ascend970DT.json": "837796ec9f3b39888950cfe6f703b63c4bf9ced22a366b66f300f1389a8006f2"
   },
   "base_parameters": "results/v0.22/model.json",
   "kda_prediction_freeze": "results/kda-resource23/freeze.json",
-  "rms_freeze": "results/rms-unknown23/freeze.json"
+  "rms_freeze": "results/rms-unknown23/freeze.json",
+  "hc_prediction_freezes": [
+    "results/v0.23/hc-timing/holdout-register.json",
+    "results/v0.23/hc-timing/supplement-register.json"
+  ]
 }

@@ -1,0 +1,66 @@
+{
+  "shape": [
+    1,
+    2,
+    4,
+    8192
+  ],
+  "chip": "Ascend950PR_957b",
+  "role": "holdout",
+  "api": "aclnnHcPost",
+  "qualified": true,
+  "raw": "results/v0.23/hc-timing/raw/holdout-Ascend950PR_957b-t2-d8192",
+  "cost": {
+    "exit_code": 0,
+    "stop_reason": null,
+    "started_utc": "2026-11-19T15:12:44.026989+00:00",
+    "finished_utc": "2026-11-19T15:13:44.109198+00:00",
+    "seconds": 60.082276719855145,
+    "raw_bytes": 54482054
+  },
+  "registration_sha256": "7fc0d619cd8bc0263a160c313f642a06a52dcdc622a589f43cc830ac8ab294ee",
+  "stage": {
+    "kernel": "HcPost_d2fe6614722b27afa6f8d964c215447e_1",
+    "ca_us": 5.878181460313499,
+    "active_aic": 0,
+    "active_aiv": 2,
+    "windows": {
+      "core16.veccore0": [
+        0.1812119483947754,
+        5.878181460313499
+      ],
+      "core0.veccore0": [
+        0.0,
+        5.859999659471214
+      ]
+    },
+    "trace": "results/v0.23/hc-timing/raw/holdout-Ascend950PR_957b-t2-d8192/profile/OPPROF_20261119231244_YXLMFVJPKOORLVMA/simulator/trace.json",
+    "trace_sha256": "db79109a022e5424e5b7148474bbc795c7e2b4a474e114da478c8f72c143ec0c",
+    "binary_sha256": "4508230c80160f04172e3ff47bff1c4a211459c0d4cd270fb88425289e5deb41",
+    "queue_events": {
+      "SCALAR": 2316,
+      "MTE3": 6,
+      "MTE2": 16,
+      "PUSHQ": 32,
+      "FLOWCTRL": 66,
+      "RVECLP": 104,
+      "RVECSU": 32,
+      "RVECLD": 12456,
+      "RVECEX": 24608,
+      "RVECST": 4104
+    },
+    "mmad": 0,
+    "total_events": 43740
+  },
+  "checks": [
+    "correctness name=output count=65536 bad=0 comparison=bf16_rne_exact"
+  ],
+  "ca_us": 5.878181460313499,
+  "text_sha256": "2a258948267cabc2b70a1dfc1131a92165c9d8e48008f915caa5792bb9c2766b",
+  "bindings": [
+    "1954026:\tbinding file /home/l00925865/operator_sim/results/v0.23/hc-timing/raw/build/host_probe [0] to /home/l00925865/operator_sim/build/hcpost23/vendors/hcpost/op_api/lib/libcust_opapi.so [0]: normal symbol `aclnnHcPostGetWorkspaceSize'",
+    "1954026:\tbinding file /home/l00925865/operator_sim/results/v0.23/hc-timing/raw/build/host_probe [0] to /home/l00925865/operator_sim/build/hcpost23/vendors/hcpost/op_api/lib/libcust_opapi.so [0]: normal symbol `aclnnHcPost'"
+  ],
+  "all_shards_end": true,
+  "chrome_sync_pairs": 4
+}

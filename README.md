@@ -12,7 +12,7 @@
 
 同一 BF16 Matmul [1280,2048,512]，32 个 AIC 分两波计算。沿第一行看，首条 MMAD 在模型中于 4.852 µs 发起，CA 记录为 5.215 µs。到最后一个块的第二页，两者只差 0.031 µs。整窗为 12.449 / 12.219 µs。换成 950PR 后会得到 24 个矩形尾块，模型和库都发出 416 条 MMAD，整窗为 14.027 / 13.218 µs。[Matmul 的计算与逐页偏差](docs/examples/matmul.md) · [同一输入的 DT 与 PR 对照图](docs/examples/figures/matmul-tile-pages-dt-pr.png)
 
-[按算子选流水对照图](docs/pipeline-comparisons.md#按算子打开图)。Vector 可以逐块查看 DynamicMXQuant 的量化值和 scale 两路写回、Cast 的缓冲区复用；CV 融合可以对比 FA 的首次 QK/PV 和长循环间隔，或 KDA 三个 kernel 各自的阶段误差。[Quant](docs/examples/quant.md) · [Cast](docs/examples/cast_bf16_fp32.md) · [FA](docs/examples/fa.md) · [KDA](docs/examples/kda_chunk.md) · [DeepSeek HcPost 的五个通道块](docs/examples/hc_post_vllm.md)
+[按算子选流水对照图](docs/pipeline-comparisons.md#按算子打开图)。Vector 可以逐块查看 DynamicMXQuant 的量化值和 scale 两路写回、Cast 的缓冲区复用；CV 融合可以对比 FA 的首次 QK/PV 和长循环间隔，或 KDA 三个 kernel 各自的阶段误差。[Quant](docs/examples/quant.md) · [Cast](docs/examples/cast_bf16_fp32.md) · [FA](docs/examples/fa.md) · [KDA 的 64+64+1 三块状态流水](results/v0.23/kda-multiblock/950pr-t129-h3-fwdh.png) · [DeepSeek HcPost 的五个通道块](docs/examples/hc_post_vllm.md)
 
 整批 prefill 的每个 rank 可以从模型规格直接查到各算子的输入、输出、dtype 和层号。按每卡 8 条、每条 32k／128k／256k 导出，模型和 CA 都齐备的单元格可以点开看该 shape 的流水。14 张图复用已完成的正式库采集。[DeepSeek V4.1 Flash](docs/workloads/deepseek-flash.md) · [DeepSeek V4 Pro](docs/workloads/deepseek-pro.md) · [Kimi K3](docs/workloads/kimi-k3.md) · [整批 prefill 的模型与 CA 图集](results/v0.23/prefill/README.md)
 
@@ -51,7 +51,7 @@ print(result.latency_us, result.work["cube_ops"], result.work["logical_read_byte
 
 三个模型的 B8 整批与 chunked prefill 输入可直接查每个 rank 的张量形状、dtype、层号和适用的独立 kernel。覆盖每请求 32k、128k、256k，以及 attention TP8 或 DP8、MoE EP8 两种拓扑。[逐模型真实维度与导出器](docs/prefill-shapes.md) · [场景索引](results/v0.20/workloads/index.csv) · [工作负载覆盖](docs/workload-coverage.md)
 
-Kimi 的 FLA 26.9.1 三段 KDA V2 可显式预测阶段耗时、工作量和分核，已在 DT、PR 用新 shape 实测。默认小形使用的融合 V1，完整耗时仍为 `None`。DeepSeek 扩展 `aclnnHcPost` 已支持结构查询。组合路线与组成它的单个 kernel 在同一调用中只计一次。[KDA 冻结模型与 CA 同轴图](docs/examples/kda_chunk.md) · [DeepSeek HcPost](docs/examples/hc_post_vllm.md) 各路线的 dtype、布局和分支限制见[建模方法](docs/modeling-strategy.md)。模型配置、本地 batch、TP/EP 切分和实际路由共同决定输入 shape，见[如何推导每卡 shape](docs/model-configs.md)。
+Kimi 的 FLA 26.9.1 三段 KDA V2 可显式预测阶段耗时、工作量和分核，已在 DT、PR 用新 shape 实测。默认小形使用的融合 V1，完整耗时仍为 `None`。DeepSeek 扩展 `aclnnHcPost` 可显式预测分核、分块与设备耗时；存在数值失败的短尾片仅返回工作量。组合路线与组成它的单个 kernel 在同一调用中只计一次。[KDA 冻结模型与 CA 同轴图](docs/examples/kda_chunk.md) · [DeepSeek HcPost](docs/examples/hc_post_vllm.md) 各路线的 dtype、布局和分支限制见[建模方法](docs/modeling-strategy.md)。模型配置、本地 batch、TP/EP 切分和实际路由共同决定输入 shape，见[如何推导每卡 shape](docs/model-configs.md)。
 
 ## 硬件与计时边界
 
