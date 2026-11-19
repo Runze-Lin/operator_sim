@@ -14,6 +14,8 @@
 
 左栏第一行是 256×256 输出块的第一个 K 页。首条 MMAD 预测在 4.852 µs 发起，CA 在 5.215 µs 发起；到尾块第二页，这个差距缩到 0.031 µs。整窗预测 12.449 µs、CA 12.219 µs。相同输入在 950PR 上，模型与库的 24 个矩形尾块和 416 条 MMAD 全部吻合，耗时 14.027 / 13.218 µs。[DT 逐页偏差](docs/examples/matmul.md#逐页核对偏差) · [PR 新实测流水图](docs/examples/figures/matmul-tile-pages-pr.png)
 
+对于 Vector，同轴图还能检查缓冲区的复用。950PR Cast `[511,5120]` 的第三笔读开始时，第一笔输出尚未写完。950DT RMSNorm 从 `[4,4800]` 到 `[34,1904]`，最后完成的工作从归一化写换成了同一扇区的统计量写。[Cast 三块对照图与地址](docs/examples/cast_bf16_fp32.md) · [RMSNorm 双算例对照图与计算过程](docs/examples/rmsnorm.md)
+
 在真实模型维度上也能逐段核对。Flash 的窄输出投影在 950DT 预测 12.123 µs、CA 为 13.023 µs。两侧都是 640 条 MMAD，实际 kernel 多用了 64 个 AIV，图上可以直接看到末段归并。整批 B8×128k 的 Flash Cast 和 Kimi Sigmoid 分别展开首轮和末轮。[Flash 投影](docs/examples/matmul-prefill.md) · [Flash Cast 两端流水](results/v0.20/large/flash-128ki-tiles.png) · [Kimi beta 两端流水](results/v0.20/newop/long-timelines.md)
 
 需要核对大 prefill 输入时，可直接打开 8 条请求、每条 32k / 128k / 256k 的逐节点张量表，查看本卡 hidden、head、专家工作量及同形 CA 状态。[DeepSeek V4.1 Flash](docs/workloads/deepseek-flash.md) · [DeepSeek V4 Pro](docs/workloads/deepseek-pro.md) · [Kimi K3](docs/workloads/kimi-k3.md)
@@ -45,7 +47,7 @@ print(result.latency_us, result.work["cube_ops"], result.work["logical_read_byte
 
 维护 960、970、980 等架构情景时，每个目标使用一份 JSON，分别填写按位宽区分的两类算力、核数、频率、外存容量和带宽。内置 `Ascend970DT` 情景为 120 Cube / 120 Vector、1.8 GHz、288 GB、14.4 TB/s；其中 16 位 Vector 峰值 110.592 TOP/s 已含双发射。这些是架构假设。调用方通过 `extrapolated` 状态识别外推，并决定是否将其交给事件调度器。[970DT 配置及逐项来源](configs/chips/Ascend970DT.json) · [自定义芯片示例](configs/chips/scenario-example.json) · [字段、单位和返回合同](docs/integration.md)
 
-隔离安装 v0.21 wheel 后，扩大归档覆盖并测试三种芯片的 1,589 个不同输入。单次预测中位 0.114 ms，P95 0.505 ms，最慢 3.950 ms；导入另计 13.86 ms。包括 8×32k 至 8×256k 的模型形状和 KDA chunk 的工作量查询。[扩展归档的各算子开销](results/v0.21/coverage/wheel-check.json) · [首轮冻结的基准](results/v0.21/wheel-check.json) · [本版变化](results/v0.21/changes.md)
+已从隔离安装的 v0.22 wheel 检查三种芯片的独立输入、完整的有序调用，以及每卡 B8×32k／128k／256k 的大 shape。设备预测时间与测量 Python 查询所花的墙钟分别记录。[查询开销、P95 和最大值](results/v0.22/wheel-check.json) · [本版变化与校准](results/v0.22/changes.md)
 
 ## 可预测的算子
 
@@ -57,7 +59,7 @@ print(result.latency_us, result.work["cube_ops"], result.work["logical_read_byte
 
 三个模型的 B8 整批与 chunked prefill 输入可直接查每个 rank 的张量形状、dtype、层号和适用的独立 kernel。覆盖每请求 32k、128k、256k，以及 attention TP8 或 DP8、MoE EP8 两种拓扑。[逐模型真实维度与导出器](docs/prefill-shapes.md) · [场景索引](results/v0.20/workloads/index.csv) · [工作负载覆盖](docs/workload-coverage.md)
 
-KDA chunk 可查询任务结构；其 CA 同步检查尚未通过，系统层应单独处理该路线的耗时。组合路线和组成它的单算子是两种记账粒度，一条路径上只能选一种。各路线的 dtype、布局和分支限制见[建模方法](docs/modeling-strategy.md)。模型配置、本地 batch、TP/EP 切分和实际路由共同决定输入 shape，见[如何推导每卡 shape](docs/model-configs.md)。
+KDA chunk 可查询任务结构。Kimi 默认小形使用的融合 V1 出现重复置位；公开 V2 直接入口在 950DT 有一个完整的三段实测，耗时模型仍待校准。系统层可通过 `latency_us is None` 识别这条路线。[V1 与 V2 校准状态](docs/examples/kda_chunk.md)组合路线和组成它的单算子是两种记账粒度，一条路径上只能选一种。各路线的 dtype、布局和分支限制见[建模方法](docs/modeling-strategy.md)。模型配置、本地 batch、TP/EP 切分和实际路由共同决定输入 shape，见[如何推导每卡 shape](docs/model-configs.md)。
 
 ## 硬件与计时边界
 

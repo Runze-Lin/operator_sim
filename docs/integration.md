@@ -181,3 +181,5 @@ assert candidate == executed
 真实例子是同一流连续派发两次 BF16 mHC Post [3,4,5376]。DT 上 `advance` 两次给出 4.855、2.380 µs，对应 CA 5.370、2.122 µs。只用形状的 `estimate` 两次都给出 3.195 µs；即使换成数学上最优的单一值，这两次的最坏误差仍至少 43.34%。PR 的下界也达到 41.08%。如果系统需要把最大误差控制在 40% 以内，至少要保留能区分这两个执行状态的信息。[两端的预测与 CA 流水图](examples/mhc_post.md)
 
 同形状、同平台、同一 kernel 的两次采集仍可能给出不同设备时间。验收的默认主表向无状态 `estimate` 只传 shape、dtype 和算子属性。已知调用顺序的成绩单列。[同输入实测上下界](../results/v0.21/dispatch/post-identifiability.json)
+
+对于 RMSNorm，前序覆盖已知且每核只执行一个 UB 块时，`projection.timing_diagnostics.lane_schedule` 提供末核通道类型、竞争扇区和获胜的写回路径。可以在相同输入下对 `stream.preview()` 与 `advance()` 核对，只用实际提交的调用推进状态。跨族 Post 的实测表明，直接继承前一算子的活动 AIV 数会把 PR 的 WAPE 从 6.93% 提高到 24.29%。[逐行 RMS 例子](examples/rmsnorm.md) · [混合序列的实测](../results/v0.22/post-stream/report.md)

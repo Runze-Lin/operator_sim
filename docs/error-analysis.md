@@ -1,78 +1,74 @@
 # 算子耗时预测与 CA 校准误差
 
-| 算子 | 950DT 样本 · WAPE / 最大 | 950PR 样本 · WAPE / 最大 | 主表数据角色 | 验收（DT / PR） |
+| 算子 | 950DT 形状数 · WAPE / 最大 | 950PR 形状数 · WAPE / 最大 | 主表数据角色 | 全组验收 DT / PR |
 |---|---:|---:|---|---|
 | DynamicMXQuant | 10 · 4.1% / 8.2% | 10 · 5.2% / 14.1% | 历史冻结合同 | 达标 / 达标 |
 | Matmul | 11 · 5.5% / 9.1% | 11 · 6.4% / 12.6% | 历史冻结合同 | 达标 / 达标 |
 | FA | 10 · 5.0% / 23.1% | 10 · 5.0% / 8.1% | 历史冻结合同 | 达标 / 达标 |
-| RMSNorm | 10 · 11.0% / 27.8% | 10 · 16.4% / 24.0% | v0.21 冻结独立 | 超门槛 / 达标 |
+| RMSNorm | 10 · 11.0% / 27.8% | 10 · 16.4% / 24.0% | v0.21 冻结独立 | 超限 / 达标 |
 | Addmm | 10 · 7.7% / 12.8% | 10 · 5.6% / 13.5% | v0.21 冻结独立 | 达标 / 达标 |
 | Lightning Indexer | 10 · 14.6% / 31.7% | 10 · 11.9% / 26.5% | 历史冻结合同 | 达标 / 达标 |
 | mHC Pre | 10 · 3.0% / 6.1% | 10 · 6.1% / 10.7% | 历史冻结合同 | 达标 / 达标 |
 | mHC Sinkhorn | 10 · 16.5% / 29.2% | 10 · 11.7% / 19.3% | v0.21 冻结独立 | 达标 / 达标 |
-| mHC PreSinkhorn | 8 · 8.8% / 18.3% | 7 · 9.5% / 14.7% | v0.21 冻结独立 | 待验证 / 待验证 |
-| mHC Post | 9 · 26.5% / 42.0% | 8 · 23.9% / 35.4% | v0.21 冻结独立 | 超门槛 / 超门槛 |
+| mHC PreSinkhorn | 10 · 9.5% / 18.3% | 10 · 12.3% / 21.9% | v0.21 冻结独立 | 达标 / 达标 |
+| mHC Post | 10 · 25.7% / 42.0% | 10 · 22.9% / 35.4% | v0.21 冻结独立 | 超限 / 超限 |
 | mHC 拆分链 | 10 · 2.3% / 5.0% | 10 · 4.2% / 9.4% | 历史冻结合同 | 达标 / 达标 |
 | KDA recurrent | 10 · 7.9% / 17.5% | 10 · 4.3% / 10.4% | 历史冻结合同 | 达标 / 达标 |
-| KDA chunk | 0 · N/A | 0 · N/A | 无合格耗时 | 缺完整 CA / 缺完整 CA |
+| KDA chunk | 0 · N/A | 0 · N/A | V1 未校准；另有 DT V2 实测 1 形 | V2 待建模 / 缺完整 CA |
 | GMM1–SwiGLU–MXQuant | 10 · 10.6% / 32.7% | 10 · 10.8% / 34.8% | 历史冻结合同 | 达标 / 达标 |
 | MoE GMM2 | 10 · 9.5% / 26.9% | 10 · 7.9% / 20.6% | 历史冻结合同 | 达标 / 达标 |
 | MoE FFN 组合 | 10 · 7.3% / 23.0% | 10 · 7.8% / 23.6% | 历史冻结合同 | 达标 / 达标 |
 | MoE sigmoid Top-K | 10 · 9.1% / 16.2% | 10 · 5.7% / 11.0% | 历史冻结合同 | 达标 / 达标 |
-| Cast BF16→FP32 | 10 · 10.2% / 22.3% | 10 · 6.7% / 22.5% | v0.21 冻结独立 | 达标 / 达标 |
+| Cast BF16→FP32 | 10 · 5.2% / 17.1% | 10 · 11.8% / 19.8% | 双槽冻结后独立 | 达标 / 达标 |
 | Kimi KDA beta Sigmoid | 10 · 5.6% / 12.9% | 10 · 17.7% / 27.0% | v0.21 冻结独立 | 达标 / 达标 |
 | Kimi AttnResFwd | 10 · 4.4% / 8.1% | 10 · 4.5% / 9.5% | v0.21 冻结独立 | 达标 / 达标 |
 
-每一格独立核对 WAPE＝Σ|预测−CA|/ΣCA ≤20%，以及 max＝max(|预测−CA|/CA) ≤40%。未满十个不同 shape 时，已完成的结果只表示进度。旧留出一旦用于开发即转作回放；历史回放超限会保留在验收结论。组合算子按该合同中串行 kernel 的设备窗口相加，排除宿主间隙。970DT 始终为配置外推。
+主表通过公开 `estimate` 计算每卡 shape 和调用属性的点估计。每组 WAPE＝Σ|预测−CA|/ΣCA，最大误差＝max |预测/CA−1|。验收要求两者分别 ≤20% 和 ≤40%，每端主验证含至少十种 shape；任一跟踪组超限都保留。Cast 的早期四对转入回放，见下表和逐行数据。通过了数值检查且全核指令窗完整，才纳入 CA 耗时。
 
-[逐 shape 的三芯片结果与误差](../results/v0.21/shape-errors.md) · [同形 DT/PR 加速比与旧版](../results/v0.21/pairs.md) · [带 kernel、trace 和角色的机器可读结果](../results/v0.21/evaluation.json) · [逐块的模型与 CA 同轴图](pipeline-comparisons.md)
+[每个算子及 shape 的 950DT/PR 预测、实测和 970DT 外推](../results/v0.22/shape-errors.md) · [双端同形加速比与直接复用 DT](../results/v0.22/pairs.md) · [原始观测、实际库 kernel、正确性与分核字段](../results/v0.22/evaluation.json) · [同一时间轴上的模型与实测](pipeline-comparisons.md)
 
-v0.12 的 development 与 validation 分组保留，曾参与校准的旧样本只按回放计分。对于 Indexer、mHC Pre、mHC 拆分链、KDA Recurrent、GMM 与 MoE FFN，DT 主表采用原始 v0.12 明确标记 validation 的十形，PR 采用 v0.17 冻结十形。Matmul、FA 复用 v0.17 资源模型验证合同，DT 包含历史同形对照。RMSNorm 的历史设备窗口用于启动状态开发；十个冻结新形逐端采集。首轮宿主自设的宽度上限和 64 列对齐限制会在部分形状进入 RMSNorm 前报错，此类尝试未产生有效 kernel 窗口，原预测及失败原因保留。公开默认入口 auto 用于主表。Quant、Matmul、FA 另对 270 个不同 trace 的完整窗口逐一核对；补充归档保留原角色，跨组可能重用同一个窗口。上述审计完成后，另用同一宿主首次采集 PR 的 [1280,2048,512]。模型和 CA 的 416 条 MMAD、52 个输出块全部相符，耗时误差 +6.12%。970DT 外推单列。[PR 矩形尾块逐页证据](../results/v0.21/matmul-pages-pr/report.md) · [三条核心路线的全窗口审计](../results/v0.21/coverage/report.md)
+## 同一系统调用知道前序时
 
-### 当前超限的数据组
+每个 rank 和每条流分别维护 `OperatorStream`。从空流开始，核数由各芯片自己的分块规则计算。RMSNorm 的有序十形在候选冻结后采集；20 个有效目标包括按原前序补采的两个末点，重复前缀只核验采集条件。表内的首次与连续调用分组各自拥有独立的时间窗口。
 
-| 算子 | 芯片 | 数据组 | WAPE / 最大 | 最大误差 shape | 预测 / CA µs |
+| 算子 | 芯片 | 实际前序 | 窗口数 | 无历史 WAPE / 最大 | 已知前序 v0.21 | 已知前序 v0.22 |
+|---|---|---|---:|---:|---:|---:|
+| mHC Post | 950DT | 独立进程首发 | 10 | 25.73% / 42.02% | 14.59% / 31.72% | 14.59% / 31.72% |
+| mHC Post | 950DT | 同一输入连续两次 | 2 | 43.34% / 50.51% | 10.31% / 12.15% | 10.31% / 12.15% |
+| mHC Post | 950PR | 独立进程首发 | 10 | 22.94% / 35.37% | 14.90% / 37.49% | 14.90% / 37.49% |
+| mHC Post | 950PR | 同一输入连续两次 | 2 | 41.08% / 53.43% | 6.12% / 14.37% | 6.12% / 14.37% |
+| RMSNorm | 950DT | 独立进程首发 | 10 | 11.01% / 27.76% | 5.63% / 10.78% | 5.63% / 10.78% |
+| RMSNorm | 950DT | 十形连续 | 10 | 20.36% / 37.80% | 19.17% / 47.26% | 6.02% / 15.64% |
+| RMSNorm | 950PR | 独立进程首发 | 10 | 16.41% / 23.99% | 12.36% / 23.42% | 12.36% / 23.42% |
+| RMSNorm | 950PR | 十形连续 | 10 | 17.97% / 38.10% | 16.07% / 52.16% | 7.03% / 14.47% |
+
+只给相同 shape 和属性时，两次 Post 共享同一预测。实测长窗 L、短窗 S 给出必然的最大相对误差下界 (L−S)/(L+S)，DT 为 43.34%、PR 为 41.08%。这个下界约束包含这对样本的任何整体最大误差；整体 WAPE 依赖其他观测。[同值输入、同一 ELF 与两次完整流水](examples/mhc_post.md) · [RMS 两个有序形状的公开调用和完整推导](examples/rmsnorm.md)
+
+## 仍超限的数据组
+
+| 算子 | 芯片 | 数据组 | WAPE / 最大 | 最差 shape | 预测 / CA µs |
 |---|---|---|---:|---|---:|
-| RMSNorm | DT | DT v0.12 development replay | 24.70% / 54.94% | [128, 1024] | 4.787 / 3.090 |
-| RMSNorm | DT | v0.17 historical RMS replay | 23.77% / 43.22% | [4, 512] | 2.437 / 4.292 |
-| RMSNorm | DT | ordered RMS plus matched-prefix target, original plus recovery | 20.36% / 37.80% | [2, 6688] | 2.912 / 4.682 |
-| mHC Post | DT | DT v0.12 development replay | 28.34% / 47.06% | [34, 4, 512] | 2.811 / 1.912 |
-| mHC Post | DT | DT v0.12 holdout replay | 26.36% / 36.97% | [31, 4, 256] | 3.120 / 2.278 |
-| mHC Post | DT | prior published pair replay | 31.86% / 43.97% | [36, 4, 128] | 2.550 / 1.772 |
-| mHC Post | DT | primary | 26.55% / 42.02% | [7, 4, 1728] | 3.120 / 5.380 |
-| mHC Post | DT | same-stream repeated Post, shape-only forecast | 43.34% / 50.51% | [3, 4, 5376] | 3.195 / 2.122 |
-| mHC Post | PR | prior published pair replay | 26.85% / 33.54% | [9, 4, 1024] | 3.124 / 4.700 |
-| mHC Post | PR | primary | 23.93% / 35.37% | [5, 4, 288] | 3.085 / 4.773 |
-| mHC Post | PR | same-stream repeated Post, shape-only forecast | 41.08% / 53.43% | [3, 4, 5376] | 3.201 / 2.086 |
+| RMSNorm | 950DT | DT v0.12 development replay | 24.70% / 54.94% | [128, 1024] | 4.787 / 3.090 |
+| RMSNorm | 950DT | v0.17 historical RMS replay | 23.77% / 43.22% | [4, 512] | 2.437 / 4.292 |
+| RMSNorm | 950DT | ordered RMS plus matched-prefix target, original plus recovery | 20.36% / 37.80% | [2, 6688] | 2.912 / 4.682 |
+| mHC Post | 950DT | DT v0.12 development replay | 28.34% / 47.06% | [34, 4, 512] | 2.811 / 1.912 |
+| mHC Post | 950DT | DT v0.12 holdout replay | 26.36% / 36.97% | [31, 4, 256] | 3.120 / 2.278 |
+| mHC Post | 950DT | prior published pair replay | 31.86% / 43.97% | [36, 4, 128] | 2.550 / 1.772 |
+| mHC Post | 950DT | primary | 25.73% / 42.02% | [7, 4, 1728] | 3.120 / 5.380 |
+| mHC Post | 950DT | same-stream repeated Post, shape-only forecast | 43.34% / 50.51% | [3, 4, 5376] | 3.195 / 2.122 |
+| mHC Post | 950PR | prior published pair replay | 26.85% / 33.54% | [9, 4, 1024] | 3.124 / 4.700 |
+| mHC Post | 950PR | primary | 22.94% / 35.37% | [5, 4, 288] | 3.085 / 4.773 |
+| mHC Post | 950PR | same-stream repeated Post, shape-only forecast | 41.08% / 53.43% | [3, 4, 5376] | 3.201 / 2.086 |
 
-### 系统调度提供的额外信息
+## 采集、算例与硬件条件
 
-下表按归档宿主的实际提交顺序调用 OperatorStream。输入仍为 shape 和调用属性，前序核数由模型推断。单独启动的进程从空流开始；连续序列要求从第 0 个 launch 起完整可重放。这里统计历史开发回放，两种模式共用每个 CA 观测。
+RMSNorm 未提供历史时，旧 DT 短宽组仍高估部分已热调用；已知前序可拆分同核新增通道和新物理核。Cast 的四槽地址可以核对，但大流式窗口的共享带宽、读写响应与发起间隔仍有误差。B8×32k 全 hidden 的低输出量采集另列原生包络，逐指令主表只统计已完成的指令窗。[两项全尺寸任务的预测与采集状态](../results/v0.22/full-prefill.md)。下方附历史各算子的库、误差及硬件条件，当前数字使用上方 v0.22 表。[RMS 写线与归一化临界路径](examples/rmsnorm.md) · [Cast 两侧槽地址和实际重叠](examples/cast_bf16_fp32.md) · [v0.22 的开销与变更](../results/v0.22/changes.md)
 
-| 算子 | 芯片 | 调用情景 | 窗口 | 仅 shape WAPE / 最大 | 已知顺序 WAPE / 最大 |
-|---|---|---|---:|---:|---:|
-| mHC Post | 950DT | 独立首发 | 3 | 32.37% / 35.94% | 1.24% / 2.34% |
-| mHC Post | 950DT | 连续同族调用 | 48 | 29.27% / 47.06% | 6.83% / 23.38% |
-| mHC Post | 950PR | 独立首发 | 10 | 26.85% / 33.54% | 8.65% / 13.47% |
-| RMSNorm | 950DT | 独立首发 | 10 | 10.89% / 25.75% | 3.41% / 9.03% |
-| RMSNorm | 950DT | 连续同族调用 | 50 | 23.23% / 54.94% | 13.55% / 44.03% |
-| RMSNorm | 950PR | 独立首发 | 10 | 14.23% / 25.55% | 9.04% / 25.13% |
+在能重建实际 Pre → Sinkhorn → Post 顺序的 34 条历史链上，跨族切换的 Post 使用公开入口的未知历史估计。PR 的 10 形 WAPE / 最大为 6.93% / 14.29%。如果直接传入前一个 Sinkhorn 实测的 AIV 数作为 Post 的驻留数，WAPE 升至 24.29%，最大为 30.61%。这项对照检验了调用方可以安全传入什么信息。[DT 与 PR 分组、真实 ELF 与端到端三段误差](../results/v0.22/post-stream/report.md)
 
-RMSNorm 的 43 个 DT 旧开发形状也纳入公开默认入口的压力回放。部分已热的短宽形被当成了可能首发，新增 AIV 也可能是同核另一通道。按输出地址恢复的 1,418 个 AIV 窗口支持在已知前序时细分启动和统计量写回，候选的仅 shape 和有顺序误差分别保留，等待独立实测。[RMSNorm 逐块证据和候选验证](../results/rms-dispatch-audit/report.md)
+Kimi K3 的 FLA 26.9.1 在默认 BF16、64-token 块与 128 维 QK/V 的合同下，按本次提交的各序列长度决定融合 V1 或三段 V2。单例 V1 的 96 个核都有 END，出现 240 次重复置位，数值校验未完成。同一发行包直接调 V2 的 DT 开发小例 [1,2,1,1,128,128] 已通过四组金标和真实结束核验。三段各为 15.281、4.739、3.221 µs，设备窗和 23.241 µs，含两段调度间隙为 28.034 µs。该例尚无事前耗时预测，WAPE 和 970 外推均为 N/A。[实际分派与厂商包指纹](../results/chunk-recovery/fla2691/report.md)
 
-同一 stream 的十个新 shape 已取得完整双端时延。原采集在导出时达到磁盘预算，每端直接恢复九个完整窗口；另一个沿完全相同的前序重新采集，十三个重复前缀只用于核对。给出实际派发顺序，十形同集上 v0.21 → RMS 候选的 WAPE / 最大误差为 DT 19.17% / 47.26% → 6.02% / 15.64%，PR 16.07% / 52.16% → 7.03% / 14.47%。只给 shape，DT 的 WAPE 从 20.36% 降至 14.75%，PR 从 17.97% 升至 18.52%。主表继续使用已发布版本。[逐核恢复](../results/rms-dispatch-audit/scope.md) · [两条补采及原始前缀](../results/rms-dispatch-audit/prefix-recovery/report.md) · [十形完整同集比较](../results/rms-dispatch-audit/report.md)
-
-每核多轮的 RMSNorm [32768,1280] 含 41,943,040 个 BF16 元素。v0.21 在 DT 按最忙核 512 行、22 轮预测 39.393 µs，实测 44.585 µs；在 PR 按 586 行、25 轮预测 61.616 µs，实测 69.729 µs。这是 v0.20 登记的大 shape；v0.21 用于后续回放，970DT 的 21.436 µs 为外推。[PR 的 25 轮对照图](examples/figures/rms-wide-tiles-pr.png) · [两端全核计时、输出与采集开销](../results/v0.21/wide-rms/receipt.json)
-
-同流连续两次 mHC Post [3,4,5376] 的同值输入、库二进制及 48 个 AIV 均相同。DT 首次 / 再次为 5.370 / 2.122 µs，PR 为 4.995 / 2.086 µs。据此得到无历史单值模型最坏相对误差的严格下界：DT 43.34%，PR 41.08%。两端都超过 40%，这个逐点最大误差的限制适用于包含该对窗口的任何样本集。公开流式 API 在本对的最大误差为 DT 12.15%、PR 14.37%；整个算子 WAPE 仍按各自完整样本计分。[同流双端完整证据](../results/post-candidate/paired-result.md)
-
-mHC Post 的 DT 同形 [1,4,128]、同 ELF 在单独首发与真实前序生产链后分别耗时 4.752、2.672 µs。任何仅依赖本次输入的单值预测，在这两次观测各计一次时的 WAPE 至少为 (4.752−2.672)/(4.752+2.672)＝28.03%。该下界只适用于这一配对；完整算子样本集的 WAPE 仍以逐形数据计算。[两端完整配对与 WAPE 可行域](../results/post-candidate/protocol-feasibility.json)
-
-[按实际派发顺序的逐条预测](../results/v0.21/dispatch/stream-replay.json) · [mHC Post 同形跨状态对照](../results/v0.21/dispatch/post-identifiability.json) · [45 个进程的阶段审计与未启用候选](../results/post-candidate/report.md)
-
-在大 Cast 上，DT 的最大历史误差发生在一个 96 MiB 工作集，实测没有物理写入 HBM。把输入、输出双缓冲分别计价后，该形状由 13.33 升至 16.59 µs，CA 为 17.04 µs。12 个双端大窗口的历史回放及另行冻结的 6 个新形状单独计分。[Cast 的物理读写计数与候选验证](../results/cast-capacity/report.md)
-
-数据角色 primary 表示上表该路线的主验证组。未合格的采集保留在分项报告，N/A 不进入 WAPE 分母。KDA chunk 的运行时 SKU、同步错误和校验状态逐次保留。[KDA chunk 算例](examples/kda_chunk.md) · [KDA 库版本与事件核对](../results/chunk-recovery/report.md) · [融合路线的拒收回执](../results/v0.21/fusion/evaluation.json)
+RMSNorm 有 199 个已去重全窗。同 SKU、同正式 ELF 与相同输入的 14 对重跑都具有相同前序，最大可证的两窗下界仅 1.86%。DT 历史 compact [2,4608] 首发/复用差得更多，但数据库缺少可验证的 ELF 身份。在十条无历史误差超过 40% 的 DT compact 窗口中，提供可重建的前序后 WAPE / 最大为 6.64% / 13.88%；这是定位误差来源的历史子集。[强弱证据分别核验](../results/v0.22/rms-unknown/report.md)
 
 ## v0.20 完成时的报告与历史校准明细
 | 算子 | 计时资格与数据角色 | DT N | DT WAPE / 最大 | PR N | PR WAPE / 最大 | DT/PR 倍速 WAPE / 最大 | 970DT 外推范围 µs |

@@ -29,5 +29,5 @@ def predict(op, shape, attrs=None):
         normalized['gate_mode'] = 'raw_safe' if safe else 'raw_unsafe'
     result = predict_case(op, shape, normalized, _profile())
     result['call_attrs'] = original
-    result['ca_timing_status'] = 'unqualified repeated set_flag; no complete validated timing'
+    result['ca_timing_status'] = 'Fused V1 has synchronization errors. The separate FLA V2 implementation has one measured development window and no timing model.'
     return result

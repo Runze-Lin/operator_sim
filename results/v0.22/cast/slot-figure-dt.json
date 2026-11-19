@@ -1,0 +1,160 @@
+{
+  "sku_short": "950DT",
+  "shape": [
+    511,
+    5120
+  ],
+  "dtype": "bf16",
+  "freeze_sha256": "23651b29a65ebf95b67fff660aaf97ddb230387c22167e9699936bf3fd1389de",
+  "freeze_utc": "2026-11-19T12:40:03.660667+00:00",
+  "ca_started_utc": "2026-11-19T13:18:05.656905+00:00",
+  "model": {
+    "plan": {
+      "active_aic": 0,
+      "active_aiv": 64,
+      "elements": 2616320,
+      "busy_core_elements": 40880,
+      "minimum_elements_per_core": 2048,
+      "busy_core_waves": 2,
+      "ub_tile_elements": 21120
+    },
+    "total_us": 5.2101188667042635,
+    "old_us": 4.943005225,
+    "stages_us": {
+      "arrival": 0.6272727272727273,
+      "control_to_read": 0.8284848484848485,
+      "read": 0.9555628106060607,
+      "vector": 0.353125,
+      "dependency_to_write": 0.5078787878787879,
+      "write": 0.921341993939394,
+      "steady_tiles": 1.016452698522445,
+      "shared_io": 0.0
+    },
+    "slot_ii_us": {
+      "input": 0.8642897725105285,
+      "output": 1.0864109814167022
+    },
+    "tiles": [
+      {
+        "n": 21120,
+        "slot": 0,
+        "first": [
+          [
+            "arrival",
+            0,
+            0.6272727272727273
+          ],
+          [
+            "control_to_read",
+            0.6272727272727273,
+            1.4557575757575758
+          ],
+          [
+            "read",
+            1.4557575757575758,
+            2.4113203863636365
+          ],
+          [
+            "vector",
+            2.4113203863636365,
+            2.7644453863636365
+          ],
+          [
+            "dependency_to_write",
+            2.7644453863636365,
+            3.2723241742424243
+          ],
+          [
+            "write",
+            3.2723241742424243,
+            4.193666168181818
+          ]
+        ]
+      },
+      {
+        "n": 19760,
+        "slot": 1,
+        "input_budget": [
+          4.193666168181818,
+          5.002300917462502
+        ],
+        "output_budget": [
+          4.193666168181818,
+          5.2101188667042635
+        ]
+      }
+    ]
+  },
+  "ca": {
+    "core": "core27.veccore0",
+    "begin": 0.3012123107910156,
+    "total_us": 5.3799996403977275,
+    "raw_time_origin": 4.090909004211426,
+    "tiles": [
+      {
+        "slot": 0,
+        "MTE2": {
+          "bytes": 42240,
+          "gm": 624195941952,
+          "ub": 0,
+          "window": [
+            1.3757576942443848,
+            3.2648485898971558
+          ]
+        },
+        "MTE3": {
+          "bytes": 84480,
+          "gm": 624205589632,
+          "ub": 84480,
+          "window": [
+            3.59818172454834,
+            4.926666617393494
+          ]
+        },
+        "n": 21120,
+        "vcvt": [
+          3.284848690032959,
+          3.5733332675881684
+        ]
+      },
+      {
+        "slot": 1,
+        "MTE2": {
+          "bytes": 39520,
+          "gm": 624195984192,
+          "ub": 42240,
+          "window": [
+            1.4496970176696777,
+            3.4387879371643066
+          ]
+        },
+        "MTE3": {
+          "bytes": 79040,
+          "gm": 624205674112,
+          "ub": 168960,
+          "window": [
+            3.8957576751708984,
+            5.373939514160156
+          ]
+        },
+        "n": 19760,
+        "vcvt": [
+          3.6012120246887207,
+          3.870303158182651
+        ]
+      }
+    ],
+    "active_aiv": 64,
+    "active_aic": 0,
+    "shard": "runs/vector21/cast_bf16_fp32_511_5120_Ascend950DT_9582/profile/OPPROF_20261119211805_RWFDFVFCXRVZDIKJ/simulator/core27.veccore0/trace.json",
+    "shard_sha256": "24193b586d70dd0926aec306547fcfeabd1ecc9661994ea5afb7b65038916a42",
+    "all_core_trace_sha256": "4449015feeb8180eb9aa9a1d245d7b0c677900cc593d7638af4c594e6ae1d726",
+    "binary_sha256": "b4281f94c2b846460a173db1ab578880e18faeeab8b719e3de5ee0da44096953",
+    "kernel": "Cast_b2717900ea7de2d41ea9c63d23aa269b_high_performance_0",
+    "api": "aclnnCast",
+    "correctness": [
+      "correctness count=2616320 bad=0"
+    ],
+    "wall_s": 120.26083856006153
+  }
+}

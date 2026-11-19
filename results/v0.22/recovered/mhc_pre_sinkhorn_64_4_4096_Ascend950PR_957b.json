@@ -1,0 +1,3085 @@
+{
+  "shape": [
+    64,
+    4,
+    4096
+  ],
+  "chip": "Ascend950PR_957b",
+  "op": "mhc_pre_sinkhorn",
+  "original": "results/v0.21/fusion/receipts/mhc_pre_sinkhorn_64_4_4096_Ascend950PR_957b.json",
+  "original_sha256": "2ec367de2ef8595d5aa470ed60056055c51d50b90f260fa2ebcfacf02b40f147",
+  "new_ca_seconds": 0,
+  "qualified": true,
+  "observation": {
+    "kernel": "MhcPreSinkhorn_bd8e37c67f2294e1437f03bb2bace96c_1000_mix_aic",
+    "api": "aclnnMhcPreSinkhorn",
+    "ca_us": 13.152121212121212,
+    "active_aic": 22,
+    "active_aiv": 44,
+    "correctness": [
+      "correctness name=hin count=262144 bad=0 max_abs_error=0.00275226 atol=0.015625 rtol=0.015625 hard_limit=1",
+      "correctness name=hpost count=256 bad=0 max_abs_error=1.72379e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+      "correctness name=hres count=1024 bad=0 max_abs_error=1.79467e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+    ],
+    "mmad": 128,
+    "queue_events": {
+      "SCALAR": 128932,
+      "FLOWCTRL": 6015,
+      "MTE1": 300,
+      "MTE2": 710,
+      "FIXP": 44,
+      "CUBE": 128,
+      "MTE3": 356,
+      "PUSHQ": 1456,
+      "RVECLP": 19968,
+      "RVECEX": 362752,
+      "RVECSU": 15904,
+      "RVECLD": 145152,
+      "RVECST": 84256
+    },
+    "first_tick": 5707,
+    "last_tick": 27408,
+    "cycles_per_us": 1650,
+    "physical_end_cores": 66,
+    "windows_ticks": {
+      "core0.cubecore0": [
+        5783,
+        20437
+      ],
+      "core0.veccore0": [
+        5707,
+        27053
+      ],
+      "core0.veccore1": [
+        5806,
+        26908
+      ],
+      "core1.cubecore0": [
+        5840,
+        20390
+      ],
+      "core1.veccore0": [
+        5794,
+        27352
+      ],
+      "core1.veccore1": [
+        5817,
+        27020
+      ],
+      "core10.cubecore0": [
+        5995,
+        19846
+      ],
+      "core10.veccore0": [
+        6129,
+        26323
+      ],
+      "core10.veccore1": [
+        6147,
+        26880
+      ],
+      "core16.cubecore0": [
+        6317,
+        19975
+      ],
+      "core16.veccore0": [
+        6398,
+        27127
+      ],
+      "core16.veccore1": [
+        6411,
+        27168
+      ],
+      "core17.cubecore0": [
+        6341,
+        19957
+      ],
+      "core17.veccore0": [
+        6469,
+        26446
+      ],
+      "core17.veccore1": [
+        6470,
+        26496
+      ],
+      "core18.cubecore0": [
+        6156,
+        20563
+      ],
+      "core18.veccore0": [
+        6332,
+        26917
+      ],
+      "core18.veccore1": [
+        6406,
+        26946
+      ],
+      "core19.cubecore0": [
+        6231,
+        20599
+      ],
+      "core19.veccore0": [
+        6356,
+        26484
+      ],
+      "core19.veccore1": [
+        6369,
+        26663
+      ],
+      "core2.cubecore0": [
+        5838,
+        19716
+      ],
+      "core2.veccore0": [
+        5820,
+        26793
+      ],
+      "core2.veccore1": [
+        5844,
+        26960
+      ],
+      "core20.cubecore0": [
+        6170,
+        19933
+      ],
+      "core20.veccore0": [
+        6268,
+        27108
+      ],
+      "core20.veccore1": [
+        6278,
+        27160
+      ],
+      "core21.cubecore0": [
+        6254,
+        19878
+      ],
+      "core21.veccore0": [
+        6423,
+        19728
+      ],
+      "core21.veccore1": [
+        6401,
+        19731
+      ],
+      "core22.cubecore0": [
+        6072,
+        20510
+      ],
+      "core22.veccore0": [
+        6002,
+        20147
+      ],
+      "core22.veccore1": [
+        6331,
+        20139
+      ],
+      "core23.cubecore0": [
+        6322,
+        20409
+      ],
+      "core23.veccore0": [
+        6476,
+        19687
+      ],
+      "core23.veccore1": [
+        6505,
+        19704
+      ],
+      "core24.cubecore0": [
+        6067,
+        19828
+      ],
+      "core24.veccore0": [
+        6217,
+        20168
+      ],
+      "core24.veccore1": [
+        6236,
+        20184
+      ],
+      "core25.cubecore0": [
+        6015,
+        19741
+      ],
+      "core25.veccore0": [
+        6114,
+        19534
+      ],
+      "core25.veccore1": [
+        6177,
+        19535
+      ],
+      "core26.cubecore0": [
+        6063,
+        20421
+      ],
+      "core26.veccore0": [
+        6166,
+        20238
+      ],
+      "core26.veccore1": [
+        6233,
+        20246
+      ],
+      "core3.cubecore0": [
+        6078,
+        20118
+      ],
+      "core3.veccore0": [
+        6090,
+        27350
+      ],
+      "core3.veccore1": [
+        6108,
+        27290
+      ],
+      "core4.cubecore0": [
+        5974,
+        20594
+      ],
+      "core4.veccore0": [
+        5853,
+        27257
+      ],
+      "core4.veccore1": [
+        5864,
+        27408
+      ],
+      "core5.cubecore0": [
+        5997,
+        20551
+      ],
+      "core5.veccore0": [
+        5954,
+        27300
+      ],
+      "core5.veccore1": [
+        5972,
+        27177
+      ],
+      "core6.cubecore0": [
+        5999,
+        19826
+      ],
+      "core6.veccore0": [
+        5997,
+        27234
+      ],
+      "core6.veccore1": [
+        6027,
+        27354
+      ],
+      "core7.cubecore0": [
+        6063,
+        19980
+      ],
+      "core7.veccore0": [
+        6026,
+        27022
+      ],
+      "core7.veccore1": [
+        6046,
+        26968
+      ],
+      "core8.cubecore0": [
+        5944,
+        20362
+      ],
+      "core8.veccore0": [
+        5892,
+        27047
+      ],
+      "core8.veccore1": [
+        5947,
+        27104
+      ],
+      "core9.cubecore0": [
+        6088,
+        20305
+      ],
+      "core9.veccore0": [
+        6146,
+        27399
+      ],
+      "core9.veccore1": [
+        6161,
+        27251
+      ]
+    },
+    "timing_source": "physical raw popped/executed per core",
+    "raw_proof": {
+      "dump": "runs/fusion21/mhc_pre_sinkhorn_64_4_4096_Ascend950PR_957b/profile/OPPROF_20261119205911_SJIBKVWXCZZSMPMO/device0/MhcPreSinkhorn_bd8e37c67f2294e1437f03bb2bace96c_1000_mix_aic/0/dump",
+      "entry_offsets": {
+        "aic": 0,
+        "aiv": 24320
+      },
+      "roster_count": 66,
+      "shortened_trace_windows": [
+        "core1.veccore0",
+        "core3.veccore0",
+        "core4.veccore1",
+        "core5.veccore0",
+        "core6.veccore1",
+        "core9.veccore0"
+      ],
+      "cores": {
+        "core0.cubecore0": {
+          "first": 5783,
+          "last": 20437,
+          "entry_pc": "0x9000d0d000",
+          "physical_end_tick": 20434,
+          "physical_end_pc": "0x9000d0e200",
+          "kernel_end_event_id": 399052,
+          "label_tick": null,
+          "popped_sha256": "ddf715fc428ee966dc01c4ccf227555f643aadb407ca93da1edd8a3e9dfb4134",
+          "executed_sha256": "5d5b9e68e2c0b0dc3acbc1721360352f235cda462b4156ce8845d2dff8c7ad65",
+          "popped_records": 1526,
+          "executed_records": 1530,
+          "original_trace_bounds": [
+            5783,
+            20437
+          ],
+          "official_duration_us": 8.88
+        },
+        "core0.veccore0": {
+          "first": 5707,
+          "last": 27053,
+          "entry_pc": "0x9000d12f00",
+          "physical_end_tick": 27046,
+          "physical_end_pc": "0x9000d15740",
+          "kernel_end_event_id": 670923,
+          "label_tick": 27053,
+          "popped_sha256": "def8eddc54daf9e0e1a220d0c933605f55f30a65df7df77dd9c4931f02c8bb1a",
+          "executed_sha256": "6a84b9c1236495f176e3c8bfe2b792ce89ceda2e73d0b25280ce67d72287da92",
+          "popped_records": 19787,
+          "executed_records": 19840,
+          "original_trace_bounds": [
+            5707,
+            27053
+          ],
+          "official_duration_us": 12.94
+        },
+        "core0.veccore1": {
+          "first": 5806,
+          "last": 26908,
+          "entry_pc": "0x9000d12f00",
+          "physical_end_tick": 26901,
+          "physical_end_pc": "0x9000d15740",
+          "kernel_end_event_id": 670646,
+          "label_tick": 26908,
+          "popped_sha256": "18be49d73919908a8b991b65f369d035aa6661224c0b0a1bc814391d630fbaca",
+          "executed_sha256": "19895abfdf38893c6ab26a48eec893fbc4691c838c73273a52a9093d8433e8ae",
+          "popped_records": 19787,
+          "executed_records": 19840,
+          "original_trace_bounds": [
+            5806,
+            26908
+          ],
+          "official_duration_us": 12.79
+        },
+        "core1.cubecore0": {
+          "first": 5840,
+          "last": 20390,
+          "entry_pc": "0x9000d0d000",
+          "physical_end_tick": 20387,
+          "physical_end_pc": "0x9000d0e200",
+          "kernel_end_event_id": 399346,
+          "label_tick": null,
+          "popped_sha256": "4ef16a8998507b07b2cc1133c0a4a2ab1d486261c2de1567ec3587e59091b55d",
+          "executed_sha256": "f51475e39ecaf8695b3b48b0e25dccf1b802fc00ca4026e5543c2953043c526d",
+          "popped_records": 1526,
+          "executed_records": 1530,
+          "original_trace_bounds": [
+            5840,
+            20390
+          ],
+          "official_duration_us": 8.82
+        },
+        "core1.veccore0": {
+          "first": 5794,
+          "last": 27352,
+          "entry_pc": "0x9000d12f00",
+          "physical_end_tick": 27345,
+          "physical_end_pc": "0x9000d15740",
+          "kernel_end_event_id": 671418,
+          "label_tick": 27352,
+          "popped_sha256": "4b75395cb32390a3b83fec2278ca6724db719dda417fa2d722d9f88618afe4dd",
+          "executed_sha256": "f4c1a9652c739e08ecf6c9b1634b0d78b0dc7c93395941c4ffd7f9912da268fe",
+          "popped_records": 19787,
+          "executed_records": 19840,
+          "original_trace_bounds": [
+            5794,
+            27300
+          ],
+          "official_duration_us": 13.03
+        },
+        "core1.veccore1": {
+          "first": 5817,
+          "last": 27020,
+          "entry_pc": "0x9000d12f00",
+          "physical_end_tick": 27013,
+          "physical_end_pc": "0x9000d15740",
+          "kernel_end_event_id": 670846,
+          "label_tick": 27020,
+          "popped_sha256": "97fdcb735ce4f6d4750640e3b67e9e1707f6bc96637efec1beb2b82544abc833",
+          "executed_sha256": "58875338136ab9ad15be0f33ea225a83edf1fc9c4b2c0441ff174f454a9e1df5",
+          "popped_records": 19787,
+          "executed_records": 19840,
+          "original_trace_bounds": [
+            5817,
+            27020
+          ],
+          "official_duration_us": 12.85
+        },
+        "core10.cubecore0": {
+          "first": 5995,
+          "last": 19846,
+          "entry_pc": "0x9000d0d000",
+          "physical_end_tick": 19843,
+          "physical_end_pc": "0x9000d0e200",
+          "kernel_end_event_id": 386954,
+          "label_tick": null,
+          "popped_sha256": "7b73c14bf2fb07a0503c96da01f5aaebc02aa33dbb7a6ff46e6eedb858701436",
+          "executed_sha256": "e06528a3939c7b5284de0695d5734fd36ed79b76913dcb69d58a8c4a3a79107f",
+          "popped_records": 1526,
+          "executed_records": 1530,
+          "original_trace_bounds": [
+            5995,
+            19846
+          ],
+          "official_duration_us": 8.39
+        },
+        "core10.veccore0": {
+          "first": 6129,
+          "last": 26323,
+          "entry_pc": "0x9000d12f00",
+          "physical_end_tick": 26316,
+          "physical_end_pc": "0x9000d15740",
+          "kernel_end_event_id": 660922,
+          "label_tick": 26323,
+          "popped_sha256": "2db48fc0ae7d2db771ae74e5cafaec9dfb3ca51b23999a9e9a2332921e5c7a58",
+          "executed_sha256": "c8c064e6d8464f6518f63889ac6ba66d7d3e6b3e8540ead2d5e71d387a543c53",
+          "popped_records": 19787,
+          "executed_records": 19840,
+          "original_trace_bounds": [
+            6129,
+            26323
+          ],
+          "official_duration_us": 12.24
+        },
+        "core10.veccore1": {
+          "first": 6147,
+          "last": 26880,
+          "entry_pc": "0x9000d12f00",
+          "physical_end_tick": 26873,
+          "physical_end_pc": "0x9000d15740",
+          "kernel_end_event_id": 670520,
+          "label_tick": 26880,
+          "popped_sha256": "53dd8c8c18e0f8e6a781d1f2a8e2bcaa75855731e09b777b25ad464795e90b70",
+          "executed_sha256": "cea2e9560e93d2f648f5b72abcc96d63dbeb6d2991f0035faf074e255aba15d4",
+          "popped_records": 19787,
+          "executed_records": 19840,
+          "original_trace_bounds": [
+            6147,
+            26880
+          ],
+          "official_duration_us": 12.57
+        },
+        "core16.cubecore0": {
+          "first": 6317,
+          "last": 19975,
+          "entry_pc": "0x9000d0d000",
+          "physical_end_tick": 19972,
+          "physical_end_pc": "0x9000d0e200",
+          "kernel_end_event_id": 387784,
+          "label_tick": null,
+          "popped_sha256": "5e879a5b7363ecc0cce10ee3a0afa4babb0881953406bba6bd0c5d859bdf7a29",
+          "executed_sha256": "d90efc28986d6043f98eb9c3feadeef81282ca17dc5132f603a471ea7e1e3e42",
+          "popped_records": 1526,
+          "executed_records": 1530,
+          "original_trace_bounds": [
+            6317,
+            19975
+          ],
+          "official_duration_us": 8.28
+        },
+        "core16.veccore0": {
+          "first": 6398,
+          "last": 27127,
+          "entry_pc": "0x9000d12f00",
+          "physical_end_tick": 27120,
+          "physical_end_pc": "0x9000d15740",
+          "kernel_end_event_id": 671055,
+          "label_tick": 27127,
+          "popped_sha256": "2bce4132efd98ae6556a6ee02ac4b1cc191f3879738918d4d2ec06884f5ad5c8",
+          "executed_sha256": "ea969862730ea8e497b3f1b807cc2e96e6d61fbe9f795f5315a1be39e47b2253",
+          "popped_records": 19787,
+          "executed_records": 19840,
+          "original_trace_bounds": [
+            6398,
+            27127
+          ],
+          "official_duration_us": 12.56
+        },
+        "core16.veccore1": {
+          "first": 6411,
+          "last": 27168,
+          "entry_pc": "0x9000d12f00",
+          "physical_end_tick": 27161,
+          "physical_end_pc": "0x9000d15740",
+          "kernel_end_event_id": 671085,
+          "label_tick": 27168,
+          "popped_sha256": "5936de585f58d807eaf506fba2f055fb47f025376f6803a1c34cf53f982c00e3",
+          "executed_sha256": "9ddd690835e0fdc8b2a360d933a884b4aa45578d7966bad2b57bfa1eb3af4793",
+          "popped_records": 19787,
+          "executed_records": 19840,
+          "original_trace_bounds": [
+            6411,
+            27168
+          ],
+          "official_duration_us": 12.58
+        },
+        "core17.cubecore0": {
+          "first": 6341,
+          "last": 19957,
+          "entry_pc": "0x9000d0d000",
+          "physical_end_tick": 19954,
+          "physical_end_pc": "0x9000d0e200",
+          "kernel_end_event_id": 387649,
+          "label_tick": null,
+          "popped_sha256": "79629596865b39adb720a769a411653e277f45f833e64ba116051bf510b3bb73",
+          "executed_sha256": "a5169eae8c993a8fc47f5c37c11f316ea95066f9700f08a637b8696e723a2381",
+          "popped_records": 1526,
+          "executed_records": 1530,
+          "original_trace_bounds": [
+            6341,
+            19957
+          ],
+          "official_duration_us": 8.25
+        },
+        "core17.veccore0": {
+          "first": 6469,
+          "last": 26446,
+          "entry_pc": "0x9000d12f00",
+          "physical_end_tick": 26439,
+          "physical_end_pc": "0x9000d15740",
+          "kernel_end_event_id": 664978,
+          "label_tick": 26446,
+          "popped_sha256": "0c4b803ab259f1482eabe58f19590a31a1cdcbfa1d36b20688e8aae0b0ab058c",
+          "executed_sha256": "9717ce81601aaed790f25b2c0ce179722ce1bed2bbbf01a5d519c52dde2b1eea",
+          "popped_records": 19787,
+          "executed_records": 19840,
+          "original_trace_bounds": [
+            6469,
+            26446
+          ],
+          "official_duration_us": 12.11
+        },
+        "core17.veccore1": {
+          "first": 6470,
+          "last": 26496,
+          "entry_pc": "0x9000d12f00",
+          "physical_end_tick": 26489,
+          "physical_end_pc": "0x9000d15740",
+          "kernel_end_event_id": 666310,
+          "label_tick": 26496,
+          "popped_sha256": "f06f57a61c76edaf93e74966b1f56320947a566d19d4ecaf9c979e43cea90a5f",
+          "executed_sha256": "d801cc65f59ed1ebc26ec029a0ad9f811a2234a3a5331c35a6170a88f62a3338",
+          "popped_records": 19787,
+          "executed_records": 19840,
+          "original_trace_bounds": [
+            6470,
+            26496
+          ],
+          "official_duration_us": 12.14
+        },
+        "core18.cubecore0": {
+          "first": 6156,
+          "last": 20563,
+          "entry_pc": "0x9000d0d000",
+          "physical_end_tick": 20560,
+          "physical_end_pc": "0x9000d0e200",
+          "kernel_end_event_id": 403986,
+          "label_tick": null,
+          "popped_sha256": "f063ed441cac29c539eec289a32d192c1ee251bcc367bb64323ccb98d8ed9331",
+          "executed_sha256": "0310b4828edd0712d6b7bdd65d7be86ef5674a442d2bff48ec1ccd644a797d88",
+          "popped_records": 1526,
+          "executed_records": 1530,
+          "original_trace_bounds": [
+            6156,
+            20563
+          ],
+          "official_duration_us": 8.73
+        },
+        "core18.veccore0": {
+          "first": 6332,
+          "last": 26917,
+          "entry_pc": "0x9000d12f00",
+          "physical_end_tick": 26910,
+          "physical_end_pc": "0x9000d15740",
+          "kernel_end_event_id": 670680,
+          "label_tick": 26917,
+          "popped_sha256": "c842535e701e096d6daee12b602446fa08a0ea8969fd61713ad9a981b2f50c0c",
+          "executed_sha256": "16780f7a7901f3dc2a32d081b347f9e0159f1ede915461edd33ffc88c7ab1401",
+          "popped_records": 19787,
+          "executed_records": 19840,
+          "original_trace_bounds": [
+            6332,
+            26917
+          ],
+          "official_duration_us": 12.48
+        },
+        "core18.veccore1": {
+          "first": 6406,
+          "last": 26946,
+          "entry_pc": "0x9000d12f00",
+          "physical_end_tick": 26939,
+          "physical_end_pc": "0x9000d15740",
+          "kernel_end_event_id": 670710,
+          "label_tick": 26946,
+          "popped_sha256": "faafa474c1c8702fa3931b0ff57cfb82cb9e4dbe0b9f680b111f649ee334ab77",
+          "executed_sha256": "ed50d9bebdd50fe442b0cddb022bdc91fe7186dbe865dbad3ad8ee707227f3dc",
+          "popped_records": 19787,
+          "executed_records": 19840,
+          "original_trace_bounds": [
+            6406,
+            26946
+          ],
+          "official_duration_us": 12.45
+        },
+        "core19.cubecore0": {
+          "first": 6231,
+          "last": 20599,
+          "entry_pc": "0x9000d0d000",
+          "physical_end_tick": 20596,
+          "physical_end_pc": "0x9000d0e200",
+          "kernel_end_event_id": 404350,
+          "label_tick": null,
+          "popped_sha256": "d42188109c0dd0e8c5a4f4d51118d2b55640c114c11ec5ad1a5a611baa4136ac",
+          "executed_sha256": "2af405169381b683115455871f4d115480cd046f16cac48637600025dbd7cca9",
+          "popped_records": 1526,
+          "executed_records": 1530,
+          "original_trace_bounds": [
+            6231,
+            20599
+          ],
+          "official_duration_us": 8.71
+        },
+        "core19.veccore0": {
+          "first": 6356,
+          "last": 26484,
+          "entry_pc": "0x9000d12f00",
+          "physical_end_tick": 26477,
+          "physical_end_pc": "0x9000d15740",
+          "kernel_end_event_id": 666025,
+          "label_tick": 26484,
+          "popped_sha256": "030cea8ba576515074e2580a05775dbb78149192e46da5a2d60a47a4d993e89c",
+          "executed_sha256": "afdbeb495308db04e0859af8b467df050f2062a4e5762d58405a6dd20910e127",
+          "popped_records": 19787,
+          "executed_records": 19840,
+          "original_trace_bounds": [
+            6356,
+            26484
+          ],
+          "official_duration_us": 12.2
+        },
+        "core19.veccore1": {
+          "first": 6369,
+          "last": 26663,
+          "entry_pc": "0x9000d12f00",
+          "physical_end_tick": 26656,
+          "physical_end_pc": "0x9000d15740",
+          "kernel_end_event_id": 668974,
+          "label_tick": 26663,
+          "popped_sha256": "83f8056120e7289065c8dd3926bfa90f167b05b2a442b4f93f15212663995b11",
+          "executed_sha256": "f4d5319978855df2c3ba2110a191a47a2f732cdd6680ebbea4705d87ddbf3325",
+          "popped_records": 19787,
+          "executed_records": 19840,
+          "original_trace_bounds": [
+            6369,
+            26663
+          ],
+          "official_duration_us": 12.3
+        },
+        "core2.cubecore0": {
+          "first": 5838,
+          "last": 19716,
+          "entry_pc": "0x9000d0d000",
+          "physical_end_tick": 19713,
+          "physical_end_pc": "0x9000d0e200",
+          "kernel_end_event_id": 383613,
+          "label_tick": null,
+          "popped_sha256": "81aad0ecfff6bdae28236891810003fd665a1085d208b3d5b2a5a8849ad43381",
+          "executed_sha256": "0f4d1ba20db2175dc4056e89c7c7f8316d57c31dbe0e481514622ff3325b3b87",
+          "popped_records": 1526,
+          "executed_records": 1530,
+          "original_trace_bounds": [
+            5838,
+            19716
+          ],
+          "official_duration_us": 8.41
+        },
+        "core2.veccore0": {
+          "first": 5820,
+          "last": 26793,
+          "entry_pc": "0x9000d12f00",
+          "physical_end_tick": 26786,
+          "physical_end_pc": "0x9000d15740",
+          "kernel_end_event_id": 670118,
+          "label_tick": 26793,
+          "popped_sha256": "0777079d8e8573c9e44561ce4793f59997059661c4578e6386a3c53315b02435",
+          "executed_sha256": "836c836fe89b0a3d0f513f87a5a68bd468fee9487f21ca2d1255f6d14dd92d81",
+          "popped_records": 19787,
+          "executed_records": 19840,
+          "original_trace_bounds": [
+            5820,
+            26793
+          ],
+          "official_duration_us": 12.71
+        },
+        "core2.veccore1": {
+          "first": 5844,
+          "last": 26960,
+          "entry_pc": "0x9000d12f00",
+          "physical_end_tick": 26953,
+          "physical_end_pc": "0x9000d15740",
+          "kernel_end_event_id": 670741,
+          "label_tick": 26960,
+          "popped_sha256": "4e00332f5247ea0ccac39a2727e5e10b7cc3be3e39e70e8b8df172ee031d76dc",
+          "executed_sha256": "416432cb1ad69e9c4bd2da4453322e69e0a5d1c5d7bd90bf1ed1b48d3c144748",
+          "popped_records": 19787,
+          "executed_records": 19840,
+          "original_trace_bounds": [
+            5844,
+            26960
+          ],
+          "official_duration_us": 12.8
+        },
+        "core20.cubecore0": {
+          "first": 6170,
+          "last": 19933,
+          "entry_pc": "0x9000d0d000",
+          "physical_end_tick": 19930,
+          "physical_end_pc": "0x9000d0e200",
+          "kernel_end_event_id": 387600,
+          "label_tick": null,
+          "popped_sha256": "2ca936e9ddf59a8279ac45de5bd83f65fe64997022821a746edadc4b4173ba39",
+          "executed_sha256": "dd2a3b4d4da5beeab0d0947ff3bce193003acce0237b7b02f80849c958cc202f",
+          "popped_records": 1526,
+          "executed_records": 1530,
+          "original_trace_bounds": [
+            6170,
+            19933
+          ],
+          "official_duration_us": 8.34
+        },
+        "core20.veccore0": {
+          "first": 6268,
+          "last": 27108,
+          "entry_pc": "0x9000d12f00",
+          "physical_end_tick": 27101,
+          "physical_end_pc": "0x9000d15740",
+          "kernel_end_event_id": 671008,
+          "label_tick": 27108,
+          "popped_sha256": "b58f3cd6f33ecb914cab215c69a75e83f4f3b0cdb4bc2e773424aecb7eb69dd7",
+          "executed_sha256": "c9902b8b978409ac2600fd6ed34fc99b28e6a2c6856a7e5ffe72e9bd0557c2fb",
+          "popped_records": 19787,
+          "executed_records": 19840,
+          "original_trace_bounds": [
+            6268,
+            27108
+          ],
+          "official_duration_us": 12.63
+        },
+        "core20.veccore1": {
+          "first": 6278,
+          "last": 27160,
+          "entry_pc": "0x9000d12f00",
+          "physical_end_tick": 27153,
+          "physical_end_pc": "0x9000d15740",
+          "kernel_end_event_id": 671070,
+          "label_tick": 27160,
+          "popped_sha256": "90e8110a011fcef5afcdb4666b3399be9755ee2ba37f67c939c8b23f087d22b0",
+          "executed_sha256": "577a51ad58a702bae295999d4754fca662f2a5fb32490b00d074a5d47661c980",
+          "popped_records": 19787,
+          "executed_records": 19840,
+          "original_trace_bounds": [
+            6278,
+            27160
+          ],
+          "official_duration_us": 12.66
+        },
+        "core21.cubecore0": {
+          "first": 6254,
+          "last": 19878,
+          "entry_pc": "0x9000d0d000",
+          "physical_end_tick": 19875,
+          "physical_end_pc": "0x9000d0e200",
+          "kernel_end_event_id": 387337,
+          "label_tick": null,
+          "popped_sha256": "2fc2e48db28012cbe680e9ea0847205c2772f92ff398d6176b36c066b8c01e18",
+          "executed_sha256": "a97f1cf3d2a1f6df8b5fb611186c298d2cdc8f72f5893937e283d80d70e09d00",
+          "popped_records": 1526,
+          "executed_records": 1530,
+          "original_trace_bounds": [
+            6254,
+            19878
+          ],
+          "official_duration_us": 8.26
+        },
+        "core21.veccore0": {
+          "first": 6423,
+          "last": 19728,
+          "entry_pc": "0x9000d12f00",
+          "physical_end_tick": 19721,
+          "physical_end_pc": "0x9000d15740",
+          "kernel_end_event_id": 384166,
+          "label_tick": 19728,
+          "popped_sha256": "c5213118657687fa94d86a507e026f996a54c243857136ae9763b0ef65890380",
+          "executed_sha256": "43def740aefea3541e727272ac755c1f1e958252a11095c5fa5870d11f745ebd",
+          "popped_records": 9540,
+          "executed_records": 9566,
+          "original_trace_bounds": [
+            6423,
+            19728
+          ],
+          "official_duration_us": 8.06
+        },
+        "core21.veccore1": {
+          "first": 6401,
+          "last": 19731,
+          "entry_pc": "0x9000d12f00",
+          "physical_end_tick": 19724,
+          "physical_end_pc": "0x9000d15740",
+          "kernel_end_event_id": 384232,
+          "label_tick": 19731,
+          "popped_sha256": "4101634b5b8a2c35b4768356f5bc45381a87850109122d81c4ced22446e93324",
+          "executed_sha256": "e7eed85df8743e31f403b997e13b3ad923e73e2939a8b26bbc87cce3e0034894",
+          "popped_records": 9540,
+          "executed_records": 9566,
+          "original_trace_bounds": [
+            6401,
+            19731
+          ],
+          "official_duration_us": 8.08
+        },
+        "core22.cubecore0": {
+          "first": 6072,
+          "last": 20510,
+          "entry_pc": "0x9000d0d000",
+          "physical_end_tick": 20507,
+          "physical_end_pc": "0x9000d0e200",
+          "kernel_end_event_id": 401660,
+          "label_tick": null,
+          "popped_sha256": "8723c90189a602718f8361b30c1c6b217d16d4f6562533269d655c5eaf07f6e4",
+          "executed_sha256": "72a0817600bd18ce2cec2cacf4360f5184edfea3baee53225dd4271d1790ba64",
+          "popped_records": 1526,
+          "executed_records": 1530,
+          "original_trace_bounds": [
+            6072,
+            20510
+          ],
+          "official_duration_us": 8.75
+        },
+        "core22.veccore0": {
+          "first": 6002,
+          "last": 20147,
+          "entry_pc": "0x9000d12f00",
+          "physical_end_tick": 20140,
+          "physical_end_pc": "0x9000d15740",
+          "kernel_end_event_id": 388369,
+          "label_tick": 20147,
+          "popped_sha256": "e9bbec79fd6f4b788874c6ac8db80c03422763972cff97ec122845fd4fab9f4f",
+          "executed_sha256": "42bb46f5873cf14cc57e64cea9245fddae7af9b90e7f1bd5b7f2bebc702eb258",
+          "popped_records": 9540,
+          "executed_records": 9566,
+          "original_trace_bounds": [
+            6002,
+            20147
+          ],
+          "official_duration_us": 8.57
+        },
+        "core22.veccore1": {
+          "first": 6331,
+          "last": 20139,
+          "entry_pc": "0x9000d12f00",
+          "physical_end_tick": 20132,
+          "physical_end_pc": "0x9000d15740",
+          "kernel_end_event_id": 388307,
+          "label_tick": 20139,
+          "popped_sha256": "ee8ce5092e1e7ff975f4d05c511301ada249efe33e3fe8ea05b268092191510b",
+          "executed_sha256": "1dd61d5f9a429027011d74197c88d3c58ec90f223eb0aaae1db9dbf65bbc0a3c",
+          "popped_records": 9540,
+          "executed_records": 9566,
+          "original_trace_bounds": [
+            6331,
+            20139
+          ],
+          "official_duration_us": 8.37
+        },
+        "core23.cubecore0": {
+          "first": 6322,
+          "last": 20409,
+          "entry_pc": "0x9000d0d000",
+          "physical_end_tick": 20406,
+          "physical_end_pc": "0x9000d0e200",
+          "kernel_end_event_id": 397850,
+          "label_tick": null,
+          "popped_sha256": "882f5a42088f8622e59c430f357d5a74bc5dcf9e87d213067cc4997761051a51",
+          "executed_sha256": "66f643a06e8cc9a2d882282cfbe6344642def27de48959dae9bfb0e4a7db73bc",
+          "popped_records": 1526,
+          "executed_records": 1530,
+          "original_trace_bounds": [
+            6322,
+            20409
+          ],
+          "official_duration_us": 8.54
+        },
+        "core23.veccore0": {
+          "first": 6476,
+          "last": 19687,
+          "entry_pc": "0x9000d12f00",
+          "physical_end_tick": 19680,
+          "physical_end_pc": "0x9000d15740",
+          "kernel_end_event_id": 382815,
+          "label_tick": 19687,
+          "popped_sha256": "5e77606921321cba805a505afa2bc65c077c2901cef3dacbe27ba4fe4cfd7860",
+          "executed_sha256": "f1f3139bf995f4401fb3114cf79066db2660a2b1226b58478850b5283949e5f0",
+          "popped_records": 9540,
+          "executed_records": 9566,
+          "original_trace_bounds": [
+            6476,
+            19687
+          ],
+          "official_duration_us": 8.01
+        },
+        "core23.veccore1": {
+          "first": 6505,
+          "last": 19704,
+          "entry_pc": "0x9000d12f00",
+          "physical_end_tick": 19697,
+          "physical_end_pc": "0x9000d15740",
+          "kernel_end_event_id": 383434,
+          "label_tick": 19704,
+          "popped_sha256": "fac253af13278b4becf7acfbaa4f73ee48230a23c5d6d1e8f8b6a897b29b231e",
+          "executed_sha256": "e62305c860028706f5ee3e81c19a655eeec44a53a21c83e20454fc31abdf872c",
+          "popped_records": 9540,
+          "executed_records": 9566,
+          "original_trace_bounds": [
+            6505,
+            19704
+          ],
+          "official_duration_us": 8.0
+        },
+        "core24.cubecore0": {
+          "first": 6067,
+          "last": 19828,
+          "entry_pc": "0x9000d0d000",
+          "physical_end_tick": 19825,
+          "physical_end_pc": "0x9000d0e200",
+          "kernel_end_event_id": 386692,
+          "label_tick": null,
+          "popped_sha256": "3e9480e4fc0076a4f28ca1a0404b343c2b06b46cf5a85faa52a8985bc40e1232",
+          "executed_sha256": "3c3e265f2f9912b42758b01d07d420e4ffa36e3bc0fecd87d40a6d6815affc52",
+          "popped_records": 1526,
+          "executed_records": 1530,
+          "original_trace_bounds": [
+            6067,
+            19828
+          ],
+          "official_duration_us": 8.34
+        },
+        "core24.veccore0": {
+          "first": 6217,
+          "last": 20168,
+          "entry_pc": "0x9000d12f00",
+          "physical_end_tick": 20161,
+          "physical_end_pc": "0x9000d15740",
+          "kernel_end_event_id": 388785,
+          "label_tick": 20168,
+          "popped_sha256": "c5e0ab73c6f4ba3ed72871acdb1a5ec001ee41d25a5d72c35ec9d3f1744fd2ae",
+          "executed_sha256": "f4de51a5d0c3b03eeba5f099241d22720465f8c20df843c57307cf1c7af27af5",
+          "popped_records": 9540,
+          "executed_records": 9566,
+          "original_trace_bounds": [
+            6217,
+            20168
+          ],
+          "official_duration_us": 8.46
+        },
+        "core24.veccore1": {
+          "first": 6236,
+          "last": 20184,
+          "entry_pc": "0x9000d12f00",
+          "physical_end_tick": 20177,
+          "physical_end_pc": "0x9000d15740",
+          "kernel_end_event_id": 389244,
+          "label_tick": 20184,
+          "popped_sha256": "7b4619d1ee01a86262c2147c4c764b2438675f951c8230b5e422a0cc26e9c22d",
+          "executed_sha256": "f0c87ee63f131b1d0da8ede7ce0c12e80c41817d7edbd33f4cd152f60a1b0aa4",
+          "popped_records": 9540,
+          "executed_records": 9566,
+          "original_trace_bounds": [
+            6236,
+            20184
+          ],
+          "official_duration_us": 8.45
+        },
+        "core25.cubecore0": {
+          "first": 6015,
+          "last": 19741,
+          "entry_pc": "0x9000d0d000",
+          "physical_end_tick": 19738,
+          "physical_end_pc": "0x9000d0e200",
+          "kernel_end_event_id": 384286,
+          "label_tick": null,
+          "popped_sha256": "ded9021bc68d6bfd515030059c488b4758055456dc833815aed3d91aa22ff656",
+          "executed_sha256": "6051a4715b942feae5c6fa22e7e8abc5011debdc3bd0b1c3a623048ee01f045b",
+          "popped_records": 1526,
+          "executed_records": 1530,
+          "original_trace_bounds": [
+            6015,
+            19741
+          ],
+          "official_duration_us": 8.32
+        },
+        "core25.veccore0": {
+          "first": 6114,
+          "last": 19534,
+          "entry_pc": "0x9000d12f00",
+          "physical_end_tick": 19527,
+          "physical_end_pc": "0x9000d15740",
+          "kernel_end_event_id": 378109,
+          "label_tick": 19534,
+          "popped_sha256": "28f76115ffab6542cf538508a2b71314c7327700558684e76ab75074560a94c8",
+          "executed_sha256": "18467d4fb4cd7c6a14c146db8bcddd2af0f0bebeffdce0a9cfb28a91cbe5a91a",
+          "popped_records": 9540,
+          "executed_records": 9566,
+          "original_trace_bounds": [
+            6114,
+            19534
+          ],
+          "official_duration_us": 8.13
+        },
+        "core25.veccore1": {
+          "first": 6177,
+          "last": 19535,
+          "entry_pc": "0x9000d12f00",
+          "physical_end_tick": 19528,
+          "physical_end_pc": "0x9000d15740",
+          "kernel_end_event_id": 378145,
+          "label_tick": 19535,
+          "popped_sha256": "ee59c0c02a32e22558c3795d4b683de240636482bfc1976e35c3016c4e5023db",
+          "executed_sha256": "c646f20f2b49d1c06fc8bb8609643274611334f346386888de3182f1416fa879",
+          "popped_records": 9540,
+          "executed_records": 9566,
+          "original_trace_bounds": [
+            6177,
+            19535
+          ],
+          "official_duration_us": 8.1
+        },
+        "core26.cubecore0": {
+          "first": 6063,
+          "last": 20421,
+          "entry_pc": "0x9000d0d000",
+          "physical_end_tick": 20418,
+          "physical_end_pc": "0x9000d0e200",
+          "kernel_end_event_id": 398368,
+          "label_tick": null,
+          "popped_sha256": "75e10c56e2090f3c6672c19e4cb4c606b62b1a124d722fbfa5532620455e743d",
+          "executed_sha256": "45fb9409bf30eb892de29f9a7b3b3c6505cbe0d6f09cfc5ebe33654c6f4e885b",
+          "popped_records": 1247,
+          "executed_records": 1251,
+          "original_trace_bounds": [
+            6063,
+            20421
+          ],
+          "official_duration_us": 8.7
+        },
+        "core26.veccore0": {
+          "first": 6166,
+          "last": 20238,
+          "entry_pc": "0x9000d12f00",
+          "physical_end_tick": 20231,
+          "physical_end_pc": "0x9000d15740",
+          "kernel_end_event_id": 391313,
+          "label_tick": 20238,
+          "popped_sha256": "e6b801c6535037a59e733f1aca4b00d5517945e6058ad03c9d518795018647f7",
+          "executed_sha256": "e532c048014bf102297491f0ef800f177fa062a790e391609eee920e2c6b4ca6",
+          "popped_records": 3841,
+          "executed_records": 3859,
+          "original_trace_bounds": [
+            6166,
+            20238
+          ],
+          "official_duration_us": 8.53
+        },
+        "core26.veccore1": {
+          "first": 6233,
+          "last": 20246,
+          "entry_pc": "0x9000d12f00",
+          "physical_end_tick": 20239,
+          "physical_end_pc": "0x9000d15740",
+          "kernel_end_event_id": 391584,
+          "label_tick": 20246,
+          "popped_sha256": "7a02b3e0f661922e7792468693510a033193d668db70fa70e5416a157f6c5c00",
+          "executed_sha256": "6f371476859e3cb6c3d00a5e7e64a83ef63b50fffe842dd8d2d489a55b2c6c6c",
+          "popped_records": 3841,
+          "executed_records": 3859,
+          "original_trace_bounds": [
+            6233,
+            20246
+          ],
+          "official_duration_us": 8.49
+        },
+        "core3.cubecore0": {
+          "first": 6078,
+          "last": 20118,
+          "entry_pc": "0x9000d0d000",
+          "physical_end_tick": 20115,
+          "physical_end_pc": "0x9000d0e200",
+          "kernel_end_event_id": 388750,
+          "label_tick": null,
+          "popped_sha256": "1bc110c28b2f1addfc84a3faf4cedd202e16966f8655a4f9e1aa610fbca42db6",
+          "executed_sha256": "4e2cfdee76a8cf33472ed6e66293cb702fe0bf64186b0381cc9e179628f0eac7",
+          "popped_records": 1526,
+          "executed_records": 1530,
+          "original_trace_bounds": [
+            6078,
+            20118
+          ],
+          "official_duration_us": 8.51
+        },
+        "core3.veccore0": {
+          "first": 6090,
+          "last": 27350,
+          "entry_pc": "0x9000d12f00",
+          "physical_end_tick": 27343,
+          "physical_end_pc": "0x9000d15740",
+          "kernel_end_event_id": 671401,
+          "label_tick": 27350,
+          "popped_sha256": "bad37a0843bdf6a2414c0e1865883f2ca5242f27f1b40bbc875d67aeba3f35ec",
+          "executed_sha256": "329c164d82b2207015f73f06960fe4bdd61c7818650fd8497a4a2a7c4c21dd28",
+          "popped_records": 19787,
+          "executed_records": 19840,
+          "original_trace_bounds": [
+            6090,
+            27300
+          ],
+          "official_duration_us": 12.85
+        },
+        "core3.veccore1": {
+          "first": 6108,
+          "last": 27290,
+          "entry_pc": "0x9000d12f00",
+          "physical_end_tick": 27283,
+          "physical_end_pc": "0x9000d15740",
+          "kernel_end_event_id": 671282,
+          "label_tick": 27290,
+          "popped_sha256": "65a742ef6803d27d5daec4e640b91df7243540c7e472dfdaafc7359068c3f765",
+          "executed_sha256": "02c2305a0fe6074096f935a7690eb9008fe63a9c9625fdbed8bdb08415c686c1",
+          "popped_records": 19787,
+          "executed_records": 19840,
+          "original_trace_bounds": [
+            6108,
+            27290
+          ],
+          "official_duration_us": 12.84
+        },
+        "core4.cubecore0": {
+          "first": 5974,
+          "last": 20594,
+          "entry_pc": "0x9000d0d000",
+          "physical_end_tick": 20591,
+          "physical_end_pc": "0x9000d0e200",
+          "kernel_end_event_id": 406409,
+          "label_tick": null,
+          "popped_sha256": "3b06b311358ed219a5939ddc0a427e13569c0c5430dd8616b625c18b3fcfa9dc",
+          "executed_sha256": "59ad6dca9095b4df2187930aa951e9cb1baa653df24cc5569b44cce971184d78",
+          "popped_records": 1526,
+          "executed_records": 1530,
+          "original_trace_bounds": [
+            5974,
+            20594
+          ],
+          "official_duration_us": 8.86
+        },
+        "core4.veccore0": {
+          "first": 5853,
+          "last": 27257,
+          "entry_pc": "0x9000d12f00",
+          "physical_end_tick": 27250,
+          "physical_end_pc": "0x9000d15740",
+          "kernel_end_event_id": 671250,
+          "label_tick": 27257,
+          "popped_sha256": "a46f1d4eff5964c607fa3fea5010f9219686aad5d6fb90be3e170b13bbdc2a08",
+          "executed_sha256": "d64940a35f5ad7d7bdd837bb962e246c2e5425da7c8767ac03fb35ff104bbe73",
+          "popped_records": 19787,
+          "executed_records": 19840,
+          "original_trace_bounds": [
+            5853,
+            27257
+          ],
+          "official_duration_us": 12.97
+        },
+        "core4.veccore1": {
+          "first": 5864,
+          "last": 27408,
+          "entry_pc": "0x9000d12f00",
+          "physical_end_tick": 27401,
+          "physical_end_pc": "0x9000d15740",
+          "kernel_end_event_id": 671460,
+          "label_tick": 27408,
+          "popped_sha256": "2c8a54ec9456ea7d3455811b31709b533afdd7d7becfe9bf940fd2f356dd5735",
+          "executed_sha256": "2ec10defa593bbd2b3598294b38c3d3da9a9fd0960b3b0708186b9165e56f47a",
+          "popped_records": 19787,
+          "executed_records": 19840,
+          "original_trace_bounds": [
+            5864,
+            27300
+          ],
+          "official_duration_us": 12.99
+        },
+        "core5.cubecore0": {
+          "first": 5997,
+          "last": 20551,
+          "entry_pc": "0x9000d0d000",
+          "physical_end_tick": 20548,
+          "physical_end_pc": "0x9000d0e200",
+          "kernel_end_event_id": 405134,
+          "label_tick": null,
+          "popped_sha256": "aa4e36fa7a7e6ba197345957effa31bcf40bec99f4b5a24e21c1258138dfd024",
+          "executed_sha256": "c5c0ad398dcfd92841ca1f2d48246553e9e12fe598855811fb1293a11f6b05db",
+          "popped_records": 1526,
+          "executed_records": 1530,
+          "original_trace_bounds": [
+            5997,
+            20551
+          ],
+          "official_duration_us": 8.82
+        },
+        "core5.veccore0": {
+          "first": 5954,
+          "last": 27300,
+          "entry_pc": "0x9000d12f00",
+          "physical_end_tick": 27293,
+          "physical_end_pc": "0x9000d15740",
+          "kernel_end_event_id": 671342,
+          "label_tick": 27300,
+          "popped_sha256": "fbe5dd6d197ccac77cf90a8d7c1fb39c102327a519d49d70b48abcffe2283124",
+          "executed_sha256": "dada1404fe8068f66e43ae12b90baa5bbdb24ff76b5eca53d7e70adde29c78d9",
+          "popped_records": 19787,
+          "executed_records": 19840,
+          "original_trace_bounds": [
+            5954,
+            27297
+          ],
+          "official_duration_us": 12.94
+        },
+        "core5.veccore1": {
+          "first": 5972,
+          "last": 27177,
+          "entry_pc": "0x9000d12f00",
+          "physical_end_tick": 27170,
+          "physical_end_pc": "0x9000d15740",
+          "kernel_end_event_id": 671118,
+          "label_tick": 27177,
+          "popped_sha256": "1f810aa7226092f32c0edb2728708168ecfc92525f26ecf79d3c60d8f5a4d465",
+          "executed_sha256": "291807b65cde36fd4371de6d7c751b298930709dbc279c491ed808bdcca7fdcc",
+          "popped_records": 19787,
+          "executed_records": 19840,
+          "original_trace_bounds": [
+            5972,
+            27177
+          ],
+          "official_duration_us": 12.85
+        },
+        "core6.cubecore0": {
+          "first": 5999,
+          "last": 19826,
+          "entry_pc": "0x9000d0d000",
+          "physical_end_tick": 19823,
+          "physical_end_pc": "0x9000d0e200",
+          "kernel_end_event_id": 386651,
+          "label_tick": null,
+          "popped_sha256": "911f26d97459f09b1892c388200b45ed728d4a4390e65c83180da7a197aab70a",
+          "executed_sha256": "14356753e1d08a15efac7a0aec55e9d6b7871d33980bc767ca62b9898d7266ff",
+          "popped_records": 1526,
+          "executed_records": 1530,
+          "original_trace_bounds": [
+            5999,
+            19826
+          ],
+          "official_duration_us": 8.38
+        },
+        "core6.veccore0": {
+          "first": 5997,
+          "last": 27234,
+          "entry_pc": "0x9000d12f00",
+          "physical_end_tick": 27227,
+          "physical_end_pc": "0x9000d15740",
+          "kernel_end_event_id": 671196,
+          "label_tick": 27234,
+          "popped_sha256": "e538b2b6dc9bea4a0b686110b7b95b91603d5b7fc3cfc23f3633ae61200fd1d5",
+          "executed_sha256": "4e203478b7e24a154175b54950f60d926453bd80a80b2cb40c75cd06e998d8aa",
+          "popped_records": 19787,
+          "executed_records": 19840,
+          "original_trace_bounds": [
+            5997,
+            27234
+          ],
+          "official_duration_us": 12.87
+        },
+        "core6.veccore1": {
+          "first": 6027,
+          "last": 27354,
+          "entry_pc": "0x9000d12f00",
+          "physical_end_tick": 27347,
+          "physical_end_pc": "0x9000d15740",
+          "kernel_end_event_id": 671429,
+          "label_tick": 27354,
+          "popped_sha256": "cde5229e65b13f9568ff530169d39f4f191e0154bc9c7dd059307b74abf8a794",
+          "executed_sha256": "8f4e6d8e63f52e06d86e6fcefbdcd16590d48ed468880aa71ee0e628a2be075b",
+          "popped_records": 19787,
+          "executed_records": 19840,
+          "original_trace_bounds": [
+            6027,
+            27296
+          ],
+          "official_duration_us": 12.89
+        },
+        "core7.cubecore0": {
+          "first": 6063,
+          "last": 19980,
+          "entry_pc": "0x9000d0d000",
+          "physical_end_tick": 19977,
+          "physical_end_pc": "0x9000d0e200",
+          "kernel_end_event_id": 387852,
+          "label_tick": null,
+          "popped_sha256": "f6ecc19a72550cf2a470a43872b7c9f6f23398106cf46d7d41a0c0220921aaa4",
+          "executed_sha256": "3eb45ed83d1058d6c44c6471cb6ab76dcea89b62c9d2985a77845038d702e680",
+          "popped_records": 1526,
+          "executed_records": 1530,
+          "original_trace_bounds": [
+            6063,
+            19980
+          ],
+          "official_duration_us": 8.43
+        },
+        "core7.veccore0": {
+          "first": 6026,
+          "last": 27022,
+          "entry_pc": "0x9000d12f00",
+          "physical_end_tick": 27015,
+          "physical_end_pc": "0x9000d15740",
+          "kernel_end_event_id": 670854,
+          "label_tick": 27022,
+          "popped_sha256": "94f9e9017d24054b753d4426462afe74109f014bd27afb9eb59a9e00ee61b95d",
+          "executed_sha256": "4c01299fc0b682180e50ab63ad4f4ece4feccb5c73832176df98e53446c43ef3",
+          "popped_records": 19787,
+          "executed_records": 19840,
+          "original_trace_bounds": [
+            6026,
+            27022
+          ],
+          "official_duration_us": 12.72
+        },
+        "core7.veccore1": {
+          "first": 6046,
+          "last": 26968,
+          "entry_pc": "0x9000d12f00",
+          "physical_end_tick": 26961,
+          "physical_end_pc": "0x9000d15740",
+          "kernel_end_event_id": 670782,
+          "label_tick": 26968,
+          "popped_sha256": "e93c8e9f4f95638132f6c7861e619f0d058c251ae2ebf944b2b0def4b115d20b",
+          "executed_sha256": "0623b51d5b243b904dbd87374f910014cbee0a7c7d4afa6635b730ac3e9bde6b",
+          "popped_records": 19787,
+          "executed_records": 19840,
+          "original_trace_bounds": [
+            6046,
+            26968
+          ],
+          "official_duration_us": 12.68
+        },
+        "core8.cubecore0": {
+          "first": 5944,
+          "last": 20362,
+          "entry_pc": "0x9000d0d000",
+          "physical_end_tick": 20359,
+          "physical_end_pc": "0x9000d0e200",
+          "kernel_end_event_id": 395974,
+          "label_tick": null,
+          "popped_sha256": "87626d823bdfd24a2f0891a41decbde61fa58438d6ed2509d0d99ec32044e97c",
+          "executed_sha256": "e35ffe0af0b069bbaf580bb7787f82d201abbf3ddbc648c267d56970cf9d4304",
+          "popped_records": 1526,
+          "executed_records": 1530,
+          "original_trace_bounds": [
+            5944,
+            20362
+          ],
+          "official_duration_us": 8.74
+        },
+        "core8.veccore0": {
+          "first": 5892,
+          "last": 27047,
+          "entry_pc": "0x9000d12f00",
+          "physical_end_tick": 27040,
+          "physical_end_pc": "0x9000d15740",
+          "kernel_end_event_id": 670891,
+          "label_tick": 27047,
+          "popped_sha256": "08da596334e2990e546ffd1effde8b4099a16946f56295baa6935a7e939721f3",
+          "executed_sha256": "6fc47d9564db636584d7c184fe79176e32ef73d5c612097855c3ed05beb8a2d2",
+          "popped_records": 19787,
+          "executed_records": 19840,
+          "original_trace_bounds": [
+            5892,
+            27047
+          ],
+          "official_duration_us": 12.82
+        },
+        "core8.veccore1": {
+          "first": 5947,
+          "last": 27104,
+          "entry_pc": "0x9000d12f00",
+          "physical_end_tick": 27097,
+          "physical_end_pc": "0x9000d15740",
+          "kernel_end_event_id": 670981,
+          "label_tick": 27104,
+          "popped_sha256": "dcae3fdfe2b663bf24c4f2906ee5d7fd0b3a5718132ad998fa3af784a4cd9be4",
+          "executed_sha256": "8f84845690c7e7df0334a2b24a36654c3bb6eb8feea70269861cf954ce73ee2b",
+          "popped_records": 19787,
+          "executed_records": 19840,
+          "original_trace_bounds": [
+            5947,
+            27104
+          ],
+          "official_duration_us": 12.82
+        },
+        "core9.cubecore0": {
+          "first": 6088,
+          "last": 20305,
+          "entry_pc": "0x9000d0d000",
+          "physical_end_tick": 20302,
+          "physical_end_pc": "0x9000d0e200",
+          "kernel_end_event_id": 393813,
+          "label_tick": null,
+          "popped_sha256": "5a47ccc7d1b99e6d40f30964dce5a2002e4bef3e9000ae61c0d9026cf8b33b36",
+          "executed_sha256": "fb2dbeda0b5f5741a52f4ee07229b65afbe70868f3b80ade9d69549316f1a066",
+          "popped_records": 1526,
+          "executed_records": 1530,
+          "original_trace_bounds": [
+            6088,
+            20305
+          ],
+          "official_duration_us": 8.62
+        },
+        "core9.veccore0": {
+          "first": 6146,
+          "last": 27399,
+          "entry_pc": "0x9000d12f00",
+          "physical_end_tick": 27392,
+          "physical_end_pc": "0x9000d15740",
+          "kernel_end_event_id": 671445,
+          "label_tick": 27399,
+          "popped_sha256": "b485c706c6f06295706eafe82e17461bc412be7bb2fc94fbd4cc3bd750cdbee8",
+          "executed_sha256": "a5d4ae450b5f5fd98ef63d5925871ef90a0d2f5e113f91c88ef5b16826ff45b2",
+          "popped_records": 19787,
+          "executed_records": 19840,
+          "original_trace_bounds": [
+            6146,
+            27297
+          ],
+          "official_duration_us": 12.82
+        },
+        "core9.veccore1": {
+          "first": 6161,
+          "last": 27251,
+          "entry_pc": "0x9000d12f00",
+          "physical_end_tick": 27244,
+          "physical_end_pc": "0x9000d15740",
+          "kernel_end_event_id": 671235,
+          "label_tick": 27251,
+          "popped_sha256": "ac5516cb493d14faa7b79bf8c46a16e95b7bedbb0e20010d52c2a5bbf43b8a89",
+          "executed_sha256": "8bc5111fc14592f87c24536d7dbfaeb1692fa4245c0f36c4119163794b05cbf2",
+          "popped_records": 19787,
+          "executed_records": 19840,
+          "original_trace_bounds": [
+            6161,
+            27251
+          ],
+          "official_duration_us": 12.78
+        }
+      },
+      "prior_comparison": {
+        "dump": "runs/fusion21/mhc_pre_sinkhorn_56_4_4096_Ascend950PR_957b/profile/OPPROF_20261119205245_ADJEPOVZSZVFZGWL/dump",
+        "entry_offsets": {
+          "aic": 0,
+          "aiv": 24320
+        },
+        "roster_count": 84,
+        "shortened_trace_windows": [],
+        "cores": {
+          "core0.cubecore0": {
+            "first": 5388,
+            "last": 20717,
+            "entry_pc": "0x9000d0d000",
+            "physical_end_tick": 20714,
+            "physical_end_pc": "0x9000d0e200",
+            "kernel_end_event_id": 424414,
+            "label_tick": null,
+            "popped_sha256": "537f870efe55de3d12d2984c411165c1fb581233b50de643c82c075b08a6d416",
+            "executed_sha256": "c818627aa2ae9dc84633fceb4596970b6f7501ec7f452ecae2a74dbb538c07e2",
+            "popped_records": 1526,
+            "executed_records": 1530,
+            "original_trace_bounds": [
+              5388,
+              20717
+            ],
+            "official_duration_us": 9.29
+          },
+          "core0.veccore0": {
+            "first": 5286,
+            "last": 24101,
+            "entry_pc": "0x9000d12f00",
+            "physical_end_tick": 24094,
+            "physical_end_pc": "0x9000d15740",
+            "kernel_end_event_id": 669760,
+            "label_tick": 24101,
+            "popped_sha256": "594bc969524f77121fbd0e03f0ad57604bfa37ef0db225bccd934320376142b3",
+            "executed_sha256": "4e92535469e91795e69a8e930e47f5c2ac2450ce0cbefaf9f7d8d6f19c886595",
+            "popped_records": 14456,
+            "executed_records": 14510,
+            "original_trace_bounds": [
+              5286,
+              24101
+            ],
+            "official_duration_us": 11.4
+          },
+          "core0.veccore1": {
+            "first": 5381,
+            "last": 23866,
+            "entry_pc": "0x9000d12f00",
+            "physical_end_tick": 23859,
+            "physical_end_pc": "0x9000d15740",
+            "kernel_end_event_id": 658086,
+            "label_tick": 23866,
+            "popped_sha256": "d8dd3f10b720f84d810cf2ed5b71c00aa5908d716b5d66e2fb29f1b841b66d6e",
+            "executed_sha256": "f1ee06462c9393e8436541e1b9ae4537cc2a216d44e4935e57ecb098256aca28",
+            "popped_records": 14456,
+            "executed_records": 14510,
+            "original_trace_bounds": [
+              5381,
+              23866
+            ],
+            "official_duration_us": 11.2
+          },
+          "core1.cubecore0": {
+            "first": 5690,
+            "last": 20445,
+            "entry_pc": "0x9000d0d000",
+            "physical_end_tick": 20442,
+            "physical_end_pc": "0x9000d0e200",
+            "kernel_end_event_id": 411701,
+            "label_tick": null,
+            "popped_sha256": "404f2c736c0737e99bb78a0b63bea600d4a4367747850339c85dd90f78c20a4a",
+            "executed_sha256": "5f9944ef68121b14987b5c89b96fd886dc31c2db277d367af532aa46ec5fcaae",
+            "popped_records": 1526,
+            "executed_records": 1530,
+            "original_trace_bounds": [
+              5690,
+              20445
+            ],
+            "official_duration_us": 8.94
+          },
+          "core1.veccore0": {
+            "first": 5780,
+            "last": 24687,
+            "entry_pc": "0x9000d12f00",
+            "physical_end_tick": 24680,
+            "physical_end_pc": "0x9000d15740",
+            "kernel_end_event_id": 677910,
+            "label_tick": 24687,
+            "popped_sha256": "a5bdef660dc477b435fb243a55165fe48268ff5fbe6a7b39284c04c09cc06938",
+            "executed_sha256": "69803b84afaa855ed3f3518ef3c6b270816b8178dd1a98f16de71ffabd7f18c7",
+            "popped_records": 14456,
+            "executed_records": 14510,
+            "original_trace_bounds": [
+              5780,
+              24687
+            ],
+            "official_duration_us": 11.46
+          },
+          "core1.veccore1": {
+            "first": 5807,
+            "last": 24433,
+            "entry_pc": "0x9000d12f00",
+            "physical_end_tick": 24426,
+            "physical_end_pc": "0x9000d15740",
+            "kernel_end_event_id": 676269,
+            "label_tick": 24433,
+            "popped_sha256": "4b82a2843b9c273fb879e1a99ecd9258794f9ae5e954f5fd0d412d6cbda3d13a",
+            "executed_sha256": "7a0c994bde77c0296a3a6784cb477eb79c08ccc6b62dce2919074586fecda006",
+            "popped_records": 14456,
+            "executed_records": 14510,
+            "original_trace_bounds": [
+              5807,
+              24433
+            ],
+            "official_duration_us": 11.29
+          },
+          "core10.cubecore0": {
+            "first": 5637,
+            "last": 20188,
+            "entry_pc": "0x9000d0d000",
+            "physical_end_tick": 20185,
+            "physical_end_pc": "0x9000d0e200",
+            "kernel_end_event_id": 395195,
+            "label_tick": null,
+            "popped_sha256": "035b2100232f922e180d1db3904b7669fc46fec55d7111546ed751ddb5a3a830",
+            "executed_sha256": "95c8877bd4bb28994bdb80838b98b9bfb24ba1ab6d2be36f3c6b26bfa4828d58",
+            "popped_records": 1526,
+            "executed_records": 1530,
+            "original_trace_bounds": [
+              5637,
+              20188
+            ],
+            "official_duration_us": 8.82
+          },
+          "core10.veccore0": {
+            "first": 5643,
+            "last": 24277,
+            "entry_pc": "0x9000d12f00",
+            "physical_end_tick": 24270,
+            "physical_end_pc": "0x9000d15740",
+            "kernel_end_event_id": 673919,
+            "label_tick": 24277,
+            "popped_sha256": "fdcfe53a5baa66f52b9b6d0037f95818fbd7aadb3071bdc14bbc57b410e3bfa4",
+            "executed_sha256": "0d689285d62e0fa1429ee88236a6e72b1e477e6d675d74219b9507a48e46d861",
+            "popped_records": 14456,
+            "executed_records": 14510,
+            "original_trace_bounds": [
+              5643,
+              24277
+            ],
+            "official_duration_us": 11.29
+          },
+          "core10.veccore1": {
+            "first": 5711,
+            "last": 24044,
+            "entry_pc": "0x9000d12f00",
+            "physical_end_tick": 24037,
+            "physical_end_pc": "0x9000d15740",
+            "kernel_end_event_id": 667585,
+            "label_tick": 24044,
+            "popped_sha256": "3fb772456e8000055de9eb3a63896c104156b3a2612c634181d6e131b099966c",
+            "executed_sha256": "93cc64c0fdd7feda3c0297237163168846666c05d128e743be18987c1b16872e",
+            "popped_records": 14456,
+            "executed_records": 14510,
+            "original_trace_bounds": [
+              5711,
+              24044
+            ],
+            "official_duration_us": 11.11
+          },
+          "core11.cubecore0": {
+            "first": 5554,
+            "last": 20184,
+            "entry_pc": "0x9000d0d000",
+            "physical_end_tick": 20181,
+            "physical_end_pc": "0x9000d0e200",
+            "kernel_end_event_id": 397202,
+            "label_tick": null,
+            "popped_sha256": "9db7377e202bd06b6a4d4df5467350f2e82cb7124062f34077204bae08c290b7",
+            "executed_sha256": "500d37befa9b430d1502a93c352af03ac8ed988fb4f00cb006a5cfc5d68dbf85",
+            "popped_records": 1526,
+            "executed_records": 1530,
+            "original_trace_bounds": [
+              5554,
+              20184
+            ],
+            "official_duration_us": 8.87
+          },
+          "core11.veccore0": {
+            "first": 5502,
+            "last": 24640,
+            "entry_pc": "0x9000d12f00",
+            "physical_end_tick": 24633,
+            "physical_end_pc": "0x9000d15740",
+            "kernel_end_event_id": 677737,
+            "label_tick": 24640,
+            "popped_sha256": "a2041e11d53f0d4a5b8564a087c137f754da1d76b8913b96d1cee609954783c1",
+            "executed_sha256": "72fa94a21969a7816c98be21c772f4fdc0e74e01c159cd5ae57a9a12b128157b",
+            "popped_records": 14456,
+            "executed_records": 14510,
+            "original_trace_bounds": [
+              5502,
+              24640
+            ],
+            "official_duration_us": 11.6
+          },
+          "core11.veccore1": {
+            "first": 5534,
+            "last": 24374,
+            "entry_pc": "0x9000d12f00",
+            "physical_end_tick": 24367,
+            "physical_end_pc": "0x9000d15740",
+            "kernel_end_event_id": 675434,
+            "label_tick": 24374,
+            "popped_sha256": "cd2ec3910764ea6521a83ed218f568cbd7b92ba76d2bb28a4c2df929c3752f41",
+            "executed_sha256": "ea022e94002307a077d3eaaa6b23936fe027ec608f3c34df91fcf030802a49c9",
+            "popped_records": 14456,
+            "executed_records": 14510,
+            "original_trace_bounds": [
+              5534,
+              24374
+            ],
+            "official_duration_us": 11.42
+          },
+          "core12.cubecore0": {
+            "first": 5532,
+            "last": 20477,
+            "entry_pc": "0x9000d0d000",
+            "physical_end_tick": 20474,
+            "physical_end_pc": "0x9000d0e200",
+            "kernel_end_event_id": 414686,
+            "label_tick": null,
+            "popped_sha256": "dece60e6cd7274d99d3a17ed196b68ce18915e54352a7534bfb2825a6e241aa2",
+            "executed_sha256": "7a30ecd30354fb5ba6267260529504d0c8928c0e997dde9a204297e45f37f48a",
+            "popped_records": 1526,
+            "executed_records": 1530,
+            "original_trace_bounds": [
+              5532,
+              20477
+            ],
+            "official_duration_us": 9.06
+          },
+          "core12.veccore0": {
+            "first": 5495,
+            "last": 24867,
+            "entry_pc": "0x9000d12f00",
+            "physical_end_tick": 24860,
+            "physical_end_pc": "0x9000d15740",
+            "kernel_end_event_id": 678298,
+            "label_tick": 24867,
+            "popped_sha256": "404f27ab2cc5b713842eb86eaa5df10fe9de1e6085b2f2603f756a67d2b29050",
+            "executed_sha256": "b1eb257802f7ae6268d60c9cb42ddf01e04ac46a4d06e6bc39186dd5aed6da0b",
+            "popped_records": 14456,
+            "executed_records": 14510,
+            "original_trace_bounds": [
+              5495,
+              24867
+            ],
+            "official_duration_us": 11.74
+          },
+          "core12.veccore1": {
+            "first": 5524,
+            "last": 24714,
+            "entry_pc": "0x9000d12f00",
+            "physical_end_tick": 24707,
+            "physical_end_pc": "0x9000d15740",
+            "kernel_end_event_id": 677974,
+            "label_tick": 24714,
+            "popped_sha256": "978a7b1c9aee0e6f0d39afa468d7f734dc07d512c85e6beb86d49db7df239749",
+            "executed_sha256": "2950c8fa649884e80e62debd50cceb978826512a31d5d3a0a300bba26fbc2cb9",
+            "popped_records": 14456,
+            "executed_records": 14510,
+            "original_trace_bounds": [
+              5524,
+              24714
+            ],
+            "official_duration_us": 11.63
+          },
+          "core13.cubecore0": {
+            "first": 5527,
+            "last": 20712,
+            "entry_pc": "0x9000d0d000",
+            "physical_end_tick": 20709,
+            "physical_end_pc": "0x9000d0e200",
+            "kernel_end_event_id": 424283,
+            "label_tick": null,
+            "popped_sha256": "ca26a11f1c052836b084856a589f06756143e249e57e2f2db0b0f702f76af14b",
+            "executed_sha256": "1e99b5f262a0180e2f6261176b6922e50ce6517ea30d74a0e1ddaebb184e719f",
+            "popped_records": 1526,
+            "executed_records": 1530,
+            "original_trace_bounds": [
+              5527,
+              20712
+            ],
+            "official_duration_us": 9.2
+          },
+          "core13.veccore0": {
+            "first": 5538,
+            "last": 24757,
+            "entry_pc": "0x9000d12f00",
+            "physical_end_tick": 24750,
+            "physical_end_pc": "0x9000d15740",
+            "kernel_end_event_id": 678061,
+            "label_tick": 24757,
+            "popped_sha256": "6783d7571fc1a4045cfd368e6a9905854761b0fcb734508a0c1c2567ba2c20a3",
+            "executed_sha256": "a454fab7c64606b0f556dc207b5f87c3bdf42f581a21ae43107ec14343f3471f",
+            "popped_records": 14456,
+            "executed_records": 14510,
+            "original_trace_bounds": [
+              5538,
+              24757
+            ],
+            "official_duration_us": 11.65
+          },
+          "core13.veccore1": {
+            "first": 5584,
+            "last": 24526,
+            "entry_pc": "0x9000d12f00",
+            "physical_end_tick": 24519,
+            "physical_end_pc": "0x9000d15740",
+            "kernel_end_event_id": 677144,
+            "label_tick": 24526,
+            "popped_sha256": "44fe3436e3231267478d9a0c56ddce345f0b93485095bab386ce023d73fe62b5",
+            "executed_sha256": "81e38ec9b4ed030dff797c36d13effa39a877a3cf9ed2ae41a208b3dcd993295",
+            "popped_records": 14456,
+            "executed_records": 14510,
+            "original_trace_bounds": [
+              5584,
+              24526
+            ],
+            "official_duration_us": 11.48
+          },
+          "core16.cubecore0": {
+            "first": 5836,
+            "last": 20118,
+            "entry_pc": "0x9000d0d000",
+            "physical_end_tick": 20115,
+            "physical_end_pc": "0x9000d0e200",
+            "kernel_end_event_id": 393346,
+            "label_tick": null,
+            "popped_sha256": "59853d30b254658a9e5d20063b9ba83821fd26ead5e7e5d7f0357a6acc86146e",
+            "executed_sha256": "3d25e08e1b34f490696ac6702cf6bf62f656c36034abcdb8752181629932bf7f",
+            "popped_records": 1526,
+            "executed_records": 1530,
+            "original_trace_bounds": [
+              5836,
+              20118
+            ],
+            "official_duration_us": 8.66
+          },
+          "core16.veccore0": {
+            "first": 5766,
+            "last": 24442,
+            "entry_pc": "0x9000d12f00",
+            "physical_end_tick": 24435,
+            "physical_end_pc": "0x9000d15740",
+            "kernel_end_event_id": 676416,
+            "label_tick": 24442,
+            "popped_sha256": "adb1ab8ad72fa9c2df827dfc684b92ba464aca52e8fb50bcf291b2a77afddc03",
+            "executed_sha256": "d51f32c40fba236c657c995e4c52afec4f005936cd261339707a8df7981cb61b",
+            "popped_records": 14456,
+            "executed_records": 14510,
+            "original_trace_bounds": [
+              5766,
+              24442
+            ],
+            "official_duration_us": 11.32
+          },
+          "core16.veccore1": {
+            "first": 5778,
+            "last": 24673,
+            "entry_pc": "0x9000d12f00",
+            "physical_end_tick": 24666,
+            "physical_end_pc": "0x9000d15740",
+            "kernel_end_event_id": 677851,
+            "label_tick": 24673,
+            "popped_sha256": "25dbb7c3f7d2911066056d10eaf128156037e35f8dca1f3821d1c9dff3c1cc0e",
+            "executed_sha256": "30c26fe643c411e38bf3dca9abf692d937032b5a239f2b3c3df85a82d0fa7dd0",
+            "popped_records": 14456,
+            "executed_records": 14510,
+            "original_trace_bounds": [
+              5778,
+              24673
+            ],
+            "official_duration_us": 11.45
+          },
+          "core17.cubecore0": {
+            "first": 5962,
+            "last": 20084,
+            "entry_pc": "0x9000d0d000",
+            "physical_end_tick": 20081,
+            "physical_end_pc": "0x9000d0e200",
+            "kernel_end_event_id": 393051,
+            "label_tick": null,
+            "popped_sha256": "712aa3590017f9faf407a6cba93e76736c61baf940adfa48ab57ca42f26013a0",
+            "executed_sha256": "a988a31eead13deda0114fa43c136aa9918d0888e6ce4a7ee756ef5f11837cbd",
+            "popped_records": 1526,
+            "executed_records": 1530,
+            "original_trace_bounds": [
+              5962,
+              20084
+            ],
+            "official_duration_us": 8.56
+          },
+          "core17.veccore0": {
+            "first": 5946,
+            "last": 24497,
+            "entry_pc": "0x9000d12f00",
+            "physical_end_tick": 24490,
+            "physical_end_pc": "0x9000d15740",
+            "kernel_end_event_id": 676943,
+            "label_tick": 24497,
+            "popped_sha256": "a44d3e5d784f6a3f6846b1c0339a1b297c440460f1b8bedee72d8adfd64443be",
+            "executed_sha256": "eee5834e78c68e70efdc100bdbe0f0a85469bb4ed27a89b92c1a9a14fb7a4d15",
+            "popped_records": 14456,
+            "executed_records": 14510,
+            "original_trace_bounds": [
+              5946,
+              24497
+            ],
+            "official_duration_us": 11.24
+          },
+          "core17.veccore1": {
+            "first": 5992,
+            "last": 24266,
+            "entry_pc": "0x9000d12f00",
+            "physical_end_tick": 24259,
+            "physical_end_pc": "0x9000d15740",
+            "kernel_end_event_id": 673712,
+            "label_tick": 24266,
+            "popped_sha256": "16a0c7a31415ff780c389c6bf353e73ad8295784aafe0d1fe693e3d27a165238",
+            "executed_sha256": "f347c337001cc78e6b61eadaa1e08d6c8641ff0e51f5475de3aa010ea7187820",
+            "popped_records": 14456,
+            "executed_records": 14510,
+            "original_trace_bounds": [
+              5992,
+              24266
+            ],
+            "official_duration_us": 11.08
+          },
+          "core18.cubecore0": {
+            "first": 5961,
+            "last": 20573,
+            "entry_pc": "0x9000d0d000",
+            "physical_end_tick": 20570,
+            "physical_end_pc": "0x9000d0e200",
+            "kernel_end_event_id": 420550,
+            "label_tick": null,
+            "popped_sha256": "96fd91070b7c84e4095440e1966aa16c0f62c694d8ce23561a2fac52a7ed85ec",
+            "executed_sha256": "bab6293a7751e47c8baaec8516fdfbbbd2e6140922167a2c425f30e8da82c849",
+            "popped_records": 1526,
+            "executed_records": 1530,
+            "original_trace_bounds": [
+              5961,
+              20573
+            ],
+            "official_duration_us": 8.86
+          },
+          "core18.veccore0": {
+            "first": 5890,
+            "last": 24980,
+            "entry_pc": "0x9000d12f00",
+            "physical_end_tick": 24973,
+            "physical_end_pc": "0x9000d15740",
+            "kernel_end_event_id": 678473,
+            "label_tick": 24980,
+            "popped_sha256": "ac512d377dbd48ddf877fed74168f1232ff94611423ac61efa35dcada456124c",
+            "executed_sha256": "827b201b10f29796e404213ffa59cfac9b0411efdf0aa80e9f3e0a7f4600f2f9",
+            "popped_records": 14456,
+            "executed_records": 14510,
+            "original_trace_bounds": [
+              5890,
+              24980
+            ],
+            "official_duration_us": 11.57
+          },
+          "core18.veccore1": {
+            "first": 5923,
+            "last": 24675,
+            "entry_pc": "0x9000d12f00",
+            "physical_end_tick": 24668,
+            "physical_end_pc": "0x9000d15740",
+            "kernel_end_event_id": 677862,
+            "label_tick": 24675,
+            "popped_sha256": "ccde95eb3bb9949f747ae0b7945f1b171fa033df4e269a1ca7a7b4db5f352100",
+            "executed_sha256": "2d34d65dc086f523f32c57af785e0703f1d7ddfc949b1d6a3e4d0022d115621b",
+            "popped_records": 14456,
+            "executed_records": 14510,
+            "original_trace_bounds": [
+              5923,
+              24675
+            ],
+            "official_duration_us": 11.36
+          },
+          "core19.cubecore0": {
+            "first": 6070,
+            "last": 20751,
+            "entry_pc": "0x9000d0d000",
+            "physical_end_tick": 20748,
+            "physical_end_pc": "0x9000d0e200",
+            "kernel_end_event_id": 423339,
+            "label_tick": null,
+            "popped_sha256": "7ac9ba8afd4ecee2f8606a1f1fca1953939dda5150530462cb199477411d4ec8",
+            "executed_sha256": "4ca9dc440fcd6f479b0346bb8d9868e3978bc7e89efa2cf53be97eb8cb9b54c3",
+            "popped_records": 1526,
+            "executed_records": 1530,
+            "original_trace_bounds": [
+              6070,
+              20751
+            ],
+            "official_duration_us": 8.9
+          },
+          "core19.veccore0": {
+            "first": 6061,
+            "last": 24223,
+            "entry_pc": "0x9000d12f00",
+            "physical_end_tick": 24216,
+            "physical_end_pc": "0x9000d15740",
+            "kernel_end_event_id": 672900,
+            "label_tick": 24223,
+            "popped_sha256": "e0d9b62006afed277ce5e8811592bd41b3335e1772f1952edf37007ef3b5714f",
+            "executed_sha256": "7d3fd955c88939d40003e798483111a698841d481367240aa47f7a32f88c5e2b",
+            "popped_records": 14456,
+            "executed_records": 14510,
+            "original_trace_bounds": [
+              6061,
+              24223
+            ],
+            "official_duration_us": 11.01
+          },
+          "core19.veccore1": {
+            "first": 6071,
+            "last": 24466,
+            "entry_pc": "0x9000d12f00",
+            "physical_end_tick": 24459,
+            "physical_end_pc": "0x9000d15740",
+            "kernel_end_event_id": 676642,
+            "label_tick": 24466,
+            "popped_sha256": "8c60b7f8f941c43eb9087eecfd585401ae91497d43f99a93fb81635154aba20d",
+            "executed_sha256": "e9b93eadd180a55a8960ed5eddd0bd45523643f03be1472530aece03f7b2520c",
+            "popped_records": 14456,
+            "executed_records": 14510,
+            "original_trace_bounds": [
+              6071,
+              24466
+            ],
+            "official_duration_us": 11.15
+          },
+          "core2.cubecore0": {
+            "first": 5460,
+            "last": 20244,
+            "entry_pc": "0x9000d0d000",
+            "physical_end_tick": 20241,
+            "physical_end_pc": "0x9000d0e200",
+            "kernel_end_event_id": 401275,
+            "label_tick": null,
+            "popped_sha256": "fdb531d818fbd7d1c8629de2596a818b86dc8876dcc7fa63226a55eeaa393c07",
+            "executed_sha256": "417fcc18a31ef81e0af2100c744ebd42152db775b1cc18c7ee9bbdbb38ce4704",
+            "popped_records": 1526,
+            "executed_records": 1530,
+            "original_trace_bounds": [
+              5460,
+              20244
+            ],
+            "official_duration_us": 8.96
+          },
+          "core2.veccore0": {
+            "first": 5450,
+            "last": 24258,
+            "entry_pc": "0x9000d12f00",
+            "physical_end_tick": 24251,
+            "physical_end_pc": "0x9000d15740",
+            "kernel_end_event_id": 673559,
+            "label_tick": 24258,
+            "popped_sha256": "b0d0e132e5cfd19c2c38693106c33f726f227f44d72595d5d92e787c2bf0cdf9",
+            "executed_sha256": "fd2c6046d9b882f78f63fb54f09b67250d86e6edf55239b85071738476659da4",
+            "popped_records": 14456,
+            "executed_records": 14510,
+            "original_trace_bounds": [
+              5450,
+              24258
+            ],
+            "official_duration_us": 11.4
+          },
+          "core2.veccore1": {
+            "first": 5483,
+            "last": 24493,
+            "entry_pc": "0x9000d12f00",
+            "physical_end_tick": 24486,
+            "physical_end_pc": "0x9000d15740",
+            "kernel_end_event_id": 676896,
+            "label_tick": 24493,
+            "popped_sha256": "8fae45185ec0908cbf6e886192e1f711e589d7e5039c060eae647e5304efbd5c",
+            "executed_sha256": "3c87feb1f193565f159438bebac2cada501291450271ff116797d4fdac2e423a",
+            "popped_records": 14456,
+            "executed_records": 14510,
+            "original_trace_bounds": [
+              5483,
+              24493
+            ],
+            "official_duration_us": 11.52
+          },
+          "core20.cubecore0": {
+            "first": 5783,
+            "last": 20059,
+            "entry_pc": "0x9000d0d000",
+            "physical_end_tick": 20056,
+            "physical_end_pc": "0x9000d0e200",
+            "kernel_end_event_id": 392766,
+            "label_tick": null,
+            "popped_sha256": "a2dcccd806e964bb03f09dfb44638dbc089fdaff3067489c70b32c995c26a0f1",
+            "executed_sha256": "d2e5002ee720b0923a81837ca3100d6abe66d53d30d9c73688a71b6587b200a8",
+            "popped_records": 1526,
+            "executed_records": 1530,
+            "original_trace_bounds": [
+              5783,
+              20059
+            ],
+            "official_duration_us": 8.65
+          },
+          "core20.veccore0": {
+            "first": 5717,
+            "last": 24648,
+            "entry_pc": "0x9000d12f00",
+            "physical_end_tick": 24641,
+            "physical_end_pc": "0x9000d15740",
+            "kernel_end_event_id": 677776,
+            "label_tick": 24648,
+            "popped_sha256": "6a8bdd8eab3245c1fc61de448c5fa168bdab6f49fb8ff847fd85b8c4b5ef90e9",
+            "executed_sha256": "9fec892bb04b3697f095442dee7f0c680b00c6f108a13c5bb516e2c36b9c1baf",
+            "popped_records": 14456,
+            "executed_records": 14510,
+            "original_trace_bounds": [
+              5717,
+              24648
+            ],
+            "official_duration_us": 11.47
+          },
+          "core20.veccore1": {
+            "first": 5728,
+            "last": 24885,
+            "entry_pc": "0x9000d12f00",
+            "physical_end_tick": 24878,
+            "physical_end_pc": "0x9000d15740",
+            "kernel_end_event_id": 678328,
+            "label_tick": 24885,
+            "popped_sha256": "5a25d8e1f0eb0753dbaa9884049cdc7f444a774edc069ba3acf6d7f67e0d7c0c",
+            "executed_sha256": "83159ce49de0dc042a4ebbddeb6c56d30ae8d4c98ba1ee579a215baa1ffe3815",
+            "popped_records": 14456,
+            "executed_records": 14510,
+            "original_trace_bounds": [
+              5728,
+              24885
+            ],
+            "official_duration_us": 11.61
+          },
+          "core21.cubecore0": {
+            "first": 5887,
+            "last": 20016,
+            "entry_pc": "0x9000d0d000",
+            "physical_end_tick": 20013,
+            "physical_end_pc": "0x9000d0e200",
+            "kernel_end_event_id": 392188,
+            "label_tick": null,
+            "popped_sha256": "a22cef6a3b077d013a73fc01ab368e5629e89740f06e0013e7eb480d194d8732",
+            "executed_sha256": "ba6b0de1c8a2ba0ff6fe40feb6aacc9898f06f21e9559a6dff0cca3ac7ab06dd",
+            "popped_records": 1526,
+            "executed_records": 1530,
+            "original_trace_bounds": [
+              5887,
+              20016
+            ],
+            "official_duration_us": 8.56
+          },
+          "core21.veccore0": {
+            "first": 5876,
+            "last": 25083,
+            "entry_pc": "0x9000d12f00",
+            "physical_end_tick": 25076,
+            "physical_end_pc": "0x9000d15740",
+            "kernel_end_event_id": 678602,
+            "label_tick": 25083,
+            "popped_sha256": "f5ce6bc934b7ededfae51a03df7a54fba8f792ba3f99326d4088b8771c7fc6d7",
+            "executed_sha256": "2979703667f6919ddeb3c53be0ef1541f7400c683f5e2f096c67da5ff53fd068",
+            "popped_records": 14456,
+            "executed_records": 14510,
+            "original_trace_bounds": [
+              5876,
+              25083
+            ],
+            "official_duration_us": 11.64
+          },
+          "core21.veccore1": {
+            "first": 5889,
+            "last": 24796,
+            "entry_pc": "0x9000d12f00",
+            "physical_end_tick": 24789,
+            "physical_end_pc": "0x9000d15740",
+            "kernel_end_event_id": 678154,
+            "label_tick": 24796,
+            "popped_sha256": "88cdf72ebcc70b8441f68bf6f3b46f16d45f7c1c82e8280a5e82bf0ff9ac5edc",
+            "executed_sha256": "e82a2930f8dc9aee15d0fe0e6baafa1a4c08156f86e82d723d0ed59612791afc",
+            "popped_records": 14456,
+            "executed_records": 14510,
+            "original_trace_bounds": [
+              5889,
+              24796
+            ],
+            "official_duration_us": 11.46
+          },
+          "core22.cubecore0": {
+            "first": 5997,
+            "last": 20817,
+            "entry_pc": "0x9000d0d000",
+            "physical_end_tick": 20814,
+            "physical_end_pc": "0x9000d0e200",
+            "kernel_end_event_id": 425215,
+            "label_tick": null,
+            "popped_sha256": "0da6b0cc722d0ee9693244fea39f6e8e33ef20ff7fdd5de7c7b6c2b1203fc361",
+            "executed_sha256": "b70d5bd7898ee166c0465e2d27f7b44bbef116c9fc7df903bb80aab44e2b6a36",
+            "popped_records": 1526,
+            "executed_records": 1530,
+            "original_trace_bounds": [
+              5997,
+              20817
+            ],
+            "official_duration_us": 8.98
+          },
+          "core22.veccore0": {
+            "first": 5969,
+            "last": 24747,
+            "entry_pc": "0x9000d12f00",
+            "physical_end_tick": 24740,
+            "physical_end_pc": "0x9000d15740",
+            "kernel_end_event_id": 678046,
+            "label_tick": 24747,
+            "popped_sha256": "05c6379e78936a59968f2f78a253d0e5b69c08e8ee6f0a019460461c4ae04718",
+            "executed_sha256": "d3159e3ffb3fbaf39f3db3a0ba967af33285f824240c5db64c0559dd2273c787",
+            "popped_records": 14456,
+            "executed_records": 14510,
+            "original_trace_bounds": [
+              5969,
+              24747
+            ],
+            "official_duration_us": 11.38
+          },
+          "core22.veccore1": {
+            "first": 6013,
+            "last": 24471,
+            "entry_pc": "0x9000d12f00",
+            "physical_end_tick": 24464,
+            "physical_end_pc": "0x9000d15740",
+            "kernel_end_event_id": 676708,
+            "label_tick": 24471,
+            "popped_sha256": "1b9609f7a57ccbe9cb4c5947602de0902bdd07ce2444f5e8dfebb04796a16a47",
+            "executed_sha256": "209d9a0db6d148e55016f448283b926f3927cded404dcacb04085e3930fbcee7",
+            "popped_records": 14456,
+            "executed_records": 14510,
+            "original_trace_bounds": [
+              6013,
+              24471
+            ],
+            "official_duration_us": 11.19
+          },
+          "core23.cubecore0": {
+            "first": 5953,
+            "last": 20541,
+            "entry_pc": "0x9000d0d000",
+            "physical_end_tick": 20538,
+            "physical_end_pc": "0x9000d0e200",
+            "kernel_end_event_id": 418713,
+            "label_tick": null,
+            "popped_sha256": "4f392ea5b607a02711fdc04933b53d6dc7cb888c2f9342d14b7ab6a0aecc562c",
+            "executed_sha256": "e7d10c4437e4fbf97675e16593c613fece275f0e381892ea116c6e10d49c7830",
+            "popped_records": 1247,
+            "executed_records": 1251,
+            "original_trace_bounds": [
+              5953,
+              20541
+            ],
+            "official_duration_us": 8.84
+          },
+          "core23.veccore0": {
+            "first": 5971,
+            "last": 24520,
+            "entry_pc": "0x9000d12f00",
+            "physical_end_tick": 24513,
+            "physical_end_pc": "0x9000d15740",
+            "kernel_end_event_id": 677099,
+            "label_tick": 24520,
+            "popped_sha256": "a52384a7961c57fd7f05c8a8ba70d106e21345a4c286b1a2c36f57173a26edfe",
+            "executed_sha256": "c590e9dc26058aa8fc667ab2f972d74f3fe3223096793ca5a4f76e368b5f1332",
+            "popped_records": 9237,
+            "executed_records": 9283,
+            "original_trace_bounds": [
+              5971,
+              24520
+            ],
+            "official_duration_us": 11.24
+          },
+          "core23.veccore1": {
+            "first": 6018,
+            "last": 24739,
+            "entry_pc": "0x9000d12f00",
+            "physical_end_tick": 24732,
+            "physical_end_pc": "0x9000d15740",
+            "kernel_end_event_id": 678025,
+            "label_tick": 24739,
+            "popped_sha256": "42fa4b1bc35b9f4e9af8f90933c3688582b687113356abeaeddd53013572f6b7",
+            "executed_sha256": "81fab6a7a8e03aa3fdd40817f9a7a83cbed9b55f0a2f2ab7bef8f365776832ed",
+            "popped_records": 9237,
+            "executed_records": 9283,
+            "original_trace_bounds": [
+              6018,
+              24739
+            ],
+            "official_duration_us": 11.35
+          },
+          "core24.cubecore0": {
+            "first": 5746,
+            "last": 19954,
+            "entry_pc": "0x9000d0d000",
+            "physical_end_tick": 19951,
+            "physical_end_pc": "0x9000d0e200",
+            "kernel_end_event_id": 390727,
+            "label_tick": null,
+            "popped_sha256": "aa2b7093f4b1779f96f11648b731193dc595eefaed7fad3c03e86ab67ab9e479",
+            "executed_sha256": "aef703046b153633a9325a8cfc641ed81cff7409f41e66d09b5b75f89e5e5d13",
+            "popped_records": 889,
+            "executed_records": 893,
+            "original_trace_bounds": [
+              5746,
+              19954
+            ],
+            "official_duration_us": 8.61
+          },
+          "core24.veccore0": {
+            "first": 5618,
+            "last": 25102,
+            "entry_pc": "0x9000d12f00",
+            "physical_end_tick": 25095,
+            "physical_end_pc": "0x9000d15740",
+            "kernel_end_event_id": 678617,
+            "label_tick": 25102,
+            "popped_sha256": "aa526079a5089cf77a3a2f11e719e60f2fdd08042d825592cbc7448fe0c9d4cb",
+            "executed_sha256": "bd982a532a37c76b7e8de10e5d0f2b7f15becb0adb8530c623d203c6032da00c",
+            "popped_records": 6430,
+            "executed_records": 6464,
+            "original_trace_bounds": [
+              5618,
+              25102
+            ],
+            "official_duration_us": 11.81
+          },
+          "core24.veccore1": {
+            "first": 5637,
+            "last": 24846,
+            "entry_pc": "0x9000d12f00",
+            "physical_end_tick": 24839,
+            "physical_end_pc": "0x9000d15740",
+            "kernel_end_event_id": 678283,
+            "label_tick": 24846,
+            "popped_sha256": "17220531c00103e0a17c3cd3486c7e0add3971423b3a9ba7fc49267031ad5539",
+            "executed_sha256": "4f2a3c7b20b5ac8665d62753cbde59caf9e69f57d3263cf3d884853bdcd30ffc",
+            "popped_records": 6430,
+            "executed_records": 6464,
+            "original_trace_bounds": [
+              5637,
+              24846
+            ],
+            "official_duration_us": 11.64
+          },
+          "core25.cubecore0": {
+            "first": 6098,
+            "last": 19875,
+            "entry_pc": "0x9000d0d000",
+            "physical_end_tick": 19872,
+            "physical_end_pc": "0x9000d0e200",
+            "kernel_end_event_id": 387747,
+            "label_tick": null,
+            "popped_sha256": "8992e6213309b900debddeb36de0eebb3d0a7939b6c5b0d46548f2bcf26b0314",
+            "executed_sha256": "158c9a0d6ed27feebc6723218a23234ba1027a6ab200b72f5e79574ee9ef1fb3",
+            "popped_records": 889,
+            "executed_records": 893,
+            "original_trace_bounds": [
+              6098,
+              19875
+            ],
+            "official_duration_us": 8.35
+          },
+          "core25.veccore0": {
+            "first": 6141,
+            "last": 25362,
+            "entry_pc": "0x9000d12f00",
+            "physical_end_tick": 25355,
+            "physical_end_pc": "0x9000d15740",
+            "kernel_end_event_id": 678773,
+            "label_tick": 25362,
+            "popped_sha256": "3af5baf7151cbc1dceb528fabec75758235ffe43816dc4cc0c638a4fe6c5de65",
+            "executed_sha256": "30dd2df6fee8736127f2baa1a4c4c1dbf0d13894671deb6acf00ee8a68a629ea",
+            "popped_records": 6430,
+            "executed_records": 6464,
+            "original_trace_bounds": [
+              6141,
+              25362
+            ],
+            "official_duration_us": 11.65
+          },
+          "core25.veccore1": {
+            "first": 6161,
+            "last": 25117,
+            "entry_pc": "0x9000d12f00",
+            "physical_end_tick": 25110,
+            "physical_end_pc": "0x9000d15740",
+            "kernel_end_event_id": 678651,
+            "label_tick": 25117,
+            "popped_sha256": "2ef4e5da7ee192ce18b74486080d7ff2afd5ec70f5d0cfb35ad4bfcbf13e222f",
+            "executed_sha256": "68b70c79669857eca4d4d86aa6ee3b1ca3e4cbd13ebf8112ca66ff245bead582",
+            "popped_records": 6430,
+            "executed_records": 6464,
+            "original_trace_bounds": [
+              6161,
+              25117
+            ],
+            "official_duration_us": 11.49
+          },
+          "core26.cubecore0": {
+            "first": 5863,
+            "last": 20812,
+            "entry_pc": "0x9000d0d000",
+            "physical_end_tick": 20809,
+            "physical_end_pc": "0x9000d0e200",
+            "kernel_end_event_id": 424535,
+            "label_tick": null,
+            "popped_sha256": "721c896b06339f39c85f78a8024df1500a87e65a558e9f0ca8102ff54abc7161",
+            "executed_sha256": "3e59c1bab2fdb56cebf8baa5c6784d2a1490b240da78872718f1f0cb93b01f04",
+            "popped_records": 889,
+            "executed_records": 893,
+            "original_trace_bounds": [
+              5863,
+              20812
+            ],
+            "official_duration_us": 9.06
+          },
+          "core26.veccore0": {
+            "first": 5811,
+            "last": 25285,
+            "entry_pc": "0x9000d12f00",
+            "physical_end_tick": 25278,
+            "physical_end_pc": "0x9000d15740",
+            "kernel_end_event_id": 678754,
+            "label_tick": 25285,
+            "popped_sha256": "19bb82949b726874160e1b88861a90439faa0faea2ea134398efdbcc47454ab2",
+            "executed_sha256": "58b14f9c5c87cdbfb19e640843185fb883989a0629ff59d116841b0e8e22e752",
+            "popped_records": 6430,
+            "executed_records": 6464,
+            "original_trace_bounds": [
+              5811,
+              25285
+            ],
+            "official_duration_us": 11.8
+          },
+          "core26.veccore1": {
+            "first": 5840,
+            "last": 25440,
+            "entry_pc": "0x9000d12f00",
+            "physical_end_tick": 25433,
+            "physical_end_pc": "0x9000d15740",
+            "kernel_end_event_id": 678809,
+            "label_tick": 25440,
+            "popped_sha256": "118a37905631b98b89794e7b66931fedcf57d07de46dc71e4de7211b1dcf9b70",
+            "executed_sha256": "6dae0cadc109baf939732caf716e28d5915df9c031b055719e96d5367f83ac8a",
+            "popped_records": 6430,
+            "executed_records": 6464,
+            "original_trace_bounds": [
+              5840,
+              25440
+            ],
+            "official_duration_us": 11.88
+          },
+          "core27.cubecore0": {
+            "first": 6040,
+            "last": 20795,
+            "entry_pc": "0x9000d0d000",
+            "physical_end_tick": 20792,
+            "physical_end_pc": "0x9000d0e200",
+            "kernel_end_event_id": 424818,
+            "label_tick": null,
+            "popped_sha256": "65e9f7afbe56105e03e5e9c1236403c6854172f4c12c476e87dfba08b1e6300a",
+            "executed_sha256": "a0ed89167eaa7cf50f4bf3607e54cae58857613b6878731ebf279f2f6ccedbdc",
+            "popped_records": 889,
+            "executed_records": 893,
+            "original_trace_bounds": [
+              6040,
+              20795
+            ],
+            "official_duration_us": 8.94
+          },
+          "core27.veccore0": {
+            "first": 6088,
+            "last": 24957,
+            "entry_pc": "0x9000d12f00",
+            "physical_end_tick": 24950,
+            "physical_end_pc": "0x9000d15740",
+            "kernel_end_event_id": 678452,
+            "label_tick": 24957,
+            "popped_sha256": "f497a775090abdf62fdf1e08056d6b36d64a3080ecd8b7f198917970be408f5a",
+            "executed_sha256": "7017ba9b50132aac9ebc13bcc5c28c02dca2cfd2ed71f268385e45428dfe62a9",
+            "popped_records": 6430,
+            "executed_records": 6464,
+            "original_trace_bounds": [
+              6088,
+              24957
+            ],
+            "official_duration_us": 11.44
+          },
+          "core27.veccore1": {
+            "first": 6124,
+            "last": 25242,
+            "entry_pc": "0x9000d12f00",
+            "physical_end_tick": 25235,
+            "physical_end_pc": "0x9000d15740",
+            "kernel_end_event_id": 678739,
+            "label_tick": 25242,
+            "popped_sha256": "575f4611babd9383ecb08e1f7c0b89e4d813dd1792a2412dd2dad156ef0a0753",
+            "executed_sha256": "3597d519b1cc7278be30e19fbd11d2c70b9226ef367aae78895be086e3a0efa2",
+            "popped_records": 6430,
+            "executed_records": 6464,
+            "original_trace_bounds": [
+              6124,
+              25242
+            ],
+            "official_duration_us": 11.59
+          },
+          "core28.cubecore0": {
+            "first": 5762,
+            "last": 19935,
+            "entry_pc": "0x9000d0d000",
+            "physical_end_tick": 19932,
+            "physical_end_pc": "0x9000d0e200",
+            "kernel_end_event_id": 389930,
+            "label_tick": null,
+            "popped_sha256": "79dbdd8d776d70211c997ca77822c268fe617089fa0e25cb87a8ccfc03bf8efe",
+            "executed_sha256": "62c4c3fd0fe2d0caf919168a77a52763ab4efe2fb9358d6065a09e2c945aaa70",
+            "popped_records": 889,
+            "executed_records": 893,
+            "original_trace_bounds": [
+              5762,
+              19935
+            ],
+            "official_duration_us": 8.59
+          },
+          "core28.veccore0": {
+            "first": 5670,
+            "last": 24646,
+            "entry_pc": "0x9000d12f00",
+            "physical_end_tick": 24639,
+            "physical_end_pc": "0x9000d15740",
+            "kernel_end_event_id": 677764,
+            "label_tick": 24646,
+            "popped_sha256": "dd995fdb4bcb788bf00258d14c3a8912273a14ee80c2f27eedf031e47e9457b7",
+            "executed_sha256": "f9c601df78746a8b1fca3f8e184907373f42a083e8438dddf7edcaac208b398a",
+            "popped_records": 6430,
+            "executed_records": 6464,
+            "original_trace_bounds": [
+              5670,
+              24646
+            ],
+            "official_duration_us": 11.5
+          },
+          "core28.veccore1": {
+            "first": 5697,
+            "last": 24875,
+            "entry_pc": "0x9000d12f00",
+            "physical_end_tick": 24868,
+            "physical_end_pc": "0x9000d15740",
+            "kernel_end_event_id": 678313,
+            "label_tick": 24875,
+            "popped_sha256": "ffccd5f85601be88a244398536aea1b3a624e0ee683281dcf41473b9a9016bf8",
+            "executed_sha256": "54c75d06c2bcccb7b0c98ac5c8253ce0618563bbfc7b0d9b3f35ade2e702be1b",
+            "popped_records": 6430,
+            "executed_records": 6464,
+            "original_trace_bounds": [
+              5697,
+              24875
+            ],
+            "official_duration_us": 11.62
+          },
+          "core29.cubecore0": {
+            "first": 5688,
+            "last": 20190,
+            "entry_pc": "0x9000d0d000",
+            "physical_end_tick": 20187,
+            "physical_end_pc": "0x9000d0e200",
+            "kernel_end_event_id": 392399,
+            "label_tick": null,
+            "popped_sha256": "4bb4136aac15951bf58c2379dbd6564def6a8796cfc59ee94de4c55e08145ab8",
+            "executed_sha256": "3ea7d3b62385d003f54baa6ceaef2674c400e992990c331b1dc42f408373c816",
+            "popped_records": 889,
+            "executed_records": 893,
+            "original_trace_bounds": [
+              5688,
+              20190
+            ],
+            "official_duration_us": 8.79
+          },
+          "core29.veccore0": {
+            "first": 5562,
+            "last": 24897,
+            "entry_pc": "0x9000d12f00",
+            "physical_end_tick": 24890,
+            "physical_end_pc": "0x9000d15740",
+            "kernel_end_event_id": 678359,
+            "label_tick": 24897,
+            "popped_sha256": "ca1b7dcdb651aadfa602b8b876c944679bda4811ca7c4e14f14a0416be2d0eca",
+            "executed_sha256": "169db1a1c63e5348f5b59d54980bc1a1ea76c45699af7bc935fcc2e58e732877",
+            "popped_records": 6430,
+            "executed_records": 6464,
+            "original_trace_bounds": [
+              5562,
+              24897
+            ],
+            "official_duration_us": 11.72
+          },
+          "core29.veccore1": {
+            "first": 5620,
+            "last": 25128,
+            "entry_pc": "0x9000d12f00",
+            "physical_end_tick": 25121,
+            "physical_end_pc": "0x9000d15740",
+            "kernel_end_event_id": 678666,
+            "label_tick": 25128,
+            "popped_sha256": "8442e7d641b636581ba726746a68cc6833da877aff6e10097908e442e8fa615d",
+            "executed_sha256": "3057842539db12bd75b7ebd206811009c6b7769008b020b553ea76dded69380f",
+            "popped_records": 6430,
+            "executed_records": 6464,
+            "original_trace_bounds": [
+              5620,
+              25128
+            ],
+            "official_duration_us": 11.82
+          },
+          "core3.cubecore0": {
+            "first": 5492,
+            "last": 20139,
+            "entry_pc": "0x9000d0d000",
+            "physical_end_tick": 20136,
+            "physical_end_pc": "0x9000d0e200",
+            "kernel_end_event_id": 395424,
+            "label_tick": null,
+            "popped_sha256": "b9906e24309d71715a5fe2ce87f7f5430c0ead45250cc34a9c15ada1306d1be9",
+            "executed_sha256": "bf63751129cce48d7adee44308bd488d4930d870fb52b318b75b37ee57bda42e",
+            "popped_records": 1526,
+            "executed_records": 1530,
+            "original_trace_bounds": [
+              5492,
+              20139
+            ],
+            "official_duration_us": 8.88
+          },
+          "core3.veccore0": {
+            "first": 5395,
+            "last": 24438,
+            "entry_pc": "0x9000d12f00",
+            "physical_end_tick": 24431,
+            "physical_end_pc": "0x9000d15740",
+            "kernel_end_event_id": 676349,
+            "label_tick": 24438,
+            "popped_sha256": "f7edaa3c4f1cee488bb02436740c1740b6807953698911d7dda671cc46470524",
+            "executed_sha256": "894b4de4475531c7c7157eb840696e2c42a19aa40b52b5167811ffc183d1949b",
+            "popped_records": 14456,
+            "executed_records": 14510,
+            "original_trace_bounds": [
+              5395,
+              24438
+            ],
+            "official_duration_us": 11.54
+          },
+          "core3.veccore1": {
+            "first": 5432,
+            "last": 24691,
+            "entry_pc": "0x9000d12f00",
+            "physical_end_tick": 24684,
+            "physical_end_pc": "0x9000d15740",
+            "kernel_end_event_id": 677935,
+            "label_tick": 24691,
+            "popped_sha256": "1afe13a91300a4b4a15d9d1c2a695cb6cb4510f25a30f623d14e36a1408f7514",
+            "executed_sha256": "cf80696cf2296175d81248e8bd3f2d16c23ad292844544696f32e2d1463dbb13",
+            "popped_records": 14456,
+            "executed_records": 14510,
+            "original_trace_bounds": [
+              5432,
+              24691
+            ],
+            "official_duration_us": 11.67
+          },
+          "core4.cubecore0": {
+            "first": 5423,
+            "last": 21126,
+            "entry_pc": "0x9000d0d000",
+            "physical_end_tick": 21123,
+            "physical_end_pc": "0x9000d0e200",
+            "kernel_end_event_id": 437748,
+            "label_tick": null,
+            "popped_sha256": "6515ec98a036df1540eb12e346488855b7eab3a9aff8b8dbfc2dc897bbdc6907",
+            "executed_sha256": "a1563cb03d5f5a5619133b02691c058f9e803c41f5c1b01ad54beb016df0a53a",
+            "popped_records": 1526,
+            "executed_records": 1530,
+            "original_trace_bounds": [
+              5423,
+              21126
+            ],
+            "official_duration_us": 9.52
+          },
+          "core4.veccore0": {
+            "first": 5419,
+            "last": 24831,
+            "entry_pc": "0x9000d12f00",
+            "physical_end_tick": 24824,
+            "physical_end_pc": "0x9000d15740",
+            "kernel_end_event_id": 678245,
+            "label_tick": 24831,
+            "popped_sha256": "68ee75a3bb79205c8a6182e077970c12285b4c5b0c62690d9b41bb2322257c87",
+            "executed_sha256": "5b256005028073b8be273c39bb21222fc7988b5dadb898cb8a7decf32f8ef39d",
+            "popped_records": 14456,
+            "executed_records": 14510,
+            "original_trace_bounds": [
+              5419,
+              24831
+            ],
+            "official_duration_us": 11.76
+          },
+          "core4.veccore1": {
+            "first": 5432,
+            "last": 24996,
+            "entry_pc": "0x9000d12f00",
+            "physical_end_tick": 24989,
+            "physical_end_pc": "0x9000d15740",
+            "kernel_end_event_id": 678503,
+            "label_tick": 24996,
+            "popped_sha256": "88b40b74d7b3bf946695c8a788f428e071dc9921b7b5d8568a82eb7783fbd599",
+            "executed_sha256": "7ee7b7b320913a1075cf6cf4b1049cbf2b94e761ea771daf1407a229810c21b2",
+            "popped_records": 14456,
+            "executed_records": 14510,
+            "original_trace_bounds": [
+              5432,
+              24996
+            ],
+            "official_duration_us": 11.86
+          },
+          "core5.cubecore0": {
+            "first": 5753,
+            "last": 20776,
+            "entry_pc": "0x9000d0d000",
+            "physical_end_tick": 20773,
+            "physical_end_pc": "0x9000d0e200",
+            "kernel_end_event_id": 425493,
+            "label_tick": null,
+            "popped_sha256": "5e470669dc90818abfbc1a93543430a7a0f07a5a7192fe2249c2b00c70b81787",
+            "executed_sha256": "1fa7b1903b7fbe484fead3f6e3b50eb5d8f6698e64c03ce63532d53de5dc1fac",
+            "popped_records": 1526,
+            "executed_records": 1530,
+            "original_trace_bounds": [
+              5753,
+              20776
+            ],
+            "official_duration_us": 9.1
+          },
+          "core5.veccore0": {
+            "first": 5809,
+            "last": 24959,
+            "entry_pc": "0x9000d12f00",
+            "physical_end_tick": 24952,
+            "physical_end_pc": "0x9000d15740",
+            "kernel_end_event_id": 678457,
+            "label_tick": 24959,
+            "popped_sha256": "15b17ae53288c7d95bf25f6250a2121d055b300f326e6bdf91e883c82d655761",
+            "executed_sha256": "dcc3bb7fcdf49710ce977592cede9c01c9ce300b7b18648d5ac60f5170905b82",
+            "popped_records": 14456,
+            "executed_records": 14510,
+            "original_trace_bounds": [
+              5809,
+              24959
+            ],
+            "official_duration_us": 11.61
+          },
+          "core5.veccore1": {
+            "first": 5823,
+            "last": 25114,
+            "entry_pc": "0x9000d12f00",
+            "physical_end_tick": 25107,
+            "physical_end_pc": "0x9000d15740",
+            "kernel_end_event_id": 678638,
+            "label_tick": 25114,
+            "popped_sha256": "2755a6e8287d685fb2fc39a6f17739c4c6a49ccad15ab574c2f39d75a2e24fdb",
+            "executed_sha256": "4ed2b62db28cc04fe8b135c58c442a40613de240968929dba6aeabd9c318bbd1",
+            "popped_records": 14456,
+            "executed_records": 14510,
+            "original_trace_bounds": [
+              5823,
+              25114
+            ],
+            "official_duration_us": 11.69
+          },
+          "core6.cubecore0": {
+            "first": 5555,
+            "last": 20198,
+            "entry_pc": "0x9000d0d000",
+            "physical_end_tick": 20195,
+            "physical_end_pc": "0x9000d0e200",
+            "kernel_end_event_id": 395666,
+            "label_tick": null,
+            "popped_sha256": "57fb6daa1307a17db5e787b684633e91e314fa75d973458358435045afcc250d",
+            "executed_sha256": "9f87ffd67e98bbfd9fe4a044213d8b2f92ea87243f427236cb3585b883144dff",
+            "popped_records": 1526,
+            "executed_records": 1530,
+            "original_trace_bounds": [
+              5555,
+              20198
+            ],
+            "official_duration_us": 8.87
+          },
+          "core6.veccore0": {
+            "first": 5580,
+            "last": 24831,
+            "entry_pc": "0x9000d12f00",
+            "physical_end_tick": 24824,
+            "physical_end_pc": "0x9000d15740",
+            "kernel_end_event_id": 678246,
+            "label_tick": 24831,
+            "popped_sha256": "5c947e4185c029fb8ff4591dbf98f8b063892e93bab4569d7fd75bd43e7d8086",
+            "executed_sha256": "37366b74d970e28f54181ac8feb8754f8fbf7e2820f6561c735bcbe6ed066128",
+            "popped_records": 14456,
+            "executed_records": 14510,
+            "original_trace_bounds": [
+              5580,
+              24831
+            ],
+            "official_duration_us": 11.67
+          },
+          "core6.veccore1": {
+            "first": 5630,
+            "last": 24563,
+            "entry_pc": "0x9000d12f00",
+            "physical_end_tick": 24556,
+            "physical_end_pc": "0x9000d15740",
+            "kernel_end_event_id": 677345,
+            "label_tick": 24563,
+            "popped_sha256": "26b9eb891f13ed337de6c6fc8863539f7c1401ae261e379b64b5ae6e6a730595",
+            "executed_sha256": "4859f29df31c4e48302e7230630ae29d0b1d722088d70ea6a2c839b8961a58cb",
+            "popped_records": 14456,
+            "executed_records": 14510,
+            "original_trace_bounds": [
+              5630,
+              24563
+            ],
+            "official_duration_us": 11.47
+          },
+          "core7.cubecore0": {
+            "first": 5667,
+            "last": 20158,
+            "entry_pc": "0x9000d0d000",
+            "physical_end_tick": 20155,
+            "physical_end_pc": "0x9000d0e200",
+            "kernel_end_event_id": 394236,
+            "label_tick": null,
+            "popped_sha256": "3c6577893560d5250945921ccd5f93703a9047381353919e50fbadbe61e57257",
+            "executed_sha256": "165793799102173ba390883742d5f0492ae17ef62c38b219e4463b6fb005ffb1",
+            "popped_records": 1526,
+            "executed_records": 1530,
+            "original_trace_bounds": [
+              5667,
+              20158
+            ],
+            "official_duration_us": 8.78
+          },
+          "core7.veccore0": {
+            "first": 5713,
+            "last": 24551,
+            "entry_pc": "0x9000d12f00",
+            "physical_end_tick": 24544,
+            "physical_end_pc": "0x9000d15740",
+            "kernel_end_event_id": 677284,
+            "label_tick": 24551,
+            "popped_sha256": "f2eff095e1c4117bcab3fda5ef7b48c9f2e3ed1225f3c84f24072f5f0d050ea8",
+            "executed_sha256": "0315918c6df8a5f48a12d333d04a0c5879de0bcc8fdae6d325e7ebdef9402cf2",
+            "popped_records": 14456,
+            "executed_records": 14510,
+            "original_trace_bounds": [
+              5713,
+              24551
+            ],
+            "official_duration_us": 11.42
+          },
+          "core7.veccore1": {
+            "first": 5732,
+            "last": 24796,
+            "entry_pc": "0x9000d12f00",
+            "physical_end_tick": 24789,
+            "physical_end_pc": "0x9000d15740",
+            "kernel_end_event_id": 678153,
+            "label_tick": 24796,
+            "popped_sha256": "41282b4b3c52a6538f282fb3cb2fc5dfad7f94cd6555d19ac95982836d77c591",
+            "executed_sha256": "4d80233fb518c39674316b9c9943994f4833a9784665f1cbd427d2a2858ffce1",
+            "popped_records": 14456,
+            "executed_records": 14510,
+            "original_trace_bounds": [
+              5732,
+              24796
+            ],
+            "official_duration_us": 11.55
+          },
+          "core8.cubecore0": {
+            "first": 5762,
+            "last": 20567,
+            "entry_pc": "0x9000d0d000",
+            "physical_end_tick": 20564,
+            "physical_end_pc": "0x9000d0e200",
+            "kernel_end_event_id": 419147,
+            "label_tick": null,
+            "popped_sha256": "84acfade1eef8757038ad9d13edf251f3b560b5c7f007a793fba34233725653b",
+            "executed_sha256": "4c23f337bb8c4edec812e0a7c6946700b9d39297cddd07c7b5cffd5af604af24",
+            "popped_records": 1526,
+            "executed_records": 1530,
+            "original_trace_bounds": [
+              5762,
+              20567
+            ],
+            "official_duration_us": 8.97
+          },
+          "core8.veccore0": {
+            "first": 5849,
+            "last": 24196,
+            "entry_pc": "0x9000d12f00",
+            "physical_end_tick": 24189,
+            "physical_end_pc": "0x9000d15740",
+            "kernel_end_event_id": 672286,
+            "label_tick": 24196,
+            "popped_sha256": "aaf7ec66a6062142ddf13808691d6968bc96f0ce8dbf1c2c15866d03af9432b1",
+            "executed_sha256": "159612483257f464121132329c7881d671b9a77b30f6be8b48706dbbfb86f814",
+            "popped_records": 14456,
+            "executed_records": 14510,
+            "original_trace_bounds": [
+              5849,
+              24196
+            ],
+            "official_duration_us": 11.12
+          },
+          "core8.veccore1": {
+            "first": 5883,
+            "last": 24435,
+            "entry_pc": "0x9000d12f00",
+            "physical_end_tick": 24428,
+            "physical_end_pc": "0x9000d15740",
+            "kernel_end_event_id": 676299,
+            "label_tick": 24435,
+            "popped_sha256": "b15130b88d2fb23c836d4f5290b91a72eddcaf2a1d332269520042033dbef73d",
+            "executed_sha256": "a3980c56414a6914b1de8263e7e5de6615ea4a14a6a6d25d7aa4e6a2e8a0689b",
+            "popped_records": 14456,
+            "executed_records": 14510,
+            "original_trace_bounds": [
+              5883,
+              24435
+            ],
+            "official_duration_us": 11.24
+          },
+          "core9.cubecore0": {
+            "first": 5647,
+            "last": 20495,
+            "entry_pc": "0x9000d0d000",
+            "physical_end_tick": 20492,
+            "physical_end_pc": "0x9000d0e200",
+            "kernel_end_event_id": 419428,
+            "label_tick": null,
+            "popped_sha256": "58cacccbb673799711004286a0812bf88ef732ddfdef105766c45019726e3c35",
+            "executed_sha256": "4e934fc1b4dfcb9ffb84f24c5578a2dc092fefe9d154bcf512acb6757b7a4f5e",
+            "popped_records": 1526,
+            "executed_records": 1530,
+            "original_trace_bounds": [
+              5647,
+              20495
+            ],
+            "official_duration_us": 9.0
+          },
+          "core9.veccore0": {
+            "first": 5634,
+            "last": 24413,
+            "entry_pc": "0x9000d12f00",
+            "physical_end_tick": 24406,
+            "physical_end_pc": "0x9000d15740",
+            "kernel_end_event_id": 676015,
+            "label_tick": 24413,
+            "popped_sha256": "a1896c707703f4758a1092f036923b61c980d736edec7e64bab20ff0a8829cc1",
+            "executed_sha256": "678db5045a830cc175da50f6a36959cde97909b8a79edf93de1b787637640626",
+            "popped_records": 14456,
+            "executed_records": 14510,
+            "original_trace_bounds": [
+              5634,
+              24413
+            ],
+            "official_duration_us": 11.38
+          },
+          "core9.veccore1": {
+            "first": 5684,
+            "last": 24629,
+            "entry_pc": "0x9000d12f00",
+            "physical_end_tick": 24622,
+            "physical_end_pc": "0x9000d15740",
+            "kernel_end_event_id": 677682,
+            "label_tick": 24629,
+            "popped_sha256": "77d19acc0de3207eb94b25fbbac31396f3f6f46e94a25bfe81f5065f299b54e0",
+            "executed_sha256": "1bf8dcb7a9d86f4388e14b2743c63d9fbff83d3c307b0defb9e7aab536bc954b",
+            "popped_records": 14456,
+            "executed_records": 14510,
+            "original_trace_bounds": [
+              5684,
+              24629
+            ],
+            "official_duration_us": 11.48
+          }
+        },
+        "control_receipt": "results/v0.22/recovered/mhc_pre_sinkhorn_56_4_4096_Ascend950PR_957b.json",
+        "first_tick": 5286,
+        "last_tick": 25440,
+        "ca_us": 12.214545454545455
+      },
+      "missing_physical_END_in_export": [
+        "core1.veccore0",
+        "core4.veccore1",
+        "core3.veccore0",
+        "core6.veccore1",
+        "core9.veccore0"
+      ],
+      "policy": "Earliest ELF-entry pop through maximum actual completion record. Per-core END IDs/PC and binary instruction words verified. Equal raw/merged ticks on the entire independent control roster. Official duration table describes the clipped JSON on damaged cores and is not substituted for the raw endpoint."
+    },
+    "queue_counts_scope": "exported instructions only",
+    "trace": "runs/fusion21/mhc_pre_sinkhorn_64_4_4096_Ascend950PR_957b/profile/OPPROF_20261119205911_SJIBKVWXCZZSMPMO/device0/MhcPreSinkhorn_bd8e37c67f2294e1437f03bb2bace96c_1000_mix_aic/0/simulator/trace.json",
+    "trace_sha256": "2988b1d7836f099695c7d963f7d47afbaf10c6f3a6136993b5181abdd671f492",
+    "binary_sha256": "280a1947dc8e2070b7563e06eed75c04683f7d684e1e618da650051ff5eda9b2",
+    "control_elf": "toolchains/cann/9.2.1/cann-9.2.1/opp/built-in/op_impl/ai_core/tbe/kernel/ascend950/ops_transformer/mhc_pre_sinkhorn_apt/MhcPreSinkhorn_bd8e37c67f2294e1437f03bb2bace96c.o",
+    "elf_text_sha256": "5397755e41682a8928f8b9521791bfd56a37609b35d3af8243e0787a09f47b7c",
+    "log_sha256": "0157cb4d9d26f8394f32e3a179868a52f08cd1a8672933012fe53cac6154e7aa",
+    "cost": {
+      "seconds": 174.43333405000158,
+      "raw_bytes": 2682703977,
+      "cpu_seconds": null,
+      "exit_code": -9,
+      "stop_reason": "raw cap",
+      "started_utc": "2026-11-19T12:59:11.005867+00:00",
+      "finished_utc": "2026-11-19T13:02:05.450803+00:00",
+      "command": [
+        "bash",
+        "/home/l00925865/operator_sim/scripts/cann-run.sh",
+        "msopprof",
+        "simulator",
+        "--soc-version=Ascend950PR_957b",
+        "--dump=true",
+        "--launch-count=20",
+        "--timeout=10",
+        "--output=/home/l00925865/operator_sim/runs/fusion21/mhc_pre_sinkhorn_64_4_4096_Ascend950PR_957b/profile",
+        "/home/l00925865/operator_sim/build/smoke/extension_indexer_mhc",
+        "mhc_pre_sinkhorn",
+        "64",
+        "4",
+        "4096"
+      ]
+    }
+  }
+}

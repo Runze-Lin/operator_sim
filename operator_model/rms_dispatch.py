@@ -1,4 +1,5 @@
-"""Price RMSNorm when the simulator has not supplied the preceding dispatch state."""
+"""RMSNorm startup, known-stream lane/sector scheduling and unknown-history policy."""
+from . import rms_lane_schedule
 from .rms_target_cost import configured_rms
 
 # Median excess of the exposed MTE2 stage on 19 previously recorded reusable
@@ -21,6 +22,8 @@ def price_rms(shape, chip, attrs):
     totals = {state:sum(costs.values()) for state,costs in phases.items()}
     state = diag['residency']
     probability = None
+    lane_diag = None
+    basis = {s:'v0.21 resource pipeline' for s in phases}
     if attrs.get('resident_aiv') is None:
         # Unknown preceding dispatch size H ~ uniform {1,...,C}, conditional
         # on an already-started stream. A prefix of A cores expands if H<A.
@@ -32,12 +35,20 @@ def price_rms(shape, chip, attrs):
         w = running_us/(running_us+totals['first'])
         stages = {q:w*phases['first'][q]+(1-w)*running[q] for q in hot}
         state = 'unknown'
+    elif attrs['resident_aiv'] > 0 and diag['target_plan']['iterations'] == 1:
+        stages, lane_diag = rms_lane_schedule.schedule(shape, chip, attrs['resident_aiv'], diag)
+        # Expansion depends on the exact previous prefix. The other states
+        # describe the existing v0.21 scenario baselines, not this launch.
+        phases[state] = stages
+        totals[state] = sum(stages.values())
+        basis[state] = 'known AIV prefix, single UB tile, rstd sector and y retirement'
     else:
         stages = phases[state]
     return sum(stages.values()), aic, active, {**diag,'stages_us':stages,
         'conditional_stages_us':phases,'conditional_us':totals,'residency':state,
         'residency_assumption':'unknown_stream_history' if state=='unknown' else 'provided',
-        'running_stream_expand_probability':probability,'reuse_read_lead_cycles':REUSE_READ_LEAD_CYCLES}
+        'running_stream_expand_probability':probability,'lane_schedule':lane_diag,
+        'conditional_model_basis':basis,'reuse_read_lead_cycles':REUSE_READ_LEAD_CYCLES}
 
 
 def total_hot_bound(diag, cycles_per_us):

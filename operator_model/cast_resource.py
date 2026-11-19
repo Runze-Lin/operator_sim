@@ -2,6 +2,14 @@
 from .workload import _counts
 
 
+# Median full-tile DMA descriptor response divided by its modeled port
+# service on a v0.20 950DT [262144, 32] critical AIV. These dimensionless
+# factors price slot residence, separately from the port throughput below.
+# Source: results/cast-capacity/two-slot-freeze.json.
+_READ_RESPONSE_FACTOR = 1.4394182462466096
+_WRITE_RESPONSE_FACTOR = 1.9750504967790543
+
+
 def _elements(shape):
     if len(shape)!=2 or any(type(x) is not int or x<=0 for x in shape):
         raise ValueError('cast_bf16_fp32 expects positive integer [tokens, channels]')
@@ -34,8 +42,7 @@ def resource_cast(shape, chip):
     wprice = byte_price('mte3_bandwidth_gbs',WRITE_PER_KIB)
     read_fixed = 965 - 8*READ_PER_KIB
     write_fixed = 455 - 16*WRITE_PER_KIB
-    # UBS fit for x/y in ping-pong buffers. Wave count and full-row reuse
-    # outside the sampled single-tile interval are scenario assumptions.
+    # Two input buffers and two widened output buffers share UB.
     cap = ((chip.details.get('ub_bytes') or 253952)//(2*(2+4))//64)*64
     if cap < 64:
         raise ValueError('UB too small for one 64-lane Cast vector')
@@ -55,6 +62,16 @@ def resource_cast(shape, chip):
     remaining = local-first
     stages['steady_tiles'] = max(2*remaining/1024*rprice,4*remaining/1024*wprice,
                                  (113/64)*((remaining+63)//64)*vec_price)
+    input_slot_ii = output_slot_ii = None
+    if remaining:
+        # The next tile can reuse an input slot once compute consumed it,
+        # and an output slot once its write retired. Each pair of slots can
+        # sustain one tile per half-residence; the slower pool limits issue.
+        input_slot_ii = (_READ_RESPONSE_FACTOR*stages['read'] + simd)/2
+        output_slot_ii = (_WRITE_RESPONSE_FACTOR*stages['write'] + simd)/2
+        repeated_tile_equivalents = remaining/cap
+        stages['steady_tiles'] = max(stages['steady_tiles'],
+                                     repeated_tile_equivalents*max(input_slot_ii, output_slot_ii))
     from .vector_memory import stream_memory
     memory = stream_memory(chip, active, 2*n, 4*n)
     shared = 1753 + max(memory['external_floor_cycles'], memory['l2_floor_cycles'] or 0)
@@ -63,5 +80,7 @@ def resource_cast(shape, chip):
     plan = dict(active_aic=0,active_aiv=active,elements=n,busy_core_elements=local,
                 minimum_elements_per_core=grain,busy_core_waves=waves,ub_tile_elements=cap)
     return sum(times.values()),0,active,dict(target_plan=plan,stages_us=times,
+                                            input_slot_ii_cycles=input_slot_ii,
+                                            output_slot_ii_cycles=output_slot_ii,
                                             read_cycles_per_kib=rprice,write_cycles_per_kib=wprice,
                                             standalone_first_launch=True, **memory)

@@ -1,10 +1,55 @@
 from dataclasses import replace
+import json
+from pathlib import Path
 import unittest
 
 from operator_model import estimate, load_chip
 
 
 class CastResourceTest(unittest.TestCase):
+    def test_two_slot_predictions_match_the_frozen_candidate(self):
+        archive = Path(__file__).resolve().parents[1] / 'results/cast-capacity'
+        frozen = json.loads((archive / 'two-slot-freeze.json').read_text())
+        for job in frozen['included'] + frozen['excluded']:
+            for sku, target in job['targets'].items():
+                with self.subTest(shape=job['shape'], chip=sku):
+                    chip = load_chip(sku)
+                    prediction = estimate('cast_bf16_fp32', job['shape'], chip=chip)
+                    d = prediction.projection['timing_diagnostics']
+                    self.assertAlmostEqual(prediction.latency_us, target['candidate_us'])
+                    self.assertEqual(prediction.active_aiv, target['active_aiv'])
+                    self.assertEqual(d['target_plan']['busy_core_waves'], target['waves'])
+                    slot_pair = (d['input_slot_ii_cycles'], d['output_slot_ii_cycles'])
+                    if target['slot_floor_us'] is None:
+                        self.assertEqual(slot_pair, (None, None))
+                    else:
+                        self.assertAlmostEqual(max(slot_pair)/(1000*chip.frequency_ghz),
+                                               target['slot_floor_us'])
+        replay = json.loads((archive / 'replay.json').read_text())
+        for row in replay['rows']:
+            with self.subTest(shape=row['shape'], chip=row['chip']):
+                p = estimate('cast_bf16_fp32', row['shape'], chip=row['chip'])
+                self.assertAlmostEqual(p.latency_us, row['candidate_model_us']['two_slot'])
+
+    def test_independent_slot_reuse_and_target_resources(self):
+        chip = load_chip()
+
+        def query(frequency=1.65, read=300, write=300, hbm=10000):
+            target = replace(chip, name='custom', frequency_ghz=frequency, hbm_bandwidth_gbs=hbm,
+                             details={**chip.details, 'mte2_bandwidth_gbs': read,
+                                      'mte3_bandwidth_gbs': write, 'l2_bandwidth_gbs': 50000})
+            return estimate('cast_bf16_fp32', (262144,32), chip=target)
+
+        fast, slow_read, slow_write = query(), query(read=5), query(write=5)
+        input_key, output_key = 'input_slot_ii_cycles', 'output_slot_ii_cycles'
+        base, rd, wr = [r.projection['timing_diagnostics'] for r in (fast, slow_read, slow_write)]
+        self.assertGreater(rd[input_key], base[input_key])
+        self.assertEqual(rd[output_key], base[output_key])
+        self.assertGreater(wr[output_key], base[output_key])
+        self.assertEqual(wr[input_key], base[input_key])
+        for slow in (slow_read, slow_write, query(frequency=.825), query(hbm=100)):
+            self.assertGreater(slow.latency_us, fast.latency_us)
+
     def test_exact_conversion_work_and_flattened_partition(self):
         chip=load_chip()
         left=estimate('cast_bf16_fp32',(64,4096),chip=chip)

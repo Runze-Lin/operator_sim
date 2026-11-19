@@ -108,7 +108,7 @@ def _estimate(op, shape, attrs, revision):
             result = chunk_structure(op,shape,attrs)
             if result.get('status')!='unsupported':
                 result.update(status='unqualified_ca_timing',
-                              reason='ChunkKdaFwd synchronization error in the CA reference')
+                              reason='No calibrated KDA chunk timing: fused V1 synchronization errors; direct FLA V2 has one development measurement.')
         else:
             result = fusion_v8.predict(op,shape,attrs,_profile('results/v0.8/fusion/model.json'))
     except (TypeError, ValueError) as error:
