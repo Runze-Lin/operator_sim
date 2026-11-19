@@ -46,13 +46,13 @@
       },
       "prospective": {
         "baseline_us": {
-          "n": 5,
-          "wape": 0.12771585884243797,
+          "n": 6,
+          "wape": 0.11898865521959878,
           "max_ape": 0.22527378429897227
         },
         "candidate_us": {
-          "n": 5,
-          "wape": 0.10938215496542028,
+          "n": 6,
+          "wape": 0.10741778113538347,
           "max_ape": 0.1717630252244523
         }
       },
@@ -405,6 +405,37 @@
       "projected_970_us": 5.831067239570839
     },
     {
+      "id": "cast_bf16_fp32_98305_64",
+      "shape": [
+        98305,
+        64
+      ],
+      "chip": "Ascend950PR_957b",
+      "targets": {
+        "baseline_us": 10.050309956709956,
+        "candidate_us": 10.050309956709956,
+        "active_aiv": 56,
+        "waves": 6,
+        "slot_floor_us": 1.0912088754384413,
+        "local_two_slot_us": 8.83729994910949,
+        "v020_us": 10.050309956709958
+      },
+      "role": "prospective",
+      "ca_us": 11.217575314454734,
+      "trace_sha256": "f044e08ffa2956e00684265711c51f375ccb12225bcae94e7a4695d64b9d50ea",
+      "api": "aclnnCast",
+      "correctness": [
+        "correctness count=6291520 bad=0"
+      ],
+      "started_utc": "2026-11-19T13:26:28.512897+00:00",
+      "source": "results/v0.21/vector/holdout.json",
+      "baseline_us": 10.050309956709956,
+      "candidate_us": 10.050309956709956,
+      "v020_us": 10.050309956709958,
+      "sensitive": false,
+      "projected_970_us": 5.831067239570839
+    },
+    {
       "id": "cast_bf16_fp32_65_5120",
       "shape": [
         65,
@@ -654,23 +685,5 @@
     }
   ],
   "unqualified": [],
-  "pending": [
-    {
-      "id": "cast_bf16_fp32_98305_64",
-      "shape": [
-        98305,
-        64
-      ],
-      "chip": "Ascend950PR_957b",
-      "targets": {
-        "baseline_us": 10.050309956709956,
-        "candidate_us": 10.050309956709956,
-        "active_aiv": 56,
-        "waves": 6,
-        "slot_floor_us": 1.0912088754384413,
-        "local_two_slot_us": 8.83729994910949,
-        "v020_us": 10.050309956709958
-      }
-    }
-  ]
+  "pending": []
 }
