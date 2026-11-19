@@ -1,6 +1,7 @@
 """Full CANN Cast on exact rank-local prefill shapes, one dispatch per process."""
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
+import fcntl
 import os
 import sys
 
@@ -35,9 +36,21 @@ def freeze():
         provenance='Flash DeepseekV41Indexer ReplicatedLinear(5120,32).project_weights().float(), or post-norm BF16 hidden [tokens,5120]/[tokens,7168]. Shape-only CA at installed aclnnCast entry under eager, pre-scaling contract.',
         historical_version='v0.19 Cast schedule, unchanged for v0.20; predictions frozen before CA',max_raw_per_process_gib=24))
 def qualify_one(job,chip):
+    folder=RAW/(job['id']+'_'+chip)
+    folder.mkdir(parents=True,exist_ok=True)
+    with (folder/'acquisition.lock').open('a') as lock:
+        # Sharing an in-flight run is cheaper than launching a duplicate and
+        # prevents a second collector from truncating the original run.log.
+        fcntl.flock(lock,fcntl.LOCK_EX)
+        return _qualify_locked(job,chip,folder)
+
+
+def _qualify_locked(job,chip,folder):
     name=job['id']+'_'+chip
-    folder=RAW/name;out=OUT/(name+'.json')
+    out=OUT/(name+'.json')
     if out.exists():return
+    if (folder/'run.log').exists() and not (folder/'cost.json').exists():
+        raise RuntimeError(f'Existing acquisition has no final cost yet: {folder}')
     c=read(folder/'cost.json') if (folder/'cost.json').exists() else capture(job,chip,folder)
     result=dict(shape=job['shape'],chip=chip,cost=c,qualified=False,ca_us=None)
     try:

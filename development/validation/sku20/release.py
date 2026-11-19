@@ -3,7 +3,9 @@ from pathlib import Path
 import hashlib
 import json
 import re
+import subprocess
 import sys
+import time
 
 ROOT=Path(__file__).resolve().parents[3]
 sys.path.insert(0,str(ROOT))
@@ -13,7 +15,8 @@ from development.validation.sku20.report import render, summary, display, CHIPS,
 def release():
     rows=render()
     wheel=read(V/'wheel-smoke.json');q=wheel['overall']
-    frozen=[V/'rms/freeze.json',V/'large/cast-v20-freeze.json',V/'newop/holdout-freeze.json']
+    frozen=[V/'rms/freeze.json',V/'large/cast-v20-freeze.json',V/'newop/holdout-freeze.json',
+            V/'large/pro-freeze.json',V/'large/native-freeze.json',V/'matmul-prefill/freeze.json',V/'full-quant/freeze.json']
     files=[p for base in ('operator_model','configs/chips') for p in (ROOT/base).rglob('*')
            if p.suffix in ('.py','.json')]
     files.extend(ROOT/line.removeprefix('include ') for line in (ROOT/'MANIFEST.in').read_text().splitlines() if line.startswith('include '))
@@ -43,10 +46,43 @@ def release():
         lines.append(f"| {title} | {d['dt']['n']} / {d['pr']['n']} / {d['speed']['n']}（{len(cohort)}） | {errs(d['dt'])} | {errs(d['pr'])} | {errs(d['speed'])} |")
     cost=[r.get(s+'_observation',{}).get('seconds') for r in rows for s in ('dt','pr')]
     wall=[x for x in cost if x]
+    cube=read(V/'evaluation.json')['prefill_matmul']
+    if cube['dt_ca_us']:
+        wall.extend(cube[s+'_observation']['seconds'] for s in ('dt','pr') if cube.get(s+'_observation'))
+        lines+=['',f"Flash indexer 的 BF16 窄投影 [2048,32,5120] 在 DT 预测 {cube['dt_us']:.3f} µs，CA {cube['dt_ca_us']:.3f} µs。"
+                '模型和 CA 各有 640 次 MMAD，模型的纯 Cube 路线漏掉实际 64 个 AIV 的末段。'
+                '[模型与 CA 的块几何、首个 MMAD 和归并尾段](../../docs/examples/matmul-prefill.md)']
     lines+=['','[同集 v0.19 对照、逐 shape、970DT 外推和全部路线摘要](../../docs/error-analysis.md) · [冻结模型与输入指纹](model.json) · [数值、时间和数据角色](evaluation.json)','',
         f"独立安装的 wheel 用三种芯片执行 {bench}。以上 {len(wall)} 个已完成且有时间的正式窗口，CA 单次宿主墙钟 {min(wall)/60:.1f}–{max(wall)/60:.1f} 分钟；各进程累计 {sum(wall)/3600:.2f} 小时，并发时间重叠。"
         '[预测墙钟](wheel-smoke.json) · [RMS 每端](rms/costs.json) · [Cast 原始成本及低记录量实验](large/report.md) · [Sigmoid](newop/measurements.md)','',
-        '32k Flash Cast 的 DT 原生通道记录显示 16 MiB 输入产生约 16.04 MiB 片外读，写命令为零。对同形 PR 的 Cast，旧误差 +162.9%，本次开发重放 −7.3%。RMSNorm [2048,5120] 的 PR 开发重放从 +77.64% 到 −6.46%。对 Sigmoid 的写回敏感性只用于诊断；正式表保留采集前冻结的模型。整批 [262144,5120] 另走低记录量 64 核原生 wrapper 协议，wrapper 启动等待独立于规范指令窗口，单列记录。未完、失去资格和没有 970 CA 的情形均不计入 WAPE。','']
+        '32k Flash Cast 的 DT 原生通道记录显示 16 MiB 输入产生约 16.04 MiB 片外读，写命令为零。对同形 PR 的 Cast，旧误差 +162.9%，本次开发重放 −7.3%。RMSNorm [2048,5120] 的 PR 开发重放从 +77.64% 到 −6.46%，旧 PR 留出十例 WAPE 从 5.16% 上升至 9.04%。对 Sigmoid 的写回敏感性只用于诊断，正式表保留采集前冻结的模型。Flash 的全宽 Cast [262144,5120] 和 Kimi 的全宽动态量化 [262144,7168] 共用一个原生采集位，逐元素核对，wrapper 计时单列。[全宽量化合同](full-quant/freeze.json) · [整批形状逐项状态](../../docs/error-analysis.md#长度增加后设备耗时如何增长)','']
     (V/'changes.md').write_text('\n'.join(lines))
 
-if __name__=='__main__':release()
+def follow():
+    """Refresh only this local release's reports as pending registered jobs finish."""
+    deadline=time.monotonic()+18*3600
+    previous=None
+    while time.monotonic()<deadline:
+        if "__version__ = '0.20.0'" not in (ROOT/'operator_model/__init__.py').read_text():
+            return
+        patterns=('rms/costs.json','large/cast_*_Ascend*.json','large/cast_262144_5120_native.json',
+                  'newop/evaluation.json','matmul-prefill/ca*.json','full-quant/native.json')
+        paths=sorted(p for pattern in patterns for p in V.glob(pattern))
+        paths.extend([Path(__file__),Path(__file__).with_name('report.py')])
+        current=[(p,p.stat().st_mtime_ns) for p in paths]
+        if current!=previous:
+            # Load the current reporting code and retry if a collector is still publishing.
+            if subprocess.run([sys.executable,__file__],cwd=ROOT,check=False).returncode==0:
+                previous=current
+                if ((V/'full-quant/native.json').exists() and len(read(V/'rms/costs.json'))>=20
+                    and read(V/'newop/evaluation.json')['completed_launches']>=20
+                    and all((V/'large'/f"cast_{t}_{h}_{CHIPS[s]}.json").exists()
+                            for t,h in ((2097152,32),(8192,5120),(4096,7168),(262144,64)) for s in ('dt','pr'))):
+                    return
+        time.sleep(45)
+
+if __name__=='__main__':
+    if sys.argv[1:]==['--follow']:
+        follow()
+    else:
+        release()

@@ -1,28 +1,29 @@
 {
   "frozen_utc": "2026-11-19T08:37:00.342418+00:00",
   "distinct_shapes": 10,
-  "completed_launches": 4,
-  "qualified_launches": 4,
+  "distinct_flattened_element_counts": 9,
+  "completed_launches": 8,
+  "qualified_launches": 8,
   "summary": {
     "Ascend950DT_9582": {
-      "n": 2,
-      "wape_pct": 26.151348217096885,
-      "max_ape_pct": 32.476967140790855
+      "n": 4,
+      "wape_pct": 40.84454105338334,
+      "max_ape_pct": 55.54112486297916
     },
     "Ascend950PR_957b": {
-      "n": 2,
-      "wape_pct": 73.90203954911475,
-      "max_ape_pct": 90.11826206356845
+      "n": 4,
+      "wape_pct": 102.27748253785693,
+      "max_ape_pct": 120.49579809373694
     },
     "paired_speedup_dt_over_pr": {
-      "n": 2,
-      "wape_pct": 20.179567526236166,
+      "n": 4,
+      "wape_pct": 19.483748697932185,
       "max_ape_pct": 30.318652346771664
     },
     "reuse_dt_prediction_on_pr": {
-      "n": 2,
-      "wape_pct": 8.998272588531199,
-      "max_ape_pct": 10.061510057525489
+      "n": 4,
+      "wape_pct": 14.161272312115889,
+      "max_ape_pct": 19.76033588623887
     }
   },
   "rows": [
@@ -121,14 +122,24 @@
           "model_aiv": 64,
           "critical_core_tiles": 13,
           "role": "frozen holdout",
-          "status": "pending"
+          "status": "qualified",
+          "ca_us": 18.553332805633545,
+          "ca_aiv": 64,
+          "signed_error_pct": 55.541124862979174,
+          "kernel": "Sigmoid_5c5e58e043224cccf51a06108010ae13_high_precision_300000000000100",
+          "ca_wall_seconds": 1503.4273449999746
         },
         "Ascend950PR_957b": {
           "model_us": 75.59665337283303,
           "model_aiv": 56,
           "critical_core_tiles": 15,
           "role": "frozen holdout",
-          "status": "pending"
+          "status": "qualified",
+          "ca_us": 34.284849882125854,
+          "ca_aiv": 56,
+          "signed_error_pct": 120.49579809373694,
+          "kernel": "Sigmoid_5c5e58e043224cccf51a06108010ae13_high_precision_300000000000100",
+          "ca_wall_seconds": 979.6246913699433
         },
         "Ascend970DT": {
           "model_us": 10.655724118376359,
@@ -136,6 +147,10 @@
           "critical_core_tiles": 7,
           "role": "future extrapolation"
         }
+      },
+      "speedup_dt_over_pr": {
+        "predicted": 0.3817373026174885,
+        "measured": 0.5411525169111556
       }
     },
     {
@@ -149,14 +164,24 @@
           "model_aiv": 24,
           "critical_core_tiles": 1,
           "role": "frozen holdout",
-          "status": "pending"
+          "status": "qualified",
+          "ca_us": 3.176363709382713,
+          "ca_aiv": 24,
+          "signed_error_pct": 5.29586101463797,
+          "kernel": "Sigmoid_5c5e58e043224cccf51a06108010ae13_high_precision_300000000000100",
+          "ca_wall_seconds": 694.7487693200819
         },
         "Ascend950PR_957b": {
           "model_us": 3.4038736412004833,
           "model_aiv": 24,
           "critical_core_tiles": 1,
           "role": "frozen holdout",
-          "status": "pending"
+          "status": "qualified",
+          "ca_us": 2.792727234773338,
+          "ca_aiv": 24,
+          "signed_error_pct": 21.883497923374783,
+          "kernel": "Sigmoid_5c5e58e043224cccf51a06108010ae13_high_precision_300000000000100",
+          "ca_wall_seconds": 338.85742269991897
         },
         "Ascend970DT": {
           "model_us": 3.065768577697274,
@@ -164,6 +189,10 @@
           "critical_core_tiles": 1,
           "role": "future extrapolation"
         }
+      },
+      "speedup_dt_over_pr": {
+        "predicted": 0.9825803978938092,
+        "measured": 1.1373698332699904
       }
     },
     {
@@ -337,15 +366,15 @@
   ],
   "query_ms": {
     "n": 720,
-    "p50": 0.08614,
-    "p95": 0.11668,
-    "max": 4.4924,
+    "p50": 0.03478,
+    "p95": 0.04149,
+    "max": 2.92582,
     "scope": "Fresh analytical estimate per call, preloaded chip, repeated in-process; includes Python arithmetic and output accounting."
   },
   "ca_cost": {
-    "wall_seconds_sum": 748.2182434499264,
-    "retained_bytes": 1816643762,
-    "peak_bytes_single": 1162171003
+    "wall_seconds_sum": 4264.876471839845,
+    "retained_bytes": 8918000723,
+    "peak_bytes_single": 6956797071
   },
   "dev": [
     {

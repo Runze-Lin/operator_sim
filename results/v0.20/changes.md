@@ -8,12 +8,14 @@ RMSNorm 与 BF16→FP32 Cast 现分别计算每核 MTE、共享 L2 及在设备�
 
 | 新冻结独立集 | 已完成 DT / PR / 成对（登记 shape） | DT WAPE / 最大 | PR WAPE / 最大 | DT/PR 倍速 WAPE / 最大 |
 |---|---|---|---|---|
-| RMSNorm | 1 / 2 / 1（10） | 4.91% / 4.91% | 15.44% / 19.83% | 2.30% / 2.30% |
-| Kimi KDA beta Sigmoid | 2 / 2 / 2（10） | 26.15% / 32.48% | 73.90% / 90.12% | 20.18% / 30.32% |
-| Cast BF16→FP32 | 0 / 0 / 0（4） | N/A | N/A | N/A |
+| RMSNorm | 3 / 3 / 3（10） | 7.81% / 12.90% | 12.35% / 19.83% | 3.77% / 8.65% |
+| Kimi KDA beta Sigmoid | 4 / 4 / 4（10） | 40.84% / 55.54% | 102.28% / 120.50% | 19.48% / 30.32% |
+| Cast BF16→FP32 | 1 / 0 / 0（4） | 21.76% / 21.76% | N/A | N/A |
+
+Flash indexer 的 BF16 窄投影 [2048,32,5120] 在 DT 预测 12.123 µs，CA 13.023 µs。模型和 CA 各有 640 次 MMAD，模型的纯 Cube 路线漏掉实际 64 个 AIV 的末段。[模型与 CA 的块几何、首个 MMAD 和归并尾段](../../docs/examples/matmul-prefill.md)
 
 [同集 v0.19 对照、逐 shape、970DT 外推和全部路线摘要](../../docs/error-analysis.md) · [冻结模型与输入指纹](model.json) · [数值、时间和数据角色](evaluation.json)
 
-独立安装的 wheel 用三种芯片执行 1,089 个不同的单次查询。中位 0.083 ms，P95 0.548 ms，最慢 2.933 ms。以上 9 个已完成且有时间的正式窗口，CA 单次宿主墙钟 1.5–14.2 分钟；各进程累计 0.70 小时，并发时间重叠。[预测墙钟](wheel-smoke.json) · [RMS 每端](rms/costs.json) · [Cast 原始成本及低记录量实验](large/report.md) · [Sigmoid](newop/measurements.md)
+独立安装的 wheel 用三种芯片执行 1,089 个不同的单次查询。中位 0.083 ms，P95 0.548 ms，最慢 2.933 ms。以上 20 个已完成且有时间的正式窗口，CA 单次宿主墙钟 1.4–25.1 分钟；各进程累计 3.43 小时，并发时间重叠。[预测墙钟](wheel-smoke.json) · [RMS 每端](rms/costs.json) · [Cast 原始成本及低记录量实验](large/report.md) · [Sigmoid](newop/measurements.md)
 
-32k Flash Cast 的 DT 原生通道记录显示 16 MiB 输入产生约 16.04 MiB 片外读，写命令为零。对同形 PR 的 Cast，旧误差 +162.9%，本次开发重放 −7.3%。RMSNorm [2048,5120] 的 PR 开发重放从 +77.64% 到 −6.46%。对 Sigmoid 的写回敏感性只用于诊断；正式表保留采集前冻结的模型。整批 [262144,5120] 另走低记录量 64 核原生 wrapper 协议，wrapper 启动等待独立于规范指令窗口，单列记录。未完、失去资格和没有 970 CA 的情形均不计入 WAPE。
+32k Flash Cast 的 DT 原生通道记录显示 16 MiB 输入产生约 16.04 MiB 片外读，写命令为零。对同形 PR 的 Cast，旧误差 +162.9%，本次开发重放 −7.3%。RMSNorm [2048,5120] 的 PR 开发重放从 +77.64% 到 −6.46%，旧 PR 留出十例 WAPE 从 5.16% 上升至 9.04%。对 Sigmoid 的写回敏感性只用于诊断，正式表保留采集前冻结的模型。Flash 的全宽 Cast [262144,5120] 和 Kimi 的全宽动态量化 [262144,7168] 共用一个原生采集位，逐元素核对，wrapper 计时单列。[全宽量化合同](full-quant/freeze.json) · [整批形状逐项状态](../../docs/error-analysis.md#长度增加后设备耗时如何增长)

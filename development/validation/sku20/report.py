@@ -67,13 +67,18 @@ def collect():
                 if role=='独立':assert v['cost']['started_utc']>=sealed[j['id']]
                 receipt(r,s,dict(**v['stage'],correctness=v['correctness'],seconds=v['cost']['seconds'],peak_bytes=v['cost']['peak_bytes']))
         rows.append(r)
+    sigmoid_raw={(tuple(r['shape']),r['sku']):r for r in read(V/'newop/holdout.json') if r['qualified']}
     for j in read(V/'newop/evaluation.json')['rows']:
         devices=j['devices']
         r=row('sigmoid_fp32',j['shape'],'独立',{s:devices[c]['model_us'] for s,c in CHIPS.items()},
             api='aclnnSigmoid',library='ops-nn')
         for s in ('dt','pr'):
             v=devices[CHIPS[s]]
-            if v.get('status')=='qualified':receipt(r,s,dict(ca_us=v['ca_us'],kernel=v['kernel'],active_aiv=v['ca_aiv'],seconds=v['ca_wall_seconds']))
+            if v.get('status')=='qualified':
+                raw=sigmoid_raw[(tuple(j['shape']),CHIPS[s])]
+                assert raw['kernel']['ca_us'] == v['ca_us']
+                receipt(r,s,dict(**raw['kernel'],correctness=raw['correctness'],
+                    seconds=raw['cost']['seconds'],peak_bytes=raw['cost']['peak_bytes']))
         rows.append(r)
     for r in rows:
         r['speedup_pred']=r['dt_us']/r['pr_us']
@@ -97,6 +102,27 @@ def summary(r):
         dt_reuse_pr=compare('pr_reuse_us','pr_ca_us'))
 
 
+def prefill_matmul():
+    folder=V/'matmul-prefill'
+    freeze=read(folder/'freeze.json')
+    shape=freeze['measured_shape']
+    values={s:next(p['us'] for p in freeze['projections'] if p['shape']==shape and p['chip']==c)
+            for s,c in CHIPS.items()}
+    result=row('matmul',shape,'独立／Flash 投影 chunk',values,api='aclnnMatmul',library='ops-nn',
+               id='matmul_prefill_'+'_'.join(map(str,shape)))
+    for side,filename in [('dt','ca.json'),('pr','ca-pr.json')]:
+        path=folder/filename
+        if not path.is_file():continue
+        data=read(path)
+        if data.get('qualified'):
+            assert data['cost']['started_utc'] >= freeze['utc']
+            receipt(result,side,dict(**data['stage'],correctness=data['correctness'],
+                seconds=data['cost']['seconds'],peak_bytes=data['cost']['peak_bytes']))
+    result['speedup_pred']=result['dt_us']/result['pr_us']
+    result['speedup_ca']=result['dt_ca_us']/result['pr_ca_us'] if result['dt_ca_us'] and result['pr_ca_us'] else None
+    return result
+
+
 def detail_row(r):
     def cell(s):
         v=r[s+'_ca_us'];p=r[s+'_us'];old=r['old_'+s+'_us']
@@ -104,6 +130,44 @@ def detail_row(r):
     dims='×'.join(map(str,r['shape']))
     return (f"| {LABEL[r['op']]} | {dims} | {r['role']} | {cell('dt')} | {cell('pr')} | "
             f"{display(r['speedup_pred'])} / {display(r['speedup_ca'])} | {r['future_us']:.3f} |")
+
+
+def scaling(rows):
+    lines=['### 长度增加后，设备耗时如何增长','',
+           '下表的增长倍数用同一 SKU 的两个合格 CA 窗口相除。B、TP 和列宽均固定。32k 到 128k 的 token 和逻辑字节增至 4 倍，128k 到 256k 增至 2 倍。','',
+           '| 算子和每 token 宽度 | 序列长度 | DT CA µs · 倍数 | PR CA µs · 倍数 |',
+           '|---|---|---|---|']
+    for op,width in [('cast_bf16_fp32',32),('sigmoid_fp32',12)]:
+        cases={r['shape'][0]:r for r in rows if r['op']==op and r['shape'][1]==width}
+        previous=None
+        for k in (32,128,256):
+            case=cases[8*k*1024]
+            def cell(side):
+                cur=case[side+'_ca_us']
+                if cur is None:return '待实测'
+                prev=previous and previous[side+'_ca_us']
+                return f'{cur:.3f}'+(f' · {cur/prev:.2f}×' if prev else '')
+            lines.append(f"| {LABEL[op]} · {width} | {k}k | {cell('dt')} | {cell('pr')} |")
+            previous=case
+    lines+=['','Flash 的 128k 在 DT 上已出现片外写。实测 128 个控制器共 94.876 MiB、188,258 条写命令，冻结模型按容量推得约 69.16 MiB 的片外流量。该点的完整 UB 块读 42,240 B、写 84,480 B，末核连续读发起的中位间隔为 DT 1.233 µs、PR 2.319 µs。冻结模型的每核服务均为 0.801 µs，加上共享链路约束后，分别为 0.801 和 2.231 µs。DT 的局部发起仍定价过快，PR 的稳态已更接近实测。单个规模区间不足以确定全程按字节线性增长。[128k 同轴图](../results/v0.20/large/flash-128ki-tiles.png) · [末核发起及在途时间](../results/v0.20/large/tile-intervals.json) · [128k 物理事务](../results/v0.20/large/cast_1048576_32_Ascend950DT_9582-official-dram.json)','',
+            'Kimi 128k 的 sigmoid 在 950DT 上预测 28.858 µs、实测 18.553 µs。128 个控制器合计 50,377,472 B，逻辑 FP32 输入 50,331,648 B，外存写命令只有 6 条。冻结模型要求全部输出在设备窗内写回 HBM；允许输出在 L2 接收的事后敏感性预测为 18.943 µs（+2.1%）。PR 具有更低的名义 HBM 带宽，旧假设放大了误差，PR 的物理写回事务尚缺同样的证据。敏感性单列，保留原预测用于独立统计。[两端 128k 首尾各两轮](../results/v0.20/newop/long-timelines.md) · [控制器](../results/v0.20/newop/controller-snapshots.json)','']
+    native=V/'large/cast_262144_5120_native.json'
+    if native.is_file() and read(native).get('qualified_core_envelope'):
+        n=read(native)
+        lines+=['全宽 `[262144,5120]` 的 950DT 原生运行覆盖 1,342,177,280 个元素、2.5 GiB 输入、5 GiB 输出，'
+            + f"全核 wrapper 窗口为 {n['core_envelope_us']:.3f} µs，宿主墙钟 {n['cost']['seconds']/60:.1f} 分钟。"
+            +' 该时间包含 wrapper 启动与退休边界，与正式指令窗口分开报告。[全宽采集口径及数值校验](../results/v0.20/large/report.md)','']
+    else:
+        lines+=['全宽 `[262144,5120]` 的 950DT 原生运行单列。该输入含 1,342,177,280 个元素、2.5 GiB 输入和 5 GiB 输出，'
+                '当前缺少合格的全宽回执。[长作业预算、进度和计时口径](../results/v0.20/large/report.md)','']
+    quant=V/'full-quant/native.json'
+    q=read(quant) if quant.exists() else {}
+    window=(f"全核 wrapper 为 {q['core_envelope_us']:.3f} µs，逐元素校验通过。"
+            if q.get('qualified_core_envelope') else '尚无合格的全核 wrapper 窗口。')
+    lines+=['Kimi 的 KDA mixed-QKV 输入在独立 MXFP8 量化分支使用整批 `[262144,7168]`，一次处理 1,879,048,192 个激活、58,720,256 个 scale。'
+            '冻结的 DT/PR/970DT 预测为 1394.986 / 3992.864 / 527.779 µs。DT 采用 64 AIV，最忙核 820 轮。'
+            +window+'该作业与全宽 Cast 串行，共用一个低记录量采集位。[范围和预测](../results/v0.20/full-quant/freeze.json)','']
+    return lines
 
 
 def sections(rows):
@@ -127,6 +191,11 @@ def sections(rows):
         '**Cast。** CANN 9.2.1 ops-math 的 `aclnnCast`。Flash indexer 的 32k 整批共 8,388,608 个 BF16 输入、同量 FP32 输出。旧模型在 DT/PR 的逻辑流量带宽下界已经超过实际窗口。该 shape 在原生 DT 的 128 个通道中合计读取 16,822,272 B，写命令数为 0，逻辑输入、输出分别为 16 MiB、32 MiB。通道计数包括可能的额外元数据。当前模型分别为 MTE、L2 和片外可见字节定价，PR 的驻留仍是可替换的假设。更宽更长的输入开始溢出时可检验这一规律。[每卡 kernel、全元素金标、容量拐点及两种计时口径](../results/v0.20/large/report.md) · [控制器计数](../results/v0.20/large/cast_262144_32_native-dram.json)','',
         '**Kimi beta Sigmoid。** `aclnnSigmoid` 操作连续 FP32 张量，与 MoE router 的 sigmoid Top-K 分属不同的调用。核数命中仍可能出现明显时延偏差，例如 32k 整批的共享带宽按读写全额收费，预测的末轮退休过晚。每端均校验全部输出，图上保留 VF 和 MTE 指令。三颗芯片上的数据量和每核 UB 轮数可从冻结预测复算。[两张卡每个 shape 的 kernel 和正确性、代价](../results/v0.20/newop/measurements.md) · [32k 时间轴与参数](examples/sigmoid_fp32.md)','',
         '**读流水图。** Matmul 按两个真实输出块、每块两页 K 对齐；Quant 按五轮 UB 将相同的读/VF/写映射到同一行；FA 按首个 KV 页和稳态 II 绘制。上部仅在模型能确定的粒度定位事件，下部统一从全核首指令对齐，标出最后结束的核。[Matmul](examples/matmul.md) · [Quant](examples/quant.md) · [FA](examples/fa.md)','']
+    sections+=['历史 RMSNorm 十例中，放宽 L2 写出退休约束使 PR WAPE 从 5.16% 上升到 9.04%，DT 保持 3.41%。'
+               '例如 `[495,6912]` 的 PR 旧版 / 当前 / 实测分别为 11.469 / 7.532 / 10.059 µs。'
+               '同一修改在新 `[1024,5120]` 的 PR 上把 +38.35% 改为 −19.83%。'
+               '容量上限不能唯一确定某次写回时刻，偏差方向随驻留和未被遮盖的流水等待而变。[逐例回放](../results/v0.20/historical-replay.json)','']
+    sections+=scaling(rows)
     return '\n'.join(sections)
 
 
@@ -136,7 +205,11 @@ def render():
     old=read(OLD/'evaluation.json')
     history=[{k:r[k] for k in ('id','op','shape','attrs','api','library','dt_us','dt_ca_us','pr_us','pr_ca_us','future_us') if k in r}
              for r in old['rows'] if r['op'] not in LABEL]
+    cube=prefill_matmul()
+    cube_rows=[r for r in old['rows'] if r['op']=='matmul']+[cube]
+    cube_summary={s:metric(cube_rows,s+'_us',s+'_ca_us') for s in ('dt','pr')}
     write(V/'evaluation.json',dict(version='0.20.0',previous_version='0.19.0',rows=rows,summary=byop,
+        prefill_matmul=cube,matmul_including_prefill=cube_summary,
         unchanged_routes_v019=history,unchanged_summary={k:v for k,v in old['summary'].items() if k not in LABEL},
         previous_evidence='results/v0.19/evaluation.json',future_role='970DT projection only'))
     replay=[]
@@ -162,9 +235,27 @@ def render():
         idx=next((i for i,l in enumerate(lines) if l.startswith('| '+name+' |')),None)
         if idx is None:idx=next(i for i,l in enumerate(lines) if l.startswith('| Kimi AttnResFwd |'));lines.insert(idx,entry)
         else:lines[idx]=entry
+    extra=''
+    if cube['dt_ca_us'] is not None:
+        dt=cube_summary['dt'];pr=cube_summary['pr']
+        idx=next(i for i,line in enumerate(lines) if line.startswith('| Matmul |'))
+        speeds=metric(cube_rows,'speedup_pred','speedup_ca')
+        projection=[c['future_us'] for c in cube_rows]
+        cube_role='双端配对' if cube['pr_ca_us'] else 'DT'
+        lines[idx]=(f"| Matmul | v0.17 原留出 + v0.20 Flash 投影 {cube_role} | {dt['n']} | {metrics(dt)} | "
+                    f"{pr['n']} | {metrics(pr)} | {metrics(speeds)} | {min(projection):.3f}–{max(projection):.3f} |")
+        obs=cube['dt_observation'];shape='×'.join(map(str,cube['shape']))
+        detail=f"模型 {cube['dt_us']:.3f} µs、CA {cube['dt_ca_us']:.3f} µs（{cube['dt_us']/cube['dt_ca_us']-1:+.1%}）"
+        extra=(f"\n### Flash prefill 投影的 Cube 验证\n\n每次调度总计 2,048 token，"
+               f"BF16 ND `[M,N,K]=[{shape}]`。950DT {detail}，kernel 为 `{obs['kernel']}`。"
+               f"950PR 预测 {cube['pr_us']:.3f} µs，CA {display(cube['pr_ca_us'])} µs。该配对是在 DT 完成后选择，沿用最初冻结的 PR 预测。970DT 外推 {cube['future_us']:.3f} µs。"
+               "该实验检查 indexer 投影的真实维度，RHS 使用连续 ND。整网权重布局和最终派发仍以实际部署为准。"
+               "DT 分核预测 32 AIC，实际另有 64 个 AIV。模型和实测各 640 次 MMAD，但单条的 [m,n,k] 分别为 [64,32,256] 和 [256,32,64]。"
+               "实际 tiling key 4098 对应 Stream-K，末个 AIC 的 Cube 结束后到整窗结束，预测 0.256 µs、实测 2.756 µs。"
+               "[分块、首次发起与终端核对照](examples/matmul-prefill.md)\n\n")
     text='\n'.join(lines)+'\n'
     anchor='## 芯片资源及模拟条件'
-    text=text.replace(anchor,A+'\n'+sections(rows)+B+'\n\n'+anchor,1)
+    text=text.replace(anchor,A+'\n'+sections(rows)+extra+B+'\n\n'+anchor,1)
     path.write_text(text)
     return rows
 

@@ -136,6 +136,23 @@ def upper(op,shape,attrs,chip):
             segments.append(interval('Shared link · exposed',mx,finish,'fabric'))
         segments.append(interval('Drain',finish,e.latency_us,'MTE3'))
         caption='Resource model · two-slot UB schedule and exposed link floor'
+    elif op=='rmsnorm':
+        # Two physically independent clocks. Mutually exclusive core costs
+        # determine one finish; the shared traffic bound starts at P_release.
+        local=0.
+        for label,delta in stages.items():
+            if label=='shared_io' or delta<=0:continue
+            color=label if label in COLORS else 'control'
+            segments.append(interval('Terminal core · exposed costs',local,local+delta,color))
+            marks.append(['Terminal core · exposed costs',local])
+            local+=delta
+        from operator_model.rms_resource import FIRST_PAYLOAD_RELEASE
+        release=data.get('first_dispatch_cycles',{}).get('payload',FIRST_PAYLOAD_RELEASE)/clock
+        shared=release+data['shared_io_floor_cycles']/clock
+        segments.append(interval('Device · memory path',0,release,'control'))
+        segments.append(interval('Device · memory path',release,shared,'fabric'))
+        assert isclose(e.latency_us,max(shared,local),abs_tol=1e-6)
+        caption='Resource model · latest of core finish and shared transfer'
     else:
         cursor=0.
         for label,value in stages.items():
@@ -227,6 +244,13 @@ def cases():
             side='pr' if '950PR' in rec['chip'] else 'dt'
             row[side+'_observation']=rec
         for side in ('dt','pr'):yield f'{op}-chunk-{side}',op,row,side
+    registered=ROOT/'results/v0.20/rms/records.json'
+    for rec in read(registered):
+        if rec['shape']!=[1024,5120]:continue
+        side='dt' if '950DT' in rec['chip'] else 'pr'
+        item=dict(op='rmsnorm',shape=rec['shape'],attrs={},api=rec['api'])
+        item[side+'_observation']=rec
+        yield 'rmsnorm-new-'+side,'rmsnorm',item,side
     for op in sorted({r['op'] for r in previous}-{'matmul','quant','rmsnorm','kda_chunk'}):
         choices=[r for r in previous if r['op']==op and r.get('pr_ca_us')]
         if op=='fa':choices=[r for r in choices if r['shape']==[9,8191,64,1,1]]

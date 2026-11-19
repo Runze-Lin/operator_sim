@@ -8,7 +8,9 @@
 | 某个算子为什么需要这么久？不同 shape 如何改变结果？ | [建模方法：Vector、Cube、CV 三类流程，含逐算子公式与算例](docs/modeling-strategy.md) |
 | 哪些算子、shape 和库实现实测过？偏差多大？预测有多快？ | [CA 校验与误差：逐算子摘要、逐 shape 数据及查询墙钟](docs/error-analysis.md) |
 
-按同一设备时间轴查看上栏预测、下栏真实流水，可比较 [DynamicMXQuant 五轮 UB 读算写](docs/examples/quant.md)、[Matmul 两波、两页 K 的 MMAD](docs/examples/matmul.md)、[FA 的首个 QK/PV 与长循环](docs/examples/fa.md)。[逐算子的算例入口](docs/modeling-strategy.md#逐算子算例)
+**[流水对照图集](docs/pipeline-comparisons.md)** 按同一设备时间轴查看上栏预测和下栏实测，可比较 [DynamicMXQuant 五轮 UB 读算写](docs/examples/quant.md)、[Matmul 两波、两页 K 的 MMAD](docs/examples/matmul.md)、[FA 的首个 QK/PV 与长循环](docs/examples/fa.md)。[逐算子的算例入口](docs/modeling-strategy.md#逐算子算例)
+
+在真实模型维度上也能逐段核对。Flash 的窄输出投影在 950DT 预测 12.123 µs、CA 为 13.023 µs。两侧都是 640 条 MMAD，实际 kernel 多用了 64 个 AIV，图上可以直接看到末段归并。整批 B8×128k 的 Flash Cast 和 Kimi Sigmoid 分别展开首轮和末轮。[Flash 投影](docs/examples/matmul-prefill.md) · [Flash Cast 两端流水](results/v0.20/large/flash-128ki-tiles.png) · [Kimi beta 两端流水](results/v0.20/newop/long-timelines.md)
 
 ## 试一次预测
 

@@ -40,6 +40,8 @@ print(r.projection['target_plan'], r.projection['timing_diagnostics']['modeled_e
 
 在此末核上，MTE3 的在途窗口一直延伸到约 9.97 µs，与 SIMD 及 MTE2 有重叠。结合全片外存写命令为零，可以把片上写入服务和 HBM 写回区分开。
 
+同一模型升到 8 × 128ki 后，DT 的 25 个 UB 块中，核内稳态每满块 0.80 µs，实测末核读/写发起间隔均为 1.23 µs。PR 有 29 块，按其 1.4 TB/s 外存折算共同约束后预测每满块 2.23 µs，实测为 2.32 µs。两端的完整 CA 分别为 35.53 和 70.71 µs。[128ki 的双端分块流水图](../../results/v0.20/large/flash-128ki-tiles.png) · [32ki、128ki、256ki 与 Pro 的逐形状报告](../../results/v0.20/large/report.md)
+
 ## 小输入的阶段价格
 
 DeepSeek-V4.1-Flash 的 950 路线会将归一化结果另行转换为 FP32 供路由使用。以下计时对应单独调用 CANN 9.2.1 ops-math 的 `aclnnCast`，本例 DT profiler 记录的 kernel 为 `Cast_b2717900ea7de2d41ea9c63d23aa269b_high_performance_0`。输入是连续的 BF16 ND 张量，输出同形 FP32。原 framework 的 `.float()` 与前一个归一化 kernel 的组合执行尚未采集。[模型源码及平台核验](../../results/v0.19/workloads/rmsnorm-cast-assessment.md)

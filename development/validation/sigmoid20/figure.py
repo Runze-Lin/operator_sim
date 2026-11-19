@@ -236,38 +236,42 @@ def render(d, slug):
         fontsize=9,
         color="#385869",
     )
-    if (
-        1 < len(d["ca_tiles"]) <= 6
-        and len(d["ca_tiles"]) == d["plan"]["critical_core_tiles"]
-    ):
-        count = len(d["ca_tiles"])
+    if min(len(d["ca_tiles"]), d["plan"]["critical_core_tiles"]) > 1:
         for ax, actual in zip(axs, [False, True]):
+            count = len(d["ca_tiles"]) if actual else d["plan"]["critical_core_tiles"]
+            # Both panels retain the same full-kernel time axis.
+            indices = list(range(count)) if count <= 6 else [0, 1, count - 2, count - 1]
+            shown = len(indices)
             for artist in list(ax.collections):
                 artist.remove()
-            for i, tile in enumerate(d["ca_tiles"]):
-                y = count - 1 - i
+            for row, i in enumerate(indices):
+                y = shown - 1 - row
                 for q, offset in [("Read", 0.18), ("Vector", 0.0), ("Write", -0.18)]:
-                    a, b = tile[q] if actual else d["model_windows"][q][i]
+                    a, b = d["ca_tiles"][i][q] if actual else d["model_windows"][q][i]
                     ax.broken_barh(
                         [(a, b - a)], (y + offset - 0.085, 0.17), facecolors=colors[q]
                     )
             if actual:
                 for a, b in d["ca_windows"]["Metadata"]:
                     ax.broken_barh(
-                        [(a, b - a)], (count - 0.9, 0.17), facecolors=colors["Metadata"]
+                        [(a, b - a)], (shown - 0.9, 0.17), facecolors=colors["Metadata"]
                     )
             else:
                 a, b = d["model_windows"]["Front"][0]
                 ax.broken_barh(
-                    [(a, b - a)], (count - 0.9, 0.17), facecolors=colors["Front"]
+                    [(a, b - a)], (shown - 0.9, 0.17), facecolors=colors["Front"]
                 )
             ax.set_yticks(
-                list(range(count))[::-1], [f"UB tile {n + 1}" for n in range(count)]
+                list(range(shown))[::-1], [f"UB tile {i + 1}" for i in indices]
             )
-            ax.set_ylim(-0.48, count - 0.43)
+            ax.set_ylim(-0.48, shown - 0.43)
         fig.texts[-2].set_text(
             "Per tile: read / SIMD / write. CA SIMD spans first RV_VLD to last RV_VST. DMA descriptors can overlap in time."
         )
+        if max(len(d["ca_tiles"]), d["plan"]["critical_core_tiles"]) > 6:
+            fig.texts[-1].set_text(
+                "Showing first two and last two tiles. Middle tiles occupy the elapsed time between rows; dashed line = full kernel end."
+            )
     fig.savefig(
         ROOT / "docs/examples/figures" / f"sigmoid-{slug}.png",
         dpi=160,

@@ -15,7 +15,9 @@
 | 950PR 模型 | 14.027 µs | 该 shape 缺配对 CA |
 | 970DT 外推 | 6.350 µs | 来自独立情景配置 |
 
-采集使用安装包的 `aclnnMatmul`，kernel 为 `MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2`，2,621,440 个输出全部通过数值检查。CA 墙钟 329 秒。发布的 JSON 带每个核的 tile 核对、图上时间戳、冻结预测和 trace 哈希。[图数据](../../results/v0.20/examples/matmul-tile-pages.json) · [从时间戳重画](../../development/validation/sku20/matmul_figure.py)
+采集使用安装包的 `aclnnMatmul`，kernel 为 `MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2`，2,621,440 个输出全部通过数值检查。CA 墙钟 329 秒。发布的 JSON 带每个核的 tile 核对、图上时间戳、冻结预测和 trace 哈希。[图数据](../../results/v0.20/examples/matmul-tile-pages.json) · [从时间戳重画](../../development/validation/sku20/matmul_figure.py) · [用原始 trace 复核 32 个核的页地址、L0A/L0B 装载、累加初始化和逐条 MMAD](../../development/validation/sku20/audit_matmul_pages.py)
+
+同样是 MatMulV3，Flash indexer 的窄输出、长 K 投影会启动 AIC 和 AIV。该例把模型的输出块与实际 MMAD 的 m/n/k 和末端 Vector 归并逐项对齐。[Flash 投影的混合核算例](matmul-prefill.md)
 
 ## 不同核数的短 K 例子
 

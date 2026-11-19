@@ -27,6 +27,12 @@ def compare(data):
             d[side]=dict(old=p[side+'_us'],ca=p[side+'_ca_us'],current=new)
         d['speedup']={key:d['dt'][key]/d['pr'][key] for key in d['dt']}
         history.append(d)
+    old_path=OUT/'prior-cast-replay.json'
+    if old_path.exists():
+        historical_frozen=read(old_path)
+        history=historical_frozen['rows']
+    else:
+        write(old_path,{'role':'frozen v0.20 replay of the earlier v0.19 ten-shape validation set', 'rows':history})
     groups={'prior_holdout_replay':history,'development':[],'parallel_replay':[],'independent':[]}
     for r in data['cases']:
         row={'shape':r['shape']};roles=set()

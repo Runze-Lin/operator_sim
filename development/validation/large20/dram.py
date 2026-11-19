@@ -57,6 +57,8 @@ def save_official_counters():
     import os
     from large_cast import DT, ROOT
     jobs=read(OUT/'registration.json')['jobs'][1:]
+    pro=OUT/'pro-freeze.json'
+    if pro.exists():jobs.append(read(pro)['job'])
     while True:
         pending=False
         for j in jobs:

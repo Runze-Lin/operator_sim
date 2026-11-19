@@ -93,6 +93,9 @@ def report():
     out = dict(
         frozen_utc=f["utc"],
         distinct_shapes=len(f["jobs"]),
+        distinct_flattened_element_counts=len(
+            {j["shape"][0] * j["shape"][1] for j in f["jobs"]}
+        ),
         completed_launches=len(records),
         qualified_launches=sum(r["qualified"] for r in records),
         summary=summary,
@@ -129,7 +132,7 @@ def report():
     lines = [
         "# Kimi K3 beta Sigmoid 冻结留出集",
         "",
-        f"已完成 {len(records)} / 20 次离线 CA，其中 {out['qualified_launches']} 个窗口通过全核窗口及全元素数值核验。输入全为连续 FP32 `[T,H_local]`，设备耗时单位 µs。开头三个超长场景分别按 B8×32k、128k、256k 推导；其余记录覆盖 TP、decode 和 tile 边界。",
+        f"已完成 {len(records)} / 20 次离线 CA，其中 {out['qualified_launches']} 个窗口通过全核窗口及全元素数值核验。输入全为连续 FP32 `[T,H_local]`，设备耗时单位 µs。开头三个超长场景分别按 B8×32k、128k、256k 推导；其余记录覆盖 TP、decode 和 tile 边界。10 个 shape 有 9 个不同的展平元素数；`[9,96]` 和 `[72,12]` 均为 864 元素，是可以对照的等工作量调用。",
         "",
         "| Shape | DT 预测 / CA / 误差 / AIV 预测→实测 | PR 预测 / CA / 误差 / AIV 预测→实测 | 970DT 外推 µs |",
         "|---|---|---|---:|",

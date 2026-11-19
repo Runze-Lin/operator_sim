@@ -101,10 +101,15 @@ def summarize():
 
 if __name__ == "__main__":
     if sys.argv[-1] == "watch":
+        last_holdout_change = None
         while True:
             save()
-            if summarize() == 20:
-                break
+            holdout = DEST / "holdout.json"
+            signature = holdout.stat().st_mtime_ns if holdout.exists() else 0
+            if signature != last_holdout_change:
+                if summarize() == 20:
+                    break
+                last_holdout_change = signature
             time.sleep(2)
     else:
         summarize()

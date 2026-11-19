@@ -172,6 +172,7 @@
           "logical_gbs": 5048.463279348863,
           "wall_s": 354.9516028801445,
           "raw_peak_bytes": 1832802673,
+          "peak_is_lower_bound": false,
           "source": "cast_262144_32_Ascend950DT_9582.json",
           "visible_read_pct": 100.0,
           "visible_write_pct": 98.93341064453125,
@@ -195,6 +196,7 @@
           "logical_gbs": 3574.6906856284795,
           "wall_s": 358.7970946698915,
           "raw_peak_bytes": 2285391866,
+          "peak_is_lower_bound": false,
           "source": "cast_262144_32_Ascend950PR_957b.json",
           "visible_read_pct": 100.0,
           "visible_write_pct": 100.0,
@@ -377,14 +379,59 @@
       },
       "devices": {
         "Ascend950DT_9582": {
-          "status": "运行中"
+          "status": "全核 CA",
+          "ca_us": 35.53454470913857,
+          "old_error_pct": 44.63129516109154,
+          "signed_error_pct": -34.50088686538481,
+          "kernel": "Cast_b2717900ea7de2d41ea9c63d23aa269b_high_performance_0",
+          "active_aiv": 64,
+          "events": 4367808,
+          "logical_gbs": 5665.658407837261,
+          "wall_s": 1310.1971584900748,
+          "raw_peak_bytes": 9531200138,
+          "peak_is_lower_bound": false,
+          "source": "cast_1048576_32_Ascend950DT_9582.json",
+          "visible_read_pct": 100.0,
+          "visible_write_pct": 100.0,
+          "read_counts": {
+            "42240": 1536,
+            "34816": 64
+          },
+          "write_counts": {
+            "84480": 1536,
+            "69632": 64
+          }
         },
         "Ascend950PR_957b": {
-          "status": "运行中"
+          "status": "全核 CA",
+          "ca_us": 70.71091270726174,
+          "old_error_pct": 104.87238428613227,
+          "signed_error_pct": -8.981159555527473,
+          "kernel": "Cast_b2717900ea7de2d41ea9c63d23aa269b_high_performance_0",
+          "active_aiv": 56,
+          "events": 4367456,
+          "logical_gbs": 2847.1785229739303,
+          "wall_s": 1216.4816455498803,
+          "raw_peak_bytes": 10645019414,
+          "peak_is_lower_bound": false,
+          "source": "cast_1048576_32_Ascend950PR_957b.json",
+          "visible_read_pct": 100.0,
+          "visible_write_pct": 100.0,
+          "read_counts": {
+            "42240": 1568,
+            "15664": 55,
+            "15024": 1
+          },
+          "write_counts": {
+            "84480": 1568,
+            "31328": 55,
+            "30048": 1
+          }
         }
       },
       "speedup": {
-        "predicted": 0.36163331595707243
+        "predicted": 0.36163331595707243,
+        "measured": 0.5025326834098311
       }
     },
     {
@@ -549,10 +596,10 @@
       },
       "devices": {
         "Ascend950DT_9582": {
-          "status": "已排队"
+          "status": "运行中"
         },
         "Ascend950PR_957b": {
-          "status": "已排队"
+          "status": "运行中"
         }
       },
       "speedup": {
@@ -721,10 +768,10 @@
       },
       "devices": {
         "Ascend950DT_9582": {
-          "status": "已排队"
+          "status": "等待前一例释放核仿真槽位"
         },
         "Ascend950PR_957b": {
-          "status": "已排队"
+          "status": "等待前一例释放核仿真槽位"
         }
       },
       "speedup": {
@@ -1059,7 +1106,28 @@
       },
       "devices": {
         "Ascend950DT_9582": {
-          "status": "已排队"
+          "status": "全核 CA",
+          "ca_us": 17.04121160786599,
+          "old_error_pct": 53.9107009874676,
+          "signed_error_pct": -21.75566672506569,
+          "kernel": "Cast_b2717900ea7de2d41ea9c63d23aa269b_high_performance_0",
+          "active_aiv": 64,
+          "events": 2198464,
+          "logical_gbs": 5907.050409111474,
+          "wall_s": 1136.900001,
+          "raw_peak_bytes": 2724094864,
+          "peak_is_lower_bound": true,
+          "source": "cast_262144_64_Ascend950DT_9582.json",
+          "visible_read_pct": 100.0,
+          "visible_write_pct": 100.0,
+          "read_counts": {
+            "42240": 768,
+            "17408": 64
+          },
+          "write_counts": {
+            "84480": 768,
+            "34816": 64
+          }
         },
         "Ascend950PR_957b": {
           "status": "已排队"
