@@ -8,7 +8,7 @@ from .fast_query import Predictor
 from .model_v6 import Case
 
 ROOT = Path(__file__).resolve().parents[1]
-VECTOR = {'quant', 'rmsnorm', 'mhc_sinkhorn', 'mhc_post', 'kda_recurrent', 'moe_gating_top_k'}
+VECTOR = {'quant', 'rmsnorm', 'mhc_sinkhorn', 'mhc_post', 'kda_recurrent', 'moe_gating_top_k', 'cast_bf16_fp32', 'attn_res_fwd'}
 CUBE = {'matmul', 'addmm', 'gmm2'}
 FUSION = {'fa', 'lightning_indexer', 'mhc_pre', 'mhc_pre_sinkhorn', 'mhc',
           'kda_chunk', 'grouped_matmul_swiglu_quant_v2', 'moe_ffn'}
@@ -32,7 +32,8 @@ def _estimate(op, shape, attrs, revision):
     attrs = dict(attrs or {})
     shape = tuple(shape)
     try:
-        if any(type(x) is not int or x<=0 for x in shape):
+        # The attention-residual contract also accepts an empty history or token batch.
+        if op != 'attn_res_fwd' and any(type(x) is not int or x<=0 for x in shape):
             raise ValueError('Expected positive integer dimensions')
         if op in ('quant','matmul','fa'):
             if attrs:
@@ -40,6 +41,21 @@ def _estimate(op, shape, attrs, revision):
             case = Case(op,shape)
             us = quant_time(_legacy(),case) if op=='quant' else _legacy().predict_us(case,use_cache=False)
             result = {'predicted_us':us}
+        elif op == 'attn_res_fwd':
+            if revision < 12:
+                raise ValueError('No historical AttnResFwd route')
+            from .chips import load_chip
+            from .attention_residual_timing import resource_attention
+            duration, _, diag = resource_attention(shape, load_chip(), attrs)
+            result = dict(predicted_us=duration, predicted_active_aiv=diag['target_plan']['active_aiv'],
+                          status='unqualified_ca_timing' if duration is None else 'A5_estimate')
+        elif op == 'cast_bf16_fp32':
+            if revision < 12 or attrs:
+                raise ValueError('Cast requires the current fixed BF16 to FP32 contract')
+            from .chips import load_chip
+            from .cast_resource import resource_cast
+            duration, _, active, diag = resource_cast(shape, load_chip())
+            result = dict(predicted_us=duration, predicted_active_aiv=active, stages_us=diag['stages_us'])
         elif op == 'moe_gating_top_k':
             if revision < 12 or attrs:
                 raise ValueError('Router requires the current fixed sigmoid/bias contract')

@@ -69,7 +69,8 @@ def _rates(work, latency_us, chip):
     }
 
 
-_RESOURCE_OPS = {'quant', 'matmul', 'fa', 'rmsnorm', 'moe_gating_top_k'}
+_RESOURCE_ONLY = {'moe_gating_top_k', 'cast_bf16_fp32', 'attn_res_fwd'}
+_RESOURCE_OPS = {'quant', 'matmul', 'fa', 'rmsnorm'} | _RESOURCE_ONLY
 
 
 def _price_resource(op, shape, target, call, dtype):
@@ -78,9 +79,19 @@ def _price_resource(op, shape, target, call, dtype):
     from .matmul_resource import resource_matmul
     from .fa_resource import resource_fa
 
-    if op == 'rmsnorm':
-        from .rms_resource import resource_rms
-        us, aic, aiv, diag = resource_rms(shape, target, call)
+    work = None
+    if op == 'attn_res_fwd':
+        from .attention_residual_timing import resource_attention
+        us, work, diag = resource_attention(shape, target, call)
+        aic, aiv = 0, diag['target_plan']['active_aiv']
+    elif op == 'rmsnorm':
+        from .rms_target_cost import configured_rms
+        us, aic, aiv, diag = configured_rms(shape, target, call)
+    elif op == 'cast_bf16_fp32':
+        if call:
+            raise ValueError('Cast expects a contiguous BF16 to FP32 conversion')
+        from .cast_resource import resource_cast
+        us, aic, aiv, diag = resource_cast(shape, target)
     elif op == 'moe_gating_top_k':
         if call:
             raise ValueError('Router expects the fixed sigmoid/bias, one-group contract')
@@ -92,12 +103,16 @@ def _price_resource(op, shape, target, call, dtype):
         Case(op, shape)
         price = {'quant': resource_quant, 'matmul': resource_matmul, 'fa': resource_fa}[op]
         us, aic, aiv, diag = price(shape, target)
-    work = account_work(op, shape, {'dtype': dtype})
+    if work is None:
+        work = account_work(op, shape, {'dtype': dtype})
     projected = dict(method='target_resource_schedule', latency_us=us, active_aic=aic,
                      active_aiv=aiv, reference_latency_us=None, stages_us=diag['stages_us'],
                      target_plan=diag['target_plan'], timing_diagnostics=diag,
                      inherited_fields=list(target.inherited_fields),
                      notes=['950 resource defaults; 950 library tiling policy assumed.'])
+    if us is None:
+        return Estimate(None, 'unavailable', diag.get('qualification', 'No qualified timing for this branch'),
+                        aiv, aic, target.name, work, projected)
     if op == 'rmsnorm' and call.get('resident_aiv') is not None:
         # Backward-compatible diagnostic for schedulers storing a DT high-water
         # mark. The target calculation itself consumes the target count directly.
@@ -107,8 +122,13 @@ def _price_resource(op, shape, target, call, dtype):
         if 0 < h < aiv and reference_active > 1:
             mapped = min(mapped, reference_active - 1)
         projected['resident_aiv_mapping'] = {'target':h,'reference':mapped}
-    if op == 'moe_gating_top_k' and target == load_chip():
-        return Estimate(us, 'estimated', 'DT-calibrated router stage schedule', aiv, aic,
+    if op in ('moe_gating_top_k', 'cast_bf16_fp32') and target == load_chip():
+        if op == 'cast_bf16_fp32':
+            inside = shape[0]*shape[1] == 64*4096  # Single DT stage calibration size.
+        else:
+            inside = shape[0] <= 65 and 128 <= shape[1] <= 896 and 6 <= shape[2] <= 16
+        return Estimate(us, 'estimated' if inside else 'extrapolated',
+                        'DT-calibrated stage schedule' if inside else 'Outside DT timing coverage', aiv, aic,
                         target.name, work, projected, _rates(work, us, target))
     return Estimate(us,'extrapolated','Target resource schedule with inherited 950 phase defaults',
                     aiv,aic,target.name,work,projected,_rates(work,us,target))
@@ -136,9 +156,9 @@ def _evaluate(op, shape, attrs, soc, chip, dtype, timing_mode='auto'):
         if timing_mode not in ('auto','resource','calibrated'):
             raise ValueError('timing_mode must be auto, resource or calibrated')
         large_rms = op == 'rmsnorm' and len(shape) == 2 and type(shape[0]) is int and shape[0] > 512
-        auto_resource = (not same and op in _RESOURCE_OPS) or large_rms
-        if (timing_mode == 'resource' or timing_mode == 'auto' and auto_resource
-                or op == 'moe_gating_top_k' and (timing_mode != 'calibrated' or same)):
+        auto_resource = op in _RESOURCE_ONLY or large_rms or (not same and op in _RESOURCE_OPS)
+        use_resource = timing_mode == 'resource' or (timing_mode == 'auto' and auto_resource)
+        if use_resource or (timing_mode == 'calibrated' and same and op in _RESOURCE_ONLY):
             if op not in _RESOURCE_OPS:
                 raise ValueError(f'{op} has no target resource schedule yet')
             return _price_resource(op, shape, target, call, chosen_dtype), raw

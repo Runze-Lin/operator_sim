@@ -151,6 +151,13 @@ def account_work(op, shape, attrs=None):
     op = ALIASES.get(op, op)
     attrs = attrs or {}
     dtype = str(attrs.get("dtype", default_dtype(op))).lower()
+    if op == "attn_res_fwd":
+        from .chips import load_chip
+        from .attention_residual_timing import resource_attention
+        return resource_attention(shape, load_chip(), attrs)[1]
+    if op == "cast_bf16_fp32":
+        from .cast_resource import cast_work
+        return cast_work(shape)
     if op == "moe_gating_top_k":
         from .moe_router import router_work
         return router_work(shape)

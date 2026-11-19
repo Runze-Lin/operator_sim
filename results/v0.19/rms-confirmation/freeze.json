@@ -1,0 +1,1981 @@
+{
+  "utc": "2026-11-19T07:57:42.010553+00:00",
+  "refs": {
+    "operator_model/rms_resource.py": "69048261035df4bb541d261193a9b2c161ed1d33092a87a2e6413ec664d1451b",
+    "operator_model/rms_target_cost.py": "7ab651257811f93017f76d88d3743d87f43a23075b3faea61b33dc91320ed79f",
+    "operator_model/backend.py": "fd4210fa0d040c8956f319379a3f22d3974ab356d323841f1f05a93363fc6093",
+    "operator_model/rms_v12.py": "f8637e8dd846b3a23549b0fd05b090a15ce09ad462fff6605b31430559ac9dd2",
+    "operator_model/chips.py": "a720cd56f11b62e51b3abecb090d9c60480f218f3047ab0bb567a34a3417a1a7",
+    "configs/chips/Ascend950PR_957b.json": "2bb5b0b34b8d04e255e24ea5d12c73407ace6bb7154ba6aa603b338fc252ada7",
+    "configs/chips/Ascend970DT.json": "837796ec9f3b39888950cfe6f703b63c4bf9ced22a366b66f300f1389a8006f2",
+    "configs/chips/scenario-example.json": "4b231c43523b3dae6f7b8a1b0dd7805b42e89fb2ebe3ede1f4d3b49c249c8066",
+    "configs/chips/Ascend950DT_9582.json": "14c621fa134dcae978269357bd544b4f1e26b436c40ac8c4f800027332260930",
+    "development/validation/sku19/confirm_rms.py": "00a5c087f3a0c36a5ae175684909b21931d6a2d34e7a9a24b634209e998bc368",
+    "build/smoke/extension_norm_addmm": "6bbb68803743f607002b47dad03e93aee5cbf030335f9d3e8ad1ca3950b53561",
+    "results/v0.19/rms-confirmation/registration.json": "72f0dafdc9ea73954a3fa518fa3a0731714524f208741193880d27163056f76f"
+  },
+  "jobs": [
+    {
+      "id": "rmsnorm_3_6080",
+      "op": "rmsnorm",
+      "shape": [
+        3,
+        6080
+      ],
+      "args": [
+        "rmsnorm",
+        "3",
+        "6080"
+      ],
+      "attrs": {},
+      "dtype": "bf16",
+      "role": "holdout",
+      "regime": "small",
+      "runner": "build/smoke/extension_norm_addmm",
+      "runner_sha256": "6bbb68803743f607002b47dad03e93aee5cbf030335f9d3e8ad1ca3950b53561",
+      "wall_s": 240,
+      "raw_mib": 409,
+      "kernels": 1,
+      "nchecks": 2,
+      "batch": null,
+      "outputs": [
+        {
+          "op": "rmsnorm",
+          "shape": [
+            3,
+            6080
+          ],
+          "attrs": {},
+          "indices": [
+            0
+          ],
+          "dt_us": 3.7127663447666523,
+          "dt_aic": 0,
+          "dt_aiv": 3,
+          "dt_status": "extrapolated",
+          "dt_query_ms": 6.09363,
+          "old_dt_us": 2.833195469517885,
+          "old_dt_aic": 0,
+          "old_dt_aiv": 3,
+          "old_dt_status": "extrapolated",
+          "old_dt_query_ms": 4.30126,
+          "pr_us": 3.507750027881216,
+          "pr_aic": 0,
+          "pr_aiv": 3,
+          "pr_status": "extrapolated",
+          "pr_query_ms": 0.44326,
+          "old_pr_us": 2.842773028629139,
+          "old_pr_aic": 0,
+          "old_pr_aiv": 3,
+          "old_pr_status": "extrapolated",
+          "old_pr_query_ms": 0.35564,
+          "future_us": 3.4029950307742003,
+          "future_aic": 0,
+          "future_aiv": 3,
+          "future_status": "extrapolated",
+          "future_query_ms": 0.42202,
+          "old_future_us": 2.5966942041999554,
+          "old_future_aic": 0,
+          "old_future_aiv": 3,
+          "old_future_status": "extrapolated",
+          "old_future_query_ms": 0.28833
+        }
+      ]
+    },
+    {
+      "id": "rmsnorm_7_7360",
+      "op": "rmsnorm",
+      "shape": [
+        7,
+        7360
+      ],
+      "args": [
+        "rmsnorm",
+        "7",
+        "7360"
+      ],
+      "attrs": {},
+      "dtype": "bf16",
+      "role": "holdout",
+      "regime": "small",
+      "runner": "build/smoke/extension_norm_addmm",
+      "runner_sha256": "6bbb68803743f607002b47dad03e93aee5cbf030335f9d3e8ad1ca3950b53561",
+      "wall_s": 240,
+      "raw_mib": 512,
+      "kernels": 1,
+      "nchecks": 2,
+      "batch": null,
+      "outputs": [
+        {
+          "op": "rmsnorm",
+          "shape": [
+            7,
+            7360
+          ],
+          "attrs": {},
+          "indices": [
+            0
+          ],
+          "dt_us": 3.9048061103828964,
+          "dt_aic": 0,
+          "dt_aiv": 7,
+          "dt_status": "extrapolated",
+          "dt_query_ms": 0.12598,
+          "old_dt_us": 2.917245979886071,
+          "old_dt_aic": 0,
+          "old_dt_aiv": 7,
+          "old_dt_status": "extrapolated",
+          "old_dt_query_ms": 0.08637,
+          "pr_us": 3.6958704317268896,
+          "pr_aic": 0,
+          "pr_aiv": 7,
+          "pr_status": "extrapolated",
+          "pr_query_ms": 0.13177,
+          "old_pr_us": 2.928779421619752,
+          "old_pr_aic": 0,
+          "old_pr_aiv": 7,
+          "old_pr_status": "extrapolated",
+          "old_pr_query_ms": 0.07369,
+          "future_us": 3.5791958099966585,
+          "future_aic": 0,
+          "future_aiv": 7,
+          "future_status": "extrapolated",
+          "future_query_ms": 0.11121,
+          "old_future_us": 2.6736584713910516,
+          "old_future_aic": 0,
+          "old_future_aiv": 7,
+          "old_future_status": "extrapolated",
+          "old_future_query_ms": 0.06726
+        }
+      ]
+    },
+    {
+      "id": "rmsnorm_18_4992",
+      "op": "rmsnorm",
+      "shape": [
+        18,
+        4992
+      ],
+      "args": [
+        "rmsnorm",
+        "18",
+        "4992"
+      ],
+      "attrs": {},
+      "dtype": "bf16",
+      "role": "holdout",
+      "regime": "small",
+      "runner": "build/smoke/extension_norm_addmm",
+      "runner_sha256": "6bbb68803743f607002b47dad03e93aee5cbf030335f9d3e8ad1ca3950b53561",
+      "wall_s": 240,
+      "raw_mib": 614,
+      "kernels": 1,
+      "nchecks": 2,
+      "batch": null,
+      "outputs": [
+        {
+          "op": "rmsnorm",
+          "shape": [
+            18,
+            4992
+          ],
+          "attrs": {},
+          "indices": [
+            0
+          ],
+          "dt_us": 4.874341533416983,
+          "dt_aic": 0,
+          "dt_aiv": 18,
+          "dt_status": "extrapolated",
+          "dt_query_ms": 0.11351,
+          "old_dt_us": 3.259801041308892,
+          "old_dt_aic": 0,
+          "old_dt_aiv": 18,
+          "old_dt_status": "extrapolated",
+          "old_dt_query_ms": 0.07844,
+          "pr_us": 4.663766706650901,
+          "pr_aic": 0,
+          "pr_aiv": 18,
+          "pr_status": "extrapolated",
+          "pr_query_ms": 0.12123,
+          "old_pr_us": 3.263358915080584,
+          "old_pr_aic": 0,
+          "old_pr_aiv": 18,
+          "old_pr_status": "extrapolated",
+          "old_pr_query_ms": 0.06419,
+          "future_us": 4.4680053391439785,
+          "future_aic": 0,
+          "future_aiv": 18,
+          "future_status": "extrapolated",
+          "future_query_ms": 0.10822,
+          "old_future_us": 2.988001775017879,
+          "old_future_aic": 0,
+          "old_future_aiv": 18,
+          "old_future_status": "extrapolated",
+          "old_future_query_ms": 0.06251
+        }
+      ]
+    },
+    {
+      "id": "rmsnorm_38_2624",
+      "op": "rmsnorm",
+      "shape": [
+        38,
+        2624
+      ],
+      "args": [
+        "rmsnorm",
+        "38",
+        "2624"
+      ],
+      "attrs": {},
+      "dtype": "bf16",
+      "role": "holdout",
+      "regime": "boundary",
+      "runner": "build/smoke/extension_norm_addmm",
+      "runner_sha256": "6bbb68803743f607002b47dad03e93aee5cbf030335f9d3e8ad1ca3950b53561",
+      "wall_s": 240,
+      "raw_mib": 665,
+      "kernels": 1,
+      "nchecks": 2,
+      "batch": null,
+      "outputs": [
+        {
+          "op": "rmsnorm",
+          "shape": [
+            38,
+            2624
+          ],
+          "attrs": {},
+          "indices": [
+            0
+          ],
+          "dt_us": 6.195166709345608,
+          "dt_aic": 0,
+          "dt_aiv": 38,
+          "dt_status": "extrapolated",
+          "dt_query_ms": 0.10991,
+          "old_dt_us": 4.7821410982034305,
+          "old_dt_aic": 0,
+          "old_dt_aiv": 38,
+          "old_dt_status": "extrapolated",
+          "old_dt_query_ms": 0.06321,
+          "pr_us": 5.983039005422613,
+          "pr_aic": 0,
+          "pr_aiv": 38,
+          "pr_status": "extrapolated",
+          "pr_query_ms": 0.13469,
+          "old_pr_us": 4.784004219034218,
+          "old_pr_aic": 0,
+          "old_pr_aiv": 38,
+          "old_pr_status": "extrapolated",
+          "old_pr_query_ms": 0.06985,
+          "future_us": 5.678826858021849,
+          "future_aic": 0,
+          "future_aiv": 38,
+          "future_status": "extrapolated",
+          "future_query_ms": 0.14753,
+          "old_future_us": 4.383551223967441,
+          "old_future_aic": 0,
+          "old_future_aiv": 38,
+          "old_future_status": "extrapolated",
+          "old_future_query_ms": 0.06849
+        }
+      ]
+    },
+    {
+      "id": "rmsnorm_57_2304",
+      "op": "rmsnorm",
+      "shape": [
+        57,
+        2304
+      ],
+      "args": [
+        "rmsnorm",
+        "57",
+        "2304"
+      ],
+      "attrs": {},
+      "dtype": "bf16",
+      "role": "holdout",
+      "regime": "boundary",
+      "runner": "build/smoke/extension_norm_addmm",
+      "runner_sha256": "6bbb68803743f607002b47dad03e93aee5cbf030335f9d3e8ad1ca3950b53561",
+      "wall_s": 240,
+      "raw_mib": 819,
+      "kernels": 1,
+      "nchecks": 2,
+      "batch": null,
+      "outputs": [
+        {
+          "op": "rmsnorm",
+          "shape": [
+            57,
+            2304
+          ],
+          "attrs": {},
+          "indices": [
+            0
+          ],
+          "dt_us": 6.347083172631692,
+          "dt_aic": 0,
+          "dt_aiv": 57,
+          "dt_status": "extrapolated",
+          "dt_query_ms": 0.11485,
+          "old_dt_us": 4.772345781899885,
+          "old_dt_aic": 0,
+          "old_dt_aiv": 57,
+          "old_dt_status": "extrapolated",
+          "old_dt_query_ms": 0.06396,
+          "pr_us": 4.564226766925984,
+          "pr_aic": 0,
+          "pr_aiv": 29,
+          "pr_status": "extrapolated",
+          "pr_query_ms": 0.12258,
+          "old_pr_us": 3.554150915181687,
+          "old_pr_aic": 0,
+          "old_pr_aiv": 29,
+          "old_pr_status": "extrapolated",
+          "old_pr_query_ms": 0.06499,
+          "future_us": 5.81809446730242,
+          "future_aic": 0,
+          "future_aiv": 57,
+          "future_status": "extrapolated",
+          "future_query_ms": 0.10805,
+          "old_future_us": 4.374583336286208,
+          "old_future_aic": 0,
+          "old_future_aiv": 57,
+          "old_future_status": "extrapolated",
+          "old_future_query_ms": 0.0613
+        }
+      ]
+    },
+    {
+      "id": "rmsnorm_69_3328",
+      "op": "rmsnorm",
+      "shape": [
+        69,
+        3328
+      ],
+      "args": [
+        "rmsnorm",
+        "69",
+        "3328"
+      ],
+      "attrs": {},
+      "dtype": "bf16",
+      "role": "holdout",
+      "regime": "boundary",
+      "runner": "build/smoke/extension_norm_addmm",
+      "runner_sha256": "6bbb68803743f607002b47dad03e93aee5cbf030335f9d3e8ad1ca3950b53561",
+      "wall_s": 240,
+      "raw_mib": 819,
+      "kernels": 1,
+      "nchecks": 2,
+      "batch": null,
+      "outputs": [
+        {
+          "op": "rmsnorm",
+          "shape": [
+            69,
+            3328
+          ],
+          "attrs": {},
+          "indices": [
+            0
+          ],
+          "dt_us": 4.923635774076277,
+          "dt_aic": 0,
+          "dt_aiv": 35,
+          "dt_status": "extrapolated",
+          "dt_query_ms": 0.11655,
+          "old_dt_us": 3.708555636093743,
+          "old_dt_aic": 0,
+          "old_dt_aiv": 35,
+          "old_dt_status": "extrapolated",
+          "old_dt_query_ms": 0.06575,
+          "pr_us": 4.7141824697012975,
+          "pr_aic": 0,
+          "pr_aiv": 35,
+          "pr_status": "extrapolated",
+          "pr_query_ms": 0.12409,
+          "old_pr_us": 3.7132459070704575,
+          "old_pr_aic": 0,
+          "old_pr_aiv": 35,
+          "old_pr_status": "extrapolated",
+          "old_pr_query_ms": 0.06194,
+          "future_us": 5.959287574035711,
+          "future_aic": 0,
+          "future_aiv": 69,
+          "future_status": "extrapolated",
+          "future_query_ms": 0.10583,
+          "old_future_us": 4.39849557898645,
+          "old_future_aic": 0,
+          "old_future_aiv": 69,
+          "old_future_status": "extrapolated",
+          "old_future_query_ms": 0.06272
+        }
+      ]
+    },
+    {
+      "id": "rmsnorm_103_2944",
+      "op": "rmsnorm",
+      "shape": [
+        103,
+        2944
+      ],
+      "args": [
+        "rmsnorm",
+        "103",
+        "2944"
+      ],
+      "attrs": {},
+      "dtype": "bf16",
+      "role": "holdout",
+      "regime": "boundary",
+      "runner": "build/smoke/extension_norm_addmm",
+      "runner_sha256": "6bbb68803743f607002b47dad03e93aee5cbf030335f9d3e8ad1ca3950b53561",
+      "wall_s": 240,
+      "raw_mib": 921,
+      "kernels": 1,
+      "nchecks": 2,
+      "batch": null,
+      "outputs": [
+        {
+          "op": "rmsnorm",
+          "shape": [
+            103,
+            2944
+          ],
+          "attrs": {},
+          "indices": [
+            0
+          ],
+          "dt_us": 5.038545011254505,
+          "dt_aic": 0,
+          "dt_aiv": 52,
+          "dt_status": "extrapolated",
+          "dt_query_ms": 0.11503,
+          "old_dt_us": 3.688634746839595,
+          "old_dt_aic": 0,
+          "old_dt_aiv": 52,
+          "old_dt_status": "extrapolated",
+          "old_dt_query_ms": 0.06341,
+          "pr_us": 4.828574081160556,
+          "pr_aic": 0,
+          "pr_aiv": 52,
+          "pr_status": "extrapolated",
+          "pr_query_ms": 0.11766,
+          "old_pr_us": 3.6927856401145127,
+          "old_pr_aic": 0,
+          "old_pr_aiv": 52,
+          "old_pr_status": "extrapolated",
+          "old_pr_query_ms": 0.0628,
+          "future_us": 6.219152659010728,
+          "future_aic": 0,
+          "future_aiv": 103,
+          "future_status": "extrapolated",
+          "future_query_ms": 0.10641,
+          "old_future_us": 4.389529283617336,
+          "old_future_aic": 0,
+          "old_future_aiv": 103,
+          "old_future_status": "extrapolated",
+          "old_future_query_ms": 0.06768
+        }
+      ]
+    },
+    {
+      "id": "rmsnorm_229_3968",
+      "op": "rmsnorm",
+      "shape": [
+        229,
+        3968
+      ],
+      "args": [
+        "rmsnorm",
+        "229",
+        "3968"
+      ],
+      "attrs": {},
+      "dtype": "bf16",
+      "role": "holdout",
+      "regime": "large",
+      "runner": "build/smoke/extension_norm_addmm",
+      "runner_sha256": "6bbb68803743f607002b47dad03e93aee5cbf030335f9d3e8ad1ca3950b53561",
+      "wall_s": 660,
+      "raw_mib": 1433,
+      "kernels": 1,
+      "nchecks": 2,
+      "batch": null,
+      "outputs": [
+        {
+          "op": "rmsnorm",
+          "shape": [
+            229,
+            3968
+          ],
+          "attrs": {},
+          "indices": [
+            0
+          ],
+          "dt_us": 5.119080917019678,
+          "dt_aic": 0,
+          "dt_aiv": 58,
+          "dt_status": "extrapolated",
+          "dt_query_ms": 0.10717,
+          "old_dt_us": 3.4664506368268144,
+          "old_dt_aic": 0,
+          "old_dt_aiv": 58,
+          "old_dt_status": "extrapolated",
+          "old_dt_query_ms": 0.07217,
+          "pr_us": 5.2013081679888105,
+          "pr_aic": 0,
+          "pr_aiv": 46,
+          "pr_status": "extrapolated",
+          "pr_query_ms": 0.11935,
+          "old_pr_us": 4.1482491595907,
+          "old_pr_aic": 0,
+          "old_pr_aiv": 46,
+          "old_pr_status": "extrapolated",
+          "old_pr_query_ms": 0.07344,
+          "future_us": 5.217761087668861,
+          "future_aic": 0,
+          "future_aiv": 115,
+          "future_status": "extrapolated",
+          "future_query_ms": 0.11076,
+          "old_future_us": 3.4296924308671275,
+          "old_future_aic": 0,
+          "old_future_aiv": 115,
+          "old_future_status": "extrapolated",
+          "old_future_query_ms": 0.08149
+        }
+      ]
+    },
+    {
+      "id": "rmsnorm_367_5312",
+      "op": "rmsnorm",
+      "shape": [
+        367,
+        5312
+      ],
+      "args": [
+        "rmsnorm",
+        "367",
+        "5312"
+      ],
+      "attrs": {},
+      "dtype": "bf16",
+      "role": "holdout",
+      "regime": "large",
+      "runner": "build/smoke/extension_norm_addmm",
+      "runner_sha256": "6bbb68803743f607002b47dad03e93aee5cbf030335f9d3e8ad1ca3950b53561",
+      "wall_s": 660,
+      "raw_mib": 2662,
+      "kernels": 1,
+      "nchecks": 2,
+      "batch": null,
+      "outputs": [
+        {
+          "op": "rmsnorm",
+          "shape": [
+            367,
+            5312
+          ],
+          "attrs": {},
+          "indices": [
+            0
+          ],
+          "dt_us": 6.062700208126847,
+          "dt_aic": 0,
+          "dt_aiv": 62,
+          "dt_status": "extrapolated",
+          "dt_query_ms": 0.11272,
+          "old_dt_us": 4.382260132215942,
+          "old_dt_aic": 0,
+          "old_dt_aiv": 62,
+          "old_dt_status": "extrapolated",
+          "old_dt_query_ms": 0.0773,
+          "pr_us": 7.261072813852813,
+          "pr_aic": 0,
+          "pr_aiv": 53,
+          "pr_status": "extrapolated",
+          "pr_query_ms": 0.12441,
+          "old_pr_us": 7.171057937922938,
+          "old_pr_aic": 0,
+          "old_pr_aiv": 53,
+          "old_pr_status": "extrapolated",
+          "old_pr_query_ms": 0.06624,
+          "future_us": 5.444104688753223,
+          "future_aic": 0,
+          "future_aiv": 92,
+          "future_status": "extrapolated",
+          "future_query_ms": 0.10971,
+          "old_future_us": 3.5055026048104945,
+          "old_future_aic": 0,
+          "old_future_aiv": 92,
+          "old_future_status": "extrapolated",
+          "old_future_query_ms": 0.06414
+        }
+      ]
+    },
+    {
+      "id": "rmsnorm_495_6912",
+      "op": "rmsnorm",
+      "shape": [
+        495,
+        6912
+      ],
+      "args": [
+        "rmsnorm",
+        "495",
+        "6912"
+      ],
+      "attrs": {},
+      "dtype": "bf16",
+      "role": "holdout",
+      "regime": "large",
+      "runner": "build/smoke/extension_norm_addmm",
+      "runner_sha256": "6bbb68803743f607002b47dad03e93aee5cbf030335f9d3e8ad1ca3950b53561",
+      "wall_s": 660,
+      "raw_mib": 4096,
+      "kernels": 1,
+      "nchecks": 2,
+      "batch": null,
+      "outputs": [
+        {
+          "op": "rmsnorm",
+          "shape": [
+            495,
+            6912
+          ],
+          "attrs": {},
+          "indices": [
+            0
+          ],
+          "dt_us": 7.741290196876038,
+          "dt_aic": 0,
+          "dt_aiv": 62,
+          "dt_status": "extrapolated",
+          "dt_query_ms": 0.11524,
+          "old_dt_us": 5.7363471227605825,
+          "old_dt_aic": 0,
+          "old_dt_aiv": 62,
+          "old_dt_status": "extrapolated",
+          "old_dt_query_ms": 0.07193,
+          "pr_us": 11.46925567099567,
+          "pr_aic": 0,
+          "pr_aiv": 55,
+          "pr_status": "extrapolated",
+          "pr_query_ms": 0.13547,
+          "old_pr_us": 11.403821359381345,
+          "old_pr_aic": 0,
+          "old_pr_aiv": 55,
+          "old_pr_status": "extrapolated",
+          "old_pr_query_ms": 0.07707,
+          "future_us": 6.023688139047805,
+          "future_aic": 0,
+          "future_aiv": 99,
+          "future_status": "extrapolated",
+          "future_query_ms": 0.12475,
+          "old_future_us": 4.161618336222694,
+          "old_future_aic": 0,
+          "old_future_aiv": 99,
+          "old_future_status": "extrapolated",
+          "old_future_query_ms": 0.07149
+        }
+      ]
+    }
+  ],
+  "v018": {
+    "version": "0.18.0",
+    "rows": [
+      {
+        "id": "rmsnorm_3_6080",
+        "targets": {
+          "dt": {
+            "us": 2.833195469517885,
+            "status": "extrapolated",
+            "reason": "Target resource schedule with inherited 950 phase defaults",
+            "aiv": 3,
+            "aic": 0,
+            "query_ms": 4.30126,
+            "plan": {
+              "active_aic": 0,
+              "active_aiv": 3,
+              "rows_per_core": 1,
+              "ub_tile_rows": [
+                1
+              ],
+              "iterations": 1,
+              "vector_groups": 48
+            }
+          },
+          "pr": {
+            "us": 2.842773028629139,
+            "status": "extrapolated",
+            "reason": "Target resource schedule with inherited 950 phase defaults",
+            "aiv": 3,
+            "aic": 0,
+            "query_ms": 0.35564,
+            "plan": {
+              "active_aic": 0,
+              "active_aiv": 3,
+              "rows_per_core": 1,
+              "ub_tile_rows": [
+                1
+              ],
+              "iterations": 1,
+              "vector_groups": 48
+            }
+          },
+          "future": {
+            "us": 2.5966942041999554,
+            "status": "extrapolated",
+            "reason": "Target resource schedule with inherited 950 phase defaults",
+            "aiv": 3,
+            "aic": 0,
+            "query_ms": 0.28833,
+            "plan": {
+              "active_aic": 0,
+              "active_aiv": 3,
+              "rows_per_core": 1,
+              "ub_tile_rows": [
+                1
+              ],
+              "iterations": 1,
+              "vector_groups": 48
+            }
+          }
+        }
+      },
+      {
+        "id": "rmsnorm_7_7360",
+        "targets": {
+          "dt": {
+            "us": 2.917245979886071,
+            "status": "extrapolated",
+            "reason": "Target resource schedule with inherited 950 phase defaults",
+            "aiv": 7,
+            "aic": 0,
+            "query_ms": 0.08637,
+            "plan": {
+              "active_aic": 0,
+              "active_aiv": 7,
+              "rows_per_core": 1,
+              "ub_tile_rows": [
+                1
+              ],
+              "iterations": 1,
+              "vector_groups": 58
+            }
+          },
+          "pr": {
+            "us": 2.928779421619752,
+            "status": "extrapolated",
+            "reason": "Target resource schedule with inherited 950 phase defaults",
+            "aiv": 7,
+            "aic": 0,
+            "query_ms": 0.07369,
+            "plan": {
+              "active_aic": 0,
+              "active_aiv": 7,
+              "rows_per_core": 1,
+              "ub_tile_rows": [
+                1
+              ],
+              "iterations": 1,
+              "vector_groups": 58
+            }
+          },
+          "future": {
+            "us": 2.6736584713910516,
+            "status": "extrapolated",
+            "reason": "Target resource schedule with inherited 950 phase defaults",
+            "aiv": 7,
+            "aic": 0,
+            "query_ms": 0.06726,
+            "plan": {
+              "active_aic": 0,
+              "active_aiv": 7,
+              "rows_per_core": 1,
+              "ub_tile_rows": [
+                1
+              ],
+              "iterations": 1,
+              "vector_groups": 58
+            }
+          }
+        }
+      },
+      {
+        "id": "rmsnorm_18_4992",
+        "targets": {
+          "dt": {
+            "us": 3.259801041308892,
+            "status": "extrapolated",
+            "reason": "Target resource schedule with inherited 950 phase defaults",
+            "aiv": 18,
+            "aic": 0,
+            "query_ms": 0.07844,
+            "plan": {
+              "active_aic": 0,
+              "active_aiv": 18,
+              "rows_per_core": 1,
+              "ub_tile_rows": [
+                1
+              ],
+              "iterations": 1,
+              "vector_groups": 39
+            }
+          },
+          "pr": {
+            "us": 3.263358915080584,
+            "status": "extrapolated",
+            "reason": "Target resource schedule with inherited 950 phase defaults",
+            "aiv": 18,
+            "aic": 0,
+            "query_ms": 0.06419,
+            "plan": {
+              "active_aic": 0,
+              "active_aiv": 18,
+              "rows_per_core": 1,
+              "ub_tile_rows": [
+                1
+              ],
+              "iterations": 1,
+              "vector_groups": 39
+            }
+          },
+          "future": {
+            "us": 2.988001775017879,
+            "status": "extrapolated",
+            "reason": "Target resource schedule with inherited 950 phase defaults",
+            "aiv": 18,
+            "aic": 0,
+            "query_ms": 0.06251,
+            "plan": {
+              "active_aic": 0,
+              "active_aiv": 18,
+              "rows_per_core": 1,
+              "ub_tile_rows": [
+                1
+              ],
+              "iterations": 1,
+              "vector_groups": 39
+            }
+          }
+        }
+      },
+      {
+        "id": "rmsnorm_38_2624",
+        "targets": {
+          "dt": {
+            "us": 4.7821410982034305,
+            "status": "extrapolated",
+            "reason": "Target resource schedule with inherited 950 phase defaults",
+            "aiv": 38,
+            "aic": 0,
+            "query_ms": 0.06321,
+            "plan": {
+              "active_aic": 0,
+              "active_aiv": 38,
+              "rows_per_core": 1,
+              "ub_tile_rows": [
+                1
+              ],
+              "iterations": 1,
+              "vector_groups": 21
+            }
+          },
+          "pr": {
+            "us": 4.784004219034218,
+            "status": "extrapolated",
+            "reason": "Target resource schedule with inherited 950 phase defaults",
+            "aiv": 38,
+            "aic": 0,
+            "query_ms": 0.06985,
+            "plan": {
+              "active_aic": 0,
+              "active_aiv": 38,
+              "rows_per_core": 1,
+              "ub_tile_rows": [
+                1
+              ],
+              "iterations": 1,
+              "vector_groups": 21
+            }
+          },
+          "future": {
+            "us": 4.383551223967441,
+            "status": "extrapolated",
+            "reason": "Target resource schedule with inherited 950 phase defaults",
+            "aiv": 38,
+            "aic": 0,
+            "query_ms": 0.06849,
+            "plan": {
+              "active_aic": 0,
+              "active_aiv": 38,
+              "rows_per_core": 1,
+              "ub_tile_rows": [
+                1
+              ],
+              "iterations": 1,
+              "vector_groups": 21
+            }
+          }
+        }
+      },
+      {
+        "id": "rmsnorm_57_2304",
+        "targets": {
+          "dt": {
+            "us": 4.772345781899885,
+            "status": "extrapolated",
+            "reason": "Target resource schedule with inherited 950 phase defaults",
+            "aiv": 57,
+            "aic": 0,
+            "query_ms": 0.06396,
+            "plan": {
+              "active_aic": 0,
+              "active_aiv": 57,
+              "rows_per_core": 1,
+              "ub_tile_rows": [
+                1
+              ],
+              "iterations": 1,
+              "vector_groups": 18
+            }
+          },
+          "pr": {
+            "us": 3.554150915181687,
+            "status": "extrapolated",
+            "reason": "Target resource schedule with inherited 950 phase defaults",
+            "aiv": 29,
+            "aic": 0,
+            "query_ms": 0.06499,
+            "plan": {
+              "active_aic": 0,
+              "active_aiv": 29,
+              "rows_per_core": 2,
+              "ub_tile_rows": [
+                2
+              ],
+              "iterations": 1,
+              "vector_groups": 36
+            }
+          },
+          "future": {
+            "us": 4.374583336286208,
+            "status": "extrapolated",
+            "reason": "Target resource schedule with inherited 950 phase defaults",
+            "aiv": 57,
+            "aic": 0,
+            "query_ms": 0.0613,
+            "plan": {
+              "active_aic": 0,
+              "active_aiv": 57,
+              "rows_per_core": 1,
+              "ub_tile_rows": [
+                1
+              ],
+              "iterations": 1,
+              "vector_groups": 18
+            }
+          }
+        }
+      },
+      {
+        "id": "rmsnorm_69_3328",
+        "targets": {
+          "dt": {
+            "us": 3.708555636093743,
+            "status": "extrapolated",
+            "reason": "Target resource schedule with inherited 950 phase defaults",
+            "aiv": 35,
+            "aic": 0,
+            "query_ms": 0.06575,
+            "plan": {
+              "active_aic": 0,
+              "active_aiv": 35,
+              "rows_per_core": 2,
+              "ub_tile_rows": [
+                2
+              ],
+              "iterations": 1,
+              "vector_groups": 52
+            }
+          },
+          "pr": {
+            "us": 3.7132459070704575,
+            "status": "extrapolated",
+            "reason": "Target resource schedule with inherited 950 phase defaults",
+            "aiv": 35,
+            "aic": 0,
+            "query_ms": 0.06194,
+            "plan": {
+              "active_aic": 0,
+              "active_aiv": 35,
+              "rows_per_core": 2,
+              "ub_tile_rows": [
+                2
+              ],
+              "iterations": 1,
+              "vector_groups": 52
+            }
+          },
+          "future": {
+            "us": 4.39849557898645,
+            "status": "extrapolated",
+            "reason": "Target resource schedule with inherited 950 phase defaults",
+            "aiv": 69,
+            "aic": 0,
+            "query_ms": 0.06272,
+            "plan": {
+              "active_aic": 0,
+              "active_aiv": 69,
+              "rows_per_core": 1,
+              "ub_tile_rows": [
+                1
+              ],
+              "iterations": 1,
+              "vector_groups": 26
+            }
+          }
+        }
+      },
+      {
+        "id": "rmsnorm_103_2944",
+        "targets": {
+          "dt": {
+            "us": 3.688634746839595,
+            "status": "extrapolated",
+            "reason": "Target resource schedule with inherited 950 phase defaults",
+            "aiv": 52,
+            "aic": 0,
+            "query_ms": 0.06341,
+            "plan": {
+              "active_aic": 0,
+              "active_aiv": 52,
+              "rows_per_core": 2,
+              "ub_tile_rows": [
+                2
+              ],
+              "iterations": 1,
+              "vector_groups": 46
+            }
+          },
+          "pr": {
+            "us": 3.6927856401145127,
+            "status": "extrapolated",
+            "reason": "Target resource schedule with inherited 950 phase defaults",
+            "aiv": 52,
+            "aic": 0,
+            "query_ms": 0.0628,
+            "plan": {
+              "active_aic": 0,
+              "active_aiv": 52,
+              "rows_per_core": 2,
+              "ub_tile_rows": [
+                2
+              ],
+              "iterations": 1,
+              "vector_groups": 46
+            }
+          },
+          "future": {
+            "us": 4.389529283617336,
+            "status": "extrapolated",
+            "reason": "Target resource schedule with inherited 950 phase defaults",
+            "aiv": 103,
+            "aic": 0,
+            "query_ms": 0.06768,
+            "plan": {
+              "active_aic": 0,
+              "active_aiv": 103,
+              "rows_per_core": 1,
+              "ub_tile_rows": [
+                1
+              ],
+              "iterations": 1,
+              "vector_groups": 23
+            }
+          }
+        }
+      },
+      {
+        "id": "rmsnorm_229_3968",
+        "targets": {
+          "dt": {
+            "us": 3.4664506368268144,
+            "status": "extrapolated",
+            "reason": "Target resource schedule with inherited 950 phase defaults",
+            "aiv": 58,
+            "aic": 0,
+            "query_ms": 0.07217,
+            "plan": {
+              "active_aic": 0,
+              "active_aiv": 58,
+              "rows_per_core": 4,
+              "ub_tile_rows": [
+                4
+              ],
+              "iterations": 1,
+              "vector_groups": 124
+            }
+          },
+          "pr": {
+            "us": 4.1482491595907,
+            "status": "extrapolated",
+            "reason": "Target resource schedule with inherited 950 phase defaults",
+            "aiv": 46,
+            "aic": 0,
+            "query_ms": 0.07344,
+            "plan": {
+              "active_aic": 0,
+              "active_aiv": 46,
+              "rows_per_core": 5,
+              "ub_tile_rows": [
+                5
+              ],
+              "iterations": 1,
+              "vector_groups": 155
+            }
+          },
+          "future": {
+            "us": 3.4296924308671275,
+            "status": "extrapolated",
+            "reason": "Target resource schedule with inherited 950 phase defaults",
+            "aiv": 115,
+            "aic": 0,
+            "query_ms": 0.08149,
+            "plan": {
+              "active_aic": 0,
+              "active_aiv": 115,
+              "rows_per_core": 2,
+              "ub_tile_rows": [
+                2
+              ],
+              "iterations": 1,
+              "vector_groups": 62
+            }
+          }
+        }
+      },
+      {
+        "id": "rmsnorm_367_5312",
+        "targets": {
+          "dt": {
+            "us": 4.382260132215942,
+            "status": "extrapolated",
+            "reason": "Target resource schedule with inherited 950 phase defaults",
+            "aiv": 62,
+            "aic": 0,
+            "query_ms": 0.0773,
+            "plan": {
+              "active_aic": 0,
+              "active_aiv": 62,
+              "rows_per_core": 6,
+              "ub_tile_rows": [
+                5,
+                1
+              ],
+              "iterations": 2,
+              "vector_groups": 252
+            }
+          },
+          "pr": {
+            "us": 7.171057937922938,
+            "status": "extrapolated",
+            "reason": "Target resource schedule with inherited 950 phase defaults",
+            "aiv": 53,
+            "aic": 0,
+            "query_ms": 0.06624,
+            "plan": {
+              "active_aic": 0,
+              "active_aiv": 53,
+              "rows_per_core": 7,
+              "ub_tile_rows": [
+                5,
+                2
+              ],
+              "iterations": 2,
+              "vector_groups": 294
+            }
+          },
+          "future": {
+            "us": 3.5055026048104945,
+            "status": "extrapolated",
+            "reason": "Target resource schedule with inherited 950 phase defaults",
+            "aiv": 92,
+            "aic": 0,
+            "query_ms": 0.06414,
+            "plan": {
+              "active_aic": 0,
+              "active_aiv": 92,
+              "rows_per_core": 4,
+              "ub_tile_rows": [
+                4
+              ],
+              "iterations": 1,
+              "vector_groups": 168
+            }
+          }
+        }
+      },
+      {
+        "id": "rmsnorm_495_6912",
+        "targets": {
+          "dt": {
+            "us": 5.7363471227605825,
+            "status": "extrapolated",
+            "reason": "Target resource schedule with inherited 950 phase defaults",
+            "aiv": 62,
+            "aic": 0,
+            "query_ms": 0.07193,
+            "plan": {
+              "active_aic": 0,
+              "active_aiv": 62,
+              "rows_per_core": 8,
+              "ub_tile_rows": [
+                4,
+                4
+              ],
+              "iterations": 2,
+              "vector_groups": 432
+            }
+          },
+          "pr": {
+            "us": 11.403821359381345,
+            "status": "extrapolated",
+            "reason": "Target resource schedule with inherited 950 phase defaults",
+            "aiv": 55,
+            "aic": 0,
+            "query_ms": 0.07707,
+            "plan": {
+              "active_aic": 0,
+              "active_aiv": 55,
+              "rows_per_core": 9,
+              "ub_tile_rows": [
+                4,
+                4,
+                1
+              ],
+              "iterations": 3,
+              "vector_groups": 486
+            }
+          },
+          "future": {
+            "us": 4.161618336222694,
+            "status": "extrapolated",
+            "reason": "Target resource schedule with inherited 950 phase defaults",
+            "aiv": 99,
+            "aic": 0,
+            "query_ms": 0.07149,
+            "plan": {
+              "active_aic": 0,
+              "active_aiv": 99,
+              "rows_per_core": 5,
+              "ub_tile_rows": [
+                4,
+                1
+              ],
+              "iterations": 2,
+              "vector_groups": 270
+            }
+          }
+        }
+      }
+    ]
+  },
+  "v019_final": {
+    "version": "0.19.0",
+    "rows": [
+      {
+        "id": "rmsnorm_3_6080",
+        "targets": {
+          "dt": {
+            "us": 3.7127663447666523,
+            "status": "extrapolated",
+            "reason": "Target resource schedule with inherited 950 phase defaults",
+            "aiv": 3,
+            "aic": 0,
+            "query_ms": 6.09363,
+            "plan": {
+              "active_aic": 0,
+              "active_aiv": 3,
+              "rows_per_core": 1,
+              "iterations": 1,
+              "full_tile_rows": 4,
+              "full_tile_count": 0,
+              "tail_tile_rows": 1,
+              "vector_groups": 48,
+              "ub_tile_rows": [
+                1
+              ]
+            }
+          },
+          "pr": {
+            "us": 3.507750027881216,
+            "status": "extrapolated",
+            "reason": "Target resource schedule with inherited 950 phase defaults",
+            "aiv": 3,
+            "aic": 0,
+            "query_ms": 0.44326,
+            "plan": {
+              "active_aic": 0,
+              "active_aiv": 3,
+              "rows_per_core": 1,
+              "iterations": 1,
+              "full_tile_rows": 4,
+              "full_tile_count": 0,
+              "tail_tile_rows": 1,
+              "vector_groups": 48,
+              "ub_tile_rows": [
+                1
+              ]
+            }
+          },
+          "future": {
+            "us": 3.4029950307742003,
+            "status": "extrapolated",
+            "reason": "Target resource schedule with inherited 950 phase defaults",
+            "aiv": 3,
+            "aic": 0,
+            "query_ms": 0.42202,
+            "plan": {
+              "active_aic": 0,
+              "active_aiv": 3,
+              "rows_per_core": 1,
+              "iterations": 1,
+              "full_tile_rows": 4,
+              "full_tile_count": 0,
+              "tail_tile_rows": 1,
+              "vector_groups": 48,
+              "ub_tile_rows": [
+                1
+              ]
+            }
+          }
+        }
+      },
+      {
+        "id": "rmsnorm_7_7360",
+        "targets": {
+          "dt": {
+            "us": 3.9048061103828964,
+            "status": "extrapolated",
+            "reason": "Target resource schedule with inherited 950 phase defaults",
+            "aiv": 7,
+            "aic": 0,
+            "query_ms": 0.12598,
+            "plan": {
+              "active_aic": 0,
+              "active_aiv": 7,
+              "rows_per_core": 1,
+              "iterations": 1,
+              "full_tile_rows": 4,
+              "full_tile_count": 0,
+              "tail_tile_rows": 1,
+              "vector_groups": 58,
+              "ub_tile_rows": [
+                1
+              ]
+            }
+          },
+          "pr": {
+            "us": 3.6958704317268896,
+            "status": "extrapolated",
+            "reason": "Target resource schedule with inherited 950 phase defaults",
+            "aiv": 7,
+            "aic": 0,
+            "query_ms": 0.13177,
+            "plan": {
+              "active_aic": 0,
+              "active_aiv": 7,
+              "rows_per_core": 1,
+              "iterations": 1,
+              "full_tile_rows": 4,
+              "full_tile_count": 0,
+              "tail_tile_rows": 1,
+              "vector_groups": 58,
+              "ub_tile_rows": [
+                1
+              ]
+            }
+          },
+          "future": {
+            "us": 3.5791958099966585,
+            "status": "extrapolated",
+            "reason": "Target resource schedule with inherited 950 phase defaults",
+            "aiv": 7,
+            "aic": 0,
+            "query_ms": 0.11121,
+            "plan": {
+              "active_aic": 0,
+              "active_aiv": 7,
+              "rows_per_core": 1,
+              "iterations": 1,
+              "full_tile_rows": 4,
+              "full_tile_count": 0,
+              "tail_tile_rows": 1,
+              "vector_groups": 58,
+              "ub_tile_rows": [
+                1
+              ]
+            }
+          }
+        }
+      },
+      {
+        "id": "rmsnorm_18_4992",
+        "targets": {
+          "dt": {
+            "us": 4.874341533416983,
+            "status": "extrapolated",
+            "reason": "Target resource schedule with inherited 950 phase defaults",
+            "aiv": 18,
+            "aic": 0,
+            "query_ms": 0.11351,
+            "plan": {
+              "active_aic": 0,
+              "active_aiv": 18,
+              "rows_per_core": 1,
+              "iterations": 1,
+              "full_tile_rows": 6,
+              "full_tile_count": 0,
+              "tail_tile_rows": 1,
+              "vector_groups": 39,
+              "ub_tile_rows": [
+                1
+              ]
+            }
+          },
+          "pr": {
+            "us": 4.663766706650901,
+            "status": "extrapolated",
+            "reason": "Target resource schedule with inherited 950 phase defaults",
+            "aiv": 18,
+            "aic": 0,
+            "query_ms": 0.12123,
+            "plan": {
+              "active_aic": 0,
+              "active_aiv": 18,
+              "rows_per_core": 1,
+              "iterations": 1,
+              "full_tile_rows": 6,
+              "full_tile_count": 0,
+              "tail_tile_rows": 1,
+              "vector_groups": 39,
+              "ub_tile_rows": [
+                1
+              ]
+            }
+          },
+          "future": {
+            "us": 4.4680053391439785,
+            "status": "extrapolated",
+            "reason": "Target resource schedule with inherited 950 phase defaults",
+            "aiv": 18,
+            "aic": 0,
+            "query_ms": 0.10822,
+            "plan": {
+              "active_aic": 0,
+              "active_aiv": 18,
+              "rows_per_core": 1,
+              "iterations": 1,
+              "full_tile_rows": 6,
+              "full_tile_count": 0,
+              "tail_tile_rows": 1,
+              "vector_groups": 39,
+              "ub_tile_rows": [
+                1
+              ]
+            }
+          }
+        }
+      },
+      {
+        "id": "rmsnorm_38_2624",
+        "targets": {
+          "dt": {
+            "us": 6.195166709345608,
+            "status": "extrapolated",
+            "reason": "Target resource schedule with inherited 950 phase defaults",
+            "aiv": 38,
+            "aic": 0,
+            "query_ms": 0.10991,
+            "plan": {
+              "active_aic": 0,
+              "active_aiv": 38,
+              "rows_per_core": 1,
+              "iterations": 1,
+              "full_tile_rows": 11,
+              "full_tile_count": 0,
+              "tail_tile_rows": 1,
+              "vector_groups": 21,
+              "ub_tile_rows": [
+                1
+              ]
+            }
+          },
+          "pr": {
+            "us": 5.983039005422613,
+            "status": "extrapolated",
+            "reason": "Target resource schedule with inherited 950 phase defaults",
+            "aiv": 38,
+            "aic": 0,
+            "query_ms": 0.13469,
+            "plan": {
+              "active_aic": 0,
+              "active_aiv": 38,
+              "rows_per_core": 1,
+              "iterations": 1,
+              "full_tile_rows": 11,
+              "full_tile_count": 0,
+              "tail_tile_rows": 1,
+              "vector_groups": 21,
+              "ub_tile_rows": [
+                1
+              ]
+            }
+          },
+          "future": {
+            "us": 5.678826858021849,
+            "status": "extrapolated",
+            "reason": "Target resource schedule with inherited 950 phase defaults",
+            "aiv": 38,
+            "aic": 0,
+            "query_ms": 0.14753,
+            "plan": {
+              "active_aic": 0,
+              "active_aiv": 38,
+              "rows_per_core": 1,
+              "iterations": 1,
+              "full_tile_rows": 11,
+              "full_tile_count": 0,
+              "tail_tile_rows": 1,
+              "vector_groups": 21,
+              "ub_tile_rows": [
+                1
+              ]
+            }
+          }
+        }
+      },
+      {
+        "id": "rmsnorm_57_2304",
+        "targets": {
+          "dt": {
+            "us": 6.347083172631692,
+            "status": "extrapolated",
+            "reason": "Target resource schedule with inherited 950 phase defaults",
+            "aiv": 57,
+            "aic": 0,
+            "query_ms": 0.11485,
+            "plan": {
+              "active_aic": 0,
+              "active_aiv": 57,
+              "rows_per_core": 1,
+              "iterations": 1,
+              "full_tile_rows": 13,
+              "full_tile_count": 0,
+              "tail_tile_rows": 1,
+              "vector_groups": 18,
+              "ub_tile_rows": [
+                1
+              ]
+            }
+          },
+          "pr": {
+            "us": 4.564226766925984,
+            "status": "extrapolated",
+            "reason": "Target resource schedule with inherited 950 phase defaults",
+            "aiv": 29,
+            "aic": 0,
+            "query_ms": 0.12258,
+            "plan": {
+              "active_aic": 0,
+              "active_aiv": 29,
+              "rows_per_core": 2,
+              "iterations": 1,
+              "full_tile_rows": 13,
+              "full_tile_count": 0,
+              "tail_tile_rows": 2,
+              "vector_groups": 36,
+              "ub_tile_rows": [
+                2
+              ]
+            }
+          },
+          "future": {
+            "us": 5.81809446730242,
+            "status": "extrapolated",
+            "reason": "Target resource schedule with inherited 950 phase defaults",
+            "aiv": 57,
+            "aic": 0,
+            "query_ms": 0.10805,
+            "plan": {
+              "active_aic": 0,
+              "active_aiv": 57,
+              "rows_per_core": 1,
+              "iterations": 1,
+              "full_tile_rows": 13,
+              "full_tile_count": 0,
+              "tail_tile_rows": 1,
+              "vector_groups": 18,
+              "ub_tile_rows": [
+                1
+              ]
+            }
+          }
+        }
+      },
+      {
+        "id": "rmsnorm_69_3328",
+        "targets": {
+          "dt": {
+            "us": 4.923635774076277,
+            "status": "extrapolated",
+            "reason": "Target resource schedule with inherited 950 phase defaults",
+            "aiv": 35,
+            "aic": 0,
+            "query_ms": 0.11655,
+            "plan": {
+              "active_aic": 0,
+              "active_aiv": 35,
+              "rows_per_core": 2,
+              "iterations": 1,
+              "full_tile_rows": 9,
+              "full_tile_count": 0,
+              "tail_tile_rows": 2,
+              "vector_groups": 52,
+              "ub_tile_rows": [
+                2
+              ]
+            }
+          },
+          "pr": {
+            "us": 4.7141824697012975,
+            "status": "extrapolated",
+            "reason": "Target resource schedule with inherited 950 phase defaults",
+            "aiv": 35,
+            "aic": 0,
+            "query_ms": 0.12409,
+            "plan": {
+              "active_aic": 0,
+              "active_aiv": 35,
+              "rows_per_core": 2,
+              "iterations": 1,
+              "full_tile_rows": 9,
+              "full_tile_count": 0,
+              "tail_tile_rows": 2,
+              "vector_groups": 52,
+              "ub_tile_rows": [
+                2
+              ]
+            }
+          },
+          "future": {
+            "us": 5.959287574035711,
+            "status": "extrapolated",
+            "reason": "Target resource schedule with inherited 950 phase defaults",
+            "aiv": 69,
+            "aic": 0,
+            "query_ms": 0.10583,
+            "plan": {
+              "active_aic": 0,
+              "active_aiv": 69,
+              "rows_per_core": 1,
+              "iterations": 1,
+              "full_tile_rows": 9,
+              "full_tile_count": 0,
+              "tail_tile_rows": 1,
+              "vector_groups": 26,
+              "ub_tile_rows": [
+                1
+              ]
+            }
+          }
+        }
+      },
+      {
+        "id": "rmsnorm_103_2944",
+        "targets": {
+          "dt": {
+            "us": 5.038545011254505,
+            "status": "extrapolated",
+            "reason": "Target resource schedule with inherited 950 phase defaults",
+            "aiv": 52,
+            "aic": 0,
+            "query_ms": 0.11503,
+            "plan": {
+              "active_aic": 0,
+              "active_aiv": 52,
+              "rows_per_core": 2,
+              "iterations": 1,
+              "full_tile_rows": 10,
+              "full_tile_count": 0,
+              "tail_tile_rows": 2,
+              "vector_groups": 46,
+              "ub_tile_rows": [
+                2
+              ]
+            }
+          },
+          "pr": {
+            "us": 4.828574081160556,
+            "status": "extrapolated",
+            "reason": "Target resource schedule with inherited 950 phase defaults",
+            "aiv": 52,
+            "aic": 0,
+            "query_ms": 0.11766,
+            "plan": {
+              "active_aic": 0,
+              "active_aiv": 52,
+              "rows_per_core": 2,
+              "iterations": 1,
+              "full_tile_rows": 10,
+              "full_tile_count": 0,
+              "tail_tile_rows": 2,
+              "vector_groups": 46,
+              "ub_tile_rows": [
+                2
+              ]
+            }
+          },
+          "future": {
+            "us": 6.219152659010728,
+            "status": "extrapolated",
+            "reason": "Target resource schedule with inherited 950 phase defaults",
+            "aiv": 103,
+            "aic": 0,
+            "query_ms": 0.10641,
+            "plan": {
+              "active_aic": 0,
+              "active_aiv": 103,
+              "rows_per_core": 1,
+              "iterations": 1,
+              "full_tile_rows": 10,
+              "full_tile_count": 0,
+              "tail_tile_rows": 1,
+              "vector_groups": 23,
+              "ub_tile_rows": [
+                1
+              ]
+            }
+          }
+        }
+      },
+      {
+        "id": "rmsnorm_229_3968",
+        "targets": {
+          "dt": {
+            "us": 5.119080917019678,
+            "status": "extrapolated",
+            "reason": "Target resource schedule with inherited 950 phase defaults",
+            "aiv": 58,
+            "aic": 0,
+            "query_ms": 0.10717,
+            "plan": {
+              "active_aic": 0,
+              "active_aiv": 58,
+              "rows_per_core": 4,
+              "iterations": 1,
+              "full_tile_rows": 7,
+              "full_tile_count": 0,
+              "tail_tile_rows": 4,
+              "vector_groups": 124,
+              "ub_tile_rows": [
+                4
+              ]
+            }
+          },
+          "pr": {
+            "us": 5.2013081679888105,
+            "status": "extrapolated",
+            "reason": "Target resource schedule with inherited 950 phase defaults",
+            "aiv": 46,
+            "aic": 0,
+            "query_ms": 0.11935,
+            "plan": {
+              "active_aic": 0,
+              "active_aiv": 46,
+              "rows_per_core": 5,
+              "iterations": 1,
+              "full_tile_rows": 7,
+              "full_tile_count": 0,
+              "tail_tile_rows": 5,
+              "vector_groups": 155,
+              "ub_tile_rows": [
+                5
+              ]
+            }
+          },
+          "future": {
+            "us": 5.217761087668861,
+            "status": "extrapolated",
+            "reason": "Target resource schedule with inherited 950 phase defaults",
+            "aiv": 115,
+            "aic": 0,
+            "query_ms": 0.11076,
+            "plan": {
+              "active_aic": 0,
+              "active_aiv": 115,
+              "rows_per_core": 2,
+              "iterations": 1,
+              "full_tile_rows": 7,
+              "full_tile_count": 0,
+              "tail_tile_rows": 2,
+              "vector_groups": 62,
+              "ub_tile_rows": [
+                2
+              ]
+            }
+          }
+        }
+      },
+      {
+        "id": "rmsnorm_367_5312",
+        "targets": {
+          "dt": {
+            "us": 6.062700208126847,
+            "status": "extrapolated",
+            "reason": "Target resource schedule with inherited 950 phase defaults",
+            "aiv": 62,
+            "aic": 0,
+            "query_ms": 0.11272,
+            "plan": {
+              "active_aic": 0,
+              "active_aiv": 62,
+              "rows_per_core": 6,
+              "iterations": 2,
+              "full_tile_rows": 5,
+              "full_tile_count": 1,
+              "tail_tile_rows": 1,
+              "vector_groups": 252,
+              "ub_tile_rows": [
+                5,
+                1
+              ]
+            }
+          },
+          "pr": {
+            "us": 7.261072813852813,
+            "status": "extrapolated",
+            "reason": "Target resource schedule with inherited 950 phase defaults",
+            "aiv": 53,
+            "aic": 0,
+            "query_ms": 0.12441,
+            "plan": {
+              "active_aic": 0,
+              "active_aiv": 53,
+              "rows_per_core": 7,
+              "iterations": 2,
+              "full_tile_rows": 5,
+              "full_tile_count": 1,
+              "tail_tile_rows": 2,
+              "vector_groups": 294,
+              "ub_tile_rows": [
+                5,
+                2
+              ]
+            }
+          },
+          "future": {
+            "us": 5.444104688753223,
+            "status": "extrapolated",
+            "reason": "Target resource schedule with inherited 950 phase defaults",
+            "aiv": 92,
+            "aic": 0,
+            "query_ms": 0.10971,
+            "plan": {
+              "active_aic": 0,
+              "active_aiv": 92,
+              "rows_per_core": 4,
+              "iterations": 1,
+              "full_tile_rows": 5,
+              "full_tile_count": 0,
+              "tail_tile_rows": 4,
+              "vector_groups": 168,
+              "ub_tile_rows": [
+                4
+              ]
+            }
+          }
+        }
+      },
+      {
+        "id": "rmsnorm_495_6912",
+        "targets": {
+          "dt": {
+            "us": 7.741290196876038,
+            "status": "extrapolated",
+            "reason": "Target resource schedule with inherited 950 phase defaults",
+            "aiv": 62,
+            "aic": 0,
+            "query_ms": 0.11524,
+            "plan": {
+              "active_aic": 0,
+              "active_aiv": 62,
+              "rows_per_core": 8,
+              "iterations": 2,
+              "full_tile_rows": 4,
+              "full_tile_count": 2,
+              "tail_tile_rows": 0,
+              "vector_groups": 432,
+              "ub_tile_rows": [
+                4,
+                4
+              ]
+            }
+          },
+          "pr": {
+            "us": 11.46925567099567,
+            "status": "extrapolated",
+            "reason": "Target resource schedule with inherited 950 phase defaults",
+            "aiv": 55,
+            "aic": 0,
+            "query_ms": 0.13547,
+            "plan": {
+              "active_aic": 0,
+              "active_aiv": 55,
+              "rows_per_core": 9,
+              "iterations": 3,
+              "full_tile_rows": 4,
+              "full_tile_count": 2,
+              "tail_tile_rows": 1,
+              "vector_groups": 486,
+              "ub_tile_rows": [
+                4,
+                4,
+                1
+              ]
+            }
+          },
+          "future": {
+            "us": 6.023688139047805,
+            "status": "extrapolated",
+            "reason": "Target resource schedule with inherited 950 phase defaults",
+            "aiv": 99,
+            "aic": 0,
+            "query_ms": 0.12475,
+            "plan": {
+              "active_aic": 0,
+              "active_aiv": 99,
+              "rows_per_core": 5,
+              "iterations": 2,
+              "full_tile_rows": 4,
+              "full_tile_count": 1,
+              "tail_tile_rows": 1,
+              "vector_groups": 270,
+              "ub_tile_rows": [
+                4,
+                1
+              ]
+            }
+          }
+        }
+      }
+    ]
+  }
+}

@@ -33,13 +33,16 @@
     "quant_fragment_vector_cycles": 208.18779342723013,
     "quant_read_latency_cycles": 954.1200773545821,
     "quant_loop_work_ops": 5962.692967409948,
-    "quant_arrival_log2_cycles": 227.76564103929616
+    "quant_arrival_log2_cycles": 227.76564103929616,
+    "rms_first_scalar_cycles": 2580.5,
+    "rms_first_payload_cycles": 2776.0
   },
   "sources": {
     "frequency_ghz,core_counts,capacity,buffer_sizes": "CANN 9.2.1 aarch64-linux/data/platform_config/Ascend950PR_957b.ini, SHA256 afa39753ab256048cc190060b1fcc8ed73c5b086f93563f2a73560a2870a8da0. Capacity in decimal GB computed from memory_size bytes.",
     "cube_tops,vector_tops": "Huawei 950 NPU architecture white paper table 3-1, matched by core count. Cube 16=BF16/FP16, 8=FP8/INT8, 4=MXFP4. Vector 32=FP32, 16=FP16/BF16, 8=INT8. Unquoted formats are unknown (null). TF32 is distinct from strict FP32.",
     "hbm_bandwidth_gbs": "PR 112 GiB SKU tier inferred from package memory_size and spec table; bandwidth not independently measured, white paper table 3-1, GB/s decimal.",
     "white_paper": "https://public-download.obs.cn-east-2.myhuaweicloud.com/ascend/%E6%98%87%E8%85%BE950%20NPU%E6%9E%B6%E6%9E%84%E7%99%BD%E7%9A%AE%E4%B9%A6.pdf",
-    "details.quant_*": "v0.19 stage calibration from archived Ascend950PR_957b official CA (results/v0.19/quant-dma-samples.json and development/validation/sku19/quant_prices.py). Earliest payload issue conditioned on single tile vs pipelined, response cycles and SIMD entry/exit clocks. quant_loop_work_ops is the common DT stage slope converted to peak-equivalent operations. These prices also include simulator dispatch behaviour."
+    "details.quant_*": "v0.19 stage calibration from archived Ascend950PR_957b official CA (results/v0.19/quant-dma-samples.json and development/validation/sku19/quant_prices.py). Earliest payload issue conditioned on single tile vs pipelined, response cycles and SIMD entry/exit clocks. quant_loop_work_ops is the common DT stage slope converted to peak-equivalent operations. These prices also include simulator dispatch behaviour.",
+    "details.rms_first_scalar_cycles,details.rms_first_payload_cycles": "v0.19 paired RMSNorm isolated first launches in CANN 9.2.1. Seven archived v0.17/v0.18 DT/PR same-partition, identical-binary shapes. Median PR minus DT relative to DT phase price: exclusive terminal-AIV SCALAR -353 cycles; earliest input DMA issue -194 cycles at 1.65 GHz. Simulator and kernel dependent; no PR whole-window fit. See results/v0.19/rms-followup/old-paired-phases.json."
   }
 }
