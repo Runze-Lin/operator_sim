@@ -24,8 +24,8 @@ print(result.latency_us, result.status)
 
 | `timing_mode` | 适用范围与语义 |
 |---|---|
-| `auto`（默认） | 原 950DT 配置使用参考校准。其他配置的 Quant、Matmul、FA 使用按目标芯片计价的资源模型。其余算子保留现有 DT 阶段投影。 |
-| `resource` | 对三条已实现路线强制使用同一套资源调度，可在 DT、PR 或自定义芯片上调用。没有相应模型的算子返回 `unsupported`。 |
+| `auto`（默认） | 原 950DT 配置使用参考校准。其他配置的 Quant、RMSNorm、Matmul、FA 使用按目标芯片计价的资源模型。其余算子保留现有 DT 阶段投影。 |
+| `resource` | 对四条已实现路线强制使用同一套资源调度，可在 DT、PR 或自定义芯片上调用。没有相应模型的算子返回 `unsupported`。 |
 | `calibrated` | 使用已登记配置的校准路线。DT 上沿用原接口，PR 上的三条路线复现 v0.15 的专属预测及其分支覆盖。自定义配置无对应校准时返回 `unsupported`。 |
 
 例如 `estimate("fa", (9, 32768, 64), chip=chip, timing_mode="resource")`。CLI 对应 `--timing-mode resource`。`projection.method == "target_resource_schedule"` 表示按目标资源计价，`stages_us` 是可相加的关键路径阶段，`timing_diagnostics` 内含操作数、搬运量、局部吞吐或流水约束。具体单位由字段和算子公式给出。目标资源路径不调用 DT 时延预测，`reference_latency_us` 为 `None`。[三类算法、参数和算例](modeling-strategy.md)
@@ -71,7 +71,7 @@ if event.status in ("estimated", "extrapolated"):
 | `work` | `cube_ops`、`vec_ops` 及各自的 `*_by_dtype`，`vec_ops_by_class` 拆分运算类别。每个 exp、除法等按一次有用标量运算计，实际每周期服务能力随指令而变。见 `scope` 和 `notes` 中的已统计范围 |
 | `work["logical_read_bytes"]`、`work["logical_write_bytes"]` | 每个 kernel 输入、输出张量的逻辑字节。未知方向返回 `None`。实际外存字节 `physical_hbm_bytes` 当前保留为 `None`。系统内存容量约束需单独核算活跃张量和 workspace |
 | `rates` | `useful_cube_tops`、`counted_vector_tops` 和 `logical_io_gbs`，均为工作量除以预测的设备时间。逻辑接口吞吐可以大于外存带宽；另给出 `cube_nominal_peak_fraction`、`vector_nominal_peak_fraction`，即已计工作按对应位宽峰值完成所需的理想时间除以预测时间。缺少相应峰值时为 `None`。用于比较有用吞吐占整片名义峰值的比例，实际硬件忙碌率需要独立流水证据 |
-| `projection` | 目标资源路径给出目标周期或字节诊断和阶段微秒数；DT 阶段投影另保留参考微秒数、目标阶段时间、继承字段、迁移方法和假设。FA、Quant 与 Matmul 命中分段路径时，`timing_diagnostics` 提供首读、计算和写回等阶段的 µs 估计；通用路线可返回空字典。系统调度按 `latency_us` 记一次耗时。高水位已知时，两种核数间按本次活跃核比例折算，并记录在 `resident_aiv_mapping` |
+| `projection` | 目标资源路径给出目标周期或字节诊断和阶段微秒数；DT 阶段投影另保留参考微秒数、目标阶段时间、继承字段、迁移方法和假设。FA、Quant、RMSNorm 与 Matmul 命中分段路径时，`timing_diagnostics` 提供首读、计算和写回等阶段的 µs 估计；通用路线可返回空字典。系统调度按 `latency_us` 记一次耗时。高水位已知时，两种核数间按本次活跃核比例折算，并记录在 `resident_aiv_mapping` |
 
 CLI 用 `predicted_us` 表示相同微秒数，用 `estimate_status` 表示系统接口状态。Python 接口保留上一版的 `soc=` 参数。芯片名拼错或配置不合法会返回 `unsupported`；在初始化时直接用 `load_chip` 可以及早发现配置问题。
 
@@ -130,7 +130,7 @@ mHC Post 在少 token 且切通道时，默认估计在首次、扩核与热态�
 
 ## 检查资源瓶颈与设备情景
 
-对同一算子比较设备时，在三条已实现的资源路线上对两端都指定 `timing_mode="resource"`，以保持算法口径一致。默认的 DT 参考校准仍可用于和系统原有结果衔接。
+对同一算子比较设备时，在四条已实现的资源路线上对两端都指定 `timing_mode="resource"`，以保持算法口径一致。默认的 DT 参考校准仍可用于和系统原有结果衔接。
 
 ```python
 from operator_model import estimate, load_chip
@@ -145,6 +145,7 @@ print(diag["shared_traffic"]["hbm_payload_fraction_of_nominal"])
 | 路线 | 可用于诊断的返回量 | 目标配置与敏感性 |
 |---|---|---|
 | Quant | `target_plan` 的分核、UB tile 和迭代数；`first_tile_cycles` 的首读、读发起间隔、VF、数据写和 scale 写；`scale_peak_writers` 为同一 32 B scale 区段的最多写核数 | UB 容量、每核 MTE2/MTE3 带宽及 BF16 Vector 峰值会改变服务；全片冷读写需满足 `chip_io_floor_cycles` |
+| RMSNorm | `target_plan.rows_per_core`、`ub_tile_rows` 和 `conditional_us` 给出目标分核、UB 轮次和首次／扩核／热态时间。 | 已知前序驻留 AIV 数可传 `attrs={"resident_aiv": n}`，其中 0 指首次。各状态是模型估计，不能当作实测误差界。 |
 | Matmul | `target_plan` 的基本 tile、K 片、DMA 页、波数和尾波分片；`wave_cost_cycles` 区分发起与完成；`shared_traffic` 给本设备指令窗暴露 HBM 字节、最终写回字节、L2/HBM 有效 GB/s 及峰值占比 | 可设置 `matmul_hbm_efficiency`、`matmul_l2_efficiency` 在 (0,1] 内限定峰值，`matmul_output_retained_fraction` 在 [0,1] 内指定可留脏比例；设 0 表示输出均在窗口内落片外 |
 | FA | `wave_types` 列出每类波的忙核数及每 AIC 的 AIV 数。`first.demands_cycles` 与 `first.steady_bottleneck` 给一块 KV 的资源需求与最长项，`steady_kv_read_fraction_of_hbm_peak` 是各忙核的稳态冷读需求占整片片外峰值比例 | `fa_aiv_per_aic` 可设置 1 或 2，比较固定绑定、可借用空闲 AIV 两种库情景；长序列可能由读发起间隔主导 |
 

@@ -2,5 +2,5 @@
 from .chips import ChipConfig, load_chip
 from .backend import Estimate, estimate
 
-__version__ = '0.17.0'
+__version__ = '0.18.0'
 __all__ = ['ChipConfig', 'load_chip', 'Estimate', 'estimate']

@@ -29,11 +29,11 @@ result = estimate("matmul", (128, 256, 512), dtype="bf16", chip=chip)
 print(result.latency_us, result.work["cube_ops"], result.work["logical_read_bytes"], result.status)
 ```
 
-**比较芯片架构时可显式指定 `timing_mode="resource"`。** Quant、Matmul 和 FA 会按目标配置重新决定分核、tile、读写字节、计算与流水时间。PR 和自定义配置的这三项默认使用该路径。其余算子的跨芯片估计沿用 DT 阶段投影。相同配置更换名称时，显式资源模型给出相同预测。[三条路线的资源公式与算例](docs/modeling-strategy.md) · [独立 PR 校验与误差](docs/error-analysis.md)
+**比较芯片架构时可显式指定 `timing_mode="resource"`。** Quant、RMSNorm、Matmul 和 FA 会按目标配置重新决定分核、tile、读写字节、计算与流水时间。PR 和自定义配置的这四项默认使用该路径。其余算子的跨芯片估计沿用 DT 阶段投影。相同配置更换名称时，显式资源模型给出相同预测。[三条路线的资源公式与算例](docs/modeling-strategy.md) · [独立 PR 校验与误差](docs/error-analysis.md)
 
 维护 960、970、980 等架构情景时，每个目标使用一份 JSON，分别填写按位宽区分的两类算力、核数、频率、外存容量和带宽。内置 `Ascend970DT` 情景为 120 Cube / 120 Vector、1.8 GHz、288 GB、14.4 TB/s；其中 16 位 Vector 峰值 110.592 TOP/s 已含双发射。这些是架构假设。调用方通过 `extrapolated` 状态识别外推，并决定是否将其交给事件调度器。[970DT 配置及逐项来源](configs/chips/Ascend970DT.json) · [自定义芯片示例](configs/chips/scenario-example.json) · [字段、单位和返回合同](docs/integration.md)
 
-安装后的 v0.17 wheel 在源码目录外对 950DT、950PR、970DT 的 453 次公共接口查询中，中位 0.183 ms、P95 0.569 ms、最大 3.632 ms。模块导入另耗 39.20 ms。计时包括参数校验和结果构建，包含 3 次 KDA chunk 无时延的结构查询。[部署环境验证](results/v0.17/wheel-smoke.json)
+安装后的 v0.18 wheel 在源码目录外对三种芯片完成 453 次查询，中位 0.199 ms、P95 0.640 ms、最大 9.294 ms。模块导入另计 39.62 ms；三次 Chunk KDA 查询只返回结构。设备预测耗时和运行预测器的耗时分别统计。[部署环境验证](results/v0.18/wheel-smoke.json)
 
 ## 可预测的算子
 

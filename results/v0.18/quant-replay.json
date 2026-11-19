@@ -1,0 +1,1319 @@
+{
+  "scope": "Historical diagnostic replay, no new independent labels. Some v17 DT phase observations are calibration.",
+  "summary": {
+    "v17_dt": {
+      "v17": {
+        "wape": 0.08399907617611652,
+        "max_ape": 0.30166553787330774
+      },
+      "v18": {
+        "wape": 0.08078372287374322,
+        "max_ape": 0.14888869339845157
+      }
+    },
+    "v17_pr": {
+      "v17": {
+        "wape": 0.12321753674635555,
+        "max_ape": 0.32177718845016856
+      },
+      "v18": {
+        "wape": 0.11601127247824093,
+        "max_ape": 0.23078214919890772
+      }
+    },
+    "v16_pr": {
+      "v17": {
+        "wape": 0.08932161000204603,
+        "max_ape": 0.25752916912970636
+      },
+      "v18": {
+        "wape": 0.052658127463147554,
+        "max_ape": 0.09789817821956248
+      }
+    }
+  },
+  "rows": {
+    "v17_dt": [
+      {
+        "shape": [
+          1,
+          256
+        ],
+        "chip": "Ascend950DT_9582",
+        "ca_us": 4.4927268056198955,
+        "v17_us": 4.20729374788565,
+        "v18_us": 4.20729374788565,
+        "active_aiv": 1,
+        "first_tile": {
+          "read_bytes": 512,
+          "write_bytes": 264,
+          "scale_bytes": 8,
+          "groups": 8,
+          "loops": 2,
+          "read_latency": 983.114020155992,
+          "local_read_cycles": 983.114020155992,
+          "shared_read_floor_cycles": 0.21119999999999997,
+          "read_ii": 7.429686561226845,
+          "vector": 869.0922813984715,
+          "write": 327.2914285775776,
+          "data_write_cycles": 245.29144531158164,
+          "scale_write_cycles": 326.29142953125194,
+          "scale_issue_gap_cycles": 0.9999990463256836
+        },
+        "fragment": null,
+        "stages_us": {
+          "dispatch": 2.8766890694109235,
+          "ub_pipeline": 1.3209077152315403,
+          "drain": 0.009696963243186474
+        }
+      },
+      {
+        "shape": [
+          5,
+          320
+        ],
+        "chip": "Ascend950DT_9582",
+        "ca_us": 4.662424090318382,
+        "v17_us": 6.068916761317744,
+        "v18_us": 5.188099436702068,
+        "active_aiv": 10,
+        "first_tile": {
+          "read_bytes": 512,
+          "write_bytes": 264,
+          "scale_bytes": 8,
+          "groups": 8,
+          "loops": 2,
+          "read_latency": 983.114020155992,
+          "local_read_cycles": 983.114020155992,
+          "shared_read_floor_cycles": 1.3199999999999998,
+          "read_ii": 7.429686561226845,
+          "vector": 475.9588815017903,
+          "write": 2067.0670374919246,
+          "data_write_cycles": 245.29144531158164,
+          "scale_write_cycles": 2066.067038445599,
+          "scale_issue_gap_cycles": 0.9999990463256836
+        },
+        "fragment": {
+          "mode": "single tile; at most 32 scale bytes per producer; shared aligned grain",
+          "critical": {
+            "row": 3,
+            "col": 0,
+            "rank": 6,
+            "read_issue_cycles": 328.72389362528753,
+            "scale_ready_cycles": 2115.0882238606473,
+            "scale_end_cycles": 3854.8638327749945,
+            "shared_grains": [
+              0,
+              1
+            ],
+            "grain_owners": [
+              7,
+              4
+            ],
+            "extra_queue_cycles": 1739.7756089143472,
+            "frontend_cycles": 1285.7503473758698
+          },
+          "peak_writers": 7,
+          "shared_grains": 2,
+          "arrival_spread_cycles": 493.08584043793127,
+          "grain_ii_cycles": 344.7499170899391,
+          "fabric_ii_cycles": 61.49994134902954
+        },
+        "stages_us": {
+          "dispatch": 2.8421213626861572,
+          "ub_pipeline": 2.336281110772724,
+          "drain": 0.009696963243186474
+        }
+      },
+      {
+        "shape": [
+          19,
+          1024
+        ],
+        "chip": "Ascend950DT_9582",
+        "ca_us": 6.229696515016258,
+        "v17_us": 5.935641529623057,
+        "v18_us": 5.441219680691793,
+        "active_aiv": 40,
+        "first_tile": {
+          "read_bytes": 512,
+          "write_bytes": 264,
+          "scale_bytes": 8,
+          "groups": 8,
+          "loops": 2,
+          "read_latency": 983.114020155992,
+          "local_read_cycles": 983.114020155992,
+          "shared_read_floor_cycles": 8.025599999999999,
+          "read_ii": 8.025599999999999,
+          "vector": 475.95888150179053,
+          "write": 2023.4862364443252,
+          "data_write_cycles": 245.29144531158164,
+          "scale_write_cycles": 2022.4862373979995,
+          "scale_issue_gap_cycles": 0.9999990463256836
+        },
+        "fragment": {
+          "mode": "single tile; at most 32 scale bytes per producer; shared aligned grain",
+          "critical": {
+            "row": 18,
+            "col": 768,
+            "rank": 39,
+            "read_issue_cycles": 789.9530972559334,
+            "scale_ready_cycles": 2576.3174274912935,
+            "scale_end_cycles": 4272.512235358041,
+            "shared_grains": [
+              18
+            ],
+            "grain_owners": [
+              4
+            ],
+            "extra_queue_cycles": 1696.1948078667474,
+            "frontend_cycles": 1285.7503473758698
+          },
+          "peak_writers": 4,
+          "shared_grains": 19,
+          "arrival_spread_cycles": 789.9530972559334,
+          "grain_ii_cycles": 344.7499170899391,
+          "fabric_ii_cycles": 61.49994134902954
+        },
+        "stages_us": {
+          "dispatch": 2.8421213626861572,
+          "ub_pipeline": 2.5894013547624493,
+          "drain": 0.009696963243186474
+        }
+      },
+      {
+        "shape": [
+          30,
+          768
+        ],
+        "chip": "Ascend950DT_9582",
+        "ca_us": 5.472120764665306,
+        "v17_us": 5.655776635500226,
+        "v18_us": 6.141311914001981,
+        "active_aiv": 60,
+        "first_tile": {
+          "read_bytes": 1024,
+          "write_bytes": 528,
+          "scale_bytes": 16,
+          "groups": 16,
+          "loops": 3,
+          "read_latency": 993.7006352529372,
+          "local_read_cycles": 993.7006352529372,
+          "shared_read_floor_cycles": 19.008,
+          "read_ii": 19.008,
+          "vector": 472.1571135507454,
+          "write": 3099.8861661631468,
+          "data_write_cycles": 248.0732341211766,
+          "scale_write_cycles": 3098.886167116821,
+          "scale_issue_gap_cycles": 0.9999990463256836
+        },
+        "fragment": {
+          "mode": "single tile; at most 32 scale bytes per producer; shared aligned grain",
+          "critical": {
+            "row": 29,
+            "col": 0,
+            "rank": 58,
+            "read_issue_cycles": 861.9205053530218,
+            "scale_ready_cycles": 2657.851471543877,
+            "scale_end_cycles": 5427.664420319851,
+            "shared_grains": [
+              21,
+              22
+            ],
+            "grain_owners": [
+              3,
+              2
+            ],
+            "extra_queue_cycles": 2769.8129487759743,
+            "frontend_cycles": 1285.7503473758698
+          },
+          "peak_writers": 3,
+          "shared_grains": 23,
+          "arrival_spread_cycles": 876.7812037211773,
+          "grain_ii_cycles": 344.7499170899391,
+          "fabric_ii_cycles": 61.49994134902954
+        },
+        "stages_us": {
+          "dispatch": 2.8421213626861572,
+          "ub_pipeline": 3.289493588072637,
+          "drain": 0.009696963243186474
+        }
+      },
+      {
+        "shape": [
+          9,
+          4096
+        ],
+        "chip": "Ascend950DT_9582",
+        "ca_us": 5.46484852116555,
+        "v17_us": 5.11587100700727,
+        "v18_us": 5.405492235452979,
+        "active_aiv": 40,
+        "first_tile": {
+          "read_bytes": 1024,
+          "write_bytes": 528,
+          "scale_bytes": 16,
+          "groups": 16,
+          "loops": 3,
+          "read_latency": 993.7006352529372,
+          "local_read_cycles": 993.7006352529372,
+          "shared_read_floor_cycles": 15.206399999999999,
+          "read_ii": 15.206399999999999,
+          "vector": 472.1571135507454,
+          "write": 1957.7511046543823,
+          "data_write_cycles": 248.0732341211766,
+          "scale_write_cycles": 1956.7511056080566,
+          "scale_issue_gap_cycles": 0.9999990463256836
+        },
+        "fragment": {
+          "mode": "single tile; at most 32 scale bytes per producer; shared aligned grain",
+          "critical": {
+            "row": 8,
+            "col": 3584,
+            "rank": 39,
+            "read_issue_cycles": 789.9530972559334,
+            "scale_ready_cycles": 2585.8840634467883,
+            "scale_end_cycles": 4213.561950713998,
+            "shared_grains": [
+              35
+            ],
+            "grain_owners": [
+              2
+            ],
+            "extra_queue_cycles": 1627.6778872672098,
+            "frontend_cycles": 1285.7503473758698
+          },
+          "peak_writers": 2,
+          "shared_grains": 36,
+          "arrival_spread_cycles": 789.9530972559334,
+          "grain_ii_cycles": 344.7499170899391,
+          "fabric_ii_cycles": 61.49994134902954
+        },
+        "stages_us": {
+          "dispatch": 2.8421213626861572,
+          "ub_pipeline": 2.5536739095236354,
+          "drain": 0.009696963243186474
+        }
+      },
+      {
+        "shape": [
+          56,
+          4096
+        ],
+        "chip": "Ascend950DT_9582",
+        "ca_us": 6.284848931245506,
+        "v17_us": 5.349105985665708,
+        "v18_us": 5.349105985665708,
+        "active_aiv": 64,
+        "first_tile": {
+          "read_bytes": 7168,
+          "write_bytes": 3696,
+          "scale_bytes": 112,
+          "groups": 112,
+          "loops": 15,
+          "read_latency": 1120.7400164162805,
+          "local_read_cycles": 1120.7400164162805,
+          "shared_read_floor_cycles": 189.2352,
+          "read_ii": 189.2352,
+          "vector": 957.2952942951754,
+          "write": 1148.6557453408711,
+          "data_write_cycles": 281.45469983631597,
+          "scale_write_cycles": 1147.6557462945455,
+          "scale_issue_gap_cycles": 0.9999990463256836
+        },
+        "fragment": null,
+        "stages_us": {
+          "dispatch": 3.383838685421111,
+          "ub_pipeline": 1.9555703370014106,
+          "drain": 0.009696963243186474
+        }
+      },
+      {
+        "shape": [
+          144,
+          5120
+        ],
+        "chip": "Ascend950DT_9582",
+        "ca_us": 5.904848578386009,
+        "v17_us": 5.777881232556675,
+        "v18_us": 5.777881232556675,
+        "active_aiv": 58,
+        "first_tile": {
+          "read_bytes": 25600,
+          "write_bytes": 13200,
+          "scale_bytes": 400,
+          "groups": 400,
+          "loops": 54,
+          "read_latency": 1501.85815990631,
+          "local_read_cycles": 1501.85815990631,
+          "shared_read_floor_cycles": 608.256,
+          "read_ii": 608.256,
+          "vector": 1221.904332985287,
+          "write": 1230.214563572307,
+          "data_write_cycles": 381.5990969817342,
+          "scale_write_cycles": 1229.2145645259814,
+          "scale_issue_gap_cycles": 0.9999990463256836
+        },
+        "fragment": null,
+        "stages_us": {
+          "dispatch": 3.3718345381232435,
+          "ub_pipeline": 2.3963497311902446,
+          "drain": 0.009696963243186474
+        }
+      },
+      {
+        "shape": [
+          384,
+          4096
+        ],
+        "chip": "Ascend950DT_9582",
+        "ca_us": 6.673333647660911,
+        "v17_us": 5.895342203720898,
+        "v18_us": 5.895342203720898,
+        "active_aiv": 64,
+        "first_tile": {
+          "read_bytes": 49152,
+          "write_bytes": 25344,
+          "scale_bytes": 768,
+          "groups": 768,
+          "loops": 102,
+          "read_latency": 1988.8424543657925,
+          "local_read_cycles": 1988.8424543657925,
+          "shared_read_floor_cycles": 1297.6127999999999,
+          "read_ii": 1297.6127999999999,
+          "vector": 1547.576995988501,
+          "write": 591.5613654890979,
+          "data_write_cycles": 509.5613822231019,
+          "scale_write_cycles": 590.5613664427722,
+          "scale_issue_gap_cycles": 0.9999990463256836
+        },
+        "fragment": null,
+        "stages_us": {
+          "dispatch": 3.383838685421111,
+          "ub_pipeline": 2.501806555056601,
+          "drain": 0.009696963243186474
+        }
+      },
+      {
+        "shape": [
+          512,
+          5120
+        ],
+        "chip": "Ascend950DT_9582",
+        "ca_us": 6.298788073472679,
+        "v17_us": 6.5638256767652905,
+        "v18_us": 6.5638256767652905,
+        "active_aiv": 64,
+        "first_tile": {
+          "read_bytes": 40960,
+          "write_bytes": 21120,
+          "scale_bytes": 640,
+          "groups": 640,
+          "loops": 85,
+          "read_latency": 1819.456612814668,
+          "local_read_cycles": 1819.456612814668,
+          "shared_read_floor_cycles": 1081.3439999999998,
+          "read_ii": 1081.3439999999998,
+          "vector": 1432.234594508196,
+          "write": 547.0527445355787,
+          "data_write_cycles": 465.0527612695827,
+          "scale_write_cycles": 546.052745489253,
+          "scale_issue_gap_cycles": 0.9999990463256836
+        },
+        "fragment": null,
+        "stages_us": {
+          "dispatch": 3.383838685421111,
+          "ub_pipeline": 3.1702900281009936,
+          "drain": 0.009696963243186474
+        }
+      },
+      {
+        "shape": [
+          576,
+          7168
+        ],
+        "chip": "Ascend950DT_9582",
+        "ca_us": 7.757575757575758,
+        "v17_us": 7.4057221422331585,
+        "v18_us": 7.4057221422331585,
+        "active_aiv": 64,
+        "first_tile": {
+          "read_bytes": 71680,
+          "write_bytes": 36960,
+          "scale_bytes": 1120,
+          "groups": 1120,
+          "loops": 149,
+          "read_latency": 2454.653518631384,
+          "local_read_cycles": 2454.653518631384,
+          "shared_read_floor_cycles": 1892.3519999999999,
+          "read_ii": 1892.3519999999999,
+          "vector": 1866.464811845815,
+          "write": 713.9600731112757,
+          "data_write_cycles": 631.9600898452798,
+          "scale_write_cycles": 712.96007406495,
+          "scale_issue_gap_cycles": 0.9999990463256836
+        },
+        "fragment": null,
+        "stages_us": {
+          "dispatch": 3.383838685421111,
+          "ub_pipeline": 4.012186493568861,
+          "drain": 0.009696963243186474
+        }
+      }
+    ],
+    "v17_pr": [
+      {
+        "shape": [
+          1,
+          256
+        ],
+        "chip": "Ascend950PR_957b",
+        "ca_us": 3.8587880162522197,
+        "v17_us": 4.207337492870472,
+        "v18_us": 4.207337492870472,
+        "active_aiv": 1,
+        "first_tile": {
+          "read_bytes": 512,
+          "write_bytes": 264,
+          "scale_bytes": 8,
+          "groups": 8,
+          "loops": 2,
+          "read_latency": 983.114020155992,
+          "local_read_cycles": 983.114020155992,
+          "shared_read_floor_cycles": 0.6034285714285714,
+          "read_ii": 7.429686561226845,
+          "vector": 869.1644606234279,
+          "write": 327.2914285775776,
+          "data_write_cycles": 245.29144531158164,
+          "scale_write_cycles": 326.29142953125194,
+          "scale_issue_gap_cycles": 0.9999990463256836
+        },
+        "fragment": null,
+        "stages_us": {
+          "dispatch": 2.8766890694109235,
+          "ub_pipeline": 1.3209514602163621,
+          "drain": 0.009696963243186474
+        }
+      },
+      {
+        "shape": [
+          5,
+          320
+        ],
+        "chip": "Ascend950PR_957b",
+        "ca_us": 4.591515543870628,
+        "v17_us": 6.068960506302565,
+        "v18_us": 5.18814318168689,
+        "active_aiv": 10,
+        "first_tile": {
+          "read_bytes": 512,
+          "write_bytes": 264,
+          "scale_bytes": 8,
+          "groups": 8,
+          "loops": 2,
+          "read_latency": 983.114020155992,
+          "local_read_cycles": 983.114020155992,
+          "shared_read_floor_cycles": 3.771428571428572,
+          "read_ii": 7.429686561226845,
+          "vector": 476.0310607267468,
+          "write": 2067.0670374919246,
+          "data_write_cycles": 245.29144531158164,
+          "scale_write_cycles": 2066.067038445599,
+          "scale_issue_gap_cycles": 0.9999990463256836
+        },
+        "fragment": {
+          "mode": "single tile; at most 32 scale bytes per producer; shared aligned grain",
+          "critical": {
+            "row": 3,
+            "col": 0,
+            "rank": 6,
+            "read_issue_cycles": 328.72389362528753,
+            "scale_ready_cycles": 2115.160403085604,
+            "scale_end_cycles": 3854.936011999951,
+            "shared_grains": [
+              0,
+              1
+            ],
+            "grain_owners": [
+              7,
+              4
+            ],
+            "extra_queue_cycles": 1739.7756089143472,
+            "frontend_cycles": 1285.7503473758698
+          },
+          "peak_writers": 7,
+          "shared_grains": 2,
+          "arrival_spread_cycles": 493.08584043793127,
+          "grain_ii_cycles": 344.7499170899391,
+          "fabric_ii_cycles": 61.49994134902954
+        },
+        "stages_us": {
+          "dispatch": 2.8421213626861572,
+          "ub_pipeline": 2.336324855757546,
+          "drain": 0.009696963243186474
+        }
+      },
+      {
+        "shape": [
+          19,
+          1024
+        ],
+        "chip": "Ascend950PR_957b",
+        "ca_us": 5.983030560426414,
+        "v17_us": 5.93570714710029,
+        "v18_us": 5.441285298169026,
+        "active_aiv": 40,
+        "first_tile": {
+          "read_bytes": 512,
+          "write_bytes": 264,
+          "scale_bytes": 8,
+          "groups": 8,
+          "loops": 2,
+          "read_latency": 983.114020155992,
+          "local_read_cycles": 983.114020155992,
+          "shared_read_floor_cycles": 22.930285714285716,
+          "read_ii": 22.930285714285716,
+          "vector": 476.03106072674655,
+          "write": 2023.5223260568046,
+          "data_write_cycles": 245.29144531158164,
+          "scale_write_cycles": 2022.5223270104789,
+          "scale_issue_gap_cycles": 0.9999990463256836
+        },
+        "fragment": {
+          "mode": "single tile; at most 32 scale bytes per producer; shared aligned grain",
+          "critical": {
+            "row": 18,
+            "col": 768,
+            "rank": 39,
+            "read_issue_cycles": 789.9530972559334,
+            "scale_ready_cycles": 2576.3896067162495,
+            "scale_end_cycles": 4272.620504195476,
+            "shared_grains": [
+              18
+            ],
+            "grain_owners": [
+              4
+            ],
+            "extra_queue_cycles": 1696.2308974792268,
+            "frontend_cycles": 1285.7503473758698
+          },
+          "peak_writers": 4,
+          "shared_grains": 19,
+          "arrival_spread_cycles": 789.9530972559334,
+          "grain_ii_cycles": 344.7499170899391,
+          "fabric_ii_cycles": 61.49994134902954
+        },
+        "stages_us": {
+          "dispatch": 2.8421213626861572,
+          "ub_pipeline": 2.589466972239683,
+          "drain": 0.009696963243186474
+        }
+      },
+      {
+        "shape": [
+          30,
+          768
+        ],
+        "chip": "Ascend950PR_957b",
+        "ca_us": 4.916969302110374,
+        "v17_us": 5.43716276783454,
+        "v18_us": 5.103714304605985,
+        "active_aiv": 30,
+        "first_tile": {
+          "read_bytes": 2048,
+          "write_bytes": 1056,
+          "scale_bytes": 32,
+          "groups": 32,
+          "loops": 5,
+          "read_latency": 1014.8738654468277,
+          "local_read_cycles": 1014.8738654468277,
+          "shared_read_floor_cycles": 54.30857142857143,
+          "read_ii": 54.30857142857143,
+          "vector": 464.73402571104657,
+          "write": 1583.0191992407695,
+          "data_write_cycles": 253.63681174036648,
+          "scale_write_cycles": 1582.0192001944438,
+          "scale_issue_gap_cycles": 0.9999990463256836
+        },
+        "fragment": {
+          "mode": "single tile; at most 32 scale bytes per producer; shared aligned grain",
+          "critical": {
+            "row": 26,
+            "col": 0,
+            "rank": 26,
+            "read_issue_cycles": 653.0012744178133,
+            "scale_ready_cycles": 2468.2459605820504,
+            "scale_end_cycles": 3715.628364816457,
+            "shared_grains": [
+              19,
+              20
+            ],
+            "grain_owners": [
+              3,
+              2
+            ],
+            "extra_queue_cycles": 1247.3824042344067,
+            "frontend_cycles": 1285.7503473758698
+          },
+          "peak_writers": 3,
+          "shared_grains": 23,
+          "arrival_spread_cycles": 728.3475753121764,
+          "grain_ii_cycles": 344.7499170899391,
+          "fabric_ii_cycles": 61.49994134902954
+        },
+        "stages_us": {
+          "dispatch": 2.8421213626861572,
+          "ub_pipeline": 2.251895978676641,
+          "drain": 0.009696963243186474
+        }
+      },
+      {
+        "shape": [
+          9,
+          4096
+        ],
+        "chip": "Ascend950PR_957b",
+        "ca_us": 4.82545471470803,
+        "v17_us": 5.115980369469325,
+        "v18_us": 5.405601597915034,
+        "active_aiv": 40,
+        "first_tile": {
+          "read_bytes": 1024,
+          "write_bytes": 528,
+          "scale_bytes": 16,
+          "groups": 16,
+          "loops": 3,
+          "read_latency": 993.7006352529372,
+          "local_read_cycles": 993.7006352529372,
+          "shared_read_floor_cycles": 43.44685714285714,
+          "read_ii": 43.44685714285714,
+          "vector": 472.2653823881799,
+          "write": 1957.8232838793383,
+          "data_write_cycles": 248.0732341211766,
+          "scale_write_cycles": 1956.8232848330126,
+          "scale_issue_gap_cycles": 0.9999990463256836
+        },
+        "fragment": {
+          "mode": "single tile; at most 32 scale bytes per producer; shared aligned grain",
+          "critical": {
+            "row": 8,
+            "col": 3584,
+            "rank": 39,
+            "read_issue_cycles": 789.9530972559334,
+            "scale_ready_cycles": 2585.992332284223,
+            "scale_end_cycles": 4213.742398776389,
+            "shared_grains": [
+              35
+            ],
+            "grain_owners": [
+              2
+            ],
+            "extra_queue_cycles": 1627.7500664921658,
+            "frontend_cycles": 1285.7503473758698
+          },
+          "peak_writers": 2,
+          "shared_grains": 36,
+          "arrival_spread_cycles": 789.9530972559334,
+          "grain_ii_cycles": 344.7499170899391,
+          "fabric_ii_cycles": 61.49994134902954
+        },
+        "stages_us": {
+          "dispatch": 2.8421213626861572,
+          "ub_pipeline": 2.55378327198569,
+          "drain": 0.009696963243186474
+        }
+      },
+      {
+        "shape": [
+          56,
+          4096
+        ],
+        "chip": "Ascend950PR_957b",
+        "ca_us": 4.512727263383567,
+        "v17_us": 4.881743256586707,
+        "v18_us": 4.881743256586707,
+        "active_aiv": 56,
+        "first_tile": {
+          "read_bytes": 8192,
+          "write_bytes": 4224,
+          "scale_bytes": 128,
+          "groups": 128,
+          "loops": 17,
+          "read_latency": 1141.913246610171,
+          "local_read_cycles": 1141.913246610171,
+          "shared_read_floor_cycles": 540.672,
+          "read_ii": 540.672,
+          "vector": 971.4785119991052,
+          "write": 369.01826072150186,
+          "data_write_cycles": 287.0182774555059,
+          "scale_write_cycles": 368.0182616751762,
+          "scale_issue_gap_cycles": 0.9999990463256836
+        },
+        "fragment": null,
+        "stages_us": {
+          "dispatch": 3.367555372536988,
+          "ub_pipeline": 1.5044909208065322,
+          "drain": 0.009696963243186474
+        }
+      },
+      {
+        "shape": [
+          144,
+          5120
+        ],
+        "chip": "Ascend950PR_957b",
+        "ca_us": 5.983636382035911,
+        "v17_us": 5.485929572096495,
+        "v18_us": 5.485929572096495,
+        "active_aiv": 55,
+        "first_tile": {
+          "read_bytes": 28672,
+          "write_bytes": 14784,
+          "scale_bytes": 448,
+          "groups": 448,
+          "loops": 60,
+          "read_latency": 1737.8742857142856,
+          "local_read_cycles": 1565.3778504879815,
+          "shared_read_floor_cycles": 1737.8742857142856,
+          "read_ii": 1737.8742857142856,
+          "vector": 1264.7787926093802,
+          "write": 480.28981310529986,
+          "data_write_cycles": 398.2898298393039,
+          "scale_write_cycles": 479.2898140589742,
+          "scale_issue_gap_cycles": 0.9999990463256836
+        },
+        "fragment": null,
+        "stages_us": {
+          "dispatch": 3.36535812919939,
+          "ub_pipeline": 2.1108744796539187,
+          "drain": 0.009696963243186474
+        }
+      },
+      {
+        "shape": [
+          384,
+          4096
+        ],
+        "chip": "Ascend950PR_957b",
+        "ca_us": 7.331514835357666,
+        "v17_us": 7.469091092416649,
+        "v18_us": 7.469091092416649,
+        "active_aiv": 56,
+        "first_tile": {
+          "read_bytes": 56320,
+          "write_bytes": 29040,
+          "scale_bytes": 880,
+          "groups": 880,
+          "loops": 117,
+          "read_latency": 3707.465142857143,
+          "local_read_cycles": 2137.055065723026,
+          "shared_read_floor_cycles": 3707.465142857143,
+          "read_ii": 3707.465142857143,
+          "vector": 1653.572187836954,
+          "write": 1390.4966177560864,
+          "data_write_cycles": 548.5064255574312,
+          "scale_write_cycles": 1389.4966187097607,
+          "scale_issue_gap_cycles": 0.9999990463256836
+        },
+        "fragment": null,
+        "stages_us": {
+          "dispatch": 3.367555372536988,
+          "ub_pipeline": 4.0918387566364745,
+          "drain": 0.009696963243186474
+        }
+      },
+      {
+        "shape": [
+          512,
+          5120
+        ],
+        "chip": "Ascend950PR_957b",
+        "ca_us": 7.690302851609886,
+        "v17_us": 9.048703244757162,
+        "v18_us": 9.048703244757162,
+        "active_aiv": 54,
+        "first_tile": {
+          "read_bytes": 51200,
+          "write_bytes": 26400,
+          "scale_bytes": 800,
+          "groups": 800,
+          "loops": 107,
+          "read_latency": 3252.1624060150375,
+          "local_read_cycles": 2031.1889147535735,
+          "shared_read_floor_cycles": 3252.1624060150375,
+          "read_ii": 3252.1624060150375,
+          "vector": 1585.362820253169,
+          "write": 1355.8124840211717,
+          "data_write_cycles": 520.6885374614817,
+          "scale_write_cycles": 1354.812484974846,
+          "scale_issue_gap_cycles": 0.9999990463256836
+        },
+        "fragment": null,
+        "stages_us": {
+          "dispatch": 3.3631205672282616,
+          "ub_pipeline": 5.675885714285714,
+          "drain": 0.009696963243186474
+        }
+      },
+      {
+        "shape": [
+          576,
+          7168
+        ],
+        "chip": "Ascend950PR_957b",
+        "ca_us": 10.007272484246641,
+        "v17_us": 12.316772335780174,
+        "v18_us": 12.316772335780174,
+        "active_aiv": 56,
+        "first_tile": {
+          "read_bytes": 73728,
+          "write_bytes": 38016,
+          "scale_bytes": 1152,
+          "groups": 1152,
+          "loops": 153,
+          "read_latency": 4866.048,
+          "local_read_cycles": 2496.999979019165,
+          "shared_read_floor_cycles": 4866.048,
+          "read_ii": 4866.048,
+          "vector": 1899.1259111385796,
+          "write": 725.0872283496556,
+          "data_write_cycles": 643.0872450836596,
+          "scale_write_cycles": 724.0872293033299,
+          "scale_issue_gap_cycles": 0.9999990463256836
+        },
+        "fragment": null,
+        "stages_us": {
+          "dispatch": 3.367555372536988,
+          "ub_pipeline": 8.93952,
+          "drain": 0.009696963243186474
+        }
+      }
+    ],
+    "v16_pr": [
+      {
+        "shape": [
+          1,
+          128
+        ],
+        "chip": "Ascend950PR_957b",
+        "ca_us": 3.828484776429832,
+        "v17_us": 4.203286461383642,
+        "v18_us": 4.203286461383642,
+        "active_aiv": 1,
+        "first_tile": {
+          "read_bytes": 256,
+          "write_bytes": 132,
+          "scale_bytes": 4,
+          "groups": 4,
+          "loops": 2,
+          "read_latency": 977.8207126075193,
+          "local_read_cycles": 977.8207126075193,
+          "shared_read_floor_cycles": 0.3017142857142857,
+          "read_ii": 3.7148432806134224,
+          "vector": 869.1644606234279,
+          "write": 325.9005341727801,
+          "data_write_cycles": 243.90055090678416,
+          "scale_write_cycles": 324.90053512645443,
+          "scale_issue_gap_cycles": 0.9999990463256836
+        },
+        "fragment": null,
+        "stages_us": {
+          "dispatch": 2.8766890694109235,
+          "ub_pipeline": 1.3169004287295316,
+          "drain": 0.009696963243186474
+        }
+      },
+      {
+        "shape": [
+          7,
+          320
+        ],
+        "chip": "Ascend950PR_957b",
+        "ca_us": 5.042424443177879,
+        "v17_us": 6.3409958204288,
+        "v18_us": 5.346224162308395,
+        "active_aiv": 14,
+        "first_tile": {
+          "read_bytes": 512,
+          "write_bytes": 264,
+          "scale_bytes": 8,
+          "groups": 8,
+          "loops": 2,
+          "read_latency": 983.114020155992,
+          "local_read_cycles": 983.114020155992,
+          "shared_read_floor_cycles": 5.28,
+          "read_ii": 7.429686561226845,
+          "vector": 476.0310607267468,
+          "write": 2134.9573130917297,
+          "data_write_cycles": 245.29144531158164,
+          "scale_write_cycles": 2133.957314045404,
+          "scale_issue_gap_cycles": 0.9999990463256836
+        },
+        "fragment": {
+          "mode": "single tile; at most 32 scale bytes per producer; shared aligned grain",
+          "critical": {
+            "row": 6,
+            "col": 0,
+            "rank": 12,
+            "read_issue_cycles": 521.6672360509656,
+            "scale_ready_cycles": 2308.103745511282,
+            "scale_end_cycles": 4115.769630025434,
+            "shared_grains": [
+              1,
+              2
+            ],
+            "grain_owners": [
+              7,
+              2
+            ],
+            "extra_queue_cycles": 1807.665884514152,
+            "frontend_cycles": 1285.7503473758698
+          },
+          "peak_writers": 7,
+          "shared_grains": 3,
+          "arrival_spread_cycles": 565.1395057218793,
+          "grain_ii_cycles": 344.7499170899391,
+          "fabric_ii_cycles": 61.49994134902954
+        },
+        "stages_us": {
+          "dispatch": 2.8421213626861572,
+          "ub_pipeline": 2.494405836379051,
+          "drain": 0.009696963243186474
+        }
+      },
+      {
+        "shape": [
+          17,
+          1024
+        ],
+        "chip": "Ascend950PR_957b",
+        "ca_us": 5.310909274034202,
+        "v17_us": 5.886691522495212,
+        "v18_us": 5.30471974043731,
+        "active_aiv": 36,
+        "first_tile": {
+          "read_bytes": 512,
+          "write_bytes": 264,
+          "scale_bytes": 8,
+          "groups": 8,
+          "loops": 2,
+          "read_latency": 983.114020155992,
+          "local_read_cycles": 983.114020155992,
+          "shared_read_floor_cycles": 20.516571428571428,
+          "read_ii": 20.516571428571428,
+          "vector": 476.03106072674655,
+          "write": 1820.751526488914,
+          "data_write_cycles": 245.29144531158164,
+          "scale_write_cycles": 1819.7515274425882,
+          "scale_issue_gap_cycles": 0.9999990463256836
+        },
+        "fragment": {
+          "mode": "single tile; at most 32 scale bytes per producer; shared aligned grain",
+          "critical": {
+            "row": 16,
+            "col": 768,
+            "rank": 35,
+            "read_issue_cycles": 767.390726566492,
+            "scale_ready_cycles": 2553.8272360268084,
+            "scale_end_cycles": 4047.2873339381445,
+            "shared_grains": [
+              16
+            ],
+            "grain_owners": [
+              4
+            ],
+            "extra_queue_cycles": 1493.460097911336,
+            "frontend_cycles": 1285.7503473758698
+          },
+          "peak_writers": 4,
+          "shared_grains": 17,
+          "arrival_spread_cycles": 767.390726566492,
+          "grain_ii_cycles": 344.7499170899391,
+          "fabric_ii_cycles": 61.49994134902954
+        },
+        "stages_us": {
+          "dispatch": 2.8421213626861572,
+          "ub_pipeline": 2.4529014145079664,
+          "drain": 0.009696963243186474
+        }
+      },
+      {
+        "shape": [
+          36,
+          512
+        ],
+        "chip": "Ascend950PR_957b",
+        "ca_us": 5.795151236467063,
+        "v17_us": 5.066604532025274,
+        "v18_us": 5.244871163653176,
+        "active_aiv": 36,
+        "first_tile": {
+          "read_bytes": 1024,
+          "write_bytes": 528,
+          "scale_bytes": 16,
+          "groups": 16,
+          "loops": 3,
+          "read_latency": 993.7006352529372,
+          "local_read_cycles": 993.7006352529372,
+          "shared_read_floor_cycles": 43.44685714285714,
+          "read_ii": 43.44685714285714,
+          "vector": 472.2653823881799,
+          "write": 1715.1804380367143,
+          "data_write_cycles": 248.0732341211766,
+          "scale_write_cycles": 1714.1804389903887,
+          "scale_issue_gap_cycles": 0.9999990463256836
+        },
+        "fragment": {
+          "mode": "single tile; at most 32 scale bytes per producer; shared aligned grain",
+          "critical": {
+            "row": 34,
+            "col": 256,
+            "rank": 35,
+            "read_issue_cycles": 767.390726566492,
+            "scale_ready_cycles": 2563.4299615947816,
+            "scale_end_cycles": 3948.5371822443235,
+            "shared_grains": [
+              17
+            ],
+            "grain_owners": [
+              2
+            ],
+            "extra_queue_cycles": 1385.107220649542,
+            "frontend_cycles": 1285.7503473758698
+          },
+          "peak_writers": 2,
+          "shared_grains": 18,
+          "arrival_spread_cycles": 767.390726566492,
+          "grain_ii_cycles": 344.7499170899391,
+          "fabric_ii_cycles": 61.49994134902954
+        },
+        "stages_us": {
+          "dispatch": 2.8421213626861572,
+          "ub_pipeline": 2.3930528377238325,
+          "drain": 0.009696963243186474
+        }
+      },
+      {
+        "shape": [
+          36,
+          3072
+        ],
+        "chip": "Ascend950PR_957b",
+        "ca_us": 5.169696810655296,
+        "v17_us": 4.779420738963223,
+        "v18_us": 4.779420738963223,
+        "active_aiv": 54,
+        "first_tile": {
+          "read_bytes": 4096,
+          "write_bytes": 2112,
+          "scale_bytes": 64,
+          "groups": 64,
+          "loops": 9,
+          "read_latency": 1057.220325834609,
+          "local_read_cycles": 1057.220325834609,
+          "shared_read_floor_cycles": 260.68114285714285,
+          "read_ii": 260.68114285714285,
+          "vector": 916.9110179320774,
+          "write": 346.76395024474226,
+          "data_write_cycles": 264.7639669787463,
+          "scale_write_cycles": 345.7639511984166,
+          "scale_issue_gap_cycles": 0.9999990463256836
+        },
+        "fragment": null,
+        "stages_us": {
+          "dispatch": 3.3631205672282616,
+          "ub_pipeline": 1.406603208491775,
+          "drain": 0.009696963243186474
+        }
+      },
+      {
+        "shape": [
+          128,
+          5120
+        ],
+        "chip": "Ascend950PR_957b",
+        "ca_us": 5.729697230271995,
+        "v17_us": 5.400315755508323,
+        "v18_us": 5.400315755508323,
+        "active_aiv": 43,
+        "first_tile": {
+          "read_bytes": 30720,
+          "write_bytes": 15840,
+          "scale_bytes": 480,
+          "groups": 480,
+          "loops": 64,
+          "read_latency": 1607.7243108757627,
+          "local_read_cycles": 1607.7243108757627,
+          "shared_read_floor_cycles": 1544.7771428571427,
+          "read_ii": 1544.7771428571427,
+          "vector": 1292.062539642894,
+          "write": 491.4169683436797,
+          "data_write_cycles": 409.4169850776837,
+          "scale_write_cycles": 490.416969297354,
+          "scale_issue_gap_cycles": 0.9999990463256836
+        },
+        "fragment": null,
+        "stages_us": {
+          "dispatch": 3.3353437505303867,
+          "ub_pipeline": 2.05527504173475,
+          "drain": 0.009696963243186474
+        }
+      },
+      {
+        "shape": [
+          36,
+          5120
+        ],
+        "chip": "Ascend950PR_957b",
+        "ca_us": 5.0521211652085185,
+        "v17_us": 4.8773084512779805,
+        "v18_us": 4.8773084512779805,
+        "active_aiv": 54,
+        "first_tile": {
+          "read_bytes": 8192,
+          "write_bytes": 4224,
+          "scale_bytes": 128,
+          "groups": 128,
+          "loops": 17,
+          "read_latency": 1141.913246610171,
+          "local_read_cycles": 1141.913246610171,
+          "shared_read_floor_cycles": 434.46857142857147,
+          "read_ii": 434.46857142857147,
+          "vector": 971.4785119991052,
+          "write": 369.01826072150186,
+          "data_write_cycles": 287.0182774555059,
+          "scale_write_cycles": 368.0182616751762,
+          "scale_issue_gap_cycles": 0.9999990463256836
+        },
+        "fragment": null,
+        "stages_us": {
+          "dispatch": 3.3631205672282616,
+          "ub_pipeline": 1.5044909208065322,
+          "drain": 0.009696963243186474
+        }
+      },
+      {
+        "shape": [
+          288,
+          7168
+        ],
+        "chip": "Ascend950PR_957b",
+        "ca_us": 8.009090426377952,
+        "v17_us": 7.91680454153062,
+        "v18_us": 7.91680454153062,
+        "active_aiv": 56,
+        "first_tile": {
+          "read_bytes": 73728,
+          "write_bytes": 38016,
+          "scale_bytes": 1152,
+          "groups": 1152,
+          "loops": 153,
+          "read_latency": 4866.048,
+          "local_read_cycles": 2496.999979019165,
+          "shared_read_floor_cycles": 4866.048,
+          "read_ii": 4866.048,
+          "vector": 1899.1259111385796,
+          "write": 725.0872283496556,
+          "data_write_cycles": 643.0872450836596,
+          "scale_write_cycles": 724.0872293033299,
+          "scale_issue_gap_cycles": 0.9999990463256836
+        },
+        "fragment": null,
+        "stages_us": {
+          "dispatch": 3.367555372536988,
+          "ub_pipeline": 4.539552205750446,
+          "drain": 0.009696963243186474
+        }
+      },
+      {
+        "shape": [
+          1,
+          192
+        ],
+        "chip": "Ascend950PR_957b",
+        "ca_us": 3.8333334950730205,
+        "v17_us": 4.205311977127057,
+        "v18_us": 4.205311977127057,
+        "active_aiv": 1,
+        "first_tile": {
+          "read_bytes": 384,
+          "write_bytes": 198,
+          "scale_bytes": 6,
+          "groups": 6,
+          "loops": 2,
+          "read_latency": 980.4673663817557,
+          "local_read_cycles": 980.4673663817557,
+          "shared_read_floor_cycles": 0.45257142857142857,
+          "read_ii": 5.572264920920134,
+          "vector": 869.1644606234279,
+          "write": 326.5959813751789,
+          "data_write_cycles": 244.5959981091829,
+          "scale_write_cycles": 325.5959823288532,
+          "scale_issue_gap_cycles": 0.9999990463256836
+        },
+        "fragment": null,
+        "stages_us": {
+          "dispatch": 2.8766890694109235,
+          "ub_pipeline": 1.318925944472947,
+          "drain": 0.009696963243186474
+        }
+      },
+      {
+        "shape": [
+          17,
+          512
+        ],
+        "chip": "Ascend950PR_957b",
+        "ca_us": 5.432120802812278,
+        "v17_us": 5.8478644266802835,
+        "v18_us": 5.224354523306381,
+        "active_aiv": 34,
+        "first_tile": {
+          "read_bytes": 512,
+          "write_bytes": 264,
+          "scale_bytes": 8,
+          "groups": 8,
+          "loops": 2,
+          "read_latency": 983.114020155992,
+          "local_read_cycles": 983.114020155992,
+          "shared_read_floor_cycles": 20.516571428571428,
+          "read_ii": 20.516571428571428,
+          "vector": 476.0310607267468,
+          "write": 1746.1557770134536,
+          "data_write_cycles": 245.29144531158164,
+          "scale_write_cycles": 1745.155777967128,
+          "scale_issue_gap_cycles": 0.9999990463256836
+        },
+        "fragment": {
+          "mode": "single tile; at most 32 scale bytes per producer; shared aligned grain",
+          "critical": {
+            "row": 15,
+            "col": 256,
+            "rank": 31,
+            "read_issue_cycles": 709.3838677759197,
+            "scale_ready_cycles": 2495.8203772362363,
+            "scale_end_cycles": 3914.684725672112,
+            "shared_grains": [
+              7
+            ],
+            "grain_owners": [
+              4
+            ],
+            "extra_queue_cycles": 1418.8643484358759,
+            "frontend_cycles": 1285.7503473758698
+          },
+          "peak_writers": 4,
+          "shared_grains": 9,
+          "arrival_spread_cycles": 755.1505689227532,
+          "grain_ii_cycles": 344.7499170899391,
+          "fabric_ii_cycles": 61.49994134902954
+        },
+        "stages_us": {
+          "dispatch": 2.8421213626861572,
+          "ub_pipeline": 2.3725361973770376,
+          "drain": 0.009696963243186474
+        }
+      }
+    ]
+  }
+}

@@ -9,13 +9,17 @@ def peak_scale_writers(rows, cols, core_rows, core_cols, granule=32):
     contiguous. For column splits the first and last grain of each producer
     interval suffice: interior grains cannot have multiple owners.
     """
-    stride = (cols+31)//32
-    width = (core_cols+31)//32
+    stride = 2*((cols+63)//64)
+    width = 2*((core_cols+63)//64)
     size = rows*stride
     if width>=stride:
         length=core_rows*stride
         if length%granule==0 or size<=length:
             return 1
+        if length>=granule:
+            # A non-aligned internal boundary splits precisely one grain; two
+            # such boundaries cannot fall in the same grain.
+            return 2
         # First bytes in equivalent granules have the same block-offset residue.
         return max((min(i+granule,size)-1)//length-i//length+1
                    for i in range(0,min(size,length*granule//gcd(granule,length)),granule))

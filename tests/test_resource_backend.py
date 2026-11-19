@@ -10,7 +10,7 @@ class ResourceBackendTest(TestCase):
     def test_resource_never_calls_reference_predictor(self):
         dt, pr = load_chip(), load_chip('Ascend950PR_957b')
         with patch('operator_model.backend.predict', side_effect=AssertionError('reference pricing')):
-            for op, shape in [('quant',(768,4096)),('fa',(9,32768,64)),('matmul',(256,512,256))]:
+            for op, shape in [('quant',(768,4096)),('fa',(9,32768,64)),('matmul',(256,512,256)),('rmsnorm',(64,2048))]:
                 forced = estimate(op, shape, chip=pr, timing_mode='resource')
                 renamed = estimate(op, shape, chip=replace(pr,name='unseen'))
                 self.assertEqual(renamed.latency_us,forced.latency_us)
@@ -21,7 +21,7 @@ class ResourceBackendTest(TestCase):
 
     def test_contract_and_explicit_mode(self):
         for op,shape,kw in [('quant',[1,65],{}),('fa',[9,128,8],{}),('matmul',[1,32,16],{'dtype':'fp16'}),
-                            ('rmsnorm',[2,256],{}),('quant',[1,128],{'attrs':{'layout':'wrong'}})]:
+                            ('mhc_post',[2,4,256],{}),('rmsnorm',[2,255],{}),('quant',[1,128],{'attrs':{'layout':'wrong'}})]:
             self.assertEqual(estimate(op,shape,timing_mode='resource',**kw).status,'unsupported')
         unknown = replace(load_chip('Ascend950PR_957b'),name='other')
         self.assertEqual(estimate('quant',[1,128],chip=unknown,timing_mode='calibrated').status,'unsupported')

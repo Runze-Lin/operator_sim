@@ -9,12 +9,14 @@ from .wide_v10 import predict as base
 def parameters():
     return json.loads((Path(__file__).resolve().parents[1] / 'results/v0.12/rms/profile.json').read_text())
 
-def tile_rows(rows, d):
+def tile_rows(rows, d, ub_bytes=253952):
     """BF16 full-row UB budget from operator_model.extensions.norm_addmm._rmsnorm."""
     aligned = (d + 15) // 16 * 16
     fold = 1 << (aligned - 1).bit_length() - 1
     aux = ((fold + 63) // 64 + 31) // 32 * 32
-    cap = (253952 - 1024 - 2048 - 2 * aligned) // (8 * aligned + 12 + aux)
+    cap = (ub_bytes - 1024 - 2048 - 2 * aligned) // (8 * aligned + 12 + aux)
+    if cap < 1:
+        raise ValueError("Target UB cannot hold a full RMSNorm row on this kernel route")
     (full, tail) = divmod(rows, cap)
     return [cap] * full + ([tail] if tail else [])
 

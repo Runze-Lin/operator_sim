@@ -69,7 +69,7 @@ def _rates(work, latency_us, chip):
     }
 
 
-_RESOURCE_OPS = {'quant', 'matmul', 'fa'}
+_RESOURCE_OPS = {'quant', 'matmul', 'fa', 'rmsnorm'}
 
 
 def _price_resource(op, shape, target, call, dtype):
@@ -78,17 +78,30 @@ def _price_resource(op, shape, target, call, dtype):
     from .matmul_resource import resource_matmul
     from .fa_resource import resource_fa
 
-    if call:
-        raise ValueError('This validated route has fixed attributes')
-    Case(op, shape)  # Apply the public shape contract before partitioning.
-    price = {'quant': resource_quant, 'matmul': resource_matmul, 'fa': resource_fa}[op]
-    us, aic, aiv, diag = price(shape, target)
+    if op == 'rmsnorm':
+        from .rms_resource import resource_rms
+        us, aic, aiv, diag = resource_rms(shape, target, call)
+    else:
+        if call:
+            raise ValueError('This validated route has fixed attributes')
+        Case(op, shape)
+        price = {'quant': resource_quant, 'matmul': resource_matmul, 'fa': resource_fa}[op]
+        us, aic, aiv, diag = price(shape, target)
     work = account_work(op, shape, {'dtype': dtype})
     projected = dict(method='target_resource_schedule', latency_us=us, active_aic=aic,
                      active_aiv=aiv, reference_latency_us=None, stages_us=diag['stages_us'],
                      target_plan=diag['target_plan'], timing_diagnostics=diag,
                      inherited_fields=list(target.inherited_fields),
                      notes=['950 resource defaults; 950 library tiling policy assumed.'])
+    if op == 'rmsnorm' and call.get('resident_aiv') is not None:
+        # Backward-compatible diagnostic for schedulers storing a DT high-water
+        # mark. The target calculation itself consumes the target count directly.
+        reference_active = ceil(shape[0] / ceil(shape[0] / 64))
+        h = call['resident_aiv']
+        mapped = min(reference_active, ceil(h * reference_active / aiv))
+        if 0 < h < aiv and reference_active > 1:
+            mapped = min(mapped, reference_active - 1)
+        projected['resident_aiv_mapping'] = {'target':h,'reference':mapped}
     return Estimate(us,'extrapolated','Target resource schedule with inherited 950 phase defaults',
                     aiv,aic,target.name,work,projected,_rates(work,us,target))
 
@@ -119,7 +132,7 @@ def _evaluate(op, shape, attrs, soc, chip, dtype, timing_mode='auto'):
                 raise ValueError(f'{op} has no target resource schedule yet')
             return _price_resource(op, shape, target, call, chosen_dtype), raw
         if timing_mode == 'calibrated' and not same and (
-                op not in _RESOURCE_OPS or target != load_chip('Ascend950PR_957b')):
+                op not in {'quant', 'matmul', 'fa'} or target != load_chip('Ascend950PR_957b')):
             raise ValueError('No calibration route for this operator and target configuration')
         # Residency is counted on the target. Translate only routes that use it.
         resident = None

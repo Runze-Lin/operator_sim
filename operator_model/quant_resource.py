@@ -5,6 +5,7 @@ from math import log2
 from pathlib import Path
 
 from .model import ceildiv
+from .quant_fragments import fragment_wave
 from .quant_scale import peak_scale_writers
 from .quant_repeat import NEG, compose, repeat
 from .target_tiling import quant_plan
@@ -46,6 +47,7 @@ def resource_quant(shape, chip):
 
     def service(h, w):
         groups = h*ceildiv(w,32)
+        scale_bytes = h*2*ceildiv(w,64)
         payload = 2*h*w
         loops = ceildiv(groups,8)+ceildiv(groups,128)
         # A read may be outstanding while bandwidth is used by the other
@@ -58,11 +60,11 @@ def resource_quant(shape, chip):
         # Data and scale have different descriptors. Small interleaved scale
         # fragments can share a granule across AIVs; contiguous full producers
         # have no such charge. scale_tail is exposed retirement after data.
-        scale_write = max(p['scale_base_cycles']+groups/write,
+        scale_write = max(p['scale_base_cycles']+scale_bytes/write,
                           data_write+p['scale_tail_cycles'])+scale_queue
         write_window = max(data_write,p['scale_issue_gap_cycles']+scale_write,
-                           (data_bytes+groups)/write)
-        return dict(read_bytes=payload, write_bytes=h*w+groups, groups=groups, loops=loops,
+                           (data_bytes+scale_bytes)/write)
+        return dict(read_bytes=payload, write_bytes=h*w+scale_bytes, scale_bytes=scale_bytes, groups=groups, loops=loops,
                     read_latency=read_window, local_read_cycles=local_read,
                     shared_read_floor_cycles=payload/share,
                     read_ii=payload/min(issue,share), vector=cycles('vf_dispatch_cycles')
@@ -93,9 +95,16 @@ def resource_quant(shape, chip):
             sequence = compose(row(tail),sequence)
         body = sequence[2][0]
     read_bytes=2*shape[0]*shape[1]
-    write_bytes=shape[0]*(shape[1]+ceildiv(shape[1],32))
+    write_bytes=shape[0]*(shape[1]+2*ceildiv(shape[1],64))
     transfer_floor=(read_bytes+write_bytes)/shared
-    stages = dict(dispatch=(cycles('launch_cycles')+cycles('arrival_log2_cycles')*log2(active))/clock,
+    launch=cycles('launch_cycles')+cycles('arrival_log2_cycles')*log2(active)
+    fragment=fragment_wave(shape,plan,service,chip,loop_work,peak,p['scale_base_cycles'],p['scale_tail_cycles'],write)
+    fragment_details=None
+    if fragment:
+        launch,body,first,fragment_details=fragment
+        writers=fragment_details['peak_writers']
+        scale_queue=fragment_details['critical']['extra_queue_cycles']
+    stages = dict(dispatch=launch/clock,
                   ub_pipeline=max(body,transfer_floor)/clock, drain=cycles('end_cycles')/clock)
     diagnostics=dict(model='target_resource_quant',target_plan=plan,stages_us=stages,
                      first_tile_cycles=first,chip_io_floor_cycles=transfer_floor,
@@ -103,5 +112,5 @@ def resource_quant(shape, chip):
                      effective_vec_ops_per_loop=loop_work,vec_ops_per_cycle_per_core=peak,
                      read_bytes_per_cycle_per_core=read,write_bytes_per_cycle_per_core=write,
                      shared_bytes_per_cycle=shared,scale_granule_bytes=32,scale_peak_writers=writers,
-                     scale_queue_cycles=scale_queue,calibrated_on='950DT phase boundaries only')
+                     scale_queue_cycles=scale_queue,fragment_wave=fragment_details,calibrated_on='950DT phase boundaries only')
     return sum(stages.values()),0,active,diagnostics

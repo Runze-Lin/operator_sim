@@ -18,6 +18,8 @@ _DETAILS = {'ub_bytes', 'l1_bytes', 'l2_bytes', 'l0a_bytes', 'l0b_bytes', 'l0c_b
             'matmul_mmad_latency_cycles', 'matmul_mmad_ii_cycles', 'matmul_l0_latency_cycles',
             'matmul_drain_cycles', 'quant_launch_cycles', 'quant_arrival_log2_cycles',
             'quant_read_latency_cycles', 'quant_vf_dispatch_cycles', 'quant_vf_dependency_cycles',
+            'quant_fragment_launch_cycles', 'quant_fragment_spread_cycles', 'quant_fragment_frontend_cycles',
+            'quant_fragment_vector_cycles', 'quant_fragment_grain_ii_cycles', 'quant_fragment_fabric_ii_cycles',
             'quant_write_latency_cycles', 'quant_end_cycles', 'fa_aiv_per_aic',
             'matmul_hbm_efficiency', 'matmul_l2_efficiency', 'matmul_output_retained_fraction'}
 
