@@ -38,6 +38,17 @@ def main():
         res=estimate('cast_bf16_fp32',z['shape'],chip=z['chip'])
         assert abs(res.latency_us-z['model_us'])<1e-8
         add('Cast · aclnnCast',z['chip'],z['shape'],'Pro 整批 prefill，独立采集',z['model_us'],z['ca_us'],z['projection_970dt_us'],str(f.relative_to(ROOT)))
+        page=ROOT/'docs/workloads/deepseek-pro.md'
+        table=page.read_text().splitlines()
+        shape_text='<code>'+json.dumps(z['shape'],separators=(',',':'))+'</code>'
+        i,=[i for i,line in enumerate(table) if '`indexer.prepare_dsa_weights.float`' in line and shape_text in line]
+        cells=table[i].split('|')
+        col=4 if '950DT' in z['chip'] else 5
+        fig=f.name.replace('-blocks.json','-plot.png')
+        assert (pro/fig).is_file()
+        cells[col]=f" [{z['model_us']:.3f} / {z['ca_us']:.3f}](../../results/v0.23/pro-prefill/{fig}) "
+        table[i]='|'.join(cells)
+        page.write_text('\n'.join(table)+'\n')
     rms=read(OUT/'rms-prefix/evaluation.json')
     for r in rms['rows']:
         name=r['group']+'-'+r['chip']+'-windows.json' if r.get('source') is None else f"recovery-{r['group']}-{r['chip']}-{r['i']}.json"
@@ -78,7 +89,16 @@ def main():
         g=post['summary'][c]['all']['baseline_us']
         count=len({tuple(r['shape']) for r in post['rows'] if r['chip']==c})
         cells.append(f"{count} · {g['wape']:.2f}% / {g['maximum']:.2f}%")
-    replace_row('mHC Post（公开模型，有序前序）',' | '.join(cells)+' | 新形独立，首次、重复及回访，含导出终止标签 | 详见分态及候选对照','mHC Post')
+    known_cells = list(cells)
+    unknown_cells = []
+    for c in chips:
+        count = len({tuple(r['shape']) for r in post['rows'] if r['chip']==c})
+        g = post['summary'][c]['all']['unknown_us']
+        unknown_cells.append(f"{count} · {g['wape']:.2f}% / {g['maximum']:.2f}%")
+    label = next(l for l in text.splitlines() if l.startswith('| mHC Post |'))
+    text = text.replace(label,'| mHC Post | '+' | '.join(unknown_cells)+' | 仅 shape，新形独立，同组首次与重复，完整标签窗 | 超限 / 超限 |')
+    verdict = ' / '.join('本组达标' if post['summary'][c]['all']['baseline_us']['maximum']<=40 and post['summary'][c]['all']['baseline_us']['wape']<=20 else '超限' for c in chips)
+    replace_row('mHC Post（公开模型，有序前序）',' | '.join(known_cells)+' | 新形独立，首次、重复及回访，含导出终止标签 | '+verdict,'mHC Post')
     current.write_text(text)
 
 

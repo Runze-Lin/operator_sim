@@ -1188,6 +1188,10 @@ v0.20 的独立安装基准在 wheel 上对三种芯片做了 1,089 个不同的
 系统框架使用 `operator_model.estimate(op, shape, attrs)` 取得设备微秒数和适用状态。当前首先覆盖 CANN 9.2.1 的 Ascend950DT_9582。可用输入、可选上下文、缺少合格时延时的调度器回退见[系统接入指南](integration.md)。各条路径的独立样本、实际库入口、误差及 CPU 端所需查询时间见[当前 CA 校验](error-analysis.md)。采集、冻结和复现实验的流程见[开发维护指南](../development/README.md)。
 
 
+### mHC Post 怎样比较同形的首发与重复
+
+内置 `aclnnMhcPost` 产生四条残差输出。按 GM 地址锁定同一 token 和相同通道片，控制、输入读、SIMD 接手、四条流的写退休都能定位到特定工作。当前公开的首次/扩核/复用价格以实际分核和前序活跃核数计算；另一个冻结候选仅在能识别特定首发或通道路线的紧接重复时，按每笔读的发起间隔和响应拆开。shape 相同并不保证调用上下文相同。[首发和热重复的同轴图、公式和误差](examples/mhc_post.md) · [跨核扩容证据](../results/v0.24/post/topology.md)
+
 ### RMSNorm 的可选前序范围
 
 `estimate_rms_history_band(shape, chip=...)` 逐一给出 H=0…A 的预测 T(H)。H 表示之前同流同族已经覆盖的 AIV 数；A 是这个输入的活跃 AIV 数。以 0 表示冷启动，超过 A 的前缀等价于 H=A。调用者可读回所有 T(H) 及最小、最大值。实现对具有相同工作量与分区状态的通道复用资源服务计算。区间只覆盖已建模的历史条件，CA 仍会有残差。日常系统仿真优先在每个 rank/流使用 `OperatorStream` 随调用顺序维护历史。[同形配对、模型范围和调用示范](examples/rmsnorm.md)

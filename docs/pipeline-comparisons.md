@@ -112,6 +112,12 @@ BF16 [32768,1280] 共 41,943,040 个元素，两端都逐元素核对了 y 和 r
 
 950DT 的 BF16 [4,4608] 紧随一次使用 3 个 AIV 的调用。最后一行对应 core16 的新通道，图上的蓝条是 4 B 统计量写回，橙条是该行归一化输出写回。给出相同的前序信息时，v0.21 预测 3.792 µs，候选模型预测 2.924 µs，CA 为 2.633 µs。候选仍把这一行的首笔统计量写发起得晚了 0.270 µs。该样本属于剔除整个进程后的历史回放。上栏三个已热通道的先后按统计顺序放置，新通道可以由输出地址唯一识别。[完整推导与独立校准状态](examples/rmsnorm.md)
 
+## mHC Post · 同一核连续五行的热态误差
+
+![模型与 CA 的累计资源成本在上，按 token 显示实际末核的五轮写回在下](../results/v0.24/post/post-multirow-repeat.png)
+
+[257,4,832] 的末核负责 token 145–149。沿第二轮读和第一轮写可以看到约 0.374 µs 的交叠。这个热重复的全核预测高估 54.57%，读和写的阶段价格合计多出 1.736 µs。[逐轮读数、比较口径与剩余误差](../results/v0.24/post/multirow.md)
+
 ## mHC Post · 同一 shape 的首次与再次派发
 
 同流连续运行两次 [3,4,5376]，相同 dtype、同一 ELF、同样使用 48 个 AIV。950DT 两次实测相差 3.247 µs，950PR 相差 2.908 µs，均超过只给一个耗时能覆盖 40% 最大误差的范围。模型在同一流里读取历史，DT 的两次时延预测为 4.855、2.380 µs，PR 为 4.861、2.386 µs。下栏的末核指令可以看出时间差有多少出现在首次向量装载之前。[双芯片首发与复用的完整上下图](examples/figures/mhc-post-repeat-paired.png) · [可行误差区间与逐段解释](examples/mhc_post.md)
@@ -160,7 +166,7 @@ GMM1 和 GMM2 均用 `[8,256,128,2]`、专家分配 `[1,7]`。GMM1 的两份中�
 | [Addmm](examples/addmm.md) | PR · 512×512×256 | [偏置进 L1、BT，与矩阵读重叠](examples/figures/addmm-v21-pr-page.png) |
 | [DynamicMXQuant](examples/quant.md) | PR · 2048×5120 | [一个 UB 块的读、计算、值和 scale 写](examples/figures/quant-chunk-pr-tiles.png) |
 | [FA](examples/fa.md) | PR · Q=9，KV=32768，D=64 | [逐 KV 页 QK、PV 发起和稳态间隔](examples/figures/fa-pr-32k-pages.png) |
-| [Cast](examples/cast_bf16_fp32.md) | DT · 2097152×32 | [整批 Flash prefill 的首中末轮](examples/figures/v021-cast-256ki-dt.png) |
+| [Cast](examples/cast_bf16_fp32.md) | DT · 2097152×32 | [Flash 的首中末轮](examples/figures/v021-cast-256ki-dt.png) · [Pro B8×128k 末两轮放大](../results/v0.24/pro-128ki-tail.png) |
 | [Sigmoid](examples/sigmoid_fp32.md) | DT · 524288×12 | [Kimi 冻结新形，终止核的 UB 轮次](examples/figures/v021-holdout-sigmoid_fp32_524288_12-dt.png) |
 | [AttnResFwd](examples/attn_res_fwd.md) | PR · 2×4096×8×1 | [五个阶段的边界](examples/figures/attn_res_fwd-independent-v21-pr.png) |
 | [Lightning Indexer](examples/lightning_indexer.md) | PR · 1×2×3072×8×128 | [AIC/AIV 的资源队列和 24 个 MMAD](examples/figures/lightning-indexer-3072-pr.png) |
@@ -170,13 +176,13 @@ GMM1 和 GMM2 均用 `[8,256,128,2]`、专家分配 `[1,7]`。GMM1 的两份中�
 | [mHC 拆分链](examples/mhc.md) | PR · 1×4×128 | [三个串行 kernel 的独立设备窗](examples/figures/mhc-pr-pipeline.png) |
 | [MoE FFN](examples/moe_ffn.md) | PR · 2×64×64×1 | [GMM1 与 GMM2 两个设备窗](examples/figures/moe_ffn-pr-pipeline.png) |
 | [RMSNorm](examples/rmsnorm.md) | DT / PR · 32768×1280；DT · 4×4608 | [PR 25 轮 UB](examples/figures/rms-wide-tiles-pr.png) · [同核扩出第二条 AIV](examples/figures/rms-expanding-sibling.png) |
-| [mHC Post](examples/mhc_post.md) | DT / PR · 3×4×5376 | [首次和连续再次派发的模型与真实指令](examples/figures/mhc-post-repeat-paired.png) |
+| [mHC Post](examples/mhc_post.md) | DT / PR · 3×4×5376 | [首次与连续再次派发](examples/figures/mhc-post-repeat-paired.png) · [7168 宽度按同一 token 四路写回](../results/v0.24/post/post-ordered-pipeline.png) |
 | [mHC Pre](examples/mhc_pre.md) | PR · 1×4×128 | [末核控制等待、计算、搬运独占成本](examples/figures/mhc-pre-exclusive-pr.png) |
 | [mHC Sinkhorn](examples/mhc_sinkhorn.md) | PR · 64×4 | [每 AIV 两行共用发射的阶段成本](examples/figures/mhc_sinkhorn-v21-pr.png) |
 | [KDA recurrent](examples/kda_recurrent.md) | PR · 1×3×1×1×128×128 | [完整资源预算与六次实际状态更新](examples/figures/kda-recurrent-state-pr.png) |
 | [MoE 路由 Top-K](examples/moe_gating_top_k.md) | PR · 1×384×6 | [路由阶段成本和末核队列](examples/figures/moe_gating_top_k-pr-pipeline.png) |
 | [KDA chunk，融合 V1](examples/kda_chunk.md) | PR · 1×64×2×2×128×128 | [V1 同步失败事件，整窗无合格结果](examples/figures/kda-chunk-pr-event.png) |
-| [KDA chunk，三段 V2](examples/kda_chunk.md) | PR · 1×5×2×2×128×128 | [V2 完整的 PR 独立观测](../results/kda-resource23/950pr-t5-holdout-comparison.png) |
+| [KDA chunk，三段 V2](examples/kda_chunk.md) | PR · 1×5×2×2×128×128 | [三段 PR 观测](../results/kda-resource23/950pr-t5-holdout-comparison.png) · [当前两块 DT](../results/v0.24/kda-prefetch/dt-80-independent.png) · [当前三块 PR](../results/v0.24/kda-prefetch/pr-145-independent.png) |
 | [DeepSeek 扩展 HcPost](examples/hc_post_vllm.md) | DT · 1×2×4×16448 | [双槽、五个 D 块和尾片的整块转换](../results/v0.23/hc-timing/dt-16448-timeline.png) · [独立 33 行×7168 的两片](../results/v0.23/hc-timing/dt-7168-independent.png) |
 
 ### 从仓内数据重画
@@ -194,4 +200,5 @@ python development/validation/sku20/quant_tile_figure.py
 python development/validation/rms_dispatch_audit/figure.py --replot
 python development/validation/sku20/fa_pages.py --replot
 python development/validation/sku20/fa_pages.py --dt128k --replot
+python development/validation/prefill_zoom24/plot.py
 ```

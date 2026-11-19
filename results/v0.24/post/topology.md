@@ -15,6 +15,10 @@
 | 950PR | [2, 4, 448] / expand | 1 → 4 | 5 / 5 | core16.veccore1 (new physical core) | 0.000 / 0.119 / 1.534 | 4.215 / 5.338 |
 | 950PR | [8, 4, 896] / expand | 4 → 32 | 5 / 5 | core23.veccore1 (new physical core) | 0.048 / — / 0.800 | 4.215 / 4.135 |
 | 950PR | [1, 4, 192] / revisit | 32 → 1 | 5 / 5 | core0.veccore0 (issued) | 0.000 / — / — | 2.283 / 1.730 |
+| 950DT | [69, 4, 640] / first | 0 → 35 | — / 6 | core17.veccore1 (new physical core) | — / — / 0.551 | 3.858 / 4.195 |
+| 950DT | [257, 4, 832] / expand | 35 → 52 | 6 / 6 | core12.veccore0 (new physical core) | 0.053 / 0.144 / 0.692 | 5.669 / 5.356 |
+| 950PR | [69, 4, 640] / first | 0 → 35 | — / 6 | core19.veccore0 (new physical core) | — / — / 0.463 | 3.867 / 3.884 |
+| 950PR | [257, 4, 832] / expand | 35 → 52 | 6 / 6 | core25.veccore1 (new physical core) | 0.053 / 0.145 / 0.696 | 5.707 / 5.251 |
 | 950DT | [3, 4, 7168] / first | 0 → 48 | — / 5 | core2.veccore0 (new physical core) | — / — / 0.568 | 4.889 / 4.753 |
 | 950DT | [3, 4, 7168] / revisit | 48 → 48 | 5 / 5 | core25.veccore1 (issued) | 0.053 / — / — | 2.414 / 2.745 |
 | 950PR | [3, 4, 7168] / first | 0 → 48 | — / 5 | core27.veccore1 (new physical core) | — / — / 0.461 | 4.895 / 4.772 |

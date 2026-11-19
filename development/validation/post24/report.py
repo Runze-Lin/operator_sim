@@ -70,6 +70,21 @@ def main():
          '其余里程碑按共同的频率、每核向量吞吐、tile 片宽、每核轮数和活动核数定价。首发 token 路线有 4 个档案窗口直接测量相应分段；通道重复路线的固定段按两个旧端点该段的观测周期标定，沿用旧档案的服务斜率。若是其他状态，候选复用公开 v0.23 的资源阶段。所有状态同时应用共享 L2/HBM 物理下界。未提供历史时保留原公开的相对误差最小最大中心；此路径每对的两次预测必须相同。', '',
          '[校准参数、单位对应项与冻结逐次预测](freeze.json) · [采集身份及预算](collection.json) · [对实际 v0.23.0 公共流的 132 次零差异复核](baseline-parity.json)', '',
          '## 每形状设备时间','', '| SKU | 协议 | [T,4,D] | 前序 H | 预测 / 实测 AIV | 候选 / CA µs | 差异 | v0.23 / 无历史 µs | 970DT 外推 µs | 内核入口 |','|---|---|---|---:|---:|---:|---:|---:|---:|---|']
+    total_groups=[]
+    for sku in src['measured']:
+        items=[r for r in rows if r['chip']==sku]
+        observed_modes={}
+        for mode in ('repeat operand schedule','first operand schedule','public resource stages'):
+            xx=[r for r in items if r['mode']==mode]
+            if xx:
+                observed_modes[mode]=dict(count=len(xx),unique_shapes=len({tuple(r['shape']) for r in xx}),candidate=stats(xx,'candidate_us'),baseline=stats(xx,'baseline_us'))
+        total_groups.append((sku,observed_modes))
+    decision=['### 当前候选的可推广边界', '', '| SKU / 事前注册路径 | 不同 shape / 窗口 | 影子 WAPE / 最大 | 公开 v0.23 WAPE / 最大 |','|---|---:|---:|---:|']
+    for sku,by_mode in total_groups:
+        for mode,v in by_mode.items():
+            decision.append(f"| {sku} / {mode} | {v['unique_shapes']} / {v['count']} | {fmt(v['candidate'])} | {fmt(v['baseline'])} |")
+    decision+=['', '通道路线的相同输入紧邻重复有专门的 DMA 证据；实际调度需要同时知道前一调用的实现、形状与成功派发状态。token 冷发在本轮每端仅一个新实测入口。扩核、隔形回访、token 多轮热态，以及用户仅给 shape 的调用均沿用公开预测。保留冻结候选作为独立对照；局部状态的收益不能推及其他状态或通用 shape-only 默认值。','']
+    md[md.index('## 从调用上下文得到阶段与价格'):md.index('## 从调用上下文得到阶段与价格')]=decision
     insertion=md.index('## 每形状设备时间')
     explanations=['### 分段参数与单位', '', '| 路线 / 前序 | 首行读次数 | 相邻发起间隔周期 | 固定响应周期 | 交接周期 | 标定窗 |','|---|---:|---|---|---:|---:|']
     for route,states in src['parameters'].items():
@@ -118,9 +133,17 @@ def main():
             worst=max(v,key=lambda z:z['unknown_minimax_relative_pct'])
             md.append(f"{sku} 的 {len(v)} 对相同输入中，任意无前序单值最坏误差下界最高为 {worst['unknown_minimax_relative_pct']:.2f}%（{worst['shape']}，两次实测 {worst['min_us']:.3f}/{worst['max_us']:.3f} µs）。给同一长期分布而无顺序仍会丢失这一信息。")
     md+=['', '这一压力组只包含同族 Post 的连续、扩核和隔形调用。旧生产链 Pre→Sinkhorn→Post 的 950PR 组在 10 个不同 shape 上无前序 WAPE 为 6.93%，其终点的输入来自其他 kernel。该历史结果只描述生产者前序分布，与本轮首发/同族热态两端的误差分别使用自己的分母。[历史生产链回放](../../v0.22/post-stream/report.md)']
-    if speed:md+=['',f"按相同调用的 DT 时间 / PR 时间计算 {len(speed)} 个加速比，候选的比值 WAPE / 最大为 {fmt(speed_summary['candidate_us'])}，v0.23 为 {fmt(speed_summary['baseline_us'])}。"]
+    if speed:
+        worst=max(speed,key=lambda r:abs(r['candidate_us']/r['ca_us']-1))
+        md+=['',f"按相同调用的 DT 时间 / PR 时间计算 {len(speed)} 个加速比，影子模型的比值 WAPE / 最大为 {fmt(speed_summary['candidate_us'])}，公开 v0.23 为 {fmt(speed_summary['baseline_us'])}。比值误差最大的 {worst['shape']}（{worst['protocol']}），实测 DT/PR = {worst['ca_us']:.3f}，候选 {worst['candidate_us']:.3f}，旧版 {worst['baseline_us']:.3f}。两端分核与具体函数不同，当前重复通道修正只作用在一端，跨芯片相对优势出现反向。两端总 WAPE 的改善与跨芯片相对误差的退化应同时保留。"]
+
     md+=['',f"预载配置/参数的单次候选查询 {bench['n']} 次，墙钟中位 {bench['median_ms']:.4f} ms、P95 {bench['p95_ms']:.4f} ms、最大 {bench['max_ms']:.4f} ms。冻结时首次候选查询最大 {bench['first_frozen_max_ms']:.4f} ms。上述 {len(costs)} 个采集进程累计 {sum(v['seconds'] for v in costs)/60:.1f} 分钟宿主墙钟，原始总量 {sum(v['raw_bytes'] for v in costs)/2**30:.2f} GiB。", '',
          '[完整冻结同集评分与逐核原始证据入口](evaluation.json) · [实时状态](status.json)']
+    if (OUT/'multirow.json').exists():
+        w=next(r for r in read(OUT/'multirow.json')['data'] if r['role']=='repeat')
+        gap=w['errors_us']
+        md+=['','### 五轮 token 热态的负例','',f"950DT [257,4,832] 的末核 {w['critical']} 完整处理 token {w['items'][0]['token']}–{w['items'][-1]['token']}。分核和轮次均正确，公开预测与影子均为 {w['model_us']:.3f} µs，CA 为 {w['ca_us']:.3f} µs。按同一组互斥队列标签记账，MTE2 高估 {gap['MTE2']:.3f} µs、MTE3 高估 {gap['MTE3']:.3f} µs；二者解释总差 {w['model_us']-w['ca_us']:.3f} µs 的主要部分。五轮确实传输了全部输入和输出，跨轮重叠使实际暴露在关键路径上的搬运时间减少。", '',
+              '![上方冻结分账与同口径 CA，下方末核五个真实 token 的读写](post-multirow-repeat.png)', '', '[按真实 GM 地址与指令排序核验的五轮里程碑和分账](multirow.md)']
     if (OUT/'topology.md').exists():
         md+=['', '从 1 扩到 4 个 AIV 的 [2,4,448] 在两端实际最晚完成的都是新启用的 core16.veccore1。旧档案也观察到只有一个前序 AIV 时，末核加入较其他扩核慢；新区分只是单次观测到的调度轨迹，物理域被激活的时间与芯片的缓存命中率不能据此等同。隔形回访保留旧策略，与相邻输入重复单独比较。[逐次活动核、兄弟核、最后完成的核](topology.md)']
     if (OUT/'physical-summary.json').exists():
@@ -136,5 +159,7 @@ def main():
             md+=['','[独立物理 END 收据索引](physical-summary.json)']
     if (OUT/'post-small-pipeline.png').exists():md+=['','![首发与热态的相同四行写回](post-small-pipeline.png)','', '[384 B 分片与逐行地址证据](small-figure-data.json)']
     if (OUT/'post-ordered-pipeline.png').exists():md+=['','![同一逻辑 tile 的关键路径预测及两次实测](post-ordered-pipeline.png)','', '[行及通道地址映射和图上的数据](figure-data.json)']
+    if len(receipts)==8:
+        md+=['','## 结论','', '两端均达到 10 个不同新 shape，冷发、核扩展、紧邻热态和多轮执行已分别实测。有前序时，通道路线的立即重复得到改善；大 token 热态的最大误差和跨芯片分块边界仍限制推广。公开 v0.23 同流预测继续作为系统入口，候选仅作为影子验证。44 个完整物理窗已支撑不同状态的比较，使用过的留出集在后续方法调整中应改列为开发证据。']
     (OUT/'report.md').write_text('\n'.join(md)+'\n')
 if __name__=='__main__':main()
