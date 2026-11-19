@@ -1,0 +1,89 @@
+{
+  "utc": "2026-11-19T13:39:29.635603+00:00",
+  "role": "development, separate release FLA kernel and contract",
+  "chip": "Ascend950DT_9582",
+  "release_asset": {
+    "name": "flash_linear_attention_npu_a5-26.9.1-py3-none-manylinux_2_34_aarch64.whl",
+    "size": 121538023,
+    "digest": "sha256:c660b90cee1d93c83292bb9b8509371da83493a633efd3e5113f70380d373521",
+    "browser_download_url": "https://github.com/flashserve/flash-linear-attention-npu/releases/download/v26.9.1-release/flash_linear_attention_npu_a5-26.9.1-py3-none-manylinux_2_34_aarch64.whl",
+    "id": 678963966
+  },
+  "wheel_compiler": "custom_opp_compiler_version=9.1.0",
+  "contract": {
+    "shape": [
+      1,
+      64,
+      2,
+      2,
+      128,
+      128
+    ],
+    "gate_dtype": "bf16",
+    "qkv_dtype": "bf16",
+    "beta_dtype": "fp32",
+    "chunk": 64,
+    "safe_gate": true,
+    "lower_bound": -5.0,
+    "use_gate_in_kernel": true,
+    "state_v_first": true,
+    "cu": [
+      0,
+      64
+    ],
+    "indices": [
+      0,
+      0
+    ],
+    "check_all_outputs": [
+      "attention",
+      "aqk",
+      "akk",
+      "state_vk"
+    ],
+    "check_initial_state_unchanged": true,
+    "heads": "two-head reduced physical shard; same K/V widths as Kimi K3",
+    "work_items": 2,
+    "force_v2": false,
+    "selected_api": "aclnnChunkKdaFwd"
+  },
+  "budget_seconds": 900,
+  "budget_bytes": 1073741824,
+  "maximum_ca_runs": 1,
+  "eligibility": "all four CPU oracle outputs, input VK preserved, numeric SMOKE_PASS, FLA host library and exact match of captured KDA .text to release, all serial device launches complete, positive instruction windows and all-core duration checks",
+  "published_kda_text": {
+    "ChunkKdaFwd_ab840dfc4cfa173688cbf30179316228.o": "eb642856ca5e19f07e079e1af1b68ed9b61174942e1d7a2097daa69113e67c0d",
+    "ChunkKdaFwd_5e864108d5688e456abb78f238c67b16.o": "5275721e11b3906d6f56a7fa5d04f535b64d9da894932abd84e082973652f200",
+    "ChunkKdaFwd_bdc078c5221f705217d250323b8feb82.o": "eb642856ca5e19f07e079e1af1b68ed9b61174942e1d7a2097daa69113e67c0d",
+    "ChunkKdaFwd_c4ae0e35839222ca5076179abc74a4f5.o": "b155d4c10ea06207c4f9277422ddc043216f881123d98ab9a5d12608471806e1",
+    "ChunkKdaFwd_3d0869ad99fc0117a05ebce5fc52f4ef.o": "5275721e11b3906d6f56a7fa5d04f535b64d9da894932abd84e082973652f200",
+    "ChunkKdaFwd_ec37fa71324acfcc6979b4d975461463.o": "e99b62c6adbe282379e1c0e5bc72cc3054a083def13b1cfbd63467ec49f3e1b0",
+    "ChunkKdaFwd_1abcbd578c0aecb0d613ba7f77626658.o": "e99b62c6adbe282379e1c0e5bc72cc3054a083def13b1cfbd63467ec49f3e1b0",
+    "ChunkKdaFwd_fc61fbaf568f8d0a23b644397f403111.o": "b155d4c10ea06207c4f9277422ddc043216f881123d98ab9a5d12608471806e1"
+  },
+  "cann_builtin_kda_text": {
+    "ChunkKdaFwd_e1f47b7ed74c47416550f45ace82d988.o": "bab4def46047afb93f7e4ef6554da85623b43074611d3ae7f9b466fda83d8329",
+    "ChunkKdaFwd_2abd624f2831d861ffa7ac1b0049c12a.o": "fa936b1653b1ad1682edea6cec5a7342bd1f359738df68ea4b8e893b262bedc2",
+    "ChunkKdaFwd_5fc9a4d54f054c7c0081057a92293b10.o": "247d431053dbef3f328c5f45ddc0d3109db10273451ccfec78f8842a13e74bee",
+    "ChunkKdaFwd_ec5c70105c2ca6873f26879e62efa878.o": "fa936b1653b1ad1682edea6cec5a7342bd1f359738df68ea4b8e893b262bedc2",
+    "ChunkKdaFwd_fa73d2b349dc97ef1ea5da4e484ceccf.o": "d6d3136972a6a6eff562a4933b08d434b937adb0b4fe61018f6ae79181fc9a81",
+    "ChunkKdaFwd_739e9f97dc2733c698e3a00e12fb80ab.o": "bab4def46047afb93f7e4ef6554da85623b43074611d3ae7f9b466fda83d8329",
+    "ChunkKdaFwd_6476ca0e1178d6f9989248428cab5a3c.o": "247d431053dbef3f328c5f45ddc0d3109db10273451ccfec78f8842a13e74bee",
+    "ChunkKdaFwd_c7537eac07b2e805494bc8b22c2da1a4.o": "d6d3136972a6a6eff562a4933b08d434b937adb0b4fe61018f6ae79181fc9a81"
+  },
+  "files": {
+    "development/validation/chunk_recovery/fla2691/probe.py": "efdf6f4f93a2aeefef00fa57c5645b322b641f7a9217dae23f2b8fdbda72e3d2",
+    "results/chunk-recovery/fla2691/raw/fla-a5.whl": "c660b90cee1d93c83292bb9b8509371da83493a633efd3e5113f70380d373521",
+    "build/smoke/chunk21-kimi.cpp": "7c8d87c0a65275aaf182f362ab8cf0f98a815390857af7cc5930b54140887aa1",
+    "smoke/extension_kda.cpp": "e0859cda502617c6e76c2cfb0d6da57120a9a3d42f0e63bee192e7a5b3427138",
+    "results/chunk-recovery/fla2691/raw/kimi-fla.cpp": "eecdeafe5dd2a72bef28968f983106ee518e40c216a7cf7094271115b049cf0a",
+    "results/chunk-recovery/fla2691/raw/kimi-fla": "fc815eae3ad4d6f179ad74e47492a1c62e87a941c37563eb034c7fecbff88855",
+    "results/chunk-recovery/fla2691/raw/fla_npu/opp/vendors/fla_npu_transformer/op_api/lib/libcust_opapi.so": "f229fc7ce9bfe486aad870bf31d6f02bc5b4b9204f7d0f4382bf655d63060e75",
+    "results/chunk-recovery/fla2691/raw/fla_npu/ops/ascendc/_aclnn_ctypes.py": "b9d5893db66409c2601cc5d86e7197052a179f5f1c9ee83cd844151d43b9e34d",
+    "results/chunk-recovery/fla2691/raw/fla_npu/ops/ascendc/_kda_policy.py": "8c4684619a74f276232f30360b0cfab0da4b7f74403f914e55d67fe3714ef31a",
+    "runs/workloads19/sources/full/Dockerfile.a5": "16b4bf2e3be10fbdaba5b765dbc636cf70ffc4cf0b221d18456ff08ad17c66c3",
+    "runs/workloads19/sources/full/vllm_ascend/ops/kda.py": "f7bc1e8011d5f82c5698933a867757b825dc0fe07bc4ff37269f2026ff9daa1d",
+    "runs/workloads19/sources/full/vllm_ascend/ops/kimi_kda.py": "744efeb5abdb6027637885416d64234fe61f8ab76300a85b1ac6799283cea3cd",
+    "scripts/cann-run.sh": "d529513abc0bc340a56c91365a9e72d5e434d2cb4841be1692930294cd0624df"
+  }
+}

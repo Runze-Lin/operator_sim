@@ -1,0 +1,160 @@
+{
+  "registration_sha256": "bf9ac39c99bda0455b078d20fa329fdedfd58b2322c790876ae3ebbf0293d8a5",
+  "role": "direct published V2 API mechanism diagnostic, never a default small-Kimi sample; no timing model is fitted",
+  "process": {
+    "seconds": 110.51540115987882,
+    "peak_bytes": 260991662,
+    "exit_code": 0,
+    "stop": null,
+    "command": [
+      "bash",
+      "/home/l00925865/operator_sim/scripts/cann-run.sh",
+      "bash",
+      "-c",
+      "source \"$1/bin/set_env.bash\"; shift; exec \"$@\"",
+      "fla",
+      "/home/l00925865/operator_sim/results/chunk-recovery/fla2691/raw/fla_npu/opp/vendors/fla_npu_transformer",
+      "msopprof",
+      "simulator",
+      "--soc-version=Ascend950DT_9582",
+      "--dump=false",
+      "--launch-count=32",
+      "--timeout=20",
+      "--output=/home/l00925865/operator_sim/results/chunk-recovery/fla2691/v2/raw/profile",
+      "/home/l00925865/operator_sim/results/chunk-recovery/fla2691/v2/raw/kimi-v2",
+      "2",
+      "1"
+    ]
+  },
+  "host_actual_bindings": {
+    "aclnnChunkKdaFwdV2": "/home/l00925865/operator_sim/results/chunk-recovery/fla2691/raw/fla_npu/opp/vendors/fla_npu_transformer/op_api/lib/libcust_opapi.so",
+    "aclnnChunkKdaFwdV2GetWorkspaceSize": "/home/l00925865/operator_sim/results/chunk-recovery/fla2691/raw/fla_npu/opp/vendors/fla_npu_transformer/op_api/lib/libcust_opapi.so"
+  },
+  "correct_host": true,
+  "runtime_verified": true,
+  "golden_qualified": true,
+  "actual_numeric_groups": {
+    "attention": [
+      256,
+      0
+    ],
+    "aqk": [
+      128,
+      0
+    ],
+    "akk": [
+      128,
+      0
+    ],
+    "state_vk": [
+      16384,
+      0
+    ]
+  },
+  "initial_unchanged": true,
+  "host_smoke_fail": [],
+  "actual_launches": [
+    {
+      "kernel": "ChunkKdaFwdPrepare_171e9a19df4c0d44ca00a177d8fe300c_32513546_mix_aic",
+      "index": 0,
+      "ordinal": 0,
+      "release_family": "chunk_kda_fwd_prepare",
+      "ca_us": 15.280606060606061,
+      "duration_qualified": true,
+      "captured_binary": "results/chunk-recovery/fla2691/v2/raw/profile/OPPROF_20261119215307_UYLEWHAZNTNUHYJI/ChunkKdaFwdPrepare_171e9a19df4c0d44ca00a177d8fe300c_32513546_mix_aic/0/dump/aicore_binary.o",
+      "binary_sha256": "e64b6768303bee4edb1ad5171b5b4f88b83c4ccfef567ceec6c607a3f45228e5",
+      "device_text_sha256": "3cdc897359178d665df362b3fcb2bdacb830af2357a2e0b6f7d1f9c79f3d136a",
+      "published_names": [
+        "ChunkKdaFwdPrepare_9a5c7ba661140e04d3bf3c972e6629a6.o",
+        "ChunkKdaFwdPrepare_ab956e5eb2ff99416b2f5173e788663a.o",
+        "ChunkKdaFwdPrepare_375ce9d41fcc2d706267f3750942ed8e.o",
+        "ChunkKdaFwdPrepare_171e9a19df4c0d44ca00a177d8fe300c.o"
+      ],
+      "first_tick": 7219,
+      "last_tick": 32432,
+      "cores": {
+        "core0.veccore1": {
+          "first_tick": 7357,
+          "last_tick": 20246,
+          "physical_end_tick": 20239,
+          "terminal_label": true,
+          "mmads": 0,
+          "official_us": "7.81",
+          "trace_sha256": "4f09ccd5736a10dc933b8c0bed0ee4f316c06873ab9f59192a1504c80f467b6c"
+        },
+        "core0.cubecore0": {
+          "first_tick": 7219,
+          "last_tick": 32432,
+          "physical_end_tick": 23496,
+          "terminal_label": false,
+          "mmads": 3,
+          "official_us": "15.28",
+          "trace_sha256": "88191bcb592b58d5729ec346f0a1efa86e9b1a835c685fbc25d728d4f08358aa"
+        },
+        "core0.veccore0": {
+          "first_tick": 7281,
+          "last_tick": 31871,
+          "physical_end_tick": 31864,
+          "terminal_label": true,
+          "mmads": 0,
+          "official_us": "14.9",
+          "trace_sha256": "c7f625f88087184dd277d95f526c2d4485479c3bb9af03c3f30d629d7c72657c"
+        }
+      },
+      "trace": "results/chunk-recovery/fla2691/v2/raw/profile/OPPROF_20261119215307_UYLEWHAZNTNUHYJI/ChunkKdaFwdPrepare_171e9a19df4c0d44ca00a177d8fe300c_32513546_mix_aic/0/simulator/trace.json",
+      "trace_sha256": "2c94a074f7b0832568c6cf6258155dd4dab7374d0b8ec4cc67e8e9698e86878d"
+    },
+    {
+      "kernel": "ChunkFwdH_72371232203476155baf45810c33a7f9_7710_mix_aic",
+      "index": 1,
+      "ordinal": 0,
+      "release_family": "chunk_fwd_h",
+      "ca_us": null,
+      "duration_qualified": false,
+      "captured_binary": "results/chunk-recovery/fla2691/v2/raw/profile/OPPROF_20261119215307_UYLEWHAZNTNUHYJI/ChunkFwdH_72371232203476155baf45810c33a7f9_7710_mix_aic/0/dump/aicore_binary.o",
+      "binary_sha256": "3f4fbce816e148200bd2c06017af6c8a572be971fcf273dfb54ee42b01e84460",
+      "device_text_sha256": "db5714f85fe237be6eed9641dec19c925c9e44d729fbdadf62b38cf4ce966da5",
+      "published_names": [
+        "ChunkFwdH_72371232203476155baf45810c33a7f9.o"
+      ],
+      "incomplete": "shard/aggregate content on core0.cubecore0"
+    },
+    {
+      "kernel": "ChunkKdaFwdFinalize_c0d447f32579acd296e1c16d6d9c7d38_0",
+      "index": 2,
+      "ordinal": 0,
+      "release_family": "chunk_kda_fwd_finalize",
+      "ca_us": 3.2206060606060607,
+      "duration_qualified": true,
+      "captured_binary": "results/chunk-recovery/fla2691/v2/raw/profile/OPPROF_20261119215307_UYLEWHAZNTNUHYJI/ChunkKdaFwdFinalize_c0d447f32579acd296e1c16d6d9c7d38_0/0/dump/aicore_binary.o",
+      "binary_sha256": "3ef4ed44162d20afbc8e9d78d28a7ad6efd6e6e0e786801826447ae3220a518f",
+      "device_text_sha256": "2460a5a34f6e593d84d8b72b0d118ac867a1b7713386da64d39b107f40d64d7e",
+      "published_names": [
+        "ChunkKdaFwdFinalize_c0d447f32579acd296e1c16d6d9c7d38.o"
+      ],
+      "first_tick": 48161,
+      "last_tick": 53475,
+      "cores": {
+        "core0.cubecore0": {
+          "first_tick": 48161,
+          "last_tick": 53475,
+          "physical_end_tick": 52783,
+          "terminal_label": false,
+          "mmads": 2,
+          "official_us": "3.22",
+          "trace_sha256": "1046d07c771b74d5b413d7ec26681621b61a8bf0aeb874c82d5c4845a71c587e"
+        }
+      },
+      "trace": "results/chunk-recovery/fla2691/v2/raw/profile/OPPROF_20261119215307_UYLEWHAZNTNUHYJI/ChunkKdaFwdFinalize_c0d447f32579acd296e1c16d6d9c7d38_0/0/simulator/trace.json",
+      "trace_sha256": "fdbdbeb0506f15c60320398cf33930e133d6d5c0a8e8e5803980a956fe4e2c85"
+    }
+  ],
+  "stages_verified": true,
+  "complete_device_windows": false,
+  "process_complete": true,
+  "sync_issue_count": 0,
+  "sync_examples": [],
+  "timing_qualified": false,
+  "serialized_device_us": null,
+  "log_sha256": "8bcd4cdb12f6e4e0eead05e97e7f4c3b46d6d19611342a219078bbe66b75cfe6"
+}
