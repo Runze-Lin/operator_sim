@@ -1,0 +1,45 @@
+{
+  "registered": "2026-11-19T07:41:29.812393+00:00",
+  "job": {
+    "id": "cast_96_7168",
+    "shape": [
+      96,
+      7168
+    ],
+    "args": [
+      "96",
+      "7168"
+    ],
+    "op": "cast_bf16_fp32",
+    "batch": false,
+    "kernels": 1,
+    "nchecks": 1,
+    "runner": "build/smoke/cast_bf16_fp32",
+    "wall_s": 240,
+    "raw_mib": 1800,
+    "predictions": {
+      "Ascend950DT_9582": 3.4013650363636363,
+      "Ascend950PR_957b": 4.011544242424242,
+      "Ascend970DT": 3.278355303386403
+    }
+  },
+  "sku": "Ascend950PR_957b",
+  "earlier": {
+    "shape": [
+      96,
+      7168
+    ],
+    "sku": "Ascend950PR_957b",
+    "read_bytes_observed": 1376256,
+    "write_bytes_observed": 294912,
+    "logical_read_bytes": 1376256,
+    "logical_write_bytes": 2752512,
+    "writers_observed": 6,
+    "active_aiv": 56,
+    "trace_sha256": "ac753e7c9e7d1a450c90588c202d3334d02a3c0aba4b6b6d0a3b0100cbf242cc"
+  },
+  "reason": "Repeat all and only full-window holdouts with mismatched logical vs descriptor output bytes; preserve primary statistics separately.",
+  "binary_sha256": "6177eb7bd6a6c28b6c75261634ed4b668a861223680525f636d45bfd1337c5f2",
+  "module_sha256": "e5d888830a518cd0774214700e3bc6a0377e94bd592a2fc6fea19db91d41bf4c",
+  "omp_wait": "PASSIVE"
+}

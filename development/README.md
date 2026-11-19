@@ -1,5 +1,9 @@
 # 维护与复现
 
+## 当前版本 v0.19
+
+第一份冻结源码快照为 e6eb2c7，RMSNorm 补充两项启动价格后的快照为 0e88b9c。两端使用相同的 CANN 主程序及 BF16 合同。常规留出、完整 2048-token chunk、整批 8×32k 尝试与模型 decoder 假跑各有登记和成本。新算子的公开接口在主测冻结后继续接入；首轮 22 个合同和 RMSNorm 再冻结的 10 个新输入均有同集 v0.18 数据。[源码摘要与两次冻结共 192 个双版本预测核对](../results/v0.19/sku/release-audit.json) · [实验与发布程序](validation/sku19) · [工作负载假跑](workloads) · [冻结合同](../results/v0.19/sku/freeze.json) · [全量误差](../docs/error-analysis.md)
+
 系统接入请读[工具说明](../README.md)和[接入指南](../docs/integration.md)。本目录保存开发过程、早期设计和验证辅助程序。当前有效的公式与校验结论分别发布在[总建模方法](../docs/modeling-strategy.md)和[总误差分析](../docs/error-analysis.md)。
 
 ## 复现跨芯片后端

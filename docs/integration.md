@@ -100,11 +100,14 @@ def duration_seconds(op, local_shape, attrs, roofline_us, soc="Ascend950DT_9582"
 
 ## 把框架节点映射到调用参数
 
-传入已经过 TP/DP/EP 切分的每卡输入。shape 使用正整数序列；可选属性使用字典，省略时采用当前已建模的调用合同。相同数学算子的 dtype、布局、融合和可选输出不同时，请先核对[逐算子方法和算例](modeling-strategy.md)，再决定是否路由到该模型。下表列出默认算子名和维度顺序。
+传入已经过 TP/DP/EP 切分的每卡输入。shape 使用整数序列，张量维度通常为正数。AttnResFwd 的有效历史行数可以是 0。可选属性使用字典，省略时采用当前已建模的调用合同。相同数学算子的 dtype、布局、融合和可选输出不同时，请先核对[逐算子方法和算例](modeling-strategy.md)，再决定是否路由到该模型。下表列出默认算子名和维度顺序。
 
 | op | 每卡 shape | 关键合同 |
 |---|---|---|
 | [quant](examples/quant.md) | (R,C) | dynamicMXquant，BF16 输入、block32 |
+| [moe_gating_top_k](examples/moe_gating_top_k.md) | (T,E,K) | FP32 logits，单分组 sigmoid 加 bias，挑选 K 个专家 |
+| [cast_bf16_fp32](examples/cast_bf16_fp32.md) | (T,D) | 连续 BF16 输入、FP32 输出 |
+| [attn_res_fwd](examples/attn_res_fwd.md) | (T,H,S,N) | Kimi BF16 prefix/addend、S 个 bank slot、N 个有效历史行 |
 | [rmsnorm](examples/rmsnorm.md) | (R,C) | BF16，输出含 rstd |
 | [matmul](examples/matmul.md)、[addmm](examples/addmm.md) | (M,N,K) | BF16；Addmm 的 bias=[N] 且 α=β=1 |
 | [fa](examples/fa.md) | (Q,KV,D,B,H) | 普通非因果 SBH；Q 是本次校验长度，H 是本卡头数 |
@@ -116,7 +119,7 @@ def duration_seconds(op, local_shape, attrs, roofline_us, soc="Ascend950DT_9582"
 
 例如 `estimate("moe_ffn", (32, 256, 128, 2), {"expert_counts": [1, 31]})` 预测整个两段计算链。调度该节点后不要再把两个 GMM 组件的估计加到同一事件上。EP 大小不能替代本地专家直方图。推测 8 个 token 时，普通 FA 的主模型校验长度常为 Q=9，实际 B、H、打包方式仍由框架提供。
 
-对 RMSNorm 和 mHC Post，默认采用调用上下文未知时的估计，不保存上次预测的设备状态。系统若维护着**同一类 kernel 连续执行时前序调用的最大活跃 AIV 数**，可用 `{"resident_aiv": 32}` 显式传入，取值 0…目标 Vector 核数，0 表示该隔离序列的首次调用。发生换流或并发干扰而无法确定时，省略该属性。该量用于描述 CA 观察到的启动上下文，硬件缓存状态仍待独立确认。
+目标资源路径的 RMSNorm 把省略 resident_aiv 的查询解释为单独启动一次。它不保存上次调用的设备状态。系统若连续执行同类 kernel，可显式传入此前覆盖的最大 AIV 数 H（0…目标核数），H=0 表示首次，H 小于本次活动核数表示扩核，其余表示复用。未知启动历史时可从 projection.timing_diagnostics.conditional_us 读取三种条件时间并做系统级情景分析。对持续热态重复使用首次启动会高估耗时。DT 在历史范围内的 auto 和 mHC Post 保留原参考模型的状态估计。
 
 当调度器知道隔离序列刚开始时，令 `resident = 0`。以下三行只由同一流、同类 kernel 的实际调度事件驱动；同一个待选方案反复试算时保留原状态。返回的 `active_aiv` 是本次预计活跃核数，缺少此信息的路线返回 None。
 
@@ -150,3 +153,14 @@ print(diag["shared_traffic"]["hbm_payload_fraction_of_nominal"])
 | FA | `wave_types` 列出每类波的忙核数及每 AIC 的 AIV 数。`first.demands_cycles` 与 `first.steady_bottleneck` 给一块 KV 的资源需求与最长项，`steady_kv_read_fraction_of_hbm_peak` 是各忙核的稳态冷读需求占整片片外峰值比例 | `fa_aiv_per_aic` 可设置 1 或 2，比较固定绑定、可借用空闲 AIV 两种库情景；长序列可能由读发起间隔主导 |
 
 设备时延与有效吞吐按不同口径解释。对单核端口，`payload/(1000 × µs × GB/s/核)` 表示这段窗口中有效传输占该端口名义容量的比例；整片多个端口的分母需乘相应核数。芯片级带宽只取一次整片值。模型返回的冷读、重复读、窗口内写回和 `work` 的逻辑接口字节各有不同用途；物理 HBM 字节没有实测时仍为空。可通过各波瓶颈、芯片配置和 CA 的指令窗口逐项核对。[三种资源模型的公式和算例](modeling-strategy.md) · [FA 场景与核绑定敏感性](../results/v0.17/fa-scenarios.md)
+
+
+### 模型主干中独立调用的 Vector 算子
+
+Kimi 的单组 sigmoid 专家选择使用 FP32 输入，调用 `estimate("moe_gating_top_k", (tokens,experts,topk), dtype="fp32", chip=chip)`。DeepSeek 回退路径中的 BF16→FP32 转换使用 `estimate("cast_bf16_fp32", (tokens,hidden), dtype="bf16", chip=chip)`。二者输出包含设备时间、分核、逻辑读写字节和 Vector 工作量；物理 HBM 流量需要缓存/事务级证据。系统将路由选择、专家 FFN、跨卡派发分别排入事件图。Flash 的后归一化只计一次，再接类型转换，避免同时计融合辅助函数与其叶节点。[模型假跑与路由合同](workload-coverage.md)
+
+
+Kimi 的融合 Attention Residual 接收 `(tokens, hidden, bank_slots, valid_bank_rows)`。例如 `estimate("attn_res_fwd", (1,7168,8,1), {"addend":True,"write_idx":1,"materialize":True}, dtype="bf16", chip=chip)` 表示每个 token 使用一个历史 slot，并将结果写至下一个 slot。工作量、逻辑字节以及目标 tiling 随属性变化。只有已定价的单 token/核驻留分支返回设备时间。系统调度器遇到 `status="unavailable"` 应保留工作量并标出缺失时间。`latency_us=None` 不能作为零时长加入整网统计。[逐阶段算例与支持条件](examples/attn_res_fwd.md)
+
+
+在系统延迟的敏感性分析中，注意两个已量化的误差。对于 [2048,5120] 的 RMSNorm，PR 的全片冷读写估计使单次预测比完整 CA 高 77.64%。Kimi AttnResFwd 在 10 个驻留 shape 上，DT/PR 的耗时 WAPE 分别为 29.95%/33.10%，点估计未判中两张卡的相对方向。一个可计时分支仍有特定适用范围；模型的设备微秒数与置信程度分别查看。[全体逐算子误差与逐 shape 数据](error-analysis.md)

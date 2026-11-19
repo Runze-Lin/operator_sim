@@ -1,0 +1,985 @@
+{
+  "qualification": "Resident priced branch. Full CA and CPU golden. Stages are exposed wall intervals on the latest-finishing core, including its start skew in dispatch. Supplemental inputs were selected after inspecting the first two, at unchanged prices and schedule.",
+  "summary": {
+    "Ascend950DT_9582": {
+      "n": 10,
+      "wape": 0.29946217480701826,
+      "max_relative_error": 1.0389268450571372
+    },
+    "Ascend950PR_957b": {
+      "n": 10,
+      "wape": 0.3309588605158147,
+      "max_relative_error": 1.0893160869408658
+    }
+  },
+  "speedup": {
+    "n": 10,
+    "wape": 0.04241837119834286,
+    "max_relative_error": 0.07565375937755603
+  },
+  "reuse_dt_as_pr": {
+    "n": 10,
+    "wape": 0.31899100114858436,
+    "max_relative_error": 1.053770908565728
+  },
+  "speedup_1x": {
+    "n": 10,
+    "wape": 0.03587198733870893,
+    "max_relative_error": 0.07361078300562407
+  },
+  "same_direction": 0,
+  "first_holdout": {
+    "summary": {
+      "Ascend950DT_9582": {
+        "n": 2,
+        "wape": 0.3386972924135961,
+        "max_relative_error": 0.5410590488288631
+      },
+      "Ascend950PR_957b": {
+        "n": 2,
+        "wape": 0.33568832953776323,
+        "max_relative_error": 0.5635501351644348
+      }
+    },
+    "speedup": {
+      "n": 2,
+      "wape": 0.046181014437164464,
+      "max_relative_error": 0.07565375937755603
+    },
+    "reuse_dt_as_pr": {
+      "n": 2,
+      "wape": 0.3220270283205642,
+      "max_relative_error": 0.5419440004067697
+    },
+    "speedup_1x": {
+      "n": 2,
+      "wape": 0.03847731876816944,
+      "max_relative_error": 0.07361078300562407
+    },
+    "same_direction": 0
+  },
+  "supplemental": {
+    "summary": {
+      "Ascend950DT_9582": {
+        "n": 8,
+        "wape": 0.2897216541835505,
+        "max_relative_error": 1.0389268450571372
+      },
+      "Ascend950PR_957b": {
+        "n": 8,
+        "wape": 0.3297835073587713,
+        "max_relative_error": 1.0893160869408658
+      }
+    },
+    "speedup": {
+      "n": 8,
+      "wape": 0.04147452222357231,
+      "max_relative_error": 0.061519939945589575
+    },
+    "reuse_dt_as_pr": {
+      "n": 8,
+      "wape": 0.31823649697382483,
+      "max_relative_error": 1.053770908565728
+    },
+    "speedup_1x": {
+      "n": 8,
+      "wape": 0.03521844693039642,
+      "max_relative_error": 0.06005538921319309
+    },
+    "same_direction": 0
+  },
+  "rows": [
+    {
+      "role": "first",
+      "shape": [
+        1,
+        7168,
+        8,
+        1
+      ],
+      "chip": "Ascend950DT_9582",
+      "pred_us": 14.647533129920179,
+      "ca_us": 9.504848721437156,
+      "rel_error": 0.5410590488288631,
+      "predicted_phases_us": {
+        "dispatch": 2.743636131286621,
+        "score_weights": 1.7103030303030302,
+        "prefix_add_write": 1.2993939393939393,
+        "bank_scores": 1.1324242424242423,
+        "weighted_norm_write": 7.761775786512345,
+        "exposed_transfer_floor": 0.0
+      },
+      "ca_phases_us": [
+        2.253333330154419,
+        1.5042424201965332,
+        1.5721216201782227,
+        1.0066661834716797,
+        3.1684851674363017
+      ],
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "active_aiv": 1,
+      "trace_sha256": "25fdc24683378adf55f84e2e585e8ce7699cef80f5a12d286e1c80a12c2b9fe5"
+    },
+    {
+      "role": "first",
+      "shape": [
+        1,
+        7168,
+        8,
+        1
+      ],
+      "chip": "Ascend950PR_957b",
+      "pred_us": 14.852778310412422,
+      "ca_us": 9.499393704347312,
+      "rel_error": 0.5635501351644348,
+      "predicted_phases_us": {
+        "dispatch": 2.743636131286621,
+        "score_weights": 1.7182502815463196,
+        "prefix_add_write": 1.304369422540727,
+        "bank_scores": 1.1431953254817786,
+        "weighted_norm_write": 7.943327149556974,
+        "exposed_transfer_floor": 0.0
+      },
+      "ca_phases_us": [
+        2.5339391231536865,
+        1.4406061172485352,
+        1.2872724533081055,
+        0.9915151596069336,
+        3.2460608510300517
+      ],
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "active_aiv": 1,
+      "trace_sha256": "76819d594c6d35a3e6d111fcd4aec299e564109eb815d5d6ffe740b8c780ea28"
+    },
+    {
+      "role": "first",
+      "shape": [
+        2,
+        512,
+        8,
+        1
+      ],
+      "chip": "Ascend950DT_9582",
+      "pred_us": 6.633095768660477,
+      "ca_us": 7.1218185452744365,
+      "rel_error": -0.06862331208062633,
+      "predicted_phases_us": {
+        "dispatch": 2.743636131286621,
+        "score_weights": 1.1050953232907552,
+        "prefix_add_write": 0.7957357936221208,
+        "bank_scores": 0.5975415576802091,
+        "weighted_norm_write": 1.3910869627807703,
+        "exposed_transfer_floor": 0.0
+      },
+      "ca_phases_us": null,
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "active_aiv": 2,
+      "trace_sha256": "2b31e415541bb3f58078e28a9eefcbf4f84bde4cb1d7cfced8f1594585103408"
+    },
+    {
+      "role": "first",
+      "shape": [
+        2,
+        512,
+        8,
+        1
+      ],
+      "chip": "Ascend950PR_957b",
+      "pred_us": 6.647756138695637,
+      "ca_us": 6.5975759057328105,
+      "rel_error": 0.0076058591336893855,
+      "predicted_phases_us": {
+        "dispatch": 2.743636131286621,
+        "score_weights": 1.1056629840938474,
+        "prefix_add_write": 0.7960911852754627,
+        "bank_scores": 0.5983109207557474,
+        "weighted_norm_write": 1.404054917283958,
+        "exposed_transfer_floor": 0.0
+      },
+      "ca_phases_us": null,
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "active_aiv": 2,
+      "trace_sha256": "2e80e2db1ef6e01d03ed28674cf5606612c7ccf63fb39b91d5ba334cc4073d2a"
+    },
+    {
+      "shape": [
+        1,
+        7168,
+        8,
+        3
+      ],
+      "chip": "Ascend950DT_9582",
+      "role": "supplemental",
+      "pred_us": 23.59347177481104,
+      "ca_us": 11.571514609269798,
+      "rel_error": 1.0389268450571372,
+      "predicted_aiv": 1,
+      "active_aiv": 1,
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "predicted_phases_us": {
+        "dispatch": 2.743636131286621,
+        "score_weights": 1.7103030303030302,
+        "prefix_add_write": 1.2993939393939393,
+        "bank_scores": 3.3972727272727274,
+        "weighted_norm_write": 14.442865946554722,
+        "exposed_transfer_floor": 0.0
+      },
+      "ca_phases_us": [
+        2.2703027725219727,
+        1.4933338165283203,
+        1.3266658782958984,
+        2.999394416809082,
+        3.4818177251145244
+      ],
+      "critical_core": "core0.veccore0",
+      "trace_sha256": "8d23be57c918c7e21ab20c5d25505e94bd47dae306c2235dc7d31592bf4b05ba"
+    },
+    {
+      "shape": [
+        1,
+        7168,
+        8,
+        3
+      ],
+      "chip": "Ascend950PR_957b",
+      "role": "supplemental",
+      "pred_us": 24.001810484462982,
+      "ca_us": 11.487879040651023,
+      "rel_error": 1.0893160869408658,
+      "predicted_aiv": 1,
+      "active_aiv": 1,
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "predicted_phases_us": {
+        "dispatch": 2.743636131286621,
+        "score_weights": 1.7182502815463196,
+        "prefix_add_write": 1.304369422540727,
+        "bank_scores": 3.4295859764453356,
+        "weighted_norm_write": 14.80596867264398,
+        "exposed_transfer_floor": 0.0
+      },
+      "ca_phases_us": [
+        2.2478787899017334,
+        1.4387879371643066,
+        1.260606288909912,
+        2.9642419815063477,
+        3.5763640431687236
+      ],
+      "critical_core": "core0.veccore0",
+      "trace_sha256": "37c75f38a63ebc2b98ef31920df66d9ec8ef7e28210c2cc5a135d13278579227"
+    },
+    {
+      "shape": [
+        2,
+        4096,
+        8,
+        2
+      ],
+      "chip": "Ascend950DT_9582",
+      "role": "supplemental",
+      "pred_us": 13.743000253981178,
+      "ca_us": 9.398182394914329,
+      "rel_error": 0.4623040580078521,
+      "predicted_aiv": 2,
+      "active_aiv": 2,
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "predicted_phases_us": {
+        "dispatch": 2.743636131286621,
+        "score_weights": 1.430976396297365,
+        "prefix_add_write": 1.0669363336531001,
+        "bank_scores": 1.7711106220078388,
+        "weighted_norm_write": 6.7303407707362535,
+        "exposed_transfer_floor": 0.0
+      },
+      "ca_phases_us": [
+        2.44303035736084,
+        1.2612123489379883,
+        1.217576026916504,
+        1.659393310546875,
+        2.816970351152122
+      ],
+      "critical_core": "core16.veccore0",
+      "trace_sha256": "663de3da21e8278cd595b26de785ecea82fac104be06037556b5fcb8d79f4396"
+    },
+    {
+      "shape": [
+        2,
+        4096,
+        8,
+        2
+      ],
+      "chip": "Ascend950PR_957b",
+      "role": "supplemental",
+      "pred_us": 13.918309936879519,
+      "ca_us": 9.00727296154946,
+      "rel_error": 0.545230170806908,
+      "predicted_aiv": 2,
+      "active_aiv": 2,
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "predicted_phases_us": {
+        "dispatch": 2.743636131286621,
+        "score_weights": 1.435517682722102,
+        "prefix_add_write": 1.069779466879836,
+        "bank_scores": 1.7834204312164517,
+        "weighted_norm_write": 6.885956224774508,
+        "exposed_transfer_floor": 0.0
+      },
+      "ca_phases_us": [
+        2.472121000289917,
+        1.2763638496398926,
+        1.0751519203186035,
+        1.6490907669067383,
+        2.5345454243943095
+      ],
+      "critical_core": "core16.veccore0",
+      "trace_sha256": "818fa88c11b2588db174f2ed54a33052e1427ec3de615d1584086592ab64bc64"
+    },
+    {
+      "shape": [
+        5,
+        2048,
+        8,
+        1
+      ],
+      "chip": "Ascend950DT_9582",
+      "role": "supplemental",
+      "pred_us": 8.482581313566563,
+      "ca_us": 7.573939326219261,
+      "rel_error": 0.11996953609092031,
+      "predicted_aiv": 5,
+      "active_aiv": 5,
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "predicted_phases_us": {
+        "dispatch": 2.743636131286621,
+        "score_weights": 1.244758640293588,
+        "prefix_add_write": 0.9119645964925405,
+        "bank_scores": 0.7209760233903707,
+        "weighted_norm_write": 2.861245922103442,
+        "exposed_transfer_floor": 0.0
+      },
+      "ca_phases_us": [
+        2.3139395713806152,
+        1.4006061553955078,
+        1.1309089660644531,
+        0.724848747253418,
+        2.0036358861252666
+      ],
+      "critical_core": "core0.veccore1",
+      "trace_sha256": "d213fe02f38c451fdde5651cc0077e187640ee9d78ea4cc55e207aa5c438fcc1"
+    },
+    {
+      "shape": [
+        5,
+        2048,
+        8,
+        1
+      ],
+      "chip": "Ascend950PR_957b",
+      "role": "supplemental",
+      "pred_us": 8.541222793707202,
+      "ca_us": 7.432727339677513,
+      "rel_error": 0.14913710719782491,
+      "predicted_aiv": 5,
+      "active_aiv": 5,
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "predicted_phases_us": {
+        "dispatch": 2.743636131286621,
+        "score_weights": 1.2470292835059564,
+        "prefix_add_write": 0.9133861631059083,
+        "bank_scores": 0.7240534756925238,
+        "weighted_norm_write": 2.9131177401161925,
+        "exposed_transfer_floor": 0.0
+      },
+      "ca_phases_us": [
+        2.3636364936828613,
+        1.257575511932373,
+        0.9715156555175781,
+        0.7199993133544922,
+        2.120000365190208
+      ],
+      "critical_core": "core16.veccore0",
+      "trace_sha256": "21366b60699e1049a3a9192aa76433429ef84183a5318c6de838d65d5d80eca2"
+    },
+    {
+      "shape": [
+        2,
+        1024,
+        8,
+        4
+      ],
+      "chip": "Ascend950DT_9582",
+      "role": "supplemental",
+      "pred_us": 10.597312266198566,
+      "ca_us": 9.17818212788552,
+      "rel_error": 0.15461995834680464,
+      "predicted_aiv": 2,
+      "active_aiv": 2,
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "predicted_phases_us": {
+        "dispatch": 2.743636131286621,
+        "score_weights": 1.1516497622916995,
+        "prefix_add_write": 0.8344787279122606,
+        "bank_scores": 2.5547455183343852,
+        "weighted_norm_write": 3.3128021263735987,
+        "exposed_transfer_floor": 0.0
+      },
+      "ca_phases_us": [
+        2.429697036743164,
+        1.1636362075805664,
+        1.1430301666259766,
+        2.709697723388672,
+        1.7321209935471416
+      ],
+      "critical_core": "core16.veccore0",
+      "trace_sha256": "96c2f8b09c6cc9e2e0effbbbb3ce355affe50549d4cb776222521b6bafee501f"
+    },
+    {
+      "shape": [
+        2,
+        1024,
+        8,
+        4
+      ],
+      "chip": "Ascend950PR_957b",
+      "role": "supplemental",
+      "pred_us": 10.670153048231679,
+      "ca_us": 8.973333599977195,
+      "rel_error": 0.1890957724182678,
+      "predicted_aiv": 2,
+      "active_aiv": 2,
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "predicted_phases_us": {
+        "dispatch": 2.743636131286621,
+        "score_weights": 1.1527850838978837,
+        "prefix_add_write": 0.8351895112189445,
+        "bank_scores": 2.560900422938692,
+        "weighted_norm_write": 3.377641898889538,
+        "exposed_transfer_floor": 0.0
+      },
+      "ca_phases_us": [
+        2.4036362171173096,
+        1.2412123680114746,
+        0.9666662216186523,
+        2.6096973419189453,
+        1.7521214513108134
+      ],
+      "critical_core": "core16.veccore0",
+      "trace_sha256": "278925e906841c680e3caa68f3b4535ec7b1b67bf26be49137f1731e668fcbef"
+    },
+    {
+      "shape": [
+        8,
+        512,
+        8,
+        2
+      ],
+      "chip": "Ascend950DT_9582",
+      "role": "supplemental",
+      "pred_us": 7.469247689199342,
+      "ca_us": 7.652121069841087,
+      "rel_error": -0.023898390913140943,
+      "predicted_aiv": 8,
+      "active_aiv": 8,
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "predicted_phases_us": {
+        "dispatch": 2.743636131286621,
+        "score_weights": 1.1050953232907552,
+        "prefix_add_write": 0.7957357936221208,
+        "bank_scores": 1.1950831153604182,
+        "weighted_norm_write": 1.6296973256394267,
+        "exposed_transfer_floor": 0.0
+      },
+      "ca_phases_us": [
+        2.541818141937256,
+        0.936363697052002,
+        1.1654548645019531,
+        1.2696971893310547,
+        1.7387871770188212
+      ],
+      "critical_core": "core0.veccore0",
+      "trace_sha256": "505d2ff7e2adfa43e907ac469a6440a3cc26cc211e3577b3c5f7e301fe238f33"
+    },
+    {
+      "shape": [
+        8,
+        512,
+        8,
+        2
+      ],
+      "chip": "Ascend950PR_957b",
+      "role": "supplemental",
+      "pred_us": 7.491161399561634,
+      "ca_us": 7.223030569963157,
+      "rel_error": 0.0371216523315705,
+      "predicted_aiv": 8,
+      "active_aiv": 8,
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "predicted_phases_us": {
+        "dispatch": 2.743636131286621,
+        "score_weights": 1.1056629840938474,
+        "prefix_add_write": 0.7960911852754627,
+        "bank_scores": 1.1966218415114949,
+        "weighted_norm_write": 1.6491492573942084,
+        "exposed_transfer_floor": 0.0
+      },
+      "ca_phases_us": [
+        2.397575855255127,
+        1.084848403930664,
+        0.9563632011413574,
+        1.2339401245117188,
+        1.55030298512429
+      ],
+      "critical_core": "core16.veccore0",
+      "trace_sha256": "1cf07ba65feb47aa5eb10eea3c7215979b52f1993387161aa91185303ae20bdd"
+    },
+    {
+      "shape": [
+        3,
+        512,
+        8,
+        1
+      ],
+      "chip": "Ascend950DT_9582",
+      "role": "supplemental",
+      "pred_us": 6.633095768660477,
+      "ca_us": 7.009697440080345,
+      "rel_error": -0.05372580979979524,
+      "predicted_aiv": 3,
+      "active_aiv": 3,
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "predicted_phases_us": {
+        "dispatch": 2.743636131286621,
+        "score_weights": 1.1050953232907552,
+        "prefix_add_write": 0.7957357936221208,
+        "bank_scores": 0.5975415576802091,
+        "weighted_norm_write": 1.3910869627807703,
+        "exposed_transfer_floor": 0.0
+      },
+      "ca_phases_us": [
+        2.2660608291625977,
+        1.225454330444336,
+        1.2272729873657227,
+        0.6527271270751953,
+        1.6381821660324931
+      ],
+      "critical_core": "core0.veccore0",
+      "trace_sha256": "4e185e68786030ee18d069246bdde778605efbe092f62d4cbcdcdd3f46a249c1"
+    },
+    {
+      "shape": [
+        3,
+        512,
+        8,
+        1
+      ],
+      "chip": "Ascend950PR_957b",
+      "role": "supplemental",
+      "pred_us": 6.6477561386956365,
+      "ca_us": 6.696969750337303,
+      "rel_error": -0.007348638783860051,
+      "predicted_aiv": 3,
+      "active_aiv": 3,
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "predicted_phases_us": {
+        "dispatch": 2.743636131286621,
+        "score_weights": 1.1056629840938474,
+        "prefix_add_write": 0.7960911852754627,
+        "bank_scores": 0.5983109207557474,
+        "weighted_norm_write": 1.404054917283958,
+        "exposed_transfer_floor": 0.0
+      },
+      "ca_phases_us": [
+        2.348484754562378,
+        1.284848690032959,
+        0.9121208190917969,
+        0.6000003814697266,
+        1.5515151051804423
+      ],
+      "critical_core": "core16.veccore0",
+      "trace_sha256": "8957dd020e93e96d58d45b788dedbe12dc1a42e23bc93607535be464e5c410dd"
+    },
+    {
+      "shape": [
+        4,
+        256,
+        8,
+        3
+      ],
+      "chip": "Ascend950DT_9582",
+      "role": "supplemental",
+      "pred_us": 7.7173968341584835,
+      "ca_us": 7.585454943589866,
+      "rel_error": 0.017394064238706708,
+      "predicted_aiv": 4,
+      "active_aiv": 4,
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "predicted_phases_us": {
+        "dispatch": 2.743636131286621,
+        "score_weights": 1.0818181037902834,
+        "prefix_add_write": 0.7763643264770508,
+        "bank_scores": 1.7309074401855467,
+        "weighted_norm_write": 1.3846708324189814,
+        "exposed_transfer_floor": 0.0
+      },
+      "ca_phases_us": [
+        2.4375758171081543,
+        0.9793939590454102,
+        0.8163633346557617,
+        1.9345455169677734,
+        1.4175763158127666
+      ],
+      "critical_core": "core16.veccore1",
+      "trace_sha256": "c318313b0c6dea45e5521f4dc485f5fd3435ea2f427d9b3240fcea1c2d2e0794"
+    },
+    {
+      "shape": [
+        4,
+        256,
+        8,
+        3
+      ],
+      "chip": "Ascend950PR_957b",
+      "role": "supplemental",
+      "pred_us": 7.731980359503195,
+      "ca_us": 7.367878916673362,
+      "rel_error": 0.04941740315599907,
+      "predicted_aiv": 4,
+      "active_aiv": 4,
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "predicted_phases_us": {
+        "dispatch": 2.743636131286621,
+        "score_weights": 1.0821019341918292,
+        "prefix_add_write": 0.7765420223037218,
+        "bank_scores": 1.7320614847988538,
+        "weighted_norm_write": 1.3976387869221691,
+        "exposed_transfer_floor": 0.0
+      },
+      "ca_phases_us": [
+        2.387878894805908,
+        0.9696969985961914,
+        0.6981821060180664,
+        1.8678779602050781,
+        1.4442429570481181
+      ],
+      "critical_core": "core16.veccore1",
+      "trace_sha256": "e7b046f12150da9e76409230abc8823956c88b3f6593eac6c28fdb57b491b651"
+    },
+    {
+      "shape": [
+        1,
+        256,
+        8,
+        2
+      ],
+      "chip": "Ascend950DT_9582",
+      "role": "supplemental",
+      "pred_us": 7.02112250600064,
+      "ca_us": 7.003636839799583,
+      "rel_error": 0.0024966551808756066,
+      "predicted_aiv": 1,
+      "active_aiv": 1,
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "predicted_phases_us": {
+        "dispatch": 2.743636131286621,
+        "score_weights": 1.0818181037902834,
+        "prefix_add_write": 0.7763643264770508,
+        "bank_scores": 1.1539382934570312,
+        "weighted_norm_write": 1.2653656509896531,
+        "exposed_transfer_floor": 0.0
+      },
+      "ca_phases_us": [
+        2.5648484230041504,
+        1.0818181037902832,
+        0.9193944931030273,
+        1.2521209716796875,
+        1.1854548482224345
+      ],
+      "critical_core": "core0.veccore0",
+      "trace_sha256": "8c961e5cfb0d35fd5b7ae6991e5d881a769f310f8294d1619c84d5bfac55e096"
+    },
+    {
+      "shape": [
+        1,
+        256,
+        8,
+        2
+      ],
+      "chip": "Ascend950PR_957b",
+      "role": "supplemental",
+      "pred_us": 7.032079361181785,
+      "ca_us": 6.5830307034775615,
+      "rel_error": 0.06821305838160674,
+      "predicted_aiv": 1,
+      "active_aiv": 1,
+      "kernel": "AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf_40020",
+      "predicted_phases_us": {
+        "dispatch": 2.743636131286621,
+        "score_weights": 1.0821019341918292,
+        "prefix_add_write": 0.7765420223037218,
+        "bank_scores": 1.1547076565325693,
+        "weighted_norm_write": 1.275091616867044,
+        "exposed_transfer_floor": 0.0
+      },
+      "ca_phases_us": [
+        2.4806060791015625,
+        0.9896969795227051,
+        0.7278785705566406,
+        1.2018184661865234,
+        1.1830306081101298
+      ],
+      "critical_core": "core0.veccore0",
+      "trace_sha256": "00135b3264e196d40858e2039061c10f9a5c1dc691625f490a002e24af476107"
+    }
+  ],
+  "pairs": [
+    {
+      "role": "first",
+      "shape": [
+        1,
+        7168,
+        8,
+        1
+      ],
+      "dt_us": 14.647533129920179,
+      "dt_ca_us": 9.504848721437156,
+      "pr_us": 14.852778310412422,
+      "pr_ca_us": 9.499393704347312,
+      "speed": 0.9861813610758361,
+      "ca_speed": 1.000574248974158,
+      "future_us": 13.418300037307233
+    },
+    {
+      "role": "first",
+      "shape": [
+        2,
+        512,
+        8,
+        1
+      ],
+      "dt_us": 6.633095768660477,
+      "dt_ca_us": 7.1218185452744365,
+      "pr_us": 6.647756138695637,
+      "pr_ca_us": 6.5975759057328105,
+      "speed": 0.9977946889552965,
+      "ca_speed": 1.0794598875453782,
+      "future_us": 6.079723121382608
+    },
+    {
+      "shape": [
+        1,
+        7168,
+        8,
+        3
+      ],
+      "role": "supplemental",
+      "dt_us": 23.59347177481104,
+      "dt_ca_us": 11.571514609269798,
+      "pr_us": 24.001810484462982,
+      "pr_ca_us": 11.487879040651023,
+      "speed": 0.982987170492148,
+      "ca_speed": 1.007280331584518,
+      "future_us": 21.610228675802315
+    },
+    {
+      "shape": [
+        2,
+        4096,
+        8,
+        2
+      ],
+      "role": "supplemental",
+      "dt_us": 13.743000253981178,
+      "dt_ca_us": 9.398182394914329,
+      "pr_us": 13.918309936879519,
+      "pr_ca_us": 9.00727296154946,
+      "speed": 0.9874043843186865,
+      "ca_speed": 1.0433993102056078,
+      "future_us": 12.590400009132061
+    },
+    {
+      "shape": [
+        5,
+        2048,
+        8,
+        1
+      ],
+      "role": "supplemental",
+      "dt_us": 8.482581313566563,
+      "dt_ca_us": 7.573939326219261,
+      "pr_us": 8.541222793707202,
+      "pr_ca_us": 7.432727339677513,
+      "speed": 0.9931342992031721,
+      "ca_speed": 1.0189986770788602,
+      "future_us": 7.773240871211368
+    },
+    {
+      "shape": [
+        2,
+        1024,
+        8,
+        4
+      ],
+      "role": "supplemental",
+      "dt_us": 10.597312266198566,
+      "dt_ca_us": 9.17818212788552,
+      "pr_us": 10.670153048231679,
+      "pr_ca_us": 8.973333599977195,
+      "speed": 0.9931734079442108,
+      "ca_speed": 1.0228285871271794,
+      "future_us": 9.71114890914365
+    },
+    {
+      "shape": [
+        8,
+        512,
+        8,
+        2
+      ],
+      "role": "supplemental",
+      "dt_us": 7.469247689199342,
+      "dt_ca_us": 7.652121069841087,
+      "pr_us": 7.491161399561634,
+      "pr_ca_us": 7.223030569963157,
+      "speed": 0.9970747245729381,
+      "ca_speed": 1.0594058817447478,
+      "future_us": 6.845891603805561
+    },
+    {
+      "shape": [
+        3,
+        512,
+        8,
+        1
+      ],
+      "role": "supplemental",
+      "dt_us": 6.633095768660477,
+      "dt_ca_us": 7.009697440080345,
+      "pr_us": 6.6477561386956365,
+      "pr_ca_us": 6.696969750337303,
+      "speed": 0.9977946889552967,
+      "ca_speed": 1.0466968944763848,
+      "future_us": 6.079723121382608
+    },
+    {
+      "shape": [
+        4,
+        256,
+        8,
+        3
+      ],
+      "role": "supplemental",
+      "dt_us": 7.7173968341584835,
+      "dt_ca_us": 7.585454943589866,
+      "pr_us": 7.731980359503195,
+      "pr_ca_us": 7.367878916673362,
+      "speed": 0.9981138693236866,
+      "ca_speed": 1.0295303477944153,
+      "future_us": 7.073668986629521
+    },
+    {
+      "shape": [
+        1,
+        256,
+        8,
+        2
+      ],
+      "role": "supplemental",
+      "dt_us": 7.02112250600064,
+      "dt_ca_us": 7.003636839799583,
+      "pr_us": 7.032079361181785,
+      "pr_ca_us": 6.5830307034775615,
+      "speed": 0.99844187549395,
+      "ca_speed": 1.0638924767736282,
+      "future_us": 6.435569574853668
+    }
+  ],
+  "cost": {
+    "launches": 27,
+    "eligible": 22,
+    "raw_mib": 1509.0903768539429,
+    "max_single_raw_mib": 231.98958206176758,
+    "simulator_wall_s_sum": 2518.5834186701104,
+    "active_wall_s_union": 1332.064088,
+    "known_cpu_s_lower_bound": 24601.24,
+    "cpu_missing": 5
+  },
+  "supplemental_cost": {
+    "launches": 16,
+    "eligible": 16,
+    "raw_mib": 881.4550619125366,
+    "max_single_raw_mib": 91.45697212219238,
+    "simulator_wall_s_sum": 1161.9307153101545,
+    "active_wall_s_union": 584.8053540000001,
+    "known_cpu_s_lower_bound": 17253.350000000002,
+    "cpu_missing": 0
+  },
+  "kimi_tail": [
+    {
+      "shape": [
+        1,
+        7168,
+        8,
+        1
+      ],
+      "chip": "Ascend950DT_9582",
+      "core": "core0.veccore0",
+      "ca_tail_us": 3.1684851674363017,
+      "visible_queue_union_us": {
+        "SIMD": 2.621817566570826,
+        "SCALAR": 0.0,
+        "MTE2": 0.47515150904655457,
+        "MTE3": 0.45151515305042267
+      }
+    },
+    {
+      "shape": [
+        1,
+        7168,
+        8,
+        1
+      ],
+      "chip": "Ascend950PR_957b",
+      "core": "core0.veccore0",
+      "ca_tail_us": 3.2460608510300517,
+      "visible_queue_union_us": {
+        "SIMD": 2.6199998579686508,
+        "SCALAR": 0.0,
+        "MTE2": 0.44363635778427124,
+        "MTE3": 0.5309090912342072
+      }
+    },
+    {
+      "shape": [
+        1,
+        7168,
+        8,
+        3
+      ],
+      "chip": "Ascend950DT_9582",
+      "core": "core0.veccore0",
+      "ca_tail_us": 3.4818177251145244,
+      "visible_queue_union_us": {
+        "SIMD": 2.93575673957821,
+        "SCALAR": 0.0,
+        "MTE2": 0.469696968793869,
+        "MTE3": 0.43878787755966187
+      }
+    },
+    {
+      "shape": [
+        1,
+        7168,
+        8,
+        3
+      ],
+      "chip": "Ascend950PR_957b",
+      "core": "core0.veccore0",
+      "ca_tail_us": 3.5763640431687236,
+      "visible_queue_union_us": {
+        "SIMD": 2.9357575210742652,
+        "SCALAR": 0.0,
+        "MTE2": 0.4424242377281189,
+        "MTE3": 0.5333333313465118
+      }
+    }
+  ]
+}
