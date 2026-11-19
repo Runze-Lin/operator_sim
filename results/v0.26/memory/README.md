@@ -17,7 +17,7 @@
 
 用 $t_1=t_{arrival}+t_{control}$ 表示第一条读的发起时间，$t_2=t_1+c/(1000f)$ 表示第二条。其中 $f$ 是本芯片 GHz 频率，$c$ 是同一核指令前端在两个空闲 UB 输入槽之间发出下一条 MTE2 的周期数。950DT 的 Flash B8×32Ki 末核测得 91 周期。整个传输需要几微秒时，核仍能很早发出下一笔请求。热身结束后，槽位要等上一次计算消费或写回退休，不能把这个两笔之间的间隔重复乘 57 次。
 
-其他 9 个 DT/PR 旧设备窗也有 91 个周期的发起间隔，第二笔的**绝对发起时刻**与 CA 最大相差 0.211 µs，来自首发的偏移。Flash 与 Pro 上栏按稳态服务均摊原本给出的 4.101 µs 是带宽预算间隔。外推沿用同一双缓冲指令实现，可在芯片详情覆写 `cast_initial_read_pair_cycles`，填 null 则只报告首笔。`estimate` 的 `projection["timing_diagnostics"]["initial_read_issue_us"]` 返回有依据的一到两个标记。整窗仍包含后续全部读写、换槽、共享链路和尾部退休。[9 个回放和 1 个参数来源](initial-issues-replay.json) · [新形的事前发起预测](initial-issues-freeze.json)
+其他 9 个 DT/PR 旧设备窗也有 91 个周期的发起间隔，第二笔的**绝对发起时刻**与 CA 最大相差 0.211 µs，来自首发的偏移。Flash 与 Pro 上栏按稳态服务均摊原本给出的 4.101 µs 是带宽预算间隔。外推沿用同一双缓冲指令实现，可在芯片详情覆写 `cast_initial_read_pair_cycles`，填 null 则只报告首笔。`estimate` 的 `projection["timing_diagnostics"]["initial_read_issue_us"]` 返回有依据的一到两个标记。整窗仍包含后续全部读写、换槽、共享链路和尾部退休。若自定义目标的前端特别慢，第二笔发起加上第二块读、转换和写的最低服务时间会成为额外的关键路径下界。[9 个回放和 1 个参数来源](initial-issues-replay.json) · [新形的事前发起预测](initial-issues-freeze.json)
 
 ### B8×256Ki 的 Pro
 

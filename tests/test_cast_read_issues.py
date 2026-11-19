@@ -31,3 +31,11 @@ class CastReadIssues(unittest.TestCase):
                 self.assertEqual(len(issues), 1)
             else:
                 self.assertAlmostEqual((issues[1]-issues[0])*1000*chip.frequency_ghz, cycles)
+
+    def test_slow_frontend_cannot_finish_before_its_second_read(self):
+        chip = load_chip('Ascend950DT_9582')
+        slow = replace(chip, details={**chip.details, 'cast_initial_read_pair_cycles': 500000})
+        us, diag = self.run_case([1048576, 64], slow)
+        self.assertGreater(us, diag['initial_read_issue_us'][1])
+        self.assertGreater(diag['stages_us']['exposed_initial_read'], 0)
+        self.assertAlmostEqual(sum(diag['stages_us'].values()), us)

@@ -70,6 +70,12 @@ def shape_table(data):
           '### 保留未通过的数值检查','',
           'T=257 与 T=248 都在两种 SKU 上得到相同的设备数组。T=257 的 Aqk 在 [head=0,row=243,col=44] 偏离双精度发布算法参考 5.2452×10⁻⁶，允许 3.1325×10⁻⁶。对 T=248，Aqk 全通过，而 Akk 在 [0,242,40] 偏离 9.5367×10⁻⁶，允许 6.2915×10⁻⁶。attention 和最终状态在四次调用中均通过。原验收合同对这四个 shape×SKU 的耗时均记 N/A。双端分别确认了导出的每个 BF16 元素和同步状态。','',
           '[T=257 实际坐标](failed-257.json) · [T=248 实际坐标](failed-248.json) · [按正式设备内核的中间精度复现](numeric-audit.md) · [冻结、回执与全量评估](../evaluation.json)']
+    secondary=OUT/'kda/numeric-audit-prospective.json'
+    if secondary.exists():
+        for v in read(secondary).values():
+            assert not v['official_qualified']
+            assert all(v['groups'][key]['device']['different_bits']==0 for key in ('aqk','akk'))
+        tbl+=['','额外的 T=259/H=2 在采集前已锁定两套参考数组。两卡各 66,304 个 Aqk/Akk 元素与按设备执行顺序计算的参考逐位相同，原算法参考在两个 SKU 上均有一个 Aqk 元素超过容差，符合事前预测。该实验只验证中间精度，按原约定不计入耗时 WAPE。〔[双端逐位结果与 SHA](numeric-audit-prospective.json)〕']
     (OUT/'kda/README.md').write_text('\n'.join(tbl)+'\n')
 
 
@@ -83,6 +89,7 @@ def main():
         'role':'Separate mixed-precision consistency check. Preserve the registered FP64 reference outcome.',
         'original_failures':k['failed'], 'controls':str((OUT/'kda/numeric-audit-control.json').relative_to(ROOT)),
         'forward_registration':str((OUT/'kda/numeric-audit-freeze.json').relative_to(ROOT)),
+        'forward_result':str((OUT/'kda/numeric-audit-prospective.json').relative_to(ROOT)) if (OUT/'kda/numeric-audit-prospective.json').exists() else None,
         'official_prospective':{p.name:{'qualified':read(p)['qualified'],'counts':read(p)['output_groups']}
                                 for p in sorted((OUT/'kda').glob('numeric26-*-official.json'))}}
     active['warm_schedule_status']=str((OUT/'post/warm-schedule.md').relative_to(ROOT))

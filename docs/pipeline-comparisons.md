@@ -246,3 +246,10 @@ python development/validation/sku20/fa_pages.py --replot
 python development/validation/sku20/fa_pages.py --dt128k --replot
 python development/validation/prefill_zoom24/plot.py
 ```
+
+从仓库根目录重画本页新加入的长 prefill 和四块 KDA 图，只需带 Matplotlib 的 Python 环境及已经提交的分块数据。第一条生成 Flash 和 Pro 的首四块，第二条生成 DT、PR 两张四块 FwdH。
+
+```sh
+python development/validation/cross26/prefill.py replay
+python development/validation/cross26/kda_picture.py
+```

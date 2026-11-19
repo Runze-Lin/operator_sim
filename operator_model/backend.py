@@ -121,6 +121,19 @@ def _price_resource(op, shape, target, call, dtype):
         second = first + spacing/(1000*target.frequency_ghz) if paired and spacing is not None else None
         diag['initial_read_issue_us'] = [first] if second is None else [first, second]
         diag['initial_read_pair_cycles'] = spacing if paired else None
+        if second is not None:
+            # The second tile must still pass through read, convert and write.
+            # Local byte costs are in cycles/KiB. Expose only service beyond
+            # the critical path already priced by the streaming model.
+            plan = diag['target_plan']
+            full = plan['ub_tile_elements']
+            count = min(full, plan['busy_core_elements'] - full)
+            dma_cycles = count * (2*diag['read_cycles_per_kib'] + 4*diag['write_cycles_per_kib']) / 1024
+            convert = stages['vector'] * ceil(count/64) / ceil(full/64)
+            finish = second + dma_cycles/(1000*target.frequency_ghz) + convert
+            if finish > us:
+                stages['exposed_initial_read'] = finish - us
+                us = finish
     elif op == 'moe_gating_top_k':
         if call:
             raise ValueError('Router expects the fixed sigmoid/bias, one-group contract')

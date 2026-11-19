@@ -28,3 +28,5 @@ wheel 的 arch35 `StageV0Vf` 对每步 gate 在 FP32 内依次做加偏置、乘
 在读取 [193,2] 的实际辅助数组之前，按复用的数值合同封存了完整带两个 head 的参考函数，以及该控制与拟测 [259,2] 两套参考数组的 SHA。T193 每端的 Aqk/Akk 各 24,704 元素，设备精度参考逐位全等。原发布参考只有一个 Akk 值与实际不同，仍在原容差内。[冻结时间与完整数组指纹](numeric-audit-freeze.json) · [旧合格窗的独立 CPU 检查](numeric-audit-control.json)
 
 T259/H2 则在新 CA 之前就产生了可检验的预期：两套参考的 Aqk 有六个 BF16 不同，其中一个超过原容限；Akk 有五个不同，全部在容限内。该预测已经封存为 `b514c87a15afc4bf4025dd752a435c9f2100909c7bb3a77b36417eb2a46d6e64`。DT、PR 的两次原库调用排在已有 T192/H4 之后，仍使用同一单槽锁，每端最多 12 分钟、3 GiB。正式校验仍由原 host 对四组输出执行；离线精度一致性另打分。两端回执登记为 `numeric26-*-259-2-official.json`，精度一致性登记为 `numeric-audit-prospective.json`。[采集进度](numeric-audit-state.json)
+
+**前向验证已完成。** T259/H2 的 950DT、950PR 均得到预先登记的结果：每端 Aqk 与 Akk 各 33,152 个 BF16 值逐位匹配中间精度参考；两端相对原发布算法参考的 Aqk 都有一个值超过容差，Akk 全部在容差内。attention/最终状态均通过。原计时资格仍为 N/A。[两套参考的实际偏差、逐位计数及完整 SHA](numeric-audit-prospective.json)
