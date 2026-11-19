@@ -1,0 +1,100 @@
+{
+  "utc": "2026-11-19T04:03:59.642800+00:00",
+  "expected_pairs_by_op": {
+    "matmul": 10,
+    "quant": 10,
+    "fa": 10,
+    "mhc": 10,
+    "mhc_pre": 10,
+    "moe_ffn": 10,
+    "grouped_matmul_swiglu_quant_v2": 10,
+    "gmm2": 10,
+    "mhc_pre_sinkhorn": 10,
+    "lightning_indexer": 10,
+    "rmsnorm": 10,
+    "addmm": 10,
+    "mhc_post": 10,
+    "mhc_sinkhorn": 10,
+    "kda_recurrent": 10
+  },
+  "qualified_pairs_by_op": {
+    "mhc": 10,
+    "mhc_pre": 10,
+    "moe_ffn": 10,
+    "grouped_matmul_swiglu_quant_v2": 10,
+    "gmm2": 10,
+    "mhc_pre_sinkhorn": 10,
+    "lightning_indexer": 10,
+    "rmsnorm": 10,
+    "addmm": 10,
+    "mhc_post": 10,
+    "mhc_sinkhorn": 10,
+    "kda_recurrent": 10,
+    "matmul": 10,
+    "quant": 10,
+    "fa": 10
+  },
+  "gaps_excluding_structural_chunk": {},
+  "qualified_pairs": 150,
+  "matching_backend_pairs": 39,
+  "fresh_DT_controls_logical_rows": 12,
+  "failed_attempts": 7,
+  "frozen_prediction_drift_count": 0,
+  "registration": [
+    {
+      "group": "core",
+      "frozen_jobs": 30,
+      "freeze_sha256": "d976ece1cac38f9880ed1570a0e79931b809cf6c5168c9d9801d94bf21dca764"
+    },
+    {
+      "group": "extension",
+      "frozen_jobs": 91,
+      "freeze_sha256": "c075e43a295c103618c387c38485a06a618be412afec63102238b62313678fa1"
+    }
+  ],
+  "overall": {
+    "physical_attempts": 161,
+    "qualified_attempts": 154,
+    "process_wall_s_sum": 17219.92422481021,
+    "calendar_span_s_including_inter_attempt_gaps": 2542.222037,
+    "cpu_s_accounted_lower_bound": 295975.18,
+    "cpu_accounting_missing_attempts": 7,
+    "raw_bytes_at_process_exit": 26192741349,
+    "failed_attempt_wall_s_sum": 1522.0214423700236,
+    "failed_attempt_raw_bytes": 236971586
+  },
+  "by_group": {
+    "extension": {
+      "physical_attempts": 106,
+      "qualified_attempts": 99,
+      "process_wall_s_sum": 11145.924398140516,
+      "calendar_span_s_including_inter_attempt_gaps": 2542.222037,
+      "cpu_s_accounted_lower_bound": 178497.79999999996,
+      "cpu_accounting_missing_attempts": 7,
+      "raw_bytes_at_process_exit": 16812901507,
+      "failed_attempt_wall_s_sum": 1522.0214423700236,
+      "failed_attempt_raw_bytes": 236971586
+    },
+    "core": {
+      "physical_attempts": 55,
+      "qualified_attempts": 55,
+      "process_wall_s_sum": 6073.999826669693,
+      "calendar_span_s_including_inter_attempt_gaps": 2332.924086,
+      "cpu_s_accounted_lower_bound": 117477.38000000003,
+      "cpu_accounting_missing_attempts": 0,
+      "raw_bytes_at_process_exit": 9379839842,
+      "failed_attempt_wall_s_sum": 0,
+      "failed_attempt_raw_bytes": 0
+    }
+  },
+  "file_sha256": {
+    "all-costs.json": "31405ae6f36e6d22495c9c0d805cd40c182791525891c2fe600c2ba778a87ff5",
+    "pairs.json": "cc6ca4923c08033bdcb14cd03c507f08c6b6af17b86fd081a2f710d92349fb8d",
+    "rejections.json": "5e4ab26ce9572a18422dfaed3a80042b762506840bb1611b616e517cd6fe0e19",
+    "records.json": "42d8b0655e1989d0c697adffeecccf81a5d69728a285ce359698c3fd7a56b0a7",
+    "dt-control-comparison.json": "024127fd1f561cdca35023474f589293d3fc9370ce5508524e5f5f1ff75d3810",
+    "campaign-mmad.json": "7e1a91924a39eda2e23c6f1efd6e55fd011dcb46bc81f7855f3672be3d10ec29"
+  },
+  "chunk_status": "diagnostic attempted on PR; no qualified timing on failure",
+  "capture_scope": "Physical attempt totals include new DT controls and retries, excluding reused historical CA."
+}

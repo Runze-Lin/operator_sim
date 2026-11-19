@@ -1,0 +1,128 @@
+{
+  "version": "0.17.0",
+  "import_ms": 39.20465,
+  "overall": {
+    "n": 453,
+    "min_ms": 0.06782,
+    "median_ms": 0.18282,
+    "p95_ms": 0.56917,
+    "max_ms": 3.63178
+  },
+  "per_op": {
+    "matmul": {
+      "n": 30,
+      "min_ms": 0.14772,
+      "median_ms": 0.354205,
+      "p95_ms": 0.61478,
+      "max_ms": 3.63178
+    },
+    "quant": {
+      "n": 30,
+      "min_ms": 0.07175,
+      "median_ms": 0.11803,
+      "p95_ms": 0.31103,
+      "max_ms": 0.40236
+    },
+    "fa": {
+      "n": 30,
+      "min_ms": 0.06782,
+      "median_ms": 0.088665,
+      "p95_ms": 0.11083,
+      "max_ms": 0.3765
+    },
+    "mhc": {
+      "n": 30,
+      "min_ms": 0.29376,
+      "median_ms": 0.5647150000000001,
+      "p95_ms": 0.66266,
+      "max_ms": 3.36265
+    },
+    "mhc_pre": {
+      "n": 30,
+      "min_ms": 0.1262,
+      "median_ms": 0.249385,
+      "p95_ms": 0.2852,
+      "max_ms": 0.30957
+    },
+    "moe_ffn": {
+      "n": 30,
+      "min_ms": 0.27398,
+      "median_ms": 0.489275,
+      "p95_ms": 0.53997,
+      "max_ms": 1.23281
+    },
+    "grouped_matmul_swiglu_quant_v2": {
+      "n": 30,
+      "min_ms": 0.16176,
+      "median_ms": 0.31233,
+      "p95_ms": 0.36359,
+      "max_ms": 0.38701
+    },
+    "gmm2": {
+      "n": 30,
+      "min_ms": 0.09109,
+      "median_ms": 0.18251499999999998,
+      "p95_ms": 0.21959,
+      "max_ms": 0.25898
+    },
+    "mhc_pre_sinkhorn": {
+      "n": 30,
+      "min_ms": 0.32819,
+      "median_ms": 0.41109,
+      "p95_ms": 0.45488,
+      "max_ms": 0.46907
+    },
+    "lightning_indexer": {
+      "n": 30,
+      "min_ms": 0.2791,
+      "median_ms": 0.4328,
+      "p95_ms": 0.48742,
+      "max_ms": 0.51679
+    },
+    "rmsnorm": {
+      "n": 30,
+      "min_ms": 0.10027,
+      "median_ms": 0.12575,
+      "p95_ms": 0.16882,
+      "max_ms": 2.39343
+    },
+    "addmm": {
+      "n": 30,
+      "min_ms": 0.08291,
+      "median_ms": 0.101495,
+      "p95_ms": 0.13336,
+      "max_ms": 2.95382
+    },
+    "mhc_post": {
+      "n": 30,
+      "min_ms": 0.14626,
+      "median_ms": 0.171005,
+      "p95_ms": 0.20176,
+      "max_ms": 1.0731
+    },
+    "mhc_sinkhorn": {
+      "n": 30,
+      "min_ms": 0.11442,
+      "median_ms": 0.143065,
+      "p95_ms": 0.16406,
+      "max_ms": 0.45733
+    },
+    "kda_recurrent": {
+      "n": 30,
+      "min_ms": 0.14816,
+      "median_ms": 0.166235,
+      "p95_ms": 0.20145,
+      "max_ms": 0.45038
+    },
+    "kda_chunk": {
+      "n": 3,
+      "min_ms": 0.21298,
+      "median_ms": 0.24822,
+      "p95_ms": 0.24822,
+      "max_ms": 0.90279
+    }
+  },
+  "protocol": "Single resident interpreter, one call per frozen operator/shape and chip, includes first calls and chip/profile loading. Package import reported separately. No CANN, CA or GPU call.",
+  "environment": "3.12.16 (main, Oct 26 2026, 11:41:19) [GCC 15.3.0]",
+  "matches_freeze_within_relative_1e_12": true
+}

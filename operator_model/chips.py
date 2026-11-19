@@ -8,7 +8,7 @@ from pathlib import Path
 from types import MappingProxyType
 
 REFERENCE_NAME = 'Ascend950DT_9582'
-_BUILTINS = (REFERENCE_NAME, 'Ascend950PR_957b')
+_BUILTINS = (REFERENCE_NAME, 'Ascend950PR_957b', 'Ascend970DT')
 _DIRECTORY = Path(__file__).resolve().parents[1] / 'configs/chips'
 _BITS = {'32', '16', '8', '4'}
 _DETAILS = {'ub_bytes', 'l1_bytes', 'l2_bytes', 'l0a_bytes', 'l0b_bytes', 'l0c_bytes',
@@ -18,7 +18,8 @@ _DETAILS = {'ub_bytes', 'l1_bytes', 'l2_bytes', 'l0a_bytes', 'l0b_bytes', 'l0c_b
             'matmul_mmad_latency_cycles', 'matmul_mmad_ii_cycles', 'matmul_l0_latency_cycles',
             'matmul_drain_cycles', 'quant_launch_cycles', 'quant_arrival_log2_cycles',
             'quant_read_latency_cycles', 'quant_vf_dispatch_cycles', 'quant_vf_dependency_cycles',
-            'quant_write_latency_cycles', 'quant_end_cycles'}
+            'quant_write_latency_cycles', 'quant_end_cycles', 'fa_aiv_per_aic',
+            'matmul_hbm_efficiency', 'matmul_l2_efficiency', 'matmul_output_retained_fraction'}
 
 
 def _number(x, label, *, integer=False):
@@ -59,7 +60,15 @@ class ChipConfig:
             raise ValueError('Unknown chip detail field')
         for field, value in self.details.items():
             if value is not None:
-                _number(value, field, integer=field.endswith('_bytes'))
+                if field == 'matmul_output_retained_fraction':
+                    if type(value) not in (int, float) or not 0 <= value <= 1:
+                        raise ValueError(f'{field} must be in [0,1]')
+                else:
+                    _number(value, field, integer=field.endswith('_bytes') or field == 'fa_aiv_per_aic')
+                if field.endswith('_efficiency') and value > 1:
+                    raise ValueError(f'{field} must be in (0,1]')
+                if field == 'fa_aiv_per_aic' and value > 2:
+                    raise ValueError('FA supports at most two AIV per AIC')
         if not isinstance(self.sources, Mapping) or any(type(k) is not str or type(v) is not str
                                                         for k, v in self.sources.items()):
             raise ValueError('sources must map names to source descriptions')

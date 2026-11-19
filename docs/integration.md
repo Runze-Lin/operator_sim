@@ -32,7 +32,7 @@ print(result.latency_us, result.status)
 
 ## 维护芯片配置
 
-`load_chip("Ascend950DT_9582")` 与 `load_chip("Ascend950PR_957b")` 读取随包发布的常量。自定义芯片传 JSON 路径或同结构的 Python 字典。建议每个系统情景只载入一次，复用返回的只读 `ChipConfig`。运行时无需安装 CANN、读取芯片信息或执行 profiler。
+`load_chip("Ascend950DT_9582")`、`load_chip("Ascend950PR_957b")` 读取随包发布的 950 配置，`load_chip("Ascend970DT")` 读取 120 AIC / 120 AIV 的架构情景。自定义芯片传 JSON 路径或同结构的 Python 字典。建议每个系统情景只载入一次，复用返回的只读 `ChipConfig`。运行时无需安装 CANN、读取芯片信息或执行 profiler。
 
 | JSON 字段 | 单位与含义 |
 |---|---|
@@ -41,15 +41,17 @@ print(result.latency_us, result.status)
 | `cube_cores`、`vector_cores` | 此调度域的 Cube、Vector 核数。双 die 设备的核数、峰值和带宽需取同一范围 |
 | `cube_tops`、`vector_tops` | 两张表各有字符串键 `32`、`16`、`8`、`4`，每项是该单元全体核的稠密峰值，单位为 $10^{12}$ 次标量操作/秒，FMA=2。位宽以该算子的计算格式解释。无法确定的项填 `null`。如果仅有整卡矩阵乘算力，将其填入 Cube 表，Vector 对应位置填 `null` |
 | `hbm_capacity_gb`、`hbm_bandwidth_gbs` | 设备外存容量（十进制 GB）和总带宽（十进制 GB/s）。字段名沿用 HBM，PR 的 CA 外存类型另有记录；容量供系统层放置张量 |
-| `details` | 可选的 `ub_bytes`、`l1_bytes`、`l2_bytes`、`l0{a,b,c}_bytes`，以及 `l2_bandwidth_gbs`（整片）、`mte1_bandwidth_gbs`、`mte2_bandwidth_gbs`、`mte3_bandwidth_gbs`（每核）。省略的细项继承 950DT 有记录的值，`chip.inherited_fields` 列出来源。显式 `null` 保留未知。资源法可直接使用目标端口带宽，可按算子覆盖发起、等待、局部有效带宽等参数；缺少细节时用 DT 阶段测量的默认值。该类模型默认值记录在各算子参数表中，独立于芯片字段继承清单。其余路线的相对带宽投影需要两端同口径数据 |
+| `details` | 可选的 `ub_bytes`、`l1_bytes`、`l2_bytes`、`l0{a,b,c}_bytes`，以及 `l2_bandwidth_gbs`（整片）、`mte1_bandwidth_gbs`、`mte2_bandwidth_gbs`、`mte3_bandwidth_gbs`（每核）。省略的细项继承 950DT 有记录的值，`chip.inherited_fields` 列出来源。显式 `null` 保留该字段的未知状态，算子可能继续使用模型缺省值。资源法可直接使用目标端口带宽，可按算子覆盖发起、等待、局部有效带宽等参数；缺少细节时用 DT 阶段测量的默认值。该类模型默认值记录在各算子参数表中，独立于芯片字段继承清单。其余路线的相对带宽投影需要两端同口径数据 |
 | `sources` | 可选，字符串到字符串的来源/假设说明 |
+
+仅有芯片宏观规格时，保持未知细项为空并记录继承来源。970 的 288 GB、14.4 TB/s 与 200 MB、30 TB/s L2 都按十进制解释；算法假设每个忙 AIC 最多配 1 个 AIV（`details.fa_aiv_per_aic=1`），配置中已计入 Vector 双发射。直接使用给定的 TOP/s，避免在调用方再次乘二。[970 全部参数及来源](../configs/chips/Ascend970DT.json)
 
 例如将仓库里的示例复制成自己的 `960.json`、`970.json`、`980.json`，用各自的参数替换。示例数值仅用于演示。在 CLI 可直接运行 `operator-sim --op fa --shape 9 32768 64 1 1 --dtype bf16 --chip configs/chips/scenario-example.json`。[完整示例](../configs/chips/scenario-example.json) · [DT 配置及来源](../configs/chips/Ascend950DT_9582.json) · [PR 配置及来源](../configs/chips/Ascend950PR_957b.json)
 
 ```python
 from operator_model import load_chip, estimate
 
-chip = load_chip("960.json")
+chip = load_chip("Ascend970DT")
 event = estimate("fa", (9, 32768, 64, 1, 1), chip=chip, dtype="bf16")
 if event.status in ("estimated", "extrapolated"):
     duration_s = event.latency_us * 1e-6
@@ -90,7 +92,7 @@ def duration_seconds(op, local_shape, attrs, roofline_us, soc="Ascend950DT_9582"
 | 返回状态 | 含义 | latency_us |
 |---|---|---|
 | estimated | 当前模型接受这次调用的属性并给出设备时间估计。新 shape 可能没有逐点 CA；适用范围和独立误差见校准报告。 | µs |
-| extrapolated | 目标芯片与参考配置不同，或已显式标记的 shape 外推，例如 KV 超过已完整验证的 128k 的普通 FA，或 T>256 的 mHC 拆分链兼容路径。 | µs |
+| extrapolated | 目标芯片与参考配置不同，或已显式标记的 shape 外推，例如 KV 超过已完整验证的 128k 的 DT 参考 FA，或 T>256 的 mHC 拆分链兼容路径；显式资源法在 DT 上也返回此状态。 | µs |
 | unsupported | 算子名、目标 SoC、shape 或调用属性未被该路线接受。 | None |
 | unavailable | 有结构模型，缺少可信的完整耗时；例如 KDA chunk。 | None |
 
@@ -102,15 +104,15 @@ def duration_seconds(op, local_shape, attrs, roofline_us, soc="Ascend950DT_9582"
 
 | op | 每卡 shape | 关键合同 |
 |---|---|---|
-| quant | (R,C) | dynamicMXquant，BF16 输入、block32 |
-| rmsnorm | (R,C) | BF16，输出含 rstd |
-| matmul、addmm | (M,N,K) | BF16；Addmm 的 bias=[N] 且 α=β=1 |
-| fa | (Q,KV,D,B,H) | 普通非因果 SBH；Q 是本次校验长度，H 是本卡头数 |
-| lightning_indexer | (B,Q,L,G,D) | BSND，G=8、D=128、top-512 |
-| mhc_pre、mhc_post、mhc_pre_sinkhorn、mhc | (T,N,D) | N=4；mhc 代表 Pre、Sinkhorn、Post 三段，外部层单独调度 |
-| mhc_sinkhorn | (T,N) | N=4，`num_iters` 为实际迭代数 |
-| kda_recurrent、kda_chunk | (B,S,Hq,Hv,K,V) | 分别为递推和分块路线，仅递推有完整时延校准 |
-| grouped_matmul_swiglu_quant_v2、gmm2、moe_ffn | (M,K,F,E) | `expert_counts` 为 E 个本地专家各自收到的有效 token 数，总和为 M |
+| [quant](examples/quant.md) | (R,C) | dynamicMXquant，BF16 输入、block32 |
+| [rmsnorm](examples/rmsnorm.md) | (R,C) | BF16，输出含 rstd |
+| [matmul](examples/matmul.md)、[addmm](examples/addmm.md) | (M,N,K) | BF16；Addmm 的 bias=[N] 且 α=β=1 |
+| [fa](examples/fa.md) | (Q,KV,D,B,H) | 普通非因果 SBH；Q 是本次校验长度，H 是本卡头数 |
+| [lightning_indexer](examples/lightning_indexer.md) | (B,Q,L,G,D) | BSND，G=8、D=128、top-512 |
+| [mhc_pre](examples/mhc_pre.md)、[mhc_post](examples/mhc_post.md)、[mhc_pre_sinkhorn](examples/mhc_pre_sinkhorn.md)、[mhc](examples/mhc.md) | (T,N,D) | N=4；mhc 代表 Pre、Sinkhorn、Post 三段，外部层单独调度 |
+| [mhc_sinkhorn](examples/mhc_sinkhorn.md) | (T,N) | N=4，`num_iters` 为实际迭代数 |
+| [kda_recurrent](examples/kda_recurrent.md)、[kda_chunk](examples/kda_chunk.md) | (B,S,Hq,Hv,K,V) | 分别为递推和分块路线，仅递推有完整时延校准 |
+| [grouped_matmul_swiglu_quant_v2](examples/grouped_matmul_swiglu_quant_v2.md)、[gmm2](examples/gmm2.md)、[moe_ffn](examples/moe_ffn.md) | (M,K,F,E) | `expert_counts` 为 E 个本地专家各自收到的有效 token 数，总和为 M |
 
 例如 `estimate("moe_ffn", (32, 256, 128, 2), {"expert_counts": [1, 31]})` 预测整个两段计算链。调度该节点后不要再把两个 GMM 组件的估计加到同一事件上。EP 大小不能替代本地专家直方图。推测 8 个 token 时，普通 FA 的主模型校验长度常为 Q=9，实际 B、H、打包方式仍由框架提供。
 
@@ -126,4 +128,24 @@ if result.active_aiv is not None:
 
 mHC Post 在少 token 且切通道时，默认估计在首次、扩核与热态之间平衡相对误差。已知连续调用处于热态时，传入 `resident_aiv` 可避免把额外的启动时间累积到每个事件。其余分核分支用历史条件时间的加权中位数。在线查询本身不改变设备历史。[不同状态的同集误差与大 shape 核查](../results/v0.12/audit/summary.md)
 
-对于 BF16 ND Matmul，`projection["target_plan"]` 给出目标的输出 tile、MMAD K 深度、DMA 页深、活跃核数和波数。FA 的 `timing_diagnostics["phases_us"]` 给出首次 MMAD 前缀、矩阵乘窗口（长循环进一步列出填充和稳态）及排空；`parameter_source` 标记配对 PR 校准或 DT 阶段随目标配置迁移。两者都是跨芯片诊断字段；设备调度器统一使用 `latency_us`。
+## 检查资源瓶颈与设备情景
+
+对同一算子比较设备时，在三条已实现的资源路线上对两端都指定 `timing_mode="resource"`，以保持算法口径一致。默认的 DT 参考校准仍可用于和系统原有结果衔接。
+
+```python
+from operator_model import estimate, load_chip
+
+target = load_chip("Ascend970DT")
+r = estimate("matmul", (1024, 2048, 32), chip=target, timing_mode="resource")
+diag = r.projection["timing_diagnostics"]
+print(r.latency_us, diag["target_plan"]["tail_split_mn"], diag["mmads_total"])
+print(diag["shared_traffic"]["hbm_payload_fraction_of_nominal"])
+```
+
+| 路线 | 可用于诊断的返回量 | 目标配置与敏感性 |
+|---|---|---|
+| Quant | `target_plan` 的分核、UB tile 和迭代数；`first_tile_cycles` 的首读、读发起间隔、VF、数据写和 scale 写；`scale_peak_writers` 为同一 32 B scale 区段的最多写核数 | UB 容量、每核 MTE2/MTE3 带宽及 BF16 Vector 峰值会改变服务；全片冷读写需满足 `chip_io_floor_cycles` |
+| Matmul | `target_plan` 的基本 tile、K 片、DMA 页、波数和尾波分片；`wave_cost_cycles` 区分发起与完成；`shared_traffic` 给本设备指令窗暴露 HBM 字节、最终写回字节、L2/HBM 有效 GB/s 及峰值占比 | 可设置 `matmul_hbm_efficiency`、`matmul_l2_efficiency` 在 (0,1] 内限定峰值，`matmul_output_retained_fraction` 在 [0,1] 内指定可留脏比例；设 0 表示输出均在窗口内落片外 |
+| FA | `wave_types` 列出每类波的忙核数及每 AIC 的 AIV 数。`first.demands_cycles` 与 `first.steady_bottleneck` 给一块 KV 的资源需求与最长项，`steady_kv_read_fraction_of_hbm_peak` 是各忙核的稳态冷读需求占整片片外峰值比例 | `fa_aiv_per_aic` 可设置 1 或 2，比较固定绑定、可借用空闲 AIV 两种库情景；长序列可能由读发起间隔主导 |
+
+设备时延与有效吞吐按不同口径解释。对单核端口，`payload/(1000 × µs × GB/s/核)` 表示这段窗口中有效传输占该端口名义容量的比例；整片多个端口的分母需乘相应核数。芯片级带宽只取一次整片值。模型返回的冷读、重复读、窗口内写回和 `work` 的逻辑接口字节各有不同用途；物理 HBM 字节没有实测时仍为空。可通过各波瓶颈、芯片配置和 CA 的指令窗口逐项核对。[三种资源模型的公式和算例](modeling-strategy.md) · [FA 场景与核绑定敏感性](../results/v0.17/fa-scenarios.md)

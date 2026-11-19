@@ -40,7 +40,8 @@ def resource_fa(shape, chip):
     outer = _ceildiv(q,tq)
     jobs = outer*batch*heads
     active = min(jobs,chip.cube_cores,chip.vector_cores)
-    aiv = min(2*active,chip.vector_cores)
+    lane_cap = details.get('fa_aiv_per_aic') or 2
+    aiv = min(lane_cap*active,chip.vector_cores)
     waves = _ceildiv(jobs,active)
     params = c['routes']['wide' if tk==256 else 'short']
     local = details.get('fa_mte_bytes_per_cycle') or c['mte_bytes_per_cycle']
@@ -65,7 +66,7 @@ def resource_fa(shape, chip):
     def wave(m, occupied, count):
         if not count:
             return
-        lanes = min(2,chip.vector_cores/occupied)
+        lanes = min(lane_cap,chip.vector_cores/occupied)
         vr = ceil(m/lanes)
         read_rate = min(read_local,shared/occupied)
         write_rate = min(write_local,shared/occupied)
@@ -86,7 +87,8 @@ def resource_fa(shape, chip):
                         k_bytes=k_bytes,v_bytes=k_bytes,qk_useful_ops=2*m*n*d,
                         pv_useful_ops=2*m*n*d,qk_physical_ops=padded_ops,pv_physical_ops=padded_ops,
                         vector_equiv_ops=5*m*n+3*m*d, l1_to_l0_bytes=l0_bytes,
-                        fix_payload_bytes=fix_bytes, demands_cycles=demands, ii_cycles=max(demands.values()))
+                        fix_payload_bytes=fix_bytes, demands_cycles=demands,
+                        steady_bottleneck=max(demands, key=demands.get), ii_cycles=max(demands.values()))
         first = tile(min(kv,tk))
         last = first if loops==1 or tail_k==tk else tile(tail_k)
         q_bytes = 2*m*d
@@ -106,7 +108,10 @@ def resource_fa(shape, chip):
                                q_read_bytes=q_bytes,output_write_bytes=output_bytes,first=first,last=last,
                                k_ready_cycles=k_ready,v_ready_cycles=v_ready,qk_start_cycles=qk_start,
                                pv_start_cycles=pv_start,read_bytes_per_cycle=read_rate,
-                               write_bytes_per_cycle=write_rate))
+                               write_bytes_per_cycle=write_rate,
+                               steady_kv_read_fraction_of_hbm_peak=(
+                                   occupied*2*first['k_bytes']*ghz /
+                                   (first['ii_cycles']*chip.hbm_bandwidth_gbs))))
 
     # Flattened [batch, head, q tile] tasks. A contiguous wave of >=2 jobs
     # always contains a full Q tile when each head has full and tail tiles.

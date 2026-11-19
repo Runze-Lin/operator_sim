@@ -4,6 +4,15 @@
 
 ## 复现跨芯片后端
 
+当前按测量角色保存 v0.17 的数据。旧 DT 时间边界用于定价，旧 PR 样本用于检查服务和实现策略；冻结后的新 PR 数据用于同集评估。970DT 的阶段、瓶颈和吞吐全部来自静态配置。离线程序位于 [sku17](validation/sku17)，系统接入只需安装运行包。
+
+| 复现内容 | 入口和数据 |
+|---|---|
+| Quant 读延迟 / 发起、数据与 scale 的两个写描述符 | [校准提取](validation/sku17/quant_dma_calibrate.py) · [旧 PR 逐阶段回放](../results/v0.17/quant-pr-replay.json) |
+| Matmul 末波重切、ASW 顺序、写回重叠 | [回放程序](validation/sku17/matmul_replay.py) · [27 个旧 DT/PR 指令直方图与 SHA](../results/v0.17/matmul-trace-replay.json) |
+| FA 的核绑定、稳态瓶颈与 970 情景 | [场景程序](validation/sku17/fa_scenarios.py) · [逐场景对比](../results/v0.17/fa-scenarios.md) |
+| 冻结、采集预算、实测、失败与汇总 | [核心 3 算子冻结](../results/v0.17/sku/core-freeze.json) · [各扩展冻结](../results/v0.17/sku/extension-freeze.json) · [版本证据目录](../results/v0.17/sku) |
+
 v0.16 的目标资源调度、同集基线和采集成本见[本轮记录](../results/v0.16/changes.md)。校准只使用旧 DT 阶段证据，PR 新 shape 预先登记并冻结。[校准、冻结与验证脚本](validation/sku16)
 
 v0.15 在 PR 上以 FA 和 Matmul 各 10 个新 shape 检查两种库分支，包含 32k FA、M=255/257 等分块边界。采集前冻结 v0.15、v0.14 和直接复用 DT 三组预测。[v0.15 验证与采集成本](../results/v0.15/changes.md) · [采集、安装核对与报告程序](validation/sku15)

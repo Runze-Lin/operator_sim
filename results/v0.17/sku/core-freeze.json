@@ -1,0 +1,1786 @@
+{
+  "utc": "2026-11-19T03:22:41.261917+00:00",
+  "group": "core",
+  "jobs": [
+    {
+      "id": "matmul_3_64_64",
+      "op": "matmul",
+      "shape": [
+        3,
+        64,
+        64
+      ],
+      "runner": "build/smoke/three_ops",
+      "runner_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "args": [
+        "matmul",
+        "3",
+        "64",
+        "64"
+      ],
+      "outputs": [
+        {
+          "op": "matmul",
+          "shape": [
+            3,
+            64,
+            64
+          ],
+          "attrs": {},
+          "dt": null,
+          "indices": [
+            0
+          ],
+          "dt_us": 3.216814840913626,
+          "dt_status": "extrapolated",
+          "dt_aic": 1,
+          "dt_aiv": 0,
+          "pr_us": 3.216814840913626,
+          "pr_status": "extrapolated",
+          "pr_aic": 1,
+          "pr_aiv": 0,
+          "future_us": 2.948733224175009,
+          "future_status": "extrapolated",
+          "future_aic": 1,
+          "future_aiv": 0,
+          "old_dt_us": 3.216814840913626,
+          "old_pr_us": 3.216814840913626
+        }
+      ],
+      "batch": null,
+      "nchecks": 1,
+      "kernels": 1,
+      "rank": 0,
+      "wall_s": 440,
+      "raw_mib": 1800
+    },
+    {
+      "id": "quant_1_256",
+      "op": "quant",
+      "shape": [
+        1,
+        256
+      ],
+      "runner": "build/smoke/three_ops",
+      "runner_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "args": [
+        "quant",
+        "1",
+        "256"
+      ],
+      "outputs": [
+        {
+          "op": "quant",
+          "shape": [
+            1,
+            256
+          ],
+          "attrs": {},
+          "dt": null,
+          "indices": [
+            0
+          ],
+          "dt_us": 4.20729374788565,
+          "dt_status": "extrapolated",
+          "dt_aic": 0,
+          "dt_aiv": 1,
+          "pr_us": 4.207337492870472,
+          "pr_status": "extrapolated",
+          "pr_aic": 0,
+          "pr_aiv": 1,
+          "future_us": 3.856676565705071,
+          "future_status": "extrapolated",
+          "future_aic": 0,
+          "future_aiv": 1,
+          "old_dt_us": 4.2177903927176805,
+          "old_pr_us": 4.217834137702503
+        }
+      ],
+      "batch": null,
+      "nchecks": 1,
+      "kernels": 1,
+      "rank": 0,
+      "wall_s": 440,
+      "raw_mib": 3500
+    },
+    {
+      "id": "fa_17_192_128_1_1",
+      "op": "fa",
+      "shape": [
+        17,
+        192,
+        128,
+        1,
+        1
+      ],
+      "runner": "build/smoke/three_ops",
+      "runner_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "args": [
+        "fa",
+        "17",
+        "192",
+        "128",
+        "1",
+        "1"
+      ],
+      "outputs": [
+        {
+          "op": "fa",
+          "shape": [
+            17,
+            192,
+            128,
+            1,
+            1
+          ],
+          "attrs": {},
+          "dt": {
+            "op": "fa",
+            "shape": [
+              17,
+              192,
+              128,
+              1,
+              1
+            ],
+            "attrs": {},
+            "chip": "Ascend950DT_9582",
+            "ca_us": 9.05030298512429,
+            "kernel": "FlashAttentionScore_50348df09d0b3ee451d3693a6b2ab3f5_2328361009230643744_mix_aic",
+            "api": "aclnnFlashAttentionScoreV2",
+            "correctness": [
+              "correctness elements=2176 bad=0 max_abs_error=8.42484365e-05 atol=0.002 rtol=0.01"
+            ],
+            "active_aic": 1,
+            "active_aiv": 2,
+            "trace": "results/v0.4/dataset.json",
+            "trace_sha256": "233e88541e2915c1781d5683a03eb0fc46b8d570008e8360af4292e734619b09",
+            "cost": {},
+            "role": "reused DT qualified archive",
+            "calibration_source": "results/v0.12/evaluation.json"
+          },
+          "indices": [
+            0
+          ],
+          "dt_us": 9.265945731743294,
+          "dt_status": "extrapolated",
+          "dt_aic": 1,
+          "dt_aiv": 2,
+          "pr_us": 9.26876548170033,
+          "pr_status": "extrapolated",
+          "pr_aic": 1,
+          "pr_aiv": 2,
+          "future_us": 8.669930555223472,
+          "future_status": "extrapolated",
+          "future_aic": 1,
+          "future_aiv": 1,
+          "old_dt_us": 9.265945731743292,
+          "old_pr_us": 9.26876548170033
+        }
+      ],
+      "batch": null,
+      "nchecks": 1,
+      "kernels": 1,
+      "rank": 0,
+      "wall_s": 440,
+      "raw_mib": 1800
+    },
+    {
+      "id": "matmul_8_96_256",
+      "op": "matmul",
+      "shape": [
+        8,
+        96,
+        256
+      ],
+      "runner": "build/smoke/three_ops",
+      "runner_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "args": [
+        "matmul",
+        "8",
+        "96",
+        "256"
+      ],
+      "outputs": [
+        {
+          "op": "matmul",
+          "shape": [
+            8,
+            96,
+            256
+          ],
+          "attrs": {},
+          "dt": null,
+          "indices": [
+            0
+          ],
+          "dt_us": 3.702054342772323,
+          "dt_status": "extrapolated",
+          "dt_aic": 2,
+          "dt_aiv": 0,
+          "pr_us": 3.702054342772323,
+          "pr_status": "extrapolated",
+          "pr_aic": 2,
+          "pr_aiv": 0,
+          "future_us": 3.393494960891369,
+          "future_status": "extrapolated",
+          "future_aic": 2,
+          "future_aiv": 0,
+          "old_dt_us": 3.7020543427723225,
+          "old_pr_us": 3.7020543427723225
+        }
+      ],
+      "batch": null,
+      "nchecks": 1,
+      "kernels": 1,
+      "rank": 1,
+      "wall_s": 440,
+      "raw_mib": 1800
+    },
+    {
+      "id": "quant_5_320",
+      "op": "quant",
+      "shape": [
+        5,
+        320
+      ],
+      "runner": "build/smoke/three_ops",
+      "runner_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "args": [
+        "quant",
+        "5",
+        "320"
+      ],
+      "outputs": [
+        {
+          "op": "quant",
+          "shape": [
+            5,
+            320
+          ],
+          "attrs": {},
+          "dt": null,
+          "indices": [
+            0
+          ],
+          "dt_us": 6.068916761317744,
+          "dt_status": "extrapolated",
+          "dt_aic": 0,
+          "dt_aiv": 10,
+          "pr_us": 6.068960506302565,
+          "pr_status": "extrapolated",
+          "pr_aic": 0,
+          "pr_aiv": 10,
+          "future_us": 5.563164328017824,
+          "future_status": "extrapolated",
+          "future_aic": 0,
+          "future_aiv": 10,
+          "old_dt_us": 4.498576152340277,
+          "old_pr_us": 4.498619897325098
+        }
+      ],
+      "batch": null,
+      "nchecks": 1,
+      "kernels": 1,
+      "rank": 1,
+      "wall_s": 440,
+      "raw_mib": 3500
+    },
+    {
+      "id": "fa_4_160_64_1_1",
+      "op": "fa",
+      "shape": [
+        4,
+        160,
+        64,
+        1,
+        1
+      ],
+      "runner": "build/smoke/three_ops",
+      "runner_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "args": [
+        "fa",
+        "4",
+        "160",
+        "64",
+        "1",
+        "1"
+      ],
+      "outputs": [
+        {
+          "op": "fa",
+          "shape": [
+            4,
+            160,
+            64,
+            1,
+            1
+          ],
+          "attrs": {},
+          "dt": {
+            "op": "fa",
+            "shape": [
+              4,
+              160,
+              64,
+              1,
+              1
+            ],
+            "attrs": {},
+            "chip": "Ascend950DT_9582",
+            "ca_us": 9.461212121212121,
+            "kernel": "entry_kernel_2050000040100220",
+            "api": "aclnnFlashAttentionScoreV2",
+            "correctness": [
+              "elements=256 bad=0 max_abs_error=0.000101984067 atol=0.002 rtol=0.01"
+            ],
+            "active_aic": 1,
+            "active_aiv": 2,
+            "trace": "results/v0.8/core/fa_reserve_2-retry.json",
+            "trace_sha256": "ea78341220827116c91527e896e4a1ae88843157ec4b7b4a9b9f4a5058179955",
+            "cost": null,
+            "role": "reused DT qualified archive",
+            "calibration_source": "results/v0.12/evaluation.json"
+          },
+          "indices": [
+            0
+          ],
+          "dt_us": 8.95607550830648,
+          "dt_status": "extrapolated",
+          "dt_aic": 1,
+          "dt_aiv": 2,
+          "pr_us": 8.956388813857261,
+          "pr_status": "extrapolated",
+          "pr_aic": 1,
+          "pr_aiv": 2,
+          "future_us": 8.220251024559813,
+          "future_status": "extrapolated",
+          "future_aic": 1,
+          "future_aiv": 1,
+          "old_dt_us": 8.95607550830648,
+          "old_pr_us": 8.956388813857261
+        }
+      ],
+      "batch": null,
+      "nchecks": 1,
+      "kernels": 1,
+      "rank": 1,
+      "wall_s": 440,
+      "raw_mib": 1800
+    },
+    {
+      "id": "matmul_33_128_129",
+      "op": "matmul",
+      "shape": [
+        33,
+        128,
+        129
+      ],
+      "runner": "build/smoke/three_ops",
+      "runner_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "args": [
+        "matmul",
+        "33",
+        "128",
+        "129"
+      ],
+      "outputs": [
+        {
+          "op": "matmul",
+          "shape": [
+            33,
+            128,
+            129
+          ],
+          "attrs": {},
+          "dt": null,
+          "indices": [
+            0
+          ],
+          "dt_us": 3.513143102839586,
+          "dt_status": "extrapolated",
+          "dt_aic": 6,
+          "dt_aiv": 0,
+          "pr_us": 3.513143102839586,
+          "pr_status": "extrapolated",
+          "pr_aic": 6,
+          "pr_aiv": 0,
+          "future_us": 3.2203503226123704,
+          "future_status": "extrapolated",
+          "future_aic": 6,
+          "future_aiv": 0,
+          "old_dt_us": 3.513143102839586,
+          "old_pr_us": 3.513143102839586
+        }
+      ],
+      "batch": null,
+      "nchecks": 1,
+      "kernels": 1,
+      "rank": 2,
+      "wall_s": 440,
+      "raw_mib": 1800
+    },
+    {
+      "id": "quant_19_1024",
+      "op": "quant",
+      "shape": [
+        19,
+        1024
+      ],
+      "runner": "build/smoke/three_ops",
+      "runner_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "args": [
+        "quant",
+        "19",
+        "1024"
+      ],
+      "outputs": [
+        {
+          "op": "quant",
+          "shape": [
+            19,
+            1024
+          ],
+          "attrs": {},
+          "dt": null,
+          "indices": [
+            0
+          ],
+          "dt_us": 5.935641529623057,
+          "dt_status": "extrapolated",
+          "dt_aic": 0,
+          "dt_aiv": 40,
+          "pr_us": 5.93570714710029,
+          "pr_status": "extrapolated",
+          "pr_aic": 0,
+          "pr_aiv": 40,
+          "future_us": 5.703517688472222,
+          "future_status": "extrapolated",
+          "future_aic": 0,
+          "future_aiv": 76,
+          "old_dt_us": 4.6831119740077,
+          "old_pr_us": 4.702555463589138
+        }
+      ],
+      "batch": null,
+      "nchecks": 1,
+      "kernels": 1,
+      "rank": 2,
+      "wall_s": 440,
+      "raw_mib": 3500
+    },
+    {
+      "id": "fa_8_128_128_1_1",
+      "op": "fa",
+      "shape": [
+        8,
+        128,
+        128,
+        1,
+        1
+      ],
+      "runner": "build/smoke/three_ops",
+      "runner_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "args": [
+        "fa",
+        "8",
+        "128",
+        "128",
+        "1",
+        "1"
+      ],
+      "outputs": [
+        {
+          "op": "fa",
+          "shape": [
+            8,
+            128,
+            128,
+            1,
+            1
+          ],
+          "attrs": {},
+          "dt": {
+            "op": "fa",
+            "shape": [
+              8,
+              128,
+              128,
+              1,
+              1
+            ],
+            "attrs": {},
+            "chip": "Ascend950DT_9582",
+            "ca_us": 9.135757575757577,
+            "kernel": "entry_kernel_2050000070100220",
+            "api": "aclnnFlashAttentionScoreV2",
+            "correctness": [
+              "elements=1024 bad=0 max_abs_error=0.000120541195 atol=0.002 rtol=0.01"
+            ],
+            "active_aic": 1,
+            "active_aiv": 2,
+            "trace": "results/v0.8/core/fa_reserve_3-retry.json",
+            "trace_sha256": "e24a0d66038789f443d2190ac85f2eef442d5c8d35639a17c021bce5b7f7b443",
+            "cost": null,
+            "role": "reused DT qualified archive",
+            "calibration_source": "results/v0.12/evaluation.json"
+          },
+          "indices": [
+            0
+          ],
+          "dt_us": 8.889054334959651,
+          "dt_status": "extrapolated",
+          "dt_aic": 1,
+          "dt_aiv": 2,
+          "pr_us": 8.89030755716278,
+          "pr_status": "extrapolated",
+          "pr_aic": 1,
+          "pr_aiv": 2,
+          "future_us": 8.190415228145103,
+          "future_status": "extrapolated",
+          "future_aic": 1,
+          "future_aiv": 1,
+          "old_dt_us": 8.889054334959651,
+          "old_pr_us": 8.890307557162778
+        }
+      ],
+      "batch": null,
+      "nchecks": 1,
+      "kernels": 1,
+      "rank": 2,
+      "wall_s": 440,
+      "raw_mib": 1800
+    },
+    {
+      "id": "matmul_127_384_256",
+      "op": "matmul",
+      "shape": [
+        127,
+        384,
+        256
+      ],
+      "runner": "build/smoke/three_ops",
+      "runner_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "args": [
+        "matmul",
+        "127",
+        "384",
+        "256"
+      ],
+      "outputs": [
+        {
+          "op": "matmul",
+          "shape": [
+            127,
+            384,
+            256
+          ],
+          "attrs": {},
+          "dt": null,
+          "indices": [
+            0
+          ],
+          "dt_us": 3.953708068269137,
+          "dt_status": "extrapolated",
+          "dt_aic": 24,
+          "dt_aiv": 0,
+          "pr_us": 3.956347029308098,
+          "pr_status": "extrapolated",
+          "pr_aic": 24,
+          "pr_aiv": 0,
+          "future_us": 3.6295279433043977,
+          "future_status": "extrapolated",
+          "future_aic": 48,
+          "future_aiv": 0,
+          "old_dt_us": 3.9596193409964098,
+          "old_pr_us": 4.004903912424981
+        }
+      ],
+      "batch": null,
+      "nchecks": 1,
+      "kernels": 1,
+      "rank": 3,
+      "wall_s": 440,
+      "raw_mib": 1800
+    },
+    {
+      "id": "quant_30_768",
+      "op": "quant",
+      "shape": [
+        30,
+        768
+      ],
+      "runner": "build/smoke/three_ops",
+      "runner_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "args": [
+        "quant",
+        "30",
+        "768"
+      ],
+      "outputs": [
+        {
+          "op": "quant",
+          "shape": [
+            30,
+            768
+          ],
+          "attrs": {},
+          "dt": null,
+          "indices": [
+            0
+          ],
+          "dt_us": 5.655776635500226,
+          "dt_status": "extrapolated",
+          "dt_aic": 0,
+          "dt_aiv": 60,
+          "pr_us": 5.43716276783454,
+          "pr_status": "extrapolated",
+          "pr_aic": 0,
+          "pr_aiv": 30,
+          "future_us": 5.775620285117215,
+          "future_status": "extrapolated",
+          "future_aic": 0,
+          "future_aiv": 90,
+          "old_dt_us": 4.73296559651666,
+          "old_pr_us": 4.685023055448614
+        }
+      ],
+      "batch": null,
+      "nchecks": 1,
+      "kernels": 1,
+      "rank": 3,
+      "wall_s": 440,
+      "raw_mib": 3500
+    },
+    {
+      "id": "fa_3_192_64_1_2",
+      "op": "fa",
+      "shape": [
+        3,
+        192,
+        64,
+        1,
+        2
+      ],
+      "runner": "build/smoke/three_ops",
+      "runner_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "args": [
+        "fa",
+        "3",
+        "192",
+        "64",
+        "1",
+        "2"
+      ],
+      "outputs": [
+        {
+          "op": "fa",
+          "shape": [
+            3,
+            192,
+            64,
+            1,
+            2
+          ],
+          "attrs": {},
+          "dt": null,
+          "indices": [
+            0
+          ],
+          "dt_us": 8.954622205749661,
+          "dt_status": "extrapolated",
+          "dt_aic": 2,
+          "dt_aiv": 4,
+          "pr_us": 8.954935511300443,
+          "pr_status": "extrapolated",
+          "pr_aic": 2,
+          "pr_aiv": 4,
+          "future_us": 8.21364097825351,
+          "future_status": "extrapolated",
+          "future_aic": 2,
+          "future_aiv": 2,
+          "old_dt_us": 8.954622205749661,
+          "old_pr_us": 8.954935511300443
+        }
+      ],
+      "batch": null,
+      "nchecks": 1,
+      "kernels": 1,
+      "rank": 3,
+      "wall_s": 440,
+      "raw_mib": 1800
+    },
+    {
+      "id": "matmul_225_512_256",
+      "op": "matmul",
+      "shape": [
+        225,
+        512,
+        256
+      ],
+      "runner": "build/smoke/three_ops",
+      "runner_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "args": [
+        "matmul",
+        "225",
+        "512",
+        "256"
+      ],
+      "outputs": [
+        {
+          "op": "matmul",
+          "shape": [
+            225,
+            512,
+            256
+          ],
+          "attrs": {},
+          "dt": null,
+          "indices": [
+            0
+          ],
+          "dt_us": 4.079497531671484,
+          "dt_status": "extrapolated",
+          "dt_aic": 32,
+          "dt_aiv": 0,
+          "pr_us": 4.225039059982447,
+          "pr_status": "extrapolated",
+          "pr_aic": 24,
+          "pr_aiv": 0,
+          "future_us": 3.6970368480401934,
+          "future_status": "extrapolated",
+          "future_aic": 120,
+          "future_aiv": 0,
+          "old_dt_us": 4.09346116803512,
+          "old_pr_us": 4.339740358683746
+        }
+      ],
+      "batch": null,
+      "nchecks": 1,
+      "kernels": 1,
+      "rank": 4,
+      "wall_s": 440,
+      "raw_mib": 1800
+    },
+    {
+      "id": "quant_9_4096",
+      "op": "quant",
+      "shape": [
+        9,
+        4096
+      ],
+      "runner": "build/smoke/three_ops",
+      "runner_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "args": [
+        "quant",
+        "9",
+        "4096"
+      ],
+      "outputs": [
+        {
+          "op": "quant",
+          "shape": [
+            9,
+            4096
+          ],
+          "attrs": {},
+          "dt": null,
+          "indices": [
+            0
+          ],
+          "dt_us": 5.11587100700727,
+          "dt_status": "extrapolated",
+          "dt_aic": 0,
+          "dt_aiv": 40,
+          "pr_us": 5.115980369469325,
+          "pr_status": "extrapolated",
+          "pr_aic": 0,
+          "pr_aiv": 40,
+          "future_us": 4.794498276944558,
+          "future_status": "extrapolated",
+          "future_aic": 0,
+          "future_aiv": 72,
+          "old_dt_us": 4.714083873335756,
+          "old_pr_us": 4.748514694291934
+        }
+      ],
+      "batch": null,
+      "nchecks": 1,
+      "kernels": 1,
+      "rank": 4,
+      "wall_s": 440,
+      "raw_mib": 3500
+    },
+    {
+      "id": "fa_9_384_64_1_1",
+      "op": "fa",
+      "shape": [
+        9,
+        384,
+        64,
+        1,
+        1
+      ],
+      "runner": "build/smoke/three_ops",
+      "runner_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "args": [
+        "fa",
+        "9",
+        "384",
+        "64",
+        "1",
+        "1"
+      ],
+      "outputs": [
+        {
+          "op": "fa",
+          "shape": [
+            9,
+            384,
+            64,
+            1,
+            1
+          ],
+          "attrs": {},
+          "dt": null,
+          "indices": [
+            0
+          ],
+          "dt_us": 9.23924397643308,
+          "dt_status": "extrapolated",
+          "dt_aic": 1,
+          "dt_aiv": 2,
+          "pr_us": 9.240027240310035,
+          "pr_status": "extrapolated",
+          "pr_aic": 1,
+          "pr_aiv": 2,
+          "future_us": 8.490358120952399,
+          "future_status": "extrapolated",
+          "future_aic": 1,
+          "future_aiv": 1,
+          "old_dt_us": 9.239243976433078,
+          "old_pr_us": 9.240027240310035
+        }
+      ],
+      "batch": null,
+      "nchecks": 1,
+      "kernels": 1,
+      "rank": 4,
+      "wall_s": 440,
+      "raw_mib": 1800
+    },
+    {
+      "id": "matmul_449_512_256",
+      "op": "matmul",
+      "shape": [
+        449,
+        512,
+        256
+      ],
+      "runner": "build/smoke/three_ops",
+      "runner_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "args": [
+        "matmul",
+        "449",
+        "512",
+        "256"
+      ],
+      "outputs": [
+        {
+          "op": "matmul",
+          "shape": [
+            449,
+            512,
+            256
+          ],
+          "attrs": {},
+          "dt": null,
+          "indices": [
+            0
+          ],
+          "dt_us": 4.758843278087587,
+          "dt_status": "extrapolated",
+          "dt_aic": 32,
+          "dt_aiv": 0,
+          "pr_us": 4.8260018704812975,
+          "pr_status": "extrapolated",
+          "pr_aic": 24,
+          "pr_aiv": 0,
+          "future_us": 3.740227663859402,
+          "future_status": "extrapolated",
+          "future_aic": 120,
+          "future_aiv": 0,
+          "old_dt_us": 4.7867084902088,
+          "old_pr_us": 5.05489468433411
+        }
+      ],
+      "batch": null,
+      "nchecks": 1,
+      "kernels": 1,
+      "rank": 5,
+      "wall_s": 440,
+      "raw_mib": 1800
+    },
+    {
+      "id": "quant_56_4096",
+      "op": "quant",
+      "shape": [
+        56,
+        4096
+      ],
+      "runner": "build/smoke/three_ops",
+      "runner_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "args": [
+        "quant",
+        "56",
+        "4096"
+      ],
+      "outputs": [
+        {
+          "op": "quant",
+          "shape": [
+            56,
+            4096
+          ],
+          "attrs": {},
+          "dt": null,
+          "indices": [
+            0
+          ],
+          "dt_us": 5.349105985665708,
+          "dt_status": "extrapolated",
+          "dt_aic": 0,
+          "dt_aiv": 64,
+          "pr_us": 4.881743256586707,
+          "pr_status": "extrapolated",
+          "pr_aic": 0,
+          "pr_aiv": 56,
+          "future_us": 4.4624594944996305,
+          "future_status": "extrapolated",
+          "future_aic": 0,
+          "future_aiv": 112,
+          "old_dt_us": 4.946681286365008,
+          "old_pr_us": 5.255975035723071
+        }
+      ],
+      "batch": null,
+      "nchecks": 1,
+      "kernels": 1,
+      "rank": 5,
+      "wall_s": 440,
+      "raw_mib": 3500
+    },
+    {
+      "id": "fa_17_512_128_1_1",
+      "op": "fa",
+      "shape": [
+        17,
+        512,
+        128,
+        1,
+        1
+      ],
+      "runner": "build/smoke/three_ops",
+      "runner_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "args": [
+        "fa",
+        "17",
+        "512",
+        "128",
+        "1",
+        "1"
+      ],
+      "outputs": [
+        {
+          "op": "fa",
+          "shape": [
+            17,
+            512,
+            128,
+            1,
+            1
+          ],
+          "attrs": {},
+          "dt": null,
+          "indices": [
+            0
+          ],
+          "dt_us": 10.495520060985765,
+          "dt_status": "extrapolated",
+          "dt_aic": 1,
+          "dt_aiv": 2,
+          "pr_us": 10.4983398109428,
+          "pr_status": "extrapolated",
+          "pr_aic": 1,
+          "pr_aiv": 2,
+          "future_us": 9.776520253261085,
+          "future_status": "extrapolated",
+          "future_aic": 1,
+          "future_aiv": 1,
+          "old_dt_us": 10.495520060985763,
+          "old_pr_us": 10.4983398109428
+        }
+      ],
+      "batch": null,
+      "nchecks": 1,
+      "kernels": 1,
+      "rank": 5,
+      "wall_s": 440,
+      "raw_mib": 1800
+    },
+    {
+      "id": "matmul_1024_1792_32",
+      "op": "matmul",
+      "shape": [
+        1024,
+        1792,
+        32
+      ],
+      "runner": "build/smoke/three_ops",
+      "runner_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "args": [
+        "matmul",
+        "1024",
+        "1792",
+        "32"
+      ],
+      "outputs": [
+        {
+          "op": "matmul",
+          "shape": [
+            1024,
+            1792,
+            32
+          ],
+          "attrs": {},
+          "dt": null,
+          "indices": [
+            0
+          ],
+          "dt_us": 4.610058783875054,
+          "dt_status": "extrapolated",
+          "dt_aic": 28,
+          "dt_aiv": 0,
+          "pr_us": 4.709355753572023,
+          "pr_status": "extrapolated",
+          "pr_aic": 28,
+          "pr_aiv": 0,
+          "future_us": 3.4770286772153614,
+          "future_status": "extrapolated",
+          "future_aic": 112,
+          "future_aiv": 0,
+          "old_dt_us": 4.832483995996266,
+          "old_pr_us": 6.536419995996265
+        }
+      ],
+      "batch": null,
+      "nchecks": 1,
+      "kernels": 1,
+      "rank": 6,
+      "wall_s": 440,
+      "raw_mib": 1800
+    },
+    {
+      "id": "quant_144_5120",
+      "op": "quant",
+      "shape": [
+        144,
+        5120
+      ],
+      "runner": "build/smoke/three_ops",
+      "runner_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "args": [
+        "quant",
+        "144",
+        "5120"
+      ],
+      "outputs": [
+        {
+          "op": "quant",
+          "shape": [
+            144,
+            5120
+          ],
+          "attrs": {},
+          "dt": null,
+          "indices": [
+            0
+          ],
+          "dt_us": 5.777881232556675,
+          "dt_status": "extrapolated",
+          "dt_aic": 0,
+          "dt_aiv": 58,
+          "pr_us": 5.485929572096495,
+          "pr_status": "extrapolated",
+          "pr_aic": 0,
+          "pr_aiv": 55,
+          "future_us": 4.653001362164616,
+          "future_status": "extrapolated",
+          "future_aic": 0,
+          "future_aiv": 120,
+          "old_dt_us": 5.535906094989963,
+          "old_pr_us": 6.531238395352739
+        }
+      ],
+      "batch": null,
+      "nchecks": 1,
+      "kernels": 1,
+      "rank": 6,
+      "wall_s": 440,
+      "raw_mib": 3500
+    },
+    {
+      "id": "fa_9_1023_64_1_1",
+      "op": "fa",
+      "shape": [
+        9,
+        1023,
+        64,
+        1,
+        1
+      ],
+      "runner": "build/smoke/three_ops",
+      "runner_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "args": [
+        "fa",
+        "9",
+        "1023",
+        "64",
+        "1",
+        "1"
+      ],
+      "outputs": [
+        {
+          "op": "fa",
+          "shape": [
+            9,
+            1023,
+            64,
+            1,
+            1
+          ],
+          "attrs": {},
+          "dt": null,
+          "indices": [
+            0
+          ],
+          "dt_us": 10.532281421129817,
+          "dt_status": "extrapolated",
+          "dt_aic": 1,
+          "dt_aiv": 2,
+          "pr_us": 10.53306468500677,
+          "pr_status": "extrapolated",
+          "pr_aic": 1,
+          "pr_aiv": 2,
+          "future_us": 9.67564244525774,
+          "future_status": "extrapolated",
+          "future_aic": 1,
+          "future_aiv": 1,
+          "old_dt_us": 10.532281421129817,
+          "old_pr_us": 10.53306468500677
+        }
+      ],
+      "batch": null,
+      "nchecks": 1,
+      "kernels": 1,
+      "rank": 6,
+      "wall_s": 440,
+      "raw_mib": 1800
+    },
+    {
+      "id": "matmul_1536_1792_16",
+      "op": "matmul",
+      "shape": [
+        1536,
+        1792,
+        16
+      ],
+      "runner": "build/smoke/three_ops",
+      "runner_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "args": [
+        "matmul",
+        "1536",
+        "1792",
+        "16"
+      ],
+      "outputs": [
+        {
+          "op": "matmul",
+          "shape": [
+            1536,
+            1792,
+            16
+          ],
+          "attrs": {},
+          "dt": null,
+          "indices": [
+            0
+          ],
+          "dt_us": 4.680121974694616,
+          "dt_status": "extrapolated",
+          "dt_aic": 32,
+          "dt_aiv": 0,
+          "pr_us": 4.818413248047748,
+          "pr_status": "extrapolated",
+          "pr_aic": 28,
+          "pr_aiv": 0,
+          "future_us": 3.489993058703357,
+          "future_status": "extrapolated",
+          "future_aic": 112,
+          "future_aiv": 0,
+          "old_dt_us": 6.499590712142864,
+          "old_pr_us": 8.870699034731146
+        }
+      ],
+      "batch": null,
+      "nchecks": 1,
+      "kernels": 1,
+      "rank": 7,
+      "wall_s": 440,
+      "raw_mib": 1800
+    },
+    {
+      "id": "quant_384_4096",
+      "op": "quant",
+      "shape": [
+        384,
+        4096
+      ],
+      "runner": "build/smoke/three_ops",
+      "runner_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "args": [
+        "quant",
+        "384",
+        "4096"
+      ],
+      "outputs": [
+        {
+          "op": "quant",
+          "shape": [
+            384,
+            4096
+          ],
+          "attrs": {},
+          "dt": null,
+          "indices": [
+            0
+          ],
+          "dt_us": 5.895342203720898,
+          "dt_status": "extrapolated",
+          "dt_aic": 0,
+          "dt_aiv": 64,
+          "pr_us": 7.469091092416649,
+          "pr_status": "extrapolated",
+          "pr_aic": 0,
+          "pr_aiv": 56,
+          "future_us": 5.008934530067317,
+          "future_status": "extrapolated",
+          "future_aic": 0,
+          "future_aiv": 110,
+          "old_dt_us": 6.356715189138216,
+          "old_pr_us": 8.578256570862893
+        }
+      ],
+      "batch": null,
+      "nchecks": 1,
+      "kernels": 1,
+      "rank": 7,
+      "wall_s": 440,
+      "raw_mib": 3500
+    },
+    {
+      "id": "fa_9_3072_64_1_1",
+      "op": "fa",
+      "shape": [
+        9,
+        3072,
+        64,
+        1,
+        1
+      ],
+      "runner": "build/smoke/three_ops",
+      "runner_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "args": [
+        "fa",
+        "9",
+        "3072",
+        "64",
+        "1",
+        "1"
+      ],
+      "outputs": [
+        {
+          "op": "fa",
+          "shape": [
+            9,
+            3072,
+            64,
+            1,
+            1
+          ],
+          "attrs": {},
+          "dt": null,
+          "indices": [
+            0
+          ],
+          "dt_us": 16.3796260611164,
+          "dt_status": "extrapolated",
+          "dt_aic": 1,
+          "dt_aiv": 2,
+          "pr_us": 16.380409324993355,
+          "pr_status": "extrapolated",
+          "pr_aic": 1,
+          "pr_aiv": 2,
+          "future_us": 15.035680938587143,
+          "future_status": "extrapolated",
+          "future_aic": 1,
+          "future_aiv": 1,
+          "old_dt_us": 16.379626061116397,
+          "old_pr_us": 16.38040932499335
+        }
+      ],
+      "batch": null,
+      "nchecks": 1,
+      "kernels": 1,
+      "rank": 7,
+      "wall_s": 440,
+      "raw_mib": 1800
+    },
+    {
+      "id": "matmul_1024_2304_16",
+      "op": "matmul",
+      "shape": [
+        1024,
+        2304,
+        16
+      ],
+      "runner": "build/smoke/three_ops",
+      "runner_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "args": [
+        "matmul",
+        "1024",
+        "2304",
+        "16"
+      ],
+      "outputs": [
+        {
+          "op": "matmul",
+          "shape": [
+            1024,
+            2304,
+            16
+          ],
+          "attrs": {},
+          "dt": null,
+          "indices": [
+            0
+          ],
+          "dt_us": 4.531176520149162,
+          "dt_status": "extrapolated",
+          "dt_aic": 32,
+          "dt_aiv": 0,
+          "pr_us": 4.648189871424371,
+          "pr_status": "extrapolated",
+          "pr_aic": 28,
+          "pr_aiv": 0,
+          "future_us": 3.44990777737984,
+          "future_status": "extrapolated",
+          "future_aic": 108,
+          "future_aiv": 0,
+          "old_dt_us": 6.499590712142864,
+          "old_pr_us": 8.308961891874004
+        }
+      ],
+      "batch": null,
+      "nchecks": 1,
+      "kernels": 1,
+      "rank": 8,
+      "wall_s": 440,
+      "raw_mib": 1800
+    },
+    {
+      "id": "quant_512_5120",
+      "op": "quant",
+      "shape": [
+        512,
+        5120
+      ],
+      "runner": "build/smoke/three_ops",
+      "runner_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "args": [
+        "quant",
+        "512",
+        "5120"
+      ],
+      "outputs": [
+        {
+          "op": "quant",
+          "shape": [
+            512,
+            5120
+          ],
+          "attrs": {},
+          "dt": {
+            "op": "quant",
+            "shape": [
+              512,
+              5120
+            ],
+            "attrs": {},
+            "chip": "Ascend950DT_9582",
+            "ca_us": 6.298788073472679,
+            "kernel": "DynamicMxQuant_bf16toe4m3_high_performance_33_mix_aiv",
+            "api": "aclnnDynamicMxQuant",
+            "correctness": [
+              "correctness quant_elements=2621440 scale_elements=81920 bad=0 comparison=exact_bytes"
+            ],
+            "active_aic": 0,
+            "active_aiv": 64,
+            "trace": "results/v0.4/dataset.json",
+            "trace_sha256": "25c24f660610696bea14e099e65c7dfc8afe04da475f7a480ad2ec9a6c1efd85",
+            "cost": {},
+            "role": "reused DT qualified archive",
+            "calibration_source": "results/v0.12/evaluation.json"
+          },
+          "indices": [
+            0
+          ],
+          "dt_us": 6.5638256767652905,
+          "dt_status": "extrapolated",
+          "dt_aic": 0,
+          "dt_aiv": 64,
+          "pr_us": 9.048703244757162,
+          "pr_status": "extrapolated",
+          "pr_aic": 0,
+          "pr_aiv": 54,
+          "future_us": 5.864094337950928,
+          "future_status": "extrapolated",
+          "future_aic": 0,
+          "future_aiv": 120,
+          "old_dt_us": 6.949507295732211,
+          "old_pr_us": 9.741063377009391
+        }
+      ],
+      "batch": null,
+      "nchecks": 1,
+      "kernels": 1,
+      "rank": 8,
+      "wall_s": 440,
+      "raw_mib": 3500
+    },
+    {
+      "id": "fa_9_8191_64_1_1",
+      "op": "fa",
+      "shape": [
+        9,
+        8191,
+        64,
+        1,
+        1
+      ],
+      "runner": "build/smoke/three_ops",
+      "runner_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "args": [
+        "fa",
+        "9",
+        "8191",
+        "64",
+        "1",
+        "1"
+      ],
+      "outputs": [
+        {
+          "op": "fa",
+          "shape": [
+            9,
+            8191,
+            64,
+            1,
+            1
+          ],
+          "attrs": {},
+          "dt": null,
+          "indices": [
+            0
+          ],
+          "dt_us": 26.723925618690295,
+          "dt_status": "extrapolated",
+          "dt_aic": 1,
+          "dt_aiv": 2,
+          "pr_us": 26.72470888256725,
+          "pr_status": "extrapolated",
+          "pr_aic": 1,
+          "pr_aiv": 2,
+          "future_us": 24.517955533029884,
+          "future_status": "extrapolated",
+          "future_aic": 1,
+          "future_aiv": 1,
+          "old_dt_us": 26.72392561869029,
+          "old_pr_us": 26.724708882567246
+        }
+      ],
+      "batch": null,
+      "nchecks": 1,
+      "kernels": 1,
+      "rank": 8,
+      "wall_s": 440,
+      "raw_mib": 1800
+    },
+    {
+      "id": "matmul_1280_2048_16",
+      "op": "matmul",
+      "shape": [
+        1280,
+        2048,
+        16
+      ],
+      "runner": "build/smoke/three_ops",
+      "runner_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "args": [
+        "matmul",
+        "1280",
+        "2048",
+        "16"
+      ],
+      "outputs": [
+        {
+          "op": "matmul",
+          "shape": [
+            1280,
+            2048,
+            16
+          ],
+          "attrs": {},
+          "dt": null,
+          "indices": [
+            0
+          ],
+          "dt_us": 4.630473489846132,
+          "dt_status": "extrapolated",
+          "dt_aic": 32,
+          "dt_aiv": 0,
+          "pr_us": 4.7616721225066225,
+          "pr_status": "extrapolated",
+          "pr_aic": 28,
+          "pr_aiv": 0,
+          "future_us": 3.481254925370024,
+          "future_status": "extrapolated",
+          "future_aic": 112,
+          "future_aiv": 0,
+          "old_dt_us": 6.499590712142864,
+          "old_pr_us": 8.683453320445432
+        }
+      ],
+      "batch": null,
+      "nchecks": 1,
+      "kernels": 1,
+      "rank": 9,
+      "wall_s": 440,
+      "raw_mib": 1800
+    },
+    {
+      "id": "quant_576_7168",
+      "op": "quant",
+      "shape": [
+        576,
+        7168
+      ],
+      "runner": "build/smoke/three_ops",
+      "runner_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "args": [
+        "quant",
+        "576",
+        "7168"
+      ],
+      "outputs": [
+        {
+          "op": "quant",
+          "shape": [
+            576,
+            7168
+          ],
+          "attrs": {},
+          "dt": {
+            "op": "quant",
+            "shape": [
+              576,
+              7168
+            ],
+            "attrs": {},
+            "chip": "Ascend950DT_9582",
+            "ca_us": 7.757575757575758,
+            "kernel": "entry_kernel_21",
+            "api": "aclnnDynamicMxQuant",
+            "correctness": [
+              "quant_elements=4128768 scale_elements=129024 bad=0 comparison=exact_bytes"
+            ],
+            "active_aic": 0,
+            "active_aiv": 64,
+            "trace": "results/v0.8/core/quant_576_7168-retry.json",
+            "trace_sha256": "6540195feeb71fdcdc6470ca176e2bc55385cc423015d039f5dc5f2b426e391a",
+            "cost": null,
+            "role": "reused DT qualified archive",
+            "calibration_source": "results/v0.12/evaluation.json"
+          },
+          "indices": [
+            0
+          ],
+          "dt_us": 7.4057221422331585,
+          "dt_status": "extrapolated",
+          "dt_aic": 0,
+          "dt_aiv": 64,
+          "pr_us": 12.316772335780174,
+          "pr_status": "extrapolated",
+          "pr_aic": 0,
+          "pr_aiv": 56,
+          "future_us": 6.524499169807763,
+          "future_status": "extrapolated",
+          "future_aic": 0,
+          "future_aiv": 120,
+          "old_dt_us": 8.004180498521588,
+          "old_pr_us": 12.740425580656087
+        }
+      ],
+      "batch": null,
+      "nchecks": 1,
+      "kernels": 1,
+      "rank": 9,
+      "wall_s": 440,
+      "raw_mib": 3500
+    },
+    {
+      "id": "fa_9_16384_64_1_1",
+      "op": "fa",
+      "shape": [
+        9,
+        16384,
+        64,
+        1,
+        1
+      ],
+      "runner": "build/smoke/three_ops",
+      "runner_sha256": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+      "args": [
+        "fa",
+        "9",
+        "16384",
+        "64",
+        "1",
+        "1"
+      ],
+      "outputs": [
+        {
+          "op": "fa",
+          "shape": [
+            9,
+            16384,
+            64,
+            1,
+            1
+          ],
+          "attrs": {},
+          "dt": null,
+          "indices": [
+            0
+          ],
+          "dt_us": 43.27480491080852,
+          "dt_status": "extrapolated",
+          "dt_aic": 1,
+          "dt_aiv": 2,
+          "pr_us": 43.275588174685474,
+          "pr_status": "extrapolated",
+          "pr_aic": 1,
+          "pr_aiv": 2,
+          "future_us": 39.68959488413826,
+          "future_status": "extrapolated",
+          "future_aic": 1,
+          "future_aiv": 1,
+          "old_dt_us": 43.27480491080852,
+          "old_pr_us": 43.275588174685474
+        }
+      ],
+      "batch": null,
+      "nchecks": 1,
+      "kernels": 1,
+      "rank": 9,
+      "wall_s": 440,
+      "raw_mib": 1800
+    }
+  ],
+  "references": {
+    "MANIFEST.in": "3e684f50f55e0a9b0872e6b21b51b9c9dce70161c72036a613116ceea51f9dc2",
+    "results/v0.12/evaluation.json": "b7ac17c81f0a7ef7604e8787f1b66f462de97209524f2ea5c26de44a42b020b8",
+    "operator_model/chips.py": "f6502c6972205770b6a7ac7a4782b754b3b0c377aaaee2768e18a85558966960",
+    "operator_model/addmm_v9.py": "cba81374c9abe6991020463b63b5b24d9fc52be917a694471f1c4710aad736d4",
+    "operator_model/cube_transfer_v14.py": "ddd7a381d0e5f20ed48a97130d6c5e180077bfdc7129b326e9e5b9eb6205ed5d",
+    "operator_model/model_v6.py": "36350794a002fee6650baf9ca270240dc99391aa9d5397d81d074124cb9b89c6",
+    "operator_model/workload.py": "9e396214f5537b62ce7f1bec09381409bd347c82cae67c3922519a673d0bf9cd",
+    "operator_model/transfer.py": "af3e04282b93a8939e46db385bfeb25a3216df0b8e21aeae0e5c0f130dfa9a3b",
+    "operator_model/cube_v8.py": "c9594e4c86943cd437698261221979e4b953342dfcc556289f84fb6795dd9dc1",
+    "operator_model/quant_resource.py": "434f39aea75655fc83503b685edfb91856e90e5651b795107cd4d72e042f5421",
+    "operator_model/vector_v9.py": "fc8dd88a971d79af3144ef6c06660af701b4343d64d0fbeaca73bb598b86ad3f",
+    "operator_model/post_v12.py": "57c506e8926152f85116ef7604c5f4248877e54b46751a8adcc0c0b3b1b9264d",
+    "operator_model/ca.py": "150e55d09622a2ae1a96f2dceeb0cd95909124c1655876a976db863388e584ee",
+    "operator_model/cube_v8_chunk.py": "eead713ba225c10c6e246b4823d010315ab1d5e555ae3e507f0016b78a5fe35a",
+    "operator_model/quant_scale.py": "05d3004fd4689a6e2766c7073bab7bc3ddae6f45d1b74d70d5c8a5589824f64b",
+    "operator_model/target_tiling.py": "3b244b8b0a61e3ed6c139123b2c87e1474da2bac3efd647f01e2b82e71a93b4b",
+    "operator_model/fa_resource.py": "3863160a63f920a8c751152a268828ebee44bbca7b7ee55e386bc6d5d124dced",
+    "operator_model/fast_query.py": "e885a4fc425be7f15254d11517745dbf22591188dbe879c8877d321cccb07a07",
+    "operator_model/vector_v8.py": "795b5e02e6950fe76f721003073fcc037309c6ed7b4953ff46207d69b7c6f059",
+    "operator_model/model_v2.py": "2787965e6c7acf40adbf2f46e2f9d53a30041db2a6715e314b6e3fe66c799b8a",
+    "operator_model/mhc_v9.py": "936e5e37c485b1bff1e184c48c72cd8783f6070a83800548c89fe3be8c1d64b8",
+    "operator_model/evaluation_v6.py": "1ec481ae98f8114aedddb85fab4ad5647dba83aa1bc39bf973768cda90144e01",
+    "operator_model/predictor.py": "a3bd93f7ccece3ec54029071ed1148a985648529f21f807a988de62aa934a621",
+    "operator_model/quant_transfer_v14.py": "a002eb2dbadbd807a7140d77a3eef6e5ab96493905f26d57307d5f92528bad76",
+    "operator_model/backend.py": "c3f44f345b92cc18050259517b34ced25d27d4cad9925c1f6ccda1d7fbe743aa",
+    "operator_model/npusim_v7.py": "a86cccf40dabd0c395c8e0978e2e81d0a14ca753cfca79a5e50495cdff877943",
+    "operator_model/fa_transfer_v15.py": "a7c1da012d55ab365345de1a8765ced096fb70cd1f2e7bbfe24b98b78cd313aa",
+    "operator_model/rms_v11.py": "5ef2b57c980d98e7acbd63c1e13b7634b79fa079ffa78164d594ce10ab6a7f93",
+    "operator_model/model_v5.py": "a4c30335bb723f7938e18bf3cc0cec0c924205523df9eee9452750888790fe51",
+    "operator_model/matmul_v15.py": "c5edb6d59c184f63db0d1208cdec38a79368d4f6eb246cb077ed0faba069fa02",
+    "operator_model/npusim.py": "0575d640b45097f29f3407eb29cdce08b54fac80c1149748e5ec14a7397e0bb0",
+    "operator_model/model.py": "14d432302e3b6f43e3b6546ac150df2fa33a560fbd606fd02e8aac4682407500",
+    "operator_model/mechanism.py": "89aa7f4f12a942d1f072b63e39092edf88db827cb3dc81446cfc83df5f14c284",
+    "operator_model/fusion_v8.py": "d8f70aa9f0bbd69f3a1da83ba9abf8039020e8c4f5d7741e942cb6f1ddd020b8",
+    "operator_model/matmul_resource.py": "0483308e583d11f472b43316bed9e79f5114cbb975a0613e73126df2fbcb05b0",
+    "operator_model/post_v11.py": "9b6898f1730fc0812f18c3bc229a5ae16c4c07b08d4562b7e0c5afb1717e9425",
+    "operator_model/model_v7.py": "656681ee0b9c12e1a66314cf7300b8da3468baed76590106bdcb25a27eaf354d",
+    "operator_model/__main__.py": "7f1e32fc47ab36102b7373131c1a6856bc60f32b3afc46867f0872bceb207892",
+    "operator_model/__init__.py": "2f4378df58bf79337c945b4dbaff234d34cc59456de19ca6ae09c924fafda2ec",
+    "operator_model/matmul_waves.py": "97f615daae6563e51df26591565909d8bea044c3b72bf5f67bb8aa1e6b5b292b",
+    "operator_model/quant_repeat.py": "4b83ff3840be3438ea5996868c51948ff7adaccd14d96fc4d702285270c3b281",
+    "operator_model/evaluation_v5.py": "f82fc3de93f8af31b0a84bf36fcd371ba3d0dcc7d8e75c19b5a2949fcfa5f87e",
+    "operator_model/wide_v10.py": "8b89296b26c00dbdc5994ddaca7ce52e15f240309a5d2212b21449a81aa3e292",
+    "operator_model/model_v3.py": "fe9f2fc7bcdcfc3aeb1a2024297cbbbd3d8337c096c53a36e0e947dd3626cf69",
+    "operator_model/rms_v12.py": "38241f13a5447d41f73ed1247580116bcb0729fa3ac2459469c08ba92a978ba9",
+    "operator_model/model_v4.py": "d3d9bba8a22d445efa739b5e3f87f5d2f98d468b094da06420cdb052864e4d07",
+    "configs/hardware-950dt-v7.json": "14cc5ccd368023bf2452c74f6ba9d5ae7b66b1d0611baea1e640d96eeb947b3c",
+    "results/v0.2/model.json": "3760fa88897e80bc9008ed40936f3bb08e9a780827aba22c137a131cdb06ed2f",
+    "results/v0.6/model.json": "bad9ec3eb0fb313b6e16d37487433d626c008331d4aabdf8a4dc37751e28cf23",
+    "results/v0.7/model.json": "672f99013218b27fae2019eb1e5b31662065bd1d78ece3d95009e92f4eabc6b5",
+    "results/v0.8/cube/control.json": "dc93c95eaea1d7eac8216764ffcec5f4a338f708dbe0432ab214baa89505dfff",
+    "results/v0.8/fusion/model.json": "8684a4254e7b53b7bb8f6ced2a7b934b1a19c59c71a814d01e204079560ca4a8",
+    "results/v0.8/vector/profile.json": "6a7c79206f7fa7064f172af066d0a29b9b88be6512eaec6d06d49fcba1cd284f",
+    "results/v0.9/addmm/profile.json": "b45e7d961b1e4409d77ee9dafaa381776d7628633b05ff7745267ca3bb8c4d12",
+    "results/v0.9/mhc/model.json": "607ab3a564e31f01aa57dbf0ecd2f394cdfc9757b5b348743f74d7dc5d31121d",
+    "results/v0.9/vector/profile.json": "820288d7748297a835f12f277758f83ca6360c192570c76f05442fa5abd8a4b9",
+    "results/v0.10/wide/profile.json": "c8a62e92c3a28965b090ac550ed00cd03e47eb64f54e969cf00ca21eb8baf755",
+    "results/v0.11/rms/profile.json": "8f90ffdaa07fab808cbf60933b341150c1feaf995334c28bae531383ca1f8769",
+    "results/v0.11/post/profile.json": "2e977b24be6b6cdd756d2aace54d71f9897c9675c340b0d8a5a502b559bada27",
+    "results/v0.12/rms/profile.json": "64fe2993bafcf4f2752a1c05e4ca66bcd00c8f7634e5822684cf4b1244d68417",
+    "results/v0.12/post/profile.json": "04a00fa0004f2bae7d795aa0535741e83347e2278b2fa42d2d182d10deedb558",
+    "configs/chips/Ascend950DT_9582.json": "01bbc6755b2ea1055ce9096313e0b72515ce81fd8bdd9a4d84993555dc4c0642",
+    "configs/chips/Ascend950PR_957b.json": "6d1df9ecf419700d53fcb14ac2b884443aed7783a977c9a83ff6b3adee6bce2a",
+    "results/v0.14/quant-phases.json": "1ff456cc028c9b3897a382993d478a19e80bf71ad04277099cdad9ab76911dbb",
+    "results/v0.14/cube-phases.json": "95932d007a01b99b688bfa6431e7e47e385fb8185865dd065cbfc1ccf29a1fd3",
+    "results/v0.15/fa-phases.json": "a34308dfc9f9f73366d3a9b3d23756c65490e891649817348faca286a0381ff0",
+    "results/v0.16/quant.json": "57cc007dd8d2846c7f10e4fd3e9842b9ce0a30b59e7df06691b536768a67ecfa",
+    "results/v0.16/matmul.json": "b37e9148aeb14d90ae744e966337556d9adf269066bf281d12984f282078546b",
+    "results/v0.16/fa.json": "74e5010eeb242a6757db1947576c3d8800aa7c4941cbc401c370d875ad8f215b",
+    "configs/chips/Ascend970DT.json": "837796ec9f3b39888950cfe6f703b63c4bf9ced22a366b66f300f1389a8006f2",
+    "results/v0.17/quant.json": "3d24e9d0b026ec9383912928ac8752aac5ff2a0c219be50b2add1c1be4a0228a"
+  },
+  "workers": 4,
+  "total_wall_s": 4800,
+  "total_raw_gib": 32
+}

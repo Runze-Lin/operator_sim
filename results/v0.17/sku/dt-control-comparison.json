@@ -1,0 +1,356 @@
+[
+  {
+    "op": "mhc",
+    "id": "mhc_1_4_128",
+    "shape": [
+      1,
+      4,
+      128
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "implementation": "split",
+      "num_iters": 20
+    },
+    "dt_archived_us": 15.97030303030303,
+    "dt_msopprof_us": 15.768485554493964,
+    "relative_vs_archive": -0.012637047363855625,
+    "archive_backend": "npusim compact",
+    "archive_context": "same serialized chain",
+    "archive_trace": [
+      "runs/model-v7/mhc_v7_1/profile/npusim_20261117193828_extension_indexer_mhc/record/0000_entry_kernel_2.db",
+      "runs/model-v7/mhc_v7_1/profile/npusim_20261117193828_extension_indexer_mhc/record/0001_entry_kernel_0.db",
+      "runs/model-v7/mhc_v7_1/profile/npusim_20261117193828_extension_indexer_mhc/record/0002_entry_kernel_5.db"
+    ],
+    "official_trace": [
+      "runs/sku17/extension/mhc_1_4_128_Ascend950DT_9582-recovery/profile/OPPROF_20261119115901_PLVGANNIUCDXQSGN/MhcPre_52e042c374f575edbe357a32523dba2c_2_mix_aic/0/simulator/trace.json",
+      "runs/sku17/extension/mhc_1_4_128_Ascend950DT_9582-recovery/profile/OPPROF_20261119115901_PLVGANNIUCDXQSGN/MhcSinkhorn_8997d9c5c22e82688b98bc25d8daa9cd_0/0/simulator/trace.json",
+      "runs/sku17/extension/mhc_1_4_128_Ascend950DT_9582-recovery/profile/OPPROF_20261119115901_PLVGANNIUCDXQSGN/MhcPost_59130ccee6717ff2c0f15b485e731162_5/0/simulator/trace.json"
+    ],
+    "old_kernel": "entry_kernel_2+entry_kernel_0+entry_kernel_5",
+    "new_kernel": "MhcPre_52e042c374f575edbe357a32523dba2c_2_mix_aic+MhcSinkhorn_8997d9c5c22e82688b98bc25d8daa9cd_0+MhcPost_59130ccee6717ff2c0f15b485e731162_5",
+    "comparison_scope": "single historical DT capture compared with fresh same-argv/msopprof DT; cannot transfer a correction factor to other shapes"
+  },
+  {
+    "op": "mhc_pre",
+    "id": "mhc_1_4_128",
+    "shape": [
+      1,
+      4,
+      128
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "alpha_count": 3,
+      "has_gamma": false,
+      "return_intermediates": true
+    },
+    "dt_archived_us": 8.270909090909091,
+    "dt_msopprof_us": 7.878787520341575,
+    "relative_vs_archive": -0.047409730448919274,
+    "archive_backend": "npusim compact",
+    "archive_context": "archived application",
+    "archive_trace": [
+      "runs/model-v7/mhc_pre_v7_1/profile/npusim_20261117193241_extension_indexer_mhc/record/0000_entry_kernel_2.db"
+    ],
+    "official_trace": [
+      "runs/sku17/extension/mhc_1_4_128_Ascend950DT_9582-recovery/profile/OPPROF_20261119115901_PLVGANNIUCDXQSGN/MhcPre_52e042c374f575edbe357a32523dba2c_2_mix_aic/0/simulator/trace.json"
+    ],
+    "old_kernel": "entry_kernel_2",
+    "new_kernel": "MhcPre_52e042c374f575edbe357a32523dba2c_2_mix_aic",
+    "comparison_scope": "single historical DT capture compared with fresh same-argv/msopprof DT; cannot transfer a correction factor to other shapes"
+  },
+  {
+    "op": "moe_ffn",
+    "id": "moe_ffn_2_64_64_1",
+    "shape": [
+      2,
+      64,
+      64,
+      1
+    ],
+    "attrs": {
+      "expert_counts": [
+        2
+      ]
+    },
+    "dt_archived_us": 10.252727272727274,
+    "dt_msopprof_us": 10.195151810534298,
+    "relative_vs_archive": -0.00561562408337235,
+    "archive_backend": "npusim compact",
+    "archive_context": "same serialized chain",
+    "archive_trace": [
+      "runs/model-v7/moe_cal_e1_chain_r3/profile/npusim_20261117200123_extension_moe/record/0000_entry_kernel_0.db",
+      "runs/model-v7/moe_cal_e1_chain_r3/profile/npusim_20261117200123_extension_moe/record/0001_entry_kernel_0.db"
+    ],
+    "official_trace": [
+      "runs/sku17/extension/moe_ffn_2_64_64_1_Ascend950DT_9582-recovery/profile/OPPROF_20261119115901_YQNXPZJBYQDPGEBM/GroupedMatmulSwigluQuantV2_201ac99772cea936e22117f5ac241d38_0_mix_aic/0/simulator/trace.json",
+      "runs/sku17/extension/moe_ffn_2_64_64_1_Ascend950DT_9582-recovery/profile/OPPROF_20261119115901_YQNXPZJBYQDPGEBM/GroupedMatmul_037cec40685a17f15b75759e999767c3_0/0/simulator/trace.json"
+    ],
+    "old_kernel": "entry_kernel_0+entry_kernel_0",
+    "new_kernel": "GroupedMatmulSwigluQuantV2_201ac99772cea936e22117f5ac241d38_0_mix_aic+GroupedMatmul_037cec40685a17f15b75759e999767c3_0",
+    "comparison_scope": "single historical DT capture compared with fresh same-argv/msopprof DT; cannot transfer a correction factor to other shapes"
+  },
+  {
+    "op": "grouped_matmul_swiglu_quant_v2",
+    "id": "moe_ffn_2_64_64_1",
+    "shape": [
+      2,
+      64,
+      64,
+      1
+    ],
+    "attrs": {
+      "expert_counts": [
+        2
+      ]
+    },
+    "dt_archived_us": 7.004848484848485,
+    "dt_msopprof_us": 7.104848387185484,
+    "relative_vs_archive": 0.014275812325319936,
+    "archive_backend": "npusim compact",
+    "archive_context": "same serialized chain",
+    "archive_trace": [
+      "runs/model-v7/moe_cal_e1_chain_r3/profile/npusim_20261117200123_extension_moe/record/0000_entry_kernel_0.db"
+    ],
+    "official_trace": [
+      "runs/sku17/extension/moe_ffn_2_64_64_1_Ascend950DT_9582-recovery/profile/OPPROF_20261119115901_YQNXPZJBYQDPGEBM/GroupedMatmulSwigluQuantV2_201ac99772cea936e22117f5ac241d38_0_mix_aic/0/simulator/trace.json"
+    ],
+    "old_kernel": "entry_kernel_0",
+    "new_kernel": "GroupedMatmulSwigluQuantV2_201ac99772cea936e22117f5ac241d38_0_mix_aic",
+    "comparison_scope": "single historical DT capture compared with fresh same-argv/msopprof DT; cannot transfer a correction factor to other shapes"
+  },
+  {
+    "op": "gmm2",
+    "id": "moe_ffn_2_64_64_1",
+    "shape": [
+      2,
+      64,
+      64,
+      1
+    ],
+    "attrs": {
+      "expert_counts": [
+        2
+      ]
+    },
+    "dt_archived_us": 3.247878787878788,
+    "dt_msopprof_us": 3.0903034233488142,
+    "relative_vs_archive": -0.048516393258902224,
+    "archive_backend": "npusim compact",
+    "archive_context": "same serialized chain",
+    "archive_trace": [
+      "runs/model-v7/moe_cal_e1_chain_r3/profile/npusim_20261117200123_extension_moe/record/0001_entry_kernel_0.db"
+    ],
+    "official_trace": [
+      "runs/sku17/extension/moe_ffn_2_64_64_1_Ascend950DT_9582-recovery/profile/OPPROF_20261119115901_YQNXPZJBYQDPGEBM/GroupedMatmul_037cec40685a17f15b75759e999767c3_0/0/simulator/trace.json"
+    ],
+    "old_kernel": "entry_kernel_0",
+    "new_kernel": "GroupedMatmul_037cec40685a17f15b75759e999767c3_0",
+    "comparison_scope": "single historical DT capture compared with fresh same-argv/msopprof DT; cannot transfer a correction factor to other shapes"
+  },
+  {
+    "op": "mhc_pre_sinkhorn",
+    "id": "mhc_pre_sinkhorn_1_4_4096",
+    "shape": [
+      1,
+      4,
+      4096
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "num_iters": 20,
+      "need_backward": false
+    },
+    "dt_archived_us": 9.700606060606061,
+    "dt_msopprof_us": 10.108484986238182,
+    "relative_vs_archive": 0.04204674667580899,
+    "archive_backend": "npusim compact",
+    "archive_context": "archived application",
+    "archive_trace": [
+      "runs/model-v7/mhc_pre_sinkhorn_v7_1_r3/profile/npusim_20261117195814_extension_indexer_mhc/record/0000_entry_kernel_3e8.db"
+    ],
+    "official_trace": [
+      "runs/sku17/extension/mhc_pre_sinkhorn_1_4_4096_Ascend950DT_9582/profile/OPPROF_20261119112939_MPYYQHZYIRTBWOCH/simulator/trace.json"
+    ],
+    "old_kernel": "entry_kernel_3e8",
+    "new_kernel": "MhcPreSinkhorn_bd8e37c67f2294e1437f03bb2bace96c_1000_mix_aic",
+    "comparison_scope": "single historical DT capture compared with fresh same-argv/msopprof DT; cannot transfer a correction factor to other shapes"
+  },
+  {
+    "op": "lightning_indexer",
+    "id": "lightning_indexer_1_1_512_8_128",
+    "shape": [
+      1,
+      1,
+      512,
+      8,
+      128
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "layout": "BSND",
+      "sparse_count": 512,
+      "sparse_mode": 3,
+      "return_values": false
+    },
+    "dt_archived_us": 6.093333333333334,
+    "dt_msopprof_us": 5.862424376420677,
+    "relative_vs_archive": -0.037895343038182205,
+    "archive_backend": "npusim compact",
+    "archive_context": "archived application",
+    "archive_trace": [
+      "runs/model-v7/lightning_indexer_v7_1/profile/npusim_20261117193052_extension_indexer_mhc/record/0000_entry_kernel_31b1b.db"
+    ],
+    "official_trace": [
+      "runs/sku17/extension/lightning_indexer_1_1_512_8_128_Ascend950DT_9582/profile/OPPROF_20261119112939_ENLFEHGPXOKMRWZV/simulator/trace.json"
+    ],
+    "old_kernel": "entry_kernel_31b1b",
+    "new_kernel": "LightningIndexer_2517851d7f53b28f971ff94bfa4b7037_203547_mix_aic",
+    "comparison_scope": "single historical DT capture compared with fresh same-argv/msopprof DT; cannot transfer a correction factor to other shapes"
+  },
+  {
+    "op": "rmsnorm",
+    "id": "rmsnorm_9_5120",
+    "shape": [
+      9,
+      5120
+    ],
+    "attrs": {},
+    "dt_archived_us": 4.1884848484848485,
+    "dt_msopprof_us": 4.1612122086808085,
+    "relative_vs_archive": -0.006511337820382823,
+    "archive_backend": "npusim compact",
+    "archive_context": "archived application",
+    "archive_trace": [
+      "runs/model-v7/r7_cal_wide/profile/npusim_20261117192539_extension_norm_addmm/record/0000_entry_kernel_1388.db"
+    ],
+    "official_trace": [
+      "runs/sku17/extension/rmsnorm_9_5120_Ascend950DT_9582/profile/OPPROF_20261119115508_KAVJGGUDJUJKOBLO/simulator/trace.json"
+    ],
+    "old_kernel": "entry_kernel_1388",
+    "new_kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+    "comparison_scope": "single historical DT capture compared with fresh same-argv/msopprof DT; cannot transfer a correction factor to other shapes"
+  },
+  {
+    "op": "addmm",
+    "id": "addmm_16_64_256",
+    "shape": [
+      16,
+      64,
+      256
+    ],
+    "attrs": {
+      "self_shape": [
+        64
+      ],
+      "alpha": 1,
+      "beta": 1
+    },
+    "dt_archived_us": 3.4466666666666668,
+    "dt_msopprof_us": 3.587878704071045,
+    "relative_vs_archive": 0.040970610465487,
+    "archive_backend": "npusim compact",
+    "archive_context": "archived application",
+    "archive_trace": [
+      "runs/model-v7/a7_cal_k256/profile/npusim_20261117193011_extension_norm_addmm/record/0000_entry_kernel_2.db"
+    ],
+    "official_trace": [
+      "runs/sku17/extension/addmm_16_64_256_Ascend950DT_9582/profile/OPPROF_20261119115508_TGBKKSMEOOSVCDGX/simulator/trace.json"
+    ],
+    "old_kernel": "entry_kernel_2",
+    "new_kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+    "comparison_scope": "single historical DT capture compared with fresh same-argv/msopprof DT; cannot transfer a correction factor to other shapes"
+  },
+  {
+    "op": "mhc_post",
+    "id": "mhc_post_1_4_128",
+    "shape": [
+      1,
+      4,
+      128
+    ],
+    "attrs": {
+      "dtype": "bf16",
+      "has_h_res": true
+    },
+    "dt_archived_us": 4.6460606060606064,
+    "dt_msopprof_us": 4.752121451310813,
+    "relative_vs_archive": 0.022828123488500163,
+    "archive_backend": "npusim compact",
+    "archive_context": "archived application",
+    "archive_trace": [
+      "runs/model-v7/mhc_post_v7_1/profile/npusim_20261117193656_extension_indexer_mhc/record/0000_entry_kernel_5.db"
+    ],
+    "official_trace": [
+      "runs/sku17/extension/mhc_post_1_4_128_Ascend950DT_9582/profile/OPPROF_20261119115639_BWTFIXWEDAIHIXLJ/simulator/trace.json"
+    ],
+    "old_kernel": "entry_kernel_5",
+    "new_kernel": "MhcPost_59130ccee6717ff2c0f15b485e731162_5",
+    "comparison_scope": "single historical DT capture compared with fresh same-argv/msopprof DT; cannot transfer a correction factor to other shapes"
+  },
+  {
+    "op": "mhc_sinkhorn",
+    "id": "mhc_sinkhorn_1_4",
+    "shape": [
+      1,
+      4
+    ],
+    "attrs": {
+      "dtype": "fp32",
+      "num_iters": 20,
+      "return_intermediates": false
+    },
+    "dt_archived_us": 6.296363636363636,
+    "dt_msopprof_us": 6.149090292863548,
+    "relative_vs_archive": -0.02339022204015262,
+    "archive_backend": "npusim compact",
+    "archive_context": "archived application",
+    "archive_trace": [
+      "runs/model-v7/mhc_sinkhorn_v7_1/profile/npusim_20261117193424_extension_indexer_mhc/record/0000_entry_kernel_0.db"
+    ],
+    "official_trace": [
+      "runs/sku17/extension/mhc_sinkhorn_1_4_Ascend950DT_9582/profile/OPPROF_20261119115645_XLXCDYOMXFWFBOAK/simulator/trace.json"
+    ],
+    "old_kernel": "entry_kernel_0",
+    "new_kernel": "MhcSinkhorn_8997d9c5c22e82688b98bc25d8daa9cd_0",
+    "comparison_scope": "single historical DT capture compared with fresh same-argv/msopprof DT; cannot transfer a correction factor to other shapes"
+  },
+  {
+    "op": "kda_recurrent",
+    "id": "kda_recurrent_1_1_1_1_128_128",
+    "shape": [
+      1,
+      1,
+      1,
+      1,
+      128,
+      128
+    ],
+    "attrs": {
+      "layout": "BSND",
+      "dtype": "BF16",
+      "gate_dtype": "FP32",
+      "state_dtype": "FP32",
+      "state_v_first": false,
+      "use_gate_in_kernel": false,
+      "chunk_size": null,
+      "output_final_state": true,
+      "export_gk": false
+    },
+    "dt_archived_us": 15.219393939393939,
+    "dt_msopprof_us": 14.833939078263938,
+    "relative_vs_archive": -0.025326557855387843,
+    "archive_backend": "npusim compact",
+    "archive_context": "archived application",
+    "archive_trace": [
+      "runs/model-v7/kda_recurrent_b1_s1_h1_k128_v128/profile/npusim_20261117192849_extension_kda/record/0000_entry_kernel_0.db"
+    ],
+    "official_trace": [
+      "runs/sku17/extension/kda_recurrent_1_1_1_1_128_128_Ascend950DT_9582/profile/OPPROF_20261119115735_RRKYQHKZVMOOVOLR/simulator/trace.json"
+    ],
+    "old_kernel": "entry_kernel_0",
+    "new_kernel": "RecurrentKda_06bba6860f70bfd6aa54df1d4ed1928e_0",
+    "comparison_scope": "single historical DT capture compared with fresh same-argv/msopprof DT; cannot transfer a correction factor to other shapes"
+  }
+]

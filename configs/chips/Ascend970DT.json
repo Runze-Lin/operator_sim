@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "name": "Ascend970DT",
+  "frequency_ghz": 1.8,
+  "cube_cores": 120,
+  "vector_cores": 120,
+  "cube_tops": {"32": null, "16": 1770, "8": 3540, "4": 14160},
+  "vector_tops": {"32": 55.296, "16": 110.592, "8": 110.592, "4": null},
+  "hbm_capacity_gb": 288,
+  "hbm_bandwidth_gbs": 14400,
+  "details": {
+    "l2_bytes": 200000000,
+    "l2_bandwidth_gbs": 30000,
+    "fa_aiv_per_aic": 1
+  },
+  "sources": {
+    "scope": "User-provided prospective architecture scenario, one scheduling domain. All 970DT timings are extrapolations; no target CA or measurements used.",
+    "cube_tops": "User scenario: dense 4-bit 14160 TOP/s with 16:8:4-bit ratio 1:2:8. Strict FP32 unspecified. Availability of a kernel for a given dtype is a separate contract.",
+    "cube_cores,vector_cores,frequency_ghz": "User scenario: 120 AIC and 120 AIV at 1.8 GHz.",
+    "vector_tops.16": "Assumed unchanged 950 vector datapath. 120 cores * 1.8 GHz * 128 scalar MAC per issue * 2 issues/cycle * 2 ops/MAC = 110.592 TFLOP/s. Dual issue is counted once.",
+    "vector_tops.32,vector_tops.8": "Assume the DT FP32:FP16:INT8 vector peak ratios 1:2:2 carry over. The 8-bit field represents INT8, not evidence for FP8 vector arithmetic.",
+    "hbm_capacity_gb,hbm_bandwidth_gbs,details.l2_bytes,details.l2_bandwidth_gbs": "User scenario: 288 decimal GB, 14.4 decimal TB/s; 200 decimal MB and 30 decimal TB/s aggregate L2 bandwidth.",
+    "details.ub_bytes,details.l1_bytes,details.l0a_bytes,details.l0b_bytes,details.l0c_bytes": "Unspecified per-core capacities inherit 950DT from the chip loader (UB 248 KiB).",
+    "mte": "Unspecified MTE1/2/3 use the applicable resource model's 950 effective per-core bytes/cycle and latency/issue defaults. Shared L2 and off-chip limits come from this config. Other operators retain the documented DT phase projection.",
+    "details.fa_aiv_per_aic": "FA implementation scenario: at most one vector worker per active Cube worker. Hardware core counts alone do not establish kernel binding. Set to 2 for pooled workers."
+  }
+}

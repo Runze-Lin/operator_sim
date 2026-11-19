@@ -8,7 +8,7 @@
 | 某个算子为什么需要这么久？不同 shape 如何改变结果？ | [建模方法：Vector、Cube、CV 三类流程，含逐算子公式与算例](docs/modeling-strategy.md) |
 | 哪些算子、shape 和库实现实测过？偏差多大？预测有多快？ | [CA 校验与误差：逐算子摘要、逐 shape 数据及查询墙钟](docs/error-analysis.md) |
 
-[RMSNorm 分块与 mHC Post 启动状态的独立校验](results/v0.12/audit/summary.md) 给出大 shape 的实际写回与耗时。固定宽度下逐级增大 token 的数据见[规模实验](results/v0.11/scaling/summary.md)。
+从具体输入开始看，可比较 [DynamicMXQuant 的 scale 写竞争](docs/examples/quant.md)、[Matmul 的多波分块](docs/examples/matmul.md)、[FA 的 Cube/Vector 绑定](docs/examples/fa.md)。[全部 16 条路线的算例入口](docs/modeling-strategy.md#逐算子算例)
 
 ## 试一次预测
 
@@ -19,7 +19,7 @@ python3 -m pip install .
 operator-sim --op rmsnorm --shape 9 7168
 ```
 
-要对另一款芯片做同一调用，可以在系统仿真器启动时加载芯片 JSON，然后在同一个进程反复调用后端。用内置 SKU 名也可以加载 950DT 或 950PR。以下示例输出一次本卡 Matmul 的微秒数、Cube 工作量、逻辑输入字节和计时状态。
+要对另一款芯片做同一调用，可以在系统仿真器启动时加载芯片 JSON，然后在同一个进程反复调用后端。可以按内置名加载 950DT、950PR 或 970DT 情景。以下示例输出一次本卡 Matmul 的微秒数、Cube 工作量、逻辑输入字节和计时状态。
 
 ```python
 from operator_model import estimate, load_chip
@@ -31,7 +31,9 @@ print(result.latency_us, result.work["cube_ops"], result.work["logical_read_byte
 
 **比较芯片架构时可显式指定 `timing_mode="resource"`。** Quant、Matmul 和 FA 会按目标配置重新决定分核、tile、读写字节、计算与流水时间。PR 和自定义配置的这三项默认使用该路径。其余算子的跨芯片估计沿用 DT 阶段投影。相同配置更换名称时，显式资源模型给出相同预测。[三条路线的资源公式与算例](docs/modeling-strategy.md) · [独立 PR 校验与误差](docs/error-analysis.md)
 
-维护 960、970、980 等架构情景时，每个目标使用一份 JSON，分别填写按位宽区分的两类算力、核数、频率、外存容量和带宽。提供的 120 Cube / 120 Vector 配置用于演示自定义输入。调用方通过 `extrapolated` 状态识别外推，并决定是否将其交给事件调度器。[自定义芯片示例](configs/chips/scenario-example.json) · [字段、单位和返回合同](docs/integration.md)
+维护 960、970、980 等架构情景时，每个目标使用一份 JSON，分别填写按位宽区分的两类算力、核数、频率、外存容量和带宽。内置 `Ascend970DT` 情景为 120 Cube / 120 Vector、1.8 GHz、288 GB、14.4 TB/s；其中 16 位 Vector 峰值 110.592 TOP/s 已含双发射。这些是架构假设。调用方通过 `extrapolated` 状态识别外推，并决定是否将其交给事件调度器。[970DT 配置及逐项来源](configs/chips/Ascend970DT.json) · [自定义芯片示例](configs/chips/scenario-example.json) · [字段、单位和返回合同](docs/integration.md)
+
+安装后的 v0.17 wheel 在源码目录外对 950DT、950PR、970DT 的 453 次公共接口查询中，中位 0.183 ms、P95 0.569 ms、最大 3.632 ms。模块导入另耗 39.20 ms。计时包括参数校验和结果构建，包含 3 次 KDA chunk 无时延的结构查询。[部署环境验证](results/v0.17/wheel-smoke.json)
 
 ## 可预测的算子
 
@@ -47,6 +49,6 @@ KDA chunk 可查询任务结构；其 CA 同步检查尚未通过，系统层应
 
 主要校准参考是 **Ascend950DT_9582（A5），CANN 9.2.1，32 AIC / 64 AIV，1.65 GHz**。参考值是安装包实际 kernel 在 CA Model 上从首条到末条设备指令的跨核时间窗；串行组合返回各窗口之和。主机 launch、卡间通信、排队及算子间并发由系统仿真器处理。报告的查询开销是运行预测器花费的真实墙钟时间，与 `predicted_us` 使用的是两条不同的时间轴。
 
-**Ascend950PR_957b** 上，三条资源路线各完成了 10 个新 shape 的冻结后验证。FA 的 WAPE 为 5.52%，Quant 为 12.18%，Matmul 为 27.57%。Matmul 的 8 个单波样例为 7.50%，2 个薄 K 多波样例因跨波重叠估计不足达到 95.58%。需要在已知 PR 上复现旧的专属校准可选 `timing_mode="calibrated"`。960、970、980 的准确性仍待独立测量。[逐 shape 误差、库身份及 DT/PR 芯片差异](docs/error-analysis.md) · [v0.16 同集对比](results/v0.16/changes.md)
+**Ascend950PR_957b** 有 28 AIC / 56 AIV，1.65 GHz，名义片外带宽 1.4 TB/s；DT 为 4.0 TB/s。核数正确时仍可能因每核的发起、写回和共享带宽产生时延偏差。精度按具体库路线与 shape 报告；同一 shape 的两 SKU 实测、开发回放、冻结后留出和 970 外推都标明数据角色。对于 960/970/980 的外推，假设软件实现仍采用当前库路线。[逐算子误差与硬件差异](docs/error-analysis.md) · [970 场景下 FA 的逐 shape 瓶颈](results/v0.17/fa-scenarios.md)
 
 维护模型、复现 CA 或查阅历史版本，请从[开发与验证档案](development/README.md)进入。

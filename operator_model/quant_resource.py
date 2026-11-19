@@ -5,13 +5,14 @@ from math import log2
 from pathlib import Path
 
 from .model import ceildiv
+from .quant_scale import peak_scale_writers
 from .quant_repeat import NEG, compose, repeat
 from .target_tiling import quant_plan
 
 
 @lru_cache(maxsize=1)
 def _costs():
-    path = Path(__file__).resolve().parents[1] / 'results/v0.16/quant.json'
+    path = Path(__file__).resolve().parents[1] / 'results/v0.17/quant.json'
     return json.loads(path.read_text())['parameters']
 
 
@@ -37,6 +38,8 @@ def resource_quant(shape, chip):
     # tensor volume, amortized over critical tiles without padding the tails.
     equivalent_cores = shape[0]*shape[1]/(rows*cols)
     share = shared/equivalent_cores
+    writers = peak_scale_writers(*shape, rows, cols)
+    scale_queue = p['scale_peer_cycles']*(writers-1)*log2(active)
     nominal = chip.vector_tops['16']
     peak = nominal*1000/f/chip.vector_cores if nominal else p['default_vector_ops_per_cycle']
     loop_work = p['vec_loop_cycles']*p['default_vector_ops_per_cycle']
@@ -45,12 +48,27 @@ def resource_quant(shape, chip):
         groups = h*ceildiv(w,32)
         payload = 2*h*w
         loops = ceildiv(groups,8)+ceildiv(groups,128)
-        read_service = payload/min(read, share)
+        # A read may be outstanding while bandwidth is used by the other
+        # cores. First-response latency belongs on the local path, not after
+        # an interval in which the entire wave has transferred its payload.
+        local_read = cycles('read_latency_cycles')+payload/read
+        read_window = max(local_read,payload/share)
+        data_bytes = h*w
+        data_write = cycles('write_latency_cycles')+data_bytes/write
+        # Data and scale have different descriptors. Small interleaved scale
+        # fragments can share a granule across AIVs; contiguous full producers
+        # have no such charge. scale_tail is exposed retirement after data.
+        scale_write = max(p['scale_base_cycles']+groups/write,
+                          data_write+p['scale_tail_cycles'])+scale_queue
+        write_window = max(data_write,p['scale_issue_gap_cycles']+scale_write,
+                           (data_bytes+groups)/write)
         return dict(read_bytes=payload, write_bytes=h*w+groups, groups=groups, loops=loops,
-                    read_latency=cycles('read_latency_cycles')+read_service,
+                    read_latency=read_window, local_read_cycles=local_read,
+                    shared_read_floor_cycles=payload/share,
                     read_ii=payload/min(issue,share), vector=cycles('vf_dispatch_cycles')
                     +cycles('vf_dependency_cycles')+loops*loop_work/peak,
-                    write=cycles('write_latency_cycles')+(h*w+groups)/min(write,share))
+                    write=write_window, data_write_cycles=data_write, scale_write_cycles=scale_write,
+                    scale_issue_gap_cycles=p['scale_issue_gap_cycles'])
 
     def matrix(h,w):
         s = service(h,w)
@@ -84,5 +102,6 @@ def resource_quant(shape, chip):
                      assumed_offchip_read_bytes=read_bytes, assumed_offchip_write_bytes=write_bytes,
                      effective_vec_ops_per_loop=loop_work,vec_ops_per_cycle_per_core=peak,
                      read_bytes_per_cycle_per_core=read,write_bytes_per_cycle_per_core=write,
-                     shared_bytes_per_cycle=shared, calibrated_on='950DT phase boundaries only')
+                     shared_bytes_per_cycle=shared,scale_granule_bytes=32,scale_peak_writers=writers,
+                     scale_queue_cycles=scale_queue,calibrated_on='950DT phase boundaries only')
     return sum(stages.values()),0,active,diagnostics

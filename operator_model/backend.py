@@ -88,8 +88,8 @@ def _price_resource(op, shape, target, call, dtype):
                      active_aiv=aiv, reference_latency_us=None, stages_us=diag['stages_us'],
                      target_plan=diag['target_plan'], timing_diagnostics=diag,
                      inherited_fields=list(target.inherited_fields),
-                     notes=['DT-only resource defaults; 950 library tiling policy assumed.'])
-    return Estimate(us,'extrapolated','Target resource schedule with 950DT phase defaults',
+                     notes=['950 resource defaults; 950 library tiling policy assumed.'])
+    return Estimate(us,'extrapolated','Target resource schedule with inherited 950 phase defaults',
                     aiv,aic,target.name,work,projected,_rates(work,us,target))
 
 
