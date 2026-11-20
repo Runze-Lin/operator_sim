@@ -16,7 +16,7 @@
 
 在 `estimate("matmul", [M,N,K], chip=...)` 中，窄输出、长 K 的投影可按目标核数重选输出块，再计算部分积与 FP32 归并。对 Pro 的 B11×9 校验，950DT 的预测 / CA 是 6.475 / 7.056 µs。对 Kimi 多头 recurrent decode，普通查询会给出独立状态链的目标 AIV 分配、工作量和条件时延，并标明外推状态。[Matmul 逐步计算与指令图](results/v0.31/matmul/device/example.md) · [Kimi 大形算例](docs/examples/kda_recurrent.md)
 
-Flash B8×128Ki 的 Matmul 有 1,048,576 行。950DT 完整 CA 为 405.617 µs，公开预测为 437.251 µs。需要检查大形缓存压力时，可调用 `estimate_matmul_supply(shape, chip=...)`。它在权重常驻 L1 的适用域内返回逐波资源约束，此例条件预测为 409.270 µs。这个数属于开发回放；未来芯片和未返回 CA 的长输入均单独列出。[完整计算与 CA 同轴图](results/v0.30/matmul/report.md) · [冻结的新形与实测](results/v0.30/matmul/comparison.md)
+Flash B8×128Ki 的 Matmul 有 1,048,576 行。950DT / 950PR 的完整 CA 为 405.617 / 804.867 µs，默认预测为 437.251 / 1155.000 µs。权重常驻 L1 的可选排程 `estimate_matmul_supply(shape, chip=...)` 给出 409.270 / 1091.722 µs。它在 DT 的开发形上贴近实测，在 PR 的新大形上仍高估 35.64%。[DT 算例](results/v0.30/matmul/report.md) · [PR 每波模型与 CA 同轴图](results/v0.31/matmul/long-pr/report.md) · [三模型的真实投影与批量](results/v0.31/matmul/scenarios.md)
 
 逐算子算例从一次调用的输入算到设备耗时。Matmul 算例将两波输出块的各页 K 逐行对齐，可以同时看预测和 CA 的首条 MMAD、重叠和末次写回。[Matmul](docs/examples/matmul.md) · [DynamicMXQuant](docs/examples/quant.md) · [FA](docs/examples/fa.md) · [大 prefill Cast](docs/examples/cast_bf16_fp32.md) · [其余算例](docs/pipeline-comparisons.md)
 

@@ -41,6 +41,15 @@ def render():
     save(OUT/'matmul/ratios.json',dict(definition='PR/DT, measured ratios dimensionless; see ca_ratio field',sets={
         name:[{('ca_ratio' if k=='ca_us' else k):v for k,v in row.items()} for row in grp] for name,grp in pairs.items()}))
     (OUT/'matmul/report.md').write_text('\n'.join(lines))
+    main = OUT.parents[1] / 'docs/error-analysis.md'
+    content = main.read_text().splitlines()
+    header, = [i for i,line in enumerate(content[:30]) if line.startswith('| Matmul |')]
+    stats = [metrics([r for r in rows if r['chip']==c], 'current_us') for c in (DT,PR)]
+    cells = [f"{s['shapes']} · {s['wape']:.2f}% / {s['maximum']:.2f}%" for s in stats]
+    verdict = '；'.join(tag+(' 达标' if s['within_limits'] else ' 超限') for tag,s in zip(('DT','PR'),stats))
+    content[header] = (f"| Matmul | {' | '.join(cells)} | v0.31 默认，{stats[0]['n']} / {stats[1]['n']} 个全窗，"
+                       f"含开发回放；独立 B11 另列 | {verdict} |")
+    main.write_text('\n'.join(content)+'\n')
 
 
 if __name__=='__main__':render()

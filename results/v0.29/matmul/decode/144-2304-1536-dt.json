@@ -1,0 +1,337 @@
+{
+  "qualified": true,
+  "ca_us": 10.96363639831543,
+  "reason": null,
+  "case": "144-2304-1536-dt",
+  "chip": "Ascend950DT_9582",
+  "shape": [
+    144,
+    2304,
+    1536
+  ],
+  "cost": {
+    "seconds": 334.5753459299449,
+    "started_utc": "2026-11-20T06:40:59.733170+00:00",
+    "finished_utc": "2026-11-20T06:46:34.308477+00:00",
+    "exit_code": 0,
+    "stop_reason": null,
+    "peak_bytes": 168976552,
+    "command": [
+      "bash",
+      "/home/l00925865/operator_sim/scripts/cann-run.sh",
+      "msopprof",
+      "simulator",
+      "--soc-version=Ascend950DT_9582",
+      "--dump=false",
+      "--timeout=20",
+      "--output=/home/l00925865/operator_sim/results/v0.29/matmul/decode/raw/144-2304-1536-dt/profile",
+      "/home/l00925865/operator_sim/build/smoke/matmul28",
+      "144",
+      "2304",
+      "1536"
+    ]
+  },
+  "model_us": 11.876954489769464,
+  "signed_error_pct": 8.33043032687919,
+  "stages": [
+    {
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "ca_us": 10.96363639831543,
+      "active_aic": 24,
+      "active_aiv": 0,
+      "windows": {
+        "core5.cubecore0": [
+          0.04424238204956055,
+          9.952727317810059
+        ],
+        "core25.cubecore0": [
+          0.26787877082824707,
+          10.685454368591309
+        ],
+        "core16.cubecore0": [
+          0.30060601234436035,
+          10.380000352859497
+        ],
+        "core21.cubecore0": [
+          0.2066667079925537,
+          10.67878770828247
+        ],
+        "core23.cubecore0": [
+          0.15272736549377441,
+          10.759999752044678
+        ],
+        "core17.cubecore0": [
+          0.2999999523162842,
+          10.20242428779602
+        ],
+        "core0.cubecore0": [
+          0.0,
+          10.102423906326294
+        ],
+        "core6.cubecore0": [
+          0.04787874221801758,
+          10.241211652755737
+        ],
+        "core9.cubecore0": [
+          0.033939361572265625,
+          9.746061086654663
+        ],
+        "core2.cubecore0": [
+          0.046666622161865234,
+          10.238788366317749
+        ],
+        "core19.cubecore0": [
+          0.2630302906036377,
+          10.673939228057861
+        ],
+        "core1.cubecore0": [
+          0.04787874221801758,
+          9.80848503112793
+        ],
+        "core27.cubecore0": [
+          0.19030308723449707,
+          9.89393949508667
+        ],
+        "core22.cubecore0": [
+          0.1854546070098877,
+          10.96363639831543
+        ],
+        "core7.cubecore0": [
+          0.04545450210571289,
+          9.992727518081665
+        ],
+        "core18.cubecore0": [
+          0.2478787899017334,
+          10.892727375030518
+        ],
+        "core11.cubecore0": [
+          0.038787841796875,
+          9.916363954544067
+        ],
+        "core20.cubecore0": [
+          0.32606053352355957,
+          10.872727394104004
+        ],
+        "core26.cubecore0": [
+          0.22060608863830566,
+          10.244848012924194
+        ],
+        "core4.cubecore0": [
+          0.033939361572265625,
+          10.147879362106323
+        ],
+        "core10.cubecore0": [
+          0.03151512145996094,
+          10.12848448753357
+        ],
+        "core3.cubecore0": [
+          0.03272724151611328,
+          9.897575855255127
+        ],
+        "core8.cubecore0": [
+          0.036969661712646484,
+          10.076363325119019
+        ],
+        "core24.cubecore0": [
+          0.30969691276550293,
+          10.862424373626709
+        ]
+      },
+      "trace": "results/v0.29/matmul/decode/raw/144-2304-1536-dt/profile/OPPROF_20261120144059_WTLYIYJGONIQQIZW/simulator/trace.json",
+      "trace_sha256": "2f3d0186549388bfeef0c4b39f4699817cfbf179269d951d41928b923bd69aed",
+      "binary_sha256": "e6899fbaa2659b7778bee81deb00b64b009dafcb7ad350f06576767fdeba2bf7",
+      "queue_events": {
+        "SCALAR": 79056,
+        "MTE2": 600,
+        "MTE1": 1176,
+        "FLOWCTRL": 3480,
+        "CUBE": 576,
+        "FIXP": 48
+      },
+      "mmad": 576,
+      "total_events": 84936
+    }
+  ],
+  "correctness": [
+    "correctness count=331776 bad=0"
+  ],
+  "terminal": {
+    "core6.cubecore0": {
+      "physical_end": 18023,
+      "first_tick": 5424,
+      "retire_tick": 22243,
+      "last_descriptor": "FIX_L0C_TO_DST",
+      "issue_tick": 17985
+    },
+    "core2.cubecore0": {
+      "physical_end": 18211,
+      "first_tick": 5422,
+      "retire_tick": 22239,
+      "last_descriptor": "FIX_L0C_TO_DST",
+      "issue_tick": 18173
+    },
+    "core0.cubecore0": {
+      "physical_end": 17985,
+      "first_tick": 5345,
+      "retire_tick": 22014,
+      "last_descriptor": "FIX_L0C_TO_DST",
+      "issue_tick": 17947
+    },
+    "core5.cubecore0": {
+      "physical_end": 18070,
+      "first_tick": 5418,
+      "retire_tick": 21767,
+      "last_descriptor": "FIX_L0C_TO_DST",
+      "issue_tick": 18032
+    },
+    "core1.cubecore0": {
+      "physical_end": 17714,
+      "first_tick": 5424,
+      "retire_tick": 21529,
+      "last_descriptor": "FIX_L0C_TO_DST",
+      "issue_tick": 17676
+    },
+    "core27.cubecore0": {
+      "physical_end": 17964,
+      "first_tick": 5659,
+      "retire_tick": 21670,
+      "last_descriptor": "FIX_L0C_TO_DST",
+      "issue_tick": 17926
+    },
+    "core7.cubecore0": {
+      "physical_end": 17928,
+      "first_tick": 5420,
+      "retire_tick": 21833,
+      "last_descriptor": "FIX_L0C_TO_DST",
+      "issue_tick": 17890
+    },
+    "core23.cubecore0": {
+      "physical_end": 18712,
+      "first_tick": 5597,
+      "retire_tick": 23099,
+      "last_descriptor": "FIX_L0C_TO_DST",
+      "issue_tick": 18674
+    },
+    "core21.cubecore0": {
+      "physical_end": 18630,
+      "first_tick": 5686,
+      "retire_tick": 22965,
+      "last_descriptor": "FIX_L0C_TO_DST",
+      "issue_tick": 18592
+    },
+    "core4.cubecore0": {
+      "physical_end": 18197,
+      "first_tick": 5401,
+      "retire_tick": 22089,
+      "last_descriptor": "FIX_L0C_TO_DST",
+      "issue_tick": 18159
+    },
+    "core11.cubecore0": {
+      "physical_end": 17772,
+      "first_tick": 5409,
+      "retire_tick": 21707,
+      "last_descriptor": "FIX_L0C_TO_DST",
+      "issue_tick": 17734
+    },
+    "core19.cubecore0": {
+      "physical_end": 18548,
+      "first_tick": 5779,
+      "retire_tick": 22957,
+      "last_descriptor": "FIX_L0C_TO_DST",
+      "issue_tick": 18510
+    },
+    "core20.cubecore0": {
+      "physical_end": 18853,
+      "first_tick": 5883,
+      "retire_tick": 23285,
+      "last_descriptor": "FIX_L0C_TO_DST",
+      "issue_tick": 18815
+    },
+    "core26.cubecore0": {
+      "physical_end": 18187,
+      "first_tick": 5709,
+      "retire_tick": 22249,
+      "last_descriptor": "FIX_L0C_TO_DST",
+      "issue_tick": 18149
+    },
+    "core22.cubecore0": {
+      "physical_end": 18791,
+      "first_tick": 5651,
+      "retire_tick": 23435,
+      "last_descriptor": "FIX_L0C_TO_DST",
+      "issue_tick": 18753
+    },
+    "core8.cubecore0": {
+      "physical_end": 17801,
+      "first_tick": 5406,
+      "retire_tick": 21971,
+      "last_descriptor": "FIX_L0C_TO_DST",
+      "issue_tick": 17763
+    },
+    "core18.cubecore0": {
+      "physical_end": 18755,
+      "first_tick": 5754,
+      "retire_tick": 23318,
+      "last_descriptor": "FIX_L0C_TO_DST",
+      "issue_tick": 18717
+    },
+    "core10.cubecore0": {
+      "physical_end": 17995,
+      "first_tick": 5397,
+      "retire_tick": 22057,
+      "last_descriptor": "FIX_L0C_TO_DST",
+      "issue_tick": 17957
+    },
+    "core24.cubecore0": {
+      "physical_end": 18793,
+      "first_tick": 5856,
+      "retire_tick": 23268,
+      "last_descriptor": "FIX_L0C_TO_DST",
+      "issue_tick": 18755
+    },
+    "core16.cubecore0": {
+      "physical_end": 18433,
+      "first_tick": 5841,
+      "retire_tick": 22472,
+      "last_descriptor": "FIX_L0C_TO_DST",
+      "issue_tick": 18395
+    },
+    "core9.cubecore0": {
+      "physical_end": 17482,
+      "first_tick": 5401,
+      "retire_tick": 21426,
+      "last_descriptor": "FIX_L0C_TO_DST",
+      "issue_tick": 17444
+    },
+    "core17.cubecore0": {
+      "physical_end": 18178,
+      "first_tick": 5840,
+      "retire_tick": 22179,
+      "last_descriptor": "FIX_L0C_TO_DST",
+      "issue_tick": 18140
+    },
+    "core3.cubecore0": {
+      "physical_end": 17956,
+      "first_tick": 5399,
+      "retire_tick": 21676,
+      "last_descriptor": "FIX_L0C_TO_DST",
+      "issue_tick": 17918
+    },
+    "core25.cubecore0": {
+      "physical_end": 18602,
+      "first_tick": 5787,
+      "retire_tick": 22976,
+      "last_descriptor": "FIX_L0C_TO_DST",
+      "issue_tick": 18564
+    }
+  },
+  "origin_ticks_range": [
+    5345,
+    5345
+  ],
+  "basis": "Supplemental physical END + independent min/max of all X descriptors on each shard + official aggregate and core table. Engine drains can retire later than scalar END.",
+  "acquisition_receipt": "144-2304-1536-dt.json",
+  "acquisition_sha256": "b17397cd9ee6ef53865da4f018e724a865320f454ffc201f8dae79c2717a536e",
+  "initial_sha256": "b17397cd9ee6ef53865da4f018e724a865320f454ffc201f8dae79c2717a536e",
+  "register_sha256": "1c3a3a45e2567fa02ef649cc7b70ffd58c8601186468eca28618640de3fbfd91"
+}

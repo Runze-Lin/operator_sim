@@ -82,8 +82,12 @@ def release(prefix):
     for r in read(OLD/'replay.json')['rows']:
         add(r['op'],r['shape'],r['chip'],r['attrs'],r['kernel'],r['ca_us'],r['trace_sha256'],
             r['current_us'],'results/v0.30/replay.json','archive replay')
+    app_cohort={(r['chip'],tuple(r['trace_sha256'])) for r in read(OUT/'matmul/app-cohort.json')['windows']}
     for r in read(ROOT/'results/v0.29/matmul/score.json')['rows']:
-        add('matmul',r['shape'],r['chip'],{},r['kernel'],r['ca_us'],r['raw_sha256'],r['old_us'],r['source'],r['role'])
+        role=r['role']
+        if role=='v0.28 application replay' and (r['chip'],tuple(r['raw_sha256'])) not in app_cohort:
+            role='late application window from a prior registration'
+        add('matmul',r['shape'],r['chip'],{},r['kernel'],r['ca_us'],r['raw_sha256'],r['old_us'],r['source'],role)
     for r in read(OLD/'matmul/score.json')['rows']:
         if r['status']=='whole kernel qualified':
             rec=ROOT/r['receipt']
@@ -189,7 +193,9 @@ def release(prefix):
             for c in (DT,PR,FUT):
                 query('matmul',j['shape'],{},c)
     historical=read(OLD/'replay.json')['rows']
-    signed_audit(ROOT,OUT,values,multi_table,table,(DT,PR),api.estimate_matmul_supply)
+    assert app_cohort=={(r['chip'],tuple(r['trace_sha256'])) for r in values
+                         if r['op']=='matmul' and r['role']=='v0.28 application replay'}
+    signed_audit(ROOT,OUT,values,multi_table,table,(DT,PR),api.estimate_matmul_supply,api.estimate)
     assert all((r['op'],r['chip'],tuple(r['trace_sha256'])) in rows for r in historical)
     assert len(costs)==len(query_cache) and max(costs)<100,(len(costs),max(costs))
     wheel,=(ROOT/'build/wheels/v031').glob('*.whl')

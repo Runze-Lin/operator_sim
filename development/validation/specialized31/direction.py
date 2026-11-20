@@ -1,8 +1,9 @@
 """Measure signed latency bias on exactly the windows used for absolute-error acceptance."""
 from collections import defaultdict
 import json
-from math import isclose
+from math import ceil,isclose
 from statistics import median
+from time import perf_counter_ns
 
 
 def summarize(samples):
@@ -18,7 +19,7 @@ def summarize(samples):
                 most_negative_pct=min(signed),most_positive_pct=max(signed))
 
 
-def audit(root,out,archive,multi,acceptance,chips,matmul_supply):
+def audit(root,out,archive,multi,acceptance,chips,matmul_supply,default_estimate):
     def read(path): return json.loads(path.read_bytes())
     data=defaultdict(dict)
     def add(label,chip,identity,pred,ca):
@@ -74,21 +75,28 @@ def audit(root,out,archive,multi,acceptance,chips,matmul_supply):
                           r['role']=='v0.31 prospective, device') for c in chips}
     alternate={}
     changed=[]
+    cost_ms=[]
     for c in chips:
         same_windows=[]
         for r in archive:
             if r['op']!='matmul' or r['chip']!=c:continue
+            start=perf_counter_ns()
             scenario=matmul_supply(r['shape'],chip=c)
             price=scenario['latency_us']
             if price is None:
-                price=r['current_us']
+                price=default_estimate('matmul',r['shape'],dtype='bf16',chip=c).latency_us
+                cost_ms.append((perf_counter_ns()-start)/1e6)
+                assert isclose(price,r['current_us'],abs_tol=1e-9)
             else:
+                cost_ms.append((perf_counter_ns()-start)/1e6)
                 changed.append(dict(shape=r['shape'],chip=c,default_us=r['current_us'],scenario_us=price,
                                     ca_us=r['ca_us'],modeled_mmad=scenario['mmad_total'],trace_sha256=r['trace_sha256']))
             same_windows.append((price,r['ca_us']))
         alternate[c]=summarize(same_windows)
+    cost=dict(n=len(cost_ms),p95_ms=sorted(cost_ms)[ceil(.95*len(cost_ms))-1],max_ms=max(cost_ms))
+    assert cost['max_ms']<100
     (out/'direction.json').write_text(json.dumps(dict(by_protocol=report,independent_b11_matmul=heldout,
-                                                 conditional_matmul_supply=dict(same_windows=alternate,changed=changed)),
+                                                 conditional_matmul_supply=dict(same_windows=alternate,changed=changed,query_cost=cost)),
                                                  ensure_ascii=False,indent=2)+'\n')
     lines=['# 同一批 CA 窗口上，预测偏快还是偏慢', '',
            '每个已定价窗口同时进入绝对误差和方向统计。下表含归档开发回放，B11 新 Matmul 留出单列。'
@@ -116,6 +124,8 @@ def audit(root,out,archive,multi,acceptance,chips,matmul_supply):
     lines+=['', '在 DT 的 B8×32Ki 窄投影中，常驻排程估 16,384 条 MMAD，与 CA 相符，默认路径为 8,192 条。'
             '常驻模型的 85.246 µs 比 CA 的 85.993 µs 快 0.87%；同形 PR 为 176.124 / 174.953 µs，慢 0.67%。'
             '权重复用和输出跨缓存的读写服务都随目标配置重算。更宽输出的 Kimi 实验仍采用普通波次模型。'
+            f"按此策略实际调两个公开入口（适用时只调常驻排程），{cost['n']} 个已载入模型参数的进程内调用 "
+            f"P95 为 {cost['p95_ms']:.3f} ms，最大 {cost['max_ms']:.3f} ms。"
             '[常驻条件、流水与双端新形](../v0.30/matmul/report.md)']
     lines+=['','模型选择优先保留能解释 tile、流量与流水的策略。在这些证据和独立绝对误差相近时，'
             '系统仿真可以优先采用略快的可实现排程。若减少的时间需要改变内核、缓存前提或向量归并，'

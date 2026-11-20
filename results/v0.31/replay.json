@@ -21755,6 +21755,32 @@
     {
       "op": "matmul",
       "shape": [
+        1048576,
+        128,
+        512
+      ],
+      "attrs": {},
+      "chip": "Ascend950PR_957b",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_131074",
+      "ca_us": 804.867262005806,
+      "trace_sha256": [
+        "bfd1670fdcfec53b76fc35e89744692a633bed0c813b8b03bed7e880b6725020"
+      ],
+      "source": "results/v0.28/matmul/long-prefill/131072-pr.json",
+      "role": "late application window from a prior registration",
+      "previous_us": 1154.9997773314942,
+      "current_us": 1154.9997773314942,
+      "future_970dt_extrapolated_us": 114.8049526548534,
+      "status": "extrapolated",
+      "branch": "coarse_tile",
+      "mmad": 33088,
+      "active_aic": 28,
+      "active_aiv": 0,
+      "productive_aic": null
+    },
+    {
+      "op": "matmul",
+      "shape": [
         9,
         128,
         512
@@ -22197,6 +22223,32 @@
     {
       "op": "matmul",
       "shape": [
+        11,
+        1280,
+        5120
+      ],
+      "attrs": {},
+      "chip": "Ascend950PR_957b",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_4098_mix_aic",
+      "ca_us": 13.579393923282623,
+      "trace_sha256": [
+        "af7db5ab94b96f34cd33e9c4c1fab4652aa0e926129f5632ea23a8d8a9f54c12"
+      ],
+      "source": "results/v0.31/matmul/device/11-1280-5120-pr.json",
+      "role": "v0.31 prospective, device",
+      "previous_us": 13.01940729293724,
+      "current_us": 12.66676447999789,
+      "future_970dt_extrapolated_us": 11.000147775163871,
+      "status": "extrapolated",
+      "branch": "retiled_output_split_k",
+      "mmad": 400,
+      "active_aic": 28,
+      "active_aiv": 56,
+      "productive_aic": 25
+    },
+    {
+      "op": "matmul",
+      "shape": [
         16,
         2304,
         1536
@@ -22217,6 +22269,58 @@
       "branch": "coarse_tile",
       "mmad": 216,
       "active_aic": 18,
+      "active_aiv": 0,
+      "productive_aic": null
+    },
+    {
+      "op": "matmul",
+      "shape": [
+        81,
+        2304,
+        1536
+      ],
+      "attrs": {},
+      "chip": "Ascend950PR_957b",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "ca_us": 9.008484840393066,
+      "trace_sha256": [
+        "2c45fea24d21ac9f6b120a9a6e992abfade99abc8e78723110df8cdcba7cab98"
+      ],
+      "source": "results/v0.29/matmul/decode/81-2304-1536-pr.json",
+      "role": "Kimi v0.29 frozen device",
+      "previous_us": 9.252936941182769,
+      "current_us": 9.252936941182769,
+      "future_970dt_extrapolated_us": 5.787620897072405,
+      "status": "extrapolated",
+      "branch": "coarse_tile",
+      "mmad": 216,
+      "active_aic": 18,
+      "active_aiv": 0,
+      "productive_aic": null
+    },
+    {
+      "op": "matmul",
+      "shape": [
+        144,
+        2304,
+        1536
+      ],
+      "attrs": {},
+      "chip": "Ascend950DT_9582",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "ca_us": 10.96363639831543,
+      "trace_sha256": [
+        "2f3d0186549388bfeef0c4b39f4699817cfbf179269d951d41928b923bd69aed"
+      ],
+      "source": "results/v0.29/matmul/decode/144-2304-1536-dt.json",
+      "role": "Kimi v0.29 frozen device",
+      "previous_us": 11.876954489769464,
+      "current_us": 11.876954489769464,
+      "future_970dt_extrapolated_us": 5.866454100433705,
+      "status": "extrapolated",
+      "branch": "coarse_tile",
+      "mmad": 576,
+      "active_aic": 24,
       "active_aiv": 0,
       "productive_aic": null
     },

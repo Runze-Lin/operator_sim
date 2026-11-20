@@ -36,6 +36,7 @@
       "old_signed_pct": 116.66419614692587,
       "signed_pct": -8.242961831870932,
       "geometry_verified": true,
+      "cube_geometry_verified": true,
       "checks": {
         "k_spans": true,
         "groups": true,
@@ -49,6 +50,7 @@
         32
       ],
       "actual_productive_aic": 32,
+      "supplement": null,
       "actual_mmad": 64,
       "actual_roster": [
         32,
@@ -96,6 +98,7 @@
       "old_signed_pct": 121.94449736637569,
       "signed_pct": -6.202783918764265,
       "geometry_verified": false,
+      "cube_geometry_verified": true,
       "checks": {
         "k_spans": true,
         "groups": true,
@@ -110,6 +113,13 @@
         28
       ],
       "actual_productive_aic": 28,
+      "supplement": {
+        "original_strict_receipt": "99-64-7168-pr-strict.json",
+        "original_sha256": "1d4e9b8e0f9396fb91f2de498b5b67b40dbed1bbe22b9b326154dab2d531d743",
+        "coverage": "99-64-7168-pr-coverage.json",
+        "coverage_sha256": "092bf93e5c9cb4825ef9a57210942f9a6949e2f09359c7a0c6527115434a7e2c",
+        "note": "Cube address map and MMAD histogram passed. Exported stores account for 8576/12672 output bytes; 16 partial readers lack a final write in all saved trace views. Full numerical correctness and official time still qualified; incomplete instruction work is not extrapolated."
+      },
       "actual_mmad": 56,
       "actual_roster": [
         28,
@@ -157,6 +167,7 @@
       "old_signed_pct": 18.19702064875186,
       "signed_pct": 11.48104674574637,
       "geometry_verified": true,
+      "cube_geometry_verified": true,
       "checks": {
         "k_spans": true,
         "groups": true,
@@ -170,6 +181,7 @@
         6
       ],
       "actual_productive_aic": 30,
+      "supplement": null,
       "actual_mmad": 420,
       "actual_roster": [
         32,
@@ -209,8 +221,47 @@
       "expected_groups": 5,
       "expected_splits": 5,
       "expected_mmad": 400,
-      "ca_us": null,
-      "status": "acquiring"
+      "ca_us": 13.579393923282623,
+      "status": "qualified",
+      "cost_s": 2814.9417292000726,
+      "peak_bytes": 141168631,
+      "receipt": "11-1280-5120-pr.json",
+      "old_signed_pct": -4.1237969345985,
+      "signed_pct": -6.7206934892726,
+      "geometry_verified": true,
+      "cube_geometry_verified": true,
+      "checks": {
+        "k_spans": true,
+        "groups": true,
+        "productive_aic": true,
+        "active_aic": true,
+        "active_aiv": true,
+        "mmads": true,
+        "final_output_descriptors_complete": true
+      },
+      "actual_groups": 5,
+      "actual_splits": [
+        5
+      ],
+      "actual_productive_aic": 25,
+      "supplement": {
+        "original_strict_receipt": "11-1280-5120-pr-strict.json",
+        "original_sha256": "7a3bce22a19baa3f3008ffa2d576c1ceca46291163e3aabd165a20f54f93f484",
+        "coverage": "11-1280-5120-pr-coverage.json",
+        "coverage_sha256": "c9c7d99adc5475846f2cf51b7059badd9bf1d612961ea519341dd76df8dbaa87",
+        "note": "Cube address map and MMAD histogram passed. Exported stores account for 28160/28160 output bytes; 0 partial readers lack a final write in all saved trace views. Full numerical correctness and official time still qualified; incomplete instruction work is not extrapolated."
+      },
+      "actual_mmad": 400,
+      "actual_roster": [
+        28,
+        56
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_4098_mix_aic",
+      "trace_sha256": "af7db5ab94b96f34cd33e9c4c1fab4652aa0e926129f5632ea23a8d8a9f54c12",
+      "correctness": [
+        "correctness count=14080 bad=0"
+      ],
+      "terminal_roster": 84
     }
   ],
   "summary": {
@@ -225,20 +276,22 @@
         "wape": 10.153312224459649,
         "maximum": 11.481046745746367
       },
+      "cube_geometry_pass": 2,
       "geometry_pass": 2
     },
     "Ascend950PR_957b": {
       "old": {
-        "windows": 1,
-        "wape": 121.94449736637569,
+        "windows": 2,
+        "wape": 43.77646972798319,
         "maximum": 121.94449736637569
       },
       "new": {
-        "windows": 1,
-        "wape": 6.202783918764266,
-        "maximum": 6.202783918764266
+        "windows": 2,
+        "wape": 6.546390513134541,
+        "maximum": 6.720693489272598
       },
-      "geometry_pass": 0
+      "cube_geometry_pass": 2,
+      "geometry_pass": 1
     }
   },
   "ratios": [
@@ -253,8 +306,20 @@
       "new": 0.9979144927007269,
       "reuse_dt": 1.0,
       "signed_pct": 2.223456591273565
+    },
+    {
+      "shape": [
+        11,
+        1280,
+        5120
+      ],
+      "pr_over_dt": 1.3375119486218932,
+      "old": 1.0849306224862751,
+      "new": 1.1191336165133579,
+      "reuse_dt": 1.0,
+      "signed_pct": -16.32720607345165
     }
   ],
-  "total_ca_seconds": 1739.880878560245,
-  "total_raw_peak_bytes": 715922277
+  "total_ca_seconds": 4554.822607760318,
+  "total_raw_peak_bytes": 857090908
 }

@@ -172,8 +172,22 @@
           }
         ]
       },
-      "actual": null,
-      "matches": null
+      "actual": {
+        "mmads": 400,
+        "useful_ops": 144179200,
+        "hypothetical_mma16_rounded_ops": 209715200,
+        "mma16_lane_fraction": 0.6875,
+        "histogram": [
+          {
+            "m": 11,
+            "n": 256,
+            "k": 64,
+            "count": 400
+          }
+        ]
+      },
+      "matches": true,
+      "trace_sha256": "af7db5ab94b96f34cd33e9c4c1fab4652aa0e926129f5632ea23a8d8a9f54c12"
     }
   ],
   "scope": "Useful ops from actual MMAD m,n,k, FMA=2. Additional ops from padding each dimension to 16 are theoretical tile occupancy, not measured hardware allocation or issue speed. Comparison checks every descriptor kind and total, not just their count."
