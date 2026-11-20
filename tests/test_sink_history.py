@@ -104,12 +104,15 @@ class SinkHistoryTests(unittest.TestCase):
         self.assertEqual(stream.preview('mhc_sinkhorn',(30,4)),estimate('mhc_sinkhorn',(30,4)))
         self.assertEqual(stream.preview('mhc_sinkhorn',(16,4)).projection['target_plan']['history_state'],'resident')
         chip = load_chip()
-        # A legacy one-pass quote can exist even if the history route's UB
-        # requirement fails. Its footprint must not seed the next history.
+        # A launch that does not fit the issue model cannot advance the stream.
+        # The next supported launch therefore still observes a clean prefix.
         small = replace(chip,details={**chip.details,'ub_bytes':1800})
         stream = OperatorStream(small,track_sinkhorn_history=True)
-        self.assertEqual(stream.advance('mhc_sinkhorn',(80,4)),estimate('mhc_sinkhorn',(80,4),chip=small))
-        self.assertEqual(stream.preview('mhc_sinkhorn',(16,4)),estimate('mhc_sinkhorn',(16,4),chip=small))
+        rejected = stream.advance('mhc_sinkhorn',(80,4))
+        self.assertEqual(rejected,estimate('mhc_sinkhorn',(80,4),chip=small))
+        self.assertIsNone(rejected.latency_us)
+        self.assertEqual(stream.preview('mhc_sinkhorn',(16,4)),
+                         estimate('mhc_sinkhorn',(16,4),{'resident_aiv':0},chip=small))
         no_vec = replace(chip,vector_tops={**chip.vector_tops,'32':None})
         stream = OperatorStream(no_vec,track_sinkhorn_history=True)
         self.assertEqual(stream.advance('mhc_sinkhorn',(67,4)),estimate('mhc_sinkhorn',(67,4),chip=no_vec))

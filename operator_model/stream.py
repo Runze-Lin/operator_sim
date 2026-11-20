@@ -31,16 +31,21 @@ class OperatorStream:
     or unknown prefix, only sufficient same-family coverage selects a warm call.
     With track_post_history=True, an observed first launch or shape change can
     select the frozen operand-issue schedule for a single-fragment token row.
+    experimental_post_fragments=True additionally enables the provisional
+    two-slot schedule for a covered token-to-token shape change.
     """
 
     def __init__(self, chip=REFERENCE_NAME, *, experimental_post_repeats=True,
-                 track_sinkhorn_history=False, track_post_history=False):
+                 track_sinkhorn_history=False, track_post_history=False, experimental_post_fragments=False):
         if not isinstance(experimental_post_repeats, bool):
             raise TypeError('experimental_post_repeats must be a boolean')
         if not isinstance(track_sinkhorn_history, bool):
             raise TypeError('track_sinkhorn_history must be a boolean')
         if not isinstance(track_post_history, bool):
             raise TypeError('track_post_history must be a boolean')
+        if not isinstance(experimental_post_fragments, bool):
+            raise TypeError('experimental_post_fragments must be a boolean')
+        self._post_fragments = experimental_post_fragments
         self._post_repeats = experimental_post_repeats
         self._track_sinkhorn = track_sinkhorn_history
         self._track_post = track_post_history
@@ -99,9 +104,15 @@ class OperatorStream:
                 if self._post_repeats:
                     from .post_repeat import price_repeat
                     return price_repeat(result, shape, self.chip)
-            elif self._track_post and infer_post:
-                from .post_ordered import price_ordered_token
-                return price_ordered_token(result, shape, self.chip, self._post_route)
+            elif infer_post:
+                if self._post_fragments and self._post_route == 'post_token':
+                    from .post_ordered import price_ordered_fragments
+                    priced = price_ordered_fragments(result, shape, self.chip, options['resident_aiv'], self._last_post[1])
+                    if priced is not None:
+                        return priced
+                if self._track_post:
+                    from .post_ordered import price_ordered_token
+                    return price_ordered_token(result, shape, self.chip, self._post_route)
         return result
 
     def _sink_dispatch(self, op, shape, attrs, dtype):
@@ -176,7 +187,7 @@ class OperatorStream:
         tracked_sink = self._track_sinkhorn and family == 'mhc_sinkhorn'
         options = attrs or {}
         explicit = options.get('resident_aiv') if family in _STATEFUL or tracked_sink else None
-        if ((tracked_sink or (self._track_post and family == 'mhc_post'))
+        if ((tracked_sink or ((self._track_post or self._post_fragments) and family == 'mhc_post'))
                 and 'resident_aiv' in options and explicit is None):
             # The caller declared an unknown predecessor. The completed launch
             # still establishes a lower bound for the following same-family one.
@@ -190,7 +201,8 @@ class OperatorStream:
         self._last_family = family
         # Successful validation fixes BF16, contiguous ND, four streams and hRes for
         # the built-in kernel. Other kernels, including vLLM HcPost, clear this key.
-        track_post = family == 'mhc_post' and (self._post_repeats or self._track_post)
+        track_route = self._track_post or self._post_fragments
+        track_post = family == 'mhc_post' and (self._post_repeats or track_route)
         self._last_post = (self.chip, tuple(shape)) if track_post else None
-        self._post_route = result.projection['target_plan']['route'] if self._track_post and track_post else None
+        self._post_route = result.projection['target_plan']['route'] if track_route and track_post else None
         return result

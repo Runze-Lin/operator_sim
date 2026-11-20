@@ -311,3 +311,22 @@ print(r["tile"], r["waves"], r["cycles"]["per_aic_step"], r["latency_us"])
 
 
 对 Kimi 的多 token AttnResFwd，可用 `from operator_model.attn_res_prefill_plan import prefill_service_plan`，然后调用 `prefill_service_plan([512,7168,8,1], "Ascend950PR_957b")`。字段 `conditional_schedule_us` 是按缓存 gamma 的 40021 分支推导的条件阶段服务，`qualified_latency_us` 在未校准时为 None。以该值做系统情景时应保留这个区别。[理想服务与缺失的阶段](../results/v0.29/large/vector/report.md)
+
+## 同一 Matmul 权重的 decode 和大 prefill
+
+以 Flash 的 BF16 独立 `indexer.wk` 为例。传入该卡本次调度实际发出的行数；相同的 M=9 可以来自一条请求校验九个 token，也可以来自九条普通 decode 请求。返回的设备时间、分核和逻辑工作都由这次调用确定。
+
+```python
+from operator_model import estimate, estimate_matmul_supply
+
+shape = [9, 128, 512]
+r = estimate("matmul", shape, chip="Ascend950DT_9582", dtype="bf16")
+print(r.latency_us, r.active_aic, r.work["cube_ops"])
+
+# B8 × 128Ki，调用方假设整个 batch 在同一次未切 chunk 的派发中。
+scenario = estimate_matmul_supply([8 * 131072, 128, 512], chip="Ascend970DT")
+if scenario["latency_us"] is not None:
+    print(scenario["latency_us"], scenario["waves"], scenario["segments"])
+```
+
+第一例在 DT 的预测为 4.234 µs、2 AIC，设备完整窗为 4.325 µs。第二例使用未来芯片情景，102.310 µs 是沿用 950 权重常驻实现时的条件外推。`input_mode="cold"` 可以关掉初始缓存供给，`mixed_efficiency` 可以传入已知的目标芯片读写混合效率。当前接口对超出已实现常驻分块条件的几何返回无时延并解释原因。[独立小形与双端速度比](../results/v0.30/matmul-dispatch/device/report.md) · [大形参数与资源分段](../results/v0.30/matmul/report.md)

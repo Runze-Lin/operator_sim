@@ -4,7 +4,7 @@ from pathlib import Path
 import unittest
 from dataclasses import replace
 
-from operator_model import estimate, load_chip
+from operator_model import load_chip
 from operator_model.mhc_sink_resource import sink as legacy
 from operator_model.sink_registers import price, registers_per_helper
 
@@ -39,15 +39,14 @@ class SinkRegisterCandidateTest(unittest.TestCase):
             else:
                 self.assertLess(diag['stages_us']['SIMD'], old['stages_us']['SIMD'])
 
-    def test_frozen_points_and_public_default(self):
+    def test_frozen_points_and_original_default(self):
         frozen = json.loads((ROOT/'results/v0.28/fusion/eligibility.freeze.json').read_bytes())
         for row in frozen['jobs']:
             chip = load_chip(row['chip'])
             attrs = {'num_iters': row['iters']}
-            public = estimate('mhc_sinkhorn', row['shape'], attrs, chip=chip)
-            self.assertEqual(public.latency_us, row['old_unknown_us'])
+            self.assertAlmostEqual(legacy(row['shape'], chip, attrs)[0], row['old_unknown_us'], places=12)
             candidate = price(row['shape'], chip, attrs)
-            self.assertEqual(candidate[0], row['corrected_unknown_us'])
+            self.assertAlmostEqual(candidate[0], row['corrected_unknown_us'], places=12)
             self.assertEqual(candidate[3]['target_plan'], row['plan'])
 
     def test_preserve_shape_and_attribute_contract(self):

@@ -1,0 +1,90 @@
+{
+  "utc": "2026-11-20T04:36:54.526680+00:00",
+  "shape": [
+    1,
+    2304,
+    1536
+  ],
+  "controls": {
+    "Ascend950DT_9582": {
+      "receipt": "results/v0.28/matmul/1-2304-1536-dt-drain.json",
+      "receipt_sha256": "3b8c57ed4ec0b53fd499df527c3f5538c808ff499e2c45f4a9f46215204352ba",
+      "baseline_us": 6.679999828338623,
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "elf": "e6899fbaa2659b7778bee81deb00b64b009dafcb7ad350f06576767fdeba2bf7",
+      "roster": [
+        "core0.cubecore0",
+        "core1.cubecore0",
+        "core16.cubecore0",
+        "core17.cubecore0",
+        "core18.cubecore0",
+        "core19.cubecore0",
+        "core2.cubecore0",
+        "core20.cubecore0",
+        "core21.cubecore0",
+        "core22.cubecore0",
+        "core23.cubecore0",
+        "core24.cubecore0",
+        "core3.cubecore0",
+        "core4.cubecore0",
+        "core5.cubecore0",
+        "core6.cubecore0",
+        "core7.cubecore0",
+        "core8.cubecore0"
+      ],
+      "mmad": 216,
+      "gold": [
+        "correctness count=2304 bad=0"
+      ],
+      "reference_wall_s": 78.10208222991787
+    },
+    "Ascend950PR_957b": {
+      "receipt": "results/v0.28/matmul/1-2304-1536-pr-drain.json",
+      "receipt_sha256": "ad7de31bea7b0420ba99700ca0c4bfec913a84b06c64fc6c244e1139f7822c31",
+      "baseline_us": 7.493939161300659,
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "elf": "e6899fbaa2659b7778bee81deb00b64b009dafcb7ad350f06576767fdeba2bf7",
+      "roster": [
+        "core0.cubecore0",
+        "core1.cubecore0",
+        "core16.cubecore0",
+        "core17.cubecore0",
+        "core18.cubecore0",
+        "core19.cubecore0",
+        "core2.cubecore0",
+        "core20.cubecore0",
+        "core21.cubecore0",
+        "core22.cubecore0",
+        "core23.cubecore0",
+        "core24.cubecore0",
+        "core3.cubecore0",
+        "core4.cubecore0",
+        "core5.cubecore0",
+        "core6.cubecore0",
+        "core7.cubecore0",
+        "core8.cubecore0"
+      ],
+      "mmad": 216,
+      "gold": [
+        "correctness count=2304 bad=0"
+      ],
+      "reference_wall_s": 82.0418392601423
+    }
+  },
+  "sha256": {
+    "development/validation/cahost30/pilot.py": "891dc7998e0768412e61fd79d1c64949f4dcea3cd319083e83984ec2d75700ea",
+    "configs/camodel-single-thread.json": "0a22794e8654c496037935a40c0b113b1a7a3e25ae1ae6a30048ee411fe44cee",
+    "build/smoke/matmul28": "a6a260ff7f8a407f7d64789f953be0edbcaf9ff94b61f0129d72272a21970b01",
+    "development/validation/matmul28/campaign.py": "835acbc959331e68860bbcdb6c456ad55b1bc057c5237fecd27e87d7a856669a",
+    "development/validation/matmul28/drain.py": "ab2a34e50e391b4691be2b388d61adecd64077c30d1d51eb2dd9345e49d7a000"
+  },
+  "host_env": {
+    "CAMODEL_CONFIG_PATH": "configs/camodel-single-thread.json",
+    "CAMODEL_OMP_THREADS": "2",
+    "OMP_WAIT_POLICY": "PASSIVE",
+    "GOMP_SPINCOUNT": "0"
+  },
+  "wall_s": 480,
+  "raw_mib": 384,
+  "protocol": "Input, SKU, msopprof, output checks, release ELF, active physical cores, MMAD, and all-core END+drain match the published measurement. Frequency and simulated blocks unchanged. Each chip at most one 8-minute control. Four physical host CPUs; at least 4 other CPUs under 60% busy available on admission. Two-layer host setting is experimental. Check observed concurrency and keep a separate measurement cohort. Do not label a new operator latency from these controls."
+}

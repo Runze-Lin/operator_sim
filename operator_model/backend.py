@@ -87,7 +87,7 @@ def _price_resource(op, shape, target, call, dtype):
         elif call.get('resident_aiv') is not None:
             from .sink_history import price
         else:
-            from .mhc_sink_resource import sink as price
+            from .sink_unknown import price
         us, aic, aiv, diag = price(shape, target, call)
         work = account_work(op, shape, {**call, 'dtype': dtype})
     elif op == 'attn_res_fwd':
@@ -239,7 +239,7 @@ def _evaluate(op, shape, attrs, soc, chip, dtype, timing_mode='auto'):
         if op == 'mhc_sinkhorn' and 'resident_aiv' in call and call['resident_aiv'] is None:
             # An explicitly unknown history has the same semantics as omitting H.
             del call['resident_aiv']
-        if op == 'mhc_pre_sinkhorn' or (op == 'mhc_sinkhorn' and 'resident_aiv' in call):
+        if op in ('mhc_pre_sinkhorn', 'mhc_sinkhorn'):
             result = _price_resource(op, shape, target, call, chosen_dtype)
             if timing_mode == 'calibrated' and result.status == 'extrapolated':
                 return Estimate(None, 'unavailable', result.reason, result.active_aiv, result.active_aic,

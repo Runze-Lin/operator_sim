@@ -1,0 +1,243 @@
+{
+  "utc": "2026-11-20T04:39:50.299446+00:00",
+  "target_slots": "Reuse the registered v0.29 official Post sequences, no new CA launches.",
+  "physical_role": "DT [65,4,5120] ordinary launch is development. Neither PR nor repeat sets fit prices; those historical outcomes were previously visible.",
+  "test": "Two frozen unequal-tail shapes, per SKU both WAPE <=25% and max <=50%, strictly better WAPE than v0.29 ordered and its pre-CA whole-row alternative. The original v0.29 eligibility gates remain in force. Two shapes alone do not qualify the conditional schedule for unrestricted default.",
+  "archive_preregistered": "2026-11-20T03:27:17.056311+00:00",
+  "state_at_freeze": "queued after registered Post and Matmul work",
+  "plans": [
+    {
+      "chip": "Ascend950DT_9582",
+      "ordinal": 1,
+      "previous_shape": [
+        112,
+        4,
+        768
+      ],
+      "shape": [
+        67,
+        4,
+        4912
+      ],
+      "resident_aiv": 56,
+      "baseline_us": 8.357537804723707,
+      "frozen_aggregate_us": 5.879073187878284,
+      "conditional_us": 5.572338866425456,
+      "stages_us": {
+        "arrival": 0.3674387625771914,
+        "first_operand": 1.0515151515151515,
+        "first_read_ready": 0.5970925681818183,
+        "first_operand_to_store": 0.8364997592953997,
+        "next_write_issues": 2.445862914249835,
+        "final_write_response": 0.2678691045454546,
+        "retire": 0.006060606060606061,
+        "exposed_shared_floor": 0.0
+      },
+      "plan": {
+        "count": 2,
+        "inner": 2464,
+        "tail": 2448,
+        "ub_bytes": 253952,
+        "inherited_ub": false
+      },
+      "critical_rows": 2,
+      "extrapolated": false
+    },
+    {
+      "chip": "Ascend950DT_9582",
+      "ordinal": 2,
+      "previous_shape": [
+        67,
+        4,
+        4912
+      ],
+      "shape": [
+        69,
+        4,
+        5680
+      ],
+      "resident_aiv": 56,
+      "baseline_us": 9.341100597879937,
+      "frozen_aggregate_us": 6.469425254880802,
+      "conditional_us": 6.100118915246157,
+      "stages_us": {
+        "arrival": 0.37045919812384553,
+        "first_operand": 1.0515151515151517,
+        "first_read_ready": 0.6305404772727271,
+        "first_operand_to_store": 0.9520466580684567,
+        "next_write_issues": 2.7925036105690064,
+        "final_write_response": 0.29699321363636366,
+        "retire": 0.006060606060606061,
+        "exposed_shared_floor": 0.0
+      },
+      "plan": {
+        "count": 2,
+        "inner": 2848,
+        "tail": 2832,
+        "ub_bytes": 253952,
+        "inherited_ub": false
+      },
+      "critical_rows": 2,
+      "extrapolated": false
+    },
+    {
+      "chip": "Ascend950PR_957b",
+      "ordinal": 1,
+      "previous_shape": [
+        112,
+        4,
+        768
+      ],
+      "shape": [
+        67,
+        4,
+        4912
+      ],
+      "resident_aiv": 56,
+      "baseline_us": 8.447954850175584,
+      "frozen_aggregate_us": 5.95966296329065,
+      "conditional_us": 5.653975262297726,
+      "stages_us": {
+        "arrival": 0.3674387625771914,
+        "first_operand": 1.0515151515151515,
+        "first_read_ready": 0.5970925681818183,
+        "first_operand_to_store": 0.8569088582634667,
+        "next_write_issues": 2.507090211154037,
+        "final_write_response": 0.2678691045454546,
+        "retire": 0.006060606060606061,
+        "exposed_shared_floor": 0.0
+      },
+      "plan": {
+        "count": 2,
+        "inner": 2464,
+        "tail": 2448,
+        "ub_bytes": 253952,
+        "inherited_ub": false
+      },
+      "critical_rows": 2,
+      "extrapolated": false
+    },
+    {
+      "chip": "Ascend950PR_957b",
+      "ordinal": 2,
+      "previous_shape": [
+        67,
+        4,
+        4912
+      ],
+      "shape": [
+        69,
+        4,
+        5680
+      ],
+      "resident_aiv": 56,
+      "baseline_us": 9.445608611454185,
+      "frozen_aggregate_us": 6.562574475811979,
+      "conditional_us": 6.194314756637235,
+      "stages_us": {
+        "arrival": 0.37045919812384553,
+        "first_operand": 1.0515151515151517,
+        "first_read_ready": 0.6305404772727271,
+        "first_operand_to_store": 0.9755956184162263,
+        "next_write_issues": 2.863150491612315,
+        "final_write_response": 0.29699321363636366,
+        "retire": 0.006060606060606061,
+        "exposed_shared_floor": 0.0
+      },
+      "plan": {
+        "count": 2,
+        "inner": 2848,
+        "tail": 2832,
+        "ub_bytes": 253952,
+        "inherited_ub": false
+      },
+      "critical_rows": 2,
+      "extrapolated": false
+    },
+    {
+      "chip": "Ascend970DT",
+      "ordinal": 1,
+      "previous_shape": [
+        112,
+        4,
+        768
+      ],
+      "shape": [
+        67,
+        4,
+        4912
+      ],
+      "resident_aiv": 112,
+      "baseline_us": 4.6726674446363194,
+      "frozen_aggregate_us": 4.036090630318164,
+      "conditional_us": 3.676362512306496,
+      "stages_us": {
+        "arrival": 0.4016094749179813,
+        "first_operand": 0.963888888888889,
+        "first_read_ready": 0.5473348541666665,
+        "first_operand_to_store": 0.7659357520275907,
+        "next_write_issues": 0.7464913075831464,
+        "final_write_response": 0.2455466791666667,
+        "retire": 0.005555555555555556,
+        "exposed_shared_floor": 0.0
+      },
+      "plan": {
+        "count": 2,
+        "inner": 2464,
+        "tail": 2448,
+        "ub_bytes": 253952,
+        "inherited_ub": false
+      },
+      "critical_rows": 1,
+      "extrapolated": true
+    },
+    {
+      "chip": "Ascend970DT",
+      "ordinal": 2,
+      "previous_shape": [
+        67,
+        4,
+        4912
+      ],
+      "shape": [
+        69,
+        4,
+        5680
+      ],
+      "resident_aiv": 112,
+      "baseline_us": 5.123171661568901,
+      "frozen_aggregate_us": 4.365188142678291,
+      "conditional_us": 3.94810234133329,
+      "stages_us": {
+        "arrival": 0.40441892998694867,
+        "first_operand": 0.9638888888888889,
+        "first_read_ready": 0.5779954374999998,
+        "first_operand_to_store": 0.8717220973398376,
+        "next_write_issues": 0.8522776528953929,
+        "final_write_response": 0.2722437791666667,
+        "retire": 0.005555555555555556,
+        "exposed_shared_floor": 0.0
+      },
+      "plan": {
+        "count": 2,
+        "inner": 2848,
+        "tail": 2832,
+        "ub_bytes": 253952,
+        "inherited_ub": false
+      },
+      "critical_rows": 1,
+      "extrapolated": true
+    }
+  ],
+  "inputs": {
+    "results/v0.29/post/split-register.json": "97566f5158b67002a672f0293c4a0b3174a706bbd5e5ce3621d8ccff85d10680",
+    "results/v0.30/post/prices.json": "a5fb4654f1eddd2e66155c2dc8b85722f1038626645c47f06a4586fb5a2c158a",
+    "operator_model/post_fragment_pipeline.py": "3615fc00eec20c270d9080c4b90e4f197df5ce294df9c7a46d21a210b164797f",
+    "operator_model/post_resource.py": "1c3d9f3e2b70ba1991f4111a3dcd4cd080fc92e270838a1e6895993df4a43fab",
+    "operator_model/post_repeat.py": "495b8761fbf6f1d6c0d9765bfae439a0706627e34210c62b29a634b13b2944ae",
+    "results/v0.25/post/prices.json": "911abfb2788ec25616d3e6200c159f289f19af2f1335d0341164ddce21c0aef5",
+    "configs/chips/Ascend950DT_9582.json": "54d68c49374f8fab57ae16b05923d7ea2874cc48083e0728bcbc60f467bb71ec",
+    "configs/chips/Ascend950PR_957b.json": "2bb5b0b34b8d04e255e24ea5d12c73407ace6bb7154ba6aa603b338fc252ada7",
+    "configs/chips/Ascend970DT.json": "837796ec9f3b39888950cfe6f703b63c4bf9ced22a366b66f300f1389a8006f2"
+  }
+}

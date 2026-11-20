@@ -10,9 +10,9 @@
 
 单卡 B8 整批 prefill 的工作负载表按 32Ki、128Ki、256Ki 给出每个算子的输入、dtype、并行切分、两卡 CA 实测和 970DT 外推。矩阵投影、indexer 系数与全 hidden 激活各有自己的宽度。[DeepSeek V4.1 Flash](docs/workloads/deepseek-flash.md) · [DeepSeek V4 Pro](docs/workloads/deepseek-pro.md) · [Kimi K3](docs/workloads/kimi-k3.md)
 
-Matmul 在普通分块只产生一个输出矩形、且目标资源支持并有收益时，会分 K 到多个 AIC，再由 AIV 归并。单卡 decode 的输入行数取实际提交 token 总数。普通 B=1、9、11、16 与 MTP8 校验的 M=9、81、99、144 均有按真实投影宽度冻结的 Matmul 对照。单卡 B8×32Ki、128Ki、256Ki 整批和分 chunk 的数据分别列出。[三模型 33 个 Matmul shape 的预测、实测与采集状态](results/v0.29/matmul/workloads.md) · [当前误差与直接复用 DT 的对照](results/v0.28/matmul/public-report.md)
+普通 decode 的每卡 M 为 1、9、11、16；同一批请求使用 MTP8 校验时 M 为 9、81、99、144。Flash、Pro 和 Kimi 的 N、K 来自各自的真实投影。38 个场景几何逐形列出默认预测和可用设备实测，另有 31 个几何/端做过安装库的 host 分支核验。[三模型 decode 与大形对照](results/v0.30/matmul-dispatch/report.md) · [其他实测 Matmul 投影](results/v0.29/matmul/workloads.md)
 
-Flash 在单卡 B8×32Ki 的 `indexer.wk` 矩阵是 [262144,128,512]。950DT 完整 CA 为 85.993 µs，公开预测为 113.505 µs（+31.99%）。按每个 AIC 的 L1 常驻权重和 32 轮连续输出重算，条件预测为 85.246 µs（−0.87%，开发回放）。同形 950PR 完整 CA 为 174.953 µs，候选在读取该结果前给出 196.082 µs（+12.08%）。扩到 B8×128Ki 后，950DT 合格 CA 为 405.617 µs；候选 324.490 µs（−20.00%），此形原公开模型更准。Kimi 的 TP8 查询投影固定 N=2304、K=1536，将普通和 MTP8 的 batch 1、9、11、16 放在同一组上。[八种 decode 调度及双端回执](results/v0.29/matmul/decode/report.md) · [大 Matmul 的模型与实测流水](results/v0.29/matmul/full-load/report.md) · [逐算子大形覆盖](results/v0.29/large/report.md)
+Flash B8×128Ki 的 Matmul 有 1,048,576 行。950DT 完整 CA 为 405.617 µs，公开预测为 437.251 µs。需要检查大形缓存压力时，可调用 `estimate_matmul_supply(shape, chip=...)`。它在权重常驻 L1 的适用域内返回逐波资源约束，此例条件预测为 409.270 µs。这个数属于开发回放；未来芯片和未返回 CA 的长输入均单独列出。[完整计算与 CA 同轴图](results/v0.30/matmul/report.md) · [冻结的新形与实测](results/v0.30/matmul/comparison.md)
 
 逐算子算例从一次调用的输入算到设备耗时。Matmul 算例将两波输出块的各页 K 逐行对齐，可以同时看预测和 CA 的首条 MMAD、重叠和末次写回。[Matmul](docs/examples/matmul.md) · [DynamicMXQuant](docs/examples/quant.md) · [FA](docs/examples/fa.md) · [大 prefill Cast](docs/examples/cast_bf16_fp32.md) · [其余算例](docs/pipeline-comparisons.md)
 
@@ -39,7 +39,7 @@ print(result.latency_us, result.work["cube_ops"], result.work["logical_read_byte
 
 维护 960、970、980 等架构情景时，每个目标使用一份 JSON，分别填写按位宽区分的两类算力、核数、频率、外存容量和带宽。内置 `Ascend970DT` 情景为 120 Cube / 120 Vector、1.8 GHz、288 GB、14.4 TB/s；其中 16 位 Vector 峰值 110.592 TOP/s 已含双发射。这些是架构假设。调用方通过 `extrapolated` 状态识别外推，并决定是否将其交给事件调度器。[970DT 配置及逐项来源](configs/chips/Ascend970DT.json) · [自定义芯片示例](configs/chips/scenario-example.json) · [字段、单位和返回合同](docs/integration.md)
 
-隔离安装的 v0.29 wheel 在三种芯片配置核对 1,401 个不同的普通预测输入，单次 P95 为 0.711 ms、最大 3.056 ms。计时包含进程内完整 API 调用。另核验了长 Matmul 条件排程、量化共享带宽、Post 有序派发、KDA V1 工作量等入口。设备预测以 µs 返回。[安装版开销](results/v0.29/wheel-check.json) · [逐算子误差](docs/error-analysis.md)
+隔离安装的 v0.30 wheel 核对了 854 条历史记录和 1,522 个不同的公开查询，进程内单次 P95 为 0.695 ms，最大 3.518 ms。[查询开销](results/v0.30/wheel-check.json) · [按算子归档的双端误差](results/v0.30/acceptance.md)
 
 ## 可预测的算子
 

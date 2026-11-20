@@ -1,5 +1,20 @@
 # MatMulV3 算例
 
+## 从同一权重看 decode 和长 prefill
+
+Flash 的 indexer.wk 在 TP8 场景中使用 K=512、N=128。单请求 MTP8 校验与九请求普通 decode 都给 [9,128,512]；B8×128Ki 的整批输入给 [1048576,128,512]。输入 $X[M,512]$，输出 $Y[M,128]$，逻辑工作为 $2M×512×128$ FLOP。长输入用 32 AIC，每核一次装入权重，处理 128 个输出块。L2 放不下全部脏输出后，A 的读和 C 的写共享外存服务，关键核的后半段出现页首空泡。950DT 的容量候选 409.270 µs，完整 CA 405.617 µs。图的上半是根据容量算出的排程，下半是最后完成的 core22；下方同时给出逐块发起间隔。
+
+![950DT B8×128Ki Matmul 模型与 CA 同时间轴](../../results/v0.30/matmul/flash-b8-128ki.png)
+
+[逐步公式、参数溯源及可重绘数据](../../results/v0.30/matmul/report.md) · [三模型 decode 与大形](../../results/v0.30/matmul-dispatch/report.md) · [PR/DT 速度比](../../results/v0.30/matmul/comparison.md)
+
+同一权重的普通 B9 或单请求 MTP8 输入为 [9,128,512]。输出沿 N 分到两个 AIC，每个算 9×64 个有效元素，每次乘加深度 256，每核两次 MMAD。全片有用计算量为 1,179,648 FLOP。DT 的独立设备窗为 4.325 µs，PR 为 4.127 µs；冻结预测各为 4.234 µs。图中 FIXP 的实测长条包含等待乘加结果的时间。模型只在临界路径上额外支付写回尾段。 [各条指令的起止时间](../../results/v0.30/matmul-dispatch/device/mtp8_example.json) · [同一投影的独立留出误差](../../results/v0.30/matmul-dispatch/device/report.md)
+
+在这个 M=9 的 DT 例子上，4.234 µs 由启动 2.105、首笔输入填充 1.554、L0 提前量 0.130、最后一组乘加 0.209 和写回尾段 0.236 µs 组成。M、N、K 及目标芯片是在线输入。每条 MMAD 的部分和和搬运 overlap 已在临界贡献中处理。实际关键核为 core16，两条 MMAD 对应同一个 9×64 输出块的两段 K；PR/DT 小形的残差可按同一组四个事件界标核对。[相同 N、K 的逐阶段实测](../../results/v0.30/matmul-dispatch/device/phases.md)
+
+![Flash MTP8 上方模型阶段、下方实际末核指令](../../results/v0.30/matmul-dispatch/device/mtp8_example.png)
+
+
 同一 Flash 投影的整批 B8 从 32Ki 扩至 128Ki 后，在 950DT 上两次都一次装入 B，依次计算 32 和 128 个输出块/核。CA 为 85.993 和 405.617 µs，候选为 85.246 和 324.490 µs。可从对照图逐块追踪为何小形的稳态斜率到后半段失效。[完整计算与两种长度的同轴图](../../results/v0.29/matmul/full-load/report.md)
 
 

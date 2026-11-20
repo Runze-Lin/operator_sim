@@ -39,3 +39,24 @@ def price_ordered_token(forecast, shape, chip, previous_route):
     return replace(forecast, latency_us=us, projection=projection,
                    status='extrapolated', reason='Observed built-in Post sequence with 950-calibrated token issue prices',
                    rates=_rates(forecast.work, us, chip))
+
+
+def price_ordered_fragments(forecast, shape, chip, resident_aiv, previous_shape):
+    """Optionally attach the estimated two-slot schedule after a successful different token Post."""
+    diag=forecast.projection['timing_diagnostics']
+    if diag['context']!='reuse' or diag['target_plan']['route']!='post_token' or not chip.vector_tops['32']:
+        return None
+    tiles=channel_tiles(shape[2],chip)
+    if not tiles or tiles['count']!=2:
+        return None
+    from .post_fragment_pipeline import estimate_post_fragments
+    p=estimate_post_fragments(shape,chip=chip,resident_aiv=resident_aiv,previous_shape=previous_shape)
+    us=p['us']
+    diagnostics=dict(context='reuse',ordered_scenario='reuse_after_token',previous_route='post_token',
+                     model=p['model'],target_plan=diag['target_plan'],stages_us=p['stages_us'],
+                     shared_floor_us=diag['shared_floor_us'],channel_tiles=tiles,
+                     qualification=p['qualification'],fragment_costs_cycles=p['fragment_costs_cycles'])
+    projection={**forecast.projection,'latency_us':us,'stages_us':p['stages_us'],'timing_diagnostics':diagnostics}
+    return replace(forecast,latency_us=us,projection=projection,status='extrapolated',
+                   reason='Opt-in two-slot Post estimate for an observed token-to-token shape change',
+                   rates=_rates(forecast.work,us,chip))

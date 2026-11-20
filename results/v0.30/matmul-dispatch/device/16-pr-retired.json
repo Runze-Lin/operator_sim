@@ -1,0 +1,94 @@
+{
+  "qualified": true,
+  "ca_us": 4.186060547828674,
+  "model_us": 4.237117990089784,
+  "signed_error_pct": 1.2197014753547508,
+  "stages": [
+    {
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "ca_us": 4.186060547828674,
+      "active_aic": 2,
+      "active_aiv": 0,
+      "windows": {
+        "core0.cubecore0": [
+          0.0,
+          4.003636479377747
+        ],
+        "core16.cubecore0": [
+          0.18909096717834473,
+          4.186060547828674
+        ]
+      },
+      "trace": "runs/matmul_dispatch30/device/16-pr/profile/OPPROF_20261120130228_INYQPHPENGSOOPED/simulator/trace.json",
+      "trace_sha256": "1a1244be456b3c61a54a3e3cca33e47c5e3584488f8f3432011f4d64d3260be1",
+      "binary_sha256": "e6899fbaa2659b7778bee81deb00b64b009dafcb7ad350f06576767fdeba2bf7",
+      "queue_events": {
+        "SCALAR": 1844,
+        "MTE2": 10,
+        "MTE1": 10,
+        "FLOWCTRL": 98,
+        "FIXP": 4,
+        "CUBE": 4
+      },
+      "mmad": 4,
+      "total_events": 1970
+    }
+  ],
+  "correctness": [
+    "correctness count=2048 bad=0"
+  ],
+  "terminal": {
+    "core0.cubecore0": {
+      "physical_end": 8974,
+      "first_tick": 5504,
+      "retire_tick": 12110,
+      "last_descriptor": "FIX_L0C_TO_DST",
+      "issue_tick": 8936
+    },
+    "core16.cubecore0": {
+      "physical_end": 9436,
+      "first_tick": 5816,
+      "retire_tick": 12411,
+      "last_descriptor": "FIX_L0C_TO_DST",
+      "issue_tick": 9398
+    }
+  },
+  "origin_ticks_range": [
+    5504,
+    5504
+  ],
+  "basis": "Supplemental physical END + independent min/max of all X descriptors on each shard + official aggregate and core table. Engine drains can retire later than scalar END.",
+  "acquisition_receipt": "16-pr-initial.json",
+  "acquisition_sha256": "8c83eb89a17e15e8cacb34ddc15feda2301a5f68600a6358c8168a1053ad24cc",
+  "registration_sha256": "aa8ab1e58050f37fe539772c4eb00e29b2d6e60fdcad7c93e4a999ec5ecf0258",
+  "chip": "Ascend950PR_957b",
+  "shape": [
+    16,
+    128,
+    512
+  ],
+  "cost": {
+    "seconds": 70.02740604011342,
+    "started_utc": "2026-11-20T05:02:28.151539+00:00",
+    "finished_utc": "2026-11-20T05:03:38.178951+00:00",
+    "exit_code": 0,
+    "stop_reason": null,
+    "peak_bytes": 4970663,
+    "command": [
+      "bash",
+      "/home/l00925865/operator_sim/scripts/cann-run.sh",
+      "msopprof",
+      "simulator",
+      "--soc-version=Ascend950PR_957b",
+      "--dump=false",
+      "--timeout=15",
+      "--output=/home/l00925865/operator_sim/runs/matmul_dispatch30/device/16-pr/profile",
+      "/home/l00925865/operator_sim/build/smoke/matmul28",
+      "16",
+      "128",
+      "512"
+    ]
+  },
+  "original_result": "results/v0.30/matmul-dispatch/device/16-pr.json",
+  "scope": "Original frozen numerical, ELF, full-roster, official-table and END/drain checks using the same raw. Supplied omitted receipt basename only."
+}

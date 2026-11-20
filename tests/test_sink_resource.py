@@ -12,8 +12,9 @@ class SinkResourceTests(unittest.TestCase):
         self.assertEqual((first.active_aiv,second.active_aiv),(56,29))
         for r,rows in [(first,1),(second,2)]:
             self.assertEqual(r.projection['target_plan']['rows_per_core'],rows)
-            self.assertEqual(r.projection['target_plan']['packed_chunks'],1)
-        self.assertEqual(first.projection['stages_us']['SIMD'],second.projection['stages_us']['SIMD'])
+            self.assertEqual(r.projection['target_plan']['register_passes'],1)
+        self.assertAlmostEqual(first.projection['stages_us']['normalization_loop'],
+                               second.projection['stages_us']['normalization_loop'])
 
     def test_pre_mixed_launch_vs_stage_two_payload(self):
         shape=(1,4,4096)
