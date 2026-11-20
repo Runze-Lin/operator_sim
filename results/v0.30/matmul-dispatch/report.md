@@ -1,6 +1,6 @@
 # 同一投影从 decode 到整批 prefill
 
-本表涵盖 **38 个场景几何**。其中 14 个已有双端完整设备时间。新增 host 对照每端查询 31 个几何，含 3 个旧阳性/阴性控制和 28 个其他几何。各端命中分别为 31/31、31/31。同一 [M,N,K] 的 B1×9 与 B9×1 共用一次测量。
+本表涵盖 **38 个场景几何**。其中 17 个已有双端完整设备时间。新增 host 对照每端查询 31 个几何，含 3 个旧阳性/阴性控制和 28 个其他几何。各端命中分别为 31/31、31/31。同一 [M,N,K] 的 B1×9 与 B9×1 共用一次测量。
 
 每个输入是单卡一次提交的连续 BF16 ND 矩阵。普通 decode 每请求贡献 1 行，MTP8 主模型校验贡献 9 行。八条未切 chunk 的 prefill 各贡献完整 S 行。表内展示独立库调用；服务侧的量化权重、融合和 chunk 调度会改变实际派发。
 
@@ -21,11 +21,11 @@
 | DeepSeek-V4.1-Flash · dsa.wq_a | decode 11×1 | [11, 1280, 5120] | 12.000 / — | 13.019 / — | 11.000 | 切 K + 归并 / 切 K + 归并 |
 | DeepSeek-V4.1-Flash · indexer.wk | decode 16×1 | [16, 128, 512] | 4.237 / [4.371](../../../results/v0.30/matmul-dispatch/device/16-dt-retired.json) | 4.237 / [4.186](../../../results/v0.30/matmul-dispatch/device/16-pr-retired.json) | 3.884 | — / — |
 | DeepSeek-V4.1-Flash · dsa.wq_a | decode 16×1 | [16, 1280, 5120] | 12.003 / — | 13.059 / — | 11.002 | 切 K + 归并 / 切 K + 归并 |
-| DeepSeek-V4.1-Flash · indexer.wk | decode 9×9 | [81, 128, 512] | 4.380 / — | 4.380 / — | 4.015 | — / — |
+| DeepSeek-V4.1-Flash · indexer.wk | decode 9×9 | [81, 128, 512] | 4.380 / [4.402](../../../results/v0.30/matmul-dispatch/device/81-dt-retired.json) | 4.380 / [4.290](../../../results/v0.30/matmul-dispatch/device/81-pr-retired.json) | 4.015 | — / — |
 | DeepSeek-V4.1-Flash · dsa.wq_a | decode 9×9 | [81, 1280, 5120] | 20.557 / — | 16.072 / — | 11.133 | 切 K + 归并 / 切 K + 归并 |
-| DeepSeek-V4.1-Flash · indexer.wk | decode 11×9 | [99, 128, 512] | 4.392 / — | 4.392 / — | 4.026 | — / — |
+| DeepSeek-V4.1-Flash · indexer.wk | decode 11×9 | [99, 128, 512] | 4.392 / [4.568](../../../results/v0.30/matmul-dispatch/device/99-dt-retired.json) | 4.392 / [4.332](../../../results/v0.30/matmul-dispatch/device/99-pr-retired.json) | 4.026 | — / — |
 | DeepSeek-V4.1-Flash · dsa.wq_a | decode 11×9 | [99, 1280, 5120] | 20.643 / — | 17.381 / — | 11.171 | 切 K + 归并 / 切 K + 归并 |
-| DeepSeek-V4.1-Flash · indexer.wk | decode 16×9 | [144, 128, 512] | 4.412 / — | 4.413 / — | 4.045 | — / — |
+| DeepSeek-V4.1-Flash · indexer.wk | decode 16×9 | [144, 128, 512] | 4.412 / [4.479](../../../results/v0.30/matmul-dispatch/device/144-dt-retired.json) | 4.413 / [4.530](../../../results/v0.30/matmul-dispatch/device/144-pr-retired.json) | 4.045 | — / — |
 | DeepSeek-V4.1-Flash · dsa.wq_a | decode 16×9 | [144, 1280, 5120] | 20.665 / — | 22.936 / — | 11.188 | 切 K + 归并 / 切 K + 归并 |
 | Kimi-K3 · mla.q_b_proj | decode 1×1 | [1, 2304, 1536] | 8.618 / [6.680](../../../results/v0.28/matmul/1-2304-1536-dt-drain.json) | 8.621 / [7.494](../../../results/v0.28/matmul/1-2304-1536-pr-drain.json) | 5.633 | 纯 Cube / 纯 Cube |
 | Kimi-K3 · mla.q_b_proj | decode 1×9、9×1 | [9, 2304, 1536] | 8.626 / — | 8.647 / — | 5.637 | 纯 Cube / 纯 Cube |

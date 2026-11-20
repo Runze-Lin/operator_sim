@@ -18,3 +18,7 @@ Flash 的独立新形 [9,128,512] 已拿到双端首个完整对照。DT 预测 
 隔离 wheel 重放 854 条归档记录，核对 1,522 个不同的公开输入。进程内单次 P95 / 最大 0.695 / 3.518 ms，36 个独立调用的 Matmul 容量查询最大 0.860 ms。324 项单元测试通过。[归档覆盖与其他超限](acceptance.md) · [wheel 结果](wheel-check.json) · [模型与冻结指纹](model.json)
 
 当前公开 Matmul 在 Pro 的部分 decode 输入仍会错选输出分块。单凭 shape 的 Post 冷热窗口存在不可分辨下界，Sinkhorn 未知前序预测在纯热态子组仍超限。融合 KDA V1 的同步异常继续缺少合格时间，部分算子的双端大形仍在排队。970DT 所有数字均为架构外推。
+
+七个不同 M 的 Flash 同权重独立样本现已全部返回，共 14 个合格全窗。默认 DT WAPE / 最大为 2.07% / 3.84%，PR 为 2.44% / 4.96%。实测 M=81、99、144 分别使用 12、14、18 个 AIC，均匹配模型。七个 PR/DT 时间比的 WAPE 为 3.66%。M=524288 的额外容量检查点已开始实跑，长形仍单独计分。[完整独立集](matmul-dispatch/device/report.md) · [事件阶段](matmul-dispatch/device/phases.md)
+
+128Ki DT 的既有采集用 32 个逐核指令汇总文件可直接核对 65,536 次 MMAD、16,416 次 GM→L1、131,072 次 L1→L0 和 4,096 次 FIXP 写出。聚合 CSV 共 6.32 MiB，全片时间线 JSON 为 3.094 GiB，节省的是回放字节读取。Kimi 同宽补测仍在其原单槽等待宿主，新宿主配置的交接条件未满足；没有重复启动任何 Kimi 端点。[计数与成本](matmul-dispatch/device/census.md) · [Kimi 原队列核验](matmul-dispatch/kimi/status.json)

@@ -1,0 +1,204 @@
+{
+  "qualified": true,
+  "ca_us": 4.402424335479736,
+  "model_us": 4.380078605290545,
+  "signed_error_pct": -0.5075778363549444,
+  "stages": [
+    {
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "ca_us": 4.402424335479736,
+      "active_aic": 12,
+      "active_aiv": 0,
+      "windows": {
+        "core0.cubecore0": [
+          0.0,
+          4.3333330154418945
+        ],
+        "core1.cubecore0": [
+          0.026666641235351562,
+          4.2521209716796875
+        ],
+        "core3.cubecore0": [
+          0.018787860870361328,
+          4.317575454711914
+        ],
+        "core16.cubecore0": [
+          0.23090887069702148,
+          4.364848613739014
+        ],
+        "core2.cubecore0": [
+          0.018181800842285156,
+          4.341211795806885
+        ],
+        "core19.cubecore0": [
+          0.18848466873168945,
+          4.364848494529724
+        ],
+        "core17.cubecore0": [
+          0.14121198654174805,
+          4.347272872924805
+        ],
+        "core18.cubecore0": [
+          0.17757558822631836,
+          4.402424335479736
+        ],
+        "core20.cubecore0": [
+          0.21818161010742188,
+          4.392121315002441
+        ],
+        "core5.cubecore0": [
+          0.03151512145996094,
+          4.128484606742859
+        ],
+        "core21.cubecore0": [
+          0.1963634490966797,
+          4.133333444595337
+        ],
+        "core4.cubecore0": [
+          0.017575740814208984,
+          4.33878755569458
+        ]
+      },
+      "trace": "runs/matmul_dispatch30/device/81-dt/profile/OPPROF_20261120130338_XULQGQFVUXOJMWYA/simulator/trace.json",
+      "trace_sha256": "283ea4eb39bf71ddfede9733ca9b6bc758ca65c63a459f8c425ad26a4c706f4f",
+      "binary_sha256": "e6899fbaa2659b7778bee81deb00b64b009dafcb7ad350f06576767fdeba2bf7",
+      "queue_events": {
+        "SCALAR": 11064,
+        "MTE1": 60,
+        "MTE2": 60,
+        "FLOWCTRL": 588,
+        "FIXP": 24,
+        "CUBE": 24
+      },
+      "mmad": 24,
+      "total_events": 11820
+    }
+  ],
+  "correctness": [
+    "correctness count=10368 bad=0"
+  ],
+  "terminal": {
+    "core2.cubecore0": {
+      "physical_end": 10207,
+      "first_tick": 6524,
+      "retire_tick": 13657,
+      "last_descriptor": "FIX_L0C_TO_DST",
+      "issue_tick": 10169
+    },
+    "core0.cubecore0": {
+      "physical_end": 10339,
+      "first_tick": 6494,
+      "retire_tick": 13644,
+      "last_descriptor": "FIX_L0C_TO_DST",
+      "issue_tick": 10301
+    },
+    "core5.cubecore0": {
+      "physical_end": 10201,
+      "first_tick": 6546,
+      "retire_tick": 13306,
+      "last_descriptor": "FIX_L0C_TO_DST",
+      "issue_tick": 10163
+    },
+    "core1.cubecore0": {
+      "physical_end": 10191,
+      "first_tick": 6538,
+      "retire_tick": 13510,
+      "last_descriptor": "FIX_L0C_TO_DST",
+      "issue_tick": 10153
+    },
+    "core21.cubecore0": {
+      "physical_end": 10430,
+      "first_tick": 6818,
+      "retire_tick": 13314,
+      "last_descriptor": "FIX_L0C_TO_DST",
+      "issue_tick": 10392
+    },
+    "core4.cubecore0": {
+      "physical_end": 10306,
+      "first_tick": 6523,
+      "retire_tick": 13653,
+      "last_descriptor": "FIX_L0C_TO_DST",
+      "issue_tick": 10268
+    },
+    "core19.cubecore0": {
+      "physical_end": 10583,
+      "first_tick": 6805,
+      "retire_tick": 13696,
+      "last_descriptor": "FIX_L0C_TO_DST",
+      "issue_tick": 10545
+    },
+    "core20.cubecore0": {
+      "physical_end": 10492,
+      "first_tick": 6854,
+      "retire_tick": 13741,
+      "last_descriptor": "FIX_L0C_TO_DST",
+      "issue_tick": 10454
+    },
+    "core18.cubecore0": {
+      "physical_end": 10446,
+      "first_tick": 6787,
+      "retire_tick": 13758,
+      "last_descriptor": "FIX_L0C_TO_DST",
+      "issue_tick": 10408
+    },
+    "core16.cubecore0": {
+      "physical_end": 10533,
+      "first_tick": 6875,
+      "retire_tick": 13696,
+      "last_descriptor": "FIX_L0C_TO_DST",
+      "issue_tick": 10495
+    },
+    "core17.cubecore0": {
+      "physical_end": 10378,
+      "first_tick": 6727,
+      "retire_tick": 13667,
+      "last_descriptor": "FIX_L0C_TO_DST",
+      "issue_tick": 10340
+    },
+    "core3.cubecore0": {
+      "physical_end": 10248,
+      "first_tick": 6525,
+      "retire_tick": 13618,
+      "last_descriptor": "FIX_L0C_TO_DST",
+      "issue_tick": 10210
+    }
+  },
+  "origin_ticks_range": [
+    6494,
+    6494
+  ],
+  "basis": "Supplemental physical END + independent min/max of all X descriptors on each shard + official aggregate and core table. Engine drains can retire later than scalar END.",
+  "acquisition_receipt": "81-dt-initial.json",
+  "acquisition_sha256": "32620cc4d60c49b8105d0c3b88cc9e2db36299228617fef09e76dd83deea86da",
+  "registration_sha256": "aa8ab1e58050f37fe539772c4eb00e29b2d6e60fdcad7c93e4a999ec5ecf0258",
+  "chip": "Ascend950DT_9582",
+  "shape": [
+    81,
+    128,
+    512
+  ],
+  "cost": {
+    "seconds": 78.10200840001926,
+    "started_utc": "2026-11-20T05:03:38.254758+00:00",
+    "finished_utc": "2026-11-20T05:04:56.356769+00:00",
+    "exit_code": 0,
+    "stop_reason": null,
+    "peak_bytes": 55335676,
+    "command": [
+      "bash",
+      "/home/l00925865/operator_sim/scripts/cann-run.sh",
+      "msopprof",
+      "simulator",
+      "--soc-version=Ascend950DT_9582",
+      "--dump=false",
+      "--timeout=15",
+      "--output=/home/l00925865/operator_sim/runs/matmul_dispatch30/device/81-dt/profile",
+      "/home/l00925865/operator_sim/build/smoke/matmul28",
+      "81",
+      "128",
+      "512"
+    ]
+  },
+  "original_result": "results/v0.30/matmul-dispatch/device/81-dt.json",
+  "scope": "Original frozen numerical, ELF, full-roster, official-table and END/drain checks using the same raw. Supplied omitted receipt basename only."
+}
