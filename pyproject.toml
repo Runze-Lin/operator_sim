@@ -4,14 +4,22 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ascend-operator-model"
-version = "0.34.0"
-description = "Per-device Ascend operator latency estimates for system simulation"
+version = "1.0.0"
+description = "Portable Ascend operator latency and resource estimates for system simulation"
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = []
 
-[tool.setuptools.packages.find]
-include = ["operator_model*"]
-
 [project.scripts]
 operator-sim = "operator_model.__main__:main"
+
+[project.urls]
+Repository = "https://github.com/Runze-Lin/operator_sim"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["operator_model", "operator_model.*"]
+namespaces = false
+
+[tool.setuptools.package-data]
+operator_model = ["data/chips/*.json", "data/parameters/*.json"]

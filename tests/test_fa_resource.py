@@ -2,7 +2,7 @@ from dataclasses import replace
 import unittest
 
 from operator_model.chips import load_chip
-from operator_model.fa_resource import resource_fa
+from operator_model.operators.attention.resources import resource_fa
 
 
 class FAResourceTest(unittest.TestCase):

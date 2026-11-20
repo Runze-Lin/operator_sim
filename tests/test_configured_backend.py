@@ -1,4 +1,5 @@
 import json
+from operator_model.resources import chip_file
 import subprocess
 import sys
 import unittest
@@ -7,7 +8,7 @@ from pathlib import Path
 from operator_model import estimate, load_chip
 
 ROOT = Path(__file__).resolve().parents[1]
-EXAMPLE = ROOT/'configs/chips/scenario-example.json'
+EXAMPLE = ROOT/'examples/chip.json'
 
 
 class ConfiguredBackendTest(unittest.TestCase):
@@ -31,7 +32,7 @@ class ConfiguredBackendTest(unittest.TestCase):
         self.assertEqual(estimate('kda_chunk',[1,64,1,1,128,128],dtype='fp16').status, 'unavailable')
 
     def test_same_name_modified_peaks_do_not_claim_calibration(self):
-        config = json.loads((EXAMPLE.parent/'Ascend950DT_9582.json').read_text())
+        config = json.loads(chip_file('Ascend950DT_9582').read_text())
         config['vector_tops']['32'] /= 2
         res = estimate('rmsnorm', [512, 4096], chip=config)
         self.assertEqual(res.status, 'extrapolated')

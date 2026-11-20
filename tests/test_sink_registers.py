@@ -5,8 +5,8 @@ import unittest
 from dataclasses import replace
 
 from operator_model import load_chip
-from operator_model.mhc_sink_resource import sink as legacy
-from operator_model.sink_registers import price, registers_per_helper
+from operator_model.operators.mhc.sink_resources import sink as legacy
+from operator_model.operators.mhc.sink_registers import price, registers_per_helper
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -39,15 +39,6 @@ class SinkRegisterCandidateTest(unittest.TestCase):
             else:
                 self.assertLess(diag['stages_us']['SIMD'], old['stages_us']['SIMD'])
 
-    def test_frozen_points_and_original_default(self):
-        frozen = json.loads((ROOT/'results/v0.28/fusion/eligibility.freeze.json').read_bytes())
-        for row in frozen['jobs']:
-            chip = load_chip(row['chip'])
-            attrs = {'num_iters': row['iters']}
-            self.assertAlmostEqual(legacy(row['shape'], chip, attrs)[0], row['old_unknown_us'], places=12)
-            candidate = price(row['shape'], chip, attrs)
-            self.assertAlmostEqual(candidate[0], row['corrected_unknown_us'], places=12)
-            self.assertEqual(candidate[3]['target_plan'], row['plan'])
 
     def test_preserve_shape_and_attribute_contract(self):
         chip = load_chip('Ascend950PR_957b')

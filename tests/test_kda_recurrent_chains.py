@@ -4,7 +4,7 @@ from unittest import TestCase
 from unittest.mock import patch
 
 from operator_model.chips import load_chip
-from operator_model.kda_recurrent_chains import estimate_recurrent_chains
+from operator_model.operators.kda.recurrent_chains import estimate_recurrent_chains
 from operator_model.backend import Estimate
 
 

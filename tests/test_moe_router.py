@@ -2,7 +2,7 @@ import unittest
 from dataclasses import replace
 
 from operator_model.chips import load_chip
-from operator_model.moe_router import resource_router, router_work
+from operator_model.operators.vector.router import resource_router, router_work
 
 
 class RouterScheduleTests(unittest.TestCase):

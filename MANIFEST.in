@@ -1,38 +1,7 @@
-include configs/hardware-950dt-v7.json
-include results/v0.2/model.json
-include results/v0.6/model.json
-include results/v0.7/model.json
-include results/v0.8/cube/control.json
-include results/v0.8/fusion/model.json
-include results/v0.8/vector/profile.json
-include results/v0.9/addmm/profile.json
-include results/v0.9/mhc/model.json
-include results/v0.9/vector/profile.json
-include results/v0.10/wide/profile.json
-include results/v0.11/rms/profile.json
-include results/v0.11/post/profile.json
-include results/v0.12/rms/profile.json
-include results/v0.12/post/profile.json
-include configs/chips/Ascend950DT_9582.json
-include configs/chips/Ascend950PR_957b.json
-include results/v0.14/quant-phases.json
-include results/v0.14/cube-phases.json
-include results/v0.15/fa-phases.json
-include results/v0.16/quant.json
-include results/v0.16/matmul.json
-include results/v0.16/fa.json
-include configs/chips/Ascend970DT.json
-include results/v0.17/quant.json
-include results/v0.18/quant-fragment.json
-include results/v0.19/workloads/attn-res-prices.json
-include results/v0.22/rms-lane-parameters.json
-include configs/kda-fla-v2-26.9.1.json
-include configs/vllm-hc-post-arch35.json
-include results/v0.25/post/prices.json
-include results/v0.26/sink/prices.json
-include results/v0.28/fusion/prices.json
-include results/v0.28/post/parameters.json
-include results/v0.28/rms/prices.json
-include results/v0.30/matmul/prices.json
-include results/v0.30/post/prices.json
-include results/v0.34/indexer/prices.json
+include README.md CONTRIBUTING.md
+recursive-include src/operator_model *.py *.json
+recursive-include docs *.md *.png *.svg *.json *.csv
+recursive-include examples *.md *.py *.json
+recursive-include calibration *.md *.py *.json *.jsonl
+recursive-include tests *.py
+global-exclude __pycache__ *.py[cod]

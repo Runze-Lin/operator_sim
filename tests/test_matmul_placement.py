@@ -1,7 +1,7 @@
 from dataclasses import replace
 from unittest import TestCase
 from operator_model import load_chip
-from operator_model.matmul_placement import matmul_placement
+from operator_model.operators.matmul.placement import matmul_placement
 
 
 class MatmulPlacementTests(TestCase):

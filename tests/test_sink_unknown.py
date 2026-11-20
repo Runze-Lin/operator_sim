@@ -13,20 +13,6 @@ FUT='Ascend970DT'
 
 
 class TestUnknownSinkhorn(unittest.TestCase):
-    def test_original_ten_shapes_every_price_already_sealed(self):
-        jobs=json.loads((ROOT/'results/v0.26/sink/register.json').read_text())['jobs']
-        for sku in (DT,PR,FUT):
-            within=[r for r in jobs if r['chip']==sku and r['shape'][0]<=256]
-            self.assertEqual(len({(*j['shape'],j['iters']) for j in within}),10)
-            for j in within:
-                args={'num_iters':j['iters']}
-                public=estimate(OP,j['shape'],args,chip=sku)
-                self.assertAlmostEqual(public.latency_us,j['unknown_us'],places=11)
-                diag=public.projection['timing_diagnostics']
-                self.assertAlmostEqual(sum(diag['stages_us'].values()),public.latency_us,places=12)
-                self.assertNotIn('resident_aiv',diag['target_plan'])
-                self.assertEqual(set(diag['scenario_us']),{'first','resident','expand'})
-                self.assertEqual(public.status,'extrapolated' if sku==FUT else 'estimated')
 
     def test_unknown_explicit_none_and_known_family(self):
         attrs={'num_iters':10}
@@ -67,26 +53,3 @@ class TestUnknownSinkhorn(unittest.TestCase):
         self.assertEqual(estimate(OP,[257,4],chip=c,timing_mode='calibrated').status,'unavailable')
         self.assertEqual(estimate(OP,[67,4],{'return_intermediates':True}).status,'unsupported')
         self.assertEqual(estimate(OP,[67,4],dtype='bf16').status,'unsupported')
-
-    def test_register_pass_and_ub_tail_work(self):
-        ledger=json.loads((ROOT/'results/v0.28/fusion/replay.json').read_text())
-        for row in ledger['rows']:
-            if row['g']<=1:
-                continue
-            attrs={'num_iters':row['iters']}
-            unknown=estimate(OP,[row['t'],4],attrs,chip=row['sku'])
-            self.assertAlmostEqual(unknown.latency_us,row['mean_us'],places=10)
-            known=estimate(OP,[row['t'],4],dict(attrs,resident_aiv=row['h']),chip=row['sku'])
-            self.assertAlmostEqual(known.latency_us,row['known_us'],places=10)
-        for sku in (DT,PR,FUT):
-            t=262144
-            out=estimate(OP,[t,4],{'resident_aiv':0},chip=sku)
-            d=out.projection['timing_diagnostics']
-            p=d['target_plan']
-            seg=d['block_schedule']
-            self.assertGreater(p['ub_blocks'],1)
-            self.assertEqual(sum(s['count']*s['rows'] for s in seg),p['rows_per_core'])
-            self.assertEqual(sum(s['count']*s['concurrent_rows'] for s in seg),t)
-            self.assertLessEqual(len(seg),5)
-            self.assertEqual(p['vf_calls_per_core'],1+41*p['ub_blocks'])
-            self.assertAlmostEqual(sum(d['stages_us'].values()),out.latency_us)

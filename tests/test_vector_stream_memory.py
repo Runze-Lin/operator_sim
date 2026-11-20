@@ -2,7 +2,7 @@ from dataclasses import replace
 import unittest
 
 from operator_model import load_chip
-from operator_model.vector_memory import stream_memory
+from operator_model.scheduling.memory import stream_memory
 
 
 class MixedStreamMemoryTest(unittest.TestCase):

@@ -1,7 +1,7 @@
 from dataclasses import replace
 import unittest
 from operator_model import load_chip
-from operator_model.matmul_multisplit import estimate_matmul_retile
+from operator_model.operators.matmul.multi_split import estimate_matmul_retile
 
 
 class RetileGeometryTest(unittest.TestCase):

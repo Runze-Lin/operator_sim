@@ -1,6 +1,6 @@
 import unittest
 from operator_model import OperatorStream
-from operator_model.post_fragment_pipeline import _advance_rows, estimate_post_fragments
+from operator_model.operators.mhc.fragment_pipeline import _advance_rows, estimate_post_fragments
 
 
 class PostFragmentTest(unittest.TestCase):

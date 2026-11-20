@@ -81,7 +81,7 @@ class PostRepeatTest(unittest.TestCase):
         self.assertEqual(stream.preview('mhc_post',shape),estimate('mhc_post', shape))
 
     def test_ub_boundary_changes_diagnostic_using_available_bytes(self):
-        from operator_model.post_repeat import channel_tiles
+        from operator_model.operators.mhc.repeat import channel_tiles
         chip = load_chip()
         self.assertEqual(channel_tiles(4864, chip)['count'], 1)
         self.assertEqual(channel_tiles(4880, chip)['count'], 2)

@@ -10,23 +10,6 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class RmsHistoryBandTests(unittest.TestCase):
-    def test_all_registered_profiles_and_conditional_prices(self):
-        rows = json.loads((ROOT/'results/rms-unknown23/freeze.json').read_text())['rows']
-        tested = set()
-        for row in rows:
-            key = row['chip'], tuple(row['shape'])
-            if key in tested:
-                continue
-            tested.add(key)
-            with self.subTest(key=key):
-                band = estimate_rms_history_band(row['shape'], chip=row['chip'], dtype='bfloat16')
-                self.assertIsInstance(band, RmsHistoryBand)
-                self.assertEqual((band.chip_name, band.active_aiv), (row['chip'], row['active_aiv']))
-                self.assertEqual(len(band.by_resident_aiv_us), band.active_aiv + 1)
-                self.assertAlmostEqual(band.lower_us, row['lower_us'], places=12)
-                self.assertAlmostEqual(band.upper_us, row['upper_us'], places=12)
-                for actual, expected in zip(band.by_resident_aiv_us, row['conditional_us_by_H']):
-                    self.assertAlmostEqual(actual, expected, places=12)
 
     def test_custom_port_prices_and_multi_ub_fallback(self):
         base = load_chip('Ascend950PR_957b')

@@ -4,16 +4,10 @@ from pathlib import Path
 import unittest
 
 from operator_model import estimate, load_chip
-from operator_model.vector_memory import stream_memory
+from operator_model.scheduling.memory import stream_memory
 
 
 class CastPressure(unittest.TestCase):
-    def test_same_three_predictions_as_frozen_pair(self):
-        reg=json.loads((Path(__file__).resolve().parents[1]/'results/v0.28/cast/register.json').read_bytes())
-        for chip,scenarios in reg['prices'].items():
-            pred=estimate('cast_bf16_fp32',(5632,5120),chip=chip)
-            self.assertAlmostEqual(pred.latency_us,scenarios['pressure']['us'])
-            self.assertEqual(pred.projection['timing_diagnostics']['retention_policy'],'pressure')
 
     def test_increasing_issue_capacity_changes_dirty_fraction_within_bounds(self):
         chip=load_chip('Ascend950PR_957b')

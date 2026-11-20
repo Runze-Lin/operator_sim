@@ -1,7 +1,7 @@
 import unittest
 from dataclasses import replace
 from operator_model.chips import load_chip
-from operator_model.matmul_resource import resource_matmul
+from operator_model.operators.matmul.resources import resource_matmul
 
 
 class TestMatmulResource(unittest.TestCase):

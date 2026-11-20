@@ -2,7 +2,7 @@ from dataclasses import replace
 import unittest
 
 from operator_model import OperatorStream, estimate, load_chip
-from operator_model.post_history import estimate_post_history
+from operator_model.operators.mhc.history import estimate_post_history
 
 
 OP = 'mhc_post'

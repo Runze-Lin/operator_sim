@@ -3,7 +3,7 @@ from unittest import TestCase
 from unittest.mock import patch
 
 from operator_model import estimate, load_chip
-from operator_model.quant_resource import resource_quant
+from operator_model.operators.quant.resources import resource_quant
 
 
 class ResourceBackendTest(TestCase):

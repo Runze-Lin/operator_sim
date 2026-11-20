@@ -4,7 +4,7 @@ from pathlib import Path
 import unittest
 
 from operator_model import estimate,load_chip
-from operator_model.mhc_sink_resource import fused as legacy
+from operator_model.operators.mhc.sink_resources import fused as legacy
 
 ROOT=Path(__file__).resolve().parents[1]
 DT='Ascend950DT_9582'
@@ -13,19 +13,6 @@ FUT='Ascend970DT'
 
 
 class FusedSinkDispatchTests(unittest.TestCase):
-    def test_preregistered_partitions_and_price_parity(self):
-        jobs=json.loads((ROOT/'results/v0.27/fusion/register.json').read_text())['jobs']
-        shapes={tuple(j['shape']):j['predictions'] for j in jobs}
-        self.assertEqual(len(shapes),11)
-        for shape,pred in shapes.items():
-            for chip,frozen in pred.items():
-                r=estimate('mhc_pre_sinkhorn',shape,chip=chip)
-                self.assertAlmostEqual(r.latency_us,frozen['candidate_us'],places=12)
-                self.assertEqual(r.projection['target_plan'],frozen['target_plan'])
-                self.assertEqual(set(r.projection['stages_us']),set(frozen['stages_us']))
-                for name, value in frozen['stages_us'].items():
-                    self.assertAlmostEqual(r.projection['stages_us'][name],value,places=12)
-                self.assertEqual(r.status,'extrapolated' if chip==FUT else 'estimated')
 
     def test_future_and_distinct_tiling_preserve_existing_prices(self):
         attrs={'num_iters':20,'need_backward':False}

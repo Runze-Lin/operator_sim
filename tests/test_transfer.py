@@ -1,8 +1,8 @@
 from dataclasses import dataclass, field, replace
 import unittest
 
-from operator_model.predictor import predict
-from operator_model.transfer import project
+from operator_model.scheduling.reference import predict
+from operator_model.scheduling.projection import project
 from operator_model.workload import account_work
 
 

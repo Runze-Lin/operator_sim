@@ -1,10 +1,10 @@
 from collections import Counter
 from dataclasses import replace
 import unittest
-from operator_model.matmul_waves import dispatch
-from operator_model.matmul_resource import resource_matmul
+from operator_model.operators.matmul.waves import dispatch
+from operator_model.operators.matmul.resources import resource_matmul
 from operator_model.chips import load_chip
-from operator_model.matmul_v15 import matmul_plan
+from operator_model.operators.matmul.tiling import matmul_plan
 
 
 class TailWaveTests(unittest.TestCase):

@@ -2,9 +2,9 @@ from dataclasses import replace
 from unittest import TestCase
 
 from operator_model.chips import load_chip
-from operator_model.quant_fragments import fragment_costs
-from operator_model.quant_resource import resource_quant
-from operator_model.quant_scale import peak_scale_writers
+from operator_model.operators.quant.fragments import fragment_costs
+from operator_model.operators.quant.resources import resource_quant
+from operator_model.operators.quant.scale import peak_scale_writers
 
 
 class QuantFragmentWave(TestCase):

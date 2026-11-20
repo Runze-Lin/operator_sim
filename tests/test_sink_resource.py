@@ -1,7 +1,7 @@
 import unittest
 
 from operator_model import estimate, load_chip
-from operator_model.mhc_sink_resource import partition
+from operator_model.operators.mhc.sink_resources import partition
 
 
 class SinkResourceTests(unittest.TestCase):

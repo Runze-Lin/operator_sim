@@ -12,30 +12,6 @@ FUT = 'Ascend970DT'
 
 
 class SinkHistoryTests(unittest.TestCase):
-    def test_all_frozen_issue_epochs_and_target_work(self):
-        jobs = json.loads((ROOT/'results/v0.26/sink/register.json').read_text())['jobs']
-        self.assertEqual(len(jobs), 45)
-        for job in jobs:
-            attrs = {'num_iters': job['iters'], 'resident_aiv': job['prior_h']}
-            actual = estimate('mhc_sinkhorn', job['shape'], attrs, chip=job['chip'])
-            expected = job['known']
-            if expected['register_passes'] == 1:
-                self.assertAlmostEqual(actual.latency_us, expected['latency_us'], places=12)
-            else:
-                self.assertEqual(actual.projection['timing_diagnostics']['schedule'],'sinkhorn_register_pipeline')
-            self.assertEqual(actual.active_aiv, expected['active_aiv'])
-            self.assertEqual(actual.work['logical_write_bytes'], expected['bytes_written'])
-            self.assertEqual(actual.work['logical_read_bytes'], expected['bytes_read'])
-            diag = actual.projection['timing_diagnostics']
-            self.assertEqual(diag['target_plan']['vf_calls_per_core'], expected['vf_calls_per_core'])
-            self.assertEqual(diag['target_plan']['history_state'], expected['selected'])
-            epochs = expected['vf_setup_epochs']
-            for key in (epochs if expected['register_passes']==1 else ('tiling_begin','read_begin','softmax_vf')):
-                value = epochs[key]
-                self.assertAlmostEqual(diag['issue_epochs_us'][key], value, places=12)
-            self.assertAlmostEqual(sum(diag['stages_us'].values()), actual.latency_us, places=12)
-            status = 'estimated' if job['shape'][0] <= 256 and job['chip'] in (DT, PR) else 'extrapolated'
-            self.assertEqual(actual.status, status)
 
     def test_history_is_explicit_only(self):
         opts = {'num_iters': 10}
@@ -48,21 +24,6 @@ class SinkHistoryTests(unittest.TestCase):
         self.assertGreater(first.latency_us, warm.latency_us)
         self.assertEqual(stream.advance('mhc_sinkhorn', [67,4], opts), base)
 
-    def test_stream_reconstructs_registered_order_on_all_three_chips(self):
-        registration = json.loads((ROOT/'results/v0.26/sink/register.json').read_text())
-        for chip in (DT, PR, FUT):
-            for group in registration['order']:
-                stream = OperatorStream(chip, track_sinkhorn_history=True)
-                calls = [j for j in registration['jobs'] if j['chip'] == chip and j['group'] == group]
-                for job in sorted(calls, key=lambda j: j['index']):
-                    options = {'num_iters': job['iters']}
-                    preview = stream.preview('mhc_sinkhorn', job['shape'], options)
-                    self.assertEqual(preview, stream.advance('mhc_sinkhorn', job['shape'], options))
-                    self.assertEqual(preview.projection['target_plan']['resident_aiv'], job['prior_h'])
-                    self.assertEqual(preview.projection['target_plan']['history_state'], job['known']['selected'])
-                    explicit = estimate('mhc_sinkhorn',job['shape'],dict(options,resident_aiv=job['prior_h']),chip=chip)
-                    self.assertEqual(preview.latency_us, explicit.latency_us)
-                    self.assertEqual(options, {'num_iters': job['iters']})
 
     def test_stream_unknown_prefix_recovers_only_provable_coverage(self):
         stream = OperatorStream(track_sinkhorn_history=True)

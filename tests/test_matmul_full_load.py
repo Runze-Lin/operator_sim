@@ -3,7 +3,7 @@ from dataclasses import replace
 from unittest import TestCase
 
 from operator_model.chips import load_chip
-from operator_model.matmul_full_load import estimate_matmul_full_load
+from operator_model.operators.matmul.full_load import estimate_matmul_full_load
 
 
 class FullLoadTests(TestCase):

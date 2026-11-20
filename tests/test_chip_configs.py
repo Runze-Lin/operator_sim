@@ -1,5 +1,5 @@
 import json
-from pathlib import Path
+from operator_model.resources import chip_file
 import unittest
 
 from operator_model.chips import load_chip, REFERENCE_NAME
@@ -7,7 +7,7 @@ from operator_model.chips import load_chip, REFERENCE_NAME
 
 class ChipTests(unittest.TestCase):
     def setUp(self):
-        self.path = Path(__file__).resolve().parents[1]/'configs/chips'/(REFERENCE_NAME+'.json')
+        self.path = chip_file(REFERENCE_NAME)
         self.doc = json.loads(self.path.read_text())
 
     def test_builtin_and_file_match(self):

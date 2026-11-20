@@ -2,8 +2,8 @@ from dataclasses import replace
 from unittest import TestCase
 
 from operator_model.chips import load_chip
-from operator_model.attention_residual import attention_residual_work
-from operator_model.attention_residual_timing import resource_attention
+from operator_model.operators.attention.residual_work import attention_residual_work
+from operator_model.operators.attention.residual_timing import resource_attention
 
 
 class KimiAttentionResidual(TestCase):

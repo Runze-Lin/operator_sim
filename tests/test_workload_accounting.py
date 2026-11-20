@@ -1,6 +1,6 @@
 import unittest
 
-from operator_model.predictor import VECTOR, CUBE, FUSION
+from operator_model.scheduling.reference import VECTOR, CUBE, FUSION
 from operator_model.workload import account_work, default_dtype
 
 
@@ -87,7 +87,7 @@ class TestWorkloadAccounting(unittest.TestCase):
                              "unsupported")
 
     def test_split_mhc_keeps_legacy_large_token_contract(self):
-        from operator_model.predictor import predict
+        from operator_model.scheduling.reference import predict
         for tokens in (256, 257, 4096):
             for width in (16, 16384):
                 shape = (tokens, 4, width)

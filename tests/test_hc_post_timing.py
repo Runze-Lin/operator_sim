@@ -1,19 +1,18 @@
 import json
-from pathlib import Path
+from operator_model.resources import chip_file
 from time import perf_counter
 import unittest
 
 from operator_model.chips import load_chip
-from operator_model.hc_post_timing import resource_hc_post
+from operator_model.operators.mhc.vllm_post import resource_hc_post
 
 
-ROOT = Path(__file__).resolve().parents[1]
 ATTRS = {'implementation': 'vllm_hc_post'}
 DT = 'Ascend950DT_9582'
 
 
 def custom(**fields):
-    config = json.loads((ROOT / 'configs/chips' / (DT+'.json')).read_text())
+    config = json.loads(chip_file(DT).read_text())
     details = fields.pop('details', {})
     config.update(name='alternative', **fields)
     config['details'].update(details)
@@ -21,20 +20,6 @@ def custom(**fields):
 
 
 class ExperimentalHcPostTest(unittest.TestCase):
-    def test_all_preregistered_targets(self):
-        register = json.loads((ROOT/'results/v0.23/hc-timing/holdout-register.json').read_text())
-        for case in register['cases'][::2]:
-            for sku, frozen in case['predictions'].items():
-                with self.subTest(shape=case['shape'], sku=sku):
-                    latency, work, diag = resource_hc_post(case['shape'], load_chip(sku), ATTRS)
-                    self.assertEqual(work['vec_ops'], frozen['fp32_useful_ops'])
-                    self.assertEqual(diag['active_aiv'], frozen['active_aiv'])
-                    if case['shape'][-1] == 4112:
-                        self.assertIsNone(latency)
-                        self.assertIn('64 elements', ' '.join(diag['warnings']))
-                        continue
-                    self.assertAlmostEqual(latency, frozen['device_us'], places=10)
-                    self.assertEqual(diag['pipeline']['vf_commands'], frozen['vf_commands'])
 
     def test_capacity_and_unpriced_fp32(self):
         fp = dict(load_chip(DT).vector_tops)

@@ -3,7 +3,7 @@ from dataclasses import replace
 from unittest import TestCase
 
 from operator_model.chips import load_chip
-from operator_model.kimi_kda import plan_kimi_kda_prefill
+from operator_model.operators.kda.prefill import plan_kimi_kda_prefill
 
 
 class KimiV1WorkTest(TestCase):

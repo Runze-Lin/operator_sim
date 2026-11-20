@@ -3,7 +3,7 @@ import unittest
 from dataclasses import replace
 
 from operator_model.chips import load_chip
-from operator_model.post_history import estimate_post_history
+from operator_model.operators.mhc.history import estimate_post_history
 
 
 class PostHistoryTest(unittest.TestCase):

@@ -1,0 +1,894 @@
+{
+  "scope": "Large registered geometries, with an additional bounded single-state-chain case. All times in microseconds. Null means unavailable.",
+  "counts": {
+    "routes": 21,
+    "large": 20,
+    "paired_large": 6,
+    "qualified_instruction_endpoints": 13,
+    "wrappers": 1
+  },
+  "routes": [
+    {
+      "route": "addmm",
+      "op": "addmm",
+      "shape": [
+        65536,
+        128,
+        512
+      ],
+      "attrs": {
+        "self_shape": [
+          128
+        ],
+        "alpha": 1,
+        "beta": 1
+      },
+      "scenario": "Flash B8×8192 调度 token，显式列 bias 的单算子变体",
+      "single_chain_limit": false,
+      "endpoints": {
+        "Ascend950DT_9582": {
+          "predicted_us": 32.64613057242172,
+          "ca_us": null,
+          "wrapper_us": null,
+          "lower_bound_us": null,
+          "signed_error_pct": null,
+          "timing_protocol": null
+        },
+        "Ascend950PR_957b": {
+          "predicted_us": 53.192858236884604,
+          "ca_us": null,
+          "wrapper_us": null,
+          "lower_bound_us": null,
+          "signed_error_pct": null,
+          "timing_protocol": null
+        }
+      },
+      "extrapolated_970dt_us": 12.404061778720106
+    },
+    {
+      "route": "attn_res_fwd",
+      "op": "attn_res_fwd",
+      "shape": [
+        512,
+        7168,
+        8,
+        1
+      ],
+      "attrs": {
+        "addend": true,
+        "write_idx": -1,
+        "materialize": false,
+        "optimize_prefill": true,
+        "mix": true,
+        "output_norm": true
+      },
+      "scenario": "Kimi 512 token prefill，7168 通道，1 个有效 cached residual",
+      "single_chain_limit": false,
+      "endpoints": {
+        "Ascend950DT_9582": {
+          "predicted_us": 45.07799082778881,
+          "ca_us": null,
+          "wrapper_us": null,
+          "lower_bound_us": null,
+          "signed_error_pct": null,
+          "timing_protocol": null
+        },
+        "Ascend950PR_957b": {
+          "predicted_us": 55.62255584343198,
+          "ca_us": null,
+          "wrapper_us": null,
+          "lower_bound_us": null,
+          "signed_error_pct": null,
+          "timing_protocol": null
+        }
+      },
+      "extrapolated_970dt_us": 27.4777435714115
+    },
+    {
+      "route": "cast_bf16_fp32",
+      "op": "cast_bf16_fp32",
+      "shape": [
+        2097152,
+        64
+      ],
+      "attrs": {},
+      "scenario": "Pro B8×256Ki，64 列输入转换",
+      "single_chain_limit": false,
+      "endpoints": {
+        "Ascend950DT_9582": {
+          "predicted_us": 227.01819528619527,
+          "ca_us": 247.78848457615823,
+          "wrapper_us": null,
+          "lower_bound_us": null,
+          "signed_error_pct": -8.38226575600981,
+          "timing_protocol": "full"
+        },
+        "Ascend950PR_957b": {
+          "predicted_us": 506.51741421837414,
+          "ca_us": 529.2866902379319,
+          "wrapper_us": null,
+          "lower_bound_us": null,
+          "signed_error_pct": -4.301879574814594,
+          "timing_protocol": "full"
+        }
+      },
+      "extrapolated_970dt_us": 104.67343127572015
+    },
+    {
+      "route": "fa",
+      "op": "fa",
+      "shape": [
+        9,
+        131072,
+        64,
+        1,
+        1
+      ],
+      "attrs": {},
+      "scenario": "单头稠密 BF16，对 128Ki KV 做 Q9 校验，D=64 控制形",
+      "single_chain_limit": false,
+      "endpoints": {
+        "Ascend950DT_9582": {
+          "predicted_us": 274.9871150004637,
+          "ca_us": 274.8212121212121,
+          "wrapper_us": null,
+          "lower_bound_us": null,
+          "signed_error_pct": 0.06036756696146117,
+          "timing_protocol": "compact"
+        },
+        "Ascend950PR_957b": {
+          "predicted_us": 274.9878982643407,
+          "ca_us": 265.8933386830613,
+          "wrapper_us": null,
+          "lower_bound_us": null,
+          "signed_error_pct": 3.4203788730938767,
+          "timing_protocol": "full"
+        }
+      },
+      "extrapolated_970dt_us": 252.0925457996555
+    },
+    {
+      "route": "fla_kda_v2",
+      "op": "kda_chunk",
+      "shape": [
+        1,
+        1024,
+        12,
+        12,
+        128,
+        128
+      ],
+      "attrs": {
+        "implementation": "fla_26_9_1_v2"
+      },
+      "scenario": "Kimi TP8，单请求 prefill 分块 1024 token、12 本地头，强制 V2",
+      "single_chain_limit": false,
+      "endpoints": {
+        "Ascend950DT_9582": {
+          "predicted_us": 161.6063328304078,
+          "ca_us": null,
+          "wrapper_us": null,
+          "lower_bound_us": null,
+          "signed_error_pct": null,
+          "timing_protocol": null
+        },
+        "Ascend950PR_957b": {
+          "predicted_us": 178.81082045908443,
+          "ca_us": null,
+          "wrapper_us": null,
+          "lower_bound_us": null,
+          "signed_error_pct": null,
+          "timing_protocol": null
+        }
+      },
+      "extrapolated_970dt_us": 111.97117237466897
+    },
+    {
+      "route": "gmm2",
+      "op": "gmm2",
+      "shape": [
+        4096,
+        7168,
+        384,
+        1
+      ],
+      "attrs": {
+        "expert_counts": [
+          4096
+        ]
+      },
+      "scenario": "Pro B8×32Ki，top6 均衡 EP384、专家 TP8，每卡单专家 4096 行",
+      "single_chain_limit": false,
+      "endpoints": {
+        "Ascend950DT_9582": {
+          "predicted_us": 2390.9624242424243,
+          "ca_us": null,
+          "wrapper_us": null,
+          "lower_bound_us": null,
+          "signed_error_pct": null,
+          "timing_protocol": null
+        },
+        "Ascend950PR_957b": {
+          "predicted_us": 2581.777762239938,
+          "ca_us": null,
+          "wrapper_us": null,
+          "lower_bound_us": null,
+          "signed_error_pct": null,
+          "timing_protocol": null
+        }
+      },
+      "extrapolated_970dt_us": 1372.2329359257974
+    },
+    {
+      "route": "grouped_matmul_swiglu_quant_v2",
+      "op": "grouped_matmul_swiglu_quant_v2",
+      "shape": [
+        4096,
+        7168,
+        384,
+        1
+      ],
+      "attrs": {
+        "expert_counts": [
+          4096
+        ]
+      },
+      "scenario": "Pro B8×32Ki，top6 均衡 EP384、专家 TP8，每卡单专家 4096 行",
+      "single_chain_limit": false,
+      "endpoints": {
+        "Ascend950DT_9582": {
+          "predicted_us": 5758.661818181818,
+          "ca_us": null,
+          "wrapper_us": null,
+          "lower_bound_us": null,
+          "signed_error_pct": null,
+          "timing_protocol": null
+        },
+        "Ascend950PR_957b": {
+          "predicted_us": 6570.864271369075,
+          "ca_us": null,
+          "wrapper_us": null,
+          "lower_bound_us": null,
+          "signed_error_pct": null,
+          "timing_protocol": null
+        }
+      },
+      "extrapolated_970dt_us": 1620.208475635708
+    },
+    {
+      "route": "kda_recurrent (single chain)",
+      "op": "kda_recurrent",
+      "shape": [
+        1,
+        8,
+        1,
+        1,
+        128,
+        256
+      ],
+      "attrs": {
+        "layout": "BSND",
+        "dtype": "BF16",
+        "gate_dtype": "FP32",
+        "state_dtype": "FP32",
+        "state_v_first": false,
+        "use_gate_in_kernel": false,
+        "chunk_size": null,
+        "output_final_state": true,
+        "export_gk": false
+      },
+      "scenario": "单链最多 8 步，V=256 为库边界；Kimi V=128 单列在下方",
+      "single_chain_limit": true,
+      "endpoints": {
+        "Ascend950DT_9582": {
+          "predicted_us": 67.20274170272131,
+          "ca_us": null,
+          "wrapper_us": null,
+          "lower_bound_us": null,
+          "signed_error_pct": null,
+          "timing_protocol": null
+        },
+        "Ascend950PR_957b": {
+          "predicted_us": 68.61457689632175,
+          "ca_us": null,
+          "wrapper_us": null,
+          "lower_bound_us": null,
+          "signed_error_pct": null,
+          "timing_protocol": null
+        }
+      },
+      "extrapolated_970dt_us": 61.53794493635951
+    },
+    {
+      "route": "lightning_indexer",
+      "op": "lightning_indexer",
+      "shape": [
+        1,
+        9,
+        8192,
+        8,
+        128
+      ],
+      "attrs": {
+        "dtype": "bf16",
+        "layout": "BSND",
+        "sparse_count": 512,
+        "sparse_mode": 3,
+        "return_values": false
+      },
+      "scenario": "Q9、8192 个可用 key，稠密 top512；容量对应 32Ki 的 4:1 压缩",
+      "single_chain_limit": false,
+      "endpoints": {
+        "Ascend950DT_9582": {
+          "predicted_us": 24.653155447811447,
+          "ca_us": null,
+          "wrapper_us": null,
+          "lower_bound_us": null,
+          "signed_error_pct": null,
+          "timing_protocol": null
+        },
+        "Ascend950PR_957b": {
+          "predicted_us": 24.7678866103687,
+          "ca_us": null,
+          "wrapper_us": null,
+          "lower_bound_us": null,
+          "signed_error_pct": null,
+          "timing_protocol": null
+        }
+      },
+      "extrapolated_970dt_us": 22.59380577751384
+    },
+    {
+      "route": "matmul",
+      "op": "matmul",
+      "shape": [
+        1048576,
+        128,
+        512
+      ],
+      "attrs": {},
+      "scenario": "Flash B8×128Ki，indexer.wk 的 BF16 投影几何",
+      "single_chain_limit": false,
+      "endpoints": {
+        "Ascend950DT_9582": {
+          "predicted_us": 409.26997347369326,
+          "ca_us": 405.6169761419296,
+          "wrapper_us": null,
+          "lower_bound_us": null,
+          "signed_error_pct": 0.9006026736132933,
+          "timing_protocol": "full"
+        },
+        "Ascend950PR_957b": {
+          "predicted_us": 847.9260970988965,
+          "ca_us": 804.867262005806,
+          "wrapper_us": null,
+          "lower_bound_us": null,
+          "signed_error_pct": 5.349805753781545,
+          "timing_protocol": "full"
+        }
+      },
+      "extrapolated_970dt_us": 87.60848801049671
+    },
+    {
+      "route": "mhc",
+      "op": "mhc",
+      "shape": [
+        4096,
+        4,
+        5120
+      ],
+      "attrs": {
+        "dtype": "bf16",
+        "implementation": "split",
+        "num_iters": 20
+      },
+      "scenario": "Flash B8×512，拆分库三段合计",
+      "single_chain_limit": false,
+      "endpoints": {
+        "Ascend950DT_9582": {
+          "predicted_us": 25641.153939393946,
+          "ca_us": null,
+          "wrapper_us": null,
+          "lower_bound_us": null,
+          "signed_error_pct": null,
+          "timing_protocol": null
+        },
+        "Ascend950PR_957b": {
+          "predicted_us": 29774.538574325532,
+          "ca_us": null,
+          "wrapper_us": null,
+          "lower_bound_us": null,
+          "signed_error_pct": null,
+          "timing_protocol": null
+        }
+      },
+      "extrapolated_970dt_us": 9655.85809313284
+    },
+    {
+      "route": "mhc_post",
+      "op": "mhc_post",
+      "shape": [
+        1024,
+        4,
+        5120
+      ],
+      "attrs": {
+        "dtype": "bf16",
+        "has_h_res": true
+      },
+      "scenario": "Flash 宽 5120，独立库 MhcPost，带 h_res",
+      "single_chain_limit": false,
+      "endpoints": {
+        "Ascend950DT_9582": {
+          "predicted_us": 36.70479540872881,
+          "ca_us": null,
+          "wrapper_us": null,
+          "lower_bound_us": null,
+          "signed_error_pct": null,
+          "timing_protocol": null
+        },
+        "Ascend950PR_957b": {
+          "predicted_us": 48.46364653284724,
+          "ca_us": null,
+          "wrapper_us": null,
+          "lower_bound_us": null,
+          "signed_error_pct": null,
+          "timing_protocol": null
+        }
+      },
+      "extrapolated_970dt_us": 20.04143448027928
+    },
+    {
+      "route": "mhc_pre",
+      "op": "mhc_pre",
+      "shape": [
+        4096,
+        4,
+        5120
+      ],
+      "attrs": {
+        "dtype": "bf16",
+        "has_gamma": false,
+        "alpha_count": 3,
+        "return_intermediates": true
+      },
+      "scenario": "Flash B8×512，拆分库前处理，导出中间量",
+      "single_chain_limit": false,
+      "endpoints": {
+        "Ascend950DT_9582": {
+          "predicted_us": 20100.11151515152,
+          "ca_us": null,
+          "wrapper_us": null,
+          "lower_bound_us": null,
+          "signed_error_pct": null,
+          "timing_protocol": null
+        },
+        "Ascend950PR_957b": {
+          "predicted_us": 23219.432935217374,
+          "ca_us": null,
+          "wrapper_us": null,
+          "lower_bound_us": null,
+          "signed_error_pct": null,
+          "timing_protocol": null
+        }
+      },
+      "extrapolated_970dt_us": 6767.275349119095
+    },
+    {
+      "route": "mhc_pre_sinkhorn",
+      "op": "mhc_pre_sinkhorn",
+      "shape": [
+        512,
+        4,
+        4096
+      ],
+      "attrs": {
+        "dtype": "bf16",
+        "num_iters": 20,
+        "need_backward": false
+      },
+      "scenario": "库融合分支 512 token、宽 4096、20 次迭代控制形",
+      "single_chain_limit": false,
+      "endpoints": {
+        "Ascend950DT_9582": {
+          "predicted_us": 43.89151515151516,
+          "ca_us": null,
+          "wrapper_us": null,
+          "lower_bound_us": null,
+          "signed_error_pct": null,
+          "timing_protocol": null
+        },
+        "Ascend950PR_957b": {
+          "predicted_us": 54.09525032938077,
+          "ca_us": null,
+          "wrapper_us": null,
+          "lower_bound_us": null,
+          "signed_error_pct": null,
+          "timing_protocol": null
+        }
+      },
+      "extrapolated_970dt_us": 34.29611111111111
+    },
+    {
+      "route": "mhc_sinkhorn",
+      "op": "mhc_sinkhorn",
+      "shape": [
+        4097,
+        4
+      ],
+      "attrs": {
+        "num_iters": 4
+      },
+      "scenario": "N=4，I=4，超过整批 4096 的尾行控制；历史 resident_aiv 为 DT57/PR52",
+      "single_chain_limit": false,
+      "endpoints": {
+        "Ascend950DT_9582": {
+          "predicted_us": 8.104583272727274,
+          "ca_us": 8.963636363636363,
+          "wrapper_us": null,
+          "lower_bound_us": null,
+          "signed_error_pct": -9.583756592292069,
+          "timing_protocol": "full"
+        },
+        "Ascend950PR_957b": {
+          "predicted_us": 8.81465488768116,
+          "ca_us": 9.111515151515151,
+          "wrapper_us": null,
+          "lower_bound_us": null,
+          "signed_error_pct": -3.2580779255426795,
+          "timing_protocol": "full"
+        }
+      },
+      "extrapolated_970dt_us": 5.545848201638783
+    },
+    {
+      "route": "moe_ffn",
+      "op": "moe_ffn",
+      "shape": [
+        4096,
+        7168,
+        384,
+        1
+      ],
+      "attrs": {
+        "expert_counts": [
+          4096
+        ]
+      },
+      "scenario": "Pro B8×32Ki，top6 均衡 EP384、专家 TP8，每卡单专家 4096 行",
+      "single_chain_limit": false,
+      "endpoints": {
+        "Ascend950DT_9582": {
+          "predicted_us": 8149.624242424242,
+          "ca_us": null,
+          "wrapper_us": null,
+          "lower_bound_us": null,
+          "signed_error_pct": null,
+          "timing_protocol": null
+        },
+        "Ascend950PR_957b": {
+          "predicted_us": 9152.642033609012,
+          "ca_us": null,
+          "wrapper_us": null,
+          "lower_bound_us": null,
+          "signed_error_pct": null,
+          "timing_protocol": null
+        }
+      },
+      "extrapolated_970dt_us": 2992.4414115615054
+    },
+    {
+      "route": "moe_gating_top_k",
+      "op": "moe_gating_top_k",
+      "shape": [
+        4096,
+        896,
+        16
+      ],
+      "attrs": {},
+      "scenario": "Kimi B8×512，896 专家中取 16",
+      "single_chain_limit": false,
+      "endpoints": {
+        "Ascend950DT_9582": {
+          "predicted_us": 125.68272727272728,
+          "ca_us": null,
+          "wrapper_us": null,
+          "lower_bound_us": null,
+          "signed_error_pct": null,
+          "timing_protocol": null
+        },
+        "Ascend950PR_957b": {
+          "predicted_us": 154.45828447957842,
+          "ca_us": null,
+          "wrapper_us": null,
+          "lower_bound_us": null,
+          "signed_error_pct": null,
+          "timing_protocol": null
+        }
+      },
+      "extrapolated_970dt_us": 64.09531092171717
+    },
+    {
+      "route": "quant",
+      "op": "quant",
+      "shape": [
+        262144,
+        7168
+      ],
+      "attrs": {},
+      "scenario": "Kimi B8×32Ki，hidden=7168",
+      "single_chain_limit": false,
+      "endpoints": {
+        "Ascend950DT_9582": {
+          "predicted_us": 1200.4151724236067,
+          "ca_us": null,
+          "wrapper_us": 1778.9884848484849,
+          "lower_bound_us": null,
+          "signed_error_pct": null,
+          "timing_protocol": "wrapper"
+        },
+        "Ascend950PR_957b": {
+          "predicted_us": 3992.8641139329397,
+          "ca_us": null,
+          "wrapper_us": null,
+          "lower_bound_us": null,
+          "signed_error_pct": null,
+          "timing_protocol": null
+        }
+      },
+      "extrapolated_970dt_us": 527.7790164159638
+    },
+    {
+      "route": "rmsnorm",
+      "op": "rmsnorm",
+      "shape": [
+        8192,
+        5120
+      ],
+      "attrs": {},
+      "scenario": "Flash B4×2048 调度 token，hidden=5120",
+      "single_chain_limit": false,
+      "endpoints": {
+        "Ascend950DT_9582": {
+          "predicted_us": 39.37886486682083,
+          "ca_us": 44.86788010876626,
+          "wrapper_us": null,
+          "lower_bound_us": null,
+          "signed_error_pct": -12.233729850038067,
+          "timing_protocol": "full"
+        },
+        "Ascend950PR_957b": {
+          "predicted_us": 61.6218146269688,
+          "ca_us": 70.48485136311501,
+          "wrapper_us": null,
+          "lower_bound_us": null,
+          "signed_error_pct": -12.57438522568024,
+          "timing_protocol": "full"
+        }
+      },
+      "extrapolated_970dt_us": 21.581925401553082
+    },
+    {
+      "route": "sigmoid_fp32",
+      "op": "sigmoid_fp32",
+      "shape": [
+        2097152,
+        12
+      ],
+      "attrs": {},
+      "scenario": "Kimi B8×256Ki，每 token 12 个本地头",
+      "single_chain_limit": false,
+      "endpoints": {
+        "Ascend950DT_9582": {
+          "predicted_us": 45.8972330989899,
+          "ca_us": 42.68606019299477,
+          "wrapper_us": null,
+          "lower_bound_us": null,
+          "signed_error_pct": 7.522767131650432,
+          "timing_protocol": "full"
+        },
+        "Ascend950PR_957b": {
+          "predicted_us": 104.71722993673289,
+          "ca_us": 88.5927286176011,
+          "wrapper_us": null,
+          "lower_bound_us": null,
+          "signed_error_pct": 18.200705148986994,
+          "timing_protocol": "full"
+        }
+      },
+      "extrapolated_970dt_us": 19.35288921652451
+    },
+    {
+      "route": "vllm_hc_post",
+      "op": "mhc_post",
+      "shape": [
+        1,
+        1024,
+        4,
+        5120
+      ],
+      "attrs": {
+        "implementation": "vllm_hc_post"
+      },
+      "scenario": "Flash 宽 5120，vLLM HcPost 自定义实现",
+      "single_chain_limit": false,
+      "endpoints": {
+        "Ascend950DT_9582": {
+          "predicted_us": 45.16902505165288,
+          "ca_us": null,
+          "wrapper_us": null,
+          "lower_bound_us": 38.18606060606061,
+          "signed_error_pct": null,
+          "timing_protocol": "partial"
+        },
+        "Ascend950PR_957b": {
+          "predicted_us": 52.84973503759362,
+          "ca_us": 44.86787878787879,
+          "wrapper_us": null,
+          "lower_bound_us": null,
+          "signed_error_pct": 17.789689339784776,
+          "timing_protocol": "full"
+        }
+      },
+      "extrapolated_970dt_us": 24.695923334911615
+    }
+  ],
+  "additional": [
+    {
+      "op": "matmul",
+      "shape": [
+        262144,
+        128,
+        512
+      ],
+      "scenario": "Flash B8 × 32768 tokens",
+      "endpoints": {
+        "Ascend950DT_9582": {
+          "predicted_us": 85.24641637016873,
+          "ca_us": 85.99272429943085
+        },
+        "Ascend950PR_957b": {
+          "predicted_us": 176.12356050219105,
+          "ca_us": 174.95333921909332
+        }
+      },
+      "extrapolated_970dt_us": 25.616997821831117
+    },
+    {
+      "op": "matmul",
+      "shape": [
+        524288,
+        128,
+        512
+      ],
+      "scenario": "Flash B8 × 65536 tokens",
+      "endpoints": {
+        "Ascend950DT_9582": {
+          "predicted_us": 167.56338366531685,
+          "ca_us": null
+        },
+        "Ascend950PR_957b": {
+          "predicted_us": 368.5290426420877,
+          "ca_us": null
+        }
+      },
+      "extrapolated_970dt_us": 44.06737250079227
+    },
+    {
+      "op": "matmul",
+      "shape": [
+        1048576,
+        128,
+        512
+      ],
+      "scenario": "Flash B8 × 131072 tokens",
+      "endpoints": {
+        "Ascend950DT_9582": {
+          "predicted_us": 409.26997347369326,
+          "ca_us": 405.6169761419296
+        },
+        "Ascend950PR_957b": {
+          "predicted_us": 847.9260970988965,
+          "ca_us": 804.867262005806
+        }
+      },
+      "extrapolated_970dt_us": 87.60848801049671
+    },
+    {
+      "op": "matmul",
+      "shape": [
+        2097152,
+        128,
+        512
+      ],
+      "scenario": "Flash B8 × 262144 tokens",
+      "endpoints": {
+        "Ascend950DT_9582": {
+          "predicted_us": 892.683153090446,
+          "ca_us": null
+        },
+        "Ascend950PR_957b": {
+          "predicted_us": 1806.822525840462,
+          "ca_us": null
+        }
+      },
+      "extrapolated_970dt_us": 180.82892021583118
+    },
+    {
+      "op": "lightning_indexer",
+      "shape": [
+        1,
+        1,
+        8192,
+        8,
+        128
+      ],
+      "attrs": {
+        "dtype": "bf16",
+        "layout": "BSND",
+        "sparse_count": 512,
+        "sparse_mode": 3,
+        "return_values": false
+      },
+      "scenario": "单 query、8192 个稠密候选、top512",
+      "endpoints": {
+        "Ascend950DT_9582": {
+          "predicted_us": 21.870884956228956,
+          "ca_us": 22.70909090909091
+        },
+        "Ascend950PR_957b": {
+          "predicted_us": 21.926305622519187,
+          "ca_us": null
+        }
+      },
+      "extrapolated_970dt_us": 20.04593272966601,
+      "evidence": {
+        "dt": {
+          "0000_entry_kernel_31b1b.db": "f09ed67f4921b575474a5ab7f12ed86032bedcccb21d1ba282b930a95b96073e",
+          "run.log": "86d56163c48146e3caff2113b786d36ca6489cd67fa05f240e968eca4d685b69",
+          "npusim.log": "5e5dc8b1dcf00549be58fd623dd4e4b97fd29f41ca7b78f3c585a7ff9a731010",
+          "result.json": "c9174c1945476b418d59eae1e73744d59ba55deb68e46a6f216f21b525a6fe49",
+          "aicore_binary.o": "4940c25dd5f72cce57bf18c30df8568ecce22d0f472c513235a0dc03db905ca6"
+        },
+        "tick_rate_per_us": 1650,
+        "first_tick": 5940,
+        "last_tick": 43410,
+        "expected_topk": 512,
+        "correctness_scope": "exact membership; order within top512 not checked",
+        "mmad": 64
+      }
+    },
+    {
+      "op": "matmul",
+      "shape": [
+        32760,
+        256,
+        512
+      ],
+      "scenario": "Kimi MLA，一本地头，7 × 4096 + 4088 个调度 token",
+      "endpoints": {
+        "Ascend950DT_9582": {
+          "predicted_us": 26.720379102182008,
+          "ca_us": null
+        },
+        "Ascend950PR_957b": {
+          "predicted_us": 29.92804332419956,
+          "ca_us": null
+        }
+      },
+      "extrapolated_970dt_us": 11.571588862452339,
+      "evidence": {
+        "dt_receipt_sha256": "a6af1156e2fa2104ae993a9f62de63d925b6c75c0d146d4495dfedbf2525780b",
+        "actual_kernel": [
+          "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_131074"
+        ],
+        "actual_elf_sha256": [
+          "e6899fbaa2659b7778bee81deb00b64b009dafcb7ad350f06576767fdeba2bf7"
+        ],
+        "launched_dt_aic": 32,
+        "complete_dt_core_summaries": 0,
+        "dt_failure": "7200 s wall cap; no complete numerical readback or all-core retirement"
+      }
+    }
+  ]
+}

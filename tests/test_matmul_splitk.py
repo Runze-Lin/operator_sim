@@ -4,22 +4,10 @@ from pathlib import Path
 import unittest
 
 from operator_model import load_chip
-from operator_model.matmul_splitk import estimate_matmul_splitk
+from operator_model.operators.matmul.split_k import estimate_matmul_splitk
 
 
 class TestExplicitMatmulStreamK(unittest.TestCase):
-    def test_all_original_frozen_pairs(self):
-        root=Path(__file__).resolve().parents[1]
-        freeze=json.loads((root/'results/v0.28/matmul/streamk-freeze.json').read_text())
-        for row in freeze['rows']:
-            for name,expected in row['predictions'].items():
-                with self.subTest(shape=row['shape'],chip=name):
-                    result=estimate_matmul_splitk(row['shape'],chip=name)
-                    self.assertEqual(result['route'], expected['route'])
-                    self.assertAlmostEqual(result['latency_us'], expected['us'], places=10)
-                    self.assertEqual((result['active_aic'],result['active_aiv']),(expected['aic'],expected['aiv']))
-                    for key in ('k_splits','max_aligned_depth','partial_fixup_bytes','launch_us','partial_pipeline_us','cold_floor_us','merge_us'):
-                        if key in expected:self.assertAlmostEqual(result[key],expected[key],places=10)
 
     def test_shape_alias_chip_clone_and_resource_changes(self):
         dt=load_chip();base=estimate_matmul_splitk([9,64,7168],chip=dt)

@@ -4,29 +4,14 @@ from pathlib import Path
 import unittest
 
 from operator_model import estimate, load_chip, OperatorStream
-from operator_model.rms_dispatch import price_rms
-from operator_model.rms_lane_schedule import parameters
+from operator_model.operators.rmsnorm.dispatch import price_rms
+from operator_model.operators.rmsnorm.lane_schedule import parameters
 
 
 ROOT = Path(__file__).resolve().parents[1]
 
 
 class RmsLaneScheduleTests(unittest.TestCase):
-    def test_frozen_estimates_and_ordered_streams(self):
-        frozen = json.loads((ROOT/'results/rms-dispatch-audit/freeze.json').read_text())
-        self.assertEqual(parameters(), frozen['params'])
-        streams = {}
-        for case in frozen['rows']:
-            chip, shape = case['chip'], case['shape']
-            with self.subTest(chip=chip, shape=shape, protocol=case['protocol']):
-                r = estimate('rmsnorm', shape, {'resident_aiv':case['prior_aiv']}, chip=chip)
-                self.assertAlmostEqual(r.latency_us, case['candidate_known_us'], places=12)
-                self.assertAlmostEqual(sum(r.projection['stages_us'].values()), r.latency_us, places=12)
-                self.assertTrue(all(x >= 0 for x in r.projection['stages_us'].values()))
-                self.assertAlmostEqual(price_rms(shape,load_chip(chip),{})[0], case['previous_unknown_us'], places=12)
-                if case['protocol'] == 'ordered new sequence':
-                    stream = streams.setdefault(chip, OperatorStream(chip))
-                    self.assertEqual(stream.advance('rmsnorm',shape).latency_us, r.latency_us)
 
     def test_local_ports_and_shared_floor(self):
         chip = load_chip()

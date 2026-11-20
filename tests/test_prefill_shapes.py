@@ -1,6 +1,6 @@
 import unittest
 
-from development.workloads.prefill_shapes import CHIPS, MODELS, Scenario, contracts, presets
+from examples.workloads.prefill import CHIPS, MODELS, Scenario, contracts, presets
 
 
 def get(rows, op):

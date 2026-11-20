@@ -2,8 +2,8 @@
 import unittest
 
 from operator_model import load_chip
-from operator_model.mhc_pre_sink_resource import cube_fragments, fused
-from operator_model.mhc_sink_resource import fused as legacy
+from operator_model.operators.mhc.pre_sinkhorn import cube_fragments, fused
+from operator_model.operators.mhc.sink_resources import fused as legacy
 
 ATTRS={'num_iters':20,'need_backward':False}
 

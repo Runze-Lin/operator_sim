@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from operator_model.kimi_kda import plan_kimi_kda_prefill
+from operator_model.operators.kda.prefill import plan_kimi_kda_prefill
 
 
 class KimiKdaDispatchTest(TestCase):

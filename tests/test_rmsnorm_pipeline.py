@@ -2,7 +2,7 @@ import unittest
 from dataclasses import replace
 
 from operator_model import estimate, load_chip
-from operator_model.rmsnorm_pipeline import RmsGeometry, rmsnorm_pipeline
+from operator_model.operators.rmsnorm.pipeline import RmsGeometry, rmsnorm_pipeline
 
 
 class RmsNormPipelineTests(unittest.TestCase):
@@ -19,7 +19,7 @@ class RmsNormPipelineTests(unittest.TestCase):
         self.assertAlmostEqual(q['us'] * 1650, max(q['bounds_cycles'].values()))
 
     def test_public_unknown_and_known_history_contract(self):
-        from operator_model.rms_dispatch import price_rms
+        from operator_model.operators.rmsnorm.dispatch import price_rms
         for chip in ('Ascend950DT_9582', 'Ascend950PR_957b', 'Ascend970DT'):
             for shape in ((4,784),(539,4000)):
                 public = estimate('rmsnorm',shape,chip=chip)

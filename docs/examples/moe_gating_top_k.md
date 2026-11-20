@@ -1,64 +1,47 @@
-# MoE Gating Top-K 算例 · Kimi 的两个 token
+# MoE Gating Top-K · 两行选 16 个专家
 
-## 模型与实际库流水对照
+FP32 logits[2,896] 和 bias[896] 总计 10,752 B。每行返回 16 个 FP32 权重与 16 个 int32 下标，合计写 256 B。
 
-![950PR moe_gating_top_k 的模型与 CA 同轴对照](figures/moe_gating_top_k-pr-pipeline.png)
-
-本卡 shape 为 `[1, 384, 6]`，950PR 模型 **4.353 µs**，完整 CA **4.094 µs**，有符号误差 +6.33%。上栏画出当前预测器能够辨识的阶段时长。只返回一个阶段的路线保留整段预测；多个暴露阶段按贡献累计，模型尚未辨识它们的具体指令发起点。下栏用实际库 trace 的最后完成核逐队列展开，黑色刻度来自真实 DMA 或 MMAD 发起。 [图上每段的时间与 trace 指纹](../../results/v0.20/examples/moe_gating_top_k-pr.json)
-
-输入为 FP32 路由 logits `[T=2,E=896]` 和 FP32 修正偏置 `[896]`。每行选 K=16 个全局专家，返回 `[2,16]` 的 FP32 权重与 int32 专家 ID。只测试一个专家组、sigmoid 激活、偏置参与排名、被选中的原始分数归一化、缩放系数 1、eps 为 1e-20 的分支。该样例来自冻结后的独立验证集。
+## 单卡输入与调用
 
 ```python
 from operator_model import estimate
 
-for chip in ('Ascend950DT_9582', 'Ascend950PR_957b', 'Ascend970DT'):
-    result = estimate('moe_gating_top_k', (2, 896, 16), dtype='fp32', chip=chip)
-    print(result.chip_name, result.latency_us, result.work, result.projection['stages_us'])
+shape = [2, 896, 16]
+attrs = {}
+result = estimate('moe_gating_top_k', shape, attrs, chip='Ascend950PR_957b')
+print(result.latency_us, result.active_aic, result.active_aiv)
+print(result.work["logical_read_bytes"], result.work["logical_write_bytes"])
 ```
 
-## 工作量和分核
+## 从工作量到设备时间
 
-令 `p[i,e] = sigmoid(logits[i,e])`，按 `p[i,e] + bias[e]` 从大到小取 K 个专家 ID，对应权重为 `p[i,e] / (Σ_selected p + eps)`。算法逻辑上读 `4(TE+E) = 10,752 B`，写 `8TK = 256 B`。每行 E 个 sigmoid 按负号、exp、加一、倒数四个标量步骤计，另有 E 个偏置加法、K−1 个归约加法、一个 eps 加法及 K 个归一化，合计 `5TE+2TK = 9,024` 个 FP32 标量等价操作。排名比较和索引重排不计作 FLOP，其成本进入 Vector 阶段。
+2 个 AIV 各一行。每行 896/64=14 个评分向量组。单组排名、偏置和归一化的固定及增量开销按 DT 已测的 128/896 专家宽度定价，随后换成目标每核 FP32 等效服务能力。
 
-设 V 为目标 AIV 数，最忙核的行数为 `r=ceil(T/V)`，有效核数 `A=ceil(T/r)`，每行 `b=ceil(E/64)` 个 64 元素块。这里 A=2、r=1、b=14；两端 CA 都由 2 个 AIV 执行。峰值指令宽度与芯片代际或 dtype 变化时需重估分块。
+公开工作量统计为 Cube **0**、Vector **9,024** 个有用标量等效操作。逻辑读 **10,752 B**、写 **256 B**。片外实际流量取决于重用与缓存。
 
-## 怎样从工作量得到设备微秒
+把两种宽度的观测换算成参考 tick 后，单行排序约为 139.33+208.33×g，g=⌈E/64⌉。本例 g=14，需要约 3056 tick 的排序服务。根据目标每核 FP32 速率伸缩，额外的两次写和收尾独立计价。
 
-四个相继发生的边界为首条 logits/bias DMA 发起、两者均就绪、第一条结果写回发起、末条指令完成。用单行旧校准 trace 在这些边界做差。DT 的 `[1,128,8]` 和 `[1,896,16]` 四段分别为 **4207/1232/556/311 cycles** 和 **4195/1254/3056/312 cycles**。设备频率 1.65 GHz，转换系数每微秒 1650 cycles。该校准只识别整个 rank 阶段，exp、排序和重排的单指令吞吐不能单独由两条 trace 求出。
+下表取 950PR 的公开阶段分账。各段已处理模型可辨识的重叠，数值保留三位小数。
 
-设 `f=1000×频率(GHz)` 为 cycles/µs，`P=FP32 Vector TOPS×10⁶/V` 为每核的峰值 ops/µs。每核 DMA 上限 `D=min(32f, HBM_GB/s×1000/A)` 以 B/µs 表示；32 B/cycle 属于继承的实现假设。一次读包括 r 行 logits 和一次核内重用的 bias，写回由两组 K 个 4 B 结果组成。
+| 阶段字段 | 暴露时间 µs |
+|---|---:|
+| `control_and_tiling` | 2.546 |
+| `read_ready` | 0.753 |
+| `rank_and_normalize` | 1.902 |
+| `drain_weights_ids` | 0.189 |
+| **整窗** | **5.391** |
 
-| 阶段 | 公式，结果单位 µs | 950DT 算例 |
-|---|---|---:|
-| 启动、解析 tiling 到首次 payload 发起 | 两条 DT trace 的对应均值 `4201/f` | 2.546 |
-| logits 与 bias 到达 | `max(1243/f, 4E(r+1)/D)`，延迟与带宽下限取大 | 0.753 |
-| sigmoid、TopK、归一化 | `r×(139.33+208.33b)×P₀/(1650P)`，P₀ 为 DT 每核 FP32 峰值 421875 ops/µs | 1.852 |
-| 权重与 ID 的写回收尾 | `max(311.5/f, 8Kr/D)` | 0.189 |
+## 与完整 CA 核对
 
-Vector 的 139.33 cycles/行和 208.33 cycles/块由两个“读就绪到首条写”窗口解得。P₀/(1650P) 将 DT cycles 换算为目标每核的时间。由此得到的 781,364 ops/行是把设备窗口写成可换算的峰值等价工作，只用于定价。应用层返回的有用 Vector 工作仍是两行合计 9,024 ops。这个外推保留排序实现与 FP32 峰值的相对效率。K 的影响只进入输出传输，较大 K、更换排序算法和多轮的流水交叠均有误差风险。
+| 目标 | 公开预测 µs | 完整 CA µs | 有符号误差 | 预测有效 AIC / AIV |
+|---|---:|---:|---:|---:|
+| Ascend950DT_9582 | 5.340 | 5.472 | -2.40% | 0 / 2 |
+| Ascend950PR_957b | 5.391 | 5.446 | -1.02% | 0 / 2 |
+| Ascend970DT（外推） | 4.893 | N/A | N/A | 0 / 2 |
 
-## 与 CA 对齐
+top16 的写量远小于扫描 896 个候选所需的读量。只有两行时，更多 AIV 不会缩短本核排序，控制与首读占据明显比例。
 
-| 芯片 | 模型 µs | CA µs | 相对误差 | 最晚核 CA 的控制 / 读 / 排名 / 写回 µs |
-|---|---:|---:|---:|---|
-| 950DT | 5.340 | 5.472 | −2.40% | 2.538 / 0.753 / 1.841 / 0.339 |
-| 950PR | 5.391 | 5.446 | −1.02% | 2.458 / 0.788 / 1.827 / 0.373 |
-| 970DT | 4.893 | N/A | N/A | 芯片配置驱动的外推 |
+示例收据的调用为 `aclnnMoeGatingTopK`，provider 为 CANN 9.2.1 ops-transformer，实际记录的 kernel 为 `MoeGatingTopK_4ca391a7fc5a94c6f1e7d38c9bb0fa20_10005`。
 
-同一输入在两端实际调用 CANN 9.2.1 ops-transformer 的 `aclnnMoeGatingTopK`，运行时 kernel 名都是 `MoeGatingTopK_4ca391a7fc5a94c6f1e7d38c9bb0fa20_10005`。两组输出的全部 32 个位置都通过独立 CPU golden。DT 的剩余低估主要来自写回，PR 的写回也低估，同时控制和排名时间略高估。实测 DT/PR=1.005×，模型=0.991×，此例的接近持平区域快慢方向仍判反。最终的误差统计使用所有合格留出样例。[冻结合同和预测](../../results/v0.19/workloads/router-holdout-freeze.json) · [全量误差分析](../error-analysis.md)
-
-十个冻结形状中，DT 与 PR 耗时的 WAPE 分别为 **9.08%** 和 **5.72%**，DT/PR 倍速 WAPE 为 **4.60%**。20 次的活动核数全部命中。DT 误差最大的是 [4,256,8]，预测 4.078 µs、实测 4.865 µs。末核距全片首次指令约 0.118 µs 才到达，两条结果写请求至末条指令用了 0.920 µs；模型分别给了 0 和 0.189 µs。CA 观测支持写回窗口变长，未单独证明具体的片上仲裁原因。[逐例预测与测量](../../results/v0.19/workloads/router-evaluation.json)
-
-17 个芯片侧样本由 msopprof 正常结束并完整导出。另 3 个超限样本已经生成厂商内部全核 trace 和完整数值校验。离线复查每个核的首条指令 MOV_XD_SPR、末条指令 END_LABEL、每核 duration 与厂商表（容许 0.011 µs 显示舍入）、实际二进制和输入。相同读取器在 17 个正常样本上与正式核窗、trace SHA256 全部相同。这三个样本的设备时间计入独立比较，外层采集超时仍单记。没有重跑。 [恢复与对照](../../results/v0.19/workloads/router-window-recovery.json)
-
-![两端冻结预测与独立 CA 耗时](figures/moe_gating_top_k.png)
-
-## 多少行装得下一个排序批
-
-以 Kimi 的 896 专家、top16 为例，单卡 8 个请求，每请求这次处理 192 个 token，输入 logits 为 FP32 `[1536,896]`，共享 bias 为 `[896]`。返回 `[1536,16]` 的权重和专家 ID。对归档 284 个真实 AIV 的审计表明，key `10005` 在每核 UB 中留给这一组宽度的输入批上限是 **26 行**。在 950DT 上每个忙核负责 24 行，一笔 logits DMA；950PR 上每个忙核负责 28 行，需要 26 行和 2 行两笔。每批末尾各发一次权重写回与 ID 写回。
-
-每行的专用排序流水包括一条含 28 个 repeat 的 32 元素排序、4 条四路归并、4 次完整行的 UB 拷贝。模型候选对这些指令分别定价，并将连续两行的发起间隔与末行响应分开。该候选对本例给出 **48.736 / 58.813 µs**，公开入口给出 **48.883 / 60.087 µs**（DT/PR）。970DT 候选 **26.263 µs** 属于跨芯片外推。独立新窗和完整 4096 行原预约的结果均在同一报告更新。[批容量推导、真实指令、每项成本和测量状态](../../results/v0.35/gating/report.md) · [1536 行的冻结元数据更正](../../results/v0.35/gating/freeze-erratum.md)
-
-![950PR 两行排序关键路径与同一零点的实测流水对照](../../results/v0.35/gating/two-rows-pr.png)
-
-上图用较小的 `[65,128,8]` 看清两行之间的重叠。上栏为候选预测的最慢核，下栏为 CA 最后退休的 `core22.veccore0`。两栏横轴从设备最早一条核指令算起，虚线标整窗。CA 下栏展示两笔数据读取、各行的向量函数描述符与排序指令，以及两笔相互重叠的结果写回。最前面的 tiling 参数读取和标量控制未画出。预测整窗 4.526 µs，实测 4.698 µs，低估 3.66%。其中末行后的写回至结束预测约 0.19 µs，实测约 0.34 µs。这张图演示逐核排程，不能代替 896 专家长序列的独立验证。[分段时间戳与 trace 校验值](../../results/v0.35/gating/two-rows-pr.json)
+复核时，在逐窗记录中筛选 `contract=moe_gating_top_k`、此页 shape 和属性。有多个前序的样本逐窗保留。示例用于解释该次计算。校准统计、冻结后独立样本数及完整误差范围以总报告为准。[逐窗数据](../../calibration/reference/windows.jsonl) · [模型实现](../../src/operator_model/operators/vector/router.py) · [总建模方法](../modeling-strategy.md) · [误差分析](../error-analysis.md)

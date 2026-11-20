@@ -1,0 +1,270 @@
+{
+  "schema": 1,
+  "kind": "ca-receipt",
+  "case": {
+    "attrs": {},
+    "dtype": "bf16",
+    "prefix": null,
+    "contract": "matmul",
+    "id": "bf16-flash-projection",
+    "op": "matmul",
+    "chip": "Ascend950DT_9582",
+    "shape": [
+      32768,
+      128,
+      512
+    ],
+    "api": "aclnnMatmul",
+    "outputs": {
+      "Y": 4194304
+    }
+  },
+  "provider": "CANN 9.2.1 ops-nn",
+  "timing": "all-core-instruction",
+  "complete": true,
+  "started_utc": "2026-11-20T02:09:55.797449+00:00",
+  "finished_utc": "2026-11-20T02:13:52.069181+00:00",
+  "run_log_sha256": "aac04f09ea2d12c2fc478bc110544535e182cb10d3053fb19647a8c239bdeec1",
+  "correctness": {
+    "Y": {
+      "checked": 4194304,
+      "bad": 0
+    }
+  },
+  "stages": [
+    {
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_131074",
+      "kernel_binary_sha256": "e6899fbaa2659b7778bee81deb00b64b009dafcb7ad350f06576767fdeba2bf7",
+      "trace_sha256": "81e827d49f13386159b40525752cbffcae51707ff214698d1e12e80d0b253bfe",
+      "ticks_per_us": 1650,
+      "launched_cores": [
+        "core0.cubecore0",
+        "core1.cubecore0",
+        "core10.cubecore0",
+        "core11.cubecore0",
+        "core12.cubecore0",
+        "core13.cubecore0",
+        "core14.cubecore0",
+        "core15.cubecore0",
+        "core16.cubecore0",
+        "core17.cubecore0",
+        "core18.cubecore0",
+        "core19.cubecore0",
+        "core2.cubecore0",
+        "core20.cubecore0",
+        "core21.cubecore0",
+        "core22.cubecore0",
+        "core23.cubecore0",
+        "core24.cubecore0",
+        "core25.cubecore0",
+        "core26.cubecore0",
+        "core27.cubecore0",
+        "core28.cubecore0",
+        "core29.cubecore0",
+        "core3.cubecore0",
+        "core30.cubecore0",
+        "core31.cubecore0",
+        "core4.cubecore0",
+        "core5.cubecore0",
+        "core6.cubecore0",
+        "core7.cubecore0",
+        "core8.cubecore0",
+        "core9.cubecore0"
+      ],
+      "cores": {
+        "core3.cubecore0": {
+          "first_tick": 7081,
+          "end_tick": 28300,
+          "retire_tick": 31326,
+          "end_count": 1
+        },
+        "core11.cubecore0": {
+          "first_tick": 7110,
+          "end_tick": 28031,
+          "retire_tick": 31037,
+          "end_count": 1
+        },
+        "core7.cubecore0": {
+          "first_tick": 7152,
+          "end_tick": 28304,
+          "retire_tick": 31304,
+          "end_count": 1
+        },
+        "core10.cubecore0": {
+          "first_tick": 7224,
+          "end_tick": 28051,
+          "retire_tick": 31044,
+          "end_count": 1
+        },
+        "core12.cubecore0": {
+          "first_tick": 7110,
+          "end_tick": 28277,
+          "retire_tick": 31295,
+          "end_count": 1
+        },
+        "core22.cubecore0": {
+          "first_tick": 7220,
+          "end_tick": 29354,
+          "retire_tick": 32366,
+          "end_count": 1
+        },
+        "core15.cubecore0": {
+          "first_tick": 7259,
+          "end_tick": 28003,
+          "retire_tick": 31013,
+          "end_count": 1
+        },
+        "core27.cubecore0": {
+          "first_tick": 7306,
+          "end_tick": 29571,
+          "retire_tick": 32578,
+          "end_count": 1
+        },
+        "core25.cubecore0": {
+          "first_tick": 7352,
+          "end_tick": 29138,
+          "retire_tick": 32145,
+          "end_count": 1
+        },
+        "core30.cubecore0": {
+          "first_tick": 7263,
+          "end_tick": 29111,
+          "retire_tick": 32122,
+          "end_count": 1
+        },
+        "core9.cubecore0": {
+          "first_tick": 7098,
+          "end_tick": 28146,
+          "retire_tick": 31143,
+          "end_count": 1
+        },
+        "core13.cubecore0": {
+          "first_tick": 7211,
+          "end_tick": 28422,
+          "retire_tick": 31440,
+          "end_count": 1
+        },
+        "core4.cubecore0": {
+          "first_tick": 7298,
+          "end_tick": 28221,
+          "retire_tick": 31227,
+          "end_count": 1
+        },
+        "core14.cubecore0": {
+          "first_tick": 7242,
+          "end_tick": 28482,
+          "retire_tick": 31485,
+          "end_count": 1
+        },
+        "core26.cubecore0": {
+          "first_tick": 7065,
+          "end_tick": 29283,
+          "retire_tick": 32281,
+          "end_count": 1
+        },
+        "core2.cubecore0": {
+          "first_tick": 7273,
+          "end_tick": 27990,
+          "retire_tick": 30988,
+          "end_count": 1
+        },
+        "core31.cubecore0": {
+          "first_tick": 7187,
+          "end_tick": 29178,
+          "retire_tick": 32178,
+          "end_count": 1
+        },
+        "core1.cubecore0": {
+          "first_tick": 7178,
+          "end_tick": 28901,
+          "retire_tick": 31914,
+          "end_count": 1
+        },
+        "core21.cubecore0": {
+          "first_tick": 7279,
+          "end_tick": 29145,
+          "retire_tick": 32151,
+          "end_count": 1
+        },
+        "core0.cubecore0": {
+          "first_tick": 6901,
+          "end_tick": 28660,
+          "retire_tick": 31664,
+          "end_count": 1
+        },
+        "core16.cubecore0": {
+          "first_tick": 7209,
+          "end_tick": 29204,
+          "retire_tick": 32211,
+          "end_count": 1
+        },
+        "core28.cubecore0": {
+          "first_tick": 7139,
+          "end_tick": 28389,
+          "retire_tick": 31421,
+          "end_count": 1
+        },
+        "core17.cubecore0": {
+          "first_tick": 7236,
+          "end_tick": 28613,
+          "retire_tick": 31611,
+          "end_count": 1
+        },
+        "core18.cubecore0": {
+          "first_tick": 7251,
+          "end_tick": 29083,
+          "retire_tick": 32083,
+          "end_count": 1
+        },
+        "core24.cubecore0": {
+          "first_tick": 7403,
+          "end_tick": 28929,
+          "retire_tick": 31916,
+          "end_count": 1
+        },
+        "core20.cubecore0": {
+          "first_tick": 7150,
+          "end_tick": 29021,
+          "retire_tick": 32048,
+          "end_count": 1
+        },
+        "core23.cubecore0": {
+          "first_tick": 7387,
+          "end_tick": 28896,
+          "retire_tick": 31893,
+          "end_count": 1
+        },
+        "core19.cubecore0": {
+          "first_tick": 7370,
+          "end_tick": 29003,
+          "retire_tick": 32019,
+          "end_count": 1
+        },
+        "core5.cubecore0": {
+          "first_tick": 7158,
+          "end_tick": 28446,
+          "retire_tick": 31475,
+          "end_count": 1
+        },
+        "core8.cubecore0": {
+          "first_tick": 7131,
+          "end_tick": 28161,
+          "retire_tick": 31153,
+          "end_count": 1
+        },
+        "core6.cubecore0": {
+          "first_tick": 7052,
+          "end_tick": 28762,
+          "retire_tick": 31776,
+          "end_count": 1
+        },
+        "core29.cubecore0": {
+          "first_tick": 7149,
+          "end_tick": 28694,
+          "retire_tick": 31695,
+          "end_count": 1
+        }
+      }
+    }
+  ]
+}

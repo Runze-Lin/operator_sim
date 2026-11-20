@@ -1,6 +1,6 @@
 import unittest
 from operator_model import estimate
-from operator_model.attn_res_prefill_plan import prefill_service_plan
+from operator_model.operators.attention.prefill_plan import prefill_service_plan
 
 
 class AttnResPrefillPlanTest(unittest.TestCase):

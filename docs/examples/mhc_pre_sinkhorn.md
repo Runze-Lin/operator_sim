@@ -1,38 +1,48 @@
-# mHC PreSinkhorn · 950PR 的 22 组 K 分块
+# 融合 mHC PreSinkhorn · 投影交给向量归约
 
-950PR 上 `[72,4,4096]` 的公开模型从输入激活、八条单核 MMAD、每核两行归一化和跨核交接得到 **14.423 µs**，全核 CA 为 **13.649 µs**。算例列出每一项的工作量、价格来源和真实 kernel。[完整计算过程](../../results/v0.27/fusion/public-fused.md)
+80 个 token，N=4、D=4096，投影输出 24 列。输入行展平为 16,384 元素，投影有 2×80×16,384×24=62,914,560 ops，随后对每张 4×4 矩阵做 20 次迭代。
 
-![950PR 上的独立 T72 形状，模型与 CA 对齐关键 AIC、AIV 第一段与第二段](../../results/v0.27/fusion/fused-t72-pr-timeline.png)
-
-输入 `[72,4,4096]`，关键分块上的 8 条 MMAD 都能在 CA 中找到，实际使用 22 AIC、44 AIV。模型首次 MMAD 早 0.814 µs，第二段 AIV 开始晚 0.567 µs。冻结融合候选 **14.423 µs**，旧版 **16.640 µs**，独立库窗 **13.649 µs**。计入三组全元素校验和 66 个核的实际退出；离线墙钟 32 分 17 秒。[逐核指令与分段](../../results/v0.27/fusion/fused-t72-pr-timeline.json) · [适用范围和独立样本进度](../../results/v0.27/fusion/report.md)
-
-## T=80 的 21 个满分片与 1 个尾分片
-
-![融合 PreSinkhorn 同一阶段在模型与实际 CA 上的窗口](../../results/v0.26/presink/pr-t80.png)
-
-950PR 目标 N=4、D=4096，归约 K=16384。21 个满分片各发 8 条 MMAD，尾片发 3 条。真实 FIXP 在首条 MMAD 前已发起，最后 MMAD 到 FIXP 返回只剩 0.353 µs。分开的两段 Vector 与 Cube 候选得到 14.616 µs，CA 实测 13.653 µs。这个旧窗属于开发回放，目标芯片的 1:1 合同仍走原投影。[库身份、逐步公式与新形验证状态](../../results/v0.26/presink/README.md)
-
-![950PR PreSinkhorn 模型重定价流水与官方 CA 同轴对照](figures/mhc_pre_sinkhorn-v21-pr.png)
-
-一个 BF16 token，4 个通道，每通道宽 4096。模型预测 950PR **9.990 µs**，实际 `aclnnMhcPreSinkhorn` 的 CA 窗口 **8.763 µs**，高估 **14.00%**。上栏保留 DT 校准核各指令队列的相对重叠，用目标 tile 工作量和芯片资源重新计价；下栏分别取 PR 最晚结束的 AIC 和 AIV。两栏都从各自设备首条指令起算。[图数据、参考 DB 与 PR trace 指纹](../../results/v0.21/fusion/mhc_pre_sinkhorn-figure.json)
+## 单卡输入与调用
 
 ```python
 from operator_model import estimate
-r = estimate('mhc_pre_sinkhorn', (1,4,4096), {'num_iters':20, 'need_backward':False},
-             dtype='bf16', chip='Ascend950PR_957b')
-print(r.latency_us, r.active_aic, r.active_aiv, r.projection['target_plan'], r.work)
+
+shape = [80, 4, 4096]
+attrs = {'need_backward': False, 'num_iters': 20}
+result = estimate('mhc_pre_sinkhorn', shape, attrs, chip='Ascend950PR_957b')
+print(result.latency_us, result.active_aic, result.active_aiv)
+print(result.work["logical_read_bytes"], result.work["logical_write_bytes"])
 ```
 
-Pre 将 K=4×4096=16384 维映射为 N²+2N=24 个系数，逻辑 Cube 计算量为 2×1×16384×24=786,432 ops。后续归一化和 Sinkhorn 拥有 62,866 个逻辑 Vector 操作，整个调用读 1,605,740 B、写 8,272 B。HF32 内部计算受库实现影响。PR 实际 kernel 为 `MhcPreSinkhorn_bd8e37c67f2294e1437f03bb2bace96c_1000_mix_aic`，数值核验通过。
+## 从工作量到设备时间
 
-按 arch35 的非确定性推理 M/K tiling，M 方向组数 G=min(AIC,⌈T/256⌉)，本例 G=1；每核 M 对齐至 16。候选 K 组数 floor(AIC/G)，每核 K 取 256×⌈K/(256×候选组数)⌉。DT 分成 32 个 K512；PR 为 21 个 K768 加一个 K256 尾片。第二段 token 数少，1:2 MIX 调度的启动块数由第一段决定，实际 DT 启动 32 AIC/64 AIV，PR 启动 22/44；执行第二段 token 负载的 AIV 只有 1 个。970 的 1:1 实现假设沿用源码另一调度分支，报出 120/120 个启动核，第一段最多有 64 个 K256 数据块。参考分核源码固定在 ops-transformer 提交 14d022b1，arch35 tiling 文件的 Git blob 为 c4f0a7e6；安装包实际启动的核数由 CA 表核验。[分核实现](../../operator_model/mhc_sink_resource.py)
+PR 划分 22 个 K 分片，每份至多 768 个元素。22 个 AIC 与 44 个 AIV 参与。代表块 [80,768] 继续沿 K 用 384 元素 L1 页和 96 元素 L0 片段，临界 AIC 8 条 MMAD。第二阶段有 40 个 AIV 承担有效行，每个两行。
 
-每个 DT 参考模板保存三类核的队列重叠。若长度 h 的区间内队列集合为 S，目标时长取 h×max(q∈S) r_q。r_Cube 随局部 M×K 和每核 Cube 吞吐变化，r_MTE1 随局部片与时钟，r_FIXP 随输出片，r_SIMD 随每核行数和每核 FP32 峰值。缺少 HF32 峰值时现用两卡的 16-bit 峰值比作代理；两张 950 卡每 AIC 16-bit 峰值相同。等待和控制按时钟比；MTE2/3 的参考重叠按每个 AIV 的行工作量近似。每个核对这些区间相加、模板取最大核、三个模板取中位数，再施加冷启动逻辑数据的带宽下限。这里 HBM 下限未超过计算窗口。这些移植假设在新代际上仍需验证，尤其是 1:1 MIX 模板和 HF32 吞吐。
+公开工作量统计为 Cube **62,914,560**、Vector **5,029,280** 个有用标量等效操作。逻辑读 **4,194,412 B**、写 **661,760 B**。片外实际流量取决于重用与缓存。
 
-| 平台 | 设备预测 µs | CA µs | 误差 | 启动 AIC / AIV |
-|---|---:|---:|---:|---|
-| 950DT | 9.939 | 10.108 | −1.67% | 32 / 64 |
-| 950PR | 9.990 | 8.763 | +14.00% | 22 / 44 |
-| 970DT 外推 | 9.109 | N/A | N/A | 120 / 120 |
+在合作核的分 K 分支，参考模型为每个 MMAD 发起约 76.52 tick，额外每 1024 个填充后的 MAC 约 0.497 tick。阶段二每个有效行约 3299 tick，由 950DT 的末次 VF 观测约束。HF32 在目标上的相对吞吐用 16 位 Cube 比例近似。
 
-旧模型把 64 个假想等长任务再除以全片核数，PR 为 11.872 µs。实际缩小的核网格改变 K 尾片和发动的工作组，只有局部片中相关资源的阶段增加。剩余约 1.23 µs 也包括从 DT 搬到 PR 的等待和线程启动差异。[全量回放及冻结留出](../../results/v0.21/fusion/evaluation.json)
+下表取 950PR 的公开阶段分账。各段已处理模型可辨识的重叠，数值保留三位小数。
+
+| 阶段字段 | 暴露时间 µs |
+|---|---:|
+| `dispatch_and_handoff` | 7.633 |
+| `stage1_cast` | 1.926 |
+| `stage1_cube` | 0.949 |
+| `stage2_rows` | 4.107 |
+| `exposed_hbm_floor` | 0.000 |
+| **整窗** | **14.616** |
+
+## 与完整 CA 核对
+
+| 目标 | 公开预测 µs | 完整 CA µs | 有符号误差 | 预测有效 AIC / AIV |
+|---|---:|---:|---:|---:|
+| Ascend950DT_9582 | 13.651 | 13.782 | -0.95% | 32 / 64 |
+| Ascend950PR_957b | 14.616 | 13.653 | +7.05% | 22 / 44 |
+| Ascend970DT（外推） | 14.378 | N/A | N/A | 120 / 120 |
+
+FIXP 描述符可能在同组 MMAD 退休前已发起。公开估计中启动/交接和第二向量阶段占较大份额，实际最后退休的也是第二阶段 AIV。此例仅对应 4096 宽融合路线。
+
+示例收据的调用为 `aclnnMhcPreSinkhorn`，provider 为 CANN 9.2.1 ops-transformer，实际记录的 kernel 为 `MhcPreSinkhorn_bd8e37c67f2294e1437f03bb2bace96c_1000_mix_aic`。
+
+复核时，在逐窗记录中筛选 `contract=mhc_pre_sinkhorn`、此页 shape 和属性。有多个前序的样本逐窗保留。示例用于解释该次计算。校准统计、冻结后独立样本数及完整误差范围以总报告为准。[逐窗数据](../../calibration/reference/windows.jsonl) · [模型实现](../../src/operator_model/operators/mhc/pre_sinkhorn.py) · [总建模方法](../modeling-strategy.md) · [误差分析](../error-analysis.md)

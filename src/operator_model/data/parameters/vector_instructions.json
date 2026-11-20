@@ -1,0 +1,134 @@
+{
+  "rmsnorm": {
+    "contract": {},
+    "phases": {
+      "arrival": {
+        "startup_us": 0.023449072948348706,
+        "service_us": 0.01707225595580011
+      },
+      "SIMD": {
+        "startup_us": 0.3794821602110234,
+        "service_us": 0.003171279643582899
+      },
+      "MTE3": {
+        "startup_us": 0.0,
+        "service_us": 0.008785455617353884
+      },
+      "MTE2": {
+        "startup_us": 0.8314876903816248,
+        "service_us": 0.0012177074049391895
+      },
+      "SCALAR": {
+        "startup_us": 1.9387960824403674,
+        "service_us": 0.0006183029798189258
+      },
+      "other": {
+        "startup_us": 0.005252525252525252,
+        "service_us": 0.0
+      }
+    }
+  },
+  "mhc_post": {
+    "contract": {
+      "dtype": "bf16",
+      "has_h_res": true
+    },
+    "phases": {
+      "arrival": {
+        "startup_us": 0.0,
+        "service_us": 0.07176218474789521
+      },
+      "SIMD": {
+        "startup_us": 0.7987878787878749,
+        "service_us": 0.0
+      },
+      "MTE3": {
+        "startup_us": 0.17288556404386274,
+        "service_us": 4.2409288433671465e-05
+      },
+      "MTE2": {
+        "startup_us": 1.1549494949494898,
+        "service_us": 0.0
+      },
+      "SCALAR": {
+        "startup_us": 1.9183838383838154,
+        "service_us": 0.0
+      },
+      "other": {
+        "startup_us": 0.004646464646464647,
+        "service_us": 0.0
+      }
+    }
+  },
+  "mhc_sinkhorn": {
+    "contract": {
+      "dtype": "fp32",
+      "return_intermediates": false
+    },
+    "phases": {
+      "arrival": {
+        "startup_us": 0.002838126637045288,
+        "service_us": 0.0328611490625106
+      },
+      "SIMD": {
+        "startup_us": 4.1503030303027195,
+        "service_us": 0.0
+      },
+      "MTE3": {
+        "startup_us": 0.07864504245812567,
+        "service_us": 0.02635509706762992
+      },
+      "MTE2": {
+        "startup_us": 0.6595485021685471,
+        "service_us": 0.007593694923781702
+      },
+      "SCALAR": {
+        "startup_us": 1.6733333333333007,
+        "service_us": 0.0
+      },
+      "other": {
+        "startup_us": 0.006868686868686868,
+        "service_us": 0.0
+      }
+    }
+  },
+  "kda_recurrent": {
+    "contract": {
+      "layout": "BSND",
+      "dtype": "BF16",
+      "gate_dtype": "FP32",
+      "state_dtype": "FP32",
+      "state_v_first": false,
+      "use_gate_in_kernel": false,
+      "chunk_size": null,
+      "output_final_state": true,
+      "export_gk": false
+    },
+    "phases": {
+      "arrival": {
+        "startup_us": 0.0,
+        "service_us": 0.0
+      },
+      "SIMD": {
+        "startup_us": 4.302424242426741,
+        "service_us": 2.937402597401173
+      },
+      "MTE3": {
+        "startup_us": 0.241212121212123,
+        "service_us": 0.44822510822510686
+      },
+      "MTE2": {
+        "startup_us": 1.4148484848484892,
+        "service_us": 0.02601731601731274
+      },
+      "SCALAR": {
+        "startup_us": 4.111818181818001,
+        "service_us": 0.06376623376624296
+      },
+      "other": {
+        "startup_us": 1.5258585858585858,
+        "service_us": 0.0
+      }
+    }
+  }
+}

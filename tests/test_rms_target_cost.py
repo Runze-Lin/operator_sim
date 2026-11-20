@@ -1,8 +1,8 @@
 from dataclasses import replace
 import unittest
 from operator_model import estimate, load_chip
-from operator_model.rms_resource import resource_rms
-from operator_model.rms_target_cost import resource_rms_target, RmsFirstDispatch
+from operator_model.operators.rmsnorm.resources import resource_rms
+from operator_model.operators.rmsnorm.target_cost import resource_rms_target, RmsFirstDispatch
 
 
 class RmsTargetCostTest(unittest.TestCase):
