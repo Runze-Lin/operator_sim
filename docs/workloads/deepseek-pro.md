@@ -1,6 +1,6 @@
 # DeepSeek-V4-Pro · 整批 prefill 的逐节点单卡张量
 
-indexer.weights_proj 的每卡 N=64、K=7168。单 token 及 MTP8、B8×32Ki 的 M 均从本步调度 token 数得到。这些投影使用 BF16 ND 独立库合同做双端 CA 对照。[含普通 decode、MTP 与大 prefill 的 Matmul 总表](../../results/v0.28/matmul/README.md)
+indexer.weights_proj 的每卡 N=64、K=7168。单 token 及 MTP8、B8×32Ki 的 M 均从本步调度 token 数得到。这些投影使用 BF16 ND 独立库合同做双端 CA 对照。[含普通 decode、MTP 与大 prefill 的 33 个 Matmul 几何](../../results/v0.29/matmul/workloads.md)
 
 **单卡 8×256Ki 的实测。** 全部 2,097,152 行在一个 `aclnnCast` 中完成，950DT 预测 227.018 µs、CA 247.788 µs。950PR 为 506.517 / 529.287 µs。下表使用模型的 64 个 indexer 系数；内部 hidden 宽度仍为 7168。[第 62–66 个 UB 块的同轴图](../../results/v0.27/memory/pro-256ki-dt-blocks-62-66.png) · [100 轮算例](../examples/cast_bf16_fp32.md)
 

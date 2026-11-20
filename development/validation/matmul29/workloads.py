@@ -1,8 +1,11 @@
 """Join the application, decode and branch-boundary Matmul registrations by geometry."""
 import json
 from pathlib import Path
+import sys
 
 ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0,str(ROOT))
+from development.validation.matmul28.overview import receipt
 OUT = ROOT / 'results/v0.29/matmul'
 PREVIOUS = ROOT / 'results/v0.28/matmul'
 DT, PR = 'Ascend950DT_9582', 'Ascend950PR_957b'
@@ -16,9 +19,10 @@ def render():
     cases = {}
     for item in read(PREVIOUS / 'overview.json')['rows']:
         shape = tuple(item['shape'])
+        endpoints = {c:dict(item['targets'][c], **receipt(item,tag)) for c,tag in ((DT,'dt'),(PR,'pr'))}
         cases[shape] = dict(name=f"{item['model']} · {item['node']}",
                             scenarios=[(item['phase'], item['requests'], item['tokens_per_request'])],
-                            endpoints=item['targets'], future=item['extrapolated_970dt_us'])
+                            endpoints=endpoints, future=item['extrapolated_970dt_us'])
 
     decode = read(OUT / 'decode/freeze.json')
     prices = read(OUT / 'decode/score.json')['unique_rows']

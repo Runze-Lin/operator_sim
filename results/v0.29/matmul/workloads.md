@@ -22,7 +22,7 @@
 | DeepSeek-V4.1-Flash · indexer.weights_proj | prefill 8×32768 | [262144, 32, 5120] | 1082.452 / 待返回 | 1921.347 / 待返回 | 273.952 |
 | DeepSeek-V4-Pro · indexer.weights_proj | prefill 8×32768 | [262144, 64, 7168] | 1514.284 / 待返回 | 2688.910 / 待返回 | 382.559 |
 | Kimi-K3 · mla.kv_b_proj | prefill 8×32768 | [262144, 3072, 512] | 2098.195 / 待返回 | 5754.504 / 待返回 | 522.738 |
-| DeepSeek-V4.1-Flash · indexer.wk | prefill 8×131072 | [1048576, 128, 512] | 437.251 / 待返回 | 1155.000 / 待返回 | 114.805 |
+| DeepSeek-V4.1-Flash · indexer.wk | prefill 8×131072 | [1048576, 128, 512] | 437.251 / 405.617 | 1155.000 / 待返回 | 114.805 |
 | DeepSeek-V4.1-Flash · indexer.wk | prefill 8×262144 | [2097152, 128, 512] | 868.573 / 待返回 | 2304.688 / 待返回 | 226.799 |
 | DeepSeek-V4.1-Flash · indexer.weights_proj | decode 1×1 | [1, 32, 5120] | 5.337 / 待返回 | 5.211 / 待返回 | 6.915 |
 | DeepSeek-V4.1-Flash · indexer.weights_proj | decode 4×1 | [4, 32, 5120] | 5.343 / 待返回 | 5.227 / 待返回 | 6.916 |
@@ -32,7 +32,7 @@
 | DeepSeek-V4-Pro · indexer.weights_proj | decode 8×1 | [8, 64, 7168] | 5.727 / 待返回 | 5.647 / 待返回 | 13.869 |
 | DeepSeek-V4-Pro · indexer.weights_proj | decode 8×9 | [72, 64, 7168] | 15.262 / 待返回 | 15.262 / 待返回 | 13.990 |
 | DeepSeek-V4.1-Flash · dsa.wq_a | decode 4×9 | [36, 1280, 5120] | 12.156 / 待返回 | 13.360 / 待返回 | 11.083 |
-| Kimi-K3 · mla.q_b_proj | decode 9×1、decode 1×9 | [9, 2304, 1536] | 8.626 / 未获合格窗 | 8.647 / 待返回 | 5.637 |
+| Kimi-K3 · mla.q_b_proj | decode 9×1、decode 1×9 | [9, 2304, 1536] | 8.626 / 未获合格窗 | 8.647 / 未获合格窗 | 5.637 |
 | Kimi-K3 · mla.q_b_proj | decode 16×1 | [16, 2304, 1536] | 8.632 / 待返回 | 8.669 / 待返回 | 5.640 |
 | Kimi-K3 · mla.q_b_proj | decode 9×9 | [81, 2304, 1536] | 9.073 / 待返回 | 9.253 / 待返回 | 5.788 |
 | Kimi-K3 · mla.q_b_proj | decode 16×9 | [144, 2304, 1536] | 11.877 / 待返回 | 11.895 / 待返回 | 5.866 |

@@ -1,6 +1,6 @@
 # DeepSeek-V4.1-Flash · 整批 prefill 的逐节点单卡张量
 
-indexer.wk 在 B8×128Ki 时按 [1048576,128,512] 提交；indexer.weights_proj 在 B8×32Ki 时为 [262144,32,5120]。这些投影使用 BF16 ND 独立库合同做双端 CA 对照。[含普通 decode、MTP 与大 prefill 的 Matmul 总表](../../results/v0.28/matmul/README.md)
+indexer.wk 在 B8×128Ki 时按 [1048576,128,512] 提交；indexer.weights_proj 在 B8×32Ki 时为 [262144,32,5120]。这些投影使用 BF16 ND 独立库合同做双端 CA 对照。[含普通 decode、MTP 与大 prefill 的 33 个 Matmul 几何](../../results/v0.29/matmul/workloads.md)
 
 单卡 B8×32Ki 整批展平后的全 hidden Cast 是 `[262144,5120]`，区别于 indexer 的 32 列系数。DT 预测 2514.820 µs，全输出核验通过，64 核原生包络 2737.538 µs，采集墙钟 4 小时 18 分。逐指令整窗未采集。[运行回执](../../results/v0.23/full-hidden/v3/flash-retry.json)
 
@@ -100,13 +100,13 @@ indexer.wk 在 B8×128Ki 时按 [1048576,128,512] 提交；indexer.weights_proj 
 | `dsa.sparse_attention`<br>36–39 | q <code>[1048576,8,512]</code><br>out <code>[1048576,8,512]</code><br>sink <code>[8]</code><br>compressed_kv_logical <code>[8,131072,1,512]</code><br>indices_capacity_per_query <code>[1048576,512]</code> | 仅形状 | — | — | — |
 | `compressor.kv`<br>20 | x <code>[1048576,5120]</code><br>weight_logical <code>[512,5120]</code><br>y <code>[1048576,512]</code> | 仅形状 | — | — | — |
 | `compressor.pool_store`<br>20 | new_rows <code>[1048576,1,512]</code><br>history_logical <code>[8,131072,1,512]</code> | 仅形状 | — | — | — |
-| `indexer.wk`<br>20 | x <code>[1048576,512]</code><br>weight_logical <code>[128,512]</code><br>y <code>[1048576,128]</code> | [独立 BF16 ND Matmul](../../results/v0.28/matmul/README.md) | 437.251 / 待回收 | 1155.000 / 待回收 | 114.805 |
+| `indexer.wk`<br>20 | x <code>[1048576,512]</code><br>weight_logical <code>[128,512]</code><br>y <code>[1048576,128]</code> | [独立 BF16 ND Matmul](../../results/v0.28/matmul/README.md) | 437.251 / 405.617 | 1155.000 / 待回收 | 114.805 |
 | `indexer.norm_cache`<br>20 | key_projection_rows <code>[1048576,1,128]</code><br>new_unique_rows <code>[1048576,1,128]</code><br>cache_logical <code>[8,131072,1,128]</code> | 仅形状 | — | — | — |
 | `compressor.input_cast`<br>2, 8, 14 | bf16 <code>[1048576,5120]</code><br>fp32 <code>[1048576,5120]</code> | `cast_bf16_fp32` | 10140.828 / — | 22940.052 / — | 4951.425 |
 | `compressor.kv`<br>2, 8, 14 | x <code>[1048576,5120]</code><br>weight_logical <code>[512,5120]</code><br>y <code>[1048576,512]</code> | 仅形状 | — | — | — |
 | `compressor.gate`<br>2, 8, 14 | x <code>[1048576,5120]</code><br>weight_logical <code>[512,5120]</code><br>y <code>[1048576,512]</code> | 仅形状 | — | — | — |
 | `compressor.pool_store`<br>2, 8, 14 | new_rows <code>[524288,1,512]</code><br>history_logical <code>[8,65536,1,512]</code> | 仅形状 | — | — | — |
-| `indexer.wk`<br>2, 8, 14 | x <code>[1048576,512]</code><br>weight_logical <code>[128,512]</code><br>y <code>[1048576,128]</code> | [独立 BF16 ND Matmul](../../results/v0.28/matmul/README.md) | 437.251 / 待回收 | 1155.000 / 待回收 | 114.805 |
+| `indexer.wk`<br>2, 8, 14 | x <code>[1048576,512]</code><br>weight_logical <code>[128,512]</code><br>y <code>[1048576,128]</code> | [独立 BF16 ND Matmul](../../results/v0.28/matmul/README.md) | 437.251 / 405.617 | 1155.000 / 待回收 | 114.805 |
 | `indexer.norm_cache`<br>2, 8, 14 | key_projection_rows <code>[1048576,1,128]</code><br>new_unique_rows <code>[524288,1,128]</code><br>cache_logical <code>[8,65536,1,128]</code> | 仅形状 | — | — | — |
 | `indexer.wq_b`<br>2, 8, 14, 20, 24, 28, 32, 36 | x <code>[1048576,1280]</code><br>weight_logical <code>[4096,1280]</code><br>y <code>[1048576,4096]</code> | 仅形状 | — | — | — |
 | `indexer.weights_proj`<br>2, 8, 14, 20, 24, 28, 32, 36 | x <code>[1048576,5120]</code><br>weight_logical <code>[32,5120]</code><br>y <code>[1048576,32]</code> | 仅形状 | — | — | — |

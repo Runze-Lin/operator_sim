@@ -1,6 +1,6 @@
 # 三个模型的 Matmul 实测总表
 
-共 28 个不同的每卡 [M,N,K]，950DT/PR 共 56 项。已返回 30 项，其中 30 项通过全数值及全核指令窗核验。所有输入与权重均为连续 BF16 ND，N、K 取目标投影在 TP8 下的真实维度。本表使用 v0.28 已封存的公开路由。独立性按各项原登记判断，总表同时包含开发回放与新形。
+共 28 个不同的每卡 [M,N,K]，950DT/PR 共 56 项。已返回 31 项，其中 31 项通过全数值及全核指令窗核验。所有输入与权重均为连续 BF16 ND，N、K 取目标投影在 TP8 下的真实维度。本表使用 v0.28 已封存的公开路由。独立性按各项原登记判断，总表同时包含开发回放与新形。
 
 | 场景 · 模型 | 投影 | B×token | [M,N,K] | DT 公开预测 / CA (误差) µs | PR 公开预测 / CA (误差) µs | 970DT 外推 µs |
 |---|---|---:|---|---:|---:|---:|
@@ -22,7 +22,7 @@
 | prefill · DeepSeek-V4.1-Flash | [indexer.weights_proj](report.md) | 8×32768 | [262144, 32, 5120] | 1082.452 / 待回收 | 1921.347 / 待回收 | 273.952 |
 | prefill · DeepSeek-V4-Pro | [indexer.weights_proj](wide-prefill/report.md) | 8×32768 | [262144, 64, 7168] | 1514.284 / 待回收 | 2688.910 / 待回收 | 382.559 |
 | prefill · Kimi-K3 | [mla.kv_b_proj](wide-prefill/report.md) | 8×32768 | [262144, 3072, 512] | 2098.195 / 待回收 | 5754.504 / 待回收 | 522.738 |
-| prefill · DeepSeek-V4.1-Flash | [indexer.wk](long-prefill/report.md) | 8×131072 | [1048576, 128, 512] | 437.251 / 待回收 | 1155.000 / 待回收 | 114.805 |
+| prefill · DeepSeek-V4.1-Flash | [indexer.wk](long-prefill/report.md) | 8×131072 | [1048576, 128, 512] | 437.251 / [405.617 (+7.8%)](long-prefill/131072-dt.json) | 1155.000 / 待回收 | 114.805 |
 | prefill · DeepSeek-V4.1-Flash | [indexer.wk](long-prefill/report.md) | 8×262144 | [2097152, 128, 512] | 868.573 / 待回收 | 2304.688 / 待回收 | 226.799 |
 | decode · DeepSeek-V4.1-Flash | [indexer.weights_proj](narrow/report.md) | 1×1 | [1, 32, 5120] | 5.337 / 待回收 | 5.211 / 待回收 | 6.915 |
 | decode · DeepSeek-V4.1-Flash | [indexer.weights_proj](narrow/report.md) | 4×1 | [4, 32, 5120] | 5.343 / 待回收 | 5.227 / 待回收 | 6.916 |

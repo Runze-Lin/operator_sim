@@ -12,7 +12,7 @@
 
 Matmul 在普通分块只产生一个输出矩形、且目标资源支持并有收益时，会分 K 到多个 AIC，再由 AIV 归并。单卡 decode 的输入行数取实际提交 token 总数。普通 B=1、9、11、16 与 MTP8 校验的 M=9、81、99、144 均有按真实投影宽度冻结的 Matmul 对照。单卡 B8×32Ki、128Ki、256Ki 整批和分 chunk 的数据分别列出。[三模型 33 个 Matmul shape 的预测、实测与采集状态](results/v0.29/matmul/workloads.md) · [当前误差与直接复用 DT 的对照](results/v0.28/matmul/public-report.md)
 
-Flash 在单卡 B8×32Ki 的 `indexer.wk` 矩阵是 [262144,128,512]。950DT 完整 CA 为 85.993 µs，公开预测为 113.505 µs（+31.99%）。按每个 AIC 的 L1 常驻权重和 32 轮连续输出重算，条件预测为 85.246 µs（−0.87%，开发回放）。同形 950PR 完整 CA 为 174.953 µs，候选在读取该结果前给出 196.082 µs（+12.08%）。Kimi 的 TP8 查询投影固定 N=2304、K=1536，将普通和 MTP8 的 batch 1、9、11、16 放在同一组上。[八种 decode 调度及双端回执](results/v0.29/matmul/decode/report.md) · [大 Matmul 的模型与实测流水](results/v0.29/matmul/full-load/report.md) · [逐算子大形覆盖](results/v0.29/large/report.md)
+Flash 在单卡 B8×32Ki 的 `indexer.wk` 矩阵是 [262144,128,512]。950DT 完整 CA 为 85.993 µs，公开预测为 113.505 µs（+31.99%）。按每个 AIC 的 L1 常驻权重和 32 轮连续输出重算，条件预测为 85.246 µs（−0.87%，开发回放）。同形 950PR 完整 CA 为 174.953 µs，候选在读取该结果前给出 196.082 µs（+12.08%）。扩到 B8×128Ki 后，950DT 合格 CA 为 405.617 µs；候选 324.490 µs（−20.00%），此形原公开模型更准。Kimi 的 TP8 查询投影固定 N=2304、K=1536，将普通和 MTP8 的 batch 1、9、11、16 放在同一组上。[八种 decode 调度及双端回执](results/v0.29/matmul/decode/report.md) · [大 Matmul 的模型与实测流水](results/v0.29/matmul/full-load/report.md) · [逐算子大形覆盖](results/v0.29/large/report.md)
 
 逐算子算例从一次调用的输入算到设备耗时。Matmul 算例将两波输出块的各页 K 逐行对齐，可以同时看预测和 CA 的首条 MMAD、重叠和末次写回。[Matmul](docs/examples/matmul.md) · [DynamicMXQuant](docs/examples/quant.md) · [FA](docs/examples/fa.md) · [大 prefill Cast](docs/examples/cast_bf16_fp32.md) · [其余算例](docs/pipeline-comparisons.md)
 

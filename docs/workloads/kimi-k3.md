@@ -1,6 +1,6 @@
 # Kimi-K3 · 整批 prefill 的逐节点单卡张量
 
-mla.q_b_proj 的 N=2304、K=1536；另一投影 mla.kv_b_proj 在 B8×32Ki 的矩阵为 [262144,3072,512]。这些投影使用 BF16 ND 独立库合同做双端 CA 对照。[含普通 decode、MTP 与大 prefill 的 Matmul 总表](../../results/v0.28/matmul/README.md)
+mla.q_b_proj 的 N=2304、K=1536；另一投影 mla.kv_b_proj 在 B8×32Ki 的矩阵为 [262144,3072,512]。这些投影使用 BF16 ND 独立库合同做双端 CA 对照。[含普通 decode、MTP 与大 prefill 的 33 个 Matmul 几何](../../results/v0.29/matmul/workloads.md)
 
 当 mixed QKV 采用独立 MXFP8 动态量化时，单卡 B8×32Ki 的输入是 `[262144,7168]`。950DT 默认预测 1200.415 µs，64 核原生包络实测 1778.988 µs，量化数据与 scale 共 1,937,768,448 个输出均已校验，采集墙钟 4 小时 53 分。逐指令整窗未采集。[原生回执](../../results/v0.20/full-quant/native.json)
 

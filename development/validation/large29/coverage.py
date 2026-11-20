@@ -19,6 +19,11 @@ def load(p):
 
 
 def render():
+    # The long-run supervisor can publish a qualified receipt between scorer
+    # polls. Refresh the lightweight frozen-price view before joining its rows.
+    import subprocess
+    subprocess.run([sys.executable,str(ROOT/'development/validation/matmul29/full_load_score.py')],
+                   cwd=ROOT,check=True)
     rows=[]
     def add(op,shape,group,role,sku,price,ca,status,evidence,protocol="full",conditional=None):
         rows.append(dict(op=op,shape=shape,group=group,role=role,sku=sku,model_us=price,

@@ -14,7 +14,7 @@
 | kda_chunk · fused V1 | 0 · N/A | 0 · N/A | 缺合格时延 | [kda/report.md](kda/report.md) |
 | kda_recurrent | 13 / 14 · 6.53% / 17.55% | 10 / 10 · 4.35% / 10.41% | 通过 | [replay.json](replay.json) |
 | lightning_indexer | 13 / 14 · 12.40% / 31.71% | 10 / 10 · 11.88% / 26.51% | 通过 | [replay.json](replay.json) |
-| matmul | 47 / 49 · 15.56% / 107.49% | 59 / 59 · 12.26% / 108.81% | 有超限 | [matmul/score.json](matmul/score.json) |
+| matmul | 48 / 50 · 11.77% / 107.49% | 59 / 59 · 12.26% / 108.81% | 有超限 | [matmul/score.json](matmul/score.json) |
 | mhc | 23 / 24 · 2.61% / 7.20% | 10 / 10 · 4.19% / 9.37% | 通过 | [replay.json](replay.json) |
 | mhc_post · shape | 113 / 151 · 30.29% / 79.81% | 56 / 88 · 31.07% / 78.23% | 有超限 | [post/score.json](post/score.json) |
 | mhc_post · visible stream | 113 / 151 · 8.20% / 58.52% | 56 / 88 · 7.13% / 57.22% | 有超限 | [post/score.json](post/score.json) |
