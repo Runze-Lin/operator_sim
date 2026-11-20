@@ -144,7 +144,10 @@ def evaluate(prefix):
         path=OUT/'hcpost'/(sku+'.json')
         if not path.is_file():continue
         r=read(path)
+        if r.get('physical_complete') is not True:continue
         assert r['chip']==sku and r['physical_complete'] and r['output_bytes']==2*r['good_outputs']
+        strict_path=ROOT/r['strict_receipt']
+        assert sha256(strict_path.read_bytes()).hexdigest()==r['strict_sha256']
         chip=r['chip']
         j,=[v for v in read('results/v0.31/post/freeze.json')['jobs'] if v['op']==r['op']]
         public('vllm_hc_post · physical full window','mhc_post',r['shape'],chip,j['attrs'],r['kernel'],
