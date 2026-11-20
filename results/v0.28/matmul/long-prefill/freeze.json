@@ -1,0 +1,62 @@
+{
+  "utc": "2026-11-20T02:18:49.173684+00:00",
+  "rows": [
+    {
+      "model": "DeepSeek-V4.1-Flash",
+      "node": "indexer.wk",
+      "seq": 131072,
+      "requests": 8,
+      "shape": [
+        1048576,
+        128,
+        512
+      ],
+      "wall_s": 43200,
+      "raw_mib": 32768,
+      "predictions": {
+        "Ascend950DT_9582": {
+          "us": 437.2508462432924
+        },
+        "Ascend950PR_957b": {
+          "us": 1154.9997773314942
+        },
+        "Ascend970DT": {
+          "us": 114.8049526548534
+        }
+      }
+    },
+    {
+      "model": "DeepSeek-V4.1-Flash",
+      "node": "indexer.wk",
+      "seq": 262144,
+      "requests": 8,
+      "shape": [
+        2097152,
+        128,
+        512
+      ],
+      "wall_s": 86400,
+      "raw_mib": 65536,
+      "predictions": {
+        "Ascend950DT_9582": {
+          "us": 868.5730192198481
+        },
+        "Ascend950PR_957b": {
+          "us": 2304.6884630457803
+        },
+        "Ascend970DT": {
+          "us": 226.79869487707563
+        }
+      }
+    }
+  ],
+  "source_sha256": {
+    "development/validation/matmul28/long_prefill.py": "9cbbb48331d5445f34aeb183b4977c479b6151b855eaa505b8e2216ff0f3c579",
+    "development/validation/matmul28/campaign.py": "835acbc959331e68860bbcdb6c456ad55b1bc057c5237fecd27e87d7a856669a",
+    "development/validation/matmul28/drain.py": "ab2a34e50e391b4691be2b388d61adecd64077c30d1d51eb2dd9345e49d7a000",
+    "build/smoke/matmul28": "a6a260ff7f8a407f7d64789f953be0edbcaf9ff94b61f0129d72272a21970b01",
+    "results/v0.23/workloads/contracts.jsonl.gz": "ce93968c42e0c82de4133a4f9454820cb75f6049ff0adde2f75797672991d829",
+    "results/v0.28/matmul/freeze.json": "e6c61efeee18a752502f6216026a51e5cdafb49b04cdf1ac42d7737dd6d7cd77"
+  },
+  "scope": "All launches; full numerical golden and physical END plus engine drain on every core. The decode slot is reused after its last job. 970DT has no measurement."
+}

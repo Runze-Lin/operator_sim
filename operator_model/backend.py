@@ -94,8 +94,8 @@ def _price_resource(op, shape, target, call, dtype):
         us, work, diag = resource_attention(shape, target, call)
         aic, aiv = 0, diag['target_plan']['active_aiv']
     elif op == 'rmsnorm':
-        from .rms_dispatch import price_rms
-        us, aic, aiv, diag = price_rms(shape, target, call)
+        from .rmsnorm_pipeline import price_registered_rms
+        us, aic, aiv, diag = price_registered_rms(shape, target, call)
     elif op == 'mhc_post':
         from .post_resource import resource_post
         us, aic, aiv, diag = resource_post(shape, target, call)
@@ -115,7 +115,7 @@ def _price_resource(op, shape, target, call, dtype):
         if call:
             raise ValueError('Cast expects a contiguous BF16 to FP32 conversion')
         from .cast_resource import resource_cast
-        us, aic, aiv, diag = resource_cast(shape, target)
+        us, aic, aiv, diag = resource_cast(shape, target, pressure_retention=True)
         # The kernel can issue its first two reads to different UB slots before
         # either retires. These are issue markers, separate from bandwidth time.
         stages = diag['stages_us']

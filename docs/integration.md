@@ -120,7 +120,27 @@ def duration_seconds(op, local_shape, attrs, roofline_us, soc="Ascend950DT_9582"
 
 例如 `estimate("moe_ffn", (32, 256, 128, 2), {"expert_counts": [1, 31]})` 预测整个两段计算链。调度该节点后不要再把两个 GMM 组件的估计加到同一事件上。EP 大小不能替代本地专家直方图。推测 8 个 token 时，普通 FA 的主模型校验长度常为 Q=9，实际 B、H、打包方式仍由框架提供。
 
-RMSNorm 与 mHC Post 可用 shape、dtype 和芯片独立预测。一次查询没有提供同流历史时，返回未知启动状态的点估计，同时返回首次、扩核和热态的时间供系统做敏感性分析。选择多种调度方案时，调用本身不会改变后续预测。如果明确是单独首次启动，可传入 `resident_aiv=0`。
+系统有序流能够提供前一算子时，可用两个条件接口做诊断；这里所有 `us` 都是设备微秒。
+
+```python
+from operator_model import estimate_post_history, rmsnorm_pipeline
+
+post = estimate_post_history([1, 4, 192], chip="Ascend950DT_9582")
+first_us = post.scenarios["first"].latency_us
+repeat_us = post.for_predecessor(post.active_aiv, previous_shape=post.shape).latency_us
+# 这里的概率是调用方给定的示例场景。
+mean_us = post.expected_us({"first": 0.2, "repeat": 0.8})
+
+rms = rmsnorm_pipeline([4, 784], chip="Ascend950PR_957b",
+                       resident_aiv=4, immediate_repeat=True, diagnostics=True)
+elapsed_us = rms["us"]
+```
+
+对单输出矩形的长 K Matmul 可调用 `from operator_model import estimate_matmul_splitk`，返回普通与分 K 的耗时、活跃核数、归约工作量和选择理由。[前瞻几何与使用示例](../results/v0.28/matmul/streamk-analysis.md)
+
+对 Stream-K 与全输出分块识别尚不确定的 Matmul，应保留 `[M,N,K]`、dtype、转置及权重格式，分别统计真实库分支。四个 batch 取 1、9、11、16 时，普通 decode 的 M 为 1、9、11、16；同一 rank 全部请求同时校验 9 个 token 的 M 为 9、81、99、144。混合批次以调度器实际提交（含 padding）的行数为准。[三模型投影的输入和两端 CA](../results/v0.28/matmul/report.md)
+
+RMSNorm 与 mHC Post 可用 shape、dtype 和芯片独立预测。RMSNorm 在最忙核最多两轮 UB 且前序未知时，当前默认使用归约与双写流水的折中值；如需分清首遇与立即复跑，可调用上面的显式接口。一次查询没有提供同流历史时，返回未知启动状态的点估计，同时返回首次、扩核和热态的时间供系统做敏感性分析。选择多种调度方案时，调用本身不会改变后续预测。如果明确是单独首次启动，可传入 `resident_aiv=0`。
 
 当调度器知道隔离序列刚开始时，令 `resident = 0`。以下三行只由同一流、同类 kernel 的实际调度事件驱动；同一个待选方案反复试算时保留原状态。返回的 `active_aiv` 是本次预计活跃核数，缺少此信息的路线返回 None。
 

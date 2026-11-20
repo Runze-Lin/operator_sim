@@ -1,5 +1,11 @@
 # mHC Sinkhorn · 跨过 950PR 分核边界
 
+以 T=69、四条流、10 次迭代为例。DT 首次运行，最忙核 2 行，占 1 组寄存器。有同族前序信息的专项模型预测 5.340 µs，CA 为 5.009 µs；完全未知前序的折中值为 4.044 µs。更宽的 T=4097 在 PR 上有十组寄存器，函数只发起一次，每额外一组单独付组内工作。前序可见性与寄存器组数在算式里各算一次。
+
+![950DT mHC Sinkhorn 首次调用的预测与 CA](../../results/v0.28/fusion/independent-950dt-t69-i10.png)
+
+[参数、组内工作和两芯片回放](../../results/v0.28/fusion/report.md) · [相同模型在全新几何上的比较](../../results/v0.28/fusion/forward.md)
+
 同一个 T=67、I=10 的输入，前序决定了第一次 VF 的接手时间。传入同一家族的 `resident_aiv=0` 表示首次，950DT 预测 **5.319 µs**，CA 为 **5.232 µs**。完整算例可逐项复核发起、迭代、写回和 PR 的同形差值。[公开接口与逐阶段计算](../../results/v0.27/fusion/public-sink.md)
 
 ![950PR 上同为 67 个 token，首发与热态对齐输入、十轮 VF 和输出写](../../results/v0.27/fusion/950pr-same-input.png)

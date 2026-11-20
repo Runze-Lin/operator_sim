@@ -1,0 +1,84 @@
+# MatMulV3 单输出矩形的 Stream-K 独立核查
+
+| SKU | 数据角色 | 完整窗 | 普通 WAPE / 最大 | 冻结 Stream-K WAPE / 最大 | AIC、AIV 均正确 |
+|---|---|---:|---:|---:|---:|
+| 950DT | 冻结前已开始 | 3 | 161.56% / 170.84% | 2.94% / 5.72% | 3 |
+| 950DT | 真正前瞻端 | 1 | 147.74% / 147.74% | 5.65% / 5.65% | 1 |
+| 950PR | 冻结前已开始 | 2 | 179.27% / 181.92% | 3.66% / 5.42% | 2 |
+| 950PR | 真正前瞻端 | 2 | 164.27% / 169.31% | 2.33% / 2.64% | 2 |
+
+四形来自 DeepSeek-V4-Pro 的 indexer.weights_proj 几何，TP=8 时逻辑 B[K,N]=[7168,64]。B=1、Q=9 与 B=9、Q=1 都给 M=9。同一连续 BF16、三维几何与属性只计一个样本。宿主走 aclnnMatmul，量化、转置、非连续步长或融合的应用需要另行确认库派发。
+
+| M | SKU | 角色 | 普通 µs | 冻结 µs | CA µs | 冻结偏差 | 实测 AIC / 启动 AIV / 写出 AIV | 真 MMAD K | 预算 K |
+|---:|---|---|---:|---:|---:|---:|---:|---:|---:|
+| 1 | 950DT | 已开始 | 15.126 | 5.695 | 5.585 | +1.97% | 32/64/1 | 224 | 256 |
+| 1 | 950PR | 已开始 | 15.126 | 5.573 | 5.467 | +1.93% | 28/56/1 | 256 | 256 |
+| 9 | 950DT | 已开始 | 15.130 | 5.731 | 6.079 | -5.72% | 32/64/9 | 224 | 256 |
+| 9 | 950PR | 已开始 | 15.130 | 5.658 | 5.367 | +5.42% | 28/56/9 | 256 | 256 |
+| 11 | 950DT | 已开始 | 15.131 | 5.741 | 5.688 | +0.93% | 32/64/11 | 224 | 256 |
+| 11 | 950PR | 前瞻 | 15.131 | 5.679 | 5.833 | -2.64% | 28/56/11 | 256 | 256 |
+| 16 | 950DT | 前瞻 | 15.133 | 5.763 | 6.108 | -5.65% | 32/64/16 | 224 | 256 |
+| 16 | 950PR | 前瞻 | 15.133 | 5.732 | 5.619 | +2.01% | 28/56/16 | 256 | 256 |
+
+| M，DT/PR 时间比 | CA | 普通 | 冻结候选 | 来源 |
+|---:|---:|---:|---:|---|
+| 1 | 1.0215 | 1.0000 | 1.0220 | 至少一端已开始 |
+| 9 | 1.1328 | 1.0000 | 1.0130 | 至少一端已开始 |
+| 11 | 0.9752 | 1.0000 | 1.0109 | 至少一端已开始 |
+| 16 | 1.0870 | 1.0000 | 1.0054 | 双端前瞻 |
+
+## 同队列中的其他矩形和分支
+
+| [M,N,K] | SKU | 实测 key | 公共普通 AIC/AIV | 真 AIC/AIV | 普通 µs / CA µs | 误差 |
+|---|---|---:|---:|---:|---:|---:|
+| [1,2304,1536] | 950DT | 2 | 18/0 | 18/0 | 8.618 / 6.680 | +29.01% |
+| [1,2304,1536] | 950PR | 2 | 18/0 | 18/0 | 8.621 / 7.494 | +15.04% |
+| [9,1280,5120] | 950DT | 4098 | 20/0 | 32/64 | 11.999 / 10.215 | +17.47% |
+| [32768,128,512] | 950DT | 131074 | 32/0 | 32/0 | 19.153 / 15.562 | +23.08% |
+| [32768,128,512] | 950PR | 131074 | 28/0 | 28/0 | 28.820 / 26.690 | +7.98% |
+
+表中存在一个实际多输出 4098 反例。即使无偏置、相同 ND/BF16、较长 K 且启动相同核数，输出被拆成多个矩形后仍需建模各矩形分得的 K 段数、哪个 AIC 同时处理多个矩形以及 reduce 的跨核任务。单矩形校准无法覆盖此路径。
+
+## 机制、来源和公式
+
+实际安装的同一多入口 BF16 二进制由两端 dump 与安装包 SHA-256 一致性确认。普通 prefill 的 tiling key 131074 与这里的 4098 共享 ELF。正式 4098 kernelList 项标为 MIX_AIC、crossCoreSync=1、taskRation=1:2。清单的内部 kernelName 使用 ND_NZ 别名，宿主 BF16 连续 ND_ND 的实际执行名记录为 ND_ND 和 4098_mix_aic。按 arch35 位布局拆解 4098 得 API_LEVEL=2、MODEL=1 即 STREAM_K。每核真实 MMAD、分段源地址、FP32 部分和的不同写地址与 AIV 最终写回共同确认派发。
+
+各 AIC 的一条 MMAD 都处理相同 M、N 和不同 K 区间。按 A 首地址排序，逐段核查 A_addr=A₀+2k_start、B_addr=B₀+2Nk_start，要求各区间恰覆盖 [0,K)，部分和写地址独立，AIV 最终写回恰覆盖 2MN 字节。原普通模板沿 MN 切，单一矩形只分给一个 AIC，因而四形预测均为约 15 µs。[逐核 MMAD、地址、写回与散列](streamk-score.json) · [开源 host 分支参考](../../../third_party/ops-nn/matmul/mat_mul_v3/op_host/op_tiling/arch35/matmul_v3_basic_streamk_tiling.cpp) · [CANNBot 950 切分机制](../../../third_party/cannbot-knowledge/knowledge/ops/ascendc/optimizations/opstune/mechanisms/ascendc_tiling.md)
+
+C、V 为目标 AIC、AIV 数，f 为 GHz。先要求普通分块只有一个输出矩形、ceil(K/256)×256 ≥ max(8192,256C)/2。参考 DAV_3510 host 还会比较多个候选。本窄合同试 S=min(C,ceil(K/64)) 个部分和，每份以 D=64 ceil(ceil(K/S)/64) 计价。D 是资源预算的上取整。DT 实际执行 224，预算 256。
+
+T_split = T_launch + max(T_partial, 2K(M+N)/(1000B_HBM)) + T_merge。B_HBM 是整芯标称 GB/s，T_partial 复用 BF16 Matmul 对 [M,N,D] 的 MTE2、MTE1、Cube 与尾写阶段。T_launch=(c_start+c_arrival log₂S)/(1000f)，c_start、c_arrival 是已有资源模型的发起周期。T_merge=(1000+60S×256/p)/(1000f) + 2MN(4S−1)/(1000B_L2)。p 是目标 AIV 的 FP32 ops/cycle，256 是参考值。1000 与 60 是参考 host 的 GetNegPerf 经验 cycles。2MN(4S−1) 表示额外归约流量估计。L2 缺省时退至 HBM 服务率，以 L2 给部分和定价属于本模型假设，开源 GetNegPerf 原式使用有效 HBM 带宽。T_split 低于普通价才选择切 K。
+
+## 独立性与部署边界
+
+M=1/9/11/16 共享 N=64、K=7168。冻结时 M=1/9 两端、11/DT 都有 raw 目录，全部列作开发/已开始。11/PR、16/DT、16/PR 是真正前瞻端，其中 16 是唯一双端都未开跑的几何。初始资格失败的端保留原回执。补充认证读取原始同一次采集，要求每核物理 END、所有描述符退休、聚合窗与全输出 correctness 一致。其他输出矩形的采集继续按旧队列完成。遇到多矩形仍走 4098 时，仅表示本候选尚未涵盖该路由。
+
+只查询实验分支的调用方式如下。默认 estimate 继续使用其原路径。
+
+```python
+from operator_model.matmul_splitk import estimate_matmul_splitk
+out = estimate_matmul_splitk([16, 64, 7168], chip="Ascend950PR_957b")
+print(out["route"], out["latency_us"], out["active_aic"], out["active_aiv"])
+```
+
+## 970DT 门槛与资源敏感性
+
+| 配置变动 | 分支 | 对齐后 K 门槛 | µs |
+|---|---|---:|---:|
+| dt | one_output_split_k | 4096 | 5.763 |
+| same-config-new-name | one_output_split_k | 4096 | 5.763 |
+| 1.2x frequency and peak rates | one_output_split_k | 4096 | 4.814 |
+| half AIC/AIV, same per-core rates | one_output_split_k | 4096 | 5.509 |
+| 10% HBM | one_output_split_k | 4096 | 7.614 |
+| explicit L2 at 10% of default service rate | one_output_split_k | 4096 | 6.349 |
+| half FP32 Vector | one_output_split_k | 4096 | 6.928 |
+| 970 resource scenario | ordinary | 15360 | 13.872 |
+| 970 K=15000 | ordinary | 15360 | 26.114 |
+| 970 K=15104 | ordinary | 15360 | 26.127 |
+| 970 K=15105 | one_output_split_k | 15360 | 8.024 |
+| 970 K=15360 | one_output_split_k | 15360 | 8.024 |
+| 970 K=16384 | one_output_split_k | 15360 | 8.154 |
+
+970DT 的 120 AIC 将对齐后的 K 下限推至 15360，K=7168 时返回普通路径。原始 K=15105 向上对齐达门槛后仍需满足单矩形及成本判定。970 的 AIC:AIV=1:1，若模型预测切 K，还须假定未来库提供此比例的混合实现。950 的 4098 MIX 实测为 1:2，970 全为外推。[候选登记](streamk-freeze.json) · [原预测登记](freeze.json)
+
+进程内重算 3 配置 × 16 形的中位 0.304 ms、最大 1.146 ms。三种便携配置均与冻结的路由、核数、分段预算及总耗时一致。

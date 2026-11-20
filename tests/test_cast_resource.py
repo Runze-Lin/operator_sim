@@ -10,13 +10,16 @@ class CastResourceTest(unittest.TestCase):
     def test_two_slot_predictions_match_the_frozen_candidate(self):
         archive = Path(__file__).resolve().parents[1] / 'results/cast-capacity'
         frozen = json.loads((archive / 'two-slot-freeze.json').read_text())
+        retention = json.loads((archive.parent/'v0.25/cache/replay.json').read_text())
+        price = {(r['chip'],tuple(r['shape'])):r['forecasts']['pressure']['us']
+                 for r in retention['rows'] if r['op']=='cast_bf16_fp32'}
         for job in frozen['included'] + frozen['excluded']:
             for sku, target in job['targets'].items():
                 with self.subTest(shape=job['shape'], chip=sku):
                     chip = load_chip(sku)
                     prediction = estimate('cast_bf16_fp32', job['shape'], chip=chip)
                     d = prediction.projection['timing_diagnostics']
-                    self.assertAlmostEqual(prediction.latency_us, target['candidate_us'])
+                    self.assertAlmostEqual(prediction.latency_us, price.get((sku,tuple(job['shape'])),target['candidate_us']))
                     self.assertEqual(prediction.active_aiv, target['active_aiv'])
                     self.assertEqual(d['target_plan']['busy_core_waves'], target['waves'])
                     slot_pair = (d['input_slot_ii_cycles'], d['output_slot_ii_cycles'])
@@ -29,7 +32,7 @@ class CastResourceTest(unittest.TestCase):
         for row in replay['rows']:
             with self.subTest(shape=row['shape'], chip=row['chip']):
                 p = estimate('cast_bf16_fp32', row['shape'], chip=row['chip'])
-                self.assertAlmostEqual(p.latency_us, row['candidate_model_us']['two_slot'])
+                self.assertAlmostEqual(p.latency_us, price[(row['chip'],tuple(row['shape']))])
 
     def test_independent_slot_reuse_and_target_resources(self):
         chip = load_chip()

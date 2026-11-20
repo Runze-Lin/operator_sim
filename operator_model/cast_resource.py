@@ -22,7 +22,7 @@ def cast_work(shape):
                    notes=['One exact widening conversion per element. This lane-operation count describes conversions, not dense FP32 multiply-adds.'])
 
 
-def resource_cast(shape, chip):
+def resource_cast(shape, chip, *, pressure_retention=False):
     n = _elements(shape)
     # 2048-element minimum grid grain inferred from a 16384-element launch of
     # eight active AIVs. Above saturation, share 32-byte aligned input blocks.
@@ -73,7 +73,10 @@ def resource_cast(shape, chip):
         stages['steady_tiles'] = max(stages['steady_tiles'],
                                      repeated_tile_equivalents*max(input_slot_ii, output_slot_ii))
     from .vector_memory import stream_memory
-    memory = stream_memory(chip, active, 2*n, 4*n)
+    if pressure_retention:
+        memory = stream_memory(chip, active, 2*n, 4*n, pressure_retention=True)
+    else:
+        memory = stream_memory(chip, active, 2*n, 4*n)
     shared = 1753 + max(memory['external_floor_cycles'], memory['l2_floor_cycles'] or 0)
     stages['shared_io'] = max(0.,shared-sum(stages.values()))
     times = {k:v/cycles_per_us for k,v in stages.items()}

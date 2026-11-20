@@ -1,5 +1,7 @@
 # DynamicMXQuant 算例 · 两个 UB tile 的预取与写回
 
+同一个 [9,5120] 在 950DT 上，DynamicMXQuant 分配 45 个 AIV，耗时 4.867 µs；RMSNorm 仅用 9 个 AIV，各自保留整行归约。量化每 32 元素产出一组 scale，所以这一行的 160 组还有行内并行性。用 RMS 的“每 token 一核”会在计算指令之前就算错分核。[相同输入的逐形数据](../../results/v0.28/vector-matched.md)
+
 Kimi 真实 mixed-QKV 的大算例是单卡 B8×32Ki、hidden=7168。950DT 最忙核执行 820 轮，默认预测 1200.415 µs、资源法 1394.986 µs；64 核 wrapper 包络为 1778.988 µs。张量输入 3,758,096,384 B，量化输出和 scale 共 1,937,768,448 B。[原生全核与全输出回执](../../results/v0.20/full-quant/native.json) · [已测读写字节与资源下界的逐步计算](../../results/v0.27/quant-envelope.md)
 
 ## 同一 UB tile 的读、计算和两次写

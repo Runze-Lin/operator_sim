@@ -61,7 +61,7 @@ def _estimate(op, shape, attrs, revision):
                 raise ValueError('Cast requires the current fixed BF16 to FP32 contract')
             from .chips import load_chip
             from .cast_resource import resource_cast
-            duration, _, active, diag = resource_cast(shape, load_chip())
+            duration, _, active, diag = resource_cast(shape, load_chip(), pressure_retention=True)
             result = dict(predicted_us=duration, predicted_active_aiv=active, stages_us=diag['stages_us'])
         elif op == 'moe_gating_top_k':
             if revision < 12 or attrs:

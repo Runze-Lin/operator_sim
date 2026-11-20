@@ -1,5 +1,13 @@
 # MatMulV3 算例
 
+## 一行的 decode 与三万多行的 prefill
+
+Pro 的 indexer.weights_proj 每个 token 将 7168 个通道投影到 64 个系数。普通 decode 在单卡 B=1、9、11、16 时就是 [B,64,7168]；一个请求开 MTP8 也可产生 [9,64,7168]。B=1 时只有 917,504 个有用 FLOP，权重却有 917,504 B。冻结的普通排程只分配 1 个 AIC、顺序算 14 个 K 页，给出 15.126 µs。库的 tiling key 4098 实际沿 K 分片，在 DT 用 32 AIC / 64 AIV、32 条 MMAD，PR 用 28 / 56、28 条 MMAD，完成时间为 **5.585 / 5.467 µs**。图示的普通输出 tile 排程只适用于对应分支。[逐芯片冻结、核数和流水](../../results/v0.28/matmul/report.md)
+
+在 Pro 的目标配置上试 `from operator_model import estimate_matmul_splitk`。输入 `[1,64,7168]` 时，DT 的 32 个核实际各自承担连续 224 个 K 元素，预算为向上对齐的 256。模型分账为启动 2.326 µs、部分积流水 1.594 µs、去重输入带宽下界 0.233 µs、AIV 合并 1.775 µs，得到 2.326+max(1.594,0.233)+1.775=**5.695 µs**。PR 的 28 个核各承担 256 个元素，预测为 **5.573 µs**。M=1 已用于提出机制；M=16 的两端结果才是完全独立对照。[四个 M 的全部预测、真实 MMAD 和对照](../../results/v0.28/matmul/streamk-analysis.md)
+
+Flash 的 indexer.wk 输入 512、输出 128。完整的单请求 32Ki prefill 得到 [32768,128,512]，DT 实际走纯 AIC 的 key 131074；预测 / 实测 19.153 / 15.562 µs。8 个请求同一次提交则有 262144 行；每请求再增至 128Ki、256Ki 时 M 为 1048576、2097152。每行的 K 和 N 保持该投影的真实宽度。[B8 的 128Ki、256Ki 双端采集](../../results/v0.28/matmul/long-prefill/report.md)
+
 ## 两波、两页 K 在 950DT 上怎样重叠
 
 ![同一横轴上的 MatMulV3 模型关键路径与 CA 最晚完成核逐指令时间窗](figures/matmul-tile-pages.png)

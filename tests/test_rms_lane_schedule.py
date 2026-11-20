@@ -4,6 +4,7 @@ from pathlib import Path
 import unittest
 
 from operator_model import estimate, load_chip, OperatorStream
+from operator_model.rms_dispatch import price_rms
 from operator_model.rms_lane_schedule import parameters
 
 
@@ -22,7 +23,7 @@ class RmsLaneScheduleTests(unittest.TestCase):
                 self.assertAlmostEqual(r.latency_us, case['candidate_known_us'], places=12)
                 self.assertAlmostEqual(sum(r.projection['stages_us'].values()), r.latency_us, places=12)
                 self.assertTrue(all(x >= 0 for x in r.projection['stages_us'].values()))
-                self.assertAlmostEqual(estimate('rmsnorm',shape,chip=chip).latency_us, case['previous_unknown_us'], places=12)
+                self.assertAlmostEqual(price_rms(shape,load_chip(chip),{})[0], case['previous_unknown_us'], places=12)
                 if case['protocol'] == 'ordered new sequence':
                     stream = streams.setdefault(chip, OperatorStream(chip))
                     self.assertEqual(stream.advance('rmsnorm',shape).latency_us, r.latency_us)

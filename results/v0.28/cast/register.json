@@ -1,0 +1,116 @@
+{
+  "utc": "2026-11-20T01:55:59.922451+00:00",
+  "hypothesis": "Cast uses 2 B read and 4 B dirty store per conversion. A slow writeback relative to aggregate active-AIV issue can leave proportionally more dirty output resident as clean input is consumed. This is an occupancy hypothesis, not a measured hit rate.",
+  "formula": "R=min(L,X+Y); q=Y/(X+Y); rho=min(1,B_ext/I_AIV); D=min(Y,R-R*(1-q)*rho); external=X+Y-D. B and I in GB/s; D,R,X,Y,L in bytes. Previously published uniform policy sets rho=1.",
+  "data_roles": "Legacy replay, 156 MiB complete DT Cast, complete 256Ki Pro and companion Sigmoid are known before this selection. 165 MiB pair pricing uses the preceding independent freeze; no outcome/dump from the in-progress pair used for selector design.",
+  "promotion": [
+    "Entire preregistered new pair must pass original ELF, submitted geometry, all output values and all-core endpoint checks.",
+    "Pressure must beat old absolute whole-window error on the PR new shape; both new endpoints must have <=25% APE.",
+    "Historical DT and PR each keep WAPE<=25% and max<=50% in every published geometric subgroup after applying the single formula.",
+    "Both 256Ki endpoints stay within 25% absolute error. Report any regression, including speed ratio and in-tile timing. If evidence is insufficient, keep default and expose mechanism as sensitivity."
+  ],
+  "prices": {
+    "Ascend950PR_957b": {
+      "uniform": {
+        "us": 68.72054233766234,
+        "active_aiv": 56,
+        "external_GB_s": 1400,
+        "mixed_issue_GB_s": 2772.0,
+        "retained_output_MiB": 74.66666666666666,
+        "external_read_plus_write_MiB": 90.33333333333334,
+        "external_write_MiB": 35.33333333333334,
+        "device_L2_MiB": 112.0
+      },
+      "pressure": {
+        "us": 54.88075136123136,
+        "active_aiv": 56,
+        "external_GB_s": 1400,
+        "mixed_issue_GB_s": 2772.0,
+        "retained_output_MiB": 93.14478114478115,
+        "external_read_plus_write_MiB": 71.85521885521885,
+        "external_write_MiB": 16.85521885521885,
+        "device_L2_MiB": 112.0
+      },
+      "clean_first": {
+        "us": 42.25648138528138,
+        "active_aiv": 56,
+        "external_GB_s": 1400,
+        "mixed_issue_GB_s": 2772.0,
+        "retained_output_MiB": 110.0,
+        "external_read_plus_write_MiB": 55.0,
+        "external_write_MiB": 0.0,
+        "device_L2_MiB": 112.0
+      }
+    },
+    "Ascend950DT_9582": {
+      "uniform": {
+        "us": 27.431286195286194,
+        "active_aiv": 64,
+        "external_GB_s": 3168.0,
+        "mixed_issue_GB_s": 3168.0,
+        "retained_output_MiB": 85.33333333333333,
+        "external_read_plus_write_MiB": 79.66666666666667,
+        "external_write_MiB": 24.66666666666667,
+        "device_L2_MiB": 128.0
+      },
+      "pressure": {
+        "us": 27.431286195286194,
+        "active_aiv": 64,
+        "external_GB_s": 3168.0,
+        "mixed_issue_GB_s": 3168.0,
+        "retained_output_MiB": 85.33333333333333,
+        "external_read_plus_write_MiB": 79.66666666666667,
+        "external_write_MiB": 24.66666666666667,
+        "device_L2_MiB": 128.0
+      },
+      "clean_first": {
+        "us": 26.28402279032143,
+        "active_aiv": 64,
+        "external_GB_s": 3168.0,
+        "mixed_issue_GB_s": 3168.0,
+        "retained_output_MiB": 110.0,
+        "external_read_plus_write_MiB": 55.0,
+        "external_write_MiB": 0.0,
+        "device_L2_MiB": 128.0
+      }
+    },
+    "Ascend970DT": {
+      "uniform": {
+        "us": 14.68805402575889,
+        "active_aiv": 120,
+        "external_GB_s": 6480.0,
+        "mixed_issue_GB_s": 6480.0,
+        "retained_output_MiB": 110.0,
+        "external_read_plus_write_MiB": 55.0,
+        "external_write_MiB": 0.0,
+        "device_L2_MiB": 190.73486328125
+      },
+      "pressure": {
+        "us": 14.68805402575889,
+        "active_aiv": 120,
+        "external_GB_s": 6480.0,
+        "mixed_issue_GB_s": 6480.0,
+        "retained_output_MiB": 110.0,
+        "external_read_plus_write_MiB": 55.0,
+        "external_write_MiB": 0.0,
+        "device_L2_MiB": 190.73486328125
+      },
+      "clean_first": {
+        "us": 14.68805402575889,
+        "active_aiv": 120,
+        "external_GB_s": 6480.0,
+        "mixed_issue_GB_s": 6480.0,
+        "retained_output_MiB": 110.0,
+        "external_read_plus_write_MiB": 55.0,
+        "external_write_MiB": 0.0,
+        "device_L2_MiB": 190.73486328125
+      }
+    }
+  },
+  "sha256": {
+    "development/validation/cache25/shadow.py": "6f28d9577083e6361eafc0d47fd3fb83c2cf98b0f8262b75fb0f7975f0ce9161",
+    "results/v0.25/cache/replay.json": "1087146324e54decd4bb7b97a179f339c7bb1b351cd49e01613cca778e1e2684",
+    "results/v0.26/memory/pro-256ki-prefix-forecast.json": "8b9f9f90ebb1da2fa22c3391a437fb94298038e4bfe63ee1b4f1577f860c989c",
+    "results/v0.27/memory/cast-pair/freeze.json": "7126147ce1bc49eddd702679829ded16a5e07baa7356f7567dcca739d079720a"
+  }
+}

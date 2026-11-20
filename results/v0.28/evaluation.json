@@ -1,0 +1,2774 @@
+{
+  "snapshot_utc": "2026-11-20T02:38+00:00",
+  "model_sha256": "6d0065484ebf42891651a779b450bd9805df2be42fd8784bb27f93cd17bcc05a",
+  "heldout_frozen_before_acquisition": [
+    "rms/freeze.json",
+    "fusion/register.json",
+    "post/registration.json",
+    "cast/register.json",
+    "matmul/freeze.json",
+    "matmul/streamk-freeze.json",
+    "matmul/long-prefill/freeze.json",
+    "matmul/wide-prefill/freeze.json"
+  ],
+  "evidence": {
+    "matmul/evaluation.json": "4a00e29a136a5a99a66fb29aedd3eade270012c1d1c25e8185fe8ac614dc4a9c",
+    "rms/evaluation.json": "85eaf383924351d1a5b9f9a0a71d70b351cb09c778435961808775879de34267",
+    "post/channel-score.json": "578b4f6c76c189b345613a8d899028e8b0568aa0dc889c6e7f8b5d4db00d522c",
+    "post/cross-chip.json": "23cd16e01d8a583dd34274f176008c1b6dbd84e84c182b51ddc29b757b9350a6",
+    "fusion/independent.json": "c24f06ecd6a9c2535bbac5d66a5946a8d8df2c528636b3ecd9e0ff9950639851",
+    "cast/score.json": "1f56b79970769b6123efca38af41aebfaa2dcd4beff34ec7c54b5ddb052ce0cc",
+    "wheel-check.json": "5b90087e6890ce225a2e1b12560230e64d5b8837c4d3bde8fc2743a0c2797ac5",
+    "replay.json": "999eab1be5f70f12869fe408bf13d1a158c600abc67a41fddd9d8e02bff05fce",
+    "matmul/streamk-score.json": "90661dbf8b8d5b368534407419bfd4a834292063e507f514896901c444a95ad7"
+  },
+  "matmul": {
+    "groups": {
+      "decode": {
+        "dt": {
+          "n": 10,
+          "wape": 67.51353026854291,
+          "max_ape": 170.83998154111737
+        },
+        "pr": {
+          "n": 9,
+          "wape": 70.6093760610367,
+          "max_ape": 181.9240281179153
+        },
+        "dt_over_pr": {
+          "n": 9,
+          "wape": 7.823353423787344,
+          "max_ape": 23.242446915905912
+        },
+        "direct_dt_for_pr": {
+          "n": 9,
+          "wape": 72.099765847168,
+          "max_ape": 181.9240281179153
+        },
+        "direction_matches": 5
+      },
+      "prefill": {
+        "dt": {
+          "n": 2,
+          "wape": 12.040266629201438,
+          "max_ape": 23.078741516972777
+        },
+        "pr": {
+          "n": 1,
+          "wape": 7.977484231808201,
+          "max_ape": 7.977484231808196
+        },
+        "dt_over_pr": {
+          "n": 1,
+          "wape": 13.985561334939868,
+          "max_ape": 13.985561334939867
+        },
+        "direct_dt_for_pr": {
+          "n": 1,
+          "wape": 28.23876475337278,
+          "max_ape": 28.23876475337278
+        },
+        "direction_matches": 1
+      }
+    },
+    "pending": 10,
+    "rejected": 0
+  },
+  "long_prefill": {
+    "registered": [
+      {
+        "model": "DeepSeek-V4.1-Flash",
+        "node": "indexer.wk",
+        "seq": 131072,
+        "requests": 8,
+        "shape": [
+          1048576,
+          128,
+          512
+        ],
+        "wall_s": 43200,
+        "raw_mib": 32768,
+        "predictions": {
+          "Ascend950DT_9582": {
+            "us": 437.2508462432924
+          },
+          "Ascend950PR_957b": {
+            "us": 1154.9997773314942
+          },
+          "Ascend970DT": {
+            "us": 114.8049526548534
+          }
+        }
+      },
+      {
+        "model": "DeepSeek-V4.1-Flash",
+        "node": "indexer.wk",
+        "seq": 262144,
+        "requests": 8,
+        "shape": [
+          2097152,
+          128,
+          512
+        ],
+        "wall_s": 86400,
+        "raw_mib": 65536,
+        "predictions": {
+          "Ascend950DT_9582": {
+            "us": 868.5730192198481
+          },
+          "Ascend950PR_957b": {
+            "us": 2304.6884630457803
+          },
+          "Ascend970DT": {
+            "us": 226.79869487707563
+          }
+        }
+      }
+    ],
+    "progress": {
+      "utc": "2026-11-20T02:19:06.128760+00:00",
+      "phase": "waiting for decode slot",
+      "pid": 3682400
+    }
+  },
+  "wide_prefill": {
+    "registered": [
+      {
+        "model": "DeepSeek-V4-Pro",
+        "node": "indexer.weights_proj",
+        "shape": [
+          262144,
+          64,
+          7168
+        ],
+        "predictions": {
+          "Ascend950DT_9582": {
+            "us": 1514.2835121930989,
+            "active_aic": 32,
+            "active_aiv": 0
+          },
+          "Ascend950PR_957b": {
+            "us": 2688.9099698057435,
+            "active_aic": 28,
+            "active_aiv": 0
+          },
+          "Ascend970DT": {
+            "us": 382.5587586656286,
+            "active_aic": 120,
+            "active_aiv": 0
+          }
+        },
+        "wall_s": 86400,
+        "raw_mib": 98304
+      },
+      {
+        "model": "Kimi-K3",
+        "node": "mla.kv_b_proj",
+        "shape": [
+          262144,
+          3072,
+          512
+        ],
+        "predictions": {
+          "Ascend950DT_9582": {
+            "us": 2098.1953925125276,
+            "active_aic": 32,
+            "active_aiv": 0
+          },
+          "Ascend950PR_957b": {
+            "us": 5754.50350304578,
+            "active_aic": 28,
+            "active_aiv": 0
+          },
+          "Ascend970DT": {
+            "us": 522.7377522044047,
+            "active_aic": 120,
+            "active_aiv": 0
+          }
+        },
+        "wall_s": 86400,
+        "raw_mib": 98304
+      }
+    ],
+    "progress": {
+      "utc": "2026-11-20T02:37:07.214399+00:00",
+      "pid": 3843629,
+      "phase": "acquiring",
+      "case": "DeepSeek-V4-Pro-dt",
+      "host": {
+        "eligible": true,
+        "sampled_cpus": 256,
+        "idle_physical": 92,
+        "chosen_cpus": [
+          177,
+          213,
+          157,
+          238,
+          172,
+          211,
+          240,
+          151,
+          175,
+          105,
+          223,
+          242,
+          186,
+          173,
+          222,
+          148,
+          133,
+          159,
+          129,
+          165,
+          130,
+          139,
+          182,
+          143,
+          138,
+          137,
+          168,
+          180,
+          154,
+          178,
+          5,
+          57,
+          128,
+          179,
+          135,
+          183,
+          220,
+          62,
+          131,
+          201,
+          221,
+          197,
+          166,
+          155,
+          160,
+          116,
+          208,
+          188,
+          212,
+          184,
+          7,
+          193,
+          164,
+          199,
+          215,
+          22,
+          112,
+          27,
+          185,
+          214,
+          29,
+          219,
+          153,
+          162,
+          48,
+          125,
+          127,
+          136,
+          202,
+          191,
+          174,
+          65,
+          83,
+          204,
+          1,
+          58,
+          82,
+          169,
+          132,
+          86
+        ],
+        "available_ram_gib": 1756.8439865112305,
+        "free_disk_gib": 1640.0739479064941,
+        "load_1m": 153.64
+      }
+    }
+  },
+  "rmsnorm": {
+    "summary": {
+      "Ascend950DT_9582": {
+        "all": {
+          "us": {
+            "n": 20,
+            "shapes": 10,
+            "wape": 23.42626272196585,
+            "max": 45.541235050773025
+          },
+          "prior27_us": {
+            "n": 20,
+            "shapes": 10,
+            "wape": 23.684292159304967,
+            "max": 45.67854194266819
+          },
+          "old_us": {
+            "n": 20,
+            "shapes": 10,
+            "wape": 26.52296269039236,
+            "max": 57.894406508001865
+          },
+          "specific_context_us": {
+            "n": 20,
+            "shapes": 10,
+            "wape": 4.769804616833192,
+            "max": 11.222954769076026
+          },
+          "known_us": {
+            "n": 20,
+            "shapes": 10,
+            "wape": 5.8694951087440685,
+            "max": 20.159708275576723
+          },
+          "sector arbitration": {
+            "n": 20,
+            "shapes": 10,
+            "wape": 35.97347573077835,
+            "max": 59.014907352497005
+          },
+          "VF issue overlap": {
+            "n": 20,
+            "shapes": 10,
+            "wape": 23.42626272196585,
+            "max": 45.396475386004376
+          },
+          "partition wake": {
+            "n": 20,
+            "shapes": 10,
+            "wape": 23.42626272196585,
+            "max": 49.69803736046733
+          },
+          "RMS-specific warm": {
+            "n": 20,
+            "shapes": 10,
+            "wape": 24.065242192953978,
+            "max": 50.24229663557017
+          },
+          "shared first payload": {
+            "n": 20,
+            "shapes": 10,
+            "wape": 23.42626272196585,
+            "max": 45.541235050773025
+          }
+        },
+        "entry": {
+          "us": {
+            "n": 10,
+            "shapes": 10,
+            "wape": 23.228285929031422,
+            "max": 45.541235050773025
+          },
+          "prior27_us": {
+            "n": 10,
+            "shapes": 10,
+            "wape": 25.710429960966614,
+            "max": 45.67854194266819
+          },
+          "old_us": {
+            "n": 10,
+            "shapes": 10,
+            "wape": 21.51392046370705,
+            "max": 44.279694912431886
+          },
+          "specific_context_us": {
+            "n": 10,
+            "shapes": 10,
+            "wape": 5.020608137988292,
+            "max": 11.222954769076026
+          },
+          "known_us": {
+            "n": 10,
+            "shapes": 10,
+            "wape": 6.598922128902934,
+            "max": 20.159708275576723
+          },
+          "sector arbitration": {
+            "n": 10,
+            "shapes": 10,
+            "wape": 38.677704839671044,
+            "max": 59.014907352497005
+          },
+          "VF issue overlap": {
+            "n": 10,
+            "shapes": 10,
+            "wape": 22.47210337610612,
+            "max": 45.396475386004376
+          },
+          "partition wake": {
+            "n": 10,
+            "shapes": 10,
+            "wape": 26.879633152822883,
+            "max": 49.69803736046733
+          },
+          "RMS-specific warm": {
+            "n": 10,
+            "shapes": 10,
+            "wape": 21.795503445290716,
+            "max": 43.97551057949921
+          },
+          "shared first payload": {
+            "n": 10,
+            "shapes": 10,
+            "wape": 23.228285929031426,
+            "max": 45.541235050773025
+          }
+        },
+        "entry / sparse": {
+          "us": {
+            "n": 4,
+            "shapes": 4,
+            "wape": 37.81163058987375,
+            "max": 45.541235050773025
+          },
+          "prior27_us": {
+            "n": 4,
+            "shapes": 4,
+            "wape": 38.55688375415251,
+            "max": 45.67854194266819
+          },
+          "old_us": {
+            "n": 4,
+            "shapes": 4,
+            "wape": 33.67529418164206,
+            "max": 44.279694912431886
+          },
+          "specific_context_us": {
+            "n": 4,
+            "shapes": 4,
+            "wape": 3.815881927971653,
+            "max": 5.231595694382798
+          },
+          "known_us": {
+            "n": 4,
+            "shapes": 4,
+            "wape": 3.465204330596847,
+            "max": 5.0325067453342855
+          },
+          "sector arbitration": {
+            "n": 4,
+            "shapes": 4,
+            "wape": 39.269693407484134,
+            "max": 50.40178872338193
+          },
+          "VF issue overlap": {
+            "n": 4,
+            "shapes": 4,
+            "wape": 36.425379640430975,
+            "max": 45.396475386004376
+          },
+          "partition wake": {
+            "n": 4,
+            "shapes": 4,
+            "wape": 41.70977032879849,
+            "max": 49.69803736046733
+          },
+          "RMS-specific warm": {
+            "n": 4,
+            "shapes": 4,
+            "wape": 33.40010029174313,
+            "max": 43.97551057949921
+          },
+          "shared first payload": {
+            "n": 4,
+            "shapes": 4,
+            "wape": 37.81163058987375,
+            "max": 45.541235050773025
+          }
+        },
+        "entry / one UB; A>4": {
+          "us": {
+            "n": 5,
+            "shapes": 5,
+            "wape": 13.794790496739227,
+            "max": 27.203944588454604
+          },
+          "prior27_us": {
+            "n": 5,
+            "shapes": 5,
+            "wape": 15.469482259147176,
+            "max": 29.694293521136185
+          },
+          "old_us": {
+            "n": 5,
+            "shapes": 5,
+            "wape": 14.337989349311513,
+            "max": 27.09867455028143
+          },
+          "specific_context_us": {
+            "n": 5,
+            "shapes": 5,
+            "wape": 4.47910101356425,
+            "max": 11.222954769076026
+          },
+          "known_us": {
+            "n": 5,
+            "shapes": 5,
+            "wape": 4.146323000445257,
+            "max": 9.621331033077638
+          },
+          "sector arbitration": {
+            "n": 5,
+            "shapes": 5,
+            "wape": 43.49418147171077,
+            "max": 59.014907352497005
+          },
+          "VF issue overlap": {
+            "n": 5,
+            "shapes": 5,
+            "wape": 13.749378902976616,
+            "max": 26.944230783982253
+          },
+          "partition wake": {
+            "n": 5,
+            "shapes": 5,
+            "wape": 16.474715515294243,
+            "max": 33.726844002372964
+          },
+          "RMS-specific warm": {
+            "n": 5,
+            "shapes": 5,
+            "wape": 13.483968145477638,
+            "max": 25.67274252828592
+          },
+          "shared first payload": {
+            "n": 5,
+            "shapes": 5,
+            "wape": 13.794790496739227,
+            "max": 27.203944588454604
+          }
+        },
+        "entry / multi UB": {
+          "us": {
+            "n": 1,
+            "shapes": 1,
+            "wape": 22.98833001944699,
+            "max": 22.98833001944699
+          },
+          "prior27_us": {
+            "n": 1,
+            "shapes": 1,
+            "wape": 31.322252815281125,
+            "max": 31.322252815281125
+          },
+          "old_us": {
+            "n": 1,
+            "shapes": 1,
+            "wape": 19.23039313105884,
+            "max": 19.23039313105884
+          },
+          "specific_context_us": {
+            "n": 1,
+            "shapes": 1,
+            "wape": 9.023523129448218,
+            "max": 9.023523129448218
+          },
+          "known_us": {
+            "n": 1,
+            "shapes": 1,
+            "wape": 20.15970827557672,
+            "max": 20.159708275576723
+          },
+          "sector arbitration": {
+            "n": 1,
+            "shapes": 1,
+            "wape": 22.98833001944699,
+            "max": 22.98833001944699
+          },
+          "VF issue overlap": {
+            "n": 1,
+            "shapes": 1,
+            "wape": 21.328168431991745,
+            "max": 21.328168431991745
+          },
+          "partition wake": {
+            "n": 1,
+            "shapes": 1,
+            "wape": 29.08366399222367,
+            "max": 29.08366399222367
+          },
+          "RMS-specific warm": {
+            "n": 1,
+            "shapes": 1,
+            "wape": 24.03184699482458,
+            "max": 24.03184699482458
+          },
+          "shared first payload": {
+            "n": 1,
+            "shapes": 1,
+            "wape": 22.988330019447,
+            "max": 22.988330019447005
+          }
+        },
+        "repeat": {
+          "us": {
+            "n": 10,
+            "shapes": 10,
+            "wape": 23.73853154732207,
+            "max": 40.35064556886387
+          },
+          "prior27_us": {
+            "n": 10,
+            "shapes": 10,
+            "wape": 20.488464699142572,
+            "max": 37.02103183726096
+          },
+          "old_us": {
+            "n": 10,
+            "shapes": 10,
+            "wape": 34.423725750054764,
+            "max": 57.894406508001865
+          },
+          "specific_context_us": {
+            "n": 10,
+            "shapes": 10,
+            "wape": 4.374212185086668,
+            "max": 7.730010746687571
+          },
+          "known_us": {
+            "n": 10,
+            "shapes": 10,
+            "wape": 4.7189697598283304,
+            "max": 11.187761628796022
+          },
+          "sector arbitration": {
+            "n": 10,
+            "shapes": 10,
+            "wape": 31.70809474944421,
+            "max": 44.606699625005874
+          },
+          "VF issue overlap": {
+            "n": 10,
+            "shapes": 10,
+            "wape": 24.93125840210583,
+            "max": 42.18618790088017
+          },
+          "partition wake": {
+            "n": 10,
+            "shapes": 10,
+            "wape": 17.979261020504694,
+            "max": 36.456742567150066
+          },
+          "RMS-specific warm": {
+            "n": 10,
+            "shapes": 10,
+            "wape": 27.645301461986936,
+            "max": 50.24229663557017
+          },
+          "shared first payload": {
+            "n": 10,
+            "shapes": 10,
+            "wape": 23.738531547322065,
+            "max": 40.35064556886387
+          }
+        },
+        "repeat / sparse": {
+          "us": {
+            "n": 4,
+            "shapes": 4,
+            "wape": 35.88680154338002,
+            "max": 38.17838252055296
+          },
+          "prior27_us": {
+            "n": 4,
+            "shapes": 4,
+            "wape": 34.25836089130154,
+            "max": 37.02103183726096
+          },
+          "old_us": {
+            "n": 4,
+            "shapes": 4,
+            "wape": 44.92504341969,
+            "max": 56.81211676243534
+          },
+          "specific_context_us": {
+            "n": 4,
+            "shapes": 4,
+            "wape": 5.077318881592533,
+            "max": 7.730010746687571
+          },
+          "known_us": {
+            "n": 4,
+            "shapes": 4,
+            "wape": 5.734783858016096,
+            "max": 11.187761628796022
+          },
+          "sector arbitration": {
+            "n": 4,
+            "shapes": 4,
+            "wape": 32.70081203097224,
+            "max": 38.17838252055296
+          },
+          "VF issue overlap": {
+            "n": 4,
+            "shapes": 4,
+            "wape": 38.91587610254638,
+            "max": 42.18618790088017
+          },
+          "partition wake": {
+            "n": 4,
+            "shapes": 4,
+            "wape": 27.369039361865468,
+            "max": 36.456742567150066
+          },
+          "RMS-specific warm": {
+            "n": 4,
+            "shapes": 4,
+            "wape": 45.5263651436289,
+            "max": 50.24229663557017
+          },
+          "shared first payload": {
+            "n": 4,
+            "shapes": 4,
+            "wape": 35.88680154338002,
+            "max": 38.17838252055296
+          }
+        },
+        "repeat / one UB; A>4": {
+          "us": {
+            "n": 5,
+            "shapes": 5,
+            "wape": 18.969022258637736,
+            "max": 40.35064556886387
+          },
+          "prior27_us": {
+            "n": 5,
+            "shapes": 5,
+            "wape": 17.855215799318547,
+            "max": 31.632653999115632
+          },
+          "old_us": {
+            "n": 5,
+            "shapes": 5,
+            "wape": 31.586188922831095,
+            "max": 57.894406508001865
+          },
+          "specific_context_us": {
+            "n": 5,
+            "shapes": 5,
+            "wape": 4.064439360093312,
+            "max": 7.333127267212666
+          },
+          "known_us": {
+            "n": 5,
+            "shapes": 5,
+            "wape": 3.834355274646793,
+            "max": 9.290100561316205
+          },
+          "sector arbitration": {
+            "n": 5,
+            "shapes": 5,
+            "wape": 33.5524663519114,
+            "max": 44.606699625005874
+          },
+          "VF issue overlap": {
+            "n": 5,
+            "shapes": 5,
+            "wape": 19.029363299407937,
+            "max": 40.35064556886387
+          },
+          "partition wake": {
+            "n": 5,
+            "shapes": 5,
+            "wape": 15.40804913686055,
+            "max": 29.67516257670057
+          },
+          "RMS-specific warm": {
+            "n": 5,
+            "shapes": 5,
+            "wape": 22.134415935227228,
+            "max": 44.165779349204925
+          },
+          "shared first payload": {
+            "n": 5,
+            "shapes": 5,
+            "wape": 18.969022258637736,
+            "max": 40.35064556886387
+          }
+        },
+        "repeat / multi UB": {
+          "us": {
+            "n": 1,
+            "shapes": 1,
+            "wape": 23.558371584046352,
+            "max": 23.558371584046352
+          },
+          "prior27_us": {
+            "n": 1,
+            "shapes": 1,
+            "wape": 10.187334054014151,
+            "max": 10.187334054014151
+          },
+          "old_us": {
+            "n": 1,
+            "shapes": 1,
+            "wape": 29.58764692065585,
+            "max": 29.587646920655846
+          },
+          "specific_context_us": {
+            "n": 1,
+            "shapes": 1,
+            "wape": 4.486595223848616,
+            "max": 4.486595223848617
+          },
+          "known_us": {
+            "n": 1,
+            "shapes": 1,
+            "wape": 6.472817948671738,
+            "max": 6.4728179486717385
+          },
+          "sector arbitration": {
+            "n": 1,
+            "shapes": 1,
+            "wape": 23.558371584046352,
+            "max": 23.558371584046352
+          },
+          "VF issue overlap": {
+            "n": 1,
+            "shapes": 1,
+            "wape": 26.2219531212881,
+            "max": 26.2219531212881
+          },
+          "partition wake": {
+            "n": 1,
+            "shapes": 1,
+            "wape": 13.778950619309674,
+            "max": 13.778950619309672
+          },
+          "RMS-specific warm": {
+            "n": 1,
+            "shapes": 1,
+            "wape": 21.8841414546319,
+            "max": 21.8841414546319
+          },
+          "shared first payload": {
+            "n": 1,
+            "shapes": 1,
+            "wape": 23.558371584046334,
+            "max": 23.558371584046334
+          }
+        }
+      },
+      "Ascend950PR_957b": {
+        "all": {
+          "us": {
+            "n": 20,
+            "shapes": 10,
+            "wape": 23.29372856595339,
+            "max": 45.71391654566474
+          },
+          "prior27_us": {
+            "n": 20,
+            "shapes": 10,
+            "wape": 23.464051380653324,
+            "max": 46.95594947573512
+          },
+          "old_us": {
+            "n": 20,
+            "shapes": 10,
+            "wape": 26.0380569813022,
+            "max": 52.38893709712179
+          },
+          "specific_context_us": {
+            "n": 20,
+            "shapes": 10,
+            "wape": 3.4718694287683256,
+            "max": 9.950572907324124
+          },
+          "known_us": {
+            "n": 20,
+            "shapes": 10,
+            "wape": 5.94022719003977,
+            "max": 24.367595842179472
+          },
+          "sector arbitration": {
+            "n": 20,
+            "shapes": 10,
+            "wape": 36.08693259809872,
+            "max": 58.742294102708634
+          },
+          "VF issue overlap": {
+            "n": 20,
+            "shapes": 10,
+            "wape": 23.29372856595339,
+            "max": 45.3710814761133
+          },
+          "partition wake": {
+            "n": 20,
+            "shapes": 10,
+            "wape": 23.29372856595339,
+            "max": 50.73416985992364
+          },
+          "RMS-specific warm": {
+            "n": 20,
+            "shapes": 10,
+            "wape": 23.695285263869614,
+            "max": 50.94874852814991
+          },
+          "shared first payload": {
+            "n": 20,
+            "shapes": 10,
+            "wape": 23.29372856595339,
+            "max": 45.71391654566474
+          }
+        },
+        "entry": {
+          "us": {
+            "n": 10,
+            "shapes": 10,
+            "wape": 23.74936505885366,
+            "max": 45.71391654566474
+          },
+          "prior27_us": {
+            "n": 10,
+            "shapes": 10,
+            "wape": 26.449741346413234,
+            "max": 46.95594947573512
+          },
+          "old_us": {
+            "n": 10,
+            "shapes": 10,
+            "wape": 22.306398200902446,
+            "max": 45.46607238913083
+          },
+          "specific_context_us": {
+            "n": 10,
+            "shapes": 10,
+            "wape": 3.1796062305624586,
+            "max": 7.24577936218619
+          },
+          "known_us": {
+            "n": 10,
+            "shapes": 10,
+            "wape": 7.771873705517555,
+            "max": 24.367595842179472
+          },
+          "sector arbitration": {
+            "n": 10,
+            "shapes": 10,
+            "wape": 38.962082375936504,
+            "max": 58.742294102708634
+          },
+          "VF issue overlap": {
+            "n": 10,
+            "shapes": 10,
+            "wape": 23.002233216942063,
+            "max": 45.3710814761133
+          },
+          "partition wake": {
+            "n": 10,
+            "shapes": 10,
+            "wape": 27.699689247608905,
+            "max": 50.73416985992364
+          },
+          "RMS-specific warm": {
+            "n": 10,
+            "shapes": 10,
+            "wape": 21.89984095716491,
+            "max": 43.965626493221755
+          },
+          "shared first payload": {
+            "n": 10,
+            "shapes": 10,
+            "wape": 23.74936505885366,
+            "max": 45.71391654566474
+          }
+        },
+        "entry / sparse": {
+          "us": {
+            "n": 4,
+            "shapes": 4,
+            "wape": 38.0374208768642,
+            "max": 45.71391654566474
+          },
+          "prior27_us": {
+            "n": 4,
+            "shapes": 4,
+            "wape": 38.91929697519649,
+            "max": 46.95594947573512
+          },
+          "old_us": {
+            "n": 4,
+            "shapes": 4,
+            "wape": 35.25643585110816,
+            "max": 45.46607238913083
+          },
+          "specific_context_us": {
+            "n": 4,
+            "shapes": 4,
+            "wape": 3.0688772395639377,
+            "max": 4.892130394417517
+          },
+          "known_us": {
+            "n": 4,
+            "shapes": 4,
+            "wape": 5.051011756817367,
+            "max": 7.243489756993831
+          },
+          "sector arbitration": {
+            "n": 4,
+            "shapes": 4,
+            "wape": 39.465549940905966,
+            "max": 50.35844327728102
+          },
+          "VF issue overlap": {
+            "n": 4,
+            "shapes": 4,
+            "wape": 36.63799906316177,
+            "max": 45.3710814761133
+          },
+          "partition wake": {
+            "n": 4,
+            "shapes": 4,
+            "wape": 42.46238182250556,
+            "max": 50.73416985992364
+          },
+          "RMS-specific warm": {
+            "n": 4,
+            "shapes": 4,
+            "wape": 33.67901280732152,
+            "max": 43.965626493221755
+          },
+          "shared first payload": {
+            "n": 4,
+            "shapes": 4,
+            "wape": 38.0374208768642,
+            "max": 45.71391654566474
+          }
+        },
+        "entry / one UB; A>4": {
+          "us": {
+            "n": 5,
+            "shapes": 5,
+            "wape": 13.012270495084325,
+            "max": 23.991098748688838
+          },
+          "prior27_us": {
+            "n": 5,
+            "shapes": 5,
+            "wape": 14.919965938472927,
+            "max": 26.598519400590792
+          },
+          "old_us": {
+            "n": 5,
+            "shapes": 5,
+            "wape": 12.853568043941385,
+            "max": 25.337988624432857
+          },
+          "specific_context_us": {
+            "n": 5,
+            "shapes": 5,
+            "wape": 4.102616030867164,
+            "max": 7.24577936218619
+          },
+          "known_us": {
+            "n": 5,
+            "shapes": 5,
+            "wape": 3.372557377808482,
+            "max": 6.25646757447271
+          },
+          "sector arbitration": {
+            "n": 5,
+            "shapes": 5,
+            "wape": 42.97538806101305,
+            "max": 58.742294102708634
+          },
+          "VF issue overlap": {
+            "n": 5,
+            "shapes": 5,
+            "wape": 12.966540297732214,
+            "max": 23.720381152488457
+          },
+          "partition wake": {
+            "n": 5,
+            "shapes": 5,
+            "wape": 16.142289527037054,
+            "max": 31.643115690882627
+          },
+          "RMS-specific warm": {
+            "n": 5,
+            "shapes": 5,
+            "wape": 11.984376788697828,
+            "max": 22.366297410407217
+          },
+          "shared first payload": {
+            "n": 5,
+            "shapes": 5,
+            "wape": 13.012270495084325,
+            "max": 23.991098748688838
+          }
+        },
+        "entry / multi UB": {
+          "us": {
+            "n": 1,
+            "shapes": 1,
+            "wape": 27.314801449075134,
+            "max": 27.314801449075134
+          },
+          "prior27_us": {
+            "n": 1,
+            "shapes": 1,
+            "wape": 35.34976281193239,
+            "max": 35.34976281193239
+          },
+          "old_us": {
+            "n": 1,
+            "shapes": 1,
+            "wape": 24.79060812538179,
+            "max": 24.79060812538179
+          },
+          "specific_context_us": {
+            "n": 1,
+            "shapes": 1,
+            "wape": 0.9006803798277995,
+            "max": 0.9006803798277995
+          },
+          "known_us": {
+            "n": 1,
+            "shapes": 1,
+            "wape": 24.367595842179472,
+            "max": 24.367595842179472
+          },
+          "sector arbitration": {
+            "n": 1,
+            "shapes": 1,
+            "wape": 27.314801449075134,
+            "max": 27.314801449075134
+          },
+          "VF issue overlap": {
+            "n": 1,
+            "shapes": 1,
+            "wape": 25.838660957512477,
+            "max": 25.838660957512477
+          },
+          "partition wake": {
+            "n": 1,
+            "shapes": 1,
+            "wape": 32.6264382660422,
+            "max": 32.6264382660422
+          },
+          "RMS-specific warm": {
+            "n": 1,
+            "shapes": 1,
+            "wape": 27.690804871431837,
+            "max": 27.690804871431833
+          },
+          "shared first payload": {
+            "n": 1,
+            "shapes": 1,
+            "wape": 27.314801449075134,
+            "max": 27.314801449075134
+          }
+        },
+        "repeat": {
+          "us": {
+            "n": 10,
+            "shapes": 10,
+            "wape": 22.5745181051189,
+            "max": 38.96711044941157
+          },
+          "prior27_us": {
+            "n": 10,
+            "shapes": 10,
+            "wape": 18.751216720473618,
+            "max": 35.78762656713653
+          },
+          "old_us": {
+            "n": 10,
+            "shapes": 10,
+            "wape": 31.928384189390528,
+            "max": 52.38893709712179
+          },
+          "specific_context_us": {
+            "n": 10,
+            "shapes": 10,
+            "wape": 3.9331993545796338,
+            "max": 9.950572907324124
+          },
+          "known_us": {
+            "n": 10,
+            "shapes": 10,
+            "wape": 3.0490203727425067,
+            "max": 10.7956004061042
+          },
+          "sector arbitration": {
+            "n": 10,
+            "shapes": 10,
+            "wape": 31.548582775580176,
+            "max": 45.14435337551955
+          },
+          "VF issue overlap": {
+            "n": 10,
+            "shapes": 10,
+            "wape": 23.75384646160105,
+            "max": 42.98679449192693
+          },
+          "partition wake": {
+            "n": 10,
+            "shapes": 10,
+            "wape": 16.33903318564783,
+            "max": 34.40483672589504
+          },
+          "RMS-specific warm": {
+            "n": 10,
+            "shapes": 10,
+            "wape": 26.529347827665198,
+            "max": 50.94874852814991
+          },
+          "shared first payload": {
+            "n": 10,
+            "shapes": 10,
+            "wape": 22.5745181051189,
+            "max": 38.96711044941157
+          }
+        },
+        "repeat / sparse": {
+          "us": {
+            "n": 4,
+            "shapes": 4,
+            "wape": 34.530583934480696,
+            "max": 38.96711044941157
+          },
+          "prior27_us": {
+            "n": 4,
+            "shapes": 4,
+            "wape": 32.615891096554485,
+            "max": 35.78762656713653
+          },
+          "old_us": {
+            "n": 4,
+            "shapes": 4,
+            "wape": 40.56854337262026,
+            "max": 52.38893709712179
+          },
+          "specific_context_us": {
+            "n": 4,
+            "shapes": 4,
+            "wape": 5.764210415185344,
+            "max": 9.950572907324124
+          },
+          "known_us": {
+            "n": 4,
+            "shapes": 4,
+            "wape": 5.249761993139779,
+            "max": 10.7956004061042
+          },
+          "sector arbitration": {
+            "n": 4,
+            "shapes": 4,
+            "wape": 31.429889295260843,
+            "max": 38.96711044941157
+          },
+          "VF issue overlap": {
+            "n": 4,
+            "shapes": 4,
+            "wape": 37.56895058145169,
+            "max": 42.98679449192693
+          },
+          "partition wake": {
+            "n": 4,
+            "shapes": 4,
+            "wape": 24.92329210885473,
+            "max": 34.40483672589504
+          },
+          "RMS-specific warm": {
+            "n": 4,
+            "shapes": 4,
+            "wape": 43.99337891361029,
+            "max": 50.94874852814991
+          },
+          "shared first payload": {
+            "n": 4,
+            "shapes": 4,
+            "wape": 34.530583934480696,
+            "max": 38.96711044941157
+          }
+        },
+        "repeat / one UB; A>4": {
+          "us": {
+            "n": 5,
+            "shapes": 5,
+            "wape": 16.665750987805637,
+            "max": 33.38824672885028
+          },
+          "prior27_us": {
+            "n": 5,
+            "shapes": 5,
+            "wape": 14.922349176488336,
+            "max": 25.088606142157342
+          },
+          "old_us": {
+            "n": 5,
+            "shapes": 5,
+            "wape": 28.697990646097644,
+            "max": 49.84085883384257
+          },
+          "specific_context_us": {
+            "n": 5,
+            "shapes": 5,
+            "wape": 4.073109525282883,
+            "max": 7.922127883591171
+          },
+          "known_us": {
+            "n": 5,
+            "shapes": 5,
+            "wape": 2.5761781643626183,
+            "max": 5.080842883923191
+          },
+          "sector arbitration": {
+            "n": 5,
+            "shapes": 5,
+            "wape": 32.884802498983326,
+            "max": 45.14435337551955
+          },
+          "VF issue overlap": {
+            "n": 5,
+            "shapes": 5,
+            "wape": 16.725137211699906,
+            "max": 33.38824672885028
+          },
+          "partition wake": {
+            "n": 5,
+            "shapes": 5,
+            "wape": 12.601040538523401,
+            "max": 22.28440408715112
+          },
+          "RMS-specific warm": {
+            "n": 5,
+            "shapes": 5,
+            "wape": 19.731025854569694,
+            "max": 36.9200111634257
+          },
+          "shared first payload": {
+            "n": 5,
+            "shapes": 5,
+            "wape": 16.665750987805637,
+            "max": 33.38824672885028
+          }
+        },
+        "repeat / multi UB": {
+          "us": {
+            "n": 1,
+            "shapes": 1,
+            "wape": 26.901207306122917,
+            "max": 26.90120730612292
+          },
+          "prior27_us": {
+            "n": 1,
+            "shapes": 1,
+            "wape": 12.872955090642623,
+            "max": 12.872955090642623
+          },
+          "old_us": {
+            "n": 1,
+            "shapes": 1,
+            "wape": 31.30820056798097,
+            "max": 31.308200567980972
+          },
+          "specific_context_us": {
+            "n": 1,
+            "shapes": 1,
+            "wape": 0.8302451128495867,
+            "max": 0.8302451128495867
+          },
+          "known_us": {
+            "n": 1,
+            "shapes": 1,
+            "wape": 1.6297215214365361,
+            "max": 1.6297215214365361
+          },
+          "sector arbitration": {
+            "n": 1,
+            "shapes": 1,
+            "wape": 26.901207306122917,
+            "max": 26.90120730612292
+          },
+          "VF issue overlap": {
+            "n": 1,
+            "shapes": 1,
+            "wape": 29.4784034102446,
+            "max": 29.478403410244603
+          },
+          "partition wake": {
+            "n": 1,
+            "shapes": 1,
+            "wape": 17.62761187977878,
+            "max": 17.627611879778783
+          },
+          "RMS-specific warm": {
+            "n": 1,
+            "shapes": 1,
+            "wape": 26.2447423146313,
+            "max": 26.244742314631296
+          },
+          "shared first payload": {
+            "n": 1,
+            "shapes": 1,
+            "wape": 26.901207306122917,
+            "max": 26.90120730612292
+          }
+        }
+      }
+    },
+    "paired_windows": 40,
+    "terminal": true,
+    "passes": true,
+    "pending": []
+  },
+  "cast": {
+    "freeze_sha256": "e88d5bc3c1df4c429350a01ede0624d8c48804da54ac334dabe1bb0b33b0fc70",
+    "historical": [
+      {
+        "op": "cast_bf16_fp32",
+        "chip": "Ascend950DT_9582",
+        "group": "≤L2",
+        "n": 26,
+        "uniform": {
+          "wape": 4.059891956326433,
+          "max_absolute_pct": 17.102960629334937
+        },
+        "pressure": {
+          "wape": 4.059891956326433,
+          "max_absolute_pct": 17.102960629334937
+        },
+        "clean_first": {
+          "wape": 4.059891956326433,
+          "max_absolute_pct": 17.102960629334937
+        }
+      },
+      {
+        "op": "cast_bf16_fp32",
+        "chip": "Ascend950DT_9582",
+        "group": "L2–2L2",
+        "n": 3,
+        "uniform": {
+          "wape": 4.283873379415862,
+          "max_absolute_pct": 5.481549643516834
+        },
+        "pressure": {
+          "wape": 4.283873379415862,
+          "max_absolute_pct": 5.481549643516834
+        },
+        "clean_first": {
+          "wape": 21.26142517665347,
+          "max_absolute_pct": 31.025484769096245
+        }
+      },
+      {
+        "op": "cast_bf16_fp32",
+        "chip": "Ascend950DT_9582",
+        "group": ">2L2",
+        "n": 3,
+        "uniform": {
+          "wape": 5.76359950631044,
+          "max_absolute_pct": 6.40604197337388
+        },
+        "pressure": {
+          "wape": 5.76359950631044,
+          "max_absolute_pct": 6.40604197337388
+        },
+        "clean_first": {
+          "wape": 20.662091984479783,
+          "max_absolute_pct": 25.21848147471904
+        }
+      },
+      {
+        "op": "cast_bf16_fp32",
+        "chip": "Ascend950DT_9582",
+        "group": "all",
+        "n": 32,
+        "uniform": {
+          "wape": 5.001055968096235,
+          "max_absolute_pct": 17.102960629334937
+        },
+        "pressure": {
+          "wape": 5.001055968096235,
+          "max_absolute_pct": 17.102960629334937
+        },
+        "clean_first": {
+          "wape": 16.562659793481856,
+          "max_absolute_pct": 31.025484769096245
+        }
+      },
+      {
+        "op": "cast_bf16_fp32",
+        "chip": "Ascend950PR_957b",
+        "group": "≤L2",
+        "n": 25,
+        "uniform": {
+          "wape": 6.772413497473973,
+          "max_absolute_pct": 19.83362963940973
+        },
+        "pressure": {
+          "wape": 6.772413497473973,
+          "max_absolute_pct": 19.83362963940973
+        },
+        "clean_first": {
+          "wape": 6.772413497473973,
+          "max_absolute_pct": 19.83362963940973
+        }
+      },
+      {
+        "op": "cast_bf16_fp32",
+        "chip": "Ascend950PR_957b",
+        "group": "L2–2L2",
+        "n": 2,
+        "uniform": {
+          "wape": 27.59870722072314,
+          "max_absolute_pct": 29.948242421135475
+        },
+        "pressure": {
+          "wape": 5.512119292294871,
+          "max_absolute_pct": 6.211736814953705
+        },
+        "clean_first": {
+          "wape": 17.025215328550264,
+          "max_absolute_pct": 21.252894512406453
+        }
+      },
+      {
+        "op": "cast_bf16_fp32",
+        "chip": "Ascend950PR_957b",
+        "group": ">2L2",
+        "n": 4,
+        "uniform": {
+          "wape": 5.466225548150629,
+          "max_absolute_pct": 9.433030034873477
+        },
+        "pressure": {
+          "wape": 2.305670057722918,
+          "max_absolute_pct": 2.6934704347779563
+        },
+        "clean_first": {
+          "wape": 10.236175778002027,
+          "max_absolute_pct": 15.067450505850841
+        }
+      },
+      {
+        "op": "cast_bf16_fp32",
+        "chip": "Ascend950PR_957b",
+        "group": "all",
+        "n": 31,
+        "uniform": {
+          "wape": 8.437915579938423,
+          "max_absolute_pct": 29.948242421135475
+        },
+        "pressure": {
+          "wape": 3.4608767683238395,
+          "max_absolute_pct": 19.83362963940973
+        },
+        "clean_first": {
+          "wape": 10.4930287094266,
+          "max_absolute_pct": 21.252894512406453
+        }
+      }
+    ],
+    "heldout": {
+      "Ascend950PR_957b": {
+        "qualified": true,
+        "ca_us": 55.22000122349709,
+        "error_pct": {
+          "uniform": 24.448643272431745,
+          "pressure": -0.614360475822251,
+          "clean_first": -23.476131023154522
+        },
+        "wall_s": 658.2944176301826,
+        "reason": null,
+        "receipt": "results/v0.27/memory/cast-pair/cast_bf16_fp32-pr-result.json"
+      },
+      "Ascend950DT_9582": {
+        "qualified": true,
+        "ca_us": 29.062424185685813,
+        "error_pct": {
+          "uniform": -5.612532457643393,
+          "pressure": -5.612532457643393,
+          "clean_first": -9.560115761894483
+        },
+        "wall_s": 685.1136955101974,
+        "reason": null,
+        "receipt": "results/v0.27/memory/cast-pair/cast_bf16_fp32-dt-result.json"
+      }
+    },
+    "large": {
+      "Ascend950DT_9582": {
+        "uniform": {
+          "us": 227.01819528619527,
+          "full_pct": -8.38226575600981,
+          "prefix_matches_measured_tile_count": true,
+          "block_write_retire_mae_us": 18.757412107326058
+        },
+        "pressure": {
+          "us": 227.01819528619527,
+          "full_pct": -8.38226575600981,
+          "prefix_matches_measured_tile_count": true,
+          "block_write_retire_mae_us": 18.757412107326058
+        }
+      },
+      "Ascend950PR_957b": {
+        "uniform": {
+          "us": 520.3572051948053,
+          "full_pct": -1.6870790835704863,
+          "prefix_matches_measured_tile_count": true,
+          "block_write_retire_mae_us": 55.21718033053533
+        },
+        "pressure": {
+          "us": 506.5174142183742,
+          "full_pct": -4.301879574814582,
+          "prefix_matches_measured_tile_count": true,
+          "block_write_retire_mae_us": 66.83114887039591
+        }
+      }
+    },
+    "paired_dt_over_pr": {
+      "uniform": 0.39917156154706973,
+      "pressure": 0.4998343775348545,
+      "clean_first": 0.6220116282440067,
+      "ca": 0.5263024907960204
+    },
+    "fully_qualified": true,
+    "promotion_passed": true
+  },
+  "post_channel": {
+    "Ascend950DT_9582": {
+      "all_repeat": {
+        "n": 10,
+        "distinct_shapes": 10,
+        "candidate_us": {
+          "wape": 8.47403278303631,
+          "maximum": 23.433535964516583
+        },
+        "public_known_us": {
+          "wape": 17.048560389929822,
+          "maximum": 30.888924795085426
+        },
+        "public_shape_only_us": {
+          "wape": 56.68146377113939,
+          "maximum": 76.9391928740282
+        }
+      },
+      "old": {
+        "n": 8,
+        "distinct_shapes": 8,
+        "candidate_us": {
+          "wape": 8.395067040538668,
+          "maximum": 23.433535964516583
+        },
+        "public_known_us": {
+          "wape": 17.424471180730116,
+          "maximum": 30.888924795085426
+        },
+        "public_shape_only_us": {
+          "wape": 57.51533772156397,
+          "maximum": 76.9391928740282
+        }
+      },
+      "new": {
+        "n": 2,
+        "distinct_shapes": 2,
+        "candidate_us": {
+          "wape": 8.76712011724418,
+          "maximum": 14.852933324639505
+        },
+        "public_known_us": {
+          "wape": 15.653339018093483,
+          "maximum": 16.187878951951838
+        },
+        "public_shape_only_us": {
+          "wape": 53.586477445865114,
+          "maximum": 54.759073494614306
+        }
+      },
+      "new_first": {
+        "n": 1,
+        "distinct_shapes": 1,
+        "candidate_us": {
+          "wape": 5.059437868360834,
+          "maximum": 5.059437868360838
+        },
+        "public_known_us": {
+          "wape": 5.059437868360834,
+          "maximum": 5.059437868360838
+        },
+        "public_shape_only_us": {
+          "wape": 37.837823224000985,
+          "maximum": 37.837823224000985
+        }
+      }
+    },
+    "Ascend950PR_957b": {
+      "all_repeat": {
+        "n": 8,
+        "distinct_shapes": 8,
+        "candidate_us": {
+          "wape": 8.136386855590512,
+          "maximum": 26.545489472976904
+        },
+        "public_known_us": {
+          "wape": 20.438333046171877,
+          "maximum": 31.50324972883851
+        },
+        "public_shape_only_us": {
+          "wape": 61.256957915447614,
+          "maximum": 77.73376500366649
+        }
+      },
+      "old": {
+        "n": 7,
+        "distinct_shapes": 7,
+        "candidate_us": {
+          "wape": 9.155567495546348,
+          "maximum": 26.545489472976904
+        },
+        "public_known_us": {
+          "wape": 21.35127987799265,
+          "maximum": 31.50324972883851
+        },
+        "public_shape_only_us": {
+          "wape": 62.38000110245569,
+          "maximum": 77.73376500366649
+        }
+      },
+      "new": {
+        "n": 1,
+        "distinct_shapes": 1,
+        "candidate_us": {
+          "wape": 1.223304982391846,
+          "maximum": 1.2233049823918485
+        },
+        "public_known_us": {
+          "wape": 14.245832966374635,
+          "maximum": 14.245832966374628
+        },
+        "public_shape_only_us": {
+          "wape": 53.63937846529127,
+          "maximum": 53.63937846529127
+        }
+      },
+      "new_first": {
+        "n": 1,
+        "distinct_shapes": 1,
+        "candidate_us": {
+          "wape": 1.7333654655725874,
+          "maximum": 1.7333654655725894
+        },
+        "public_known_us": {
+          "wape": 1.7333654655725874,
+          "maximum": 1.7333654655725894
+        },
+        "public_shape_only_us": {
+          "wape": 35.61706203502848,
+          "maximum": 35.61706203502848
+        }
+      }
+    }
+  },
+  "sinkhorn": {
+    "Ascend950DT_9582": {
+      "all": {
+        "models": {
+          "old_unknown_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 10.663732487840495,
+            "max_ape": 10.663732487840495,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.009090909090909,
+              "pred_us": 4.474934854472717
+            }
+          },
+          "old_known_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 6.613581367211124,
+            "max_ape": 6.61358136721113,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.009090909090909,
+              "pred_us": 5.3403712121212115
+            }
+          },
+          "old_minimax_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 19.563860906825166,
+            "max_ape": 19.56386090682517,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.009090909090909,
+              "pred_us": 4.029119330939939
+            }
+          },
+          "point_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 19.275559588626727,
+            "max_ape": 19.275559588626724,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.009090909090909,
+              "pred_us": 4.043560606060606
+            }
+          },
+          "mean_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 11.850324662230284,
+            "max_ape": 11.850324662230282,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.009090909090909,
+              "pred_us": 4.415497373737374
+            }
+          },
+          "harmonic_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 19.563860906825166,
+            "max_ape": 19.56386090682517,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.009090909090909,
+              "pred_us": 4.029119330939939
+            }
+          },
+          "known_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 6.613581367211124,
+            "max_ape": 6.61358136721113,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.009090909090909,
+              "pred_us": 5.3403712121212115
+            }
+          }
+        },
+        "within_modeled_state_range": 1,
+        "total": 1
+      },
+      "frozen forward": {
+        "models": {
+          "old_unknown_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 10.663732487840495,
+            "max_ape": 10.663732487840495,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.009090909090909,
+              "pred_us": 4.474934854472717
+            }
+          },
+          "old_known_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 6.613581367211124,
+            "max_ape": 6.61358136721113,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.009090909090909,
+              "pred_us": 5.3403712121212115
+            }
+          },
+          "old_minimax_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 19.563860906825166,
+            "max_ape": 19.56386090682517,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.009090909090909,
+              "pred_us": 4.029119330939939
+            }
+          },
+          "point_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 19.275559588626727,
+            "max_ape": 19.275559588626724,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.009090909090909,
+              "pred_us": 4.043560606060606
+            }
+          },
+          "mean_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 11.850324662230284,
+            "max_ape": 11.850324662230282,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.009090909090909,
+              "pred_us": 4.415497373737374
+            }
+          },
+          "harmonic_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 19.563860906825166,
+            "max_ape": 19.56386090682517,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.009090909090909,
+              "pred_us": 4.029119330939939
+            }
+          },
+          "known_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 6.613581367211124,
+            "max_ape": 6.61358136721113,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.009090909090909,
+              "pred_us": 5.3403712121212115
+            }
+          }
+        },
+        "within_modeled_state_range": 1,
+        "total": 1
+      },
+      "old public domain": {
+        "models": {
+          "old_unknown_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 10.663732487840495,
+            "max_ape": 10.663732487840495,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.009090909090909,
+              "pred_us": 4.474934854472717
+            }
+          },
+          "old_known_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 6.613581367211124,
+            "max_ape": 6.61358136721113,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.009090909090909,
+              "pred_us": 5.3403712121212115
+            }
+          },
+          "old_minimax_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 19.563860906825166,
+            "max_ape": 19.56386090682517,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.009090909090909,
+              "pred_us": 4.029119330939939
+            }
+          },
+          "point_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 19.275559588626727,
+            "max_ape": 19.275559588626724,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.009090909090909,
+              "pred_us": 4.043560606060606
+            }
+          },
+          "mean_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 11.850324662230284,
+            "max_ape": 11.850324662230282,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.009090909090909,
+              "pred_us": 4.415497373737374
+            }
+          },
+          "harmonic_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 19.563860906825166,
+            "max_ape": 19.56386090682517,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.009090909090909,
+              "pred_us": 4.029119330939939
+            }
+          },
+          "known_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 6.613581367211124,
+            "max_ape": 6.61358136721113,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.009090909090909,
+              "pred_us": 5.3403712121212115
+            }
+          }
+        },
+        "within_modeled_state_range": 1,
+        "total": 1
+      },
+      "single register group": {
+        "models": {
+          "old_unknown_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 10.663732487840495,
+            "max_ape": 10.663732487840495,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.009090909090909,
+              "pred_us": 4.474934854472717
+            }
+          },
+          "old_known_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 6.613581367211124,
+            "max_ape": 6.61358136721113,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.009090909090909,
+              "pred_us": 5.3403712121212115
+            }
+          },
+          "old_minimax_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 19.563860906825166,
+            "max_ape": 19.56386090682517,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.009090909090909,
+              "pred_us": 4.029119330939939
+            }
+          },
+          "point_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 19.275559588626727,
+            "max_ape": 19.275559588626724,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.009090909090909,
+              "pred_us": 4.043560606060606
+            }
+          },
+          "mean_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 11.850324662230284,
+            "max_ape": 11.850324662230282,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.009090909090909,
+              "pred_us": 4.415497373737374
+            }
+          },
+          "harmonic_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 19.563860906825166,
+            "max_ape": 19.56386090682517,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.009090909090909,
+              "pred_us": 4.029119330939939
+            }
+          },
+          "known_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 6.613581367211124,
+            "max_ape": 6.61358136721113,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.009090909090909,
+              "pred_us": 5.3403712121212115
+            }
+          }
+        },
+        "within_modeled_state_range": 1,
+        "total": 1
+      },
+      "first": {
+        "models": {
+          "old_unknown_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 10.663732487840495,
+            "max_ape": 10.663732487840495,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.009090909090909,
+              "pred_us": 4.474934854472717
+            }
+          },
+          "old_known_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 6.613581367211124,
+            "max_ape": 6.61358136721113,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.009090909090909,
+              "pred_us": 5.3403712121212115
+            }
+          },
+          "old_minimax_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 19.563860906825166,
+            "max_ape": 19.56386090682517,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.009090909090909,
+              "pred_us": 4.029119330939939
+            }
+          },
+          "point_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 19.275559588626727,
+            "max_ape": 19.275559588626724,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.009090909090909,
+              "pred_us": 4.043560606060606
+            }
+          },
+          "mean_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 11.850324662230284,
+            "max_ape": 11.850324662230282,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.009090909090909,
+              "pred_us": 4.415497373737374
+            }
+          },
+          "harmonic_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 19.563860906825166,
+            "max_ape": 19.56386090682517,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.009090909090909,
+              "pred_us": 4.029119330939939
+            }
+          },
+          "known_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 6.613581367211124,
+            "max_ape": 6.61358136721113,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.009090909090909,
+              "pred_us": 5.3403712121212115
+            }
+          }
+        },
+        "within_modeled_state_range": 1,
+        "total": 1
+      }
+    },
+    "Ascend950PR_957b": {
+      "all": {
+        "models": {
+          "old_unknown_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 11.061370149419497,
+            "max_ape": 11.061370149419503,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.078181818181818,
+              "pred_us": 4.516465330412206
+            }
+          },
+          "old_known_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 6.090582304622829,
+            "max_ape": 6.090582304622827,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.078181818181818,
+              "pred_us": 5.387472661396574
+            }
+          },
+          "old_minimax_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 19.617682159388874,
+            "max_ape": 19.61768215938887,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.078181818181818,
+              "pred_us": 4.081960249615034
+            }
+          },
+          "point_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 19.121002233845488,
+            "max_ape": 19.121002233845484,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.078181818181818,
+              "pred_us": 4.107182559288537
+            }
+          },
+          "mean_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 12.097196320684388,
+            "max_ape": 12.09719632068439,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.078181818181818,
+              "pred_us": 4.463864194115064
+            }
+          },
+          "harmonic_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 19.617682159388874,
+            "max_ape": 19.61768215938887,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.078181818181818,
+              "pred_us": 4.081960249615034
+            }
+          },
+          "known_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 6.090582304622829,
+            "max_ape": 6.090582304622827,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.078181818181818,
+              "pred_us": 5.387472661396574
+            }
+          }
+        },
+        "within_modeled_state_range": 1,
+        "total": 1
+      },
+      "frozen forward": {
+        "models": {
+          "old_unknown_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 11.061370149419497,
+            "max_ape": 11.061370149419503,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.078181818181818,
+              "pred_us": 4.516465330412206
+            }
+          },
+          "old_known_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 6.090582304622829,
+            "max_ape": 6.090582304622827,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.078181818181818,
+              "pred_us": 5.387472661396574
+            }
+          },
+          "old_minimax_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 19.617682159388874,
+            "max_ape": 19.61768215938887,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.078181818181818,
+              "pred_us": 4.081960249615034
+            }
+          },
+          "point_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 19.121002233845488,
+            "max_ape": 19.121002233845484,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.078181818181818,
+              "pred_us": 4.107182559288537
+            }
+          },
+          "mean_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 12.097196320684388,
+            "max_ape": 12.09719632068439,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.078181818181818,
+              "pred_us": 4.463864194115064
+            }
+          },
+          "harmonic_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 19.617682159388874,
+            "max_ape": 19.61768215938887,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.078181818181818,
+              "pred_us": 4.081960249615034
+            }
+          },
+          "known_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 6.090582304622829,
+            "max_ape": 6.090582304622827,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.078181818181818,
+              "pred_us": 5.387472661396574
+            }
+          }
+        },
+        "within_modeled_state_range": 1,
+        "total": 1
+      },
+      "old public domain": {
+        "models": {
+          "old_unknown_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 11.061370149419497,
+            "max_ape": 11.061370149419503,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.078181818181818,
+              "pred_us": 4.516465330412206
+            }
+          },
+          "old_known_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 6.090582304622829,
+            "max_ape": 6.090582304622827,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.078181818181818,
+              "pred_us": 5.387472661396574
+            }
+          },
+          "old_minimax_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 19.617682159388874,
+            "max_ape": 19.61768215938887,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.078181818181818,
+              "pred_us": 4.081960249615034
+            }
+          },
+          "point_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 19.121002233845488,
+            "max_ape": 19.121002233845484,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.078181818181818,
+              "pred_us": 4.107182559288537
+            }
+          },
+          "mean_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 12.097196320684388,
+            "max_ape": 12.09719632068439,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.078181818181818,
+              "pred_us": 4.463864194115064
+            }
+          },
+          "harmonic_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 19.617682159388874,
+            "max_ape": 19.61768215938887,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.078181818181818,
+              "pred_us": 4.081960249615034
+            }
+          },
+          "known_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 6.090582304622829,
+            "max_ape": 6.090582304622827,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.078181818181818,
+              "pred_us": 5.387472661396574
+            }
+          }
+        },
+        "within_modeled_state_range": 1,
+        "total": 1
+      },
+      "single register group": {
+        "models": {
+          "old_unknown_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 11.061370149419497,
+            "max_ape": 11.061370149419503,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.078181818181818,
+              "pred_us": 4.516465330412206
+            }
+          },
+          "old_known_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 6.090582304622829,
+            "max_ape": 6.090582304622827,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.078181818181818,
+              "pred_us": 5.387472661396574
+            }
+          },
+          "old_minimax_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 19.617682159388874,
+            "max_ape": 19.61768215938887,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.078181818181818,
+              "pred_us": 4.081960249615034
+            }
+          },
+          "point_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 19.121002233845488,
+            "max_ape": 19.121002233845484,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.078181818181818,
+              "pred_us": 4.107182559288537
+            }
+          },
+          "mean_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 12.097196320684388,
+            "max_ape": 12.09719632068439,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.078181818181818,
+              "pred_us": 4.463864194115064
+            }
+          },
+          "harmonic_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 19.617682159388874,
+            "max_ape": 19.61768215938887,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.078181818181818,
+              "pred_us": 4.081960249615034
+            }
+          },
+          "known_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 6.090582304622829,
+            "max_ape": 6.090582304622827,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.078181818181818,
+              "pred_us": 5.387472661396574
+            }
+          }
+        },
+        "within_modeled_state_range": 1,
+        "total": 1
+      },
+      "first": {
+        "models": {
+          "old_unknown_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 11.061370149419497,
+            "max_ape": 11.061370149419503,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.078181818181818,
+              "pred_us": 4.516465330412206
+            }
+          },
+          "old_known_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 6.090582304622829,
+            "max_ape": 6.090582304622827,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.078181818181818,
+              "pred_us": 5.387472661396574
+            }
+          },
+          "old_minimax_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 19.617682159388874,
+            "max_ape": 19.61768215938887,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.078181818181818,
+              "pred_us": 4.081960249615034
+            }
+          },
+          "point_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 19.121002233845488,
+            "max_ape": 19.121002233845484,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.078181818181818,
+              "pred_us": 4.107182559288537
+            }
+          },
+          "mean_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 12.097196320684388,
+            "max_ape": 12.09719632068439,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.078181818181818,
+              "pred_us": 4.463864194115064
+            }
+          },
+          "harmonic_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 19.617682159388874,
+            "max_ape": 19.61768215938887,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.078181818181818,
+              "pred_us": 4.081960249615034
+            }
+          },
+          "known_us": {
+            "n": 1,
+            "geometries": 1,
+            "wape": 6.090582304622829,
+            "max_ape": 6.090582304622827,
+            "worst": {
+              "t": 69,
+              "iters": 10,
+              "h": 0,
+              "ca_us": 5.078181818181818,
+              "pred_us": 5.387472661396574
+            }
+          }
+        },
+        "within_modeled_state_range": 1,
+        "total": 1
+      }
+    }
+  },
+  "wheel": {
+    "version": "0.28.0",
+    "wheel_sha256": "9c45af4722bc39ec6f3019479873b6aa685fc48af8499f6f0dd085d8e26cc9ed",
+    "checked_history_rows": 854,
+    "cost": {
+      "estimate": {
+        "n": 1371,
+        "p50_ms": 0.12921,
+        "p95_ms": 0.63098,
+        "maximum_ms": 2.01473
+      },
+      "matmul_splitk": {
+        "n": 48,
+        "p50_ms": 0.15752,
+        "p95_ms": 0.31748,
+        "maximum_ms": 0.40703
+      },
+      "rmsnorm_pipeline": {
+        "n": 132,
+        "p50_ms": 0.58588,
+        "p95_ms": 4.79634,
+        "maximum_ms": 8.18484
+      },
+      "post_history": {
+        "n": 9,
+        "p50_ms": 0.20024,
+        "p95_ms": 0.76424,
+        "maximum_ms": 0.76424
+      }
+    },
+    "scope": "wheel installed outside checkout, first distinct estimate per input; duration measured around one API call after import"
+  },
+  "interpretation": "Snapshots of current results. Subsequent durable queue receipts and live scores are linked in changes.md. All 970DT values are projections."
+}

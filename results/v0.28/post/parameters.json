@@ -1,0 +1,134 @@
+{
+  "description": "Original pre-CA operand and issue prices. Distinct channel-repeat and token routes; no v0.28 fit.",
+  "sha256": {
+    "results/v0.24/post/freeze.json": "ca836280153f9f16d6aaa8e455bb9e84bba008c2305c4d24c530333a688e9edf",
+    "results/v0.27/post/parameters.json": "9f93e2f4a847f202414ffba806d5a6d8884c6d58a4491cc8ba44862f20bbd54e",
+    "results/v0.25/post/prices.json": "911abfb2788ec25616d3e6200c159f289f19af2f1335d0341164ddce21c0aef5",
+    "development/validation/post24/model.py": "47106bdeb0a4188337b3ef3ded51290132711bf70c2e619e60dd2467a04c950a",
+    "development/validation/post27/issue.py": "2927dcb0e924f60163223ab6ec718c77f9c7f78285372053045be6788d45b789",
+    "operator_model/post_token_pipeline.py": "30340c2ec9318d604b013b5c9d17bfbfc8e505afb8ef8f22f21bfbf0577985b2"
+  },
+  "channel_repeat": {
+    "phase": {
+      "arrival": {
+        "base_us": 0.0,
+        "slopes": [
+          0.08843838356758171
+        ]
+      },
+      "control": {
+        "base_us": 0.8981819152832031,
+        "slopes": []
+      },
+      "body": {
+        "base_us": 0.5070703411558256,
+        "slopes": [
+          1.5859961524180062,
+          0.01
+        ]
+      },
+      "retire": {
+        "base_us": 0.16333294194191694,
+        "slopes": []
+      }
+    },
+    "port": {
+      "n": 2,
+      "gap_cycles": [
+        62.99915313720703
+      ],
+      "response_fixed_cycles": [
+        177.42739899308683,
+        166.20957338218687
+      ],
+      "handoff_cycles": 26.000171899795532
+    },
+    "calibration_windows": 2
+  },
+  "token_ordinary": {
+    "curves": {
+      "expand_after_token": {
+        "read_gap_first": {
+          "minimum": 913.4295805689839,
+          "fixed_compute_tail": 50.0,
+          "n": 9
+        },
+        "write_gap_first": {
+          "minimum": 674.1364519707769,
+          "fixed_compute_tail": 87.8967451592426,
+          "n": 9
+        }
+      },
+      "first": {
+        "read_gap_first": {
+          "minimum": 1436.2309754590694,
+          "fixed_compute_tail": 50.0,
+          "n": 9
+        },
+        "write_gap_first": {
+          "minimum": 1083.711828573067,
+          "fixed_compute_tail": 50.0,
+          "n": 9
+        }
+      },
+      "reuse_after_channel": {
+        "read_gap_first": {
+          "minimum": 1663.3144056095036,
+          "fixed_compute_tail": 50.0,
+          "n": 6
+        },
+        "write_gap_first": {
+          "minimum": 1346.9762562962408,
+          "fixed_compute_tail": 50.0,
+          "n": 6
+        }
+      },
+      "reuse_after_token": {
+        "read_gap_first": {
+          "minimum": 785.3403975489495,
+          "fixed_compute_tail": 18.510684479446862,
+          "n": 4
+        },
+        "write_gap_first": {
+          "minimum": 576.8046112817301,
+          "fixed_compute_tail": 102.38413570041634,
+          "n": 4
+        }
+      },
+      "shared": {
+        "read_ii": {
+          "minimum": 554.6257488254962,
+          "fixed_compute_tail": 189.0129203944009,
+          "n": 26
+        },
+        "write_ii": {
+          "minimum": 574.6518584253834,
+          "fixed_compute_tail": 111.85298401711135,
+          "n": 26
+        }
+      }
+    },
+    "control": {
+      "first": {
+        "median_cycles": 3023.9994764328003,
+        "n": 14,
+        "processes": 14
+      },
+      "reuse_after_channel": {
+        "median_cycles": 1636.5004005432138,
+        "n": 12,
+        "processes": 11
+      },
+      "reuse_after_token": {
+        "median_cycles": 1523.4992561340368,
+        "n": 6,
+        "processes": 5
+      },
+      "expand_after_token": {
+        "median_cycles": 2675.006103515625,
+        "n": 11,
+        "processes": 10
+      }
+    }
+  }
+}

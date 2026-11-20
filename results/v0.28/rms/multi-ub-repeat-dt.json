@@ -1,0 +1,426 @@
+{
+  "time_origin": "first physical instruction over the complete active AIV roster; axes in target microseconds",
+  "scope": "Same output row range recovered from GM addresses and byte counts on both calls. All-device terminal line; relative to first AIV. Estimated reduction bar is issue-to-next-issue, hatched. No fabricated reduce retirement time.",
+  "entries": [
+    {
+      "shape": [
+        539,
+        4000
+      ],
+      "chip": "Ascend950DT_9582",
+      "role": "entry",
+      "H": 1,
+      "active": 60,
+      "ca_us": 7.627272727272727,
+      "model_us": 8.315521445964276,
+      "unknown_us": 5.873890101243997,
+      "lane": {
+        "lane": "core23.veccore0",
+        "ops": {
+          "gamma": [
+            {
+              "b": 5944,
+              "e": 6720,
+              "pc": "0x4878",
+              "bytes": 8000,
+              "src": 624195838976,
+              "dst": 0
+            }
+          ],
+          "x": [
+            {
+              "b": 6040,
+              "e": 7994,
+              "pc": "0x4a48",
+              "bytes": 56000,
+              "src": 624194694912,
+              "dst": 8000
+            },
+            {
+              "b": 6849,
+              "e": 8158,
+              "pc": "0x4a48",
+              "bytes": 16000,
+              "src": 624194750912,
+              "dst": 64000
+            }
+          ],
+          "reduce": [
+            {
+              "b": 7998,
+              "e": 9142,
+              "pc": "0x4d1c",
+              "bytes": null,
+              "src": null,
+              "dst": null
+            },
+            {
+              "b": 10639,
+              "e": 11065,
+              "pc": "0x4d1c",
+              "bytes": null,
+              "src": null,
+              "dst": null
+            }
+          ],
+          "rstd_vf": [
+            {
+              "b": 9038,
+              "e": 9250,
+              "pc": "0x4e64",
+              "bytes": null,
+              "src": null,
+              "dst": null
+            },
+            {
+              "b": 10968,
+              "e": 11173,
+              "pc": "0x4e64",
+              "bytes": null,
+              "src": null,
+              "dst": null
+            }
+          ],
+          "normalize": [
+            {
+              "b": 9153,
+              "e": 10688,
+              "pc": "0x5008",
+              "bytes": null,
+              "src": null,
+              "dst": null
+            },
+            {
+              "b": 11076,
+              "e": 11615,
+              "pc": "0x5008",
+              "bytes": null,
+              "src": null,
+              "dst": null
+            }
+          ],
+          "rstd": [
+            {
+              "b": 9254,
+              "e": 10165,
+              "pc": "0x4f38",
+              "bytes": 28,
+              "src": 232000,
+              "dst": 624200160816
+            },
+            {
+              "b": 11177,
+              "e": 12576,
+              "pc": "0x4f38",
+              "bytes": 8,
+              "src": 232032,
+              "dst": 624200160844
+            }
+          ],
+          "y": [
+            {
+              "b": 10693,
+              "e": 11706,
+              "pc": "0x5128",
+              "bytes": 56000,
+              "src": 120000,
+              "dst": 624199015168
+            },
+            {
+              "b": 11620,
+              "e": 12578,
+              "pc": "0x5128",
+              "bytes": 16000,
+              "src": 176000,
+              "dst": 624199071168
+            }
+          ]
+        },
+        "last_cycles": 12585,
+        "shard_sha256": "58e171a9b0d6e602f2355c8e239c742da8f20efe6d4bc818d7f0cc4e20499539",
+        "row0": 396,
+        "block": 44
+      },
+      "model_tiles": [
+        {
+          "block": 44,
+          "tile": 0,
+          "rows": 7,
+          "row0": 396,
+          "state": "partition",
+          "gamma": [
+            5315.183333333333,
+            6141.650560315218
+          ],
+          "x": [
+            5411.183333333333,
+            9687.631136147538
+          ],
+          "reduce_issue": 9691.631136147538,
+          "rstd_vf": [
+            10730.16877102477,
+            10940.972305231497
+          ],
+          "normalize": [
+            10844.4526294484,
+            12392.641925482396
+          ],
+          "rstd_issue": 10944.972305231497,
+          "y": [
+            12397.641925482396,
+            13273.640519232396
+          ],
+          "rstd_retire": 11580.20563856483
+        },
+        {
+          "block": 44,
+          "tile": 1,
+          "rows": 2,
+          "row0": 403,
+          "state": "partition",
+          "gamma": [
+            5315.183333333333,
+            6141.650560315218
+          ],
+          "x": [
+            5787.683333333333,
+            7517.14947705313
+          ],
+          "reduce_issue": 12342.641925482396,
+          "rstd_vf": [
+            12651.712257658526,
+            12861.512041520928
+          ],
+          "normalize": [
+            12765.410908397458,
+            13309.79553988473
+          ],
+          "rstd_issue": 12865.512041520928,
+          "y": [
+            13314.79553988473,
+            13709.74371917439
+          ],
+          "rstd_retire": 13500.745374854261
+        }
+      ],
+      "trace": "runs/rms28/multi-Ascend950DT_9582/profile/OPPROF_20261120101802_GMNEQOUBXRLKSEPD/RmsNorm_normal_all_bf16_high_performance_5000/1/simulator/trace.json",
+      "sha256": "fae3ded166009bb5e47b2d5ceb31895e7e81e386be7a7c94b0bc359ec412ac02",
+      "bounds_cycles": {
+        "y": 13720.610385841055,
+        "rstd": 13668.212041520928,
+        "compulsory_x_with_remaining_work": 5898.126480457855,
+        "resource_floor": 3479.1156911229964
+      }
+    },
+    {
+      "shape": [
+        539,
+        4000
+      ],
+      "chip": "Ascend950DT_9582",
+      "role": "repeat",
+      "H": 60,
+      "active": 60,
+      "ca_us": 4.753939393939394,
+      "model_us": 4.540649376146251,
+      "unknown_us": 5.873890101243997,
+      "lane": {
+        "lane": "core23.veccore0",
+        "ops": {
+          "gamma": [
+            {
+              "b": 1801,
+              "e": 2736,
+              "pc": "0x4878",
+              "bytes": 8000,
+              "src": 624195838976,
+              "dst": 0
+            }
+          ],
+          "x": [
+            {
+              "b": 1897,
+              "e": 3107,
+              "pc": "0x4a48",
+              "bytes": 56000,
+              "src": 624194694912,
+              "dst": 8000
+            },
+            {
+              "b": 2273,
+              "e": 3394,
+              "pc": "0x4a48",
+              "bytes": 16000,
+              "src": 624194750912,
+              "dst": 64000
+            }
+          ],
+          "reduce": [
+            {
+              "b": 3111,
+              "e": 4253,
+              "pc": "0x4d1c",
+              "bytes": null,
+              "src": null,
+              "dst": null
+            },
+            {
+              "b": 5744,
+              "e": 6168,
+              "pc": "0x4d1c",
+              "bytes": null,
+              "src": null,
+              "dst": null
+            }
+          ],
+          "rstd_vf": [
+            {
+              "b": 4146,
+              "e": 4360,
+              "pc": "0x4e64",
+              "bytes": null,
+              "src": null,
+              "dst": null
+            },
+            {
+              "b": 6074,
+              "e": 6275,
+              "pc": "0x4e64",
+              "bytes": null,
+              "src": null,
+              "dst": null
+            }
+          ],
+          "normalize": [
+            {
+              "b": 4264,
+              "e": 5792,
+              "pc": "0x5008",
+              "bytes": null,
+              "src": null,
+              "dst": null
+            },
+            {
+              "b": 6179,
+              "e": 6717,
+              "pc": "0x5008",
+              "bytes": null,
+              "src": null,
+              "dst": null
+            }
+          ],
+          "rstd": [
+            {
+              "b": 4364,
+              "e": 4482,
+              "pc": "0x4f38",
+              "bytes": 28,
+              "src": 232000,
+              "dst": 624200160816
+            },
+            {
+              "b": 6279,
+              "e": 6546,
+              "pc": "0x4f38",
+              "bytes": 8,
+              "src": 232032,
+              "dst": 624200160844
+            }
+          ],
+          "y": [
+            {
+              "b": 5797,
+              "e": 6501,
+              "pc": "0x5128",
+              "bytes": 56000,
+              "src": 120000,
+              "dst": 624199015168
+            },
+            {
+              "b": 6722,
+              "e": 7058,
+              "pc": "0x5128",
+              "bytes": 16000,
+              "src": 176000,
+              "dst": 624199071168
+            }
+          ]
+        },
+        "last_cycles": 7065,
+        "shard_sha256": "240d4bdd9b5bd6ad03bad0e0f2bd79be3e684aeb228963849d99b3992d02e13a",
+        "row0": 396,
+        "block": 44
+      },
+      "model_tiles": [
+        {
+          "block": 44,
+          "tile": 0,
+          "rows": 7,
+          "row0": 396,
+          "state": "repeat",
+          "gamma": [
+            2002.8175334694304,
+            2338.440362246649
+          ],
+          "x": [
+            2098.8175334694306,
+            3439.1537388276947
+          ],
+          "reduce_issue": 3443.1537388276947,
+          "rstd_vf": [
+            4481.691373704927,
+            4692.494907911655
+          ],
+          "normalize": [
+            4595.975232128557,
+            6144.164528162553
+          ],
+          "rstd_issue": 4696.494907911655,
+          "y": [
+            6149.164528162553,
+            7025.163121912554
+          ],
+          "rstd_retire": 5113.059423086374
+        },
+        {
+          "block": 44,
+          "tile": 1,
+          "rows": 2,
+          "row0": 403,
+          "state": "repeat",
+          "gamma": [
+            2002.8175334694304,
+            2338.440362246649
+          ],
+          "x": [
+            2475.3175334694306,
+            2986.161142792792
+          ],
+          "reduce_issue": 6094.164528162553,
+          "rstd_vf": [
+            6403.234860338684,
+            6613.034644201086
+          ],
+          "normalize": [
+            6516.933511077616,
+            7061.318142564887
+          ],
+          "rstd_issue": 6617.034644201086,
+          "y": [
+            7066.318142564887,
+            7329.523076864352
+          ],
+          "rstd_retire": 7033.599159375805
+        }
+      ],
+      "trace": "runs/rms28/multi-Ascend950DT_9582/profile/OPPROF_20261120101802_GMNEQOUBXRLKSEPD/RmsNorm_normal_all_bf16_high_performance_5000/2/simulator/trace.json",
+      "sha256": "ebd46b10e3051d8e2cac8fca4a0674758e4895a1a7583aaba826522cd65f5d68",
+      "bounds_cycles": {
+        "y": 7492.071470641315,
+        "rstd": 7320.244325914848,
+        "compulsory_x_with_remaining_work": 9.0,
+        "resource_floor": 1437.2148437500002
+      }
+    }
+  ]
+}
