@@ -8,6 +8,8 @@
 | 某个算子为什么需要这么久？不同 shape 如何改变结果？ | [建模方法：Vector、Cube、CV 三类流程，含逐算子公式与算例](docs/modeling-strategy.md) |
 | 哪些算子、shape 和库实现实测过？偏差多大？预测有多快？ | [CA 校验与误差：逐算子摘要、逐 shape 数据及查询墙钟](docs/error-analysis.md) |
 
+各算子在 DT、PR 上分别核验 WAPE 和最大误差；偏快、偏慢用同窗带符号偏差与偏快占比描述。对常驻权重的 Matmul，可按配置切换资源排程，比较同形预测和 CA。[全部算子的误差方向](results/v0.31/direction.md)
+
 单卡 B8 整批 prefill 的工作负载表按 32Ki、128Ki、256Ki 给出每个算子的输入、dtype、并行切分、两卡 CA 实测和 970DT 外推。矩阵投影、indexer 系数与全 hidden 激活各有自己的宽度。[DeepSeek V4.1 Flash](docs/workloads/deepseek-flash.md) · [DeepSeek V4 Pro](docs/workloads/deepseek-pro.md) · [Kimi K3](docs/workloads/kimi-k3.md)
 
 普通 decode 的每卡 B 为 1、9、11、16 时，M 分别为 1、9、11、16。同一批请求做 MTP8 主模型校验时，M 分别为 9、81、99、144。Flash、Pro 和 Kimi 的 N、K 取各自的投影宽度。53 个场景几何表列出公开接口的 DT、PR、970DT 预测、现有两端 CA 时间和长 prefill 的实测增长斜率。[三模型 decode 与大形对照](results/v0.31/matmul/scenarios.md) · [安装库的 host 分支核验](results/v0.30/matmul-dispatch/report.md)

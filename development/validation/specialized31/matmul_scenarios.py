@@ -44,7 +44,8 @@ def write_scenarios(archive, query, root, out, chips, scenarios, older_workloads
                 source = rows[0]['source']
                 if len(rows) != 1 or not isinstance(source, str) or not (root / source).is_file():
                     source = 'results/v0.31/replay.json'
-                if old_reference and isclose(old_reference['ca_us'], ca, abs_tol=1e-8):
+                if (len(rows) == 1 and Path(source).name in ('replay.json','score.json')
+                        and old_reference and isclose(old_reference['ca_us'], ca, abs_tol=1e-8)):
                     source = old_reference['source']
                 assert (root / source).is_file()
                 cells.append(f'{pred:.3f} / [{ca:.3f}](../../../{source})')

@@ -2,6 +2,8 @@
 
 DeepSeek-V4-Pro 的 B11、MTP8 算例同时给出资源预测与同轴实测图，可逐项核对每个 AIC 的 K 段、部分和与最终输出。[B11 逐步算例](../../results/v0.31/matmul/device/example.md) · [逐字节访存](../../results/v0.31/matmul/device/traffic.md)
 
+同一个 `[99,64,7168]` 在 970DT 配置下预测为 14.015 µs。原因在实现选路。当前沿用的 950 库规则要求对齐的 K 至少达到 $\max(8192,256C)/2$，其中 $C$ 是目标 AIC 数。对 DT 的 32 核，门槛为 4096，32 核可以分担这一次 K 归约。对 970DT 的 120 核，门槛为 15360，K=7168 落入普通路线，模型只派 7 个 AIC，各做 28 次 MMAD。这一时间对未来库的分核策略敏感。换到大输出的 Kimi `[32768,3072,512]`，即使不切 K 也有足够多的输出块，970DT 可用满 120 个 AIC。两例中的 970DT 时间都属于外推。[三端逐形预测与已有实测](../../results/v0.31/matmul/scenarios.md)
+
 Kimi 的 MLA 宽输出样例把 B8 每请求本步的 4096 个 token 组成 M=32768，在 TP8 的 N=3072、K=512 上预测 48 / 55 波（DT / PR）。输出 192 MiB。表中同时列出旧版和当前冻结值，CA 回执到达时填入实测。[宽输出多波 prefill](../../results/v0.31/matmul/kimi-prefill/report.md) · [同一模型的 B16 decode 偏差](../../results/v0.31/matmul/kimi/pages.md)
 
 ## 从同一权重看 decode 和长 prefill

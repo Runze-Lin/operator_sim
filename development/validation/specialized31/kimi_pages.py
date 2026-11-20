@@ -90,6 +90,8 @@ def render():
               '[原始 DT](../../../v0.29/matmul/decode/9-2304-1536-dt.json) · '
               '[DT 重试](../../../v0.29/matmul/decode/retry/receipt.json) · '
               '[原始 PR](../../../v0.29/matmul/decode/9-2304-1536-pr.json)', '',
+              'M=16 的 DT 完成了全部 36,864 项数值检查。PR 在 1,200 秒墙钟预算内未产生合格设备窗，'
+              '这一形状的 PR 误差和同形加速比仍为空。[M16 的 PR 收据](../../../v0.29/matmul/decode/16-2304-1536-pr.json)', '',
               '[逐页与总窗数据](pages.json) · [三模型完整场景](../scenarios.md)', '']
     assert 16 in archived['Ascend950DT_9582']
     (OUT/'pages.md').write_text('\n'.join(lines))

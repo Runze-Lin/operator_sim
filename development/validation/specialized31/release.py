@@ -47,6 +47,7 @@ def release(prefix):
     assert api.__version__=='0.31.0' and not Path(api.__file__).is_relative_to(ROOT)
     sys.path.append(str(Path(__file__).resolve().parent))
     from matmul_scenarios import write_scenarios
+    from direction import audit as signed_audit
     table=read(OLD/'evaluation.json')['summary']
     rows={}
     costs=[]
@@ -188,6 +189,7 @@ def release(prefix):
             for c in (DT,PR,FUT):
                 query('matmul',j['shape'],{},c)
     historical=read(OLD/'replay.json')['rows']
+    signed_audit(ROOT,OUT,values,multi_table,table,(DT,PR),api.estimate_matmul_supply)
     assert all((r['op'],r['chip'],tuple(r['trace_sha256'])) in rows for r in historical)
     assert len(costs)==len(query_cache) and max(costs)<100,(len(costs),max(costs))
     wheel,=(ROOT/'build/wheels/v031').glob('*.whl')
@@ -201,7 +203,8 @@ def release(prefix):
     save(OUT/'model.json',dict(version=api.__version__,baseline='0.30.0',
                                hashes={str(p.relative_to(ROOT)):digest(p) for p in sorted(set(deps))}))
     save(OUT/'evaluation.json',dict(utc=datetime.now(timezone.utc).isoformat(),summary=table,
-          limits=dict(wape=25,maximum=50),comparisons=comparisons,model_sha256=digest(OUT/'model.json'),
+          limits=dict(wape=25,maximum=50),signed_residuals='direction.json',
+          comparisons=comparisons,model_sha256=digest(OUT/'model.json'),
           role='All unique priced complete windows by protocol. Historical replay and frozen groups are separately labeled.',
           retained_protocols='See v0.30/evaluation.json and its named sources for archived protocols with unchanged prices.'))
     def fmt(j):

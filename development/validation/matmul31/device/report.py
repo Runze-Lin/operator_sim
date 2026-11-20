@@ -41,8 +41,10 @@ def render():
                 if not d['qualified']:r['reason']=d.get('reason')
                 else:
                     stage,=d['stages']; ms=d.get('mechanism_checks');g=d.get('actual_geometry',{})
+                    cube_fields=('k_spans','groups','productive_aic','active_aic','active_aiv','mmads')
                     r.update(ca_us=d['ca_us'],old_signed_pct=100*(p['old_us']/d['ca_us']-1),
-                        signed_pct=100*(p['us']/d['ca_us']-1),geometry_verified=bool(ms) and all(ms.values()),checks=ms,
+                        signed_pct=100*(p['us']/d['ca_us']-1),geometry_verified=bool(ms) and all(ms.values()),
+                        cube_geometry_verified=all((ms or {}).get(key,False) for key in cube_fields),checks=ms,
                         actual_groups=g.get('groups'),actual_splits=g.get('splits_per_output'),actual_productive_aic=g.get('productive_aic'),
                         supplement=d.get('secondary_evidence'),actual_mmad=stage['mmad'],actual_roster=[stage['active_aic'],stage['active_aiv']],kernel=stage['kernel'],trace_sha256=stage['trace_sha256'],
                         correctness=d['correctness'],terminal_roster=len(d.get('terminal',stage['windows'])))
@@ -54,7 +56,9 @@ def render():
     summary={}
     for sku,_ in CHIPS:
         measured=[r for r in rows if r['sku']==sku and r['ca_us']]
-        summary[sku]=dict(old=metrics(measured,'old_us'),new=metrics(measured,'forecast_us'),geometry_pass=sum(r['geometry_verified'] for r in measured))
+        summary[sku]=dict(old=metrics(measured,'old_us'),new=metrics(measured,'forecast_us'),
+                          cube_geometry_pass=sum(r['cube_geometry_verified'] for r in measured),
+                          geometry_pass=sum(r['geometry_verified'] for r in measured))
     result=dict(freeze_sha256=ca.digest(REG),rows=rows,summary=summary,ratios=ratios,total_ca_seconds=cost_s,total_raw_peak_bytes=cost_bytes)
     write(OUT/'score.json',json.dumps(result,indent=2,ensure_ascii=False,allow_nan=False)+'\n')
     lines=['# 两种 B11 投影的 Matmul 独立设备校验','',
@@ -69,10 +73,10 @@ def render():
             evidence=f"[{r['actual_roster'][0]} AIC / {r['actual_roster'][1]} AIV，{r['actual_productive_aic']} 个 AIC 计算]({r['supplement']['coverage']})，Cube 分块已核实，最终写回导出不全"
         shape='×'.join(map(str,r['shape'])); brief=f"{desc['model']} `{desc['node']}` · Q{desc['tokens_per_request']} · {shape}"
         lines.append(f"| {brief} | {r['sku'][6:11]} | {r['old_us']:.3f} / {r['forecast_us']:.3f} / {f'{t:.3f}' if t else '—'} | {format(r['signed_pct'],'+.2f')+'%' if t else '—'} | {r['expected_mmad']} / {r.get('actual_mmad','—')} | {evidence} | {r['future_970dt_extrapolated_us']:.3f} |")
-    lines+=['','| 芯片 | 已测 / 冻结 shape | 旧 WAPE / 最大 | 当前 WAPE / 最大 | 所有分块核对通过 |','|---|---:|---:|---:|---:|']
+    lines+=['','| 芯片 | 已测 / 冻结 shape | 旧 WAPE / 最大 | 当前 WAPE / 最大 | 分核、K 分块及 MMAD 相符 | 加上最终输出写回均已核实 |','|---|---:|---:|---:|---:|---:|']
     for sku,_ in CHIPS:
         s=summary[sku]; n=s['new']['windows'];fmt=lambda x:f"{x['wape']:.2f}% / {x['maximum']:.2f}%" if n else 'N/A'
-        lines.append(f"| {sku[6:11]} | {n} / {len(reg['rows'])} | {fmt(s['old'])} | {fmt(s['new'])} | {s['geometry_pass']} / {n} |")
+        lines.append(f"| {sku[6:11]} | {n} / {len(reg['rows'])} | {fmt(s['old'])} | {fmt(s['new'])} | {s['cube_geometry_pass']} / {n} | {s['geometry_pass']} / {n} |")
     if ratios:
         lines+=['','| [M,N,K] | 实测 PR/DT | 旧预测比 | 当前预测比 | 比值误差 |','|---|---:|---:|---:|---:|']
         for r in ratios:lines.append(f"| {r['shape']} | {r['pr_over_dt']:.4f} | {r['old']:.4f} | {r['new']:.4f} | {r['signed_pct']:+.2f}% |")

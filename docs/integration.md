@@ -138,6 +138,25 @@ elapsed_us = rms["us"]
 
 常规 `estimate("matmul", ...)` 已按输入与目标芯片比较单输出矩形的普通和分 K 排程。选中分 K 时，`work["implementation_work"]` 给出附加归约与中间传输，逻辑输入和输出字节仍对应应用张量。需要查看候选定价时可调用 `from operator_model import estimate_matmul_splitk`，返回普通与分 K 的耗时、活跃核数、归约工作量和选择理由。[前瞻几何与使用示例](../results/v0.28/matmul/streamk-analysis.md)
 
+对多波、窄 N 的连续 BF16 投影，系统还可选择“权重 B 常驻 L1”实现情景。用每次调用的实际 shape 和目标芯片判断适用域。选择后，同时使用该排程给出的时延、MMAD、波数与字节数。这样长 M 的读写重叠可带来较快的估计，是否成立可由独立窗口检验。[同一批 CA 的误差与方向](../results/v0.31/direction.md)
+
+```python
+from operator_model import estimate, estimate_matmul_supply
+
+shape = [262144, 128, 512]
+chip = "Ascend950DT_9582"
+supply = estimate_matmul_supply(shape, chip=chip)
+if supply["latency_us"] is not None:
+    latency_us = supply["latency_us"]
+    cube_ops = supply["cube_ops"]
+    traffic = supply["work"]
+else:
+    ordinary = estimate("matmul", shape, dtype="bf16", chip=chip)
+    latency_us = ordinary.latency_us
+    cube_ops = ordinary.work["cube_ops"]
+    traffic = ordinary.work
+```
+
 对 Stream-K 与全输出分块识别尚不确定的 Matmul，应保留 `[M,N,K]`、dtype、转置及权重格式，分别统计真实库分支。四个 batch 取 1、9、11、16 时，普通 decode 的 M 为 1、9、11、16；同一 rank 全部请求同时校验 9 个 token 的 M 为 9、81、99、144。混合批次以调度器实际提交（含 padding）的行数为准。[三模型投影的输入和两端 CA](../results/v0.28/matmul/report.md)
 
 RMSNorm 与 mHC Post 可用 shape、dtype 和芯片独立预测。RMSNorm 在最忙核最多两轮 UB 且前序未知时，当前默认使用归约与双写流水的折中值；如需分清首遇与立即复跑，可调用上面的显式接口。一次查询没有提供同流历史时，返回未知启动状态的点估计，同时返回首次、扩核和热态的时间供系统做敏感性分析。选择多种调度方案时，调用本身不会改变后续预测。如果明确是单独首次启动，可传入 `resident_aiv=0`。
