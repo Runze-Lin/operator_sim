@@ -26,6 +26,29 @@ def metrics(rows):
                            latency_us=worst['latency_us'],trace=worst['trace_sha256']))
 
 
+def shape_report(rows):
+    lines = ['# 逐个 shape 的当前预测和完整 CA', '',
+             f'以下 {len(rows)} 个历史指令窗按各自真实库合同、芯片、输入属性重新调用本版。设备时间单位均为 µs，偏差取 (本版/CA−1) × 100%。同形出现多次时保留各自的实际观测。每条 970DT 数值均为该输入的资源外推。', '',
+             '冻结后的独立样本另外提供[FA](../v0.25/coverage/supplement/score.json)、[有序 Post](post/report.md)、[Sinkhorn 与 PreSinkhorn](fusion/report.md)、[RMSNorm 两种前序](rms/report.md) 和 [Pro 大 Cast](memory/README.md)。内置 Post 和 RMSNorm 的旧前序协议见[总表](../../docs/error-analysis.md)。',
+             '逐窗原始指纹、直接调用参数和来源可在[JSON](replay.json)及[去重账本](../v0.25/coverage/audit.json)核查。', '']
+    for route in sorted({r['op'] for r in rows}):
+        lines.extend(['## '+route, '', '| Shape | 目标 SKU | 输入属性 | 旧模型 | 本版 | CA | 偏差 | 970DT 外推 | 实测 kernel |',
+                      '|---|---|---|---:|---:|---:|---:|---:|---|'])
+        for r in sorted((r for r in rows if r['op']==route),
+                        key=lambda r:(tuple(r['shape']),json.dumps(r['attrs'],sort_keys=True),r['chip'],r['ca_us'])):
+            pred=r['latency_us']
+            fmt=lambda x:'N/A' if x is None else f'{x:.3f}'
+            diff='N/A' if pred is None else f"{100*(pred/r['ca_us']-1):+.2f}%"
+            attrs=json.dumps(r['attrs'],ensure_ascii=False,separators=(',',':')).replace('|','&#124;')
+            kernel=r['kernel']
+            if isinstance(kernel,list):
+                kernel=', '.join(kernel)
+            lines.append(' | '.join(['| '+str(r['shape']), r['chip'], '`'+attrs+'`',fmt(r['previous_us']),
+                                     fmt(pred),fmt(r['ca_us']),diff,fmt(r['future_970dt_extrapolated_us']),'`'+str(kernel)+'` |']))
+        lines.append('')
+    (OUT/'shape-errors.md').write_text('\n'.join(lines).rstrip()+'\n')
+
+
 def main():
     groups = defaultdict(list)
     rows = []
@@ -41,6 +64,7 @@ def main():
         rows.append(row)
         for group in {'所有合格窗',*ref['slices']}:
             groups[route,sku,group].append(row)
+    shape_report(rows)
     summary = [dict(op=op,sku=sku,group=group,result=metrics(values))
                for (op,sku,group),values in sorted(groups.items())]
     output = dict(role='Historical development replay under current public API. New paired validation and any partial or native wrapper windows are reported separately.',

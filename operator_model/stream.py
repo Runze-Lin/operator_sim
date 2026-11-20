@@ -26,12 +26,18 @@ class OperatorStream:
     Adjacent identical built-in BF16 Post launches use the calibrated token
     schedule. Set experimental_post_repeats=False to replay the earlier
     occupancy-only estimate. The flag name is retained for existing callers.
+    Set track_sinkhorn_history=True to reconstruct the standalone FP32 Sinkhorn
+    high-water mark from eligible launches on this stream. After a family switch
+    or unknown prefix, only sufficient same-family coverage selects a warm call.
     """
 
-    def __init__(self, chip=REFERENCE_NAME, *, experimental_post_repeats=True):
+    def __init__(self, chip=REFERENCE_NAME, *, experimental_post_repeats=True, track_sinkhorn_history=False):
         if not isinstance(experimental_post_repeats, bool):
             raise TypeError('experimental_post_repeats must be a boolean')
+        if not isinstance(track_sinkhorn_history, bool):
+            raise TypeError('track_sinkhorn_history must be a boolean')
         self._post_repeats = experimental_post_repeats
+        self._track_sinkhorn = track_sinkhorn_history
         self.chip = load_chip(chip)
         self.reset()
 
@@ -86,9 +92,43 @@ class OperatorStream:
             return price_repeat(result, shape, self.chip)
         return result
 
+    def _sink_dispatch(self, op, shape, attrs, dtype):
+        """Return a price and the family whose coverage this dispatch can prove."""
+        options = dict(attrs or {})
+        resident, exact = self._prefix('mhc_sinkhorn')
+        explicit = 'resident_aiv' in options
+        h = options.get('resident_aiv', resident)
+        # The backend alone checks the layout, UB, dtype, iterations and target
+        # resources. Its active AIV count also covers valid one-block large T
+        # outside the shape-only model's domain.
+        conditional = estimate(op, shape, {**options, 'resident_aiv': 0 if h is None else h},
+                               chip=self.chip, dtype=dtype)
+        if explicit and h is not None:
+            return conditional, 'mhc_sinkhorn'
+        compatible = conditional.latency_us is not None
+        if compatible and not explicit and (exact or resident >= conditional.active_aiv):
+            if not exact:
+                # Only a lower bound is known, but every feasible history
+                # selects the same resident schedule for this activity level.
+                context = {'minimum_resident_aiv': resident, 'maximum_resident_aiv': self.chip.vector_cores}
+                conditional = replace(conditional, projection={**conditional.projection, 'partial_history': context})
+            return conditional, 'mhc_sinkhorn'
+        fallback = estimate(op, shape, options, chip=self.chip, dtype=dtype)
+        # An older fallback may still return a time on hardware with no
+        # calibrated local price. It cannot establish same-kernel residency.
+        return fallback, 'mhc_sinkhorn' if compatible else 'untracked_sinkhorn'
+
+    def _dispatch(self, op, shape, attrs, dtype):
+        family = _kernel_family(op, attrs)
+        if self._track_sinkhorn and family == 'mhc_sinkhorn' and (attrs is None or isinstance(attrs, Mapping)):
+            return self._sink_dispatch(op, shape, attrs, dtype)
+        return self._preview_existing(family, op, shape, attrs, dtype), family
+
     def preview(self, op, shape, attrs=None, *, dtype=None):
         """Price a candidate without changing the next call."""
-        family = _kernel_family(op, attrs)
+        return self._dispatch(op, shape, attrs, dtype)[0]
+
+    def _preview_existing(self, family, op, shape, attrs, dtype):
         if family not in _STATEFUL or (attrs is not None and not isinstance(attrs, Mapping)):
             return estimate(op, shape, attrs, chip=self.chip, dtype=dtype)
         options = dict(attrs or {})
@@ -113,16 +153,21 @@ class OperatorStream:
         """
         if not isinstance(aic_only, bool):
             raise TypeError('aic_only must be a boolean')
-        result = self.preview(op, shape, attrs, dtype=dtype)
+        result, family = self._dispatch(op, shape, attrs, dtype)
         if result.latency_us is None:
             return result
-        family = _kernel_family(op, attrs)
         if aic_only and (not result.active_aic or result.active_aiv != 0):
             raise ValueError('aic_only conflicts with the modeled engine footprint')
         saved_rms = self._prefix('rmsnorm') if aic_only else None
         self._resident, self._exact = self._prefix(family)
         self._rms_prefix = saved_rms
-        explicit = (attrs or {}).get('resident_aiv') if family in _STATEFUL else None
+        tracked_sink = self._track_sinkhorn and family == 'mhc_sinkhorn'
+        options = attrs or {}
+        explicit = options.get('resident_aiv') if family in _STATEFUL or tracked_sink else None
+        if tracked_sink and 'resident_aiv' in options and explicit is None:
+            # The caller declared an unknown predecessor. The completed launch
+            # still establishes a lower bound for the following same-family one.
+            self._resident, self._exact = 0, False
         if explicit is not None:
             self._resident = explicit
             self._exact = True

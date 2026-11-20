@@ -60,6 +60,16 @@ class ResourceBackendTest(TestCase):
             self.assertEqual(estimate(op,shape,timing_mode='calibrated').status,'unsupported')
         self.assertGreater(estimate('quant',(8*262144,7168)).projection['target_plan']['iterations'],100)
 
+    def test_reference_quant_marks_streaming_work_as_extrapolated(self):
+        small = estimate('quant', (1024, 7168))
+        self.assertEqual(small.status, 'estimated')
+        for shape in ((16384, 5120), (262144, 7168)):
+            result = estimate('quant', shape)
+            self.assertEqual(result.status, 'extrapolated')
+            self.assertIn('instruction-window', result.reason)
+            self.assertGreater(result.latency_us, 0)
+            self.assertEqual(result.latency_us, estimate('quant', shape, timing_mode='calibrated').latency_us)
+
     def test_quant_slow_resources_and_long_repeats(self):
         chip=load_chip()
         shape=(1024,4096)

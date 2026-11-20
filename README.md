@@ -35,7 +35,7 @@ print(result.latency_us, result.work["cube_ops"], result.work["logical_read_byte
 
 维护 960、970、980 等架构情景时，每个目标使用一份 JSON，分别填写按位宽区分的两类算力、核数、频率、外存容量和带宽。内置 `Ascend970DT` 情景为 120 Cube / 120 Vector、1.8 GHz、288 GB、14.4 TB/s；其中 16 位 Vector 峰值 110.592 TOP/s 已含双发射。这些是架构假设。调用方通过 `extrapolated` 状态识别外推，并决定是否将其交给事件调度器。[970DT 配置及逐项来源](configs/chips/Ascend970DT.json) · [自定义芯片示例](configs/chips/scenario-example.json) · [字段、单位和返回合同](docs/integration.md)
 
-隔离安装的 v0.27 wheel 在三种芯片配置核对 1,818 个不同输入。单次查询 P95 为 0.583 ms、最大 5.359 ms。另测 57 次 Kimi 路由选择，最大 2.036 ms。有序 Post 单独计时，72 次查询最大 25.16 ms。设备时延以 µs 返回。[安装版开销](results/v0.27/wheel-check.json) · [有序 Post](results/v0.27/post/published.json) · [逐算子误差](docs/error-analysis.md)
+隔离安装的 v0.27 wheel 在三种芯片配置核对 1,818 个不同输入。单次查询 P95 为 0.586 ms、最大 5.258 ms。另测 57 次 Kimi 路由选择，最大 2.233 ms。有序 Post 单独计时，72 次查询最大 25.16 ms。设备时延以 µs 返回。[安装版开销](results/v0.27/wheel-check.json) · [有序 Post](results/v0.27/post/published.json) · [逐算子误差](docs/error-analysis.md)
 
 ## 可预测的算子
 

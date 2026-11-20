@@ -291,6 +291,11 @@ def _evaluate(op, shape, attrs, soc, chip, dtype, timing_mode='auto'):
             return Estimate(None, 'unavailable', raw.get('reason') or raw['status'],
                             chip_name=target.name, work=work), raw
         reason = raw.get('reason') if raw['status'] == 'extrapolation' else None
+        if same and op == 'quant':
+            cache_bytes = target.details.get('l2_bytes')
+            logical_bytes = work['logical_read_bytes'] + work['logical_write_bytes']
+            if cache_bytes and logical_bytes > cache_bytes:
+                reason = 'Quant working set exceeds L2; this streaming regime lacks full instruction-window calibration'
         if op == 'fa' and shape[1] > 131072:
             reason = 'KV length exceeds the longest complete 950DT FA reference'
         if same:

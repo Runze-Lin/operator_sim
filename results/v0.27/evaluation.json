@@ -1,24 +1,24 @@
 {
   "version": "0.27.0",
-  "cutoff_utc": "2026-11-20T01:36:34.709746+00:00",
+  "cutoff_utc": "2026-11-20T01:52:01.456081+00:00",
   "base": "results/v0.25/coverage/audit.json",
   "previous": "results/v0.26/evaluation.json",
   "wheel": {
     "version": "0.27.0",
-    "wheel_sha256": "2a4d632e689722b1fc8590d17452b8e8eb955a2b740956ad0630568ff92801c0",
+    "wheel_sha256": "c64c20b3f1cb39fdeb21de939c46aa9478a4a3ae22753382dfde8229003ce345",
     "python": "3.12.16",
-    "import_ms": 37.20194,
+    "import_ms": 36.60116,
     "unique_predictions": {
       "n": 1818,
-      "median_ms": 0.105595,
-      "p95_ms": 0.58313,
-      "maximum_ms": 5.35837
+      "median_ms": 0.10936499999999999,
+      "p95_ms": 0.58638,
+      "maximum_ms": 5.25712
     },
     "kimi_dispatch": {
       "n": 57,
-      "median_ms": 0.03701,
-      "p95_ms": 1.98272,
-      "maximum_ms": 2.03534
+      "median_ms": 0.054,
+      "p95_ms": 2.11119,
+      "maximum_ms": 2.23227
     },
     "scope": "first call per distinct input in one isolated process; import and plotting excluded"
   },
@@ -3717,8 +3717,50 @@
           "undeliverable_read_bytes": 4424829.090909089,
           "fraction": 0.054100587929323256
         }
+      },
+      {
+        "id": "sigmoid_fp32-dt",
+        "qualified": true,
+        "matched": true,
+        "result": {
+          "source": "results/v0.25/cache/sigmoid_fp32-dt-prospective-traffic.json",
+          "sha256": "84c3c31bef4007e050c5852dbdb7c4ae68f96e16c7ceb54f916ad13f8ef3a873",
+          "shape": [
+            1703936,
+            12
+          ],
+          "op": "sigmoid_fp32",
+          "chip": "Ascend950DT_9582",
+          "read_descriptors": 1344,
+          "read_bytes": 81788928,
+          "nominal_GBps": 4000,
+          "peak_rate_interval": {
+            "start_us": 1.8024242424242425,
+            "end_us": 12.48121212121212,
+            "bytes": 33394688,
+            "rate_GBps": 3127.1983654937567,
+            "excess_bytes": -9320463.515151516
+          },
+          "peak_deficit_interval": {
+            "start_us": 28.366666666666667,
+            "end_us": 28.367272727272727,
+            "bytes": 0,
+            "rate_GBps": 0.0,
+            "excess_bytes": -2424.242424242424
+          },
+          "undeliverable_read_bytes": 0.0,
+          "fraction": 0.0
+        }
       }
     ]
+  },
+  "cast_holdout": {
+    "path": "results/v0.27/memory/cast-pair/freeze.json",
+    "sha256": "7126147ce1bc49eddd702679829ded16a5e07baa7356f7567dcca739d079720a"
+  },
+  "quant_envelope_validation": {
+    "path": "results/v0.27/quant-transfer/freeze.json",
+    "sha256": "d9e7d39ebca9f8d300f45dc71f9465d824f6b30cee5d59d93ca4b8e71d2416be"
   },
   "repeat_acceptance": {
     "utc": "2026-11-20T01:09:10.289684+00:00",
@@ -4007,6 +4049,14 @@
     "sha256": "205d744613533334304d5520fdaf8390b72fa3c4fdeca9771632cb6f5f944e55"
   },
   "sink_unknown_history": "results/v0.27/fusion/unknown-history.json",
+  "stream_sink": {
+    "path": "results/v0.27/fusion/stream-installed.json",
+    "sha256": "50124c58115538a34fbbacf01955622041c40ec28550548815615f0eaf558a18"
+  },
+  "dram_service": {
+    "path": "results/v0.27/quant-channel-service.json",
+    "sha256": "b72faf5967beca8b28f35d33858f707a6839db2ef721f17eaa1fcd5e1829bb4f"
+  },
   "native_64_aiv": {
     "flash": {
       "path": "results/v0.23/full-hidden/v3/flash-retry.json",
@@ -4095,72 +4145,72 @@
   },
   "rms_shadow": {
     "path": "results/v0.27/rms/score.json",
-    "sha256": "29df1cbc2750fce4800493f6223c533c5fc3dc8c03bcddb120db137e08740fe2",
+    "sha256": "7d5650c88065f0dc20622b9b6c7e15f1ed52b4566669d94675bb384119cde4f2",
     "matched_summary": {
       "Ascend950DT_9582": {
         "entry": {
           "us": {
-            "n": 9,
-            "wape": 25.67029350015962,
+            "n": 10,
+            "wape": 25.297815585875625,
             "maximum": 48.430529324819496
           },
           "old_us": {
-            "n": 9,
-            "wape": 21.685224201934773,
+            "n": 10,
+            "wape": 19.928803580896712,
             "maximum": 44.95277735572137
           },
           "cold_hot_us": {
-            "n": 9,
-            "wape": 25.01313883257212,
+            "n": 10,
+            "wape": 24.740676427713442,
             "maximum": 48.81658762627208
           },
           "known_us": {
-            "n": 9,
-            "wape": 5.006607806615834,
+            "n": 10,
+            "wape": 5.27314136123137,
             "maximum": 11.977062356156509
           }
         },
         "repeat": {
           "us": {
-            "n": 9,
-            "wape": 22.700024844421954,
+            "n": 10,
+            "wape": 20.56252387078388,
             "maximum": 42.496091784499136
           },
           "old_us": {
-            "n": 9,
-            "wape": 35.591987072182405,
+            "n": 10,
+            "wape": 34.429172459432266,
             "maximum": 57.60854904717676
           },
           "cold_hot_us": {
-            "n": 9,
-            "wape": 25.09496622714939,
+            "n": 10,
+            "wape": 22.557120490443367,
             "maximum": 48.029836848153565
           },
           "known_us": {
-            "n": 9,
-            "wape": 3.5877533608997143,
+            "n": 10,
+            "wape": 4.088425561324119,
             "maximum": 11.994062691637875
           }
         },
         "all": {
           "us": {
-            "n": 18,
-            "wape": 24.528162775460164,
+            "n": 20,
+            "wape": 23.456993675825,
             "maximum": 48.430529324819496
           },
           "old_us": {
-            "n": 18,
-            "wape": 27.032666806002794,
+            "n": 20,
+            "wape": 25.565752335363733,
             "maximum": 57.60854904717676
           },
           "cold_hot_us": {
-            "n": 18,
-            "wape": 25.044603185565336,
+            "n": 20,
+            "wape": 23.89182954498871,
             "maximum": 48.81658762627208
           },
           "known_us": {
-            "n": 18,
-            "wape": 4.461028451967747,
+            "n": 20,
+            "wape": 4.812588784353819,
             "maximum": 11.994062691637875
           }
         }
@@ -4168,82 +4218,82 @@
       "Ascend950PR_957b": {
         "entry": {
           "us": {
-            "n": 8,
-            "wape": 20.92193567050749,
+            "n": 10,
+            "wape": 25.215210351284387,
             "maximum": 47.624624111205684
           },
           "old_us": {
-            "n": 8,
-            "wape": 18.22301058936912,
+            "n": 10,
+            "wape": 21.046091233001466,
             "maximum": 47.43885006247173
           },
           "cold_hot_us": {
-            "n": 8,
-            "wape": 21.21101365316341,
+            "n": 10,
+            "wape": 25.451882310087463,
             "maximum": 51.219007719206644
           },
           "known_us": {
-            "n": 8,
-            "wape": 6.04229620925937,
-            "maximum": 8.412645590930111
+            "n": 10,
+            "wape": 7.998904566602323,
+            "maximum": 19.46967912276677
           }
         },
         "repeat": {
           "us": {
-            "n": 8,
-            "wape": 19.991958018815616,
-            "maximum": 36.97754828098936
+            "n": 10,
+            "wape": 20.276377832713262,
+            "maximum": 41.783432681450286
           },
           "old_us": {
-            "n": 8,
-            "wape": 32.47501441942987,
+            "n": 10,
+            "wape": 33.44045841843296,
             "maximum": 52.3912920100688
           },
           "cold_hot_us": {
-            "n": 8,
-            "wape": 20.9494229911151,
+            "n": 10,
+            "wape": 20.975322526908943,
             "maximum": 43.32581219203435
           },
           "known_us": {
-            "n": 8,
-            "wape": 2.3944170142482535,
-            "maximum": 10.718034945786513
+            "n": 10,
+            "wape": 2.574048965529352,
+            "maximum": 11.34708721584554
           }
         },
         "all": {
           "us": {
-            "n": 16,
-            "wape": 20.548986185324004,
+            "n": 20,
+            "wape": 23.307454320809654,
             "maximum": 47.624624111205684
           },
           "old_us": {
-            "n": 16,
-            "wape": 23.938500076223214,
+            "n": 20,
+            "wape": 25.833746747338687,
             "maximum": 52.3912920100688
           },
           "cold_hot_us": {
-            "n": 16,
-            "wape": 21.106107795950347,
+            "n": 20,
+            "wape": 23.722691476013527,
             "maximum": 51.219007719206644
           },
           "known_us": {
-            "n": 16,
-            "wape": 4.579385067990686,
-            "maximum": 10.718034945786513
+            "n": 20,
+            "wape": 5.90340913352459,
+            "maximum": 19.46967912276677
           }
         }
       }
     },
     "paired_bounds": {
       "Ascend950DT_9582": {
-        "n": 9,
+        "n": 10,
         "max_lower": 46.85355812585767,
-        "wape_lower": 23.095796570912626
+        "wape_lower": 22.250960624715944
       },
       "Ascend950PR_957b": {
-        "n": 8,
-        "max_lower": 44.67962285934193,
-        "wape_lower": 19.793882249753317
+        "n": 10,
+        "max_lower": 45.23570712136409,
+        "wape_lower": 22.744655814865656
       }
     },
     "promotion_qualified": false

@@ -1,0 +1,188 @@
+{
+  "created_utc": "2026-11-20T01:50:35.518092+00:00",
+  "role": "Independent B4 native wrapper after Cast-only sensitivity selection. The B8 application is retrospective.",
+  "efficiency_source": [
+    {
+      "op": "Cast [8192, 5120]",
+      "shape": [
+        8192,
+        5120
+      ],
+      "accepted_periods": 5407,
+      "read_beats": 1756345,
+      "write_beats": 2229135,
+      "channel_DFI_cycles": 5407000,
+      "eta": 0.7370963565748104,
+      "raw": "runs/prefill20-memory/cast_8192_5120_Ascend950DT_9582/log",
+      "receipt": "results/v0.20/large/cast_8192_5120_Ascend950DT_9582.json"
+    },
+    {
+      "op": "Cast [2097152, 32]",
+      "shape": [
+        2097152,
+        32
+      ],
+      "accepted_periods": 12464,
+      "read_beats": 3711165,
+      "write_beats": 5519921,
+      "channel_DFI_cycles": 12464000,
+      "eta": 0.74061986521181,
+      "raw": "runs/prefill20-memory/cast_2097152_32_Ascend950DT_9582/log",
+      "receipt": "results/v0.20/large/cast_2097152_32_Ascend950DT_9582.json"
+    },
+    {
+      "op": "Pro indexer Cast",
+      "shape": [
+        2097152,
+        64
+      ],
+      "accepted_periods": 30503,
+      "read_beats": 7912740,
+      "write_beats": 14482517,
+      "channel_DFI_cycles": 30503000,
+      "eta": 0.7341985050650756,
+      "raw": "runs/memory26-controller-snapshots/pro-b8-256ki-dt/log",
+      "receipt": "results/v0.23/pro-prefill/pro-b8-256ki-dt.json"
+    }
+  ],
+  "efficiency": {
+    "low": 0.7341985050650756,
+    "mid": 0.7370963565748104,
+    "high": 0.74061986521181
+  },
+  "source_rule": "min / equal-shape median / max of per-shape achieved aggregate DDR payload fraction in mixed R+W 1us channel periods whose DMC queue is occupied >=95% of ticks. No Kimi latency or traffic was used in prediction.",
+  "formula": "max(T_resource, T_first_issue+T_drain+(R+W_visible)/(1000*4096*eta)), us. R and W_visible from current 64-AIV tiling and bounded output retention. Physical source: 128 x 32-bit x 8 Gbit/s per pin.",
+  "retrospective_b8": {
+    "shape": [
+      262144,
+      7168
+    ],
+    "chip": "Ascend950DT_9582",
+    "active_aiv": 64,
+    "auto_us": 1200.4151724236067,
+    "resource_us": 1394.9861420541522,
+    "target_plan": {
+      "active_aiv": 64,
+      "rows_per_core": 4096,
+      "cols_per_core": 7168,
+      "slice_cols": 512,
+      "active_aic": 0,
+      "tile": [
+        5,
+        7168
+      ],
+      "iterations": 820,
+      "waves": 1,
+      "units": {
+        "read": 70.0,
+        "vector": 149
+      }
+    },
+    "logical_read": 3758096384,
+    "logical_write": 1937768448,
+    "assumed_read": 3758096384,
+    "assumed_write": 1812725760,
+    "assumed_output_retained": 125042688.0,
+    "wire_gbs": 4096,
+    "exposed_us": 2.2806060541522775,
+    "eta_case_us": {
+      "low": 1854.7278537905815,
+      "mid": 1847.4450650402719,
+      "high": 1838.666671139019
+    },
+    "time_range_us": [
+      1838.666671139019,
+      1854.7278537905815
+    ]
+  },
+  "independent_b4": {
+    "shape": [
+      131072,
+      7168
+    ],
+    "chip": "Ascend950DT_9582",
+    "active_aiv": 64,
+    "auto_us": 602.6137565428736,
+    "resource_us": 683.0030380541523,
+    "target_plan": {
+      "active_aiv": 64,
+      "rows_per_core": 2048,
+      "cols_per_core": 7168,
+      "slice_cols": 512,
+      "active_aic": 0,
+      "tile": [
+        5,
+        7168
+      ],
+      "iterations": 410,
+      "waves": 1,
+      "units": {
+        "read": 70.0,
+        "vector": 149
+      }
+    },
+    "logical_read": 1879048192,
+    "logical_write": 968884224,
+    "assumed_read": 1879048192,
+    "assumed_write": 843841536,
+    "assumed_output_retained": 125042688.0,
+    "wire_gbs": 4096,
+    "exposed_us": 2.2806060541522775,
+    "eta_case_us": {
+      "low": 907.714212107434,
+      "mid": 904.1545524796769,
+      "high": 899.8638754549575
+    },
+    "time_range_us": [
+      899.8638754549575,
+      907.714212107434
+    ]
+  },
+  "shape": [
+    131072,
+    7168
+  ],
+  "scenario": {
+    "model": "Kimi-K3",
+    "seq": 32768,
+    "batch": 4,
+    "tp": 8,
+    "dp": 1,
+    "ep": 8,
+    "chunk": 0,
+    "step": 0,
+    "ep_rank": 0
+  },
+  "operator_contract": "aclnnDynamicMxQuant; BF16 input contiguous, block=32, E4M3FN y and E8M0 scale [rows, hidden/64,2]; Kimi mixed QKV, MXFP8 dynamic method, scale_alg=0.",
+  "items_to_verify": [
+    939524096,
+    29360128
+  ],
+  "raw_cap_gib": 12,
+  "wall_s": 14400,
+  "expected_aiv": 64,
+  "attempts": 1,
+  "measurement": "all 64 AIV wrapper starts to done; single dispatch; verified values and E8M0 scale; all-instruction duration unavailable",
+  "participates_in_instruction_WAPE": false,
+  "qualification": "same frozen host and adapter; RUN success + exact case and SMOKE_PASS; full numerical checks; all 64 unique AIV IDs for task0 and kernel0, both done events and wrapper timestamps; no simulator sync error; within time/disk cap.",
+  "comparison": "Frozen interval hit or miss; signed error of all three sensitivity scenarios and auto/resource vs wrapper. No interval expansion or fitting.",
+  "priority_receipt": "results/v0.27/memory/cast-pair/score.json",
+  "slot": "runs/memory27-followup/remaining.lock",
+  "hashes": {
+    "results/v0.27/quant-channel-service.json": "b72faf5967beca8b28f35d33858f707a6839db2ef721f17eaa1fcd5e1829bb4f",
+    "build/smoke/large_vector": "a2a780962fdacbe48e6403201dbae4f5fdfcfdb2f8b364a304cccbcc5f4b3ceb",
+    "toolchains/cann/9.2.1/cann-9.2.1/opp/built-in/op_impl/ai_core/tbe/kernel/ascend950/ops_nn/dynamic_mx_quant/DynamicMxQuant_bf16toe4m3_high_performance.o": "17d48c749a27b6d68751ec25f76dc1e9feba37df2052be7b53a7cbd36e86a661",
+    "toolchains/cann/9.2.1/cann-9.2.1/opp/built-in/op_impl/ai_core/tbe/kernel/ascend950/ops_nn/dynamic_mx_quant/DynamicMxQuant_bf16toe4m3_high_performance.json": "9025c3adbf292f85c098431c4659f6b321f2e48c3170c316c7ea52b253ea0b49",
+    "development/validation/kda27/quant_transfer.py": "c822ba66aea583789ff048e68f3a44abdc9f83f3567179180e84fe0650b66682",
+    "scripts/cann-run.sh": "d529513abc0bc340a56c91365a9e72d5e434d2cb4841be1692930294cd0624df",
+    "scripts/cann-native-sim-run.sh": "af7dbbb67fb5b17c327d193fa9d045aeb4a1bf48b87f7051fab53bca05d6157d",
+    "build/capture/libsim_soc_adapter.so": "3f78dfb3c88665800c04d4da932255df356f1492a50d8b358933701b66f1c186",
+    "smoke/large_vector.cpp": "82715927932e28ea6ec8436e85db2eaf02fc595d56a6c335927b0f6616ebbf7d",
+    "operator_model/quant_resource.py": "036d730070e3b8cc1f9fe6a2484f1e2524e9e4d8ac81283b342bd9c6e762f129",
+    "operator_model/target_tiling.py": "3b244b8b0a61e3ed6c139123b2c87e1474da2bac3efd647f01e2b82e71a93b4b",
+    "configs/models/Kimi-K3.json": "9710e121a58d03ac92c8d6da287a19541994319afbbe6d6202af001ffd379213",
+    "configs/chips/Ascend950DT_9582.json": "54d68c49374f8fab57ae16b05923d7ea2874cc48083e0728bcbc60f467bb71ec",
+    "development/validation/large20/native.py": "f6600406f5d4c36a878ee4e49780059dc4c53e5653621204e6fa1c1470151b95",
+    "development/workloads/prefill_shapes.py": "cc9a95e07034563eeed8d302d1115d889b7ee17531a3095bc7fe3c6295e8a285"
+  }
+}

@@ -32,7 +32,7 @@ def main():
                    'results/v0.27/fusion/register.json','results/v0.27/kda/v1-register.json','results/v0.27/post/registration.json',
                    'results/v0.27/memory/read-freeze.json','results/v0.27/rms/freeze.json',
                    'results/v0.27/fusion/reserve-activation.json','results/v0.27/kda/host-control/register.json','results/v0.27/memory/cast-pair/freeze.json',
-                   'results/v0.27/rms/recovery-freeze.json']
+                   'results/v0.27/rms/recovery-freeze.json','results/v0.27/quant-transfer/freeze.json']
     sources=[*registrations,'operator_model/kimi_kda.py','operator_model/stream.py','operator_model/post_repeat.py',
              'operator_model/backend.py','operator_model/sink_history.py','operator_model/mhc_pre_sink_resource.py',
              'operator_model/vector_memory.py','operator_model/fa_resource.py',
@@ -50,6 +50,8 @@ def main():
                          for tag in ('dt','pr') if (ROOT/f'results/v0.26/memory/pro-b8-256ki-{tag}-score.json').exists()},
                  fa=fa, fusion=sink, post=post, retention=read(OUT/'memory/read-windows.json'),
                  read_holdout=read(OUT/'memory/read-holdout.json'),
+                 cast_holdout=receipt(OUT/'memory/cast-pair/freeze.json'),
+                 quant_envelope_validation=receipt(OUT/'quant-transfer/freeze.json'),
                  repeat_acceptance=read(OUT/'post/deployment.json'),
                  kda_v1={chip:read(OUT/f'kda/v1-{chip}.json') for chip in (DT,PR)
                          if (OUT/f'kda/v1-{chip}.json').exists()})
@@ -58,6 +60,8 @@ def main():
                    cache_subset=read(OUT/'memory/pr156-partial.json'),
                    large_quant=receipt(OUT/'quant-envelope.json'),
                    sink_unknown_history='results/v0.27/fusion/unknown-history.json',
+                   stream_sink=receipt(OUT/'fusion/stream-installed.json'),
+                   dram_service=receipt(OUT/'quant-channel-service.json'),
                    native_64_aiv={tag:receipt(path,('shape','qualified_core_envelope','instruction_ca_us','core_envelope_us','active_aiv','correct_elements','cost')) for tag,path in {
                        'flash':'results/v0.23/full-hidden/v3/flash-retry.json',
                        'kimi':'results/v0.20/full-quant/native.json'}.items()},

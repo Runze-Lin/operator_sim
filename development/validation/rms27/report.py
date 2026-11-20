@@ -96,7 +96,9 @@ def render():
     md=['# RMSNorm 无前序点预测','', '| 芯片 | 两个前序都合格的独立 shape | 首次遇到该形，候选 / 旧默认 WAPE、最大 | 同形立即复跑，候选 / 旧默认 WAPE、最大 |','|---|---:|---|---|']
     for s in reg['measured']:
         k=summary[s];md.append(f"| {s} | {bounds[s]['n']}/10 | {fmt(k['entry']['us'])} · {fmt(k['entry']['old_us'])} | {fmt(k['repeat']['us'])} · {fmt(k['repeat']['old_us'])} |")
-    md+=['',f"已返回 {len(cost)}/8 个宿主进程、{len(rows)}/40 个核验合格的目标窗。公开 shape-only 继续采用当前估计。候选接入所需的两端独立完整配对、两种前序各 WAPE≤25% 且最大≤50% 的判定为{'通过' if qualified else '尚未通过'}。970DT 均为外推。",'','## 同一形状的两个资源端点','',
+    final=all(bounds[sku]['n']==10 for sku in reg['measured'])
+    verdict='通过' if qualified else '未达标' if final else '尚未通过'
+    md+=['',f"已返回 {len(cost)}/8 个原始宿主进程、{len(recovery_costs)} 个补测进程，{len(rows)}/40 个核验合格的目标窗。公开 shape-only 继续采用当前估计。候选接入所需的两端独立完整配对、两种前序各 WAPE≤25% 且最大≤50% 的判定为{verdict}。970DT 均为外推。",'','## 同一形状的两个资源端点','',
      r'对完全覆盖的热态，令 $A$ 为本次活动 AIV 数、$K=\lceil D/128\rceil r$ 为本核处理 $r$ 行的向量组数。首条 gamma 搬运发起中位周期为 $G=g_0+g_A(A-1)$，各核发起的离散幅度按在同一 rstd 扇区的核数分配。x 描述符在 gamma 发起后 96 周期发出。等两条读都退休才能开始归约，数据就绪时刻还要满足本核读取总字节的端口下界。',
      '',r'令 $t_r$ 为归约后发出 rstd 写的时刻。归约到该时刻的成本按固定开销和每向量组的服务相加；从 $t_r$ 到 y 写发起另计规范化。对于同一个 128 B 扇区上的 FP32 rstd，依次按 $d_j=\max(t_{r,j}+L_{solo},d_{j-1}+I_{sector})$ 退休。最终取 y 与 rstd 的最晚完成，加退出周期，并满足 MTE、L2、HBM 下界。训练单元是某条 DMA 的发起、响应或 VF 到写发起的间隔。每次启动在端口/向量拟合中只贡献一次统计。没有使用 shape 的实测总时定价。超过一个 UB tile 的核使用既有多段排程。','',
      r'上端点为单独首次调用 $T(H=0)$ 和已用一个 AIV、开始启用第二分区 $T(H=1)$ 中较慢者。下端点为完全覆盖时的资源估计。两端假设时延为 $l,u$，相对误差平衡点 $2lu/(l+u)$ 满足 $p/l-1=1-p/u$。这只是两个模型场景之间的决策，真实 CA 可以落在两端之外。其他前序与同时工作的其他流也会改变终点。输入仍只有 shape、dtype、chip。各 AIV 的计算量按核数和 tile 上界展开，训练不要求未来芯片上提供结果。',
@@ -113,6 +115,31 @@ def render():
     md+=['',f"来源为 18 个旧的双端热态单 UB 启动。x 与 gamma 发起间隔 {p['x_lead']:.0f} 周期，rstd 最短独占响应的逐窗中位数 {p['rstd_solo']:.1f} 周期。同一扇区后继退休间隔沿用 v0.22 的 {p['shared_retire_ii']:.0f} 周期，退出 {p['drain']:.0f} 周期。响应的基础项衡量端口固定开销，增量项按目标端口字节价或每核每周期 FP32 吞吐缩放。冷/开分区取现有已校准分支。",'',
         '## 独立逐窗','', '| 芯片 | [T,D] | 真实前序 H | 时序 | 当前默认 / 冷热谐均 / 新候选 µs | 已知 H / CA µs | 新候选偏差 | 970DT 外推 µs |','|---|---|---:|---|---:|---:|---:|---:|']
     for r in rows:md.append(f"| {r['chip']} | {r['shape']} | {r['prior_aiv']} | {r['role']} | {r['old_us']:.3f} / {r['cold_hot_us']:.3f} / {r['us']:.3f} | {r['known_us']:.3f} / {r['ca_us']:.3f} | {100*(r['us']/r['ca_us']-1):+.2f}% | {r['extrapolated_970_us']:.3f} |")
+    md+=['','## 同一形状的三芯片结果和旧版差异','',
+         '按原冻结清单列全部目标。两个 950 的单元格顺序是 v0.26 无历史 / 新候选 / 同一序号的 CA，970DT 列是 v0.26 / 新候选外推。缺 CA 时保留两个冻结预测。模拟器耗时见下方进程表。','',
+         '| [T,D] | 目标调度 | 950DT 旧 / 新 / CA µs | 950PR 旧 / 新 / CA µs | 970DT 旧 / 新 µs，外推 |','|---|---|---:|---:|---:|']
+    measured={(r['chip'],r['group'],r['i']):r for r in rows};frozen={(r['chip'],r['group'],r['i']):r for r in reg['rows']}
+    for f in reg['rows']:
+        if f['chip']!=reg['measured'][0] or f['role']=='prefix':continue
+        cells=[]
+        for sk in [*reg['measured'],*reg['extrapolated']]:
+            key=(sk,f['group'],f['i']);z=frozen[key];v=measured.get(key);cell=f"{z['old_us']:.3f} / {z['us']:.3f}"
+            if sk in reg['measured']:cell+=' / '+(f"{v['ca_us']:.3f}" if v else '—')
+            cells.append(cell)
+        md.append(f"| {f['shape']} | {f['role']} | "+' | '.join(cells)+' |')
+    md+=['','合并 WAPE 将相同 shape 的两个调用当作两个设备窗，以各自时长计权。门槛仍按该端完整配对中的首次/扩核、复跑分别判断。','',
+         '| 芯片 | 完整配对窗数 | 合并旧默认 WAPE / 最大 | 合并候选 WAPE / 最大 |','|---|---:|---:|---:|']
+    for s,g in summary.items():md.append(f"| {s} | {2*bounds[s]['n']} | {fmt(g['all']['old_us'])} | {fmt(g['all']['us'])} |")
+    md+=['','## CA 成本','', '| 进程、SKU | CA 墙钟 s | CPU user+sys 秒 | 峰值 GiB | 退出码 |','|---|---:|---:|---:|---:|']
+    for folder,prefix in [('receipts',''),('recovery','补测 ')]:
+        for file in sorted((OUT/folder).glob('*.json')):
+            q=read(file);c=q['cost'];cpu=c.get('cpu_user_s',c.get('user_seconds'));sys_s=c.get('cpu_sys_s',c.get('system_seconds'))
+            cpu_text=f"{cpu+sys_s:.1f}" if isinstance(cpu,(int,float)) and isinstance(sys_s,(int,float)) else '—'
+            raw=ROOT/'runs/rms27'/(('recovery-' if prefix else '')+file.stem)/'cpu.txt'
+            if cpu_text=='—' and raw.is_file():
+                values=raw.read_text().split()
+                if len(values)==2:cpu_text=f"{sum(map(float,values)):.1f}"
+            md.append(f"| {prefix+file.stem} | {c['seconds']:.1f} | {cpu_text} | {c['peak_bytes']/2**30:.2f} | {c['exit_code']} |")
     md+=['','## 当真实前序已知时','',
          '| SKU | 协议 | 仅按 shape 的新候选 | 按真实 H 的生产估计 | 冻结热端点（仅复跑） |','|---|---|---:|---:|---:|']
     for sku in reg['measured']:
@@ -157,6 +184,15 @@ def render():
             shape=[8*seq,w];forecasts=[forecast(shape,load_chip(sk),p)['us'] for sk in [*reg['measured'],*reg['extrapolated']]]
             md.append(f"| {label} input_layernorm | {seq} | {shape} | "+' / '.join(f'{v:.2f}' for v in forecasts)+' |')
     md+=['','在这些多 UB 块情景，输入 x 和 y 读写量随 T 成正比，多轮重叠、最后一轮余量及缓存容量仍影响短区间的增量。Kimi 自定义的融合归一化须按其实际 kernel 合同单独验证。']
+    completed=[r for r in paired if r['role']=='entry' and r['chip']==dt]
+    if len(completed)==10:
+        ae=sum(abs(x['us']-x['ca_us']) for x in completed);truth=sum(x['ca_us']for x in completed)
+        ranked=sorted(completed,key=lambda x:-abs(x['us']-x['ca_us']))
+        md+=['','## 950DT 首遇组的误差来自哪些形状','',
+            f'十窗实测总时长 {truth:.3f} µs，允许的绝对误差总和 {0.25*truth:.3f} µs；模型为 {ae:.3f} µs，多出 {ae-.25*truth:.3f} µs。复跑的改进不能抵消首遇协议的验收缺口。', '',
+            '| 贡献最大的 shape | 预测 / CA µs | 对整组 WAPE 的贡献（百分点） |','|---|---:|---:|']
+        for v in ranked[:4]:md.append(f"| {v['shape']} | {v['us']:.3f} / {v['ca_us']:.3f} | {100*abs(v['us']-v['ca_us'])/truth:.2f} |")
+        md+=['','[2,2816] 和 [4,688] 都由 H=1 打开第二个派发分区。只给 shape 时，同时压低它们在热复跑和扩核时的误差有硬下界。[521,4032] 在 DT 每核最多 9 行、7+2 个 UB 行分段；传 H=0 的首发资源估计为 6.362 µs，相同输入无历史点为 5.239 µs。该例误差既含首发流水残差也包含平衡未知前序引入的偏移。']
     from development.validation.rms27.limits import group
     limits={'criteria':{'protocol_wape_pct':25,'per_window_max_pct':50},
             'old_rms23':group(dev['paired_rows'],reg['measured']),'new_rms27':group(paired,reg['measured'])}

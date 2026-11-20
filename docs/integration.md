@@ -92,7 +92,7 @@ def duration_seconds(op, local_shape, attrs, roofline_us, soc="Ascend950DT_9582"
 | 返回状态 | 含义 | latency_us |
 |---|---|---|
 | estimated | 当前模型接受这次调用的属性并给出设备时间估计。新 shape 可能没有逐点 CA；适用范围和独立误差见校准报告。 | µs |
-| extrapolated | 目标芯片与参考配置不同，或已显式标记的 shape 外推，例如 KV 超过已完整验证的 128k 的 DT 参考 FA，或 T>256 的 mHC 拆分链兼容路径；显式资源法在 DT 上也返回此状态。 | µs |
+| extrapolated | 目标芯片与参考配置不同，或已显式标记的 shape 外推，例如逻辑读写总量超过 L2 的 DT 参考 Quant、KV 超过已完整验证的 128k 的 DT 参考 FA，或 T>256 的 mHC 拆分链兼容路径；显式资源法在 DT 上也返回此状态。 | µs |
 | unsupported | 算子名、目标 SoC、shape 或调用属性未被该路线接受。 | None |
 | unavailable | 有结构模型，缺少可信的完整耗时；例如默认的融合 KDA chunk V1，或实际内核铺开后末片只有 16 列且数值失败的 vLLM HcPost。 | None |
 
@@ -220,6 +220,16 @@ repeat = stream.advance("mhc_post", [65, 4, 5120], dtype="bf16")
 `issue_us` 是忙核第一个 UB 块（以及第二个空槽，如有）的读发起时间，相对全片首条设备指令计时。其余时间由 `latency_us` 和阶段诊断描述。若换了指令实现，在芯片 config 的 `details.cast_initial_read_pair_cycles` 覆写同一核连续发出两笔读的周期数；不确定时可传 null。在同一系统流上只有紧邻成功重复的内置 token 分核 Post 会默认使用重复派发的读写时序。前序丢失时调用 `forget_history()`，分支探索使用 `preview()`。[Cast 同轴读图](../results/v0.26/memory/README.md) · [Post 适用分支和独立验证](../results/v0.27/post/report.md)
 
 独立 Sinkhorn 可传入同一库实现此前已覆盖的 AIV 数，例如 `estimate("mhc_sinkhorn",(67,4),{"resident_aiv":0,"num_iters":10},chip="Ascend950DT_9582")`。0 表示确定首次，省略表示前序未知。其他算子的活跃核数无法说明本实现的前序。[调用边界与实测](../results/v0.27/fusion/public-sink.md)
+
+有序系统也可从已提交的调用恢复 Sinkhorn 前序。每个 rank 和 stream 各持有一个实例，调用方按实际顺序传入 shape 和迭代数即可。
+
+```python
+sink_stream = OperatorStream("Ascend950PR_957b", track_sinkhorn_history=True)
+for tokens, iters in [(13, 3), (46, 8), (67, 10)]:
+    result = sink_stream.advance("mhc_sinkhorn", (tokens, 4), {"num_iters": iters})
+```
+
+若接入时上一段历史未知，先调 `forget_history()`。它仅在能证明当前 AIV 已全部被覆盖时恢复热态，跨库实现时重新判断。两端 30 个实际 CA 窗和 970DT 的冻结预测都重放了相同的调用顺序。[使用边界与验证](../results/v0.27/fusion/stream.md)
 
 ## Kimi-K3 在一次 prefill 调度中的 KDA
 
