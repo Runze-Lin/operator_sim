@@ -58,4 +58,4 @@ Kimi [144,2304,1536] 的 950PR 接口已启动，但达到 20.0 分钟上限（�
 
 [公式、来源与算例](method.md) · [每一实际窗口、接口 kernel、MMAD 与比值](score.json) · [冻结时间、模型指纹与三端预测](freeze.json) · [不同 N/K 的前瞻条件](kimi-head/freeze.json) · [单槽状态](kimi-head/state.json) · [与直接复用 DT 比](paired.md) · [三模型 B1/9/11/16 与 MTP 同表](decode.md) · [Pro 整批与分块设备实验](pro-large/README.md) · [Flash 每行增量成本](scaling.md)
 
-最后更新：2026-11-20T07:24:52.399645+00:00
+最后更新：2026-11-20T07:30:34.826984+00:00

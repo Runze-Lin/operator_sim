@@ -6,6 +6,30 @@ import json
 from freeze import ROOT, OUT, DT, PR, FUT
 TARGET=OUT/'decode';REG=TARGET/'freeze.json'
 
+def decode_groups(rows):
+    """Aggregate one median CA window per geometry to avoid B1/Q9 and B9/Q1 double counting."""
+    lines = ['## 同一 decode 行数下的投影误差', '',
+             '| 本次 M | B×Q | DT 合格投影/6 · WAPE / 最大 | PR 合格投影/6 · WAPE / 最大 |',
+             '|---:|---|---:|---:|']
+    summaries = {}
+    for m in sorted({r['shape'][0] for r in rows}):
+        group = [r for r in rows if r['shape'][0]==m]
+        scenarios = sorted({(a['batch'],a['Q']) for r in group for a in r['scenarios']})
+        cells = []
+        summaries[m] = {}
+        for chip in (DT,PR):
+            samples = [r['endpoints'][chip] for r in group if r['endpoints'][chip]['ca_us'] is not None]
+            absolute = [abs(r['predicted_us']-r['ca_us']) for r in samples]
+            wape = 100*sum(absolute)/sum(r['ca_us'] for r in samples) if samples else None
+            maximum = max((100*err/r['ca_us'] for err,r in zip(absolute,samples)),default=None)
+            summaries[m][chip] = dict(eligible=len(samples),planned=len(group),wape=wape,max_pct=maximum)
+            cells.append(f'{len(samples)}/{len(group)} · {wape:.2f}% / {maximum:.2f}%' if samples else f'0/{len(group)} · N/A')
+        lines.append('| '+ ' | '.join([str(m),'、'.join(f'{b}×{q}' for b,q in scenarios),*cells])+' |')
+    lines+=['','每个 M 有六种不同权重。先在每个几何和芯片内取合格 CA 中位数，再算 WAPE 和最大相对误差。'
+             '缺完整回执的投影在该分母中留空。M=9 的两个调度场景只计同一份几何；每行统计反映当前各端实际取得的投影组合。']
+    return summaries, lines
+
+
 def build(score):
     prices=json.loads(REG.read_bytes());pending={tuple(x['shape']) for x in prices['jobs']}
     evidence=defaultdict(list)
@@ -37,10 +61,12 @@ def build(score):
         rows.append(dict(model=j['model'],node=j['node'],shape=s,scenarios=j['scenarios'],endpoints=endpoints,extrapolated_970dt_us=j['predictions'][FUT]['us']))
     ids={tuple(r['shape']) for r in rows};counts={k:sum(bool(evidence[s,k]) for s in ids) for k in (DT,PR)};both=sum(all(evidence[s,k] for k in (DT,PR)) for s in ids)
     lines[5:5]=[f"当前 {len(ids)} 种唯一几何，DT {counts[DT]}、PR {counts[PR]} 种已有合格时间，{both} 种双端配对。空白项只表示这份合同尚无合格设备时间。",'']
+    grouped, group_lines = decode_groups(rows)
+    lines += ['', *group_lines]
     idle=OUT/'pro-b9-mtp/host-check.json'
     if idle.exists():
         obs=json.loads(idle.read_text())['observation'];quiet='、'.join(str(v['idle80']) for v in obs)
         lines+=['',f"Pro 的同一 indexer.weights_proj [81,64,7168]（B9×Q9）目前只有 host workspace 和本模型预报。已有设备登记和全部相关原始调用均未发现相同采集。三次 2 秒宿主采样只见 {quiet} 个具有至少 80% 空闲的物理核；256 核主机上的旧 Kimi 槽已有锁主和等待者。因此此端点没有另排长队，表里也不填 CA。[资源核对](pro-b9-mtp/host-check.json)。"]
     lines+=['','本轮只新增三个从未采集也未预约的几何：Flash dsa.wq_a 的 [81,1280,5120]、Pro dsa.wq_a 的 [16,1536,7168]、Kimi mla.kv_b_proj 的 [9,3072,512]。三形共六个目标端点，已在采前登记唯一 ELF、数值、分核和 MMAD 预测；在现有 Kimi 大形双端释放同一把锁后逐一执行。前序等待不计为已采或独立准确性。','', '[新增六端冻结](decode/freeze.json) · [实际排队和 CA 状态](decode/state.json) · [逐几何机器数据](decode.json) · [prefill 双端实测和冻结盲测](report.md)']
     from score import save
-    save('decode.md','\n'.join(lines)+'\n');save('decode.json',json.dumps(dict(utc=score['utc'],unique_shapes=len(ids),measured_counts=counts,both=both,rows=rows,state=state),indent=2,ensure_ascii=False)+'\n')
+    save('decode.md','\n'.join(lines)+'\n');save('decode.json',json.dumps(dict(utc=score['utc'],unique_shapes=len(ids),measured_counts=counts,both=both,by_m=grouped,rows=rows,state=state),indent=2,ensure_ascii=False)+'\n')
