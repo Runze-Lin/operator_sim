@@ -45,6 +45,8 @@ def release(prefix):
     sys.path.insert(0,str(Path(prefix).resolve()))
     import operator_model as api
     assert api.__version__=='0.31.0' and not Path(api.__file__).is_relative_to(ROOT)
+    sys.path.append(str(Path(__file__).resolve().parent))
+    from matmul_scenarios import write_scenarios
     table=read(OLD/'evaluation.json')['summary']
     rows={}
     costs=[]
@@ -81,6 +83,14 @@ def release(prefix):
             r['current_us'],'results/v0.30/replay.json','archive replay')
     for r in read(ROOT/'results/v0.29/matmul/score.json')['rows']:
         add('matmul',r['shape'],r['chip'],{},r['kernel'],r['ca_us'],r['raw_sha256'],r['old_us'],r['source'],r['role'])
+    for r in read(OLD/'matmul/score.json')['rows']:
+        if r['status']=='whole kernel qualified':
+            rec=ROOT/r['receipt']
+            assert digest(rec)==r['receipt_sha256']
+            s,=read(rec)['stages']
+            assert s['trace_sha256']==r['trace_sha256'] and isclose(s['ca_us'],r['ca_us'],abs_tol=.001)
+            add('matmul',r['shape'],r['chip'],{},s['kernel'],r['ca_us'],[s['trace_sha256']],r['public_us'],
+                r['receipt'],'Flash full prefill; '+r['role'])
     for r in read(OLD/'matmul-dispatch/device/score.json')['rows']:
         if r['status']=='qualified':
             add('matmul',r['shape'],r['chip'],{},r['kernel'],r['ca_us'],[r['trace']],r['public_us'],
@@ -92,6 +102,17 @@ def release(prefix):
                 str(rec.relative_to(ROOT)),'v0.31 prospective, device')
             q=rows['matmul',r['sku'],(stage['trace_sha256'],)]
             assert isclose(q['current_us'],r['forecast_us'],abs_tol=1e-9)
+    chunk_dir=OUT/'matmul/kimi-prefill'
+    chunk=read(chunk_dir/'freeze.json')
+    for chip,tag in ((DT,'dt'),(PR,'pr')):
+        rec=chunk_dir/(tag+'.json')
+        if rec.exists() and (r:=read(rec)).get('qualified'):
+            assert r['freeze_sha256']==digest(chunk_dir/'freeze.json') and r['chip']==chip
+            stage,=r['stages']
+            add('matmul',chunk['shape'],chip,{},stage['kernel'],r['ca_us'],[stage['trace_sha256']],
+                chunk['predictions'][chip]['old_us'],str(rec.relative_to(ROOT)),'v0.31 frozen Kimi wide-output prefill')
+            assert isclose(rows['matmul',chip,(stage['trace_sha256'],)]['current_us'],
+                           chunk['predictions'][chip]['us'],abs_tol=1e-9)
     kimi=ROOT/'results/v0.29/matmul/decode'
     for j in read(kimi/'freeze.json')['targets']:
         for chip,tag in [(DT,'dt'),(PR,'pr')]:
@@ -118,6 +139,8 @@ def release(prefix):
                 add(j['op'],j['shape'],chip,j['attrs'],s['kernel'],r['ca_us'][j['op']],[s['trace_sha256']],
                     j['predictions'][chip]['us'],str(file.relative_to(ROOT)),'v0.31 independent standalone')
     values=list(rows.values())
+    write_scenarios(values,query,ROOT,OUT,(DT,PR,FUT),read(OLD/'matmul-dispatch/coverage.json')['rows'],
+                    [*read(ROOT/'results/v0.28/matmul/overview-prices.json')['rows'],chunk])
     comparisons={}
     for op in ('fa','matmul','vllm_hc_post'):
         by_chip={}

@@ -44,7 +44,7 @@ def render():
                     r.update(ca_us=d['ca_us'],old_signed_pct=100*(p['old_us']/d['ca_us']-1),
                         signed_pct=100*(p['us']/d['ca_us']-1),geometry_verified=bool(ms) and all(ms.values()),checks=ms,
                         actual_groups=g.get('groups'),actual_splits=g.get('splits_per_output'),actual_productive_aic=g.get('productive_aic'),
-                        actual_mmad=stage['mmad'],actual_roster=[stage['active_aic'],stage['active_aiv']],kernel=stage['kernel'],trace_sha256=stage['trace_sha256'],
+                        supplement=d.get('secondary_evidence'),actual_mmad=stage['mmad'],actual_roster=[stage['active_aic'],stage['active_aiv']],kernel=stage['kernel'],trace_sha256=stage['trace_sha256'],
                         correctness=d['correctness'],terminal_roster=len(d.get('terminal',stage['windows'])))
             rows.append(r);group.append(r)
         dt,pr=group
@@ -65,6 +65,8 @@ def render():
         evidence='进行中' if r['status'] in ('acquiring','qualifying') else '待采' if r['status']=='pending' else '采集未合格'
         if t:
             evidence=f"[{r['actual_roster'][0]} AIC / {r['actual_roster'][1]} AIV，{r.get('actual_productive_aic','—')} 个 AIC 计算]({r['receipt']})，{'分块全符' if r['geometry_verified'] else '分块待核查'}"
+        if r.get('supplement') and r['checks'].get('k_spans') and not r['checks'].get('final_output_descriptors_complete',True):
+            evidence=f"[{r['actual_roster'][0]} AIC / {r['actual_roster'][1]} AIV，{r['actual_productive_aic']} 个 AIC 计算]({r['supplement']['coverage']})，Cube 分块已核实，最终写回导出不全"
         shape='×'.join(map(str,r['shape'])); brief=f"{desc['model']} `{desc['node']}` · Q{desc['tokens_per_request']} · {shape}"
         lines.append(f"| {brief} | {r['sku'][6:11]} | {r['old_us']:.3f} / {r['forecast_us']:.3f} / {f'{t:.3f}' if t else '—'} | {format(r['signed_pct'],'+.2f')+'%' if t else '—'} | {r['expected_mmad']} / {r.get('actual_mmad','—')} | {evidence} | {r['future_970dt_extrapolated_us']:.3f} |")
     lines+=['','| 芯片 | 已测 / 冻结 shape | 旧 WAPE / 最大 | 当前 WAPE / 最大 | 所有分块核对通过 |','|---|---:|---:|---:|---:|']
@@ -76,7 +78,7 @@ def render():
         for r in ratios:lines.append(f"| {r['shape']} | {r['pr_over_dt']:.4f} | {r['old']:.4f} | {r['new']:.4f} | {r['signed_pct']:+.2f}% |")
     lines+=['',f"四个端点按顺序各采一次。截至本次评分，已结束端点共用时 {cost_s/60:.1f} 分钟，累计盘占峰值 {cost_bytes/2**20:.1f} MiB。源投影、旧版和候选预测、两端的切 K 段数及真实 MMAD 数的预测均在首次设备采集前登记。此前知道两个形状的 host workspace 大小。此处验证连续 ND BF16、无偏置的 `aclnnMatmul` 实现。正式安装包为 `ops_nn/mat_mul_v3`。模型部署中若使用其他精度、转换或融合，需要相符的 CA 合同。970DT 全为外推。",'',
         '预测按目标 L0A/L0B 容量重选输出矩形并分配 K 段。首个 shape 是 B11 推测八个 token 后每请求校验 Q9。第二个 shape 是 B11 每请求一行的普通 decode。每个合格端点均核对 gold、安装 ELF、official duration 表和全部物理核结束。机制检查另从每核真实 A/B 装载首址、非重叠输出矩形、MMAD 序列、FP32 部分和地址以及所有 AIV 的最终写回，重建每个矩形对整个 K 轴的覆盖。','',
-        '[冻结资源与预算](freeze.json) · [逐形机器数据](score.json) · [后台采集状态](state.json)','']
+        '[冻结资源与预算](freeze.json) · [逐形机器数据](score.json) · [后台采集状态](state.json) · [PR 最终写回核查](pr-store-diagnosis.md) · [B11 逐步算例](example.md)','']
     write(OUT/'report.md','\n'.join(lines))
     return all('receipt' in r for r in rows)
 

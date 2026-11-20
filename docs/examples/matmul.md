@@ -2,13 +2,15 @@
 
 DeepSeek-V4-Pro 的 B11、MTP8 算例同时给出资源预测与同轴实测图，可逐项核对每个 AIC 的 K 段、部分和与最终输出。[B11 逐步算例](../../results/v0.31/matmul/device/example.md) · [逐字节访存](../../results/v0.31/matmul/device/traffic.md)
 
+Kimi 的 MLA 宽输出样例把 B8 每请求本步的 4096 个 token 组成 M=32768，在 TP8 的 N=3072、K=512 上预测 48 / 55 波（DT / PR）。输出 192 MiB。表中同时列出旧版和当前冻结值，CA 回执到达时填入实测。[宽输出多波 prefill](../../results/v0.31/matmul/kimi-prefill/report.md) · [同一模型的 B16 decode 偏差](../../results/v0.31/matmul/kimi/pages.md)
+
 ## 从同一权重看 decode 和长 prefill
 
 Flash 的 indexer.wk 在 TP8 场景中使用 K=512、N=128。单请求 MTP8 校验与九请求普通 decode 都给 [9,128,512]；B8×128Ki 的整批输入给 [1048576,128,512]。输入 $X[M,512]$，输出 $Y[M,128]$，逻辑工作为 $2M×512×128$ FLOP。长输入用 32 AIC，每核一次装入权重，处理 128 个输出块。L2 放不下全部脏输出后，A 的读和 C 的写共享外存服务，关键核的后半段出现页首空泡。950DT 的容量候选 409.270 µs，完整 CA 405.617 µs。图的上半是根据容量算出的排程，下半是最后完成的 core22；下方同时给出逐块发起间隔。
 
 ![950DT B8×128Ki Matmul 模型与 CA 同时间轴](../../results/v0.30/matmul/flash-b8-128ki.png)
 
-[逐步公式、参数溯源及可重绘数据](../../results/v0.30/matmul/report.md) · [三模型 decode 与大形](../../results/v0.30/matmul-dispatch/report.md) · [PR/DT 速度比](../../results/v0.30/matmul/comparison.md)
+[逐步公式、参数溯源及可重绘数据](../../results/v0.30/matmul/report.md) · [三模型 decode 与大形的公开预测和 CA](../../results/v0.31/matmul/scenarios.md) · [PR/DT 速度比](../../results/v0.30/matmul/comparison.md)
 
 同一权重的普通 B9 或单请求 MTP8 输入为 [9,128,512]。输出沿 N 分到两个 AIC，每个算 9×64 个有效元素，每次乘加深度 256，每核两次 MMAD。全片有用计算量为 1,179,648 FLOP。DT 的独立设备窗为 4.325 µs，PR 为 4.127 µs；冻结预测各为 4.234 µs。图中 FIXP 的实测长条包含等待乘加结果的时间。模型只在临界路径上额外支付写回尾段。 [各条指令的起止时间](../../results/v0.30/matmul-dispatch/device/mtp8_example.json) · [同一投影的独立留出误差](../../results/v0.30/matmul-dispatch/device/report.md)
 

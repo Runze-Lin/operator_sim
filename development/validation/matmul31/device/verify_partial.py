@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 import struct
 import sys
+import time
 
 ROOT=Path(__file__).resolve().parents[4]
 sys.path.insert(0,str(ROOT))
@@ -68,6 +69,7 @@ def audit(leaf):
     expected_slices=[(i*pred['max_segment_k'],i*pred['max_segment_k']+(pred['tail_segment_k'] if i==pred['k_splits']-1 else pred['max_segment_k'])) for i in range(pred['k_splits'])];assert all(sorted(z)==expected_slices for z in rect.values())
     for i,(mi,ni,dm,dn) in enumerate(rect):
         assert mi>=0 and ni>=0 and mi+dm<=m and ni+dn<=n and all(max(mi,mj)>=min(mi+dm,mj+em) or max(ni,nj)>=min(ni+dn,nj+en) for mj,nj,em,en in list(rect)[:i])
+    assert s['active_aic']==pred['active_aic'] and s['active_aiv']==pred['active_aiv']
     assert sum(dm*dn for _,_,dm,dn in rect)==m*n and len(rect)==pred['output_tiles'] and len(raw_cube)==pred['productive_aic'] and sum(hist.values())==s['mmad']==pred['mmads_total'] and hist==expected((m,n,k),pred)
     union,over=flattened(destinations);assert not over;origin=min(lo for lo,hi in union);missing=[];cursor=origin
     for lo,hi in union:
@@ -78,6 +80,38 @@ def audit(leaf):
     assert writes+unseen==2*m*n
     return dict(receipt=leaf,receipt_sha256=ca.digest(p),trace_sha256=s['trace_sha256'],freeze_sha256=ca.digest(REG),shape=[m,n,k],chip=receipt['chip'],kernel=s['kernel'],time_qualified=receipt['qualified'],ca_us=receipt['ca_us'],all_gold=receipt['correctness'],export= 'all descriptor names with src_mem=UB and dst_mem=OUT independently searched in every physical AIV shard and all-chip JSON. CSV counts at all GM write PCs and visualize_data.bin per-PC per-core execution counts independently crosschecked; binary timeline is byte-identical to global JSON.',cube_geometry=dict(matches_expected=True,groups=len(rect),slices_per_group=sorted({len(v) for v in rect.values()}),productive_aic=len(raw_cube),active_aic=s['active_aic'],active_aiv=s['active_aiv'],rectangles=[dict(m0=mi,n0=ni,m=dm,n=dn,k_spans=sorted(v)) for (mi,ni,dm,dn),v in rect.items()],mmad=describe(hist),cores=workers),end_writes=dict(fully_observed=not unseen,visible_bytes=writes,expected_bytes=2*m*n,unseen_bytes=unseen,missing_output_relative_byte_ranges=missing,partial_readers=len(readers),store_writers=sum(v['write_desc']>0 for v in coverage.values()),partial_readers_without_write=unfinished,store_pcs=sorted(set(observed_stores)),per_aiv=coverage))
 
+def supplement(leaf):
+    receipt_path=OUT/leaf; strict=OUT/(leaf[:-5]+'-strict.json'); original=ca.read(receipt_path)
+    # Immutable snapshots; the score's active receipt may gain diagnostics but
+    # neither the original time qualification nor a missing store is upgraded.
+    if original.get('mechanism_checks') is None and not strict.exists():
+        with strict.open('xb') as f:f.write(receipt_path.read_bytes())
+    source=strict.name if strict.exists() else leaf
+    out=audit(source);coverage_path=OUT/(leaf[:-5]+'-coverage.json');ca.save(coverage_path,out)
+    if strict.exists():
+        d=ca.read(strict);g=out['cube_geometry'];dest=out['end_writes'];without=dest['partial_readers_without_write']
+        d['actual_geometry']=dict(groups=g['groups'],splits_per_output=g['slices_per_group'],productive_aic=g['productive_aic'],active_aic=g['active_aic'],active_aiv=g['active_aiv'],actual_mmad=g['mmad']['mmads'],mmads=g['mmad']['histogram'],output_rectangles=g['rectangles']);d['mechanism_checks']=dict(k_spans=True,groups=True,productive_aic=True,active_aic=True,active_aiv=True,mmads=True,final_output_descriptors_complete=dest['fully_observed']);d['secondary_evidence']=dict(original_strict_receipt=strict.name,original_sha256=ca.digest(strict),coverage=coverage_path.name,coverage_sha256=ca.digest(coverage_path),note=f'Cube address map and MMAD histogram passed. Exported stores account for {dest["visible_bytes"]}/{dest["expected_bytes"]} output bytes; {len(without)} partial readers lack a final write in all saved trace views. Full numerical correctness and official time still qualified; incomplete instruction work is not extrapolated.');ca.save(receipt_path,d)
+    return out
+
+def follow():
+    # Passive raw-data audits only. Preserve failed audits rather than promoting them.
+    reg=ca.read(REG)
+    for j in reg['rows']:
+        for chip,tag in ((ca.DT,'dt'),(ca.PR,'pr')):
+            stem='-'.join(map(str,j['shape']))+'-'+tag;leaf=stem+'.json';completed=OUT/(stem+'-coverage.json');failure=OUT/(stem+'-coverage-failure.json')
+            if completed.exists() or failure.exists():continue
+            while not (OUT/leaf).exists():time.sleep(15)
+            d=ca.read(OUT/leaf)
+            if not d['qualified']:
+                ca.save(failure,dict(qualified=False,reason=d.get('reason'),receipt=leaf));continue
+            try:supplement(leaf)
+            except (KeyError,ValueError,AssertionError,OSError) as exc:ca.save(failure,dict(receipt=leaf,reason=repr(exc),evidence='Original receipt preserved; supplemental output-coverage audit not qualified.'))
+    from development.validation.matmul31.device.report import render
+    from development.validation.matmul31.device.work_audit import build
+    render();build()
+
 if __name__=='__main__':
-    for leaf in sys.argv[1:]:
-        out=audit(leaf);ca.save(OUT/(leaf[:-5]+'-coverage.json'),out);print(out['chip'],out['cube_geometry']['groups'],out['end_writes']['unseen_bytes'])
+    if '--watch' in sys.argv:follow()
+    else:
+        for leaf in sys.argv[1:]:
+            out=supplement(leaf);print(out['chip'],out['cube_geometry']['groups'],out['end_writes']['unseen_bytes'])

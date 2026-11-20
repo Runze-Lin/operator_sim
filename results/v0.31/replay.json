@@ -22169,6 +22169,58 @@
       "productive_aic": 28
     },
     {
+      "op": "matmul",
+      "shape": [
+        11,
+        1280,
+        5120
+      ],
+      "attrs": {},
+      "chip": "Ascend950DT_9582",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_4098_mix_aic",
+      "ca_us": 10.15272718667984,
+      "trace_sha256": [
+        "7e67345c372e4b99375dbda4182b68a3991e15ec6cbb367e3530a322f64bd786"
+      ],
+      "source": "results/v0.31/matmul/device/11-1280-5120-dt.json",
+      "role": "v0.31 prospective, device",
+      "previous_us": 12.000221049251415,
+      "current_us": 11.318366540950652,
+      "future_970dt_extrapolated_us": 11.000147775163871,
+      "status": "extrapolated",
+      "branch": "retiled_output_split_k",
+      "mmad": 420,
+      "active_aic": 32,
+      "active_aiv": 64,
+      "productive_aic": 30
+    },
+    {
+      "op": "matmul",
+      "shape": [
+        16,
+        2304,
+        1536
+      ],
+      "attrs": {},
+      "chip": "Ascend950DT_9582",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "ca_us": 6.8399999141693115,
+      "trace_sha256": [
+        "c406a6a780d5deb64b3e8bff79ab0ceccaca036b4f8f9eae44adbd431b55fd13"
+      ],
+      "source": "results/v0.29/matmul/decode/16-2304-1536-dt.json",
+      "role": "Kimi v0.29 frozen device",
+      "previous_us": 8.632401346215127,
+      "current_us": 8.632401346215127,
+      "future_970dt_extrapolated_us": 5.639816328102776,
+      "status": "extrapolated",
+      "branch": "coarse_tile",
+      "mmad": 216,
+      "active_aic": 18,
+      "active_aiv": 0,
+      "productive_aic": null
+    },
+    {
       "op": "fa",
       "shape": [
         9,

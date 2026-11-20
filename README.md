@@ -10,7 +10,7 @@
 
 单卡 B8 整批 prefill 的工作负载表按 32Ki、128Ki、256Ki 给出每个算子的输入、dtype、并行切分、两卡 CA 实测和 970DT 外推。矩阵投影、indexer 系数与全 hidden 激活各有自己的宽度。[DeepSeek V4.1 Flash](docs/workloads/deepseek-flash.md) · [DeepSeek V4 Pro](docs/workloads/deepseek-pro.md) · [Kimi K3](docs/workloads/kimi-k3.md)
 
-普通 decode 的每卡 M 为 1、9、11、16；同一批请求使用 MTP8 校验时 M 为 9、81、99、144。Flash、Pro 和 Kimi 的 N、K 来自各自的真实投影。v0.30 的 38 个场景几何逐形列出当时的预测和可用设备实测，另有 31 个几何/端做过安装库的 host 分支核验。[三模型 decode 与大形对照](results/v0.30/matmul-dispatch/report.md) · [其他实测 Matmul 投影](results/v0.29/matmul/workloads.md)
+普通 decode 的每卡 B 为 1、9、11、16 时，M 分别为 1、9、11、16。同一批请求做 MTP8 主模型校验时，M 分别为 9、81、99、144。Flash、Pro 和 Kimi 的 N、K 取各自的投影宽度。53 个场景几何表列出公开接口的 DT、PR、970DT 预测、现有两端 CA 时间和长 prefill 的实测增长斜率。[三模型 decode 与大形对照](results/v0.31/matmul/scenarios.md) · [安装库的 host 分支核验](results/v0.30/matmul-dispatch/report.md)
 
 在 `estimate("matmul", [M,N,K], chip=...)` 中，窄输出、长 K 的投影可按目标核数重选输出块，再计算部分积与 FP32 归并。对 Pro 的 B11×9 校验，950DT 的预测 / CA 是 6.475 / 7.056 µs。对 Kimi 多头 recurrent decode，普通查询会给出独立状态链的目标 AIV 分配、工作量和条件时延，并标明外推状态。[Matmul 逐步计算与指令图](results/v0.31/matmul/device/example.md) · [Kimi 大形算例](docs/examples/kda_recurrent.md)
 

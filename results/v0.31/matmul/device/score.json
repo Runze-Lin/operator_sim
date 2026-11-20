@@ -96,10 +96,20 @@
       "old_signed_pct": 121.94449736637569,
       "signed_pct": -6.202783918764265,
       "geometry_verified": false,
-      "checks": null,
-      "actual_groups": null,
-      "actual_splits": null,
-      "actual_productive_aic": null,
+      "checks": {
+        "k_spans": true,
+        "groups": true,
+        "productive_aic": true,
+        "active_aic": true,
+        "active_aiv": true,
+        "mmads": true,
+        "final_output_descriptors_complete": false
+      },
+      "actual_groups": 1,
+      "actual_splits": [
+        28
+      ],
+      "actual_productive_aic": 28,
       "actual_mmad": 56,
       "actual_roster": [
         28,
@@ -139,8 +149,38 @@
       "expected_groups": 5,
       "expected_splits": 6,
       "expected_mmad": 420,
-      "ca_us": null,
-      "status": "acquiring"
+      "ca_us": 10.15272718667984,
+      "status": "qualified",
+      "cost_s": 662.8563219900243,
+      "peak_bytes": 268826187,
+      "receipt": "11-1280-5120-dt.json",
+      "old_signed_pct": 18.19702064875186,
+      "signed_pct": 11.48104674574637,
+      "geometry_verified": true,
+      "checks": {
+        "k_spans": true,
+        "groups": true,
+        "productive_aic": true,
+        "active_aic": true,
+        "active_aiv": true,
+        "mmads": true
+      },
+      "actual_groups": 5,
+      "actual_splits": [
+        6
+      ],
+      "actual_productive_aic": 30,
+      "actual_mmad": 420,
+      "actual_roster": [
+        32,
+        64
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_4098_mix_aic",
+      "trace_sha256": "7e67345c372e4b99375dbda4182b68a3991e15ec6cbb367e3530a322f64bd786",
+      "correctness": [
+        "correctness count=14080 bad=0"
+      ],
+      "terminal_roster": 96
     },
     {
       "shape": [
@@ -170,22 +210,22 @@
       "expected_splits": 5,
       "expected_mmad": 400,
       "ca_us": null,
-      "status": "pending"
+      "status": "acquiring"
     }
   ],
   "summary": {
     "Ascend950DT_9582": {
       "old": {
-        "windows": 1,
-        "wape": 116.66419614692587,
+        "windows": 2,
+        "wape": 58.572202770227506,
         "maximum": 116.66419614692589
       },
       "new": {
-        "windows": 1,
-        "wape": 8.242961831870938,
-        "maximum": 8.242961831870936
+        "windows": 2,
+        "wape": 10.153312224459649,
+        "maximum": 11.481046745746367
       },
-      "geometry_pass": 1
+      "geometry_pass": 2
     },
     "Ascend950PR_957b": {
       "old": {
@@ -215,6 +255,6 @@
       "signed_pct": 2.223456591273565
     }
   ],
-  "total_ca_seconds": 1077.0245565702207,
-  "total_raw_peak_bytes": 447096090
+  "total_ca_seconds": 1739.880878560245,
+  "total_raw_peak_bytes": 715922277
 }

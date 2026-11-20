@@ -13,4 +13,6 @@ FA 在新 PR 长形用 72.76 分钟和 1.81 GiB 获得完整计时与数值。�
 
 另实跑 Flash 隐藏宽 5,120、单卡 1,024 token 的 vLLM HcPost 与内置 MhcPost。每端只需一次整窗与 20,971,520 个输出的数值核验。Kimi Matmul 原先的两个等待程序在还没有设备子进程时退出，七个已登记端点沿用原设备、黄金值、预算和序列锁；恢复程序先重新检查了旧 PR 完整窗。大 MoE 进程的 32 个模拟线程运行在 16 个宿主 CPU 上，现将原掩码放宽到 80 个物理核，完整设备时间和墙钟加速仍以运行结束为准。[大 Post 两库及成本](post/report.md) · [Kimi 同槽交接回执](matmul/kimi/handoff.json) · [MoE 宿主记录](host/moe-affinity.json)
 
+通过 40 个合格窗口逐核复核 MoE 的 MX 乘加维度，发现大形两段预测中有 54.7% 来自小模板首条 MX 指令前区间的放大。大形设备窗尚缺，暂保留原预测及其适用限制。新增 Kimi [32768,3072,512] 的 192 MiB 输出实跑，DT、PR 顺序复用 B11 的槽。三模型的 53 个 Matmul 场景统一用同一安装版回放；Kimi B16 新 DT 窗的 1.792 µs 高估中，五个 K 页间隔占 1.255 µs，M=9 的尝试在达到墙钟预算前没有导出完整设备时间。[MoE 大形定价来源](moe/report.md) · [三模型场景](matmul/scenarios.md) · [宽输出 prefill 冻结值和进度](matmul/kimi-prefill/report.md) · [Kimi 的逐页证据](matmul/kimi/pages.md)
+
 安装版测试覆盖普通系统入口、实时核数与工作量、独立调用的耗时，以及 `calibrated` 对未验证多链返回空时延的行为。此次 333 项单元测试通过。公开查询的实测 P95、最大值和具体样本数见 wheel 回放。仅 shape 的 Post 冷热不可辨识、融合 KDA V1 重复 SET、未到达的双端大形都仍影响全目标验收。[全量归档资格](acceptance.md) · [安装版查询计时](wheel-check.json) · [模型和事前登记指纹](model.json) · [全算子大形](../v0.29/large/report.md)
