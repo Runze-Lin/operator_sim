@@ -1,0 +1,378 @@
+{
+  "utc": "2026-11-20T08:04:00.723449+00:00",
+  "jobs": [
+    {
+      "op": "attn_res_fwd",
+      "shape": [
+        65,
+        7168,
+        8,
+        1
+      ],
+      "prices": {
+        "Ascend950DT_9582": {
+          "us": 14.895680023542026,
+          "query_with_calibrated_check_ms": 3.78451,
+          "plan": {
+            "active_aic": 0,
+            "active_aiv": 33,
+            "launch_aiv": 64,
+            "tile": [
+              1,
+              7168
+            ],
+            "iterations": 2,
+            "waves": 1,
+            "tiling_key": 40021,
+            "branch": "resident"
+          },
+          "dma_read_bytes": 4214784,
+          "dma_write_bytes": 1863680,
+          "stages": {
+            "dispatch": 2.4375757575757575,
+            "setup_weights": 2.0826446766718867,
+            "first_row": 5.03038513404113,
+            "following_rows": 5.03038513404113,
+            "final_store_drain": 0.31468932121212123,
+            "exposed_shared": 0.0
+          },
+          "status": "extrapolated"
+        },
+        "Ascend950PR_957b": {
+          "us": 14.993929803944422,
+          "query_with_calibrated_check_ms": 0.43424,
+          "plan": {
+            "active_aic": 0,
+            "active_aiv": 33,
+            "launch_aiv": 56,
+            "tile": [
+              1,
+              7168
+            ],
+            "iterations": 2,
+            "waves": 1,
+            "tiling_key": 40021,
+            "branch": "resident"
+          },
+          "dma_read_bytes": 4214784,
+          "dma_write_bytes": 1863680,
+          "stages": {
+            "dispatch": 2.4375757575757575,
+            "setup_weights": 2.084508215284654,
+            "first_row": 5.078578254935945,
+            "following_rows": 5.078578254935945,
+            "final_store_drain": 0.31468932121212123,
+            "exposed_shared": 0.0
+          },
+          "status": "extrapolated"
+        },
+        "Ascend970DT": {
+          "us": 8.514273805399238,
+          "query_with_calibrated_check_ms": 0.415,
+          "plan": {
+            "active_aic": 0,
+            "active_aiv": 65,
+            "launch_aiv": 65,
+            "tile": [
+              1,
+              7168
+            ],
+            "iterations": 1,
+            "waves": 1,
+            "tiling_key": 40020,
+            "branch": "resident"
+          },
+          "dma_read_bytes": 5591040,
+          "dma_write_bytes": 1863680,
+          "stages": {
+            "dispatch": 2.2344444444444442,
+            "setup_weights": 1.3821983739684978,
+            "first_row": 4.609165775875185,
+            "following_rows": 0.0,
+            "final_store_drain": 0.2884652111111111,
+            "exposed_shared": 0.0
+          },
+          "status": "extrapolated"
+        }
+      },
+      "attrs": {
+        "addend": true,
+        "write_idx": -1,
+        "materialize": false,
+        "optimize_prefill": true,
+        "mix": true,
+        "output_norm": true
+      },
+      "protocol": "instruction",
+      "args": [
+        "65",
+        "1"
+      ],
+      "runner": "runs/large29/vector-host/attn_res_prefill",
+      "new": true,
+      "wall_s": 7200,
+      "raw_gib": 20,
+      "existing": []
+    },
+    {
+      "op": "attn_res_fwd",
+      "shape": [
+        121,
+        7168,
+        8,
+        2
+      ],
+      "prices": {
+        "Ascend950DT_9582": {
+          "us": 17.55721221741058,
+          "query_with_calibrated_check_ms": 0.15074,
+          "plan": {
+            "active_aic": 0,
+            "active_aiv": 61,
+            "launch_aiv": 64,
+            "tile": [
+              1,
+              7168
+            ],
+            "iterations": 2,
+            "waves": 1,
+            "tiling_key": 40021,
+            "branch": "resident"
+          },
+          "dma_read_bytes": 9562112,
+          "dma_write_bytes": 3469312,
+          "stages": {
+            "dispatch": 2.4375757575757575,
+            "setup_weights": 2.0826446766718867,
+            "first_row": 6.361151230975408,
+            "following_rows": 6.361151230975408,
+            "final_store_drain": 0.31468932121212123,
+            "exposed_shared": 0.0
+          },
+          "status": "extrapolated"
+        },
+        "Ascend950PR_957b": {
+          "us": 24.114116362786763,
+          "query_with_calibrated_check_ms": 0.13026,
+          "plan": {
+            "active_aic": 0,
+            "active_aiv": 41,
+            "launch_aiv": 56,
+            "tile": [
+              1,
+              7168
+            ],
+            "iterations": 3,
+            "waves": 1,
+            "tiling_key": 40021,
+            "branch": "resident"
+          },
+          "dma_read_bytes": 8701952,
+          "dma_write_bytes": 3469312,
+          "stages": {
+            "dispatch": 2.4375757575757575,
+            "setup_weights": 2.084508215284654,
+            "first_row": 6.425781022904744,
+            "following_rows": 12.851562045809487,
+            "final_store_drain": 0.31468932121212123,
+            "exposed_shared": 0.0
+          },
+          "status": "extrapolated"
+        },
+        "Ascend970DT": {
+          "us": 16.088605804813085,
+          "query_with_calibrated_check_ms": 0.11889,
+          "plan": {
+            "active_aic": 0,
+            "active_aiv": 61,
+            "launch_aiv": 120,
+            "tile": [
+              1,
+              7168
+            ],
+            "iterations": 2,
+            "waves": 1,
+            "tiling_key": 40021,
+            "branch": "resident"
+          },
+          "dma_read_bytes": 9562112,
+          "dma_write_bytes": 3469312,
+          "stages": {
+            "dispatch": 2.2344444444444442,
+            "setup_weights": 1.9090050364800204,
+            "first_row": 5.828345556388754,
+            "following_rows": 5.828345556388754,
+            "final_store_drain": 0.2884652111111111,
+            "exposed_shared": 0.0
+          },
+          "status": "extrapolated"
+        }
+      },
+      "attrs": {
+        "addend": true,
+        "write_idx": -1,
+        "materialize": false,
+        "optimize_prefill": true,
+        "mix": true,
+        "output_norm": true
+      },
+      "protocol": "instruction",
+      "args": [
+        "121",
+        "2"
+      ],
+      "runner": "runs/large29/vector-host/attn_res_prefill",
+      "new": true,
+      "wall_s": 10800,
+      "raw_gib": 28,
+      "existing": []
+    },
+    {
+      "op": "attn_res_fwd",
+      "shape": [
+        512,
+        7168,
+        8,
+        1
+      ],
+      "prices": {
+        "Ascend950DT_9582": {
+          "us": 45.07799082778881,
+          "query_with_calibrated_check_ms": 0.13253,
+          "plan": {
+            "active_aic": 0,
+            "active_aiv": 64,
+            "launch_aiv": 64,
+            "tile": [
+              1,
+              7168
+            ],
+            "iterations": 8,
+            "waves": 1,
+            "tiling_key": 40021,
+            "branch": "resident"
+          },
+          "dma_read_bytes": 24772608,
+          "dma_write_bytes": 14680064,
+          "stages": {
+            "dispatch": 2.4375757575757575,
+            "setup_weights": 2.0826446766718867,
+            "first_row": 5.03038513404113,
+            "following_rows": 35.212695938287915,
+            "final_store_drain": 0.31468932121212123,
+            "exposed_shared": 0.0
+          },
+          "status": "extrapolated"
+        },
+        "Ascend950PR_957b": {
+          "us": 55.62255584343198,
+          "query_with_calibrated_check_ms": 0.12332,
+          "plan": {
+            "active_aic": 0,
+            "active_aiv": 52,
+            "launch_aiv": 56,
+            "tile": [
+              1,
+              7168
+            ],
+            "iterations": 10,
+            "waves": 1,
+            "tiling_key": 40021,
+            "branch": "resident"
+          },
+          "dma_read_bytes": 24256512,
+          "dma_write_bytes": 14680064,
+          "stages": {
+            "dispatch": 2.4375757575757575,
+            "setup_weights": 2.084508215284654,
+            "first_row": 5.078578254935945,
+            "following_rows": 45.707204294423505,
+            "final_store_drain": 0.31468932121212123,
+            "exposed_shared": 0.0
+          },
+          "status": "extrapolated"
+        },
+        "Ascend970DT": {
+          "us": 27.4777435714115,
+          "query_with_calibrated_check_ms": 0.12501,
+          "plan": {
+            "active_aic": 0,
+            "active_aiv": 103,
+            "launch_aiv": 120,
+            "tile": [
+              1,
+              7168
+            ],
+            "iterations": 5,
+            "waves": 1,
+            "tiling_key": 40021,
+            "branch": "resident"
+          },
+          "dma_read_bytes": 26449920,
+          "dma_write_bytes": 14680064,
+          "stages": {
+            "dispatch": 2.2344444444444442,
+            "setup_weights": 1.9090050364800204,
+            "first_row": 4.609165775875185,
+            "following_rows": 18.43666310350074,
+            "final_store_drain": 0.2884652111111111,
+            "exposed_shared": 0.0
+          },
+          "status": "extrapolated"
+        }
+      },
+      "attrs": {
+        "addend": true,
+        "write_idx": -1,
+        "materialize": false,
+        "optimize_prefill": true,
+        "mix": true,
+        "output_norm": true
+      },
+      "protocol": "instruction",
+      "args": [
+        "512",
+        "1"
+      ],
+      "runner": "runs/large29/vector-host/attn_res_prefill",
+      "new": false,
+      "wall_s": 10800,
+      "raw_gib": 28,
+      "existing": [
+        "results/v0.29/large/vector/instruction-attn_res_fwd-512-7168-8-1-Ascend950DT_9582.json",
+        "results/v0.29/large/vector/instruction-attn_res_fwd-512-7168-8-1-Ascend950PR_957b.json"
+      ]
+    }
+  ],
+  "release_phase": "source-frozen before acquisition, sibling stages only, no 40021 latency labels",
+  "roots": "c09d3e20b9c45c80b34ae3781440d90904a44023",
+  "source_sha256": {
+    "operator_model/attn_res_resident.py": "bf074cc5d251e1f529de47eaff648ec8cadb83dbce2be51b34ebf22ac20ba007",
+    "operator_model/attention_residual_timing.py": "0fa27ff80a12df600df3d6e4b864113f1515a21085b79aa1d4b93516e001bebe",
+    "operator_model/attention_residual.py": "427d34dc4ca547c89eea0b9f4071446e7567a19348bf87174a8728e62df17f03",
+    "operator_model/backend.py": "08ba8f5f5c184dc8b3f4594da75ad02cfd19d91cdc955f70eaaee63ce00de91a",
+    "operator_model/rms_resource.py": "a2dea4908805c5fb576087ea9db85d08f93849441800ffdd912fc4cfc4ac07b5",
+    "runs/workloads19/sources/full/csrc/attention/attn_res_fwd/op_kernel/arch35/attn_res_fwd_resident.h": "bb5a40a14e3d5637ab9deff26b77e8e3a305500f9c582a3274d7bf0b23840d94",
+    "runs/workloads19/sources/full/csrc/attention/attn_res_fwd/op_host/attn_res_fwd_tiling.cpp": "3249e4f252af0c68187b8caa7a00f63592a42c231fefecc28b7b1e7609b60669",
+    "runs/large29/vector-host/attn_res_prefill": "95cfacb0d3b9a49d54ad3c6d24eceb470e37d08d89adf87cef6ab3ea87e9b080",
+    "runs/large29/vector-host/attn_res_prefill.cpp": "ec0a37500150a7b67e8ee48452a94a186270a2075ce8a4a7a7d721272cb93292",
+    "configs/models/Kimi-K3.json": "9710e121a58d03ac92c8d6da287a19541994319afbbe6d6202af001ffd379213",
+    "results/v0.34/attn/phase-calibration.json": "3de63cf4c2e8c223ef37ee437f477ce9d805200c5d0230594c2b04baa72b6545",
+    "results/v0.29/large/vector/freeze.json": "041f360a4369c955fa941edc8628db0bdf94667e2dccc9e7a3cf9a9e51838b3a",
+    "development/validation/attn34/collect.py": "f5ffb3d0abe8436bed95886ff94c8a548c576754908efc5d62176c57a698d84a",
+    "configs/chips/Ascend950DT_9582.json": "54d68c49374f8fab57ae16b05923d7ea2874cc48083e0728bcbc60f467bb71ec",
+    "configs/chips/Ascend950PR_957b.json": "79bb18eb9a914eaab9b6b9344178d601e4300e5853f864acbb1dac3b42b0ccc7",
+    "configs/chips/Ascend970DT.json": "837796ec9f3b39888950cfe6f703b63c4bf9ced22a366b66f300f1389a8006f2",
+    "runs/workloads19/sources/fastbuild/vendors/custom_transformer/op_api/lib/libcust_opapi.so": "4effe22346b7baababe1bba15c25803e095f77fce81c97b93584f050a2717455",
+    "runs/workloads19/sources/fastbuild/vendors/custom_transformer/op_impl/ai_core/tbe/config/ascend950/aic-ascend950-ops-info.json": "c789ecae6350eac230bcfa240dac034884d7f71d322a43f494ca02968c1df938",
+    "runs/workloads19/sources/fastbuild/vendors/custom_transformer/op_impl/ai_core/tbe/kernel/ascend950/attn_res_fwd_apt/AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf.json": "056641a4ad6afc6082113290855924698352fb8d4d1255f8dea9acba6e47620a",
+    "runs/workloads19/sources/fastbuild/vendors/custom_transformer/op_impl/ai_core/tbe/kernel/ascend950/attn_res_fwd_apt/AttnResFwd_9dfad72fc51beb0819dd59ab91fb1abf.o": "1597fd69d8978d7e29c87ced997e2e0f06b39d509732abba08235b3abac5f392",
+    "runs/workloads19/sources/fastbuild/vendors/custom_transformer/op_impl/ai_core/tbe/kernel/config/ascend950/attn_res_fwd_apt.json": "3fba540e5d30d30950bb3edf0cdc820b7906c098e38882f1f83e34ba12d36175",
+    "runs/workloads19/sources/fastbuild/vendors/custom_transformer/op_impl/ai_core/tbe/kernel/config/ascend950/binary_info_config.json": "bcaef2893082ee04ef0919f338b1ef10e94be4b3e498c911556a028fa881780a",
+    "runs/workloads19/sources/fastbuild/vendors/custom_transformer/op_impl/ai_core/tbe/op_tiling/lib/linux/aarch64/libcust_opmaster_rt2.0.so": "e7bb1de7e2696096c4c803559f34825d0a830dcde10f28ec9c7b5558a3413fd4",
+    "runs/workloads19/sources/fastbuild/vendors/custom_transformer/op_impl/ai_core/tbe/op_tiling/liboptiling.so": "e7bb1de7e2696096c4c803559f34825d0a830dcde10f28ec9c7b5558a3413fd4",
+    "runs/workloads19/sources/fastbuild/vendors/custom_transformer/op_proto/lib/linux/aarch64/libcust_opsproto_rt2.0.so": "952d9cd5dd2bbec67149bdf6632142efd9f4cbe746b7bcd1ffefb47b186b665d"
+  },
+  "slot": "results/v0.26/sink/raw/lock",
+  "policy": "65/1 and 121/2 on both real devices, one attempt per SKU; release serial host flock after each endpoint. 512/1 reuses the running large29 queue without relaunch. msopprof dump=false. All aligned outputs, unchanged bank, installed ELF, physical MTE counts and all launched kernels required. 970DT projections only."
+}

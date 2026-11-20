@@ -1,0 +1,221 @@
+{
+  "utc": "2026-11-20T08:04:02.930794+00:00",
+  "shape": [
+    65536,
+    128,
+    512
+  ],
+  "attrs": {
+    "self_shape": [
+      128
+    ],
+    "alpha": 1,
+    "beta": 1
+  },
+  "forecasts": {
+    "Ascend950DT_9582": {
+      "prediction_us": 32.64613057242172,
+      "active_aic": 32,
+      "active_aiv": 0,
+      "waves": 4,
+      "tile": [
+        512,
+        128,
+        32
+      ],
+      "mmads": 2048,
+      "query_ms": 2.62685,
+      "extrapolation": false,
+      "b_resident_scenario": {
+        "overlapped_us": 25.435507279259642,
+        "extra_bandwidth_service_us": 0.008918631708176836,
+        "serialized_service_us": 25.44442591096782,
+        "waves": 8,
+        "mmads": 4096,
+        "tile": [
+          256,
+          128,
+          32
+        ],
+        "full_rhs_bytes": 131072,
+        "requires": "Same B-resident body as isolated no-bias MatMulV3: one full KxN B load per core and one bias move per output fragment. Separate setup/queue latency unresolved. Two cost scenarios, not a certified interval."
+      }
+    },
+    "Ascend950PR_957b": {
+      "prediction_us": 53.192858236884604,
+      "active_aic": 28,
+      "active_aiv": 0,
+      "waves": 6,
+      "tile": [
+        464,
+        128,
+        32
+      ],
+      "mmads": 2688,
+      "query_ms": 0.54547,
+      "extrapolation": false,
+      "b_resident_scenario": {
+        "overlapped_us": 47.05129373242162,
+        "extra_bandwidth_service_us": 0.013708289635221044,
+        "serialized_service_us": 47.06500202205684,
+        "waves": 10,
+        "mmads": 4480,
+        "tile": [
+          256,
+          128,
+          32
+        ],
+        "full_rhs_bytes": 131072,
+        "requires": "Same B-resident body as isolated no-bias MatMulV3: one full KxN B load per core and one bias move per output fragment. Separate setup/queue latency unresolved. Two cost scenarios, not a certified interval."
+      }
+    },
+    "Ascend970DT": {
+      "prediction_us": 12.404061778720106,
+      "active_aic": 120,
+      "active_aiv": 0,
+      "waves": 2,
+      "tile": [
+        512,
+        128,
+        32
+      ],
+      "mmads": 3712,
+      "query_ms": 0.43528,
+      "extrapolation": true,
+      "b_resident_scenario": {
+        "overlapped_us": 10.010941343830048,
+        "extra_bandwidth_service_us": 0.004495112983019121,
+        "serialized_service_us": 10.015436456813067,
+        "waves": 3,
+        "mmads": 5632,
+        "tile": [
+          256,
+          128,
+          32
+        ],
+        "full_rhs_bytes": 131072,
+        "requires": "Same B-resident body as isolated no-bias MatMulV3: one full KxN B load per core and one bias move per output fragment. Separate setup/queue latency unresolved. Two cost scenarios, not a certified interval."
+      }
+    }
+  },
+  "job": {
+    "id": "addmm",
+    "host": "addmm",
+    "hours": 4,
+    "gib": 16,
+    "args": [
+      "addmm",
+      65536,
+      128,
+      512,
+      "bias"
+    ]
+  },
+  "archive_inventory": {
+    "raw_logs": 1125,
+    "native_host_case_lines": 89,
+    "raw_largest_by_volume": [
+      [
+        512,
+        512,
+        256
+      ],
+      "bias",
+      "runs/v8cube/addmm_512_512_256/run.log"
+    ],
+    "raw_large_bias_logs": [],
+    "archive": {
+      "Ascend950DT_9582": {
+        "windows": 34,
+        "shapes": 33,
+        "max_rows": 1024,
+        "largest_volume_shape": [
+          512,
+          512,
+          256
+        ],
+        "largest_ca_us": 4.4787878787878785,
+        "largest_trace_sha256": [
+          "2d8bbf3aba9929b63f1fdae0799817fa6033604b5cf3ad7d85626535e0f60515"
+        ]
+      },
+      "Ascend950PR_957b": {
+        "windows": 20,
+        "shapes": 20,
+        "max_rows": 1024,
+        "largest_volume_shape": [
+          512,
+          512,
+          256
+        ],
+        "largest_ca_us": 4.686666488647461,
+        "largest_trace_sha256": [
+          "e551d4a39ec7838bcdf84db2cf668e56ff0d3b30e1f08c739f211f30da8b565d"
+        ]
+      }
+    },
+    "bias_free_matmul_lines": 58,
+    "large_bias_free_examples": [
+      "runs/matmul28/long-prefill/131072-pr/run.log",
+      "runs/matmul28/long-prefill/262144-dt/run.log",
+      "runs/matmul28/long-prefill/131072-dt/run.log",
+      "runs/matmul28/32768-128-512-pr/run.log",
+      "runs/matmul28/262144-128-512-pr/run.log",
+      "runs/matmul28/262144-128-512-dt/run.log",
+      "runs/matmul28/32768-128-512-dt/run.log",
+      "runs/matmul_dispatch30/device/524288-dt/run.log"
+    ],
+    "source": "results/v0.32/replay.json",
+    "scope": "Run logs under runs/ (data payloads/OPPROF trees excluded); standard qualified score checked separately. A host launch log alone is not an admitted timing."
+  },
+  "scenario": "Flash B8×32768, 4 equal chunks/request, 8192 query rows each => 65536 local rows, replicated indexer.wk width from real config. Explicit BF16 column bias is a standalone variant; model node bias not established.",
+  "logical_tensor_bytes": {
+    "lhs": 67108864,
+    "rhs": 131072,
+    "self": 256,
+    "output": 16777216
+  },
+  "expected_output_elements": 8388608,
+  "outputs_rejecting_omitted_bias": 5582129,
+  "existing_full": {
+    "shape": [
+      262144,
+      128,
+      512
+    ],
+    "registration": "results/v0.29/large/cube/freeze.json",
+    "state": "results/v0.29/large/cube/state.json",
+    "prices": {
+      "Ascend950DT_9582": 113.55852672985847,
+      "Ascend950PR_957b": 206.1558916172085,
+      "Ascend970DT": 31.883706395960534
+    }
+  },
+  "lane": "results/v0.26/sink/raw/lock",
+  "retired_predecessor": "results/v0.32/large/recurrent-state.json",
+  "acquire": "Official msopprof simulator, --dump=false, mandatory pipe collection only, one process/SKU, serial DT then PR. Each endpoint releases flock before qualification so queued AttnRes can use the same physical lane. No retry. Four hours and 16 GiB per target; minimum 48 GiB free. Preserve partials.",
+  "qualification": "Actual aclnnAddmm host and dtype/scalars/self rank, full output golden observable against zero bias, one STARS task, correct SoC/DRAM, installed ELF, all active shard retirements and ENDs matching vendor table. Never price with wrapper or no-bias Matmul.",
+  "criterion": "Publish current point signed error and pair speedup. Resident-B branch is a pre-priced hypothesis pending source/structural and independent timing agreement; no default change on this geometry alone.",
+  "source_sha256": {
+    "development/validation/addmm34/acquire.py": "a73589684619e4952192e650ef17266096d6fae5d8c7e45247960fde086292b9",
+    "development/validation/addmm34/certificate.py": "b75938684fead37e19162a79283e08b85cbde4768dd40dd6a245bcd28244d7f7",
+    "development/validation/matmul33/replay.cc": "e145030ae86406929aa8aaf69658e0020ca309fcae97cb344a6a0f0456698cbe",
+    "toolchains/cann/9.2.1/cann-9.2.1/opp/built-in/op_impl/ai_core/tbe/kernel/ascend950/ops_nn/mat_mul_v3/MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance.o": "e6899fbaa2659b7778bee81deb00b64b009dafcb7ad350f06576767fdeba2bf7",
+    "runs/large29/cube/bin/addmm": "d359b8a17cbc5f2e5f9d1d085a9f5c1f0797430a4516bc57bbd61886e75d4e7e",
+    "runs/large29/cube/bin/addmm.cpp": "0c97cf010eb8061ac27bf549e43271bf148803dcf2379b76bf4f7a291326bce9",
+    "development/validation/large29/cube/campaign.py": "a12aa414df1ec7bdd62fac884f2ea0c9b2505fb02dda64fd8d666675058188d5",
+    "scripts/cann-run.sh": "d529513abc0bc340a56c91365a9e72d5e434d2cb4841be1692930294cd0624df",
+    "configs/models/DeepSeek-V4.1-Flash.json": "8be45ce0476004a3f529fd896115a4a2e800a129ad2d3ec05b16050f52e21879",
+    "development/workloads/prefill_shapes.py": "cc9a95e07034563eeed8d302d1115d889b7ee17531a3095bc7fe3c6295e8a285",
+    "results/v0.29/large/cube/freeze.json": "68b3d71f4ea458b5cc8a2a43942cf47a424a095047d0b74105c60c940a80f102",
+    "results/v0.32/replay.json": "149e76aaf7f133214348c6f7dee16faa32588c12bb218607e8ee1a30297035dd",
+    "configs/chips/Ascend950DT_9582.json": "54d68c49374f8fab57ae16b05923d7ea2874cc48083e0728bcbc60f467bb71ec",
+    "configs/chips/Ascend950PR_957b.json": "79bb18eb9a914eaab9b6b9344178d601e4300e5853f864acbb1dac3b42b0ccc7",
+    "configs/chips/Ascend970DT.json": "837796ec9f3b39888950cfe6f703b63c4bf9ced22a366b66f300f1389a8006f2",
+    "operator_model/addmm_v9.py": "cba81374c9abe6991020463b63b5b24d9fc52be917a694471f1c4710aad736d4",
+    "operator_model/matmul_supply32.py": "1eb9b8c0dfaadcbca4a0313bc330acc44f83babdf801e94bb51e2e03947d2030",
+    "operator_model/matmul_resource.py": "4ff5f1e2bc2581ed16d609e18900879ccaf1a80f65433de8f85de7e513140b19",
+    "operator_model/matmul_v15.py": "c5edb6d59c184f63db0d1208cdec38a79368d4f6eb246cb077ed0faba069fa02",
+    "operator_model/matmul_waves.py": "97f615daae6563e51df26591565909d8bea044c3b72bf5f67bb8aa1e6b5b292b"
+  }
+}

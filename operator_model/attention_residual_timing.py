@@ -32,6 +32,14 @@ def resource_attention(shape, chip, attrs):
           'tile':[1,shape[1]],'iterations':d['tokens_per_core'],'waves':1 if shape[0] else 0,
           'tiling_key':d['tiling_key'],'branch':('resident' if d['resident'] else 'reload')}
     diagnostics=dict(model='attn_res_fwd_arch35', target_plan=plan, stages_us={}, **d)
+    if (d['resident'] and d['tokens_per_core'] and shape[3]>0 and
+            attrs.get('addend',False) and attrs.get('mix',True) and attrs.get('output_norm',True) and
+            attrs.get('optimize_prefill',False) and not attrs.get('materialize',False) and attrs.get('write_idx',-1)==-1):
+        from .attn_res_resident import resident_inference_price
+        forecast=resident_inference_price(shape,chip,d)
+        if forecast is not None:
+            diagnostics.update(forecast)
+        return diagnostics['latency_us'],work,diagnostics
     covered=(d['resident'] and d['tokens_per_core']==1 and shape[3]>0 and
              attrs.get('addend',False) and attrs.get('output_norm',True) and
              attrs.get('materialize',False) and attrs.get('mix',True) and

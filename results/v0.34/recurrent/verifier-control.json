@@ -1,0 +1,86 @@
+{
+  "role": "Archived PR S2 / V256 verifier control, not a new S8 measurement.",
+  "shape": [
+    1,
+    2,
+    1,
+    1,
+    128,
+    256
+  ],
+  "chip": "Ascend950PR_957b",
+  "old_receipt": "runs/sku17/extension/kda_recurrent_1_2_1_1_128_256_Ascend950PR_957b/strict.json",
+  "old_receipt_sha256": "b249427dd03e377994ce8b5dd214a874a09cf832f48f074bde74b5d671c0d9da",
+  "merged_trace_sha256": "263c65af6209155b0018593bba8b655fe3a8a5d1d341d51b82c1b6b364a9f4f6",
+  "expected_and_verified_golden": {
+    "attn_out": [
+      512,
+      0
+    ],
+    "final_state": [
+      32768,
+      0
+    ],
+    "initial_state_unchanged": [
+      32768,
+      0
+    ]
+  },
+  "released_device_text_sha256": "2404c408ad876022d6c0519fed97fca2ad3ee7766c1f2be1faa10582cd67219a",
+  "kernel": "RecurrentKda_06bba6860f70bfd6aa54df1d4ed1928e_0",
+  "strict_s8_verifier_on_old_shape_us": 28.402424242424242,
+  "old_us": 28.40242266934365,
+  "active_aiv": 1,
+  "cost": {
+    "seconds": 128.1948573300615,
+    "raw_bytes": 107988691,
+    "cpu_seconds": 2912.27,
+    "exit_code": 0,
+    "stop_reason": null,
+    "started_utc": "2026-11-19T03:52:52.997055+00:00",
+    "finished_utc": "2026-11-19T03:55:01.192355+00:00",
+    "command": [
+      "bash",
+      "/home/l00925865/operator_sim/scripts/cann-run.sh",
+      "msopprof",
+      "simulator",
+      "--soc-version=Ascend950PR_957b",
+      "--dump=true",
+      "--launch-count=20",
+      "--timeout=4",
+      "--output=/home/l00925865/operator_sim/runs/sku17/extension/kda_recurrent_1_2_1_1_128_256_Ascend950PR_957b/profile",
+      "/home/l00925865/operator_sim/build/vector-v8/KDA",
+      "/home/l00925865/operator_sim/runs/sku17/extension/kda_recurrent_1_2_1_1_128_256_Ascend950PR_957b/batch.txt"
+    ]
+  },
+  "actual_core_windows": {
+    "core0.veccore0": {
+      "first": 6026,
+      "last": 52890,
+      "events": 60348,
+      "multiset": "52e40e6b354bced850bde4bec19e283def515939022901a0263e83ac5c19c30b",
+      "end": [
+        [
+          52883,
+          52883
+        ]
+      ],
+      "mmad": 0,
+      "mmad_geometry": {},
+      "pipe": {
+        "SCALAR": 28232,
+        "FLOWCTRL": 1447,
+        "MTE2": 16,
+        "MTE3": 17,
+        "PUSHQ": 1175,
+        "RVECLP": 133,
+        "RVECSU": 112,
+        "RVECLD": 5308,
+        "RVECEX": 18624,
+        "RVECST": 5236
+      },
+      "shard_sha256": "29d8467d60320b9194e78e4f534be92b68928753df88cd0fa7b8d73e3c466ac4",
+      "official_us": 28.4
+    }
+  }
+}

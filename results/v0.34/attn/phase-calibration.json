@@ -1,0 +1,1572 @@
+{
+  "roles": "v0.19 DT development only. PR and v0.21 are archived sibling-phase replay. No direct 40021 measurements used.",
+  "phases": {
+    "dispatch": {
+      "coefficients": [
+        4022.0
+      ],
+      "rank": 1
+    },
+    "weights": {
+      "coefficients": [
+        1784.8336276083464,
+        0.985805613642992
+      ],
+      "rank": 2
+    },
+    "prefix": {
+      "coefficients": [
+        1577.8180577849118,
+        2.1045455815402594
+      ],
+      "rank": 2
+    },
+    "score_weighted": {
+      "coefficients": [
+        657.8523974343806,
+        901.3041720108591,
+        8.911023796571937
+      ],
+      "rank": 3
+    },
+    "norm": {
+      "coefficients": [
+        446.2947030497593,
+        6.200963081861957
+      ],
+      "rank": 2
+    },
+    "gamma_read": {
+      "coefficients": [
+        637.8267698060969
+      ],
+      "rank": 1
+    },
+    "write": {
+      "coefficients": [
+        284.98174
+      ],
+      "rank": 1
+    },
+    "drain": {
+      "coefficients": [
+        10.0
+      ],
+      "rank": 1
+    }
+  },
+  "rows": [
+    {
+      "source": "results/v0.19/workloads/attn-res-micro-ca.json",
+      "trace": "runs/workloads19/attnres_micro19_1_1_Ascend950DT_9582/profile/OPPROF_20261119153347_MFHWNDLDWMMENJZX/simulator/trace.json",
+      "trace_sha256": "87a1753436b5654b3d23d4c9d2a528bbff986521c1f047997f515b1f5a9e6828",
+      "core": "core0.veccore0",
+      "shape": [
+        1,
+        256,
+        8,
+        1
+      ],
+      "chip": "Ascend950DT_9582",
+      "development": true,
+      "ca_us": 6.324848177842796,
+      "cycles": {
+        "dispatch": 4527,
+        "weights": 1785,
+        "prefix": 1281,
+        "score_weighted": 2042,
+        "norm": 491,
+        "materialized_or_gamma": 129,
+        "write": 171,
+        "drain": 10,
+        "gamma_read": 657
+      },
+      "predicted_reference_cycles": {
+        "dispatch": 4022.0,
+        "weights": 1809.9500802568216,
+        "prefix": 1607.4094703049761,
+        "score_weighted": 2542.3355469256257,
+        "norm": 471.0985553772071,
+        "gamma_read": 648.4133849030485,
+        "write": 292.99087000000003,
+        "drain": 10.0
+      }
+    },
+    {
+      "source": "results/v0.19/workloads/attn-res-micro-ca.json",
+      "trace": "runs/workloads19/attnres_micro19_1_2_Ascend950PR_957b/profile/OPPROF_20261119153347_ADNDETNQHJVFACBS/simulator/trace.json",
+      "trace_sha256": "028131592a40898f25e53312d4996111e27b298c90b4c0eea6c423426714ec09",
+      "core": "core0.veccore0",
+      "shape": [
+        1,
+        512,
+        8,
+        2
+      ],
+      "chip": "Ascend950PR_957b",
+      "development": false,
+      "ca_us": 7.039394143037498,
+      "cycles": {
+        "dispatch": 3583,
+        "weights": 1850,
+        "prefix": 1471,
+        "score_weighted": 3583,
+        "norm": 435,
+        "materialized_or_gamma": 301,
+        "write": 382,
+        "drain": 10,
+        "gamma_read": 598
+      },
+      "predicted_reference_cycles": {
+        "dispatch": 4022.0,
+        "weights": 1835.0665329052965,
+        "prefix": 1637.0008828250402,
+        "score_weighted": 3617.975944972491,
+        "norm": 495.90240770465493,
+        "gamma_read": 659.0,
+        "write": 301.0,
+        "drain": 10.0
+      }
+    },
+    {
+      "source": "results/v0.19/workloads/attn-res-holdout.json",
+      "trace": "runs/workloads19/attnres_hold19_1_1_Ascend950DT_9582/profile/OPPROF_20261119154003_NFJEQVJLBUSTXJWS/simulator/trace.json",
+      "trace_sha256": "25fdc24683378adf55f84e2e585e8ce7699cef80f5a12d286e1c80a12c2b9fe5",
+      "core": "core0.veccore0",
+      "shape": [
+        1,
+        7168,
+        8,
+        1
+      ],
+      "chip": "Ascend950DT_9582",
+      "development": true,
+      "ca_us": 9.504848721437156,
+      "cycles": {
+        "dispatch": 3718,
+        "weights": 2482,
+        "prefix": 2594,
+        "score_weighted": 5006,
+        "norm": 1128,
+        "materialized_or_gamma": 380,
+        "write": 365,
+        "drain": 10,
+        "gamma_read": 784
+      },
+      "predicted_reference_cycles": {
+        "dispatch": 4022.0,
+        "weights": 2488.09430176565,
+        "prefix": 2406.377608346709,
+        "score_weighted": 4752.955294602857,
+        "norm": 1140.8025682182983,
+        "gamma_read": 934.2519925207409,
+        "write": 509.23738000000003,
+        "drain": 10.0
+      }
+    },
+    {
+      "source": "results/v0.19/workloads/attn-res-holdout.json",
+      "trace": "runs/workloads19/attnres_hold19_1_1_Ascend950PR_957b/profile/OPPROF_20261119154003_AVLVXMUUWPCQTAAD/simulator/trace.json",
+      "trace_sha256": "76819d594c6d35a3e6d111fcd4aec299e564109eb815d5d6ffe740b8c780ea28",
+      "core": "core0.veccore0",
+      "shape": [
+        1,
+        7168,
+        8,
+        1
+      ],
+      "chip": "Ascend950PR_957b",
+      "development": false,
+      "ca_us": 9.499393704347312,
+      "cycles": {
+        "dispatch": 4181,
+        "weights": 2377,
+        "prefix": 2124,
+        "score_weighted": 4978,
+        "norm": 1128,
+        "materialized_or_gamma": 447,
+        "write": 429,
+        "drain": 10,
+        "gamma_read": 732
+      },
+      "predicted_reference_cycles": {
+        "dispatch": 4022.0,
+        "weights": 2488.09430176565,
+        "prefix": 2406.377608346709,
+        "score_weighted": 4752.955294602857,
+        "norm": 1140.8025682182983,
+        "gamma_read": 934.2519925207409,
+        "write": 509.23738000000003,
+        "drain": 10.0
+      }
+    },
+    {
+      "source": "results/v0.19/workloads/attn-res-holdout.json",
+      "trace": "runs/workloads19/attnres_hold19_2_1_Ascend950DT_9582/profile/OPPROF_20261119154124_JWXXOVDYDYQQSMOF/simulator/trace.json",
+      "trace_sha256": "2b31e415541bb3f58078e28a9eefcbf4f84bde4cb1d7cfced8f1594585103408",
+      "core": "core16.veccore0",
+      "shape": [
+        2,
+        512,
+        8,
+        1
+      ],
+      "chip": "Ascend950DT_9582",
+      "development": true,
+      "ca_us": 7.1218185452744365,
+      "cycles": {
+        "dispatch": 4464,
+        "weights": 1958,
+        "prefix": 1471,
+        "score_weighted": 2799,
+        "norm": 435,
+        "materialized_or_gamma": 313,
+        "write": 301,
+        "drain": 10,
+        "gamma_read": 613
+      },
+      "predicted_reference_cycles": {
+        "dispatch": 4022.0,
+        "weights": 1835.0665329052965,
+        "prefix": 1637.0008828250402,
+        "score_weighted": 2624.210352395153,
+        "norm": 495.90240770465493,
+        "gamma_read": 659.0,
+        "write": 301.0,
+        "drain": 10.0
+      }
+    },
+    {
+      "source": "results/v0.19/workloads/attn-res-holdout.json",
+      "trace": "runs/workloads19/attnres_hold19_2_1_Ascend950PR_957b/profile/OPPROF_20261119154130_TWZAZGNISBPDWCTG/simulator/trace.json",
+      "trace_sha256": "2e80e2db1ef6e01d03ed28674cf5606612c7ccf63fb39b91d5ba334cc4073d2a",
+      "core": "core0.veccore0",
+      "shape": [
+        2,
+        512,
+        8,
+        1
+      ],
+      "chip": "Ascend950PR_957b",
+      "development": false,
+      "ca_us": 6.5975759057328105,
+      "cycles": {
+        "dispatch": 4245,
+        "weights": 1638,
+        "prefix": 1360,
+        "score_weighted": 2312,
+        "norm": 639,
+        "materialized_or_gamma": 350,
+        "write": 332,
+        "drain": 10,
+        "gamma_read": 606
+      },
+      "predicted_reference_cycles": {
+        "dispatch": 4022.0,
+        "weights": 1835.0665329052965,
+        "prefix": 1637.0008828250402,
+        "score_weighted": 2624.210352395153,
+        "norm": 495.90240770465493,
+        "gamma_read": 659.0,
+        "write": 301.0,
+        "drain": 10.0
+      }
+    },
+    {
+      "source": "results/v0.19/workloads/attn-res-extension-holdout.json",
+      "trace": "runs/workloads19/attnres_ext19_1_3_Ascend950DT_9582/profile/OPPROF_20261119155101_PCLKBQERRWAIGJWB/simulator/trace.json",
+      "trace_sha256": "8d23be57c918c7e21ab20c5d25505e94bd47dae306c2235dc7d31592bf4b05ba",
+      "core": "core0.veccore0",
+      "shape": [
+        1,
+        7168,
+        8,
+        3
+      ],
+      "chip": "Ascend950DT_9582",
+      "development": true,
+      "ca_us": 11.571514609269798,
+      "cycles": {
+        "dispatch": 3746,
+        "weights": 2464,
+        "prefix": 2189,
+        "score_weighted": 8832,
+        "norm": 1128,
+        "materialized_or_gamma": 359,
+        "write": 365,
+        "drain": 10,
+        "gamma_read": 775
+      },
+      "predicted_reference_cycles": {
+        "dispatch": 4022.0,
+        "weights": 2488.09430176565,
+        "prefix": 2406.377608346709,
+        "score_weighted": 9144.483414485976,
+        "norm": 1140.8025682182983,
+        "gamma_read": 934.2519925207409,
+        "write": 509.23738000000003,
+        "drain": 10.0
+      }
+    },
+    {
+      "source": "results/v0.19/workloads/attn-res-extension-holdout.json",
+      "trace": "runs/workloads19/attnres_ext19_1_3_Ascend950PR_957b/profile/OPPROF_20261119155101_NJZDEJVXQYMOFJJX/simulator/trace.json",
+      "trace_sha256": "37c75f38a63ebc2b98ef31920df66d9ec8ef7e28210c2cc5a135d13278579227",
+      "core": "core0.veccore0",
+      "shape": [
+        1,
+        7168,
+        8,
+        3
+      ],
+      "chip": "Ascend950PR_957b",
+      "development": false,
+      "ca_us": 11.487879040651023,
+      "cycles": {
+        "dispatch": 3709,
+        "weights": 2374,
+        "prefix": 2080,
+        "score_weighted": 8774,
+        "norm": 1128,
+        "materialized_or_gamma": 451,
+        "write": 429,
+        "drain": 10,
+        "gamma_read": 730
+      },
+      "predicted_reference_cycles": {
+        "dispatch": 4022.0,
+        "weights": 2488.09430176565,
+        "prefix": 2406.377608346709,
+        "score_weighted": 9144.483414485976,
+        "norm": 1140.8025682182983,
+        "gamma_read": 934.2519925207409,
+        "write": 509.23738000000003,
+        "drain": 10.0
+      }
+    },
+    {
+      "source": "results/v0.19/workloads/attn-res-extension-holdout.json",
+      "trace": "runs/workloads19/attnres_ext19_2_2_Ascend950DT_9582/profile/OPPROF_20261119155223_GMGYHTNQWDRKZKMX/simulator/trace.json",
+      "trace_sha256": "663de3da21e8278cd595b26de785ecea82fac104be06037556b5fcb8d79f4396",
+      "core": "core16.veccore0",
+      "shape": [
+        2,
+        4096,
+        8,
+        2
+      ],
+      "chip": "Ascend950DT_9582",
+      "development": true,
+      "ca_us": 9.398182394914329,
+      "cycles": {
+        "dispatch": 4031,
+        "weights": 2081,
+        "prefix": 2009,
+        "score_weighted": 5852,
+        "norm": 807,
+        "materialized_or_gamma": 363,
+        "write": 354,
+        "drain": 10,
+        "gamma_read": 803
+      },
+      "predicted_reference_cycles": {
+        "dispatch": 4022.0,
+        "weights": 2186.696869983948,
+        "prefix": 2051.280658105939,
+        "score_weighted": 5411.45316551122,
+        "norm": 843.1563402889245,
+        "gamma_read": 807.2126113573221,
+        "write": 413.12782000000004,
+        "drain": 10.0
+      }
+    },
+    {
+      "source": "results/v0.19/workloads/attn-res-extension-holdout.json",
+      "trace": "runs/workloads19/attnres_ext19_2_2_Ascend950PR_957b/profile/OPPROF_20261119155225_HMXATFURBPIWLWQH/simulator/trace.json",
+      "trace_sha256": "818fa88c11b2588db174f2ed54a33052e1427ec3de615d1584086592ab64bc64",
+      "core": "core16.veccore0",
+      "shape": [
+        2,
+        4096,
+        8,
+        2
+      ],
+      "chip": "Ascend950PR_957b",
+      "development": false,
+      "ca_us": 9.00727296154946,
+      "cycles": {
+        "dispatch": 4079,
+        "weights": 2106,
+        "prefix": 1774,
+        "score_weighted": 5287,
+        "norm": 807,
+        "materialized_or_gamma": 407,
+        "write": 392,
+        "drain": 10,
+        "gamma_read": 786
+      },
+      "predicted_reference_cycles": {
+        "dispatch": 4022.0,
+        "weights": 2186.696869983948,
+        "prefix": 2051.280658105939,
+        "score_weighted": 5411.45316551122,
+        "norm": 843.1563402889245,
+        "gamma_read": 807.2126113573221,
+        "write": 413.12782000000004,
+        "drain": 10.0
+      }
+    },
+    {
+      "source": "results/v0.19/workloads/attn-res-extension-holdout.json",
+      "trace": "runs/workloads19/attnres_ext19_5_1_Ascend950DT_9582/profile/OPPROF_20261119155337_ANRBSRIBTJFMVNCS/simulator/trace.json",
+      "trace_sha256": "d213fe02f38c451fdde5651cc0077e187640ee9d78ea4cc55e207aa5c438fcc1",
+      "core": "core0.veccore1",
+      "shape": [
+        5,
+        2048,
+        8,
+        1
+      ],
+      "chip": "Ascend950DT_9582",
+      "development": true,
+      "ca_us": 7.573939326219261,
+      "cycles": {
+        "dispatch": 3818,
+        "weights": 2311,
+        "prefix": 1866,
+        "score_weighted": 2937,
+        "norm": 870,
+        "materialized_or_gamma": 332,
+        "write": 353,
+        "drain": 10,
+        "gamma_read": 844
+      },
+      "predicted_reference_cycles": {
+        "dispatch": 4022.0,
+        "weights": 1985.7652487961475,
+        "prefix": 1814.5493579454253,
+        "score_weighted": 3115.4591852123153,
+        "norm": 644.7255216693419,
+        "gamma_read": 722.5196905817095,
+        "write": 349.05478,
+        "drain": 10.0
+      }
+    },
+    {
+      "source": "results/v0.19/workloads/attn-res-extension-holdout.json",
+      "trace": "runs/workloads19/attnres_ext19_5_1_Ascend950PR_957b/profile/OPPROF_20261119155339_AOKZWOMIKXFIMBAI/simulator/trace.json",
+      "trace_sha256": "21366b60699e1049a3a9192aa76433429ef84183a5318c6de838d65d5d80eca2",
+      "core": "core16.veccore0",
+      "shape": [
+        5,
+        2048,
+        8,
+        1
+      ],
+      "chip": "Ascend950PR_957b",
+      "development": false,
+      "ca_us": 7.432727339677513,
+      "cycles": {
+        "dispatch": 3900,
+        "weights": 2075,
+        "prefix": 1603,
+        "score_weighted": 3034,
+        "norm": 917,
+        "materialized_or_gamma": 353,
+        "write": 372,
+        "drain": 10,
+        "gamma_read": 835
+      },
+      "predicted_reference_cycles": {
+        "dispatch": 4022.0,
+        "weights": 1985.7652487961475,
+        "prefix": 1814.5493579454253,
+        "score_weighted": 3115.4591852123153,
+        "norm": 644.7255216693419,
+        "gamma_read": 722.5196905817095,
+        "write": 349.05478,
+        "drain": 10.0
+      }
+    },
+    {
+      "source": "results/v0.19/workloads/attn-res-extension-holdout.json",
+      "trace": "runs/workloads19/attnres_ext19_2_4_Ascend950DT_9582/profile/OPPROF_20261119155448_TVCPNQWNKMBDWKPB/simulator/trace.json",
+      "trace_sha256": "96c2f8b09c6cc9e2e0effbbbb3ce355affe50549d4cb776222521b6bafee501f",
+      "core": "core16.veccore0",
+      "shape": [
+        2,
+        1024,
+        8,
+        4
+      ],
+      "chip": "Ascend950DT_9582",
+      "development": true,
+      "ca_us": 9.17818212788552,
+      "cycles": {
+        "dispatch": 4009,
+        "weights": 1920,
+        "prefix": 1886,
+        "score_weighted": 6140,
+        "norm": 492,
+        "materialized_or_gamma": 350,
+        "write": 337,
+        "drain": 10,
+        "gamma_read": 624
+      },
+      "predicted_reference_cycles": {
+        "dispatch": 4022.0,
+        "weights": 1885.2994382022468,
+        "prefix": 1696.1837078651686,
+        "score_weighted": 6046.641002765656,
+        "norm": 545.5101123595506,
+        "gamma_read": 680.1732301939031,
+        "write": 317.01826,
+        "drain": 10.0
+      }
+    },
+    {
+      "source": "results/v0.19/workloads/attn-res-extension-holdout.json",
+      "trace": "runs/workloads19/attnres_ext19_2_4_Ascend950PR_957b/profile/OPPROF_20261119155450_BRYDJMMZFUCENCHJ/simulator/trace.json",
+      "trace_sha256": "278925e906841c680e3caa68f3b4535ec7b1b67bf26be49137f1731e668fcbef",
+      "core": "core16.veccore0",
+      "shape": [
+        2,
+        1024,
+        8,
+        4
+      ],
+      "chip": "Ascend950PR_957b",
+      "development": false,
+      "ca_us": 8.973333599977195,
+      "cycles": {
+        "dispatch": 3966,
+        "weights": 2048,
+        "prefix": 1595,
+        "score_weighted": 5975,
+        "norm": 492,
+        "materialized_or_gamma": 373,
+        "write": 347,
+        "drain": 10,
+        "gamma_read": 730
+      },
+      "predicted_reference_cycles": {
+        "dispatch": 4022.0,
+        "weights": 1885.2994382022468,
+        "prefix": 1696.1837078651686,
+        "score_weighted": 6046.641002765656,
+        "norm": 545.5101123595506,
+        "gamma_read": 680.1732301939031,
+        "write": 317.01826,
+        "drain": 10.0
+      }
+    },
+    {
+      "source": "results/v0.19/workloads/attn-res-extension-holdout.json",
+      "trace": "runs/workloads19/attnres_ext19_8_2_Ascend950DT_9582/profile/OPPROF_20261119155558_IGAHYCDZAYEKIQYU/simulator/trace.json",
+      "trace_sha256": "505d2ff7e2adfa43e907ac469a6440a3cc26cc211e3577b3c5f7e301fe238f33",
+      "core": "core0.veccore0",
+      "shape": [
+        8,
+        512,
+        8,
+        2
+      ],
+      "chip": "Ascend950DT_9582",
+      "development": true,
+      "ca_us": 7.652121069841087,
+      "cycles": {
+        "dispatch": 4194,
+        "weights": 1545,
+        "prefix": 1923,
+        "score_weighted": 3902,
+        "norm": 435,
+        "materialized_or_gamma": 303,
+        "write": 314,
+        "drain": 10,
+        "gamma_read": 722
+      },
+      "predicted_reference_cycles": {
+        "dispatch": 4022.0,
+        "weights": 1835.0665329052965,
+        "prefix": 1637.0008828250402,
+        "score_weighted": 3617.975944972491,
+        "norm": 495.90240770465493,
+        "gamma_read": 659.0,
+        "write": 301.0,
+        "drain": 10.0
+      }
+    },
+    {
+      "source": "results/v0.19/workloads/attn-res-extension-holdout.json",
+      "trace": "runs/workloads19/attnres_ext19_8_2_Ascend950PR_957b/profile/OPPROF_20261119155600_KQDFPPLTKICBPTGK/simulator/trace.json",
+      "trace_sha256": "1cf07ba65feb47aa5eb10eea3c7215979b52f1993387161aa91185303ae20bdd",
+      "core": "core16.veccore0",
+      "shape": [
+        8,
+        512,
+        8,
+        2
+      ],
+      "chip": "Ascend950PR_957b",
+      "development": false,
+      "ca_us": 7.223030569963157,
+      "cycles": {
+        "dispatch": 3956,
+        "weights": 1790,
+        "prefix": 1578,
+        "score_weighted": 3391,
+        "norm": 435,
+        "materialized_or_gamma": 376,
+        "write": 382,
+        "drain": 10,
+        "gamma_read": 437
+      },
+      "predicted_reference_cycles": {
+        "dispatch": 4022.0,
+        "weights": 1835.0665329052965,
+        "prefix": 1637.0008828250402,
+        "score_weighted": 3617.975944972491,
+        "norm": 495.90240770465493,
+        "gamma_read": 659.0,
+        "write": 301.0,
+        "drain": 10.0
+      }
+    },
+    {
+      "source": "results/v0.19/workloads/attn-res-extension-holdout.json",
+      "trace": "runs/workloads19/attnres_ext19_3_1_Ascend950DT_9582/profile/OPPROF_20261119155708_IDGYPEDNBBWWYSSP/simulator/trace.json",
+      "trace_sha256": "4e185e68786030ee18d069246bdde778605efbe092f62d4cbcdcdd3f46a249c1",
+      "core": "core0.veccore0",
+      "shape": [
+        3,
+        512,
+        8,
+        1
+      ],
+      "chip": "Ascend950DT_9582",
+      "development": true,
+      "ca_us": 7.009697440080345,
+      "cycles": {
+        "dispatch": 3739,
+        "weights": 2022,
+        "prefix": 2025,
+        "score_weighted": 2702,
+        "norm": 435,
+        "materialized_or_gamma": 317,
+        "write": 316,
+        "drain": 10,
+        "gamma_read": 659
+      },
+      "predicted_reference_cycles": {
+        "dispatch": 4022.0,
+        "weights": 1835.0665329052965,
+        "prefix": 1637.0008828250402,
+        "score_weighted": 2624.210352395153,
+        "norm": 495.90240770465493,
+        "gamma_read": 659.0,
+        "write": 301.0,
+        "drain": 10.0
+      }
+    },
+    {
+      "source": "results/v0.19/workloads/attn-res-extension-holdout.json",
+      "trace": "runs/workloads19/attnres_ext19_3_1_Ascend950PR_957b/profile/OPPROF_20261119155709_UKBPLYSSPZTUKDYO/simulator/trace.json",
+      "trace_sha256": "8957dd020e93e96d58d45b788dedbe12dc1a42e23bc93607535be464e5c410dd",
+      "core": "core16.veccore0",
+      "shape": [
+        3,
+        512,
+        8,
+        1
+      ],
+      "chip": "Ascend950PR_957b",
+      "development": false,
+      "ca_us": 6.696969750337303,
+      "cycles": {
+        "dispatch": 3875,
+        "weights": 2120,
+        "prefix": 1505,
+        "score_weighted": 2274,
+        "norm": 627,
+        "materialized_or_gamma": 357,
+        "write": 282,
+        "drain": 10,
+        "gamma_read": 553
+      },
+      "predicted_reference_cycles": {
+        "dispatch": 4022.0,
+        "weights": 1835.0665329052965,
+        "prefix": 1637.0008828250402,
+        "score_weighted": 2624.210352395153,
+        "norm": 495.90240770465493,
+        "gamma_read": 659.0,
+        "write": 301.0,
+        "drain": 10.0
+      }
+    },
+    {
+      "source": "results/v0.19/workloads/attn-res-extension-holdout.json",
+      "trace": "runs/workloads19/attnres_ext19_4_3_Ascend950DT_9582/profile/OPPROF_20261119155813_ZMXHONXTBOTTQNAR/simulator/trace.json",
+      "trace_sha256": "c318313b0c6dea45e5521f4dc485f5fd3435ea2f427d9b3240fcea1c2d2e0794",
+      "core": "core16.veccore1",
+      "shape": [
+        4,
+        256,
+        8,
+        3
+      ],
+      "chip": "Ascend950DT_9582",
+      "development": true,
+      "ca_us": 7.585454943589866,
+      "cycles": {
+        "dispatch": 4022,
+        "weights": 1616,
+        "prefix": 1347,
+        "score_weighted": 4390,
+        "norm": 491,
+        "materialized_or_gamma": 308,
+        "write": 332,
+        "drain": 10,
+        "gamma_read": 664
+      },
+      "predicted_reference_cycles": {
+        "dispatch": 4022.0,
+        "weights": 1809.9500802568216,
+        "prefix": 1607.4094703049761,
+        "score_weighted": 4437.405311513823,
+        "norm": 471.0985553772071,
+        "gamma_read": 648.4133849030485,
+        "write": 292.99087000000003,
+        "drain": 10.0
+      }
+    },
+    {
+      "source": "results/v0.19/workloads/attn-res-extension-holdout.json",
+      "trace": "runs/workloads19/attnres_ext19_4_3_Ascend950PR_957b/profile/OPPROF_20261119155813_LTWGJQWOZMAQDILR/simulator/trace.json",
+      "trace_sha256": "e7b046f12150da9e76409230abc8823956c88b3f6593eac6c28fdb57b491b651",
+      "core": "core16.veccore1",
+      "shape": [
+        4,
+        256,
+        8,
+        3
+      ],
+      "chip": "Ascend950PR_957b",
+      "development": false,
+      "ca_us": 7.367878916673362,
+      "cycles": {
+        "dispatch": 3940,
+        "weights": 1600,
+        "prefix": 1152,
+        "score_weighted": 4285,
+        "norm": 491,
+        "materialized_or_gamma": 329,
+        "write": 350,
+        "drain": 10,
+        "gamma_read": 437
+      },
+      "predicted_reference_cycles": {
+        "dispatch": 4022.0,
+        "weights": 1809.9500802568216,
+        "prefix": 1607.4094703049761,
+        "score_weighted": 4437.405311513823,
+        "norm": 471.0985553772071,
+        "gamma_read": 648.4133849030485,
+        "write": 292.99087000000003,
+        "drain": 10.0
+      }
+    },
+    {
+      "source": "results/v0.19/workloads/attn-res-extension-holdout.json",
+      "trace": "runs/workloads19/attnres_ext19_1_2_Ascend950DT_9582/profile/OPPROF_20261119155927_KQLOOMLGGXWYVIYS/simulator/trace.json",
+      "trace_sha256": "8c961e5cfb0d35fd5b7ae6991e5d881a769f310f8294d1619c84d5bfac55e096",
+      "core": "core0.veccore0",
+      "shape": [
+        1,
+        256,
+        8,
+        2
+      ],
+      "chip": "Ascend950DT_9582",
+      "development": true,
+      "ca_us": 7.003636839799583,
+      "cycles": {
+        "dispatch": 4232,
+        "weights": 1785,
+        "prefix": 1517,
+        "score_weighted": 3205,
+        "norm": 504,
+        "materialized_or_gamma": 131,
+        "write": 172,
+        "drain": 10,
+        "gamma_read": 663
+      },
+      "predicted_reference_cycles": {
+        "dispatch": 4022.0,
+        "weights": 1809.9500802568216,
+        "prefix": 1607.4094703049761,
+        "score_weighted": 3489.8704292197244,
+        "norm": 471.0985553772071,
+        "gamma_read": 648.4133849030485,
+        "write": 292.99087000000003,
+        "drain": 10.0
+      }
+    },
+    {
+      "source": "results/v0.19/workloads/attn-res-extension-holdout.json",
+      "trace": "runs/workloads19/attnres_ext19_1_2_Ascend950PR_957b/profile/OPPROF_20261119155928_UNDECABGSDTWHWXE/simulator/trace.json",
+      "trace_sha256": "00135b3264e196d40858e2039061c10f9a5c1dc691625f490a002e24af476107",
+      "core": "core0.veccore0",
+      "shape": [
+        1,
+        256,
+        8,
+        2
+      ],
+      "chip": "Ascend950PR_957b",
+      "development": false,
+      "ca_us": 6.5830307034775615,
+      "cycles": {
+        "dispatch": 4093,
+        "weights": 1633,
+        "prefix": 1201,
+        "score_weighted": 3122,
+        "norm": 504,
+        "materialized_or_gamma": 131,
+        "write": 168,
+        "drain": 10,
+        "gamma_read": 633
+      },
+      "predicted_reference_cycles": {
+        "dispatch": 4022.0,
+        "weights": 1809.9500802568216,
+        "prefix": 1607.4094703049761,
+        "score_weighted": 3489.8704292197244,
+        "norm": 471.0985553772071,
+        "gamma_read": 648.4133849030485,
+        "write": 292.99087000000003,
+        "drain": 10.0
+      }
+    },
+    {
+      "source": "results/v0.21/fusion/receipts/attn_res_fwd_1_1024_8_7_Ascend950DT_9582.json",
+      "trace": "runs/fusion21/attnres_h1024_1_7_Ascend950DT_9582/profile/OPPROF_20261119201920_HKSLLIGHQNPCIZNK/simulator/trace.json",
+      "trace_sha256": "159c1705d9f9cd69c6d342c747ee2dad723f7548c4642c9790c1d1037a514d73",
+      "core": "core0.veccore0",
+      "shape": [
+        1,
+        1024,
+        8,
+        7
+      ],
+      "chip": "Ascend950DT_9582",
+      "development": false,
+      "ca_us": 11.573333266191185,
+      "cycles": {
+        "dispatch": 4329,
+        "weights": 2072,
+        "prefix": 1722,
+        "score_weighted": 9797,
+        "norm": 495,
+        "materialized_or_gamma": 331,
+        "write": 340,
+        "drain": 10,
+        "gamma_read": 664
+      },
+      "predicted_reference_cycles": {
+        "dispatch": 4022.0,
+        "weights": 1885.2994382022468,
+        "prefix": 1696.1837078651686,
+        "score_weighted": 9305.322042197105,
+        "norm": 545.5101123595506,
+        "gamma_read": 680.1732301939031,
+        "write": 317.01826,
+        "drain": 10.0
+      }
+    },
+    {
+      "source": "results/v0.21/fusion/receipts/attn_res_fwd_1_1024_8_7_Ascend950PR_957b.json",
+      "trace": "runs/fusion21/attnres_h1024_1_7_Ascend950PR_957b/profile/OPPROF_20261119201945_ZLHNNLAGJGURYIGY/simulator/trace.json",
+      "trace_sha256": "899a6bad445b32ada42a8bbc02449afb90d15d67c302af84f8f0ff00daeacfa1",
+      "core": "core0.veccore0",
+      "shape": [
+        1,
+        1024,
+        8,
+        7
+      ],
+      "chip": "Ascend950PR_957b",
+      "development": false,
+      "ca_us": 10.764242890290916,
+      "cycles": {
+        "dispatch": 3498,
+        "weights": 1971,
+        "prefix": 1469,
+        "score_weighted": 9606,
+        "norm": 495,
+        "materialized_or_gamma": 353,
+        "write": 359,
+        "drain": 10,
+        "gamma_read": 609
+      },
+      "predicted_reference_cycles": {
+        "dispatch": 4022.0,
+        "weights": 1885.2994382022468,
+        "prefix": 1696.1837078651686,
+        "score_weighted": 9305.322042197105,
+        "norm": 545.5101123595506,
+        "gamma_read": 680.1732301939031,
+        "write": 317.01826,
+        "drain": 10.0
+      }
+    },
+    {
+      "source": "results/v0.21/fusion/receipts/attn_res_fwd_2_2048_8_3_Ascend950DT_9582.json",
+      "trace": "runs/fusion21/attnres_h2048_2_3_Ascend950DT_9582/profile/OPPROF_20261119203102_LGIRWSBDQBBKXBHF/simulator/trace.json",
+      "trace_sha256": "003885d79887d4a1feb2422dd8e7e24ab2e9abc30c957534dab7f85aab910474",
+      "core": "core16.veccore0",
+      "shape": [
+        2,
+        2048,
+        8,
+        3
+      ],
+      "chip": "Ascend950DT_9582",
+      "development": false,
+      "ca_us": 9.489697220735252,
+      "cycles": {
+        "dispatch": 5029,
+        "weights": 2060,
+        "prefix": 1757,
+        "score_weighted": 5496,
+        "norm": 595,
+        "materialized_or_gamma": 355,
+        "write": 356,
+        "drain": 10,
+        "gamma_read": 656
+      },
+      "predicted_reference_cycles": {
+        "dispatch": 4022.0,
+        "weights": 1985.7652487961475,
+        "prefix": 1814.5493579454253,
+        "score_weighted": 5657.758893765863,
+        "norm": 644.7255216693419,
+        "gamma_read": 722.5196905817095,
+        "write": 349.05478,
+        "drain": 10.0
+      }
+    },
+    {
+      "source": "results/v0.21/fusion/receipts/attn_res_fwd_2_2048_8_3_Ascend950PR_957b.json",
+      "trace": "runs/fusion21/attnres_h2048_2_3_Ascend950PR_957b/profile/OPPROF_20261119203223_ZXWFSCMYLFOEJTNB/simulator/trace.json",
+      "trace_sha256": "9f146660687d18033b05a20c72fb1bc48e218c3e6ad44cf31bfa315b11efbd5a",
+      "core": "core16.veccore0",
+      "shape": [
+        2,
+        2048,
+        8,
+        3
+      ],
+      "chip": "Ascend950PR_957b",
+      "development": false,
+      "ca_us": 9.085454466752708,
+      "cycles": {
+        "dispatch": 4283,
+        "weights": 2138,
+        "prefix": 1558,
+        "score_weighted": 5652,
+        "norm": 595,
+        "materialized_or_gamma": 387,
+        "write": 368,
+        "drain": 10,
+        "gamma_read": 784
+      },
+      "predicted_reference_cycles": {
+        "dispatch": 4022.0,
+        "weights": 1985.7652487961475,
+        "prefix": 1814.5493579454253,
+        "score_weighted": 5657.758893765863,
+        "norm": 644.7255216693419,
+        "gamma_read": 722.5196905817095,
+        "write": 349.05478,
+        "drain": 10.0
+      }
+    },
+    {
+      "source": "results/v0.21/fusion/receipts/attn_res_fwd_2_4096_8_1_Ascend950DT_9582.json",
+      "trace": "runs/fusion21/attnres_h4096_2_1_Ascend950DT_9582/profile/OPPROF_20261119194312_KBJHFYKAVYJMTUBM/simulator/trace.json",
+      "trace_sha256": "47c982c85dd70927bdcd29405a49d4de811c80bce5134768488e236c560e473a",
+      "core": "core0.veccore0",
+      "shape": [
+        2,
+        4096,
+        8,
+        1
+      ],
+      "chip": "Ascend950DT_9582",
+      "development": false,
+      "ca_us": 8.113332989625633,
+      "cycles": {
+        "dispatch": 4382,
+        "weights": 1857,
+        "prefix": 1852,
+        "score_weighted": 3753,
+        "norm": 807,
+        "materialized_or_gamma": 369,
+        "write": 357,
+        "drain": 10,
+        "gamma_read": 761
+      },
+      "predicted_reference_cycles": {
+        "dispatch": 4022.0,
+        "weights": 2186.696869983948,
+        "prefix": 2051.280658105939,
+        "score_weighted": 3770.457628968532,
+        "norm": 843.1563402889245,
+        "gamma_read": 807.2126113573221,
+        "write": 413.12782000000004,
+        "drain": 10.0
+      }
+    },
+    {
+      "source": "results/v0.21/fusion/receipts/attn_res_fwd_2_4096_8_1_Ascend950PR_957b.json",
+      "trace": "runs/fusion21/attnres_h4096_2_1_Ascend950PR_957b/profile/OPPROF_20261119194702_LZKPLAPMTJCHXZAB/simulator/trace.json",
+      "trace_sha256": "6dc4617c1dd09cceefde40f65fa726eeacdd4c8d670baa8b00cc66d355daaedc",
+      "core": "core16.veccore0",
+      "shape": [
+        2,
+        4096,
+        8,
+        1
+      ],
+      "chip": "Ascend950PR_957b",
+      "development": false,
+      "ca_us": 7.984242203645408,
+      "cycles": {
+        "dispatch": 3985,
+        "weights": 2065,
+        "prefix": 1770,
+        "score_weighted": 3755,
+        "norm": 807,
+        "materialized_or_gamma": 389,
+        "write": 393,
+        "drain": 10,
+        "gamma_read": 688
+      },
+      "predicted_reference_cycles": {
+        "dispatch": 4022.0,
+        "weights": 2186.696869983948,
+        "prefix": 2051.280658105939,
+        "score_weighted": 3770.457628968532,
+        "norm": 843.1563402889245,
+        "gamma_read": 807.2126113573221,
+        "write": 413.12782000000004,
+        "drain": 10.0
+      }
+    },
+    {
+      "source": "results/v0.21/fusion/receipts/attn_res_fwd_3_2048_8_4_Ascend950DT_9582.json",
+      "trace": "runs/fusion21/attnres_h2048_3_4_Ascend950DT_9582/profile/OPPROF_20261119210205_REXOZABZKKIDLZQR/simulator/trace.json",
+      "trace_sha256": "45a10c95b6be072cf2cb817f74a15eddf367a5f97e562b9f824208edfc8f66df",
+      "core": "core0.veccore0",
+      "shape": [
+        3,
+        2048,
+        8,
+        4
+      ],
+      "chip": "Ascend950DT_9582",
+      "development": false,
+      "ca_us": 9.823636534623802,
+      "cycles": {
+        "dispatch": 3805,
+        "weights": 2265,
+        "prefix": 1737,
+        "score_weighted": 7108,
+        "norm": 595,
+        "materialized_or_gamma": 339,
+        "write": 350,
+        "drain": 10,
+        "gamma_read": 719
+      },
+      "predicted_reference_cycles": {
+        "dispatch": 4022.0,
+        "weights": 1985.7652487961475,
+        "prefix": 1814.5493579454253,
+        "score_weighted": 6928.908748042636,
+        "norm": 644.7255216693419,
+        "gamma_read": 722.5196905817095,
+        "write": 349.05478,
+        "drain": 10.0
+      }
+    },
+    {
+      "source": "results/v0.21/fusion/receipts/attn_res_fwd_3_2048_8_4_Ascend950PR_957b.json",
+      "trace": "runs/fusion21/attnres_h2048_3_4_Ascend950PR_957b/profile/OPPROF_20261119210221_TCRBVHTWLUJMVHDK/simulator/trace.json",
+      "trace_sha256": "a903f8def59a4687ed279561433c2a2a8feecbe312f47335065e7a082dc87c9b",
+      "core": "core16.veccore0",
+      "shape": [
+        3,
+        2048,
+        8,
+        4
+      ],
+      "chip": "Ascend950PR_957b",
+      "development": false,
+      "ca_us": 9.57878804486245,
+      "cycles": {
+        "dispatch": 4286,
+        "weights": 1801,
+        "prefix": 1667,
+        "score_weighted": 6731,
+        "norm": 595,
+        "materialized_or_gamma": 364,
+        "write": 351,
+        "drain": 10,
+        "gamma_read": 632
+      },
+      "predicted_reference_cycles": {
+        "dispatch": 4022.0,
+        "weights": 1985.7652487961475,
+        "prefix": 1814.5493579454253,
+        "score_weighted": 6928.908748042636,
+        "norm": 644.7255216693419,
+        "gamma_read": 722.5196905817095,
+        "write": 349.05478,
+        "drain": 10.0
+      }
+    },
+    {
+      "source": "results/v0.21/fusion/receipts/attn_res_fwd_3_7168_8_1_Ascend950DT_9582.json",
+      "trace": "runs/fusion21/attnres_h7168_3_1_Ascend950DT_9582/profile/OPPROF_20261119204531_CEFBMYBDOOKJXIVE/simulator/trace.json",
+      "trace_sha256": "cba37e46811ce38ec2c00f7b08b1da548bf14c96e53b8066069055573875337c",
+      "core": "core0.veccore0",
+      "shape": [
+        3,
+        7168,
+        8,
+        1
+      ],
+      "chip": "Ascend950DT_9582",
+      "development": false,
+      "ca_us": 9.712120774202049,
+      "cycles": {
+        "dispatch": 4541,
+        "weights": 1969,
+        "prefix": 2618,
+        "score_weighted": 5009,
+        "norm": 1128,
+        "materialized_or_gamma": 383,
+        "write": 367,
+        "drain": 10,
+        "gamma_read": 343
+      },
+      "predicted_reference_cycles": {
+        "dispatch": 4022.0,
+        "weights": 2488.09430176565,
+        "prefix": 2406.377608346709,
+        "score_weighted": 4752.955294602857,
+        "norm": 1140.8025682182983,
+        "gamma_read": 934.2519925207409,
+        "write": 509.23738000000003,
+        "drain": 10.0
+      }
+    },
+    {
+      "source": "results/v0.21/fusion/receipts/attn_res_fwd_3_7168_8_1_Ascend950PR_957b.json",
+      "trace": "runs/fusion21/attnres_h7168_3_1_Ascend950PR_957b/profile/OPPROF_20261119204601_FJWWTSHOPOEJOKKT/simulator/trace.json",
+      "trace_sha256": "05ac5cd194840b536a71c41a86fba1da8be9d7c1fe39716d0d0be61c6504b01d",
+      "core": "core0.veccore0",
+      "shape": [
+        3,
+        7168,
+        8,
+        1
+      ],
+      "chip": "Ascend950PR_957b",
+      "development": false,
+      "ca_us": 9.473939421586692,
+      "cycles": {
+        "dispatch": 3537,
+        "weights": 2636,
+        "prefix": 2124,
+        "score_weighted": 5209,
+        "norm": 1128,
+        "materialized_or_gamma": 536,
+        "write": 452,
+        "drain": 10,
+        "gamma_read": 688
+      },
+      "predicted_reference_cycles": {
+        "dispatch": 4022.0,
+        "weights": 2488.09430176565,
+        "prefix": 2406.377608346709,
+        "score_weighted": 4752.955294602857,
+        "norm": 1140.8025682182983,
+        "gamma_read": 934.2519925207409,
+        "write": 509.23738000000003,
+        "drain": 10.0
+      }
+    },
+    {
+      "source": "results/v0.21/fusion/receipts/attn_res_fwd_4_1024_8_2_Ascend950DT_9582.json",
+      "trace": "runs/fusion21/attnres_h1024_4_2_Ascend950DT_9582/profile/OPPROF_20261119205543_COKHATUDJCEITTZJ/simulator/trace.json",
+      "trace_sha256": "7800bf146686ba2d4b7c2eb1bf27df2e9098e20aedfb8eff8014432d629edff2",
+      "core": "core0.veccore1",
+      "shape": [
+        4,
+        1024,
+        8,
+        2
+      ],
+      "chip": "Ascend950DT_9582",
+      "development": false,
+      "ca_us": 7.852121355943382,
+      "cycles": {
+        "dispatch": 3716,
+        "weights": 2257,
+        "prefix": 1775,
+        "score_weighted": 4048,
+        "norm": 492,
+        "materialized_or_gamma": 329,
+        "write": 329,
+        "drain": 10,
+        "gamma_read": 784
+      },
+      "predicted_reference_cycles": {
+        "dispatch": 4022.0,
+        "weights": 1885.2994382022468,
+        "prefix": 1696.1837078651686,
+        "score_weighted": 3874.1869764780236,
+        "norm": 545.5101123595506,
+        "gamma_read": 680.1732301939031,
+        "write": 317.01826,
+        "drain": 10.0
+      }
+    },
+    {
+      "source": "results/v0.21/fusion/receipts/attn_res_fwd_4_1024_8_2_Ascend950PR_957b.json",
+      "trace": "runs/fusion21/attnres_h1024_4_2_Ascend950PR_957b/profile/OPPROF_20261119205602_APRBGTYJPTLLFZMJ/simulator/trace.json",
+      "trace_sha256": "86594ad34c077ee45997b9ebe6870277247239ac2760846a83c9e089087923cf",
+      "core": "core16.veccore0",
+      "shape": [
+        4,
+        1024,
+        8,
+        2
+      ],
+      "chip": "Ascend950PR_957b",
+      "development": false,
+      "ca_us": 7.493938925676048,
+      "cycles": {
+        "dispatch": 4327,
+        "weights": 1534,
+        "prefix": 1616,
+        "score_weighted": 3702,
+        "norm": 492,
+        "materialized_or_gamma": 341,
+        "write": 343,
+        "drain": 10,
+        "gamma_read": 557
+      },
+      "predicted_reference_cycles": {
+        "dispatch": 4022.0,
+        "weights": 1885.2994382022468,
+        "prefix": 1696.1837078651686,
+        "score_weighted": 3874.1869764780236,
+        "norm": 545.5101123595506,
+        "gamma_read": 680.1732301939031,
+        "write": 317.01826,
+        "drain": 10.0
+      }
+    },
+    {
+      "source": "results/v0.21/fusion/receipts/attn_res_fwd_4_256_8_6_Ascend950PR_957b.json",
+      "trace": "runs/fusion21/attnres_h256_4_6_Ascend950PR_957b/profile/OPPROF_20261119200641_ETFLJSLFWBWBPAGZ/simulator/trace.json",
+      "trace_sha256": "761f1c6c44a393981dc81a0db2667e423b3bf9061cea098a655883e71fa1037b",
+      "core": "core16.veccore1",
+      "shape": [
+        4,
+        256,
+        8,
+        6
+      ],
+      "chip": "Ascend950PR_957b",
+      "development": false,
+      "ca_us": 9.181212189607322,
+      "cycles": {
+        "dispatch": 3927,
+        "weights": 1654,
+        "prefix": 1153,
+        "score_weighted": 7226,
+        "norm": 504,
+        "materialized_or_gamma": 327,
+        "write": 348,
+        "drain": 10,
+        "gamma_read": 388
+      },
+      "predicted_reference_cycles": {
+        "dispatch": 4022.0,
+        "weights": 1809.9500802568216,
+        "prefix": 1607.4094703049761,
+        "score_weighted": 7280.009958396117,
+        "norm": 471.0985553772071,
+        "gamma_read": 648.4133849030485,
+        "write": 292.99087000000003,
+        "drain": 10.0
+      }
+    },
+    {
+      "source": "results/v0.21/fusion/receipts/attn_res_fwd_5_512_8_4_Ascend950DT_9582.json",
+      "trace": "runs/fusion21/attnres_h512_5_4_Ascend950DT_9582/profile/OPPROF_20261119203853_IMWWVSQUOAPDLYIS/simulator/trace.json",
+      "trace_sha256": "3cae08e0db9ef1a136b38f0ed2efdb6018970c6804879a97b30d9663897ce50e",
+      "core": "core16.veccore1",
+      "shape": [
+        5,
+        512,
+        8,
+        4
+      ],
+      "chip": "Ascend950DT_9582",
+      "development": false,
+      "ca_us": 9.236970189027488,
+      "cycles": {
+        "dispatch": 4376,
+        "weights": 2049,
+        "prefix": 2041,
+        "score_weighted": 5690,
+        "norm": 435,
+        "materialized_or_gamma": 300,
+        "write": 340,
+        "drain": 10,
+        "gamma_read": 250
+      },
+      "predicted_reference_cycles": {
+        "dispatch": 4022.0,
+        "weights": 1835.0665329052965,
+        "prefix": 1637.0008828250402,
+        "score_weighted": 5605.507130127166,
+        "norm": 495.90240770465493,
+        "gamma_read": 659.0,
+        "write": 301.0,
+        "drain": 10.0
+      }
+    },
+    {
+      "source": "results/v0.21/fusion/receipts/attn_res_fwd_5_512_8_4_Ascend950PR_957b.json",
+      "trace": "runs/fusion21/attnres_h512_5_4_Ascend950PR_957b/profile/OPPROF_20261119203951_INVTVQXJCYHCVOSX/simulator/trace.json",
+      "trace_sha256": "354acbd0a5e52f3a6d0b4e54073d95a4f27ce32f4194976c54fab4beb0b56b43",
+      "core": "core0.veccore1",
+      "shape": [
+        5,
+        512,
+        8,
+        4
+      ],
+      "chip": "Ascend950PR_957b",
+      "development": false,
+      "ca_us": 8.472727539949119,
+      "cycles": {
+        "dispatch": 3690,
+        "weights": 1959,
+        "prefix": 1537,
+        "score_weighted": 5614,
+        "norm": 435,
+        "materialized_or_gamma": 368,
+        "write": 367,
+        "drain": 10,
+        "gamma_read": 558
+      },
+      "predicted_reference_cycles": {
+        "dispatch": 4022.0,
+        "weights": 1835.0665329052965,
+        "prefix": 1637.0008828250402,
+        "score_weighted": 5605.507130127166,
+        "norm": 495.90240770465493,
+        "gamma_read": 659.0,
+        "write": 301.0,
+        "drain": 10.0
+      }
+    },
+    {
+      "source": "results/v0.21/fusion/retries/attn_res_fwd_2_7168_8_3_Ascend950DT_9582.json",
+      "trace": "runs/fusion21/retry_attnres_h7168_2_3_Ascend950DT_9582/profile/OPPROF_20261119211231_KQLIPVHHOZLMAOCJ/simulator/trace.json",
+      "trace_sha256": "d5108aa905edfa30e4fd1240a37728f32400bdc75251c3ec73a3f2a0aa6214a5",
+      "core": "core0.veccore0",
+      "shape": [
+        2,
+        7168,
+        8,
+        3
+      ],
+      "chip": "Ascend950DT_9582",
+      "development": false,
+      "ca_us": 11.745454791001976,
+      "cycles": {
+        "dispatch": 4235,
+        "weights": 2271,
+        "prefix": 2165,
+        "score_weighted": 8837,
+        "norm": 1128,
+        "materialized_or_gamma": 367,
+        "write": 367,
+        "drain": 10,
+        "gamma_read": 755
+      },
+      "predicted_reference_cycles": {
+        "dispatch": 4022.0,
+        "weights": 2488.09430176565,
+        "prefix": 2406.377608346709,
+        "score_weighted": 9144.483414485976,
+        "norm": 1140.8025682182983,
+        "gamma_read": 934.2519925207409,
+        "write": 509.23738000000003,
+        "drain": 10.0
+      }
+    },
+    {
+      "source": "results/v0.21/fusion/retries/attn_res_fwd_2_7168_8_3_Ascend950PR_957b.json",
+      "trace": "runs/fusion21/retry_attnres_h7168_2_3_Ascend950PR_957b/profile/OPPROF_20261119211411_ENUWHELBEGCPIQGJ/simulator/trace.json",
+      "trace_sha256": "de978c0a8c33c3ada5948b7f41eb77cfde98d6803cfd361e806c760d2d6cb193",
+      "core": "core16.veccore0",
+      "shape": [
+        2,
+        7168,
+        8,
+        3
+      ],
+      "chip": "Ascend950PR_957b",
+      "development": false,
+      "ca_us": 11.686060192994773,
+      "cycles": {
+        "dispatch": 3945,
+        "weights": 2490,
+        "prefix": 2082,
+        "score_weighted": 8737,
+        "norm": 1128,
+        "materialized_or_gamma": 452,
+        "write": 438,
+        "drain": 10,
+        "gamma_read": 784
+      },
+      "predicted_reference_cycles": {
+        "dispatch": 4022.0,
+        "weights": 2488.09430176565,
+        "prefix": 2406.377608346709,
+        "score_weighted": 9144.483414485976,
+        "norm": 1140.8025682182983,
+        "gamma_read": 934.2519925207409,
+        "write": 509.23738000000003,
+        "drain": 10.0
+      }
+    },
+    {
+      "source": "results/v0.21/fusion/retries/attn_res_fwd_3_512_8_3_Ascend950DT_9582.json",
+      "trace": "runs/fusion21/retry_attnres_h512_3_3_Ascend950DT_9582/profile/OPPROF_20261119211557_KQCRCJHWCMJRKYJT/simulator/trace.json",
+      "trace_sha256": "65624444af8f0c929c1a524da8ba0903cd7cefea523637a800e142b00eb26e5b",
+      "core": "core16.veccore0",
+      "shape": [
+        3,
+        512,
+        8,
+        3
+      ],
+      "chip": "Ascend950DT_9582",
+      "development": false,
+      "ca_us": 8.47939348500222,
+      "cycles": {
+        "dispatch": 4394,
+        "weights": 1532,
+        "prefix": 1691,
+        "score_weighted": 5310,
+        "norm": 435,
+        "materialized_or_gamma": 332,
+        "write": 287,
+        "drain": 10,
+        "gamma_read": 718
+      },
+      "predicted_reference_cycles": {
+        "dispatch": 4022.0,
+        "weights": 1835.0665329052965,
+        "prefix": 1637.0008828250402,
+        "score_weighted": 4611.7415375498285,
+        "norm": 495.90240770465493,
+        "gamma_read": 659.0,
+        "write": 301.0,
+        "drain": 10.0
+      }
+    },
+    {
+      "source": "results/v0.21/fusion/retries/attn_res_fwd_3_512_8_3_Ascend950PR_957b.json",
+      "trace": "runs/fusion21/retry_attnres_h512_3_3_Ascend950PR_957b/profile/OPPROF_20261119211715_RSICPOMFXUARLFZM/simulator/trace.json",
+      "trace_sha256": "5d6a97d2e558859274e431e371323f95caf6ba73633457fe54f2a29a191745b4",
+      "core": "core16.veccore0",
+      "shape": [
+        3,
+        512,
+        8,
+        3
+      ],
+      "chip": "Ascend950PR_957b",
+      "development": false,
+      "ca_us": 7.775757315568626,
+      "cycles": {
+        "dispatch": 3937,
+        "weights": 1953,
+        "prefix": 1371,
+        "score_weighted": 4463,
+        "norm": 435,
+        "materialized_or_gamma": 376,
+        "write": 285,
+        "drain": 10,
+        "gamma_read": 553
+      },
+      "predicted_reference_cycles": {
+        "dispatch": 4022.0,
+        "weights": 1835.0665329052965,
+        "prefix": 1637.0008828250402,
+        "score_weighted": 4611.7415375498285,
+        "norm": 495.90240770465493,
+        "gamma_read": 659.0,
+        "write": 301.0,
+        "drain": 10.0
+      }
+    },
+    {
+      "source": "results/v0.21/fusion/retries/attn_res_fwd_4_256_8_6_Ascend950DT_9582.json",
+      "trace": "runs/fusion21/retry_attnres_h256_4_6_Ascend950DT_9582/profile/OPPROF_20261119212250_HIWMGLKWIYPVWKSI/simulator/trace.json",
+      "trace_sha256": "4de6302b2eec21b15f544af1ba7de12532dce5e8095b98c3cfc71f5d0db8b333",
+      "core": "core16.veccore1",
+      "shape": [
+        4,
+        256,
+        8,
+        6
+      ],
+      "chip": "Ascend950DT_9582",
+      "development": false,
+      "ca_us": 9.449091198854148,
+      "cycles": {
+        "dispatch": 4369,
+        "weights": 1303,
+        "prefix": 1292,
+        "score_weighted": 7488,
+        "norm": 504,
+        "materialized_or_gamma": 302,
+        "write": 323,
+        "drain": 10,
+        "gamma_read": 651
+      },
+      "predicted_reference_cycles": {
+        "dispatch": 4022.0,
+        "weights": 1809.9500802568216,
+        "prefix": 1607.4094703049761,
+        "score_weighted": 7280.009958396117,
+        "norm": 471.0985553772071,
+        "gamma_read": 648.4133849030485,
+        "write": 292.99087000000003,
+        "drain": 10.0
+      }
+    }
+  ]
+}

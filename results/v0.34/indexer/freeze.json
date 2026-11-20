@@ -1,0 +1,304 @@
+{
+  "utc": "2026-11-20T08:14:02.417665+00:00",
+  "round": "v0.34",
+  "job": {
+    "id": "compressed-8ki",
+    "op": "lightning_indexer",
+    "shape": [
+      1,
+      9,
+      8192,
+      8,
+      128
+    ],
+    "role": "B1 Q9 right-aligned dense BF16 top512, 8192 available keys; comparable size to 32Ki per request at 4:1 compression, no quantized/paged dispatch claimed",
+    "index": [
+      "lightning_indexer",
+      "9",
+      "8192",
+      "8"
+    ],
+    "runner": "results/v0.29/large/fusion/build/builtin",
+    "wall_s": 7200,
+    "raw_mib": 8192,
+    "expected_numerics": {
+      "topk_set": 4608
+    },
+    "outputs": [
+      {
+        "op": "lightning_indexer"
+      }
+    ]
+  },
+  "forecasts": [
+    {
+      "shape": [
+        1,
+        9,
+        8192,
+        8,
+        128
+      ],
+      "role": "new, before acquisition",
+      "prices": {
+        "Ascend950DT_9582": {
+          "us": 24.653155447811447,
+          "plan": {
+            "query_rows_per_tile": 4,
+            "kv_page_keys": 128,
+            "histogram_chunk_keys": 8192,
+            "active_aic": 3,
+            "active_aiv": 5,
+            "active_aiv_scope": "AIVs issuing histogram instructions; the runtime also launches idle partners",
+            "launched_aic_950": 32,
+            "launched_aiv_950": 64,
+            "critical_query_group": 0,
+            "mmad_count": 192,
+            "mmads_by_shape": [
+              [
+                16,
+                128,
+                128,
+                64
+              ],
+              [
+                32,
+                128,
+                128,
+                128
+              ]
+            ],
+            "modeled_histogram_instructions": 2304,
+            "key_reads_across_aic_bytes": 6291456
+          },
+          "stages_us": {
+            "first_mmad": 2.78,
+            "page_intervals": 15.883636363636363,
+            "last_mmad": 0.11820595286195286,
+            "score_to_histogram": 0.703030303030303,
+            "histogram_and_output": 5.168282828282828,
+            "additional_shared_service": 0.0
+          }
+        },
+        "Ascend950PR_957b": {
+          "us": 24.7678866103687,
+          "plan": {
+            "query_rows_per_tile": 4,
+            "kv_page_keys": 128,
+            "histogram_chunk_keys": 8192,
+            "active_aic": 3,
+            "active_aiv": 5,
+            "active_aiv_scope": "AIVs issuing histogram instructions; the runtime also launches idle partners",
+            "launched_aic_950": 28,
+            "launched_aiv_950": 56,
+            "critical_query_group": 0,
+            "mmad_count": 192,
+            "mmads_by_shape": [
+              [
+                16,
+                128,
+                128,
+                64
+              ],
+              [
+                32,
+                128,
+                128,
+                128
+              ]
+            ],
+            "modeled_histogram_instructions": 2304,
+            "key_reads_across_aic_bytes": 6291456
+          },
+          "stages_us": {
+            "first_mmad": 2.78,
+            "page_intervals": 15.883636363636363,
+            "last_mmad": 0.11820595286195286,
+            "score_to_histogram": 0.703030303030303,
+            "histogram_and_output": 5.283013990840077,
+            "additional_shared_service": 0.0
+          }
+        },
+        "Ascend970DT": {
+          "us": 22.59380577751384,
+          "plan": {
+            "query_rows_per_tile": 4,
+            "kv_page_keys": 128,
+            "histogram_chunk_keys": 8192,
+            "active_aic": 3,
+            "active_aiv": 5,
+            "active_aiv_scope": "AIVs issuing histogram instructions; the runtime also launches idle partners",
+            "launched_aic_950": 120,
+            "launched_aiv_950": 120,
+            "critical_query_group": 0,
+            "mmad_count": 192,
+            "mmads_by_shape": [
+              [
+                16,
+                128,
+                128,
+                64
+              ],
+              [
+                32,
+                128,
+                128,
+                128
+              ]
+            ],
+            "modeled_histogram_instructions": 2304,
+            "key_reads_across_aic_bytes": 6291456
+          },
+          "stages_us": {
+            "first_mmad": 2.5483333333333333,
+            "page_intervals": 14.56,
+            "last_mmad": 0.1082457501569366,
+            "score_to_histogram": 0.6444444444444445,
+            "histogram_and_output": 4.732782249579126,
+            "additional_shared_service": 0.0
+          }
+        }
+      }
+    },
+    {
+      "shape": [
+        1,
+        9,
+        32768,
+        8,
+        128
+      ],
+      "role": "previously registered, predicate depends on original acquisition time",
+      "prices": {
+        "Ascend950DT_9582": {
+          "us": 90.2078452025012,
+          "plan": {
+            "query_rows_per_tile": 4,
+            "kv_page_keys": 128,
+            "histogram_chunk_keys": 8192,
+            "active_aic": 3,
+            "active_aiv": 5,
+            "active_aiv_scope": "AIVs issuing histogram instructions; the runtime also launches idle partners",
+            "launched_aic_950": 32,
+            "launched_aiv_950": 64,
+            "critical_query_group": 0,
+            "mmad_count": 768,
+            "mmads_by_shape": [
+              [
+                16,
+                128,
+                128,
+                256
+              ],
+              [
+                32,
+                128,
+                128,
+                512
+              ]
+            ],
+            "modeled_histogram_instructions": 9648,
+            "key_reads_across_aic_bytes": 25165824
+          },
+          "stages_us": {
+            "first_mmad": 2.78,
+            "page_intervals": 64.2909090909091,
+            "last_mmad": 0.11820595286195286,
+            "score_to_histogram": 0.703030303030303,
+            "histogram_and_output": 22.31569985569985,
+            "additional_shared_service": 0.0
+          }
+        },
+        "Ascend950PR_957b": {
+          "us": 90.69710268415,
+          "plan": {
+            "query_rows_per_tile": 4,
+            "kv_page_keys": 128,
+            "histogram_chunk_keys": 8192,
+            "active_aic": 3,
+            "active_aiv": 5,
+            "active_aiv_scope": "AIVs issuing histogram instructions; the runtime also launches idle partners",
+            "launched_aic_950": 28,
+            "launched_aiv_950": 56,
+            "critical_query_group": 0,
+            "mmad_count": 768,
+            "mmads_by_shape": [
+              [
+                16,
+                128,
+                128,
+                256
+              ],
+              [
+                32,
+                128,
+                128,
+                512
+              ]
+            ],
+            "modeled_histogram_instructions": 9648,
+            "key_reads_across_aic_bytes": 25165824
+          },
+          "stages_us": {
+            "first_mmad": 2.78,
+            "page_intervals": 64.2909090909091,
+            "last_mmad": 0.11820595286195286,
+            "score_to_histogram": 0.703030303030303,
+            "histogram_and_output": 22.804957337348636,
+            "additional_shared_service": 0.0
+          }
+        },
+        "Ascend970DT": {
+          "us": 82.6699019231217,
+          "plan": {
+            "query_rows_per_tile": 4,
+            "kv_page_keys": 128,
+            "histogram_chunk_keys": 8192,
+            "active_aic": 3,
+            "active_aiv": 5,
+            "active_aiv_scope": "AIVs issuing histogram instructions; the runtime also launches idle partners",
+            "launched_aic_950": 120,
+            "launched_aiv_950": 120,
+            "critical_query_group": 0,
+            "mmad_count": 768,
+            "mmads_by_shape": [
+              [
+                16,
+                128,
+                128,
+                256
+              ],
+              [
+                32,
+                128,
+                128,
+                512
+              ]
+            ],
+            "modeled_histogram_instructions": 9648,
+            "key_reads_across_aic_bytes": 25165824
+          },
+          "stages_us": {
+            "first_mmad": 2.5483333333333333,
+            "page_intervals": 58.93333333333333,
+            "last_mmad": 0.1082457501569366,
+            "score_to_histogram": 0.6444444444444445,
+            "histogram_and_output": 20.435545061853656,
+            "additional_shared_service": 0.0
+          }
+        }
+      }
+    }
+  ],
+  "checked_logs": 1127,
+  "lock": "runs/large29/shared.lock",
+  "sources": {
+    "development/validation/indexer34/campaign.py": "b781972cdb149d1f31d211403eb63616b0f11cdb22b7119060f696e2ab193657",
+    "operator_model/indexer_pipeline.py": "f48d8e379e64f36bbf9ac63e80168f6964fc645ad494beb628fde574b5e8b290",
+    "results/v0.34/indexer/prices.json": "8d7ead4747592548b8a2fd554761b417c8d604202f8d04cfa754c7a7808b208d",
+    "results/v0.29/large/fusion/build/builtin": "b4a289a5ef84cb3b10e31db95bfe06e764c3f2efc9aace605ff9e62abbeaefa3",
+    "results/v0.29/large/fusion/freeze.json": "973c234775de2c637361dab557427875c50efd2a1a894b28b7b4d0f838329175",
+    "development/validation/large29/fusion/fusion_campaign.py": "a0290bed722c63179466e57caa37a1d9050178be9ad9ef82faf840042538614f",
+    "development/validation/sku17/campaign_collect.py": "128913632124b4ff430595a34d239e53742f2cb4d1a16ea82a581180bfb3f792"
+  }
+}

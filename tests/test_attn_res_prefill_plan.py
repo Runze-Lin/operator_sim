@@ -12,7 +12,10 @@ class AttnResPrefillPlanTest(unittest.TestCase):
             self.assertEqual(w['dma_read_bytes'], 2*7168*(3*512+3*p['active_aiv']))
             self.assertEqual(w['dma_write_bytes'], 2*7168*2*512)
             self.assertGreaterEqual(p['conditional_schedule_us'], max(p['component_floor_us'].values()))
-            self.assertIsNone(estimate('attn_res_fwd',shape,{'addend':True,'optimize_prefill':True},chip=chip).latency_us)
+            forecast=estimate('attn_res_fwd',shape,{'addend':True,'optimize_prefill':True},chip=chip)
+            self.assertEqual(forecast.status, 'extrapolated')
+            self.assertGreaterEqual(forecast.latency_us, p['component_floor_us']['cold_input_hbm'])
+            self.assertIsNone(p['qualified_latency_us'])
 
     def test_gate(self):
         with self.assertRaises(ValueError):

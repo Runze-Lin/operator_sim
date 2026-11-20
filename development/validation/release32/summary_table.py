@@ -22,6 +22,8 @@ CONTRACT = {'known history': '已知前序', 'stream': '有序流', 'shape': '�
 def update():
     path = ROOT/'docs/error-analysis.md'
     s = path.read_text()
+    if '<!-- release34-summary -->' in s:
+        return
     original, tail = s.split(BEGIN)
     _, tail = tail.split(END)
     stats = json.loads((ROOT/'results/v0.32/evaluation.json').read_text())['summary']

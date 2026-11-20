@@ -172,6 +172,9 @@ def _price_resource(op, shape, target, call, dtype):
     if op == 'matmul' and diag.get('internal_work'):
         return Estimate(us, 'extrapolated', diag['qualification'], aiv, aic, target.name,
                         work, projected, _rates(work, us, target))
+    if op == 'attn_res_fwd' and diag.get('attn_sibling_projection'):
+        return Estimate(us, 'extrapolated', diag['qualification'], aiv, aic, target.name,
+                        work, projected, _rates(work, us, target))
     if op == 'mhc_pre_sinkhorn':
         verified = (diag['schedule'] == 'k_split_cv2_joint_sinkhorn'
                     and target in (load_chip(), load_chip('Ascend950PR_957b')))
@@ -236,10 +239,30 @@ def _evaluate(op, shape, attrs, soc, chip, dtype, timing_mode='auto'):
         call, chosen_dtype = _call_attrs(op, attrs, dtype)
         if timing_mode not in ('auto','resource','calibrated'):
             raise ValueError('timing_mode must be auto, resource or calibrated')
+        if op == 'lightning_indexer' and timing_mode in ('auto','resource'):
+            from .indexer_pipeline import applies, schedule
+            if applies(shape,call,target):
+                duration, plan, diag = schedule(shape,target)
+                work = account_work(op,shape,{**call,'dtype':chosen_dtype})
+                # Coverage is metadata only. None of these extents price an instruction.
+                q, length = shape[1:3]
+                in_archive = ((same and ((q <= 1 and length <= 8192) or (q <= 9 and length <= 4096)))
+                              or (target == load_chip('Ascend950PR_957b') and
+                                  ((q <= 2 and length <= 3072) or (q <= 8 and length <= 1536))))
+                reason = ('Single-wave BF16 query-group schedule within archived Q/KV bounds for this SKU'
+                          if in_archive else 'Single-wave BF16 query-group schedule extrapolated from measured DT stages')
+                projected = dict(method='query_group_kv_pipeline',target_plan=plan,latency_us=duration,
+                                 timing_diagnostics=diag,stages_us=diag['stages_us'],
+                                 inherited_fields=list(target.inherited_fields))
+                return Estimate(duration,'estimated' if in_archive else 'extrapolated',reason,
+                                plan['active_aiv'],plan['active_aic'],target.name,work,projected,
+                                _rates(work,duration,target)), raw
         if op == 'mhc_sinkhorn' and 'resident_aiv' in call and call['resident_aiv'] is None:
             # An explicitly unknown history has the same semantics as omitting H.
             del call['resident_aiv']
-        if op in ('mhc_pre_sinkhorn', 'mhc_sinkhorn'):
+        if (op in ('mhc_pre_sinkhorn', 'mhc_sinkhorn') or
+                (op == 'attn_res_fwd' and timing_mode == 'calibrated' and call.get('optimize_prefill')
+                 and call.get('write_idx', -1) == -1 and not call.get('materialize'))):
             result = _price_resource(op, shape, target, call, chosen_dtype)
             if timing_mode == 'calibrated' and result.status == 'extrapolated':
                 return Estimate(None, 'unavailable', result.reason, result.active_aiv, result.active_aic,

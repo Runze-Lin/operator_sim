@@ -8,9 +8,11 @@
 | 某个算子为什么需要这么久？不同 shape 如何改变结果？ | [建模方法：Vector、Cube、CV 三类流程，含逐算子公式与算例](docs/modeling-strategy.md) |
 | 哪些算子、shape 和库实现实测过？偏差多大？预测有多快？ | [CA 校验与误差：逐算子摘要、逐 shape 数据及查询墙钟](docs/error-analysis.md) |
 
-各算子在 DT、PR 上分别核验 WAPE 和最大误差；偏快、偏慢用同窗带符号偏差与偏快占比描述。Matmul 按目标 L1、输出几何和工作集自动选择分 K、普通多页或权重常驻的多波排程。[逐算子两端误差与方向](results/v0.32/acceptance.md)
+各算子在 DT、PR 上分别核验 WAPE 和最大误差；偏快、偏慢用同窗带符号偏差与偏快占比描述。Matmul 按目标 L1、输出几何和工作集自动选择分 K、普通多页或权重常驻的多波排程。[逐算子两端误差与方向](results/v0.34/acceptance.md)
 
 当前 KDA 验收包含 recurrent 单状态链与 chunk FLA V2。整套模型有 21 条验收路线，双端大 shape 覆盖按同一几何、同一实现的完整设备时间单列。[当前误差表](docs/error-analysis.md) · [逐算子大形覆盖](results/v0.33/large/report.md)
+
+短 query、长 KV 的 Lightning Indexer 按实际 query 分组、每页 MMAD 与每行 TopK 排程。真实 Kimi AttnResFwd 可按 UB 容量为驻留分支预测时延；大 prefill 的接口会标注当前证据为外推。[Indexer 流水算例](docs/examples/lightning_indexer.md) · [AttnRes 的输入、输出与适用层](docs/examples/attn_res_fwd.md)
 
 单卡 B8 整批 prefill 的工作负载表按 32Ki、128Ki、256Ki 给出每个算子的输入、dtype、并行切分、两卡 CA 实测和 970DT 外推。矩阵投影、indexer 系数与全 hidden 激活各有自己的宽度。[DeepSeek V4.1 Flash](docs/workloads/deepseek-flash.md) · [DeepSeek V4 Pro](docs/workloads/deepseek-pro.md) · [Kimi K3](docs/workloads/kimi-k3.md)
 

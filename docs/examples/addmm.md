@@ -33,3 +33,9 @@ PR 的 28 个 AIC 用目标 L0/L1 容量和输出网格重选 [80,128,128] 主�
 | 970DT | 3.761 | N/A · 外推 | 88 |
 
 DT 原始归档与 PR 单独发起的实验沿用各自的采集上下文。本例是开发回放，新验证的形状、预测、基线和资格记录另外保存。[开发形状原始回执](../../results/v0.17/evaluation.json) · [独立预注册](../../results/v0.21/dispatch/freeze.json)
+
+## 65,536 行的多波 prefill 算例
+
+设每卡有 8 个 32Ki 请求，本次每个请求处理 8192 个 token，取 Flash C1 来源层 `indexer.wk` 的输入宽度 512、输出宽度 128，得到 `A[65536,512]`、`B[512,128]`。源码的 `wk` 使用 `bias=False`。本例显式传入独立的非零 BF16 `self[128]`，用于验证系统仿真后端 `addmm` 的列偏置合同。实际调度的 `max_num_batched_tokens` 决定单次能否容纳这 65,536 行。[锁定的 vLLM 源码](https://github.com/vllm-project/vllm-ascend/blob/c09d3e20b9c45c80b34ae3781440d90904a44023/vllm_ascend/models/deepseek_v41/indexer.py#L74-L80)
+
+$2MNK=8,589,934,592$ FLOP，逻辑输入 A、B、self 分别占 64 MiB、128 KiB、256 B，输出 Y 占 16 MiB。950DT 当前模型为 32 个 AIC 各排 4 波、共 2,048 条 MMAD，给出 32.646 µs。950PR 为 28 个 AIC、6 波、2,688 条 MMAD，预测 53.193 µs。970DT 为 12.404 µs，属于外推。一个可验证的问题是 B 能否在每核 L1 常驻。以 DT 为例，如果设备采用 256×128×32 而非 512×128×32 的块，MMAD 将翻到 4,096 条，但 B 可能只需每核从 GM 读一次，核内波数上升仍可缩短整窗。实际分核、L1→BT 偏置指令、MMAD 尺寸和总时间随独立端点回执更新。[大形实测、候选和偏差](../../results/v0.34/addmm/report.md)

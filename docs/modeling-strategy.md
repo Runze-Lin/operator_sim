@@ -68,6 +68,8 @@ $$T=T_{\rm launch}+\max(T_{\rm partial},R_{\rm HBM}/B_{\rm HBM},R_{\rm L2}/B_{\r
 
 大 prefill 下，mHC Pre 的第一层投影要同时沿 token 与归约 K 切片。设最忙 AIC 负责 $m_c$ 行、$k_c$ 个输入位置，24 个投影输出时，已有 950 FP32 MMAD 的片深为 32，一条指令的已观测服务周期是 $67+96\lceil m/16\rceil$，其中 $m$ 是该指令的有效行数。两个系数来自 28 份旧窗口的指令时长。不能把小形的整核总时长同时乘全片 token 倍数和完整宽度倍数。Flash 的 512-token、D=5120 chunk 在 DT 拆成 2 个 M 组、16 个 K 组；候选把这个 AIC 子问题、AIV 行归约和交接分别定价。更换 970 的 C:V 配比后，旧模板的成对发射映射仍需重新识别。AttnResFwd 的多 token 路径则先把 gamma 驻留，按核内行数流水化 score、归一化与异步写，非线性/控制延时尚未确认时可从 API 单取条件服务时间。[mHC 的源码条件与各阶段](../results/v0.29/large/fusion/report.md) · [AttnResFwd 的资源下界和真实维度](../results/v0.29/large/vector/report.md)
 
+**Kimi AttnResFwd 的真实 resident prefill。** `write_idx=-1, materialize=False` 时输出与 Y 别名，bank 保持原值。目标 AIV 数与 UB 决定最多每核 $R$ 行、权重是否能常驻。设 $I$ 是每核一次的发起与权重准备，$p$ 是一行 prefix 服务，$s$ 是输出写响应，$b$ 是同一行 prefix 写与打分、混合、归一化之间的较慢服务，则临界核局部周期为 $I+p+b+(R-1)[\max(p,s)+b]+s+10$。10 是末笔写到 END 的控制周期。阶段价格、$R$ 与搬运量均按目标配置换算，再施加 HBM 与 L2 的服务下界。H=7168、T=512、历史 1 行时，DT 每忙核 8 行，PR 最多 10 行。当前仅能用近邻旧合同标定共有阶段，真实新合同的整窗仍待核验。历史行放不进 UB 的 reload 分支返回工作量和未定价状态。[各参数的测量位置、三端算式与两轮示意图](examples/attn_res_fwd.md)
+
 ### Vector 算子怎样建模
 
 1. 先找可以并行的维度。逐行归约可以把行分给多个 AIV，KDA recurrent 的同一条状态链则要依次处理 token。根据库的分核规则算出最忙核承担的行数、列片数和尾块，再用 UB 容量决定每轮读入多少数据。
@@ -462,7 +464,7 @@ $$
 
 - **Vector。** KDA recurrent 将已经互斥的阶段按所属队列倍率迁移。mHC 的两条 Vector 路线先用目标核数重新计算分块。参考 tile 和单位时间中的等待均可能随未来库变化。
 - **Cube。** Addmm 调用目标 MatMulV3 的波次模型，另计列 bias 从 GM→L1→BT 的流量。GMM2 按各本地专家的 token 数决定独立 output tile，再对队列模板中的并发区间重新计价。独立的数学派生工作仍由 shape 和 dtype 决定。
-- **CV 与组合。** Indexer、融合 PreSinkhorn、GMM1 按每个队列同时活跃的观测时间段计价。对活动集合 S 和参考模板时间 $t_S$，目标时间为 $t_S\max_{q∈S}[(W_q/W^0_q)r_q]$，其中 $W_q,W^0_q$ 是本次与参考的分块工作，$r_q$ 是该队列的目标时间倍率。mHC 拆分链 $T≤256$ 用每个阶段的截距、单位斜率和工作量迁移，详细步骤见第 8 节。多 kernel 分别重算后相加。KDA chunk 可以报工作和任务图，缺少合格耗时。
+- **CV 与组合。** Indexer 的 BF16 单波合同按第 7 节逐组流水计价。其余可用的 Indexer 模板、融合 PreSinkhorn、GMM1 按每个队列同时活跃的观测时间段计价。对活动集合 S 和参考模板时间 $t_S$，目标时间为 $t_S\max_{q∈S}[(W_q/W^0_q)r_q]$，其中 $W_q,W^0_q$ 是本次与参考的分块工作，$r_q$ 是该队列的目标时间倍率。mHC 拆分链 $T≤256$ 用每个阶段的截距、单位斜率和工作量迁移，详细步骤见第 8 节。多 kernel 分别重算后相加。KDA chunk 可以报工作和任务图，缺少合格耗时。
 
 ### mHC 的分核与未知状态
 
@@ -540,7 +542,7 @@ $$
 | MoE sigmoid Top-K | `(T,E,K)` | ops-transformer / `aclnnMoeGatingTopK` | 单分组 FP32 logits，跨芯片资源调度 |
 | Kimi AttnResFwd | `(T,H,S,N)` 及混合/写回属性 | vLLM-Ascend 自定义算子包 / `aclnnAttnResFwd` | 驻留单 token/核子集可计时，其他分支返回结构与工作量 |
 | Addmm | `(M,N,K)`、self_shape、alpha/beta | ops-nn / `aclnnAddmm` | 实测校准阶段成本、独立 shape 验证 |
-| LightningIndexer | `(B,Q,L,G,D)`、sparse_count/mode | ops-transformer / `aclnnLightningIndexer` | 打分/TopK 工作量与流水重叠模板 |
+| LightningIndexer | `(B,Q,L,G,D)`、sparse_count/mode | ops-transformer / `aclnnLightningIndexer` | 单波按发出的 MMAD、排序执行及交接；其余已支持分支沿用重叠模板 |
 | mHC | `(T,N,D)`；Sinkhorn为`(T,N)` | ops-transformer / `aclnnMhcPre`、`aclnnMhcSinkhorn`、`aclnnMhcPreSinkhorn`、`aclnnMhcPost` | 各组件与拆分链分别采集、受限校准 |
 | KDA | `(B,S,Hq,Hv,K,V)`、recurrent/chunk | ops-transformer / `aclnnRecurrentKda`、`aclnnChunkKdaFwd` | recurrent 预测与独立验证，chunk 的 CA 同步资格待解决 |
 | MoE融合链 | `(M,K,F,E)`及本rank专家token直方图 | ops-transformer / `aclnnGroupedMatmulSwigluQuantV2`，后续`aclnnGroupedMatmulV5` | 真实GMM1→MX→GMM2链；组件与链分别预测 |
@@ -928,7 +930,17 @@ u=\left\lfloor\frac{253952-1024-2048-C_ab_g}{4C_ab_x+12+L}\right\rfloor.
 
 ## 7. LightningIndexer：打分、head归约和TopK
 
-**算例 · Lightning Indexer。** B=1、Q=1、L=640、G=8、D=128，选择 top-512。对 640 个候选 key，要先算 640×8 个长度为 128 的点积，再跨 head 合并、选出 512 个下标。按每段 128 个 key 共五段点积，模型估 6.65 µs，CA 为 6.20 µs。
+**算例。** BF16 的两行 query 扫描 3072 个 key，G=8、D=128，一个 AIC 发 24 条 MMAD，两个 AIV 各做一行 Top-512。950PR 模型 10.742 µs，CA 10.776 µs；同形 950DT 模型 10.716 µs，CA 11.101 µs。模型在 PR 首条 MMAD 晚 0.219 µs，最后一条又早 0.243 µs。可在同一横轴上看这两种偏差如何部分抵消。[输入、资源、逐阶段算式和 CA 对照图](examples/lightning_indexer.md)
+
+**单波的分核与流水。** 当前 `auto/resource` 对 B=1、G=8、D=128 的连续 BF16 BSND、右对齐 Top-512、只返回索引，使用 950 安装实现中的 query 分组。每组最多 4 行，在一个 AIC 上打分；一对 AIV 分前半和后半 query，一行尾组只需一个 AIV 做直方图。令 $A=\lceil Q/4\rceil$。当 $A\le\min(C,V/2)$ 且最短一行至少有 512 个候选时，一波能发完。$C,V$ 为目标 AIC、AIV 核数。例如 Q=9 有 3 个 AIC 做乘加、5 个 AIV 排序。实际 kernel 可启动整片核，取数/执行工作与启动核表单独记。更大的多波及其它实现仍须按各自合同验证。
+
+对组内 $r$ 行，矩阵高 $m=16\lceil rG/16\rceil$。以本组最后一行可见的 key 数求页数 $P=\lceil L_{\rm visible}/128\rceil$；一页最多 $n=128$ 个 key，末页按物理张量边界缩短。可见尾掩码可能只屏蔽已经读入的列。关键 AIC 的周期数写成
+
+$$t_C=4587+(P-1)\max(t_{\rm page},2m\cdot128D/u_C)+66.88+2mn_{\rm last}D/u_C.$$
+
+$u_C$ 是目标 BF16 每 AIC 每周期运算数，等于整片 TOPS×1000/(C×GHz)。4587 是首发周期，66.88 是 MMAD 末次响应扣除算术服务后的中位固定成本。无 MTE2 规格时，$t_{\rm page}$ 取 DT 三个轮转槽相邻同槽发起差除以三的中位数 416 周期；已知每核读带宽 $b$（GB/s）时，取 $2×128D×f/b$ 周期，$f$ 单位 GHz。这个替代假设以可用端口带宽作为有效服务价，尚未分辨长循环中的端口争用与发起控制各占多少。
+
+每个 AIV 独立处理分到的行。在一行可见 $l$ 个 key 时，扫 $h=\lceil l/8192\rceil$ 个片，总代价有 $g=\lceil l/256\rceil+2(h-1)$ 个 256-key 分组。额外两组是前一片留下的 512 个赢家。预测 $8g$ 条直方图执行。设 $s=u_{V,DT}/u_V$，$u_V$ 为各芯片每个 AIV 每周期 FP32 运算数。各片扫描合计 $(540h+48.75g)s$ 周期；每次片/行间交接加 $925.33+46.92g_i s$，末行末片至退出加 $635.86+39.54g_i s$。$g_i$ 是交接前该片的分组数。对所有分到同一 AIV 的行求和得到 $t_V$。取相同 query 组的 $t_C+1160+\max t_V$，除以 $1000f$ 得 µs；1160 是末次 MMAD 到排序执行的有效交接。最后在各并行组局部时间、外存字节/HBM 带宽、片上 key 总读量/L2 带宽之间取最大值。已知 key 能驻留 L2 时 HBM 计一份，容量不足时按各组发送量计算。4 个 DT 整窗用于标定；PR 没有独立拟合系数。超过 8192 个 key 后尚缺合格整窗佐证片间交接。时间模型每次只遍历 query 组和组内的行，KV 页数与排序块数用整数计算，空间开销不随 KV 长度增长。[参数与原始时标](../results/v0.34/indexer/prices.json) · [归档与冻结留出](../results/v0.34/indexer/score.json)
 
 普通950接口固定D=128、key head数1，G∈{8,16,24,32,64}；Q/K/weights同为BF16或FP16。当前结构输入是BSND，不覆盖所有paged/TND路线。对每个query：
 
@@ -943,7 +955,7 @@ s_{qk}=\sum_gW_{qg}\max(0,a_{qgk}),\quad indices_q=TopK_k(s_{qk}).
 v=\begin{cases}QL,&mode=0,\\Q(L-Q)+Q(Q+1)/2,&mode=3,Q\le L,\\L(L+1)/2,&mode=3,Q>L.\end{cases}
 \]
 
-mode3为右下对齐因果，\(P=Bv\)。工作量分别为点积 \(2PGD\)、ReLU PG次、weight乘法PG次、head归约 \(P(G-1)\) 次。实际padding/mask可能执行更多，另保留稠密 \(2BQLGD\) 作为参照。TopK比较、分块选取与合并的完整安装包算法尚未移植；时延先采用第11节融合流水模板，不宣称已恢复逐指令成本。不能用topk/L减少前面必须完成的打分工作。
+mode3为右下对齐因果，\(P=Bv\)。工作量分别为点积 \(2PGD\)、ReLU PG次、weight乘法PG次、head归约 \(P(G-1)\) 次。实际padding/mask可能执行更多，另保留稠密 \(2BQLGD\) 作为参照。上述单波分支直接预测 TopK 的直方图执行次数。多波模板与未覆盖的输入合同见第 11 节。不能用topk/L减少前面必须完成的打分工作。
 
 输入输出唯一字节下界为
 
@@ -955,7 +967,7 @@ mode3为右下对齐因果，\(P=Bv\)。工作量分别为点积 \(2PGD\)、ReLU
 
 参数解释：B是batch，Q是query长度，L是key长度，G是query/index head数，D是每head宽度；q/g/k/d是对应索引，Q/K/W在打分式中分别是query张量、key张量和head权重（不要把张量Q与长度Q混淆）。a是点积，s是head加权后的分数，indices是最终整数下标。mode为稀疏mask模式，v是单batch有效配对数，P是所有batch有效配对总数；字节式中的k是top-k个数，不是前面的key索引。returnValues指是否额外写回分数；指示函数成立时为1，否则0；2和4分别对应BF16与int32字节数。
 
-通俗地说，Indexer先对候选key打分，再选最高的若干项。选取数量少并不意味着打分工作少；小query可能仍启动大量核处理长key和归并结果。
+通俗地说，Indexer先对候选key打分，再选最高的若干项。选取数量少并不意味着打分工作少；短 query 也要扫完整个候选序列；在已经验证的单波分支中，多个空闲 AIC 无法缩短单组的 KV 循环。
 
 ## 8. mHC：Pre、Sinkhorn和Post的组成
 
@@ -1255,7 +1267,7 @@ KDA chunk的可执行结构入口为`operator_model.cube_v8_chunk.predict('kda_c
 
 | 路径 | 波次与工作单位 |
 |---|---|
-| Indexer (B=1,G=8,D=128) | 波次p=ceil(Q/32)；CUBE/MTE1工作=p·ceil(L/128)·ceil(G/16)，MTE2=p·ceil(L/128)，SIMD/MTE3=p·ceil(L/512)。Q为查询长度，L为key长度，G为head数，D为head宽度。 |
+| Indexer 的旧模板对照及回退（单波默认走第 7 节） | 波次p=ceil(Q/32)；CUBE/MTE1工作=p·ceil(L/128)·ceil(G/16)，MTE2=p·ceil(L/128)，SIMD/MTE3=p·ceil(L/512)。Q为查询长度，L为key长度，G为head数，D为head宽度。 |
 | 融合 PreSinkhorn | T 为 token 数，N=4，D=4096。投影波次 p=ceil(T/32)，CUBE/MTE1 为 p·ceil(ND/128)，向量和读写为 p·ceil(D/128)。I=20。普通 Pre 与拆分链使用第 8.1 节的分核方法。 |
 | MoE | 记每专家有效行为m_e，输出宽度o，归约宽度k，p=ceil[(Σ_e ceil(m_e/16))·ceil(o/128)/32]。Cube和读工作=p·ceil(k/64)，向量工作=ceil[Σ_e ceil(m_e·F/256)/64]。第一层o=2F、k=K，第二层o=K、k=F。F/K分别为激活后宽度和输入隐藏宽度。SCALAR、FIXP和等待项以p计。 |
 
