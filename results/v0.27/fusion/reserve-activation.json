@@ -1,0 +1,240 @@
+{
+  "utc": "2026-11-20T01:07:57.300556+00:00",
+  "original_registration_sha256": "a3b764910fecc2474936adff2505c148ef1d8345cc3c77806b0fca69c9c1ca69",
+  "failure_sha256": "c4ad24a6abd683cd4d21cf6d8c37ac5fb8d06d982a95997b2fd60759d967dc79",
+  "source_sha256": "a885efe823d2ede8999b16575a86d25728610056eb5c9fd3aa2484deac5dd73b",
+  "jobs": [
+    {
+      "id": "fused-t91-pr",
+      "sku": "Ascend950PR_957b",
+      "op": "mhc_pre_sinkhorn",
+      "shape": [
+        91,
+        4,
+        4096
+      ],
+      "attrs": {
+        "num_iters": 20,
+        "need_backward": false
+      },
+      "api": "aclnnMhcPreSinkhorn",
+      "dtype": "bf16",
+      "runner": "build/smoke/extension_indexer_mhc",
+      "args": [
+        "mhc_pre_sinkhorn",
+        "91",
+        "4",
+        "4096"
+      ],
+      "kernels": 1,
+      "nchecks": 3,
+      "wall_s": 2700,
+      "raw_mib": 10240,
+      "kernel": "MhcPreSinkhorn_bd8e37c67f2294e1437f03bb2bace96c_1000_mix_aic",
+      "elf": "280a1947dc8e2070b7563e06eed75c04683f7d684e1e618da650051ff5eda9b2",
+      "predictions": {
+        "Ascend950PR_957b": {
+          "v025_us": 18.796969696969697,
+          "candidate_us": 15.20555564269796,
+          "target_plan": {
+            "active_aic": 23,
+            "active_aiv": 46,
+            "m_blocks": 1,
+            "k_blocks": 22,
+            "tile": [
+              96,
+              768
+            ],
+            "stage2_payload_aiv": 46,
+            "rows_per_aiv": 2,
+            "largest_k": 768,
+            "critical_aiv_stage1_elements": 35328,
+            "critical_aic_mmad": 12,
+            "l1_k": 256,
+            "l0_k": 64,
+            "critical_aic_padded_mac": 2359296,
+            "stage2_rows": 2
+          },
+          "stages_us": {
+            "dispatch_and_handoff": 7.6330732210405365,
+            "stage1_cast": 2.2147288681992974,
+            "stage1_cube": 1.250302953645587,
+            "stage2_rows": 4.107450599812538,
+            "exposed_hbm_floor": 0.0
+          },
+          "schedule": "k_split_cv2_joint_sinkhorn"
+        },
+        "Ascend950DT_9582": {
+          "v025_us": 17.73151515151515,
+          "candidate_us": 14.008658876811296,
+          "target_plan": {
+            "active_aic": 32,
+            "active_aiv": 64,
+            "m_blocks": 1,
+            "k_blocks": 32,
+            "tile": [
+              96,
+              512
+            ],
+            "stage2_payload_aiv": 46,
+            "rows_per_aiv": 2,
+            "largest_k": 512,
+            "critical_aiv_stage1_elements": 23552,
+            "critical_aic_mmad": 8,
+            "l1_k": 256,
+            "l0_k": 64,
+            "critical_aic_padded_mac": 1572864,
+            "stage2_rows": 2
+          },
+          "stages_us": {
+            "dispatch_and_handoff": 7.738910250582205,
+            "stage1_cast": 1.437425438266916,
+            "stage1_cube": 0.8335353024303913,
+            "stage2_rows": 3.998787885531783,
+            "exposed_hbm_floor": 0.0
+          },
+          "schedule": "k_split_cv2_joint_sinkhorn"
+        },
+        "Ascend970DT": {
+          "v025_us": 16.190555555555555,
+          "candidate_us": 16.190555555555555,
+          "target_plan": {
+            "active_aic": 120,
+            "active_aiv": 120,
+            "m_blocks": 1,
+            "k_blocks": 64,
+            "tile": [
+              96,
+              256
+            ],
+            "stage2_payload_aiv": 91,
+            "rows_per_aiv": 1
+          },
+          "stages_us": {
+            "overlap_window": 16.190555555555555,
+            "exposed_hbm_floor": 0.0
+          },
+          "schedule": "prior_overlap_template"
+        }
+      },
+      "cohort": "reserved when any original pair fails"
+    },
+    {
+      "id": "fused-t91-dt",
+      "sku": "Ascend950DT_9582",
+      "op": "mhc_pre_sinkhorn",
+      "shape": [
+        91,
+        4,
+        4096
+      ],
+      "attrs": {
+        "num_iters": 20,
+        "need_backward": false
+      },
+      "api": "aclnnMhcPreSinkhorn",
+      "dtype": "bf16",
+      "runner": "build/smoke/extension_indexer_mhc",
+      "args": [
+        "mhc_pre_sinkhorn",
+        "91",
+        "4",
+        "4096"
+      ],
+      "kernels": 1,
+      "nchecks": 3,
+      "wall_s": 2700,
+      "raw_mib": 10240,
+      "kernel": "MhcPreSinkhorn_bd8e37c67f2294e1437f03bb2bace96c_1000_mix_aic",
+      "elf": "280a1947dc8e2070b7563e06eed75c04683f7d684e1e618da650051ff5eda9b2",
+      "predictions": {
+        "Ascend950PR_957b": {
+          "v025_us": 18.796969696969697,
+          "candidate_us": 15.20555564269796,
+          "target_plan": {
+            "active_aic": 23,
+            "active_aiv": 46,
+            "m_blocks": 1,
+            "k_blocks": 22,
+            "tile": [
+              96,
+              768
+            ],
+            "stage2_payload_aiv": 46,
+            "rows_per_aiv": 2,
+            "largest_k": 768,
+            "critical_aiv_stage1_elements": 35328,
+            "critical_aic_mmad": 12,
+            "l1_k": 256,
+            "l0_k": 64,
+            "critical_aic_padded_mac": 2359296,
+            "stage2_rows": 2
+          },
+          "stages_us": {
+            "dispatch_and_handoff": 7.6330732210405365,
+            "stage1_cast": 2.2147288681992974,
+            "stage1_cube": 1.250302953645587,
+            "stage2_rows": 4.107450599812538,
+            "exposed_hbm_floor": 0.0
+          },
+          "schedule": "k_split_cv2_joint_sinkhorn"
+        },
+        "Ascend950DT_9582": {
+          "v025_us": 17.73151515151515,
+          "candidate_us": 14.008658876811296,
+          "target_plan": {
+            "active_aic": 32,
+            "active_aiv": 64,
+            "m_blocks": 1,
+            "k_blocks": 32,
+            "tile": [
+              96,
+              512
+            ],
+            "stage2_payload_aiv": 46,
+            "rows_per_aiv": 2,
+            "largest_k": 512,
+            "critical_aiv_stage1_elements": 23552,
+            "critical_aic_mmad": 8,
+            "l1_k": 256,
+            "l0_k": 64,
+            "critical_aic_padded_mac": 1572864,
+            "stage2_rows": 2
+          },
+          "stages_us": {
+            "dispatch_and_handoff": 7.738910250582205,
+            "stage1_cast": 1.437425438266916,
+            "stage1_cube": 0.8335353024303913,
+            "stage2_rows": 3.998787885531783,
+            "exposed_hbm_floor": 0.0
+          },
+          "schedule": "k_split_cv2_joint_sinkhorn"
+        },
+        "Ascend970DT": {
+          "v025_us": 16.190555555555555,
+          "candidate_us": 16.190555555555555,
+          "target_plan": {
+            "active_aic": 120,
+            "active_aiv": 120,
+            "m_blocks": 1,
+            "k_blocks": 64,
+            "tile": [
+              96,
+              256
+            ],
+            "stage2_payload_aiv": 91,
+            "rows_per_aiv": 1
+          },
+          "stages_us": {
+            "overlap_window": 16.190555555555555,
+            "exposed_hbm_floor": 0.0
+          },
+          "schedule": "prior_overlap_template"
+        }
+      },
+      "cohort": "reserved when any original pair fails"
+    }
+  ],
+  "reason": "T127 DT failed the endpoint comparison and is retained. The original condition enabled T91 only after a failure among T72/T113, so the new-main failure did not activate it. Before any T91 CA existed, extend only activation to that failure. Both SKU forecasts and the exact host, ELF, outputs and window gates were preregistered, and remain unmodified.",
+  "resources": "Original single slot, 120 seconds of headroom, 45 min/10 GiB per acquisition, within original aggregate ceiling."
+}

@@ -1,0 +1,2422 @@
+{
+  "chip": "Ascend950DT_9582",
+  "group": "partition",
+  "freeze_sha256": "f7ae623d263f4a2082e1322efde80fd8b8b37e92191ccc6d34f13ddbf53b754c",
+  "cost": {
+    "started_utc": "2026-11-20T01:19:24.547891+00:00",
+    "finished_utc": "2026-11-20T01:21:20.765171+00:00",
+    "seconds": 116.21729871002026,
+    "exit_code": 0,
+    "peak_bytes": 496419398,
+    "raw_bytes": 325948317,
+    "stop_reason": null,
+    "command": [
+      "bash",
+      "/home/l00925865/operator_sim/scripts/cann-run.sh",
+      "msopprof",
+      "simulator",
+      "--soc-version=Ascend950DT_9582",
+      "--dump=false",
+      "--launch-count=8",
+      "--timeout=60",
+      "--output=/home/l00925865/operator_sim/runs/rms27/partition-Ascend950DT_9582/profile",
+      "/home/l00925865/operator_sim/build/vector-v8/NORM",
+      "/home/l00925865/operator_sim/runs/rms27/partition-Ascend950DT_9582/inputs.txt"
+    ]
+  },
+  "rows": [
+    {
+      "chip": "Ascend950DT_9582",
+      "group": "partition",
+      "i": 0,
+      "shape": [
+        1,
+        736
+      ],
+      "prior_aiv": 0,
+      "role": "entry",
+      "known_us": 3.1900175109777,
+      "cold_hot_us": 2.1504698116668126,
+      "runtime_ms": 0.66166,
+      "us": 2.0014600311127784,
+      "lower_us": 1.4581667688973516,
+      "upper_us": 3.1900175109777,
+      "old_us": 2.2896223761580767,
+      "conditional": {
+        "first_us": 3.1900175109777,
+        "one_aiv_prefix_us": 3.1900175109777,
+        "fully_covered_us": 1.621924716838207
+      },
+      "covered_us": 1.4581667688973516,
+      "active_aiv": 1,
+      "detail": {
+        "route": "single-UB",
+        "gamma_issue_cycles": 1583.6029411764707,
+        "issue_spread_cycles": 0.0,
+        "final_y_cycles": 2396.9751686806303,
+        "final_rstd_cycles": 2276.906852381545,
+        "lower_bound_cycles": 1584.8173411764708
+      },
+      "timing_qualified": true,
+      "correctness": [
+        "correctness count=736 bad=0 max_abs_error=0.00178441 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness count=1 bad=0 max_abs_error=1.3565e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ],
+      "host_task": {
+        "begin_tick": 3020,
+        "done_tick": 8841,
+        "full_task_id": 0,
+        "raw_stream_id": 0
+      },
+      "stage": {
+        "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+        "ca_us": 3.536363636363636,
+        "active_aiv": 1,
+        "active_aic": 0,
+        "windows": {
+          "core0.veccore0": [
+            0.0,
+            3.536363636363636
+          ]
+        },
+        "trace": "runs/rms27/partition-Ascend950DT_9582/profile/OPPROF_20261120091924_CXOZNPELDKIZQVZA/RmsNorm_normal_all_bf16_high_performance_5000/0/simulator/trace.json",
+        "trace_sha256": "66df91d66bdd8fdd63b9d32f4d58b9124aee863059059d33c7a90f13c64aaec2",
+        "binary_sha256": "0926fe478e5f718ef49241c08ef00b665797690f0f7f22c67fdc25044e0cb54d",
+        "first_tick": 8602,
+        "last_tick": 14437,
+        "physical_last_tick": 14434,
+        "physical_ca_us": 3.5345454545454547,
+        "cores": {
+          "core0.veccore0": {
+            "first_tick": 8602,
+            "last_tick": 14437,
+            "physical_last_tick": 14434,
+            "physical_end_tick": 14430,
+            "official_duration_us": "3.54",
+            "official_running_us": "3.53",
+            "instruction_events_without_sync": 1528,
+            "signature128": "22c1b3d7b582ddb3bf0393757f45a61e",
+            "rows_written": 1,
+            "shard_sha256": "f98bb2c0d48236c3d6f0b29dda6ae0691c3a6ad97dedf0abe0bbd73f773a27c6"
+          }
+        },
+        "ordinal": 0
+      },
+      "active_count_matches": true
+    },
+    {
+      "chip": "Ascend950DT_9582",
+      "group": "partition",
+      "i": 1,
+      "shape": [
+        1,
+        736
+      ],
+      "prior_aiv": 1,
+      "role": "repeat",
+      "known_us": 1.621924716838207,
+      "cold_hot_us": 2.1504698116668126,
+      "runtime_ms": 0.18364,
+      "us": 2.0014600311127784,
+      "lower_us": 1.4581667688973516,
+      "upper_us": 3.1900175109777,
+      "old_us": 2.2896223761580767,
+      "conditional": {
+        "first_us": 3.1900175109777,
+        "one_aiv_prefix_us": 3.1900175109777,
+        "fully_covered_us": 1.621924716838207
+      },
+      "covered_us": 1.4581667688973516,
+      "active_aiv": 1,
+      "detail": {
+        "route": "single-UB",
+        "gamma_issue_cycles": 1583.6029411764707,
+        "issue_spread_cycles": 0.0,
+        "final_y_cycles": 2396.9751686806303,
+        "final_rstd_cycles": 2276.906852381545,
+        "lower_bound_cycles": 1584.8173411764708
+      },
+      "timing_qualified": true,
+      "correctness": [
+        "correctness count=736 bad=0 max_abs_error=0.00178441 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness count=1 bad=0 max_abs_error=1.3565e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ],
+      "host_task": {
+        "begin_tick": 9186,
+        "done_tick": 10785,
+        "full_task_id": 1,
+        "raw_stream_id": 1
+      },
+      "stage": {
+        "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+        "ca_us": 1.4527272727272726,
+        "active_aiv": 1,
+        "active_aic": 0,
+        "windows": {
+          "core0.veccore0": [
+            0.0,
+            1.4527272727272726
+          ]
+        },
+        "trace": "runs/rms27/partition-Ascend950DT_9582/profile/OPPROF_20261120091924_CXOZNPELDKIZQVZA/RmsNorm_normal_all_bf16_high_performance_5000/1/simulator/trace.json",
+        "trace_sha256": "15e82161116f7ad5bcd521f3e95cfd6610505296098e739180180b60eb631b7d",
+        "binary_sha256": "0926fe478e5f718ef49241c08ef00b665797690f0f7f22c67fdc25044e0cb54d",
+        "first_tick": 15247,
+        "last_tick": 17644,
+        "physical_last_tick": 17641,
+        "physical_ca_us": 1.450909090909091,
+        "cores": {
+          "core0.veccore0": {
+            "first_tick": 15247,
+            "last_tick": 17644,
+            "physical_last_tick": 17641,
+            "physical_end_tick": 17637,
+            "official_duration_us": "1.45",
+            "official_running_us": "1.45",
+            "instruction_events_without_sync": 1528,
+            "signature128": "d4ed6a25d91b422a565c1736cf18b8fd",
+            "rows_written": 1,
+            "shard_sha256": "7ed254638280fb079f341dfbd1665365e0be6566c2dba127bd8dd68be2808a6d"
+          }
+        },
+        "ordinal": 1
+      },
+      "active_count_matches": true
+    },
+    {
+      "chip": "Ascend950DT_9582",
+      "group": "partition",
+      "i": 2,
+      "shape": [
+        4,
+        688
+      ],
+      "prior_aiv": 1,
+      "role": "entry",
+      "known_us": 4.173010227764781,
+      "cold_hot_us": 2.2759557368851016,
+      "runtime_ms": 0.28417,
+      "us": 2.386142469108932,
+      "lower_us": 1.670738386118484,
+      "upper_us": 4.173010227764781,
+      "old_us": 2.447766500248923,
+      "conditional": {
+        "first_us": 3.299495495662391,
+        "one_aiv_prefix_us": 4.173010227764781,
+        "fully_covered_us": 1.7370910159632034
+      },
+      "covered_us": 1.670738386118484,
+      "active_aiv": 4,
+      "detail": {
+        "route": "single-UB",
+        "gamma_issue_cycles": 1596.8970588235295,
+        "issue_spread_cycles": 33.22641509433963,
+        "final_y_cycles": 2421.3336836502504,
+        "final_rstd_cycles": 2747.7183370954986,
+        "lower_bound_cycles": 1599.7350588235295
+      },
+      "timing_qualified": true,
+      "correctness": [
+        "correctness count=2752 bad=0 max_abs_error=0.00160956 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness count=4 bad=0 max_abs_error=1.35247e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ],
+      "host_task": {
+        "begin_tick": 11310,
+        "done_tick": 15894,
+        "full_task_id": 2,
+        "raw_stream_id": 2
+      },
+      "stage": {
+        "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+        "ca_us": 4.446666666666666,
+        "active_aiv": 4,
+        "active_aic": 0,
+        "windows": {
+          "core0.veccore0": [
+            0.0,
+            1.829090909090909
+          ],
+          "core0.veccore1": [
+            0.11636363636363636,
+            2.752727272727273
+          ],
+          "core16.veccore0": [
+            1.4157575757575758,
+            4.446666666666666
+          ],
+          "core16.veccore1": [
+            1.4557575757575758,
+            4.289090909090909
+          ]
+        },
+        "trace": "runs/rms27/partition-Ascend950DT_9582/profile/OPPROF_20261120091924_CXOZNPELDKIZQVZA/RmsNorm_normal_all_bf16_high_performance_5000/2/simulator/trace.json",
+        "trace_sha256": "9c1d2726e5a884c5b33e28cbfc3e6f56e8ef65329c45889d37b130d2914e6a04",
+        "binary_sha256": "0926fe478e5f718ef49241c08ef00b665797690f0f7f22c67fdc25044e0cb54d",
+        "first_tick": 18751,
+        "last_tick": 26088,
+        "physical_last_tick": 26085,
+        "physical_ca_us": 4.444848484848485,
+        "cores": {
+          "core0.veccore0": {
+            "first_tick": 18751,
+            "last_tick": 21769,
+            "physical_last_tick": 21766,
+            "physical_end_tick": 21762,
+            "official_duration_us": "1.83",
+            "official_running_us": "1.82",
+            "instruction_events_without_sync": 1500,
+            "signature128": "72f2cb072d4cfd42978f6dd8af1fb0ce",
+            "rows_written": 1,
+            "shard_sha256": "4dfc84e54db4e52b197c3b76a0dc7ccf60e9fe75132b03ec4a127aaa89cf83f0"
+          },
+          "core0.veccore1": {
+            "first_tick": 18943,
+            "last_tick": 23293,
+            "physical_last_tick": 23290,
+            "physical_end_tick": 23286,
+            "official_duration_us": "2.64",
+            "official_running_us": "2.63",
+            "instruction_events_without_sync": 1500,
+            "signature128": "5143e468576c5cb85204f0eb3db780f3",
+            "rows_written": 1,
+            "shard_sha256": "e067af80d5fbe6d07d67071ee4326662c4b5629a742fea1dbb862d181618e019"
+          },
+          "core16.veccore0": {
+            "first_tick": 21087,
+            "last_tick": 26088,
+            "physical_last_tick": 26085,
+            "physical_end_tick": 26081,
+            "official_duration_us": "3.03",
+            "official_running_us": "3.02",
+            "instruction_events_without_sync": 1500,
+            "signature128": "397bb55577f7e9b3e86df530eff19ef4",
+            "rows_written": 1,
+            "shard_sha256": "6229e198cdbac87052ca3959686c85d8fa5b005c756bf306c6c8949c802ce22a"
+          },
+          "core16.veccore1": {
+            "first_tick": 21153,
+            "last_tick": 25828,
+            "physical_last_tick": 25825,
+            "physical_end_tick": 25821,
+            "official_duration_us": "2.83",
+            "official_running_us": "2.83",
+            "instruction_events_without_sync": 1500,
+            "signature128": "790fc6cdb610af74b79d546801d57789",
+            "rows_written": 1,
+            "shard_sha256": "d0faea5b3c3f590f5b48e7ee7bf8c910d780e0ccf7c0137babfc2cdfb20303bf"
+          }
+        },
+        "ordinal": 2
+      },
+      "active_count_matches": true
+    },
+    {
+      "chip": "Ascend950DT_9582",
+      "group": "partition",
+      "i": 3,
+      "shape": [
+        4,
+        688
+      ],
+      "prior_aiv": 4,
+      "role": "repeat",
+      "known_us": 1.7370910159632034,
+      "cold_hot_us": 2.2759557368851016,
+      "runtime_ms": 0.26957,
+      "us": 2.386142469108932,
+      "lower_us": 1.670738386118484,
+      "upper_us": 4.173010227764781,
+      "old_us": 2.447766500248923,
+      "conditional": {
+        "first_us": 3.299495495662391,
+        "one_aiv_prefix_us": 4.173010227764781,
+        "fully_covered_us": 1.7370910159632034
+      },
+      "covered_us": 1.670738386118484,
+      "active_aiv": 4,
+      "detail": {
+        "route": "single-UB",
+        "gamma_issue_cycles": 1596.8970588235295,
+        "issue_spread_cycles": 33.22641509433963,
+        "final_y_cycles": 2421.3336836502504,
+        "final_rstd_cycles": 2747.7183370954986,
+        "lower_bound_cycles": 1599.7350588235295
+      },
+      "timing_qualified": true,
+      "correctness": [
+        "correctness count=2752 bad=0 max_abs_error=0.00160956 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness count=4 bad=0 max_abs_error=1.35247e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ],
+      "host_task": {
+        "begin_tick": 16194,
+        "done_tick": 18050,
+        "full_task_id": 3,
+        "raw_stream_id": 3
+      },
+      "stage": {
+        "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+        "ca_us": 1.7375757575757576,
+        "active_aiv": 4,
+        "active_aic": 0,
+        "windows": {
+          "core0.veccore0": [
+            0.0,
+            1.6484848484848484
+          ],
+          "core0.veccore1": [
+            0.0,
+            1.7375757575757576
+          ],
+          "core16.veccore0": [
+            0.04909090909090909,
+            1.4648484848484848
+          ],
+          "core16.veccore1": [
+            0.04909090909090909,
+            1.5187878787878788
+          ]
+        },
+        "trace": "runs/rms27/partition-Ascend950DT_9582/profile/OPPROF_20261120091924_CXOZNPELDKIZQVZA/RmsNorm_normal_all_bf16_high_performance_5000/3/simulator/trace.json",
+        "trace_sha256": "d033dd1d791c474ee18e1f3b61db3cab13805932ceb4c21c5d1a2a8e9ba46df2",
+        "binary_sha256": "0926fe478e5f718ef49241c08ef00b665797690f0f7f22c67fdc25044e0cb54d",
+        "first_tick": 26810,
+        "last_tick": 29677,
+        "physical_last_tick": 29674,
+        "physical_ca_us": 1.7357575757575758,
+        "cores": {
+          "core0.veccore0": {
+            "first_tick": 26810,
+            "last_tick": 29530,
+            "physical_last_tick": 29527,
+            "physical_end_tick": 29523,
+            "official_duration_us": "1.65",
+            "official_running_us": "1.65",
+            "instruction_events_without_sync": 1500,
+            "signature128": "72f7870fae1d72e98116c13849e32efa",
+            "rows_written": 1,
+            "shard_sha256": "d5813004c28d9fbf4a948ce4821155019be411bba395c4bb2f7b3d1528575a25"
+          },
+          "core0.veccore1": {
+            "first_tick": 26810,
+            "last_tick": 29677,
+            "physical_last_tick": 29674,
+            "physical_end_tick": 29670,
+            "official_duration_us": "1.74",
+            "official_running_us": "1.74",
+            "instruction_events_without_sync": 1500,
+            "signature128": "857f8c827056305e34c384ff11fd9a1f",
+            "rows_written": 1,
+            "shard_sha256": "834bf67558ed13291cd0a94cbea035bc7568d50dc213344641b9f6164d8f4e34"
+          },
+          "core16.veccore0": {
+            "first_tick": 26891,
+            "last_tick": 29227,
+            "physical_last_tick": 29224,
+            "physical_end_tick": 29220,
+            "official_duration_us": "1.42",
+            "official_running_us": "1.41",
+            "instruction_events_without_sync": 1500,
+            "signature128": "6c12e3bab3ea55b6848a2cb6de49d16f",
+            "rows_written": 1,
+            "shard_sha256": "544240787f2d7e9c8c2d1fd83d5eaa31a5fb82bca597fb83688a1b216353fb53"
+          },
+          "core16.veccore1": {
+            "first_tick": 26891,
+            "last_tick": 29316,
+            "physical_last_tick": 29313,
+            "physical_end_tick": 29309,
+            "official_duration_us": "1.47",
+            "official_running_us": "1.47",
+            "instruction_events_without_sync": 1500,
+            "signature128": "4861994d8de9362bd8ccde3e28e555a2",
+            "rows_written": 1,
+            "shard_sha256": "8dbc739348cbcf4bb950901947e0b9dd199e1f4a0b06e899828bfa14eab1cfd9"
+          }
+        },
+        "ordinal": 3
+      },
+      "active_count_matches": true
+    },
+    {
+      "chip": "Ascend950DT_9582",
+      "group": "partition",
+      "i": 4,
+      "shape": [
+        19,
+        2416
+      ],
+      "prior_aiv": 4,
+      "role": "entry",
+      "known_us": 4.1722872443181815,
+      "cold_hot_us": 3.9206803018262733,
+      "runtime_ms": 0.43637,
+      "us": 3.8197536279155133,
+      "lower_us": 3.1492242970336295,
+      "upper_us": 4.853062235564108,
+      "old_us": 4.2316627246032255,
+      "conditional": {
+        "first_us": 4.853062235564108,
+        "one_aiv_prefix_us": 4.808461320075758,
+        "fully_covered_us": 3.28882363284632
+      },
+      "covered_us": 3.1492242970336295,
+      "active_aiv": 19,
+      "detail": {
+        "route": "single-UB",
+        "gamma_issue_cycles": 1663.3676470588236,
+        "issue_spread_cycles": 199.35849056603774,
+        "final_y_cycles": 2765.338045750027,
+        "final_rstd_cycles": 5187.220090105488,
+        "lower_bound_cycles": 1703.2316470588237
+      },
+      "timing_qualified": true,
+      "correctness": [
+        "correctness count=45904 bad=0 max_abs_error=0.00176277 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness count=19 bad=0 max_abs_error=1.27194e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ],
+      "host_task": {
+        "begin_tick": 18765,
+        "done_tick": 23659,
+        "full_task_id": 4,
+        "raw_stream_id": 4
+      },
+      "stage": {
+        "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+        "ca_us": 4.74,
+        "active_aiv": 19,
+        "active_aic": 0,
+        "windows": {
+          "core0.veccore0": [
+            0.0,
+            1.9612121212121212
+          ],
+          "core0.veccore1": [
+            0.0,
+            1.9296969696969697
+          ],
+          "core1.veccore0": [
+            0.48484848484848486,
+            3.7436363636363637
+          ],
+          "core1.veccore1": [
+            0.4993939393939394,
+            3.3436363636363637
+          ],
+          "core16.veccore0": [
+            0.048484848484848485,
+            2.2284848484848485
+          ],
+          "core16.veccore1": [
+            0.048484848484848485,
+            2.0296969696969698
+          ],
+          "core17.veccore0": [
+            0.7442424242424243,
+            4.74
+          ],
+          "core17.veccore1": [
+            0.6975757575757576,
+            4.659393939393939
+          ],
+          "core18.veccore0": [
+            0.6696969696969697,
+            4.483636363636363
+          ],
+          "core18.veccore1": [
+            0.7024242424242424,
+            4.573333333333333
+          ],
+          "core19.veccore0": [
+            0.6624242424242425,
+            3.9872727272727273
+          ],
+          "core19.veccore1": [
+            0.6878787878787879,
+            4.402424242424242
+          ],
+          "core2.veccore0": [
+            0.49575757575757573,
+            3.5345454545454547
+          ],
+          "core2.veccore1": [
+            0.5036363636363637,
+            3.5472727272727274
+          ],
+          "core20.veccore0": [
+            0.6260606060606061,
+            3.912121212121212
+          ],
+          "core3.veccore0": [
+            0.546060606060606,
+            3.398787878787879
+          ],
+          "core3.veccore1": [
+            0.5593939393939394,
+            3.638181818181818
+          ],
+          "core4.veccore0": [
+            0.5775757575757576,
+            4.119393939393939
+          ],
+          "core4.veccore1": [
+            0.5890909090909091,
+            4.2284848484848485
+          ]
+        },
+        "trace": "runs/rms27/partition-Ascend950DT_9582/profile/OPPROF_20261120091924_CXOZNPELDKIZQVZA/RmsNorm_normal_all_bf16_high_performance_5000/4/simulator/trace.json",
+        "trace_sha256": "ce4a8f77e21ff51501e16ef9bbdf1aec25bcfa10ecfcdeb5f8e2a1eb24e769e8",
+        "binary_sha256": "0926fe478e5f718ef49241c08ef00b665797690f0f7f22c67fdc25044e0cb54d",
+        "first_tick": 31053,
+        "last_tick": 38874,
+        "physical_last_tick": 38871,
+        "physical_ca_us": 4.738181818181818,
+        "cores": {
+          "core0.veccore0": {
+            "first_tick": 31053,
+            "last_tick": 34289,
+            "physical_last_tick": 34286,
+            "physical_end_tick": 34282,
+            "official_duration_us": "1.96",
+            "official_running_us": "1.96",
+            "instruction_events_without_sync": 2256,
+            "signature128": "a9de274b995801d638d876523c2e278d",
+            "rows_written": 1,
+            "shard_sha256": "24640fba4b15a3c31b00a3f18f9ad9fe1f18edd91d644e7488e8c7b915722658"
+          },
+          "core0.veccore1": {
+            "first_tick": 31053,
+            "last_tick": 34237,
+            "physical_last_tick": 34234,
+            "physical_end_tick": 34230,
+            "official_duration_us": "1.93",
+            "official_running_us": "1.92",
+            "instruction_events_without_sync": 2256,
+            "signature128": "33d39da56aa44fe3d58a1a9839b3e395",
+            "rows_written": 1,
+            "shard_sha256": "710038936724e3d9b971d17566c257894183e10fe8c6d04139fc8d5750e980d8"
+          },
+          "core1.veccore0": {
+            "first_tick": 31853,
+            "last_tick": 37230,
+            "physical_last_tick": 37227,
+            "physical_end_tick": 37223,
+            "official_duration_us": "3.26",
+            "official_running_us": "3.25",
+            "instruction_events_without_sync": 2256,
+            "signature128": "b9f56350fef948b7e5cb0d65b66d33b3",
+            "rows_written": 1,
+            "shard_sha256": "1a9de00419cdf8dc54aa1bd55558943e89c8fc19e27cda05234681bfbf7e0256"
+          },
+          "core1.veccore1": {
+            "first_tick": 31877,
+            "last_tick": 36570,
+            "physical_last_tick": 36567,
+            "physical_end_tick": 36563,
+            "official_duration_us": "2.84",
+            "official_running_us": "2.84",
+            "instruction_events_without_sync": 2256,
+            "signature128": "98a0371b863af85bc824e308611b94e4",
+            "rows_written": 1,
+            "shard_sha256": "91aa0c26b28a1b01534b9b79efe78c50094590ab6dedfdd747ec854dfabca2fe"
+          },
+          "core16.veccore0": {
+            "first_tick": 31133,
+            "last_tick": 34730,
+            "physical_last_tick": 34727,
+            "physical_end_tick": 34723,
+            "official_duration_us": "2.18",
+            "official_running_us": "2.18",
+            "instruction_events_without_sync": 2256,
+            "signature128": "69d13593b12070a86d0e89ea71b19d66",
+            "rows_written": 1,
+            "shard_sha256": "0302e58941193e949c896f8f3e6ed73975dd19a750e6d2375aa171ac104b893a"
+          },
+          "core16.veccore1": {
+            "first_tick": 31133,
+            "last_tick": 34402,
+            "physical_last_tick": 34399,
+            "physical_end_tick": 34395,
+            "official_duration_us": "1.98",
+            "official_running_us": "1.98",
+            "instruction_events_without_sync": 2256,
+            "signature128": "84a5de0d25cc574539f4a35d18721121",
+            "rows_written": 1,
+            "shard_sha256": "fa828a8e41eef46878e6d627414c19bcacd5ffcfedfadeab8b9ec57983ff6d05"
+          },
+          "core17.veccore0": {
+            "first_tick": 32281,
+            "last_tick": 38874,
+            "physical_last_tick": 38871,
+            "physical_end_tick": 38867,
+            "official_duration_us": "4",
+            "official_running_us": "3.99",
+            "instruction_events_without_sync": 2256,
+            "signature128": "9785f1745ecd2ce47588384ae1fd463b",
+            "rows_written": 1,
+            "shard_sha256": "58447bf61ff03304f597ee9ad480ff03a39643aaf9da7f1ed7538723cff13b83"
+          },
+          "core17.veccore1": {
+            "first_tick": 32204,
+            "last_tick": 38741,
+            "physical_last_tick": 38738,
+            "physical_end_tick": 38734,
+            "official_duration_us": "3.96",
+            "official_running_us": "3.96",
+            "instruction_events_without_sync": 2256,
+            "signature128": "bb3e9e4601bdeebfb1cd4c3ff9bee876",
+            "rows_written": 1,
+            "shard_sha256": "4e7f116f268fe9db20df3004ba91002d86a843e888c791bb03e61cf632907e4e"
+          },
+          "core18.veccore0": {
+            "first_tick": 32158,
+            "last_tick": 38451,
+            "physical_last_tick": 38448,
+            "physical_end_tick": 38444,
+            "official_duration_us": "3.81",
+            "official_running_us": "3.81",
+            "instruction_events_without_sync": 2256,
+            "signature128": "0f6dd2e0c8e2486c51f7e421eeaaa090",
+            "rows_written": 1,
+            "shard_sha256": "39811f702722e890f6e3ec33ab1df180e42cc4ce21fddaa6f98d5ae6205e91a3"
+          },
+          "core18.veccore1": {
+            "first_tick": 32212,
+            "last_tick": 38599,
+            "physical_last_tick": 38596,
+            "physical_end_tick": 38592,
+            "official_duration_us": "3.87",
+            "official_running_us": "3.87",
+            "instruction_events_without_sync": 2256,
+            "signature128": "f9c8ab564944eae27dc46a371a992bd7",
+            "rows_written": 1,
+            "shard_sha256": "fcb11942afd6e85255bd91b98447b09b6c801afc511dafed224541240713d099"
+          },
+          "core19.veccore0": {
+            "first_tick": 32146,
+            "last_tick": 37632,
+            "physical_last_tick": 37629,
+            "physical_end_tick": 37625,
+            "official_duration_us": "3.32",
+            "official_running_us": "3.32",
+            "instruction_events_without_sync": 2256,
+            "signature128": "fbb6e264de0d87cc3d0720fc641f5d2d",
+            "rows_written": 1,
+            "shard_sha256": "61101ec973b1827ccb03e6ed84ead8f11a926b1266e1ad91e1d77d3fdea7ce8f"
+          },
+          "core19.veccore1": {
+            "first_tick": 32188,
+            "last_tick": 38317,
+            "physical_last_tick": 38314,
+            "physical_end_tick": 38310,
+            "official_duration_us": "3.71",
+            "official_running_us": "3.71",
+            "instruction_events_without_sync": 2256,
+            "signature128": "bfe6665c209642e321612a684dbbb7e1",
+            "rows_written": 1,
+            "shard_sha256": "9dda159fede013be760dba6d7c7ebaa82d25f6e0c1b6ea99af710a35f66f714b"
+          },
+          "core2.veccore0": {
+            "first_tick": 31871,
+            "last_tick": 36885,
+            "physical_last_tick": 36882,
+            "physical_end_tick": 36878,
+            "official_duration_us": "3.04",
+            "official_running_us": "3.03",
+            "instruction_events_without_sync": 2256,
+            "signature128": "3f56e904987561293e315179a8a268d6",
+            "rows_written": 1,
+            "shard_sha256": "bbae062c878c9ea77ffe027c73ab7666e5b5c71f1cc3d85c29ceb655d3bd76cc"
+          },
+          "core2.veccore1": {
+            "first_tick": 31884,
+            "last_tick": 36906,
+            "physical_last_tick": 36903,
+            "physical_end_tick": 36899,
+            "official_duration_us": "3.04",
+            "official_running_us": "3.04",
+            "instruction_events_without_sync": 2256,
+            "signature128": "19b1086e3c5ae7481189be3a385ab752",
+            "rows_written": 1,
+            "shard_sha256": "0a052e983a018053a9f949c05fd2ca181396fc846a1016446081508b3e112e37"
+          },
+          "core20.veccore0": {
+            "first_tick": 32086,
+            "last_tick": 37508,
+            "physical_last_tick": 37505,
+            "physical_end_tick": 37501,
+            "official_duration_us": "3.29",
+            "official_running_us": "3.28",
+            "instruction_events_without_sync": 2256,
+            "signature128": "6cc06fa6ec51fe16a5eba88e0ce646f0",
+            "rows_written": 1,
+            "shard_sha256": "4423e8fc37e76c3871dbb242f932599d84996a000c593f5cf2296724b8aa0c55"
+          },
+          "core3.veccore0": {
+            "first_tick": 31954,
+            "last_tick": 36661,
+            "physical_last_tick": 36658,
+            "physical_end_tick": 36654,
+            "official_duration_us": "2.85",
+            "official_running_us": "2.85",
+            "instruction_events_without_sync": 2256,
+            "signature128": "232979456afe7edc07ac323d9e39dd45",
+            "rows_written": 1,
+            "shard_sha256": "c8ea7871f9c6caf8bda3d0c106f65bd0d060f9f6b879e3a07a8589bd79465ad6"
+          },
+          "core3.veccore1": {
+            "first_tick": 31976,
+            "last_tick": 37056,
+            "physical_last_tick": 37053,
+            "physical_end_tick": 37049,
+            "official_duration_us": "3.08",
+            "official_running_us": "3.07",
+            "instruction_events_without_sync": 2256,
+            "signature128": "d98e36b03845a93d330792b59ab89e66",
+            "rows_written": 1,
+            "shard_sha256": "bfd31383eb3edb38d792c5aef60d71ede17567e17a4b970bcffaeac9f1a2f8fe"
+          },
+          "core4.veccore0": {
+            "first_tick": 32006,
+            "last_tick": 37850,
+            "physical_last_tick": 37847,
+            "physical_end_tick": 37843,
+            "official_duration_us": "3.54",
+            "official_running_us": "3.54",
+            "instruction_events_without_sync": 2256,
+            "signature128": "3a66d2fa22e2722b592ea4e8e2218153",
+            "rows_written": 1,
+            "shard_sha256": "f211bc37fe61bb72bfcb732f74324a712bf7241382f10991e2efaf049604f24b"
+          },
+          "core4.veccore1": {
+            "first_tick": 32025,
+            "last_tick": 38030,
+            "physical_last_tick": 38027,
+            "physical_end_tick": 38023,
+            "official_duration_us": "3.64",
+            "official_running_us": "3.64",
+            "instruction_events_without_sync": 2256,
+            "signature128": "7a84ea5d83e3b95e1cc1072f009ae6f0",
+            "rows_written": 1,
+            "shard_sha256": "659eec2cc2234f2befc8d6d2c2aec0633bedd3d6b0425b6359f6857e54f4a838"
+          }
+        },
+        "ordinal": 4
+      },
+      "active_count_matches": true
+    },
+    {
+      "chip": "Ascend950DT_9582",
+      "group": "partition",
+      "i": 5,
+      "shape": [
+        19,
+        2416
+      ],
+      "prior_aiv": 19,
+      "role": "repeat",
+      "known_us": 3.28882363284632,
+      "cold_hot_us": 3.9206803018262733,
+      "runtime_ms": 0.43106,
+      "us": 3.8197536279155133,
+      "lower_us": 3.1492242970336295,
+      "upper_us": 4.853062235564108,
+      "old_us": 4.2316627246032255,
+      "conditional": {
+        "first_us": 4.853062235564108,
+        "one_aiv_prefix_us": 4.808461320075758,
+        "fully_covered_us": 3.28882363284632
+      },
+      "covered_us": 3.1492242970336295,
+      "active_aiv": 19,
+      "detail": {
+        "route": "single-UB",
+        "gamma_issue_cycles": 1663.3676470588236,
+        "issue_spread_cycles": 199.35849056603774,
+        "final_y_cycles": 2765.338045750027,
+        "final_rstd_cycles": 5187.220090105488,
+        "lower_bound_cycles": 1703.2316470588237
+      },
+      "timing_qualified": true,
+      "correctness": [
+        "correctness count=45904 bad=0 max_abs_error=0.00176277 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness count=19 bad=0 max_abs_error=1.27194e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ],
+      "host_task": {
+        "begin_tick": 24930,
+        "done_tick": 28428,
+        "full_task_id": 5,
+        "raw_stream_id": 5
+      },
+      "stage": {
+        "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+        "ca_us": 3.38,
+        "active_aiv": 19,
+        "active_aic": 0,
+        "windows": {
+          "core0.veccore0": [
+            0.0006060606060606061,
+            2.0187878787878786
+          ],
+          "core0.veccore1": [
+            0.0006060606060606061,
+            2.3133333333333335
+          ],
+          "core1.veccore0": [
+            0.0030303030303030303,
+            2.7096969696969695
+          ],
+          "core1.veccore1": [
+            0.0030303030303030303,
+            2.1157575757575757
+          ],
+          "core16.veccore0": [
+            0.0496969696969697,
+            3.0557575757575757
+          ],
+          "core16.veccore1": [
+            0.0496969696969697,
+            2.4836363636363634
+          ],
+          "core17.veccore0": [
+            0.05090909090909091,
+            3.22
+          ],
+          "core17.veccore1": [
+            0.05090909090909091,
+            3.3024242424242423
+          ],
+          "core18.veccore0": [
+            0.04787878787878788,
+            2.5757575757575757
+          ],
+          "core18.veccore1": [
+            0.04787878787878788,
+            2.8836363636363638
+          ],
+          "core19.veccore0": [
+            0.0496969696969697,
+            3.1424242424242426
+          ],
+          "core19.veccore1": [
+            0.0496969696969697,
+            3.38
+          ],
+          "core2.veccore0": [
+            0.0,
+            2.2163636363636363
+          ],
+          "core2.veccore1": [
+            0.0,
+            1.9187878787878787
+          ],
+          "core20.veccore0": [
+            0.05272727272727273,
+            2.9696969696969697
+          ],
+          "core3.veccore0": [
+            0.0006060606060606061,
+            1.8145454545454545
+          ],
+          "core3.veccore1": [
+            0.0006060606060606061,
+            1.7048484848484848
+          ],
+          "core4.veccore0": [
+            0.0048484848484848485,
+            1.592121212121212
+          ],
+          "core4.veccore1": [
+            0.0048484848484848485,
+            1.4896969696969697
+          ]
+        },
+        "trace": "runs/rms27/partition-Ascend950DT_9582/profile/OPPROF_20261120091924_CXOZNPELDKIZQVZA/RmsNorm_normal_all_bf16_high_performance_5000/5/simulator/trace.json",
+        "trace_sha256": "dffc13d650d356a26ff68a5e729609916f028bac2e5d98560b182a5553ac7158",
+        "binary_sha256": "0926fe478e5f718ef49241c08ef00b665797690f0f7f22c67fdc25044e0cb54d",
+        "first_tick": 41223,
+        "last_tick": 46800,
+        "physical_last_tick": 46797,
+        "physical_ca_us": 3.3781818181818184,
+        "cores": {
+          "core0.veccore0": {
+            "first_tick": 41224,
+            "last_tick": 44554,
+            "physical_last_tick": 44551,
+            "physical_end_tick": 44547,
+            "official_duration_us": "2.02",
+            "official_running_us": "2.02",
+            "instruction_events_without_sync": 2256,
+            "signature128": "a7598e381c9258873c70b21f24163d67",
+            "rows_written": 1,
+            "shard_sha256": "48858cd2962b0d954c7cc66f9e89cdd39bcd42d25d578c1f70bb8edf7b0ae13e"
+          },
+          "core0.veccore1": {
+            "first_tick": 41224,
+            "last_tick": 45040,
+            "physical_last_tick": 45037,
+            "physical_end_tick": 45033,
+            "official_duration_us": "2.31",
+            "official_running_us": "2.31",
+            "instruction_events_without_sync": 2256,
+            "signature128": "84de3260428885b2d4bb73d6ce84b41e",
+            "rows_written": 1,
+            "shard_sha256": "30ee3f221e3bfb77c582f43c138799630b5df8c92c88d94c23065c8203df2d34"
+          },
+          "core1.veccore0": {
+            "first_tick": 41228,
+            "last_tick": 45694,
+            "physical_last_tick": 45691,
+            "physical_end_tick": 45687,
+            "official_duration_us": "2.71",
+            "official_running_us": "2.7",
+            "instruction_events_without_sync": 2256,
+            "signature128": "65a77d027904731792cc72ef0dffe433",
+            "rows_written": 1,
+            "shard_sha256": "5a5f732b2bee1ec7249aaf01791d7ca282282d9e877de21af57c70ae02444e1d"
+          },
+          "core1.veccore1": {
+            "first_tick": 41228,
+            "last_tick": 44714,
+            "physical_last_tick": 44711,
+            "physical_end_tick": 44707,
+            "official_duration_us": "2.11",
+            "official_running_us": "2.11",
+            "instruction_events_without_sync": 2256,
+            "signature128": "59ef1299da7710e3916b953aa998bf10",
+            "rows_written": 1,
+            "shard_sha256": "e694e33f1eae3cbcfc5d744e80ca8e0f9463b74b7e6c544217012f720f253469"
+          },
+          "core16.veccore0": {
+            "first_tick": 41305,
+            "last_tick": 46265,
+            "physical_last_tick": 46262,
+            "physical_end_tick": 46258,
+            "official_duration_us": "3.01",
+            "official_running_us": "3",
+            "instruction_events_without_sync": 2256,
+            "signature128": "c41a3dbede5a0f704c868b8e3e8558ab",
+            "rows_written": 1,
+            "shard_sha256": "93f7e2166979dce82323cd9e0a294e5eea6bfdab269fac3aeb6b2069ec3fe808"
+          },
+          "core16.veccore1": {
+            "first_tick": 41305,
+            "last_tick": 45321,
+            "physical_last_tick": 45318,
+            "physical_end_tick": 45314,
+            "official_duration_us": "2.43",
+            "official_running_us": "2.43",
+            "instruction_events_without_sync": 2256,
+            "signature128": "4f5c512e9e273afc005e399c8d2488d7",
+            "rows_written": 1,
+            "shard_sha256": "a37f4203869c474fb04688547e1a946d1aa86324506ef35c18316fc47076e1cd"
+          },
+          "core17.veccore0": {
+            "first_tick": 41307,
+            "last_tick": 46536,
+            "physical_last_tick": 46533,
+            "physical_end_tick": 46529,
+            "official_duration_us": "3.17",
+            "official_running_us": "3.17",
+            "instruction_events_without_sync": 2256,
+            "signature128": "996e35b4fb04caa309f4de9c501181c1",
+            "rows_written": 1,
+            "shard_sha256": "168532d6442b3ca5a752910eca4034a08703159e7eead6aa653a615ad8f5e2bb"
+          },
+          "core17.veccore1": {
+            "first_tick": 41307,
+            "last_tick": 46672,
+            "physical_last_tick": 46669,
+            "physical_end_tick": 46665,
+            "official_duration_us": "3.25",
+            "official_running_us": "3.25",
+            "instruction_events_without_sync": 2256,
+            "signature128": "7df8a2bcb7bcf39eff2d18eb607422a2",
+            "rows_written": 1,
+            "shard_sha256": "098b8d5b5c95cd4a6ecdb97f72d324255243ed458797daf24e20bb4252cfb325"
+          },
+          "core18.veccore0": {
+            "first_tick": 41302,
+            "last_tick": 45473,
+            "physical_last_tick": 45470,
+            "physical_end_tick": 45466,
+            "official_duration_us": "2.53",
+            "official_running_us": "2.53",
+            "instruction_events_without_sync": 2256,
+            "signature128": "102597bbc8085f09a5855afe39f51d00",
+            "rows_written": 1,
+            "shard_sha256": "b4a0287e604893a1b03120ae38d0b9189e1c7e7aca00507378ac219825472188"
+          },
+          "core18.veccore1": {
+            "first_tick": 41302,
+            "last_tick": 45981,
+            "physical_last_tick": 45978,
+            "physical_end_tick": 45974,
+            "official_duration_us": "2.84",
+            "official_running_us": "2.83",
+            "instruction_events_without_sync": 2256,
+            "signature128": "86a8b5256cd9f2489a8f6a7e61af7b6b",
+            "rows_written": 1,
+            "shard_sha256": "28b44c438ca303e8ffb419e3f7369b55eba0c66fe50abdf1d8f0820136445ed7"
+          },
+          "core19.veccore0": {
+            "first_tick": 41305,
+            "last_tick": 46408,
+            "physical_last_tick": 46405,
+            "physical_end_tick": 46401,
+            "official_duration_us": "3.09",
+            "official_running_us": "3.09",
+            "instruction_events_without_sync": 2256,
+            "signature128": "ccbcaa7b54efdbe5bfb5a4af9601998f",
+            "rows_written": 1,
+            "shard_sha256": "1c7f1d88b23bbfaab372d929e5a098c96b9a7212c8cdd42834ef093cb0309c47"
+          },
+          "core19.veccore1": {
+            "first_tick": 41305,
+            "last_tick": 46800,
+            "physical_last_tick": 46797,
+            "physical_end_tick": 46793,
+            "official_duration_us": "3.33",
+            "official_running_us": "3.33",
+            "instruction_events_without_sync": 2256,
+            "signature128": "48e581fb4e6d755bebc20d082c328145",
+            "rows_written": 1,
+            "shard_sha256": "5d902e3d2f5281fa657fc5b64c08e943c518f49c7dd30095a332c6b4a7368eed"
+          },
+          "core2.veccore0": {
+            "first_tick": 41223,
+            "last_tick": 44880,
+            "physical_last_tick": 44877,
+            "physical_end_tick": 44873,
+            "official_duration_us": "2.22",
+            "official_running_us": "2.21",
+            "instruction_events_without_sync": 2256,
+            "signature128": "5ba0d25aec8d3d38d910edd048fb60e9",
+            "rows_written": 1,
+            "shard_sha256": "706d736b2679abdf341eb58803c03fc448e73ffb945088e441967ff2cae4e1fb"
+          },
+          "core2.veccore1": {
+            "first_tick": 41223,
+            "last_tick": 44389,
+            "physical_last_tick": 44386,
+            "physical_end_tick": 44382,
+            "official_duration_us": "1.92",
+            "official_running_us": "1.92",
+            "instruction_events_without_sync": 2256,
+            "signature128": "8e3195183823d1473f9c0c4b5e81d6f3",
+            "rows_written": 1,
+            "shard_sha256": "c4ae8f48b5abd5fad909f704b46eb1e0d74e680bb789a2948c06e4cd37a05e9e"
+          },
+          "core20.veccore0": {
+            "first_tick": 41310,
+            "last_tick": 46123,
+            "physical_last_tick": 46120,
+            "physical_end_tick": 46116,
+            "official_duration_us": "2.92",
+            "official_running_us": "2.91",
+            "instruction_events_without_sync": 2256,
+            "signature128": "26a1b26e0d4fa346fcf49da744f80413",
+            "rows_written": 1,
+            "shard_sha256": "28f9fb189130f0fe78b6e83093d408ee8ed682ef232cc79efe7c8371bf1df5f1"
+          },
+          "core3.veccore0": {
+            "first_tick": 41224,
+            "last_tick": 44217,
+            "physical_last_tick": 44214,
+            "physical_end_tick": 44210,
+            "official_duration_us": "1.81",
+            "official_running_us": "1.81",
+            "instruction_events_without_sync": 2256,
+            "signature128": "94871454091774af37807074737b0428",
+            "rows_written": 1,
+            "shard_sha256": "e5b740bfff574b85dd5d0edf80e2af583df52ff228c96b1595aa15caef6fb2f0"
+          },
+          "core3.veccore1": {
+            "first_tick": 41224,
+            "last_tick": 44036,
+            "physical_last_tick": 44033,
+            "physical_end_tick": 44029,
+            "official_duration_us": "1.7",
+            "official_running_us": "1.7",
+            "instruction_events_without_sync": 2256,
+            "signature128": "fb68feb3ac7051e5f58e53191b9e6623",
+            "rows_written": 1,
+            "shard_sha256": "dc89bb12506ba08900f57d3f0858009240622a0ae666a03c202ef78f83f1c10e"
+          },
+          "core4.veccore0": {
+            "first_tick": 41231,
+            "last_tick": 43850,
+            "physical_last_tick": 43847,
+            "physical_end_tick": 43843,
+            "official_duration_us": "1.59",
+            "official_running_us": "1.59",
+            "instruction_events_without_sync": 2256,
+            "signature128": "15956d6a3fc94e115fa3bd764e4619fb",
+            "rows_written": 1,
+            "shard_sha256": "3ccf5a67ae5bb52fd8bc06678587185417a8c7a2f212d1654f639eb4ebace782"
+          },
+          "core4.veccore1": {
+            "first_tick": 41231,
+            "last_tick": 43681,
+            "physical_last_tick": 43678,
+            "physical_end_tick": 43674,
+            "official_duration_us": "1.48",
+            "official_running_us": "1.48",
+            "instruction_events_without_sync": 2256,
+            "signature128": "82587f0d26990fa642f8b4b3818f3af0",
+            "rows_written": 1,
+            "shard_sha256": "1a1cdb0e06ad48d821773eba7c86d78e9787d0913989f62d79a0ce635575f606"
+          }
+        },
+        "ordinal": 5
+      },
+      "active_count_matches": true
+    },
+    {
+      "chip": "Ascend950DT_9582",
+      "group": "partition",
+      "i": 6,
+      "shape": [
+        35,
+        1744
+      ],
+      "prior_aiv": 19,
+      "role": "entry",
+      "known_us": 4.5968811972402595,
+      "cold_hot_us": 5.248999249656996,
+      "runtime_ms": 0.61543,
+      "us": 5.089539665696856,
+      "lower_us": 4.352445659501464,
+      "upper_us": 6.127189538136874,
+      "old_us": 5.680487877611874,
+      "conditional": {
+        "first_us": 6.127189538136874,
+        "one_aiv_prefix_us": 5.568020323863636,
+        "fully_covered_us": 4.590987795692313
+      },
+      "covered_us": 4.352445659501464,
+      "active_aiv": 35,
+      "detail": {
+        "route": "single-UB",
+        "gamma_issue_cycles": 1734.2696078431375,
+        "issue_spread_cycles": 376.5660377358491,
+        "final_y_cycles": 2848.775860445423,
+        "final_rstd_cycles": 7172.535338177415,
+        "lower_bound_cycles": 1786.0664078431375
+      },
+      "timing_qualified": true,
+      "correctness": [
+        "correctness count=61040 bad=0 max_abs_error=0.00166165 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness count=35 bad=0 max_abs_error=1.65143e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ],
+      "host_task": {
+        "begin_tick": 29884,
+        "done_tick": 34666,
+        "full_task_id": 6,
+        "raw_stream_id": 6
+      },
+      "stage": {
+        "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+        "ca_us": 4.647272727272727,
+        "active_aiv": 35,
+        "active_aic": 0,
+        "windows": {
+          "core0.veccore0": [
+            0.0012121212121212121,
+            2.206060606060606
+          ],
+          "core0.veccore1": [
+            0.0012121212121212121,
+            2.1145454545454547
+          ],
+          "core1.veccore0": [
+            0.0030303030303030303,
+            1.6884848484848485
+          ],
+          "core1.veccore1": [
+            0.0030303030303030303,
+            2.0224242424242425
+          ],
+          "core16.veccore0": [
+            0.0496969696969697,
+            3.3393939393939394
+          ],
+          "core16.veccore1": [
+            0.0496969696969697,
+            2.3781818181818184
+          ],
+          "core17.veccore0": [
+            0.05090909090909091,
+            2.7545454545454544
+          ],
+          "core17.veccore1": [
+            0.05090909090909091,
+            4.183636363636364
+          ],
+          "core18.veccore0": [
+            0.04787878787878788,
+            2.4672727272727273
+          ],
+          "core18.veccore1": [
+            0.04787878787878788,
+            2.558181818181818
+          ],
+          "core19.veccore0": [
+            0.0496969696969697,
+            3.4393939393939394
+          ],
+          "core19.veccore1": [
+            0.0496969696969697,
+            4.074545454545454
+          ],
+          "core2.veccore0": [
+            0.0,
+            1.936969696969697
+          ],
+          "core2.veccore1": [
+            0.0,
+            1.7733333333333334
+          ],
+          "core20.veccore0": [
+            0.05272727272727273,
+            4.287272727272727
+          ],
+          "core20.veccore1": [
+            0.1787878787878788,
+            2.8436363636363637
+          ],
+          "core21.veccore0": [
+            0.6303030303030303,
+            4.548484848484849
+          ],
+          "core21.veccore1": [
+            0.686060606060606,
+            4.647272727272727
+          ],
+          "core22.veccore0": [
+            0.616969696969697,
+            4.459393939393939
+          ],
+          "core22.veccore1": [
+            0.6503030303030303,
+            4.379393939393939
+          ],
+          "core23.veccore0": [
+            0.6163636363636363,
+            3.4836363636363634
+          ],
+          "core23.veccore1": [
+            0.6218181818181818,
+            3.464848484848485
+          ],
+          "core24.veccore0": [
+            0.6496969696969697,
+            3.316969696969697
+          ],
+          "core3.veccore0": [
+            0.0012121212121212121,
+            1.6472727272727272
+          ],
+          "core3.veccore1": [
+            0.0012121212121212121,
+            1.8557575757575757
+          ],
+          "core4.veccore0": [
+            0.0048484848484848485,
+            1.7181818181818183
+          ],
+          "core4.veccore1": [
+            0.0048484848484848485,
+            1.6096969696969696
+          ],
+          "core5.veccore0": [
+            0.5975757575757575,
+            3.0636363636363635
+          ],
+          "core5.veccore1": [
+            0.5757575757575758,
+            3.016969696969697
+          ],
+          "core6.veccore0": [
+            0.536969696969697,
+            3.1606060606060606
+          ],
+          "core6.veccore1": [
+            0.5575757575757576,
+            3.6769696969696968
+          ],
+          "core7.veccore0": [
+            0.5484848484848485,
+            3.2406060606060607
+          ],
+          "core7.veccore1": [
+            0.5593939393939394,
+            3.581818181818182
+          ],
+          "core8.veccore0": [
+            0.6193939393939394,
+            3.887272727272727
+          ],
+          "core8.veccore1": [
+            0.6206060606060606,
+            3.7824242424242422
+          ]
+        },
+        "trace": "runs/rms27/partition-Ascend950DT_9582/profile/OPPROF_20261120091924_CXOZNPELDKIZQVZA/RmsNorm_normal_all_bf16_high_performance_5000/6/simulator/trace.json",
+        "trace_sha256": "16ed5aa62b084d9f1c89cbc1f7f7a2b8d25d7e916156de93084f982a40c523b4",
+        "binary_sha256": "0926fe478e5f718ef49241c08ef00b665797690f0f7f22c67fdc25044e0cb54d",
+        "first_tick": 49397,
+        "last_tick": 57065,
+        "physical_last_tick": 57062,
+        "physical_ca_us": 4.6454545454545455,
+        "cores": {
+          "core0.veccore0": {
+            "first_tick": 49399,
+            "last_tick": 53037,
+            "physical_last_tick": 53034,
+            "physical_end_tick": 53030,
+            "official_duration_us": "2.2",
+            "official_running_us": "2.2",
+            "instruction_events_without_sync": 1976,
+            "signature128": "79cf76d5a0979049d6ca55f560c03f97",
+            "rows_written": 1,
+            "shard_sha256": "e3ea76905d5bbbb15ebcaa751bb1292105f7231a9dfbcf248abb2185a7e7418b"
+          },
+          "core0.veccore1": {
+            "first_tick": 49399,
+            "last_tick": 52886,
+            "physical_last_tick": 52883,
+            "physical_end_tick": 52879,
+            "official_duration_us": "2.11",
+            "official_running_us": "2.11",
+            "instruction_events_without_sync": 1976,
+            "signature128": "8193021aa197fea962f705a209c0356b",
+            "rows_written": 1,
+            "shard_sha256": "398b268578f5667348f5b650ba1dec803c4a56a96ce089e508c67dd15814c87b"
+          },
+          "core1.veccore0": {
+            "first_tick": 49402,
+            "last_tick": 52183,
+            "physical_last_tick": 52180,
+            "physical_end_tick": 52176,
+            "official_duration_us": "1.69",
+            "official_running_us": "1.68",
+            "instruction_events_without_sync": 1976,
+            "signature128": "a88317bd95324f0ed701b341339dd0f8",
+            "rows_written": 1,
+            "shard_sha256": "a162c57b7ed02ac7a72738bb93afe23b4a6660a9eb82aea40bc215c75a8fa912"
+          },
+          "core1.veccore1": {
+            "first_tick": 49402,
+            "last_tick": 52734,
+            "physical_last_tick": 52731,
+            "physical_end_tick": 52727,
+            "official_duration_us": "2.02",
+            "official_running_us": "2.02",
+            "instruction_events_without_sync": 1976,
+            "signature128": "e6a5cedb753051cfffb04244b402dad3",
+            "rows_written": 1,
+            "shard_sha256": "d206765dcaf0711747a3c1b72c601ac157972e345d3096dc6e7d1d759ce0a990"
+          },
+          "core16.veccore0": {
+            "first_tick": 49479,
+            "last_tick": 54907,
+            "physical_last_tick": 54904,
+            "physical_end_tick": 54900,
+            "official_duration_us": "3.29",
+            "official_running_us": "3.29",
+            "instruction_events_without_sync": 1976,
+            "signature128": "6ac9e5312528b93d07429c91577a89b2",
+            "rows_written": 1,
+            "shard_sha256": "49e583323c639946f380167f623c3e2c1df98621ca8f8135a3cc0dee972c1de0"
+          },
+          "core16.veccore1": {
+            "first_tick": 49479,
+            "last_tick": 53321,
+            "physical_last_tick": 53318,
+            "physical_end_tick": 53314,
+            "official_duration_us": "2.33",
+            "official_running_us": "2.32",
+            "instruction_events_without_sync": 1976,
+            "signature128": "4d159b102380c32b8b44cff99b739974",
+            "rows_written": 1,
+            "shard_sha256": "f205fe9a3026f091dc816a858eb9186eca7244d43ffc9855310395e649032bef"
+          },
+          "core17.veccore0": {
+            "first_tick": 49481,
+            "last_tick": 53942,
+            "physical_last_tick": 53939,
+            "physical_end_tick": 53935,
+            "official_duration_us": "2.7",
+            "official_running_us": "2.7",
+            "instruction_events_without_sync": 1976,
+            "signature128": "534cdca2e04a2e7004085d5902170c85",
+            "rows_written": 1,
+            "shard_sha256": "8d85973e9e79fa29fef980e7337aec8a9cb0902619e46b973c6a2358d2d70305"
+          },
+          "core17.veccore1": {
+            "first_tick": 49481,
+            "last_tick": 56300,
+            "physical_last_tick": 56297,
+            "physical_end_tick": 56293,
+            "official_duration_us": "4.13",
+            "official_running_us": "4.13",
+            "instruction_events_without_sync": 1976,
+            "signature128": "1286354a3090dc97e89de980228de19a",
+            "rows_written": 1,
+            "shard_sha256": "29604b94be4ce4164a6452f9d0d19e040f9860c067c40480c62852a9728a445b"
+          },
+          "core18.veccore0": {
+            "first_tick": 49476,
+            "last_tick": 53468,
+            "physical_last_tick": 53465,
+            "physical_end_tick": 53461,
+            "official_duration_us": "2.42",
+            "official_running_us": "2.41",
+            "instruction_events_without_sync": 1976,
+            "signature128": "8bea63f974738efe07e6c2c003a0b852",
+            "rows_written": 1,
+            "shard_sha256": "fb57ee00070a98bfb529700411ab6b94bbffa4f8f0b3faef7b784b4b26139f50"
+          },
+          "core18.veccore1": {
+            "first_tick": 49476,
+            "last_tick": 53618,
+            "physical_last_tick": 53615,
+            "physical_end_tick": 53611,
+            "official_duration_us": "2.51",
+            "official_running_us": "2.51",
+            "instruction_events_without_sync": 1976,
+            "signature128": "d44fbc45f69414c33cf5ec29f688de2f",
+            "rows_written": 1,
+            "shard_sha256": "702ec1c11fd15258744f031380acdc85dafeb744971013ff54193ff5cd5d83bf"
+          },
+          "core19.veccore0": {
+            "first_tick": 49479,
+            "last_tick": 55072,
+            "physical_last_tick": 55069,
+            "physical_end_tick": 55065,
+            "official_duration_us": "3.39",
+            "official_running_us": "3.38",
+            "instruction_events_without_sync": 1976,
+            "signature128": "123501dbaba1db27badb8a1e7ca40a7a",
+            "rows_written": 1,
+            "shard_sha256": "8dfc3c758667b9cfa3b9f7602ca3e81181b34efbcf93f612ee34d9688bfc2a18"
+          },
+          "core19.veccore1": {
+            "first_tick": 49479,
+            "last_tick": 56120,
+            "physical_last_tick": 56117,
+            "physical_end_tick": 56113,
+            "official_duration_us": "4.02",
+            "official_running_us": "4.02",
+            "instruction_events_without_sync": 1976,
+            "signature128": "fda6bf478d50752dd4069e8652151239",
+            "rows_written": 1,
+            "shard_sha256": "d3a8cf2b8a4022ebb48043970964717e3135ea033de2b59045906ba557a2d696"
+          },
+          "core2.veccore0": {
+            "first_tick": 49397,
+            "last_tick": 52593,
+            "physical_last_tick": 52590,
+            "physical_end_tick": 52586,
+            "official_duration_us": "1.94",
+            "official_running_us": "1.93",
+            "instruction_events_without_sync": 1976,
+            "signature128": "06c4b97a0c1ab7baa4d5236eea17b4c6",
+            "rows_written": 1,
+            "shard_sha256": "93889387346f122c9919d13a1cc02389133b4f8adf682a311b062b0f46aada4f"
+          },
+          "core2.veccore1": {
+            "first_tick": 49397,
+            "last_tick": 52323,
+            "physical_last_tick": 52320,
+            "physical_end_tick": 52316,
+            "official_duration_us": "1.77",
+            "official_running_us": "1.77",
+            "instruction_events_without_sync": 1976,
+            "signature128": "e7b0603264c07c0b9576b97687fa532e",
+            "rows_written": 1,
+            "shard_sha256": "0ddf5f05532a7f96f21b9ac7277a6fa9263ee6cfd49c9b65adb9133ccc01d901"
+          },
+          "core20.veccore0": {
+            "first_tick": 49484,
+            "last_tick": 56471,
+            "physical_last_tick": 56468,
+            "physical_end_tick": 56464,
+            "official_duration_us": "4.23",
+            "official_running_us": "4.23",
+            "instruction_events_without_sync": 1976,
+            "signature128": "f862a3bc45740a16c8a4ce55ab61bbe8",
+            "rows_written": 1,
+            "shard_sha256": "88b9b9d1064bbc11a4a78de35399a6dc34a8040d9a3be224e9c10ce2a2d3aad2"
+          },
+          "core20.veccore1": {
+            "first_tick": 49692,
+            "last_tick": 54089,
+            "physical_last_tick": 54086,
+            "physical_end_tick": 54082,
+            "official_duration_us": "2.66",
+            "official_running_us": "2.66",
+            "instruction_events_without_sync": 1976,
+            "signature128": "5710e4ebb49681e162119ffbd2205091",
+            "rows_written": 1,
+            "shard_sha256": "5311f54266321f4c09f1eee680aba9d7dfc427fb9bb1b49ca63e51e2f722ed94"
+          },
+          "core21.veccore0": {
+            "first_tick": 50437,
+            "last_tick": 56902,
+            "physical_last_tick": 56899,
+            "physical_end_tick": 56895,
+            "official_duration_us": "3.92",
+            "official_running_us": "3.91",
+            "instruction_events_without_sync": 1976,
+            "signature128": "7df5f737be8e1399e05839e220247ecd",
+            "rows_written": 1,
+            "shard_sha256": "f35dcb2b0d0a3413ea726d60df55778347cdac476bb9f737fef1ff0f7f27fa59"
+          },
+          "core21.veccore1": {
+            "first_tick": 50529,
+            "last_tick": 57065,
+            "physical_last_tick": 57062,
+            "physical_end_tick": 57058,
+            "official_duration_us": "3.96",
+            "official_running_us": "3.96",
+            "instruction_events_without_sync": 1976,
+            "signature128": "05f9f14cef47e3fdf5e3a8b21a9891a2",
+            "rows_written": 1,
+            "shard_sha256": "e0a54f6365acb566e10d6432cde9f37d851f134fa11616e52f79edceda467078"
+          },
+          "core22.veccore0": {
+            "first_tick": 50415,
+            "last_tick": 56755,
+            "physical_last_tick": 56752,
+            "physical_end_tick": 56748,
+            "official_duration_us": "3.84",
+            "official_running_us": "3.84",
+            "instruction_events_without_sync": 1976,
+            "signature128": "91c8145ecbdbe34a2523fa46502eb0ef",
+            "rows_written": 1,
+            "shard_sha256": "dc13f51ad737f5fcf6b5a43b41db398e8aefb158d886b460e88aad7296944a11"
+          },
+          "core22.veccore1": {
+            "first_tick": 50470,
+            "last_tick": 56623,
+            "physical_last_tick": 56620,
+            "physical_end_tick": 56616,
+            "official_duration_us": "3.73",
+            "official_running_us": "3.72",
+            "instruction_events_without_sync": 1976,
+            "signature128": "37d4b498d60e971779fc7a4ddd7f54df",
+            "rows_written": 1,
+            "shard_sha256": "7667f53326e8754db2018c33b38ce3598507738e1101a2bbd5f2fa709bc6dec1"
+          },
+          "core23.veccore0": {
+            "first_tick": 50414,
+            "last_tick": 55145,
+            "physical_last_tick": 55142,
+            "physical_end_tick": 55138,
+            "official_duration_us": "2.87",
+            "official_running_us": "2.86",
+            "instruction_events_without_sync": 1976,
+            "signature128": "401082a577a2dd12b151d50aa534d05e",
+            "rows_written": 1,
+            "shard_sha256": "596c69d4eb769f1dcb37bae54caa3c0444f7928d0252be7765ac7a1f15935e5e"
+          },
+          "core23.veccore1": {
+            "first_tick": 50423,
+            "last_tick": 55114,
+            "physical_last_tick": 55111,
+            "physical_end_tick": 55107,
+            "official_duration_us": "2.84",
+            "official_running_us": "2.84",
+            "instruction_events_without_sync": 1976,
+            "signature128": "37b7e847b0e387766f03f17ae7771fe0",
+            "rows_written": 1,
+            "shard_sha256": "b58b2f57af4132550a3992889bf6be565782561740f1f20ea20f1dc0f9049eff"
+          },
+          "core24.veccore0": {
+            "first_tick": 50469,
+            "last_tick": 54870,
+            "physical_last_tick": 54867,
+            "physical_end_tick": 54863,
+            "official_duration_us": "2.67",
+            "official_running_us": "2.66",
+            "instruction_events_without_sync": 1976,
+            "signature128": "554534aa1330e91671dbd4c049c3ccbb",
+            "rows_written": 1,
+            "shard_sha256": "25a02c110168add98166a9c1cd994007b9319768fbc976e10bde41824be3b05a"
+          },
+          "core3.veccore0": {
+            "first_tick": 49399,
+            "last_tick": 52115,
+            "physical_last_tick": 52112,
+            "physical_end_tick": 52108,
+            "official_duration_us": "1.65",
+            "official_running_us": "1.64",
+            "instruction_events_without_sync": 1976,
+            "signature128": "00eec54c3bd773675f616b0219d8e7ae",
+            "rows_written": 1,
+            "shard_sha256": "ba8943ccc00dc0720de84c67ebe8297d8c7ae251fb5fe0abe391a48b6442d56e"
+          },
+          "core3.veccore1": {
+            "first_tick": 49399,
+            "last_tick": 52459,
+            "physical_last_tick": 52456,
+            "physical_end_tick": 52452,
+            "official_duration_us": "1.85",
+            "official_running_us": "1.85",
+            "instruction_events_without_sync": 1976,
+            "signature128": "0db3722f11b2dfd25af223c8b1ef06b7",
+            "rows_written": 1,
+            "shard_sha256": "d51dd9cdf78387efcea9ec233b0848ed08685e7d4f268af9cfb6b486efce2b60"
+          },
+          "core4.veccore0": {
+            "first_tick": 49405,
+            "last_tick": 52232,
+            "physical_last_tick": 52229,
+            "physical_end_tick": 52225,
+            "official_duration_us": "1.71",
+            "official_running_us": "1.71",
+            "instruction_events_without_sync": 1976,
+            "signature128": "4335436f33f61470d6cb3b9849229093",
+            "rows_written": 1,
+            "shard_sha256": "d92506adb2b586cf1d72d4b7da56e5e6bddc4a8075607d46c9c8429a73fdbec2"
+          },
+          "core4.veccore1": {
+            "first_tick": 49405,
+            "last_tick": 52053,
+            "physical_last_tick": 52050,
+            "physical_end_tick": 52046,
+            "official_duration_us": "1.6",
+            "official_running_us": "1.6",
+            "instruction_events_without_sync": 1976,
+            "signature128": "ecd91747cba22211bb1434b51723ade6",
+            "rows_written": 1,
+            "shard_sha256": "ccfe2a6910b4254c6364412b430e57cfb91da8fcce4d2e172ee16b3a9bc3c1af"
+          },
+          "core5.veccore0": {
+            "first_tick": 50383,
+            "last_tick": 54452,
+            "physical_last_tick": 54449,
+            "physical_end_tick": 54445,
+            "official_duration_us": "2.47",
+            "official_running_us": "2.46",
+            "instruction_events_without_sync": 1976,
+            "signature128": "d3f0dbac7b9219e524ef8b6b32008ae7",
+            "rows_written": 1,
+            "shard_sha256": "6916ab7a713fcb74098b6661ee0364ffa63132ad9fe8c2f6a534f478c9ab7cb1"
+          },
+          "core5.veccore1": {
+            "first_tick": 50347,
+            "last_tick": 54375,
+            "physical_last_tick": 54372,
+            "physical_end_tick": 54368,
+            "official_duration_us": "2.44",
+            "official_running_us": "2.44",
+            "instruction_events_without_sync": 1976,
+            "signature128": "2dae1903e24d7722df5cad21138439cd",
+            "rows_written": 1,
+            "shard_sha256": "4e717f6d2f15ff8edae406df31ad64803b0e604c4ec5f7bc1042e772d6928692"
+          },
+          "core6.veccore0": {
+            "first_tick": 50283,
+            "last_tick": 54612,
+            "physical_last_tick": 54609,
+            "physical_end_tick": 54605,
+            "official_duration_us": "2.62",
+            "official_running_us": "2.62",
+            "instruction_events_without_sync": 1976,
+            "signature128": "11325ec8794b6916b2d66e974ba9527c",
+            "rows_written": 1,
+            "shard_sha256": "8756a5968348c953cb4324ebcf340ee362233fb82d41fa4184cb6e84b1672d29"
+          },
+          "core6.veccore1": {
+            "first_tick": 50317,
+            "last_tick": 55464,
+            "physical_last_tick": 55461,
+            "physical_end_tick": 55457,
+            "official_duration_us": "3.12",
+            "official_running_us": "3.12",
+            "instruction_events_without_sync": 1976,
+            "signature128": "2f1ba15af5bc5e60f6908f587167c3f4",
+            "rows_written": 1,
+            "shard_sha256": "17dc9b988c00eaaa527d63e870a1e1b8bb97e9a4eb8d1f3e2c274775e01e7417"
+          },
+          "core7.veccore0": {
+            "first_tick": 50302,
+            "last_tick": 54744,
+            "physical_last_tick": 54741,
+            "physical_end_tick": 54737,
+            "official_duration_us": "2.69",
+            "official_running_us": "2.69",
+            "instruction_events_without_sync": 1976,
+            "signature128": "de5f8fb80ccfe8fe2f6896730a500cab",
+            "rows_written": 1,
+            "shard_sha256": "51c0cb30227c52715325dd861c33c382296eabe9d88212087c267cfb8cfc270c"
+          },
+          "core7.veccore1": {
+            "first_tick": 50320,
+            "last_tick": 55307,
+            "physical_last_tick": 55304,
+            "physical_end_tick": 55300,
+            "official_duration_us": "3.02",
+            "official_running_us": "3.02",
+            "instruction_events_without_sync": 1976,
+            "signature128": "52a324db0705254603cec8fcf6fedd22",
+            "rows_written": 1,
+            "shard_sha256": "ac48e7e9aa30e6fa3c0c1987e4320d40c2a693275b5ece3796b58ae3278ed5f3"
+          },
+          "core8.veccore0": {
+            "first_tick": 50419,
+            "last_tick": 55811,
+            "physical_last_tick": 55808,
+            "physical_end_tick": 55804,
+            "official_duration_us": "3.27",
+            "official_running_us": "3.26",
+            "instruction_events_without_sync": 1976,
+            "signature128": "e913ea6a423a66b251edbe6f44e4b08c",
+            "rows_written": 1,
+            "shard_sha256": "c0778c461bce234b10f7a734b5eef17a24b63b91c445f7922d7dc8d0981e4b43"
+          },
+          "core8.veccore1": {
+            "first_tick": 50421,
+            "last_tick": 55638,
+            "physical_last_tick": 55635,
+            "physical_end_tick": 55631,
+            "official_duration_us": "3.16",
+            "official_running_us": "3.16",
+            "instruction_events_without_sync": 1976,
+            "signature128": "bd2316afd82e8b61028c2f0bc455b7c9",
+            "rows_written": 1,
+            "shard_sha256": "f42a7646b1cc7acc07803b0e5f16ed224f7f61464cb2b141024aa2b21db7b172"
+          }
+        },
+        "ordinal": 6
+      },
+      "active_count_matches": true
+    },
+    {
+      "chip": "Ascend950DT_9582",
+      "group": "partition",
+      "i": 7,
+      "shape": [
+        35,
+        1744
+      ],
+      "prior_aiv": 35,
+      "role": "repeat",
+      "known_us": 4.590987795692313,
+      "cold_hot_us": 5.248999249656996,
+      "runtime_ms": 0.61263,
+      "us": 5.089539665696856,
+      "lower_us": 4.352445659501464,
+      "upper_us": 6.127189538136874,
+      "old_us": 5.680487877611874,
+      "conditional": {
+        "first_us": 6.127189538136874,
+        "one_aiv_prefix_us": 5.568020323863636,
+        "fully_covered_us": 4.590987795692313
+      },
+      "covered_us": 4.352445659501464,
+      "active_aiv": 35,
+      "detail": {
+        "route": "single-UB",
+        "gamma_issue_cycles": 1734.2696078431375,
+        "issue_spread_cycles": 376.5660377358491,
+        "final_y_cycles": 2848.775860445423,
+        "final_rstd_cycles": 7172.535338177415,
+        "lower_bound_cycles": 1786.0664078431375
+      },
+      "timing_qualified": true,
+      "correctness": [
+        "correctness count=61040 bad=0 max_abs_error=0.00166165 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness count=35 bad=0 max_abs_error=1.65143e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ],
+      "host_task": {
+        "begin_tick": 36480,
+        "done_tick": 41139,
+        "full_task_id": 7,
+        "raw_stream_id": 7
+      },
+      "stage": {
+        "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+        "ca_us": 4.493939393939394,
+        "active_aiv": 35,
+        "active_aic": 0,
+        "windows": {
+          "core0.veccore0": [
+            0.0012121212121212121,
+            3.313939393939394
+          ],
+          "core0.veccore1": [
+            0.0012121212121212121,
+            3.221212121212121
+          ],
+          "core1.veccore0": [
+            0.0030303030303030303,
+            2.095151515151515
+          ],
+          "core1.veccore1": [
+            0.0030303030303030303,
+            1.6939393939393939
+          ],
+          "core16.veccore0": [
+            0.0503030303030303,
+            4.3987878787878785
+          ],
+          "core16.veccore1": [
+            0.0503030303030303,
+            3.581212121212121
+          ],
+          "core17.veccore0": [
+            0.05090909090909091,
+            4.493939393939394
+          ],
+          "core17.veccore1": [
+            0.05090909090909091,
+            4.302424242424243
+          ],
+          "core18.veccore0": [
+            0.04787878787878788,
+            2.986060606060606
+          ],
+          "core18.veccore1": [
+            0.04787878787878788,
+            3.9975757575757576
+          ],
+          "core19.veccore0": [
+            0.0503030303030303,
+            3.8927272727272726
+          ],
+          "core19.veccore1": [
+            0.0503030303030303,
+            3.78
+          ],
+          "core2.veccore0": [
+            0.0,
+            2.56
+          ],
+          "core2.veccore1": [
+            0.0,
+            1.5115151515151515
+          ],
+          "core20.veccore0": [
+            0.05333333333333334,
+            4.198787878787879
+          ],
+          "core20.veccore1": [
+            0.05333333333333334,
+            4.095151515151515
+          ],
+          "core21.veccore0": [
+            0.0503030303030303,
+            3.4890909090909092
+          ],
+          "core21.veccore1": [
+            0.0503030303030303,
+            3.673939393939394
+          ],
+          "core22.veccore0": [
+            0.04787878787878788,
+            1.4951515151515151
+          ],
+          "core22.veccore1": [
+            0.04787878787878788,
+            2.9
+          ],
+          "core23.veccore0": [
+            0.05090909090909091,
+            1.7363636363636363
+          ],
+          "core23.veccore1": [
+            0.05090909090909091,
+            1.6593939393939394
+          ],
+          "core24.veccore0": [
+            0.0503030303030303,
+            1.7824242424242425
+          ],
+          "core3.veccore0": [
+            0.0012121212121212121,
+            1.7503030303030302
+          ],
+          "core3.veccore1": [
+            0.0012121212121212121,
+            1.667878787878788
+          ],
+          "core4.veccore0": [
+            0.005454545454545455,
+            2.015151515151515
+          ],
+          "core4.veccore1": [
+            0.005454545454545455,
+            2.4763636363636365
+          ],
+          "core5.veccore0": [
+            0.0012121212121212121,
+            2.733939393939394
+          ],
+          "core5.veccore1": [
+            0.0012121212121212121,
+            2.18
+          ],
+          "core6.veccore0": [
+            0.0,
+            2.3836363636363638
+          ],
+          "core6.veccore1": [
+            0.0,
+            2.2775757575757574
+          ],
+          "core7.veccore0": [
+            0.0030303030303030303,
+            2.647878787878788
+          ],
+          "core7.veccore1": [
+            0.0030303030303030303,
+            1.829090909090909
+          ],
+          "core8.veccore0": [
+            0.0012121212121212121,
+            3.124848484848485
+          ],
+          "core8.veccore1": [
+            0.0012121212121212121,
+            1.9224242424242424
+          ]
+        },
+        "trace": "runs/rms27/partition-Ascend950DT_9582/profile/OPPROF_20261120091924_CXOZNPELDKIZQVZA/RmsNorm_normal_all_bf16_high_performance_5000/7/simulator/trace.json",
+        "trace_sha256": "57d4bec1d09baf5a77c352856bc45da3e7f7dd9f10169bde01550270feda03d2",
+        "binary_sha256": "0926fe478e5f718ef49241c08ef00b665797690f0f7f22c67fdc25044e0cb54d",
+        "first_tick": 60280,
+        "last_tick": 67695,
+        "physical_last_tick": 67692,
+        "physical_ca_us": 4.492121212121212,
+        "cores": {
+          "core0.veccore0": {
+            "first_tick": 60282,
+            "last_tick": 65748,
+            "physical_last_tick": 65745,
+            "physical_end_tick": 65741,
+            "official_duration_us": "3.31",
+            "official_running_us": "3.31",
+            "instruction_events_without_sync": 1976,
+            "signature128": "2066e72539746e437ecb6de244106576",
+            "rows_written": 1,
+            "shard_sha256": "a53052380015aace23a822802ffcdc90fe826ed2885016b1f17f68320bc6762f"
+          },
+          "core0.veccore1": {
+            "first_tick": 60282,
+            "last_tick": 65595,
+            "physical_last_tick": 65592,
+            "physical_end_tick": 65588,
+            "official_duration_us": "3.22",
+            "official_running_us": "3.22",
+            "instruction_events_without_sync": 1976,
+            "signature128": "86cb6d244cf61a50c2b387ee92d5e60c",
+            "rows_written": 1,
+            "shard_sha256": "4e914e01c42e19e3f4957c0d4abadf1364b4b5b211cd6bc3f8b840d30970a37d"
+          },
+          "core1.veccore0": {
+            "first_tick": 60285,
+            "last_tick": 63737,
+            "physical_last_tick": 63734,
+            "physical_end_tick": 63730,
+            "official_duration_us": "2.09",
+            "official_running_us": "2.09",
+            "instruction_events_without_sync": 1976,
+            "signature128": "1924c45807d912cc345931926039fe15",
+            "rows_written": 1,
+            "shard_sha256": "08382e10ed118547e31073b0c74f92e0bac9f9b7600d1b69e1f33aeb63004d53"
+          },
+          "core1.veccore1": {
+            "first_tick": 60285,
+            "last_tick": 63075,
+            "physical_last_tick": 63072,
+            "physical_end_tick": 63068,
+            "official_duration_us": "1.69",
+            "official_running_us": "1.69",
+            "instruction_events_without_sync": 1976,
+            "signature128": "3d0276bf984b2b55e3c1c8a835f08f0b",
+            "rows_written": 1,
+            "shard_sha256": "f9ff30f55f9d2442d9f6f3cb76235500d8ad3811c346739e99aa707a2f8a61af"
+          },
+          "core16.veccore0": {
+            "first_tick": 60363,
+            "last_tick": 67538,
+            "physical_last_tick": 67535,
+            "physical_end_tick": 67531,
+            "official_duration_us": "4.35",
+            "official_running_us": "4.35",
+            "instruction_events_without_sync": 1976,
+            "signature128": "b2c2a4348d8d3364043e27f647565e71",
+            "rows_written": 1,
+            "shard_sha256": "f1facd045a60792546f72969a70795608ef4b3f6b6a26f39e9d4ec6f228e5eff"
+          },
+          "core16.veccore1": {
+            "first_tick": 60363,
+            "last_tick": 66189,
+            "physical_last_tick": 66186,
+            "physical_end_tick": 66182,
+            "official_duration_us": "3.53",
+            "official_running_us": "3.53",
+            "instruction_events_without_sync": 1976,
+            "signature128": "f8402820906d1ee57f25dfb47847f4ea",
+            "rows_written": 1,
+            "shard_sha256": "63932e30258db0cf79304276c130b312435f93cc7ad65b9b0961ed5ee7dd68d6"
+          },
+          "core17.veccore0": {
+            "first_tick": 60364,
+            "last_tick": 67695,
+            "physical_last_tick": 67692,
+            "physical_end_tick": 67688,
+            "official_duration_us": "4.44",
+            "official_running_us": "4.44",
+            "instruction_events_without_sync": 1976,
+            "signature128": "4c603297a9cb3fa88752cc81e4400284",
+            "rows_written": 1,
+            "shard_sha256": "d01a9c19006334c0ca26c9098bb11cd76a5c5c72c26ec9d5dad09d38efe230b8"
+          },
+          "core17.veccore1": {
+            "first_tick": 60364,
+            "last_tick": 67379,
+            "physical_last_tick": 67376,
+            "physical_end_tick": 67372,
+            "official_duration_us": "4.25",
+            "official_running_us": "4.25",
+            "instruction_events_without_sync": 1976,
+            "signature128": "602ceabe94edba779eba22df8ec955f3",
+            "rows_written": 1,
+            "shard_sha256": "2e4645f6af6216b89129d4d578be1e222f9e91835291f7cfe613bfa01b2ccae7"
+          },
+          "core18.veccore0": {
+            "first_tick": 60359,
+            "last_tick": 65207,
+            "physical_last_tick": 65204,
+            "physical_end_tick": 65200,
+            "official_duration_us": "2.94",
+            "official_running_us": "2.94",
+            "instruction_events_without_sync": 1976,
+            "signature128": "449c5425db8b53a91e8940a642bd9417",
+            "rows_written": 1,
+            "shard_sha256": "e5dd209a6e1e357ae1d67027f2a0f83f00c399805c3e68fc93ddb4491ba2274b"
+          },
+          "core18.veccore1": {
+            "first_tick": 60359,
+            "last_tick": 66876,
+            "physical_last_tick": 66873,
+            "physical_end_tick": 66869,
+            "official_duration_us": "3.95",
+            "official_running_us": "3.95",
+            "instruction_events_without_sync": 1976,
+            "signature128": "50db48c0e2a2d1dbe36cea54130cedcf",
+            "rows_written": 1,
+            "shard_sha256": "0bbe21b50989b829be81e9a6e6514ad3759e465218156cb57a6170d0172978a0"
+          },
+          "core19.veccore0": {
+            "first_tick": 60363,
+            "last_tick": 66703,
+            "physical_last_tick": 66700,
+            "physical_end_tick": 66696,
+            "official_duration_us": "3.84",
+            "official_running_us": "3.84",
+            "instruction_events_without_sync": 1976,
+            "signature128": "1c276e11cf6c69cb7c658a5068b39300",
+            "rows_written": 1,
+            "shard_sha256": "045131fd91fe3771ea515b3af92eb8245b8450eba653b2b7f0ba7ea50105cc11"
+          },
+          "core19.veccore1": {
+            "first_tick": 60363,
+            "last_tick": 66517,
+            "physical_last_tick": 66514,
+            "physical_end_tick": 66510,
+            "official_duration_us": "3.73",
+            "official_running_us": "3.73",
+            "instruction_events_without_sync": 1976,
+            "signature128": "c8d93f63b4c7ccec2f123b27c046a89b",
+            "rows_written": 1,
+            "shard_sha256": "238976d7d83e5bb6a90080595c4a2435a1dae3fe506aa02d5a99ea96aac02db1"
+          },
+          "core2.veccore0": {
+            "first_tick": 60280,
+            "last_tick": 64504,
+            "physical_last_tick": 64501,
+            "physical_end_tick": 64497,
+            "official_duration_us": "2.56",
+            "official_running_us": "2.56",
+            "instruction_events_without_sync": 1976,
+            "signature128": "92ff3bfa7e1d9f3123114f1e3ac97f75",
+            "rows_written": 1,
+            "shard_sha256": "4aee292cb01ff67c2347f8a016745bc70b633b0baba6031a773988300b43d566"
+          },
+          "core2.veccore1": {
+            "first_tick": 60280,
+            "last_tick": 62774,
+            "physical_last_tick": 62771,
+            "physical_end_tick": 62767,
+            "official_duration_us": "1.51",
+            "official_running_us": "1.51",
+            "instruction_events_without_sync": 1976,
+            "signature128": "78e70466814a404ea49fcb7b38aa0b70",
+            "rows_written": 1,
+            "shard_sha256": "bcea1a8ea9693a5a15f6e3cc7ffe391ee574b0097b7da213c4413eec1bbe20ae"
+          },
+          "core20.veccore0": {
+            "first_tick": 60368,
+            "last_tick": 67208,
+            "physical_last_tick": 67205,
+            "physical_end_tick": 67201,
+            "official_duration_us": "4.15",
+            "official_running_us": "4.14",
+            "instruction_events_without_sync": 1976,
+            "signature128": "9a06c2f35fa3adc9797db659e49ae780",
+            "rows_written": 1,
+            "shard_sha256": "0b2401232151cc0d2121a5f7c58bd9699f54cc8dd40a5c11beae7f17294bd54d"
+          },
+          "core20.veccore1": {
+            "first_tick": 60368,
+            "last_tick": 67037,
+            "physical_last_tick": 67034,
+            "physical_end_tick": 67030,
+            "official_duration_us": "4.04",
+            "official_running_us": "4.04",
+            "instruction_events_without_sync": 1976,
+            "signature128": "417bc9c3bbf7c1aaf35e92e1b444b8d9",
+            "rows_written": 1,
+            "shard_sha256": "638acd45a1d0c960662ae88b3abd52452f8025f6f66b261a352810be490147fd"
+          },
+          "core21.veccore0": {
+            "first_tick": 60363,
+            "last_tick": 66037,
+            "physical_last_tick": 66034,
+            "physical_end_tick": 66030,
+            "official_duration_us": "3.44",
+            "official_running_us": "3.44",
+            "instruction_events_without_sync": 1976,
+            "signature128": "430aff97c1ab8d9b60983a27f660800a",
+            "rows_written": 1,
+            "shard_sha256": "a63f689c56e05a3b3a976681f6bf1b4bb7113fb70c96129208f4ef58a39c289f"
+          },
+          "core21.veccore1": {
+            "first_tick": 60363,
+            "last_tick": 66342,
+            "physical_last_tick": 66339,
+            "physical_end_tick": 66335,
+            "official_duration_us": "3.62",
+            "official_running_us": "3.62",
+            "instruction_events_without_sync": 1976,
+            "signature128": "ea3b14e777304d26c593207395911563",
+            "rows_written": 1,
+            "shard_sha256": "79d1ac2499d0bfbbed693c8d5c0b0a13285681799b37981683fb5f749ef5d9df"
+          },
+          "core22.veccore0": {
+            "first_tick": 60359,
+            "last_tick": 62747,
+            "physical_last_tick": 62744,
+            "physical_end_tick": 62740,
+            "official_duration_us": "1.45",
+            "official_running_us": "1.44",
+            "instruction_events_without_sync": 1976,
+            "signature128": "7c07ec8be8898c34e6bf4466b3a965d9",
+            "rows_written": 1,
+            "shard_sha256": "da35445a939b3dae5535784417aa816010bece3fc9ed7c526be40fb8d84a8b3c"
+          },
+          "core22.veccore1": {
+            "first_tick": 60359,
+            "last_tick": 65065,
+            "physical_last_tick": 65062,
+            "physical_end_tick": 65058,
+            "official_duration_us": "2.85",
+            "official_running_us": "2.85",
+            "instruction_events_without_sync": 1976,
+            "signature128": "f4647436e0567a80a7de3aec3c1c17bd",
+            "rows_written": 1,
+            "shard_sha256": "0691391a0912572c0266a32b2331925e8f40fc02823c1afcea56de3fb65eb164"
+          },
+          "core23.veccore0": {
+            "first_tick": 60364,
+            "last_tick": 63145,
+            "physical_last_tick": 63142,
+            "physical_end_tick": 63138,
+            "official_duration_us": "1.69",
+            "official_running_us": "1.68",
+            "instruction_events_without_sync": 1976,
+            "signature128": "d46bceb479801b33a35241b03fc95ae2",
+            "rows_written": 1,
+            "shard_sha256": "16ab985f45518386803a938016070f9912d2ff0e41bbd1861254514604f3dd18"
+          },
+          "core23.veccore1": {
+            "first_tick": 60364,
+            "last_tick": 63018,
+            "physical_last_tick": 63015,
+            "physical_end_tick": 63011,
+            "official_duration_us": "1.61",
+            "official_running_us": "1.61",
+            "instruction_events_without_sync": 1976,
+            "signature128": "fafde0037783a2f580ae88e8a85abfe4",
+            "rows_written": 1,
+            "shard_sha256": "89e0fb3144b1fbeda852bb6cd5ee7a123e24bfe12bf80ae5f4fd5b529c2017aa"
+          },
+          "core24.veccore0": {
+            "first_tick": 60363,
+            "last_tick": 63221,
+            "physical_last_tick": 63218,
+            "physical_end_tick": 63214,
+            "official_duration_us": "1.73",
+            "official_running_us": "1.73",
+            "instruction_events_without_sync": 1976,
+            "signature128": "a66e8a4dcc9e79bd9af65fff227bec40",
+            "rows_written": 1,
+            "shard_sha256": "18da783678dbbd7e68fec4fb5e838c649652b5aefb2d67a33fa2cabb9c8c3c5f"
+          },
+          "core3.veccore0": {
+            "first_tick": 60282,
+            "last_tick": 63168,
+            "physical_last_tick": 63165,
+            "physical_end_tick": 63161,
+            "official_duration_us": "1.75",
+            "official_running_us": "1.75",
+            "instruction_events_without_sync": 1976,
+            "signature128": "9f5c08fb08e96a1621216a64e6e587a1",
+            "rows_written": 1,
+            "shard_sha256": "8e538489223f5c8b2e76ec724d8ca95c8d77c5d537e37e35fad52aabb9e0d1b7"
+          },
+          "core3.veccore1": {
+            "first_tick": 60282,
+            "last_tick": 63032,
+            "physical_last_tick": 63029,
+            "physical_end_tick": 63025,
+            "official_duration_us": "1.67",
+            "official_running_us": "1.66",
+            "instruction_events_without_sync": 1976,
+            "signature128": "49e54a636c92bc8f86bf4234e3bb7353",
+            "rows_written": 1,
+            "shard_sha256": "1a450882a8f3db754572c3b0e6225ca313dd9a8f9b5a8bd4f7d7a438f2f5d1d5"
+          },
+          "core4.veccore0": {
+            "first_tick": 60289,
+            "last_tick": 63605,
+            "physical_last_tick": 63602,
+            "physical_end_tick": 63598,
+            "official_duration_us": "2.01",
+            "official_running_us": "2.01",
+            "instruction_events_without_sync": 1976,
+            "signature128": "cfcfe4d1a10221fcbbe0b1c98629983c",
+            "rows_written": 1,
+            "shard_sha256": "7cff4a00bd43d8a3adef3aac05c411fba6443dd022125010cd61314d0191b96e"
+          },
+          "core4.veccore1": {
+            "first_tick": 60289,
+            "last_tick": 64366,
+            "physical_last_tick": 64363,
+            "physical_end_tick": 64359,
+            "official_duration_us": "2.47",
+            "official_running_us": "2.47",
+            "instruction_events_without_sync": 1976,
+            "signature128": "96c8a418d995f3033736782472c9a50f",
+            "rows_written": 1,
+            "shard_sha256": "8fcdf10a4c73d6269159333285f03445d9cb37892bfcd66118ad259d044c91e0"
+          },
+          "core5.veccore0": {
+            "first_tick": 60282,
+            "last_tick": 64791,
+            "physical_last_tick": 64788,
+            "physical_end_tick": 64784,
+            "official_duration_us": "2.73",
+            "official_running_us": "2.73",
+            "instruction_events_without_sync": 1976,
+            "signature128": "7c2592603c5ba300a10bf4e189b918ac",
+            "rows_written": 1,
+            "shard_sha256": "af0c196e24b199e2988283461e76b0b338f7d388565d85fcce78712d7cf74c1f"
+          },
+          "core5.veccore1": {
+            "first_tick": 60282,
+            "last_tick": 63877,
+            "physical_last_tick": 63874,
+            "physical_end_tick": 63870,
+            "official_duration_us": "2.18",
+            "official_running_us": "2.18",
+            "instruction_events_without_sync": 1976,
+            "signature128": "1d66433b75753182b1bed8eaea7a11e5",
+            "rows_written": 1,
+            "shard_sha256": "9eae5428ed71a596d4b79ea4543bae66e4fc1b30e48333ecc2289d04847cd7f5"
+          },
+          "core6.veccore0": {
+            "first_tick": 60280,
+            "last_tick": 64213,
+            "physical_last_tick": 64210,
+            "physical_end_tick": 64206,
+            "official_duration_us": "2.38",
+            "official_running_us": "2.38",
+            "instruction_events_without_sync": 1976,
+            "signature128": "db748668e346d22f0a347cd1b1cf312b",
+            "rows_written": 1,
+            "shard_sha256": "99347b97c52a6d65f0705b8aa4aeb1a59d4bc0261a3fefa93e0bc2553673c618"
+          },
+          "core6.veccore1": {
+            "first_tick": 60280,
+            "last_tick": 64038,
+            "physical_last_tick": 64035,
+            "physical_end_tick": 64031,
+            "official_duration_us": "2.28",
+            "official_running_us": "2.27",
+            "instruction_events_without_sync": 1976,
+            "signature128": "6ecec249de42ac92f8e1c17c69a86b0c",
+            "rows_written": 1,
+            "shard_sha256": "a07a2184cf91e6c65360ec6fa6510538fe3aa90afa9850202f78e0ebf3340583"
+          },
+          "core7.veccore0": {
+            "first_tick": 60285,
+            "last_tick": 64649,
+            "physical_last_tick": 64646,
+            "physical_end_tick": 64642,
+            "official_duration_us": "2.64",
+            "official_running_us": "2.64",
+            "instruction_events_without_sync": 1976,
+            "signature128": "866b6f98e1b58652249b36dfc33a12b1",
+            "rows_written": 1,
+            "shard_sha256": "ad009f0e16bf7f867ac2b81e781db8da1478224a5b436e5ac4f5d95ac325e7cf"
+          },
+          "core7.veccore1": {
+            "first_tick": 60285,
+            "last_tick": 63298,
+            "physical_last_tick": 63295,
+            "physical_end_tick": 63291,
+            "official_duration_us": "1.83",
+            "official_running_us": "1.82",
+            "instruction_events_without_sync": 1976,
+            "signature128": "1ee5bdab675cdbe9ad452296fca7f090",
+            "rows_written": 1,
+            "shard_sha256": "26dd2666f7518d726256249f5075939cc024458c6223aadbaa12a94dbd44105c"
+          },
+          "core8.veccore0": {
+            "first_tick": 60282,
+            "last_tick": 65436,
+            "physical_last_tick": 65433,
+            "physical_end_tick": 65429,
+            "official_duration_us": "3.12",
+            "official_running_us": "3.12",
+            "instruction_events_without_sync": 1976,
+            "signature128": "e0539c546ddffa48d370d4792ef43eca",
+            "rows_written": 1,
+            "shard_sha256": "a9f3d17ff2a01b08c7556decd84549e1f3f0a3b93ffa8193188fa5e863d00d67"
+          },
+          "core8.veccore1": {
+            "first_tick": 60282,
+            "last_tick": 63452,
+            "physical_last_tick": 63449,
+            "physical_end_tick": 63445,
+            "official_duration_us": "1.92",
+            "official_running_us": "1.92",
+            "instruction_events_without_sync": 1976,
+            "signature128": "64a6e59b814a8c40d1c576408eaca01e",
+            "rows_written": 1,
+            "shard_sha256": "ffece975da21e54715f3380c9224bd774f29aa37365f60ad6816ff39dada6d98"
+          }
+        },
+        "ordinal": 7
+      },
+      "active_count_matches": true
+    }
+  ],
+  "elf_text_sha256": "c801d87f4298a8b399bce6678bafac249504eb176705aea81e826085edfe6456"
+}

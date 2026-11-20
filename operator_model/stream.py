@@ -23,11 +23,12 @@ class OperatorStream:
 
     Successive launches establish a lower bound on warm AIVs. A verified
     AIC-only dispatch can carry the RMSNorm prefix across a family switch.
-    experimental_post_repeats enables the frozen per-row schedule for two
-    adjacent, identical built-in BF16 Post launches in this stream.
+    Adjacent identical built-in BF16 Post launches use the calibrated token
+    schedule. Set experimental_post_repeats=False to replay the earlier
+    occupancy-only estimate. The flag name is retained for existing callers.
     """
 
-    def __init__(self, chip=REFERENCE_NAME, *, experimental_post_repeats=False):
+    def __init__(self, chip=REFERENCE_NAME, *, experimental_post_repeats=True):
         if not isinstance(experimental_post_repeats, bool):
             raise TypeError('experimental_post_repeats must be a boolean')
         self._post_repeats = experimental_post_repeats

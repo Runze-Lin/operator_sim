@@ -1,5 +1,7 @@
 # DeepSeek-V4-Pro · 整批 prefill 的逐节点单卡张量
 
+**单卡 8×256Ki 的实测。** 全部 2,097,152 行在一个 `aclnnCast` 中完成，950DT 预测 227.018 µs、CA 247.788 µs。950PR 为 520.357 / 529.287 µs。下表使用模型的 64 个 indexer 系数；内部 hidden 宽度仍为 7168。[第 62–66 个 UB 块的同轴图](../../results/v0.27/memory/pro-256ki-dt-blocks-62-66.png) · [100 轮算例](../examples/cast_bf16_fp32.md)
+
 **单卡 8×128k 的实测。** 64 个 indexer 系数升精度得到 BF16→FP32 [1048576,64]，在 950DT 上完整运行 50 轮/核。模型为 99.918 µs，CA 为 105.374 µs。逐节点表中的别的通道数取决于各自的模型位置。[同一批次逐 UB 块的模型与 CA](../../results/v0.23/pro-prefill/pro-b8-128ki-dt-plot.png) · [完整计时与校验](../../results/v0.23/pro-prefill/pro-b8-128ki-dt.json)
 
 每个表对应 8 条等长请求一次提交，attention TP8、DP1，MoE EP8。层号从 0 开始。权重写为源码的逻辑形状，KV 表同时包含持久化或条件性缓冲。专家行数采用本情景的均衡路由。表内给出完整轴长度，可以按具体节点直接查询。
@@ -137,7 +139,7 @@
 | `indexer.wq_b`<br>2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60 | x <code>[2097152,1536]</code><br>weight_logical <code>[8192,1536]</code><br>y <code>[2097152,8192]</code> | 仅形状 | — | — | — |
 | `indexer.weights_proj`<br>2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60 | x <code>[2097152,7168]</code><br>weight_logical <code>[64,7168]</code><br>y <code>[2097152,64]</code> | 仅形状 | — | — | — |
 | `indexer.weights_scale`<br>2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60 | x <code>[2097152,64]</code><br>scalar <code>[]</code><br>y <code>[2097152,64]</code> | 仅形状 | — | — | — |
-| `indexer.prepare_dsa_weights.float`<br>2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60 | scaled_bf16 <code>[2097152,64]</code><br>fp32 <code>[2097152,64]</code> | `cast_bf16_fp32` | 227.018 / — | 520.357 / — | 104.673 |
+| `indexer.prepare_dsa_weights.float`<br>2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60 | scaled_bf16 <code>[2097152,64]</code><br>fp32 <code>[2097152,64]</code> | `cast_bf16_fp32` | [227.018 / 247.788](../../results/v0.27/memory/pro-256ki-dt-blocks-62-66.png) | [520.357 / 529.287](../../results/v0.23/pro-prefill/pro-b8-256ki-pr.json) | 104.673 |
 | `indexer.select`<br>2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60 | q <code>[2097152,64,128]</code><br>weights <code>[2097152,64]</code><br>indices <code>[2097152,1024]</code> | 仅形状 | — | — | — |
 | `output.hc_head_and_norm`<br>output | x <code>[2097152,4,7168]</code><br>out <code>[2097152,7168]</code> | 仅形状 | — | — | — |
 | `parallel.attention_row_reduce`<br>0–60 | partial <code>[2097152,7168]</code><br>result <code>[2097152,7168]</code> | 仅形状 | — | — | — |

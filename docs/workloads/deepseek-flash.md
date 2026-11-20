@@ -1,5 +1,7 @@
 # DeepSeek-V4.1-Flash · 整批 prefill 的逐节点单卡张量
 
+单卡 B8×32Ki 整批展平后的全 hidden Cast 是 `[262144,5120]`，区别于 indexer 的 32 列系数。DT 预测 2514.820 µs，全输出核验通过，64 核原生包络 2737.538 µs，采集墙钟 4 小时 18 分。逐指令整窗未采集。[运行回执](../../results/v0.23/full-hidden/v3/flash-retry.json)
+
 每个表对应 8 条等长请求一次提交，attention TP8、DP1，MoE EP8。层号从 0 开始。权重写为源码的逻辑形状，KV 表同时包含持久化或条件性缓冲。专家行数采用本情景的均衡路由。表内给出完整轴长度，可以按具体节点直接查询。
 
 三个时延列的单位是 µs。950 的单元格是“模型 / 同形 CA”，970DT 是配置外推。只有算子、shape 和属性一致的独立库调用才显示正式指令窗。原生 wrapper 和单独检查过的 BF16 ND 投影另有证据。此情景的残差激活为 BF16，beta Sigmoid 是 FP32→FP32；动态 MX 量化是 BF16→FP8 E4M3FN 和 E8M0 scale。“仅形状”表示只导出了结构，没有独立后端计时合同。视部署而定的算子可能被融合。[调度与参数来源](../prefill-shapes.md) · [独立库采集的角色及误差](../error-analysis.md) · [完整配置、条件和其他并行拓扑](../../results/v0.23/workloads/contracts.jsonl.gz)

@@ -1,0 +1,751 @@
+{
+  "chip": "Ascend950PR_957b",
+  "group": "siblings",
+  "freeze_sha256": "f7ae623d263f4a2082e1322efde80fd8b8b37e92191ccc6d34f13ddbf53b754c",
+  "cost": {
+    "started_utc": "2026-11-20T01:25:09.042808+00:00",
+    "finished_utc": "2026-11-20T01:26:43.097194+00:00",
+    "seconds": 94.05441642994992,
+    "exit_code": 0,
+    "peak_bytes": 87799903,
+    "raw_bytes": 87773382,
+    "stop_reason": null,
+    "command": [
+      "bash",
+      "/home/l00925865/operator_sim/scripts/cann-run.sh",
+      "msopprof",
+      "simulator",
+      "--soc-version=Ascend950PR_957b",
+      "--dump=false",
+      "--launch-count=7",
+      "--timeout=60",
+      "--output=/home/l00925865/operator_sim/runs/rms27/siblings-Ascend950PR_957b/profile",
+      "/home/l00925865/operator_sim/build/vector-v8/NORM",
+      "/home/l00925865/operator_sim/runs/rms27/siblings-Ascend950PR_957b/inputs.txt"
+    ]
+  },
+  "rows": [
+    {
+      "chip": "Ascend950PR_957b",
+      "group": "siblings",
+      "i": 0,
+      "shape": [
+        1,
+        736
+      ],
+      "prior_aiv": 0,
+      "role": "prefix",
+      "known_us": 2.9771935016700506,
+      "cold_hot_us": 2.1003746295778125,
+      "runtime_ms": 0.16117,
+      "us": 1.9585563651001727,
+      "lower_us": 1.4592713782782272,
+      "upper_us": 2.9771935016700506,
+      "old_us": 2.233225115638463,
+      "conditional": {
+        "first_us": 2.9771935016700506,
+        "one_aiv_prefix_us": 2.9771935016700506,
+        "fully_covered_us": 1.6225224757509806
+      },
+      "covered_us": 1.4592713782782272,
+      "active_aiv": 1,
+      "detail": {
+        "route": "single-UB",
+        "gamma_issue_cycles": 1583.6029411764707,
+        "issue_spread_cycles": 0.0,
+        "final_y_cycles": 2398.797774159075,
+        "final_rstd_cycles": 2277.6993195200685,
+        "lower_bound_cycles": 1587.072655462185
+      },
+      "timing_qualified": true,
+      "correctness": [
+        "correctness count=736 bad=0 max_abs_error=0.00178441 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness count=1 bad=0 max_abs_error=1.3565e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ],
+      "host_task": {
+        "begin_tick": 2510,
+        "done_tick": 7672,
+        "full_task_id": 0,
+        "raw_stream_id": 0
+      },
+      "stage": {
+        "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+        "ca_us": 3.183030303030303,
+        "active_aiv": 1,
+        "active_aic": 0,
+        "windows": {
+          "core0.veccore0": [
+            0.0,
+            3.183030303030303
+          ]
+        },
+        "trace": "runs/rms27/siblings-Ascend950PR_957b/profile/OPPROF_20261120092509_OQOLSNKEDOSITYOC/RmsNorm_normal_all_bf16_high_performance_5000/0/simulator/trace.json",
+        "trace_sha256": "de905cad2884df66a437853268cc506bbf833d0f3a08c5f692c52f9a58fd7007",
+        "binary_sha256": "0926fe478e5f718ef49241c08ef00b665797690f0f7f22c67fdc25044e0cb54d",
+        "first_tick": 7257,
+        "last_tick": 12509,
+        "physical_last_tick": 12506,
+        "physical_ca_us": 3.181212121212121,
+        "cores": {
+          "core0.veccore0": {
+            "first_tick": 7257,
+            "last_tick": 12509,
+            "physical_last_tick": 12506,
+            "physical_end_tick": 12502,
+            "official_duration_us": "3.18",
+            "official_running_us": "3.18",
+            "instruction_events_without_sync": 1528,
+            "signature128": "79a109187429cdb8c174f37a0265ccfc",
+            "rows_written": 1,
+            "shard_sha256": "03763cb0d0e39cdcdcbeb36e4c7184c2032f6e96d4847e8e7000093b709dee7c"
+          }
+        },
+        "ordinal": 0
+      },
+      "active_count_matches": true
+    },
+    {
+      "chip": "Ascend950PR_957b",
+      "group": "siblings",
+      "i": 1,
+      "shape": [
+        2,
+        2816
+      ],
+      "prior_aiv": 1,
+      "role": "entry",
+      "known_us": 4.30901371431008,
+      "cold_hot_us": 2.3338571642600767,
+      "runtime_ms": 0.25695,
+      "us": 2.3458713407294502,
+      "lower_us": 1.6116294998981076,
+      "upper_us": 4.30901371431008,
+      "old_us": 2.4665267451507393,
+      "conditional": {
+        "first_us": 3.1832208502014323,
+        "one_aiv_prefix_us": 4.30901371431008,
+        "fully_covered_us": 1.8422881702985354
+      },
+      "covered_us": 1.6116294998981076,
+      "active_aiv": 2,
+      "detail": {
+        "route": "single-UB",
+        "gamma_issue_cycles": 1588.0343137254904,
+        "issue_spread_cycles": 11.075471698113208,
+        "final_y_cycles": 2650.1886748318775,
+        "final_rstd_cycles": 2560.5606935259366,
+        "lower_bound_cycles": 1607.9474565826333
+      },
+      "timing_qualified": true,
+      "correctness": [
+        "correctness count=5632 bad=0 max_abs_error=0.00120334 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness count=2 bad=0 max_abs_error=6.95489e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ],
+      "host_task": {
+        "begin_tick": 8051,
+        "done_tick": 12560,
+        "full_task_id": 1,
+        "raw_stream_id": 1
+      },
+      "stage": {
+        "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+        "ca_us": 4.335757575757576,
+        "active_aiv": 2,
+        "active_aic": 0,
+        "windows": {
+          "core0.veccore0": [
+            0.0,
+            1.9418181818181819
+          ],
+          "core16.veccore0": [
+            1.476969696969697,
+            4.335757575757576
+          ]
+        },
+        "trace": "runs/rms27/siblings-Ascend950PR_957b/profile/OPPROF_20261120092509_OQOLSNKEDOSITYOC/RmsNorm_normal_all_bf16_high_performance_5000/1/simulator/trace.json",
+        "trace_sha256": "21c1c2d2956a1fdc4e0aebfd8eee87b4c019b4d717acfea85870b84189565eb9",
+        "binary_sha256": "0926fe478e5f718ef49241c08ef00b665797690f0f7f22c67fdc25044e0cb54d",
+        "first_tick": 13374,
+        "last_tick": 20528,
+        "physical_last_tick": 20525,
+        "physical_ca_us": 4.333939393939394,
+        "cores": {
+          "core0.veccore0": {
+            "first_tick": 13374,
+            "last_tick": 16578,
+            "physical_last_tick": 16575,
+            "physical_end_tick": 16571,
+            "official_duration_us": "1.94",
+            "official_running_us": "1.94",
+            "instruction_events_without_sync": 2424,
+            "signature128": "f001070ba4a66f5092e1fab2b2e056dc",
+            "rows_written": 1,
+            "shard_sha256": "32a5ab3c343fda726b80b0f44badf32ab922b81e34dff43f0739d22365964ef4"
+          },
+          "core16.veccore0": {
+            "first_tick": 15811,
+            "last_tick": 20528,
+            "physical_last_tick": 20525,
+            "physical_end_tick": 20521,
+            "official_duration_us": "2.86",
+            "official_running_us": "2.85",
+            "instruction_events_without_sync": 2424,
+            "signature128": "f7b97735076cd71f7901dbfe0c2a984c",
+            "rows_written": 1,
+            "shard_sha256": "cc0be231137f520b76aebe185534720d50eca57dadc38223fea281fd5160af97"
+          }
+        },
+        "ordinal": 1
+      },
+      "active_count_matches": true
+    },
+    {
+      "chip": "Ascend950PR_957b",
+      "group": "siblings",
+      "i": 2,
+      "shape": [
+        2,
+        2816
+      ],
+      "prior_aiv": 2,
+      "role": "repeat",
+      "known_us": 1.8422881702985354,
+      "cold_hot_us": 2.3338571642600767,
+      "runtime_ms": 0.2545,
+      "us": 2.3458713407294502,
+      "lower_us": 1.6116294998981076,
+      "upper_us": 4.30901371431008,
+      "old_us": 2.4665267451507393,
+      "conditional": {
+        "first_us": 3.1832208502014323,
+        "one_aiv_prefix_us": 4.30901371431008,
+        "fully_covered_us": 1.8422881702985354
+      },
+      "covered_us": 1.6116294998981076,
+      "active_aiv": 2,
+      "detail": {
+        "route": "single-UB",
+        "gamma_issue_cycles": 1588.0343137254904,
+        "issue_spread_cycles": 11.075471698113208,
+        "final_y_cycles": 2650.1886748318775,
+        "final_rstd_cycles": 2560.5606935259366,
+        "lower_bound_cycles": 1607.9474565826333
+      },
+      "timing_qualified": false,
+      "reason": "ValueError('missing ELF entry/physical END/terminal label on core16.veccore0')",
+      "correctness": [
+        "correctness count=5632 bad=0 max_abs_error=0.00120334 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness count=2 bad=0 max_abs_error=6.95489e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ]
+    },
+    {
+      "chip": "Ascend950PR_957b",
+      "group": "siblings",
+      "i": 3,
+      "shape": [
+        3,
+        3520
+      ],
+      "prior_aiv": 2,
+      "role": "entry",
+      "known_us": 2.750885159138331,
+      "cold_hot_us": 2.42624428430059,
+      "runtime_ms": 0.26401,
+      "us": 2.426028077207625,
+      "lower_us": 1.6795954812345095,
+      "upper_us": 4.366596507623179,
+      "old_us": 2.565297533234089,
+      "conditional": {
+        "first_us": 3.2629248673116855,
+        "one_aiv_prefix_us": 4.366596507623179,
+        "fully_covered_us": 1.931076759787682
+      },
+      "covered_us": 1.6795954812345095,
+      "active_aiv": 3,
+      "detail": {
+        "route": "single-UB",
+        "gamma_issue_cycles": 1592.4656862745098,
+        "issue_spread_cycles": 22.150943396226417,
+        "final_y_cycles": 2748.5967699616226,
+        "final_rstd_cycles": 2762.332544036941,
+        "lower_bound_cycles": 1625.6542577030812
+      },
+      "timing_qualified": true,
+      "correctness": [
+        "correctness count=10560 bad=0 max_abs_error=0.00153188 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness count=3 bad=0 max_abs_error=9.04111e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ],
+      "host_task": {
+        "begin_tick": 15350,
+        "done_tick": 18348,
+        "full_task_id": 3,
+        "raw_stream_id": 3
+      },
+      "stage": {
+        "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+        "ca_us": 2.8527272727272726,
+        "active_aiv": 3,
+        "active_aic": 0,
+        "windows": {
+          "core0.veccore0": [
+            0.0,
+            2.0454545454545454
+          ],
+          "core0.veccore1": [
+            0.10545454545454545,
+            2.8527272727272726
+          ],
+          "core16.veccore0": [
+            0.0496969696969697,
+            1.9115151515151516
+          ]
+        },
+        "trace": "runs/rms27/siblings-Ascend950PR_957b/profile/OPPROF_20261120092509_OQOLSNKEDOSITYOC/RmsNorm_normal_all_bf16_high_performance_5000/3/simulator/trace.json",
+        "trace_sha256": "3992c13e89ccd3561849badfcb5eb64f7a335eabae2d27f962a10a1a5a631f76",
+        "binary_sha256": "0926fe478e5f718ef49241c08ef00b665797690f0f7f22c67fdc25044e0cb54d",
+        "first_tick": 25417,
+        "last_tick": 30124,
+        "physical_last_tick": 30121,
+        "physical_ca_us": 2.850909090909091,
+        "cores": {
+          "core0.veccore0": {
+            "first_tick": 25417,
+            "last_tick": 28792,
+            "physical_last_tick": 28789,
+            "physical_end_tick": 28785,
+            "official_duration_us": "2.05",
+            "official_running_us": "2.04",
+            "instruction_events_without_sync": 2732,
+            "signature128": "ef90b4657cf07ca93da947b0f3e170f7",
+            "rows_written": 1,
+            "shard_sha256": "adcb52f5c7469422b2fc1e0fae3ef2165f6415f1b82abf3efd3167b5c8da1a77"
+          },
+          "core0.veccore1": {
+            "first_tick": 25591,
+            "last_tick": 30124,
+            "physical_last_tick": 30121,
+            "physical_end_tick": 30117,
+            "official_duration_us": "2.75",
+            "official_running_us": "2.74",
+            "instruction_events_without_sync": 2732,
+            "signature128": "48a3b3ca45b445281c94aa68aed10b4d",
+            "rows_written": 1,
+            "shard_sha256": "8c9907acf781a00e09f18c56ced4700295e790a411bcb0de255eb0b06ee1b4d0"
+          },
+          "core16.veccore0": {
+            "first_tick": 25499,
+            "last_tick": 28571,
+            "physical_last_tick": 28568,
+            "physical_end_tick": 28564,
+            "official_duration_us": "1.86",
+            "official_running_us": "1.86",
+            "instruction_events_without_sync": 2732,
+            "signature128": "a28c222386ca6f4bcc9e54a7df78387b",
+            "rows_written": 1,
+            "shard_sha256": "da341b396b23ba34ab931274b9967ed42d356ad3a88936e14841960d82e44db4"
+          }
+        },
+        "ordinal": 3
+      },
+      "active_count_matches": true
+    },
+    {
+      "chip": "Ascend950PR_957b",
+      "group": "siblings",
+      "i": 4,
+      "shape": [
+        3,
+        3520
+      ],
+      "prior_aiv": 3,
+      "role": "repeat",
+      "known_us": 1.931076759787682,
+      "cold_hot_us": 2.42624428430059,
+      "runtime_ms": 0.26628,
+      "us": 2.426028077207625,
+      "lower_us": 1.6795954812345095,
+      "upper_us": 4.366596507623179,
+      "old_us": 2.565297533234089,
+      "conditional": {
+        "first_us": 3.2629248673116855,
+        "one_aiv_prefix_us": 4.366596507623179,
+        "fully_covered_us": 1.931076759787682
+      },
+      "covered_us": 1.6795954812345095,
+      "active_aiv": 3,
+      "detail": {
+        "route": "single-UB",
+        "gamma_issue_cycles": 1592.4656862745098,
+        "issue_spread_cycles": 22.150943396226417,
+        "final_y_cycles": 2748.5967699616226,
+        "final_rstd_cycles": 2762.332544036941,
+        "lower_bound_cycles": 1625.6542577030812
+      },
+      "timing_qualified": true,
+      "correctness": [
+        "correctness count=10560 bad=0 max_abs_error=0.00153188 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness count=3 bad=0 max_abs_error=9.04111e-08 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ],
+      "host_task": {
+        "begin_tick": 18974,
+        "done_tick": 20968,
+        "full_task_id": 4,
+        "raw_stream_id": 4
+      },
+      "stage": {
+        "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+        "ca_us": 1.8812121212121211,
+        "active_aiv": 3,
+        "active_aic": 0,
+        "windows": {
+          "core0.veccore0": [
+            0.0,
+            1.7860606060606061
+          ],
+          "core0.veccore1": [
+            0.0,
+            1.8812121212121211
+          ],
+          "core16.veccore0": [
+            0.04909090909090909,
+            1.6327272727272728
+          ]
+        },
+        "trace": "runs/rms27/siblings-Ascend950PR_957b/profile/OPPROF_20261120092509_OQOLSNKEDOSITYOC/RmsNorm_normal_all_bf16_high_performance_5000/4/simulator/trace.json",
+        "trace_sha256": "35173e431d249cec0ad05e19f7b9f0fe5f57b63b1d80d62ea6c4b9fc49076e05",
+        "binary_sha256": "0926fe478e5f718ef49241c08ef00b665797690f0f7f22c67fdc25044e0cb54d",
+        "first_tick": 31397,
+        "last_tick": 34501,
+        "physical_last_tick": 34498,
+        "physical_ca_us": 1.8793939393939394,
+        "cores": {
+          "core0.veccore0": {
+            "first_tick": 31397,
+            "last_tick": 34344,
+            "physical_last_tick": 34341,
+            "physical_end_tick": 34337,
+            "official_duration_us": "1.79",
+            "official_running_us": "1.78",
+            "instruction_events_without_sync": 2732,
+            "signature128": "ef9cf29c28e9489de00120f0f3ddf314",
+            "rows_written": 1,
+            "shard_sha256": "8c012404d7574843911faa05169ee7e7ac2664cf8b234bee25e39859e42d357c"
+          },
+          "core0.veccore1": {
+            "first_tick": 31397,
+            "last_tick": 34501,
+            "physical_last_tick": 34498,
+            "physical_end_tick": 34494,
+            "official_duration_us": "1.88",
+            "official_running_us": "1.88",
+            "instruction_events_without_sync": 2732,
+            "signature128": "7783309104e2a8610a5580c9da22f992",
+            "rows_written": 1,
+            "shard_sha256": "7c74463196e829958c463c86f72594dd99b4396b18fe185095094143988b2190"
+          },
+          "core16.veccore0": {
+            "first_tick": 31478,
+            "last_tick": 34091,
+            "physical_last_tick": 34088,
+            "physical_end_tick": 34084,
+            "official_duration_us": "1.58",
+            "official_running_us": "1.58",
+            "instruction_events_without_sync": 2732,
+            "signature128": "d06aa24072d4d2255717eee4d4ee2df5",
+            "rows_written": 1,
+            "shard_sha256": "28138ecb4c6dbb869a4d2c4e9150f287831d619f72112677451fe405cbb95710"
+          }
+        },
+        "ordinal": 4
+      },
+      "active_count_matches": true
+    },
+    {
+      "chip": "Ascend950PR_957b",
+      "group": "siblings",
+      "i": 5,
+      "shape": [
+        5,
+        5680
+      ],
+      "prior_aiv": 3,
+      "role": "entry",
+      "known_us": 3.527881351546039,
+      "cold_hot_us": 2.6525358078188277,
+      "runtime_ms": 0.29389,
+      "us": 2.731697904512472,
+      "lower_us": 1.948335842439614,
+      "upper_us": 4.5685705788187665,
+      "old_us": 2.829129072593385,
+      "conditional": {
+        "first_us": 3.4881017346669987,
+        "one_aiv_prefix_us": 4.5685705788187665,
+        "fully_covered_us": 2.139922740795678
+      },
+      "covered_us": 1.948335842439614,
+      "active_aiv": 5,
+      "detail": {
+        "route": "single-UB",
+        "gamma_issue_cycles": 1601.3284313725492,
+        "issue_spread_cycles": 44.301886792452834,
+        "final_y_cycles": 3025.7955439210505,
+        "final_rstd_cycles": 3205.754140025363,
+        "lower_bound_cycles": 1681.6598599439778
+      },
+      "timing_qualified": true,
+      "correctness": [
+        "correctness count=28400 bad=0 max_abs_error=0.00153273 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness count=5 bad=0 max_abs_error=1.39645e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ],
+      "host_task": {
+        "begin_tick": 21540,
+        "done_tick": 24995,
+        "full_task_id": 5,
+        "raw_stream_id": 5
+      },
+      "stage": {
+        "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+        "ca_us": 3.309090909090909,
+        "active_aiv": 5,
+        "active_aic": 0,
+        "windows": {
+          "core0.veccore0": [
+            0.0,
+            2.132727272727273
+          ],
+          "core0.veccore1": [
+            0.0,
+            2.309090909090909
+          ],
+          "core1.veccore0": [
+            0.48484848484848486,
+            3.309090909090909
+          ],
+          "core16.veccore0": [
+            0.04909090909090909,
+            2.1266666666666665
+          ],
+          "core16.veccore1": [
+            0.15333333333333332,
+            2.7812121212121212
+          ]
+        },
+        "trace": "runs/rms27/siblings-Ascend950PR_957b/profile/OPPROF_20261120092509_OQOLSNKEDOSITYOC/RmsNorm_normal_all_bf16_high_performance_5000/5/simulator/trace.json",
+        "trace_sha256": "96117d13965dfbc046be0bfc4b0a517ad1eca7474681ff6feacb7c71417f8816",
+        "binary_sha256": "0926fe478e5f718ef49241c08ef00b665797690f0f7f22c67fdc25044e0cb54d",
+        "first_tick": 35631,
+        "last_tick": 41091,
+        "physical_last_tick": 41088,
+        "physical_ca_us": 3.307272727272727,
+        "cores": {
+          "core0.veccore0": {
+            "first_tick": 35631,
+            "last_tick": 39150,
+            "physical_last_tick": 39147,
+            "physical_end_tick": 39143,
+            "official_duration_us": "2.13",
+            "official_running_us": "2.12",
+            "instruction_events_without_sync": 3684,
+            "signature128": "18e0eaf11ff1182daccf0203cf58de37",
+            "rows_written": 1,
+            "shard_sha256": "6d4fb609413a15ccf659a8de2e598092648a755e8ce2c0a9c5b736ed6c528031"
+          },
+          "core0.veccore1": {
+            "first_tick": 35631,
+            "last_tick": 39441,
+            "physical_last_tick": 39438,
+            "physical_end_tick": 39434,
+            "official_duration_us": "2.31",
+            "official_running_us": "2.3",
+            "instruction_events_without_sync": 3684,
+            "signature128": "ef2d3ed6d2da2a29356f3aa1e5df1151",
+            "rows_written": 1,
+            "shard_sha256": "e0dcdd63b2137f44cb4b7333e36e470306bc8016e0dcf571b0756d7e3bd99f2b"
+          },
+          "core1.veccore0": {
+            "first_tick": 36431,
+            "last_tick": 41091,
+            "physical_last_tick": 41088,
+            "physical_end_tick": 41084,
+            "official_duration_us": "2.82",
+            "official_running_us": "2.82",
+            "instruction_events_without_sync": 3684,
+            "signature128": "fb75f23a1d625a48a5acf3b5512b63f5",
+            "rows_written": 1,
+            "shard_sha256": "1d9a5e38a66b69183a8504b9ffe6712964bcee4e19022a8f4eb95c9f8b3a219f"
+          },
+          "core16.veccore0": {
+            "first_tick": 35712,
+            "last_tick": 39140,
+            "physical_last_tick": 39137,
+            "physical_end_tick": 39133,
+            "official_duration_us": "2.08",
+            "official_running_us": "2.07",
+            "instruction_events_without_sync": 3684,
+            "signature128": "a76e797287be69b9d14873a29c4b3375",
+            "rows_written": 1,
+            "shard_sha256": "fb48adac113996fa32b206d108a7a9d74290b58c416d36190b4f07044b0872dc"
+          },
+          "core16.veccore1": {
+            "first_tick": 35884,
+            "last_tick": 40220,
+            "physical_last_tick": 40217,
+            "physical_end_tick": 40213,
+            "official_duration_us": "2.63",
+            "official_running_us": "2.62",
+            "instruction_events_without_sync": 3684,
+            "signature128": "45c1fb03a7f3c27818d4f2e5ecd01ede",
+            "rows_written": 1,
+            "shard_sha256": "e035e2b7d1a5e8b67f5280fcb6eb5b5a58d3abeadd3c38532a05d50b03edbb55"
+          }
+        },
+        "ordinal": 5
+      },
+      "active_count_matches": true
+    },
+    {
+      "chip": "Ascend950PR_957b",
+      "group": "siblings",
+      "i": 6,
+      "shape": [
+        5,
+        5680
+      ],
+      "prior_aiv": 5,
+      "role": "repeat",
+      "known_us": 2.139922740795678,
+      "cold_hot_us": 2.6525358078188277,
+      "runtime_ms": 0.30538,
+      "us": 2.731697904512472,
+      "lower_us": 1.948335842439614,
+      "upper_us": 4.5685705788187665,
+      "old_us": 2.829129072593385,
+      "conditional": {
+        "first_us": 3.4881017346669987,
+        "one_aiv_prefix_us": 4.5685705788187665,
+        "fully_covered_us": 2.139922740795678
+      },
+      "covered_us": 1.948335842439614,
+      "active_aiv": 5,
+      "detail": {
+        "route": "single-UB",
+        "gamma_issue_cycles": 1601.3284313725492,
+        "issue_spread_cycles": 44.301886792452834,
+        "final_y_cycles": 3025.7955439210505,
+        "final_rstd_cycles": 3205.754140025363,
+        "lower_bound_cycles": 1681.6598599439778
+      },
+      "timing_qualified": true,
+      "correctness": [
+        "correctness count=28400 bad=0 max_abs_error=0.00153273 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness count=5 bad=0 max_abs_error=1.39645e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ],
+      "host_task": {
+        "begin_tick": 25838,
+        "done_tick": 28019,
+        "full_task_id": 6,
+        "raw_stream_id": 6
+      },
+      "stage": {
+        "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+        "ca_us": 2.033333333333333,
+        "active_aiv": 5,
+        "active_aic": 0,
+        "windows": {
+          "core0.veccore0": [
+            0.0,
+            1.981818181818182
+          ],
+          "core0.veccore1": [
+            0.0,
+            1.9072727272727272
+          ],
+          "core1.veccore0": [
+            0.0018181818181818182,
+            1.7896969696969698
+          ],
+          "core16.veccore0": [
+            0.048484848484848485,
+            1.9454545454545455
+          ],
+          "core16.veccore1": [
+            0.048484848484848485,
+            2.033333333333333
+          ]
+        },
+        "trace": "runs/rms27/siblings-Ascend950PR_957b/profile/OPPROF_20261120092509_OQOLSNKEDOSITYOC/RmsNorm_normal_all_bf16_high_performance_5000/6/simulator/trace.json",
+        "trace_sha256": "ff47623339a75e8bcf3c91748806d76f9d57e73c4f88dd86154f6667fbf17640",
+        "binary_sha256": "0926fe478e5f718ef49241c08ef00b665797690f0f7f22c67fdc25044e0cb54d",
+        "first_tick": 42723,
+        "last_tick": 46078,
+        "physical_last_tick": 46075,
+        "physical_ca_us": 2.0315151515151517,
+        "cores": {
+          "core0.veccore0": {
+            "first_tick": 42723,
+            "last_tick": 45993,
+            "physical_last_tick": 45990,
+            "physical_end_tick": 45986,
+            "official_duration_us": "1.98",
+            "official_running_us": "1.97",
+            "instruction_events_without_sync": 3684,
+            "signature128": "d93d55c8d0a3e869291ddeb500cefd12",
+            "rows_written": 1,
+            "shard_sha256": "cd250911dc545d10575193edd9bdfe800b20836dcec30110e6140d5afea8bf23"
+          },
+          "core0.veccore1": {
+            "first_tick": 42723,
+            "last_tick": 45870,
+            "physical_last_tick": 45867,
+            "physical_end_tick": 45863,
+            "official_duration_us": "1.91",
+            "official_running_us": "1.9",
+            "instruction_events_without_sync": 3684,
+            "signature128": "1db921333ae4fd1dc47231195b3ef878",
+            "rows_written": 1,
+            "shard_sha256": "0ec47c5b8de8154a0fdfff1c2a936633fed15189b89f00bce2e03a6ca9012f92"
+          },
+          "core1.veccore0": {
+            "first_tick": 42726,
+            "last_tick": 45676,
+            "physical_last_tick": 45673,
+            "physical_end_tick": 45669,
+            "official_duration_us": "1.79",
+            "official_running_us": "1.78",
+            "instruction_events_without_sync": 3684,
+            "signature128": "4943a7c11ceecc0ea33d2e1b2fdd1c9d",
+            "rows_written": 1,
+            "shard_sha256": "2c9bb5727f435f154ae924accf1bd19d9bed81e0df0f76e76119f93d0200322e"
+          },
+          "core16.veccore0": {
+            "first_tick": 42803,
+            "last_tick": 45933,
+            "physical_last_tick": 45930,
+            "physical_end_tick": 45926,
+            "official_duration_us": "1.9",
+            "official_running_us": "1.89",
+            "instruction_events_without_sync": 3684,
+            "signature128": "ffc778bb01e0d997e3acf88ee78b6384",
+            "rows_written": 1,
+            "shard_sha256": "90bac0de91996740dd509abc7908d5f1d16ef9ede45cec3c5ebe08fafdb13523"
+          },
+          "core16.veccore1": {
+            "first_tick": 42803,
+            "last_tick": 46078,
+            "physical_last_tick": 46075,
+            "physical_end_tick": 46071,
+            "official_duration_us": "1.98",
+            "official_running_us": "1.98",
+            "instruction_events_without_sync": 3684,
+            "signature128": "1c3b8c5859014a533b061305ca1b6c11",
+            "rows_written": 1,
+            "shard_sha256": "f2b843ce8fb5837f869a41444c091452fdce2b45815bdd7d1633c9b7ac6159f0"
+          }
+        },
+        "ordinal": 6
+      },
+      "active_count_matches": true
+    }
+  ],
+  "elf_text_sha256": "c801d87f4298a8b399bce6678bafac249504eb176705aea81e826085edfe6456"
+}

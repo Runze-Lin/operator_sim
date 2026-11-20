@@ -1,4 +1,4 @@
-"""Optional price for two consecutive successful dispatches of the same built-in Post."""
+"""Resource schedule for consecutive successful dispatches of the same built-in Post."""
 from dataclasses import replace
 from functools import lru_cache
 import json
@@ -52,5 +52,5 @@ def price_repeat(forecast, shape, chip):
     projection = {**forecast.projection, 'latency_us': us, 'stages_us': pipe['stages_us'],
                   'timing_diagnostics': diagnostics}
     return replace(forecast, latency_us=us, status='extrapolated',
-                   reason='Experimental per-token schedule for an immediate identical Post',
+                   reason='Consecutive identical Post on the token path; target resources with 950-calibrated row prices',
                    projection=projection, rates=_rates(forecast.work, us, chip))

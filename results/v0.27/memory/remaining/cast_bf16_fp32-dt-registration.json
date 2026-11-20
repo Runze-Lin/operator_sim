@@ -1,0 +1,157 @@
+{
+  "utc": "2026-11-19T16:36:55.861672+00:00",
+  "jobs": [
+    {
+      "id": "cast_bf16_fp32-dt",
+      "sku": "Ascend950DT_9582",
+      "op": "cast_bf16_fp32",
+      "shape": [
+        851968,
+        32
+      ],
+      "runner": "build/smoke/large_cast20",
+      "args": [
+        "851968",
+        "32"
+      ],
+      "api": "aclnnCast",
+      "kernels": 1,
+      "nchecks": 1,
+      "expected_elements": 27262976,
+      "working_set_MiB": 156.0,
+      "kernel": "Cast_b2717900ea7de2d41ea9c63d23aa269b_high_performance_0",
+      "elf": "b4281f94c2b846460a173db1ab578880e18faeeab8b719e3de5ee0da44096953",
+      "predictions": {
+        "Ascend950DT_9582": {
+          "uniform": {
+            "us": 25.019835466491084,
+            "active_aiv": 64,
+            "external_GB_s": 3168.0,
+            "mixed_issue_GB_s": 3168.0,
+            "retained_output_MiB": 85.33333333333333,
+            "external_read_plus_write_MiB": 70.66666666666667,
+            "external_write_MiB": 18.66666666666667,
+            "device_L2_MiB": 128.0
+          },
+          "pressure": {
+            "us": 25.019835466491084,
+            "active_aiv": 64,
+            "external_GB_s": 3168.0,
+            "mixed_issue_GB_s": 3168.0,
+            "retained_output_MiB": 85.33333333333333,
+            "external_read_plus_write_MiB": 70.66666666666667,
+            "external_write_MiB": 18.66666666666667,
+            "device_L2_MiB": 128.0
+          },
+          "clean_first": {
+            "us": 25.019835466491084,
+            "active_aiv": 64,
+            "external_GB_s": 3168.0,
+            "mixed_issue_GB_s": 3168.0,
+            "retained_output_MiB": 104.0,
+            "external_read_plus_write_MiB": 52.0,
+            "external_write_MiB": 0.0,
+            "device_L2_MiB": 128.0
+          }
+        },
+        "Ascend950PR_957b": {
+          "uniform": {
+            "us": 61.979696623376626,
+            "active_aiv": 56,
+            "external_GB_s": 1400,
+            "mixed_issue_GB_s": 2772.0,
+            "retained_output_MiB": 74.66666666666666,
+            "external_read_plus_write_MiB": 81.33333333333334,
+            "external_write_MiB": 29.333333333333343,
+            "device_L2_MiB": 112.0
+          },
+          "pressure": {
+            "us": 48.139905646945635,
+            "active_aiv": 56,
+            "external_GB_s": 1400,
+            "mixed_issue_GB_s": 2772.0,
+            "retained_output_MiB": 93.14478114478115,
+            "external_read_plus_write_MiB": 62.85521885521885,
+            "external_write_MiB": 10.855218855218851,
+            "device_L2_MiB": 112.0
+          },
+          "clean_first": {
+            "us": 40.00953281385281,
+            "active_aiv": 56,
+            "external_GB_s": 1400,
+            "mixed_issue_GB_s": 2772.0,
+            "retained_output_MiB": 104.0,
+            "external_read_plus_write_MiB": 52.0,
+            "external_write_MiB": 0.0,
+            "device_L2_MiB": 112.0
+          }
+        },
+        "Ascend970DT": {
+          "uniform": {
+            "us": 14.07028259177081,
+            "active_aiv": 120,
+            "external_GB_s": 6480.0,
+            "mixed_issue_GB_s": 6480.0,
+            "retained_output_MiB": 104.0,
+            "external_read_plus_write_MiB": 52.0,
+            "external_write_MiB": 0.0,
+            "device_L2_MiB": 190.73486328125
+          },
+          "pressure": {
+            "us": 14.07028259177081,
+            "active_aiv": 120,
+            "external_GB_s": 6480.0,
+            "mixed_issue_GB_s": 6480.0,
+            "retained_output_MiB": 104.0,
+            "external_read_plus_write_MiB": 52.0,
+            "external_write_MiB": 0.0,
+            "device_L2_MiB": 190.73486328125
+          },
+          "clean_first": {
+            "us": 14.07028259177081,
+            "active_aiv": 120,
+            "external_GB_s": 6480.0,
+            "mixed_issue_GB_s": 6480.0,
+            "retained_output_MiB": 104.0,
+            "external_read_plus_write_MiB": 52.0,
+            "external_write_MiB": 0.0,
+            "device_L2_MiB": 190.73486328125
+          }
+        }
+      },
+      "wall_s": 5400,
+      "raw_mib": 16384,
+      "receipt": "cast_bf16_fp32-4096x7168-Ascend950DT_9582-traffic.json",
+      "receipt_sha256": "719939615df0fffdbcbd6d474cc065bf8ad323fe2c996da9d5a1f2e45e5ef941"
+    }
+  ],
+  "sha256": {
+    "development/validation/cache25/descriptors.py": "a9f048ab327740c4d96810662b7801ea0860eaba825b52778e86937b82e88de6",
+    "development/validation/cache25/flash_tail.py": "36a0235effa63d07697f48ef3d6747f79c8f8cddeed655a7ec31cf86286a8310",
+    "development/validation/cache25/campaign.py": "9c97a844c86dafb0d174856741d44cd70ba5a7551e0209a0d64cc9cbe96505b2",
+    "development/validation/cache25/shadow.py": "6f28d9577083e6361eafc0d47fd3fb83c2cf98b0f8262b75fb0f7975f0ce9161",
+    "build/smoke/large_cast20": "52e156f36007702a509189e1a83f0205adbe565fc5463429262c8cb40ea155f9",
+    "build/smoke/sigmoid20": "1f82b297b3ddf60fba0345ac8009b8e8445fe927f522cd347e19084592f7ea2a",
+    "operator_model/cast_resource.py": "bd254541550cbda10edd5af5575cab3bfdde443d819b3ba69e36a6827d41a24c",
+    "operator_model/sigmoid_resource.py": "103977a99a86870bf75b092570fee616358aa013ac3c2c34435bb04fe62c4517",
+    "operator_model/vector_memory.py": "c2d2badc3d1de4551544962f0018599ddcb5834469f878a9cfa623a46ed2ca96",
+    "operator_model/rms_resource.py": "a2dea4908805c5fb576087ea9db85d08f93849441800ffdd912fc4cfc4ac07b5",
+    "scripts/cann-run.sh": "d529513abc0bc340a56c91365a9e72d5e434d2cb4841be1692930294cd0624df",
+    "development/validation/sku19/collect.py": "f16296c2d5fb3ec14e5afd65a4f57ff99b9f2623cfaa599c49d5cf5ea3234266",
+    "development/validation/sku17/campaign_collect.py": "128913632124b4ff430595a34d239e53742f2cb4d1a16ea82a581180bfb3f792",
+    "development/validation/pro_prefill23/evidence.py": "cfaf82d19934f80e6d6eb1b512f88be8d6b5ccdc50ac13c0ba5e362b89bc8603",
+    "development/validation/large20/cast.cpp": "427361f6f618d0ae490802038686c46057c03f3df31b21489d1ec2ec3110d011",
+    "development/validation/sigmoid20/smoke.cpp": "67c64def68b106edd674ae150299b0d6113d4f7bc3b73553a88bd00a1086ca56",
+    "configs/chips/Ascend950DT_9582.json": "54d68c49374f8fab57ae16b05923d7ea2874cc48083e0728bcbc60f467bb71ec",
+    "configs/chips/Ascend950PR_957b.json": "2bb5b0b34b8d04e255e24ea5d12c73407ace6bb7154ba6aa603b338fc252ada7",
+    "configs/chips/Ascend970DT.json": "837796ec9f3b39888950cfe6f703b63c4bf9ced22a366b66f300f1389a8006f2"
+  },
+  "role": "Prospective cross-operator mechanism check, no model refit. Previous model and two frozen scenarios are scored equally; identical 156 MiB logical working set, 2:1 vs 1:1 writes/read.",
+  "qualification": "Actual target RAM backend + runtime SKU + expected ELF + shape + all outputs + every active core duration table and actual per-core END, continuous GM payload and earliest/latest instruction window. No replacement by wrapper or wall.",
+  "optional_traffic": "Mirror native controller summaries before profiler cleanup where available. Missing physical counters do not imply zero writes. Record coverage separately.",
+  "bounds": "4 serial jobs; each 90 min and 16 GiB wall/raw; existing Pro 256k, Flash full-hidden retry and Kimi native job have priority; 970DT prediction only.",
+  "original_freeze_sha256": "8af7575730c4f6ea2fcf6795dadfaff14d9c3312add155cbbe1b002f57b3af90",
+  "earlier_failure_sha256": "bf75acde38d78ea722e5debadafe5ea9219da51a8991899c67bed59e71702b3e",
+  "activation_utc": "2026-11-20T01:09:32.690006+00:00",
+  "scope": "Previously registered untouched job. Single slot and original per-case budgets, qualification and predictions. Prior failed receipt is immutable."
+}

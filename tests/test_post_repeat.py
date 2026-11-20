@@ -5,6 +5,30 @@ from operator_model import OperatorStream, estimate, load_chip
 
 
 class PostRepeatTest(unittest.TestCase):
+    def test_default_stream_prices_only_an_exact_token_repeat(self):
+        for sku in ('Ascend950DT_9582', 'Ascend950PR_957b', 'Ascend970DT'):
+            with self.subTest(sku=sku):
+                default = OperatorStream(sku)
+                opt_in = OperatorStream(sku, experimental_post_repeats=True)
+                legacy = OperatorStream(sku, experimental_post_repeats=False)
+                # The ordinary shape change uses the original estimate on every SKU.
+                first = [127, 4, 448]
+                second = [157, 4, 1088]
+                resident = 0
+                for shape in (first, second):
+                    result = default.advance('mhc_post', shape)
+                    self.assertEqual(result, legacy.advance('mhc_post', shape))
+                    self.assertEqual(result, opt_in.advance('mhc_post', shape))
+                    resident = max(resident, result.active_aiv)
+                repeated = default.advance('mhc_post', second)
+                self.assertEqual(repeated, opt_in.advance('mhc_post', second))
+                previous = legacy.advance('mhc_post', second)
+                self.assertEqual(repeated.projection['timing_diagnostics']['model'],
+                                 'post_token_immediate_repeat')
+                self.assertNotEqual(repeated.latency_us, previous.latency_us)
+                self.assertEqual(previous, estimate('mhc_post', second,
+                                 {'resident_aiv': resident}, chip=sku))
+
     def test_only_adjacent_success_is_eligible(self):
         chip = load_chip('Ascend950PR_957b')
         stream = OperatorStream(chip, experimental_post_repeats=True)
@@ -32,7 +56,7 @@ class PostRepeatTest(unittest.TestCase):
     def test_context_reset_different_shape_and_channel(self):
         shape = [57,4,192]
         stream = OperatorStream(experimental_post_repeats=True)
-        base = OperatorStream()
+        base = OperatorStream(experimental_post_repeats=False)
         for s in (base,stream):
             s.advance('mhc_post', shape)
         self.assertEqual(stream.preview('mhc_post',[56,4,192]),base.preview('mhc_post',[56,4,192]))

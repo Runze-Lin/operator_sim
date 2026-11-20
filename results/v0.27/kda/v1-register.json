@@ -1,0 +1,93 @@
+{
+  "utc": "2026-11-19T17:41:28.965589+00:00",
+  "api": "aclnnChunkKdaFwd",
+  "release": {
+    "name": "flash_linear_attention_npu_a5-26.9.1-py3-none-manylinux_2_34_aarch64.whl",
+    "size": 121538023,
+    "digest": "sha256:c660b90cee1d93c83292bb9b8509371da83493a633efd3e5113f70380d373521",
+    "browser_download_url": "https://github.com/flashserve/flash-linear-attention-npu/releases/download/v26.9.1-release/flash_linear_attention_npu_a5-26.9.1-py3-none-manylinux_2_34_aarch64.whl",
+    "id": 678963966
+  },
+  "published_kda_text": {
+    "ChunkKdaFwd_ab840dfc4cfa173688cbf30179316228.o": "eb642856ca5e19f07e079e1af1b68ed9b61174942e1d7a2097daa69113e67c0d",
+    "ChunkKdaFwd_5e864108d5688e456abb78f238c67b16.o": "5275721e11b3906d6f56a7fa5d04f535b64d9da894932abd84e082973652f200",
+    "ChunkKdaFwd_bdc078c5221f705217d250323b8feb82.o": "eb642856ca5e19f07e079e1af1b68ed9b61174942e1d7a2097daa69113e67c0d",
+    "ChunkKdaFwd_c4ae0e35839222ca5076179abc74a4f5.o": "b155d4c10ea06207c4f9277422ddc043216f881123d98ab9a5d12608471806e1",
+    "ChunkKdaFwd_3d0869ad99fc0117a05ebce5fc52f4ef.o": "5275721e11b3906d6f56a7fa5d04f535b64d9da894932abd84e082973652f200",
+    "ChunkKdaFwd_ec37fa71324acfcc6979b4d975461463.o": "e99b62c6adbe282379e1c0e5bc72cc3054a083def13b1cfbd63467ec49f3e1b0",
+    "ChunkKdaFwd_1abcbd578c0aecb0d613ba7f77626658.o": "e99b62c6adbe282379e1c0e5bc72cc3054a083def13b1cfbd63467ec49f3e1b0",
+    "ChunkKdaFwd_fc61fbaf568f8d0a23b644397f403111.o": "b155d4c10ea06207c4f9277422ddc043216f881123d98ab9a5d12608471806e1"
+  },
+  "builtin_text": {
+    "ChunkKdaFwd_e1f47b7ed74c47416550f45ace82d988.o": "bab4def46047afb93f7e4ef6554da85623b43074611d3ae7f9b466fda83d8329",
+    "ChunkKdaFwd_2abd624f2831d861ffa7ac1b0049c12a.o": "fa936b1653b1ad1682edea6cec5a7342bd1f359738df68ea4b8e893b262bedc2",
+    "ChunkKdaFwd_5fc9a4d54f054c7c0081057a92293b10.o": "247d431053dbef3f328c5f45ddc0d3109db10273451ccfec78f8842a13e74bee",
+    "ChunkKdaFwd_ec5c70105c2ca6873f26879e62efa878.o": "fa936b1653b1ad1682edea6cec5a7342bd1f359738df68ea4b8e893b262bedc2",
+    "ChunkKdaFwd_fa73d2b349dc97ef1ea5da4e484ceccf.o": "d6d3136972a6a6eff562a4933b08d434b937adb0b4fe61018f6ae79181fc9a81",
+    "ChunkKdaFwd_739e9f97dc2733c698e3a00e12fb80ab.o": "bab4def46047afb93f7e4ef6554da85623b43074611d3ae7f9b466fda83d8329",
+    "ChunkKdaFwd_6476ca0e1178d6f9989248428cab5a3c.o": "247d431053dbef3f328c5f45ddc0d3109db10273451ccfec78f8842a13e74bee",
+    "ChunkKdaFwd_c7537eac07b2e805494bc8b22c2da1a4.o": "d6d3136972a6a6eff562a4933b08d434b937adb0b4fe61018f6ae79181fc9a81"
+  },
+  "dtype": "BF16 Q/K/V/G, FP32 beta/initial VK",
+  "shape": [
+    1,
+    2,
+    1,
+    1,
+    128,
+    128
+  ],
+  "cu": [
+    0,
+    1,
+    2
+  ],
+  "chunk_indices": [
+    0,
+    0,
+    1,
+    0
+  ],
+  "work_items": 2,
+  "primary": "four physical V1 phases, BF16 varlen, packed independent nonzero opposite VK/V",
+  "control": "v0.24: one length-two sequence, same B=1 physical descriptor and heads",
+  "oracle": {
+    "attention": 256,
+    "aqk": 128,
+    "akk": 128,
+    "state_vk": 32768
+  },
+  "budget_seconds": 3600,
+  "budget_bytes": 8589934592,
+  "cpus": 8,
+  "skus": [
+    "Ascend950DT_9582",
+    "Ascend950PR_957b"
+  ],
+  "pr_condition": "Only after qualified DT",
+  "retention": "all four native V1 phase windows, all auxiliary windows and output arrays; no V2 family; reject any sync or nonfinite/numeric errors",
+  "hashes": {
+    "results/v0.27/kda/raw/packed-v1": "99059dffafbbdfd38c5acd0cfd1077d95744550549049d90fc09c81e6cc73839",
+    "development/validation/kda27/packed_v1.cpp": "6b03ca3b6b85918cf09c75d558412d77a25d0d3fc1a50ac918f72c92c0abff34",
+    "development/validation/kda27/packed_probe.py": "3ae4539ae7d7ecc1366329bd81884354c19938de1aac454779414667be81b6f5",
+    "development/validation/kda_v1_24/golden.py": "c4cf43728bc65b6ac6646d9dd7330494961cae00933f1f7d531f8c74b2c852d0",
+    "development/validation/kda_v1_24/investigate.py": "d715cb2586cedcc5e1b10c86475f44e7c5b1a81067abb610eb3a1cdf30995d0a",
+    "smoke/extension_kda.cpp": "e0859cda502617c6e76c2cfb0d6da57120a9a3d42f0e63bee192e7a5b3427138",
+    "development/validation/kda_v23/precise_host.hpp": "9aebd0d23d27da2f524a354bcdb6ea65c3990d524195c1a5611b2238520d2057",
+    "results/chunk-recovery/fla2691/raw/fla_npu/opp/vendors/fla_npu_transformer/op_api/lib/libcust_opapi.so": "f229fc7ce9bfe486aad870bf31d6f02bc5b4b9204f7d0f4382bf655d63060e75",
+    "results/chunk-recovery/fla2691/raw/stable_chunk_kda_fwd.cpp": "07d77366e2b2744f5770beb2a0f9d8b48bd8cde5720e3f98a4c69a04b7e434ea",
+    "results/chunk-recovery/fla2691/raw/aclnn_chunk_kda_fwd.cpp": "3e0a2f33c16967daf31fea5f1eee5cbda31142b32e895381c257a383e50a9382",
+    "results/v0.24/kda-v1/register.json": "ce564a7e697a023417d2b2676185718e7b7f05b56f4e77a144b723a9555a672f",
+    "results/v0.27/kda/raw/fixtures/k.bf16": "fac64c9577142d2f6d78355d3956399b4e1e6d887c25797807badf4663edde6e",
+    "results/v0.27/kda/raw/fixtures/dt_bias.f32": "4f6437edf37c21341205a48ee852a5c85b23e3e172581b591490dc560dc69419",
+    "results/v0.27/kda/raw/fixtures/v.bf16": "328229b9170f2651667534630602ba4dd1d93aa7e1e540356b8004552c13e3ad",
+    "results/v0.27/kda/raw/fixtures/q.bf16": "58e321bc298a343a8cd1371d76fbbfe5152be7e7bf13d99680d65ac3c77889f6",
+    "results/v0.27/kda/raw/fixtures/akk.bin": "5b4549e361b9023c8da57f0642be217c589ad9154e8817058f9fe4b845d7f50f",
+    "results/v0.27/kda/raw/fixtures/aqk.bin": "48289823d1850f819be77b888bebc47240ca3aee6a59d3b5b06c189bf7c45cb5",
+    "results/v0.27/kda/raw/fixtures/state_vk.bin": "03d36f3c6d1aa24a70ad5aef89a5213ce881f9748a98e77ec5706e44ed936a94",
+    "results/v0.27/kda/raw/fixtures/gate.bf16": "0ddbde046a91a674dcd0d7e39c521b1f5b4fc1f206c844817a019db506315a35",
+    "results/v0.27/kda/raw/fixtures/attention.bin": "2398a1c2c230089d4ff9a7a32838d66adaf3b3c0140717e108ca449fa5fda6f4",
+    "results/v0.27/kda/raw/fixtures/initial.f32": "5856d4b325f84873fc6cef3914e96b767647d5e4af22bd66d97905bd96741b64",
+    "results/v0.27/kda/raw/fixtures/beta.f32": "cbfc0d88fc4c077b7b000143b4806c1ca5657e1131cc64539cd4657f3dc6dc98"
+  }
+}

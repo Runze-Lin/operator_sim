@@ -1,0 +1,52 @@
+{
+  "utc": "2026-11-19T17:49:06.912900+00:00",
+  "cases": [
+    {
+      "id": "cast_bf16_fp32-pr",
+      "shape": [
+        851968,
+        32
+      ],
+      "op": "cast_bf16_fp32",
+      "sku": "Ascend950PR_957b",
+      "read_only_exceeds_nominal": true
+    },
+    {
+      "id": "cast_bf16_fp32-dt",
+      "shape": [
+        851968,
+        32
+      ],
+      "op": "cast_bf16_fp32",
+      "sku": "Ascend950DT_9582",
+      "read_only_exceeds_nominal": false
+    },
+    {
+      "id": "sigmoid_fp32-pr",
+      "shape": [
+        1703936,
+        12
+      ],
+      "op": "sigmoid_fp32",
+      "sku": "Ascend950PR_957b",
+      "read_only_exceeds_nominal": true
+    },
+    {
+      "id": "sigmoid_fp32-dt",
+      "shape": [
+        1703936,
+        12
+      ],
+      "op": "sigmoid_fp32",
+      "sku": "Ascend950DT_9582",
+      "read_only_exceeds_nominal": false
+    }
+  ],
+  "diagnostic": "Use conservative descriptor windows (floor(issue)-1, ceil(retire)+1 cycle); test if peak read-only interval rate exceeds target nominal GB/s by >1%. Prices, total-time forecasts, collection order and budgets remain those in the original contract.",
+  "source_sha256": {
+    "results/v0.25/cache/freeze.json": "8af7575730c4f6ea2fcf6795dadfaff14d9c3312add155cbbe1b002f57b3af90",
+    "development/validation/memory27/forward.py": "f4c8ddf2532833e2949789b252c23e9af4fd4fb9ad68436913e5357b67017975",
+    "development/validation/memory27/read_windows.py": "592543d56fabb7457302f1e17518bd990476372d3e039dd180da19b19778b705",
+    "development/validation/memory27/retention.py": "9fd220d64355343696f7f154b5ade95a70c0d3f15211eff8c5834b341c5aac31"
+  }
+}

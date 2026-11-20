@@ -8,21 +8,9 @@
 | 某个算子为什么需要这么久？不同 shape 如何改变结果？ | [建模方法：Vector、Cube、CV 三类流程，含逐算子公式与算例](docs/modeling-strategy.md) |
 | 哪些算子、shape 和库实现实测过？偏差多大？预测有多快？ | [CA 校验与误差：逐算子摘要、逐 shape 数据及查询墙钟](docs/error-analysis.md) |
 
-![950DT MatMulV3，每个输出块的两页 K，上栏模型，下栏 CA 末核](docs/examples/figures/matmul-tile-pages.png)
+单卡 B8 整批 prefill 的工作负载表按 32Ki、128Ki、256Ki 给出每个算子的输入、dtype、并行切分、两卡 CA 实测和 970DT 外推。矩阵投影、indexer 系数与全 hidden 激活各有自己的宽度。[DeepSeek V4.1 Flash](docs/workloads/deepseek-flash.md) · [DeepSeek V4 Pro](docs/workloads/deepseek-pro.md) · [Kimi K3](docs/workloads/kimi-k3.md)
 
-同一 BF16 Matmul [1280,2048,512]，32 个 AIC 分两波计算。沿第一行看，首条 MMAD 在模型中于 4.852 µs 发起，CA 记录为 5.215 µs。到最后一个块的第二页，两者只差 0.031 µs。整窗为 12.449 / 12.219 µs。换成 950PR 后会得到 24 个矩形尾块，模型和库都发出 416 条 MMAD，整窗为 14.027 / 13.218 µs。[Matmul 的计算与逐页偏差](docs/examples/matmul.md) · [同一输入的 DT 与 PR 对照图](docs/examples/figures/matmul-tile-pages-dt-pr.png)
-
-[按算子选流水对照图](docs/pipeline-comparisons.md#按算子打开图)。Vector 可以逐块查看 DynamicMXQuant 的量化值和 scale 两路写回、Cast 的缓冲区复用；CV 融合可以对比 FA 的首次 QK/PV 和长循环间隔，或 KDA 三个 kernel 各自的阶段误差。[Quant](docs/examples/quant.md) · [Cast](docs/examples/cast_bf16_fp32.md) · [FA](docs/examples/fa.md) · [KDA 的 64+64+1 三块状态流水](results/v0.23/kda-multiblock/950pr-t129-h3-fwdh.png) · [DeepSeek HcPost 的五个通道块](docs/examples/hc_post_vllm.md)
-
-整批 prefill 的每个 rank 可以从模型规格直接查到各算子的输入、输出、dtype 和层号。按每卡 8 条、每条 32k／128k／256k 导出，模型和 CA 都齐备的单元格可以点开看该 shape 的流水。14 张图复用已完成的正式库采集。[DeepSeek V4.1 Flash](docs/workloads/deepseek-flash.md) · [DeepSeek V4 Pro](docs/workloads/deepseek-pro.md) · [Kimi K3](docs/workloads/kimi-k3.md) · [整批 prefill 的模型与 CA 图集](results/v0.23/prefill/README.md)
-
-新增的 **DeepSeek V4 Pro 单卡 B8×128k** 实测覆盖 950DT 上 50 轮 UB 分块。该层对 64 个 indexer 系数升精度，模型给 99.918 µs，CA 为 105.374 µs。对照图能看到差值从哪一轮开始积累。[大 shape 上下对照图](results/v0.23/pro-prefill/pro-b8-128ki-dt-plot.png) · [首块到尾块的计算过程](docs/examples/cast_bf16_fp32.md#pro-整批-128k-的-50-个-ub-块)
-
-Pro 的同一批 8×128k 在 950PR 也已取得完整 CA。模型 232.748 µs，实测 224.719 µs。末核第 29 块的读发起比模型早 25.689 µs；这段错位在整窗误差里看不出来。[放大中间三块](results/v0.25/pro-128ki-pr-middle.png) · [逐核归档和 256k 状态](results/v0.23/pro-prefill/README.md)
-
-**逐块读图。** 在 FA 图中选一个 KV 页，可以上下对照 QK 和 PV 的发起与完成。在 RMSNorm 图中选一个相同的 UB 块，可以看到前序调度怎样改变它的首读和末写。两栏共享微秒刻度，指令数据附在各自算例下。[FA 八个 KV 页](docs/examples/fa.md) · [RMSNorm 首发、连续与跨 Cube 复用](docs/examples/rmsnorm.md) · [Matmul 两波两页](docs/examples/matmul.md)
-
-**首读、响应与持续带宽。** 大 prefill 可以看同一条 MTE2 是何时发起、何时退休。950PR Flash 8×256Ki 和 Pro 8×128Ki 各有 67,108,864 个系数，前两笔读在两个空槽上只隔 91 周期。公开 Cast 诊断现返回这两个发起时刻；同一组图保留每一块的资源服务预算及真实末核的描述符。[Flash 与 Pro 的同刻度对比](results/v0.26/memory/README.md) · [融合 PreSinkhorn](results/v0.26/presink/pr-t80.png) · [KDA 的四个状态更新](results/v0.26/kda/pr-four-chunks.png) · [全部算子的误差与样本资格](docs/error-analysis.md)
+逐算子算例从一次调用的输入算到设备耗时。Matmul 算例将两波输出块的各页 K 逐行对齐，可以同时看预测和 CA 的首条 MMAD、重叠和末次写回。[Matmul](docs/examples/matmul.md) · [DynamicMXQuant](docs/examples/quant.md) · [FA](docs/examples/fa.md) · [大 prefill Cast](docs/examples/cast_bf16_fp32.md) · [其余算例](docs/pipeline-comparisons.md)
 
 ## 试一次预测
 
@@ -47,7 +35,7 @@ print(result.latency_us, result.work["cube_ops"], result.work["logical_read_byte
 
 维护 960、970、980 等架构情景时，每个目标使用一份 JSON，分别填写按位宽区分的两类算力、核数、频率、外存容量和带宽。内置 `Ascend970DT` 情景为 120 Cube / 120 Vector、1.8 GHz、288 GB、14.4 TB/s；其中 16 位 Vector 峰值 110.592 TOP/s 已含双发射。这些是架构假设。调用方通过 `extrapolated` 状态识别外推，并决定是否将其交给事件调度器。[970DT 配置及逐项来源](configs/chips/Ascend970DT.json) · [自定义芯片示例](configs/chips/scenario-example.json) · [字段、单位和返回合同](docs/integration.md)
 
-隔离安装的 v0.25 wheel 在三种芯片配置上核对 1,661 个常规输入，单次查询 P95 为 0.506 ms、最大 5.329 ms。跨纯 Cube 的 90 次有序派发最大 0.558 ms，部分历史的 39 次调用最大 9.958 ms。设备延迟按 µs 返回。[安装版开销](results/v0.25/wheel-check.json) · [逐算子误差](docs/error-analysis.md)
+隔离安装的 v0.27 wheel 在三种芯片配置核对 1,818 个不同输入。单次查询 P95 为 0.583 ms、最大 5.359 ms。另测 57 次 Kimi 路由选择，最大 2.036 ms。有序 Post 单独计时，72 次查询最大 25.16 ms。设备时延以 µs 返回。[安装版开销](results/v0.27/wheel-check.json) · [有序 Post](results/v0.27/post/published.json) · [逐算子误差](docs/error-analysis.md)
 
 ## 可预测的算子
 
@@ -59,7 +47,7 @@ print(result.latency_us, result.work["cube_ops"], result.work["logical_read_byte
 
 三个模型的 B8 整批与 chunked prefill 输入可直接查每个 rank 的张量形状、dtype、层号和适用的独立 kernel。覆盖每请求 32k、128k、256k，以及 attention TP8 或 DP8、MoE EP8 两种拓扑。[逐模型真实维度与导出器](docs/prefill-shapes.md) · [场景索引](results/v0.20/workloads/index.csv) · [工作负载覆盖](docs/workload-coverage.md)
 
-Kimi 的 FLA 26.9.1 三段 KDA V2 可显式预测阶段耗时、工作量和分核，已在 DT、PR 用新 shape 实测。默认小形使用的融合 V1，完整耗时仍为 `None`。DeepSeek 扩展 `aclnnHcPost` 可显式预测分核、分块与设备耗时；存在数值失败的短尾片仅返回工作量。组合路线与组成它的单个 kernel 在同一调用中只计一次。[KDA 冻结模型与 CA 同轴图](docs/examples/kda_chunk.md) · [DeepSeek HcPost](docs/examples/hc_post_vllm.md) 各路线的 dtype、布局和分支限制见[建模方法](docs/modeling-strategy.md)。模型配置、本地 batch、TP/EP 切分和实际路由共同决定输入 shape，见[如何推导每卡 shape](docs/model-configs.md)。
+Kimi 的 `plan_kimi_kda_prefill` 根据每条请求本次提交的 token 数和 attention TP 选择 V1/V2。FLA 26.9.1 三段 KDA V2 可显式预测阶段耗时、工作量和分核，已在 DT、PR 用新 shape 实测。默认小形使用的融合 V1，完整耗时仍为 `None`。DeepSeek 扩展 `aclnnHcPost` 可显式预测分核、分块与设备耗时；存在数值失败的短尾片仅返回工作量。组合路线与组成它的单个 kernel 在同一调用中只计一次。[KDA 冻结模型与 CA 同轴图](docs/examples/kda_chunk.md) · [DeepSeek HcPost](docs/examples/hc_post_vllm.md) 各路线的 dtype、布局和分支限制见[建模方法](docs/modeling-strategy.md)。模型配置、本地 batch、TP/EP 切分和实际路由共同决定输入 shape，见[如何推导每卡 shape](docs/model-configs.md)。
 
 ## 硬件与计时边界
 

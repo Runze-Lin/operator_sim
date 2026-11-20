@@ -1,0 +1,78 @@
+{
+  "case": "fused-t127-dt",
+  "shape": [
+    127,
+    4,
+    4096
+  ],
+  "sku": "Ascend950DT_9582",
+  "source_receipt": "receipts/fused-t127-dt.json",
+  "registration_sha256": "a3b764910fecc2474936adff2505c148ef1d8345cc3c77806b0fca69c9c1ca69",
+  "raw_sha256": "d7e8ec74c74c65b3aa74141ce72665b69f0469ba72152e32b2e25bcd503b5342",
+  "cost": {
+    "started_utc": "2026-11-19T20:09:44.229738+00:00",
+    "finished_utc": "2026-11-19T20:14:50.646521+00:00",
+    "seconds": 306.4166737999767,
+    "raw_bytes": 2027710732,
+    "peak_bytes": 3496092279,
+    "cpu_seconds": 9061.23,
+    "exit_code": 0,
+    "stop_reason": null,
+    "command": [
+      "bash",
+      "/home/l00925865/operator_sim/scripts/cann-run.sh",
+      "msopprof",
+      "simulator",
+      "--soc-version=Ascend950DT_9582",
+      "--dump=false",
+      "--launch-count=1",
+      "--timeout=45",
+      "--output=/home/l00925865/operator_sim/results/v0.27/fusion/raw/fused-t127-dt/profile",
+      "/home/l00925865/operator_sim/build/smoke/extension_indexer_mhc",
+      "mhc_pre_sinkhorn",
+      "127",
+      "4",
+      "4096"
+    ]
+  },
+  "device_elf_sha256": "280a1947dc8e2070b7563e06eed75c04683f7d684e1e618da650051ff5eda9b2",
+  "kernel": "MhcPreSinkhorn_bd8e37c67f2294e1437f03bb2bace96c_1000_mix_aic",
+  "trace": "results/v0.27/fusion/raw/fused-t127-dt/profile/OPPROF_20261120040944_XYTJXGFUNXGLNEBU/simulator/trace.json",
+  "golden": [
+    "correctness name=hin count=520192 bad=0 max_abs_error=0.00275226 atol=0.015625 rtol=0.015625 hard_limit=1",
+    "correctness name=hpost count=508 bad=0 max_abs_error=1.72379e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01",
+    "correctness name=hres count=2032 bad=0 max_abs_error=1.79467e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+  ],
+  "observed_us": 15.007878782693297,
+  "active_aic": 32,
+  "active_aiv": 64,
+  "offset_spread_frozen_cycles": 3.0013505881652236,
+  "offset_spread_all_raw_cycles": 0.003002166748046875,
+  "descriptors_beyond_original_epilogue": {
+    "core15.veccore1": {
+      "window_us": [
+        0.22303056716918945,
+        15.007878782693297
+      ],
+      "end_markers": {
+        "END": {
+          "tick": 32400,
+          "retire": 32400,
+          "pc": "0x9000d15740"
+        }
+      },
+      "latest": [
+        {
+          "name": "MOV_XD_IMM",
+          "pc": "0x9000d15738",
+          "issue": 32399,
+          "end": 32403
+        }
+      ],
+      "additional_cycles": 3,
+      "shard": "results/v0.27/fusion/raw/fused-t127-dt/profile/OPPROF_20261120040944_XYTJXGFUNXGLNEBU/simulator/core15.veccore1/trace.json",
+      "sha256": "a634ad7d504d26d2db458c45fb421cb6f010e05fa44e1676bd18cc1febc2564f"
+    }
+  },
+  "role": "Read-only diagnostic. The original independent physical-retirement failure is preserved."
+}

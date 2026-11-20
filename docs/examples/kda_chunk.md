@@ -1,5 +1,9 @@
 # Chunk KDA 算例
 
+对于 Kimi 的真实 B8×32Ki 调用，TP8 后每 rank 有 12 个 128 维头。单次交满产生 49,152 个工作项，FLA 26.9.1 选择三主核 V2；若每条只提交 2,048 token 则走融合 V1。三主核和完整 dispatch 分开返回。[逐步选路、shape 和三芯片预测](../../results/v0.27/kda/report.md)
+
+在 Kimi-K3 的一个 attention TP8 rank，若本次真调度了 8 条各 32Ki 的 prefill，`plan_kimi_kda_prefill([32768]*8, attention_tp=8)` 得到 12 个本地头、4,096 个 64-token 块和 49,152 个工作项，选择 FLA 26.9.1 V2。三个串行主核在 950DT、950PR、970DT 的场景预测分别约为 **33.161、39.396、16.450 ms**。这是该大形状的外推。Q/K 的两次归一化、状态 gather/scatter 和 launch 间隔仍单列，整次调用耗时留空。[系统适配器输入、各序列边界与内存成本](../../results/v0.27/kda/report.md) · [小形状真实三块递推图](../../results/v0.23/kda-multiblock/950pr-t129-h3-fwdh.png)
+
 ## 四个块怎样沿同一个状态递推
 
 ![950PR T193/H2，64+64+64+1 行在模型和实际末工作组逐一对应](../../results/v0.26/kda/pr-four-chunks.png)

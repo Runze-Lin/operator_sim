@@ -1,0 +1,2422 @@
+{
+  "chip": "Ascend950PR_957b",
+  "group": "partition",
+  "freeze_sha256": "f7ae623d263f4a2082e1322efde80fd8b8b37e92191ccc6d34f13ddbf53b754c",
+  "cost": {
+    "started_utc": "2026-11-20T01:21:26.143931+00:00",
+    "finished_utc": "2026-11-20T01:23:24.274825+00:00",
+    "seconds": 118.1309115299955,
+    "exit_code": 0,
+    "peak_bytes": 325811547,
+    "raw_bytes": 325785027,
+    "stop_reason": null,
+    "command": [
+      "bash",
+      "/home/l00925865/operator_sim/scripts/cann-run.sh",
+      "msopprof",
+      "simulator",
+      "--soc-version=Ascend950PR_957b",
+      "--dump=false",
+      "--launch-count=8",
+      "--timeout=60",
+      "--output=/home/l00925865/operator_sim/runs/rms27/partition-Ascend950PR_957b/profile",
+      "/home/l00925865/operator_sim/build/vector-v8/NORM",
+      "/home/l00925865/operator_sim/runs/rms27/partition-Ascend950PR_957b/inputs.txt"
+    ]
+  },
+  "rows": [
+    {
+      "chip": "Ascend950PR_957b",
+      "group": "partition",
+      "i": 0,
+      "shape": [
+        1,
+        736
+      ],
+      "prior_aiv": 0,
+      "role": "entry",
+      "known_us": 2.9771935016700506,
+      "cold_hot_us": 2.1003746295778125,
+      "runtime_ms": 0.20251,
+      "us": 1.9585563651001727,
+      "lower_us": 1.4592713782782272,
+      "upper_us": 2.9771935016700506,
+      "old_us": 2.233225115638463,
+      "conditional": {
+        "first_us": 2.9771935016700506,
+        "one_aiv_prefix_us": 2.9771935016700506,
+        "fully_covered_us": 1.6225224757509806
+      },
+      "covered_us": 1.4592713782782272,
+      "active_aiv": 1,
+      "detail": {
+        "route": "single-UB",
+        "gamma_issue_cycles": 1583.6029411764707,
+        "issue_spread_cycles": 0.0,
+        "final_y_cycles": 2398.797774159075,
+        "final_rstd_cycles": 2277.6993195200685,
+        "lower_bound_cycles": 1587.072655462185
+      },
+      "timing_qualified": true,
+      "correctness": [
+        "correctness count=736 bad=0 max_abs_error=0.00178441 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness count=1 bad=0 max_abs_error=1.3565e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ],
+      "host_task": {
+        "begin_tick": 2414,
+        "done_tick": 7636,
+        "full_task_id": 0,
+        "raw_stream_id": 0
+      },
+      "stage": {
+        "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+        "ca_us": 3.232727272727273,
+        "active_aiv": 1,
+        "active_aic": 0,
+        "windows": {
+          "core0.veccore0": [
+            0.0,
+            3.232727272727273
+          ]
+        },
+        "trace": "runs/rms27/partition-Ascend950PR_957b/profile/OPPROF_20261120092126_XLFMBWFHHFXGNARB/RmsNorm_normal_all_bf16_high_performance_5000/0/simulator/trace.json",
+        "trace_sha256": "05ff81729eb874f6b8a8456cdaac737704c073af55e5e78067d523d9058ff855",
+        "binary_sha256": "0926fe478e5f718ef49241c08ef00b665797690f0f7f22c67fdc25044e0cb54d",
+        "first_tick": 7115,
+        "last_tick": 12449,
+        "physical_last_tick": 12446,
+        "physical_ca_us": 3.230909090909091,
+        "cores": {
+          "core0.veccore0": {
+            "first_tick": 7115,
+            "last_tick": 12449,
+            "physical_last_tick": 12446,
+            "physical_end_tick": 12442,
+            "official_duration_us": "3.23",
+            "official_running_us": "3.23",
+            "instruction_events_without_sync": 1528,
+            "signature128": "558aceb376fddc061b8b44e791a16df4",
+            "rows_written": 1,
+            "shard_sha256": "efe4736c53a24f2051e1edd52c6fd91057ef36e276279d5e7112d4b6ae78d775"
+          }
+        },
+        "ordinal": 0
+      },
+      "active_count_matches": true
+    },
+    {
+      "chip": "Ascend950PR_957b",
+      "group": "partition",
+      "i": 1,
+      "shape": [
+        1,
+        736
+      ],
+      "prior_aiv": 1,
+      "role": "repeat",
+      "known_us": 1.6225224757509806,
+      "cold_hot_us": 2.1003746295778125,
+      "runtime_ms": 0.16735,
+      "us": 1.9585563651001727,
+      "lower_us": 1.4592713782782272,
+      "upper_us": 2.9771935016700506,
+      "old_us": 2.233225115638463,
+      "conditional": {
+        "first_us": 2.9771935016700506,
+        "one_aiv_prefix_us": 2.9771935016700506,
+        "fully_covered_us": 1.6225224757509806
+      },
+      "covered_us": 1.4592713782782272,
+      "active_aiv": 1,
+      "detail": {
+        "route": "single-UB",
+        "gamma_issue_cycles": 1583.6029411764707,
+        "issue_spread_cycles": 0.0,
+        "final_y_cycles": 2398.797774159075,
+        "final_rstd_cycles": 2277.6993195200685,
+        "lower_bound_cycles": 1587.072655462185
+      },
+      "timing_qualified": true,
+      "correctness": [
+        "correctness count=736 bad=0 max_abs_error=0.00178441 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness count=1 bad=0 max_abs_error=1.3565e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ],
+      "host_task": {
+        "begin_tick": 8037,
+        "done_tick": 9649,
+        "full_task_id": 1,
+        "raw_stream_id": 1
+      },
+      "stage": {
+        "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+        "ca_us": 1.4654545454545456,
+        "active_aiv": 1,
+        "active_aic": 0,
+        "windows": {
+          "core0.veccore0": [
+            0.0,
+            1.4654545454545456
+          ]
+        },
+        "trace": "runs/rms27/partition-Ascend950PR_957b/profile/OPPROF_20261120092126_XLFMBWFHHFXGNARB/RmsNorm_normal_all_bf16_high_performance_5000/1/simulator/trace.json",
+        "trace_sha256": "04be37b870693a379c1d4e8a576cf2629f5cb74ed1fd47115b0872c02f847bc0",
+        "binary_sha256": "0926fe478e5f718ef49241c08ef00b665797690f0f7f22c67fdc25044e0cb54d",
+        "first_tick": 13351,
+        "last_tick": 15769,
+        "physical_last_tick": 15766,
+        "physical_ca_us": 1.4636363636363636,
+        "cores": {
+          "core0.veccore0": {
+            "first_tick": 13351,
+            "last_tick": 15769,
+            "physical_last_tick": 15766,
+            "physical_end_tick": 15762,
+            "official_duration_us": "1.47",
+            "official_running_us": "1.46",
+            "instruction_events_without_sync": 1528,
+            "signature128": "63662caed02d8730b91bf655f6564e5d",
+            "rows_written": 1,
+            "shard_sha256": "5819e4577fcf16eaf18b9deb8fd4e5ca781eb1444251e61ba11c9035ffdfd164"
+          }
+        },
+        "ordinal": 1
+      },
+      "active_count_matches": true
+    },
+    {
+      "chip": "Ascend950PR_957b",
+      "group": "partition",
+      "i": 2,
+      "shape": [
+        4,
+        688
+      ],
+      "prior_aiv": 1,
+      "role": "entry",
+      "known_us": 4.173607986677554,
+      "cold_hot_us": 2.22293503611688,
+      "runtime_ms": 0.29651,
+      "us": 2.38673000792633,
+      "lower_us": 1.6712186692327409,
+      "upper_us": 4.173607986677554,
+      "old_us": 2.39519567503197,
+      "conditional": {
+        "first_us": 3.0860737274419683,
+        "one_aiv_prefix_us": 4.173607986677554,
+        "fully_covered_us": 1.7370910159632034
+      },
+      "covered_us": 1.6712186692327409,
+      "active_aiv": 4,
+      "detail": {
+        "route": "single-UB",
+        "gamma_issue_cycles": 1596.8970588235295,
+        "issue_spread_cycles": 33.22641509433963,
+        "final_y_cycles": 2423.1562891286953,
+        "final_rstd_cycles": 2748.5108042340225,
+        "lower_bound_cycles": 1605.005630252101
+      },
+      "timing_qualified": true,
+      "correctness": [
+        "correctness count=2752 bad=0 max_abs_error=0.00160956 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness count=4 bad=0 max_abs_error=1.35247e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ],
+      "host_task": {
+        "begin_tick": 10157,
+        "done_tick": 14876,
+        "full_task_id": 2,
+        "raw_stream_id": 2
+      },
+      "stage": {
+        "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+        "ca_us": 4.556969696969697,
+        "active_aiv": 4,
+        "active_aic": 0,
+        "windows": {
+          "core0.veccore0": [
+            0.0,
+            1.8593939393939394
+          ],
+          "core0.veccore1": [
+            0.10545454545454545,
+            2.456969696969697
+          ],
+          "core16.veccore0": [
+            1.470909090909091,
+            4.556969696969697
+          ],
+          "core16.veccore1": [
+            1.5115151515151515,
+            4.424242424242424
+          ]
+        },
+        "trace": "runs/rms27/partition-Ascend950PR_957b/profile/OPPROF_20261120092126_XLFMBWFHHFXGNARB/RmsNorm_normal_all_bf16_high_performance_5000/2/simulator/trace.json",
+        "trace_sha256": "07d26d0584fc9cd488348311c50b3ef43f8993f8b365d1a9430af37c1395e93e",
+        "binary_sha256": "0926fe478e5f718ef49241c08ef00b665797690f0f7f22c67fdc25044e0cb54d",
+        "first_tick": 16849,
+        "last_tick": 24368,
+        "physical_last_tick": 24365,
+        "physical_ca_us": 4.555151515151515,
+        "cores": {
+          "core0.veccore0": {
+            "first_tick": 16849,
+            "last_tick": 19917,
+            "physical_last_tick": 19914,
+            "physical_end_tick": 19910,
+            "official_duration_us": "1.86",
+            "official_running_us": "1.85",
+            "instruction_events_without_sync": 1500,
+            "signature128": "03b88f02c84c781b446e20b9bf75dd55",
+            "rows_written": 1,
+            "shard_sha256": "58f952c20d2fdf989a1235efc46e71353ee636be010dc532924f1bd4f392fb9e"
+          },
+          "core0.veccore1": {
+            "first_tick": 17023,
+            "last_tick": 20903,
+            "physical_last_tick": 20900,
+            "physical_end_tick": 20896,
+            "official_duration_us": "2.35",
+            "official_running_us": "2.35",
+            "instruction_events_without_sync": 1500,
+            "signature128": "1c3ad099145cd00971a9a0d2f905f809",
+            "rows_written": 1,
+            "shard_sha256": "ccff41bc3dd3c1c14f2a373f98c2fe3233d2fd1bea9906cca37853d3f69f60c3"
+          },
+          "core16.veccore0": {
+            "first_tick": 19276,
+            "last_tick": 24368,
+            "physical_last_tick": 24365,
+            "physical_end_tick": 24361,
+            "official_duration_us": "3.09",
+            "official_running_us": "3.08",
+            "instruction_events_without_sync": 1500,
+            "signature128": "f9b5624f3f26dfe027643ce12c2a3d85",
+            "rows_written": 1,
+            "shard_sha256": "bd2de3754b06d9e99f8db58622480aac1c5d087508029da4efc5dd7434d35f3a"
+          },
+          "core16.veccore1": {
+            "first_tick": 19343,
+            "last_tick": 24149,
+            "physical_last_tick": 24146,
+            "physical_end_tick": 24142,
+            "official_duration_us": "2.91",
+            "official_running_us": "2.91",
+            "instruction_events_without_sync": 1500,
+            "signature128": "b052bb4da995ef182c0873297f291c61",
+            "rows_written": 1,
+            "shard_sha256": "4136e86305339d76467727fa787e77445ff791dcad3417076a96b847abcd277a"
+          }
+        },
+        "ordinal": 2
+      },
+      "active_count_matches": true
+    },
+    {
+      "chip": "Ascend950PR_957b",
+      "group": "partition",
+      "i": 3,
+      "shape": [
+        4,
+        688
+      ],
+      "prior_aiv": 4,
+      "role": "repeat",
+      "known_us": 1.7370910159632034,
+      "cold_hot_us": 2.22293503611688,
+      "runtime_ms": 0.29039,
+      "us": 2.38673000792633,
+      "lower_us": 1.6712186692327409,
+      "upper_us": 4.173607986677554,
+      "old_us": 2.39519567503197,
+      "conditional": {
+        "first_us": 3.0860737274419683,
+        "one_aiv_prefix_us": 4.173607986677554,
+        "fully_covered_us": 1.7370910159632034
+      },
+      "covered_us": 1.6712186692327409,
+      "active_aiv": 4,
+      "detail": {
+        "route": "single-UB",
+        "gamma_issue_cycles": 1596.8970588235295,
+        "issue_spread_cycles": 33.22641509433963,
+        "final_y_cycles": 2423.1562891286953,
+        "final_rstd_cycles": 2748.5108042340225,
+        "lower_bound_cycles": 1605.005630252101
+      },
+      "timing_qualified": true,
+      "correctness": [
+        "correctness count=2752 bad=0 max_abs_error=0.00160956 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness count=4 bad=0 max_abs_error=1.35247e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ],
+      "host_task": {
+        "begin_tick": 15300,
+        "done_tick": 17161,
+        "full_task_id": 3,
+        "raw_stream_id": 3
+      },
+      "stage": {
+        "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+        "ca_us": 1.7424242424242424,
+        "active_aiv": 4,
+        "active_aic": 0,
+        "windows": {
+          "core0.veccore0": [
+            0.0,
+            1.653939393939394
+          ],
+          "core0.veccore1": [
+            0.0,
+            1.7424242424242424
+          ],
+          "core16.veccore0": [
+            0.04909090909090909,
+            1.5224242424242425
+          ],
+          "core16.veccore1": [
+            0.04909090909090909,
+            1.4527272727272726
+          ]
+        },
+        "trace": "runs/rms27/partition-Ascend950PR_957b/profile/OPPROF_20261120092126_XLFMBWFHHFXGNARB/RmsNorm_normal_all_bf16_high_performance_5000/3/simulator/trace.json",
+        "trace_sha256": "1d7ecc8bb929b2138ff3afeb765d31159908abaadc80ff042fbb4fb765aeb882",
+        "binary_sha256": "0926fe478e5f718ef49241c08ef00b665797690f0f7f22c67fdc25044e0cb54d",
+        "first_tick": 25335,
+        "last_tick": 28210,
+        "physical_last_tick": 28207,
+        "physical_ca_us": 1.7406060606060607,
+        "cores": {
+          "core0.veccore0": {
+            "first_tick": 25335,
+            "last_tick": 28064,
+            "physical_last_tick": 28061,
+            "physical_end_tick": 28057,
+            "official_duration_us": "1.65",
+            "official_running_us": "1.65",
+            "instruction_events_without_sync": 1500,
+            "signature128": "6f4bbb09c47ca15ad48ce73d0878360a",
+            "rows_written": 1,
+            "shard_sha256": "db06e15dc1fae5db17d770d1e4a337201ce0f4c12598a66b14fa03db1ed60d20"
+          },
+          "core0.veccore1": {
+            "first_tick": 25335,
+            "last_tick": 28210,
+            "physical_last_tick": 28207,
+            "physical_end_tick": 28203,
+            "official_duration_us": "1.74",
+            "official_running_us": "1.74",
+            "instruction_events_without_sync": 1500,
+            "signature128": "72f5930e94fd1a0773853de4d13f310b",
+            "rows_written": 1,
+            "shard_sha256": "1aaea5350f0691cf438147067762c9365377ea9913065ea4f0e65112397d5810"
+          },
+          "core16.veccore0": {
+            "first_tick": 25416,
+            "last_tick": 27847,
+            "physical_last_tick": 27844,
+            "physical_end_tick": 27840,
+            "official_duration_us": "1.47",
+            "official_running_us": "1.47",
+            "instruction_events_without_sync": 1500,
+            "signature128": "7800d26e956ec7e1f2965e3d362c1c4e",
+            "rows_written": 1,
+            "shard_sha256": "3256c89068323415d8116d712c90ed2f8b329ac439f8395e5cfa483b1aa75d0c"
+          },
+          "core16.veccore1": {
+            "first_tick": 25416,
+            "last_tick": 27732,
+            "physical_last_tick": 27729,
+            "physical_end_tick": 27725,
+            "official_duration_us": "1.4",
+            "official_running_us": "1.4",
+            "instruction_events_without_sync": 1500,
+            "signature128": "a341dcc9d91ae67d9f672260d4121722",
+            "rows_written": 1,
+            "shard_sha256": "740b23a9e4bc25eea534b71b6e7faaa0aad0dfdc84656470fd1103e5f27ffa72"
+          }
+        },
+        "ordinal": 3
+      },
+      "active_count_matches": true
+    },
+    {
+      "chip": "Ascend950PR_957b",
+      "group": "partition",
+      "i": 4,
+      "shape": [
+        19,
+        2416
+      ],
+      "prior_aiv": 4,
+      "role": "entry",
+      "known_us": 4.1722872443181815,
+      "cold_hot_us": 3.849544839465808,
+      "runtime_ms": 0.45411,
+      "us": 3.8069715534327506,
+      "lower_us": 3.150745193562109,
+      "upper_us": 4.808461320075758,
+      "old_us": 4.189969485749974,
+      "conditional": {
+        "first_us": 4.64076198973479,
+        "one_aiv_prefix_us": 4.808461320075758,
+        "fully_covered_us": 3.28882363284632
+      },
+      "covered_us": 3.150745193562109,
+      "active_aiv": 19,
+      "detail": {
+        "route": "single-UB",
+        "gamma_issue_cycles": 1663.3676470588236,
+        "issue_spread_cycles": 199.35849056603774,
+        "final_y_cycles": 2771.109629765102,
+        "final_rstd_cycles": 5189.72956937748,
+        "lower_bound_cycles": 1777.2647899159665
+      },
+      "timing_qualified": true,
+      "correctness": [
+        "correctness count=45904 bad=0 max_abs_error=0.00176277 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness count=19 bad=0 max_abs_error=1.27194e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ],
+      "host_task": {
+        "begin_tick": 17707,
+        "done_tick": 22378,
+        "full_task_id": 4,
+        "raw_stream_id": 4
+      },
+      "stage": {
+        "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+        "ca_us": 4.551515151515152,
+        "active_aiv": 19,
+        "active_aic": 0,
+        "windows": {
+          "core0.veccore0": [
+            0.0,
+            1.9327272727272726
+          ],
+          "core0.veccore1": [
+            0.0,
+            1.8951515151515153
+          ],
+          "core1.veccore0": [
+            0.5157575757575757,
+            3.533939393939394
+          ],
+          "core1.veccore1": [
+            0.49757575757575756,
+            3.159393939393939
+          ],
+          "core16.veccore0": [
+            0.048484848484848485,
+            2.0727272727272728
+          ],
+          "core16.veccore1": [
+            0.048484848484848485,
+            1.9781818181818183
+          ],
+          "core17.veccore0": [
+            0.6709090909090909,
+            4.473939393939394
+          ],
+          "core17.veccore1": [
+            0.6678787878787878,
+            4.391515151515152
+          ],
+          "core18.veccore0": [
+            0.6606060606060606,
+            4.233939393939394
+          ],
+          "core18.veccore1": [
+            0.713939393939394,
+            3.3175757575757574
+          ],
+          "core19.veccore0": [
+            0.636969696969697,
+            4.551515151515152
+          ],
+          "core19.veccore1": [
+            0.6672727272727272,
+            4.315151515151515
+          ],
+          "core2.veccore0": [
+            0.4987878787878788,
+            3.743030303030303
+          ],
+          "core2.veccore1": [
+            0.5103030303030303,
+            3.840606060606061
+          ],
+          "core20.veccore0": [
+            0.6521212121212121,
+            3.4042424242424243
+          ],
+          "core3.veccore0": [
+            0.5703030303030303,
+            3.639393939393939
+          ],
+          "core3.veccore1": [
+            0.5563636363636364,
+            3.2703030303030305
+          ],
+          "core4.veccore0": [
+            0.5503030303030303,
+            4.053939393939394
+          ],
+          "core4.veccore1": [
+            0.5618181818181818,
+            3.9442424242424243
+          ]
+        },
+        "trace": "runs/rms27/partition-Ascend950PR_957b/profile/OPPROF_20261120092126_XLFMBWFHHFXGNARB/RmsNorm_normal_all_bf16_high_performance_5000/4/simulator/trace.json",
+        "trace_sha256": "53594dbdd7de4f6d7571c69aceb7bf90785f4fd028048832a33a0066d433be87",
+        "binary_sha256": "0926fe478e5f718ef49241c08ef00b665797690f0f7f22c67fdc25044e0cb54d",
+        "first_tick": 29307,
+        "last_tick": 36817,
+        "physical_last_tick": 36814,
+        "physical_ca_us": 4.54969696969697,
+        "cores": {
+          "core0.veccore0": {
+            "first_tick": 29307,
+            "last_tick": 32496,
+            "physical_last_tick": 32493,
+            "physical_end_tick": 32489,
+            "official_duration_us": "1.93",
+            "official_running_us": "1.93",
+            "instruction_events_without_sync": 2256,
+            "signature128": "3eecc95c73ac9acbf691a11516796440",
+            "rows_written": 1,
+            "shard_sha256": "ac7ecc3028c993387d1fb27deb1c076c95ea2f58d901da20e48dc4f4d597df75"
+          },
+          "core0.veccore1": {
+            "first_tick": 29307,
+            "last_tick": 32434,
+            "physical_last_tick": 32431,
+            "physical_end_tick": 32427,
+            "official_duration_us": "1.9",
+            "official_running_us": "1.89",
+            "instruction_events_without_sync": 2256,
+            "signature128": "59b764a7bb290dae46d5d407e47da5e2",
+            "rows_written": 1,
+            "shard_sha256": "4dfde3c0262ebee2bce8e94b5343f6b27524f461dd811efeb369e5f9086c9309"
+          },
+          "core1.veccore0": {
+            "first_tick": 30158,
+            "last_tick": 35138,
+            "physical_last_tick": 35135,
+            "physical_end_tick": 35131,
+            "official_duration_us": "3.02",
+            "official_running_us": "3.01",
+            "instruction_events_without_sync": 2256,
+            "signature128": "0a568a6467dfa5587101d9718e1f32f9",
+            "rows_written": 1,
+            "shard_sha256": "46ded310bbfa3e71a4aeee714bf0fdcb4260e20f909e28f0007ca6d8abcc673e"
+          },
+          "core1.veccore1": {
+            "first_tick": 30128,
+            "last_tick": 34520,
+            "physical_last_tick": 34517,
+            "physical_end_tick": 34513,
+            "official_duration_us": "2.66",
+            "official_running_us": "2.66",
+            "instruction_events_without_sync": 2256,
+            "signature128": "ed0c99a1d492015ec6dabe90989b06e1",
+            "rows_written": 1,
+            "shard_sha256": "68ace2c332204f48113fcd98a5e8e48e52b0d6affc7a1d3bff8f70a90c9a36af"
+          },
+          "core16.veccore0": {
+            "first_tick": 29387,
+            "last_tick": 32727,
+            "physical_last_tick": 32724,
+            "physical_end_tick": 32720,
+            "official_duration_us": "2.02",
+            "official_running_us": "2.02",
+            "instruction_events_without_sync": 2256,
+            "signature128": "3103815153b267c0be3fc17a76148be1",
+            "rows_written": 1,
+            "shard_sha256": "af942c1f5ff349b630ddd793f9c48031a41fa7d51f6fb4c2028fdeba8b6a7192"
+          },
+          "core16.veccore1": {
+            "first_tick": 29387,
+            "last_tick": 32571,
+            "physical_last_tick": 32568,
+            "physical_end_tick": 32564,
+            "official_duration_us": "1.93",
+            "official_running_us": "1.93",
+            "instruction_events_without_sync": 2256,
+            "signature128": "eefdc423d04346cb0e559da5d61d2aa5",
+            "rows_written": 1,
+            "shard_sha256": "d784dd3d85a899e0a89d05f640fe9eef6b7a13ba2eea52f36e7b2b4e80c951f4"
+          },
+          "core17.veccore0": {
+            "first_tick": 30414,
+            "last_tick": 36689,
+            "physical_last_tick": 36686,
+            "physical_end_tick": 36682,
+            "official_duration_us": "3.8",
+            "official_running_us": "3.8",
+            "instruction_events_without_sync": 2256,
+            "signature128": "83ee95ca786003a54def2e1dd229f742",
+            "rows_written": 1,
+            "shard_sha256": "bb0477ca52df1f0f2f7e11bf6f7c659f10b1b294ff967ed7ab8da0d3d9d07902"
+          },
+          "core17.veccore1": {
+            "first_tick": 30409,
+            "last_tick": 36553,
+            "physical_last_tick": 36550,
+            "physical_end_tick": 36546,
+            "official_duration_us": "3.72",
+            "official_running_us": "3.72",
+            "instruction_events_without_sync": 2256,
+            "signature128": "7d78c15ec8d04f7efac36e148ef39e67",
+            "rows_written": 1,
+            "shard_sha256": "106dc42e2a267f756b7a435ba25d6ca49923f599b7e63497245be8aaaa724cf9"
+          },
+          "core18.veccore0": {
+            "first_tick": 30397,
+            "last_tick": 36293,
+            "physical_last_tick": 36290,
+            "physical_end_tick": 36286,
+            "official_duration_us": "3.57",
+            "official_running_us": "3.57",
+            "instruction_events_without_sync": 2256,
+            "signature128": "594a8fc7cae88d96508618770fe122b6",
+            "rows_written": 1,
+            "shard_sha256": "3786c21bbefc48981b8b8ee7d24b8090eb193c583614739e023618abf5616b83"
+          },
+          "core18.veccore1": {
+            "first_tick": 30485,
+            "last_tick": 34781,
+            "physical_last_tick": 34778,
+            "physical_end_tick": 34774,
+            "official_duration_us": "2.6",
+            "official_running_us": "2.6",
+            "instruction_events_without_sync": 2256,
+            "signature128": "9f28982543ff9f6ee30bf97492ef8b37",
+            "rows_written": 1,
+            "shard_sha256": "6da296cb413ae9290d253c7a7062e9df17c7370af71c710c27275e227fd95894"
+          },
+          "core19.veccore0": {
+            "first_tick": 30358,
+            "last_tick": 36817,
+            "physical_last_tick": 36814,
+            "physical_end_tick": 36810,
+            "official_duration_us": "3.91",
+            "official_running_us": "3.91",
+            "instruction_events_without_sync": 2256,
+            "signature128": "01c92706e180ae5fb8764f033f77c6bc",
+            "rows_written": 1,
+            "shard_sha256": "2d3bb092cd2c6c5798b92838524359770596603a6f68c970a4c72d4cac93e6d6"
+          },
+          "core19.veccore1": {
+            "first_tick": 30408,
+            "last_tick": 36427,
+            "physical_last_tick": 36424,
+            "physical_end_tick": 36420,
+            "official_duration_us": "3.65",
+            "official_running_us": "3.64",
+            "instruction_events_without_sync": 2256,
+            "signature128": "43f0335297155e10dace3c4276c47292",
+            "rows_written": 1,
+            "shard_sha256": "eb023a962a0024faad50a4e77cc332d82569963abf7a3b8e90aab470ccae6cf1"
+          },
+          "core2.veccore0": {
+            "first_tick": 30130,
+            "last_tick": 35483,
+            "physical_last_tick": 35480,
+            "physical_end_tick": 35476,
+            "official_duration_us": "3.24",
+            "official_running_us": "3.24",
+            "instruction_events_without_sync": 2256,
+            "signature128": "2d63c82e956f908aebe4ed06e613885f",
+            "rows_written": 1,
+            "shard_sha256": "298b7ae1598e0ce814296df2508110e2ce1d135e8fadf54ea7e8ba9f00e111c4"
+          },
+          "core2.veccore1": {
+            "first_tick": 30149,
+            "last_tick": 35644,
+            "physical_last_tick": 35641,
+            "physical_end_tick": 35637,
+            "official_duration_us": "3.33",
+            "official_running_us": "3.33",
+            "instruction_events_without_sync": 2256,
+            "signature128": "f090d703a8aaea3d2d6417f244b047bd",
+            "rows_written": 1,
+            "shard_sha256": "39a283269aab20d141645aaa1210ccc392b94c65d11d06d9017ec214836c3580"
+          },
+          "core20.veccore0": {
+            "first_tick": 30383,
+            "last_tick": 34924,
+            "physical_last_tick": 34921,
+            "physical_end_tick": 34917,
+            "official_duration_us": "2.75",
+            "official_running_us": "2.75",
+            "instruction_events_without_sync": 2256,
+            "signature128": "9c8e082db39dda2d4efc804502596576",
+            "rows_written": 1,
+            "shard_sha256": "70b049f886507ea9e1e93c8a33cdb6f9c06c5b31fc0553a51027653b3232adf6"
+          },
+          "core3.veccore0": {
+            "first_tick": 30248,
+            "last_tick": 35312,
+            "physical_last_tick": 35309,
+            "physical_end_tick": 35305,
+            "official_duration_us": "3.07",
+            "official_running_us": "3.06",
+            "instruction_events_without_sync": 2256,
+            "signature128": "0b6fb5c737a7b81e2fa67ef9153af039",
+            "rows_written": 1,
+            "shard_sha256": "652861ca341547bbd8088366488dc3e57f1400e05c688485830abc5a336e3a04"
+          },
+          "core3.veccore1": {
+            "first_tick": 30225,
+            "last_tick": 34703,
+            "physical_last_tick": 34700,
+            "physical_end_tick": 34696,
+            "official_duration_us": "2.71",
+            "official_running_us": "2.71",
+            "instruction_events_without_sync": 2256,
+            "signature128": "081e5df6e191dc509d73b781f55820de",
+            "rows_written": 1,
+            "shard_sha256": "9afec0c8748743ca0a8d23cabe1ee60316a271163c09f23483748abbf3e5b1d2"
+          },
+          "core4.veccore0": {
+            "first_tick": 30215,
+            "last_tick": 35996,
+            "physical_last_tick": 35993,
+            "physical_end_tick": 35989,
+            "official_duration_us": "3.5",
+            "official_running_us": "3.5",
+            "instruction_events_without_sync": 2256,
+            "signature128": "1972251af6430ad30a2a2c25079622b3",
+            "rows_written": 1,
+            "shard_sha256": "6efc9cbbe6b26f4249e172cd7e4f882db70881efd13f6107891d38bfbba9f73a"
+          },
+          "core4.veccore1": {
+            "first_tick": 30234,
+            "last_tick": 35815,
+            "physical_last_tick": 35812,
+            "physical_end_tick": 35808,
+            "official_duration_us": "3.38",
+            "official_running_us": "3.38",
+            "instruction_events_without_sync": 2256,
+            "signature128": "d2852145439c15cb81e5dafa7deb0afc",
+            "rows_written": 1,
+            "shard_sha256": "70525c9d5782fa76993266c51076413c5c317012364c9a24c06f6c869f7a17cf"
+          }
+        },
+        "ordinal": 4
+      },
+      "active_count_matches": true
+    },
+    {
+      "chip": "Ascend950PR_957b",
+      "group": "partition",
+      "i": 5,
+      "shape": [
+        19,
+        2416
+      ],
+      "prior_aiv": 19,
+      "role": "repeat",
+      "known_us": 3.28882363284632,
+      "cold_hot_us": 3.849544839465808,
+      "runtime_ms": 0.45173,
+      "us": 3.8069715534327506,
+      "lower_us": 3.150745193562109,
+      "upper_us": 4.808461320075758,
+      "old_us": 4.189969485749974,
+      "conditional": {
+        "first_us": 4.64076198973479,
+        "one_aiv_prefix_us": 4.808461320075758,
+        "fully_covered_us": 3.28882363284632
+      },
+      "covered_us": 3.150745193562109,
+      "active_aiv": 19,
+      "detail": {
+        "route": "single-UB",
+        "gamma_issue_cycles": 1663.3676470588236,
+        "issue_spread_cycles": 199.35849056603774,
+        "final_y_cycles": 2771.109629765102,
+        "final_rstd_cycles": 5189.72956937748,
+        "lower_bound_cycles": 1777.2647899159665
+      },
+      "timing_qualified": true,
+      "correctness": [
+        "correctness count=45904 bad=0 max_abs_error=0.00176277 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness count=19 bad=0 max_abs_error=1.27194e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ],
+      "host_task": {
+        "begin_tick": 23508,
+        "done_tick": 26896,
+        "full_task_id": 5,
+        "raw_stream_id": 5
+      },
+      "stage": {
+        "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+        "ca_us": 3.2545454545454544,
+        "active_aiv": 19,
+        "active_aic": 0,
+        "windows": {
+          "core0.veccore0": [
+            0.0012121212121212121,
+            2.4212121212121214
+          ],
+          "core0.veccore1": [
+            0.0012121212121212121,
+            2.1284848484848484
+          ],
+          "core1.veccore0": [
+            0.0030303030303030303,
+            1.9224242424242424
+          ],
+          "core1.veccore1": [
+            0.0030303030303030303,
+            2.3236363636363637
+          ],
+          "core16.veccore0": [
+            0.0503030303030303,
+            3.2545454545454544
+          ],
+          "core16.veccore1": [
+            0.0503030303030303,
+            2.850909090909091
+          ],
+          "core17.veccore0": [
+            0.051515151515151514,
+            2.938181818181818
+          ],
+          "core17.veccore1": [
+            0.051515151515151514,
+            3.0921212121212123
+          ],
+          "core18.veccore0": [
+            0.04787878787878788,
+            2.590909090909091
+          ],
+          "core18.veccore1": [
+            0.04787878787878788,
+            2.68
+          ],
+          "core19.veccore0": [
+            0.0503030303030303,
+            3.0157575757575756
+          ],
+          "core19.veccore1": [
+            0.0503030303030303,
+            3.170909090909091
+          ],
+          "core2.veccore0": [
+            0.0,
+            2.2236363636363636
+          ],
+          "core2.veccore1": [
+            0.0,
+            1.8224242424242425
+          ],
+          "core20.veccore0": [
+            0.05333333333333334,
+            2.7648484848484847
+          ],
+          "core3.veccore0": [
+            0.0012121212121212121,
+            1.6109090909090908
+          ],
+          "core3.veccore1": [
+            0.0012121212121212121,
+            1.72
+          ],
+          "core4.veccore0": [
+            0.005454545454545455,
+            1.5145454545454546
+          ],
+          "core4.veccore1": [
+            0.005454545454545455,
+            2.0272727272727273
+          ]
+        },
+        "trace": "runs/rms27/partition-Ascend950PR_957b/profile/OPPROF_20261120092126_XLFMBWFHHFXGNARB/RmsNorm_normal_all_bf16_high_performance_5000/5/simulator/trace.json",
+        "trace_sha256": "428abcf76277aadd6bfeb089fb8fbbedca91c6bb1ff45a275157a1fc0eca302b",
+        "binary_sha256": "0926fe478e5f718ef49241c08ef00b665797690f0f7f22c67fdc25044e0cb54d",
+        "first_tick": 38876,
+        "last_tick": 44246,
+        "physical_last_tick": 44243,
+        "physical_ca_us": 3.252727272727273,
+        "cores": {
+          "core0.veccore0": {
+            "first_tick": 38878,
+            "last_tick": 42871,
+            "physical_last_tick": 42868,
+            "physical_end_tick": 42864,
+            "official_duration_us": "2.42",
+            "official_running_us": "2.42",
+            "instruction_events_without_sync": 2256,
+            "signature128": "b81782979e8b99dd41cbdef2ecd41301",
+            "rows_written": 1,
+            "shard_sha256": "17435cc9ca210c64d31ded5c99e833ed09f9a01a3a068fb0cc2fd743721983f2"
+          },
+          "core0.veccore1": {
+            "first_tick": 38878,
+            "last_tick": 42388,
+            "physical_last_tick": 42385,
+            "physical_end_tick": 42381,
+            "official_duration_us": "2.13",
+            "official_running_us": "2.12",
+            "instruction_events_without_sync": 2256,
+            "signature128": "d1f0cc2e3858410d7154b677b147e9e0",
+            "rows_written": 1,
+            "shard_sha256": "65246da8706c0ca4628049044ee9b34132cbf35046305e6de79bb02ecb44b95d"
+          },
+          "core1.veccore0": {
+            "first_tick": 38881,
+            "last_tick": 42048,
+            "physical_last_tick": 42045,
+            "physical_end_tick": 42041,
+            "official_duration_us": "1.92",
+            "official_running_us": "1.92",
+            "instruction_events_without_sync": 2256,
+            "signature128": "5aea61288cbbae36946900db86babfad",
+            "rows_written": 1,
+            "shard_sha256": "eb3d3d6e666d2da4eb53336cf361a9fdf4a2b48ba9c57fdfd319164e991462ac"
+          },
+          "core1.veccore1": {
+            "first_tick": 38881,
+            "last_tick": 42710,
+            "physical_last_tick": 42707,
+            "physical_end_tick": 42703,
+            "official_duration_us": "2.32",
+            "official_running_us": "2.32",
+            "instruction_events_without_sync": 2256,
+            "signature128": "1ae7576632ffe1d6a662a303f843baea",
+            "rows_written": 1,
+            "shard_sha256": "289183729927625305876163db7208aad9130bc81b8d1552e47c1c44432f8669"
+          },
+          "core16.veccore0": {
+            "first_tick": 38959,
+            "last_tick": 44246,
+            "physical_last_tick": 44243,
+            "physical_end_tick": 44239,
+            "official_duration_us": "3.2",
+            "official_running_us": "3.2",
+            "instruction_events_without_sync": 2256,
+            "signature128": "87a9b3e85a21e50f5dfe30ff285dbd4c",
+            "rows_written": 1,
+            "shard_sha256": "ed41960236c5bcd5dd81027de14c9c1da1e7c7fd2d4386b9e66038b7a95547aa"
+          },
+          "core16.veccore1": {
+            "first_tick": 38959,
+            "last_tick": 43580,
+            "physical_last_tick": 43577,
+            "physical_end_tick": 43573,
+            "official_duration_us": "2.8",
+            "official_running_us": "2.8",
+            "instruction_events_without_sync": 2256,
+            "signature128": "024d785b0014d530a63ceb325812bb79",
+            "rows_written": 1,
+            "shard_sha256": "d2c699be134e5c2d5dfe954f9380edecd8bed8f8a7d450e041b978efb2b40476"
+          },
+          "core17.veccore0": {
+            "first_tick": 38961,
+            "last_tick": 43724,
+            "physical_last_tick": 43721,
+            "physical_end_tick": 43717,
+            "official_duration_us": "2.89",
+            "official_running_us": "2.88",
+            "instruction_events_without_sync": 2256,
+            "signature128": "eb2426d582d93d292b4b87061f7b2f53",
+            "rows_written": 1,
+            "shard_sha256": "1a8f896ad1b67bfe1b533e7e142fdcfca3bfebcf0756804a00f7075c1bc71820"
+          },
+          "core17.veccore1": {
+            "first_tick": 38961,
+            "last_tick": 43978,
+            "physical_last_tick": 43975,
+            "physical_end_tick": 43971,
+            "official_duration_us": "3.04",
+            "official_running_us": "3.04",
+            "instruction_events_without_sync": 2256,
+            "signature128": "eb7f1fad0cb08eb7843d1b36b6d64106",
+            "rows_written": 1,
+            "shard_sha256": "466dbf8124dd0e072e927655fd1226651a0460d4f35bd51d92ac5d1334c477fb"
+          },
+          "core18.veccore0": {
+            "first_tick": 38955,
+            "last_tick": 43151,
+            "physical_last_tick": 43148,
+            "physical_end_tick": 43144,
+            "official_duration_us": "2.54",
+            "official_running_us": "2.54",
+            "instruction_events_without_sync": 2256,
+            "signature128": "0d836f758849e1aee69f16e229fcd049",
+            "rows_written": 1,
+            "shard_sha256": "1a0dbb4de61f42811308d32a63f77fec99a32564ef233a98ceff7bdb1e0e95d8"
+          },
+          "core18.veccore1": {
+            "first_tick": 38955,
+            "last_tick": 43298,
+            "physical_last_tick": 43295,
+            "physical_end_tick": 43291,
+            "official_duration_us": "2.63",
+            "official_running_us": "2.63",
+            "instruction_events_without_sync": 2256,
+            "signature128": "c08fbc0e92796163801ffc71610b47a6",
+            "rows_written": 1,
+            "shard_sha256": "1ea9ea2f77ff88abb7a582c935277d3216c97d237734b000e18c89a2d2785ccb"
+          },
+          "core19.veccore0": {
+            "first_tick": 38959,
+            "last_tick": 43852,
+            "physical_last_tick": 43849,
+            "physical_end_tick": 43845,
+            "official_duration_us": "2.97",
+            "official_running_us": "2.96",
+            "instruction_events_without_sync": 2256,
+            "signature128": "44157fd415d2b4e542a62f2d96a39cbd",
+            "rows_written": 1,
+            "shard_sha256": "77a2af3fbc2ba8f48effb3e76918d89c0ae3fbf37d1ae9587364ac03ae94ef32"
+          },
+          "core19.veccore1": {
+            "first_tick": 38959,
+            "last_tick": 44108,
+            "physical_last_tick": 44105,
+            "physical_end_tick": 44101,
+            "official_duration_us": "3.12",
+            "official_running_us": "3.12",
+            "instruction_events_without_sync": 2256,
+            "signature128": "a8e15bcdcdac5219ce2388252667db8d",
+            "rows_written": 1,
+            "shard_sha256": "d1999db6bcbea3f01d30e880eaa3ff8ee5727196daa635e304fdfc489dc84c13"
+          },
+          "core2.veccore0": {
+            "first_tick": 38876,
+            "last_tick": 42545,
+            "physical_last_tick": 42542,
+            "physical_end_tick": 42538,
+            "official_duration_us": "2.22",
+            "official_running_us": "2.22",
+            "instruction_events_without_sync": 2256,
+            "signature128": "42294118d3ac2e5a2e0a2685ae13e766",
+            "rows_written": 1,
+            "shard_sha256": "731009b968b9c4ad11d1b5cb9b357cbb81e5336b75bf0e0f84efe57a5671d411"
+          },
+          "core2.veccore1": {
+            "first_tick": 38876,
+            "last_tick": 41883,
+            "physical_last_tick": 41880,
+            "physical_end_tick": 41876,
+            "official_duration_us": "1.82",
+            "official_running_us": "1.82",
+            "instruction_events_without_sync": 2256,
+            "signature128": "a37f0b24def014353bf452d74fd4c303",
+            "rows_written": 1,
+            "shard_sha256": "9b8997a18f8e824ee53505c0299260ef46a1291e61ece2e578e19bbbb9550758"
+          },
+          "core20.veccore0": {
+            "first_tick": 38964,
+            "last_tick": 43438,
+            "physical_last_tick": 43435,
+            "physical_end_tick": 43431,
+            "official_duration_us": "2.71",
+            "official_running_us": "2.71",
+            "instruction_events_without_sync": 2256,
+            "signature128": "9149de04a0ba4f527f50a278390fc44a",
+            "rows_written": 1,
+            "shard_sha256": "9298fbf05e08610dbfa9f661e0eebac3cbc515c08aed64993f51f83acea326e2"
+          },
+          "core3.veccore0": {
+            "first_tick": 38878,
+            "last_tick": 41534,
+            "physical_last_tick": 41531,
+            "physical_end_tick": 41527,
+            "official_duration_us": "1.61",
+            "official_running_us": "1.61",
+            "instruction_events_without_sync": 2256,
+            "signature128": "0e6d63c3361809a8c895639b569b3656",
+            "rows_written": 1,
+            "shard_sha256": "d8c737c5be44156063f4b34a0c72b47f1f042541951e418dc994ef033a5b2d51"
+          },
+          "core3.veccore1": {
+            "first_tick": 38878,
+            "last_tick": 41714,
+            "physical_last_tick": 41711,
+            "physical_end_tick": 41707,
+            "official_duration_us": "1.72",
+            "official_running_us": "1.72",
+            "instruction_events_without_sync": 2256,
+            "signature128": "5e9f92b2d5d8a05722595906463745e4",
+            "rows_written": 1,
+            "shard_sha256": "5a22505ea97094283283e4b0cd12cd58d6bc26619533d1eefc11ea291f5bf349"
+          },
+          "core4.veccore0": {
+            "first_tick": 38885,
+            "last_tick": 41375,
+            "physical_last_tick": 41372,
+            "physical_end_tick": 41368,
+            "official_duration_us": "1.51",
+            "official_running_us": "1.51",
+            "instruction_events_without_sync": 2256,
+            "signature128": "b2bc9aa107ddf6a94540c8937dafc6b3",
+            "rows_written": 1,
+            "shard_sha256": "8f1a24d824e7bb000cb28a659f83f84ee1bde1f6419592b78131fc268afc13b4"
+          },
+          "core4.veccore1": {
+            "first_tick": 38885,
+            "last_tick": 42221,
+            "physical_last_tick": 42218,
+            "physical_end_tick": 42214,
+            "official_duration_us": "2.02",
+            "official_running_us": "2.02",
+            "instruction_events_without_sync": 2256,
+            "signature128": "f2253a022f5ebb766ecff7ea79971713",
+            "rows_written": 1,
+            "shard_sha256": "18f51b7e396f7125ebcd0242f5f4a63be77ae75149cb9fad141b9651b2600c09"
+          }
+        },
+        "ordinal": 5
+      },
+      "active_count_matches": true
+    },
+    {
+      "chip": "Ascend950PR_957b",
+      "group": "partition",
+      "i": 6,
+      "shape": [
+        35,
+        1744
+      ],
+      "prior_aiv": 19,
+      "role": "entry",
+      "known_us": 4.5968811972402595,
+      "cold_hot_us": 5.169357854753429,
+      "runtime_ms": 0.65326,
+      "us": 5.015372818070917,
+      "lower_us": 4.353566320101396,
+      "upper_us": 5.914457937541746,
+      "old_us": 5.656675060051417,
+      "conditional": {
+        "first_us": 5.914457937541746,
+        "one_aiv_prefix_us": 5.568020323863636,
+        "fully_covered_us": 4.590987795692313
+      },
+      "covered_us": 4.353566320101396,
+      "active_aiv": 35,
+      "detail": {
+        "route": "single-UB",
+        "gamma_issue_cycles": 1734.2696078431375,
+        "issue_spread_cycles": 376.5660377358491,
+        "final_y_cycles": 2853.028606561794,
+        "final_rstd_cycles": 7174.384428167304,
+        "lower_bound_cycles": 1882.2604649859945
+      },
+      "timing_qualified": true,
+      "correctness": [
+        "correctness count=61040 bad=0 max_abs_error=0.00166165 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness count=35 bad=0 max_abs_error=1.65143e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ],
+      "host_task": {
+        "begin_tick": 28300,
+        "done_tick": 33242,
+        "full_task_id": 6,
+        "raw_stream_id": 6
+      },
+      "stage": {
+        "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+        "ca_us": 4.806666666666667,
+        "active_aiv": 35,
+        "active_aic": 0,
+        "windows": {
+          "core0.veccore0": [
+            0.0012121212121212121,
+            2.5036363636363634
+          ],
+          "core0.veccore1": [
+            0.0012121212121212121,
+            2.335151515151515
+          ],
+          "core1.veccore0": [
+            0.0030303030303030303,
+            2.1587878787878787
+          ],
+          "core1.veccore1": [
+            0.0030303030303030303,
+            2.0739393939393937
+          ],
+          "core16.veccore0": [
+            0.0503030303030303,
+            1.833939393939394
+          ],
+          "core16.veccore1": [
+            0.0503030303030303,
+            1.7727272727272727
+          ],
+          "core17.veccore0": [
+            0.05090909090909091,
+            2.855151515151515
+          ],
+          "core17.veccore1": [
+            0.05090909090909091,
+            4.235151515151515
+          ],
+          "core18.veccore0": [
+            0.04787878787878788,
+            3.667878787878788
+          ],
+          "core18.veccore1": [
+            0.04787878787878788,
+            2.757575757575758
+          ],
+          "core19.veccore0": [
+            0.0503030303030303,
+            3.769090909090909
+          ],
+          "core19.veccore1": [
+            0.0503030303030303,
+            4.127878787878788
+          ],
+          "core2.veccore0": [
+            0.0,
+            2.2436363636363637
+          ],
+          "core2.veccore1": [
+            0.0,
+            1.621212121212121
+          ],
+          "core20.veccore0": [
+            0.05333333333333334,
+            4.34
+          ],
+          "core20.veccore1": [
+            0.18181818181818182,
+            4.446060606060606
+          ],
+          "core21.veccore0": [
+            0.6563636363636364,
+            4.806666666666667
+          ],
+          "core21.veccore1": [
+            0.6678787878787878,
+            4.709090909090909
+          ],
+          "core22.veccore0": [
+            0.6127272727272727,
+            4.538787878787879
+          ],
+          "core22.veccore1": [
+            0.6242424242424243,
+            4.62
+          ],
+          "core23.veccore0": [
+            0.6006060606060606,
+            3.373939393939394
+          ],
+          "core23.veccore1": [
+            0.6303030303030303,
+            3.318787878787879
+          ],
+          "core24.veccore0": [
+            0.6775757575757576,
+            3.2248484848484846
+          ],
+          "core3.veccore0": [
+            0.0012121212121212121,
+            1.993939393939394
+          ],
+          "core3.veccore1": [
+            0.0012121212121212121,
+            1.9187878787878787
+          ],
+          "core4.veccore0": [
+            0.005454545454545455,
+            1.653939393939394
+          ],
+          "core4.veccore1": [
+            0.005454545454545455,
+            2.42
+          ],
+          "core5.veccore0": [
+            0.5666666666666667,
+            2.8715151515151516
+          ],
+          "core5.veccore1": [
+            0.6018181818181818,
+            3.112727272727273
+          ],
+          "core6.veccore0": [
+            0.5551515151515152,
+            3.081212121212121
+          ],
+          "core6.veccore1": [
+            0.5957575757575757,
+            3.4836363636363634
+          ],
+          "core7.veccore0": [
+            0.576969696969697,
+            3.2836363636363637
+          ],
+          "core7.veccore1": [
+            0.5496969696969697,
+            3.1987878787878787
+          ],
+          "core8.veccore0": [
+            0.6133333333333333,
+            3.933939393939394
+          ],
+          "core8.veccore1": [
+            0.6357575757575757,
+            3.3775757575757575
+          ]
+        },
+        "trace": "runs/rms27/partition-Ascend950PR_957b/profile/OPPROF_20261120092126_XLFMBWFHHFXGNARB/RmsNorm_normal_all_bf16_high_performance_5000/6/simulator/trace.json",
+        "trace_sha256": "00d1018ea9bc28c870b47cba40fa8563f41656eb6b0328b6211ec034da1b0b17",
+        "binary_sha256": "0926fe478e5f718ef49241c08ef00b665797690f0f7f22c67fdc25044e0cb54d",
+        "first_tick": 46783,
+        "last_tick": 54714,
+        "physical_last_tick": 54711,
+        "physical_ca_us": 4.804848484848485,
+        "cores": {
+          "core0.veccore0": {
+            "first_tick": 46785,
+            "last_tick": 50914,
+            "physical_last_tick": 50911,
+            "physical_end_tick": 50907,
+            "official_duration_us": "2.5",
+            "official_running_us": "2.5",
+            "instruction_events_without_sync": 1976,
+            "signature128": "ca020b2969c3a3d212961aea1f5cc061",
+            "rows_written": 1,
+            "shard_sha256": "70a2bc0ee7cace4b8a4659a5eb9115f1ac9a8b65719098bc2db2f2c74268e48f"
+          },
+          "core0.veccore1": {
+            "first_tick": 46785,
+            "last_tick": 50636,
+            "physical_last_tick": 50633,
+            "physical_end_tick": 50629,
+            "official_duration_us": "2.33",
+            "official_running_us": "2.33",
+            "instruction_events_without_sync": 1976,
+            "signature128": "fc82379b374a312a2c4268b6e8e7a17e",
+            "rows_written": 1,
+            "shard_sha256": "7eddcfa4b6d178df2d01eb6817e52121be3e00e27f580803e14cbb345845d2ce"
+          },
+          "core1.veccore0": {
+            "first_tick": 46788,
+            "last_tick": 50345,
+            "physical_last_tick": 50342,
+            "physical_end_tick": 50338,
+            "official_duration_us": "2.16",
+            "official_running_us": "2.15",
+            "instruction_events_without_sync": 1976,
+            "signature128": "8f85328a2138e3b43f9d082fa4c36962",
+            "rows_written": 1,
+            "shard_sha256": "82d657949d7f35a3efa27bb8a6041067d5f23fe8d4f2e2c63682312ef4f8b2da"
+          },
+          "core1.veccore1": {
+            "first_tick": 46788,
+            "last_tick": 50205,
+            "physical_last_tick": 50202,
+            "physical_end_tick": 50198,
+            "official_duration_us": "2.07",
+            "official_running_us": "2.07",
+            "instruction_events_without_sync": 1976,
+            "signature128": "8eaf9ea77c61494e6626cf2d2d1f5e92",
+            "rows_written": 1,
+            "shard_sha256": "b02c07c0b8691fdaa81e14aeacb1f9c70a1ce58290e5c84e068be1ac83b33b17"
+          },
+          "core16.veccore0": {
+            "first_tick": 46866,
+            "last_tick": 49809,
+            "physical_last_tick": 49806,
+            "physical_end_tick": 49802,
+            "official_duration_us": "1.78",
+            "official_running_us": "1.78",
+            "instruction_events_without_sync": 1976,
+            "signature128": "11572210d438e902de532e7fab8e8c32",
+            "rows_written": 1,
+            "shard_sha256": "f7c094e4f61e373536b50acad9b4ab49fdbf858eadfcf2c5e43165e5e3fa0a21"
+          },
+          "core16.veccore1": {
+            "first_tick": 46866,
+            "last_tick": 49708,
+            "physical_last_tick": 49705,
+            "physical_end_tick": 49701,
+            "official_duration_us": "1.72",
+            "official_running_us": "1.72",
+            "instruction_events_without_sync": 1976,
+            "signature128": "7692c2062091ea6f9c7538132ad23bd6",
+            "rows_written": 1,
+            "shard_sha256": "9fac4d73f768346b0ed7008619cbb10715cb527cf5ebcbfa7b17bf3929d83ccf"
+          },
+          "core17.veccore0": {
+            "first_tick": 46867,
+            "last_tick": 51494,
+            "physical_last_tick": 51491,
+            "physical_end_tick": 51487,
+            "official_duration_us": "2.8",
+            "official_running_us": "2.8",
+            "instruction_events_without_sync": 1976,
+            "signature128": "34bb804cdd71b5d157b0ed20edf4b26d",
+            "rows_written": 1,
+            "shard_sha256": "75c5ac48247319e94c29a2181930f74864e9e6649a08f364744ff408deec93ca"
+          },
+          "core17.veccore1": {
+            "first_tick": 46867,
+            "last_tick": 53771,
+            "physical_last_tick": 53768,
+            "physical_end_tick": 53764,
+            "official_duration_us": "4.18",
+            "official_running_us": "4.18",
+            "instruction_events_without_sync": 1976,
+            "signature128": "fd96e411a139e6c8265c5f5aa43f5de6",
+            "rows_written": 1,
+            "shard_sha256": "c62d35beeac773045f5db662ab3d11b557335138d2f02af9e49fc4409b9991b6"
+          },
+          "core18.veccore0": {
+            "first_tick": 46862,
+            "last_tick": 52835,
+            "physical_last_tick": 52832,
+            "physical_end_tick": 52828,
+            "official_duration_us": "3.62",
+            "official_running_us": "3.62",
+            "instruction_events_without_sync": 1976,
+            "signature128": "c5b0a32c4d13e0e0cf4a7f23c5c042e2",
+            "rows_written": 1,
+            "shard_sha256": "b685d6873edf2be4787a76a26e37490685db48ef4a45cdb23cd18c1cff9b7cdc"
+          },
+          "core18.veccore1": {
+            "first_tick": 46862,
+            "last_tick": 51333,
+            "physical_last_tick": 51330,
+            "physical_end_tick": 51326,
+            "official_duration_us": "2.71",
+            "official_running_us": "2.7",
+            "instruction_events_without_sync": 1976,
+            "signature128": "0d9adf9000edf5f8e49ee2405d69cef2",
+            "rows_written": 1,
+            "shard_sha256": "71c1aad176003f03a7085c9ca0e3099aa3b89593e123cce4cc255500c97c7478"
+          },
+          "core19.veccore0": {
+            "first_tick": 46866,
+            "last_tick": 53002,
+            "physical_last_tick": 52999,
+            "physical_end_tick": 52995,
+            "official_duration_us": "3.72",
+            "official_running_us": "3.71",
+            "instruction_events_without_sync": 1976,
+            "signature128": "119558759ae7b9c136a3a110c5cc7876",
+            "rows_written": 1,
+            "shard_sha256": "9f7e284b347b0d30714c439fc731ec6197c4ff2d8fae72bf9ba861082ecbb29a"
+          },
+          "core19.veccore1": {
+            "first_tick": 46866,
+            "last_tick": 53594,
+            "physical_last_tick": 53591,
+            "physical_end_tick": 53587,
+            "official_duration_us": "4.08",
+            "official_running_us": "4.07",
+            "instruction_events_without_sync": 1976,
+            "signature128": "4f9746336f4aff226b61e9613fa9f934",
+            "rows_written": 1,
+            "shard_sha256": "7da91aed03ab2cc3428ffdc4a726346f3604a4c5ed4aa592afebb25471a6b95e"
+          },
+          "core2.veccore0": {
+            "first_tick": 46783,
+            "last_tick": 50485,
+            "physical_last_tick": 50482,
+            "physical_end_tick": 50478,
+            "official_duration_us": "2.24",
+            "official_running_us": "2.24",
+            "instruction_events_without_sync": 1976,
+            "signature128": "4ec32771d1817834ae2da365dc82dbf3",
+            "rows_written": 1,
+            "shard_sha256": "cc392f108b666752045aeb8dc184cf4ec39f18516900bb0fcada38d63c49b3b6"
+          },
+          "core2.veccore1": {
+            "first_tick": 46783,
+            "last_tick": 49458,
+            "physical_last_tick": 49455,
+            "physical_end_tick": 49451,
+            "official_duration_us": "1.62",
+            "official_running_us": "1.62",
+            "instruction_events_without_sync": 1976,
+            "signature128": "6dee688897cf8b884ea8a63259018e49",
+            "rows_written": 1,
+            "shard_sha256": "ea9c064d52c9cc87e84836ec7b2b72732e1571d40194e6f44100c8c6c4128b95"
+          },
+          "core20.veccore0": {
+            "first_tick": 46871,
+            "last_tick": 53944,
+            "physical_last_tick": 53941,
+            "physical_end_tick": 53937,
+            "official_duration_us": "4.29",
+            "official_running_us": "4.28",
+            "instruction_events_without_sync": 1976,
+            "signature128": "8d78ed18b870b28886c487ee4f352de3",
+            "rows_written": 1,
+            "shard_sha256": "4310943db16b8777bcc20b3ebb747fc5e420b044dd733921ac02fc3bf5b3a6b8"
+          },
+          "core20.veccore1": {
+            "first_tick": 47083,
+            "last_tick": 54119,
+            "physical_last_tick": 54116,
+            "physical_end_tick": 54112,
+            "official_duration_us": "4.26",
+            "official_running_us": "4.26",
+            "instruction_events_without_sync": 1976,
+            "signature128": "ad314910163d66fd78092f1a5bdca158",
+            "rows_written": 1,
+            "shard_sha256": "2aa5d0e5cf2a8893caa5b9a114b1ff69a26b1b55b629a93a4d7909475395cae7"
+          },
+          "core21.veccore0": {
+            "first_tick": 47866,
+            "last_tick": 54714,
+            "physical_last_tick": 54711,
+            "physical_end_tick": 54707,
+            "official_duration_us": "4.15",
+            "official_running_us": "4.15",
+            "instruction_events_without_sync": 1976,
+            "signature128": "befcc27c37fb6accb67316ee7c8c6030",
+            "rows_written": 1,
+            "shard_sha256": "9aedc60c5829b8eef42728d6c6a7a0e94f4b5c99913df75258db9f5616eb87f8"
+          },
+          "core21.veccore1": {
+            "first_tick": 47885,
+            "last_tick": 54553,
+            "physical_last_tick": 54550,
+            "physical_end_tick": 54546,
+            "official_duration_us": "4.04",
+            "official_running_us": "4.04",
+            "instruction_events_without_sync": 1976,
+            "signature128": "df7752acd95aea438807edb9207c41df",
+            "rows_written": 1,
+            "shard_sha256": "a06d64ae00ec46b079b4c4df2f1439f6eca30dc1780f93867d941f4ff6e929f3"
+          },
+          "core22.veccore0": {
+            "first_tick": 47794,
+            "last_tick": 54272,
+            "physical_last_tick": 54269,
+            "physical_end_tick": 54265,
+            "official_duration_us": "3.93",
+            "official_running_us": "3.92",
+            "instruction_events_without_sync": 1976,
+            "signature128": "521a2cd448baef0f4cc680fdfbc0c5fe",
+            "rows_written": 1,
+            "shard_sha256": "2b019c62d8af458d6adfb386cca067ae6786a6f027d563560f93054f0a01b5d1"
+          },
+          "core22.veccore1": {
+            "first_tick": 47813,
+            "last_tick": 54406,
+            "physical_last_tick": 54403,
+            "physical_end_tick": 54399,
+            "official_duration_us": "4",
+            "official_running_us": "3.99",
+            "instruction_events_without_sync": 1976,
+            "signature128": "aa01600268864882d964bb9c8d87399b",
+            "rows_written": 1,
+            "shard_sha256": "bfb0f46d826df18805fd66a0a87a2280cdf10886f3c8daf46cec3b4b10df0a7f"
+          },
+          "core23.veccore0": {
+            "first_tick": 47774,
+            "last_tick": 52350,
+            "physical_last_tick": 52347,
+            "physical_end_tick": 52343,
+            "official_duration_us": "2.77",
+            "official_running_us": "2.77",
+            "instruction_events_without_sync": 1976,
+            "signature128": "f179b93472673986f724a69721d57930",
+            "rows_written": 1,
+            "shard_sha256": "7b58af6e9317bd32923a722dbaaed287d4385ccb83f524881753eafd3c0f4e6b"
+          },
+          "core23.veccore1": {
+            "first_tick": 47823,
+            "last_tick": 52259,
+            "physical_last_tick": 52256,
+            "physical_end_tick": 52252,
+            "official_duration_us": "2.69",
+            "official_running_us": "2.69",
+            "instruction_events_without_sync": 1976,
+            "signature128": "7af7a535900f971a3c7af0db2148cc91",
+            "rows_written": 1,
+            "shard_sha256": "ffba4c37902bfbcb8a6434acf69332d1b9b2d3be4119c1dfd601b2aa76b44b6f"
+          },
+          "core24.veccore0": {
+            "first_tick": 47901,
+            "last_tick": 52104,
+            "physical_last_tick": 52101,
+            "physical_end_tick": 52097,
+            "official_duration_us": "2.55",
+            "official_running_us": "2.54",
+            "instruction_events_without_sync": 1976,
+            "signature128": "290a9d4ee3585e65339363f014de1958",
+            "rows_written": 1,
+            "shard_sha256": "c88690701e9c8a1bf44de9ffc964495e9215acf3b15f826e17f06cea87621249"
+          },
+          "core3.veccore0": {
+            "first_tick": 46785,
+            "last_tick": 50073,
+            "physical_last_tick": 50070,
+            "physical_end_tick": 50066,
+            "official_duration_us": "1.99",
+            "official_running_us": "1.99",
+            "instruction_events_without_sync": 1976,
+            "signature128": "9b5f09524d39b34b8796178ead98ba4f",
+            "rows_written": 1,
+            "shard_sha256": "fdb74a9581597dca3e8860360a19ddfb58c6703b3f61274c295ca9a5421339c0"
+          },
+          "core3.veccore1": {
+            "first_tick": 46785,
+            "last_tick": 49949,
+            "physical_last_tick": 49946,
+            "physical_end_tick": 49942,
+            "official_duration_us": "1.92",
+            "official_running_us": "1.92",
+            "instruction_events_without_sync": 1976,
+            "signature128": "df2cf152bece0ae7377a501becf15b14",
+            "rows_written": 1,
+            "shard_sha256": "75577d47dfe51c808491a62865dd087ccf0cb07d49b215d463450c7e80cb11b4"
+          },
+          "core4.veccore0": {
+            "first_tick": 46792,
+            "last_tick": 49512,
+            "physical_last_tick": 49509,
+            "physical_end_tick": 49505,
+            "official_duration_us": "1.65",
+            "official_running_us": "1.64",
+            "instruction_events_without_sync": 1976,
+            "signature128": "c28ad5c9b7cb601b0a4f6e00f25a62be",
+            "rows_written": 1,
+            "shard_sha256": "03376ef3ea8701c60778c4e9386515c0c49cd2531bc139a82561a334f3e65e5e"
+          },
+          "core4.veccore1": {
+            "first_tick": 46792,
+            "last_tick": 50776,
+            "physical_last_tick": 50773,
+            "physical_end_tick": 50769,
+            "official_duration_us": "2.41",
+            "official_running_us": "2.41",
+            "instruction_events_without_sync": 1976,
+            "signature128": "7a08066c466b428fb8af136222b52497",
+            "rows_written": 1,
+            "shard_sha256": "9255e742ff19a9f8fe2502d9d3c82128d67aafe7c4f15a041809d7b9e52d7210"
+          },
+          "core5.veccore0": {
+            "first_tick": 47718,
+            "last_tick": 51521,
+            "physical_last_tick": 51518,
+            "physical_end_tick": 51514,
+            "official_duration_us": "2.3",
+            "official_running_us": "2.3",
+            "instruction_events_without_sync": 1976,
+            "signature128": "4f81b7f8af05a4f56683fd43ed27de2d",
+            "rows_written": 1,
+            "shard_sha256": "5a5dc57f87927b228e4fb3b7a32c00930a5e47aef78ac62912568bc3160c6c97"
+          },
+          "core5.veccore1": {
+            "first_tick": 47776,
+            "last_tick": 51919,
+            "physical_last_tick": 51916,
+            "physical_end_tick": 51912,
+            "official_duration_us": "2.51",
+            "official_running_us": "2.51",
+            "instruction_events_without_sync": 1976,
+            "signature128": "c992759eb633df1a22aa197a29e01f40",
+            "rows_written": 1,
+            "shard_sha256": "ad63c111acf0bbf7f66528cdb16bf61b5a8127c5e41d5f752f8abad10233d98d"
+          },
+          "core6.veccore0": {
+            "first_tick": 47699,
+            "last_tick": 51867,
+            "physical_last_tick": 51864,
+            "physical_end_tick": 51860,
+            "official_duration_us": "2.53",
+            "official_running_us": "2.52",
+            "instruction_events_without_sync": 1976,
+            "signature128": "73733d6f2ae29acf8570acce63f7211d",
+            "rows_written": 1,
+            "shard_sha256": "84c29b9a0924fb46fd25220f9cb7f8b37b15f4b3b3638f154e176329d5333972"
+          },
+          "core6.veccore1": {
+            "first_tick": 47766,
+            "last_tick": 52531,
+            "physical_last_tick": 52528,
+            "physical_end_tick": 52524,
+            "official_duration_us": "2.89",
+            "official_running_us": "2.88",
+            "instruction_events_without_sync": 1976,
+            "signature128": "369da7541378d0b17a7ed117d06458a4",
+            "rows_written": 1,
+            "shard_sha256": "517310fb44952bc6cc33dc89b3f25f40342dc6bfbf649212f9890fa90da37198"
+          },
+          "core7.veccore0": {
+            "first_tick": 47735,
+            "last_tick": 52201,
+            "physical_last_tick": 52198,
+            "physical_end_tick": 52194,
+            "official_duration_us": "2.71",
+            "official_running_us": "2.7",
+            "instruction_events_without_sync": 1976,
+            "signature128": "0ebde6c2acc21297f2d2001d766a960d",
+            "rows_written": 1,
+            "shard_sha256": "77c3bc96cf67a647790dc5cc4d47a00e910fa62183c945689242dda77b5b8da1"
+          },
+          "core7.veccore1": {
+            "first_tick": 47690,
+            "last_tick": 52061,
+            "physical_last_tick": 52058,
+            "physical_end_tick": 52054,
+            "official_duration_us": "2.65",
+            "official_running_us": "2.64",
+            "instruction_events_without_sync": 1976,
+            "signature128": "a1b44e2e56099c4a3b4003c73d4711ff",
+            "rows_written": 1,
+            "shard_sha256": "f4e2594a4342a1bf7357f86667ae74cb11c3450c56a6d8c2b61a0bec76821656"
+          },
+          "core8.veccore0": {
+            "first_tick": 47795,
+            "last_tick": 53274,
+            "physical_last_tick": 53271,
+            "physical_end_tick": 53267,
+            "official_duration_us": "3.32",
+            "official_running_us": "3.32",
+            "instruction_events_without_sync": 1976,
+            "signature128": "eb179c5fa964c8b023766367e0c22870",
+            "rows_written": 1,
+            "shard_sha256": "2fe1bf2b6df0db8be0f40749ebf7d462833bb8f93b82a4d24fa87783e61daa5e"
+          },
+          "core8.veccore1": {
+            "first_tick": 47832,
+            "last_tick": 52356,
+            "physical_last_tick": 52353,
+            "physical_end_tick": 52349,
+            "official_duration_us": "2.74",
+            "official_running_us": "2.74",
+            "instruction_events_without_sync": 1976,
+            "signature128": "67c7e11f1a202a312bf4dad088170598",
+            "rows_written": 1,
+            "shard_sha256": "df95df5b661d8a523124c10a26289fccad3a31ec6e07421a9d0c4d0407cbb291"
+          }
+        },
+        "ordinal": 6
+      },
+      "active_count_matches": true
+    },
+    {
+      "chip": "Ascend950PR_957b",
+      "group": "partition",
+      "i": 7,
+      "shape": [
+        35,
+        1744
+      ],
+      "prior_aiv": 35,
+      "role": "repeat",
+      "known_us": 4.590987795692313,
+      "cold_hot_us": 5.169357854753429,
+      "runtime_ms": 0.64078,
+      "us": 5.015372818070917,
+      "lower_us": 4.353566320101396,
+      "upper_us": 5.914457937541746,
+      "old_us": 5.656675060051417,
+      "conditional": {
+        "first_us": 5.914457937541746,
+        "one_aiv_prefix_us": 5.568020323863636,
+        "fully_covered_us": 4.590987795692313
+      },
+      "covered_us": 4.353566320101396,
+      "active_aiv": 35,
+      "detail": {
+        "route": "single-UB",
+        "gamma_issue_cycles": 1734.2696078431375,
+        "issue_spread_cycles": 376.5660377358491,
+        "final_y_cycles": 2853.028606561794,
+        "final_rstd_cycles": 7174.384428167304,
+        "lower_bound_cycles": 1882.2604649859945
+      },
+      "timing_qualified": true,
+      "correctness": [
+        "correctness count=61040 bad=0 max_abs_error=0.00166165 atol=0.015625 rtol=0.015625 hard_limit=1",
+        "correctness count=35 bad=0 max_abs_error=1.65143e-07 atol=1.52588e-05 rtol=0.000976562 hard_limit=0.01"
+      ],
+      "host_task": {
+        "begin_tick": 35044,
+        "done_tick": 39703,
+        "full_task_id": 7,
+        "raw_stream_id": 7
+      },
+      "stage": {
+        "kernel": "RmsNorm_normal_all_bf16_high_performance_5000",
+        "ca_us": 4.507272727272727,
+        "active_aiv": 35,
+        "active_aic": 0,
+        "windows": {
+          "core0.veccore0": [
+            0.0012121212121212121,
+            2.366060606060606
+          ],
+          "core0.veccore1": [
+            0.0012121212121212121,
+            3.315757575757576
+          ],
+          "core1.veccore0": [
+            0.0030303030303030303,
+            3.138181818181818
+          ],
+          "core1.veccore1": [
+            0.0030303030303030303,
+            2.5606060606060606
+          ],
+          "core16.veccore0": [
+            0.0496969696969697,
+            4.507272727272727
+          ],
+          "core16.veccore1": [
+            0.0496969696969697,
+            2.727272727272727
+          ],
+          "core17.veccore0": [
+            0.05090909090909091,
+            4.090909090909091
+          ],
+          "core17.veccore1": [
+            0.05090909090909091,
+            3.895757575757576
+          ],
+          "core18.veccore0": [
+            0.04787878787878788,
+            3.993333333333333
+          ],
+          "core18.veccore1": [
+            0.04787878787878788,
+            4.301818181818182
+          ],
+          "core19.veccore0": [
+            0.0496969696969697,
+            4.198181818181818
+          ],
+          "core19.veccore1": [
+            0.0496969696969697,
+            4.406060606060606
+          ],
+          "core2.veccore0": [
+            0.0,
+            3.2236363636363636
+          ],
+          "core2.veccore1": [
+            0.0,
+            2.0993939393939396
+          ],
+          "core20.veccore0": [
+            0.05272727272727273,
+            3.5957575757575757
+          ],
+          "core20.veccore1": [
+            0.05272727272727273,
+            3.493333333333333
+          ],
+          "core21.veccore0": [
+            0.0496969696969697,
+            3.7945454545454544
+          ],
+          "core21.veccore1": [
+            0.0496969696969697,
+            3.696969696969697
+          ],
+          "core22.veccore0": [
+            0.04787878787878788,
+            1.4848484848484849
+          ],
+          "core22.veccore1": [
+            0.04787878787878788,
+            2.810909090909091
+          ],
+          "core23.veccore0": [
+            0.05090909090909091,
+            1.670909090909091
+          ],
+          "core23.veccore1": [
+            0.05090909090909091,
+            1.7496969696969698
+          ],
+          "core24.veccore0": [
+            0.0496969696969697,
+            1.5260606060606061
+          ],
+          "core3.veccore0": [
+            0.0012121212121212121,
+            1.6636363636363636
+          ],
+          "core3.veccore1": [
+            0.0012121212121212121,
+            1.7381818181818183
+          ],
+          "core4.veccore0": [
+            0.0048484848484848485,
+            1.5042424242424242
+          ],
+          "core4.veccore1": [
+            0.0048484848484848485,
+            1.8145454545454545
+          ],
+          "core5.veccore0": [
+            0.0012121212121212121,
+            1.6806060606060607
+          ],
+          "core5.veccore1": [
+            0.0012121212121212121,
+            2.1884848484848485
+          ],
+          "core6.veccore0": [
+            0.0,
+            2.466060606060606
+          ],
+          "core6.veccore1": [
+            0.0,
+            2.956969696969697
+          ],
+          "core7.veccore0": [
+            0.0030303030303030303,
+            3.0545454545454547
+          ],
+          "core7.veccore1": [
+            0.0030303030303030303,
+            2.276969696969697
+          ],
+          "core8.veccore0": [
+            0.0012121212121212121,
+            2.004848484848485
+          ],
+          "core8.veccore1": [
+            0.0012121212121212121,
+            1.9036363636363636
+          ]
+        },
+        "trace": "runs/rms27/partition-Ascend950PR_957b/profile/OPPROF_20261120092126_XLFMBWFHHFXGNARB/RmsNorm_normal_all_bf16_high_performance_5000/7/simulator/trace.json",
+        "trace_sha256": "6ba45253ea7e37623e3f63cd9ff05445ece430c4f4d3e5e2205bf9f6a9a54b04",
+        "binary_sha256": "0926fe478e5f718ef49241c08ef00b665797690f0f7f22c67fdc25044e0cb54d",
+        "first_tick": 57911,
+        "last_tick": 65348,
+        "physical_last_tick": 65345,
+        "physical_ca_us": 4.505454545454546,
+        "cores": {
+          "core0.veccore0": {
+            "first_tick": 57913,
+            "last_tick": 61815,
+            "physical_last_tick": 61812,
+            "physical_end_tick": 61808,
+            "official_duration_us": "2.36",
+            "official_running_us": "2.36",
+            "instruction_events_without_sync": 1976,
+            "signature128": "91468c24e9bea44d9533b0d5a3c0e236",
+            "rows_written": 1,
+            "shard_sha256": "d2539b7ea5223a4b5d4ac73a6c43075a28e3be1cc614fc8acfa84a0503d64db8"
+          },
+          "core0.veccore1": {
+            "first_tick": 57913,
+            "last_tick": 63382,
+            "physical_last_tick": 63379,
+            "physical_end_tick": 63375,
+            "official_duration_us": "3.31",
+            "official_running_us": "3.31",
+            "instruction_events_without_sync": 1976,
+            "signature128": "5201fdd095843650e29fcc8d939ad734",
+            "rows_written": 1,
+            "shard_sha256": "9394e9fd232334166fdb7438d600ed34421940208c1ecd306c754b5a6c47ff38"
+          },
+          "core1.veccore0": {
+            "first_tick": 57916,
+            "last_tick": 63089,
+            "physical_last_tick": 63086,
+            "physical_end_tick": 63082,
+            "official_duration_us": "3.14",
+            "official_running_us": "3.13",
+            "instruction_events_without_sync": 1976,
+            "signature128": "665b65467674d092df77d661ca0b818f",
+            "rows_written": 1,
+            "shard_sha256": "1dfafda9c6427b15f92b6294f135de8388d5cdbca37818c79aaaba14c5cdd104"
+          },
+          "core1.veccore1": {
+            "first_tick": 57916,
+            "last_tick": 62136,
+            "physical_last_tick": 62133,
+            "physical_end_tick": 62129,
+            "official_duration_us": "2.56",
+            "official_running_us": "2.56",
+            "instruction_events_without_sync": 1976,
+            "signature128": "5f3cffba055debe101a36d5e0ba6d993",
+            "rows_written": 1,
+            "shard_sha256": "f83e4434774aa1420153e3bf3e248e2a37c3527e884a37515dcc5582fa211d6e"
+          },
+          "core16.veccore0": {
+            "first_tick": 57993,
+            "last_tick": 65348,
+            "physical_last_tick": 65345,
+            "physical_end_tick": 65341,
+            "official_duration_us": "4.46",
+            "official_running_us": "4.46",
+            "instruction_events_without_sync": 1976,
+            "signature128": "88e282e301a1ba4e11a8e940c5e98bb0",
+            "rows_written": 1,
+            "shard_sha256": "ad9b8207f9d74a1871b7150abe285a302ca8abe5aaa39617ca97eaa82fff10b2"
+          },
+          "core16.veccore1": {
+            "first_tick": 57993,
+            "last_tick": 62411,
+            "physical_last_tick": 62408,
+            "physical_end_tick": 62404,
+            "official_duration_us": "2.68",
+            "official_running_us": "2.68",
+            "instruction_events_without_sync": 1976,
+            "signature128": "cc37ef10535947b6327b87d14166f213",
+            "rows_written": 1,
+            "shard_sha256": "c2507e82bd2c2748e1ddd42bb7b56c65abf232e85bee8b11b8f9e12851d212b1"
+          },
+          "core17.veccore0": {
+            "first_tick": 57995,
+            "last_tick": 64661,
+            "physical_last_tick": 64658,
+            "physical_end_tick": 64654,
+            "official_duration_us": "4.04",
+            "official_running_us": "4.04",
+            "instruction_events_without_sync": 1976,
+            "signature128": "17d681ea2fc01bc27fe7ae576d043e8b",
+            "rows_written": 1,
+            "shard_sha256": "c9f4f5dc74ae04eb4037430c8957615f5b6510d61ab2a31f8eded2fa44421201"
+          },
+          "core17.veccore1": {
+            "first_tick": 57995,
+            "last_tick": 64339,
+            "physical_last_tick": 64336,
+            "physical_end_tick": 64332,
+            "official_duration_us": "3.84",
+            "official_running_us": "3.84",
+            "instruction_events_without_sync": 1976,
+            "signature128": "5f1a6ca31d68c69c2fed036e935597f7",
+            "rows_written": 1,
+            "shard_sha256": "d1bafea1b5bdea89ed740f70dee2af26226aa0e8871653226b01788fd8f8226e"
+          },
+          "core18.veccore0": {
+            "first_tick": 57990,
+            "last_tick": 64500,
+            "physical_last_tick": 64497,
+            "physical_end_tick": 64493,
+            "official_duration_us": "3.95",
+            "official_running_us": "3.94",
+            "instruction_events_without_sync": 1976,
+            "signature128": "a1f4922790d38526c1b2467a8e0fe6df",
+            "rows_written": 1,
+            "shard_sha256": "3d13745a452b427a5ae32c441835a1e91ecc82f3aee8d534cea823f726b60554"
+          },
+          "core18.veccore1": {
+            "first_tick": 57990,
+            "last_tick": 65009,
+            "physical_last_tick": 65006,
+            "physical_end_tick": 65002,
+            "official_duration_us": "4.25",
+            "official_running_us": "4.25",
+            "instruction_events_without_sync": 1976,
+            "signature128": "fe1f0d2fdff8c913447aa5388d45cfc2",
+            "rows_written": 1,
+            "shard_sha256": "ecb56685ffd7d33d21c847c238e0bd7f83cf4e700afb877cfddeaa72fe55dde8"
+          },
+          "core19.veccore0": {
+            "first_tick": 57993,
+            "last_tick": 64838,
+            "physical_last_tick": 64835,
+            "physical_end_tick": 64831,
+            "official_duration_us": "4.15",
+            "official_running_us": "4.15",
+            "instruction_events_without_sync": 1976,
+            "signature128": "d20bc91138a0d839d8193b8ec1b14d37",
+            "rows_written": 1,
+            "shard_sha256": "d8fdcbee493613fedfacb05a223dddf7c62fe5c02c748b31e92c75432487bc4b"
+          },
+          "core19.veccore1": {
+            "first_tick": 57993,
+            "last_tick": 65181,
+            "physical_last_tick": 65178,
+            "physical_end_tick": 65174,
+            "official_duration_us": "4.36",
+            "official_running_us": "4.35",
+            "instruction_events_without_sync": 1976,
+            "signature128": "4de49a93c060a27cf44f1cf2d19a8355",
+            "rows_written": 1,
+            "shard_sha256": "b9b94010bc9196e2c68aa2386f06a19a6b1989a6645a1bca48d3f27a80759551"
+          },
+          "core2.veccore0": {
+            "first_tick": 57911,
+            "last_tick": 63230,
+            "physical_last_tick": 63227,
+            "physical_end_tick": 63223,
+            "official_duration_us": "3.22",
+            "official_running_us": "3.22",
+            "instruction_events_without_sync": 1976,
+            "signature128": "f79eed4c92d22976fa844a1cf95846aa",
+            "rows_written": 1,
+            "shard_sha256": "0e58f9c5195100eb41c2c0d248c2b32f1c680a9c47bf9ffb1dd157fe558b4e29"
+          },
+          "core2.veccore1": {
+            "first_tick": 57911,
+            "last_tick": 61375,
+            "physical_last_tick": 61372,
+            "physical_end_tick": 61368,
+            "official_duration_us": "2.1",
+            "official_running_us": "2.1",
+            "instruction_events_without_sync": 1976,
+            "signature128": "53dfef11e9ea0024cde52077b0325f6f",
+            "rows_written": 1,
+            "shard_sha256": "3df913a6d746a12c3f00ed5dffb23657b4e8314d681a31176a1907b2b8f17be4"
+          },
+          "core20.veccore0": {
+            "first_tick": 57998,
+            "last_tick": 63844,
+            "physical_last_tick": 63841,
+            "physical_end_tick": 63837,
+            "official_duration_us": "3.54",
+            "official_running_us": "3.54",
+            "instruction_events_without_sync": 1976,
+            "signature128": "01c1ccd7589b240acf5b1c15689e4ced",
+            "rows_written": 1,
+            "shard_sha256": "b51f5642f239dc87c9652f47f68bed49a548b8753907a270e812f2ea48c14418"
+          },
+          "core20.veccore1": {
+            "first_tick": 57998,
+            "last_tick": 63675,
+            "physical_last_tick": 63672,
+            "physical_end_tick": 63668,
+            "official_duration_us": "3.44",
+            "official_running_us": "3.44",
+            "instruction_events_without_sync": 1976,
+            "signature128": "231449b95baf41a1e4fe5dce6d5f9607",
+            "rows_written": 1,
+            "shard_sha256": "b473ac667869e53130f41b5dfe122ee0e5729e7d52fe8226c9c2190163555bf5"
+          },
+          "core21.veccore0": {
+            "first_tick": 57993,
+            "last_tick": 64172,
+            "physical_last_tick": 64169,
+            "physical_end_tick": 64165,
+            "official_duration_us": "3.74",
+            "official_running_us": "3.74",
+            "instruction_events_without_sync": 1976,
+            "signature128": "ef38562e16ace528bcc6d9b2800e939b",
+            "rows_written": 1,
+            "shard_sha256": "55ccd3c6738889fc7ebebd139ca1782edbe40ffdb33ccd23a60ef1bf6c7d85f0"
+          },
+          "core21.veccore1": {
+            "first_tick": 57993,
+            "last_tick": 64011,
+            "physical_last_tick": 64008,
+            "physical_end_tick": 64004,
+            "official_duration_us": "3.65",
+            "official_running_us": "3.64",
+            "instruction_events_without_sync": 1976,
+            "signature128": "dfb0eb6703e63d9fed1039329f106c3b",
+            "rows_written": 1,
+            "shard_sha256": "aab85fe466c4281e3e2c453ddcfe39dd4dadfb5eb360864a18f9ff245baf7de6"
+          },
+          "core22.veccore0": {
+            "first_tick": 57990,
+            "last_tick": 60361,
+            "physical_last_tick": 60358,
+            "physical_end_tick": 60354,
+            "official_duration_us": "1.44",
+            "official_running_us": "1.43",
+            "instruction_events_without_sync": 1976,
+            "signature128": "3bc2b0299b0787602fed0309184aa810",
+            "rows_written": 1,
+            "shard_sha256": "f84062fbb9b050dcedf87f6309ab595d446c6d214f81dd4b8bd4bd07acb0673b"
+          },
+          "core22.veccore1": {
+            "first_tick": 57990,
+            "last_tick": 62549,
+            "physical_last_tick": 62546,
+            "physical_end_tick": 62542,
+            "official_duration_us": "2.76",
+            "official_running_us": "2.76",
+            "instruction_events_without_sync": 1976,
+            "signature128": "a6b2dc00795c63cf1a79111556d0f5f9",
+            "rows_written": 1,
+            "shard_sha256": "8f95027a2910df1929b3e9971e98d9a64c5abbe0c5d7e3fa77ab4a11617f9fee"
+          },
+          "core23.veccore0": {
+            "first_tick": 57995,
+            "last_tick": 60668,
+            "physical_last_tick": 60665,
+            "physical_end_tick": 60661,
+            "official_duration_us": "1.62",
+            "official_running_us": "1.62",
+            "instruction_events_without_sync": 1976,
+            "signature128": "0c0b3d7290a2b7a45127d71e45153850",
+            "rows_written": 1,
+            "shard_sha256": "e32e4327b474f98865f86ce13394874668aaf6995171700e215ff1413e3405b0"
+          },
+          "core23.veccore1": {
+            "first_tick": 57995,
+            "last_tick": 60798,
+            "physical_last_tick": 60795,
+            "physical_end_tick": 60791,
+            "official_duration_us": "1.7",
+            "official_running_us": "1.7",
+            "instruction_events_without_sync": 1976,
+            "signature128": "a629ad3d2fabbacf3f27bfbbfb223f72",
+            "rows_written": 1,
+            "shard_sha256": "f93919b2729db06bcce82a72d7717949da299bea47e4c691936e60dbfc4b762b"
+          },
+          "core24.veccore0": {
+            "first_tick": 57993,
+            "last_tick": 60429,
+            "physical_last_tick": 60426,
+            "physical_end_tick": 60422,
+            "official_duration_us": "1.48",
+            "official_running_us": "1.47",
+            "instruction_events_without_sync": 1976,
+            "signature128": "888704ecc2b6519ca5617d2ee8173123",
+            "rows_written": 1,
+            "shard_sha256": "66e5a939bfead4e0231c6dd521bbc11c519a0f8944e74c22ddbeceb365ad0189"
+          },
+          "core3.veccore0": {
+            "first_tick": 57913,
+            "last_tick": 60656,
+            "physical_last_tick": 60653,
+            "physical_end_tick": 60649,
+            "official_duration_us": "1.66",
+            "official_running_us": "1.66",
+            "instruction_events_without_sync": 1976,
+            "signature128": "4a9eb868439338a134242711af766013",
+            "rows_written": 1,
+            "shard_sha256": "b97f30118556c850f90533019047c0798f6f48103c41951ca83db19d8d2c47f6"
+          },
+          "core3.veccore1": {
+            "first_tick": 57913,
+            "last_tick": 60779,
+            "physical_last_tick": 60776,
+            "physical_end_tick": 60772,
+            "official_duration_us": "1.74",
+            "official_running_us": "1.74",
+            "instruction_events_without_sync": 1976,
+            "signature128": "853a59ab7d33b87ac960a1ccb085ed25",
+            "rows_written": 1,
+            "shard_sha256": "582f4d67bd1ab79043be3f19044cdc69d8be34e43cc1015ac59df4c9ab4a2eca"
+          },
+          "core4.veccore0": {
+            "first_tick": 57919,
+            "last_tick": 60393,
+            "physical_last_tick": 60390,
+            "physical_end_tick": 60386,
+            "official_duration_us": "1.5",
+            "official_running_us": "1.5",
+            "instruction_events_without_sync": 1976,
+            "signature128": "9241176628df175ef00d5b99d65f8027",
+            "rows_written": 1,
+            "shard_sha256": "9454b7dd4cd063ce5d6f265d8b9d4776ee399ebdaa1dd6dfde1dc895218a0461"
+          },
+          "core4.veccore1": {
+            "first_tick": 57919,
+            "last_tick": 60905,
+            "physical_last_tick": 60902,
+            "physical_end_tick": 60898,
+            "official_duration_us": "1.81",
+            "official_running_us": "1.81",
+            "instruction_events_without_sync": 1976,
+            "signature128": "dba3e0408e379ea23fda556a5c85e07e",
+            "rows_written": 1,
+            "shard_sha256": "5408a0149f42fb338b3dc8ab6573d2d0d4cfc16a6983fd0caadc0af0a8f485bc"
+          },
+          "core5.veccore0": {
+            "first_tick": 57913,
+            "last_tick": 60684,
+            "physical_last_tick": 60681,
+            "physical_end_tick": 60677,
+            "official_duration_us": "1.68",
+            "official_running_us": "1.67",
+            "instruction_events_without_sync": 1976,
+            "signature128": "9a493c50d803e0747dc065b1625b0b6b",
+            "rows_written": 1,
+            "shard_sha256": "15781be370dafb4aa941cf01b03e07ed6d60fcc00f00997fc7a38d600d577d10"
+          },
+          "core5.veccore1": {
+            "first_tick": 57913,
+            "last_tick": 61522,
+            "physical_last_tick": 61519,
+            "physical_end_tick": 61515,
+            "official_duration_us": "2.19",
+            "official_running_us": "2.19",
+            "instruction_events_without_sync": 1976,
+            "signature128": "295ba604d05972804f805d9c14eeef9d",
+            "rows_written": 1,
+            "shard_sha256": "4d3c19a6017b34083451ca7825f2f605944deba869552df32cd27b81a85ee87a"
+          },
+          "core6.veccore0": {
+            "first_tick": 57911,
+            "last_tick": 61980,
+            "physical_last_tick": 61977,
+            "physical_end_tick": 61973,
+            "official_duration_us": "2.47",
+            "official_running_us": "2.46",
+            "instruction_events_without_sync": 1976,
+            "signature128": "58f8d28e36b296edb706dafa5da0b720",
+            "rows_written": 1,
+            "shard_sha256": "da8470484be0a9a45109b420882b18ea82cf266910df0e68a80d39c15957140a"
+          },
+          "core6.veccore1": {
+            "first_tick": 57911,
+            "last_tick": 62790,
+            "physical_last_tick": 62787,
+            "physical_end_tick": 62783,
+            "official_duration_us": "2.96",
+            "official_running_us": "2.95",
+            "instruction_events_without_sync": 1976,
+            "signature128": "95010b0ef1629837c16941af64676db2",
+            "rows_written": 1,
+            "shard_sha256": "119e04f89d77b3bb78591db7f622f77b2fe6671fa8de75f4687bef979bce4722"
+          },
+          "core7.veccore0": {
+            "first_tick": 57916,
+            "last_tick": 62951,
+            "physical_last_tick": 62948,
+            "physical_end_tick": 62944,
+            "official_duration_us": "3.05",
+            "official_running_us": "3.05",
+            "instruction_events_without_sync": 1976,
+            "signature128": "993a862691022920b53d22c94c8d3fc6",
+            "rows_written": 1,
+            "shard_sha256": "7109cf62a15018f81ec772cb53b0a39de9d84bb9563715defc8d0595adc06b97"
+          },
+          "core7.veccore1": {
+            "first_tick": 57916,
+            "last_tick": 61668,
+            "physical_last_tick": 61665,
+            "physical_end_tick": 61661,
+            "official_duration_us": "2.27",
+            "official_running_us": "2.27",
+            "instruction_events_without_sync": 1976,
+            "signature128": "86a71bf8eef8adb708e61be4a92629d4",
+            "rows_written": 1,
+            "shard_sha256": "3aa0166a31ce810fdcf63daaaed37ed25144713ae00e89f6ec29e267a49dbeff"
+          },
+          "core8.veccore0": {
+            "first_tick": 57913,
+            "last_tick": 61219,
+            "physical_last_tick": 61216,
+            "physical_end_tick": 61212,
+            "official_duration_us": "2",
+            "official_running_us": "2",
+            "instruction_events_without_sync": 1976,
+            "signature128": "a75c3d1f41e9a636cca63b97c0303319",
+            "rows_written": 1,
+            "shard_sha256": "b487fcc896ec32d34370179fafa175cd3f9fa3c2c9840807b9f2f49605b2c30d"
+          },
+          "core8.veccore1": {
+            "first_tick": 57913,
+            "last_tick": 61052,
+            "physical_last_tick": 61049,
+            "physical_end_tick": 61045,
+            "official_duration_us": "1.9",
+            "official_running_us": "1.9",
+            "instruction_events_without_sync": 1976,
+            "signature128": "01eed4bf58fd190845fb400fa912d84b",
+            "rows_written": 1,
+            "shard_sha256": "e0b943c35c9fe8356760030836ac678babf92a06a5da5a7fa9e91f07469a2f23"
+          }
+        },
+        "ordinal": 7
+      },
+      "active_count_matches": true
+    }
+  ],
+  "elf_text_sha256": "c801d87f4298a8b399bce6678bafac249504eb176705aea81e826085edfe6456"
+}

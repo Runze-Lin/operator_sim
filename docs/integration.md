@@ -204,7 +204,7 @@ after_cube = rank0.preview("rmsnorm", [2, 2944])
 
 从中途接入一条已执行的流，或外部后端确实执行了一次未建模的 kernel，调用 `rank0.forget_history()`。随后第一个可见 RMSNorm 按未知历史估计，`advance` 记录它实际要求的活跃核数。若下次增加用核数，可查 `result.projection["partial_history"]` 中的 `minimum_resident_aiv`、`possible_us`、`shape_only_us` 和 `endpoint_scenario_aiv`。范围描述模型的可行前序，CA 波动仍可能超出。新进程明确从空流开始时使用 `reset()`；仅用 `preview()` 试算不会推进状态。
 
-### 读取 Cast 的发起时刻与试用 Post 的有序重复
+### 读取 Cast 的发起时刻与使用 Post 的有序重复
 
 ```python
 from operator_model import OperatorStream, estimate
@@ -212,9 +212,26 @@ from operator_model import OperatorStream, estimate
 cast = estimate("cast_bf16_fp32", [2097152, 32], dtype="bf16", chip="Ascend950PR_957b")
 issue_us = cast.projection["timing_diagnostics"]["initial_read_issue_us"]
 
-stream = OperatorStream("Ascend950DT_9582", experimental_post_repeats=True)
+stream = OperatorStream("Ascend950DT_9582")
 first = stream.advance("mhc_post", [65, 4, 5120], dtype="bf16")
 repeat = stream.advance("mhc_post", [65, 4, 5120], dtype="bf16")
 ```
 
-`issue_us` 是忙核第一个 UB 块（以及第二个空槽，如有）的读发起时间，相对全片首条设备指令计时。其余时间由 `latency_us` 和阶段诊断描述。若换了指令实现，在芯片 config 的 `details.cast_initial_read_pair_cycles` 覆写同一核连续发出两笔读的周期数；不确定时可传 null。在同一系统流上只有紧邻成功重复的内置 token 分核 Post 才会使用可选定价。前序丢失时调用 `forget_history()`，分支探索使用 `preview()`。[Cast 同轴读图](../results/v0.26/memory/README.md) · [Post 支持范围及实际重复的样本数](../results/v0.26/post/report.md)
+`issue_us` 是忙核第一个 UB 块（以及第二个空槽，如有）的读发起时间，相对全片首条设备指令计时。其余时间由 `latency_us` 和阶段诊断描述。若换了指令实现，在芯片 config 的 `details.cast_initial_read_pair_cycles` 覆写同一核连续发出两笔读的周期数；不确定时可传 null。在同一系统流上只有紧邻成功重复的内置 token 分核 Post 会默认使用重复派发的读写时序。前序丢失时调用 `forget_history()`，分支探索使用 `preview()`。[Cast 同轴读图](../results/v0.26/memory/README.md) · [Post 适用分支和独立验证](../results/v0.27/post/report.md)
+
+独立 Sinkhorn 可传入同一库实现此前已覆盖的 AIV 数，例如 `estimate("mhc_sinkhorn",(67,4),{"resident_aiv":0,"num_iters":10},chip="Ascend950DT_9582")`。0 表示确定首次，省略表示前序未知。其他算子的活跃核数无法说明本实现的前序。[调用边界与实测](../results/v0.27/fusion/public-sink.md)
+
+## Kimi-K3 在一次 prefill 调度中的 KDA
+
+可以从调度器的实际 token 数选择 FLA 调用。在 TP8、单卡 B8、每条 32Ki 的未切块例子中，模型配置给出每卡 12 个头和 128 维状态。结果包含 `aclnn`、工作项、三个主核各自的耗时和外围张量的读写字节。
+
+```python
+from operator_model import plan_kimi_kda_prefill
+
+p = plan_kimi_kda_prefill([32768] * 8, attention_tp=8,
+                          initialized_sequences=3, chip="Ascend950DT_9582")
+main_us = p["main_kernels_us"]
+dispatch_us = p["full_dispatch_us"]
+```
+
+这个例子选择 V2，`main_us` 约为 33,161 µs，属于大 shape 外推。系统只应把这个量用于三个主核，Q/K 归一化、状态 gather/scatter 和 launch 间隔另行建模。缺少合格计时的 V1 或不等长的 packed V2 返回相应的形状、路由和可用字节字段，耗时返回 `None`。[各代输入与输出示例](../results/v0.27/kda/report.md)

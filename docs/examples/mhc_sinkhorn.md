@@ -1,5 +1,11 @@
 # mHC Sinkhorn · 跨过 950PR 分核边界
 
+同一个 T=67、I=10 的输入，前序决定了第一次 VF 的接手时间。传入同一家族的 `resident_aiv=0` 表示首次，950DT 预测 **5.319 µs**，CA 为 **5.232 µs**。完整算例可逐项复核发起、迭代、写回和 PR 的同形差值。[公开接口与逐阶段计算](../../results/v0.27/fusion/public-sink.md)
+
+![950PR 上同为 67 个 token，首发与热态对齐输入、十轮 VF 和输出写](../../results/v0.27/fusion/950pr-same-input.png)
+
+固定 FP32 输入 `[67,4,4]` 和 10 轮迭代。950PR 首次设备窗为 **5.068 µs**，同族已有 46 个 AIV 驻留时为 **3.285 µs**。冻结候选在给出各自的前序后得到 **5.367、3.286 µs**。每栏的总时长按全核退出，真实末核的循环按对应行与列规约标出；两次同形只算一个不同形状。[950DT 同形图](../../results/v0.27/fusion/950dt-same-input.png) · [PR 逐轮源数据](../../results/v0.27/fusion/950pr-same-input.json) · [候选与公开模型的同集误差](../../results/v0.27/fusion/report.md)
+
 ## T=67、I=10 的首次发起
 
 ![950DT 新形，[67,4] 的首次发起，阶段逐项与末核实测对齐](../../results/v0.26/sink/independent-950dt-67-first.png)

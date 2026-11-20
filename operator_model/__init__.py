@@ -3,6 +3,8 @@ from .chips import ChipConfig, load_chip
 from .backend import Estimate, estimate
 from .stream import OperatorStream
 from .rms_history import RmsHistoryBand, estimate_rms_history_band
+from .kimi_kda import plan_kimi_kda_prefill
 
-__version__ = '0.26.0'
-__all__ = ['ChipConfig', 'load_chip', 'Estimate', 'estimate', 'OperatorStream', 'RmsHistoryBand', 'estimate_rms_history_band']
+__version__ = '0.27.0'
+__all__ = ['ChipConfig', 'load_chip', 'Estimate', 'estimate', 'OperatorStream',
+           'RmsHistoryBand', 'estimate_rms_history_band', 'plan_kimi_kda_prefill']

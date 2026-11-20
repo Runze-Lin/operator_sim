@@ -1,0 +1,3673 @@
+{
+  "qualification": "source and metadata decisions, no production end-to-end CA in these rows",
+  "source": {
+    "wheel_sha256": "c660b90cee1d93c83292bb9b8509371da83493a633efd3e5113f70380d373521",
+    "member": "flash_linear_attention_npu_a5-26.9.1.data/purelib/fla_npu/ops/ascendc/_aclnn_ctypes.py",
+    "sha256": "b9d5893db66409c2601cc5d86e7197052a179f5f1c9ee83cd844151d43b9e34d",
+    "functions": [
+      "_chunk_kda_fwd_use_v2",
+      "_kda_ceil_div",
+      "_kda_total_chunks"
+    ],
+    "constant": "_CHUNK_KDA_FWD_V2_MIN_WORK_ITEMS",
+    "stable_cpp_sha256": "07d77366e2b2744f5770beb2a0f9d8b48bd8cde5720e3f98a4c69a04b7e434ea"
+  },
+  "query_measurement": "in-process warm + initial call; 7 calls per row per chip; no farm coordination",
+  "max_query_ms": 4.190869999999999,
+  "rows": [
+    {
+      "tag": "single",
+      "lengths": [
+        2
+      ],
+      "tp": 96,
+      "w": 1,
+      "official_api": "aclnnChunkKdaFwd",
+      "targets": {
+        "Ascend950DT_9582": {
+          "plan": {
+            "chip": "Ascend950DT_9582",
+            "selector": "vllm_ascend_kimi_k3_fla_a5_26.9.1",
+            "chip_policy": "assume the same 950 FLA implementation and host selection rule on future chips",
+            "local_heads": 1,
+            "query_lengths": [
+              2
+            ],
+            "nonempty_requests": 1,
+            "shape": [
+              1,
+              2,
+              1,
+              1,
+              128,
+              128
+            ],
+            "chunks": 1,
+            "work_items": 1,
+            "aclnn": "aclnnChunkKdaFwd",
+            "main_kernels": [
+              "ChunkKdaFwd:full"
+            ],
+            "main_kernels_us": null,
+            "full_dispatch_us": null,
+            "status": "unavailable",
+            "reason": "selected fused V1 has no qualified cost for this dispatch",
+            "graph_io": {
+              "qk_l2norm_read_bytes": 1024,
+              "qk_l2norm_write_bytes": 1024,
+              "state_gather_read_bytes_range": [
+                0,
+                65536
+              ],
+              "state_gather_write_bytes": 65536,
+              "state_scatter_read_bytes": 65536,
+              "state_scatter_write_bytes": 65536
+            },
+            "main_stages_us": {},
+            "minimum_payload_bytes": 134668,
+            "capacity_bytes": 103079215104,
+            "scope": "one prefill dispatch, after convolution and beta preprocessing; excludes decoder and speculative recurrent calls"
+          },
+          "median_query_ms": 0.01078,
+          "max_query_ms": 0.31939
+        },
+        "Ascend950PR_957b": {
+          "plan": {
+            "chip": "Ascend950PR_957b",
+            "selector": "vllm_ascend_kimi_k3_fla_a5_26.9.1",
+            "chip_policy": "assume the same 950 FLA implementation and host selection rule on future chips",
+            "local_heads": 1,
+            "query_lengths": [
+              2
+            ],
+            "nonempty_requests": 1,
+            "shape": [
+              1,
+              2,
+              1,
+              1,
+              128,
+              128
+            ],
+            "chunks": 1,
+            "work_items": 1,
+            "aclnn": "aclnnChunkKdaFwd",
+            "main_kernels": [
+              "ChunkKdaFwd:full"
+            ],
+            "main_kernels_us": null,
+            "full_dispatch_us": null,
+            "status": "unavailable",
+            "reason": "selected fused V1 has no qualified cost for this dispatch",
+            "graph_io": {
+              "qk_l2norm_read_bytes": 1024,
+              "qk_l2norm_write_bytes": 1024,
+              "state_gather_read_bytes_range": [
+                0,
+                65536
+              ],
+              "state_gather_write_bytes": 65536,
+              "state_scatter_read_bytes": 65536,
+              "state_scatter_write_bytes": 65536
+            },
+            "main_stages_us": {},
+            "minimum_payload_bytes": 134668,
+            "capacity_bytes": 120259084288,
+            "scope": "one prefill dispatch, after convolution and beta preprocessing; excludes decoder and speculative recurrent calls"
+          },
+          "median_query_ms": 0.0104,
+          "max_query_ms": 0.23104
+        },
+        "Ascend970DT": {
+          "plan": {
+            "chip": "Ascend970DT",
+            "selector": "vllm_ascend_kimi_k3_fla_a5_26.9.1",
+            "chip_policy": "assume the same 950 FLA implementation and host selection rule on future chips",
+            "local_heads": 1,
+            "query_lengths": [
+              2
+            ],
+            "nonempty_requests": 1,
+            "shape": [
+              1,
+              2,
+              1,
+              1,
+              128,
+              128
+            ],
+            "chunks": 1,
+            "work_items": 1,
+            "aclnn": "aclnnChunkKdaFwd",
+            "main_kernels": [
+              "ChunkKdaFwd:full"
+            ],
+            "main_kernels_us": null,
+            "full_dispatch_us": null,
+            "status": "unavailable",
+            "reason": "selected fused V1 has no qualified cost for this dispatch",
+            "graph_io": {
+              "qk_l2norm_read_bytes": 1024,
+              "qk_l2norm_write_bytes": 1024,
+              "state_gather_read_bytes_range": [
+                0,
+                65536
+              ],
+              "state_gather_write_bytes": 65536,
+              "state_scatter_read_bytes": 65536,
+              "state_scatter_write_bytes": 65536
+            },
+            "main_stages_us": {},
+            "minimum_payload_bytes": 134668,
+            "capacity_bytes": 288000000000,
+            "scope": "one prefill dispatch, after convolution and beta preprocessing; excludes decoder and speculative recurrent calls"
+          },
+          "median_query_ms": 0.0101,
+          "max_query_ms": 0.26825
+        }
+      }
+    },
+    {
+      "tag": "two-sequences",
+      "lengths": [
+        1,
+        1
+      ],
+      "tp": 96,
+      "w": 2,
+      "official_api": "aclnnChunkKdaFwd",
+      "targets": {
+        "Ascend950DT_9582": {
+          "plan": {
+            "chip": "Ascend950DT_9582",
+            "selector": "vllm_ascend_kimi_k3_fla_a5_26.9.1",
+            "chip_policy": "assume the same 950 FLA implementation and host selection rule on future chips",
+            "local_heads": 1,
+            "query_lengths": [
+              1,
+              1
+            ],
+            "nonempty_requests": 2,
+            "shape": [
+              1,
+              2,
+              1,
+              1,
+              128,
+              128
+            ],
+            "chunks": 2,
+            "work_items": 2,
+            "aclnn": "aclnnChunkKdaFwd",
+            "main_kernels": [
+              "ChunkKdaFwd:gate_prepare",
+              "ChunkKdaFwd:post_wu",
+              "ChunkKdaFwd:fwd_h",
+              "ChunkKdaFwd:finalize"
+            ],
+            "main_kernels_us": null,
+            "full_dispatch_us": null,
+            "status": "unavailable",
+            "reason": "selected fused V1 has no qualified cost for this dispatch",
+            "graph_io": {
+              "qk_l2norm_read_bytes": 1024,
+              "qk_l2norm_write_bytes": 1024,
+              "state_gather_read_bytes_range": [
+                0,
+                131072
+              ],
+              "state_gather_write_bytes": 131072,
+              "state_scatter_read_bytes": 131072,
+              "state_scatter_write_bytes": 131072
+            },
+            "main_stages_us": {},
+            "minimum_payload_bytes": 265740,
+            "capacity_bytes": 103079215104,
+            "scope": "one prefill dispatch, after convolution and beta preprocessing; excludes decoder and speculative recurrent calls"
+          },
+          "median_query_ms": 0.010289999999999999,
+          "max_query_ms": 0.012589999999999999
+        },
+        "Ascend950PR_957b": {
+          "plan": {
+            "chip": "Ascend950PR_957b",
+            "selector": "vllm_ascend_kimi_k3_fla_a5_26.9.1",
+            "chip_policy": "assume the same 950 FLA implementation and host selection rule on future chips",
+            "local_heads": 1,
+            "query_lengths": [
+              1,
+              1
+            ],
+            "nonempty_requests": 2,
+            "shape": [
+              1,
+              2,
+              1,
+              1,
+              128,
+              128
+            ],
+            "chunks": 2,
+            "work_items": 2,
+            "aclnn": "aclnnChunkKdaFwd",
+            "main_kernels": [
+              "ChunkKdaFwd:gate_prepare",
+              "ChunkKdaFwd:post_wu",
+              "ChunkKdaFwd:fwd_h",
+              "ChunkKdaFwd:finalize"
+            ],
+            "main_kernels_us": null,
+            "full_dispatch_us": null,
+            "status": "unavailable",
+            "reason": "selected fused V1 has no qualified cost for this dispatch",
+            "graph_io": {
+              "qk_l2norm_read_bytes": 1024,
+              "qk_l2norm_write_bytes": 1024,
+              "state_gather_read_bytes_range": [
+                0,
+                131072
+              ],
+              "state_gather_write_bytes": 131072,
+              "state_scatter_read_bytes": 131072,
+              "state_scatter_write_bytes": 131072
+            },
+            "main_stages_us": {},
+            "minimum_payload_bytes": 265740,
+            "capacity_bytes": 120259084288,
+            "scope": "one prefill dispatch, after convolution and beta preprocessing; excludes decoder and speculative recurrent calls"
+          },
+          "median_query_ms": 0.010539999999999999,
+          "max_query_ms": 0.01078
+        },
+        "Ascend970DT": {
+          "plan": {
+            "chip": "Ascend970DT",
+            "selector": "vllm_ascend_kimi_k3_fla_a5_26.9.1",
+            "chip_policy": "assume the same 950 FLA implementation and host selection rule on future chips",
+            "local_heads": 1,
+            "query_lengths": [
+              1,
+              1
+            ],
+            "nonempty_requests": 2,
+            "shape": [
+              1,
+              2,
+              1,
+              1,
+              128,
+              128
+            ],
+            "chunks": 2,
+            "work_items": 2,
+            "aclnn": "aclnnChunkKdaFwd",
+            "main_kernels": [
+              "ChunkKdaFwd:gate_prepare",
+              "ChunkKdaFwd:post_wu",
+              "ChunkKdaFwd:fwd_h",
+              "ChunkKdaFwd:finalize"
+            ],
+            "main_kernels_us": null,
+            "full_dispatch_us": null,
+            "status": "unavailable",
+            "reason": "selected fused V1 has no qualified cost for this dispatch",
+            "graph_io": {
+              "qk_l2norm_read_bytes": 1024,
+              "qk_l2norm_write_bytes": 1024,
+              "state_gather_read_bytes_range": [
+                0,
+                131072
+              ],
+              "state_gather_write_bytes": 131072,
+              "state_scatter_read_bytes": 131072,
+              "state_scatter_write_bytes": 131072
+            },
+            "main_stages_us": {},
+            "minimum_payload_bytes": 265740,
+            "capacity_bytes": 288000000000,
+            "scope": "one prefill dispatch, after convolution and beta preprocessing; excludes decoder and speculative recurrent calls"
+          },
+          "median_query_ms": 0.010289999999999999,
+          "max_query_ms": 0.01068
+        }
+      }
+    },
+    {
+      "tag": "W4095",
+      "lengths": [
+        262080
+      ],
+      "tp": 96,
+      "w": 4095,
+      "official_api": "aclnnChunkKdaFwd",
+      "targets": {
+        "Ascend950DT_9582": {
+          "plan": {
+            "chip": "Ascend950DT_9582",
+            "selector": "vllm_ascend_kimi_k3_fla_a5_26.9.1",
+            "chip_policy": "assume the same 950 FLA implementation and host selection rule on future chips",
+            "local_heads": 1,
+            "query_lengths": [
+              262080
+            ],
+            "nonempty_requests": 1,
+            "shape": [
+              1,
+              262080,
+              1,
+              1,
+              128,
+              128
+            ],
+            "chunks": 4095,
+            "work_items": 4095,
+            "aclnn": "aclnnChunkKdaFwd",
+            "main_kernels": [
+              "ChunkKdaFwd:gate_prepare",
+              "ChunkKdaFwd:post_wu",
+              "ChunkKdaFwd:fwd_h",
+              "ChunkKdaFwd:finalize"
+            ],
+            "main_kernels_us": null,
+            "full_dispatch_us": null,
+            "status": "unavailable",
+            "reason": "selected fused V1 has no qualified cost for this dispatch",
+            "graph_io": {
+              "qk_l2norm_read_bytes": 134184960,
+              "qk_l2norm_write_bytes": 134184960,
+              "state_gather_read_bytes_range": [
+                0,
+                65536
+              ],
+              "state_gather_write_bytes": 65536,
+              "state_scatter_read_bytes": 65536,
+              "state_scatter_write_bytes": 65536
+            },
+            "main_stages_us": {},
+            "minimum_payload_bytes": 403734788,
+            "capacity_bytes": 103079215104,
+            "scope": "one prefill dispatch, after convolution and beta preprocessing; excludes decoder and speculative recurrent calls"
+          },
+          "median_query_ms": 0.01053,
+          "max_query_ms": 0.01575
+        },
+        "Ascend950PR_957b": {
+          "plan": {
+            "chip": "Ascend950PR_957b",
+            "selector": "vllm_ascend_kimi_k3_fla_a5_26.9.1",
+            "chip_policy": "assume the same 950 FLA implementation and host selection rule on future chips",
+            "local_heads": 1,
+            "query_lengths": [
+              262080
+            ],
+            "nonempty_requests": 1,
+            "shape": [
+              1,
+              262080,
+              1,
+              1,
+              128,
+              128
+            ],
+            "chunks": 4095,
+            "work_items": 4095,
+            "aclnn": "aclnnChunkKdaFwd",
+            "main_kernels": [
+              "ChunkKdaFwd:gate_prepare",
+              "ChunkKdaFwd:post_wu",
+              "ChunkKdaFwd:fwd_h",
+              "ChunkKdaFwd:finalize"
+            ],
+            "main_kernels_us": null,
+            "full_dispatch_us": null,
+            "status": "unavailable",
+            "reason": "selected fused V1 has no qualified cost for this dispatch",
+            "graph_io": {
+              "qk_l2norm_read_bytes": 134184960,
+              "qk_l2norm_write_bytes": 134184960,
+              "state_gather_read_bytes_range": [
+                0,
+                65536
+              ],
+              "state_gather_write_bytes": 65536,
+              "state_scatter_read_bytes": 65536,
+              "state_scatter_write_bytes": 65536
+            },
+            "main_stages_us": {},
+            "minimum_payload_bytes": 403734788,
+            "capacity_bytes": 120259084288,
+            "scope": "one prefill dispatch, after convolution and beta preprocessing; excludes decoder and speculative recurrent calls"
+          },
+          "median_query_ms": 0.00997,
+          "max_query_ms": 0.01087
+        },
+        "Ascend970DT": {
+          "plan": {
+            "chip": "Ascend970DT",
+            "selector": "vllm_ascend_kimi_k3_fla_a5_26.9.1",
+            "chip_policy": "assume the same 950 FLA implementation and host selection rule on future chips",
+            "local_heads": 1,
+            "query_lengths": [
+              262080
+            ],
+            "nonempty_requests": 1,
+            "shape": [
+              1,
+              262080,
+              1,
+              1,
+              128,
+              128
+            ],
+            "chunks": 4095,
+            "work_items": 4095,
+            "aclnn": "aclnnChunkKdaFwd",
+            "main_kernels": [
+              "ChunkKdaFwd:gate_prepare",
+              "ChunkKdaFwd:post_wu",
+              "ChunkKdaFwd:fwd_h",
+              "ChunkKdaFwd:finalize"
+            ],
+            "main_kernels_us": null,
+            "full_dispatch_us": null,
+            "status": "unavailable",
+            "reason": "selected fused V1 has no qualified cost for this dispatch",
+            "graph_io": {
+              "qk_l2norm_read_bytes": 134184960,
+              "qk_l2norm_write_bytes": 134184960,
+              "state_gather_read_bytes_range": [
+                0,
+                65536
+              ],
+              "state_gather_write_bytes": 65536,
+              "state_scatter_read_bytes": 65536,
+              "state_scatter_write_bytes": 65536
+            },
+            "main_stages_us": {},
+            "minimum_payload_bytes": 403734788,
+            "capacity_bytes": 288000000000,
+            "scope": "one prefill dispatch, after convolution and beta preprocessing; excludes decoder and speculative recurrent calls"
+          },
+          "median_query_ms": 0.010069999999999999,
+          "max_query_ms": 0.01128
+        }
+      }
+    },
+    {
+      "tag": "W4096",
+      "lengths": [
+        262144
+      ],
+      "tp": 96,
+      "w": 4096,
+      "official_api": "aclnnChunkKdaFwdV2",
+      "targets": {
+        "Ascend950DT_9582": {
+          "plan": {
+            "chip": "Ascend950DT_9582",
+            "selector": "vllm_ascend_kimi_k3_fla_a5_26.9.1",
+            "chip_policy": "assume the same 950 FLA implementation and host selection rule on future chips",
+            "local_heads": 1,
+            "query_lengths": [
+              262144
+            ],
+            "nonempty_requests": 1,
+            "shape": [
+              1,
+              262144,
+              1,
+              1,
+              128,
+              128
+            ],
+            "chunks": 4096,
+            "work_items": 4096,
+            "aclnn": "aclnnChunkKdaFwdV2",
+            "main_kernels": [
+              "chunk_kda_fwd_prepare",
+              "chunk_fwd_h",
+              "chunk_kda_fwd_finalize"
+            ],
+            "main_kernels_us": 15868.311336234081,
+            "full_dispatch_us": null,
+            "status": "extrapolated",
+            "reason": "three serial V2 compute kernels; graph helpers, possible materialization and launch gaps have no qualified times",
+            "graph_io": {
+              "qk_l2norm_read_bytes": 134217728,
+              "qk_l2norm_write_bytes": 134217728,
+              "state_gather_read_bytes_range": [
+                0,
+                65536
+              ],
+              "state_gather_write_bytes": 65536,
+              "state_scatter_read_bytes": 65536,
+              "state_scatter_write_bytes": 65536
+            },
+            "main_stages_us": {
+              "chunk_kda_fwd_prepare": 1849.6884804218719,
+              "chunk_fwd_h": 13652.338157145563,
+              "chunk_kda_fwd_finalize": 366.28469866664585
+            },
+            "minimum_payload_bytes": 806486532,
+            "capacity_bytes": 103079215104,
+            "scope": "one prefill dispatch, after convolution and beta preprocessing; excludes decoder and speculative recurrent calls",
+            "memory_bytes": {
+              "public_live": 403833348,
+              "intermediate_after_prepare": 402653184,
+              "intermediate_after_fwdh": 268435456
+            }
+          },
+          "median_query_ms": 2.08119,
+          "max_query_ms": 2.48446
+        },
+        "Ascend950PR_957b": {
+          "plan": {
+            "chip": "Ascend950PR_957b",
+            "selector": "vllm_ascend_kimi_k3_fla_a5_26.9.1",
+            "chip_policy": "assume the same 950 FLA implementation and host selection rule on future chips",
+            "local_heads": 1,
+            "query_lengths": [
+              262144
+            ],
+            "nonempty_requests": 1,
+            "shape": [
+              1,
+              262144,
+              1,
+              1,
+              128,
+              128
+            ],
+            "chunks": 4096,
+            "work_items": 4096,
+            "aclnn": "aclnnChunkKdaFwdV2",
+            "main_kernels": [
+              "chunk_kda_fwd_prepare",
+              "chunk_fwd_h",
+              "chunk_kda_fwd_finalize"
+            ],
+            "main_kernels_us": 16244.021794028422,
+            "full_dispatch_us": null,
+            "status": "extrapolated",
+            "reason": "three serial V2 compute kernels; graph helpers, possible materialization and launch gaps have no qualified times",
+            "graph_io": {
+              "qk_l2norm_read_bytes": 134217728,
+              "qk_l2norm_write_bytes": 134217728,
+              "state_gather_read_bytes_range": [
+                0,
+                65536
+              ],
+              "state_gather_write_bytes": 65536,
+              "state_scatter_read_bytes": 65536,
+              "state_scatter_write_bytes": 65536
+            },
+            "main_stages_us": {
+              "chunk_kda_fwd_prepare": 2138.6905997417402,
+              "chunk_fwd_h": 13684.95688244201,
+              "chunk_kda_fwd_finalize": 420.3743118446731
+            },
+            "minimum_payload_bytes": 806486532,
+            "capacity_bytes": 120259084288,
+            "scope": "one prefill dispatch, after convolution and beta preprocessing; excludes decoder and speculative recurrent calls",
+            "memory_bytes": {
+              "public_live": 403833348,
+              "intermediate_after_prepare": 402653184,
+              "intermediate_after_fwdh": 268435456
+            }
+          },
+          "median_query_ms": 1.9452399999999999,
+          "max_query_ms": 2.0441499999999997
+        },
+        "Ascend970DT": {
+          "plan": {
+            "chip": "Ascend970DT",
+            "selector": "vllm_ascend_kimi_k3_fla_a5_26.9.1",
+            "chip_policy": "assume the same 950 FLA implementation and host selection rule on future chips",
+            "local_heads": 1,
+            "query_lengths": [
+              262144
+            ],
+            "nonempty_requests": 1,
+            "shape": [
+              1,
+              262144,
+              1,
+              1,
+              128,
+              128
+            ],
+            "chunks": 4096,
+            "work_items": 4096,
+            "aclnn": "aclnnChunkKdaFwdV2",
+            "main_kernels": [
+              "chunk_kda_fwd_prepare",
+              "chunk_fwd_h",
+              "chunk_kda_fwd_finalize"
+            ],
+            "main_kernels_us": 13561.490235666064,
+            "full_dispatch_us": null,
+            "status": "extrapolated",
+            "reason": "three serial V2 compute kernels; graph helpers, possible materialization and launch gaps have no qualified times",
+            "graph_io": {
+              "qk_l2norm_read_bytes": 134217728,
+              "qk_l2norm_write_bytes": 134217728,
+              "state_gather_read_bytes_range": [
+                0,
+                65536
+              ],
+              "state_gather_write_bytes": 65536,
+              "state_scatter_read_bytes": 65536,
+              "state_scatter_write_bytes": 65536
+            },
+            "main_stages_us": {
+              "chunk_kda_fwd_prepare": 872.8651062218734,
+              "chunk_fwd_h": 12511.478488638162,
+              "chunk_kda_fwd_finalize": 177.14664080602816
+            },
+            "minimum_payload_bytes": 806486532,
+            "capacity_bytes": 288000000000,
+            "scope": "one prefill dispatch, after convolution and beta preprocessing; excludes decoder and speculative recurrent calls",
+            "memory_bytes": {
+              "public_live": 403833348,
+              "intermediate_after_prepare": 402653184,
+              "intermediate_after_fwdh": 268435456
+            }
+          },
+          "median_query_ms": 2.5677,
+          "max_query_ms": 2.58145
+        }
+      }
+    },
+    {
+      "tag": "same-tokens",
+      "lengths": [
+        21824
+      ],
+      "tp": 8,
+      "w": 4092,
+      "official_api": "aclnnChunkKdaFwd",
+      "targets": {
+        "Ascend950DT_9582": {
+          "plan": {
+            "chip": "Ascend950DT_9582",
+            "selector": "vllm_ascend_kimi_k3_fla_a5_26.9.1",
+            "chip_policy": "assume the same 950 FLA implementation and host selection rule on future chips",
+            "local_heads": 12,
+            "query_lengths": [
+              21824
+            ],
+            "nonempty_requests": 1,
+            "shape": [
+              1,
+              21824,
+              12,
+              12,
+              128,
+              128
+            ],
+            "chunks": 341,
+            "work_items": 4092,
+            "aclnn": "aclnnChunkKdaFwd",
+            "main_kernels": [
+              "ChunkKdaFwd:gate_prepare",
+              "ChunkKdaFwd:post_wu",
+              "ChunkKdaFwd:fwd_h",
+              "ChunkKdaFwd:finalize"
+            ],
+            "main_kernels_us": null,
+            "full_dispatch_us": null,
+            "status": "unavailable",
+            "reason": "selected fused V1 has no qualified cost for this dispatch",
+            "graph_io": {
+              "qk_l2norm_read_bytes": 134086656,
+              "qk_l2norm_write_bytes": 134086656,
+              "state_gather_read_bytes_range": [
+                0,
+                786432
+              ],
+              "state_gather_write_bytes": 786432,
+              "state_scatter_read_bytes": 786432,
+              "state_scatter_write_bytes": 786432
+            },
+            "main_stages_us": {},
+            "minimum_payload_bytes": 404886576,
+            "capacity_bytes": 103079215104,
+            "scope": "one prefill dispatch, after convolution and beta preprocessing; excludes decoder and speculative recurrent calls"
+          },
+          "median_query_ms": 0.01085,
+          "max_query_ms": 0.01652
+        },
+        "Ascend950PR_957b": {
+          "plan": {
+            "chip": "Ascend950PR_957b",
+            "selector": "vllm_ascend_kimi_k3_fla_a5_26.9.1",
+            "chip_policy": "assume the same 950 FLA implementation and host selection rule on future chips",
+            "local_heads": 12,
+            "query_lengths": [
+              21824
+            ],
+            "nonempty_requests": 1,
+            "shape": [
+              1,
+              21824,
+              12,
+              12,
+              128,
+              128
+            ],
+            "chunks": 341,
+            "work_items": 4092,
+            "aclnn": "aclnnChunkKdaFwd",
+            "main_kernels": [
+              "ChunkKdaFwd:gate_prepare",
+              "ChunkKdaFwd:post_wu",
+              "ChunkKdaFwd:fwd_h",
+              "ChunkKdaFwd:finalize"
+            ],
+            "main_kernels_us": null,
+            "full_dispatch_us": null,
+            "status": "unavailable",
+            "reason": "selected fused V1 has no qualified cost for this dispatch",
+            "graph_io": {
+              "qk_l2norm_read_bytes": 134086656,
+              "qk_l2norm_write_bytes": 134086656,
+              "state_gather_read_bytes_range": [
+                0,
+                786432
+              ],
+              "state_gather_write_bytes": 786432,
+              "state_scatter_read_bytes": 786432,
+              "state_scatter_write_bytes": 786432
+            },
+            "main_stages_us": {},
+            "minimum_payload_bytes": 404886576,
+            "capacity_bytes": 120259084288,
+            "scope": "one prefill dispatch, after convolution and beta preprocessing; excludes decoder and speculative recurrent calls"
+          },
+          "median_query_ms": 0.01019,
+          "max_query_ms": 0.04899
+        },
+        "Ascend970DT": {
+          "plan": {
+            "chip": "Ascend970DT",
+            "selector": "vllm_ascend_kimi_k3_fla_a5_26.9.1",
+            "chip_policy": "assume the same 950 FLA implementation and host selection rule on future chips",
+            "local_heads": 12,
+            "query_lengths": [
+              21824
+            ],
+            "nonempty_requests": 1,
+            "shape": [
+              1,
+              21824,
+              12,
+              12,
+              128,
+              128
+            ],
+            "chunks": 341,
+            "work_items": 4092,
+            "aclnn": "aclnnChunkKdaFwd",
+            "main_kernels": [
+              "ChunkKdaFwd:gate_prepare",
+              "ChunkKdaFwd:post_wu",
+              "ChunkKdaFwd:fwd_h",
+              "ChunkKdaFwd:finalize"
+            ],
+            "main_kernels_us": null,
+            "full_dispatch_us": null,
+            "status": "unavailable",
+            "reason": "selected fused V1 has no qualified cost for this dispatch",
+            "graph_io": {
+              "qk_l2norm_read_bytes": 134086656,
+              "qk_l2norm_write_bytes": 134086656,
+              "state_gather_read_bytes_range": [
+                0,
+                786432
+              ],
+              "state_gather_write_bytes": 786432,
+              "state_scatter_read_bytes": 786432,
+              "state_scatter_write_bytes": 786432
+            },
+            "main_stages_us": {},
+            "minimum_payload_bytes": 404886576,
+            "capacity_bytes": 288000000000,
+            "scope": "one prefill dispatch, after convolution and beta preprocessing; excludes decoder and speculative recurrent calls"
+          },
+          "median_query_ms": 0.01001,
+          "max_query_ms": 0.01032
+        }
+      }
+    },
+    {
+      "tag": "ragged",
+      "lengths": [
+        1,
+        0,
+        21823
+      ],
+      "tp": 8,
+      "w": 4104,
+      "official_api": "aclnnChunkKdaFwdV2",
+      "targets": {
+        "Ascend950DT_9582": {
+          "plan": {
+            "chip": "Ascend950DT_9582",
+            "selector": "vllm_ascend_kimi_k3_fla_a5_26.9.1",
+            "chip_policy": "assume the same 950 FLA implementation and host selection rule on future chips",
+            "local_heads": 12,
+            "query_lengths": [
+              1,
+              0,
+              21823
+            ],
+            "nonempty_requests": 2,
+            "shape": [
+              1,
+              21824,
+              12,
+              12,
+              128,
+              128
+            ],
+            "chunks": 342,
+            "work_items": 4104,
+            "aclnn": "aclnnChunkKdaFwdV2",
+            "main_kernels": [
+              "chunk_kda_fwd_prepare",
+              "chunk_fwd_h",
+              "chunk_kda_fwd_finalize"
+            ],
+            "main_kernels_us": null,
+            "full_dispatch_us": null,
+            "status": "unavailable",
+            "reason": "ragged packed route identified; frozen resource scheduler covers equal nonempty lengths",
+            "graph_io": {
+              "qk_l2norm_read_bytes": 134086656,
+              "qk_l2norm_write_bytes": 134086656,
+              "state_gather_read_bytes_range": [
+                0,
+                1572864
+              ],
+              "state_gather_write_bytes": 1572864,
+              "state_scatter_read_bytes": 1572864,
+              "state_scatter_write_bytes": 1572864
+            },
+            "main_stages_us": {},
+            "minimum_payload_bytes": 808719408,
+            "capacity_bytes": 103079215104,
+            "scope": "one prefill dispatch, after convolution and beta preprocessing; excludes decoder and speculative recurrent calls",
+            "memory_bytes": {
+              "public_live": 406459440,
+              "intermediate_after_prepare": 402259968,
+              "intermediate_after_fwdh": 268566528
+            }
+          },
+          "median_query_ms": 0.01188,
+          "max_query_ms": 0.01394
+        },
+        "Ascend950PR_957b": {
+          "plan": {
+            "chip": "Ascend950PR_957b",
+            "selector": "vllm_ascend_kimi_k3_fla_a5_26.9.1",
+            "chip_policy": "assume the same 950 FLA implementation and host selection rule on future chips",
+            "local_heads": 12,
+            "query_lengths": [
+              1,
+              0,
+              21823
+            ],
+            "nonempty_requests": 2,
+            "shape": [
+              1,
+              21824,
+              12,
+              12,
+              128,
+              128
+            ],
+            "chunks": 342,
+            "work_items": 4104,
+            "aclnn": "aclnnChunkKdaFwdV2",
+            "main_kernels": [
+              "chunk_kda_fwd_prepare",
+              "chunk_fwd_h",
+              "chunk_kda_fwd_finalize"
+            ],
+            "main_kernels_us": null,
+            "full_dispatch_us": null,
+            "status": "unavailable",
+            "reason": "ragged packed route identified; frozen resource scheduler covers equal nonempty lengths",
+            "graph_io": {
+              "qk_l2norm_read_bytes": 134086656,
+              "qk_l2norm_write_bytes": 134086656,
+              "state_gather_read_bytes_range": [
+                0,
+                1572864
+              ],
+              "state_gather_write_bytes": 1572864,
+              "state_scatter_read_bytes": 1572864,
+              "state_scatter_write_bytes": 1572864
+            },
+            "main_stages_us": {},
+            "minimum_payload_bytes": 808719408,
+            "capacity_bytes": 120259084288,
+            "scope": "one prefill dispatch, after convolution and beta preprocessing; excludes decoder and speculative recurrent calls",
+            "memory_bytes": {
+              "public_live": 406459440,
+              "intermediate_after_prepare": 402259968,
+              "intermediate_after_fwdh": 268566528
+            }
+          },
+          "median_query_ms": 0.01163,
+          "max_query_ms": 0.01189
+        },
+        "Ascend970DT": {
+          "plan": {
+            "chip": "Ascend970DT",
+            "selector": "vllm_ascend_kimi_k3_fla_a5_26.9.1",
+            "chip_policy": "assume the same 950 FLA implementation and host selection rule on future chips",
+            "local_heads": 12,
+            "query_lengths": [
+              1,
+              0,
+              21823
+            ],
+            "nonempty_requests": 2,
+            "shape": [
+              1,
+              21824,
+              12,
+              12,
+              128,
+              128
+            ],
+            "chunks": 342,
+            "work_items": 4104,
+            "aclnn": "aclnnChunkKdaFwdV2",
+            "main_kernels": [
+              "chunk_kda_fwd_prepare",
+              "chunk_fwd_h",
+              "chunk_kda_fwd_finalize"
+            ],
+            "main_kernels_us": null,
+            "full_dispatch_us": null,
+            "status": "unavailable",
+            "reason": "ragged packed route identified; frozen resource scheduler covers equal nonempty lengths",
+            "graph_io": {
+              "qk_l2norm_read_bytes": 134086656,
+              "qk_l2norm_write_bytes": 134086656,
+              "state_gather_read_bytes_range": [
+                0,
+                1572864
+              ],
+              "state_gather_write_bytes": 1572864,
+              "state_scatter_read_bytes": 1572864,
+              "state_scatter_write_bytes": 1572864
+            },
+            "main_stages_us": {},
+            "minimum_payload_bytes": 808719408,
+            "capacity_bytes": 288000000000,
+            "scope": "one prefill dispatch, after convolution and beta preprocessing; excludes decoder and speculative recurrent calls",
+            "memory_bytes": {
+              "public_live": 406459440,
+              "intermediate_after_prepare": 402259968,
+              "intermediate_after_fwdh": 268566528
+            }
+          },
+          "median_query_ms": 0.0116,
+          "max_query_ms": 0.01205
+        }
+      }
+    },
+    {
+      "tag": "empty-slots",
+      "lengths": [
+        0,
+        32768,
+        0,
+        32768
+      ],
+      "tp": 8,
+      "w": 12288,
+      "official_api": "aclnnChunkKdaFwdV2",
+      "targets": {
+        "Ascend950DT_9582": {
+          "plan": {
+            "chip": "Ascend950DT_9582",
+            "selector": "vllm_ascend_kimi_k3_fla_a5_26.9.1",
+            "chip_policy": "assume the same 950 FLA implementation and host selection rule on future chips",
+            "local_heads": 12,
+            "query_lengths": [
+              0,
+              32768,
+              0,
+              32768
+            ],
+            "nonempty_requests": 2,
+            "shape": [
+              1,
+              65536,
+              12,
+              12,
+              128,
+              128
+            ],
+            "chunks": 1024,
+            "work_items": 12288,
+            "aclnn": "aclnnChunkKdaFwdV2",
+            "main_kernels": [
+              "chunk_kda_fwd_prepare",
+              "chunk_fwd_h",
+              "chunk_kda_fwd_finalize"
+            ],
+            "main_kernels_us": 8364.729629785674,
+            "full_dispatch_us": null,
+            "status": "extrapolated",
+            "reason": "three serial V2 compute kernels; graph helpers, possible materialization and launch gaps have no qualified times",
+            "graph_io": {
+              "qk_l2norm_read_bytes": 402653184,
+              "qk_l2norm_write_bytes": 402653184,
+              "state_gather_read_bytes_range": [
+                0,
+                1572864
+              ],
+              "state_gather_write_bytes": 1572864,
+              "state_scatter_read_bytes": 1572864,
+              "state_scatter_write_bytes": 1572864
+            },
+            "main_stages_us": {
+              "chunk_kda_fwd_prepare": 5537.0024109625865,
+              "chunk_fwd_h": 1732.6561531261807,
+              "chunk_kda_fwd_finalize": 1095.0710656969072
+            },
+            "minimum_payload_bytes": 2422216752,
+            "capacity_bytes": 103079215104,
+            "scope": "one prefill dispatch, after convolution and beta preprocessing; excludes decoder and speculative recurrent calls",
+            "memory_bytes": {
+              "public_live": 1214257200,
+              "intermediate_after_prepare": 1207959552,
+              "intermediate_after_fwdh": 805306368
+            }
+          },
+          "median_query_ms": 2.16424,
+          "max_query_ms": 2.24389
+        },
+        "Ascend950PR_957b": {
+          "plan": {
+            "chip": "Ascend950PR_957b",
+            "selector": "vllm_ascend_kimi_k3_fla_a5_26.9.1",
+            "chip_policy": "assume the same 950 FLA implementation and host selection rule on future chips",
+            "local_heads": 12,
+            "query_lengths": [
+              0,
+              32768,
+              0,
+              32768
+            ],
+            "nonempty_requests": 2,
+            "shape": [
+              1,
+              65536,
+              12,
+              12,
+              128,
+              128
+            ],
+            "chunks": 1024,
+            "work_items": 12288,
+            "aclnn": "aclnnChunkKdaFwdV2",
+            "main_kernels": [
+              "chunk_kda_fwd_prepare",
+              "chunk_fwd_h",
+              "chunk_kda_fwd_finalize"
+            ],
+            "main_kernels_us": 9471.980217228382,
+            "full_dispatch_us": null,
+            "status": "extrapolated",
+            "reason": "three serial V2 compute kernels; graph helpers, possible materialization and launch gaps have no qualified times",
+            "graph_io": {
+              "qk_l2norm_read_bytes": 402653184,
+              "qk_l2norm_write_bytes": 402653184,
+              "state_gather_read_bytes_range": [
+                0,
+                1572864
+              ],
+              "state_gather_write_bytes": 1572864,
+              "state_scatter_read_bytes": 1572864,
+              "state_scatter_write_bytes": 1572864
+            },
+            "main_stages_us": {
+              "chunk_kda_fwd_prepare": 6447.532423709745,
+              "chunk_fwd_h": 1758.5674230490129,
+              "chunk_kda_fwd_finalize": 1265.8803704696247
+            },
+            "minimum_payload_bytes": 2422216752,
+            "capacity_bytes": 120259084288,
+            "scope": "one prefill dispatch, after convolution and beta preprocessing; excludes decoder and speculative recurrent calls",
+            "memory_bytes": {
+              "public_live": 1214257200,
+              "intermediate_after_prepare": 1207959552,
+              "intermediate_after_fwdh": 805306368
+            }
+          },
+          "median_query_ms": 2.1183799999999997,
+          "max_query_ms": 2.13733
+        },
+        "Ascend970DT": {
+          "plan": {
+            "chip": "Ascend970DT",
+            "selector": "vllm_ascend_kimi_k3_fla_a5_26.9.1",
+            "chip_policy": "assume the same 950 FLA implementation and host selection rule on future chips",
+            "local_heads": 12,
+            "query_lengths": [
+              0,
+              32768,
+              0,
+              32768
+            ],
+            "nonempty_requests": 2,
+            "shape": [
+              1,
+              65536,
+              12,
+              12,
+              128,
+              128
+            ],
+            "chunks": 1024,
+            "work_items": 12288,
+            "aclnn": "aclnnChunkKdaFwdV2",
+            "main_kernels": [
+              "chunk_kda_fwd_prepare",
+              "chunk_fwd_h",
+              "chunk_kda_fwd_finalize"
+            ],
+            "main_kernels_us": 4837.30061293079,
+            "full_dispatch_us": null,
+            "status": "extrapolated",
+            "reason": "three serial V2 compute kernels; graph helpers, possible materialization and launch gaps have no qualified times",
+            "graph_io": {
+              "qk_l2norm_read_bytes": 402653184,
+              "qk_l2norm_write_bytes": 402653184,
+              "state_gather_read_bytes_range": [
+                0,
+                1572864
+              ],
+              "state_gather_write_bytes": 1572864,
+              "state_scatter_read_bytes": 1572864,
+              "state_scatter_write_bytes": 1572864
+            },
+            "main_stages_us": {
+              "chunk_kda_fwd_prepare": 2720.6683518443183,
+              "chunk_fwd_h": 1565.78019228306,
+              "chunk_kda_fwd_finalize": 550.8520688034117
+            },
+            "minimum_payload_bytes": 2422216752,
+            "capacity_bytes": 288000000000,
+            "scope": "one prefill dispatch, after convolution and beta preprocessing; excludes decoder and speculative recurrent calls",
+            "memory_bytes": {
+              "public_live": 1214257200,
+              "intermediate_after_prepare": 1207959552,
+              "intermediate_after_fwdh": 805306368
+            }
+          },
+          "median_query_ms": 2.7153899999999997,
+          "max_query_ms": 2.74265
+        }
+      }
+    },
+    {
+      "tag": "B8x512",
+      "lengths": [
+        512,
+        512,
+        512,
+        512,
+        512,
+        512,
+        512,
+        512
+      ],
+      "tp": 8,
+      "w": 768,
+      "official_api": "aclnnChunkKdaFwd",
+      "targets": {
+        "Ascend950DT_9582": {
+          "plan": {
+            "chip": "Ascend950DT_9582",
+            "selector": "vllm_ascend_kimi_k3_fla_a5_26.9.1",
+            "chip_policy": "assume the same 950 FLA implementation and host selection rule on future chips",
+            "local_heads": 12,
+            "query_lengths": [
+              512,
+              512,
+              512,
+              512,
+              512,
+              512,
+              512,
+              512
+            ],
+            "nonempty_requests": 8,
+            "shape": [
+              1,
+              4096,
+              12,
+              12,
+              128,
+              128
+            ],
+            "chunks": 64,
+            "work_items": 768,
+            "aclnn": "aclnnChunkKdaFwd",
+            "main_kernels": [
+              "ChunkKdaFwd:gate_prepare",
+              "ChunkKdaFwd:post_wu",
+              "ChunkKdaFwd:fwd_h",
+              "ChunkKdaFwd:finalize"
+            ],
+            "main_kernels_us": null,
+            "full_dispatch_us": null,
+            "status": "unavailable",
+            "reason": "selected fused V1 has no qualified cost for this dispatch",
+            "graph_io": {
+              "qk_l2norm_read_bytes": 25165824,
+              "qk_l2norm_write_bytes": 25165824,
+              "state_gather_read_bytes_range": [
+                0,
+                6291456
+              ],
+              "state_gather_write_bytes": 6291456,
+              "state_scatter_read_bytes": 6291456,
+              "state_scatter_write_bytes": 6291456
+            },
+            "main_stages_us": {},
+            "minimum_payload_bytes": 88283184,
+            "capacity_bytes": 103079215104,
+            "scope": "one prefill dispatch, after convolution and beta preprocessing; excludes decoder and speculative recurrent calls"
+          },
+          "median_query_ms": 0.013829999999999999,
+          "max_query_ms": 0.019129999999999998
+        },
+        "Ascend950PR_957b": {
+          "plan": {
+            "chip": "Ascend950PR_957b",
+            "selector": "vllm_ascend_kimi_k3_fla_a5_26.9.1",
+            "chip_policy": "assume the same 950 FLA implementation and host selection rule on future chips",
+            "local_heads": 12,
+            "query_lengths": [
+              512,
+              512,
+              512,
+              512,
+              512,
+              512,
+              512,
+              512
+            ],
+            "nonempty_requests": 8,
+            "shape": [
+              1,
+              4096,
+              12,
+              12,
+              128,
+              128
+            ],
+            "chunks": 64,
+            "work_items": 768,
+            "aclnn": "aclnnChunkKdaFwd",
+            "main_kernels": [
+              "ChunkKdaFwd:gate_prepare",
+              "ChunkKdaFwd:post_wu",
+              "ChunkKdaFwd:fwd_h",
+              "ChunkKdaFwd:finalize"
+            ],
+            "main_kernels_us": null,
+            "full_dispatch_us": null,
+            "status": "unavailable",
+            "reason": "selected fused V1 has no qualified cost for this dispatch",
+            "graph_io": {
+              "qk_l2norm_read_bytes": 25165824,
+              "qk_l2norm_write_bytes": 25165824,
+              "state_gather_read_bytes_range": [
+                0,
+                6291456
+              ],
+              "state_gather_write_bytes": 6291456,
+              "state_scatter_read_bytes": 6291456,
+              "state_scatter_write_bytes": 6291456
+            },
+            "main_stages_us": {},
+            "minimum_payload_bytes": 88283184,
+            "capacity_bytes": 120259084288,
+            "scope": "one prefill dispatch, after convolution and beta preprocessing; excludes decoder and speculative recurrent calls"
+          },
+          "median_query_ms": 0.01313,
+          "max_query_ms": 0.01393
+        },
+        "Ascend970DT": {
+          "plan": {
+            "chip": "Ascend970DT",
+            "selector": "vllm_ascend_kimi_k3_fla_a5_26.9.1",
+            "chip_policy": "assume the same 950 FLA implementation and host selection rule on future chips",
+            "local_heads": 12,
+            "query_lengths": [
+              512,
+              512,
+              512,
+              512,
+              512,
+              512,
+              512,
+              512
+            ],
+            "nonempty_requests": 8,
+            "shape": [
+              1,
+              4096,
+              12,
+              12,
+              128,
+              128
+            ],
+            "chunks": 64,
+            "work_items": 768,
+            "aclnn": "aclnnChunkKdaFwd",
+            "main_kernels": [
+              "ChunkKdaFwd:gate_prepare",
+              "ChunkKdaFwd:post_wu",
+              "ChunkKdaFwd:fwd_h",
+              "ChunkKdaFwd:finalize"
+            ],
+            "main_kernels_us": null,
+            "full_dispatch_us": null,
+            "status": "unavailable",
+            "reason": "selected fused V1 has no qualified cost for this dispatch",
+            "graph_io": {
+              "qk_l2norm_read_bytes": 25165824,
+              "qk_l2norm_write_bytes": 25165824,
+              "state_gather_read_bytes_range": [
+                0,
+                6291456
+              ],
+              "state_gather_write_bytes": 6291456,
+              "state_scatter_read_bytes": 6291456,
+              "state_scatter_write_bytes": 6291456
+            },
+            "main_stages_us": {},
+            "minimum_payload_bytes": 88283184,
+            "capacity_bytes": 288000000000,
+            "scope": "one prefill dispatch, after convolution and beta preprocessing; excludes decoder and speculative recurrent calls"
+          },
+          "median_query_ms": 0.013059999999999999,
+          "max_query_ms": 0.01328
+        }
+      }
+    },
+    {
+      "tag": "B8x2048",
+      "lengths": [
+        2048,
+        2048,
+        2048,
+        2048,
+        2048,
+        2048,
+        2048,
+        2048
+      ],
+      "tp": 8,
+      "w": 3072,
+      "official_api": "aclnnChunkKdaFwd",
+      "targets": {
+        "Ascend950DT_9582": {
+          "plan": {
+            "chip": "Ascend950DT_9582",
+            "selector": "vllm_ascend_kimi_k3_fla_a5_26.9.1",
+            "chip_policy": "assume the same 950 FLA implementation and host selection rule on future chips",
+            "local_heads": 12,
+            "query_lengths": [
+              2048,
+              2048,
+              2048,
+              2048,
+              2048,
+              2048,
+              2048,
+              2048
+            ],
+            "nonempty_requests": 8,
+            "shape": [
+              1,
+              16384,
+              12,
+              12,
+              128,
+              128
+            ],
+            "chunks": 256,
+            "work_items": 3072,
+            "aclnn": "aclnnChunkKdaFwd",
+            "main_kernels": [
+              "ChunkKdaFwd:gate_prepare",
+              "ChunkKdaFwd:post_wu",
+              "ChunkKdaFwd:fwd_h",
+              "ChunkKdaFwd:finalize"
+            ],
+            "main_kernels_us": null,
+            "full_dispatch_us": null,
+            "status": "unavailable",
+            "reason": "selected fused V1 has no qualified cost for this dispatch",
+            "graph_io": {
+              "qk_l2norm_read_bytes": 100663296,
+              "qk_l2norm_write_bytes": 100663296,
+              "state_gather_read_bytes_range": [
+                0,
+                6291456
+              ],
+              "state_gather_write_bytes": 6291456,
+              "state_scatter_read_bytes": 6291456,
+              "state_scatter_write_bytes": 6291456
+            },
+            "main_stages_us": {},
+            "minimum_payload_bytes": 315365424,
+            "capacity_bytes": 103079215104,
+            "scope": "one prefill dispatch, after convolution and beta preprocessing; excludes decoder and speculative recurrent calls"
+          },
+          "median_query_ms": 0.01279,
+          "max_query_ms": 0.01385
+        },
+        "Ascend950PR_957b": {
+          "plan": {
+            "chip": "Ascend950PR_957b",
+            "selector": "vllm_ascend_kimi_k3_fla_a5_26.9.1",
+            "chip_policy": "assume the same 950 FLA implementation and host selection rule on future chips",
+            "local_heads": 12,
+            "query_lengths": [
+              2048,
+              2048,
+              2048,
+              2048,
+              2048,
+              2048,
+              2048,
+              2048
+            ],
+            "nonempty_requests": 8,
+            "shape": [
+              1,
+              16384,
+              12,
+              12,
+              128,
+              128
+            ],
+            "chunks": 256,
+            "work_items": 3072,
+            "aclnn": "aclnnChunkKdaFwd",
+            "main_kernels": [
+              "ChunkKdaFwd:gate_prepare",
+              "ChunkKdaFwd:post_wu",
+              "ChunkKdaFwd:fwd_h",
+              "ChunkKdaFwd:finalize"
+            ],
+            "main_kernels_us": null,
+            "full_dispatch_us": null,
+            "status": "unavailable",
+            "reason": "selected fused V1 has no qualified cost for this dispatch",
+            "graph_io": {
+              "qk_l2norm_read_bytes": 100663296,
+              "qk_l2norm_write_bytes": 100663296,
+              "state_gather_read_bytes_range": [
+                0,
+                6291456
+              ],
+              "state_gather_write_bytes": 6291456,
+              "state_scatter_read_bytes": 6291456,
+              "state_scatter_write_bytes": 6291456
+            },
+            "main_stages_us": {},
+            "minimum_payload_bytes": 315365424,
+            "capacity_bytes": 120259084288,
+            "scope": "one prefill dispatch, after convolution and beta preprocessing; excludes decoder and speculative recurrent calls"
+          },
+          "median_query_ms": 0.01294,
+          "max_query_ms": 0.01311
+        },
+        "Ascend970DT": {
+          "plan": {
+            "chip": "Ascend970DT",
+            "selector": "vllm_ascend_kimi_k3_fla_a5_26.9.1",
+            "chip_policy": "assume the same 950 FLA implementation and host selection rule on future chips",
+            "local_heads": 12,
+            "query_lengths": [
+              2048,
+              2048,
+              2048,
+              2048,
+              2048,
+              2048,
+              2048,
+              2048
+            ],
+            "nonempty_requests": 8,
+            "shape": [
+              1,
+              16384,
+              12,
+              12,
+              128,
+              128
+            ],
+            "chunks": 256,
+            "work_items": 3072,
+            "aclnn": "aclnnChunkKdaFwd",
+            "main_kernels": [
+              "ChunkKdaFwd:gate_prepare",
+              "ChunkKdaFwd:post_wu",
+              "ChunkKdaFwd:fwd_h",
+              "ChunkKdaFwd:finalize"
+            ],
+            "main_kernels_us": null,
+            "full_dispatch_us": null,
+            "status": "unavailable",
+            "reason": "selected fused V1 has no qualified cost for this dispatch",
+            "graph_io": {
+              "qk_l2norm_read_bytes": 100663296,
+              "qk_l2norm_write_bytes": 100663296,
+              "state_gather_read_bytes_range": [
+                0,
+                6291456
+              ],
+              "state_gather_write_bytes": 6291456,
+              "state_scatter_read_bytes": 6291456,
+              "state_scatter_write_bytes": 6291456
+            },
+            "main_stages_us": {},
+            "minimum_payload_bytes": 315365424,
+            "capacity_bytes": 288000000000,
+            "scope": "one prefill dispatch, after convolution and beta preprocessing; excludes decoder and speculative recurrent calls"
+          },
+          "median_query_ms": 0.01275,
+          "max_query_ms": 0.01286
+        }
+      }
+    },
+    {
+      "tag": "B8x4096",
+      "lengths": [
+        4096,
+        4096,
+        4096,
+        4096,
+        4096,
+        4096,
+        4096,
+        4096
+      ],
+      "tp": 8,
+      "w": 6144,
+      "official_api": "aclnnChunkKdaFwdV2",
+      "targets": {
+        "Ascend950DT_9582": {
+          "plan": {
+            "chip": "Ascend950DT_9582",
+            "selector": "vllm_ascend_kimi_k3_fla_a5_26.9.1",
+            "chip_policy": "assume the same 950 FLA implementation and host selection rule on future chips",
+            "local_heads": 12,
+            "query_lengths": [
+              4096,
+              4096,
+              4096,
+              4096,
+              4096,
+              4096,
+              4096,
+              4096
+            ],
+            "nonempty_requests": 8,
+            "shape": [
+              1,
+              32768,
+              12,
+              12,
+              128,
+              128
+            ],
+            "chunks": 512,
+            "work_items": 6144,
+            "aclnn": "aclnnChunkKdaFwdV2",
+            "main_kernels": [
+              "chunk_kda_fwd_prepare",
+              "chunk_fwd_h",
+              "chunk_kda_fwd_finalize"
+            ],
+            "main_kernels_us": 4157.314909620478,
+            "full_dispatch_us": null,
+            "status": "extrapolated",
+            "reason": "three serial V2 compute kernels; graph helpers, possible materialization and launch gaps have no qualified times",
+            "graph_io": {
+              "qk_l2norm_read_bytes": 201326592,
+              "qk_l2norm_write_bytes": 201326592,
+              "state_gather_read_bytes_range": [
+                0,
+                6291456
+              ],
+              "state_gather_write_bytes": 6291456,
+              "state_scatter_read_bytes": 6291456,
+              "state_scatter_write_bytes": 6291456
+            },
+            "main_stages_us": {
+              "chunk_kda_fwd_prepare": 2771.516963057051,
+              "chunk_fwd_h": 837.3166561392165,
+              "chunk_kda_fwd_finalize": 548.4812904242112
+            },
+            "minimum_payload_bytes": 1222121520,
+            "capacity_bytes": 103079215104,
+            "scope": "one prefill dispatch, after convolution and beta preprocessing; excludes decoder and speculative recurrent calls",
+            "memory_bytes": {
+              "public_live": 618141744,
+              "intermediate_after_prepare": 603979776,
+              "intermediate_after_fwdh": 402653184
+            }
+          },
+          "median_query_ms": 2.23429,
+          "max_query_ms": 2.25855
+        },
+        "Ascend950PR_957b": {
+          "plan": {
+            "chip": "Ascend950PR_957b",
+            "selector": "vllm_ascend_kimi_k3_fla_a5_26.9.1",
+            "chip_policy": "assume the same 950 FLA implementation and host selection rule on future chips",
+            "local_heads": 12,
+            "query_lengths": [
+              4096,
+              4096,
+              4096,
+              4096,
+              4096,
+              4096,
+              4096,
+              4096
+            ],
+            "nonempty_requests": 8,
+            "shape": [
+              1,
+              32768,
+              12,
+              12,
+              128,
+              128
+            ],
+            "chunks": 512,
+            "work_items": 6144,
+            "aclnn": "aclnnChunkKdaFwdV2",
+            "main_kernels": [
+              "chunk_kda_fwd_prepare",
+              "chunk_fwd_h",
+              "chunk_kda_fwd_finalize"
+            ],
+            "main_kernels_us": 5068.336045528455,
+            "full_dispatch_us": null,
+            "status": "extrapolated",
+            "reason": "three serial V2 compute kernels; graph helpers, possible materialization and launch gaps have no qualified times",
+            "graph_io": {
+              "qk_l2norm_read_bytes": 201326592,
+              "qk_l2norm_write_bytes": 201326592,
+              "state_gather_read_bytes_range": [
+                0,
+                6291456
+              ],
+              "state_gather_write_bytes": 6291456,
+              "state_scatter_read_bytes": 6291456,
+              "state_scatter_write_bytes": 6291456
+            },
+            "main_stages_us": {
+              "chunk_kda_fwd_prepare": 3313.8292790057412,
+              "chunk_fwd_h": 1103.5398932348721,
+              "chunk_kda_fwd_finalize": 650.9668732878417
+            },
+            "minimum_payload_bytes": 1222121520,
+            "capacity_bytes": 120259084288,
+            "scope": "one prefill dispatch, after convolution and beta preprocessing; excludes decoder and speculative recurrent calls",
+            "memory_bytes": {
+              "public_live": 618141744,
+              "intermediate_after_prepare": 603979776,
+              "intermediate_after_fwdh": 402653184
+            }
+          },
+          "median_query_ms": 2.05117,
+          "max_query_ms": 2.08297
+        },
+        "Ascend970DT": {
+          "plan": {
+            "chip": "Ascend970DT",
+            "selector": "vllm_ascend_kimi_k3_fla_a5_26.9.1",
+            "chip_policy": "assume the same 950 FLA implementation and host selection rule on future chips",
+            "local_heads": 12,
+            "query_lengths": [
+              4096,
+              4096,
+              4096,
+              4096,
+              4096,
+              4096,
+              4096,
+              4096
+            ],
+            "nonempty_requests": 8,
+            "shape": [
+              1,
+              32768,
+              12,
+              12,
+              128,
+              128
+            ],
+            "chunks": 512,
+            "work_items": 6144,
+            "aclnn": "aclnnChunkKdaFwdV2",
+            "main_kernels": [
+              "chunk_kda_fwd_prepare",
+              "chunk_fwd_h",
+              "chunk_kda_fwd_finalize"
+            ],
+            "main_kernels_us": 1962.7903104447812,
+            "full_dispatch_us": null,
+            "status": "extrapolated",
+            "reason": "three serial V2 compute kernels; graph helpers, possible materialization and launch gaps have no qualified times",
+            "graph_io": {
+              "qk_l2norm_read_bytes": 201326592,
+              "qk_l2norm_write_bytes": 201326592,
+              "state_gather_read_bytes_range": [
+                0,
+                6291456
+              ],
+              "state_gather_write_bytes": 6291456,
+              "state_scatter_read_bytes": 6291456,
+              "state_scatter_write_bytes": 6291456
+            },
+            "main_stages_us": {
+              "chunk_kda_fwd_prepare": 1363.0986203666037,
+              "chunk_fwd_h": 494.3287248387713,
+              "chunk_kda_fwd_finalize": 105.3629652394064
+            },
+            "minimum_payload_bytes": 1222121520,
+            "capacity_bytes": 288000000000,
+            "scope": "one prefill dispatch, after convolution and beta preprocessing; excludes decoder and speculative recurrent calls",
+            "memory_bytes": {
+              "public_live": 618141744,
+              "intermediate_after_prepare": 603979776,
+              "intermediate_after_fwdh": 402653184
+            }
+          },
+          "median_query_ms": 3.5683499999999997,
+          "max_query_ms": 3.58316
+        }
+      }
+    },
+    {
+      "tag": "B8x32768",
+      "lengths": [
+        32768,
+        32768,
+        32768,
+        32768,
+        32768,
+        32768,
+        32768,
+        32768
+      ],
+      "tp": 8,
+      "w": 49152,
+      "official_api": "aclnnChunkKdaFwdV2",
+      "targets": {
+        "Ascend950DT_9582": {
+          "plan": {
+            "chip": "Ascend950DT_9582",
+            "selector": "vllm_ascend_kimi_k3_fla_a5_26.9.1",
+            "chip_policy": "assume the same 950 FLA implementation and host selection rule on future chips",
+            "local_heads": 12,
+            "query_lengths": [
+              32768,
+              32768,
+              32768,
+              32768,
+              32768,
+              32768,
+              32768,
+              32768
+            ],
+            "nonempty_requests": 8,
+            "shape": [
+              1,
+              262144,
+              12,
+              12,
+              128,
+              128
+            ],
+            "chunks": 4096,
+            "work_items": 49152,
+            "aclnn": "aclnnChunkKdaFwdV2",
+            "main_kernels": [
+              "chunk_kda_fwd_prepare",
+              "chunk_fwd_h",
+              "chunk_kda_fwd_finalize"
+            ],
+            "main_kernels_us": 33160.5310211021,
+            "full_dispatch_us": null,
+            "status": "extrapolated",
+            "reason": "three serial V2 compute kernels; graph helpers, possible materialization and launch gaps have no qualified times",
+            "graph_io": {
+              "qk_l2norm_read_bytes": 1610612736,
+              "qk_l2norm_write_bytes": 1610612736,
+              "state_gather_read_bytes_range": [
+                0,
+                6291456
+              ],
+              "state_gather_write_bytes": 6291456,
+              "state_scatter_read_bytes": 6291456,
+              "state_scatter_write_bytes": 6291456
+            },
+            "main_stages_us": {
+              "chunk_kda_fwd_prepare": 22129.9150983958,
+              "chunk_fwd_h": 6656.006205373214,
+              "chunk_kda_fwd_finalize": 4374.609717333084
+            },
+            "minimum_payload_bytes": 9688848432,
+            "capacity_bytes": 103079215104,
+            "scope": "one prefill dispatch, after convolution and beta preprocessing; excludes decoder and speculative recurrent calls",
+            "memory_bytes": {
+              "public_live": 4857010224,
+              "intermediate_after_prepare": 4831838208,
+              "intermediate_after_fwdh": 3221225472
+            }
+          },
+          "median_query_ms": 2.2709699999999997,
+          "max_query_ms": 2.39784
+        },
+        "Ascend950PR_957b": {
+          "plan": {
+            "chip": "Ascend950PR_957b",
+            "selector": "vllm_ascend_kimi_k3_fla_a5_26.9.1",
+            "chip_policy": "assume the same 950 FLA implementation and host selection rule on future chips",
+            "local_heads": 12,
+            "query_lengths": [
+              32768,
+              32768,
+              32768,
+              32768,
+              32768,
+              32768,
+              32768,
+              32768
+            ],
+            "nonempty_requests": 8,
+            "shape": [
+              1,
+              262144,
+              12,
+              12,
+              128,
+              128
+            ],
+            "chunks": 4096,
+            "work_items": 49152,
+            "aclnn": "aclnnChunkKdaFwdV2",
+            "main_kernels": [
+              "chunk_kda_fwd_prepare",
+              "chunk_fwd_h",
+              "chunk_kda_fwd_finalize"
+            ],
+            "main_kernels_us": 39396.007435993575,
+            "full_dispatch_us": null,
+            "status": "extrapolated",
+            "reason": "three serial V2 compute kernels; graph helpers, possible materialization and launch gaps have no qualified times",
+            "graph_io": {
+              "qk_l2norm_read_bytes": 1610612736,
+              "qk_l2norm_write_bytes": 1610612736,
+              "state_gather_read_bytes_range": [
+                0,
+                6291456
+              ],
+              "state_gather_write_bytes": 6291456,
+              "state_scatter_read_bytes": 6291456,
+              "state_scatter_write_bytes": 6291456
+            },
+            "main_stages_us": {
+              "chunk_kda_fwd_prepare": 25597.940530234213,
+              "chunk_fwd_h": 8774.381830289949,
+              "chunk_kda_fwd_finalize": 5023.685075469411
+            },
+            "minimum_payload_bytes": 9688848432,
+            "capacity_bytes": 120259084288,
+            "scope": "one prefill dispatch, after convolution and beta preprocessing; excludes decoder and speculative recurrent calls",
+            "memory_bytes": {
+              "public_live": 4857010224,
+              "intermediate_after_prepare": 4831838208,
+              "intermediate_after_fwdh": 3221225472
+            }
+          },
+          "median_query_ms": 2.13779,
+          "max_query_ms": 2.2297
+        },
+        "Ascend970DT": {
+          "plan": {
+            "chip": "Ascend970DT",
+            "selector": "vllm_ascend_kimi_k3_fla_a5_26.9.1",
+            "chip_policy": "assume the same 950 FLA implementation and host selection rule on future chips",
+            "local_heads": 12,
+            "query_lengths": [
+              32768,
+              32768,
+              32768,
+              32768,
+              32768,
+              32768,
+              32768,
+              32768
+            ],
+            "nonempty_requests": 8,
+            "shape": [
+              1,
+              262144,
+              12,
+              12,
+              128,
+              128
+            ],
+            "chunks": 4096,
+            "work_items": 49152,
+            "aclnn": "aclnnChunkKdaFwdV2",
+            "main_kernels": [
+              "chunk_kda_fwd_prepare",
+              "chunk_fwd_h",
+              "chunk_kda_fwd_finalize"
+            ],
+            "main_kernels_us": 16449.61036225633,
+            "full_dispatch_us": null,
+            "status": "extrapolated",
+            "reason": "three serial V2 compute kernels; graph helpers, possible materialization and launch gaps have no qualified times",
+            "graph_io": {
+              "qk_l2norm_read_bytes": 1610612736,
+              "qk_l2norm_write_bytes": 1610612736,
+              "state_gather_read_bytes_range": [
+                0,
+                6291456
+              ],
+              "state_gather_write_bytes": 6291456,
+              "state_scatter_read_bytes": 6291456,
+              "state_scatter_write_bytes": 6291456
+            },
+            "main_stages_us": {
+              "chunk_kda_fwd_prepare": 10413.5634968847,
+              "chunk_fwd_h": 3929.3599534770706,
+              "chunk_kda_fwd_finalize": 2106.6869118945597
+            },
+            "minimum_payload_bytes": 9688848432,
+            "capacity_bytes": 288000000000,
+            "scope": "one prefill dispatch, after convolution and beta preprocessing; excludes decoder and speculative recurrent calls",
+            "memory_bytes": {
+              "public_live": 4857010224,
+              "intermediate_after_prepare": 4831838208,
+              "intermediate_after_fwdh": 3221225472
+            }
+          },
+          "median_query_ms": 3.23452,
+          "max_query_ms": 3.2527
+        }
+      }
+    },
+    {
+      "tag": "B8x131072",
+      "lengths": [
+        131072,
+        131072,
+        131072,
+        131072,
+        131072,
+        131072,
+        131072,
+        131072
+      ],
+      "tp": 8,
+      "w": 196608,
+      "official_api": "aclnnChunkKdaFwdV2",
+      "targets": {
+        "Ascend950DT_9582": {
+          "plan": {
+            "chip": "Ascend950DT_9582",
+            "selector": "vllm_ascend_kimi_k3_fla_a5_26.9.1",
+            "chip_policy": "assume the same 950 FLA implementation and host selection rule on future chips",
+            "local_heads": 12,
+            "query_lengths": [
+              131072,
+              131072,
+              131072,
+              131072,
+              131072,
+              131072,
+              131072,
+              131072
+            ],
+            "nonempty_requests": 8,
+            "shape": [
+              1,
+              1048576,
+              12,
+              12,
+              128,
+              128
+            ],
+            "chunks": 16384,
+            "work_items": 196608,
+            "aclnn": "aclnnChunkKdaFwdV2",
+            "main_kernels": [
+              "chunk_kda_fwd_prepare",
+              "chunk_fwd_h",
+              "chunk_kda_fwd_finalize"
+            ],
+            "main_kernels_us": 132600.1291176105,
+            "full_dispatch_us": null,
+            "status": "extrapolated",
+            "reason": "three serial V2 compute kernels; graph helpers, possible materialization and launch gaps have no qualified times",
+            "graph_io": {
+              "qk_l2norm_read_bytes": 6442450944,
+              "qk_l2norm_write_bytes": 6442450944,
+              "state_gather_read_bytes_range": [
+                0,
+                6291456
+              ],
+              "state_gather_write_bytes": 6291456,
+              "state_scatter_read_bytes": 6291456,
+              "state_scatter_write_bytes": 6291456
+            },
+            "main_stages_us": {
+              "chunk_kda_fwd_prepare": 88501.56584812865,
+              "chunk_fwd_h": 26605.798945604052,
+              "chunk_kda_fwd_finalize": 17492.76432387779
+            },
+            "minimum_payload_bytes": 38717626416,
+            "capacity_bytes": 103079215104,
+            "scope": "one prefill dispatch, after convolution and beta preprocessing; excludes decoder and speculative recurrent calls",
+            "memory_bytes": {
+              "public_live": 19390273584,
+              "intermediate_after_prepare": 19327352832,
+              "intermediate_after_fwdh": 12884901888
+            }
+          },
+          "median_query_ms": 2.4933799999999997,
+          "max_query_ms": 2.54092
+        },
+        "Ascend950PR_957b": {
+          "plan": {
+            "chip": "Ascend950PR_957b",
+            "selector": "vllm_ascend_kimi_k3_fla_a5_26.9.1",
+            "chip_policy": "assume the same 950 FLA implementation and host selection rule on future chips",
+            "local_heads": 12,
+            "query_lengths": [
+              131072,
+              131072,
+              131072,
+              131072,
+              131072,
+              131072,
+              131072,
+              131072
+            ],
+            "nonempty_requests": 8,
+            "shape": [
+              1,
+              1048576,
+              12,
+              12,
+              128,
+              128
+            ],
+            "chunks": 16384,
+            "work_items": 196608,
+            "aclnn": "aclnnChunkKdaFwdV2",
+            "main_kernels": [
+              "chunk_kda_fwd_prepare",
+              "chunk_fwd_h",
+              "chunk_kda_fwd_finalize"
+            ],
+            "main_kernels_us": 157120.63170046036,
+            "full_dispatch_us": null,
+            "status": "extrapolated",
+            "reason": "three serial V2 compute kernels; graph helpers, possible materialization and launch gaps have no qualified times",
+            "graph_io": {
+              "qk_l2norm_read_bytes": 6442450944,
+              "qk_l2norm_write_bytes": 6442450944,
+              "state_gather_read_bytes_range": [
+                0,
+                6291456
+              ],
+              "state_gather_write_bytes": 6291456,
+              "state_scatter_read_bytes": 6291456,
+              "state_scatter_write_bytes": 6291456
+            },
+            "main_stages_us": {
+              "chunk_kda_fwd_prepare": 102025.47833718186,
+              "chunk_fwd_h": 35074.4113287645,
+              "chunk_kda_fwd_finalize": 20020.74203451401
+            },
+            "minimum_payload_bytes": 38717626416,
+            "capacity_bytes": 120259084288,
+            "scope": "one prefill dispatch, after convolution and beta preprocessing; excludes decoder and speculative recurrent calls",
+            "memory_bytes": {
+              "public_live": 19390273584,
+              "intermediate_after_prepare": 19327352832,
+              "intermediate_after_fwdh": 12884901888
+            }
+          },
+          "median_query_ms": 2.27241,
+          "max_query_ms": 2.3440499999999997
+        },
+        "Ascend970DT": {
+          "plan": {
+            "chip": "Ascend970DT",
+            "selector": "vllm_ascend_kimi_k3_fla_a5_26.9.1",
+            "chip_policy": "assume the same 950 FLA implementation and host selection rule on future chips",
+            "local_heads": 12,
+            "query_lengths": [
+              131072,
+              131072,
+              131072,
+              131072,
+              131072,
+              131072,
+              131072,
+              131072
+            ],
+            "nonempty_requests": 8,
+            "shape": [
+              1,
+              1048576,
+              12,
+              12,
+              128,
+              128
+            ],
+            "chunks": 16384,
+            "work_items": 196608,
+            "aclnn": "aclnnChunkKdaFwdV2",
+            "main_kernels": [
+              "chunk_kda_fwd_prepare",
+              "chunk_fwd_h",
+              "chunk_kda_fwd_finalize"
+            ],
+            "main_kernels_us": 65403.12788836846,
+            "full_dispatch_us": null,
+            "status": "extrapolated",
+            "reason": "three serial V2 compute kernels; graph helpers, possible materialization and launch gaps have no qualified times",
+            "graph_io": {
+              "qk_l2norm_read_bytes": 6442450944,
+              "qk_l2norm_write_bytes": 6442450944,
+              "state_gather_read_bytes_range": [
+                0,
+                6291456
+              ],
+              "state_gather_write_bytes": 6291456,
+              "state_scatter_read_bytes": 6291456,
+              "state_scatter_write_bytes": 6291456
+            },
+            "main_stages_us": {
+              "chunk_kda_fwd_prepare": 41335.98515832154,
+              "chunk_fwd_h": 15706.609880236954,
+              "chunk_kda_fwd_finalize": 8360.532849809959
+            },
+            "minimum_payload_bytes": 38717626416,
+            "capacity_bytes": 288000000000,
+            "scope": "one prefill dispatch, after convolution and beta preprocessing; excludes decoder and speculative recurrent calls",
+            "memory_bytes": {
+              "public_live": 19390273584,
+              "intermediate_after_prepare": 19327352832,
+              "intermediate_after_fwdh": 12884901888
+            }
+          },
+          "median_query_ms": 3.31213,
+          "max_query_ms": 3.38698
+        }
+      }
+    },
+    {
+      "tag": "B8x262144",
+      "lengths": [
+        262144,
+        262144,
+        262144,
+        262144,
+        262144,
+        262144,
+        262144,
+        262144
+      ],
+      "tp": 8,
+      "w": 393216,
+      "official_api": "aclnnChunkKdaFwdV2",
+      "targets": {
+        "Ascend950DT_9582": {
+          "plan": {
+            "chip": "Ascend950DT_9582",
+            "selector": "vllm_ascend_kimi_k3_fla_a5_26.9.1",
+            "chip_policy": "assume the same 950 FLA implementation and host selection rule on future chips",
+            "local_heads": 12,
+            "query_lengths": [
+              262144,
+              262144,
+              262144,
+              262144,
+              262144,
+              262144,
+              262144,
+              262144
+            ],
+            "nonempty_requests": 8,
+            "shape": [
+              1,
+              2097152,
+              12,
+              12,
+              128,
+              128
+            ],
+            "chunks": 32768,
+            "work_items": 393216,
+            "aclnn": "aclnnChunkKdaFwdV2",
+            "main_kernels": [
+              "chunk_kda_fwd_prepare",
+              "chunk_fwd_h",
+              "chunk_kda_fwd_finalize"
+            ],
+            "main_kernels_us": 265186.25991295505,
+            "full_dispatch_us": null,
+            "status": "extrapolated",
+            "reason": "three serial V2 compute kernels; graph helpers, possible materialization and launch gaps have no qualified times",
+            "graph_io": {
+              "qk_l2norm_read_bytes": 12884901888,
+              "qk_l2norm_write_bytes": 12884901888,
+              "state_gather_read_bytes_range": [
+                0,
+                6291456
+              ],
+              "state_gather_write_bytes": 6291456,
+              "state_scatter_read_bytes": 6291456,
+              "state_scatter_write_bytes": 6291456
+            },
+            "main_stages_us": {
+              "chunk_kda_fwd_prepare": 176997.10018110578,
+              "chunk_fwd_h": 53205.522599245196,
+              "chunk_kda_fwd_finalize": 34983.63713260406
+            },
+            "minimum_payload_bytes": 77422663728,
+            "capacity_bytes": 103079215104,
+            "scope": "one prefill dispatch, after convolution and beta preprocessing; excludes decoder and speculative recurrent calls",
+            "memory_bytes": {
+              "public_live": 38767958064,
+              "intermediate_after_prepare": 38654705664,
+              "intermediate_after_fwdh": 25769803776
+            }
+          },
+          "median_query_ms": 2.51882,
+          "max_query_ms": 2.53415
+        },
+        "Ascend950PR_957b": {
+          "plan": {
+            "chip": "Ascend950PR_957b",
+            "selector": "vllm_ascend_kimi_k3_fla_a5_26.9.1",
+            "chip_policy": "assume the same 950 FLA implementation and host selection rule on future chips",
+            "local_heads": 12,
+            "query_lengths": [
+              262144,
+              262144,
+              262144,
+              262144,
+              262144,
+              262144,
+              262144,
+              262144
+            ],
+            "nonempty_requests": 8,
+            "shape": [
+              1,
+              2097152,
+              12,
+              12,
+              128,
+              128
+            ],
+            "chunks": 32768,
+            "work_items": 393216,
+            "aclnn": "aclnnChunkKdaFwdV2",
+            "main_kernels": [
+              "chunk_kda_fwd_prepare",
+              "chunk_fwd_h",
+              "chunk_kda_fwd_finalize"
+            ],
+            "main_kernels_us": 314017.37855971453,
+            "full_dispatch_us": null,
+            "status": "extrapolated",
+            "reason": "three serial V2 compute kernels; graph helpers, possible materialization and launch gaps have no qualified times",
+            "graph_io": {
+              "qk_l2norm_read_bytes": 12884901888,
+              "qk_l2norm_write_bytes": 12884901888,
+              "state_gather_read_bytes_range": [
+                0,
+                6291456
+              ],
+              "state_gather_write_bytes": 6291456,
+              "state_scatter_read_bytes": 6291456,
+              "state_scatter_write_bytes": 6291456
+            },
+            "main_stages_us": {
+              "chunk_kda_fwd_prepare": 203870.830540062,
+              "chunk_fwd_h": 70141.11732673057,
+              "chunk_kda_fwd_finalize": 40005.43069292196
+            },
+            "minimum_payload_bytes": 77422663728,
+            "capacity_bytes": 120259084288,
+            "scope": "one prefill dispatch, after convolution and beta preprocessing; excludes decoder and speculative recurrent calls",
+            "memory_bytes": {
+              "public_live": 38767958064,
+              "intermediate_after_prepare": 38654705664,
+              "intermediate_after_fwdh": 25769803776
+            }
+          },
+          "median_query_ms": 2.25032,
+          "max_query_ms": 2.3226999999999998
+        },
+        "Ascend970DT": {
+          "plan": {
+            "chip": "Ascend970DT",
+            "selector": "vllm_ascend_kimi_k3_fla_a5_26.9.1",
+            "chip_policy": "assume the same 950 FLA implementation and host selection rule on future chips",
+            "local_heads": 12,
+            "query_lengths": [
+              262144,
+              262144,
+              262144,
+              262144,
+              262144,
+              262144,
+              262144,
+              262144
+            ],
+            "nonempty_requests": 8,
+            "shape": [
+              1,
+              2097152,
+              12,
+              12,
+              128,
+              128
+            ],
+            "chunks": 32768,
+            "work_items": 393216,
+            "aclnn": "aclnnChunkKdaFwdV2",
+            "main_kernels": [
+              "chunk_kda_fwd_prepare",
+              "chunk_fwd_h",
+              "chunk_kda_fwd_finalize"
+            ],
+            "main_kernels_us": 130614.03537424258,
+            "full_dispatch_us": null,
+            "status": "extrapolated",
+            "reason": "three serial V2 compute kernels; graph helpers, possible materialization and launch gaps have no qualified times",
+            "graph_io": {
+              "qk_l2norm_read_bytes": 12884901888,
+              "qk_l2norm_write_bytes": 12884901888,
+              "state_gather_read_bytes_range": [
+                0,
+                6291456
+              ],
+              "state_gather_write_bytes": 6291456,
+              "state_scatter_read_bytes": 6291456,
+              "state_scatter_write_bytes": 6291456
+            },
+            "main_stages_us": {
+              "chunk_kda_fwd_prepare": 82515.60034647888,
+              "chunk_fwd_h": 31409.609782583466,
+              "chunk_kda_fwd_finalize": 16688.825245180222
+            },
+            "minimum_payload_bytes": 77422663728,
+            "capacity_bytes": 288000000000,
+            "scope": "one prefill dispatch, after convolution and beta preprocessing; excludes decoder and speculative recurrent calls",
+            "memory_bytes": {
+              "public_live": 38767958064,
+              "intermediate_after_prepare": 38654705664,
+              "intermediate_after_fwdh": 25769803776
+            }
+          },
+          "median_query_ms": 3.29169,
+          "max_query_ms": 3.3271599999999997
+        }
+      }
+    },
+    {
+      "tag": "B8x524288",
+      "lengths": [
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288
+      ],
+      "tp": 8,
+      "w": 786432,
+      "official_api": "aclnnChunkKdaFwdV2",
+      "targets": {
+        "Ascend950DT_9582": {
+          "plan": {
+            "chip": "Ascend950DT_9582",
+            "selector": "vllm_ascend_kimi_k3_fla_a5_26.9.1",
+            "chip_policy": "assume the same 950 FLA implementation and host selection rule on future chips",
+            "local_heads": 12,
+            "query_lengths": [
+              524288,
+              524288,
+              524288,
+              524288,
+              524288,
+              524288,
+              524288,
+              524288
+            ],
+            "nonempty_requests": 8,
+            "shape": [
+              1,
+              4194304,
+              12,
+              12,
+              128,
+              128
+            ],
+            "chunks": 65536,
+            "work_items": 786432,
+            "aclnn": "aclnnChunkKdaFwdV2",
+            "main_kernels": [
+              "chunk_kda_fwd_prepare",
+              "chunk_fwd_h",
+              "chunk_kda_fwd_finalize"
+            ],
+            "main_kernels_us": null,
+            "full_dispatch_us": null,
+            "status": "infeasible",
+            "reason": "minimum simultaneous tensor payload exceeds the chip HBM capacity",
+            "graph_io": {
+              "qk_l2norm_read_bytes": 25769803776,
+              "qk_l2norm_write_bytes": 25769803776,
+              "state_gather_read_bytes_range": [
+                0,
+                6291456
+              ],
+              "state_gather_write_bytes": 6291456,
+              "state_scatter_read_bytes": 6291456,
+              "state_scatter_write_bytes": 6291456
+            },
+            "main_stages_us": {},
+            "minimum_payload_bytes": 154832738352,
+            "capacity_bytes": 103079215104,
+            "scope": "one prefill dispatch, after convolution and beta preprocessing; excludes decoder and speculative recurrent calls",
+            "memory_bytes": {
+              "public_live": 77523327024,
+              "intermediate_after_prepare": 77309411328,
+              "intermediate_after_fwdh": 51539607552
+            }
+          },
+          "median_query_ms": 0.01477,
+          "max_query_ms": 0.07893
+        },
+        "Ascend950PR_957b": {
+          "plan": {
+            "chip": "Ascend950PR_957b",
+            "selector": "vllm_ascend_kimi_k3_fla_a5_26.9.1",
+            "chip_policy": "assume the same 950 FLA implementation and host selection rule on future chips",
+            "local_heads": 12,
+            "query_lengths": [
+              524288,
+              524288,
+              524288,
+              524288,
+              524288,
+              524288,
+              524288,
+              524288
+            ],
+            "nonempty_requests": 8,
+            "shape": [
+              1,
+              4194304,
+              12,
+              12,
+              128,
+              128
+            ],
+            "chunks": 65536,
+            "work_items": 786432,
+            "aclnn": "aclnnChunkKdaFwdV2",
+            "main_kernels": [
+              "chunk_kda_fwd_prepare",
+              "chunk_fwd_h",
+              "chunk_kda_fwd_finalize"
+            ],
+            "main_kernels_us": null,
+            "full_dispatch_us": null,
+            "status": "infeasible",
+            "reason": "minimum simultaneous tensor payload exceeds the chip HBM capacity",
+            "graph_io": {
+              "qk_l2norm_read_bytes": 25769803776,
+              "qk_l2norm_write_bytes": 25769803776,
+              "state_gather_read_bytes_range": [
+                0,
+                6291456
+              ],
+              "state_gather_write_bytes": 6291456,
+              "state_scatter_read_bytes": 6291456,
+              "state_scatter_write_bytes": 6291456
+            },
+            "main_stages_us": {},
+            "minimum_payload_bytes": 154832738352,
+            "capacity_bytes": 120259084288,
+            "scope": "one prefill dispatch, after convolution and beta preprocessing; excludes decoder and speculative recurrent calls",
+            "memory_bytes": {
+              "public_live": 77523327024,
+              "intermediate_after_prepare": 77309411328,
+              "intermediate_after_fwdh": 51539607552
+            }
+          },
+          "median_query_ms": 0.01393,
+          "max_query_ms": 0.01705
+        },
+        "Ascend970DT": {
+          "plan": {
+            "chip": "Ascend970DT",
+            "selector": "vllm_ascend_kimi_k3_fla_a5_26.9.1",
+            "chip_policy": "assume the same 950 FLA implementation and host selection rule on future chips",
+            "local_heads": 12,
+            "query_lengths": [
+              524288,
+              524288,
+              524288,
+              524288,
+              524288,
+              524288,
+              524288,
+              524288
+            ],
+            "nonempty_requests": 8,
+            "shape": [
+              1,
+              4194304,
+              12,
+              12,
+              128,
+              128
+            ],
+            "chunks": 65536,
+            "work_items": 786432,
+            "aclnn": "aclnnChunkKdaFwdV2",
+            "main_kernels": [
+              "chunk_kda_fwd_prepare",
+              "chunk_fwd_h",
+              "chunk_kda_fwd_finalize"
+            ],
+            "main_kernels_us": 261035.8503459908,
+            "full_dispatch_us": null,
+            "status": "extrapolated",
+            "reason": "three serial V2 compute kernels; graph helpers, possible materialization and launch gaps have no qualified times",
+            "graph_io": {
+              "qk_l2norm_read_bytes": 25769803776,
+              "qk_l2norm_write_bytes": 25769803776,
+              "state_gather_read_bytes_range": [
+                0,
+                6291456
+              ],
+              "state_gather_write_bytes": 6291456,
+              "state_scatter_read_bytes": 6291456,
+              "state_scatter_write_bytes": 6291456
+            },
+            "main_stages_us": {
+              "chunk_kda_fwd_prepare": 164874.83072279356,
+              "chunk_fwd_h": 62815.609587276485,
+              "chunk_kda_fwd_finalize": 33345.41003592075
+            },
+            "minimum_payload_bytes": 154832738352,
+            "capacity_bytes": 288000000000,
+            "scope": "one prefill dispatch, after convolution and beta preprocessing; excludes decoder and speculative recurrent calls",
+            "memory_bytes": {
+              "public_live": 77523327024,
+              "intermediate_after_prepare": 77309411328,
+              "intermediate_after_fwdh": 51539607552
+            }
+          },
+          "median_query_ms": 3.31458,
+          "max_query_ms": 3.49709
+        }
+      }
+    },
+    {
+      "tag": "TP1",
+      "lengths": [
+        2048,
+        2048,
+        2048,
+        2048,
+        2048,
+        2048,
+        2048,
+        2048
+      ],
+      "tp": 1,
+      "w": 24576,
+      "official_api": "aclnnChunkKdaFwdV2",
+      "targets": {
+        "Ascend950DT_9582": {
+          "plan": {
+            "chip": "Ascend950DT_9582",
+            "selector": "vllm_ascend_kimi_k3_fla_a5_26.9.1",
+            "chip_policy": "assume the same 950 FLA implementation and host selection rule on future chips",
+            "local_heads": 96,
+            "query_lengths": [
+              2048,
+              2048,
+              2048,
+              2048,
+              2048,
+              2048,
+              2048,
+              2048
+            ],
+            "nonempty_requests": 8,
+            "shape": [
+              1,
+              16384,
+              96,
+              96,
+              128,
+              128
+            ],
+            "chunks": 256,
+            "work_items": 24576,
+            "aclnn": "aclnnChunkKdaFwdV2",
+            "main_kernels": [
+              "chunk_kda_fwd_prepare",
+              "chunk_fwd_h",
+              "chunk_kda_fwd_finalize"
+            ],
+            "main_kernels_us": 16625.994745727578,
+            "full_dispatch_us": null,
+            "status": "extrapolated",
+            "reason": "three serial V2 compute kernels; graph helpers, possible materialization and launch gaps have no qualified times",
+            "graph_io": {
+              "qk_l2norm_read_bytes": 805306368,
+              "qk_l2norm_write_bytes": 805306368,
+              "state_gather_read_bytes_range": [
+                0,
+                50331648
+              ],
+              "state_gather_write_bytes": 50331648,
+              "state_scatter_read_bytes": 50331648,
+              "state_scatter_write_bytes": 50331648
+            },
+            "main_stages_us": {
+              "chunk_kda_fwd_prepare": 11067.973306773658,
+              "chunk_fwd_h": 3369.7708227116227,
+              "chunk_kda_fwd_finalize": 2188.250616242299
+            },
+            "minimum_payload_bytes": 4938842496,
+            "capacity_bytes": 103079215104,
+            "scope": "one prefill dispatch, after convolution and beta preprocessing; excludes decoder and speculative recurrent calls",
+            "memory_bytes": {
+              "public_live": 2522923392,
+              "intermediate_after_prepare": 2415919104,
+              "intermediate_after_fwdh": 1610612736
+            }
+          },
+          "median_query_ms": 2.44109,
+          "max_query_ms": 2.48537
+        },
+        "Ascend950PR_957b": {
+          "plan": {
+            "chip": "Ascend950PR_957b",
+            "selector": "vllm_ascend_kimi_k3_fla_a5_26.9.1",
+            "chip_policy": "assume the same 950 FLA implementation and host selection rule on future chips",
+            "local_heads": 96,
+            "query_lengths": [
+              2048,
+              2048,
+              2048,
+              2048,
+              2048,
+              2048,
+              2048,
+              2048
+            ],
+            "nonempty_requests": 8,
+            "shape": [
+              1,
+              16384,
+              96,
+              96,
+              128,
+              128
+            ],
+            "chunks": 256,
+            "work_items": 24576,
+            "aclnn": "aclnnChunkKdaFwdV2",
+            "main_kernels": [
+              "chunk_kda_fwd_prepare",
+              "chunk_fwd_h",
+              "chunk_kda_fwd_finalize"
+            ],
+            "main_kernels_us": 20606.97397734633,
+            "full_dispatch_us": null,
+            "status": "extrapolated",
+            "reason": "three serial V2 compute kernels; graph helpers, possible materialization and launch gaps have no qualified times",
+            "graph_io": {
+              "qk_l2norm_read_bytes": 805306368,
+              "qk_l2norm_write_bytes": 805306368,
+              "state_gather_read_bytes_range": [
+                0,
+                50331648
+              ],
+              "state_gather_write_bytes": 50331648,
+              "state_scatter_read_bytes": 50331648,
+              "state_scatter_write_bytes": 50331648
+            },
+            "main_stages_us": {
+              "chunk_kda_fwd_prepare": 13933.601047169312,
+              "chunk_fwd_h": 3938.5325386620216,
+              "chunk_kda_fwd_finalize": 2734.8403915149956
+            },
+            "minimum_payload_bytes": 4938842496,
+            "capacity_bytes": 120259084288,
+            "scope": "one prefill dispatch, after convolution and beta preprocessing; excludes decoder and speculative recurrent calls",
+            "memory_bytes": {
+              "public_live": 2522923392,
+              "intermediate_after_prepare": 2415919104,
+              "intermediate_after_fwdh": 1610612736
+            }
+          },
+          "median_query_ms": 2.32878,
+          "max_query_ms": 2.3706199999999997
+        },
+        "Ascend970DT": {
+          "plan": {
+            "chip": "Ascend970DT",
+            "selector": "vllm_ascend_kimi_k3_fla_a5_26.9.1",
+            "chip_policy": "assume the same 950 FLA implementation and host selection rule on future chips",
+            "local_heads": 96,
+            "query_lengths": [
+              2048,
+              2048,
+              2048,
+              2048,
+              2048,
+              2048,
+              2048,
+              2048
+            ],
+            "nonempty_requests": 8,
+            "shape": [
+              1,
+              16384,
+              96,
+              96,
+              128,
+              128
+            ],
+            "chunks": 256,
+            "work_items": 24576,
+            "aclnn": "aclnnChunkKdaFwdV2",
+            "main_kernels": [
+              "chunk_kda_fwd_prepare",
+              "chunk_fwd_h",
+              "chunk_kda_fwd_finalize"
+            ],
+            "main_kernels_us": 8153.891656920051,
+            "full_dispatch_us": null,
+            "status": "extrapolated",
+            "reason": "three serial V2 compute kernels; graph helpers, possible materialization and launch gaps have no qualified times",
+            "graph_io": {
+              "qk_l2norm_read_bytes": 805306368,
+              "qk_l2norm_write_bytes": 805306368,
+              "state_gather_read_bytes_range": [
+                0,
+                50331648
+              ],
+              "state_gather_write_bytes": 50331648,
+              "state_scatter_read_bytes": 50331648,
+              "state_scatter_write_bytes": 50331648
+            },
+            "main_stages_us": {
+              "chunk_kda_fwd_prepare": 6039.172139900955,
+              "chunk_fwd_h": 1615.5660616477237,
+              "chunk_kda_fwd_finalize": 499.15345537137296
+            },
+            "minimum_payload_bytes": 4938842496,
+            "capacity_bytes": 288000000000,
+            "scope": "one prefill dispatch, after convolution and beta preprocessing; excludes decoder and speculative recurrent calls",
+            "memory_bytes": {
+              "public_live": 2522923392,
+              "intermediate_after_prepare": 2415919104,
+              "intermediate_after_fwdh": 1610612736
+            }
+          },
+          "median_query_ms": 4.0171,
+          "max_query_ms": 4.07871
+        }
+      }
+    },
+    {
+      "tag": "TP2",
+      "lengths": [
+        2048,
+        2048,
+        2048,
+        2048,
+        2048,
+        2048,
+        2048,
+        2048
+      ],
+      "tp": 2,
+      "w": 12288,
+      "official_api": "aclnnChunkKdaFwdV2",
+      "targets": {
+        "Ascend950DT_9582": {
+          "plan": {
+            "chip": "Ascend950DT_9582",
+            "selector": "vllm_ascend_kimi_k3_fla_a5_26.9.1",
+            "chip_policy": "assume the same 950 FLA implementation and host selection rule on future chips",
+            "local_heads": 48,
+            "query_lengths": [
+              2048,
+              2048,
+              2048,
+              2048,
+              2048,
+              2048,
+              2048,
+              2048
+            ],
+            "nonempty_requests": 8,
+            "shape": [
+              1,
+              16384,
+              48,
+              48,
+              128,
+              128
+            ],
+            "chunks": 256,
+            "work_items": 12288,
+            "aclnn": "aclnnChunkKdaFwdV2",
+            "main_kernels": [
+              "chunk_kda_fwd_prepare",
+              "chunk_fwd_h",
+              "chunk_kda_fwd_finalize"
+            ],
+            "main_kernels_us": 8317.230100136518,
+            "full_dispatch_us": null,
+            "status": "extrapolated",
+            "reason": "three serial V2 compute kernels; graph helpers, possible materialization and launch gaps have no qualified times",
+            "graph_io": {
+              "qk_l2norm_read_bytes": 402653184,
+              "qk_l2norm_write_bytes": 402653184,
+              "state_gather_read_bytes_range": [
+                0,
+                25165824
+              ],
+              "state_gather_write_bytes": 25165824,
+              "state_scatter_read_bytes": 25165824,
+              "state_scatter_write_bytes": 25165824
+            },
+            "main_stages_us": {
+              "chunk_kda_fwd_prepare": 5537.0024109625865,
+              "chunk_fwd_h": 1685.1566234770235,
+              "chunk_kda_fwd_finalize": 1095.0710656969072
+            },
+            "minimum_payload_bytes": 2469421248,
+            "capacity_bytes": 103079215104,
+            "scope": "one prefill dispatch, after convolution and beta preprocessing; excludes decoder and speculative recurrent calls",
+            "memory_bytes": {
+              "public_live": 1261461696,
+              "intermediate_after_prepare": 1207959552,
+              "intermediate_after_fwdh": 805306368
+            }
+          },
+          "median_query_ms": 2.3835599999999997,
+          "max_query_ms": 2.42958
+        },
+        "Ascend950PR_957b": {
+          "plan": {
+            "chip": "Ascend950PR_957b",
+            "selector": "vllm_ascend_kimi_k3_fla_a5_26.9.1",
+            "chip_policy": "assume the same 950 FLA implementation and host selection rule on future chips",
+            "local_heads": 48,
+            "query_lengths": [
+              2048,
+              2048,
+              2048,
+              2048,
+              2048,
+              2048,
+              2048,
+              2048
+            ],
+            "nonempty_requests": 8,
+            "shape": [
+              1,
+              16384,
+              48,
+              48,
+              128,
+              128
+            ],
+            "chunks": 256,
+            "work_items": 12288,
+            "aclnn": "aclnnChunkKdaFwdV2",
+            "main_kernels": [
+              "chunk_kda_fwd_prepare",
+              "chunk_fwd_h",
+              "chunk_kda_fwd_finalize"
+            ],
+            "main_kernels_us": 10307.719715945892,
+            "full_dispatch_us": null,
+            "status": "extrapolated",
+            "reason": "three serial V2 compute kernels; graph helpers, possible materialization and launch gaps have no qualified times",
+            "graph_io": {
+              "qk_l2norm_read_bytes": 402653184,
+              "qk_l2norm_write_bytes": 402653184,
+              "state_gather_read_bytes_range": [
+                0,
+                25165824
+              ],
+              "state_gather_write_bytes": 25165824,
+              "state_scatter_read_bytes": 25165824,
+              "state_scatter_write_bytes": 25165824
+            },
+            "main_stages_us": {
+              "chunk_kda_fwd_prepare": 6969.816281160413,
+              "chunk_fwd_h": 1969.537481452223,
+              "chunk_kda_fwd_finalize": 1368.3659533332554
+            },
+            "minimum_payload_bytes": 2469421248,
+            "capacity_bytes": 120259084288,
+            "scope": "one prefill dispatch, after convolution and beta preprocessing; excludes decoder and speculative recurrent calls",
+            "memory_bytes": {
+              "public_live": 1261461696,
+              "intermediate_after_prepare": 1207959552,
+              "intermediate_after_fwdh": 805306368
+            }
+          },
+          "median_query_ms": 2.22635,
+          "max_query_ms": 2.43998
+        },
+        "Ascend970DT": {
+          "plan": {
+            "chip": "Ascend970DT",
+            "selector": "vllm_ascend_kimi_k3_fla_a5_26.9.1",
+            "chip_policy": "assume the same 950 FLA implementation and host selection rule on future chips",
+            "local_heads": 48,
+            "query_lengths": [
+              2048,
+              2048,
+              2048,
+              2048,
+              2048,
+              2048,
+              2048,
+              2048
+            ],
+            "nonempty_requests": 8,
+            "shape": [
+              1,
+              16384,
+              48,
+              48,
+              128,
+              128
+            ],
+            "chunks": 256,
+            "work_items": 12288,
+            "aclnn": "aclnnChunkKdaFwdV2",
+            "main_kernels": [
+              "chunk_kda_fwd_prepare",
+              "chunk_fwd_h",
+              "chunk_kda_fwd_finalize"
+            ],
+            "main_kernels_us": 4142.943860745622,
+            "full_dispatch_us": null,
+            "status": "extrapolated",
+            "reason": "three serial V2 compute kernels; graph helpers, possible materialization and launch gaps have no qualified times",
+            "graph_io": {
+              "qk_l2norm_read_bytes": 402653184,
+              "qk_l2norm_write_bytes": 402653184,
+              "state_gather_read_bytes_range": [
+                0,
+                25165824
+              ],
+              "state_gather_write_bytes": 25165824,
+              "state_scatter_read_bytes": 25165824,
+              "state_scatter_write_bytes": 25165824
+            },
+            "main_stages_us": {
+              "chunk_kda_fwd_prepare": 3022.350514394922,
+              "chunk_fwd_h": 870.1496742205692,
+              "chunk_kda_fwd_finalize": 250.44367213013095
+            },
+            "minimum_payload_bytes": 2469421248,
+            "capacity_bytes": 288000000000,
+            "scope": "one prefill dispatch, after convolution and beta preprocessing; excludes decoder and speculative recurrent calls",
+            "memory_bytes": {
+              "public_live": 1261461696,
+              "intermediate_after_prepare": 1207959552,
+              "intermediate_after_fwdh": 805306368
+            }
+          },
+          "median_query_ms": 3.7669799999999998,
+          "max_query_ms": 4.190869999999999
+        }
+      }
+    },
+    {
+      "tag": "TP4",
+      "lengths": [
+        2048,
+        2048,
+        2048,
+        2048,
+        2048,
+        2048,
+        2048,
+        2048
+      ],
+      "tp": 4,
+      "w": 6144,
+      "official_api": "aclnnChunkKdaFwdV2",
+      "targets": {
+        "Ascend950DT_9582": {
+          "plan": {
+            "chip": "Ascend950DT_9582",
+            "selector": "vllm_ascend_kimi_k3_fla_a5_26.9.1",
+            "chip_policy": "assume the same 950 FLA implementation and host selection rule on future chips",
+            "local_heads": 24,
+            "query_lengths": [
+              2048,
+              2048,
+              2048,
+              2048,
+              2048,
+              2048,
+              2048,
+              2048
+            ],
+            "nonempty_requests": 8,
+            "shape": [
+              1,
+              16384,
+              24,
+              24,
+              128,
+              128
+            ],
+            "chunks": 256,
+            "work_items": 6144,
+            "aclnn": "aclnnChunkKdaFwdV2",
+            "main_kernels": [
+              "chunk_kda_fwd_prepare",
+              "chunk_fwd_h",
+              "chunk_kda_fwd_finalize"
+            ],
+            "main_kernels_us": 4162.847777340986,
+            "full_dispatch_us": null,
+            "status": "extrapolated",
+            "reason": "three serial V2 compute kernels; graph helpers, possible materialization and launch gaps have no qualified times",
+            "graph_io": {
+              "qk_l2norm_read_bytes": 201326592,
+              "qk_l2norm_write_bytes": 201326592,
+              "state_gather_read_bytes_range": [
+                0,
+                12582912
+              ],
+              "state_gather_write_bytes": 12582912,
+              "state_scatter_read_bytes": 12582912,
+              "state_scatter_write_bytes": 12582912
+            },
+            "main_stages_us": {
+              "chunk_kda_fwd_prepare": 2771.516963057051,
+              "chunk_fwd_h": 842.8495238597238,
+              "chunk_kda_fwd_finalize": 548.4812904242112
+            },
+            "minimum_payload_bytes": 1234710624,
+            "capacity_bytes": 103079215104,
+            "scope": "one prefill dispatch, after convolution and beta preprocessing; excludes decoder and speculative recurrent calls",
+            "memory_bytes": {
+              "public_live": 630730848,
+              "intermediate_after_prepare": 603979776,
+              "intermediate_after_fwdh": 402653184
+            }
+          },
+          "median_query_ms": 2.25024,
+          "max_query_ms": 2.27808
+        },
+        "Ascend950PR_957b": {
+          "plan": {
+            "chip": "Ascend950PR_957b",
+            "selector": "vllm_ascend_kimi_k3_fla_a5_26.9.1",
+            "chip_policy": "assume the same 950 FLA implementation and host selection rule on future chips",
+            "local_heads": 24,
+            "query_lengths": [
+              2048,
+              2048,
+              2048,
+              2048,
+              2048,
+              2048,
+              2048,
+              2048
+            ],
+            "nonempty_requests": 8,
+            "shape": [
+              1,
+              16384,
+              24,
+              24,
+              128,
+              128
+            ],
+            "chunks": 256,
+            "work_items": 6144,
+            "aclnn": "aclnnChunkKdaFwdV2",
+            "main_kernels": [
+              "chunk_kda_fwd_prepare",
+              "chunk_fwd_h",
+              "chunk_kda_fwd_finalize"
+            ],
+            "main_kernels_us": 5158.092585245673,
+            "full_dispatch_us": null,
+            "status": "extrapolated",
+            "reason": "three serial V2 compute kernels; graph helpers, possible materialization and launch gaps have no qualified times",
+            "graph_io": {
+              "qk_l2norm_read_bytes": 201326592,
+              "qk_l2norm_write_bytes": 201326592,
+              "state_gather_read_bytes_range": [
+                0,
+                12582912
+              ],
+              "state_gather_write_bytes": 12582912,
+              "state_scatter_read_bytes": 12582912,
+              "state_scatter_write_bytes": 12582912
+            },
+            "main_stages_us": {
+              "chunk_kda_fwd_prepare": 3487.9238981559643,
+              "chunk_fwd_h": 985.0399528473237,
+              "chunk_kda_fwd_finalize": 685.1287342423852
+            },
+            "minimum_payload_bytes": 1234710624,
+            "capacity_bytes": 120259084288,
+            "scope": "one prefill dispatch, after convolution and beta preprocessing; excludes decoder and speculative recurrent calls",
+            "memory_bytes": {
+              "public_live": 630730848,
+              "intermediate_after_prepare": 603979776,
+              "intermediate_after_fwdh": 402653184
+            }
+          },
+          "median_query_ms": 2.06925,
+          "max_query_ms": 2.1792
+        },
+        "Ascend970DT": {
+          "plan": {
+            "chip": "Ascend970DT",
+            "selector": "vllm_ascend_kimi_k3_fla_a5_26.9.1",
+            "chip_policy": "assume the same 950 FLA implementation and host selection rule on future chips",
+            "local_heads": 24,
+            "query_lengths": [
+              2048,
+              2048,
+              2048,
+              2048,
+              2048,
+              2048,
+              2048,
+              2048
+            ],
+            "nonempty_requests": 8,
+            "shape": [
+              1,
+              16384,
+              24,
+              24,
+              128,
+              128
+            ],
+            "chunks": 256,
+            "work_items": 6144,
+            "aclnn": "aclnnChunkKdaFwdV2",
+            "main_kernels": [
+              "chunk_kda_fwd_prepare",
+              "chunk_fwd_h",
+              "chunk_kda_fwd_finalize"
+            ],
+            "main_kernels_us": 2137.4699626584074,
+            "full_dispatch_us": null,
+            "status": "extrapolated",
+            "reason": "three serial V2 compute kernels; graph helpers, possible materialization and launch gaps have no qualified times",
+            "graph_io": {
+              "qk_l2norm_read_bytes": 201326592,
+              "qk_l2norm_write_bytes": 201326592,
+              "state_gather_read_bytes_range": [
+                0,
+                12582912
+              ],
+              "state_gather_write_bytes": 12582912,
+              "state_scatter_read_bytes": 12582912,
+              "state_scatter_write_bytes": 12582912
+            },
+            "main_stages_us": {
+              "chunk_kda_fwd_prepare": 1513.9397016419055,
+              "chunk_fwd_h": 497.44148050699204,
+              "chunk_kda_fwd_finalize": 126.08878050950992
+            },
+            "minimum_payload_bytes": 1234710624,
+            "capacity_bytes": 288000000000,
+            "scope": "one prefill dispatch, after convolution and beta preprocessing; excludes decoder and speculative recurrent calls",
+            "memory_bytes": {
+              "public_live": 630730848,
+              "intermediate_after_prepare": 603979776,
+              "intermediate_after_fwdh": 402653184
+            }
+          },
+          "median_query_ms": 3.76849,
+          "max_query_ms": 3.7957099999999997
+        }
+      }
+    },
+    {
+      "tag": "TP16",
+      "lengths": [
+        2048,
+        2048,
+        2048,
+        2048,
+        2048,
+        2048,
+        2048,
+        2048
+      ],
+      "tp": 16,
+      "w": 1536,
+      "official_api": "aclnnChunkKdaFwd",
+      "targets": {
+        "Ascend950DT_9582": {
+          "plan": {
+            "chip": "Ascend950DT_9582",
+            "selector": "vllm_ascend_kimi_k3_fla_a5_26.9.1",
+            "chip_policy": "assume the same 950 FLA implementation and host selection rule on future chips",
+            "local_heads": 6,
+            "query_lengths": [
+              2048,
+              2048,
+              2048,
+              2048,
+              2048,
+              2048,
+              2048,
+              2048
+            ],
+            "nonempty_requests": 8,
+            "shape": [
+              1,
+              16384,
+              6,
+              6,
+              128,
+              128
+            ],
+            "chunks": 256,
+            "work_items": 1536,
+            "aclnn": "aclnnChunkKdaFwd",
+            "main_kernels": [
+              "ChunkKdaFwd:gate_prepare",
+              "ChunkKdaFwd:post_wu",
+              "ChunkKdaFwd:fwd_h",
+              "ChunkKdaFwd:finalize"
+            ],
+            "main_kernels_us": null,
+            "full_dispatch_us": null,
+            "status": "unavailable",
+            "reason": "selected fused V1 has no qualified cost for this dispatch",
+            "graph_io": {
+              "qk_l2norm_read_bytes": 50331648,
+              "qk_l2norm_write_bytes": 50331648,
+              "state_gather_read_bytes_range": [
+                0,
+                3145728
+              ],
+              "state_gather_write_bytes": 3145728,
+              "state_scatter_read_bytes": 3145728,
+              "state_scatter_write_bytes": 3145728
+            },
+            "main_stages_us": {},
+            "minimum_payload_bytes": 157682712,
+            "capacity_bytes": 103079215104,
+            "scope": "one prefill dispatch, after convolution and beta preprocessing; excludes decoder and speculative recurrent calls"
+          },
+          "median_query_ms": 0.01315,
+          "max_query_ms": 0.02761
+        },
+        "Ascend950PR_957b": {
+          "plan": {
+            "chip": "Ascend950PR_957b",
+            "selector": "vllm_ascend_kimi_k3_fla_a5_26.9.1",
+            "chip_policy": "assume the same 950 FLA implementation and host selection rule on future chips",
+            "local_heads": 6,
+            "query_lengths": [
+              2048,
+              2048,
+              2048,
+              2048,
+              2048,
+              2048,
+              2048,
+              2048
+            ],
+            "nonempty_requests": 8,
+            "shape": [
+              1,
+              16384,
+              6,
+              6,
+              128,
+              128
+            ],
+            "chunks": 256,
+            "work_items": 1536,
+            "aclnn": "aclnnChunkKdaFwd",
+            "main_kernels": [
+              "ChunkKdaFwd:gate_prepare",
+              "ChunkKdaFwd:post_wu",
+              "ChunkKdaFwd:fwd_h",
+              "ChunkKdaFwd:finalize"
+            ],
+            "main_kernels_us": null,
+            "full_dispatch_us": null,
+            "status": "unavailable",
+            "reason": "selected fused V1 has no qualified cost for this dispatch",
+            "graph_io": {
+              "qk_l2norm_read_bytes": 50331648,
+              "qk_l2norm_write_bytes": 50331648,
+              "state_gather_read_bytes_range": [
+                0,
+                3145728
+              ],
+              "state_gather_write_bytes": 3145728,
+              "state_scatter_read_bytes": 3145728,
+              "state_scatter_write_bytes": 3145728
+            },
+            "main_stages_us": {},
+            "minimum_payload_bytes": 157682712,
+            "capacity_bytes": 120259084288,
+            "scope": "one prefill dispatch, after convolution and beta preprocessing; excludes decoder and speculative recurrent calls"
+          },
+          "median_query_ms": 0.01303,
+          "max_query_ms": 0.015179999999999999
+        },
+        "Ascend970DT": {
+          "plan": {
+            "chip": "Ascend970DT",
+            "selector": "vllm_ascend_kimi_k3_fla_a5_26.9.1",
+            "chip_policy": "assume the same 950 FLA implementation and host selection rule on future chips",
+            "local_heads": 6,
+            "query_lengths": [
+              2048,
+              2048,
+              2048,
+              2048,
+              2048,
+              2048,
+              2048,
+              2048
+            ],
+            "nonempty_requests": 8,
+            "shape": [
+              1,
+              16384,
+              6,
+              6,
+              128,
+              128
+            ],
+            "chunks": 256,
+            "work_items": 1536,
+            "aclnn": "aclnnChunkKdaFwd",
+            "main_kernels": [
+              "ChunkKdaFwd:gate_prepare",
+              "ChunkKdaFwd:post_wu",
+              "ChunkKdaFwd:fwd_h",
+              "ChunkKdaFwd:finalize"
+            ],
+            "main_kernels_us": null,
+            "full_dispatch_us": null,
+            "status": "unavailable",
+            "reason": "selected fused V1 has no qualified cost for this dispatch",
+            "graph_io": {
+              "qk_l2norm_read_bytes": 50331648,
+              "qk_l2norm_write_bytes": 50331648,
+              "state_gather_read_bytes_range": [
+                0,
+                3145728
+              ],
+              "state_gather_write_bytes": 3145728,
+              "state_scatter_read_bytes": 3145728,
+              "state_scatter_write_bytes": 3145728
+            },
+            "main_stages_us": {},
+            "minimum_payload_bytes": 157682712,
+            "capacity_bytes": 288000000000,
+            "scope": "one prefill dispatch, after convolution and beta preprocessing; excludes decoder and speculative recurrent calls"
+          },
+          "median_query_ms": 0.01266,
+          "max_query_ms": 0.013829999999999999
+        }
+      }
+    },
+    {
+      "tag": "TP32",
+      "lengths": [
+        2048,
+        2048,
+        2048,
+        2048,
+        2048,
+        2048,
+        2048,
+        2048
+      ],
+      "tp": 32,
+      "w": 768,
+      "official_api": "aclnnChunkKdaFwd",
+      "targets": {
+        "Ascend950DT_9582": {
+          "plan": {
+            "chip": "Ascend950DT_9582",
+            "selector": "vllm_ascend_kimi_k3_fla_a5_26.9.1",
+            "chip_policy": "assume the same 950 FLA implementation and host selection rule on future chips",
+            "local_heads": 3,
+            "query_lengths": [
+              2048,
+              2048,
+              2048,
+              2048,
+              2048,
+              2048,
+              2048,
+              2048
+            ],
+            "nonempty_requests": 8,
+            "shape": [
+              1,
+              16384,
+              3,
+              3,
+              128,
+              128
+            ],
+            "chunks": 256,
+            "work_items": 768,
+            "aclnn": "aclnnChunkKdaFwd",
+            "main_kernels": [
+              "ChunkKdaFwd:gate_prepare",
+              "ChunkKdaFwd:post_wu",
+              "ChunkKdaFwd:fwd_h",
+              "ChunkKdaFwd:finalize"
+            ],
+            "main_kernels_us": null,
+            "full_dispatch_us": null,
+            "status": "unavailable",
+            "reason": "selected fused V1 has no qualified cost for this dispatch",
+            "graph_io": {
+              "qk_l2norm_read_bytes": 25165824,
+              "qk_l2norm_write_bytes": 25165824,
+              "state_gather_read_bytes_range": [
+                0,
+                1572864
+              ],
+              "state_gather_write_bytes": 1572864,
+              "state_scatter_read_bytes": 1572864,
+              "state_scatter_write_bytes": 1572864
+            },
+            "main_stages_us": {},
+            "minimum_payload_bytes": 78841356,
+            "capacity_bytes": 103079215104,
+            "scope": "one prefill dispatch, after convolution and beta preprocessing; excludes decoder and speculative recurrent calls"
+          },
+          "median_query_ms": 0.01262,
+          "max_query_ms": 0.01509
+        },
+        "Ascend950PR_957b": {
+          "plan": {
+            "chip": "Ascend950PR_957b",
+            "selector": "vllm_ascend_kimi_k3_fla_a5_26.9.1",
+            "chip_policy": "assume the same 950 FLA implementation and host selection rule on future chips",
+            "local_heads": 3,
+            "query_lengths": [
+              2048,
+              2048,
+              2048,
+              2048,
+              2048,
+              2048,
+              2048,
+              2048
+            ],
+            "nonempty_requests": 8,
+            "shape": [
+              1,
+              16384,
+              3,
+              3,
+              128,
+              128
+            ],
+            "chunks": 256,
+            "work_items": 768,
+            "aclnn": "aclnnChunkKdaFwd",
+            "main_kernels": [
+              "ChunkKdaFwd:gate_prepare",
+              "ChunkKdaFwd:post_wu",
+              "ChunkKdaFwd:fwd_h",
+              "ChunkKdaFwd:finalize"
+            ],
+            "main_kernels_us": null,
+            "full_dispatch_us": null,
+            "status": "unavailable",
+            "reason": "selected fused V1 has no qualified cost for this dispatch",
+            "graph_io": {
+              "qk_l2norm_read_bytes": 25165824,
+              "qk_l2norm_write_bytes": 25165824,
+              "state_gather_read_bytes_range": [
+                0,
+                1572864
+              ],
+              "state_gather_write_bytes": 1572864,
+              "state_scatter_read_bytes": 1572864,
+              "state_scatter_write_bytes": 1572864
+            },
+            "main_stages_us": {},
+            "minimum_payload_bytes": 78841356,
+            "capacity_bytes": 120259084288,
+            "scope": "one prefill dispatch, after convolution and beta preprocessing; excludes decoder and speculative recurrent calls"
+          },
+          "median_query_ms": 0.012589999999999999,
+          "max_query_ms": 0.01282
+        },
+        "Ascend970DT": {
+          "plan": {
+            "chip": "Ascend970DT",
+            "selector": "vllm_ascend_kimi_k3_fla_a5_26.9.1",
+            "chip_policy": "assume the same 950 FLA implementation and host selection rule on future chips",
+            "local_heads": 3,
+            "query_lengths": [
+              2048,
+              2048,
+              2048,
+              2048,
+              2048,
+              2048,
+              2048,
+              2048
+            ],
+            "nonempty_requests": 8,
+            "shape": [
+              1,
+              16384,
+              3,
+              3,
+              128,
+              128
+            ],
+            "chunks": 256,
+            "work_items": 768,
+            "aclnn": "aclnnChunkKdaFwd",
+            "main_kernels": [
+              "ChunkKdaFwd:gate_prepare",
+              "ChunkKdaFwd:post_wu",
+              "ChunkKdaFwd:fwd_h",
+              "ChunkKdaFwd:finalize"
+            ],
+            "main_kernels_us": null,
+            "full_dispatch_us": null,
+            "status": "unavailable",
+            "reason": "selected fused V1 has no qualified cost for this dispatch",
+            "graph_io": {
+              "qk_l2norm_read_bytes": 25165824,
+              "qk_l2norm_write_bytes": 25165824,
+              "state_gather_read_bytes_range": [
+                0,
+                1572864
+              ],
+              "state_gather_write_bytes": 1572864,
+              "state_scatter_read_bytes": 1572864,
+              "state_scatter_write_bytes": 1572864
+            },
+            "main_stages_us": {},
+            "minimum_payload_bytes": 78841356,
+            "capacity_bytes": 288000000000,
+            "scope": "one prefill dispatch, after convolution and beta preprocessing; excludes decoder and speculative recurrent calls"
+          },
+          "median_query_ms": 0.012459999999999999,
+          "max_query_ms": 0.014079999999999999
+        }
+      }
+    }
+  ]
+}

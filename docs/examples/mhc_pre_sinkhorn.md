@@ -1,5 +1,11 @@
 # mHC PreSinkhorn · 950PR 的 22 组 K 分块
 
+950PR 上 `[72,4,4096]` 的公开模型从输入激活、八条单核 MMAD、每核两行归一化和跨核交接得到 **14.423 µs**，全核 CA 为 **13.649 µs**。算例列出每一项的工作量、价格来源和真实 kernel。[完整计算过程](../../results/v0.27/fusion/public-fused.md)
+
+![950PR 上的独立 T72 形状，模型与 CA 对齐关键 AIC、AIV 第一段与第二段](../../results/v0.27/fusion/fused-t72-pr-timeline.png)
+
+输入 `[72,4,4096]`，关键分块上的 8 条 MMAD 都能在 CA 中找到，实际使用 22 AIC、44 AIV。模型首次 MMAD 早 0.814 µs，第二段 AIV 开始晚 0.567 µs。冻结融合候选 **14.423 µs**，旧版 **16.640 µs**，独立库窗 **13.649 µs**。计入三组全元素校验和 66 个核的实际退出；离线墙钟 32 分 17 秒。[逐核指令与分段](../../results/v0.27/fusion/fused-t72-pr-timeline.json) · [适用范围和独立样本进度](../../results/v0.27/fusion/report.md)
+
 ## T=80 的 21 个满分片与 1 个尾分片
 
 ![融合 PreSinkhorn 同一阶段在模型与实际 CA 上的窗口](../../results/v0.26/presink/pr-t80.png)

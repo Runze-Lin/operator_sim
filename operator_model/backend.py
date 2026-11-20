@@ -81,8 +81,12 @@ def _price_resource(op, shape, target, call, dtype):
 
     work = None
     if op in ('mhc_sinkhorn', 'mhc_pre_sinkhorn'):
-        from .mhc_sink_resource import fused, sink
-        price = sink if op == 'mhc_sinkhorn' else fused
+        if op == 'mhc_pre_sinkhorn':
+            from .mhc_pre_sink_resource import fused as price
+        elif call.get('resident_aiv') is not None:
+            from .sink_history import price
+        else:
+            from .mhc_sink_resource import sink as price
         us, aic, aiv, diag = price(shape, target, call)
         work = account_work(op, shape, {**call, 'dtype': dtype})
     elif op == 'attn_res_fwd':
@@ -162,6 +166,16 @@ def _price_resource(op, shape, target, call, dtype):
     if us is None:
         return Estimate(None, 'unavailable', diag.get('qualification', 'No qualified timing for this branch'),
                         aiv, aic, target.name, work, projected)
+    if op == 'mhc_pre_sinkhorn':
+        verified = (diag['schedule'] == 'k_split_cv2_joint_sinkhorn'
+                    and target in (load_chip(), load_chip('Ascend950PR_957b')))
+        reason = ('Two-SKU validated K-split projection and joint Sinkhorn, T<128' if verified
+                  else diag['qualification'])
+        return Estimate(us, 'estimated' if verified else 'extrapolated', reason, aiv, aic,
+                        target.name, work, projected, _rates(work, us, target))
+    if op == 'mhc_sinkhorn' and 'history_timing_status' in diag:
+        return Estimate(us, diag['history_timing_status'], diag['qualification'], aiv, aic,
+                        target.name, work, projected, _rates(work, us, target))
     if op == 'rmsnorm' and call.get('resident_aiv') is not None:
         # Backward-compatible diagnostic for schedulers storing a DT high-water
         # mark. The target calculation itself consumes the target count directly.
@@ -216,6 +230,15 @@ def _evaluate(op, shape, attrs, soc, chip, dtype, timing_mode='auto'):
         call, chosen_dtype = _call_attrs(op, attrs, dtype)
         if timing_mode not in ('auto','resource','calibrated'):
             raise ValueError('timing_mode must be auto, resource or calibrated')
+        if op == 'mhc_sinkhorn' and 'resident_aiv' in call and call['resident_aiv'] is None:
+            # An explicitly unknown history has the same semantics as omitting H.
+            del call['resident_aiv']
+        if op == 'mhc_pre_sinkhorn' or (op == 'mhc_sinkhorn' and 'resident_aiv' in call):
+            result = _price_resource(op, shape, target, call, chosen_dtype)
+            if timing_mode == 'calibrated' and result.status == 'extrapolated':
+                return Estimate(None, 'unavailable', result.reason, result.active_aiv, result.active_aic,
+                                target.name, result.work, {**result.projection, 'latency_us': None}), raw
+            return result, raw
         if op == 'mhc_post' and call.get('implementation') == 'vllm_hc_post':
             if timing_mode == 'calibrated':
                 from .hc_post_layout import layout

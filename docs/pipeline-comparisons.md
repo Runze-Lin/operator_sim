@@ -10,6 +10,22 @@
 
 同一个 shape 在 950PR 上只用 28 个 AIC，首波之后分出 24 个 128×256 矩形。预测和实测都有 416 条 MMAD；首条 MMAD 起点相差 0.059 µs，到了最后一页扩大到 0.586 µs。模型给出 **14.027 µs**，CA 给出 **13.218 µs**。[同一刻度并排看 DT 与 PR](examples/figures/matmul-tile-pages-dt-pr.png) · [950PR 上下对照原图](examples/figures/matmul-tile-pages-pr.png) · [两卡同形的逐页偏差](../results/v0.21/matmul-pages-pr/report.md)
 
+## Pro 8×256Ki · 在第 65 块看见误差换方向
+
+![950DT 的 Pro Cast，第 62 至 66 个块模型与 CA 逐行对应](../results/v0.27/memory/pro-256ki-dt-blocks-62-66.png)
+
+在第 62 块模型写完成晚 4.394 µs，第 66 块早 2.605 µs。底部细线保留了 100 个工作块的写完成偏差。把同一坐标移到尾部，可以看到末核在 247.788 µs 退出。[首四块](../results/v0.26/memory/pro-b8-256ki-dt-head.png) · [尾四块](../results/v0.27/memory/pro-256ki-dt-blocks-97-100.png) · [逐步算例](examples/cast_bf16_fp32.md)
+
+## FA · 比整页多一个 KV token
+
+![950DT 的 FA，最后两张完整 KV 页和单 token 尾页的 K/V 读、QK 和 PV](../results/v0.27/fa-32769-dt-tail.png)
+
+Q=9、KV=32,769、D=64，每个完整 KV 页各发两条 QK 和 PV，最后一个 token 各发一条。尾页 QK 模型比实测早 1.385 µs，PV 却晚 0.648 µs。右侧时间包含末尾 AIV 退休。[参数与来源](examples/fa.md) · [全部 129 页的时间](../results/v0.27/fa-32769-dt-tail.json)
+
+## 同一输入，不同前序
+
+独立 Sinkhorn 的 [950DT](../results/v0.27/fusion/950dt-same-input.png) 与 [950PR](../results/v0.27/fusion/950pr-same-input.png) 采用同一个 [67,4,4] 输入和 10 次迭代，每列分别画首次或热态。融合 [PreSinkhorn，72 个 token](../results/v0.27/fusion/fused-t72-pr-timeline.png) 可以逐次读出 8 条 MMAD 和两个 AIV 阶段。内置 [Post，196 个 token](../results/v0.27/post/same-token-history.png) 将两种前序的同一物理核、同四个 token 并排，图上分别标注独立预测和开发回放。
+
 ## 大 prefill · 第一块还没读完，第二块已经发起
 
 ![950PR Flash 单卡 8×256Ki，首四块的模型与 CA 末核共享坐标](../results/v0.26/memory/flash-256ki-pr-head.png)
