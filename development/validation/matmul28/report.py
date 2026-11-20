@@ -101,7 +101,7 @@ def report():
             if q['qualified'] is None: continue
             stage=' + '.join(f'{s["kernel"]} · {s["active_aic"]}/{s["active_aiv"]} · {s["mmad"]}' for s in q['stages']) or '—'
             lines.append(f'| {r["shape"]} | {t.upper()} | {q["model_aic"]}/{q["model_aiv"]} | {stage} | {fmt(q["wall_s"],1)} | [{q["status"]}]({q["receipt"]}) |')
-    lines+=['','CA 从所有活动核最早发起计至最后退出。多 kernel 派发保留每个完整窗口及成本，只有冻结合同对应的一次独立 Matmul 窗参加聚合。WAPE 以实测时间加权；分母为零个合格样本时记 N/A。两个队列按完成情况更新此表。[冻结的模型输入、预算与三芯片预测](freeze.json) · [逐形机器可读表](evaluation.json) · [单卡模型规格和切分](../../../docs/prefill-shapes.md)','']
+    lines+=['','CA 从所有活动核最早发起计至最后退出。多 kernel 派发保留每个完整窗口及成本，只有冻结合同对应的一次独立 Matmul 窗参加聚合。WAPE 以实测时间加权；分母为零个合格样本时记 N/A。表中预测始终是采集前冻结的普通排程。[当前默认分支、同形误差与加速比](public-report.md) · [单输出分 K 的预登记验证](streamk-analysis.md)。两个队列按完成情况更新此表。[冻结的模型输入、预算与三芯片预测](freeze.json) · [逐形机器可读表](evaluation.json) · [单卡模型规格和切分](../../../docs/prefill-shapes.md)','']
     write(OUT/'report.md','\n'.join(lines))
 
 

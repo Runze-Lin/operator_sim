@@ -77,6 +77,7 @@ def _price_resource(op, shape, target, call, dtype):
     from .model_v6 import Case
     from .quant_resource import resource_quant
     from .matmul_resource import resource_matmul
+    from .matmul_splitk import resource_matmul_dispatch
     from .fa_resource import resource_fa
 
     work = None
@@ -154,10 +155,12 @@ def _price_resource(op, shape, target, call, dtype):
                 raise ValueError(f'{op} requires {rank} positive integer dimensions')
             if op == 'quant' and (shape[1] % 64 or shape[1] > 65536):
                 raise ValueError('Quant cols must be a multiple of 64, at most 65536')
-        price = {'quant': resource_quant, 'matmul': resource_matmul, 'fa': resource_fa}[op]
+        price = {'quant': resource_quant, 'matmul': resource_matmul_dispatch, 'fa': resource_fa}[op]
         us, aic, aiv, diag = price(shape, target)
     if work is None:
         work = account_work(op, shape, {'dtype': dtype})
+    if op == 'matmul' and 'internal_work' in diag:
+        work['implementation_work'] = diag['internal_work'].copy()
     projected = dict(method='target_resource_schedule', latency_us=us, active_aic=aic,
                      active_aiv=aiv, reference_latency_us=None, stages_us=diag['stages_us'],
                      target_plan=diag['target_plan'], timing_diagnostics=diag,
@@ -166,6 +169,9 @@ def _price_resource(op, shape, target, call, dtype):
     if us is None:
         return Estimate(None, 'unavailable', diag.get('qualification', 'No qualified timing for this branch'),
                         aiv, aic, target.name, work, projected)
+    if op == 'matmul' and diag.get('internal_work'):
+        return Estimate(us, 'extrapolated', diag['qualification'], aiv, aic, target.name,
+                        work, projected, _rates(work, us, target))
     if op == 'mhc_pre_sinkhorn':
         verified = (diag['schedule'] == 'k_split_cv2_joint_sinkhorn'
                     and target in (load_chip(), load_chip('Ascend950PR_957b')))

@@ -1,5 +1,7 @@
 # DeepSeek-V4.1-Flash · 整批 prefill 的逐节点单卡张量
 
+indexer.wk 在 B8×128Ki 时按 [1048576,128,512] 提交；indexer.weights_proj 在 B8×32Ki 时为 [262144,32,5120]。这些投影使用 BF16 ND 独立库合同做双端 CA 对照。[含普通 decode、MTP 与大 prefill 的 Matmul 总表](../../results/v0.28/matmul/README.md)
+
 单卡 B8×32Ki 整批展平后的全 hidden Cast 是 `[262144,5120]`，区别于 indexer 的 32 列系数。DT 预测 2514.820 µs，全输出核验通过，64 核原生包络 2737.538 µs，采集墙钟 4 小时 18 分。逐指令整窗未采集。[运行回执](../../results/v0.23/full-hidden/v3/flash-retry.json)
 
 每个表对应 8 条等长请求一次提交，attention TP8、DP1，MoE EP8。层号从 0 开始。权重写为源码的逻辑形状，KV 表同时包含持久化或条件性缓冲。专家行数采用本情景的均衡路由。表内给出完整轴长度，可以按具体节点直接查询。
@@ -18,7 +20,7 @@
 | `mhc.ffn.post`<br>0–39 | x <code>[1,262144,5120]</code><br>residual <code>[1,262144,4,5120]</code><br>post <code>[1,262144,4]</code><br>mix <code>[1,262144,4,4]</code><br>out <code>[1,262144,4,5120]</code> | `mhc_post`<br>implementation="vllm_hc_post" | 10660.341 / — | 17187.659 / — | 5211.008 |
 | `input_layernorm`<br>0–39 | x <code>[262144,5120]</code><br>weight <code>[5120]</code><br>out <code>[262144,5120]</code> | `rmsnorm` | 1312.284 / — | 3757.462 / — | 551.800 |
 | `post_attention_layernorm`<br>0–39 | x <code>[262144,5120]</code><br>weight <code>[5120]</code><br>out <code>[262144,5120]</code> | `rmsnorm` | 1312.284 / — | 3757.462 / — | 551.800 |
-| `moe.router_input.float`<br>0–39 | bf16 <code>[262144,5120]</code><br>fp32 <code>[262144,5120]</code> | `cast_bf16_fp32` | 2514.820 / — | 5697.327 / — | 1223.154 |
+| `moe.router_input.float`<br>0–39 | bf16 <code>[262144,5120]</code><br>fp32 <code>[262144,5120]</code> | `cast_bf16_fp32` | 2514.820 / — | 5683.487 / — | 1223.154 |
 | `dsa.wq_a`<br>0–39 | x <code>[262144,5120]</code><br>weight_logical <code>[1280,5120]</code><br>y <code>[262144,1280]</code> | 仅形状 | — | — | — |
 | `dsa.q_norm`<br>0–39 | x <code>[262144,1280]</code><br>weight <code>[1280]</code><br>y <code>[262144,1280]</code> | 仅形状 | — | — | — |
 | `dsa.wq_b`<br>0–39 | x <code>[262144,1280]</code><br>weight_logical <code>[4096,1280]</code><br>y <code>[262144,4096]</code> | 仅形状 | — | — | — |
@@ -38,16 +40,16 @@
 | `dsa.sparse_attention`<br>36–39 | q <code>[262144,8,512]</code><br>out <code>[262144,8,512]</code><br>sink <code>[8]</code><br>compressed_kv_logical <code>[8,32768,1,512]</code><br>indices_capacity_per_query <code>[262144,512]</code> | 仅形状 | — | — | — |
 | `compressor.kv`<br>20 | x <code>[262144,5120]</code><br>weight_logical <code>[512,5120]</code><br>y <code>[262144,512]</code> | 仅形状 | — | — | — |
 | `compressor.pool_store`<br>20 | new_rows <code>[262144,1,512]</code><br>history_logical <code>[8,32768,1,512]</code> | 仅形状 | — | — | — |
-| `indexer.wk`<br>20 | x <code>[262144,512]</code><br>weight_logical <code>[128,512]</code><br>y <code>[262144,128]</code> | 仅形状 | — | — | — |
+| `indexer.wk`<br>20 | x <code>[262144,512]</code><br>weight_logical <code>[128,512]</code><br>y <code>[262144,128]</code> | [独立 BF16 ND Matmul](../../results/v0.28/matmul/README.md) | 113.505 / 待回收 | 206.156 / 待回收 | 31.871 |
 | `indexer.norm_cache`<br>20 | key_projection_rows <code>[262144,1,128]</code><br>new_unique_rows <code>[262144,1,128]</code><br>cache_logical <code>[8,32768,1,128]</code> | 仅形状 | — | — | — |
-| `compressor.input_cast`<br>2, 8, 14 | bf16 <code>[262144,5120]</code><br>fp32 <code>[262144,5120]</code> | `cast_bf16_fp32` | 2514.820 / — | 5697.327 / — | 1223.154 |
+| `compressor.input_cast`<br>2, 8, 14 | bf16 <code>[262144,5120]</code><br>fp32 <code>[262144,5120]</code> | `cast_bf16_fp32` | 2514.820 / — | 5683.487 / — | 1223.154 |
 | `compressor.kv`<br>2, 8, 14 | x <code>[262144,5120]</code><br>weight_logical <code>[512,5120]</code><br>y <code>[262144,512]</code> | 仅形状 | — | — | — |
 | `compressor.gate`<br>2, 8, 14 | x <code>[262144,5120]</code><br>weight_logical <code>[512,5120]</code><br>y <code>[262144,512]</code> | 仅形状 | — | — | — |
 | `compressor.pool_store`<br>2, 8, 14 | new_rows <code>[131072,1,512]</code><br>history_logical <code>[8,16384,1,512]</code> | 仅形状 | — | — | — |
-| `indexer.wk`<br>2, 8, 14 | x <code>[262144,512]</code><br>weight_logical <code>[128,512]</code><br>y <code>[262144,128]</code> | 仅形状 | — | — | — |
+| `indexer.wk`<br>2, 8, 14 | x <code>[262144,512]</code><br>weight_logical <code>[128,512]</code><br>y <code>[262144,128]</code> | [独立 BF16 ND Matmul](../../results/v0.28/matmul/README.md) | 113.505 / 待回收 | 206.156 / 待回收 | 31.871 |
 | `indexer.norm_cache`<br>2, 8, 14 | key_projection_rows <code>[262144,1,128]</code><br>new_unique_rows <code>[131072,1,128]</code><br>cache_logical <code>[8,16384,1,128]</code> | 仅形状 | — | — | — |
 | `indexer.wq_b`<br>2, 8, 14, 20, 24, 28, 32, 36 | x <code>[262144,1280]</code><br>weight_logical <code>[4096,1280]</code><br>y <code>[262144,4096]</code> | 仅形状 | — | — | — |
-| `indexer.weights_proj`<br>2, 8, 14, 20, 24, 28, 32, 36 | x <code>[262144,5120]</code><br>weight_logical <code>[32,5120]</code><br>y <code>[262144,32]</code> | 仅形状 | — | — | — |
+| `indexer.weights_proj`<br>2, 8, 14, 20, 24, 28, 32, 36 | x <code>[262144,5120]</code><br>weight_logical <code>[32,5120]</code><br>y <code>[262144,32]</code> | [独立 BF16 ND Matmul](../../results/v0.28/matmul/README.md) | 1082.452 / 待回收 | 1921.347 / 待回收 | 273.952 |
 | `indexer.project_weights.float`<br>2, 8, 14, 20, 24, 28, 32, 36 | bf16 <code>[262144,32]</code><br>fp32 <code>[262144,32]</code> | `cast_bf16_fp32` | [9.850 / 9.970](../examples/figures/prefill-flash-32ki-dt.png) | [13.046 / 14.080](../examples/figures/prefill-flash-32ki-pr.png) | 6.656 |
 | `indexer.weights_scale`<br>2, 8, 14, 20, 24, 28, 32, 36 | x <code>[262144,32]</code><br>scalar <code>[]</code><br>y <code>[262144,32]</code> | 仅形状 | — | — | — |
 | `indexer.select`<br>2, 8, 14, 20, 24, 28, 32, 36 | q <code>[262144,32,128]</code><br>weights <code>[262144,32]</code><br>indices <code>[262144,512]</code> | 仅形状 | — | — | — |
@@ -78,7 +80,7 @@
 | `mhc.ffn.post`<br>0–39 | x <code>[1,1048576,5120]</code><br>residual <code>[1,1048576,4,5120]</code><br>post <code>[1,1048576,4]</code><br>mix <code>[1,1048576,4,4]</code><br>out <code>[1,1048576,4,5120]</code> | `mhc_post`<br>implementation="vllm_hc_post" | 42630.743 / — | 69002.293 / — | 20831.148 |
 | `input_layernorm`<br>0–39 | x <code>[1048576,5120]</code><br>weight <code>[5120]</code><br>out <code>[1048576,5120]</code> | `rmsnorm` | 5339.602 / — | 15264.085 / — | 2193.658 |
 | `post_attention_layernorm`<br>0–39 | x <code>[1048576,5120]</code><br>weight <code>[5120]</code><br>out <code>[1048576,5120]</code> | `rmsnorm` | 5339.602 / — | 15264.085 / — | 2193.658 |
-| `moe.router_input.float`<br>0–39 | bf16 <code>[1048576,5120]</code><br>fp32 <code>[1048576,5120]</code> | `cast_bf16_fp32` | 10140.828 / — | 22953.892 / — | 4951.425 |
+| `moe.router_input.float`<br>0–39 | bf16 <code>[1048576,5120]</code><br>fp32 <code>[1048576,5120]</code> | `cast_bf16_fp32` | 10140.828 / — | 22940.052 / — | 4951.425 |
 | `dsa.wq_a`<br>0–39 | x <code>[1048576,5120]</code><br>weight_logical <code>[1280,5120]</code><br>y <code>[1048576,1280]</code> | 仅形状 | — | — | — |
 | `dsa.q_norm`<br>0–39 | x <code>[1048576,1280]</code><br>weight <code>[1280]</code><br>y <code>[1048576,1280]</code> | 仅形状 | — | — | — |
 | `dsa.wq_b`<br>0–39 | x <code>[1048576,1280]</code><br>weight_logical <code>[4096,1280]</code><br>y <code>[1048576,4096]</code> | 仅形状 | — | — | — |
@@ -98,17 +100,17 @@
 | `dsa.sparse_attention`<br>36–39 | q <code>[1048576,8,512]</code><br>out <code>[1048576,8,512]</code><br>sink <code>[8]</code><br>compressed_kv_logical <code>[8,131072,1,512]</code><br>indices_capacity_per_query <code>[1048576,512]</code> | 仅形状 | — | — | — |
 | `compressor.kv`<br>20 | x <code>[1048576,5120]</code><br>weight_logical <code>[512,5120]</code><br>y <code>[1048576,512]</code> | 仅形状 | — | — | — |
 | `compressor.pool_store`<br>20 | new_rows <code>[1048576,1,512]</code><br>history_logical <code>[8,131072,1,512]</code> | 仅形状 | — | — | — |
-| `indexer.wk`<br>20 | x <code>[1048576,512]</code><br>weight_logical <code>[128,512]</code><br>y <code>[1048576,128]</code> | 仅形状 | — | — | — |
+| `indexer.wk`<br>20 | x <code>[1048576,512]</code><br>weight_logical <code>[128,512]</code><br>y <code>[1048576,128]</code> | [独立 BF16 ND Matmul](../../results/v0.28/matmul/README.md) | 437.251 / 待回收 | 1155.000 / 待回收 | 114.805 |
 | `indexer.norm_cache`<br>20 | key_projection_rows <code>[1048576,1,128]</code><br>new_unique_rows <code>[1048576,1,128]</code><br>cache_logical <code>[8,131072,1,128]</code> | 仅形状 | — | — | — |
-| `compressor.input_cast`<br>2, 8, 14 | bf16 <code>[1048576,5120]</code><br>fp32 <code>[1048576,5120]</code> | `cast_bf16_fp32` | 10140.828 / — | 22953.892 / — | 4951.425 |
+| `compressor.input_cast`<br>2, 8, 14 | bf16 <code>[1048576,5120]</code><br>fp32 <code>[1048576,5120]</code> | `cast_bf16_fp32` | 10140.828 / — | 22940.052 / — | 4951.425 |
 | `compressor.kv`<br>2, 8, 14 | x <code>[1048576,5120]</code><br>weight_logical <code>[512,5120]</code><br>y <code>[1048576,512]</code> | 仅形状 | — | — | — |
 | `compressor.gate`<br>2, 8, 14 | x <code>[1048576,5120]</code><br>weight_logical <code>[512,5120]</code><br>y <code>[1048576,512]</code> | 仅形状 | — | — | — |
 | `compressor.pool_store`<br>2, 8, 14 | new_rows <code>[524288,1,512]</code><br>history_logical <code>[8,65536,1,512]</code> | 仅形状 | — | — | — |
-| `indexer.wk`<br>2, 8, 14 | x <code>[1048576,512]</code><br>weight_logical <code>[128,512]</code><br>y <code>[1048576,128]</code> | 仅形状 | — | — | — |
+| `indexer.wk`<br>2, 8, 14 | x <code>[1048576,512]</code><br>weight_logical <code>[128,512]</code><br>y <code>[1048576,128]</code> | [独立 BF16 ND Matmul](../../results/v0.28/matmul/README.md) | 437.251 / 待回收 | 1155.000 / 待回收 | 114.805 |
 | `indexer.norm_cache`<br>2, 8, 14 | key_projection_rows <code>[1048576,1,128]</code><br>new_unique_rows <code>[524288,1,128]</code><br>cache_logical <code>[8,65536,1,128]</code> | 仅形状 | — | — | — |
 | `indexer.wq_b`<br>2, 8, 14, 20, 24, 28, 32, 36 | x <code>[1048576,1280]</code><br>weight_logical <code>[4096,1280]</code><br>y <code>[1048576,4096]</code> | 仅形状 | — | — | — |
 | `indexer.weights_proj`<br>2, 8, 14, 20, 24, 28, 32, 36 | x <code>[1048576,5120]</code><br>weight_logical <code>[32,5120]</code><br>y <code>[1048576,32]</code> | 仅形状 | — | — | — |
-| `indexer.project_weights.float`<br>2, 8, 14, 20, 24, 28, 32, 36 | bf16 <code>[1048576,32]</code><br>fp32 <code>[1048576,32]</code> | `cast_bf16_fp32` | [36.368 / 35.535](../examples/figures/prefill-flash-128ki-dt.png) | [88.943 / 70.711](../examples/figures/prefill-flash-128ki-pr.png) | 16.542 |
+| `indexer.project_weights.float`<br>2, 8, 14, 20, 24, 28, 32, 36 | bf16 <code>[1048576,32]</code><br>fp32 <code>[1048576,32]</code> | `cast_bf16_fp32` | [36.368 / 35.535](../examples/figures/prefill-flash-128ki-dt.png) | [75.103 / 70.711](../examples/figures/prefill-flash-128ki-pr.png) | 16.542 |
 | `indexer.weights_scale`<br>2, 8, 14, 20, 24, 28, 32, 36 | x <code>[1048576,32]</code><br>scalar <code>[]</code><br>y <code>[1048576,32]</code> | 仅形状 | — | — | — |
 | `indexer.select`<br>2, 8, 14, 20, 24, 28, 32, 36 | q <code>[1048576,32,128]</code><br>weights <code>[1048576,32]</code><br>indices <code>[1048576,512]</code> | 仅形状 | — | — | — |
 | `indexer.candidate_blocks`<br>20 | block_ids <code>[1048576,1,2048]</code> | 仅形状 | — | — | — |
@@ -138,7 +140,7 @@
 | `mhc.ffn.post`<br>0–39 | x <code>[1,2097152,5120]</code><br>residual <code>[1,2097152,4,5120]</code><br>post <code>[1,2097152,4]</code><br>mix <code>[1,2097152,4,4]</code><br>out <code>[1,2097152,4,5120]</code> | `mhc_post`<br>implementation="vllm_hc_post" | 85257.944 / — | 138088.471 / — | 41657.685 |
 | `input_layernorm`<br>0–39 | x <code>[2097152,5120]</code><br>weight <code>[5120]</code><br>out <code>[2097152,5120]</code> | `rmsnorm` | 10709.360 / — | 30606.250 / — | 4382.575 |
 | `post_attention_layernorm`<br>0–39 | x <code>[2097152,5120]</code><br>weight <code>[5120]</code><br>out <code>[2097152,5120]</code> | `rmsnorm` | 10709.360 / — | 30606.250 / — | 4382.575 |
-| `moe.router_input.float`<br>0–39 | bf16 <code>[2097152,5120]</code><br>fp32 <code>[2097152,5120]</code> | `cast_bf16_fp32` | 20308.837 / — | 45962.645 / — | 9922.452 |
+| `moe.router_input.float`<br>0–39 | bf16 <code>[2097152,5120]</code><br>fp32 <code>[2097152,5120]</code> | `cast_bf16_fp32` | 20308.837 / — | 45948.805 / — | 9922.452 |
 | `dsa.wq_a`<br>0–39 | x <code>[2097152,5120]</code><br>weight_logical <code>[1280,5120]</code><br>y <code>[2097152,1280]</code> | 仅形状 | — | — | — |
 | `dsa.q_norm`<br>0–39 | x <code>[2097152,1280]</code><br>weight <code>[1280]</code><br>y <code>[2097152,1280]</code> | 仅形状 | — | — | — |
 | `dsa.wq_b`<br>0–39 | x <code>[2097152,1280]</code><br>weight_logical <code>[4096,1280]</code><br>y <code>[2097152,4096]</code> | 仅形状 | — | — | — |
@@ -158,17 +160,17 @@
 | `dsa.sparse_attention`<br>36–39 | q <code>[2097152,8,512]</code><br>out <code>[2097152,8,512]</code><br>sink <code>[8]</code><br>compressed_kv_logical <code>[8,262144,1,512]</code><br>indices_capacity_per_query <code>[2097152,512]</code> | 仅形状 | — | — | — |
 | `compressor.kv`<br>20 | x <code>[2097152,5120]</code><br>weight_logical <code>[512,5120]</code><br>y <code>[2097152,512]</code> | 仅形状 | — | — | — |
 | `compressor.pool_store`<br>20 | new_rows <code>[2097152,1,512]</code><br>history_logical <code>[8,262144,1,512]</code> | 仅形状 | — | — | — |
-| `indexer.wk`<br>20 | x <code>[2097152,512]</code><br>weight_logical <code>[128,512]</code><br>y <code>[2097152,128]</code> | 仅形状 | — | — | — |
+| `indexer.wk`<br>20 | x <code>[2097152,512]</code><br>weight_logical <code>[128,512]</code><br>y <code>[2097152,128]</code> | [独立 BF16 ND Matmul](../../results/v0.28/matmul/README.md) | 868.573 / 待回收 | 2304.688 / 待回收 | 226.799 |
 | `indexer.norm_cache`<br>20 | key_projection_rows <code>[2097152,1,128]</code><br>new_unique_rows <code>[2097152,1,128]</code><br>cache_logical <code>[8,262144,1,128]</code> | 仅形状 | — | — | — |
-| `compressor.input_cast`<br>2, 8, 14 | bf16 <code>[2097152,5120]</code><br>fp32 <code>[2097152,5120]</code> | `cast_bf16_fp32` | 20308.837 / — | 45962.645 / — | 9922.452 |
+| `compressor.input_cast`<br>2, 8, 14 | bf16 <code>[2097152,5120]</code><br>fp32 <code>[2097152,5120]</code> | `cast_bf16_fp32` | 20308.837 / — | 45948.805 / — | 9922.452 |
 | `compressor.kv`<br>2, 8, 14 | x <code>[2097152,5120]</code><br>weight_logical <code>[512,5120]</code><br>y <code>[2097152,512]</code> | 仅形状 | — | — | — |
 | `compressor.gate`<br>2, 8, 14 | x <code>[2097152,5120]</code><br>weight_logical <code>[512,5120]</code><br>y <code>[2097152,512]</code> | 仅形状 | — | — | — |
 | `compressor.pool_store`<br>2, 8, 14 | new_rows <code>[1048576,1,512]</code><br>history_logical <code>[8,131072,1,512]</code> | 仅形状 | — | — | — |
-| `indexer.wk`<br>2, 8, 14 | x <code>[2097152,512]</code><br>weight_logical <code>[128,512]</code><br>y <code>[2097152,128]</code> | 仅形状 | — | — | — |
+| `indexer.wk`<br>2, 8, 14 | x <code>[2097152,512]</code><br>weight_logical <code>[128,512]</code><br>y <code>[2097152,128]</code> | [独立 BF16 ND Matmul](../../results/v0.28/matmul/README.md) | 868.573 / 待回收 | 2304.688 / 待回收 | 226.799 |
 | `indexer.norm_cache`<br>2, 8, 14 | key_projection_rows <code>[2097152,1,128]</code><br>new_unique_rows <code>[1048576,1,128]</code><br>cache_logical <code>[8,131072,1,128]</code> | 仅形状 | — | — | — |
 | `indexer.wq_b`<br>2, 8, 14, 20, 24, 28, 32, 36 | x <code>[2097152,1280]</code><br>weight_logical <code>[4096,1280]</code><br>y <code>[2097152,4096]</code> | 仅形状 | — | — | — |
 | `indexer.weights_proj`<br>2, 8, 14, 20, 24, 28, 32, 36 | x <code>[2097152,5120]</code><br>weight_logical <code>[32,5120]</code><br>y <code>[2097152,32]</code> | 仅形状 | — | — | — |
-| `indexer.project_weights.float`<br>2, 8, 14, 20, 24, 28, 32, 36 | bf16 <code>[2097152,32]</code><br>fp32 <code>[2097152,32]</code> | `cast_bf16_fp32` | [99.918 / 106.757](../examples/figures/prefill-flash-256ki-dt.png) | [232.748 / 223.493](../examples/figures/prefill-flash-256ki-pr.png) | 42.536 |
+| `indexer.project_weights.float`<br>2, 8, 14, 20, 24, 28, 32, 36 | bf16 <code>[2097152,32]</code><br>fp32 <code>[2097152,32]</code> | `cast_bf16_fp32` | [99.918 / 106.757](../examples/figures/prefill-flash-256ki-dt.png) | [218.908 / 223.493](../examples/figures/prefill-flash-256ki-pr.png) | 42.536 |
 | `indexer.weights_scale`<br>2, 8, 14, 20, 24, 28, 32, 36 | x <code>[2097152,32]</code><br>scalar <code>[]</code><br>y <code>[2097152,32]</code> | 仅形状 | — | — | — |
 | `indexer.select`<br>2, 8, 14, 20, 24, 28, 32, 36 | q <code>[2097152,32,128]</code><br>weights <code>[2097152,32]</code><br>indices <code>[2097152,512]</code> | 仅形状 | — | — | — |
 | `indexer.candidate_blocks`<br>20 | block_ids <code>[2097152,1,2048]</code> | 仅形状 | — | — | — |

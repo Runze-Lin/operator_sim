@@ -136,11 +136,23 @@ rms = rmsnorm_pipeline([4, 784], chip="Ascend950PR_957b",
 elapsed_us = rms["us"]
 ```
 
-对单输出矩形的长 K Matmul 可调用 `from operator_model import estimate_matmul_splitk`，返回普通与分 K 的耗时、活跃核数、归约工作量和选择理由。[前瞻几何与使用示例](../results/v0.28/matmul/streamk-analysis.md)
+常规 `estimate("matmul", ...)` 已按输入与目标芯片比较单输出矩形的普通和分 K 排程。选中分 K 时，`work["implementation_work"]` 给出附加归约与中间传输，逻辑输入和输出字节仍对应应用张量。需要查看候选定价时可调用 `from operator_model import estimate_matmul_splitk`，返回普通与分 K 的耗时、活跃核数、归约工作量和选择理由。[前瞻几何与使用示例](../results/v0.28/matmul/streamk-analysis.md)
 
 对 Stream-K 与全输出分块识别尚不确定的 Matmul，应保留 `[M,N,K]`、dtype、转置及权重格式，分别统计真实库分支。四个 batch 取 1、9、11、16 时，普通 decode 的 M 为 1、9、11、16；同一 rank 全部请求同时校验 9 个 token 的 M 为 9、81、99、144。混合批次以调度器实际提交（含 padding）的行数为准。[三模型投影的输入和两端 CA](../results/v0.28/matmul/report.md)
 
 RMSNorm 与 mHC Post 可用 shape、dtype 和芯片独立预测。RMSNorm 在最忙核最多两轮 UB 且前序未知时，当前默认使用归约与双写流水的折中值；如需分清首遇与立即复跑，可调用上面的显式接口。一次查询没有提供同流历史时，返回未知启动状态的点估计，同时返回首次、扩核和热态的时间供系统做敏感性分析。选择多种调度方案时，调用本身不会改变后续预测。如果明确是单独首次启动，可传入 `resident_aiv=0`。
+
+在整网事件循环中，每卡每条实际流持有一个 `OperatorStream`。试排候选时用 `preview`，只有成功进入该流的调用才用 `advance`。下面的首次和紧邻复跑由调度序列决定，无需目标芯片的 CA：
+
+```python
+from operator_model import OperatorStream
+
+stream = OperatorStream("Ascend950PR_957b", track_sinkhorn_history=True)
+first = stream.advance("mhc_post", [65, 4, 5120])
+repeat = stream.advance("mhc_post", [65, 4, 5120])
+```
+
+对于只提供 shape 的内置 Post，混合首遇/复跑样本在 DT、PR 上的最优静态 WAPE 下界都超过 25%。如果系统没有可恢复的派发历史，应把不同前序的估时作为情景输出；服务平均值取决于真实状态频率。[逐芯片数学下界与条件调用](../results/v0.28/post/report.md)
 
 当调度器知道隔离序列刚开始时，令 `resident = 0`。以下三行只由同一流、同类 kernel 的实际调度事件驱动；同一个待选方案反复试算时保留原状态。返回的 `active_aiv` 是本次预计活跃核数，缺少此信息的路线返回 None。
 

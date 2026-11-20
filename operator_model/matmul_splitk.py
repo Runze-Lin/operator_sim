@@ -1,4 +1,4 @@
-"""Opt-in one-output-rectangle Stream-K estimate for contiguous BF16 MatMulV3."""
+"""One-output-rectangle Stream-K selection for contiguous BF16 MatMulV3."""
 from math import ceil, log2
 
 from .chips import load_chip
@@ -21,8 +21,12 @@ def estimate_matmul_splitk(shape, *, chip='Ascend950DT_9582', dtype='bf16',
     if type(deterministic_level) is not int or not 0 <= deterministic_level <= 3:
         raise ValueError('deterministic_level must be one of 0, 1, 2, 3')
     target = load_chip(chip)
+    return _select(shape, target, resource_matmul(shape, target), deterministic_level)
+
+
+def _select(shape, target, baseline, deterministic_level):
     m, n, k = shape
-    ordinary, aic, aiv, diagnostics = resource_matmul(shape, target)
+    ordinary, aic, aiv, diagnostics = baseline
     tiles = diagnostics['target_plan']['output_tiles']
     cores = target.cube_cores
     threshold = max(8192, 256 * cores) / 2  # host byte threshold / sizeof(BF16)
@@ -62,9 +66,40 @@ def estimate_matmul_splitk(shape, *, chip='Ascend950DT_9582', dtype='bf16',
             'active_aic': splits, 'active_aiv': min(target.vector_cores, ceil(splits*target.vector_cores/cores)),
             'k_splits': splits, 'max_aligned_depth': local_k, 'partial_fixup_bytes': merge_bytes,
             'logical_reduction_adds': m*n*(splits-1),
+            'partial_tile': partial['target_plan']['tile'],
+            'mmads_per_partial_budget': partial['target_plan']['mmads_total'],
+            'partial_read_page_k': partial['target_plan']['read_page_k'],
             'launch_us': launch, 'partial_pipeline_us': pipeline, 'cold_floor_us': cold,
             'merge_us': merge, 'merge_issue_us': merge_issue,
             'reason': 'One output rectangle and profitable split K on the supplied target resources',
             'mix_qualification': ('Assumes a compatible 1:2 mixed executable'
                                   if target.vector_cores == 2*cores else
                                   'Requires a future mixed executable for the new target AIC:AIV ratio')}
+
+def resource_matmul_dispatch(shape, target):
+    """Return the selected schedule and physically distinct internal work."""
+    baseline = resource_matmul(shape, target)
+    result = _select(shape, target, baseline, 0)
+    if result['route'] == 'ordinary':
+        us, aic, aiv, diag = baseline
+        return us, aic, aiv, {**diag, 'streamk_selection': {
+            'route': 'ordinary', 'reason': result['reason'],
+            'threshold_aligned_k': result['threshold_aligned_k']}}
+    m, n, _ = shape
+    s = result['k_splits']
+    plan = dict(active_aic=result['active_aic'], active_aiv=result['active_aiv'], branch=result['route'],
+                output_tiles=1, waves=1, tile=result['partial_tile'], k_splits=s,
+                max_aligned_depth=result['max_aligned_depth'], read_page_k=result['partial_read_page_k'],
+                mmads_total=s*result['mmads_per_partial_budget'], iterations=result['mmads_per_partial_budget'])
+    internal = dict(fp32_partial_write_bytes=4*m*n*s, fp32_partial_read_bytes=4*m*n*s,
+                    fp32_reduction_adds=result['logical_reduction_adds'],
+                    priced_incremental_fixup_bytes=result['partial_fixup_bytes'])
+    stages = dict(launch=result['launch_us'], partial_pipeline=result['partial_pipeline_us'],
+                  exposed_hbm_read=max(0., result['cold_floor_us']-result['partial_pipeline_us']),
+                  merge_issue=result['merge_issue_us'], merge_transfer=result['merge_us']-result['merge_issue_us'])
+    diag = dict(model='target_resource_matmul_single_output_split_k', target_plan=plan,
+                streamk_selection=result, stages_us=stages, internal_work=internal,
+                logical_cube_ops=result['cube_ops'], logical_read_bytes=result['input_bytes'],
+                write_bytes=result['final_output_bytes'], mmads_total=plan['mmads_total'],
+                qualification='One-output long-K resource estimate; limited 950 geometry coverage. '+result['mix_qualification'])
+    return result['latency_us'], result['active_aic'], result['active_aiv'], diag

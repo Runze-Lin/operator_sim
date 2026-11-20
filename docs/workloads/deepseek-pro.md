@@ -1,6 +1,8 @@
 # DeepSeek-V4-Pro · 整批 prefill 的逐节点单卡张量
 
-**单卡 8×256Ki 的实测。** 全部 2,097,152 行在一个 `aclnnCast` 中完成，950DT 预测 227.018 µs、CA 247.788 µs。950PR 为 520.357 / 529.287 µs。下表使用模型的 64 个 indexer 系数；内部 hidden 宽度仍为 7168。[第 62–66 个 UB 块的同轴图](../../results/v0.27/memory/pro-256ki-dt-blocks-62-66.png) · [100 轮算例](../examples/cast_bf16_fp32.md)
+indexer.weights_proj 的每卡 N=64、K=7168。单 token 及 MTP8、B8×32Ki 的 M 均从本步调度 token 数得到。这些投影使用 BF16 ND 独立库合同做双端 CA 对照。[含普通 decode、MTP 与大 prefill 的 Matmul 总表](../../results/v0.28/matmul/README.md)
+
+**单卡 8×256Ki 的实测。** 全部 2,097,152 行在一个 `aclnnCast` 中完成，950DT 预测 227.018 µs、CA 247.788 µs。950PR 为 506.517 / 529.287 µs。下表使用模型的 64 个 indexer 系数；内部 hidden 宽度仍为 7168。[第 62–66 个 UB 块的同轴图](../../results/v0.27/memory/pro-256ki-dt-blocks-62-66.png) · [100 轮算例](../examples/cast_bf16_fp32.md)
 
 **单卡 8×128k 的实测。** 64 个 indexer 系数升精度得到 BF16→FP32 [1048576,64]，在 950DT 上完整运行 50 轮/核。模型为 99.918 µs，CA 为 105.374 µs。逐节点表中的别的通道数取决于各自的模型位置。[同一批次逐 UB 块的模型与 CA](../../results/v0.23/pro-prefill/pro-b8-128ki-dt-plot.png) · [完整计时与校验](../../results/v0.23/pro-prefill/pro-b8-128ki-dt.json)
 
@@ -20,7 +22,7 @@
 | `mhc.ffn.post`<br>0–60 | x <code>[1,262144,7168]</code><br>residual <code>[1,262144,4,7168]</code><br>post <code>[1,262144,4]</code><br>mix <code>[1,262144,4,4]</code><br>out <code>[1,262144,4,7168]</code> | `mhc_post`<br>implementation="vllm_hc_post" | 10661.002 / — | 24090.285 / — | 5211.613 |
 | `input_layernorm`<br>0–60 | x <code>[262144,7168]</code><br>weight <code>[7168]</code><br>out <code>[262144,7168]</code> | `rmsnorm` | 1849.354 / — | 5291.876 / — | 770.501 |
 | `post_attention_layernorm`<br>0–60 | x <code>[262144,7168]</code><br>weight <code>[7168]</code><br>out <code>[262144,7168]</code> | `rmsnorm` | 1849.354 / — | 5291.876 / — | 770.501 |
-| `moe.router_input.float`<br>0–60 | bf16 <code>[262144,7168]</code><br>fp32 <code>[262144,7168]</code> | `cast_bf16_fp32` | 3531.621 / — | 7998.202 / — | 1720.257 |
+| `moe.router_input.float`<br>0–60 | bf16 <code>[262144,7168]</code><br>fp32 <code>[262144,7168]</code> | `cast_bf16_fp32` | 3531.621 / — | 7984.362 / — | 1720.257 |
 | `dsa.wq_a`<br>0–60 | x <code>[262144,7168]</code><br>weight_logical <code>[1536,7168]</code><br>y <code>[262144,1536]</code> | 仅形状 | — | — | — |
 | `dsa.q_norm`<br>0–60 | x <code>[262144,1536]</code><br>weight <code>[1536]</code><br>y <code>[262144,1536]</code> | 仅形状 | — | — | — |
 | `dsa.wq_b`<br>0–60 | x <code>[262144,1536]</code><br>weight_logical <code>[8192,1536]</code><br>y <code>[262144,8192]</code> | 仅形状 | — | — | — |
@@ -41,7 +43,7 @@
 | `compressor.gate`<br>0–1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39, 41, 43, 45, 47, 49, 51, 53, 55, 57, 59 | x <code>[262144,7168]</code><br>weight_logical <code>[512,7168]</code><br>y <code>[262144,512]</code> | 仅形状 | — | — | — |
 | `compressor.pool_store`<br>0–1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39, 41, 43, 45, 47, 49, 51, 53, 55, 57, 59 | new_rows <code>[2048,1,512]</code><br>history_logical <code>[8,256,1,512]</code> | 仅形状 | — | — | — |
 | `indexer.wq_b`<br>2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60 | x <code>[262144,1536]</code><br>weight_logical <code>[8192,1536]</code><br>y <code>[262144,8192]</code> | 仅形状 | — | — | — |
-| `indexer.weights_proj`<br>2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60 | x <code>[262144,7168]</code><br>weight_logical <code>[64,7168]</code><br>y <code>[262144,64]</code> | 仅形状 | — | — | — |
+| `indexer.weights_proj`<br>2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60 | x <code>[262144,7168]</code><br>weight_logical <code>[64,7168]</code><br>y <code>[262144,64]</code> | [独立 BF16 ND Matmul](../../results/v0.28/matmul/README.md) | 1514.284 / 待回收 | 2688.910 / 待回收 | 382.559 |
 | `indexer.weights_scale`<br>2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60 | x <code>[262144,64]</code><br>scalar <code>[]</code><br>y <code>[262144,64]</code> | 仅形状 | — | — | — |
 | `indexer.prepare_dsa_weights.float`<br>2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60 | scaled_bf16 <code>[262144,64]</code><br>fp32 <code>[262144,64]</code> | `cast_bf16_fp32` | [16.592 / 17.041](../examples/figures/prefill-pro-32ki-dt.png) | [25.030 / 23.762](../examples/figures/prefill-pro-32ki-pr.png) | 9.951 |
 | `indexer.select`<br>2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60 | q <code>[262144,64,128]</code><br>weights <code>[262144,64]</code><br>indices <code>[262144,1024]</code> | 仅形状 | — | — | — |
@@ -68,7 +70,7 @@
 | `mhc.ffn.post`<br>0–60 | x <code>[1,1048576,7168]</code><br>residual <code>[1,1048576,4,7168]</code><br>post <code>[1,1048576,4]</code><br>mix <code>[1,1048576,4,4]</code><br>out <code>[1,1048576,4,7168]</code> | `mhc_post`<br>implementation="vllm_hc_post" | 42631.403 / — | 96612.797 / — | 20831.753 |
 | `input_layernorm`<br>0–60 | x <code>[1048576,7168]</code><br>weight <code>[7168]</code><br>out <code>[1048576,7168]</code> | `rmsnorm` | 7487.285 / — | 21400.250 / — | 3069.475 |
 | `post_attention_layernorm`<br>0–60 | x <code>[1048576,7168]</code><br>weight <code>[7168]</code><br>out <code>[1048576,7168]</code> | `rmsnorm` | 7487.285 / — | 21400.250 / — | 3069.475 |
-| `moe.router_input.float`<br>0–60 | bf16 <code>[1048576,7168]</code><br>fp32 <code>[1048576,7168]</code> | `cast_bf16_fp32` | 14208.032 / — | 32157.393 / — | 6939.836 |
+| `moe.router_input.float`<br>0–60 | bf16 <code>[1048576,7168]</code><br>fp32 <code>[1048576,7168]</code> | `cast_bf16_fp32` | 14208.032 / — | 32143.553 / — | 6939.836 |
 | `dsa.wq_a`<br>0–60 | x <code>[1048576,7168]</code><br>weight_logical <code>[1536,7168]</code><br>y <code>[1048576,1536]</code> | 仅形状 | — | — | — |
 | `dsa.q_norm`<br>0–60 | x <code>[1048576,1536]</code><br>weight <code>[1536]</code><br>y <code>[1048576,1536]</code> | 仅形状 | — | — | — |
 | `dsa.wq_b`<br>0–60 | x <code>[1048576,1536]</code><br>weight_logical <code>[8192,1536]</code><br>y <code>[1048576,8192]</code> | 仅形状 | — | — | — |
@@ -91,7 +93,7 @@
 | `indexer.wq_b`<br>2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60 | x <code>[1048576,1536]</code><br>weight_logical <code>[8192,1536]</code><br>y <code>[1048576,8192]</code> | 仅形状 | — | — | — |
 | `indexer.weights_proj`<br>2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60 | x <code>[1048576,7168]</code><br>weight_logical <code>[64,7168]</code><br>y <code>[1048576,64]</code> | 仅形状 | — | — | — |
 | `indexer.weights_scale`<br>2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60 | x <code>[1048576,64]</code><br>scalar <code>[]</code><br>y <code>[1048576,64]</code> | 仅形状 | — | — | — |
-| `indexer.prepare_dsa_weights.float`<br>2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60 | scaled_bf16 <code>[1048576,64]</code><br>fp32 <code>[1048576,64]</code> | `cast_bf16_fp32` | [99.918 / 105.374](../../results/v0.23/pro-prefill/pro-b8-128ki-dt-plot.png) | [232.748 / 224.719](../../results/v0.23/pro-prefill/pro-b8-128ki-pr-plot.png) | 42.536 |
+| `indexer.prepare_dsa_weights.float`<br>2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60 | scaled_bf16 <code>[1048576,64]</code><br>fp32 <code>[1048576,64]</code> | `cast_bf16_fp32` | [99.918 / 105.374](../../results/v0.23/pro-prefill/pro-b8-128ki-dt-plot.png) | [218.908 / 224.719](../../results/v0.23/pro-prefill/pro-b8-128ki-pr-plot.png) | 42.536 |
 | `indexer.select`<br>2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60 | q <code>[1048576,64,128]</code><br>weights <code>[1048576,64]</code><br>indices <code>[1048576,1024]</code> | 仅形状 | — | — | — |
 | `output.hc_head_and_norm`<br>output | x <code>[1048576,4,7168]</code><br>out <code>[1048576,7168]</code> | 仅形状 | — | — | — |
 | `parallel.attention_row_reduce`<br>0–60 | partial <code>[1048576,7168]</code><br>result <code>[1048576,7168]</code> | 仅形状 | — | — | — |
@@ -116,7 +118,7 @@
 | `mhc.ffn.post`<br>0–60 | x <code>[1,2097152,7168]</code><br>residual <code>[1,2097152,4,7168]</code><br>post <code>[1,2097152,4]</code><br>mix <code>[1,2097152,4,4]</code><br>out <code>[1,2097152,4,7168]</code> | `mhc_post`<br>implementation="vllm_hc_post" | 85258.605 / — | 193309.479 / — | 41658.290 |
 | `input_layernorm`<br>0–60 | x <code>[2097152,7168]</code><br>weight <code>[7168]</code><br>out <code>[2097152,7168]</code> | `rmsnorm` | 15004.526 / — | 42878.083 / — | 6133.959 |
 | `post_attention_layernorm`<br>0–60 | x <code>[2097152,7168]</code><br>weight <code>[7168]</code><br>out <code>[2097152,7168]</code> | `rmsnorm` | 15004.526 / — | 42878.083 / — | 6133.959 |
-| `moe.router_input.float`<br>0–60 | bf16 <code>[2097152,7168]</code><br>fp32 <code>[2097152,7168]</code> | `cast_bf16_fp32` | 28443.245 / — | 64369.648 / — | 13899.273 |
+| `moe.router_input.float`<br>0–60 | bf16 <code>[2097152,7168]</code><br>fp32 <code>[2097152,7168]</code> | `cast_bf16_fp32` | 28443.245 / — | 64355.808 / — | 13899.273 |
 | `dsa.wq_a`<br>0–60 | x <code>[2097152,7168]</code><br>weight_logical <code>[1536,7168]</code><br>y <code>[2097152,1536]</code> | 仅形状 | — | — | — |
 | `dsa.q_norm`<br>0–60 | x <code>[2097152,1536]</code><br>weight <code>[1536]</code><br>y <code>[2097152,1536]</code> | 仅形状 | — | — | — |
 | `dsa.wq_b`<br>0–60 | x <code>[2097152,1536]</code><br>weight_logical <code>[8192,1536]</code><br>y <code>[2097152,8192]</code> | 仅形状 | — | — | — |
@@ -139,7 +141,7 @@
 | `indexer.wq_b`<br>2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60 | x <code>[2097152,1536]</code><br>weight_logical <code>[8192,1536]</code><br>y <code>[2097152,8192]</code> | 仅形状 | — | — | — |
 | `indexer.weights_proj`<br>2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60 | x <code>[2097152,7168]</code><br>weight_logical <code>[64,7168]</code><br>y <code>[2097152,64]</code> | 仅形状 | — | — | — |
 | `indexer.weights_scale`<br>2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60 | x <code>[2097152,64]</code><br>scalar <code>[]</code><br>y <code>[2097152,64]</code> | 仅形状 | — | — | — |
-| `indexer.prepare_dsa_weights.float`<br>2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60 | scaled_bf16 <code>[2097152,64]</code><br>fp32 <code>[2097152,64]</code> | `cast_bf16_fp32` | [227.018 / 247.788](../../results/v0.27/memory/pro-256ki-dt-blocks-62-66.png) | [520.357 / 529.287](../../results/v0.23/pro-prefill/pro-b8-256ki-pr.json) | 104.673 |
+| `indexer.prepare_dsa_weights.float`<br>2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60 | scaled_bf16 <code>[2097152,64]</code><br>fp32 <code>[2097152,64]</code> | `cast_bf16_fp32` | [227.018 / 247.788](../../results/v0.27/memory/pro-256ki-dt-blocks-62-66.png) | [506.517 / 529.287](../../results/v0.23/pro-prefill/pro-b8-256ki-pr.json) | 104.673 |
 | `indexer.select`<br>2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60 | q <code>[2097152,64,128]</code><br>weights <code>[2097152,64]</code><br>indices <code>[2097152,1024]</code> | 仅形状 | — | — | — |
 | `output.hc_head_and_norm`<br>output | x <code>[2097152,4,7168]</code><br>out <code>[2097152,7168]</code> | 仅形状 | — | — | — |
 | `parallel.attention_row_reduce`<br>0–60 | partial <code>[2097152,7168]</code><br>result <code>[2097152,7168]</code> | 仅形状 | — | — | — |

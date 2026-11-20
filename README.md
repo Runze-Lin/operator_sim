@@ -10,7 +10,7 @@
 
 单卡 B8 整批 prefill 的工作负载表按 32Ki、128Ki、256Ki 给出每个算子的输入、dtype、并行切分、两卡 CA 实测和 970DT 外推。矩阵投影、indexer 系数与全 hidden 激活各有自己的宽度。[DeepSeek V4.1 Flash](docs/workloads/deepseek-flash.md) · [DeepSeek V4 Pro](docs/workloads/deepseek-pro.md) · [Kimi K3](docs/workloads/kimi-k3.md)
 
-单卡 decode 的输入行数取实际提交 token 总数。普通 B=1、9、11、16 与 MTP8 校验的 M=9、81、99、144 均有按真实投影宽度冻结的 Matmul 对照。单卡 B8×32Ki、128Ki、256Ki 整批和分 chunk 的数据分别列出。[decode 和 prefill 的双端实测](results/v0.28/matmul/report.md) · [Pro 与 Kimi 的 B8 全批投影](results/v0.28/matmul/wide-prefill/report.md) · [128Ki、256Ki 长任务](results/v0.28/matmul/long-prefill/report.md)
+Matmul 在普通分块只产生一个输出矩形、且目标资源支持并有收益时，会分 K 到多个 AIC，再由 AIV 归并。单卡 decode 的输入行数取实际提交 token 总数。普通 B=1、9、11、16 与 MTP8 校验的 M=9、81、99、144 均有按真实投影宽度冻结的 Matmul 对照。单卡 B8×32Ki、128Ki、256Ki 整批和分 chunk 的数据分别列出。[三模型 28 个 Matmul shape 的预测、实测与采集状态](results/v0.28/matmul/README.md) · [当前误差与直接复用 DT 的对照](results/v0.28/matmul/public-report.md)
 
 逐算子算例从一次调用的输入算到设备耗时。Matmul 算例将两波输出块的各页 K 逐行对齐，可以同时看预测和 CA 的首条 MMAD、重叠和末次写回。[Matmul](docs/examples/matmul.md) · [DynamicMXQuant](docs/examples/quant.md) · [FA](docs/examples/fa.md) · [大 prefill Cast](docs/examples/cast_bf16_fp32.md) · [其余算例](docs/pipeline-comparisons.md)
 
@@ -33,11 +33,11 @@ result = estimate("matmul", (128, 256, 512), dtype="bf16", chip=chip)
 print(result.latency_us, result.work["cube_ops"], result.work["logical_read_bytes"], result.status)
 ```
 
-**比较芯片架构时可显式指定 `timing_mode="resource"`。** Quant、RMSNorm、Matmul 和 FA 会按目标配置重新决定分核、tile、读写字节、计算与流水时间。FA 在 DT、PR 和自定义配置上均默认走资源排程，其余三项在 PR 和自定义配置上默认使用该路径。新增的 sigmoid 专家路由、BF16→FP32 Cast 和 Kimi 融合残差也按目标资源估计。其余路线沿用 DT 阶段投影，或仅返回工作量。相同配置更换名称时，显式资源模型给出相同预测。[资源公式与算例](docs/modeling-strategy.md) · [独立 PR 校验与误差](docs/error-analysis.md)
+**比较芯片架构时可显式指定 `timing_mode="resource"`。** Quant、RMSNorm、Matmul 和 FA 会按目标配置重新决定分核、tile、读写字节、计算与流水时间。普通 Matmul 和 FA 在 DT、PR 和自定义配置上都默认走资源排程。RMSNorm 按目标资源和前序选择排程。Quant 在原 DT 校准域可走参考模型，在 PR、自定义配置或超出该域时走资源排程。新增的 sigmoid 专家路由、BF16→FP32 Cast 和 Kimi 融合残差也按目标资源估计。其余路线沿用 DT 阶段投影，或仅返回工作量。相同配置更换名称时，显式资源模型给出相同预测。[资源公式与算例](docs/modeling-strategy.md) · [独立 PR 校验与误差](docs/error-analysis.md)
 
 维护 960、970、980 等架构情景时，每个目标使用一份 JSON，分别填写按位宽区分的两类算力、核数、频率、外存容量和带宽。内置 `Ascend970DT` 情景为 120 Cube / 120 Vector、1.8 GHz、288 GB、14.4 TB/s；其中 16 位 Vector 峰值 110.592 TOP/s 已含双发射。这些是架构假设。调用方通过 `extrapolated` 状态识别外推，并决定是否将其交给事件调度器。[970DT 配置及逐项来源](configs/chips/Ascend970DT.json) · [自定义芯片示例](configs/chips/scenario-example.json) · [字段、单位和返回合同](docs/integration.md)
 
-隔离安装的 v0.28 wheel 在三种芯片配置核对 1,371 个不同的普通预测输入，单次 P95 为 0.631 ms、最大 2.015 ms。显式 RMSNorm 逐阶段、Post 前序情景和 Matmul 分 K 的最慢单次查询为 8.185 ms。设备时延单独以 µs 返回。[安装版开销](results/v0.28/wheel-check.json) · [逐算子误差](docs/error-analysis.md)
+隔离安装的 v0.28 wheel 在三种芯片配置核对 1,371 个不同的普通预测输入，单次 P95 为 0.684 ms、最大 2.419 ms。显式 RMSNorm 逐阶段、Post 前序情景和 Matmul 分 K 的最慢单次查询为 9.397 ms。设备时延单独以 µs 返回。[安装版开销](results/v0.28/wheel-check.json) · [逐算子误差](docs/error-analysis.md)
 
 ## 可预测的算子
 

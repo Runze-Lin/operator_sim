@@ -6,6 +6,8 @@
 
 [参数、组内工作和两芯片回放](../../results/v0.28/fusion/report.md) · [相同模型在全新几何上的比较](../../results/v0.28/fusion/forward.md)
 
+T=241、I=16 的 PR 临界核分到 5 行。旧无前序预测按每 4 行分组，收了两次组内工作；库指令中一次 VF 足以处理 8 行。在已有窗将组数改成 1，预测从 7.991 降至 5.479 µs，CA 为 4.419 µs。T=233 的新形会在 PR 再次触发这一分歧，同时检验 64 AIV 的 DT 对照。[逐条发起图、DT/PR 冻结及实测结果](../../results/v0.28/fusion/eligibility.md)
+
 同一个 T=67、I=10 的输入，前序决定了第一次 VF 的接手时间。传入同一家族的 `resident_aiv=0` 表示首次，950DT 预测 **5.319 µs**，CA 为 **5.232 µs**。完整算例可逐项复核发起、迭代、写回和 PR 的同形差值。[公开接口与逐阶段计算](../../results/v0.27/fusion/public-sink.md)
 
 ![950PR 上同为 67 个 token，首发与热态对齐输入、十轮 VF 和输出写](../../results/v0.27/fusion/950pr-same-input.png)

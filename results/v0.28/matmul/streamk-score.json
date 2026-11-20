@@ -48,6 +48,13 @@
         "max_aligned_depth": 256,
         "partial_fixup_bytes": 16256,
         "logical_reduction_adds": 1984,
+        "partial_tile": [
+          16,
+          64,
+          256
+        ],
+        "mmads_per_partial_budget": 1,
+        "partial_read_page_k": 256,
         "launch_us": 2.325814369829399,
         "partial_pipeline_us": 1.594028413816178,
         "cold_floor_us": 0.23296,
@@ -1350,6 +1357,13 @@
         "max_aligned_depth": 256,
         "partial_fixup_bytes": 14208,
         "logical_reduction_adds": 1728,
+        "partial_tile": [
+          16,
+          64,
+          256
+        ],
+        "mmads_per_partial_budget": 1,
+        "partial_read_page_k": 256,
         "launch_us": 2.315160188637076,
         "partial_pipeline_us": 1.594028413816178,
         "cold_floor_us": 0.6656,
@@ -2535,6 +2549,13 @@
         "max_aligned_depth": 256,
         "partial_fixup_bytes": 146304,
         "logical_reduction_adds": 17856,
+        "partial_tile": [
+          16,
+          64,
+          256
+        ],
+        "mmads_per_partial_budget": 1,
+        "partial_read_page_k": 256,
         "launch_us": 2.325814369829399,
         "partial_pipeline_us": 1.597948894255392,
         "cold_floor_us": 0.261632,
@@ -3877,6 +3898,13 @@
         "max_aligned_depth": 256,
         "partial_fixup_bytes": 127872,
         "logical_reduction_adds": 15552,
+        "partial_tile": [
+          16,
+          64,
+          256
+        ],
+        "mmads_per_partial_budget": 1,
+        "partial_read_page_k": 256,
         "launch_us": 2.315160188637076,
         "partial_pipeline_us": 1.597948894255392,
         "cold_floor_us": 0.74752,
@@ -5102,6 +5130,13 @@
         "max_aligned_depth": 256,
         "partial_fixup_bytes": 178816,
         "logical_reduction_adds": 21824,
+        "partial_tile": [
+          16,
+          64,
+          256
+        ],
+        "mmads_per_partial_budget": 1,
+        "partial_read_page_k": 256,
         "launch_us": 2.325814369829399,
         "partial_pipeline_us": 1.5989290143651955,
         "cold_floor_us": 0.2688,
@@ -6454,6 +6489,13 @@
         "max_aligned_depth": 256,
         "partial_fixup_bytes": 156288,
         "logical_reduction_adds": 19008,
+        "partial_tile": [
+          16,
+          64,
+          256
+        ],
+        "mmads_per_partial_budget": 1,
+        "partial_read_page_k": 256,
         "launch_us": 2.315160188637076,
         "partial_pipeline_us": 1.5989290143651955,
         "cold_floor_us": 0.768,
@@ -7675,7 +7717,7 @@
       ],
       "candidate": {
         "route": "one_output_split_k",
-        "latency_us": 5.763362734974154,
+        "latency_us": 5.763362734974153,
         "active_aic": 32,
         "active_aiv": 64,
         "ordinary_us": 15.13335282300825,
@@ -7689,8 +7731,15 @@
         "max_aligned_depth": 256,
         "partial_fixup_bytes": 260096,
         "logical_reduction_adds": 31744,
+        "partial_tile": [
+          16,
+          64,
+          256
+        ],
+        "mmads_per_partial_budget": 1,
+        "partial_read_page_k": 256,
         "launch_us": 2.325814369829399,
-        "partial_pipeline_us": 1.6013793146397044,
+        "partial_pipeline_us": 1.6013793146397042,
         "cold_floor_us": 0.28672,
         "merge_us": 1.8361690505050505,
         "merge_issue_us": 1.7711450505050506,
@@ -9066,8 +9115,15 @@
         "max_aligned_depth": 256,
         "partial_fixup_bytes": 227328,
         "logical_reduction_adds": 27648,
+        "partial_tile": [
+          16,
+          64,
+          256
+        ],
+        "mmads_per_partial_budget": 1,
+        "partial_read_page_k": 256,
         "launch_us": 2.315160188637076,
-        "partial_pipeline_us": 1.6013793146397044,
+        "partial_pipeline_us": 1.6013793146397042,
         "cold_floor_us": 0.8192,
         "merge_us": 1.8155890532655747,
         "merge_issue_us": 1.653211910408432,
@@ -10312,10 +10368,10 @@
       ],
       "candidate": {
         "route": "ordinary",
-        "latency_us": 8.617699544568076,
+        "latency_us": 8.617699544568074,
         "active_aic": 18,
         "active_aiv": 0,
-        "ordinary_us": 8.617699544568076,
+        "ordinary_us": 8.617699544568074,
         "threshold_aligned_k": 4096.0,
         "output_tiles": 18,
         "cube_ops": 7077888,
@@ -10422,10 +10478,10 @@
       ],
       "candidate": {
         "route": "ordinary",
-        "latency_us": 5.633078002347878,
+        "latency_us": 5.633078002347877,
         "active_aic": 36,
         "active_aiv": 0,
-        "ordinary_us": 5.633078002347878,
+        "ordinary_us": 5.633078002347877,
         "threshold_aligned_k": 15360.0,
         "output_tiles": 36,
         "cube_ops": 7077888,
@@ -10524,7 +10580,26 @@
         "evidence": "experimental; no timing qualification on a new chip",
         "reason": "Several ordinary output rectangles; other provider Stream-K routes are unmodeled"
       },
-      "status": "pending"
+      "receipt": "results/v0.28/matmul/9-1280-5120-pr.json",
+      "original_sha256": "91433270cc9e3108fbf9699f20f0a79c062d335f43275875cf902be2479249dc",
+      "original_verdict": false,
+      "original_reason": "ValueError('end marker disagrees with all-core window')",
+      "wall_s": 126.09656350011937,
+      "started_utc": "2026-11-20T02:25:54.361324+00:00",
+      "drain_receipt": "results/v0.28/matmul/9-1280-5120-pr-drain.json",
+      "drain_sha256": "435c7804c661226f53eac419576e63a3eb873cb88a9994fde37c20fdc8bb3a1d",
+      "status": "qualified",
+      "ca_us": 13.642424583435059,
+      "observed_key": 4098,
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_4098_mix_aic",
+      "trace_sha256": "b3b95d44cdd91cd126e12c8384859d5adc335401a808159f75f0bd13b4179daa",
+      "aic": 28,
+      "aiv": 56,
+      "actual_mmads": 400,
+      "correct_core_counts": false,
+      "correctness": [
+        "correctness count=11520 bad=0"
+      ]
     },
     {
       "sku": "Ascend970DT",
@@ -10548,10 +10623,10 @@
       ],
       "candidate": {
         "route": "ordinary",
-        "latency_us": 10.999249331729885,
+        "latency_us": 10.999249331729883,
         "active_aic": 20,
         "active_aiv": 0,
-        "ordinary_us": 10.999249331729885,
+        "ordinary_us": 10.999249331729883,
         "threshold_aligned_k": 15360.0,
         "output_tiles": 20,
         "cube_ops": 117964800,
@@ -10595,7 +10670,26 @@
         "evidence": "experimental; no timing qualification on a new chip",
         "reason": "Several ordinary output rectangles; other provider Stream-K routes are unmodeled"
       },
-      "status": "pending"
+      "receipt": "results/v0.28/matmul/11-2304-1536-dt.json",
+      "original_sha256": "5976a42b96fe919ab8c77f21e17c5ba3b93215334414ccc5c25fc92143e36cfb",
+      "original_verdict": false,
+      "original_reason": "ValueError('end marker disagrees with all-core window')",
+      "wall_s": 78.0993244801648,
+      "started_utc": "2026-11-20T02:28:04.342260+00:00",
+      "drain_receipt": "results/v0.28/matmul/11-2304-1536-dt-drain.json",
+      "drain_sha256": "c301664ff1a66ef645337150ef98e91528bdf64fd39e82e05c47ec8416079d96",
+      "status": "qualified",
+      "ca_us": 6.938788175582886,
+      "observed_key": 2,
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "trace_sha256": "cf2144f15b49eba368933400fd565d19041c5860d56b25a9292de9b4bc346a18",
+      "aic": 18,
+      "aiv": 0,
+      "actual_mmads": 216,
+      "correct_core_counts": true,
+      "correctness": [
+        "correctness count=25344 bad=0"
+      ]
     },
     {
       "sku": "Ascend950PR_957b",
@@ -10631,7 +10725,26 @@
         "evidence": "experimental; no timing qualification on a new chip",
         "reason": "Several ordinary output rectangles; other provider Stream-K routes are unmodeled"
       },
-      "status": "pending"
+      "receipt": "results/v0.28/matmul/11-2304-1536-pr.json",
+      "original_sha256": "942f95b8d5ea01baf01383f3ee3a5d1103f29ad215522535d8d209e5ca144f04",
+      "original_verdict": false,
+      "original_reason": "ValueError('end marker disagrees with all-core window')",
+      "wall_s": 78.03544265008532,
+      "started_utc": "2026-11-20T02:29:24.831022+00:00",
+      "drain_receipt": "results/v0.28/matmul/11-2304-1536-pr-drain.json",
+      "drain_sha256": "8aa0648965aef110b1250d4143a91a9d4f02c90e1cfc41caf3119962d1a25849",
+      "status": "qualified",
+      "ca_us": 7.608484983444214,
+      "observed_key": 2,
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "trace_sha256": "26f7792e420110e1b3617c6bc3bbfbf87e6212858ecd0f95a1a315cdcab12c84",
+      "aic": 18,
+      "aiv": 0,
+      "actual_mmads": 216,
+      "correct_core_counts": true,
+      "correctness": [
+        "correctness count=25344 bad=0"
+      ]
     },
     {
       "sku": "Ascend970DT",
@@ -10655,10 +10768,10 @@
       ],
       "candidate": {
         "route": "ordinary",
-        "latency_us": 5.63757021951781,
+        "latency_us": 5.6375702195178095,
         "active_aic": 36,
         "active_aiv": 0,
-        "ordinary_us": 5.63757021951781,
+        "ordinary_us": 5.6375702195178095,
         "threshold_aligned_k": 15360.0,
         "output_tiles": 36,
         "cube_ops": 77856768,
@@ -10702,7 +10815,26 @@
         "evidence": "experimental; no timing qualification on a new chip",
         "reason": "Several ordinary output rectangles; other provider Stream-K routes are unmodeled"
       },
-      "status": "pending"
+      "receipt": "results/v0.28/matmul/16-512-5120-dt.json",
+      "original_sha256": "cb7d1a89f5629f05f0ab2e283074aed720816a504a3967b85f6883453375e729",
+      "original_verdict": false,
+      "original_reason": "ValueError('end marker disagrees with all-core window')",
+      "wall_s": 92.15672385995276,
+      "started_utc": "2026-11-20T02:30:45.368024+00:00",
+      "drain_receipt": "results/v0.28/matmul/16-512-5120-dt-drain.json",
+      "drain_sha256": "4235121980060d36c95bcfffd87d722dd6b5d0738e475c450fdbc916bbe849e9",
+      "status": "qualified",
+      "ca_us": 8.023030549287796,
+      "observed_key": 4098,
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_4098_mix_aic",
+      "trace_sha256": "bfd43d395f16c5353a90d1d5c95b611f717801d06fbb0d5310a432478544e513",
+      "aic": 32,
+      "aiv": 64,
+      "actual_mmads": 160,
+      "correct_core_counts": false,
+      "correctness": [
+        "correctness count=8192 bad=0"
+      ]
     },
     {
       "sku": "Ascend950PR_957b",
@@ -10738,7 +10870,26 @@
         "evidence": "experimental; no timing qualification on a new chip",
         "reason": "Several ordinary output rectangles; other provider Stream-K routes are unmodeled"
       },
-      "status": "pending"
+      "receipt": "results/v0.28/matmul/16-512-5120-pr.json",
+      "original_sha256": "1aee2ea7892ba0e4364a9307ecfcab9d96f2233208144c5c5a431ada3ad968cf",
+      "original_verdict": false,
+      "original_reason": "ValueError('end marker disagrees with all-core window')",
+      "wall_s": 94.07349418010563,
+      "started_utc": "2026-11-20T02:32:21.580721+00:00",
+      "drain_receipt": "results/v0.28/matmul/16-512-5120-pr-drain.json",
+      "drain_sha256": "fbb5c367691441f8cc89ffe3e739add40d63e08ac0145d4a087c3d9a53b0d5df",
+      "status": "qualified",
+      "ca_us": 8.253939628601074,
+      "observed_key": 4098,
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_4098_mix_aic",
+      "trace_sha256": "776f9e879e53fe1d070de00d6870d51bdec2c7f4e306845ff209caffe54847c6",
+      "aic": 28,
+      "aiv": 56,
+      "actual_mmads": 168,
+      "correct_core_counts": false,
+      "correctness": [
+        "correctness count=8192 bad=0"
+      ]
     },
     {
       "sku": "Ascend970DT",
@@ -10809,7 +10960,26 @@
         "evidence": "experimental; no timing qualification on a new chip",
         "reason": "Several ordinary output rectangles; other provider Stream-K routes are unmodeled"
       },
-      "status": "pending"
+      "receipt": "results/v0.28/matmul/81-32-5120-dt.json",
+      "original_sha256": "3b37ac830c92ee77da8b9b3932b6659b7223eb8b36ee0ba19c69d9aff999d85d",
+      "original_verdict": false,
+      "original_reason": "ValueError('end marker disagrees with all-core window')",
+      "wall_s": 76.11798909003846,
+      "started_utc": "2026-11-20T02:33:59.472593+00:00",
+      "drain_receipt": "results/v0.28/matmul/81-32-5120-dt-drain.json",
+      "drain_sha256": "ca856d3bb0efc9180a896199d6193f99f84862985a993ac222a59e6f3734a697",
+      "status": "qualified",
+      "ca_us": 6.333332732319832,
+      "observed_key": 4098,
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_4098_mix_aic",
+      "trace_sha256": "9f0240d7faf3456876a2f65fc8a8a4b7ff86e5510ea6044b0a64ae82e0c4c97c",
+      "aic": 32,
+      "aiv": 64,
+      "actual_mmads": 64,
+      "correct_core_counts": false,
+      "correctness": [
+        "correctness count=2592 bad=0"
+      ]
     },
     {
       "sku": "Ascend950PR_957b",
@@ -10845,7 +11015,26 @@
         "evidence": "experimental; no timing qualification on a new chip",
         "reason": "Several ordinary output rectangles; other provider Stream-K routes are unmodeled"
       },
-      "status": "pending"
+      "receipt": "results/v0.28/matmul/81-32-5120-pr.json",
+      "original_sha256": "d5ab7f6c28ca2ff40e119bf9e2692bf57d2624ea3626c3ee68a128e941c7813a",
+      "original_verdict": false,
+      "original_reason": "ValueError('end marker disagrees with all-core window')",
+      "wall_s": 72.0574029001873,
+      "started_utc": "2026-11-20T02:35:20.156563+00:00",
+      "drain_receipt": "results/v0.28/matmul/81-32-5120-pr-drain.json",
+      "drain_sha256": "6bda9ca5bfaa6001393cc3532f0e21cc32af60394371ce1ed339a1c4660e16ef",
+      "status": "qualified",
+      "ca_us": 6.183636620640755,
+      "observed_key": 4098,
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_4098_mix_aic",
+      "trace_sha256": "829fee62e95d3cec75831665c94e4fe9d951a89974e0f0d21e6f4f61f0a870d2",
+      "aic": 28,
+      "aiv": 56,
+      "actual_mmads": 56,
+      "correct_core_counts": false,
+      "correctness": [
+        "correctness count=2592 bad=0"
+      ]
     },
     {
       "sku": "Ascend970DT",
@@ -10916,7 +11105,26 @@
         "evidence": "experimental; no timing qualification on a new chip",
         "reason": "Several ordinary output rectangles; other provider Stream-K routes are unmodeled"
       },
-      "status": "pending"
+      "receipt": "results/v0.28/matmul/99-2304-1536-dt.json",
+      "original_sha256": "3b7d2c2f0081dc24280e0718a2e7e10b77b474754c4d4401037c62636380ca3f",
+      "original_verdict": false,
+      "original_reason": "ValueError('end marker disagrees with all-core window')",
+      "wall_s": 90.10889729997143,
+      "started_utc": "2026-11-20T02:36:36.181626+00:00",
+      "drain_receipt": "results/v0.28/matmul/99-2304-1536-dt-drain.json",
+      "drain_sha256": "897d1bb829724d1ccf2a9aecfa9192a0981272d77af0aa061cfe30d0a3cf3009",
+      "status": "qualified",
+      "ca_us": 9.40666675567627,
+      "observed_key": 2,
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "trace_sha256": "97f27b18e23d934676c192122ef297cc141d0bd8e10cb4841f2f314fc22ab9a7",
+      "aic": 18,
+      "aiv": 0,
+      "actual_mmads": 216,
+      "correct_core_counts": true,
+      "correctness": [
+        "correctness count=228096 bad=0"
+      ]
     },
     {
       "sku": "Ascend950PR_957b",
@@ -10952,7 +11160,26 @@
         "evidence": "experimental; no timing qualification on a new chip",
         "reason": "Several ordinary output rectangles; other provider Stream-K routes are unmodeled"
       },
-      "status": "pending"
+      "receipt": "results/v0.28/matmul/99-2304-1536-pr.json",
+      "original_sha256": "0f14348366b64eea2db70228d3d979d2f8a172a25da69f48c4ac8d6ac3529d92",
+      "original_verdict": false,
+      "original_reason": "ValueError('end marker disagrees with all-core window')",
+      "wall_s": 104.04378538997844,
+      "started_utc": "2026-11-20T02:38:08.253438+00:00",
+      "drain_receipt": "results/v0.28/matmul/99-2304-1536-pr-drain.json",
+      "drain_sha256": "c70ceafc54836cfa154cf5b03912934e4b649436d077d483809112150ce97c80",
+      "status": "qualified",
+      "ca_us": 9.84666657447815,
+      "observed_key": 2,
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "trace_sha256": "48f8df7b58008b065bcd7a704dcffaf2be09b4225a1cf09a8c40882851998b97",
+      "aic": 18,
+      "aiv": 0,
+      "actual_mmads": 216,
+      "correct_core_counts": true,
+      "correctness": [
+        "correctness count=228096 bad=0"
+      ]
     },
     {
       "sku": "Ascend970DT",
@@ -11023,7 +11250,26 @@
         "evidence": "experimental; no timing qualification on a new chip",
         "reason": "Several ordinary output rectangles; other provider Stream-K routes are unmodeled"
       },
-      "status": "pending"
+      "receipt": "results/v0.28/matmul/144-64-7168-dt.json",
+      "original_sha256": "a9662e463266afdb97d594f5b33af83c018bdba3cdba11f57da9cd4314339032",
+      "original_verdict": false,
+      "original_reason": "ValueError('end marker disagrees with all-core window')",
+      "wall_s": 92.14298610994592,
+      "started_utc": "2026-11-20T02:39:54.355243+00:00",
+      "drain_receipt": "results/v0.28/matmul/144-64-7168-dt-drain.json",
+      "drain_sha256": "618bcc77faad0488b7813fd90eff144cbe5c37e4567e1f9fea682e03290c7504",
+      "status": "qualified",
+      "ca_us": 7.378182113170624,
+      "observed_key": 4098,
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_4098_mix_aic",
+      "trace_sha256": "013b65092bc6e890890a2e20a3af51bb7f418825c048fea4fa4a31228fab8f88",
+      "aic": 32,
+      "aiv": 64,
+      "actual_mmads": 128,
+      "correct_core_counts": false,
+      "correctness": [
+        "correctness count=9216 bad=0"
+      ]
     },
     {
       "sku": "Ascend950PR_957b",
@@ -11059,7 +11305,26 @@
         "evidence": "experimental; no timing qualification on a new chip",
         "reason": "Several ordinary output rectangles; other provider Stream-K routes are unmodeled"
       },
-      "status": "pending"
+      "receipt": "results/v0.28/matmul/144-64-7168-pr.json",
+      "original_sha256": "5ed0595f9e5c0bcc875778286b0864b0331d3f7af063aa2b6ea1bae9b9681508",
+      "original_verdict": false,
+      "original_reason": "ValueError('end marker disagrees with all-core window')",
+      "wall_s": 90.06619876017794,
+      "started_utc": "2026-11-20T02:41:32.377437+00:00",
+      "drain_receipt": "results/v0.28/matmul/144-64-7168-pr-drain.json",
+      "drain_sha256": "38065ab05b6d37a57c5bcf6dd2282197e7188f0f855faa8dacf2e5ecd07ba8d1",
+      "status": "qualified",
+      "ca_us": 7.33151550590992,
+      "observed_key": 4098,
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_4098_mix_aic",
+      "trace_sha256": "19050ff2303c3b2c254f23d978b209154ad5e5d75e4386ab325c3634da1c17bc",
+      "aic": 28,
+      "aiv": 56,
+      "actual_mmads": 112,
+      "correct_core_counts": false,
+      "correctness": [
+        "correctness count=9216 bad=0"
+      ]
     },
     {
       "sku": "Ascend970DT",
@@ -11083,10 +11348,10 @@
       ],
       "candidate": {
         "route": "ordinary",
-        "latency_us": 14.032887717565979,
+        "latency_us": 14.03288771756598,
         "active_aic": 9,
         "active_aiv": 0,
-        "ordinary_us": 14.032887717565979,
+        "ordinary_us": 14.03288771756598,
         "threshold_aligned_k": 15360.0,
         "output_tiles": 9,
         "cube_ops": 132120576,
@@ -11118,10 +11383,10 @@
       ],
       "candidate": {
         "route": "ordinary",
-        "latency_us": 19.153290929829982,
+        "latency_us": 19.15329092982998,
         "active_aic": 32,
         "active_aiv": 0,
-        "ordinary_us": 19.153290929829982,
+        "ordinary_us": 19.15329092982998,
         "threshold_aligned_k": 4096.0,
         "output_tiles": 64,
         "cube_ops": 4294967296,
@@ -11228,10 +11493,10 @@
       ],
       "candidate": {
         "route": "ordinary",
-        "latency_us": 7.7774995267805735,
+        "latency_us": 7.777499526780573,
         "active_aic": 114,
         "active_aiv": 0,
-        "ordinary_us": 7.7774995267805735,
+        "ordinary_us": 7.777499526780573,
         "threshold_aligned_k": 15360.0,
         "output_tiles": 114,
         "cube_ops": 4294967296,
@@ -11275,7 +11540,26 @@
         "evidence": "experimental; no timing qualification on a new chip",
         "reason": "Several ordinary output rectangles; other provider Stream-K routes are unmodeled"
       },
-      "status": "pending"
+      "receipt": "results/v0.28/matmul/4096-2304-1536-dt.json",
+      "original_sha256": "5dca5c39b21acb4d42679b412fe8b01af3a532155dd78c8c74d39e85e81d3eb1",
+      "original_verdict": false,
+      "original_reason": "ValueError('end marker disagrees with all-core window')",
+      "wall_s": 1055.2473581300583,
+      "started_utc": "2026-11-20T02:19:23.638574+00:00",
+      "drain_receipt": "results/v0.28/matmul/4096-2304-1536-dt-drain.json",
+      "drain_sha256": "88b758661a1c5a707e920d3c63d6afbb3b137e0a2a8d6529b515ee2909a95a99",
+      "status": "qualified",
+      "ca_us": 73.61454844474792,
+      "observed_key": 2,
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "trace_sha256": "1aefd55156e9a04afcecbf5afac0045fb4e45b3899ddc19ac6f0f848089931bd",
+      "aic": 32,
+      "aiv": 0,
+      "actual_mmads": 3840,
+      "correct_core_counts": true,
+      "correctness": [
+        "correctness count=9437184 bad=0"
+      ]
     },
     {
       "sku": "Ascend950PR_957b",
@@ -11311,7 +11595,26 @@
         "evidence": "experimental; no timing qualification on a new chip",
         "reason": "Several ordinary output rectangles; other provider Stream-K routes are unmodeled"
       },
-      "status": "pending"
+      "receipt": "results/v0.28/matmul/4096-2304-1536-pr.json",
+      "original_sha256": "baedb17a6d381015a54f50f69fca6d10bd49f6b27a19699abf727b139daf8e53",
+      "original_verdict": false,
+      "original_reason": "ValueError('end marker disagrees with all-core window')",
+      "wall_s": 1224.5562093500048,
+      "started_utc": "2026-11-20T02:37:12.709470+00:00",
+      "drain_receipt": "results/v0.28/matmul/4096-2304-1536-pr-drain.json",
+      "drain_sha256": "7bfb5eb77e271edf6fcf565b1c07502ca211b49cf93047dcef220c122ed66c50",
+      "status": "qualified",
+      "ca_us": 84.1975748538971,
+      "observed_key": 2,
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "trace_sha256": "a27b253232f9e44db97c500a3d860f667810a9d191c2a2a00e2a5de8cd1649d5",
+      "aic": 28,
+      "aiv": 0,
+      "actual_mmads": 3936,
+      "correct_core_counts": true,
+      "correctness": [
+        "correctness count=9437184 bad=0"
+      ]
     },
     {
       "sku": "Ascend970DT",
@@ -11382,7 +11685,26 @@
         "evidence": "experimental; no timing qualification on a new chip",
         "reason": "Several ordinary output rectangles; other provider Stream-K routes are unmodeled"
       },
-      "status": "pending"
+      "receipt": "results/v0.28/matmul/4096-32-5120-dt.json",
+      "original_sha256": "9d6b44953f04943985b305d4f7bd0d260782d49da4a6853e54908f30885c70f2",
+      "original_verdict": false,
+      "original_reason": "ValueError('end marker disagrees with all-core window')",
+      "wall_s": 192.28037508996204,
+      "started_utc": "2026-11-20T02:57:50.579926+00:00",
+      "drain_receipt": "results/v0.28/matmul/4096-32-5120-dt-drain.json",
+      "drain_sha256": "31f8be1b7c7ccc3705e5c9f78eb56d43e1726b73f12eda365738f135fd2eb8f3",
+      "status": "qualified",
+      "ca_us": 19.115757316350937,
+      "observed_key": 4098,
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_4098_mix_aic",
+      "trace_sha256": "7079394da4488bf0c73aeb82696001ebdc78ba3b90375df059f5ecbdcc731853",
+      "aic": 32,
+      "aiv": 64,
+      "actual_mmads": 1280,
+      "correct_core_counts": false,
+      "correctness": [
+        "correctness count=131072 bad=0"
+      ]
     },
     {
       "sku": "Ascend950PR_957b",
@@ -11418,7 +11740,26 @@
         "evidence": "experimental; no timing qualification on a new chip",
         "reason": "Several ordinary output rectangles; other provider Stream-K routes are unmodeled"
       },
-      "status": "pending"
+      "receipt": "results/v0.28/matmul/4096-32-5120-pr.json",
+      "original_sha256": "85fcede2e6957c029006050e665f5b0c987245fe4f43bad8b14d22654b206be2",
+      "original_verdict": false,
+      "original_reason": "ValueError('end marker disagrees with all-core window')",
+      "wall_s": 234.10287645994686,
+      "started_utc": "2026-11-20T03:01:09.843348+00:00",
+      "drain_receipt": "results/v0.28/matmul/4096-32-5120-pr-drain.json",
+      "drain_sha256": "2536640304806d50244f000176fc96dabfe13e68ec846ffe7b4ace940a6fd911",
+      "status": "qualified",
+      "ca_us": 29.5696964263916,
+      "observed_key": 2,
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "trace_sha256": "8f48fcebe72173bf38a89c10965c79a03a9e9e703b3917dbbead0764491ba867",
+      "aic": 26,
+      "aiv": 0,
+      "actual_mmads": 2080,
+      "correct_core_counts": true,
+      "correctness": [
+        "correctness count=131072 bad=0"
+      ]
     },
     {
       "sku": "Ascend970DT",
@@ -11442,10 +11783,10 @@
       ],
       "candidate": {
         "route": "ordinary",
-        "latency_us": 9.509023181578598,
+        "latency_us": 9.509023181578597,
         "active_aic": 86,
         "active_aiv": 0,
-        "ordinary_us": 9.509023181578598,
+        "ordinary_us": 9.509023181578597,
         "threshold_aligned_k": 15360.0,
         "output_tiles": 86,
         "cube_ops": 1342177280,
@@ -11513,10 +11854,10 @@
       ],
       "candidate": {
         "route": "ordinary",
-        "latency_us": 206.15552590292276,
+        "latency_us": 206.1555259029228,
         "active_aic": 28,
         "active_aiv": 0,
-        "ordinary_us": 206.15552590292276,
+        "ordinary_us": 206.1555259029228,
         "threshold_aligned_k": 4096.0,
         "output_tiles": 512,
         "cube_ops": 34359738368,
@@ -11549,10 +11890,10 @@
       ],
       "candidate": {
         "route": "ordinary",
-        "latency_us": 31.870853136975693,
+        "latency_us": 31.87085313697569,
         "active_aic": 120,
         "active_aiv": 0,
-        "ordinary_us": 31.870853136975693,
+        "ordinary_us": 31.87085313697569,
         "threshold_aligned_k": 15360.0,
         "output_tiles": 512,
         "cube_ops": 34359738368,
@@ -11712,16 +12053,16 @@
     },
     "Ascend950DT_9582/prospective endpoint/ordinary": {
       "ordinary": {
-        "n": 2,
-        "wape": 22.033114970072308,
-        "max_ape": 29.007481527306787
+        "n": 9,
+        "wape": 18.58164050709296,
+        "max_ape": 107.48558910539555
       },
       "candidate": {
-        "n": 2,
-        "wape": 22.033114970072308,
-        "max_ape": 29.007481527306787
+        "n": 9,
+        "wape": 18.58164050709296,
+        "max_ape": 107.48558910539555
       },
-      "correct_core_counts": 1
+      "correct_core_counts": 4
     },
     "Ascend950PR_957b/already started/one_output_split_k": {
       "ordinary": {
@@ -11764,16 +12105,16 @@
     },
     "Ascend950PR_957b/prospective endpoint/ordinary": {
       "ordinary": {
-        "n": 1,
-        "wape": 15.039480550292604,
-        "max_ape": 15.039480550292605
+        "n": 9,
+        "wape": 16.370422358052693,
+        "max_ape": 108.80627764397015
       },
       "candidate": {
-        "n": 1,
-        "wape": 15.039480550292604,
-        "max_ape": 15.039480550292605
+        "n": 9,
+        "wape": 16.370422358052693,
+        "max_ape": 108.80627764397015
       },
-      "correct_core_counts": 1
+      "correct_core_counts": 5
     }
   },
   "dt_over_pr_ratios": [
@@ -11839,6 +12180,78 @@
     },
     {
       "shape": [
+        9,
+        1280,
+        5120
+      ],
+      "role": "prospective both",
+      "predicted_route": "ordinary",
+      "ca_us": 0.7487339136692955,
+      "candidate_us": 0.9227579960952664,
+      "ordinary_us": 0.9227579960952664
+    },
+    {
+      "shape": [
+        11,
+        2304,
+        1536
+      ],
+      "role": "prospective both",
+      "predicted_route": "ordinary",
+      "ca_us": 0.9119802681718419,
+      "candidate_us": 0.9970640126407017,
+      "ordinary_us": 0.9970640126407017
+    },
+    {
+      "shape": [
+        16,
+        512,
+        5120
+      ],
+      "role": "prospective both",
+      "predicted_route": "ordinary",
+      "ca_us": 0.9720243799078508,
+      "candidate_us": 1.0,
+      "ordinary_us": 1.0
+    },
+    {
+      "shape": [
+        81,
+        32,
+        5120
+      ],
+      "role": "prospective both",
+      "predicted_route": "ordinary",
+      "ca_us": 1.024208426345655,
+      "candidate_us": 1.0,
+      "ordinary_us": 1.0
+    },
+    {
+      "shape": [
+        99,
+        2304,
+        1536
+      ],
+      "role": "prospective both",
+      "predicted_route": "ordinary",
+      "ca_us": 0.955314845336357,
+      "candidate_us": 0.9765635464758884,
+      "ordinary_us": 0.9765635464758884
+    },
+    {
+      "shape": [
+        144,
+        64,
+        7168
+      ],
+      "role": "prospective both",
+      "predicted_route": "ordinary",
+      "ca_us": 1.0063652061054889,
+      "candidate_us": 1.0,
+      "ordinary_us": 1.0
+    },
+    {
+      "shape": [
         32768,
         128,
         512
@@ -11848,12 +12261,36 @@
       "ca_us": 0.5830514218958862,
       "candidate_us": 0.6645944361193744,
       "ordinary_us": 0.6645944361193744
+    },
+    {
+      "shape": [
+        4096,
+        2304,
+        1536
+      ],
+      "role": "prospective both",
+      "predicted_route": "ordinary",
+      "ca_us": 0.8743072300180469,
+      "candidate_us": 0.8795449872758693,
+      "ordinary_us": 0.8795449872758693
+    },
+    {
+      "shape": [
+        4096,
+        32,
+        5120
+      ],
+      "role": "prospective both",
+      "predicted_route": "ordinary",
+      "ca_us": 0.6464644425395488,
+      "candidate_us": 0.6046396547525482,
+      "ordinary_us": 0.6046396547525482
     }
   ],
   "sensitivities": {
     "dt": {
       "route": "one_output_split_k",
-      "latency_us": 5.763362734974154,
+      "latency_us": 5.763362734974153,
       "active_aic": 32,
       "active_aiv": 64,
       "ordinary_us": 15.13335282300825,
@@ -11867,8 +12304,15 @@
       "max_aligned_depth": 256,
       "partial_fixup_bytes": 260096,
       "logical_reduction_adds": 31744,
+      "partial_tile": [
+        16,
+        64,
+        256
+      ],
+      "mmads_per_partial_budget": 1,
+      "partial_read_page_k": 256,
       "launch_us": 2.325814369829399,
-      "partial_pipeline_us": 1.6013793146397044,
+      "partial_pipeline_us": 1.6013793146397042,
       "cold_floor_us": 0.28672,
       "merge_us": 1.8361690505050505,
       "merge_issue_us": 1.7711450505050506,
@@ -11877,7 +12321,7 @@
     },
     "same-config-new-name": {
       "route": "one_output_split_k",
-      "latency_us": 5.763362734974154,
+      "latency_us": 5.763362734974153,
       "active_aic": 32,
       "active_aiv": 64,
       "ordinary_us": 15.13335282300825,
@@ -11891,8 +12335,15 @@
       "max_aligned_depth": 256,
       "partial_fixup_bytes": 260096,
       "logical_reduction_adds": 31744,
+      "partial_tile": [
+        16,
+        64,
+        256
+      ],
+      "mmads_per_partial_budget": 1,
+      "partial_read_page_k": 256,
       "launch_us": 2.325814369829399,
-      "partial_pipeline_us": 1.6013793146397044,
+      "partial_pipeline_us": 1.6013793146397042,
       "cold_floor_us": 0.28672,
       "merge_us": 1.8361690505050505,
       "merge_issue_us": 1.7711450505050506,
@@ -11915,6 +12366,13 @@
       "max_aligned_depth": 256,
       "partial_fixup_bytes": 260096,
       "logical_reduction_adds": 31744,
+      "partial_tile": [
+        16,
+        64,
+        256
+      ],
+      "mmads_per_partial_budget": 1,
+      "partial_read_page_k": 256,
       "launch_us": 1.9381786415244993,
       "partial_pipeline_us": 1.3344827621997537,
       "cold_floor_us": 0.28672,
@@ -11939,6 +12397,13 @@
       "max_aligned_depth": 448,
       "partial_fixup_bytes": 129024,
       "logical_reduction_adds": 15360,
+      "partial_tile": [
+        16,
+        64,
+        256
+      ],
+      "mmads_per_partial_budget": 2,
+      "partial_read_page_k": 512,
       "launch_us": 2.270509654515007,
       "partial_pipeline_us": 2.0175101795940593,
       "cold_floor_us": 0.28672,
@@ -11963,8 +12428,15 @@
       "max_aligned_depth": 256,
       "partial_fixup_bytes": 260096,
       "logical_reduction_adds": 31744,
+      "partial_tile": [
+        16,
+        64,
+        256
+      ],
+      "mmads_per_partial_budget": 1,
+      "partial_read_page_k": 256,
       "launch_us": 2.325814369829399,
-      "partial_pipeline_us": 1.6013793146397044,
+      "partial_pipeline_us": 1.6013793146397042,
       "cold_floor_us": 2.8672,
       "merge_us": 2.4213850505050507,
       "merge_issue_us": 1.7711450505050506,
@@ -11987,8 +12459,15 @@
       "max_aligned_depth": 256,
       "partial_fixup_bytes": 260096,
       "logical_reduction_adds": 31744,
+      "partial_tile": [
+        16,
+        64,
+        256
+      ],
+      "mmads_per_partial_budget": 1,
+      "partial_read_page_k": 256,
       "launch_us": 2.325814369829399,
-      "partial_pipeline_us": 1.6013793146397044,
+      "partial_pipeline_us": 1.6013793146397042,
       "cold_floor_us": 0.28672,
       "merge_us": 2.4213850505050507,
       "merge_issue_us": 1.7711450505050506,
@@ -11997,7 +12476,7 @@
     },
     "half FP32 Vector": {
       "route": "one_output_split_k",
-      "latency_us": 6.928447179418599,
+      "latency_us": 6.9284471794185984,
       "active_aic": 32,
       "active_aiv": 64,
       "ordinary_us": 15.13335282300825,
@@ -12011,8 +12490,15 @@
       "max_aligned_depth": 256,
       "partial_fixup_bytes": 260096,
       "logical_reduction_adds": 31744,
+      "partial_tile": [
+        16,
+        64,
+        256
+      ],
+      "mmads_per_partial_budget": 1,
+      "partial_read_page_k": 256,
       "launch_us": 2.325814369829399,
-      "partial_pipeline_us": 1.6013793146397044,
+      "partial_pipeline_us": 1.6013793146397042,
       "cold_floor_us": 0.28672,
       "merge_us": 3.0012534949494953,
       "merge_issue_us": 2.936229494949495,
@@ -12077,6 +12563,13 @@
       "max_aligned_depth": 128,
       "partial_fixup_bytes": 980992,
       "logical_reduction_adds": 121856,
+      "partial_tile": [
+        16,
+        64,
+        128
+      ],
+      "mmads_per_partial_budget": 1,
+      "partial_read_page_k": 128,
       "launch_us": 2.22866821040895,
       "partial_pipeline_us": 1.2066630923743344,
       "cold_floor_us": 0.16783333333333333,
@@ -12101,6 +12594,13 @@
       "max_aligned_depth": 128,
       "partial_fixup_bytes": 980992,
       "logical_reduction_adds": 121856,
+      "partial_tile": [
+        16,
+        64,
+        128
+      ],
+      "mmads_per_partial_budget": 1,
+      "partial_read_page_k": 128,
       "launch_us": 2.22866821040895,
       "partial_pipeline_us": 1.2066630923743344,
       "cold_floor_us": 0.17066666666666666,
@@ -12111,7 +12611,7 @@
     },
     "970 K=16384": {
       "route": "one_output_split_k",
-      "latency_us": 8.154193138036574,
+      "latency_us": 8.154193138036575,
       "active_aic": 120,
       "active_aiv": 120,
       "ordinary_us": 27.77221619950575,
@@ -12125,8 +12625,15 @@
       "max_aligned_depth": 192,
       "partial_fixup_bytes": 980992,
       "logical_reduction_adds": 121856,
+      "partial_tile": [
+        16,
+        64,
+        192
+      ],
+      "mmads_per_partial_budget": 1,
+      "partial_read_page_k": 192,
       "launch_us": 2.22866821040895,
-      "partial_pipeline_us": 1.3372696387387348,
+      "partial_pipeline_us": 1.337269638738735,
       "cold_floor_us": 0.18204444444444445,
       "merge_us": 4.588255288888889,
       "merge_issue_us": 4.555555555555555,
@@ -12135,8 +12642,8 @@
     }
   },
   "online_ms": {
-    "median": 0.3043650649487972,
-    "max": 1.1458501685410738,
+    "median": 0.20421494264155626,
+    "max": 0.8685397915542126,
     "queries": 48
   }
 }

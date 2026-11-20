@@ -64,10 +64,11 @@ def release():
         us=r['current_us'];err='N/A' if us is None else f'{100*(us/r["ca_us"]-1):+.1f}%'
         lines.append(f'| {r["op"]} · {r["kernel"]} | {r["chip"]} | {r["shape"]} · {r["attrs"]} | {fmt(r["previous_us"])} | {fmt(us)} | {fmt(r["ca_us"])} | {err} | {fmt(r["future_970dt_extrapolated_us"])} |')
     (OUT/'shape-errors.md').write_text('\n'.join(lines)+'\n')
+    candidate={(tuple(r['shape']),c):v['us'] for r in read(OUT/'matmul/streamk-freeze.json')['rows'] for c,v in r['predictions'].items()}
     for r in read(OUT/'matmul/freeze.json')['rows']+read(OUT/'matmul/long-prefill/freeze.json')['rows']+read(OUT/'matmul/wide-prefill/freeze.json')['rows']:
         for c,ref in r['predictions'].items():
             p=query('matmul',r['shape'],{},c)
-            if not isclose(p.latency_us,ref['us'],rel_tol=1e-10):raise ValueError(('matmul',r['shape'],c))
+            if not isclose(p.latency_us,candidate.get((tuple(r['shape']),c),ref['us']),rel_tol=1e-10):raise ValueError(('matmul',r['shape'],c))
     for r in read(OUT/'matmul/streamk-freeze.json')['rows']:
         for c,target in r['predictions'].items():
             start=perf_counter_ns();v=estimate_matmul_splitk(r['shape'],chip=c)

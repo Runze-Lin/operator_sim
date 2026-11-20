@@ -4,7 +4,7 @@
 
 普通 decode 每个请求贡献一行；MTP8 校验每请求最多贡献九行。B=1、Q=9 与 B=9、Q=1 都可产生 M=9。同一权重和输入几何只验证一次。prefill 的 B8×512 表示一轮调度 4096 个 token，B8×32768 表示 262144 行一次提交。
 
-冻结 16 个新 shape、两端 32 个采集。当前 23 个合格完整窗、0 个不合格、9 个待回收。冻结时三种配置的最大单次预测开销为 2.424 ms。970DT 全部是外推。
+冻结 16 个新 shape、两端 32 个采集。当前 28 个合格完整窗、0 个不合格、4 个待回收。冻结时三种配置的最大单次预测开销为 2.424 ms。970DT 全部是外推。
 
 | 场景 | 模型 · 投影 | B×每请求 token | [M,N,K] | DT 预测 / CA (误差) µs | PR 预测 / CA (误差) µs | 970DT 外推 µs |
 |---|---|---:|---|---:|---:|---:|
@@ -18,17 +18,17 @@
 | decode | DeepSeek-V4.1-Flash · dsa.wkv | 16×1 | [16, 512, 5120] | 11.930 / 8.023 (+48.7%) | 11.930 / 8.254 (+44.5%) | 10.935 |
 | decode | DeepSeek-V4.1-Flash · indexer.weights_proj | 9×9 | [81, 32, 5120] | 7.691 / 6.333 (+21.4%) | 7.691 / 6.184 (+24.4%) | 7.050 |
 | decode | Kimi-K3 · mla.q_b_proj | 11×9 | [99, 2304, 1536] | 9.168 / 9.407 (-2.5%) | 9.388 / 9.847 (-4.7%) | 5.866 |
-| decode | DeepSeek-V4-Pro · indexer.weights_proj | 16×9 | [144, 64, 7168] | 15.309 / 待回收 | 15.309 / 待回收 | 14.033 |
+| decode | DeepSeek-V4-Pro · indexer.weights_proj | 16×9 | [144, 64, 7168] | 15.309 / 7.378 (+107.5%) | 15.309 / 7.332 (+108.8%) | 14.033 |
 | prefill | DeepSeek-V4.1-Flash · indexer.wk | 1×32768 | [32768, 128, 512] | 19.153 / 15.562 (+23.1%) | 28.820 / 26.690 (+8.0%) | 7.777 |
-| prefill | Kimi-K3 · mla.q_b_proj | 8×512 | [4096, 2304, 1536] | 80.760 / 73.615 (+9.7%) | 91.820 / 待回收 | 26.297 |
-| prefill | DeepSeek-V4.1-Flash · indexer.weights_proj | 8×512 | [4096, 32, 5120] | 20.572 / 待回收 | 34.024 / 待回收 | 9.509 |
+| prefill | Kimi-K3 · mla.q_b_proj | 8×512 | [4096, 2304, 1536] | 80.760 / 73.615 (+9.7%) | 91.820 / 84.198 (+9.1%) | 26.297 |
+| prefill | DeepSeek-V4.1-Flash · indexer.weights_proj | 8×512 | [4096, 32, 5120] | 20.572 / 19.116 (+7.6%) | 34.024 / 29.570 (+15.1%) | 9.509 |
 | prefill | DeepSeek-V4.1-Flash · indexer.wk | 8×32768 | [262144, 128, 512] | 113.505 / 待回收 | 206.156 / 待回收 | 31.871 |
 | prefill | DeepSeek-V4.1-Flash · indexer.weights_proj | 8×32768 | [262144, 32, 5120] | 1082.452 / 待回收 | 1921.347 / 待回收 | 273.952 |
 
 | 场景 | DT 形数 · WAPE / 最大 | PR 形数 · WAPE / 最大 | DT/PR 比值 WAPE / 最大 | 直接用 DT 预测 PR，同形 WAPE |
 |---|---:|---:|---:|---:|
-| decode | 10 · 67.5% / 170.8% | 10 · 62.0% / 181.9% | 10 · 7.3% / 23.2% | 63.6 |
-| prefill | 2 · 12.0% / 23.1% | 1 · 8.0% / 8.0% | 1 · 14.0% / 14.0% | 28.2 |
+| decode | 11 · 71.3% / 170.8% | 11 · 66.1% / 181.9% | 11 · 6.7% / 23.2% | 67.6 |
+| prefill | 3 · 11.3% / 23.1% | 3 · 10.1% / 15.1% | 3 · 6.1% / 14.0% | 14.2 |
 
 ## 已返回的库分支和成本
 
@@ -54,8 +54,13 @@
 | [81, 32, 5120] | PR | 6/0 | MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_4098_mix_aic · 28/56 · 56 | 72.1 | [qualified](81-32-5120-pr-drain.json) |
 | [99, 2304, 1536] | DT | 18/0 | MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2 · 18/0 · 216 | 90.1 | [qualified](99-2304-1536-dt-drain.json) |
 | [99, 2304, 1536] | PR | 18/0 | MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2 · 18/0 · 216 | 104.0 | [qualified](99-2304-1536-pr-drain.json) |
+| [144, 64, 7168] | DT | 9/0 | MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_4098_mix_aic · 32/64 · 128 | 92.1 | [qualified](144-64-7168-dt-drain.json) |
+| [144, 64, 7168] | PR | 9/0 | MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_4098_mix_aic · 28/56 · 112 | 90.1 | [qualified](144-64-7168-pr-drain.json) |
 | [32768, 128, 512] | DT | 32/0 | MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_131074 · 32/0 · 2048 | 236.3 | [qualified](32768-128-512-dt-drain.json) |
 | [32768, 128, 512] | PR | 28/0 | MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_131074 · 28/0 · 2048 | 316.2 | [qualified](32768-128-512-pr-drain.json) |
 | [4096, 2304, 1536] | DT | 32/0 | MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2 · 32/0 · 3840 | 1055.2 | [qualified](4096-2304-1536-dt-drain.json) |
+| [4096, 2304, 1536] | PR | 28/0 | MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2 · 28/0 · 3936 | 1224.6 | [qualified](4096-2304-1536-pr-drain.json) |
+| [4096, 32, 5120] | DT | 32/0 | MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_4098_mix_aic · 32/64 · 1280 | 192.3 | [qualified](4096-32-5120-dt-drain.json) |
+| [4096, 32, 5120] | PR | 26/0 | MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2 · 26/0 · 2080 | 234.1 | [qualified](4096-32-5120-pr-drain.json) |
 
-CA 从所有活动核最早发起计至最后退出。多 kernel 派发保留每个完整窗口及成本，只有冻结合同对应的一次独立 Matmul 窗参加聚合。WAPE 以实测时间加权；分母为零个合格样本时记 N/A。两个队列按完成情况更新此表。[冻结的模型输入、预算与三芯片预测](freeze.json) · [逐形机器可读表](evaluation.json) · [单卡模型规格和切分](../../../docs/prefill-shapes.md)
+CA 从所有活动核最早发起计至最后退出。多 kernel 派发保留每个完整窗口及成本，只有冻结合同对应的一次独立 Matmul 窗参加聚合。WAPE 以实测时间加权；分母为零个合格样本时记 N/A。表中预测始终是采集前冻结的普通排程。[当前默认分支、同形误差与加速比](public-report.md) · [单输出分 K 的预登记验证](streamk-analysis.md)。两个队列按完成情况更新此表。[冻结的模型输入、预算与三芯片预测](freeze.json) · [逐形机器可读表](evaluation.json) · [单卡模型规格和切分](../../../docs/prefill-shapes.md)

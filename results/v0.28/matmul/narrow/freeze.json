@@ -1,0 +1,1505 @@
+{
+  "utc": "2026-11-20T02:47:30.379365+00:00",
+  "source_geometry": {
+    "DeepSeek-V4.1-Flash": {
+      "scenario": {
+        "model": "DeepSeek-V4.1-Flash",
+        "seq": 32768,
+        "batch": 8,
+        "tp": 8,
+        "dp": 1,
+        "ep": 8,
+        "chunk": 0,
+        "step": 0,
+        "ep_rank": 0
+      },
+      "node": {
+        "op": "indexer.weights_proj",
+        "layers": [
+          2,
+          8,
+          14,
+          20,
+          24,
+          28,
+          32,
+          36
+        ],
+        "tensors": {
+          "x": [
+            262144,
+            5120
+          ],
+          "weight_logical": [
+            32,
+            5120
+          ],
+          "y": [
+            262144,
+            32
+          ]
+        },
+        "evidence": "logical component",
+        "useful_flops": 85899345920,
+        "placement": "replicated",
+        "mapping": "shape derived from pinned source and config",
+        "unpriced_reason": "Serving fusion, layout, quantization or kernel schedule has no matching calibrated timing contract."
+      }
+    },
+    "DeepSeek-V4-Pro": {
+      "scenario": {
+        "model": "DeepSeek-V4-Pro",
+        "seq": 32768,
+        "batch": 8,
+        "tp": 8,
+        "dp": 1,
+        "ep": 8,
+        "chunk": 0,
+        "step": 0,
+        "ep_rank": 0
+      },
+      "node": {
+        "op": "indexer.weights_proj",
+        "layers": [
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16,
+          18,
+          20,
+          22,
+          24,
+          26,
+          28,
+          30,
+          32,
+          34,
+          36,
+          38,
+          40,
+          42,
+          44,
+          46,
+          48,
+          50,
+          52,
+          54,
+          56,
+          58,
+          60
+        ],
+        "tensors": {
+          "x": [
+            262144,
+            7168
+          ],
+          "weight_logical": [
+            64,
+            7168
+          ],
+          "y": [
+            262144,
+            64
+          ]
+        },
+        "evidence": "logical component",
+        "useful_flops": 240518168576,
+        "placement": "replicated",
+        "mapping": "shape derived from pinned source and config",
+        "unpriced_reason": "Serving fusion, layout, quantization or kernel schedule has no matching calibrated timing contract."
+      }
+    }
+  },
+  "rows": [
+    {
+      "shape": [
+        1,
+        32,
+        5120
+      ],
+      "model": "DeepSeek-V4.1-Flash",
+      "node": "indexer.weights_proj",
+      "predictions": {
+        "Ascend950DT_9582": {
+          "us": 5.33653773223168,
+          "ordinary_us": 7.543921820303756,
+          "ordinary_aic": 1,
+          "ordinary_aiv": 0,
+          "ordinary_plan": {
+            "active_aic": 1,
+            "active_aiv": 0,
+            "tile": [
+              16,
+              32,
+              512
+            ],
+            "read_page_k": 1024,
+            "waves": 1,
+            "iterations": 1,
+            "branch": "gemv",
+            "mmads_total": 10,
+            "output_tiles": 1,
+            "units": {
+              "read": 330.0,
+              "cube": 2.5,
+              "fix": 0.0625,
+              "vector": 0.0,
+              "write": 0.0
+            },
+            "tail_split_mn": [
+              1,
+              1
+            ],
+            "effective_output_tiles": 1,
+            "tail_wave_pieces": 1,
+            "tail_wave_histogram": [
+              [
+                1,
+                32,
+                1
+              ]
+            ]
+          },
+          "candidate": {
+            "route": "one_output_split_k",
+            "latency_us": 5.33653773223168,
+            "active_aic": 32,
+            "active_aiv": 64,
+            "ordinary_us": 7.543921820303756,
+            "threshold_aligned_k": 4096.0,
+            "output_tiles": 1,
+            "cube_ops": 327680,
+            "input_bytes": 337920,
+            "final_output_bytes": 64,
+            "evidence": "experimental; no timing qualification on a new chip",
+            "k_splits": 32,
+            "max_aligned_depth": 192,
+            "partial_fixup_bytes": 8128,
+            "logical_reduction_adds": 992,
+            "partial_tile": [
+              16,
+              32,
+              192
+            ],
+            "mmads_per_partial_budget": 1,
+            "partial_read_page_k": 192,
+            "launch_us": 2.325814369829399,
+            "partial_pipeline_us": 1.23754631189723,
+            "cold_floor_us": 0.08448,
+            "merge_us": 1.7731770505050506,
+            "merge_issue_us": 1.7711450505050506,
+            "reason": "One output rectangle and profitable split K on the supplied target resources",
+            "mix_qualification": "Assumes a compatible 1:2 mixed executable"
+          },
+          "ordinary_query_ms": 0.45201,
+          "candidate_query_ms": 0.23044,
+          "target_extrapolated": false
+        },
+        "Ascend950PR_957b": {
+          "us": 5.210992696657024,
+          "ordinary_us": 7.543921820303756,
+          "ordinary_aic": 1,
+          "ordinary_aiv": 0,
+          "ordinary_plan": {
+            "active_aic": 1,
+            "active_aiv": 0,
+            "tile": [
+              16,
+              32,
+              512
+            ],
+            "read_page_k": 1024,
+            "waves": 1,
+            "iterations": 1,
+            "branch": "gemv",
+            "mmads_total": 10,
+            "output_tiles": 1,
+            "units": {
+              "read": 330.0,
+              "cube": 2.5,
+              "fix": 0.0625,
+              "vector": 0.0,
+              "write": 0.0
+            },
+            "tail_split_mn": [
+              1,
+              1
+            ],
+            "effective_output_tiles": 1,
+            "tail_wave_pieces": 1,
+            "tail_wave_histogram": [
+              [
+                1,
+                32,
+                1
+              ]
+            ]
+          },
+          "candidate": {
+            "route": "one_output_split_k",
+            "latency_us": 5.210992696657024,
+            "active_aic": 28,
+            "active_aiv": 56,
+            "ordinary_us": 7.543921820303756,
+            "threshold_aligned_k": 4096.0,
+            "output_tiles": 1,
+            "cube_ops": 327680,
+            "input_bytes": 337920,
+            "final_output_bytes": 64,
+            "evidence": "experimental; no timing qualification on a new chip",
+            "k_splits": 28,
+            "max_aligned_depth": 192,
+            "partial_fixup_bytes": 7104,
+            "logical_reduction_adds": 864,
+            "partial_tile": [
+              16,
+              32,
+              192
+            ],
+            "mmads_per_partial_budget": 1,
+            "partial_read_page_k": 192,
+            "launch_us": 2.315160188637076,
+            "partial_pipeline_us": 1.23754631189723,
+            "cold_floor_us": 0.24137142857142857,
+            "merge_us": 1.6582861961227178,
+            "merge_issue_us": 1.653211910408432,
+            "reason": "One output rectangle and profitable split K on the supplied target resources",
+            "mix_qualification": "Assumes a compatible 1:2 mixed executable"
+          },
+          "ordinary_query_ms": 0.10612,
+          "candidate_query_ms": 0.20183,
+          "target_extrapolated": false
+        },
+        "Ascend970DT": {
+          "us": 6.915206815295183,
+          "ordinary_us": 6.915206815295183,
+          "ordinary_aic": 1,
+          "ordinary_aiv": 0,
+          "ordinary_plan": {
+            "active_aic": 1,
+            "active_aiv": 0,
+            "tile": [
+              16,
+              32,
+              512
+            ],
+            "read_page_k": 1024,
+            "waves": 1,
+            "iterations": 1,
+            "branch": "gemv",
+            "mmads_total": 10,
+            "output_tiles": 1,
+            "units": {
+              "read": 330.0,
+              "cube": 2.5,
+              "fix": 0.0625,
+              "vector": 0.0,
+              "write": 0.0
+            },
+            "tail_split_mn": [
+              1,
+              1
+            ],
+            "effective_output_tiles": 1,
+            "tail_wave_pieces": 1,
+            "tail_wave_histogram": [
+              [
+                1,
+                32,
+                1
+              ]
+            ]
+          },
+          "candidate": {
+            "route": "ordinary",
+            "latency_us": 6.915206815295183,
+            "active_aic": 1,
+            "active_aiv": 0,
+            "ordinary_us": 6.915206815295183,
+            "threshold_aligned_k": 15360.0,
+            "output_tiles": 1,
+            "cube_ops": 327680,
+            "input_bytes": 337920,
+            "final_output_bytes": 64,
+            "evidence": "experimental; no timing qualification on a new chip",
+            "reason": "Aligned K below the DAV_3510 host threshold"
+          },
+          "ordinary_query_ms": 0.1191,
+          "candidate_query_ms": 0.09879,
+          "target_extrapolated": true
+        }
+      },
+      "runtime_example": {
+        "batch": 1,
+        "query_per_request": 1
+      },
+      "wall_s": 900,
+      "raw_mib": 2048
+    },
+    {
+      "shape": [
+        4,
+        32,
+        5120
+      ],
+      "model": "DeepSeek-V4.1-Flash",
+      "node": "indexer.weights_proj",
+      "predictions": {
+        "Ascend950DT_9582": {
+          "us": 5.343368822314032,
+          "ordinary_us": 7.5446569103861085,
+          "ordinary_aic": 1,
+          "ordinary_aiv": 0,
+          "ordinary_plan": {
+            "active_aic": 1,
+            "active_aiv": 0,
+            "tile": [
+              16,
+              32,
+              512
+            ],
+            "read_page_k": 1024,
+            "waves": 1,
+            "iterations": 1,
+            "branch": "coarse_tile",
+            "mmads_total": 10,
+            "output_tiles": 1,
+            "units": {
+              "read": 360.0,
+              "cube": 10.0,
+              "fix": 0.25,
+              "vector": 0.0,
+              "write": 0.0
+            },
+            "tail_split_mn": [
+              1,
+              1
+            ],
+            "effective_output_tiles": 1,
+            "tail_wave_pieces": 1,
+            "tail_wave_histogram": [
+              [
+                4,
+                32,
+                1
+              ]
+            ]
+          },
+          "candidate": {
+            "route": "one_output_split_k",
+            "latency_us": 5.343368822314032,
+            "active_aic": 32,
+            "active_aiv": 64,
+            "ordinary_us": 7.5446569103861085,
+            "threshold_aligned_k": 4096.0,
+            "output_tiles": 1,
+            "cube_ops": 1310720,
+            "input_bytes": 368640,
+            "final_output_bytes": 256,
+            "evidence": "experimental; no timing qualification on a new chip",
+            "k_splits": 32,
+            "max_aligned_depth": 192,
+            "partial_fixup_bytes": 32512,
+            "logical_reduction_adds": 3968,
+            "partial_tile": [
+              16,
+              32,
+              192
+            ],
+            "mmads_per_partial_budget": 1,
+            "partial_read_page_k": 192,
+            "launch_us": 2.325814369829399,
+            "partial_pipeline_us": 1.2382814019795827,
+            "cold_floor_us": 0.09216,
+            "merge_us": 1.7792730505050505,
+            "merge_issue_us": 1.7711450505050506,
+            "reason": "One output rectangle and profitable split K on the supplied target resources",
+            "mix_qualification": "Assumes a compatible 1:2 mixed executable"
+          },
+          "ordinary_query_ms": 0.1221,
+          "candidate_query_ms": 0.18576,
+          "target_extrapolated": false
+        },
+        "Ascend950PR_957b": {
+          "us": 5.226950643882233,
+          "ordinary_us": 7.5446569103861085,
+          "ordinary_aic": 1,
+          "ordinary_aiv": 0,
+          "ordinary_plan": {
+            "active_aic": 1,
+            "active_aiv": 0,
+            "tile": [
+              16,
+              32,
+              512
+            ],
+            "read_page_k": 1024,
+            "waves": 1,
+            "iterations": 1,
+            "branch": "coarse_tile",
+            "mmads_total": 10,
+            "output_tiles": 1,
+            "units": {
+              "read": 360.0,
+              "cube": 10.0,
+              "fix": 0.25,
+              "vector": 0.0,
+              "write": 0.0
+            },
+            "tail_split_mn": [
+              1,
+              1
+            ],
+            "effective_output_tiles": 1,
+            "tail_wave_pieces": 1,
+            "tail_wave_histogram": [
+              [
+                4,
+                32,
+                1
+              ]
+            ]
+          },
+          "candidate": {
+            "route": "one_output_split_k",
+            "latency_us": 5.226950643882233,
+            "active_aic": 28,
+            "active_aiv": 56,
+            "ordinary_us": 7.5446569103861085,
+            "threshold_aligned_k": 4096.0,
+            "output_tiles": 1,
+            "cube_ops": 1310720,
+            "input_bytes": 368640,
+            "final_output_bytes": 256,
+            "evidence": "experimental; no timing qualification on a new chip",
+            "k_splits": 28,
+            "max_aligned_depth": 192,
+            "partial_fixup_bytes": 28416,
+            "logical_reduction_adds": 3456,
+            "partial_tile": [
+              16,
+              32,
+              192
+            ],
+            "mmads_per_partial_budget": 1,
+            "partial_read_page_k": 192,
+            "launch_us": 2.315160188637076,
+            "partial_pipeline_us": 1.2382814019795827,
+            "cold_floor_us": 0.2633142857142857,
+            "merge_us": 1.6735090532655748,
+            "merge_issue_us": 1.653211910408432,
+            "reason": "One output rectangle and profitable split K on the supplied target resources",
+            "mix_qualification": "Assumes a compatible 1:2 mixed executable"
+          },
+          "ordinary_query_ms": 0.08835,
+          "candidate_query_ms": 0.18153,
+          "target_extrapolated": false
+        },
+        "Ascend970DT": {
+          "us": 6.915880647870672,
+          "ordinary_us": 6.915880647870672,
+          "ordinary_aic": 1,
+          "ordinary_aiv": 0,
+          "ordinary_plan": {
+            "active_aic": 1,
+            "active_aiv": 0,
+            "tile": [
+              16,
+              32,
+              512
+            ],
+            "read_page_k": 1024,
+            "waves": 1,
+            "iterations": 1,
+            "branch": "coarse_tile",
+            "mmads_total": 10,
+            "output_tiles": 1,
+            "units": {
+              "read": 360.0,
+              "cube": 10.0,
+              "fix": 0.25,
+              "vector": 0.0,
+              "write": 0.0
+            },
+            "tail_split_mn": [
+              1,
+              1
+            ],
+            "effective_output_tiles": 1,
+            "tail_wave_pieces": 1,
+            "tail_wave_histogram": [
+              [
+                4,
+                32,
+                1
+              ]
+            ]
+          },
+          "candidate": {
+            "route": "ordinary",
+            "latency_us": 6.915880647870672,
+            "active_aic": 1,
+            "active_aiv": 0,
+            "ordinary_us": 6.915880647870672,
+            "threshold_aligned_k": 15360.0,
+            "output_tiles": 1,
+            "cube_ops": 1310720,
+            "input_bytes": 368640,
+            "final_output_bytes": 256,
+            "evidence": "experimental; no timing qualification on a new chip",
+            "reason": "Aligned K below the DAV_3510 host threshold"
+          },
+          "ordinary_query_ms": 0.08053,
+          "candidate_query_ms": 0.08239,
+          "target_extrapolated": true
+        }
+      },
+      "runtime_example": {
+        "batch": 4,
+        "query_per_request": 1
+      },
+      "wall_s": 900,
+      "raw_mib": 2048
+    },
+    {
+      "shape": [
+        9,
+        32,
+        5120
+      ],
+      "model": "DeepSeek-V4.1-Flash",
+      "node": "indexer.weights_proj",
+      "predictions": {
+        "Ascend950DT_9582": {
+          "us": 5.354753972451286,
+          "ordinary_us": 7.545882060523363,
+          "ordinary_aic": 1,
+          "ordinary_aiv": 0,
+          "ordinary_plan": {
+            "active_aic": 1,
+            "active_aiv": 0,
+            "tile": [
+              16,
+              32,
+              512
+            ],
+            "read_page_k": 1024,
+            "waves": 1,
+            "iterations": 1,
+            "branch": "coarse_tile",
+            "mmads_total": 10,
+            "output_tiles": 1,
+            "units": {
+              "read": 410.0,
+              "cube": 22.5,
+              "fix": 0.5625,
+              "vector": 0.0,
+              "write": 0.0
+            },
+            "tail_split_mn": [
+              1,
+              1
+            ],
+            "effective_output_tiles": 1,
+            "tail_wave_pieces": 1,
+            "tail_wave_histogram": [
+              [
+                9,
+                32,
+                1
+              ]
+            ]
+          },
+          "candidate": {
+            "route": "one_output_split_k",
+            "latency_us": 5.354753972451286,
+            "active_aic": 32,
+            "active_aiv": 64,
+            "ordinary_us": 7.545882060523363,
+            "threshold_aligned_k": 4096.0,
+            "output_tiles": 1,
+            "cube_ops": 2949120,
+            "input_bytes": 419840,
+            "final_output_bytes": 576,
+            "evidence": "experimental; no timing qualification on a new chip",
+            "k_splits": 32,
+            "max_aligned_depth": 192,
+            "partial_fixup_bytes": 73152,
+            "logical_reduction_adds": 8928,
+            "partial_tile": [
+              16,
+              32,
+              192
+            ],
+            "mmads_per_partial_budget": 1,
+            "partial_read_page_k": 192,
+            "launch_us": 2.325814369829399,
+            "partial_pipeline_us": 1.2395065521168371,
+            "cold_floor_us": 0.10496,
+            "merge_us": 1.7894330505050506,
+            "merge_issue_us": 1.7711450505050506,
+            "reason": "One output rectangle and profitable split K on the supplied target resources",
+            "mix_qualification": "Assumes a compatible 1:2 mixed executable"
+          },
+          "ordinary_query_ms": 0.07852,
+          "candidate_query_ms": 0.1701,
+          "target_extrapolated": false
+        },
+        "Ascend950PR_957b": {
+          "us": 5.2535472225909166,
+          "ordinary_us": 7.545882060523363,
+          "ordinary_aic": 1,
+          "ordinary_aiv": 0,
+          "ordinary_plan": {
+            "active_aic": 1,
+            "active_aiv": 0,
+            "tile": [
+              16,
+              32,
+              512
+            ],
+            "read_page_k": 1024,
+            "waves": 1,
+            "iterations": 1,
+            "branch": "coarse_tile",
+            "mmads_total": 10,
+            "output_tiles": 1,
+            "units": {
+              "read": 410.0,
+              "cube": 22.5,
+              "fix": 0.5625,
+              "vector": 0.0,
+              "write": 0.0
+            },
+            "tail_split_mn": [
+              1,
+              1
+            ],
+            "effective_output_tiles": 1,
+            "tail_wave_pieces": 1,
+            "tail_wave_histogram": [
+              [
+                9,
+                32,
+                1
+              ]
+            ]
+          },
+          "candidate": {
+            "route": "one_output_split_k",
+            "latency_us": 5.2535472225909166,
+            "active_aic": 28,
+            "active_aiv": 56,
+            "ordinary_us": 7.545882060523363,
+            "threshold_aligned_k": 4096.0,
+            "output_tiles": 1,
+            "cube_ops": 2949120,
+            "input_bytes": 419840,
+            "final_output_bytes": 576,
+            "evidence": "experimental; no timing qualification on a new chip",
+            "k_splits": 28,
+            "max_aligned_depth": 192,
+            "partial_fixup_bytes": 63936,
+            "logical_reduction_adds": 7776,
+            "partial_tile": [
+              16,
+              32,
+              192
+            ],
+            "mmads_per_partial_budget": 1,
+            "partial_read_page_k": 192,
+            "launch_us": 2.315160188637076,
+            "partial_pipeline_us": 1.2395065521168371,
+            "cold_floor_us": 0.2998857142857143,
+            "merge_us": 1.6988804818370034,
+            "merge_issue_us": 1.653211910408432,
+            "reason": "One output rectangle and profitable split K on the supplied target resources",
+            "mix_qualification": "Assumes a compatible 1:2 mixed executable"
+          },
+          "ordinary_query_ms": 0.07913,
+          "candidate_query_ms": 0.16631,
+          "target_extrapolated": false
+        },
+        "Ascend970DT": {
+          "us": 6.917003702163155,
+          "ordinary_us": 6.917003702163155,
+          "ordinary_aic": 1,
+          "ordinary_aiv": 0,
+          "ordinary_plan": {
+            "active_aic": 1,
+            "active_aiv": 0,
+            "tile": [
+              16,
+              32,
+              512
+            ],
+            "read_page_k": 1024,
+            "waves": 1,
+            "iterations": 1,
+            "branch": "coarse_tile",
+            "mmads_total": 10,
+            "output_tiles": 1,
+            "units": {
+              "read": 410.0,
+              "cube": 22.5,
+              "fix": 0.5625,
+              "vector": 0.0,
+              "write": 0.0
+            },
+            "tail_split_mn": [
+              1,
+              1
+            ],
+            "effective_output_tiles": 1,
+            "tail_wave_pieces": 1,
+            "tail_wave_histogram": [
+              [
+                9,
+                32,
+                1
+              ]
+            ]
+          },
+          "candidate": {
+            "route": "ordinary",
+            "latency_us": 6.917003702163155,
+            "active_aic": 1,
+            "active_aiv": 0,
+            "ordinary_us": 6.917003702163155,
+            "threshold_aligned_k": 15360.0,
+            "output_tiles": 1,
+            "cube_ops": 2949120,
+            "input_bytes": 419840,
+            "final_output_bytes": 576,
+            "evidence": "experimental; no timing qualification on a new chip",
+            "reason": "Aligned K below the DAV_3510 host threshold"
+          },
+          "ordinary_query_ms": 0.08642,
+          "candidate_query_ms": 0.08859,
+          "target_extrapolated": true
+        }
+      },
+      "runtime_example": {
+        "batch": 1,
+        "query_per_request": 9
+      },
+      "wall_s": 900,
+      "raw_mib": 2048
+    },
+    {
+      "shape": [
+        16,
+        32,
+        5120
+      ],
+      "model": "DeepSeek-V4.1-Flash",
+      "node": "indexer.weights_proj",
+      "predictions": {
+        "Ascend950DT_9582": {
+          "us": 5.370693182643443,
+          "ordinary_us": 7.547597270715519,
+          "ordinary_aic": 1,
+          "ordinary_aiv": 0,
+          "ordinary_plan": {
+            "active_aic": 1,
+            "active_aiv": 0,
+            "tile": [
+              16,
+              32,
+              512
+            ],
+            "read_page_k": 1024,
+            "waves": 1,
+            "iterations": 1,
+            "branch": "coarse_tile",
+            "mmads_total": 10,
+            "output_tiles": 1,
+            "units": {
+              "read": 480.0,
+              "cube": 40.0,
+              "fix": 1.0,
+              "vector": 0.0,
+              "write": 0.0
+            },
+            "tail_split_mn": [
+              1,
+              1
+            ],
+            "effective_output_tiles": 1,
+            "tail_wave_pieces": 1,
+            "tail_wave_histogram": [
+              [
+                16,
+                32,
+                1
+              ]
+            ]
+          },
+          "candidate": {
+            "route": "one_output_split_k",
+            "latency_us": 5.370693182643443,
+            "active_aic": 32,
+            "active_aiv": 64,
+            "ordinary_us": 7.547597270715519,
+            "threshold_aligned_k": 4096.0,
+            "output_tiles": 1,
+            "cube_ops": 5242880,
+            "input_bytes": 491520,
+            "final_output_bytes": 1024,
+            "evidence": "experimental; no timing qualification on a new chip",
+            "k_splits": 32,
+            "max_aligned_depth": 192,
+            "partial_fixup_bytes": 130048,
+            "logical_reduction_adds": 15872,
+            "partial_tile": [
+              16,
+              32,
+              192
+            ],
+            "mmads_per_partial_budget": 1,
+            "partial_read_page_k": 192,
+            "launch_us": 2.325814369829399,
+            "partial_pipeline_us": 1.2412217623089932,
+            "cold_floor_us": 0.12288,
+            "merge_us": 1.8036570505050507,
+            "merge_issue_us": 1.7711450505050506,
+            "reason": "One output rectangle and profitable split K on the supplied target resources",
+            "mix_qualification": "Assumes a compatible 1:2 mixed executable"
+          },
+          "ordinary_query_ms": 0.07469,
+          "candidate_query_ms": 0.19002,
+          "target_extrapolated": false
+        },
+        "Ascend950PR_957b": {
+          "us": 5.290782432783073,
+          "ordinary_us": 7.547597270715519,
+          "ordinary_aic": 1,
+          "ordinary_aiv": 0,
+          "ordinary_plan": {
+            "active_aic": 1,
+            "active_aiv": 0,
+            "tile": [
+              16,
+              32,
+              512
+            ],
+            "read_page_k": 1024,
+            "waves": 1,
+            "iterations": 1,
+            "branch": "coarse_tile",
+            "mmads_total": 10,
+            "output_tiles": 1,
+            "units": {
+              "read": 480.0,
+              "cube": 40.0,
+              "fix": 1.0,
+              "vector": 0.0,
+              "write": 0.0
+            },
+            "tail_split_mn": [
+              1,
+              1
+            ],
+            "effective_output_tiles": 1,
+            "tail_wave_pieces": 1,
+            "tail_wave_histogram": [
+              [
+                16,
+                32,
+                1
+              ]
+            ]
+          },
+          "candidate": {
+            "route": "one_output_split_k",
+            "latency_us": 5.290782432783073,
+            "active_aic": 28,
+            "active_aiv": 56,
+            "ordinary_us": 7.547597270715519,
+            "threshold_aligned_k": 4096.0,
+            "output_tiles": 1,
+            "cube_ops": 5242880,
+            "input_bytes": 491520,
+            "final_output_bytes": 1024,
+            "evidence": "experimental; no timing qualification on a new chip",
+            "k_splits": 28,
+            "max_aligned_depth": 192,
+            "partial_fixup_bytes": 113664,
+            "logical_reduction_adds": 13824,
+            "partial_tile": [
+              16,
+              32,
+              192
+            ],
+            "mmads_per_partial_budget": 1,
+            "partial_read_page_k": 192,
+            "launch_us": 2.315160188637076,
+            "partial_pipeline_us": 1.2412217623089932,
+            "cold_floor_us": 0.3510857142857143,
+            "merge_us": 1.7344004818370033,
+            "merge_issue_us": 1.653211910408432,
+            "reason": "One output rectangle and profitable split K on the supplied target resources",
+            "mix_qualification": "Assumes a compatible 1:2 mixed executable"
+          },
+          "ordinary_query_ms": 0.09033,
+          "candidate_query_ms": 0.19026,
+          "target_extrapolated": false
+        },
+        "Ascend970DT": {
+          "us": 6.918575978172632,
+          "ordinary_us": 6.918575978172632,
+          "ordinary_aic": 1,
+          "ordinary_aiv": 0,
+          "ordinary_plan": {
+            "active_aic": 1,
+            "active_aiv": 0,
+            "tile": [
+              16,
+              32,
+              512
+            ],
+            "read_page_k": 1024,
+            "waves": 1,
+            "iterations": 1,
+            "branch": "coarse_tile",
+            "mmads_total": 10,
+            "output_tiles": 1,
+            "units": {
+              "read": 480.0,
+              "cube": 40.0,
+              "fix": 1.0,
+              "vector": 0.0,
+              "write": 0.0
+            },
+            "tail_split_mn": [
+              1,
+              1
+            ],
+            "effective_output_tiles": 1,
+            "tail_wave_pieces": 1,
+            "tail_wave_histogram": [
+              [
+                16,
+                32,
+                1
+              ]
+            ]
+          },
+          "candidate": {
+            "route": "ordinary",
+            "latency_us": 6.918575978172632,
+            "active_aic": 1,
+            "active_aiv": 0,
+            "ordinary_us": 6.918575978172632,
+            "threshold_aligned_k": 15360.0,
+            "output_tiles": 1,
+            "cube_ops": 5242880,
+            "input_bytes": 491520,
+            "final_output_bytes": 1024,
+            "evidence": "experimental; no timing qualification on a new chip",
+            "reason": "Aligned K below the DAV_3510 host threshold"
+          },
+          "ordinary_query_ms": 0.09112,
+          "candidate_query_ms": 0.09555,
+          "target_extrapolated": true
+        }
+      },
+      "runtime_example": {
+        "batch": 16,
+        "query_per_request": 1
+      },
+      "wall_s": 900,
+      "raw_mib": 2048
+    },
+    {
+      "shape": [
+        4,
+        64,
+        7168
+      ],
+      "model": "DeepSeek-V4-Pro",
+      "node": "indexer.weights_proj",
+      "predictions": {
+        "Ascend950DT_9582": {
+          "us": 5.7087140143153325,
+          "ordinary_us": 15.12747210234943,
+          "ordinary_aic": 1,
+          "ordinary_aiv": 0,
+          "ordinary_plan": {
+            "active_aic": 1,
+            "active_aiv": 0,
+            "tile": [
+              16,
+              64,
+              256
+            ],
+            "read_page_k": 512,
+            "waves": 1,
+            "iterations": 1,
+            "branch": "dense",
+            "mmads_total": 28,
+            "output_tiles": 1,
+            "units": {
+              "read": 952.0,
+              "cube": 28.0,
+              "fix": 0.5,
+              "vector": 0.0,
+              "write": 0.0
+            },
+            "tail_split_mn": [
+              1,
+              1
+            ],
+            "effective_output_tiles": 1,
+            "tail_wave_pieces": 1,
+            "tail_wave_histogram": [
+              [
+                4,
+                64,
+                1
+              ]
+            ]
+          },
+          "candidate": {
+            "route": "one_output_split_k",
+            "latency_us": 5.7087140143153325,
+            "active_aic": 32,
+            "active_aiv": 64,
+            "ordinary_us": 15.12747210234943,
+            "threshold_aligned_k": 4096.0,
+            "output_tiles": 1,
+            "cube_ops": 3670016,
+            "input_bytes": 974848,
+            "final_output_bytes": 512,
+            "evidence": "experimental; no timing qualification on a new chip",
+            "k_splits": 32,
+            "max_aligned_depth": 256,
+            "partial_fixup_bytes": 65024,
+            "logical_reduction_adds": 7936,
+            "partial_tile": [
+              16,
+              64,
+              256
+            ],
+            "mmads_per_partial_budget": 1,
+            "partial_read_page_k": 256,
+            "launch_us": 2.325814369829399,
+            "partial_pipeline_us": 1.5954985939808832,
+            "cold_floor_us": 0.243712,
+            "merge_us": 1.7874010505050506,
+            "merge_issue_us": 1.7711450505050506,
+            "reason": "One output rectangle and profitable split K on the supplied target resources",
+            "mix_qualification": "Assumes a compatible 1:2 mixed executable"
+          },
+          "ordinary_query_ms": 0.09339,
+          "candidate_query_ms": 0.17106,
+          "target_extrapolated": false
+        },
+        "Ascend950PR_957b": {
+          "us": 5.604464978740677,
+          "ordinary_us": 15.12747210234943,
+          "ordinary_aic": 1,
+          "ordinary_aiv": 0,
+          "ordinary_plan": {
+            "active_aic": 1,
+            "active_aiv": 0,
+            "tile": [
+              16,
+              64,
+              256
+            ],
+            "read_page_k": 512,
+            "waves": 1,
+            "iterations": 1,
+            "branch": "dense",
+            "mmads_total": 28,
+            "output_tiles": 1,
+            "units": {
+              "read": 952.0,
+              "cube": 28.0,
+              "fix": 0.5,
+              "vector": 0.0,
+              "write": 0.0
+            },
+            "tail_split_mn": [
+              1,
+              1
+            ],
+            "effective_output_tiles": 1,
+            "tail_wave_pieces": 1,
+            "tail_wave_histogram": [
+              [
+                4,
+                64,
+                1
+              ]
+            ]
+          },
+          "candidate": {
+            "route": "one_output_split_k",
+            "latency_us": 5.604464978740677,
+            "active_aic": 28,
+            "active_aiv": 56,
+            "ordinary_us": 15.12747210234943,
+            "threshold_aligned_k": 4096.0,
+            "output_tiles": 1,
+            "cube_ops": 3670016,
+            "input_bytes": 974848,
+            "final_output_bytes": 512,
+            "evidence": "experimental; no timing qualification on a new chip",
+            "k_splits": 28,
+            "max_aligned_depth": 256,
+            "partial_fixup_bytes": 56832,
+            "logical_reduction_adds": 6912,
+            "partial_tile": [
+              16,
+              64,
+              256
+            ],
+            "mmads_per_partial_budget": 1,
+            "partial_read_page_k": 256,
+            "launch_us": 2.315160188637076,
+            "partial_pipeline_us": 1.5954985939808832,
+            "cold_floor_us": 0.69632,
+            "merge_us": 1.6938061961227178,
+            "merge_issue_us": 1.653211910408432,
+            "reason": "One output rectangle and profitable split K on the supplied target resources",
+            "mix_qualification": "Assumes a compatible 1:2 mixed executable"
+          },
+          "ordinary_query_ms": 0.08599,
+          "candidate_query_ms": 0.16871,
+          "target_extrapolated": false
+        },
+        "Ascend970DT": {
+          "us": 13.86679457383705,
+          "ordinary_us": 13.86679457383705,
+          "ordinary_aic": 1,
+          "ordinary_aiv": 0,
+          "ordinary_plan": {
+            "active_aic": 1,
+            "active_aiv": 0,
+            "tile": [
+              16,
+              64,
+              256
+            ],
+            "read_page_k": 512,
+            "waves": 1,
+            "iterations": 1,
+            "branch": "dense",
+            "mmads_total": 28,
+            "output_tiles": 1,
+            "units": {
+              "read": 952.0,
+              "cube": 28.0,
+              "fix": 0.5,
+              "vector": 0.0,
+              "write": 0.0
+            },
+            "tail_split_mn": [
+              1,
+              1
+            ],
+            "effective_output_tiles": 1,
+            "tail_wave_pieces": 1,
+            "tail_wave_histogram": [
+              [
+                4,
+                64,
+                1
+              ]
+            ]
+          },
+          "candidate": {
+            "route": "ordinary",
+            "latency_us": 13.86679457383705,
+            "active_aic": 1,
+            "active_aiv": 0,
+            "ordinary_us": 13.86679457383705,
+            "threshold_aligned_k": 15360.0,
+            "output_tiles": 1,
+            "cube_ops": 3670016,
+            "input_bytes": 974848,
+            "final_output_bytes": 512,
+            "evidence": "experimental; no timing qualification on a new chip",
+            "reason": "Aligned K below the DAV_3510 host threshold"
+          },
+          "ordinary_query_ms": 0.08025,
+          "candidate_query_ms": 0.08873,
+          "target_extrapolated": true
+        }
+      },
+      "runtime_example": {
+        "batch": 4,
+        "query_per_request": 1
+      },
+      "wall_s": 900,
+      "raw_mib": 2048
+    },
+    {
+      "shape": [
+        8,
+        64,
+        7168
+      ],
+      "model": "DeepSeek-V4-Pro",
+      "node": "indexer.weights_proj",
+      "predictions": {
+        "Ascend950DT_9582": {
+          "us": 5.72693025453494,
+          "ordinary_us": 15.129432342569038,
+          "ordinary_aic": 1,
+          "ordinary_aiv": 0,
+          "ordinary_plan": {
+            "active_aic": 1,
+            "active_aiv": 0,
+            "tile": [
+              16,
+              64,
+              256
+            ],
+            "read_page_k": 512,
+            "waves": 1,
+            "iterations": 1,
+            "branch": "dense",
+            "mmads_total": 28,
+            "output_tiles": 1,
+            "units": {
+              "read": 1008.0,
+              "cube": 56.0,
+              "fix": 1.0,
+              "vector": 0.0,
+              "write": 0.0
+            },
+            "tail_split_mn": [
+              1,
+              1
+            ],
+            "effective_output_tiles": 1,
+            "tail_wave_pieces": 1,
+            "tail_wave_histogram": [
+              [
+                8,
+                64,
+                1
+              ]
+            ]
+          },
+          "candidate": {
+            "route": "one_output_split_k",
+            "latency_us": 5.72693025453494,
+            "active_aic": 32,
+            "active_aiv": 64,
+            "ordinary_us": 15.129432342569038,
+            "threshold_aligned_k": 4096.0,
+            "output_tiles": 1,
+            "cube_ops": 7340032,
+            "input_bytes": 1032192,
+            "final_output_bytes": 1024,
+            "evidence": "experimental; no timing qualification on a new chip",
+            "k_splits": 32,
+            "max_aligned_depth": 256,
+            "partial_fixup_bytes": 130048,
+            "logical_reduction_adds": 15872,
+            "partial_tile": [
+              16,
+              64,
+              256
+            ],
+            "mmads_per_partial_budget": 1,
+            "partial_read_page_k": 256,
+            "launch_us": 2.325814369829399,
+            "partial_pipeline_us": 1.5974588342004903,
+            "cold_floor_us": 0.258048,
+            "merge_us": 1.8036570505050507,
+            "merge_issue_us": 1.7711450505050506,
+            "reason": "One output rectangle and profitable split K on the supplied target resources",
+            "mix_qualification": "Assumes a compatible 1:2 mixed executable"
+          },
+          "ordinary_query_ms": 0.09442,
+          "candidate_query_ms": 0.19564,
+          "target_extrapolated": false
+        },
+        "Ascend950PR_957b": {
+          "us": 5.647019504674569,
+          "ordinary_us": 15.129432342569038,
+          "ordinary_aic": 1,
+          "ordinary_aiv": 0,
+          "ordinary_plan": {
+            "active_aic": 1,
+            "active_aiv": 0,
+            "tile": [
+              16,
+              64,
+              256
+            ],
+            "read_page_k": 512,
+            "waves": 1,
+            "iterations": 1,
+            "branch": "dense",
+            "mmads_total": 28,
+            "output_tiles": 1,
+            "units": {
+              "read": 1008.0,
+              "cube": 56.0,
+              "fix": 1.0,
+              "vector": 0.0,
+              "write": 0.0
+            },
+            "tail_split_mn": [
+              1,
+              1
+            ],
+            "effective_output_tiles": 1,
+            "tail_wave_pieces": 1,
+            "tail_wave_histogram": [
+              [
+                8,
+                64,
+                1
+              ]
+            ]
+          },
+          "candidate": {
+            "route": "one_output_split_k",
+            "latency_us": 5.647019504674569,
+            "active_aic": 28,
+            "active_aiv": 56,
+            "ordinary_us": 15.129432342569038,
+            "threshold_aligned_k": 4096.0,
+            "output_tiles": 1,
+            "cube_ops": 7340032,
+            "input_bytes": 1032192,
+            "final_output_bytes": 1024,
+            "evidence": "experimental; no timing qualification on a new chip",
+            "k_splits": 28,
+            "max_aligned_depth": 256,
+            "partial_fixup_bytes": 113664,
+            "logical_reduction_adds": 13824,
+            "partial_tile": [
+              16,
+              64,
+              256
+            ],
+            "mmads_per_partial_budget": 1,
+            "partial_read_page_k": 256,
+            "launch_us": 2.315160188637076,
+            "partial_pipeline_us": 1.5974588342004903,
+            "cold_floor_us": 0.73728,
+            "merge_us": 1.7344004818370033,
+            "merge_issue_us": 1.653211910408432,
+            "reason": "One output rectangle and profitable split K on the supplied target resources",
+            "mix_qualification": "Assumes a compatible 1:2 mixed executable"
+          },
+          "ordinary_query_ms": 0.08715,
+          "candidate_query_ms": 0.17116,
+          "target_extrapolated": false
+        },
+        "Ascend970DT": {
+          "us": 13.868591460705023,
+          "ordinary_us": 13.868591460705023,
+          "ordinary_aic": 1,
+          "ordinary_aiv": 0,
+          "ordinary_plan": {
+            "active_aic": 1,
+            "active_aiv": 0,
+            "tile": [
+              16,
+              64,
+              256
+            ],
+            "read_page_k": 512,
+            "waves": 1,
+            "iterations": 1,
+            "branch": "dense",
+            "mmads_total": 28,
+            "output_tiles": 1,
+            "units": {
+              "read": 1008.0,
+              "cube": 56.0,
+              "fix": 1.0,
+              "vector": 0.0,
+              "write": 0.0
+            },
+            "tail_split_mn": [
+              1,
+              1
+            ],
+            "effective_output_tiles": 1,
+            "tail_wave_pieces": 1,
+            "tail_wave_histogram": [
+              [
+                8,
+                64,
+                1
+              ]
+            ]
+          },
+          "candidate": {
+            "route": "ordinary",
+            "latency_us": 13.868591460705023,
+            "active_aic": 1,
+            "active_aiv": 0,
+            "ordinary_us": 13.868591460705023,
+            "threshold_aligned_k": 15360.0,
+            "output_tiles": 1,
+            "cube_ops": 7340032,
+            "input_bytes": 1032192,
+            "final_output_bytes": 1024,
+            "evidence": "experimental; no timing qualification on a new chip",
+            "reason": "Aligned K below the DAV_3510 host threshold"
+          },
+          "ordinary_query_ms": 0.08177,
+          "candidate_query_ms": 0.08269,
+          "target_extrapolated": true
+        }
+      },
+      "runtime_example": {
+        "batch": 8,
+        "query_per_request": 1
+      },
+      "wall_s": 900,
+      "raw_mib": 2048
+    }
+  ],
+  "novelty": {
+    "manifests": 1583,
+    "operational_logs_or_batches": 1112,
+    "matching_records": [],
+    "scope": "Local measured result manifests and historical acquisition host logs. Geometry catalogue and development source are not prior hardware observations."
+  },
+  "source_sha256": {
+    "development/validation/matmul28/narrow.py": "cfafde380d8774eb5d8d6b4bae5d4e503b652226dabec3a28315758ec57c7a54",
+    "development/validation/matmul28/campaign.py": "835acbc959331e68860bbcdb6c456ad55b1bc057c5237fecd27e87d7a856669a",
+    "development/validation/matmul28/drain.py": "ab2a34e50e391b4691be2b388d61adecd64077c30d1d51eb2dd9345e49d7a000",
+    "development/validation/matmul28/runner.cpp": "7085a4bef5c8b2587452349c04579ad12ccd7d2ef82b78318635515b98abfcbf",
+    "development/validation/matmul28/streamk_audit.py": "146dda85ce5f662bb15614d371e2d8189057390398b70ea1ab3b1f529902cf5e",
+    "build/smoke/matmul28": "a6a260ff7f8a407f7d64789f953be0edbcaf9ff94b61f0129d72272a21970b01",
+    "results/v0.23/workloads/contracts.jsonl.gz": "ce93968c42e0c82de4133a4f9454820cb75f6049ff0adde2f75797672991d829",
+    "toolchains/cann/9.2.1/cann-9.2.1/opp/built-in/op_impl/ai_core/tbe/kernel/ascend950/ops_nn/mat_mul_v3/MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance.json": "456b8fe38ff394137c3942e958a30995dc9821f208be8b0817a9457dfd5dc9f6",
+    "toolchains/cann/9.2.1/cann-9.2.1/opp/built-in/op_impl/ai_core/tbe/kernel/ascend950/ops_nn/mat_mul_v3/MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance.o": "e6899fbaa2659b7778bee81deb00b64b009dafcb7ad350f06576767fdeba2bf7",
+    "smoke/large_vector.cpp": "82715927932e28ea6ec8436e85db2eaf02fc595d56a6c335927b0f6616ebbf7d",
+    "scripts/cann-run.sh": "d529513abc0bc340a56c91365a9e72d5e434d2cb4841be1692930294cd0624df",
+    "results/v0.16/matmul.json": "b37e9148aeb14d90ae744e966337556d9adf269066bf281d12984f282078546b",
+    "development/validation/sku17/campaign_collect.py": "128913632124b4ff430595a34d239e53742f2cb4d1a16ea82a581180bfb3f792",
+    "operator_model/matmul_resource.py": "4ff5f1e2bc2581ed16d609e18900879ccaf1a80f65433de8f85de7e513140b19",
+    "operator_model/matmul_splitk.py": "05a80dae59c80ba78734c0a0ef50276fca840eddfdde3bc43cc278702b05d497",
+    "operator_model/matmul_waves.py": "97f615daae6563e51df26591565909d8bea044c3b72bf5f67bb8aa1e6b5b292b",
+    "operator_model/matmul_v15.py": "c5edb6d59c184f63db0d1208cdec38a79368d4f6eb246cb077ed0faba069fa02",
+    "operator_model/chips.py": "9df714f5c3728c9b7fa48edaea3de96c9e09a7487706f9728dd790f4a7e208ce",
+    "configs/chips/Ascend950DT_9582.json": "54d68c49374f8fab57ae16b05923d7ea2874cc48083e0728bcbc60f467bb71ec",
+    "configs/chips/Ascend950PR_957b.json": "2bb5b0b34b8d04e255e24ea5d12c73407ace6bb7154ba6aa603b338fc252ada7",
+    "configs/chips/Ascend970DT.json": "837796ec9f3b39888950cfe6f703b63c4bf9ced22a366b66f300f1389a8006f2",
+    "configs/models/DeepSeek-V4.1-Flash.json": "8be45ce0476004a3f529fd896115a4a2e800a129ad2d3ec05b16050f52e21879",
+    "configs/models/DeepSeek-V4-Pro.json": "5fe4568daee51c208cb8a79538eaeda090ae011ade1dee2c386aa95f569c810e"
+  },
+  "baseline": "resource_matmul(shape, chip) ordinary route explicitly; never the evolving public default.",
+  "candidate": "estimate_matmul_splitk(shape, chip=..., dtype=bf16,layout=ND_ND,deterministic_level=0). No fitted new coefficients.",
+  "scope": "Contiguous, non-transposed BF16 A[M,K] @ B[K,N], no bias. Catalogue confirms per-rank geometry, not live vLLM dispatch.",
+  "acceptance": "Per-target full reference tensor, exact SDK ELF and runtime SKU, complete all-core window and physical ends. Original verdict saved before existing asynchronous-drain recovery. Count MMAD and actual branch independently. Never use unqualified endpoint in errors.",
+  "budget": "12 distinct endpoint attempts, serial, 900 wall seconds and 2048 MiB raw each, no retries. Wait for six original Post outcomes. Lower host priority than the larger Matmul lanes. No CA on 970DT."
+}
