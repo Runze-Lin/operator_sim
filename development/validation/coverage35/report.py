@@ -133,7 +133,8 @@ def measurement(r, chip):
         verdict = x.get('verdict', x)
         if verdict.get('qualified') and verdict.get('ca_us') is not None:
             role = '原始逐 launch 回执离线恢复' if op == 'vllm_hc_post' else ('逐核复核旧采集' if op=='rmsnorm' else '冻结后完整指令')
-            return qualified(verdict['ca_us'], 'full', ref(path), ref(path), role)
+            time_us = verdict['ca_us'][op] if op == 'lightning_indexer' else verdict['ca_us']
+            return qualified(time_us, 'full', ref(path), ref(path), role)
         if 'conservative_lower_us' in x:
             return dict(result, lower_us=x['conservative_lower_us'], source=ref(path), index=ref(path),
                         role='原始 trace 不完整，三核缺 END', protocol='partial')

@@ -1,7 +1,7 @@
 """Same-window comparisons and preregistered external receipts only."""
 from collections import defaultdict
 from statistics import median
-import math,time
+import math,re,time
 from registration import D,P,F,ROOT,OUT,read,save,sha,rel,schedule
 
 
@@ -63,7 +63,24 @@ def forward():
             i=p['i'];j=dict(sku=chip,shape=p['shape'],ordinal=i,group='fresh',forecast={'us':p['candidate_us']},future970_us=g['rows'][F][i]['candidate_us'],
                            owner=rel(OUT/'fresh-freeze.json'),owner_field='freeze_sha256',receipt=rel(OUT/('fresh-'+tag+'.json')))
             row=observed(j,g,'owner_sha256');row.update(public_us=p['public_us'],sequence_role=p['role']);rows.append(row)
-    return dict(rows=rows,independent={c:stats([r for r in rows if r['chip']==c and r['role']=='frozen independent'],'us') for c in (D,P)})
+    return dict(rows=rows, fresh_batches=[batch_evidence(c,tag) for c,tag in ((D,'dt'),(P,'pr'))],
+                independent={c:stats([r for r in rows if r['chip']==c and r['role']=='frozen independent'],'us') for c in (D,P)})
+
+def batch_evidence(chip,tag):
+    """Report vendor progress only when the capture cost and eligibility are final."""
+    f=OUT/('fresh-'+tag+'.json')
+    if not f.is_file():
+        return dict(chip=chip,status='pending terminal receipt')
+    d=read(f);folder=ROOT/'runs/post35'/tag
+    evidence={}
+    for name,patterns in [('run.log',{'calls_begun':r'^BATCH_BEGIN \d+','host_outputs_passed':r'^correctness name=output count=\d+ bad=0\b','calls_completed':r'^BATCH_END \d+','physical_blocks_started':r'\[block_start\]'}),
+                          ('stars_log0_0_task.dump',{'device_tasks_begun':r'\[TASK_BEGIN\]','device_tasks_done':r'\[TASK_DONE\]'})]:
+        p=folder/name
+        if p.is_file():
+            s=p.read_text(errors='replace')
+            evidence[name]=dict(file=rel(p),sha256=sha(p),counters={k:len(re.findall(v,s,re.M)) for k,v in patterns.items()})
+    return dict(chip=chip,status='terminal',receipt=rel(f),cost=d['cost'],eligible_windows=d['qualified_windows'],
+                eligibility_reason=d.get('reason'),evidence=evidence)
 def fmt(v):return 'N/A' if v is None else f'{v:.2f}%'
 def main():
     e=replay();save(OUT/'replay.json',e);fwd=forward();save(OUT/'forward.json',fwd)
@@ -97,6 +114,14 @@ def main():
     for r in fwd['rows']:
         ca=r['ca_us'];state=r['role']+(' · '+r['sequence_role'] if 'sequence_role' in r else '')
         lines.append(f"| {r['shape']} / {'PR' if r['chip']==P else 'DT'} | {state} | {r['us']:.3f} | {ca if ca is None else f'{ca:.3f}'} | {fmt(r['error_pct'])} | {r['forecast_970dt_us']:.3f} |".replace(' | None |',' | N/A |'))
+    for batch in fwd['fresh_batches']:
+        if batch['status']!='terminal':continue
+        c=batch['cost'];evidence=batch['evidence']
+        host=evidence.get('run.log',{}).get('counters',{});device=evidence.get('stars_log0_0_task.dump',{}).get('counters',{})
+        lines+=['',f"{batch['chip']} 新四调用批次整体墙钟 {c['seconds']:.1f} s，原始峰值 {c['peak_bytes']/2**20:.2f} MiB，停止原因 {c['stop_reason'] or '正常退出'}。"
+               f"STARS 可见任务发起 / 完成 {device.get('device_tasks_begun','N/A')} / {device.get('device_tasks_done','N/A')}，宿主完整输出校验 {host.get('host_outputs_passed','N/A')} 次，"
+               f"合格指令整窗 {batch['eligible_windows']}。这些开销是整个批次的一次计费。"]
+    lines+=['','**离线 CA 的宿主开销**。DT 首次采集时，两次各约 4 秒的 Linux 调度快照均看到 103 个宿主线程共同使用六个已固定的物理核，35 个线程可运行、66 个等待 futex。这两段实际得到 0.96 和 2.97 个 CPU，累计可运行排队 136.6 和 128.1 线程秒。256 逻辑核的主机一分钟负载分别约 495 和 469。对照以往六次调用的边界组，DT 用 9517 CPU 秒 / 306 墙钟秒，PR 用 7163 / 245。调度竞争直接可见；现有计数无法区分用户态自旋和实际指令计算，也不能把宿主等待折算成设备时间。DT 在两次快照之间只出现第一个 TASK_BEGIN 和 35 个物理块发起，尚无 TASK_DONE、主机输出校验或可计时整窗。结束后的合格窗口及预算开销由上表和逐端回执记录。[宿主快照一](scheduler-dt.json) · [宿主快照二](scheduler-dt-second.json) · [旧边界组 DT](../../v0.25/post/receipts/boundary-Ascend950DT_9582.json) · [PR](../../v0.25/post/receipts/boundary-Ascend950PR_957b.json)']
     from lower_bound import markdown
     lines+=markdown(e['replay'])
     from operator_model import load_chip

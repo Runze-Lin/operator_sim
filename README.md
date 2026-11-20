@@ -8,6 +8,8 @@
 | 某个算子为什么需要这么久？不同 shape 如何改变结果？ | [建模方法：Vector、Cube、CV 三类流程，含逐算子公式与算例](docs/modeling-strategy.md) |
 | 哪些算子、shape 和库实现实测过？偏差多大？预测有多快？ | [CA 校验与误差：逐算子摘要、逐 shape 数据及查询墙钟](docs/error-analysis.md) |
 
+第一版已可作为系统仿真的算子耗时后端接入。内置 mHC Post 在只提供 shape 时，冷启动、扩核和紧邻复跑共用一个点预测，这是已接受的精度限制。系统知道每卡每流的调用顺序时，使用 `OperatorStream` 可显著降低这项误差。大 shape 双端实测覆盖与 970DT 外推资格逐项标注。[第一版校准与已知限制](docs/error-analysis.md) · [同形两次调用的算例](docs/examples/mhc_post.md)
+
 各算子在 DT、PR 上分别核验 WAPE 和最大误差；偏快、偏慢用同窗带符号偏差与偏快占比描述。Matmul 按目标 L1、输出几何和工作集自动选择分 K、普通多页或权重常驻的多波排程。[逐算子两端误差与方向](results/v0.35/acceptance.md)
 
 当前 KDA 验收包含 recurrent 单状态链与 chunk FLA V2。整套模型有 21 条验收路线，双端大 shape 覆盖按同一几何、同一实现的完整设备时间单列。[当前误差表](docs/error-analysis.md) · [逐算子大形覆盖](results/v0.35/large/report.md)

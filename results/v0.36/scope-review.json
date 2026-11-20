@@ -1,0 +1,199 @@
+{
+  "calibration_snapshot_commit": "269db0cb71fdaad1c3c2143c9cb643b32c3cb0c8",
+  "backend_version": "0.34.0",
+  "thresholds_pct": {
+    "wape": 25,
+    "maximum": 50
+  },
+  "evaluated_protocols": 26,
+  "both_chip_protocols": 24,
+  "both_chip_passed": 23,
+  "protocols_with_missing_chip": {
+    "rmsnorm · compact CA": {
+      "Ascend950DT_9582": 57,
+      "Ascend950PR_957b": 0
+    },
+    "attn_res_fwd · resident inference prefill": {
+      "Ascend950DT_9582": 0,
+      "Ascend950PR_957b": 0
+    }
+  },
+  "accepted_limitation": {
+    "protocol": "mhc_post · shape",
+    "status": "accepted for first backend milestone; measured threshold exceedances retained",
+    "public_scores": {
+      "Ascend950DT_9582": {
+        "n": 151,
+        "shapes": 113,
+        "wape": 27.942895750485473,
+        "maximum": 63.5603648812105,
+        "bias": -12.969241841074803,
+        "faster_fraction": 0.6026490066225165
+      },
+      "Ascend950PR_957b": {
+        "n": 88,
+        "shapes": 56,
+        "wape": 28.023612704620803,
+        "maximum": 67.39979202385283,
+        "bias": -10.961081288803074,
+        "faster_fraction": 0.625
+      }
+    },
+    "ordered_scores": {
+      "Ascend950DT_9582": {
+        "n": 151,
+        "shapes": 113,
+        "wape": 8.377110655466561,
+        "maximum": 45.13155405236707,
+        "bias": -3.256161007587802,
+        "faster_fraction": 0.6622516556291391
+      },
+      "Ascend950PR_957b": {
+        "n": 88,
+        "shapes": 56,
+        "wape": 6.830342709914843,
+        "maximum": 31.7793237310684,
+        "bias": 0.0796657175499172,
+        "faster_fraction": 0.5454545454545454
+      }
+    }
+  },
+  "large_coverage_at_snapshot": {
+    "routes": 21,
+    "large": 20,
+    "paired_large": 6,
+    "qualified_instruction_endpoints": 13,
+    "wrappers": 1
+  },
+  "query_ms_at_snapshot": {
+    "n": 3958,
+    "p50": 0.17362,
+    "p95": 3.69159,
+    "maximum": 18.3814,
+    "over_100ms": 0,
+    "all_under_100ms": true
+  },
+  "source_sha256": {
+    "results/v0.35/evaluation.json": "230749d53d493dd840ab10e6df49741ee202179f637a4672b408fd72fdfb459f",
+    "results/v0.35/large/coverage.json": "169c7c3aa166feea2ae452c07d94b145bd0e1049bf3d6f39d3c42fcebe7841a2",
+    "results/v0.34/wheel-check.json": "09e3ee3f70d9c442492cdf8db97ece67a9eb6f760b0eaabae6447602acc5eaef",
+    "results/v0.34/replay.json": "0f328ad108af2c566ca99baec1a36d5a7e86c80596ab0b0542fb867705846970",
+    "results/v0.24/post/freeze.json": "ca836280153f9f16d6aaa8e455bb9e84bba008c2305c4d24c530333a688e9edf"
+  },
+  "verified_public_examples": [
+    {
+      "chip": "Ascend950DT_9582",
+      "launch_ordinal": 2,
+      "sequence": [
+        [
+          1,
+          4,
+          192
+        ],
+        [
+          1,
+          4,
+          192
+        ],
+        [
+          2,
+          4,
+          448
+        ]
+      ],
+      "kernel": "MhcPost_59130ccee6717ff2c0f15b485e731162_5",
+      "trace_sha256": "2f4cb5edb7cb07089e39c4d8a0ab8e23ba9e2b8da80472cca97d5fc78747c5a5",
+      "ca_us": 5.349090909090909,
+      "ordered_us": 4.211444574427852,
+      "shape_only_us": 2.7920213625448325
+    },
+    {
+      "chip": "Ascend950DT_9582",
+      "launch_ordinal": 3,
+      "sequence": [
+        [
+          1,
+          4,
+          192
+        ],
+        [
+          1,
+          4,
+          192
+        ],
+        [
+          2,
+          4,
+          448
+        ],
+        [
+          2,
+          4,
+          448
+        ]
+      ],
+      "kernel": "MhcPost_59130ccee6717ff2c0f15b485e731162_5",
+      "trace_sha256": "c6899c4cf1154de7a66ef61d0755af2c952914b5ac129251cef367f12433bb11",
+      "ca_us": 1.8987878787878787,
+      "ordered_us": 2.31334158488188,
+      "shape_only_us": 2.7920213625448325
+    },
+    {
+      "chip": "Ascend950PR_957b",
+      "launch_ordinal": 2,
+      "sequence": [
+        [
+          1,
+          4,
+          192
+        ],
+        [
+          1,
+          4,
+          192
+        ],
+        [
+          2,
+          4,
+          448
+        ]
+      ],
+      "kernel": "MhcPost_59130ccee6717ff2c0f15b485e731162_5",
+      "trace_sha256": "d809d5854cbedbd701e79bd4a8a8f9efc33bde1565f2f147b12719b0370e48c1",
+      "ca_us": 5.33939393939394,
+      "ordered_us": 4.215085280385978,
+      "shape_only_us": 2.7980458167539135
+    },
+    {
+      "chip": "Ascend950PR_957b",
+      "launch_ordinal": 3,
+      "sequence": [
+        [
+          1,
+          4,
+          192
+        ],
+        [
+          1,
+          4,
+          192
+        ],
+        [
+          2,
+          4,
+          448
+        ],
+        [
+          2,
+          4,
+          448
+        ]
+      ],
+      "kernel": "MhcPost_59130ccee6717ff2c0f15b485e731162_5",
+      "trace_sha256": "cc37c7936ccae8c25eb618e690b9ff661f9bdb0beb15bc77c831adf0c63f10c2",
+      "ca_us": 1.887878787878788,
+      "ordered_us": 2.3169822908400057,
+      "shape_only_us": 2.7980458167539135
+    }
+  ]
+}

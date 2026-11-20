@@ -78,6 +78,8 @@
 | [2, 4, 368] / PR | awaiting full instruction window · reuse_after_token | 2.745 | N/A | N/A | 2.516 |
 | [2, 4, 368] / PR | awaiting full instruction window · repeat | 2.745 | N/A | N/A | 2.516 |
 
+**离线 CA 的宿主开销**。DT 首次采集时，两次各约 4 秒的 Linux 调度快照均看到 103 个宿主线程共同使用六个已固定的物理核，35 个线程可运行、66 个等待 futex。这两段实际得到 0.96 和 2.97 个 CPU，累计可运行排队 136.6 和 128.1 线程秒。256 逻辑核的主机一分钟负载分别约 495 和 469。对照以往六次调用的边界组，DT 用 9517 CPU 秒 / 306 墙钟秒，PR 用 7163 / 245。调度竞争直接可见；现有计数无法区分用户态自旋和实际指令计算，也不能把宿主等待折算成设备时间。DT 在两次快照之间只出现第一个 TASK_BEGIN 和 35 个物理块发起，尚无 TASK_DONE、主机输出校验或可计时整窗。结束后的合格窗口及预算开销由上表和逐端回执记录。[宿主快照一](scheduler-dt.json) · [宿主快照二](scheduler-dt-second.json) · [旧边界组 DT](../../v0.25/post/receipts/boundary-Ascend950DT_9582.json) · [PR](../../v0.25/post/receipts/boundary-Ascend950PR_957b.json)
+
 ## 已有窗口对仅形状模型的误差下界
 
 给定同一芯片、同 dtype/属性和同一 shape 的真实设备时间 $y_i$，任何无前序输入的确定性模型都必须给同一个点 $p$。设 $h=\max y_i,l=\min y_i$。要求每次绝对相对误差≤50%，等价于 $0.5h\le p\le1.5l$。区间有解的条件是 $h\le3l$。如不限制最大误差，样本中位数最小化总绝对偏差；加上约束，只需将中位数截入上述区间。按每形分别求最小绝对偏差、再除以这一组所有实测时间之和，恰好得到 WAPE 下界。单形可达到的最小最大相对误差是 $(h-l)/(h+l)$；整份数据取所有形的最大值。
@@ -123,6 +125,6 @@
 
 假设将所有未分块 token 合成一次内置 aclnnMhcPost 调用，实际 chunked prefill 须按调度块分别估算，vLLM HcPost 另计。DT 随每核轮次增加而接近线性；在 Flash B8×32Ki 上，DT 每核4096行、共享内存服务下限6.011 ms，模型给6.839 ms。PR 每核4682行，模型达到配置的共享带宽服务下限17.188 ms；970DT 每核2185行、共享下限1.665 ms，模型给3.342 ms。共享下限沿用公开资源估算的流量与带宽情景，不能由此认定真机时哪一级发生了堵塞。[逐项资源与行数](whole-input.json)
 
-239 次已加载估时器在线查询的中位 0.150 ms、P95 0.226 ms、最大 1.516 ms。设备微秒、宿主查询和离线 CA 墙钟是三个量。970DT 全部外推。
+239 次已加载估时器在线查询的中位 0.157 ms、P95 0.196 ms、最大 1.694 ms。设备微秒、宿主查询和离线 CA 墙钟是三个量。970DT 全部外推。
 
 [完整历史逐窗、旧模型与所有阶段](replay.json) · [v0.34 安装包同集对齐](baseline-wheel.json) · [真实末核 DMA、地址和 SHA](physical.json) · [候选冻结](freeze.json) · [新留出、预算与查重](fresh-freeze.json) · [新 CA 状态](fresh-state.json) · [端点及资格](forward.json) · [算例](../../../docs/examples/mhc_post.md)
