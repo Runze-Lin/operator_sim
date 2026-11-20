@@ -1,5 +1,8 @@
 # FlashAttentionScoreV2 算例
 
+长 KV 的 SBH 对照使用 [Q,KV,D,B,H]=[9,131072,64,1,1]。DT 的资源模型需要 512 个 KV 页，给出 274.987 µs，compact CA 完整指令窗口为 274.821 µs。相同输入 PR 的预测为 274.988 µs，已在同侧配置发起官方全核 CA。256Ki 和 512Ki 各自翻倍页数，在新的设备时间返回前只列预测。此合同是独立稠密 attention，模型中实际稀疏、压缩和 MLA 路线单独列出。[逐页数、双卡状态与原始协议](../../results/v0.29/large/fa/report.md)
+
+
 ## 32Ki 加一个 token，尾页还有多少工作
 
 ![Q9 在 950DT 的最后三页，模型和 CA 逐页对齐 K/V 搬运与两次矩阵乘](../../results/v0.27/fa-32769-dt-tail.png)

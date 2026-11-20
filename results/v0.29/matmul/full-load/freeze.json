@@ -1,0 +1,877 @@
+{
+  "utc": "2026-11-20T03:43:07.578586+00:00",
+  "rows": [
+    {
+      "shape": [
+        32768,
+        128,
+        512
+      ],
+      "chip": "Ascend950DT_9582",
+      "model": "DeepSeek-V4.1-Flash",
+      "node": "indexer.wk",
+      "role": "development",
+      "original_freeze": "results/v0.28/matmul/freeze.json",
+      "acquisition": "results/v0.28/matmul/32768-128-512-dt.json",
+      "legacy_us": 19.15329092982998,
+      "candidate": {
+        "status": "conditional",
+        "route": "b_full_l1",
+        "latency_us": 15.467022430774792,
+        "all_output_writeback_us": 15.467022430774792,
+        "bottleneck": "core",
+        "target_extrapolated": false,
+        "shape": [
+          32768,
+          128,
+          512
+        ],
+        "tile": [
+          256,
+          128,
+          32
+        ],
+        "a_page_k": 128,
+        "active_aic": 32,
+        "waves": 4,
+        "critical_core_tiles": 4,
+        "cube_ops": 4294967296,
+        "mmad_total": 2048,
+        "mmads_per_tile": 16,
+        "work": {
+          "chip_l2_interface_bytes": 46137344,
+          "logical_b_bytes": 131072,
+          "b_lower_link_bytes": 4194304,
+          "a_read_bytes": 33554432,
+          "final_bf16_store_bytes": 8388608,
+          "fixp_fp32_source_bytes": 16777216,
+          "minimum_cold_hbm_bytes": 33685504,
+          "all_store_cold_hbm_bytes": 42074112,
+          "per_tile_a_bytes": 262144,
+          "per_tile_l0_bytes": 393216,
+          "per_tile_store_bytes": 65536
+        },
+        "cycles": {
+          "launch": 3837.593710218508,
+          "first_fill": 4245.45649741778,
+          "l0_first": 169.72387685519453,
+          "first_cube": 8252.774084491482,
+          "cube_issue": 257,
+          "compute_tile": 4112,
+          "per_aic_step": 4112,
+          "response_after_last_issue_interval": 24,
+          "final_write": 795.8129262869256,
+          "chip_memory_finish": 20128.044484491482,
+          "core_finish": 24724.77408449148,
+          "l2_finish": 19428.97020763629,
+          "total": 25520.587010778407
+        },
+        "rates": {
+          "bf16_ops_per_aic_cycle": 8181.818181818182,
+          "mte2_bytes_per_aic_cycle": 64,
+          "mte1_bytes_per_aic_cycle": 180.65473073384752,
+          "fixp_destination_bytes_per_aic_cycle": 158.29847138083917,
+          "hbm_bytes_per_chip_cycle": 2424.2424242424245,
+          "l2_bytes_per_chip_cycle": 3200.0
+        },
+        "assumption": "One aligned output rectangle along N, qualified geometry family on 950 only. B is loaded once per participating AIC, cold A and B, minimum compulsory dirty C eviction. Scope assumes the same ASWT implementation on future chips."
+      }
+    },
+    {
+      "shape": [
+        32768,
+        128,
+        512
+      ],
+      "chip": "Ascend950PR_957b",
+      "model": "DeepSeek-V4.1-Flash",
+      "node": "indexer.wk",
+      "role": "development",
+      "original_freeze": "results/v0.28/matmul/freeze.json",
+      "acquisition": "results/v0.28/matmul/32768-128-512-pr.json",
+      "legacy_us": 28.81951742128287,
+      "candidate": {
+        "status": "conditional",
+        "route": "b_full_l1",
+        "latency_us": 28.310169808024032,
+        "all_output_writeback_us": 34.30203266516689,
+        "bottleneck": "hbm",
+        "target_extrapolated": false,
+        "shape": [
+          32768,
+          128,
+          512
+        ],
+        "tile": [
+          256,
+          128,
+          32
+        ],
+        "a_page_k": 128,
+        "active_aic": 28,
+        "waves": 5,
+        "critical_core_tiles": 5,
+        "cube_ops": 4294967296,
+        "mmad_total": 2048,
+        "mmads_per_tile": 16,
+        "work": {
+          "chip_l2_interface_bytes": 45613056,
+          "logical_b_bytes": 131072,
+          "b_lower_link_bytes": 3670016,
+          "a_read_bytes": 33554432,
+          "final_bf16_store_bytes": 8388608,
+          "fixp_fp32_source_bytes": 16777216,
+          "minimum_cold_hbm_bytes": 33685504,
+          "all_store_cold_hbm_bytes": 42074112,
+          "per_tile_a_bytes": 262144,
+          "per_tile_l0_bytes": 393216,
+          "per_tile_store_bytes": 65536
+        },
+        "cycles": {
+          "launch": 3820.014311251175,
+          "first_fill": 4245.45649741778,
+          "l0_first": 169.72387685519453,
+          "first_cube": 8235.19468552415,
+          "cube_issue": 257,
+          "compute_tile": 4112,
+          "per_aic_step": 4112,
+          "response_after_last_issue_interval": 24,
+          "final_write": 795.8129262869256,
+          "chip_memory_finish": 45915.967256952725,
+          "core_finish": 28819.194685524148,
+          "l2_finish": 21283.8479515261,
+          "total": 46711.78018323965
+        },
+        "rates": {
+          "bf16_ops_per_aic_cycle": 8181.818181818183,
+          "mte2_bytes_per_aic_cycle": 64,
+          "mte1_bytes_per_aic_cycle": 180.65473073384752,
+          "fixp_destination_bytes_per_aic_cycle": 158.29847138083917,
+          "hbm_bytes_per_chip_cycle": 848.4848484848485,
+          "l2_bytes_per_chip_cycle": 2800.0
+        },
+        "assumption": "One aligned output rectangle along N, qualified geometry family on 950 only. B is loaded once per participating AIC, cold A and B, minimum compulsory dirty C eviction. Scope assumes the same ASWT implementation on future chips."
+      }
+    },
+    {
+      "shape": [
+        32768,
+        128,
+        512
+      ],
+      "chip": "Ascend970DT",
+      "model": "DeepSeek-V4.1-Flash",
+      "node": "indexer.wk",
+      "role": "extrapolation only",
+      "original_freeze": "results/v0.28/matmul/freeze.json",
+      "acquisition": null,
+      "legacy_us": 7.777499526780573,
+      "candidate": {
+        "status": "unavailable",
+        "latency_us": null,
+        "reason": "Requires one aligned N rectangle and repeated M rectangles beyond one wave."
+      }
+    },
+    {
+      "shape": [
+        262144,
+        128,
+        512
+      ],
+      "chip": "Ascend950DT_9582",
+      "model": "DeepSeek-V4.1-Flash",
+      "node": "indexer.wk",
+      "role": "development",
+      "original_freeze": "results/v0.28/matmul/freeze.json",
+      "acquisition": "results/v0.28/matmul/262144-128-512-dt.json",
+      "legacy_us": 113.5050162684515,
+      "candidate": {
+        "status": "conditional",
+        "route": "b_full_l1",
+        "latency_us": 85.24641637016873,
+        "all_output_writeback_us": 88.17859770350206,
+        "bottleneck": "core",
+        "target_extrapolated": false,
+        "shape": [
+          262144,
+          128,
+          512
+        ],
+        "tile": [
+          256,
+          128,
+          32
+        ],
+        "a_page_k": 128,
+        "active_aic": 32,
+        "waves": 32,
+        "critical_core_tiles": 32,
+        "cube_ops": 34359738368,
+        "mmad_total": 16384,
+        "mmads_per_tile": 16,
+        "work": {
+          "chip_l2_interface_bytes": 339738624,
+          "logical_b_bytes": 131072,
+          "b_lower_link_bytes": 4194304,
+          "a_read_bytes": 268435456,
+          "final_bf16_store_bytes": 67108864,
+          "fixp_fp32_source_bytes": 134217728,
+          "minimum_cold_hbm_bytes": 268566528,
+          "all_store_cold_hbm_bytes": 335675392,
+          "per_tile_a_bytes": 262144,
+          "per_tile_l0_bytes": 393216,
+          "per_tile_store_bytes": 65536
+        },
+        "cycles": {
+          "launch": 3837.593710218508,
+          "first_fill": 4245.45649741778,
+          "l0_first": 169.72387685519453,
+          "first_cube": 8252.774084491482,
+          "cube_issue": 257,
+          "compute_tile": 4112,
+          "per_aic_step": 4112,
+          "response_after_last_issue_interval": 24,
+          "final_write": 795.8129262869256,
+          "chip_memory_finish": 117016.46688449147,
+          "core_finish": 139860.77408449148,
+          "l2_finish": 111179.3702076363,
+          "total": 140656.5870107784
+        },
+        "rates": {
+          "bf16_ops_per_aic_cycle": 8181.818181818182,
+          "mte2_bytes_per_aic_cycle": 64,
+          "mte1_bytes_per_aic_cycle": 180.65473073384752,
+          "fixp_destination_bytes_per_aic_cycle": 158.29847138083917,
+          "hbm_bytes_per_chip_cycle": 2424.2424242424245,
+          "l2_bytes_per_chip_cycle": 3200.0
+        },
+        "assumption": "One aligned output rectangle along N, qualified geometry family on 950 only. B is loaded once per participating AIC, cold A and B, minimum compulsory dirty C eviction. Scope assumes the same ASWT implementation on future chips."
+      }
+    },
+    {
+      "shape": [
+        262144,
+        128,
+        512
+      ],
+      "chip": "Ascend950PR_957b",
+      "model": "DeepSeek-V4.1-Flash",
+      "node": "indexer.wk",
+      "role": "in flight, blinded at freeze",
+      "original_freeze": "results/v0.28/matmul/freeze.json",
+      "acquisition": "results/v0.28/matmul/262144-128-512-pr.json",
+      "legacy_us": 206.1555259029228,
+      "candidate": {
+        "status": "conditional",
+        "route": "b_full_l1",
+        "latency_us": 196.08232980802404,
+        "all_output_writeback_us": 244.0172326651669,
+        "bottleneck": "hbm",
+        "target_extrapolated": false,
+        "shape": [
+          262144,
+          128,
+          512
+        ],
+        "tile": [
+          256,
+          128,
+          32
+        ],
+        "a_page_k": 128,
+        "active_aic": 28,
+        "waves": 37,
+        "critical_core_tiles": 37,
+        "cube_ops": 34359738368,
+        "mmad_total": 16384,
+        "mmads_per_tile": 16,
+        "work": {
+          "chip_l2_interface_bytes": 339214336,
+          "logical_b_bytes": 131072,
+          "b_lower_link_bytes": 3670016,
+          "a_read_bytes": 268435456,
+          "final_bf16_store_bytes": 67108864,
+          "fixp_fp32_source_bytes": 134217728,
+          "minimum_cold_hbm_bytes": 268566528,
+          "all_store_cold_hbm_bytes": 335675392,
+          "per_tile_a_bytes": 262144,
+          "per_tile_l0_bytes": 393216,
+          "per_tile_store_bytes": 65536
+        },
+        "cycles": {
+          "launch": 3820.014311251175,
+          "first_fill": 4245.45649741778,
+          "l0_first": 169.72387685519453,
+          "first_cube": 8235.19468552415,
+          "cube_issue": 257,
+          "compute_tile": 4112,
+          "per_aic_step": 4112,
+          "response_after_last_issue_interval": 24,
+          "final_write": 795.8129262869256,
+          "chip_memory_finish": 322740.03125695273,
+          "core_finish": 160403.19468552415,
+          "l2_finish": 126141.44795152609,
+          "total": 323535.8441832397
+        },
+        "rates": {
+          "bf16_ops_per_aic_cycle": 8181.818181818183,
+          "mte2_bytes_per_aic_cycle": 64,
+          "mte1_bytes_per_aic_cycle": 180.65473073384752,
+          "fixp_destination_bytes_per_aic_cycle": 158.29847138083917,
+          "hbm_bytes_per_chip_cycle": 848.4848484848485,
+          "l2_bytes_per_chip_cycle": 2800.0
+        },
+        "assumption": "One aligned output rectangle along N, qualified geometry family on 950 only. B is loaded once per participating AIC, cold A and B, minimum compulsory dirty C eviction. Scope assumes the same ASWT implementation on future chips."
+      }
+    },
+    {
+      "shape": [
+        262144,
+        128,
+        512
+      ],
+      "chip": "Ascend970DT",
+      "model": "DeepSeek-V4.1-Flash",
+      "node": "indexer.wk",
+      "role": "extrapolation only",
+      "original_freeze": "results/v0.28/matmul/freeze.json",
+      "acquisition": null,
+      "legacy_us": 31.87085313697569,
+      "candidate": {
+        "status": "conditional",
+        "route": "b_full_l1",
+        "latency_us": 25.616997821831117,
+        "all_output_writeback_us": 27.31001115516445,
+        "bottleneck": "core",
+        "target_extrapolated": true,
+        "shape": [
+          262144,
+          128,
+          512
+        ],
+        "tile": [
+          256,
+          128,
+          32
+        ],
+        "a_page_k": 128,
+        "active_aic": 120,
+        "waves": 9,
+        "critical_core_tiles": 9,
+        "cube_ops": 34359738368,
+        "mmad_total": 16384,
+        "mmads_per_tile": 16,
+        "work": {
+          "chip_l2_interface_bytes": 351272960,
+          "logical_b_bytes": 131072,
+          "b_lower_link_bytes": 15728640,
+          "a_read_bytes": 268435456,
+          "final_bf16_store_bytes": 67108864,
+          "fixp_fp32_source_bytes": 134217728,
+          "minimum_cold_hbm_bytes": 268566528,
+          "all_store_cold_hbm_bytes": 335675392,
+          "per_tile_a_bytes": 262144,
+          "per_tile_l0_bytes": 393216,
+          "per_tile_store_bytes": 65536
+        },
+        "cycles": {
+          "launch": 4011.6027787361104,
+          "first_fill": 4245.45649741778,
+          "l0_first": 169.72387685519453,
+          "first_cube": 8426.783153009084,
+          "cube_issue": 256,
+          "compute_tile": 4096,
+          "per_aic_step": 4096,
+          "response_after_last_issue_interval": 24,
+          "final_write": 795.8129262869256,
+          "chip_memory_finish": 39973.59915300909,
+          "core_finish": 45314.783153009084,
+          "l2_finish": 26261.43687615389,
+          "total": 46110.59607929601
+        },
+        "rates": {
+          "bf16_ops_per_aic_cycle": 8194.444444444445,
+          "mte2_bytes_per_aic_cycle": 64,
+          "mte1_bytes_per_aic_cycle": 180.65473073384752,
+          "fixp_destination_bytes_per_aic_cycle": 158.29847138083917,
+          "hbm_bytes_per_chip_cycle": 8000.0,
+          "l2_bytes_per_chip_cycle": 16666.666666666668
+        },
+        "assumption": "One aligned output rectangle along N, qualified geometry family on 950 only. B is loaded once per participating AIC, cold A and B, minimum compulsory dirty C eviction. Scope assumes the same ASWT implementation on future chips."
+      }
+    },
+    {
+      "shape": [
+        1048576,
+        128,
+        512
+      ],
+      "chip": "Ascend950DT_9582",
+      "model": "DeepSeek-V4.1-Flash",
+      "node": "indexer.wk",
+      "role": "in flight, blinded at freeze",
+      "original_freeze": "results/v0.28/matmul/long-prefill/freeze.json",
+      "acquisition": "results/v0.28/matmul/long-prefill/131072-dt.json",
+      "legacy_us": 437.2508462432924,
+      "candidate": {
+        "status": "conditional",
+        "route": "b_full_l1",
+        "latency_us": 324.49005273380516,
+        "all_output_writeback_us": 339.8368377035021,
+        "bottleneck": "core",
+        "target_extrapolated": false,
+        "shape": [
+          1048576,
+          128,
+          512
+        ],
+        "tile": [
+          256,
+          128,
+          32
+        ],
+        "a_page_k": 128,
+        "active_aic": 32,
+        "waves": 128,
+        "critical_core_tiles": 128,
+        "cube_ops": 137438953472,
+        "mmad_total": 65536,
+        "mmads_per_tile": 16,
+        "work": {
+          "chip_l2_interface_bytes": 1346371584,
+          "logical_b_bytes": 131072,
+          "b_lower_link_bytes": 4194304,
+          "a_read_bytes": 1073741824,
+          "final_bf16_store_bytes": 268435456,
+          "fixp_fp32_source_bytes": 536870912,
+          "minimum_cold_hbm_bytes": 1208090624,
+          "all_store_cold_hbm_bytes": 1342308352,
+          "per_tile_a_bytes": 262144,
+          "per_tile_l0_bytes": 393216,
+          "per_tile_store_bytes": 65536
+        },
+        "cycles": {
+          "launch": 3837.593710218508,
+          "first_fill": 4245.45649741778,
+          "l0_first": 169.72387685519453,
+          "first_cube": 8252.774084491482,
+          "cube_issue": 257,
+          "compute_tile": 4112,
+          "per_aic_step": 4112,
+          "response_after_last_issue_interval": 24,
+          "final_write": 795.8129262869256,
+          "chip_memory_finish": 504570.1564844914,
+          "core_finish": 534612.7740844915,
+          "l2_finish": 425752.17020763626,
+          "total": 535408.5870107785
+        },
+        "rates": {
+          "bf16_ops_per_aic_cycle": 8181.818181818182,
+          "mte2_bytes_per_aic_cycle": 64,
+          "mte1_bytes_per_aic_cycle": 180.65473073384752,
+          "fixp_destination_bytes_per_aic_cycle": 158.29847138083917,
+          "hbm_bytes_per_chip_cycle": 2424.2424242424245,
+          "l2_bytes_per_chip_cycle": 3200.0
+        },
+        "assumption": "One aligned output rectangle along N, qualified geometry family on 950 only. B is loaded once per participating AIC, cold A and B, minimum compulsory dirty C eviction. Scope assumes the same ASWT implementation on future chips."
+      }
+    },
+    {
+      "shape": [
+        1048576,
+        128,
+        512
+      ],
+      "chip": "Ascend950PR_957b",
+      "model": "DeepSeek-V4.1-Flash",
+      "node": "indexer.wk",
+      "role": "registered before acquisition",
+      "original_freeze": "results/v0.28/matmul/long-prefill/freeze.json",
+      "acquisition": "results/v0.28/matmul/long-prefill/131072-pr.json",
+      "legacy_us": 1154.9997773314942,
+      "candidate": {
+        "status": "conditional",
+        "route": "b_full_l1",
+        "latency_us": 879.1546955223097,
+        "all_output_writeback_us": 963.0407755223096,
+        "bottleneck": "hbm",
+        "target_extrapolated": false,
+        "shape": [
+          1048576,
+          128,
+          512
+        ],
+        "tile": [
+          256,
+          128,
+          32
+        ],
+        "a_page_k": 128,
+        "active_aic": 28,
+        "waves": 147,
+        "critical_core_tiles": 147,
+        "cube_ops": 137438953472,
+        "mmad_total": 65536,
+        "mmads_per_tile": 16,
+        "work": {
+          "chip_l2_interface_bytes": 1345847296,
+          "logical_b_bytes": 131072,
+          "b_lower_link_bytes": 3670016,
+          "a_read_bytes": 1073741824,
+          "final_bf16_store_bytes": 268435456,
+          "fixp_fp32_source_bytes": 536870912,
+          "minimum_cold_hbm_bytes": 1224867840,
+          "all_store_cold_hbm_bytes": 1342308352,
+          "per_tile_a_bytes": 262144,
+          "per_tile_l0_bytes": 393216,
+          "per_tile_store_bytes": 65536
+        },
+        "cycles": {
+          "launch": 3820.014311251175,
+          "first_fill": 4245.45649741778,
+          "l0_first": 169.72387685519453,
+          "first_cube": 8235.19468552415,
+          "cube_issue": 257,
+          "compute_tile": 4112,
+          "per_aic_step": 4112,
+          "response_after_last_issue_interval": 24,
+          "final_write": 795.8129262869256,
+          "chip_memory_finish": 1449809.434685524,
+          "core_finish": 612723.1946855241,
+          "l2_finish": 485653.2193800975,
+          "total": 1450605.247611811
+        },
+        "rates": {
+          "bf16_ops_per_aic_cycle": 8181.818181818183,
+          "mte2_bytes_per_aic_cycle": 64,
+          "mte1_bytes_per_aic_cycle": 180.65473073384752,
+          "fixp_destination_bytes_per_aic_cycle": 158.29847138083917,
+          "hbm_bytes_per_chip_cycle": 848.4848484848485,
+          "l2_bytes_per_chip_cycle": 2800.0
+        },
+        "assumption": "One aligned output rectangle along N, qualified geometry family on 950 only. B is loaded once per participating AIC, cold A and B, minimum compulsory dirty C eviction. Scope assumes the same ASWT implementation on future chips."
+      }
+    },
+    {
+      "shape": [
+        1048576,
+        128,
+        512
+      ],
+      "chip": "Ascend970DT",
+      "model": "DeepSeek-V4.1-Flash",
+      "node": "indexer.wk",
+      "role": "extrapolation only",
+      "original_freeze": "results/v0.28/matmul/long-prefill/freeze.json",
+      "acquisition": null,
+      "legacy_us": 114.8049526548534,
+      "candidate": {
+        "status": "conditional",
+        "route": "b_full_l1",
+        "latency_us": 84.78144226627555,
+        "all_output_writeback_us": 97.2150778218311,
+        "bottleneck": "core",
+        "target_extrapolated": true,
+        "shape": [
+          1048576,
+          128,
+          512
+        ],
+        "tile": [
+          256,
+          128,
+          32
+        ],
+        "a_page_k": 128,
+        "active_aic": 120,
+        "waves": 35,
+        "critical_core_tiles": 35,
+        "cube_ops": 137438953472,
+        "mmad_total": 65536,
+        "mmads_per_tile": 16,
+        "work": {
+          "chip_l2_interface_bytes": 1357905920,
+          "logical_b_bytes": 131072,
+          "b_lower_link_bytes": 15728640,
+          "a_read_bytes": 1073741824,
+          "final_bf16_store_bytes": 268435456,
+          "fixp_fp32_source_bytes": 536870912,
+          "minimum_cold_hbm_bytes": 1142308352,
+          "all_store_cold_hbm_bytes": 1342308352,
+          "per_tile_a_bytes": 262144,
+          "per_tile_l0_bytes": 393216,
+          "per_tile_store_bytes": 65536
+        },
+        "cycles": {
+          "launch": 4011.6027787361104,
+          "first_fill": 4245.45649741778,
+          "l0_first": 169.72387685519453,
+          "first_cube": 8426.783153009084,
+          "cube_issue": 256,
+          "compute_tile": 4096,
+          "per_aic_step": 4096,
+          "response_after_last_issue_interval": 24,
+          "final_write": 795.8129262869256,
+          "chip_memory_finish": 149191.32715300907,
+          "core_finish": 151810.78315300908,
+          "l2_finish": 86659.41447615388,
+          "total": 152606.596079296
+        },
+        "rates": {
+          "bf16_ops_per_aic_cycle": 8194.444444444445,
+          "mte2_bytes_per_aic_cycle": 64,
+          "mte1_bytes_per_aic_cycle": 180.65473073384752,
+          "fixp_destination_bytes_per_aic_cycle": 158.29847138083917,
+          "hbm_bytes_per_chip_cycle": 8000.0,
+          "l2_bytes_per_chip_cycle": 16666.666666666668
+        },
+        "assumption": "One aligned output rectangle along N, qualified geometry family on 950 only. B is loaded once per participating AIC, cold A and B, minimum compulsory dirty C eviction. Scope assumes the same ASWT implementation on future chips."
+      }
+    },
+    {
+      "shape": [
+        2097152,
+        128,
+        512
+      ],
+      "chip": "Ascend950DT_9582",
+      "model": "DeepSeek-V4.1-Flash",
+      "node": "indexer.wk",
+      "role": "registered before acquisition",
+      "original_freeze": "results/v0.28/matmul/long-prefill/freeze.json",
+      "acquisition": "results/v0.28/matmul/long-prefill/262144-dt.json",
+      "legacy_us": 868.5730192198481,
+      "candidate": {
+        "status": "conditional",
+        "route": "b_full_l1",
+        "latency_us": 643.4815678853201,
+        "all_output_writeback_us": 675.3811577035019,
+        "bottleneck": "core",
+        "target_extrapolated": false,
+        "shape": [
+          2097152,
+          128,
+          512
+        ],
+        "tile": [
+          256,
+          128,
+          32
+        ],
+        "a_page_k": 128,
+        "active_aic": 32,
+        "waves": 256,
+        "critical_core_tiles": 256,
+        "cube_ops": 274877906944,
+        "mmad_total": 131072,
+        "mmads_per_tile": 16,
+        "work": {
+          "chip_l2_interface_bytes": 2688548864,
+          "logical_b_bytes": 131072,
+          "b_lower_link_bytes": 4194304,
+          "a_read_bytes": 2147483648,
+          "final_bf16_store_bytes": 536870912,
+          "fixp_fp32_source_bytes": 1073741824,
+          "minimum_cold_hbm_bytes": 2550267904,
+          "all_store_cold_hbm_bytes": 2684485632,
+          "per_tile_a_bytes": 262144,
+          "per_tile_l0_bytes": 393216,
+          "per_tile_store_bytes": 65536
+        },
+        "cycles": {
+          "launch": 3837.593710218508,
+          "first_fill": 4245.45649741778,
+          "l0_first": 169.72387685519453,
+          "first_cube": 8252.774084491482,
+          "cube_issue": 257,
+          "compute_tile": 4112,
+          "per_aic_step": 4112,
+          "response_after_last_issue_interval": 24,
+          "final_write": 795.8129262869256,
+          "chip_memory_finish": 1058218.2844844912,
+          "core_finish": 1060948.7740844914,
+          "l2_finish": 845182.5702076363,
+          "total": 1061744.5870107783
+        },
+        "rates": {
+          "bf16_ops_per_aic_cycle": 8181.818181818182,
+          "mte2_bytes_per_aic_cycle": 64,
+          "mte1_bytes_per_aic_cycle": 180.65473073384752,
+          "fixp_destination_bytes_per_aic_cycle": 158.29847138083917,
+          "hbm_bytes_per_chip_cycle": 2424.2424242424245,
+          "l2_bytes_per_chip_cycle": 3200.0
+        },
+        "assumption": "One aligned output rectangle along N, qualified geometry family on 950 only. B is loaded once per participating AIC, cold A and B, minimum compulsory dirty C eviction. Scope assumes the same ASWT implementation on future chips."
+      }
+    },
+    {
+      "shape": [
+        2097152,
+        128,
+        512
+      ],
+      "chip": "Ascend950PR_957b",
+      "model": "DeepSeek-V4.1-Flash",
+      "node": "indexer.wk",
+      "role": "registered before acquisition",
+      "original_freeze": "results/v0.28/matmul/long-prefill/freeze.json",
+      "acquisition": "results/v0.28/matmul/long-prefill/262144-pr.json",
+      "legacy_us": 2304.6884630457803,
+      "candidate": {
+        "status": "conditional",
+        "route": "b_full_l1",
+        "latency_us": 1837.852752665167,
+        "all_output_writeback_us": 1921.7388326651667,
+        "bottleneck": "hbm",
+        "target_extrapolated": false,
+        "shape": [
+          2097152,
+          128,
+          512
+        ],
+        "tile": [
+          256,
+          128,
+          32
+        ],
+        "a_page_k": 128,
+        "active_aic": 28,
+        "waves": 293,
+        "critical_core_tiles": 293,
+        "cube_ops": 274877906944,
+        "mmad_total": 131072,
+        "mmads_per_tile": 16,
+        "work": {
+          "chip_l2_interface_bytes": 2688024576,
+          "logical_b_bytes": 131072,
+          "b_lower_link_bytes": 3670016,
+          "a_read_bytes": 2147483648,
+          "final_bf16_store_bytes": 536870912,
+          "fixp_fp32_source_bytes": 1073741824,
+          "minimum_cold_hbm_bytes": 2567045120,
+          "all_store_cold_hbm_bytes": 2684485632,
+          "per_tile_a_bytes": 262144,
+          "per_tile_l0_bytes": 393216,
+          "per_tile_store_bytes": 65536
+        },
+        "cycles": {
+          "launch": 3820.014311251175,
+          "first_fill": 4245.45649741778,
+          "l0_first": 169.72387685519453,
+          "first_cube": 8235.19468552415,
+          "cube_issue": 257,
+          "compute_tile": 4112,
+          "per_aic_step": 4112,
+          "response_after_last_issue_interval": 24,
+          "final_write": 795.8129262869256,
+          "chip_memory_finish": 3031661.2289712387,
+          "core_finish": 1213075.194685524,
+          "l2_finish": 965002.2479515261,
+          "total": 3032457.0418975255
+        },
+        "rates": {
+          "bf16_ops_per_aic_cycle": 8181.818181818183,
+          "mte2_bytes_per_aic_cycle": 64,
+          "mte1_bytes_per_aic_cycle": 180.65473073384752,
+          "fixp_destination_bytes_per_aic_cycle": 158.29847138083917,
+          "hbm_bytes_per_chip_cycle": 848.4848484848485,
+          "l2_bytes_per_chip_cycle": 2800.0
+        },
+        "assumption": "One aligned output rectangle along N, qualified geometry family on 950 only. B is loaded once per participating AIC, cold A and B, minimum compulsory dirty C eviction. Scope assumes the same ASWT implementation on future chips."
+      }
+    },
+    {
+      "shape": [
+        2097152,
+        128,
+        512
+      ],
+      "chip": "Ascend970DT",
+      "model": "DeepSeek-V4.1-Flash",
+      "node": "indexer.wk",
+      "role": "extrapolation only",
+      "original_freeze": "results/v0.28/matmul/long-prefill/freeze.json",
+      "acquisition": null,
+      "legacy_us": 226.79869487707563,
+      "candidate": {
+        "status": "conditional",
+        "route": "b_full_l1",
+        "latency_us": 176.53294448849783,
+        "all_output_writeback_us": 190.42183337738672,
+        "bottleneck": "hbm",
+        "target_extrapolated": true,
+        "shape": [
+          2097152,
+          128,
+          512
+        ],
+        "tile": [
+          256,
+          128,
+          32
+        ],
+        "a_page_k": 128,
+        "active_aic": 120,
+        "waves": 69,
+        "critical_core_tiles": 69,
+        "cube_ops": 274877906944,
+        "mmad_total": 131072,
+        "mmads_per_tile": 16,
+        "work": {
+          "chip_l2_interface_bytes": 2700083200,
+          "logical_b_bytes": 131072,
+          "b_lower_link_bytes": 15728640,
+          "a_read_bytes": 2147483648,
+          "final_bf16_store_bytes": 536870912,
+          "fixp_fp32_source_bytes": 1073741824,
+          "minimum_cold_hbm_bytes": 2484485632,
+          "all_store_cold_hbm_bytes": 2684485632,
+          "per_tile_a_bytes": 262144,
+          "per_tile_l0_bytes": 393216,
+          "per_tile_store_bytes": 65536
+        },
+        "cycles": {
+          "launch": 4011.6027787361104,
+          "first_fill": 4245.45649741778,
+          "l0_first": 169.72387685519453,
+          "first_cube": 8426.783153009084,
+          "cube_issue": 256,
+          "compute_tile": 4096,
+          "per_aic_step": 4096,
+          "response_after_last_issue_interval": 24,
+          "final_write": 795.8129262869256,
+          "chip_memory_finish": 316963.48715300916,
+          "core_finish": 291074.7831530091,
+          "l2_finish": 167190.05127615388,
+          "total": 317759.3000792961
+        },
+        "rates": {
+          "bf16_ops_per_aic_cycle": 8194.444444444445,
+          "mte2_bytes_per_aic_cycle": 64,
+          "mte1_bytes_per_aic_cycle": 180.65473073384752,
+          "fixp_destination_bytes_per_aic_cycle": 158.29847138083917,
+          "hbm_bytes_per_chip_cycle": 8000.0,
+          "l2_bytes_per_chip_cycle": 16666.666666666668
+        },
+        "assumption": "One aligned output rectangle along N, qualified geometry family on 950 only. B is loaded once per participating AIC, cold A and B, minimum compulsory dirty C eviction. Scope assumes the same ASWT implementation on future chips."
+      }
+    }
+  ],
+  "sha256": {
+    "development/validation/matmul29/full_load_freeze.py": "98102c2d0ecbfbfabe5362c4655d0f161df2c588f5687d399630daa6811e3acd",
+    "results/v0.29/matmul/full-load/development-traces.json": "5365ae5d0d04fbe38955fc64cf1b62421beb86d8b6de3e0d83febaf32dbe0cab",
+    "results/v0.28/matmul/freeze.json": "e6c61efeee18a752502f6216026a51e5cdafb49b04cdf1ac42d7737dd6d7cd77",
+    "results/v0.28/matmul/long-prefill/freeze.json": "f33ef8d051b8b491003d9e68f285208b7fe51a77a72a1bed7f969dacf20b471c",
+    "development/validation/matmul29/full_load_trace.py": "e271b8a82f0306884fa07a01e551054e55dd136278be21cabef2fdbb9b8d10d3",
+    "third_party/ops-nn/matmul/mat_mul_v3/op_host/op_tiling/arch35/matmul_v3_basic_aswt_tiling.cpp": "c496eccd1bd3f1867935a0d11b1075091da0dd9082842392c9019ac53310c076",
+    "results/v0.16/matmul.json": "b37e9148aeb14d90ae744e966337556d9adf269066bf281d12984f282078546b",
+    "operator_model/matmul_full_load.py": "070d567219da004743af1783b9b1588a8ed31d76b4b4a7fb63ad5c14eadeda39",
+    "operator_model/matmul_v15.py": "c5edb6d59c184f63db0d1208cdec38a79368d4f6eb246cb077ed0faba069fa02",
+    "operator_model/matmul_resource.py": "4ff5f1e2bc2581ed16d609e18900879ccaf1a80f65433de8f85de7e513140b19",
+    "operator_model/chips.py": "9df714f5c3728c9b7fa48edaea3de96c9e09a7487706f9728dd790f4a7e208ce",
+    "configs/chips/Ascend950DT_9582.json": "54d68c49374f8fab57ae16b05923d7ea2874cc48083e0728bcbc60f467bb71ec",
+    "configs/chips/Ascend950PR_957b.json": "2bb5b0b34b8d04e255e24ea5d12c73407ace6bb7154ba6aa603b338fc252ada7",
+    "configs/chips/Ascend970DT.json": "837796ec9f3b39888950cfe6f703b63c4bf9ced22a366b66f300f1389a8006f2"
+  },
+  "contract": "No new CA. Three developmental whole-kernel receipts. Five target CA endpoints never opened before freezing. Each needs host golden, official kernel, all active physical core END and drain. Report role separately for already running original experiments. No future-chip CA, no promotion to default."
+}

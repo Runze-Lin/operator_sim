@@ -263,6 +263,20 @@ for tokens, iters in [(13, 3), (46, 8), (67, 10)]:
 
 若接入时上一段历史未知，先调 `forget_history()`。它仅在能证明当前 AIV 已全部被覆盖时恢复热态，跨库实现时重新判断。两端 30 个实际 CA 窗和 970DT 的冻结预测都重放了相同的调用顺序。[使用边界与验证](../results/v0.27/fusion/stream.md)
 
+### 已知内置 Post 的真实派发顺序
+
+每个有序 rank/stream 可以传 `track_post_history=True`。新建实例代表明确的首次调用，接入正在运行的流时先用 `forget_history()`。传入相邻两次的真实张量，后端从上次成功派发推导哪些 AIV 可复用。
+
+```python
+from operator_model import OperatorStream
+
+stream = OperatorStream("Ascend950DT_9582", track_post_history=True)
+first = stream.advance("mhc_post", (64, 4, 256))
+next_call = stream.advance("mhc_post", (63, 4, 320))
+```
+
+独立的 vLLM 扩展 HcPost、未知前缀、宽行跨 UB 分片各有自己的适用边界。[分支、实际误差和 970DT 情景](../results/v0.29/post/report.md)
+
 ## Kimi-K3 在一次 prefill 调度中的 KDA
 
 可以从调度器的实际 token 数选择 FLA 调用。在 TP8、单卡 B8、每条 32Ki 的未切块例子中，模型配置给出每卡 12 个头和 128 维状态。结果包含 `aclnn`、工作项、三个主核各自的耗时和外围张量的读写字节。
@@ -277,3 +291,23 @@ dispatch_us = p["full_dispatch_us"]
 ```
 
 这个例子选择 V2，`main_us` 约为 33,161 µs，属于大 shape 外推。系统只应把这个量用于三个主核，Q/K 归一化、状态 gather/scatter 和 launch 间隔另行建模。缺少合格计时的 V1 或不等长的 packed V2 返回相应的形状、路由和可用字节字段，耗时返回 `None`。[各代输入与输出示例](../results/v0.27/kda/report.md)
+
+对于 V1，`p["v1_work"]["finalize"]` 提供每 AIC 工作、有效 Cube 运算与 BF16 理想下界。程序可在计时为 None 时继续统计工作量。[V1 输出字段和单位](../results/v0.29/kda/report.md)
+
+
+## 查询一条长矩阵的分块假设
+
+系统缺少目标芯片 CA 时可以比较候选的工作量和带宽假设。例如独立的 BF16 连续 Matmul，B 能整份进入每个 AIC 的 L1 时，可显式查看此路径。返回 `status=conditional` 表示依赖该实现，`unavailable` 表示该路径无法为给定几何提供时间。公共 `estimate` 和该条件值在误差报告中分别评分。
+
+```python
+from operator_model.matmul_full_load import estimate_matmul_full_load
+
+r = estimate_matmul_full_load((262144, 128, 512), chip="Ascend950DT_9582")
+print(r["tile"], r["waves"], r["cycles"]["per_aic_step"], r["latency_us"])
+# [256, 128, 32], 32, 4112, approximately 85.246 microseconds
+```
+
+输入轴是 M、N、K。这个例子来自 Flash 的 B8×32Ki，普通 decode 的同一轴 M 则为 1、9、11、16，启用 MTP8 并等长满校验时为 9、81、99、144。shape 变化会选择不同的块、不同数量的 AIC 和可能的 AIV 归并。[大形驻留算例](examples/matmul.md) · [相同投影的八种 decode 调度](../results/v0.29/matmul/decode/report.md)
+
+
+对 Kimi 的多 token AttnResFwd，可用 `from operator_model.attn_res_prefill_plan import prefill_service_plan`，然后调用 `prefill_service_plan([512,7168,8,1], "Ascend950PR_957b")`。字段 `conditional_schedule_us` 是按缓存 gamma 的 40021 分支推导的条件阶段服务，`qualified_latency_us` 在未校准时为 None。以该值做系统情景时应保留这个区别。[理想服务与缺失的阶段](../results/v0.29/large/vector/report.md)

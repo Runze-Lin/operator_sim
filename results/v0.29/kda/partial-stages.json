@@ -1,0 +1,879 @@
+{
+  "scope": "Measured V1 phase intervals inside an invalid full dispatch. Finalize source-derived work and nominal owner identities compared to actual instructions/GM displacements. Whole V1 and standalone subphase latency calibration remain unavailable.",
+  "target": "Ascend950DT_9582",
+  "inputs": [
+    1,
+    2,
+    1,
+    1,
+    128,
+    128
+  ],
+  "cu": [
+    0,
+    1,
+    2
+  ],
+  "four_groups": {
+    "attention": {
+      "count": 256,
+      "bad": 0,
+      "max_abs": 3.57628e-07
+    },
+    "aqk": {
+      "count": 128,
+      "bad": 0,
+      "max_abs": 0.0
+    },
+    "akk": {
+      "count": 128,
+      "bad": 0,
+      "max_abs": 0.0
+    },
+    "state_vk": {
+      "count": 32768,
+      "bad": 0,
+      "max_abs": 1.11817e-07
+    }
+  },
+  "register_sha256": "37bb14f5779ad16054f2cfe7c45afb5888b978d02005ebd900f3aab0c4628895",
+  "capture_sha256": "a6d4f15f8f9c66af319455aadd198b75e5d4be54d777c600b2b23f2329bbb27d",
+  "fault_sha256": "98d14f87ad3bd537b93e5e564067b6249237b901544fabd2951f3fda47ac3ef4",
+  "model_work": {
+    "lengths": [
+      1,
+      1
+    ],
+    "rank_local_heads": 1,
+    "physical_aic": 32,
+    "chunks": 2,
+    "work_items": 2,
+    "automatic_route": "v1",
+    "v1_phase_device_us": {},
+    "v1_total_device_us": null,
+    "v1_phases": [
+      "gate_prepare",
+      "post_wu",
+      "fwd_h",
+      "finalize"
+    ],
+    "finalize_work": {
+      "valid_rows_per_owner_task": {
+        "1": 2
+      },
+      "full_block_tasks": 0,
+      "tail_tasks": 2,
+      "logical_cube_ops": 66048,
+      "logical_state_product_ops": 65536,
+      "logical_local_product_ops": 512,
+      "predicted_aic_with_output_tasks": 2,
+      "tasks_per_aic": [
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "logical_ops_per_aic": [
+        33024,
+        33024,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "critical_owner_logical_ops": 33024
+    },
+    "selection_reason": "Nonempty explicit-length 950 V1 multi-chunk dispatch. Finalize uses the ordinary strided queue; each valid full and tail branch constructs an inner Resource."
+  },
+  "phases": [
+    {
+      "stage": "gate_prepare",
+      "kernel": "ChunkKdaFwd_5e864108d5688e456abb78f238c67b16_2_mix_aic",
+      "capture": "results/v0.27/kda/raw/host-control/profile/OPPROF_20261120090934_QXPJJWSIKZZFJXOI/ChunkKdaFwd_5e864108d5688e456abb78f238c67b16_2_mix_aic/0",
+      "trace_sha256": "966a8746ae7b77fa5cd050ff267e0679a163c54f30cd445bfe4d0761c8eb6cb5",
+      "text_sha256": "5275721e11b3906d6f56a7fa5d04f535b64d9da894932abd84e082973652f200",
+      "observed_window_us": 37.43878787878788,
+      "first_tick": 29101,
+      "last_tick": 90875,
+      "active_aic": 32,
+      "active_aiv": 64,
+      "useful_mmad_aics": 2,
+      "callback_count": 114,
+      "prefix_certified_aics": 2,
+      "status": "phase in faulted measurement",
+      "formal_timing_us": null,
+      "reference_for_individual_phase_outputs": false,
+      "resource": {
+        "descriptor_bytes": {
+          "OUT->UB": 35904,
+          "UB->OUT": 87552,
+          "OUT->L1": 98304,
+          "L1->L0A": 40960,
+          "L1->L0B": 90112,
+          "L0C->OUT": 40960
+        },
+        "mmad_issued_shapes": {
+          "16x64x128": 4,
+          "16x16x16": 8,
+          "32x32x32": 4
+        },
+        "issued_mmad_ops": 1376256,
+        "queue_instruction_counts": {
+          "SCALAR": 100804,
+          "FLOWCTRL": 3338,
+          "MTE1": 78,
+          "MTE2": 350,
+          "MTE3": 172,
+          "PUSHQ": 420,
+          "RVECLP": 316,
+          "RVECSU": 662,
+          "RVECLD": 1086,
+          "RVECEX": 2488,
+          "RVECST": 1652,
+          "FIXP": 32,
+          "CUBE": 16
+        }
+      },
+      "owners": [
+        {
+          "core": "core0.cubecore0",
+          "shard_sha256": "b80b14e6c81f2e62a92ae33a8dafb31fdff3760f74816a8d640551f78e055b2e",
+          "family_ordinal": 0,
+          "window": [
+            29171,
+            85779
+          ],
+          "mmads": [
+            {
+              "op": "MMAD",
+              "pc": "0x915a166334",
+              "start_tick": 61583,
+              "end_tick": 61682,
+              "m": 16,
+              "n": 64,
+              "k": 128
+            },
+            {
+              "op": "MMAD",
+              "pc": "0x915a166a34",
+              "start_tick": 63378,
+              "end_tick": 63477,
+              "m": 16,
+              "n": 64,
+              "k": 128
+            },
+            {
+              "op": "MMAD",
+              "pc": "0x915a167abc",
+              "start_tick": 75155,
+              "end_tick": 75270,
+              "m": 16,
+              "n": 16,
+              "k": 16
+            },
+            {
+              "op": "MMAD",
+              "pc": "0x915a1687c0",
+              "start_tick": 79610,
+              "end_tick": 79725,
+              "m": 16,
+              "n": 16,
+              "k": 16
+            },
+            {
+              "op": "MMAD",
+              "pc": "0x915a167abc",
+              "start_tick": 80986,
+              "end_tick": 81101,
+              "m": 16,
+              "n": 16,
+              "k": 16
+            },
+            {
+              "op": "MMAD",
+              "pc": "0x915a1687c0",
+              "start_tick": 82086,
+              "end_tick": 82201,
+              "m": 16,
+              "n": 16,
+              "k": 16
+            },
+            {
+              "op": "MMAD",
+              "pc": "0x915a167abc",
+              "start_tick": 83190,
+              "end_tick": 83449,
+              "m": 32,
+              "n": 32,
+              "k": 32
+            },
+            {
+              "op": "MMAD",
+              "pc": "0x915a1687c0",
+              "start_tick": 85284,
+              "end_tick": 85543,
+              "m": 32,
+              "n": 32,
+              "k": 32
+            }
+          ],
+          "earliest_repeated_set": {
+            "0": {
+              "first_tick": 42398,
+              "first_offset": "0x11316c",
+              "second_tick": 56413,
+              "second_offset": "0x141568",
+              "second_pc_in_actual_callback": true
+            },
+            "1": {
+              "first_tick": 42400,
+              "first_offset": "0x113180",
+              "second_tick": 56414,
+              "second_offset": "0x141574",
+              "second_pc_in_actual_callback": true
+            },
+            "2": {
+              "first_tick": 42403,
+              "first_offset": "0x113194",
+              "second_tick": 56420,
+              "second_offset": "0x141590",
+              "second_pc_in_actual_callback": true
+            }
+          },
+          "transfer_details": []
+        },
+        {
+          "core": "core1.cubecore0",
+          "shard_sha256": "69692ab7c8a3a21490b4a87f87b52f0bf6be55829f52421e95172562cecb836d",
+          "family_ordinal": 0,
+          "window": [
+            29177,
+            85616
+          ],
+          "mmads": [
+            {
+              "op": "MMAD",
+              "pc": "0x915a166334",
+              "start_tick": 61519,
+              "end_tick": 61618,
+              "m": 16,
+              "n": 64,
+              "k": 128
+            },
+            {
+              "op": "MMAD",
+              "pc": "0x915a166a34",
+              "start_tick": 63329,
+              "end_tick": 63428,
+              "m": 16,
+              "n": 64,
+              "k": 128
+            },
+            {
+              "op": "MMAD",
+              "pc": "0x915a167abc",
+              "start_tick": 75221,
+              "end_tick": 75336,
+              "m": 16,
+              "n": 16,
+              "k": 16
+            },
+            {
+              "op": "MMAD",
+              "pc": "0x915a1687c0",
+              "start_tick": 79644,
+              "end_tick": 79759,
+              "m": 16,
+              "n": 16,
+              "k": 16
+            },
+            {
+              "op": "MMAD",
+              "pc": "0x915a167abc",
+              "start_tick": 80800,
+              "end_tick": 80915,
+              "m": 16,
+              "n": 16,
+              "k": 16
+            },
+            {
+              "op": "MMAD",
+              "pc": "0x915a1687c0",
+              "start_tick": 81914,
+              "end_tick": 82029,
+              "m": 16,
+              "n": 16,
+              "k": 16
+            },
+            {
+              "op": "MMAD",
+              "pc": "0x915a167abc",
+              "start_tick": 82997,
+              "end_tick": 83256,
+              "m": 32,
+              "n": 32,
+              "k": 32
+            },
+            {
+              "op": "MMAD",
+              "pc": "0x915a1687c0",
+              "start_tick": 85147,
+              "end_tick": 85406,
+              "m": 32,
+              "n": 32,
+              "k": 32
+            }
+          ],
+          "earliest_repeated_set": {
+            "0": {
+              "first_tick": 42422,
+              "first_offset": "0x11316c",
+              "second_tick": 56702,
+              "second_offset": "0x141568",
+              "second_pc_in_actual_callback": true
+            },
+            "1": {
+              "first_tick": 42424,
+              "first_offset": "0x113180",
+              "second_tick": 56703,
+              "second_offset": "0x141574",
+              "second_pc_in_actual_callback": true
+            },
+            "2": {
+              "first_tick": 42427,
+              "first_offset": "0x113194",
+              "second_tick": 56709,
+              "second_offset": "0x141590",
+              "second_pc_in_actual_callback": true
+            }
+          },
+          "transfer_details": []
+        }
+      ]
+    },
+    {
+      "stage": "post_wu",
+      "kernel": "ChunkKdaFwd_5e864108d5688e456abb78f238c67b16_2_mix_aic",
+      "capture": "results/v0.27/kda/raw/host-control/profile/OPPROF_20261120090934_QXPJJWSIKZZFJXOI/ChunkKdaFwd_5e864108d5688e456abb78f238c67b16_2_mix_aic/1",
+      "trace_sha256": "d750dccd5b2a9b7b2d777929df300c03a677ff12c36a8639925205fa66290bfb",
+      "text_sha256": "5275721e11b3906d6f56a7fa5d04f535b64d9da894932abd84e082973652f200",
+      "observed_window_us": 5.364242424242424,
+      "first_tick": 101156,
+      "last_tick": 110007,
+      "active_aic": 32,
+      "active_aiv": 64,
+      "useful_mmad_aics": 0,
+      "callback_count": 0,
+      "prefix_certified_aics": 0,
+      "status": "phase in faulted measurement",
+      "formal_timing_us": null,
+      "reference_for_individual_phase_outputs": false,
+      "resource": {
+        "descriptor_bytes": {
+          "OUT->UB": 25100,
+          "UB->OUT": 2048
+        },
+        "mmad_issued_shapes": {},
+        "issued_mmad_ops": 0,
+        "queue_instruction_counts": {
+          "SCALAR": 60864,
+          "FLOWCTRL": 2000,
+          "MTE1": 64,
+          "MTE2": 212,
+          "MTE3": 74,
+          "PUSHQ": 186,
+          "RVECLP": 126,
+          "RVECSU": 192,
+          "RVECLD": 162,
+          "RVECEX": 256,
+          "RVECST": 150
+        }
+      },
+      "owners": []
+    },
+    {
+      "stage": "fwd_h",
+      "kernel": "ChunkKdaFwd_5e864108d5688e456abb78f238c67b16_2_mix_aic",
+      "capture": "results/v0.27/kda/raw/host-control/profile/OPPROF_20261120090934_QXPJJWSIKZZFJXOI/ChunkKdaFwd_5e864108d5688e456abb78f238c67b16_2_mix_aic/2",
+      "trace_sha256": "0daa24d3c268a7195b1ddb59e1bb73810e0a9a7cb4056d4c3ab21fe37d55e09e",
+      "text_sha256": "5275721e11b3906d6f56a7fa5d04f535b64d9da894932abd84e082973652f200",
+      "observed_window_us": 50.18969696969697,
+      "first_tick": 115397,
+      "last_tick": 198210,
+      "active_aic": 32,
+      "active_aiv": 64,
+      "useful_mmad_aics": 2,
+      "callback_count": 0,
+      "prefix_certified_aics": 0,
+      "status": "phase in faulted measurement",
+      "formal_timing_us": null,
+      "reference_for_individual_phase_outputs": false,
+      "resource": {
+        "descriptor_bytes": {
+          "OUT->UB": 483328,
+          "OUT->L1": 1024,
+          "L1->L0A": 8192,
+          "L1->L0B": 8192,
+          "L0C->OUT": 131072,
+          "UB->OUT": 199168
+        },
+        "mmad_issued_shapes": {
+          "128x128x1": 2
+        },
+        "issued_mmad_ops": 65536,
+        "queue_instruction_counts": {
+          "SCALAR": 230694,
+          "MTE2": 490,
+          "FLOWCTRL": 15640,
+          "MTE3": 92,
+          "PUSHQ": 1280,
+          "MTE1": 40,
+          "FIXP": 4,
+          "CUBE": 2,
+          "RVECLP": 2210,
+          "RVECSU": 3764,
+          "RVECLD": 8328,
+          "RVECEX": 10952,
+          "RVECST": 6776
+        }
+      },
+      "owners": [
+        {
+          "core": "core0.cubecore0",
+          "shard_sha256": "8cd4eb0f79fb3c68bcb7a15102f313b2de3f10fcce9bb0fafc05b342f20284c8",
+          "family_ordinal": 2,
+          "window": [
+            115399,
+            197420
+          ],
+          "mmads": [
+            {
+              "op": "MMAD",
+              "pc": "0x915a1a41b0",
+              "start_tick": 188480,
+              "end_tick": 188611,
+              "m": 128,
+              "n": 128,
+              "k": 1
+            }
+          ],
+          "earliest_repeated_set": {},
+          "transfer_details": []
+        },
+        {
+          "core": "core1.cubecore0",
+          "shard_sha256": "2dbf0fe0bea5896871120097da534757c5440df2af73c875baaca56678dfdc18",
+          "family_ordinal": 2,
+          "window": [
+            115402,
+            197443
+          ],
+          "mmads": [
+            {
+              "op": "MMAD",
+              "pc": "0x915a1a41b0",
+              "start_tick": 188532,
+              "end_tick": 188663,
+              "m": 128,
+              "n": 128,
+              "k": 1
+            }
+          ],
+          "earliest_repeated_set": {},
+          "transfer_details": []
+        }
+      ]
+    },
+    {
+      "stage": "finalize",
+      "kernel": "ChunkKdaFwd_5e864108d5688e456abb78f238c67b16_2_mix_aic",
+      "capture": "results/v0.27/kda/raw/host-control/profile/OPPROF_20261120090934_QXPJJWSIKZZFJXOI/ChunkKdaFwd_5e864108d5688e456abb78f238c67b16_2_mix_aic/3",
+      "trace_sha256": "d9b7b4ffd5c628d521a70d254b6c3c762b8a58a6551becd2f7dd13d347ef2870",
+      "text_sha256": "5275721e11b3906d6f56a7fa5d04f535b64d9da894932abd84e082973652f200",
+      "observed_window_us": 11.784848484848485,
+      "first_tick": 216915,
+      "last_tick": 236360,
+      "active_aic": 32,
+      "active_aiv": 64,
+      "useful_mmad_aics": 2,
+      "callback_count": 18,
+      "prefix_certified_aics": 2,
+      "status": "phase in faulted measurement",
+      "formal_timing_us": null,
+      "reference_for_individual_phase_outputs": false,
+      "resource": {
+        "descriptor_bytes": {
+          "OUT->UB": 23040,
+          "UB->OUT": 512,
+          "OUT->L1": 66564,
+          "L1->L0A": 9216,
+          "L1->L0B": 73728,
+          "L0C->OUT": 2048
+        },
+        "mmad_issued_shapes": {
+          "1x128x128": 2,
+          "1x128x1": 2
+        },
+        "issued_mmad_ops": 66048,
+        "queue_instruction_counts": {
+          "SCALAR": 64656,
+          "FLOWCTRL": 2476,
+          "MTE2": 184,
+          "MTE1": 44,
+          "MTE3": 66,
+          "PUSHQ": 134,
+          "RVECLP": 8,
+          "RVECSU": 8,
+          "RVECLD": 18,
+          "RVECEX": 24,
+          "RVECST": 18,
+          "FIXP": 8,
+          "CUBE": 4
+        }
+      },
+      "owners": [
+        {
+          "core": "core0.cubecore0",
+          "shard_sha256": "21e4dd73b1ad4a908abd007f97c01f90b8cd06fdb19c19028161030897a4959b",
+          "family_ordinal": 3,
+          "window": [
+            217088,
+            235710
+          ],
+          "mmads": [
+            {
+              "op": "MMAD",
+              "pc": "0x915a18ed98",
+              "start_tick": 230224,
+              "end_tick": 230355,
+              "m": 1,
+              "n": 128,
+              "k": 128
+            },
+            {
+              "op": "MMAD",
+              "pc": "0x915a18f9a0",
+              "start_tick": 234144,
+              "end_tick": 234219,
+              "m": 1,
+              "n": 128,
+              "k": 1
+            }
+          ],
+          "earliest_repeated_set": {
+            "0": {
+              "first_tick": 221766,
+              "first_offset": "0x11a228",
+              "second_tick": 223653,
+              "second_offset": "0x16935c",
+              "second_pc_in_actual_callback": true
+            },
+            "1": {
+              "first_tick": 221770,
+              "first_offset": "0x11a240",
+              "second_tick": 223660,
+              "second_offset": "0x169378",
+              "second_pc_in_actual_callback": true
+            },
+            "2": {
+              "first_tick": 221771,
+              "first_offset": "0x11a248",
+              "second_tick": 223665,
+              "second_offset": "0x169390",
+              "second_pc_in_actual_callback": true
+            }
+          },
+          "transfer_details": [
+            {
+              "op": "MOV_OUT_TO_L1_MULTI_ND2NZ",
+              "pc": "0x915a18e4f4",
+              "start_tick": 227656,
+              "end_tick": 227990,
+              "src_addr": 624236241408,
+              "dst_addr": 0,
+              "n": 1,
+              "d": 128,
+              "processed_bytes": 256
+            },
+            {
+              "op": "MOV_OUT_TO_L1_MULTI_ND2NZ",
+              "pc": "0x915a18e570",
+              "start_tick": 227681,
+              "end_tick": 228418,
+              "src_addr": 624236175360,
+              "dst_addr": 32768,
+              "n": 128,
+              "d": 128,
+              "processed_bytes": 32768
+            },
+            {
+              "op": "FIX_L0C_TO_DST",
+              "pc": "0x915a18e3d4",
+              "start_tick": 230197,
+              "end_tick": 230504,
+              "dst_addr": 624280350720,
+              "m": 1,
+              "n": 128,
+              "processed_bytes": 512
+            },
+            {
+              "op": "MOV_OUT_TO_L1_MULTI_ND2NZ",
+              "pc": "0x915a18f0e0",
+              "start_tick": 231665,
+              "end_tick": 231816,
+              "src_addr": 624191662080,
+              "dst_addr": 16384,
+              "n": 1,
+              "d": 1,
+              "processed_bytes": 2
+            },
+            {
+              "op": "MOV_OUT_TO_L1_MULTI_ND2NZ",
+              "pc": "0x915a18f15c",
+              "start_tick": 231696,
+              "end_tick": 231853,
+              "src_addr": 624236174336,
+              "dst_addr": 65536,
+              "n": 1,
+              "d": 128,
+              "processed_bytes": 256
+            },
+            {
+              "op": "FIX_L0C_TO_DST",
+              "pc": "0x915a18efc0",
+              "start_tick": 234213,
+              "end_tick": 234419,
+              "dst_addr": 624280351744,
+              "m": 1,
+              "n": 128,
+              "processed_bytes": 512
+            }
+          ]
+        },
+        {
+          "core": "core1.cubecore0",
+          "shard_sha256": "c6ede8192fdd7fd29f13145985653221c3f252a1066ca6a2fdd1b803c2b2f338",
+          "family_ordinal": 3,
+          "window": [
+            217048,
+            235724
+          ],
+          "mmads": [
+            {
+              "op": "MMAD",
+              "pc": "0x915a18ed98",
+              "start_tick": 230197,
+              "end_tick": 230328,
+              "m": 1,
+              "n": 128,
+              "k": 128
+            },
+            {
+              "op": "MMAD",
+              "pc": "0x915a18f9a0",
+              "start_tick": 234212,
+              "end_tick": 234287,
+              "m": 1,
+              "n": 128,
+              "k": 1
+            }
+          ],
+          "earliest_repeated_set": {
+            "0": {
+              "first_tick": 220994,
+              "first_offset": "0x11a228",
+              "second_tick": 223620,
+              "second_offset": "0x16935c",
+              "second_pc_in_actual_callback": true
+            },
+            "1": {
+              "first_tick": 220998,
+              "first_offset": "0x11a240",
+              "second_tick": 223627,
+              "second_offset": "0x169378",
+              "second_pc_in_actual_callback": true
+            },
+            "2": {
+              "first_tick": 220999,
+              "first_offset": "0x11a248",
+              "second_tick": 223632,
+              "second_offset": "0x169390",
+              "second_pc_in_actual_callback": true
+            }
+          },
+          "transfer_details": [
+            {
+              "op": "MOV_OUT_TO_L1_MULTI_ND2NZ",
+              "pc": "0x915a18e4f4",
+              "start_tick": 227614,
+              "end_tick": 227930,
+              "src_addr": 624236241664,
+              "dst_addr": 0,
+              "n": 1,
+              "d": 128,
+              "processed_bytes": 256
+            },
+            {
+              "op": "MOV_OUT_TO_L1_MULTI_ND2NZ",
+              "pc": "0x915a18e570",
+              "start_tick": 227639,
+              "end_tick": 228317,
+              "src_addr": 624236208128,
+              "dst_addr": 32768,
+              "n": 128,
+              "d": 128,
+              "processed_bytes": 32768
+            },
+            {
+              "op": "FIX_L0C_TO_DST",
+              "pc": "0x915a18e3d4",
+              "start_tick": 230170,
+              "end_tick": 230659,
+              "dst_addr": 624280351232,
+              "m": 1,
+              "n": 128,
+              "processed_bytes": 512
+            },
+            {
+              "op": "MOV_OUT_TO_L1_MULTI_ND2NZ",
+              "pc": "0x915a18f0e0",
+              "start_tick": 231723,
+              "end_tick": 231877,
+              "src_addr": 624191662208,
+              "dst_addr": 16384,
+              "n": 1,
+              "d": 1,
+              "processed_bytes": 2
+            },
+            {
+              "op": "MOV_OUT_TO_L1_MULTI_ND2NZ",
+              "pc": "0x915a18f15c",
+              "start_tick": 231754,
+              "end_tick": 231913,
+              "src_addr": 624236174592,
+              "dst_addr": 65536,
+              "n": 1,
+              "d": 128,
+              "processed_bytes": 256
+            },
+            {
+              "op": "FIX_L0C_TO_DST",
+              "pc": "0x915a18efc0",
+              "start_tick": 234281,
+              "end_tick": 234629,
+              "dst_addr": 624280352256,
+              "m": 1,
+              "n": 128,
+              "processed_bytes": 512
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "finalize_cross_owner_pointers": [
+    {
+      "op": "MOV_OUT_TO_L1_MULTI_ND2NZ",
+      "pc": "0x915a18e4f4",
+      "core0": 624236241408,
+      "core1": 624236241664,
+      "delta_bytes": 256,
+      "descriptor_bytes": 256
+    },
+    {
+      "op": "MOV_OUT_TO_L1_MULTI_ND2NZ",
+      "pc": "0x915a18e570",
+      "core0": 624236175360,
+      "core1": 624236208128,
+      "delta_bytes": 32768,
+      "descriptor_bytes": 32768
+    },
+    {
+      "op": "FIX_L0C_TO_DST",
+      "pc": "0x915a18e3d4",
+      "core0": 624280350720,
+      "core1": 624280351232,
+      "delta_bytes": 512,
+      "descriptor_bytes": 512
+    },
+    {
+      "op": "MOV_OUT_TO_L1_MULTI_ND2NZ",
+      "pc": "0x915a18f0e0",
+      "core0": 624191662080,
+      "core1": 624191662208,
+      "delta_bytes": 128,
+      "descriptor_bytes": 2
+    },
+    {
+      "op": "MOV_OUT_TO_L1_MULTI_ND2NZ",
+      "pc": "0x915a18f15c",
+      "core0": 624236174336,
+      "core1": 624236174592,
+      "delta_bytes": 256,
+      "descriptor_bytes": 256
+    },
+    {
+      "op": "FIX_L0C_TO_DST",
+      "pc": "0x915a18efc0",
+      "core0": 624280351744,
+      "core1": 624280352256,
+      "delta_bytes": 512,
+      "descriptor_bytes": 512
+    }
+  ],
+  "formal_time_us": null
+}

@@ -26,6 +26,20 @@
 
 **RMSNorm 默认如何使用这一分层。** 连续 BF16 完整行时，`estimate` 在无前序且最忙核最多两轮 UB 块的范围内采用专项流水。每块先推进 gamma 和 x 的发起与响应，再按寄存器组数定价平方归约与归一化，按两个输出的完成及邻核统计量写扇区竞争求末核退休。行数很多时保持原先按芯片服务率定价的稳态排程。调用方有前序时可沿用原 `resident_aiv` 校准；显式 `rmsnorm_pipeline` 可再提供“紧邻同形复跑”，检查逐块预测。[含每一参数的公式](../results/v0.28/rms/method.md) · [独立十形的同核示例](examples/rmsnorm.md)
 
+同一算子内部也要区分策略。在选路可以从已发布库源码或安装包几何确认时，判别条件写成输入维度、dtype/布局、目标核数和缓冲容量上的不等式。先核对分支、实际核数、分块次数和尾块，再比较时间。例如切 K 的多核归并与 B 常驻的多波流水需要不同的指令图。每个分支的大形分别与同库同 dtype 的完整 CA 对照；小形、完整 prefill、调度 chunk 与 decode 的长期 KV 各按实际提交的轴和工作量标注。源码参考的版本、安装 ELF 指纹、未返回的端点和预测适用域可在大形总表追踪。[逐算子大形合同](../results/v0.29/large/report.md)
+
+### 哪些参数随芯片改变，哪些取决于具体算子
+
+以同为 BF16 的两个 Matmul 为例。小 M、长 K 的投影需要决定是否沿 K 并行。连续无转置、无 bias 时，令 $G=\lceil M/U\rceil\lceil N/V\rceil$，其中 $U,V$ 是在 L0A、L0B 各双缓冲、K 深度至少 64 时容得下的输出边长。对 950 的 64 KiB L0 输入缓冲，$U=V=256$。当 $G\le\lfloor C/2\rfloor$ 时，每个矩形至少能用两个 AIC。安装库的 host 探针还显示 K 对齐后的最小深度、L0C 容量与 FP32 归并能力会影响选择；候选把每个矩形的 K 段数定为 $\lfloor C/G\rfloor$。$C$ 取目标芯片的 AIC 数。Flash 的 $[4096,32,5120]$ 在 DT 的 16 个矩形上各分两个 K 段，在 PR 走纯 Cube。同一个算子迁移到另一张卡时，连要计价的工作都可能变化。此选路已通过每芯片 14 个新形的 host 工作区对照，设备计时独立评估另列。[候选公式、各矩形 MMAD 和逐形误差](../results/v0.29/matmul/report.md)
+
+大 M、窄 N 的投影面临不同的问题。若整份 BF16 权重 $B[K,N]$ 能在计算期间驻留于每个活动核的 L1，核外到 L1 的 B 搬入总量为 $2KNA$ 字节，$A$ 为实际活动 AIC 数。每核此后的 $w$ 个输出块只需继续搬 A、发起 MMAD 和写 Y，核内 L1→L0 的 B 搬运仍要计入。稳态 tile 发起间隔下界是单核乘加、核内搬运和全片外存服务三者中最长的一项。首次等待和末次排空另外计算。Flash 的 $[262144,128,512]$ 在 DT 每核 32 个输出块，若把不断发射的每条 MMAD 都再加一次完整启动等待，误差会随轮数积累。在 DT 的 32 核上，B8×32Ki 的物理候选给出 85.246 µs，CA 为 85.993 µs。在更长的 shape 和另一芯片上，模型会重新比较全片带宽和核内发射的下界。[大 prefill 与小 decode 的完整算例](examples/matmul.md) · [ops-nn 的 B 常驻条件与 L0C 双缓冲分块](https://gitcode.com/cann/ops-nn/blob/602e4ad985da00aad28c16432841e9c5069e10de/matmul/mat_mul_v3/op_host/op_tiling/arch35/matmul_v3_basic_aswt_tiling.cpp)
+
+对 Vector，RMSNorm 的归约和两笔输出决定各行能否重叠，MXQuant 的 data 与 scale 则共享外存写通道。量化的大输入情景把有效驻留容量 $L$ 分给流经缓存的干净与脏数据。若总读 $R$、总写 $Y$、活跃预取占用 $V$ 字节，能保留的脏输出估为 $Y\min(1,\max(0,L-V)/(R-V+Y))$。溢出后的读写共同使用 $\eta B$，$B$ 是目标内存引脚带宽，$\eta$ 是混合访问的有效载荷比例，单位无量纲。$\eta$ 取自其他 Cast 的控制器计数，移植到 PR 还有不确定性。此情景与逐核归约价格可分别验证。[大 quant 的完整字节、控制器校准与对照图](../results/v0.29/quant/method.md)
+
+内置 mHC Post 可使用本流首遇、换形、同形重复的派发历史。对一个能完整装入 UB 的 token 行，已发出的多个读取在 $\max_j(a_j+L_j+b_j/r_j)$ 后就绪。$a_j$ 是描述符的发起时刻，$L_j$ 是首字节响应，$b_j$ 是负载字节，$r_j$ 是每周期服务字节。依赖就绪后才发该行计算与写回。系统持有顺序时可选用这个模型。KDA V1 的 Finalize 另按实际有效输出块和两段乘加计算作业量；上界能力只给出该阶段的理想计算下界。重复 SET 让整个 V1 没有合格设备时间。[Post 算例](examples/mhc_post.md) · [KDA 算例](examples/kda_chunk.md)
+
+大 prefill 下，mHC Pre 的第一层投影要同时沿 token 与归约 K 切片。设最忙 AIC 负责 $m_c$ 行、$k_c$ 个输入位置，24 个投影输出时，已有 950 FP32 MMAD 的片深为 32，一条指令的已观测服务周期是 $67+96\lceil m/16\rceil$，其中 $m$ 是该指令的有效行数。两个系数来自 28 份旧窗口的指令时长。不能把小形的整核总时长同时乘全片 token 倍数和完整宽度倍数。Flash 的 512-token、D=5120 chunk 在 DT 拆成 2 个 M 组、16 个 K 组；候选把这个 AIC 子问题、AIV 行归约和交接分别定价。更换 970 的 C:V 配比后，旧模板的成对发射映射仍需重新识别。AttnResFwd 的多 token 路径则先把 gamma 驻留，按核内行数流水化 score、归一化与异步写，非线性/控制延时尚未确认时可从 API 单取条件服务时间。[mHC 的源码条件与各阶段](../results/v0.29/large/fusion/report.md) · [AttnResFwd 的资源下界和真实维度](../results/v0.29/large/vector/report.md)
+
 ### Vector 算子怎样建模
 
 1. 先找可以并行的维度。逐行归约可以把行分给多个 AIV，KDA recurrent 的同一条状态链则要依次处理 token。根据库的分核规则算出最忙核承担的行数、列片数和尾块，再用 UB 容量决定每轮读入多少数据。
@@ -462,7 +476,7 @@ $$
 | Addmm | BF16 Cube 为 2MNK，融合 bias 的 MN 次加法单独记 `fused_bias_additions` | 增加 N 个 BF16 bias 输入 |
 | FA | 稠密非因果 QK 和 PV 的 Cube 共 4BHQ·KV·D。FP32 逻辑 softmax 的缩放、比较、减、exp、求和、除法 | 读 BF16 Q/K/V，写 BF16 O 和两路 [B,H,Q,8] 的 FP32 统计量。在线分块归并未展开 |
 | Lightning Indexer | 按各 query 可见 key 数累计 BF16 点积、FP32 ReLU、逐头加权与归约 | 读 query、key、weights，写每行 top-512 的 int32 索引。TopK 比较数随实现变化，未计 |
-| mHC Pre | 宽度 W=N²+2N 的投影为 2TNDW。HF32 按 32-bit 输入算力代理。Vector 含 RMS、仿射、sigmoid 和 residual 混合 | 读 BF16 x 与 FP32 phi/alpha/bias，写 BF16 h_in 和五个 FP32 输出（h_post、h_res、inv_rms、h_mix、h_pre） |
+| mHC Pre | 宽度 W=N²+2N 的投影为 2TNDW。实际拆分 Pre 的旧形 FP32 MMAD 沿 K 每 32 个位置发射一次，按 32 位操作数统计。Vector 含 RMS、仿射、sigmoid 和 residual 混合 | 读 BF16 x 与 FP32 phi/alpha/bias，写 BF16 h_in 和五个 FP32 输出（h_post、h_res、inv_rms、h_mix、h_pre） |
 | mHC Sinkhorn | 按实际 I 次迭代计 FP32 最大值、减法、exp、归约、epsilon 加法及 2I 轮逐元素除法 | 读、写各一个 FP32 [T,N,N]。推理合同没有辅助输出 |
 | mHC Post | FP32 residual 矩阵混合、post 支路乘加，另按 FP32 源元素数计输出 cast | 读 x/h_out/h_post/h_res，写 BF16 [T,N,D]。切核和驻留状态不改变逻辑张量 |
 | mHC PreSinkhorn | 融合 Pre 与 Sinkhorn 的代数步骤 | 写三个有效推理张量。need_backward=false 的辅助描述符不计有效写，片内中间结果不重复计 |
@@ -736,7 +750,7 @@ B_m=S_R+S_C+S_F+(W-1)\max(S_R,S_C,S_F),
 
 首轮填充按顺序相加，其后按最慢资源推进；总时延校正承担未分离的控制/同步和路径偏差。分支优先级为M=1→`gemv`，否则K%16≠0→`k_tail`，否则tile≠16×64→`coarse_tile`，其余`dense`。对应残差 \(\delta_b\) 分别0.024992、0.041869、−0.062131、−0.006530µs；残差用 \(\sum residual/(n_b+2)\) 收缩，避免一两个样本单独拟合完整模型。其中 residual 是各样本 CA 时间减未加该分组修正的预测（µs），\(n_b\) 是分组 b 的校准样本数，分母额外加2相当于把小样本残差向0收缩；它不是额外两个真实样本。
 
-每个最忙核的选定MMAD计数近似 \(W\lceil K/256\rceil\)，现计数系数≈1。K尾块和不同tile可能改变实际指令形状，需对比实际MMAD维度与数量。分支校准仅2/1/1/4点，未见组合仍为外推；不能将已校准BF16 matmul直接用于MX GMM、HF32 mHC或Addmm总调用。
+每个最忙核的选定MMAD计数近似 \(W\lceil K/256\rceil\)，现计数系数≈1。K尾块和不同tile可能改变实际指令形状，需对比实际MMAD维度与数量。分支校准仅2/1/1/4点，未见组合仍为外推；不能将已校准BF16 matmul直接用于MX GMM、32 位投影的 mHC 或 Addmm 总调用。
 
 ## 5. 普通FA：通用路径和长循环路径
 

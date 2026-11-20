@@ -1,0 +1,283 @@
+{
+  "utc": "2026-11-20T04:18:59.537604+00:00",
+  "pid": 13104,
+  "phase": "waiting for original CA",
+  "freeze_sha256": "2a3f88684606f95a2aa30ec97c37124251de3c1aac0c3f18426e5fcf9f6d8591",
+  "groups": {
+    "development": {
+      "completed": 3,
+      "wape_pct": 1.918963304377277,
+      "legacy_wape_pct": 25.913695304941204,
+      "max_abs_pct": 6.069122163311169
+    },
+    "in flight, blinded at freeze": {
+      "completed": 1,
+      "wape_pct": 12.076929016182408,
+      "legacy_wape_pct": 17.834576249359323,
+      "max_abs_pct": 12.076929016182403
+    },
+    "registered before acquisition": {
+      "completed": 0,
+      "wape_pct": null,
+      "legacy_wape_pct": null,
+      "max_abs_pct": null
+    },
+    "completed but unseen at freeze": {
+      "completed": 0,
+      "wape_pct": null,
+      "legacy_wape_pct": null,
+      "max_abs_pct": null
+    }
+  },
+  "rows": [
+    {
+      "shape": [
+        32768,
+        128,
+        512
+      ],
+      "chip": "Ascend950DT_9582",
+      "role": "development",
+      "candidate_us": 15.467022430774792,
+      "all_output_writeback_us": 15.467022430774792,
+      "legacy_us": 19.15329092982998,
+      "receipt": "results/v0.28/matmul/32768-128-512-dt-drain.json",
+      "sha256": "a94d1b63a9390e90292c73daafb5fbc18a6b5e2bec5b13e2dd65ef46843cdcbf",
+      "original": "results/v0.28/matmul/32768-128-512-dt.json",
+      "cost_seconds": 236.27172743994743,
+      "peak_bytes": 414217276,
+      "status": "whole kernel qualified",
+      "terminal": true,
+      "ca_us": 15.561818957328796,
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_131074",
+      "candidate_roster_mmad_match": true,
+      "active_aic": 32,
+      "active_aiv": 0,
+      "mmad": 2048,
+      "trace": "runs/matmul28/32768-128-512-dt/profile/OPPROF_20261120100956_FZOFOXHRAGHFUQVS/simulator/trace.json",
+      "trace_sha256": "81e827d49f13386159b40525752cbffcae51707ff214698d1e12e80d0b253bfe",
+      "elf_sha256": "e6899fbaa2659b7778bee81deb00b64b009dafcb7ad350f06576767fdeba2bf7",
+      "correctness": [
+        "correctness count=4194304 bad=0"
+      ],
+      "basis": "Supplemental physical END + independent min/max of all X descriptors on each shard + official aggregate and core table. Engine drains can retire later than scalar END.",
+      "signed_error_pct": -0.6091609651412866,
+      "old_signed_error_pct": 23.078741516972777
+    },
+    {
+      "shape": [
+        32768,
+        128,
+        512
+      ],
+      "chip": "Ascend950PR_957b",
+      "role": "development",
+      "candidate_us": 28.310169808024032,
+      "all_output_writeback_us": 34.30203266516689,
+      "legacy_us": 28.81951742128287,
+      "receipt": "results/v0.28/matmul/32768-128-512-pr-drain.json",
+      "sha256": "75b1c2a2c14767b2b8588795ec722c6d9be382b5ea900e8df5d2773c33952561",
+      "original": "results/v0.28/matmul/32768-128-512-pr.json",
+      "cost_seconds": 316.20684813987464,
+      "peak_bytes": 569968133,
+      "status": "whole kernel qualified",
+      "terminal": true,
+      "ca_us": 26.69030272960663,
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_131074",
+      "candidate_roster_mmad_match": true,
+      "active_aic": 28,
+      "active_aiv": 0,
+      "mmad": 2048,
+      "trace": "runs/matmul28/32768-128-512-pr/profile/OPPROF_20261120101400_HYOCKFQUDRAZLMPU/simulator/trace.json",
+      "trace_sha256": "173500590bac9bfc981916e740c26367fffed324debbb7cd4950fb663ac59748",
+      "elf_sha256": "e6899fbaa2659b7778bee81deb00b64b009dafcb7ad350f06576767fdeba2bf7",
+      "correctness": [
+        "correctness count=4194304 bad=0"
+      ],
+      "basis": "Supplemental physical END + independent min/max of all X descriptors on each shard + official aggregate and core table. Engine drains can retire later than scalar END.",
+      "signed_error_pct": 6.069122163311169,
+      "old_signed_error_pct": 7.977484231808196
+    },
+    {
+      "shape": [
+        32768,
+        128,
+        512
+      ],
+      "chip": "Ascend970DT",
+      "role": "extrapolation only",
+      "candidate_us": null,
+      "all_output_writeback_us": null,
+      "legacy_us": 7.777499526780573,
+      "status": "no CA, extrapolation only",
+      "terminal": true
+    },
+    {
+      "shape": [
+        262144,
+        128,
+        512
+      ],
+      "chip": "Ascend950DT_9582",
+      "role": "development",
+      "candidate_us": 85.24641637016873,
+      "all_output_writeback_us": 88.17859770350206,
+      "legacy_us": 113.5050162684515,
+      "receipt": "results/v0.28/matmul/262144-128-512-dt-drain.json",
+      "sha256": "1bd1325872e1da775ef7fa71a2df773b2fcc320bf180cac1b9843e85ab71fc50",
+      "original": "results/v0.28/matmul/262144-128-512-dt.json",
+      "cost_seconds": 1396.0554936099797,
+      "peak_bytes": 4467079786,
+      "status": "whole kernel qualified",
+      "terminal": true,
+      "ca_us": 85.99272429943085,
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_131074",
+      "candidate_roster_mmad_match": true,
+      "active_aic": 32,
+      "active_aiv": 0,
+      "mmad": 16384,
+      "trace": "runs/matmul28/262144-128-512-dt/profile/OPPROF_20261120110511_RQGFGWLMFQQPTGCJ/simulator/trace.json",
+      "trace_sha256": "409d3dbf0f63cd3e131236fd4dac41ac0ab1f92dcff4578e4d7b08344842f489",
+      "elf_sha256": "e6899fbaa2659b7778bee81deb00b64b009dafcb7ad350f06576767fdeba2bf7",
+      "correctness": [
+        "correctness count=33554432 bad=0"
+      ],
+      "basis": "Supplemental physical END + independent min/max of all X descriptors on each shard + official aggregate and core table. Engine drains can retire later than scalar END.",
+      "signed_error_pct": -0.8678733408461814,
+      "old_signed_error_pct": 31.99374388142595
+    },
+    {
+      "shape": [
+        262144,
+        128,
+        512
+      ],
+      "chip": "Ascend950PR_957b",
+      "role": "in flight, blinded at freeze",
+      "candidate_us": 196.08232980802404,
+      "all_output_writeback_us": 244.0172326651669,
+      "legacy_us": 206.1555259029228,
+      "receipt": "results/v0.28/matmul/262144-128-512-pr-drain.json",
+      "sha256": "78cfc3dbbd87b07ab5e2a4435eb248497e1ea6aa338119564c2e5892a5c70aad",
+      "original": "results/v0.28/matmul/262144-128-512-pr.json",
+      "cost_seconds": 1805.0930073801428,
+      "peak_bytes": 4055871820,
+      "status": "whole kernel qualified",
+      "terminal": true,
+      "ca_us": 174.95333921909332,
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_131074",
+      "candidate_roster_mmad_match": true,
+      "active_aic": 28,
+      "active_aiv": 0,
+      "mmad": 16384,
+      "trace": "runs/matmul28/262144-128-512-pr/profile/OPPROF_20261120112917_YZGYRYSVSVTYJTGV/simulator/trace.json",
+      "trace_sha256": "46c3bd2755a7a8820fdd87d9985a50e3206f8e7a61c5cc8ca2470ce932cc1e2f",
+      "elf_sha256": "e6899fbaa2659b7778bee81deb00b64b009dafcb7ad350f06576767fdeba2bf7",
+      "correctness": [
+        "correctness count=33554432 bad=0"
+      ],
+      "basis": "Supplemental physical END + independent min/max of all X descriptors on each shard + official aggregate and core table. Engine drains can retire later than scalar END.",
+      "signed_error_pct": 12.076929016182403,
+      "old_signed_error_pct": 17.834576249359312
+    },
+    {
+      "shape": [
+        262144,
+        128,
+        512
+      ],
+      "chip": "Ascend970DT",
+      "role": "extrapolation only",
+      "candidate_us": 25.616997821831117,
+      "all_output_writeback_us": 27.31001115516445,
+      "legacy_us": 31.87085313697569,
+      "status": "no CA, extrapolation only",
+      "terminal": true
+    },
+    {
+      "shape": [
+        1048576,
+        128,
+        512
+      ],
+      "chip": "Ascend950DT_9582",
+      "role": "in flight, blinded at freeze",
+      "candidate_us": 324.49005273380516,
+      "all_output_writeback_us": 339.8368377035021,
+      "legacy_us": 437.2508462432924,
+      "status": "acquiring",
+      "terminal": false
+    },
+    {
+      "shape": [
+        1048576,
+        128,
+        512
+      ],
+      "chip": "Ascend950PR_957b",
+      "role": "registered before acquisition",
+      "candidate_us": 879.1546955223097,
+      "all_output_writeback_us": 963.0407755223096,
+      "legacy_us": 1154.9997773314942,
+      "status": "queued",
+      "terminal": false
+    },
+    {
+      "shape": [
+        1048576,
+        128,
+        512
+      ],
+      "chip": "Ascend970DT",
+      "role": "extrapolation only",
+      "candidate_us": 84.78144226627555,
+      "all_output_writeback_us": 97.2150778218311,
+      "legacy_us": 114.8049526548534,
+      "status": "no CA, extrapolation only",
+      "terminal": true
+    },
+    {
+      "shape": [
+        2097152,
+        128,
+        512
+      ],
+      "chip": "Ascend950DT_9582",
+      "role": "registered before acquisition",
+      "candidate_us": 643.4815678853201,
+      "all_output_writeback_us": 675.3811577035019,
+      "legacy_us": 868.5730192198481,
+      "status": "queued",
+      "terminal": false
+    },
+    {
+      "shape": [
+        2097152,
+        128,
+        512
+      ],
+      "chip": "Ascend950PR_957b",
+      "role": "registered before acquisition",
+      "candidate_us": 1837.852752665167,
+      "all_output_writeback_us": 1921.7388326651667,
+      "legacy_us": 2304.6884630457803,
+      "status": "queued",
+      "terminal": false
+    },
+    {
+      "shape": [
+        2097152,
+        128,
+        512
+      ],
+      "chip": "Ascend970DT",
+      "role": "extrapolation only",
+      "candidate_us": 176.53294448849783,
+      "all_output_writeback_us": 190.42183337738672,
+      "legacy_us": 226.79869487707563,
+      "status": "no CA, extrapolation only",
+      "terminal": true
+    }
+  ],
+  "source_drift": []
+}

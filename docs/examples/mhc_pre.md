@@ -1,5 +1,7 @@
 # mHC Pre 算例
 
+Flash D=5120、T=512 时，950DT 将 FP32 投影分配到 2 个 M 组和 16 个 K 组。每 AIC 处理局部 256 行与 K=1280，后继 AIV 每忙核最多归约 8 行。公开全量缩放 2512.514 µs，源码和旧指令驱动的阶段候选 56.427 µs，当前大形仍待 CA。[逐组分核、阶段参数和双端检查](../../results/v0.29/large/fusion/report.md)
+
 ## 关键核的资源分摊与实际指令顺序
 
 ![mHC Pre 模型与真实末核的独占预算，附按实际发生顺序的时间线](figures/mhc-pre-exclusive-pr.png)

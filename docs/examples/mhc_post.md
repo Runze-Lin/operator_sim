@@ -1,5 +1,9 @@
 # mHC Post 算例
 
+内置 Post 的另一种用法是让系统仿真器按真实顺序调用 `OperatorStream(track_post_history=True)`。在 [65,4,5120] 的 DT 临界核上，12 笔读响应相加为 6.839 µs，这些读实际占据的区间并集只有 2.455 µs。按整行依赖和跨分片重叠估得 6.025 µs，完整 CA 为 5.433 µs。这个双分片候选仍在独立验证。[分核、关键路径、前序与 PR 对照](../../results/v0.29/post/report.md)
+
+![DT 的宽通道 Post 模型与真实分片流水](../../results/v0.29/post/wide-dt.png)
+
 给定同一个 [1,4,192]，950DT 的首次与紧邻复跑分别实测 4.528、1.742 µs。复跑时通道片两笔有效输入是 384 与 1536 B，四笔 384 B 输出分别归属四路残差。条件接口 `estimate_post_history([1,4,192]).scenarios["repeat"].latency_us` 给出 1.889 µs。已有服务日志可通过 `expected_us` 传入不同前序的频率求系统平均。[逐笔读写、条件公式及价格来源](../../results/v0.28/post/report.md)
 
 ![独立新形 157×4×1088，两种前序均为采集前冻结预测，下栏同一核的三行实际指令](../../results/v0.27/post/unseen-same-token.png)

@@ -1,5 +1,7 @@
 # Chunk KDA 算例
 
+每条仅交 2048 token 时，`plan_kimi_kda_prefill([2048]*8, attention_tp=8, chip="Ascend950PR_957b")` 的 V1 Finalize 有 3072 个块/头任务，见返回的 `v1_work.finalize` 字典。9,663,676,416 次有效 Cube 运算除以 PR 的 BF16 峰值得到理想下界 25.632 µs，DT 为 22.370 µs，970DT 外推为 5.545 µs。两端融合实现的重复 SET 发生在首条 MMAD 之前，主核和完整调用耗时均保留为空。[真实 MMAD、分核、同步与可执行示例](../../results/v0.29/kda/report.md)
+
 对于 Kimi 的真实 B8×32Ki 调用，TP8 后每 rank 有 12 个 128 维头。单次交满产生 49,152 个工作项，FLA 26.9.1 选择三主核 V2；若每条只提交 2,048 token 则走融合 V1。三主核和完整 dispatch 分开返回。[逐步选路、shape 和三芯片预测](../../results/v0.27/kda/report.md)
 
 在 Kimi-K3 的一个 attention TP8 rank，若本次真调度了 8 条各 32Ki 的 prefill，`plan_kimi_kda_prefill([32768]*8, attention_tp=8)` 得到 12 个本地头、4,096 个 64-token 块和 49,152 个工作项，选择 FLA 26.9.1 V2。三个串行主核在 950DT、950PR、970DT 的场景预测分别约为 **33.161、39.396、16.450 ms**。这是该大形状的外推。Q/K 的两次归一化、状态 gather/scatter 和 launch 间隔仍单列，整次调用耗时留空。[系统适配器输入、各序列边界与内存成本](../../results/v0.27/kda/report.md) · [小形状真实三块递推图](../../results/v0.23/kda-multiblock/950pr-t129-h3-fwdh.png)

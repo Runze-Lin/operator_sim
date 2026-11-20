@@ -1,0 +1,395 @@
+{
+  "utc": "2026-11-20T03:27:17.056311+00:00",
+  "observed": [
+    "Ascend950DT_9582",
+    "Ascend950PR_957b"
+  ],
+  "extrapolated": "Ascend970DT",
+  "novelty": {
+    "result_json": 1662,
+    "local_post_batch_rosters": 27,
+    "prior_targets": []
+  },
+  "order": [
+    [
+      112,
+      4,
+      768
+    ],
+    [
+      67,
+      4,
+      4912
+    ],
+    [
+      69,
+      4,
+      5680
+    ]
+  ],
+  "predecessor_states": {
+    "results/v0.28/post/state.json": "complete",
+    "results/v0.28/matmul/narrow/state.json": "finished",
+    "results/v0.28/matmul/multi/state.json": "finished"
+  },
+  "also_wait_for_active_large_matmuls": {
+    "results/v0.28/matmul/prefill-status.json": "262144-128-512-dt",
+    "results/v0.28/matmul/long-prefill/state.json": "131072-dt",
+    "results/v0.28/matmul/wide-prefill/state.json": "DeepSeek-V4-Pro-dt"
+  },
+  "compute_sha256": {
+    "operator_model/post_resource.py": "1c3d9f3e2b70ba1991f4111a3dcd4cd080fc92e270838a1e6895993df4a43fab",
+    "operator_model/post_repeat.py": "495b8761fbf6f1d6c0d9765bfae439a0706627e34210c62b29a634b13b2944ae",
+    "operator_model/post_token_pipeline.py": "30340c2ec9318d604b013b5c9d17bfbfc8e505afb8ef8f22f21bfbf0577985b2",
+    "operator_model/post_history.py": "48b381b382102ac8636d5c9c699d54e3979fde5ee979cb595dd0ee14139d1ec8",
+    "operator_model/post_ordered.py": "69f32df084a6ec12119179bf7571e49e53da0b745c835abdc0f338f132c0f3a7",
+    "operator_model/stream.py": "8299de7ea0c9b970b9aba6281ec35d5b1d4ef2081663fa1c87cb936ca8c22248",
+    "results/v0.25/post/prices.json": "911abfb2788ec25616d3e6200c159f289f19af2f1335d0341164ddce21c0aef5",
+    "results/v0.28/post/parameters.json": "c976f3bc1b658364b72d2b64bdaed250675f4766d0e5aaf633fe7146e33ac042",
+    "configs/chips/Ascend950DT_9582.json": "54d68c49374f8fab57ae16b05923d7ea2874cc48083e0728bcbc60f467bb71ec",
+    "configs/chips/Ascend950PR_957b.json": "2bb5b0b34b8d04e255e24ea5d12c73407ace6bb7154ba6aa603b338fc252ada7",
+    "configs/chips/Ascend970DT.json": "837796ec9f3b39888950cfe6f703b63c4bf9ced22a366b66f300f1389a8006f2"
+  },
+  "capture_sha256": {
+    "development/validation/post29/split_width.py": "a0b02c86a0c787e9a72f1854c8293354612920ca8facdccc841e87510dff8489",
+    "toolchains/cann/9.2.1/cann-9.2.1/opp/built-in/op_impl/ai_core/tbe/kernel/ascend950/ops_transformer/mhc_post_apt/MhcPost_59130ccee6717ff2c0f15b485e731162.o": "36851e45520023382742d07d871519f65e57e9c49ec3594583e361b0bb9b6677",
+    "build/vector-v8/MHC": "a7d3a4da5264a489830c2899954eb252bb823974b23baee733ba513788a2c6d0",
+    "scripts/cann-run.sh": "d529513abc0bc340a56c91365a9e72d5e434d2cb4841be1692930294cd0624df",
+    "development/validation/post24/collect.py": "980663759c0f29da1ac7fa62aec96b6856027c2b71a1826db894f68be6cddfad",
+    "development/validation/rms_ordered_verify/verify.py": "6880244f8a43a62658b773fba3a1e677d06fd6eba7265790cfa839a30220d31c",
+    "development/validation/post_candidate/extract.py": "1306476bff874a1c98b9609d422b41c09cb62e59ec12f1319d1d6cf66706f5e4",
+    "development/validation/kda27/quant_transfer.py": "c822ba66aea583789ff048e68f3a44abdc9f83f3567179180e84fe0650b66682"
+  },
+  "rows": {
+    "Ascend950DT_9582": [
+      {
+        "i": 0,
+        "shape": [
+          112,
+          4,
+          768
+        ],
+        "active": 56,
+        "prior_aiv": 0,
+        "previous_shape": null,
+        "role": "prefix only",
+        "state": "first",
+        "aggregate_us": 4.165725278176595,
+        "public_us": 4.165725278176595,
+        "shape_only_us": 3.6075537768131705,
+        "stages_us": {
+          "arrival": 0.34183758515743656,
+          "control_to_first_read": 1.8327269554138184,
+          "first_read_to_ready": 0.75072048659342,
+          "ready_to_first_write": 0.3060770086775468,
+          "overlapping_rows": 0.6846332283889685,
+          "last_write_response": 0.24366956019555008,
+          "exit_after_write": 0.006060453749854533,
+          "shared_link_floor": 0.0
+        },
+        "tiles": {
+          "count": 1,
+          "inner": 768,
+          "tail": 768,
+          "ub_bytes": 253952,
+          "inherited_ub": false
+        }
+      },
+      {
+        "i": 1,
+        "shape": [
+          67,
+          4,
+          4912
+        ],
+        "active": 34,
+        "prior_aiv": 56,
+        "previous_shape": [
+          112,
+          4,
+          768
+        ],
+        "role": "ordinary split width after different token shape",
+        "state": "reuse_after_token",
+        "aggregate_us": 5.879073187878284,
+        "public_us": 8.357537804723707,
+        "shape_only_us": 9.00213822617902,
+        "stages_us": {
+          "arrival": 0.3674387625771914,
+          "control_to_first_read": 0.9233328825054768,
+          "first_read_to_ready": 0.9379828993786888,
+          "ready_to_first_write": 1.5619995314654727,
+          "overlapping_rows": 1.5449028589211504,
+          "last_write_response": 0.5391738287878776,
+          "exit_after_write": 0.004242424242425713,
+          "shared_link_floor": 0.0
+        },
+        "tiles": {
+          "count": 2,
+          "inner": 2464,
+          "tail": 2448,
+          "ub_bytes": 253952,
+          "inherited_ub": false
+        }
+      },
+      {
+        "i": 2,
+        "shape": [
+          69,
+          4,
+          5680
+        ],
+        "active": 35,
+        "prior_aiv": 56,
+        "previous_shape": [
+          67,
+          4,
+          4912
+        ],
+        "role": "ordinary split width after different token shape",
+        "state": "reuse_after_token",
+        "aggregate_us": 6.469425254880802,
+        "public_us": 9.341100597879937,
+        "shape_only_us": 9.990978762145765,
+        "stages_us": {
+          "arrival": 0.37045919812384553,
+          "control_to_first_read": 0.923332882505477,
+          "first_read_to_ready": 1.004878717560507,
+          "ready_to_first_write": 1.793093329011587,
+          "overlapping_rows": 1.7759966564672642,
+          "last_write_response": 0.5974220469696957,
+          "exit_after_write": 0.004242424242425713,
+          "shared_link_floor": 0.0
+        },
+        "tiles": {
+          "count": 2,
+          "inner": 2848,
+          "tail": 2832,
+          "ub_bytes": 253952,
+          "inherited_ub": false
+        }
+      }
+    ],
+    "Ascend950PR_957b": [
+      {
+        "i": 0,
+        "shape": [
+          112,
+          4,
+          768
+        ],
+        "active": 56,
+        "prior_aiv": 0,
+        "previous_shape": null,
+        "role": "prefix only",
+        "state": "first",
+        "aggregate_us": 4.172005000936,
+        "public_us": 4.172005000936,
+        "shape_only_us": 3.6221348747489253,
+        "stages_us": {
+          "arrival": 0.34183758515743656,
+          "control_to_first_read": 1.8327269554138184,
+          "first_read_to_ready": 0.75072048659342,
+          "ready_to_first_write": 0.312356731436952,
+          "overlapping_rows": 0.6846332283889685,
+          "last_write_response": 0.24366956019555008,
+          "exit_after_write": 0.006060453749854533,
+          "shared_link_floor": 0.0
+        },
+        "tiles": {
+          "count": 1,
+          "inner": 768,
+          "tail": 768,
+          "ub_bytes": 253952,
+          "inherited_ub": false
+        }
+      },
+      {
+        "i": 1,
+        "shape": [
+          67,
+          4,
+          4912
+        ],
+        "active": 34,
+        "prior_aiv": 56,
+        "previous_shape": [
+          112,
+          4,
+          768
+        ],
+        "role": "ordinary split width after different token shape",
+        "state": "reuse_after_token",
+        "aggregate_us": 5.95966296329065,
+        "public_us": 8.447954850175584,
+        "shape_only_us": 9.093087821400339,
+        "stages_us": {
+          "arrival": 0.3674387625771914,
+          "control_to_first_read": 0.9233328825054768,
+          "first_read_to_ready": 0.9379828993786888,
+          "ready_to_first_write": 1.6022944191716562,
+          "overlapping_rows": 1.5851977466273335,
+          "last_write_response": 0.5391738287878776,
+          "exit_after_write": 0.004242424242425713,
+          "shared_link_floor": 0.0
+        },
+        "tiles": {
+          "count": 2,
+          "inner": 2464,
+          "tail": 2448,
+          "ub_bytes": 253952,
+          "inherited_ub": false
+        }
+      },
+      {
+        "i": 2,
+        "shape": [
+          69,
+          4,
+          5680
+        ],
+        "active": 35,
+        "prior_aiv": 56,
+        "previous_shape": [
+          67,
+          4,
+          4912
+        ],
+        "role": "ordinary split width after different token shape",
+        "state": "reuse_after_token",
+        "aggregate_us": 6.562574475811979,
+        "public_us": 9.445608611454185,
+        "shape_only_us": 10.095987409232032,
+        "stages_us": {
+          "arrival": 0.37045919812384553,
+          "control_to_first_read": 0.923332882505477,
+          "first_read_to_ready": 1.004878717560507,
+          "ready_to_first_write": 1.8396679394771753,
+          "overlapping_rows": 1.8225712669328524,
+          "last_write_response": 0.5974220469696957,
+          "exit_after_write": 0.004242424242425713,
+          "shared_link_floor": 0.0
+        },
+        "tiles": {
+          "count": 2,
+          "inner": 2848,
+          "tail": 2832,
+          "ub_bytes": 253952,
+          "inherited_ub": false
+        }
+      }
+    ],
+    "Ascend970DT": [
+      {
+        "i": 0,
+        "shape": [
+          112,
+          4,
+          768
+        ],
+        "active": 112,
+        "prior_aiv": 0,
+        "previous_shape": null,
+        "role": "prefix only",
+        "state": "first",
+        "aggregate_us": 3.244695387170583,
+        "public_us": 3.244695387170583,
+        "shape_only_us": 2.734660796091379,
+        "stages_us": {
+          "arrival": 0.3673087517190193,
+          "control_to_first_read": 1.6799997091293335,
+          "first_read_to_ready": 0.6881604460439684,
+          "ready_to_first_write": 0.2803073008283074,
+          "overlapping_rows": 0.0,
+          "last_write_response": 0.22336376351258758,
+          "exit_after_write": 0.005555415937366655,
+          "shared_link_floor": 0.0
+        },
+        "tiles": {
+          "count": 1,
+          "inner": 768,
+          "tail": 768,
+          "ub_bytes": 253952,
+          "inherited_ub": false
+        }
+      },
+      {
+        "i": 1,
+        "shape": [
+          67,
+          4,
+          4912
+        ],
+        "active": 67,
+        "prior_aiv": 112,
+        "previous_shape": [
+          112,
+          4,
+          768
+        ],
+        "role": "ordinary split width after different token shape",
+        "state": "reuse_after_token",
+        "aggregate_us": 4.036090630318164,
+        "public_us": 4.6726674446363194,
+        "shape_only_us": 5.23577460614855,
+        "stages_us": {
+          "arrival": 0.4016094749179813,
+          "control_to_first_read": 0.8463884756300206,
+          "first_read_to_ready": 0.8598176577637981,
+          "ready_to_first_write": 1.4301434567285856,
+          "overlapping_rows": 0.0,
+          "last_write_response": 0.49424267638888775,
+          "exit_after_write": 0.003888888888890237,
+          "shared_link_floor": 0.0
+        },
+        "tiles": {
+          "count": 2,
+          "inner": 2464,
+          "tail": 2448,
+          "ub_bytes": 253952,
+          "inherited_ub": false
+        }
+      },
+      {
+        "i": 2,
+        "shape": [
+          69,
+          4,
+          5680
+        ],
+        "active": 69,
+        "prior_aiv": 112,
+        "previous_shape": [
+          67,
+          4,
+          4912
+        ],
+        "role": "ordinary split width after different token shape",
+        "state": "reuse_after_token",
+        "aggregate_us": 4.365188142678291,
+        "public_us": 5.123171661568901,
+        "shape_only_us": 5.692310026715625,
+        "stages_us": {
+          "arrival": 0.40441892998694867,
+          "control_to_first_read": 0.8463884756300205,
+          "first_read_to_ready": 0.9211388244304648,
+          "ready_to_first_write": 1.6417161473530797,
+          "overlapping_rows": 0.0,
+          "last_write_response": 0.5476368763888877,
+          "exit_after_write": 0.003888888888890237,
+          "shared_link_floor": 0.0
+        },
+        "tiles": {
+          "count": 2,
+          "inner": 2848,
+          "tail": 2832,
+          "ub_bytes": 253952,
+          "inherited_ub": false
+        }
+      }
+    ]
+  },
+  "wall_seconds_per_sku": 2400,
+  "raw_mib_per_sku": 6144,
+  "objective": "Same-register honest check of the frozen ordinary issue model as an aggregate for two fragments. Use the complete correctness-checked parent and targets, matching source ELF, official inclusive envelope/retired roster, predicted active AIV and MTE3 write volume. No replacement. Hypothesis on these two shapes only if both WAPE<=25%, max<=50% and better than public on both SKUs. Production admission still requires >=10 independent geometries per SKU."
+}

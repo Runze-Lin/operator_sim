@@ -29,15 +29,21 @@ class OperatorStream:
     Set track_sinkhorn_history=True to reconstruct the standalone FP32 Sinkhorn
     high-water mark from eligible launches on this stream. After a family switch
     or unknown prefix, only sufficient same-family coverage selects a warm call.
+    With track_post_history=True, an observed first launch or shape change can
+    select the frozen operand-issue schedule for a single-fragment token row.
     """
 
-    def __init__(self, chip=REFERENCE_NAME, *, experimental_post_repeats=True, track_sinkhorn_history=False):
+    def __init__(self, chip=REFERENCE_NAME, *, experimental_post_repeats=True,
+                 track_sinkhorn_history=False, track_post_history=False):
         if not isinstance(experimental_post_repeats, bool):
             raise TypeError('experimental_post_repeats must be a boolean')
         if not isinstance(track_sinkhorn_history, bool):
             raise TypeError('track_sinkhorn_history must be a boolean')
+        if not isinstance(track_post_history, bool):
+            raise TypeError('track_post_history must be a boolean')
         self._post_repeats = experimental_post_repeats
         self._track_sinkhorn = track_sinkhorn_history
+        self._track_post = track_post_history
         self.chip = load_chip(chip)
         self.reset()
 
@@ -48,6 +54,7 @@ class OperatorStream:
         self._exact = True
         self._rms_prefix = None
         self._last_post = None
+        self._post_route = None
 
     def forget_history(self):
         """Attach to a running stream, or record an unmodeled completed dispatch.
@@ -60,6 +67,7 @@ class OperatorStream:
         self._exact = False
         self._rms_prefix = None
         self._last_post = None
+        self._post_route = None
 
     def _prefix(self, family):
         if family == 'rmsnorm' and self._rms_prefix is not None:
@@ -84,12 +92,16 @@ class OperatorStream:
                        shape_only_us=point, endpoint_scenario_aiv=selected)
         return replace(forecast, projection={**forecast.projection, 'partial_history': context})
 
-    def _with_history(self, family, op, shape, options, dtype):
+    def _with_history(self, family, op, shape, options, dtype, *, infer_post=False):
         result = estimate(op, shape, options, chip=self.chip, dtype=dtype)
-        if (self._last_post is not None and family == 'mhc_post' and
-                result.latency_us is not None and self._last_post == (self.chip, tuple(shape))):
-            from .post_repeat import price_repeat
-            return price_repeat(result, shape, self.chip)
+        if family == 'mhc_post' and result.latency_us is not None:
+            if self._last_post == (self.chip, tuple(shape)):
+                if self._post_repeats:
+                    from .post_repeat import price_repeat
+                    return price_repeat(result, shape, self.chip)
+            elif self._track_post and infer_post:
+                from .post_ordered import price_ordered_token
+                return price_ordered_token(result, shape, self.chip, self._post_route)
         return result
 
     def _sink_dispatch(self, op, shape, attrs, dtype):
@@ -143,7 +155,7 @@ class OperatorStream:
             if forecast.active_aiv is None or forecast.active_aiv > resident:
                 return forecast
         options['resident_aiv'] = resident
-        return self._with_history(family, op, shape, options, dtype)
+        return self._with_history(family, op, shape, options, dtype, infer_post=True)
 
     def advance(self, op, shape, attrs=None, *, dtype=None, aic_only=False):
         """Price a dispatch and record its AIV footprint on success.
@@ -164,7 +176,8 @@ class OperatorStream:
         tracked_sink = self._track_sinkhorn and family == 'mhc_sinkhorn'
         options = attrs or {}
         explicit = options.get('resident_aiv') if family in _STATEFUL or tracked_sink else None
-        if tracked_sink and 'resident_aiv' in options and explicit is None:
+        if ((tracked_sink or (self._track_post and family == 'mhc_post'))
+                and 'resident_aiv' in options and explicit is None):
             # The caller declared an unknown predecessor. The completed launch
             # still establishes a lower bound for the following same-family one.
             self._resident, self._exact = 0, False
@@ -177,5 +190,7 @@ class OperatorStream:
         self._last_family = family
         # Successful validation fixes BF16, contiguous ND, four streams and hRes for
         # the built-in kernel. Other kernels, including vLLM HcPost, clear this key.
-        self._last_post = (self.chip, tuple(shape)) if self._post_repeats and family == 'mhc_post' else None
+        track_post = family == 'mhc_post' and (self._post_repeats or self._track_post)
+        self._last_post = (self.chip, tuple(shape)) if track_post else None
+        self._post_route = result.projection['target_plan']['route'] if self._track_post and track_post else None
         return result

@@ -4,6 +4,7 @@ from itertools import accumulate
 from .backend import estimate
 from .chips import REFERENCE_NAME, load_chip
 from .kda_fla_v2 import IMPLEMENTATION
+from .kda_v1_work import kimi_v1_work
 
 
 def plan_kimi_kda_prefill(query_lengths, *, attention_tp, chip=REFERENCE_NAME,
@@ -14,7 +15,9 @@ def plan_kimi_kda_prefill(query_lengths, *, attention_tp, chip=REFERENCE_NAME,
     QK/V heads, D=128, raw BF16 gate and preprocessed FP32 beta. Valid cache
     indices and a dense FP32 VK payload are assumed. `initialized_sequences`
     counts true gather flags among nonempty requests. Only the V2 main kernel
-    subtotal is currently priced; full_dispatch_us includes graph dependencies.
+    subtotal is currently priced. full_dispatch_us includes graph dependencies.
+    v1_work describes useful Finalize work on an explicit-length four-phase
+    V1 route. Its ideal Cube floor has a narrower scope than device latency.
     """
     if type(attention_tp) is not int or attention_tp < 1 or 96 % attention_tp:
         raise ValueError('attention_tp must divide the 96 Kimi-K3 KDA heads')
@@ -45,7 +48,7 @@ def plan_kimi_kda_prefill(query_lengths, *, attention_tp, chip=REFERENCE_NAME,
                 chip_policy="assume the same 950 FLA implementation and host selection rule on future chips",
                 local_heads=heads, query_lengths=lengths, nonempty_requests=batch,
                 shape=shape, chunks=chunks, work_items=work, aclnn=None,
-                main_kernels=(), main_kernels_us=None, full_dispatch_us=None,
+                main_kernels=(), main_kernels_us=None, full_dispatch_us=None, v1_work=None,
                 status='unavailable', reason=None,
                 graph_io=dict(qk_l2norm_read_bytes=normalized, qk_l2norm_write_bytes=normalized,
                               state_gather_read_bytes_range=(min_reads, max_reads),
@@ -66,6 +69,7 @@ def plan_kimi_kda_prefill(query_lengths, *, attention_tp, chip=REFERENCE_NAME,
         stages = ('gate_prepare', 'post_wu', 'fwd_h', 'finalize') if chunks > 1 else ('full',)
         plan.update(aclnn='aclnnChunkKdaFwd', main_kernels=tuple('ChunkKdaFwd:'+s for s in stages),
                     minimum_payload_bytes=visible,
+                    v1_work=kimi_v1_work(active, heads, target, split_phases=chunks > 1),
                     reason='selected fused V1 has no qualified cost for this dispatch')
         return plan
     # At the Prepare/FwdH boundary gk (FP32), W/U/Kg/QgScaled (BF16)

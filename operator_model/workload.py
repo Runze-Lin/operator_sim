@@ -114,7 +114,12 @@ def _structured(op, shape, attrs, dtype):
         write = 2*t*d
         write += 4*sum(prod(dims) for name, dims in plan["output_shapes"].items()
                        if name != "h_in" and dims is not None)
-        notes.append("Projection uses the HF32 matrix math class; fp32 denotes its 32-bit input peak proxy.")
+        if op == "mhc_pre":
+            notes.append("Projection work counts 32-bit operands. In the audited split Pre kernel "
+                         "the FP32 MMAD reduction fragments have depth 32.")
+        else:
+            notes.append("Projection work is grouped by its 32-bit operand width. "
+                         "The fused kernel's internal math mode depends on the implementation.")
     else:
         b, s, hq, hv, k, v = shape
         data_width = {"fp32": 4, "bf16": 2, "fp16": 2}

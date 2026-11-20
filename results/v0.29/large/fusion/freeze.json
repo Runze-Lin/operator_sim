@@ -1,0 +1,2211 @@
+{
+  "utc": "2026-11-20T03:55:18.730012+00:00",
+  "jobs": [
+    {
+      "id": "flash-chunk512",
+      "op": "mhc",
+      "shape": [
+        512,
+        4,
+        5120
+      ],
+      "role": "Flash N4/D5120 in a 512-token prefill chunk; installed three-operator reference alternative to the serving extension",
+      "index": [
+        "mhc",
+        "512",
+        "4",
+        "5120"
+      ],
+      "runner": "results/v0.29/large/fusion/build/builtin",
+      "wall_s": 10800,
+      "raw_mib": 49152,
+      "expected_numerics": {
+        "hin": 2621440,
+        "hpost": 2048,
+        "hres": 8192,
+        "inv_rms": 512,
+        "hmix": 12288,
+        "hpre": 2048,
+        "chain_sinkhorn": 8192,
+        "chain_post": 10485760,
+        "chain_end_to_end": 10485760
+      },
+      "outputs": [
+        {
+          "op": "mhc_pre",
+          "shape": [
+            512,
+            4,
+            5120
+          ],
+          "attrs": {
+            "dtype": "bf16",
+            "has_gamma": false,
+            "alpha_count": 3,
+            "return_intermediates": true
+          },
+          "model": {
+            "Ascend950DT_9582": {
+              "us": 2512.5139393939394,
+              "status": "extrapolated",
+              "reason": "Above the calibrated 256-token split mHC partition; using the previous overlap estimate",
+              "query_ms": 2.835,
+              "active_aic": null,
+              "active_aiv": null,
+              "work": {
+                "dtype": "bf16",
+                "cube_ops": 503316480,
+                "vec_ops": 39367680,
+                "cube_ops_by_dtype": {
+                  "fp32": 503316480
+                },
+                "vec_ops_by_dtype": {
+                  "fp32": 39367680
+                },
+                "vec_ops_by_class": {
+                  "alu": 39363072,
+                  "rsqrt": 512,
+                  "sigmoid": 4096
+                },
+                "logical_read_bytes": 22937708,
+                "logical_write_bytes": 5343232,
+                "physical_hbm_bytes": null,
+                "scope": "Useful scalar-equivalent work (FMA=2), one logical read/write per tensor per kernel; excludes padding, cache traffic and ISA expansion.",
+                "notes": [
+                  "Projection uses the HF32 matrix math class; fp32 denotes its 32-bit input peak proxy."
+                ]
+              },
+              "plan": null
+            },
+            "Ascend950PR_957b": {
+              "us": 2982.2511353234527,
+              "status": "extrapolated",
+              "reason": "Same implementation and tiling policy assumed from Ascend950DT_9582. Above the calibrated 256-token split mHC partition; using the previous overlap estimate",
+              "query_ms": 1.18743,
+              "active_aic": 28,
+              "active_aiv": 56,
+              "work": {
+                "dtype": "bf16",
+                "cube_ops": 503316480,
+                "vec_ops": 39367680,
+                "cube_ops_by_dtype": {
+                  "fp32": 503316480
+                },
+                "vec_ops_by_dtype": {
+                  "fp32": 39367680
+                },
+                "vec_ops_by_class": {
+                  "alu": 39363072,
+                  "rsqrt": 512,
+                  "sigmoid": 4096
+                },
+                "logical_read_bytes": 22937708,
+                "logical_write_bytes": 5343232,
+                "physical_hbm_bytes": null,
+                "scope": "Useful scalar-equivalent work (FMA=2), one logical read/write per tensor per kernel; excludes padding, cache traffic and ISA expansion.",
+                "notes": [
+                  "Projection uses the HF32 matrix math class; fp32 denotes its 32-bit input peak proxy."
+                ]
+              },
+              "plan": null
+            },
+            "Ascend970DT": {
+              "us": 909.1737275401115,
+              "status": "extrapolated",
+              "reason": "Same implementation and tiling policy assumed from Ascend950DT_9582. Above the calibrated 256-token split mHC partition; using the previous overlap estimate",
+              "query_ms": 0.61334,
+              "active_aic": 120,
+              "active_aiv": 120,
+              "work": {
+                "dtype": "bf16",
+                "cube_ops": 503316480,
+                "vec_ops": 39367680,
+                "cube_ops_by_dtype": {
+                  "fp32": 503316480
+                },
+                "vec_ops_by_dtype": {
+                  "fp32": 39367680
+                },
+                "vec_ops_by_class": {
+                  "alu": 39363072,
+                  "rsqrt": 512,
+                  "sigmoid": 4096
+                },
+                "logical_read_bytes": 22937708,
+                "logical_write_bytes": 5343232,
+                "physical_hbm_bytes": null,
+                "scope": "Useful scalar-equivalent work (FMA=2), one logical read/write per tensor per kernel; excludes padding, cache traffic and ISA expansion.",
+                "notes": [
+                  "Projection uses the HF32 matrix math class; fp32 denotes its 32-bit input peak proxy."
+                ]
+              },
+              "plan": null
+            }
+          }
+        },
+        {
+          "op": "mhc_sinkhorn",
+          "shape": [
+            512,
+            4
+          ],
+          "attrs": {
+            "dtype": "fp32",
+            "num_iters": 20,
+            "return_intermediates": false
+          },
+          "model": {
+            "Ascend950DT_9582": {
+              "us": null,
+              "status": "unsupported",
+              "reason": "Outside N4 inference FP32 template",
+              "query_ms": 1.37478,
+              "active_aic": null,
+              "active_aiv": null,
+              "work": null,
+              "plan": null
+            },
+            "Ascend950PR_957b": {
+              "us": null,
+              "status": "unsupported",
+              "reason": "Outside N4 inference FP32 template",
+              "query_ms": 0.04857,
+              "active_aic": null,
+              "active_aiv": null,
+              "work": null,
+              "plan": null
+            },
+            "Ascend970DT": {
+              "us": null,
+              "status": "unsupported",
+              "reason": "Outside N4 inference FP32 template",
+              "query_ms": 0.02867,
+              "active_aic": null,
+              "active_aiv": null,
+              "work": null,
+              "plan": null
+            }
+          }
+        },
+        {
+          "op": "mhc_post",
+          "shape": [
+            512,
+            4,
+            5120
+          ],
+          "attrs": {
+            "dtype": "bf16",
+            "has_h_res": true
+          },
+          "model": {
+            "Ascend950DT_9582": {
+              "us": 29.609944695560277,
+              "status": "extrapolated",
+              "reason": "Target resource schedule with inherited 950 phase defaults",
+              "query_ms": 1.3924,
+              "active_aic": 0,
+              "active_aiv": 64,
+              "work": {
+                "dtype": "bf16",
+                "cube_ops": 0,
+                "vec_ops": 104857600,
+                "cube_ops_by_dtype": {},
+                "vec_ops_by_dtype": {
+                  "fp32": 104857600
+                },
+                "vec_ops_by_class": {
+                  "alu": 94371840,
+                  "cast": 10485760
+                },
+                "logical_read_bytes": 26255360,
+                "logical_write_bytes": 20971520,
+                "physical_hbm_bytes": null,
+                "scope": "Useful scalar-equivalent work (FMA=2), one logical read/write per tensor per kernel; excludes padding, cache traffic and ISA expansion.",
+                "notes": [
+                  "Output cast counted once per element against FP32 source precision."
+                ]
+              },
+              "plan": {
+                "active_aiv": 64,
+                "active_aic": 0,
+                "route": "post_token",
+                "channel_slices": 1,
+                "fragment_width": 5120,
+                "rows_per_core": 8
+              }
+            },
+            "Ascend950PR_957b": {
+              "us": 36.85448578736509,
+              "status": "extrapolated",
+              "reason": "Target resource schedule with inherited 950 phase defaults",
+              "query_ms": 0.18262,
+              "active_aic": 0,
+              "active_aiv": 52,
+              "work": {
+                "dtype": "bf16",
+                "cube_ops": 0,
+                "vec_ops": 104857600,
+                "cube_ops_by_dtype": {},
+                "vec_ops_by_dtype": {
+                  "fp32": 104857600
+                },
+                "vec_ops_by_class": {
+                  "alu": 94371840,
+                  "cast": 10485760
+                },
+                "logical_read_bytes": 26255360,
+                "logical_write_bytes": 20971520,
+                "physical_hbm_bytes": null,
+                "scope": "Useful scalar-equivalent work (FMA=2), one logical read/write per tensor per kernel; excludes padding, cache traffic and ISA expansion.",
+                "notes": [
+                  "Output cast counted once per element against FP32 source precision."
+                ]
+              },
+              "plan": {
+                "active_aiv": 52,
+                "active_aic": 0,
+                "route": "post_token",
+                "channel_slices": 1,
+                "fragment_width": 5120,
+                "rows_per_core": 10
+              }
+            },
+            "Ascend970DT": {
+              "us": 17.81375401557454,
+              "status": "extrapolated",
+              "reason": "Target resource schedule with inherited 950 phase defaults",
+              "query_ms": 0.11905,
+              "active_aic": 0,
+              "active_aiv": 103,
+              "work": {
+                "dtype": "bf16",
+                "cube_ops": 0,
+                "vec_ops": 104857600,
+                "cube_ops_by_dtype": {},
+                "vec_ops_by_dtype": {
+                  "fp32": 104857600
+                },
+                "vec_ops_by_class": {
+                  "alu": 94371840,
+                  "cast": 10485760
+                },
+                "logical_read_bytes": 26255360,
+                "logical_write_bytes": 20971520,
+                "physical_hbm_bytes": null,
+                "scope": "Useful scalar-equivalent work (FMA=2), one logical read/write per tensor per kernel; excludes padding, cache traffic and ISA expansion.",
+                "notes": [
+                  "Output cast counted once per element against FP32 source precision."
+                ]
+              },
+              "plan": {
+                "active_aiv": 103,
+                "active_aic": 0,
+                "route": "post_token",
+                "channel_slices": 1,
+                "fragment_width": 5120,
+                "rows_per_core": 5
+              }
+            }
+          }
+        },
+        {
+          "op": "mhc",
+          "shape": [
+            512,
+            4,
+            5120
+          ],
+          "attrs": {
+            "dtype": "bf16",
+            "implementation": "split",
+            "num_iters": 20
+          },
+          "model": {
+            "Ascend950DT_9582": {
+              "us": 3205.1442424242423,
+              "status": "extrapolated",
+              "reason": "Above the calibrated 256-token split mHC partition; using the previous overlap estimate",
+              "query_ms": 0.49306,
+              "active_aic": null,
+              "active_aiv": null,
+              "work": {
+                "dtype": "bf16",
+                "cube_ops": 503316480,
+                "vec_ops": 144909312,
+                "cube_ops_by_dtype": {
+                  "fp32": 503316480
+                },
+                "vec_ops_by_dtype": {
+                  "fp32": 144909312
+                },
+                "vec_ops_by_class": {
+                  "alu": 134083072,
+                  "rsqrt": 512,
+                  "sigmoid": 4096,
+                  "exp": 8192,
+                  "div": 327680,
+                  "cast": 10485760
+                },
+                "logical_read_bytes": 49225836,
+                "logical_write_bytes": 26347520,
+                "physical_hbm_bytes": null,
+                "scope": "Useful scalar-equivalent work (FMA=2), one logical read/write per tensor per kernel; excludes padding, cache traffic and ISA expansion.",
+                "notes": [
+                  "Kernel-interface byte sum includes materialized intermediates at both ends.",
+                  "Projection uses the HF32 matrix math class; fp32 denotes its 32-bit input peak proxy.",
+                  "Output cast counted once per element against FP32 source precision."
+                ]
+              },
+              "plan": null
+            },
+            "Ascend950PR_957b": {
+              "us": 3865.85020186611,
+              "status": "extrapolated",
+              "reason": "Same implementation and tiling policy assumed from Ascend950DT_9582. Above the calibrated 256-token split mHC partition; using the previous overlap estimate",
+              "query_ms": 0.90399,
+              "active_aic": 28,
+              "active_aiv": 56,
+              "work": {
+                "dtype": "bf16",
+                "cube_ops": 503316480,
+                "vec_ops": 144909312,
+                "cube_ops_by_dtype": {
+                  "fp32": 503316480
+                },
+                "vec_ops_by_dtype": {
+                  "fp32": 144909312
+                },
+                "vec_ops_by_class": {
+                  "alu": 134083072,
+                  "rsqrt": 512,
+                  "sigmoid": 4096,
+                  "exp": 8192,
+                  "div": 327680,
+                  "cast": 10485760
+                },
+                "logical_read_bytes": 49225836,
+                "logical_write_bytes": 26347520,
+                "physical_hbm_bytes": null,
+                "scope": "Useful scalar-equivalent work (FMA=2), one logical read/write per tensor per kernel; excludes padding, cache traffic and ISA expansion.",
+                "notes": [
+                  "Kernel-interface byte sum includes materialized intermediates at both ends.",
+                  "Projection uses the HF32 matrix math class; fp32 denotes its 32-bit input peak proxy.",
+                  "Output cast counted once per element against FP32 source precision."
+                ]
+              },
+              "plan": null
+            },
+            "Ascend970DT": {
+              "us": 1316.9345641881582,
+              "status": "extrapolated",
+              "reason": "Same implementation and tiling policy assumed from Ascend950DT_9582. Above the calibrated 256-token split mHC partition; using the previous overlap estimate",
+              "query_ms": 0.87541,
+              "active_aic": 120,
+              "active_aiv": 120,
+              "work": {
+                "dtype": "bf16",
+                "cube_ops": 503316480,
+                "vec_ops": 144909312,
+                "cube_ops_by_dtype": {
+                  "fp32": 503316480
+                },
+                "vec_ops_by_dtype": {
+                  "fp32": 144909312
+                },
+                "vec_ops_by_class": {
+                  "alu": 134083072,
+                  "rsqrt": 512,
+                  "sigmoid": 4096,
+                  "exp": 8192,
+                  "div": 327680,
+                  "cast": 10485760
+                },
+                "logical_read_bytes": 49225836,
+                "logical_write_bytes": 26347520,
+                "physical_hbm_bytes": null,
+                "scope": "Useful scalar-equivalent work (FMA=2), one logical read/write per tensor per kernel; excludes padding, cache traffic and ISA expansion.",
+                "notes": [
+                  "Kernel-interface byte sum includes materialized intermediates at both ends.",
+                  "Projection uses the HF32 matrix math class; fp32 denotes its 32-bit input peak proxy.",
+                  "Output cast counted once per element against FP32 source precision."
+                ]
+              },
+              "plan": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "flash-hc512",
+      "op": "vllm_hc_post",
+      "shape": [
+        1,
+        512,
+        4,
+        5120
+      ],
+      "role": "Exact flat 512-token Flash row geometry and pinned vLLM custom implementation, one rank",
+      "index": [
+        "512",
+        "5120"
+      ],
+      "runner": "results/v0.29/large/fusion/build/hcpost",
+      "wall_s": 7200,
+      "raw_mib": 24576,
+      "expected_numerics": {
+        "output": 10485760
+      },
+      "outputs": [
+        {
+          "op": "vllm_hc_post",
+          "shape": [
+            1,
+            512,
+            4,
+            5120
+          ],
+          "attrs": {
+            "implementation": "vllm_hc_post"
+          },
+          "model": {
+            "Ascend950DT_9582": {
+              "us": 24.354961690771347,
+              "status": "extrapolated",
+              "reason": "Explicit experimental arch35 vLLM HcPost resource model",
+              "query_ms": 0.95317,
+              "active_aic": 0,
+              "active_aiv": 64,
+              "work": {
+                "dtype": "bf16",
+                "cube_ops": 0,
+                "vec_ops": 94371840,
+                "cube_ops_by_dtype": {},
+                "vec_ops_by_dtype": {
+                  "fp32": 94371840
+                },
+                "vec_ops_by_class": {
+                  "multiply": 52428800,
+                  "add": 41943040
+                },
+                "logical_read_bytes": 26255360,
+                "logical_write_bytes": 20971520,
+                "physical_hbm_bytes": null,
+                "scope": "Useful scalar-equivalent work (FMA=2), one logical read/write per tensor per kernel; excludes padding, cache traffic and ISA expansion.",
+                "notes": [
+                  "FP32 useful arithmetic; BF16 conversions and physical DMA traffic are separate."
+                ]
+              },
+              "plan": {
+                "active_aic": 0,
+                "active_aiv": 64,
+                "min_rows_per_core": 8,
+                "max_rows_per_core": 8,
+                "larger_cores": 0,
+                "d_tile": 4096,
+                "full_d_tiles": 1,
+                "tail_elements": 1024,
+                "d_tiles_per_row": 2,
+                "x_residual_reads": 2048,
+                "coeff_reads": 1024,
+                "output_writes": 1024
+              }
+            },
+            "Ascend950PR_957b": {
+              "us": 28.966790589109134,
+              "status": "extrapolated",
+              "reason": "Explicit experimental arch35 vLLM HcPost resource model",
+              "query_ms": 0.17434,
+              "active_aic": 0,
+              "active_aiv": 56,
+              "work": {
+                "dtype": "bf16",
+                "cube_ops": 0,
+                "vec_ops": 94371840,
+                "cube_ops_by_dtype": {},
+                "vec_ops_by_dtype": {
+                  "fp32": 94371840
+                },
+                "vec_ops_by_class": {
+                  "multiply": 52428800,
+                  "add": 41943040
+                },
+                "logical_read_bytes": 26255360,
+                "logical_write_bytes": 20971520,
+                "physical_hbm_bytes": null,
+                "scope": "Useful scalar-equivalent work (FMA=2), one logical read/write per tensor per kernel; excludes padding, cache traffic and ISA expansion.",
+                "notes": [
+                  "FP32 useful arithmetic; BF16 conversions and physical DMA traffic are separate."
+                ]
+              },
+              "plan": {
+                "active_aic": 0,
+                "active_aiv": 56,
+                "min_rows_per_core": 9,
+                "max_rows_per_core": 10,
+                "larger_cores": 8,
+                "d_tile": 4096,
+                "full_d_tiles": 1,
+                "tail_elements": 1024,
+                "d_tiles_per_row": 2,
+                "x_residual_reads": 2048,
+                "coeff_reads": 1024,
+                "output_writes": 1024
+              }
+            },
+            "Ascend970DT": {
+              "us": 14.653281513673441,
+              "status": "extrapolated",
+              "reason": "Explicit experimental arch35 vLLM HcPost resource model",
+              "query_ms": 0.12665,
+              "active_aic": 0,
+              "active_aiv": 120,
+              "work": {
+                "dtype": "bf16",
+                "cube_ops": 0,
+                "vec_ops": 94371840,
+                "cube_ops_by_dtype": {},
+                "vec_ops_by_dtype": {
+                  "fp32": 94371840
+                },
+                "vec_ops_by_class": {
+                  "multiply": 52428800,
+                  "add": 41943040
+                },
+                "logical_read_bytes": 26255360,
+                "logical_write_bytes": 20971520,
+                "physical_hbm_bytes": null,
+                "scope": "Useful scalar-equivalent work (FMA=2), one logical read/write per tensor per kernel; excludes padding, cache traffic and ISA expansion.",
+                "notes": [
+                  "FP32 useful arithmetic; BF16 conversions and physical DMA traffic are separate."
+                ]
+              },
+              "plan": {
+                "active_aic": 0,
+                "active_aiv": 120,
+                "min_rows_per_core": 4,
+                "max_rows_per_core": 5,
+                "larger_cores": 32,
+                "d_tile": 4096,
+                "full_d_tiles": 1,
+                "tail_elements": 1024,
+                "d_tiles_per_row": 2,
+                "x_residual_reads": 2048,
+                "coeff_reads": 1024,
+                "output_writes": 1024
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "index-32ki",
+      "op": "lightning_indexer",
+      "shape": [
+        1,
+        9,
+        32768,
+        8,
+        128
+      ],
+      "role": "BF16 dense BSND top-512 key candidate set with Q9. Logical full-length 32Ki indexer; neither compressed Flash pages nor the Pro top-1024 contract",
+      "index": [
+        "lightning_indexer",
+        "9",
+        "32768",
+        "8"
+      ],
+      "runner": "results/v0.29/large/fusion/build/builtin",
+      "wall_s": 7200,
+      "raw_mib": 24576,
+      "expected_numerics": {
+        "topk_set": 4608
+      },
+      "outputs": [
+        {
+          "op": "lightning_indexer",
+          "shape": [
+            1,
+            9,
+            32768,
+            8,
+            128
+          ],
+          "attrs": {
+            "dtype": "bf16",
+            "layout": "BSND",
+            "sparse_count": 512,
+            "sparse_mode": 3,
+            "return_values": false
+          },
+          "model": {
+            "Ascend950DT_9582": {
+              "us": 110.65272727272726,
+              "status": "estimated",
+              "reason": null,
+              "query_ms": 0.26547,
+              "active_aic": null,
+              "active_aiv": null,
+              "work": {
+                "dtype": "bf16",
+                "cube_ops": 603906048,
+                "vec_ops": 6782148,
+                "cube_ops_by_dtype": {
+                  "bf16": 603906048
+                },
+                "vec_ops_by_dtype": {
+                  "fp32": 6782148
+                },
+                "vec_ops_by_class": {
+                  "alu": 6782148
+                },
+                "logical_read_bytes": 8407184,
+                "logical_write_bytes": 18432,
+                "physical_hbm_bytes": null,
+                "scope": "Useful scalar-equivalent work (FMA=2), one logical read/write per tensor per kernel; excludes padding, cache traffic and ISA expansion.",
+                "notes": [
+                  "Counts visible causal pairs; data-dependent top-k selection is excluded."
+                ]
+              },
+              "plan": null
+            },
+            "Ascend950PR_957b": {
+              "us": 114.07540076507608,
+              "status": "extrapolated",
+              "reason": "Same implementation and tiling policy assumed from Ascend950DT_9582",
+              "query_ms": 0.41876,
+              "active_aic": 9,
+              "active_aiv": 18,
+              "work": {
+                "dtype": "bf16",
+                "cube_ops": 603906048,
+                "vec_ops": 6782148,
+                "cube_ops_by_dtype": {
+                  "bf16": 603906048
+                },
+                "vec_ops_by_dtype": {
+                  "fp32": 6782148
+                },
+                "vec_ops_by_class": {
+                  "alu": 6782148
+                },
+                "logical_read_bytes": 8407184,
+                "logical_write_bytes": 18432,
+                "physical_hbm_bytes": null,
+                "scope": "Useful scalar-equivalent work (FMA=2), one logical read/write per tensor per kernel; excludes padding, cache traffic and ISA expansion.",
+                "notes": [
+                  "Counts visible causal pairs; data-dependent top-k selection is excluded."
+                ]
+              },
+              "plan": null
+            },
+            "Ascend970DT": {
+              "us": 100.68579807337446,
+              "status": "extrapolated",
+              "reason": "Same implementation and tiling policy assumed from Ascend950DT_9582",
+              "query_ms": 0.38665,
+              "active_aic": 9,
+              "active_aiv": 18,
+              "work": {
+                "dtype": "bf16",
+                "cube_ops": 603906048,
+                "vec_ops": 6782148,
+                "cube_ops_by_dtype": {
+                  "bf16": 603906048
+                },
+                "vec_ops_by_dtype": {
+                  "fp32": 6782148
+                },
+                "vec_ops_by_class": {
+                  "alu": 6782148
+                },
+                "logical_read_bytes": 8407184,
+                "logical_write_bytes": 18432,
+                "physical_hbm_bytes": null,
+                "scope": "Useful scalar-equivalent work (FMA=2), one logical read/write per tensor per kernel; excludes padding, cache traffic and ISA expansion.",
+                "notes": [
+                  "Counts visible causal pairs; data-dependent top-k selection is excluded."
+                ]
+              },
+              "plan": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "fused-t512",
+      "op": "mhc_pre_sinkhorn",
+      "shape": [
+        512,
+        4,
+        4096
+      ],
+      "role": "Installed BF16 fused D4096/I20 reference geometry; T>=128 separate-team branch. D4096 is not the hidden width of Flash or Pro",
+      "index": [
+        "mhc_pre_sinkhorn",
+        "512",
+        "4",
+        "4096"
+      ],
+      "runner": "results/v0.29/large/fusion/build/builtin",
+      "wall_s": 10800,
+      "raw_mib": 49152,
+      "expected_numerics": {
+        "hin": 2097152,
+        "hpost": 2048,
+        "hres": 8192
+      },
+      "outputs": [
+        {
+          "op": "mhc_pre_sinkhorn",
+          "shape": [
+            512,
+            4,
+            4096
+          ],
+          "attrs": {
+            "dtype": "bf16",
+            "num_iters": 20,
+            "need_backward": false
+          },
+          "model": {
+            "Ascend950DT_9582": {
+              "us": 43.89151515151515,
+              "status": "extrapolated",
+              "reason": "Separate Sinkhorn team or alternative C:V template; per-stage timing unverified.",
+              "query_ms": 0.57328,
+              "active_aic": 32,
+              "active_aiv": 64,
+              "work": {
+                "dtype": "bf16",
+                "cube_ops": 402653184,
+                "vec_ops": 32187392,
+                "cube_ops_by_dtype": {
+                  "fp32": 402653184
+                },
+                "vec_ops_by_dtype": {
+                  "fp32": 32187392
+                },
+                "vec_ops_by_class": {
+                  "alu": 31846912,
+                  "rsqrt": 512,
+                  "sigmoid": 4096,
+                  "exp": 8192,
+                  "div": 327680
+                },
+                "logical_read_bytes": 18350188,
+                "logical_write_bytes": 4235264,
+                "physical_hbm_bytes": null,
+                "scope": "Useful scalar-equivalent work (FMA=2), one logical read/write per tensor per kernel; excludes padding, cache traffic and ISA expansion.",
+                "notes": [
+                  "Projection uses the HF32 matrix math class; fp32 denotes its 32-bit input peak proxy."
+                ]
+              },
+              "plan": {
+                "active_aic": 32,
+                "active_aiv": 64,
+                "m_blocks": 2,
+                "k_blocks": 16,
+                "tile": [
+                  256,
+                  1024
+                ],
+                "stage2_payload_aiv": 64,
+                "rows_per_aiv": 8
+              }
+            },
+            "Ascend950PR_957b": {
+              "us": 54.09525032938077,
+              "status": "extrapolated",
+              "reason": "Separate Sinkhorn team or alternative C:V template; per-stage timing unverified.",
+              "query_ms": 0.27063,
+              "active_aic": 26,
+              "active_aiv": 52,
+              "work": {
+                "dtype": "bf16",
+                "cube_ops": 402653184,
+                "vec_ops": 32187392,
+                "cube_ops_by_dtype": {
+                  "fp32": 402653184
+                },
+                "vec_ops_by_dtype": {
+                  "fp32": 32187392
+                },
+                "vec_ops_by_class": {
+                  "alu": 31846912,
+                  "rsqrt": 512,
+                  "sigmoid": 4096,
+                  "exp": 8192,
+                  "div": 327680
+                },
+                "logical_read_bytes": 18350188,
+                "logical_write_bytes": 4235264,
+                "physical_hbm_bytes": null,
+                "scope": "Useful scalar-equivalent work (FMA=2), one logical read/write per tensor per kernel; excludes padding, cache traffic and ISA expansion.",
+                "notes": [
+                  "Projection uses the HF32 matrix math class; fp32 denotes its 32-bit input peak proxy."
+                ]
+              },
+              "plan": {
+                "active_aic": 26,
+                "active_aiv": 52,
+                "m_blocks": 2,
+                "k_blocks": 13,
+                "tile": [
+                  256,
+                  1280
+                ],
+                "stage2_payload_aiv": 52,
+                "rows_per_aiv": 10
+              }
+            },
+            "Ascend970DT": {
+              "us": 34.29611111111111,
+              "status": "extrapolated",
+              "reason": "Separate Sinkhorn team or alternative C:V template; per-stage timing unverified.",
+              "query_ms": 0.25275,
+              "active_aic": 120,
+              "active_aiv": 120,
+              "work": {
+                "dtype": "bf16",
+                "cube_ops": 402653184,
+                "vec_ops": 32187392,
+                "cube_ops_by_dtype": {
+                  "fp32": 402653184
+                },
+                "vec_ops_by_dtype": {
+                  "fp32": 32187392
+                },
+                "vec_ops_by_class": {
+                  "alu": 31846912,
+                  "rsqrt": 512,
+                  "sigmoid": 4096,
+                  "exp": 8192,
+                  "div": 327680
+                },
+                "logical_read_bytes": 18350188,
+                "logical_write_bytes": 4235264,
+                "physical_hbm_bytes": null,
+                "scope": "Useful scalar-equivalent work (FMA=2), one logical read/write per tensor per kernel; excludes padding, cache traffic and ISA expansion.",
+                "notes": [
+                  "Projection uses the HF32 matrix math class; fp32 denotes its 32-bit input peak proxy."
+                ]
+              },
+              "plan": {
+                "active_aic": 120,
+                "active_aiv": 120,
+                "m_blocks": 2,
+                "k_blocks": 32,
+                "tile": [
+                  256,
+                  512
+                ],
+                "stage2_payload_aiv": 103,
+                "rows_per_aiv": 5
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "sink-chunk4096",
+      "op": "mhc_sinkhorn",
+      "shape": [
+        4096,
+        4
+      ],
+      "role": "B8 times 512 token chunk, row-local N4/I20; isolated cold launch",
+      "index": [
+        "mhc_sinkhorn",
+        "4096",
+        "4",
+        "20"
+      ],
+      "runner": "results/v0.29/large/fusion/build/builtin",
+      "wall_s": 5400,
+      "raw_mib": 16384,
+      "expected_numerics": {
+        "output": 65536
+      },
+      "outputs": [
+        {
+          "op": "mhc_sinkhorn",
+          "shape": [
+            4096,
+            4
+          ],
+          "attrs": {
+            "dtype": "fp32",
+            "num_iters": 20,
+            "return_intermediates": false
+          },
+          "model": {
+            "Ascend950DT_9582": {
+              "us": null,
+              "status": "unsupported",
+              "reason": "Outside N4 inference FP32 template",
+              "query_ms": 0.04166,
+              "active_aic": null,
+              "active_aiv": null,
+              "work": null,
+              "plan": null,
+              "explicit_empty_stream": {
+                "us": 30.749715393939393,
+                "status": "extrapolated",
+                "reason": "One-UB extrapolation: T>256 has four separate holdout geometries per 950 SKU",
+                "query_ms": 0.66471,
+                "active_aic": 0,
+                "active_aiv": 64,
+                "work": {
+                  "dtype": "fp32",
+                  "cube_ops": 0,
+                  "vec_ops": 5472256,
+                  "cube_ops_by_dtype": {},
+                  "vec_ops_by_dtype": {
+                    "fp32": 5472256
+                  },
+                  "vec_ops_by_class": {
+                    "alu": 2785280,
+                    "exp": 65536,
+                    "div": 2621440
+                  },
+                  "logical_read_bytes": 262144,
+                  "logical_write_bytes": 262144,
+                  "physical_hbm_bytes": null,
+                  "scope": "Useful scalar-equivalent work (FMA=2), one logical read/write per tensor per kernel; excludes padding, cache traffic and ISA expansion.",
+                  "notes": []
+                },
+                "plan": {
+                  "active_aiv": 64,
+                  "active_aic": 0,
+                  "rows_per_core": 64,
+                  "register_passes": 8,
+                  "iterations": 20,
+                  "vf_calls_per_core": 42,
+                  "logical_read_bytes": 262144,
+                  "logical_write_bytes": 262144,
+                  "resident_aiv": 0,
+                  "history_state": "first",
+                  "required_ub_bytes": 58176
+                }
+              }
+            },
+            "Ascend950PR_957b": {
+              "us": null,
+              "status": "unsupported",
+              "reason": "Outside N4 inference FP32 template",
+              "query_ms": 0.02882,
+              "active_aic": null,
+              "active_aiv": null,
+              "work": null,
+              "plan": null,
+              "explicit_empty_stream": {
+                "us": 38.400914329380754,
+                "status": "extrapolated",
+                "reason": "One-UB extrapolation: T>256 has four separate holdout geometries per 950 SKU",
+                "query_ms": 0.13193,
+                "active_aic": 0,
+                "active_aiv": 56,
+                "work": {
+                  "dtype": "fp32",
+                  "cube_ops": 0,
+                  "vec_ops": 5472256,
+                  "cube_ops_by_dtype": {},
+                  "vec_ops_by_dtype": {
+                    "fp32": 5472256
+                  },
+                  "vec_ops_by_class": {
+                    "alu": 2785280,
+                    "exp": 65536,
+                    "div": 2621440
+                  },
+                  "logical_read_bytes": 262144,
+                  "logical_write_bytes": 262144,
+                  "physical_hbm_bytes": null,
+                  "scope": "Useful scalar-equivalent work (FMA=2), one logical read/write per tensor per kernel; excludes padding, cache traffic and ISA expansion.",
+                  "notes": []
+                },
+                "plan": {
+                  "active_aiv": 56,
+                  "active_aic": 0,
+                  "rows_per_core": 74,
+                  "register_passes": 10,
+                  "iterations": 20,
+                  "vf_calls_per_core": 42,
+                  "logical_read_bytes": 262144,
+                  "logical_write_bytes": 262144,
+                  "resident_aiv": 0,
+                  "history_state": "first",
+                  "required_ub_bytes": 67136
+                }
+              }
+            },
+            "Ascend970DT": {
+              "us": null,
+              "status": "unsupported",
+              "reason": "Outside N4 inference FP32 template",
+              "query_ms": 0.02489,
+              "active_aic": null,
+              "active_aiv": null,
+              "work": null,
+              "plan": null,
+              "explicit_empty_stream": {
+                "us": 19.883303089646464,
+                "status": "extrapolated",
+                "reason": "New hardware: inherited local issue prices and assumed 950 kernel layout; no target CA calibration",
+                "query_ms": 0.11376,
+                "active_aic": 0,
+                "active_aiv": 118,
+                "work": {
+                  "dtype": "fp32",
+                  "cube_ops": 0,
+                  "vec_ops": 5472256,
+                  "cube_ops_by_dtype": {},
+                  "vec_ops_by_dtype": {
+                    "fp32": 5472256
+                  },
+                  "vec_ops_by_class": {
+                    "alu": 2785280,
+                    "exp": 65536,
+                    "div": 2621440
+                  },
+                  "logical_read_bytes": 262144,
+                  "logical_write_bytes": 262144,
+                  "physical_hbm_bytes": null,
+                  "scope": "Useful scalar-equivalent work (FMA=2), one logical read/write per tensor per kernel; excludes padding, cache traffic and ISA expansion.",
+                  "notes": []
+                },
+                "plan": {
+                  "active_aiv": 118,
+                  "active_aic": 0,
+                  "rows_per_core": 35,
+                  "register_passes": 5,
+                  "iterations": 20,
+                  "vf_calls_per_core": 42,
+                  "logical_read_bytes": 262144,
+                  "logical_write_bytes": 262144,
+                  "resident_aiv": 0,
+                  "history_state": "first",
+                  "required_ub_bytes": 32192
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "flash-chunk4096",
+      "op": "mhc",
+      "shape": [
+        4096,
+        4,
+        5120
+      ],
+      "role": "B8 times 512 token chunk or 4096 tokens/rank in one dispatch; installed split alternative to serving extension",
+      "index": [
+        "mhc",
+        "4096",
+        "4",
+        "5120"
+      ],
+      "runner": "results/v0.29/large/fusion/build/builtin",
+      "wall_s": 21600,
+      "raw_mib": 98304,
+      "expected_numerics": {
+        "hin": 20971520,
+        "hpost": 16384,
+        "hres": 65536,
+        "inv_rms": 4096,
+        "hmix": 98304,
+        "hpre": 16384,
+        "chain_sinkhorn": 65536,
+        "chain_post": 83886080,
+        "chain_end_to_end": 83886080
+      },
+      "outputs": [
+        {
+          "op": "mhc_pre",
+          "shape": [
+            4096,
+            4,
+            5120
+          ],
+          "attrs": {
+            "dtype": "bf16",
+            "has_gamma": false,
+            "alpha_count": 3,
+            "return_intermediates": true
+          },
+          "model": {
+            "Ascend950DT_9582": {
+              "us": 20100.111515151515,
+              "status": "extrapolated",
+              "reason": "Above the calibrated 256-token split mHC partition; using the previous overlap estimate",
+              "query_ms": 0.2301,
+              "active_aic": null,
+              "active_aiv": null,
+              "work": {
+                "dtype": "bf16",
+                "cube_ops": 4026531840,
+                "vec_ops": 314941440,
+                "cube_ops_by_dtype": {
+                  "fp32": 4026531840
+                },
+                "vec_ops_by_dtype": {
+                  "fp32": 314941440
+                },
+                "vec_ops_by_class": {
+                  "alu": 314904576,
+                  "rsqrt": 4096,
+                  "sigmoid": 32768
+                },
+                "logical_read_bytes": 169738348,
+                "logical_write_bytes": 42745856,
+                "physical_hbm_bytes": null,
+                "scope": "Useful scalar-equivalent work (FMA=2), one logical read/write per tensor per kernel; excludes padding, cache traffic and ISA expansion.",
+                "notes": [
+                  "Projection uses the HF32 matrix math class; fp32 denotes its 32-bit input peak proxy."
+                ]
+              },
+              "plan": null
+            },
+            "Ascend950PR_957b": {
+              "us": 23219.43293521737,
+              "status": "extrapolated",
+              "reason": "Same implementation and tiling policy assumed from Ascend950DT_9582. Above the calibrated 256-token split mHC partition; using the previous overlap estimate",
+              "query_ms": 0.33904,
+              "active_aic": 28,
+              "active_aiv": 56,
+              "work": {
+                "dtype": "bf16",
+                "cube_ops": 4026531840,
+                "vec_ops": 314941440,
+                "cube_ops_by_dtype": {
+                  "fp32": 4026531840
+                },
+                "vec_ops_by_dtype": {
+                  "fp32": 314941440
+                },
+                "vec_ops_by_class": {
+                  "alu": 314904576,
+                  "rsqrt": 4096,
+                  "sigmoid": 32768
+                },
+                "logical_read_bytes": 169738348,
+                "logical_write_bytes": 42745856,
+                "physical_hbm_bytes": null,
+                "scope": "Useful scalar-equivalent work (FMA=2), one logical read/write per tensor per kernel; excludes padding, cache traffic and ISA expansion.",
+                "notes": [
+                  "Projection uses the HF32 matrix math class; fp32 denotes its 32-bit input peak proxy."
+                ]
+              },
+              "plan": null
+            },
+            "Ascend970DT": {
+              "us": 6767.275349119096,
+              "status": "extrapolated",
+              "reason": "Same implementation and tiling policy assumed from Ascend950DT_9582. Above the calibrated 256-token split mHC partition; using the previous overlap estimate",
+              "query_ms": 0.33445,
+              "active_aic": 120,
+              "active_aiv": 120,
+              "work": {
+                "dtype": "bf16",
+                "cube_ops": 4026531840,
+                "vec_ops": 314941440,
+                "cube_ops_by_dtype": {
+                  "fp32": 4026531840
+                },
+                "vec_ops_by_dtype": {
+                  "fp32": 314941440
+                },
+                "vec_ops_by_class": {
+                  "alu": 314904576,
+                  "rsqrt": 4096,
+                  "sigmoid": 32768
+                },
+                "logical_read_bytes": 169738348,
+                "logical_write_bytes": 42745856,
+                "physical_hbm_bytes": null,
+                "scope": "Useful scalar-equivalent work (FMA=2), one logical read/write per tensor per kernel; excludes padding, cache traffic and ISA expansion.",
+                "notes": [
+                  "Projection uses the HF32 matrix math class; fp32 denotes its 32-bit input peak proxy."
+                ]
+              },
+              "plan": null
+            }
+          }
+        },
+        {
+          "op": "mhc_sinkhorn",
+          "shape": [
+            4096,
+            4
+          ],
+          "attrs": {
+            "dtype": "fp32",
+            "num_iters": 20,
+            "return_intermediates": false
+          },
+          "model": {
+            "Ascend950DT_9582": {
+              "us": null,
+              "status": "unsupported",
+              "reason": "Outside N4 inference FP32 template",
+              "query_ms": 0.04587,
+              "active_aic": null,
+              "active_aiv": null,
+              "work": null,
+              "plan": null
+            },
+            "Ascend950PR_957b": {
+              "us": null,
+              "status": "unsupported",
+              "reason": "Outside N4 inference FP32 template",
+              "query_ms": 0.05477,
+              "active_aic": null,
+              "active_aiv": null,
+              "work": null,
+              "plan": null
+            },
+            "Ascend970DT": {
+              "us": null,
+              "status": "unsupported",
+              "reason": "Outside N4 inference FP32 template",
+              "query_ms": 0.02685,
+              "active_aic": null,
+              "active_aiv": null,
+              "work": null,
+              "plan": null
+            }
+          }
+        },
+        {
+          "op": "mhc_post",
+          "shape": [
+            4096,
+            4,
+            5120
+          ],
+          "attrs": {
+            "dtype": "bf16",
+            "has_h_res": true
+          },
+          "model": {
+            "Ascend950DT_9582": {
+              "us": 219.22920446429546,
+              "status": "extrapolated",
+              "reason": "Target resource schedule with inherited 950 phase defaults",
+              "query_ms": 0.13248,
+              "active_aic": 0,
+              "active_aiv": 64,
+              "work": {
+                "dtype": "bf16",
+                "cube_ops": 0,
+                "vec_ops": 838860800,
+                "cube_ops_by_dtype": {},
+                "vec_ops_by_dtype": {
+                  "fp32": 838860800
+                },
+                "vec_ops_by_class": {
+                  "alu": 754974720,
+                  "cast": 83886080
+                },
+                "logical_read_bytes": 210042880,
+                "logical_write_bytes": 167772160,
+                "physical_hbm_bytes": null,
+                "scope": "Useful scalar-equivalent work (FMA=2), one logical read/write per tensor per kernel; excludes padding, cache traffic and ISA expansion.",
+                "notes": [
+                  "Output cast counted once per element against FP32 source precision."
+                ]
+              },
+              "plan": {
+                "active_aiv": 64,
+                "active_aic": 0,
+                "route": "post_token",
+                "channel_slices": 1,
+                "fragment_width": 5120,
+                "rows_per_core": 64
+              }
+            },
+            "Ascend950PR_957b": {
+              "us": 256.56333933357195,
+              "status": "extrapolated",
+              "reason": "Target resource schedule with inherited 950 phase defaults",
+              "query_ms": 0.11643,
+              "active_aic": 0,
+              "active_aiv": 56,
+              "work": {
+                "dtype": "bf16",
+                "cube_ops": 0,
+                "vec_ops": 838860800,
+                "cube_ops_by_dtype": {},
+                "vec_ops_by_dtype": {
+                  "fp32": 838860800
+                },
+                "vec_ops_by_class": {
+                  "alu": 754974720,
+                  "cast": 83886080
+                },
+                "logical_read_bytes": 210042880,
+                "logical_write_bytes": 167772160,
+                "physical_hbm_bytes": null,
+                "scope": "Useful scalar-equivalent work (FMA=2), one logical read/write per tensor per kernel; excludes padding, cache traffic and ISA expansion.",
+                "notes": [
+                  "Output cast counted once per element against FP32 source precision."
+                ]
+              },
+              "plan": {
+                "active_aiv": 56,
+                "active_aic": 0,
+                "route": "post_token",
+                "channel_slices": 1,
+                "fragment_width": 5120,
+                "rows_per_core": 74
+              }
+            },
+            "Ascend970DT": {
+              "us": 110.88356774559958,
+              "status": "extrapolated",
+              "reason": "Target resource schedule with inherited 950 phase defaults",
+              "query_ms": 0.10902,
+              "active_aic": 0,
+              "active_aiv": 118,
+              "work": {
+                "dtype": "bf16",
+                "cube_ops": 0,
+                "vec_ops": 838860800,
+                "cube_ops_by_dtype": {},
+                "vec_ops_by_dtype": {
+                  "fp32": 838860800
+                },
+                "vec_ops_by_class": {
+                  "alu": 754974720,
+                  "cast": 83886080
+                },
+                "logical_read_bytes": 210042880,
+                "logical_write_bytes": 167772160,
+                "physical_hbm_bytes": null,
+                "scope": "Useful scalar-equivalent work (FMA=2), one logical read/write per tensor per kernel; excludes padding, cache traffic and ISA expansion.",
+                "notes": [
+                  "Output cast counted once per element against FP32 source precision."
+                ]
+              },
+              "plan": {
+                "active_aiv": 118,
+                "active_aic": 0,
+                "route": "post_token",
+                "channel_slices": 1,
+                "fragment_width": 5120,
+                "rows_per_core": 35
+              }
+            }
+          }
+        },
+        {
+          "op": "mhc",
+          "shape": [
+            4096,
+            4,
+            5120
+          ],
+          "attrs": {
+            "dtype": "bf16",
+            "implementation": "split",
+            "num_iters": 20
+          },
+          "model": {
+            "Ascend950DT_9582": {
+              "us": 25641.15393939394,
+              "status": "extrapolated",
+              "reason": "Above the calibrated 256-token split mHC partition; using the previous overlap estimate",
+              "query_ms": 0.45919,
+              "active_aic": null,
+              "active_aiv": null,
+              "work": {
+                "dtype": "bf16",
+                "cube_ops": 4026531840,
+                "vec_ops": 1159274496,
+                "cube_ops_by_dtype": {
+                  "fp32": 4026531840
+                },
+                "vec_ops_by_dtype": {
+                  "fp32": 1159274496
+                },
+                "vec_ops_by_class": {
+                  "alu": 1072664576,
+                  "rsqrt": 4096,
+                  "sigmoid": 32768,
+                  "exp": 65536,
+                  "div": 2621440,
+                  "cast": 83886080
+                },
+                "logical_read_bytes": 380043372,
+                "logical_write_bytes": 210780160,
+                "physical_hbm_bytes": null,
+                "scope": "Useful scalar-equivalent work (FMA=2), one logical read/write per tensor per kernel; excludes padding, cache traffic and ISA expansion.",
+                "notes": [
+                  "Kernel-interface byte sum includes materialized intermediates at both ends.",
+                  "Projection uses the HF32 matrix math class; fp32 denotes its 32-bit input peak proxy.",
+                  "Output cast counted once per element against FP32 source precision."
+                ]
+              },
+              "plan": null
+            },
+            "Ascend950PR_957b": {
+              "us": 29774.53857432553,
+              "status": "extrapolated",
+              "reason": "Same implementation and tiling policy assumed from Ascend950DT_9582. Above the calibrated 256-token split mHC partition; using the previous overlap estimate",
+              "query_ms": 0.90455,
+              "active_aic": 28,
+              "active_aiv": 56,
+              "work": {
+                "dtype": "bf16",
+                "cube_ops": 4026531840,
+                "vec_ops": 1159274496,
+                "cube_ops_by_dtype": {
+                  "fp32": 4026531840
+                },
+                "vec_ops_by_dtype": {
+                  "fp32": 1159274496
+                },
+                "vec_ops_by_class": {
+                  "alu": 1072664576,
+                  "rsqrt": 4096,
+                  "sigmoid": 32768,
+                  "exp": 65536,
+                  "div": 2621440,
+                  "cast": 83886080
+                },
+                "logical_read_bytes": 380043372,
+                "logical_write_bytes": 210780160,
+                "physical_hbm_bytes": null,
+                "scope": "Useful scalar-equivalent work (FMA=2), one logical read/write per tensor per kernel; excludes padding, cache traffic and ISA expansion.",
+                "notes": [
+                  "Kernel-interface byte sum includes materialized intermediates at both ends.",
+                  "Projection uses the HF32 matrix math class; fp32 denotes its 32-bit input peak proxy.",
+                  "Output cast counted once per element against FP32 source precision."
+                ]
+              },
+              "plan": null
+            },
+            "Ascend970DT": {
+              "us": 9655.85809313284,
+              "status": "extrapolated",
+              "reason": "Same implementation and tiling policy assumed from Ascend950DT_9582. Above the calibrated 256-token split mHC partition; using the previous overlap estimate",
+              "query_ms": 0.87296,
+              "active_aic": 120,
+              "active_aiv": 120,
+              "work": {
+                "dtype": "bf16",
+                "cube_ops": 4026531840,
+                "vec_ops": 1159274496,
+                "cube_ops_by_dtype": {
+                  "fp32": 4026531840
+                },
+                "vec_ops_by_dtype": {
+                  "fp32": 1159274496
+                },
+                "vec_ops_by_class": {
+                  "alu": 1072664576,
+                  "rsqrt": 4096,
+                  "sigmoid": 32768,
+                  "exp": 65536,
+                  "div": 2621440,
+                  "cast": 83886080
+                },
+                "logical_read_bytes": 380043372,
+                "logical_write_bytes": 210780160,
+                "physical_hbm_bytes": null,
+                "scope": "Useful scalar-equivalent work (FMA=2), one logical read/write per tensor per kernel; excludes padding, cache traffic and ISA expansion.",
+                "notes": [
+                  "Kernel-interface byte sum includes materialized intermediates at both ends.",
+                  "Projection uses the HF32 matrix math class; fp32 denotes its 32-bit input peak proxy.",
+                  "Output cast counted once per element against FP32 source precision."
+                ]
+              },
+              "plan": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "sink-b8-32ki",
+      "op": "mhc_sinkhorn",
+      "shape": [
+        262144,
+        4
+      ],
+      "role": "Full B8 x 32768 tokens on one rank, one original FP32 Sinkhorn launch with I20",
+      "index": [
+        "mhc_sinkhorn",
+        "262144",
+        "4",
+        "20"
+      ],
+      "runner": "results/v0.29/large/fusion/build/builtin",
+      "wall_s": 21600,
+      "raw_mib": 98304,
+      "expected_numerics": {
+        "output": 4194304
+      },
+      "outputs": [
+        {
+          "op": "mhc_sinkhorn",
+          "shape": [
+            262144,
+            4
+          ],
+          "attrs": {
+            "dtype": "fp32",
+            "num_iters": 20,
+            "return_intermediates": false
+          },
+          "model": {
+            "Ascend950DT_9582": {
+              "us": null,
+              "status": "unsupported",
+              "reason": "Outside N4 inference FP32 template",
+              "query_ms": 0.04525,
+              "active_aic": null,
+              "active_aiv": null,
+              "work": null,
+              "plan": null,
+              "explicit_empty_stream": {
+                "us": null,
+                "status": "unavailable",
+                "reason": "Multiple UB blocks have no validated inter-block issue schedule",
+                "query_ms": 0.09927,
+                "active_aic": 0,
+                "active_aiv": 64,
+                "work": {
+                  "dtype": "fp32",
+                  "cube_ops": 0,
+                  "vec_ops": 350224384,
+                  "cube_ops_by_dtype": {},
+                  "vec_ops_by_dtype": {
+                    "fp32": 350224384
+                  },
+                  "vec_ops_by_class": {
+                    "alu": 178257920,
+                    "exp": 4194304,
+                    "div": 167772160
+                  },
+                  "logical_read_bytes": 16777216,
+                  "logical_write_bytes": 16777216,
+                  "physical_hbm_bytes": null,
+                  "scope": "Useful scalar-equivalent work (FMA=2), one logical read/write per tensor per kernel; excludes padding, cache traffic and ISA expansion.",
+                  "notes": []
+                },
+                "plan": {
+                  "active_aiv": 64,
+                  "active_aic": 0,
+                  "rows_per_core": 4096,
+                  "register_passes": 512,
+                  "iterations": 20,
+                  "vf_calls_per_core": 42,
+                  "logical_read_bytes": 16777216,
+                  "logical_write_bytes": 16777216,
+                  "resident_aiv": 0,
+                  "history_state": "first",
+                  "required_ub_bytes": 3670848
+                }
+              }
+            },
+            "Ascend950PR_957b": {
+              "us": null,
+              "status": "unsupported",
+              "reason": "Outside N4 inference FP32 template",
+              "query_ms": 0.02908,
+              "active_aic": null,
+              "active_aiv": null,
+              "work": null,
+              "plan": null,
+              "explicit_empty_stream": {
+                "us": null,
+                "status": "unavailable",
+                "reason": "Multiple UB blocks have no validated inter-block issue schedule",
+                "query_ms": 0.08762,
+                "active_aic": 0,
+                "active_aiv": 56,
+                "work": {
+                  "dtype": "fp32",
+                  "cube_ops": 0,
+                  "vec_ops": 350224384,
+                  "cube_ops_by_dtype": {},
+                  "vec_ops_by_dtype": {
+                    "fp32": 350224384
+                  },
+                  "vec_ops_by_class": {
+                    "alu": 178257920,
+                    "exp": 4194304,
+                    "div": 167772160
+                  },
+                  "logical_read_bytes": 16777216,
+                  "logical_write_bytes": 16777216,
+                  "physical_hbm_bytes": null,
+                  "scope": "Useful scalar-equivalent work (FMA=2), one logical read/write per tensor per kernel; excludes padding, cache traffic and ISA expansion.",
+                  "notes": []
+                },
+                "plan": {
+                  "active_aiv": 56,
+                  "active_aic": 0,
+                  "rows_per_core": 4682,
+                  "register_passes": 586,
+                  "iterations": 20,
+                  "vf_calls_per_core": 42,
+                  "logical_read_bytes": 16777216,
+                  "logical_write_bytes": 16777216,
+                  "resident_aiv": 0,
+                  "history_state": "first",
+                  "required_ub_bytes": 4195904
+                }
+              }
+            },
+            "Ascend970DT": {
+              "us": null,
+              "status": "unsupported",
+              "reason": "Outside N4 inference FP32 template",
+              "query_ms": 0.02432,
+              "active_aic": null,
+              "active_aiv": null,
+              "work": null,
+              "plan": null,
+              "explicit_empty_stream": {
+                "us": null,
+                "status": "unavailable",
+                "reason": "Multiple UB blocks have no validated inter-block issue schedule",
+                "query_ms": 0.08224,
+                "active_aic": 0,
+                "active_aiv": 120,
+                "work": {
+                  "dtype": "fp32",
+                  "cube_ops": 0,
+                  "vec_ops": 350224384,
+                  "cube_ops_by_dtype": {},
+                  "vec_ops_by_dtype": {
+                    "fp32": 350224384
+                  },
+                  "vec_ops_by_class": {
+                    "alu": 178257920,
+                    "exp": 4194304,
+                    "div": 167772160
+                  },
+                  "logical_read_bytes": 16777216,
+                  "logical_write_bytes": 16777216,
+                  "physical_hbm_bytes": null,
+                  "scope": "Useful scalar-equivalent work (FMA=2), one logical read/write per tensor per kernel; excludes padding, cache traffic and ISA expansion.",
+                  "notes": []
+                },
+                "plan": {
+                  "active_aiv": 120,
+                  "active_aic": 0,
+                  "rows_per_core": 2185,
+                  "register_passes": 274,
+                  "iterations": 20,
+                  "vf_calls_per_core": 42,
+                  "logical_read_bytes": 16777216,
+                  "logical_write_bytes": 16777216,
+                  "resident_aiv": 0,
+                  "history_state": "first",
+                  "required_ub_bytes": 1958592
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "archive": {
+    "Ascend950DT_9582": {
+      "mhc": {
+        "windows": 24,
+        "maximum_by_tensor_elements": {
+          "shape": [
+            24,
+            4,
+            1536
+          ],
+          "ca_us": 21.986060606060605,
+          "source": "results/v0.29/replay.json",
+          "trace_sha256": [
+            "fda24c0f309f085265cae62c41fd03877c4f5994d2a71110cf9915e07f3aeb2b",
+            "e05744fe183d09430e14552cef2326f410011e739be806c3b50a46f978e5aca7",
+            "7c14bd2f93b291d159ce5a42b798ad21a3039a63c3f2b916d93ecf0db3a0d170"
+          ]
+        },
+        "maximum_by_token_or_kv": {
+          "shape": [
+            32,
+            4,
+            1024
+          ],
+          "ca_us": 20.06969696969697,
+          "source": "results/v0.29/replay.json",
+          "trace_sha256": [
+            "e75d3812adccce3466102d86cbda1519ea408a457e0a56f6bb1437d1f494f875",
+            "e4f77a86f9d34220f970365fcd4eb8beaf414c48fa1b2cc88defeb7df1daae3e",
+            "adfc80c6dcc367d04429ca9fb82e617b5ae3569ee820d9c2a444d92b8becdacb"
+          ]
+        }
+      },
+      "mhc_pre": {
+        "windows": 24,
+        "maximum_by_tensor_elements": {
+          "shape": [
+            24,
+            4,
+            1536
+          ],
+          "ca_us": 12.200606060606061,
+          "source": "results/v0.29/replay.json",
+          "trace_sha256": [
+            "fda24c0f309f085265cae62c41fd03877c4f5994d2a71110cf9915e07f3aeb2b"
+          ]
+        },
+        "maximum_by_token_or_kv": {
+          "shape": [
+            32,
+            4,
+            1024
+          ],
+          "ca_us": 11.368484848484849,
+          "source": "results/v0.29/replay.json",
+          "trace_sha256": [
+            "e75d3812adccce3466102d86cbda1519ea408a457e0a56f6bb1437d1f494f875"
+          ]
+        }
+      },
+      "mhc_sinkhorn": {
+        "windows": 49,
+        "maximum_by_tensor_elements": {
+          "shape": [
+            4097,
+            4
+          ],
+          "ca_us": 8.963636363636363,
+          "source": "results/v0.27/fusion/public-sink.json",
+          "trace_sha256": "91c202e39f2ed931edef51400f466de50ccd540fa8e5e96c9928f903d2e393d4"
+        },
+        "maximum_by_token_or_kv": {
+          "shape": [
+            4097,
+            4
+          ],
+          "ca_us": 8.963636363636363,
+          "source": "results/v0.27/fusion/public-sink.json",
+          "trace_sha256": "91c202e39f2ed931edef51400f466de50ccd540fa8e5e96c9928f903d2e393d4"
+        }
+      },
+      "mhc_post": {
+        "windows": 151,
+        "maximum_by_tensor_elements": {
+          "shape": [
+            253,
+            4,
+            2048
+          ],
+          "ca_us": 6.766666666666667,
+          "source": "results/v0.29/post/score.json",
+          "trace_sha256": "ff7e9dfc963ccb3959e697e48a2ad2562eba4e93ae7cd5308827d2accaf8a35b"
+        },
+        "maximum_by_token_or_kv": {
+          "shape": [
+            449,
+            4,
+            512
+          ],
+          "ca_us": 5.6036363636363635,
+          "source": "results/v0.29/post/score.json",
+          "trace_sha256": "6863be5738771d06889c2a414ed7470bf5cc4a58d8664b74b6dcebf6787a13cf"
+        }
+      },
+      "mhc_pre_sinkhorn": {
+        "windows": 24,
+        "maximum_by_tensor_elements": {
+          "shape": [
+            80,
+            4,
+            4096
+          ],
+          "ca_us": 13.781818181818181,
+          "source": "results/v0.26/presink/replay.json",
+          "trace_sha256": [
+            "ad282eb1e6db43a5e18b8d7fc0f43e07aab91a10ee67c4c13448362ff923041e"
+          ]
+        },
+        "maximum_by_token_or_kv": {
+          "shape": [
+            80,
+            4,
+            4096
+          ],
+          "ca_us": 13.781818181818181,
+          "source": "results/v0.26/presink/replay.json",
+          "trace_sha256": [
+            "ad282eb1e6db43a5e18b8d7fc0f43e07aab91a10ee67c4c13448362ff923041e"
+          ]
+        }
+      },
+      "vllm_hc_post": {
+        "windows": 27,
+        "maximum_by_tensor_elements": {
+          "shape": [
+            1,
+            33,
+            4,
+            7168
+          ],
+          "ca_us": 6.101212027482688,
+          "source": "results/v0.29/replay.json",
+          "trace_sha256": [
+            "30f966b560a83fa21af5bb9f2c31e7492edbd5e98b16e6d7441a5cac18de84d4"
+          ]
+        },
+        "maximum_by_token_or_kv": {
+          "shape": [
+            1,
+            129,
+            4,
+            128
+          ],
+          "ca_us": 4.611515047959983,
+          "source": "results/v0.29/replay.json",
+          "trace_sha256": [
+            "3dd281d539a50e51d8a32d62b22ef5323c88674f463ac7840669e24378b8371a"
+          ]
+        }
+      },
+      "lightning_indexer": {
+        "windows": 14,
+        "maximum_by_tensor_elements": {
+          "shape": [
+            1,
+            9,
+            4096,
+            8,
+            128
+          ],
+          "ca_us": 15.333939393939394,
+          "source": "results/v0.29/replay.json",
+          "trace_sha256": [
+            "44276025984adc3fd052a8bc26afc1baa266330b1344f385356141fc157bd8ec"
+          ]
+        },
+        "maximum_by_token_or_kv": {
+          "shape": [
+            1,
+            1,
+            8192,
+            8,
+            128
+          ],
+          "ca_us": 22.70909090909091,
+          "source": "results/v0.29/replay.json",
+          "trace_sha256": [
+            "f09ed67f4921b575474a5ab7f12ed86032bedcccb21d1ba282b930a95b96073e"
+          ]
+        }
+      }
+    },
+    "Ascend950PR_957b": {
+      "mhc": {
+        "windows": 10,
+        "maximum_by_tensor_elements": {
+          "shape": [
+            9,
+            4,
+            1024
+          ],
+          "ca_us": 19.19878936652094,
+          "source": "results/v0.29/replay.json",
+          "trace_sha256": [
+            "77aa39b3cd41aee5d131fffac01eea1741571ab540b6dd321be096c6a722b460",
+            "f918ab4198f7779f32c23ba258dc85b4cf142885f3066a534279e8a8019aa415",
+            "d196a680e05024674479cbd68cdd90469206e5bb83fc4f2a6afdeaec4172ff5e"
+          ]
+        },
+        "maximum_by_token_or_kv": {
+          "shape": [
+            16,
+            4,
+            128
+          ],
+          "ca_us": 17.676969774998724,
+          "source": "results/v0.29/replay.json",
+          "trace_sha256": [
+            "dd790f2be457a296a610ceeea11c09ff862ada80a35617d6696d47f429cc39b6",
+            "b6c1e23268124adf9caca273da3d518dea219f7dd2696cc6e20658785ba4c5a4",
+            "ef24927831b0f606e7c5db9aa586de58659df94c7f05e474af4d6163131e04fa"
+          ]
+        }
+      },
+      "mhc_pre": {
+        "windows": 10,
+        "maximum_by_tensor_elements": {
+          "shape": [
+            9,
+            4,
+            1024
+          ],
+          "ca_us": 9.86484885495156,
+          "source": "results/v0.29/replay.json",
+          "trace_sha256": [
+            "77aa39b3cd41aee5d131fffac01eea1741571ab540b6dd321be096c6a722b460"
+          ]
+        },
+        "maximum_by_token_or_kv": {
+          "shape": [
+            16,
+            4,
+            128
+          ],
+          "ca_us": 8.696363690309227,
+          "source": "results/v0.29/replay.json",
+          "trace_sha256": [
+            "dd790f2be457a296a610ceeea11c09ff862ada80a35617d6696d47f429cc39b6"
+          ]
+        }
+      },
+      "mhc_sinkhorn": {
+        "windows": 35,
+        "maximum_by_tensor_elements": {
+          "shape": [
+            4097,
+            4
+          ],
+          "ca_us": 9.111515151515151,
+          "source": "results/v0.27/fusion/public-sink.json",
+          "trace_sha256": "c93da495114380f42790e65a5c86ce9286369ca631a730b4e06f7c0b35ed2013"
+        },
+        "maximum_by_token_or_kv": {
+          "shape": [
+            4097,
+            4
+          ],
+          "ca_us": 9.111515151515151,
+          "source": "results/v0.27/fusion/public-sink.json",
+          "trace_sha256": "c93da495114380f42790e65a5c86ce9286369ca631a730b4e06f7c0b35ed2013"
+        }
+      },
+      "mhc_post": {
+        "windows": 88,
+        "maximum_by_tensor_elements": {
+          "shape": [
+            253,
+            4,
+            2048
+          ],
+          "ca_us": 7.583030303030303,
+          "source": "results/v0.29/post/score.json",
+          "trace_sha256": "a41fc8b1e4a6858cc90633dcdfdf7714cc6ad8608a387c401a16c28c3db7ea77"
+        },
+        "maximum_by_token_or_kv": {
+          "shape": [
+            449,
+            4,
+            512
+          ],
+          "ca_us": 5.471515151515152,
+          "source": "results/v0.29/post/score.json",
+          "trace_sha256": "bbf3d68e2c3c91c58209a54bb12c84304f5c35df0be9aeefbe267ed4825ec218"
+        }
+      },
+      "mhc_pre_sinkhorn": {
+        "windows": 20,
+        "maximum_by_tensor_elements": {
+          "shape": [
+            80,
+            4,
+            4096
+          ],
+          "ca_us": 13.653333333333334,
+          "source": "results/v0.26/presink/replay.json",
+          "trace_sha256": [
+            "daace4313ef57dc560bba38ac06b4419fe9cbbf2e4f5df8f6a46c950fb9c266e"
+          ]
+        },
+        "maximum_by_token_or_kv": {
+          "shape": [
+            80,
+            4,
+            4096
+          ],
+          "ca_us": 13.653333333333334,
+          "source": "results/v0.26/presink/replay.json",
+          "trace_sha256": [
+            "daace4313ef57dc560bba38ac06b4419fe9cbbf2e4f5df8f6a46c950fb9c266e"
+          ]
+        }
+      },
+      "vllm_hc_post": {
+        "windows": 25,
+        "maximum_by_tensor_elements": {
+          "shape": [
+            1,
+            33,
+            4,
+            7168
+          ],
+          "ca_us": 6.508485320024192,
+          "source": "results/v0.29/replay.json",
+          "trace_sha256": [
+            "e1da732d3690ff93d005731d009f17ccca1142379d0f072626d788c3e7d91cf5"
+          ]
+        },
+        "maximum_by_token_or_kv": {
+          "shape": [
+            1,
+            129,
+            4,
+            128
+          ],
+          "ca_us": 4.364242556504905,
+          "source": "results/v0.29/replay.json",
+          "trace_sha256": [
+            "1d45bbacab2a148a61622b005e9c9bee6e0af35a55d57cbf59d2bc97dd81d3ba"
+          ]
+        }
+      },
+      "lightning_indexer": {
+        "windows": 10,
+        "maximum_by_tensor_elements": {
+          "shape": [
+            1,
+            8,
+            1536,
+            8,
+            128
+          ],
+          "ca_us": 8.829090598039329,
+          "source": "results/v0.29/replay.json",
+          "trace_sha256": [
+            "793760e7d49f3ab9046e1bb8ce28ad37558861babd9dbe85fd4d785cb05ce545"
+          ]
+        },
+        "maximum_by_token_or_kv": {
+          "shape": [
+            1,
+            2,
+            3072,
+            8,
+            128
+          ],
+          "ca_us": 10.776363614015281,
+          "source": "results/v0.29/replay.json",
+          "trace_sha256": [
+            "cfc3505bdb9ee342f3a4b4cfd9be161adf017bf6ec0636cbf8ac808b04f072a1"
+          ]
+        }
+      }
+    }
+  },
+  "model_skus": [
+    "Ascend950DT_9582",
+    "Ascend950PR_957b",
+    "Ascend970DT"
+  ],
+  "measure": [
+    "Ascend950DT_9582",
+    "Ascend950PR_957b"
+  ],
+  "physical_clock_ghz": 1.65,
+  "provider": {
+    "mhc_pre": [
+      {
+        "file": "toolchains/cann/9.2.1/cann-9.2.1/opp/built-in/op_impl/ai_core/tbe/kernel/ascend950/ops_transformer/mhc_pre_apt/MhcPre_52e042c374f575edbe357a32523dba2c.o",
+        "sha256": "f2c7caa0ab2907476ec347351cb64689740b751b7e772a577fe5d10a71da7cd3",
+        "text_sha256": "86929759f21d6edf2da40e4d4b2829d1e70bac1acd8a83aaa8e86431f1e272a6"
+      },
+      {
+        "file": "toolchains/cann/9.2.1/cann-9.2.1/opp/built-in/op_impl/ai_core/tbe/kernel/ascend950/ops_transformer/mhc_pre_apt/MhcPre_a10d4b6657622686981662bb42314491.o",
+        "sha256": "1d4247d0104d4ac1474c7f29cded45ddeed5f7f0023e1019490313bb9b5e9b3e",
+        "text_sha256": "e87a4906318d68f93eb87b0b7ed15b9c6f1d0e23b30a0285d7276f3ae11cfbb0"
+      }
+    ],
+    "mhc_sinkhorn": [
+      {
+        "file": "toolchains/cann/9.2.1/cann-9.2.1/opp/built-in/op_impl/ai_core/tbe/kernel/ascend950/ops_transformer/mhc_sinkhorn_apt/MhcSinkhorn_8997d9c5c22e82688b98bc25d8daa9cd.o",
+        "sha256": "50ff8fc0d508329a7d5123ee5dcde5e6c930a97a24c398411cfbd92c0432d17a",
+        "text_sha256": "3ff3e7e684a95d0bef60c9258623f580c0fd9b83ba8bc5cc792b7bf04647ee5c"
+      }
+    ],
+    "mhc_post": [
+      {
+        "file": "toolchains/cann/9.2.1/cann-9.2.1/opp/built-in/op_impl/ai_core/tbe/kernel/ascend950/ops_transformer/mhc_post_apt/MhcPost_59130ccee6717ff2c0f15b485e731162.o",
+        "sha256": "36851e45520023382742d07d871519f65e57e9c49ec3594583e361b0bb9b6677",
+        "text_sha256": "c5054f5b0703eb46d255f77c36368206319d306d80d1200e1455010800f7ed12"
+      },
+      {
+        "file": "toolchains/cann/9.2.1/cann-9.2.1/opp/built-in/op_impl/ai_core/tbe/kernel/ascend950/ops_transformer/mhc_post_apt/MhcPost_9ea9c0dc66163bb0563738a10f00ae24.o",
+        "sha256": "f38243b6c7409168100b7da4c56c015255d1d5b084cc83657d0acbc5c7c1c5a8",
+        "text_sha256": "9ebd7c39513345c50bee7fbfdb08a85595d27898e175d874b5df69c8a079e337"
+      }
+    ],
+    "mhc_pre_sinkhorn": [
+      {
+        "file": "toolchains/cann/9.2.1/cann-9.2.1/opp/built-in/op_impl/ai_core/tbe/kernel/ascend950/ops_transformer/mhc_pre_sinkhorn_apt/MhcPreSinkhorn_bd8e37c67f2294e1437f03bb2bace96c.o",
+        "sha256": "280a1947dc8e2070b7563e06eed75c04683f7d684e1e618da650051ff5eda9b2",
+        "text_sha256": "5397755e41682a8928f8b9521791bfd56a37609b35d3af8243e0787a09f47b7c"
+      },
+      {
+        "file": "toolchains/cann/9.2.1/cann-9.2.1/opp/built-in/op_impl/ai_core/tbe/kernel/ascend950/ops_transformer/mhc_pre_sinkhorn_apt/MhcPreSinkhorn_5d39354b089359785ccbee74e3ea8182.o",
+        "sha256": "bce56d678c6b21f23016fbb47f723b11b1e01b97a4c1ea65580d937871f0700f",
+        "text_sha256": "048a04dff8f5c19215c4762b440c694ffeabe2961161cbc219e7229ae77998da"
+      }
+    ],
+    "vllm_hc_post": [
+      {
+        "file": "build/hcpost23/kernel/HcPost_d2fe6614722b27afa6f8d964c215447e.o",
+        "sha256": "4508230c80160f04172e3ff47bff1c4a211459c0d4cd270fb88425289e5deb41",
+        "text_sha256": "2a258948267cabc2b70a1dfc1131a92165c9d8e48008f915caa5792bb9c2766b"
+      }
+    ],
+    "lightning_indexer": [
+      {
+        "file": "toolchains/cann/9.2.1/cann-9.2.1/opp/built-in/op_impl/ai_core/tbe/kernel/ascend950/ops_transformer/lightning_indexer/LightningIndexer_468c104183baa47aac33ce774c8668e0.o",
+        "sha256": "3d4bb016c0feb823dbcf1658b8708c5d074c944e7ad70a02b5932128bdf790bf",
+        "text_sha256": "a2d94b5dec5ec63d90bd645c22c839df9dff2f334f8ae7b775d58d6f48448ae8"
+      },
+      {
+        "file": "toolchains/cann/9.2.1/cann-9.2.1/opp/built-in/op_impl/ai_core/tbe/kernel/ascend950/ops_transformer/lightning_indexer/LightningIndexer_0704142c0a98b377b01b6ebed9643a0c.o",
+        "sha256": "6d27a40687c4b91b3b8d0d085983c6a4a0d2d5559bb39a7a734617c51c4e51a6",
+        "text_sha256": "f33659f89c7867678cdcdcacdc788781adb538fec87376d4a41f079086c110aa"
+      },
+      {
+        "file": "toolchains/cann/9.2.1/cann-9.2.1/opp/built-in/op_impl/ai_core/tbe/kernel/ascend950/ops_transformer/lightning_indexer/LightningIndexer_5e74d4b002cc3d030158f0e18362672c.o",
+        "sha256": "cdeaafe7bb537fe7c38ea839edf139ab688e2b832bbebbd1c42c7b726e9cad07",
+        "text_sha256": "a2d94b5dec5ec63d90bd645c22c839df9dff2f334f8ae7b775d58d6f48448ae8"
+      },
+      {
+        "file": "toolchains/cann/9.2.1/cann-9.2.1/opp/built-in/op_impl/ai_core/tbe/kernel/ascend950/ops_transformer/lightning_indexer/LightningIndexer_2517851d7f53b28f971ff94bfa4b7037.o",
+        "sha256": "4940c25dd5f72cce57bf18c30df8568ecce22d0f472c513235a0dc03db905ca6",
+        "text_sha256": "f33659f89c7867678cdcdcacdc788781adb538fec87376d4a41f079086c110aa"
+      }
+    ]
+  },
+  "assets": {
+    "development/validation/large29/fusion/fusion_campaign.py": "a0290bed722c63179466e57caa37a1d9050178be9ad9ef82faf840042538614f",
+    "development/validation/large29/fusion/build_hosts.py": "6cafca6933b87593ccfe43b2f473b957e1b9bb1e4c3a8735df423bd3fc972496",
+    "results/v0.29/large/fusion/build/builtin": "b4a289a5ef84cb3b10e31db95bfe06e764c3f2efc9aace605ff9e62abbeaefa3",
+    "results/v0.29/large/fusion/build/hcpost": "d818f128d0219fcea95d4961b05c7d0a8478f75d48c28a805d3edeff155f8989",
+    "smoke/extension_indexer_mhc.cpp": "a1536bfd32a9c7ffec7fb2434d00cbecb8afa21a14e73c2040d54d2f2cb9b5e5",
+    "development/validation/hcpost23/host.cpp": "d85c748be852b49ccac91060b18ad512077022b773d1c0aed7a7bd402ef49e51",
+    "development/validation/sku17/campaign_collect.py": "128913632124b4ff430595a34d239e53742f2cb4d1a16ea82a581180bfb3f792",
+    "scripts/cann-run.sh": "d529513abc0bc340a56c91365a9e72d5e434d2cb4841be1692930294cd0624df",
+    "configs/models/DeepSeek-V4.1-Flash.json": "8be45ce0476004a3f529fd896115a4a2e800a129ad2d3ec05b16050f52e21879",
+    "configs/models/DeepSeek-V4-Pro.json": "5fe4568daee51c208cb8a79538eaeda090ae011ade1dee2c386aa95f569c810e"
+  },
+  "protocol": "Fair inter-campaign shared flock for each individual CA endpoint. Strict original numerical groups and counts, target SKU/DRAM, vendor table envelope per core, active shard inventory, physical END on each participating core and installation .text. No replay of incomplete acquisitions. Physical execution proof can be valid even if no matching timing model. MHC sequence excludes host gaps and is counted separately from components.",
+  "unsupported_full": {
+    "mhc_pre/mhc_post/hc_post/mhc": "B8 x 32Ki x 4 x 5120 gives 5,368,709,120 elements, beyond signed-int product in the pinned golden generator. Full-width 512/4096-token chunks and the true full-token standalone Sinkhorn are registered separately.",
+    "mhc_pre_sinkhorn": "The registered built-in D4096/I20 contract and the real separate extension at D5120 or D7168 are distinct. Future-chip branch timings have no CA.",
+    "lightning_indexer": "Q9 and KV32768 denote an isolated dense candidate-index contract. Actual upstream uses compressed or filtered pages and runtime head placement, Pro top-k=1024. No equivalence to full three-model dispatch is implied."
+  }
+}

@@ -1,5 +1,7 @@
 # Kimi AttnResFwd · 驻留 4 行的 decode
 
+Kimi 的 [512,7168,8,1] 表示 512 个 token、7168 通道、8 个 bank 槽，其中 1 个有效。先将归一化 gamma 与分数权重读入，再按 token 计算 score 和加权输出。950DT、PR 每忙核分别处理 8、10 行，条件理想服务分别为 7.834、15.759 µs。公开耗时为 N/A，rsqrt、exp、控制和实际等待需由同一 kernel 的 CA 核验。[40021 分支、各项理想价格与预登记](../../results/v0.29/large/vector/report.md)
+
 ![950PR 模型阶段与 CA 同一阶段的指令](figures/attn_res_fwd-v21-pr.png)
 
 在 950PR 上，一个 7168 维 token、8 个 slot、3 行有效历史，模型给出 **12.799 µs**，CA 完整设备窗口 **11.488 µs**，偏高 **11.42%**。旧模型为 24.002 µs。上图两栏按同一组读请求划分阶段，起点为全芯片第一条指令；下栏还能看到每个阶段里 MTE2、SIMD 和写回的并行。保留每段边界、trace 和绘图输入以便核对。[图数据](../../results/v0.21/fusion/attn_res_fwd-figure.json)
