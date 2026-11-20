@@ -1,0 +1,211 @@
+{
+  "utc": "2026-11-20T07:09:52.694781+00:00",
+  "model": "Kimi-K3",
+  "node": "mla.kv_b_proj",
+  "shape": [
+    32760,
+    256,
+    512
+  ],
+  "source_model_heads": 96,
+  "tp": 96,
+  "local_heads": 1,
+  "dtype": "bf16",
+  "per_request_unpadded_query": [
+    4096,
+    4096,
+    4096,
+    4096,
+    4096,
+    4096,
+    4096,
+    4088
+  ],
+  "requests": 8,
+  "requests_context": 32768,
+  "scenario": "Seven requests submit a complete 4096 chunk; the eighth has a final remainder of 4088. No rank padding. TP96 is an isolated MLA attention sharding scenario; does not claim whole-network support or actual vLLM weight format.",
+  "predictions": {
+    "Ascend950DT_9582": {
+      "us": 26.720379102182008,
+      "old_us": 27.66642786182888,
+      "plan": {
+        "branch": "b_resident_l1",
+        "tile": [
+          128,
+          256,
+          64
+        ],
+        "read_page_k": 256,
+        "output_tiles": 256,
+        "effective_output_tiles": 256,
+        "waves": 8,
+        "active_aic": 32,
+        "active_aiv": 0,
+        "iterations": 8,
+        "mmads_total": 2048,
+        "tail_wave_pieces": 32,
+        "tail_split_mn": [
+          1,
+          1
+        ],
+        "tail_wave_histogram": [
+          [
+            120,
+            256,
+            1
+          ],
+          [
+            128,
+            256,
+            31
+          ]
+        ]
+      },
+      "active_aic": 32,
+      "active_aiv": 0
+    },
+    "Ascend950PR_957b": {
+      "us": 29.92804332419956,
+      "old_us": 32.194647245700956,
+      "plan": {
+        "branch": "b_resident_l1",
+        "tile": [
+          128,
+          256,
+          64
+        ],
+        "read_page_k": 256,
+        "output_tiles": 256,
+        "effective_output_tiles": 280,
+        "waves": 10,
+        "active_aic": 28,
+        "active_aiv": 0,
+        "iterations": 8,
+        "mmads_total": 2240,
+        "tail_wave_pieces": 28,
+        "tail_split_mn": [
+          7,
+          1
+        ],
+        "tail_wave_histogram": [
+          [
+            12,
+            256,
+            1
+          ],
+          [
+            14,
+            256,
+            3
+          ],
+          [
+            18,
+            256,
+            6
+          ],
+          [
+            19,
+            256,
+            18
+          ]
+        ]
+      },
+      "active_aic": 28,
+      "active_aiv": 0
+    },
+    "Ascend970DT": {
+      "us": 11.571588862452339,
+      "old_us": 10.794879401890752,
+      "plan": {
+        "branch": "b_resident_l1",
+        "tile": [
+          128,
+          256,
+          64
+        ],
+        "read_page_k": 256,
+        "output_tiles": 256,
+        "effective_output_tiles": 352,
+        "waves": 3,
+        "active_aic": 120,
+        "active_aiv": 0,
+        "iterations": 8,
+        "mmads_total": 2816,
+        "tail_wave_pieces": 112,
+        "tail_split_mn": [
+          7,
+          1
+        ],
+        "tail_wave_histogram": [
+          [
+            12,
+            256,
+            1
+          ],
+          [
+            14,
+            256,
+            15
+          ],
+          [
+            18,
+            256,
+            6
+          ],
+          [
+            19,
+            256,
+            90
+          ]
+        ]
+      },
+      "active_aic": 120,
+      "active_aiv": 0
+    }
+  },
+  "wall_s": 7200,
+  "raw_mib": 8192,
+  "installed_matmul_elf": "e6899fbaa2659b7778bee81deb00b64b009dafcb7ad350f06576767fdeba2bf7",
+  "dependencies": {
+    "operator_model/matmul_supply32.py": "1eb9b8c0dfaadcbca4a0313bc330acc44f83babdf801e94bb51e2e03947d2030",
+    "operator_model/matmul_v15.py": "c5edb6d59c184f63db0d1208cdec38a79368d4f6eb246cb077ed0faba069fa02",
+    "operator_model/matmul_resource.py": "4ff5f1e2bc2581ed16d609e18900879ccaf1a80f65433de8f85de7e513140b19",
+    "operator_model/matmul_supply30.py": "4eebf06bec3c2c5bb03145bc367fbc195d79e29dfdada27fa6a5c70776583c92",
+    "operator_model/matmul_dispatch31.py": "1abf97a33fce2ebbfe175fff0152cc1d28f7420836c27eb8acd713c17452ce83",
+    "operator_model/matmul_waves.py": "97f615daae6563e51df26591565909d8bea044c3b72bf5f67bb8aa1e6b5b292b",
+    "operator_model/matmul_splitk.py": "05a80dae59c80ba78734c0a0ef50276fca840eddfdde3bc43cc278702b05d497",
+    "results/v0.16/matmul.json": "b37e9148aeb14d90ae744e966337556d9adf269066bf281d12984f282078546b",
+    "results/v0.30/matmul/prices.json": "c491160a228e196060f9787451510936f62479aef72c9be5185d902fb097cad3",
+    "development/validation/matmul32/freeze.py": "3d7713e8c6819c62fcbc3c6204193a5e67e066da527177ee40d31d0959c9129f",
+    "configs/chips/Ascend950DT_9582.json": "54d68c49374f8fab57ae16b05923d7ea2874cc48083e0728bcbc60f467bb71ec",
+    "configs/chips/Ascend950PR_957b.json": "79bb18eb9a914eaab9b6b9344178d601e4300e5853f864acbb1dac3b42b0ccc7",
+    "configs/chips/Ascend970DT.json": "837796ec9f3b39888950cfe6f703b63c4bf9ced22a366b66f300f1389a8006f2",
+    "development/validation/matmul32/forward.py": "3710db31b4b26fa5646a01a235c7be6c516b2ae63ef63b9d8f74c8844d0d9726",
+    "development/validation/matmul32/geometry.py": "c804588fb49fb742089a0de42df85eae1700cc563d77ba6725a79bb4621d3092",
+    "configs/models/Kimi-K3.json": "9710e121a58d03ac92c8d6da287a19541994319afbbe6d6202af001ffd379213",
+    "development/workloads/prefill_shapes.py": "cc9a95e07034563eeed8d302d1115d889b7ee17531a3095bc7fe3c6295e8a285",
+    "development/validation/matmul28/campaign.py": "835acbc959331e68860bbcdb6c456ad55b1bc057c5237fecd27e87d7a856669a",
+    "development/validation/matmul28/drain.py": "ab2a34e50e391b4691be2b388d61adecd64077c30d1d51eb2dd9345e49d7a000",
+    "build/smoke/matmul28": "a6a260ff7f8a407f7d64789f953be0edbcaf9ff94b61f0129d72272a21970b01",
+    "results/v0.31/matmul/kimi-prefill/freeze.json": "894600f695f3aa15bc75c4fcd3b2aaae896461cde54ec8cd786addd4fb62d673"
+  },
+  "dedup_prior_registrations": [
+    "results/v0.28/matmul/freeze.json",
+    "results/v0.28/matmul/long-prefill/freeze.json",
+    "results/v0.28/matmul/multi/freeze.json",
+    "results/v0.28/matmul/narrow/freeze.json",
+    "results/v0.28/matmul/streamk-freeze.json",
+    "results/v0.28/matmul/wide-prefill/freeze.json",
+    "results/v0.29/matmul/decode/freeze.json",
+    "results/v0.29/matmul/full-load/freeze.json",
+    "results/v0.29/matmul/timing-freeze.json",
+    "results/v0.29/matmul/workspace-freeze.json",
+    "results/v0.30/matmul-dispatch/device/freeze.json",
+    "results/v0.30/matmul-dispatch/freeze.json",
+    "results/v0.30/matmul/freeze.json",
+    "results/v0.31/matmul/device/freeze.json",
+    "results/v0.31/matmul/kimi-prefill/freeze.json",
+    "results/v0.32/matmul/freeze.json"
+  ],
+  "policy": "One run per actual SKU, serially in the retired Kimi decode CA slot, full affinity nice+12; no unlimited retries. Check all outputs and all AIC retirements; separately compare each physical MMAD size, B address reuse, A bytes and complete output address union."
+}

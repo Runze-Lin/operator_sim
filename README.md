@@ -8,15 +8,15 @@
 | 某个算子为什么需要这么久？不同 shape 如何改变结果？ | [建模方法：Vector、Cube、CV 三类流程，含逐算子公式与算例](docs/modeling-strategy.md) |
 | 哪些算子、shape 和库实现实测过？偏差多大？预测有多快？ | [CA 校验与误差：逐算子摘要、逐 shape 数据及查询墙钟](docs/error-analysis.md) |
 
-各算子在 DT、PR 上分别核验 WAPE 和最大误差；偏快、偏慢用同窗带符号偏差与偏快占比描述。对常驻权重的 Matmul，可按配置切换资源排程，比较同形预测和 CA。[全部算子的误差方向](results/v0.31/direction.md)
+各算子在 DT、PR 上分别核验 WAPE 和最大误差；偏快、偏慢用同窗带符号偏差与偏快占比描述。Matmul 按目标 L1、输出几何和工作集自动选择分 K、普通多页或权重常驻的多波排程。[逐算子两端误差与方向](results/v0.32/acceptance.md)
 
 单卡 B8 整批 prefill 的工作负载表按 32Ki、128Ki、256Ki 给出每个算子的输入、dtype、并行切分、两卡 CA 实测和 970DT 外推。矩阵投影、indexer 系数与全 hidden 激活各有自己的宽度。[DeepSeek V4.1 Flash](docs/workloads/deepseek-flash.md) · [DeepSeek V4 Pro](docs/workloads/deepseek-pro.md) · [Kimi K3](docs/workloads/kimi-k3.md)
 
-普通 decode 的每卡 B 为 1、9、11、16 时，M 分别为 1、9、11、16。同一批请求做 MTP8 主模型校验时，M 分别为 9、81、99、144。Flash、Pro 和 Kimi 的 N、K 取各自的投影宽度。53 个场景几何表列出公开接口的 DT、PR、970DT 预测、现有两端 CA 时间和长 prefill 的实测增长斜率。[三模型 decode 与大形对照](results/v0.31/matmul/scenarios.md) · [安装库的 host 分支核验](results/v0.30/matmul-dispatch/report.md)
+普通 decode 的每卡 B 为 1、9、11、16 时，M 分别为 1、9、11、16。同一批请求做 MTP8 主模型校验时，M 分别为 9、81、99、144。Flash、Pro 和 Kimi 的 N、K 取各自的投影宽度。同一几何复用设备证据，单卡 batch 和每请求 token 数分别保留。[三模型 decode 的 batch、投影与实测](results/v0.32/matmul/decode.md) · [大 prefill 的分块与实测](results/v0.32/matmul/report.md) · [32Ki 到 256Ki 的斜率](results/v0.32/matmul/scaling.md) · [安装库的 host 分支核验](results/v0.30/matmul-dispatch/report.md)
 
 在 `estimate("matmul", [M,N,K], chip=...)` 中，窄输出、长 K 的投影可按目标核数重选输出块，再计算部分积与 FP32 归并。对 Pro 的 B11×9 校验，950DT 的预测 / CA 是 6.475 / 7.056 µs。对 Kimi 多头 recurrent decode，普通查询会给出独立状态链的目标 AIV 分配、工作量和条件时延，并标明外推状态。[Matmul 逐步计算与指令图](results/v0.31/matmul/device/example.md) · [Kimi 大形算例](docs/examples/kda_recurrent.md)
 
-Flash B8×128Ki 的 Matmul 有 1,048,576 行。950DT / 950PR 的完整 CA 为 405.617 / 804.867 µs，默认预测为 437.251 / 1155.000 µs。权重常驻 L1 的可选排程 `estimate_matmul_supply(shape, chip=...)` 给出 409.270 / 1091.722 µs。它在 DT 的开发形上贴近实测，在 PR 的新大形上仍高估 35.64%。[DT 算例](results/v0.30/matmul/report.md) · [PR 每波模型与 CA 同轴图](results/v0.31/matmul/long-pr/report.md) · [三模型的真实投影与批量](results/v0.31/matmul/scenarios.md)
+Flash B8×128Ki 的 Matmul 有 1,048,576 行。950DT 的预测 / 完整 CA 为 **409.270 / 405.617 µs**，950PR 为 **847.926 / 804.867 µs**。PR 的最后 8 个输出块各拆成 3 片，全芯片 65,792 条 MMAD 与 trace 一致。970DT 在相同库策略下外推 **87.608 µs**。这些窗口参与了开发；64Ki、256Ki 及不同投影宽度的冻结样例分别跟踪。[逐波模型与 CA 同轴算例](results/v0.32/matmul/method.md) · [大形覆盖与采集进度](results/v0.32/large/report.md)
 
 逐算子算例从一次调用的输入算到设备耗时。Matmul 算例将两波输出块的各页 K 逐行对齐，可以同时看预测和 CA 的首条 MMAD、重叠和末次写回。[Matmul](docs/examples/matmul.md) · [DynamicMXQuant](docs/examples/quant.md) · [FA](docs/examples/fa.md) · [大 prefill Cast](docs/examples/cast_bf16_fp32.md) · [其余算例](docs/pipeline-comparisons.md)
 
@@ -43,7 +43,7 @@ print(result.latency_us, result.work["cube_ops"], result.work["logical_read_byte
 
 维护 960、970、980 等架构情景时，每个目标使用一份 JSON，分别填写按位宽区分的两类算力、核数、频率、外存容量和带宽。内置 `Ascend970DT` 情景为 120 Cube / 120 Vector、1.8 GHz、288 GB、14.4 TB/s；其中 16 位 Vector 峰值 110.592 TOP/s 已含双发射。这些是架构假设。调用方通过 `extrapolated` 状态识别外推，并决定是否将其交给事件调度器。[970DT 配置及逐项来源](configs/chips/Ascend970DT.json) · [自定义芯片示例](configs/chips/scenario-example.json) · [字段、单位和返回合同](docs/integration.md)
 
-安装版实际 API 的逐输入墙钟、不同 shape 与完整 CA 窗口覆盖可在 v0.31 发布记录核对。时间按进程内首次遇到该组参数的一次调用统计。[查询开销](results/v0.31/wheel-check.json) · [按算子归档的双端误差](results/v0.31/acceptance.md)
+安装版实际 API 的逐输入墙钟、不同 shape 与完整 CA 窗口覆盖可在 v0.32 发布记录核对。时间按进程内首次遇到该组参数的一次调用统计。[查询开销](results/v0.32/wheel-check.json) · [按算子归档的双端误差](results/v0.32/acceptance.md)
 
 ## 可预测的算子
 

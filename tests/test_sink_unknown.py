@@ -48,8 +48,9 @@ class TestUnknownSinkhorn(unittest.TestCase):
             chip=load_chip(sku);last=chip.vector_cores*8
             self.assertIsNotNone(estimate(OP,[last,4],chip=sku).latency_us)
             beyond=estimate(OP,[last+1,4],chip=sku)
-            self.assertEqual(beyond.status,'unavailable')
-            self.assertIn('Multiple register',beyond.reason)
+            self.assertEqual(beyond.status,'extrapolated')
+            self.assertEqual(beyond.projection['target_plan']['register_passes'],2)
+            self.assertIsNone(estimate(OP,[last+1,4],chip=sku,timing_mode='calibrated').latency_us)
         c=load_chip(PR)
         slower=replace(c,name='lower-vector-rate',vector_tops={**c.vector_tops,'32':c.vector_tops['32']/2})
         self.assertGreater(estimate(OP,[67,4],chip=slower).latency_us,estimate(OP,[67,4],chip=c).latency_us)
@@ -66,3 +67,26 @@ class TestUnknownSinkhorn(unittest.TestCase):
         self.assertEqual(estimate(OP,[257,4],chip=c,timing_mode='calibrated').status,'unavailable')
         self.assertEqual(estimate(OP,[67,4],{'return_intermediates':True}).status,'unsupported')
         self.assertEqual(estimate(OP,[67,4],dtype='bf16').status,'unsupported')
+
+    def test_register_pass_and_ub_tail_work(self):
+        ledger=json.loads((ROOT/'results/v0.28/fusion/replay.json').read_text())
+        for row in ledger['rows']:
+            if row['g']<=1:
+                continue
+            attrs={'num_iters':row['iters']}
+            unknown=estimate(OP,[row['t'],4],attrs,chip=row['sku'])
+            self.assertAlmostEqual(unknown.latency_us,row['mean_us'],places=10)
+            known=estimate(OP,[row['t'],4],dict(attrs,resident_aiv=row['h']),chip=row['sku'])
+            self.assertAlmostEqual(known.latency_us,row['known_us'],places=10)
+        for sku in (DT,PR,FUT):
+            t=262144
+            out=estimate(OP,[t,4],{'resident_aiv':0},chip=sku)
+            d=out.projection['timing_diagnostics']
+            p=d['target_plan']
+            seg=d['block_schedule']
+            self.assertGreater(p['ub_blocks'],1)
+            self.assertEqual(sum(s['count']*s['rows'] for s in seg),p['rows_per_core'])
+            self.assertEqual(sum(s['count']*s['concurrent_rows'] for s in seg),t)
+            self.assertLessEqual(len(seg),5)
+            self.assertEqual(p['vf_calls_per_core'],1+41*p['ub_blocks'])
+            self.assertAlmostEqual(sum(d['stages_us'].values()),out.latency_us)

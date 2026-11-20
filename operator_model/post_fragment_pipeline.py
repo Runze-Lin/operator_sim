@@ -55,7 +55,17 @@ def estimate_post_fragments(shape, *, chip, resident_aiv, previous_shape, inspec
             or plan['route']!='post_token' or prev['target_plan']['route']!='post_token'
             or not tiles or tiles['count']!=2):
         raise ValueError('Requires a covered changed token shape with two UB fragments')
-    rows = plan['rows_per_core']
+    return covered_fragment_schedule(target, diag, tiles, inspect_rows)
+
+
+def covered_fragment_schedule(target, diag, tiles, inspect_rows=()):
+    """Two-slot costs conditional on a covered, changed token-to-token predecessor.
+
+    The individual previous tensor dimensions do not enter the critical path
+    once the caller has established that dispatch condition.
+    """
+    active = diag['target_plan']['active_aiv']
+    rows = diag['target_plan']['rows_per_core']
     requested = tuple(inspect_rows)
     if len(requested)>8 or any(type(i) is not int or not 0<=i<rows for i in requested):
         raise ValueError('Inspect at most eight valid row indices of the critical AIV')

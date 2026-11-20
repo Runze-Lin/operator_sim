@@ -1,0 +1,132 @@
+{
+  "utc": "2026-11-20T07:02:17.831011+00:00",
+  "scan": "host ps -u own_uid -ww and pstree -p <owned PID>, descendant real msopprof children; state and live observations separate.",
+  "state_sources": [
+    {
+      "label": "large MoE / addmm / KDA B128",
+      "state_file": "results/v0.29/large/cube/state.json",
+      "state": "acquiring",
+      "pid": 86851,
+      "pid_matches_worker": true,
+      "actual_ca_children": [
+        {
+          "pid": 288396,
+          "elapsed": "01:56:40",
+          "soc": "Ascend950DT_9582",
+          "profile": "/home/l00925865/operator_sim/runs/large29/cube/moe-dt/profile"
+        }
+      ],
+      "process_tree": [
+        "python(86851)---micromamba(288390)-+-msopprof(288396)-+-moe(288446)-+-{moe}(288453)",
+        "                                   |                  |             |-{moe}(289424)",
+        "                                   |                  |             |-{moe}(289425)",
+        "                                   |                  |             |-{moe}(289426)"
+      ]
+    },
+    {
+      "label": "FA long",
+      "state_file": "results/v0.29/large/fa/state.json",
+      "state": "waiting for shared CA slot",
+      "pid": 57270,
+      "pid_matches_worker": true,
+      "actual_ca_children": [],
+      "process_tree": [
+        "python(57270)"
+      ]
+    },
+    {
+      "label": "RMS and TopK",
+      "state_file": "results/v0.29/large/vector/state.json",
+      "state": "waiting for shared CA slot",
+      "pid": 88433,
+      "pid_matches_worker": true,
+      "actual_ca_children": [],
+      "process_tree": [
+        "python(88433)"
+      ]
+    },
+    {
+      "label": "fusion",
+      "state_file": "results/v0.29/large/fusion/state.json",
+      "state": "waiting for shared acquisition slot",
+      "pid": 75470,
+      "pid_matches_worker": true,
+      "actual_ca_children": [],
+      "process_tree": [
+        "python(75470)"
+      ]
+    },
+    {
+      "label": "KDA B6",
+      "state_file": "results/v0.31/recurrent/state.json",
+      "state": "waiting for large29 shared slot",
+      "pid": 376152,
+      "pid_matches_worker": true,
+      "actual_ca_children": [],
+      "process_tree": [
+        "python(376152)"
+      ]
+    },
+    {
+      "label": "new Sinkhorn B8 x 128",
+      "state_file": "results/v0.32/large/state.json",
+      "state": "acquiring single independent cold window",
+      "pid": 629494,
+      "pid_matches_worker": true,
+      "actual_ca_children": [
+        {
+          "pid": 629507,
+          "elapsed": "04:53",
+          "soc": "Ascend950DT_9582",
+          "profile": "/home/l00925865/operator_sim/runs/coverage32/sink1024-Ascend950DT_9582/profile"
+        }
+      ],
+      "process_tree": [
+        "python(629494)---time(629502)---micromamba(629503)-+-msopprof(629507)-+-MHC(629557)-+-{MHC}(629559)",
+        "                                                   |                  |             |-{MHC}(630319)",
+        "                                                   |                  |             |-{MHC}(630321)",
+        "                                                   |                  |             |-{MHC}(630322)"
+      ]
+    },
+    {
+      "label": "new KDA B16",
+      "state_file": "results/v0.32/large/recurrent-state.json",
+      "state": "waiting on previously frozen Sinkhorn 1024 dual endpoints",
+      "pid": 643302,
+      "pid_matches_worker": true,
+      "actual_ca_children": [],
+      "process_tree": [
+        "python(643302)"
+      ]
+    },
+    {
+      "label": "old B11 matmul lane",
+      "state_file": "results/v0.31/matmul/device/state.json",
+      "state": "finished",
+      "pid": 346719,
+      "pid_matches_worker": false,
+      "actual_ca_children": [],
+      "process_tree": []
+    },
+    {
+      "label": "old quant B4",
+      "state_file": "results/v0.27/quant-transfer/state.json",
+      "state": "finished",
+      "pid": 3421316,
+      "pid_matches_worker": false,
+      "actual_ca_children": [],
+      "process_tree": []
+    }
+  ],
+  "large29_log_last": [
+    "[INFO] Thread 32 is running. Cycle Count: 30000",
+    "[INFO] Thread 32 is running. Cycle Count: 40000",
+    "[INFO] Thread 32 is running. Cycle Count: 50000"
+  ],
+  "old_sink_lane": {
+    "utc": "2026-11-19T18:23:38.959382+00:00",
+    "state": "finished",
+    "registration_sha256": "56d21678eb0c6fa2fa8b96b61c712d187b12fefacf959da9bd9f509481414208"
+  },
+  "new_lane_lock": "results/v0.26/sink/raw/lock"
+}

@@ -66,5 +66,35 @@ class PostHistoryTest(unittest.TestCase):
             estimate_post_history(shape,dtype='fp16')
 
 
+
+class PostUnknownDispatchTest(unittest.TestCase):
+    def test_public_point_uses_state_endpoints_without_learning_a_predecessor(self):
+        from operator_model import OperatorStream, estimate
+        shape = [9, 4, 3840]
+        for chip in ('Ascend950DT_9582','Ascend950PR_957b','Ascend970DT'):
+            result = estimate('mhc_post', shape, chip=chip)
+            diag = result.projection['timing_diagnostics']
+            lo, hi = diag['state_range_us']
+            self.assertEqual(diag['state_scenarios_us']['repeat'],lo)
+            self.assertAlmostEqual(result.latency_us/lo-1,1-result.latency_us/hi)
+            self.assertAlmostEqual(result.latency_us,sum(result.projection['stages_us'].values()))
+            stream=OperatorStream(chip)
+            stream.advance('mhc_post',shape)
+            stream.forget_history()
+            self.assertEqual(stream.preview('mhc_post',shape),result)
+            self.assertEqual(estimate('mhc_post',shape,{'resident_aiv':None},chip=chip),result)
+
+    def test_two_fragment_scenario_matches_default_stream_when_history_proves_it(self):
+        from operator_model import OperatorStream
+        shape=[65,4,5120]
+        for chip in ('Ascend950DT_9582','Ascend950PR_957b','Ascend970DT'):
+            stream=OperatorStream(chip)
+            previous=[load_chip(chip).vector_cores,4,1216]
+            prefix=stream.advance('mhc_post',previous)
+            conditional=estimate_post_history(shape,chip=chip).for_predecessor(prefix.active_aiv,previous)
+            self.assertAlmostEqual(conditional.latency_us,stream.preview('mhc_post',shape).latency_us)
+            self.assertEqual(conditional.model,'post_two_fragment_slot_reuse')
+
+
 if __name__ == '__main__':
     unittest.main()

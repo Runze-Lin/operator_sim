@@ -1,0 +1,823 @@
+{
+  "utc": "2026-11-20T06:57:55.773521+00:00",
+  "rows": [
+    {
+      "shape": [
+        524288,
+        128,
+        512
+      ],
+      "scenario": "Flash B8×64Ki",
+      "chip": "Ascend950DT_9582",
+      "role": "running before freeze; result blinded",
+      "candidate_receipts": [
+        "results/v0.30/matmul-dispatch/device/524288-dt-retired.json",
+        "results/v0.30/matmul-dispatch/device/524288-dt-drain.json",
+        "results/v0.30/matmul-dispatch/device/524288-dt.json"
+      ],
+      "old_us": 221.58975975501465,
+      "us": 167.56338366531685,
+      "aic": 32,
+      "aiv": 0,
+      "plan": {
+        "branch": "b_resident_l1",
+        "tile": [
+          256,
+          128,
+          32
+        ],
+        "read_page_k": 128,
+        "output_tiles": 2048,
+        "effective_output_tiles": 2048,
+        "waves": 64,
+        "active_aic": 32,
+        "active_aiv": 0,
+        "iterations": 16,
+        "mmads_total": 32768,
+        "tail_wave_pieces": 32,
+        "tail_split_mn": [
+          1,
+          1
+        ],
+        "tail_wave_histogram": [
+          [
+            256,
+            128,
+            32
+          ]
+        ]
+      },
+      "pricing": {
+        "l2_bytes": 134217728,
+        "hbm_bytes_per_cycle": 2424.2424242424245,
+        "inplace_excluded_tensors_fit_hbm": true,
+        "mixed_fabric_bytes_per_cycle": 1682.7029341700345,
+        "shared_bytes_per_cycle": 3200.0,
+        "mixed_write_decile": 2,
+        "mixed_dfi_observed_efficiency": 0.6941149603451393,
+        "initial_logical_read_scenario_gbs": 4000
+      },
+      "stages_us": {
+        "first_mmad": 5.001681263328171,
+        "shared_or_core": 162.0648460830269,
+        "terminal_drain": 0.4968563189617731
+      }
+    },
+    {
+      "shape": [
+        524288,
+        128,
+        512
+      ],
+      "scenario": "Flash B8×64Ki",
+      "chip": "Ascend950PR_957b",
+      "role": "prediction before device acquisition",
+      "candidate_receipts": [
+        "results/v0.30/matmul-dispatch/device/524288-pr-retired.json",
+        "results/v0.30/matmul-dispatch/device/524288-pr-drain.json",
+        "results/v0.30/matmul-dispatch/device/524288-pr.json"
+      ],
+      "old_us": 577.5339944743513,
+      "us": 368.5290426420877,
+      "aic": 28,
+      "aiv": 0,
+      "plan": {
+        "branch": "b_resident_l1",
+        "tile": [
+          256,
+          128,
+          32
+        ],
+        "read_page_k": 128,
+        "output_tiles": 2048,
+        "effective_output_tiles": 2072,
+        "waves": 74,
+        "active_aic": 28,
+        "active_aiv": 0,
+        "iterations": 16,
+        "mmads_total": 33152,
+        "tail_wave_pieces": 28,
+        "tail_split_mn": [
+          7,
+          1
+        ],
+        "tail_wave_histogram": [
+          [
+            34,
+            128,
+            4
+          ],
+          [
+            37,
+            128,
+            24
+          ]
+        ]
+      },
+      "pricing": {
+        "l2_bytes": 117440512,
+        "hbm_bytes_per_cycle": 848.4848484848485,
+        "inplace_excluded_tensors_fit_hbm": true,
+        "mixed_fabric_bytes_per_cycle": 1472.3650673987802,
+        "shared_bytes_per_cycle": 2800.0,
+        "mixed_write_decile": 2,
+        "mixed_dfi_observed_efficiency": 0.6941149603451393,
+        "initial_logical_read_scenario_gbs": 1562.3956990076115
+      },
+      "stages_us": {
+        "first_mmad": 4.991027082135848,
+        "shared_or_core": 363.255805545037,
+        "terminal_drain": 0.28221001491480546
+      }
+    },
+    {
+      "shape": [
+        524288,
+        128,
+        512
+      ],
+      "scenario": "Flash B8×64Ki",
+      "chip": "Ascend970DT",
+      "role": "970DT extrapolation",
+      "candidate_receipts": null,
+      "old_us": 58.55060460159229,
+      "us": 44.06737250079227,
+      "aic": 120,
+      "aiv": 0,
+      "plan": {
+        "branch": "b_resident_l1",
+        "tile": [
+          256,
+          128,
+          32
+        ],
+        "read_page_k": 128,
+        "output_tiles": 2048,
+        "effective_output_tiles": 2160,
+        "waves": 18,
+        "active_aic": 120,
+        "active_aiv": 0,
+        "iterations": 16,
+        "mmads_total": 34560,
+        "tail_wave_pieces": 120,
+        "tail_split_mn": [
+          15,
+          1
+        ],
+        "tail_wave_histogram": [
+          [
+            4,
+            128,
+            8
+          ],
+          [
+            18,
+            128,
+            112
+          ]
+        ]
+      },
+      "pricing": {
+        "l2_bytes": 200000000,
+        "hbm_bytes_per_cycle": 8000.0,
+        "inplace_excluded_tensors_fit_hbm": true,
+        "mixed_fabric_bytes_per_cycle": 8764.077782135599,
+        "shared_bytes_per_cycle": 16666.666666666668,
+        "mixed_write_decile": 2,
+        "mixed_dfi_observed_efficiency": 0.6941149603451393,
+        "initial_logical_read_scenario_gbs": 14400
+      },
+      "stages_us": {
+        "first_mmad": 4.681546196116158,
+        "shared_or_core": 39.144204216249946,
+        "terminal_drain": 0.2416220884261606
+      }
+    },
+    {
+      "shape": [
+        2097152,
+        128,
+        512
+      ],
+      "scenario": "Flash B8×256Ki",
+      "chip": "Ascend950DT_9582",
+      "role": "running before freeze; result blinded",
+      "candidate_receipts": [
+        "results/v0.28/matmul/long-prefill/262144-dt-retired.json",
+        "results/v0.28/matmul/long-prefill/262144-dt-drain.json",
+        "results/v0.28/matmul/long-prefill/262144-dt.json"
+      ],
+      "old_us": 868.5730192198481,
+      "us": 892.683153090446,
+      "aic": 32,
+      "aiv": 0,
+      "plan": {
+        "branch": "b_resident_l1",
+        "tile": [
+          256,
+          128,
+          32
+        ],
+        "read_page_k": 128,
+        "output_tiles": 8192,
+        "effective_output_tiles": 8192,
+        "waves": 256,
+        "active_aic": 32,
+        "active_aiv": 0,
+        "iterations": 16,
+        "mmads_total": 131072,
+        "tail_wave_pieces": 32,
+        "tail_split_mn": [
+          1,
+          1
+        ],
+        "tail_wave_histogram": [
+          [
+            256,
+            128,
+            32
+          ]
+        ]
+      },
+      "pricing": {
+        "l2_bytes": 134217728,
+        "hbm_bytes_per_cycle": 2424.2424242424245,
+        "inplace_excluded_tensors_fit_hbm": true,
+        "mixed_fabric_bytes_per_cycle": 1682.7029341700345,
+        "shared_bytes_per_cycle": 3200.0,
+        "mixed_write_decile": 2,
+        "mixed_dfi_observed_efficiency": 0.6941149603451393,
+        "initial_logical_read_scenario_gbs": 4000
+      },
+      "stages_us": {
+        "first_mmad": 5.001681263328171,
+        "shared_or_core": 887.1846155081561,
+        "terminal_drain": 0.4968563189617731
+      }
+    },
+    {
+      "shape": [
+        2097152,
+        128,
+        512
+      ],
+      "scenario": "Flash B8×256Ki",
+      "chip": "Ascend950PR_957b",
+      "role": "prediction before device acquisition",
+      "candidate_receipts": [
+        "results/v0.28/matmul/long-prefill/262144-pr-retired.json",
+        "results/v0.28/matmul/long-prefill/262144-pr-drain.json",
+        "results/v0.28/matmul/long-prefill/262144-pr.json"
+      ],
+      "old_us": 2304.68846304578,
+      "us": 1806.822525840462,
+      "aic": 28,
+      "aiv": 0,
+      "plan": {
+        "branch": "b_resident_l1",
+        "tile": [
+          256,
+          128,
+          32
+        ],
+        "read_page_k": 128,
+        "output_tiles": 8192,
+        "effective_output_tiles": 8192,
+        "waves": 293,
+        "active_aic": 28,
+        "active_aiv": 0,
+        "iterations": 16,
+        "mmads_total": 131072,
+        "tail_wave_pieces": 16,
+        "tail_split_mn": [
+          1,
+          1
+        ],
+        "tail_wave_histogram": [
+          [
+            256,
+            128,
+            16
+          ]
+        ]
+      },
+      "pricing": {
+        "l2_bytes": 117440512,
+        "hbm_bytes_per_cycle": 848.4848484848485,
+        "inplace_excluded_tensors_fit_hbm": true,
+        "mixed_fabric_bytes_per_cycle": 1472.3650673987802,
+        "shared_bytes_per_cycle": 2800.0,
+        "mixed_write_decile": 2,
+        "mixed_dfi_observed_efficiency": 0.6941149603451393,
+        "initial_logical_read_scenario_gbs": 1562.3956990076115
+      },
+      "stages_us": {
+        "first_mmad": 4.991027082135848,
+        "shared_or_core": 1801.3346424393644,
+        "terminal_drain": 0.4968563189617731
+      }
+    },
+    {
+      "shape": [
+        2097152,
+        128,
+        512
+      ],
+      "scenario": "Flash B8×256Ki",
+      "chip": "Ascend970DT",
+      "role": "970DT extrapolation",
+      "candidate_receipts": null,
+      "old_us": 226.79869487707563,
+      "us": 180.82892021583118,
+      "aic": 120,
+      "aiv": 0,
+      "plan": {
+        "branch": "b_resident_l1",
+        "tile": [
+          256,
+          128,
+          32
+        ],
+        "read_page_k": 128,
+        "output_tiles": 8192,
+        "effective_output_tiles": 8256,
+        "waves": 69,
+        "active_aic": 120,
+        "active_aiv": 0,
+        "iterations": 16,
+        "mmads_total": 132096,
+        "tail_wave_pieces": 96,
+        "tail_split_mn": [
+          3,
+          1
+        ],
+        "tail_wave_histogram": [
+          [
+            84,
+            128,
+            32
+          ],
+          [
+            86,
+            128,
+            64
+          ]
+        ]
+      },
+      "pricing": {
+        "l2_bytes": 200000000,
+        "hbm_bytes_per_cycle": 8000.0,
+        "inplace_excluded_tensors_fit_hbm": true,
+        "mixed_fabric_bytes_per_cycle": 8764.077782135599,
+        "shared_bytes_per_cycle": 16666.666666666668,
+        "mixed_write_decile": 2,
+        "mixed_dfi_observed_efficiency": 0.6941149603451393,
+        "initial_logical_read_scenario_gbs": 14400
+      },
+      "stages_us": {
+        "first_mmad": 4.681546196116158,
+        "shared_or_core": 175.84465777777777,
+        "terminal_drain": 0.3027162419372458
+      }
+    },
+    {
+      "shape": [
+        32768,
+        3072,
+        512
+      ],
+      "scenario": "Kimi B8×4096 chunk",
+      "chip": "Ascend950DT_9582",
+      "role": "running before freeze; result blinded",
+      "candidate_receipts": [
+        "results/v0.31/matmul/kimi-prefill/dt-retired.json",
+        "results/v0.31/matmul/kimi-prefill/dt-drain.json",
+        "results/v0.31/matmul/kimi-prefill/dt.json",
+        "results/v0.31/matmul/kimi-prefill/Ascend950DT_9582-retired.json",
+        "results/v0.31/matmul/kimi-prefill/Ascend950DT_9582-drain.json",
+        "results/v0.31/matmul/kimi-prefill/Ascend950DT_9582.json"
+      ],
+      "old_us": 267.3353991749602,
+      "us": 267.3353991749602,
+      "aic": 32,
+      "aiv": 0,
+      "plan": {
+        "active_aic": 32,
+        "active_aiv": 0,
+        "tile": [
+          256,
+          256,
+          64
+        ],
+        "read_page_k": 256,
+        "waves": 48,
+        "iterations": 1,
+        "branch": "coarse_tile",
+        "mmads_total": 12288,
+        "output_tiles": 1536,
+        "units": {
+          "read": 512.0,
+          "cube": 512.0,
+          "fix": 128.0,
+          "vector": 0.0,
+          "write": 0.0
+        },
+        "tail_split_mn": [
+          1,
+          1
+        ],
+        "effective_output_tiles": 1536,
+        "tail_wave_pieces": 32,
+        "tail_wave_histogram": [
+          [
+            256,
+            256,
+            32
+          ]
+        ]
+      },
+      "pricing": null,
+      "stages_us": {
+        "read_fill": 2.396037994200446,
+        "l0_lead": 0.1303454825025222,
+        "page_intervals": 2.7241082828282823,
+        "last_mmad": 2.7241082828282823,
+        "write_tail": 1.0257758738823788,
+        "additional_output_waves": 256.00920888888885,
+        "shared_link_floor": 0.0,
+        "launch": 2.325814369829399
+      }
+    },
+    {
+      "shape": [
+        32768,
+        3072,
+        512
+      ],
+      "scenario": "Kimi B8×4096 chunk",
+      "chip": "Ascend950PR_957b",
+      "role": "prediction before device acquisition",
+      "candidate_receipts": [
+        "results/v0.31/matmul/kimi-prefill/pr-retired.json",
+        "results/v0.31/matmul/kimi-prefill/pr-drain.json",
+        "results/v0.31/matmul/kimi-prefill/pr.json",
+        "results/v0.31/matmul/kimi-prefill/Ascend950PR_957b-retired.json",
+        "results/v0.31/matmul/kimi-prefill/Ascend950PR_957b-drain.json",
+        "results/v0.31/matmul/kimi-prefill/Ascend950PR_957b.json"
+      ],
+      "old_us": 305.8004289187318,
+      "us": 305.8004289187318,
+      "aic": 28,
+      "aiv": 0,
+      "plan": {
+        "active_aic": 28,
+        "active_aiv": 0,
+        "tile": [
+          256,
+          256,
+          64
+        ],
+        "read_page_k": 256,
+        "waves": 55,
+        "iterations": 1,
+        "branch": "coarse_tile",
+        "mmads_total": 12288,
+        "output_tiles": 1536,
+        "units": {
+          "read": 512.0,
+          "cube": 512.0,
+          "fix": 128.0,
+          "vector": 0.0,
+          "write": 0.0
+        },
+        "tail_split_mn": [
+          1,
+          1
+        ],
+        "effective_output_tiles": 1536,
+        "tail_wave_pieces": 24,
+        "tail_wave_histogram": [
+          [
+            256,
+            256,
+            24
+          ]
+        ]
+      },
+      "pricing": null,
+      "stages_us": {
+        "read_fill": 2.396037994200446,
+        "l0_lead": 0.1303454825025222,
+        "page_intervals": 2.7241082828282823,
+        "last_mmad": 2.7241082828282823,
+        "write_tail": 1.5626001163066212,
+        "additional_output_waves": 293.94806857142856,
+        "shared_link_floor": 0.0,
+        "launch": 2.315160188637076
+      }
+    },
+    {
+      "shape": [
+        32768,
+        3072,
+        512
+      ],
+      "scenario": "Kimi B8×4096 chunk",
+      "chip": "Ascend970DT",
+      "role": "970DT extrapolation",
+      "candidate_receipts": null,
+      "old_us": 70.03661103079813,
+      "us": 70.03661103079813,
+      "aic": 120,
+      "aiv": 0,
+      "plan": {
+        "active_aic": 120,
+        "active_aiv": 0,
+        "tile": [
+          256,
+          256,
+          64
+        ],
+        "read_page_k": 256,
+        "waves": 13,
+        "iterations": 1,
+        "branch": "coarse_tile",
+        "mmads_total": 12288,
+        "output_tiles": 1536,
+        "units": {
+          "read": 512.0,
+          "cube": 512.0,
+          "fix": 128.0,
+          "vector": 0.0,
+          "write": 0.0
+        },
+        "tail_split_mn": [
+          1,
+          1
+        ],
+        "effective_output_tiles": 1536,
+        "tail_wave_pieces": 96,
+        "tail_wave_histogram": [
+          [
+            256,
+            256,
+            96
+          ]
+        ]
+      },
+      "pricing": null,
+      "stages_us": {
+        "read_fill": 2.196368161350409,
+        "l0_lead": 0.11948335896064537,
+        "page_intervals": 2.4935886469972797,
+        "last_mmad": 2.4935886469972797,
+        "write_tail": 0.7364047732810695,
+        "additional_output_waves": 59.76850923280249,
+        "shared_link_floor": 0.0,
+        "launch": 2.22866821040895
+      }
+    },
+    {
+      "shape": [
+        262144,
+        3072,
+        512
+      ],
+      "scenario": "Kimi B8×32Ki",
+      "chip": "Ascend950DT_9582",
+      "role": "prediction before device acquisition",
+      "candidate_receipts": [
+        "results/v0.28/matmul/wide-prefill/Kimi-K3-dt-retired.json",
+        "results/v0.28/matmul/wide-prefill/Kimi-K3-dt-drain.json",
+        "results/v0.28/matmul/wide-prefill/Kimi-K3-dt.json"
+      ],
+      "old_us": 2098.1953925125276,
+      "us": 2098.1953925125276,
+      "aic": 32,
+      "aiv": 0,
+      "plan": {
+        "active_aic": 32,
+        "active_aiv": 0,
+        "tile": [
+          256,
+          256,
+          64
+        ],
+        "read_page_k": 256,
+        "waves": 384,
+        "iterations": 1,
+        "branch": "coarse_tile",
+        "mmads_total": 98304,
+        "output_tiles": 12288,
+        "units": {
+          "read": 512.0,
+          "cube": 512.0,
+          "fix": 128.0,
+          "vector": 0.0,
+          "write": 0.0
+        },
+        "tail_split_mn": [
+          1,
+          1
+        ],
+        "effective_output_tiles": 12288,
+        "tail_wave_pieces": 32,
+        "tail_wave_histogram": [
+          [
+            256,
+            256,
+            32
+          ]
+        ]
+      },
+      "pricing": null,
+      "stages_us": {
+        "read_fill": 2.8083377560107756,
+        "l0_lead": 0.1303454825025222,
+        "page_intervals": 2.7241082828282823,
+        "last_mmad": 2.7241082828282823,
+        "write_tail": 1.2799761163066212,
+        "additional_output_waves": 2086.202702222222,
+        "shared_link_floor": 0.0,
+        "launch": 2.325814369829399
+      }
+    },
+    {
+      "shape": [
+        262144,
+        3072,
+        512
+      ],
+      "scenario": "Kimi B8×32Ki",
+      "chip": "Ascend950PR_957b",
+      "role": "prediction before device acquisition",
+      "candidate_receipts": [
+        "results/v0.28/matmul/wide-prefill/Kimi-K3-pr-retired.json",
+        "results/v0.28/matmul/wide-prefill/Kimi-K3-pr-drain.json",
+        "results/v0.28/matmul/wide-prefill/Kimi-K3-pr.json"
+      ],
+      "old_us": 5754.503503045781,
+      "us": 5754.503503045781,
+      "aic": 28,
+      "aiv": 0,
+      "plan": {
+        "active_aic": 28,
+        "active_aiv": 0,
+        "tile": [
+          256,
+          256,
+          64
+        ],
+        "read_page_k": 256,
+        "waves": 439,
+        "iterations": 1,
+        "branch": "coarse_tile",
+        "mmads_total": 98304,
+        "output_tiles": 12288,
+        "units": {
+          "read": 512.0,
+          "cube": 512.0,
+          "fix": 128.0,
+          "vector": 0.0,
+          "write": 0.0
+        },
+        "tail_split_mn": [
+          1,
+          1
+        ],
+        "effective_output_tiles": 12288,
+        "tail_wave_pieces": 24,
+        "tail_wave_histogram": [
+          [
+            256,
+            256,
+            24
+          ]
+        ]
+      },
+      "pricing": null,
+      "stages_us": {
+        "read_fill": 5.954065756010777,
+        "l0_lead": 0.1303454825025222,
+        "page_intervals": 5.24288,
+        "last_mmad": 2.7241082828282823,
+        "write_tail": 2.852840116306621,
+        "additional_output_waves": 4590.890422857144,
+        "shared_link_floor": 1144.3936803623515,
+        "launch": 2.315160188637076
+      }
+    },
+    {
+      "shape": [
+        262144,
+        3072,
+        512
+      ],
+      "scenario": "Kimi B8×32Ki",
+      "chip": "Ascend970DT",
+      "role": "970DT extrapolation",
+      "candidate_receipts": null,
+      "old_us": 522.7377522044047,
+      "us": 522.7377522044047,
+      "aic": 120,
+      "aiv": 0,
+      "plan": {
+        "active_aic": 120,
+        "active_aiv": 0,
+        "tile": [
+          224,
+          256,
+          64
+        ],
+        "read_page_k": 256,
+        "waves": 118,
+        "iterations": 1,
+        "branch": "coarse_tile",
+        "mmads_total": 113184,
+        "output_tiles": 14052,
+        "units": {
+          "read": 480.0,
+          "cube": 448.0,
+          "fix": 112.0,
+          "vector": 0.0,
+          "write": 0.0
+        },
+        "tail_split_mn": [
+          3,
+          3
+        ],
+        "effective_output_tiles": 14148,
+        "tail_wave_pieces": 108,
+        "tail_wave_histogram": [
+          [
+            20,
+            84,
+            2
+          ],
+          [
+            20,
+            86,
+            4
+          ],
+          [
+            22,
+            84,
+            4
+          ],
+          [
+            22,
+            86,
+            8
+          ],
+          [
+            74,
+            84,
+            10
+          ],
+          [
+            74,
+            86,
+            20
+          ],
+          [
+            75,
+            84,
+            20
+          ],
+          [
+            75,
+            86,
+            40
+          ]
+        ]
+      },
+      "pricing": null,
+      "stages_us": {
+        "read_fill": 2.196368161350409,
+        "l0_lead": 0.11948335896064537,
+        "page_intervals": 2.2092290537769403,
+        "last_mmad": 2.2092290537769403,
+        "write_tail": 1.1292815683420558,
+        "additional_output_waves": 512.6454927977887,
+        "shared_link_floor": 0.0,
+        "launch": 2.22866821040895
+      }
+    }
+  ],
+  "sha256": {
+    "operator_model/matmul_supply32.py": "1eb9b8c0dfaadcbca4a0313bc330acc44f83babdf801e94bb51e2e03947d2030",
+    "operator_model/matmul_v15.py": "c5edb6d59c184f63db0d1208cdec38a79368d4f6eb246cb077ed0faba069fa02",
+    "operator_model/matmul_resource.py": "4ff5f1e2bc2581ed16d609e18900879ccaf1a80f65433de8f85de7e513140b19",
+    "operator_model/matmul_supply30.py": "4eebf06bec3c2c5bb03145bc367fbc195d79e29dfdada27fa6a5c70776583c92",
+    "operator_model/matmul_dispatch31.py": "1abf97a33fce2ebbfe175fff0152cc1d28f7420836c27eb8acd713c17452ce83",
+    "operator_model/matmul_waves.py": "97f615daae6563e51df26591565909d8bea044c3b72bf5f67bb8aa1e6b5b292b",
+    "operator_model/matmul_splitk.py": "05a80dae59c80ba78734c0a0ef50276fca840eddfdde3bc43cc278702b05d497",
+    "results/v0.16/matmul.json": "b37e9148aeb14d90ae744e966337556d9adf269066bf281d12984f282078546b",
+    "results/v0.30/matmul/prices.json": "c491160a228e196060f9787451510936f62479aef72c9be5185d902fb097cad3",
+    "development/validation/matmul32/freeze.py": "3d7713e8c6819c62fcbc3c6204193a5e67e066da527177ee40d31d0959c9129f",
+    "configs/chips/Ascend950DT_9582.json": "54d68c49374f8fab57ae16b05923d7ea2874cc48083e0728bcbc60f467bb71ec",
+    "configs/chips/Ascend950PR_957b.json": "79bb18eb9a914eaab9b6b9344178d601e4300e5853f864acbb1dac3b42b0ccc7",
+    "configs/chips/Ascend970DT.json": "837796ec9f3b39888950cfe6f703b63c4bf9ced22a366b66f300f1389a8006f2"
+  },
+  "policy": "No new CA jobs; reuse existing slots and budgets. The 32Ki and 128Ki Flash DT/PR traces informed development. 64Ki and 256Ki are untouched holdouts; distinguish already running from preregistered. Nominal width case outside B residency retains v0.31."
+}

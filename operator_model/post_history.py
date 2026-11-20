@@ -9,7 +9,7 @@ from types import MappingProxyType
 
 from .backend import _call_attrs
 from .chips import REFERENCE_NAME, load_chip
-from .post_repeat import _prices as token_prices
+from .post_repeat import _prices as token_prices, channel_tiles
 from .post_resource import resource_post
 from .post_token_pipeline import token_pipeline
 from .rms_resource import READ_PER_KIB
@@ -152,7 +152,17 @@ def estimate_post_history(shape,*,chip=REFERENCE_NAME,dtype=None) -> PostHistory
     if chosen!='bf16':raise ValueError('Post history scenarios require BF16')
     shape=tuple(shape)
     _,_,active,base=resource_post(shape,target,{})
+    estimated = _scenarios(shape, target, base)
+    route = base['target_plan']['route']
+    # Name alone cannot qualify edited clocks or resource counts as a measured 950 configuration.
+    outside=target not in (load_chip(REFERENCE_NAME),load_chip('Ascend950PR_957b'))
+    return PostHistory(shape,target.name,active,route,MappingProxyType(estimated),outside,target)
+
+
+def _scenarios(shape, target, base):
+    """Conditional prices derived from shape, hardware and declared state contracts."""
     plan=base['target_plan'];route=plan['route']
+    active=plan['active_aiv']
     phases=base['state_phases_us'];estimated={}
     v32=target.vector_tops['32']
     if route=='post_channel':
@@ -165,17 +175,52 @@ def estimate_post_history(shape,*,chip=REFERENCE_NAME,dtype=None) -> PostHistory
         groups=['first','reuse_after_channel','reuse_after_token']
         if active>1:groups.append('expand_after_channel')
         if active>ceil(target.vector_cores/2):groups.append('expand_after_token')
+        tiles = channel_tiles(shape[2], target)
         for group in groups:
             state=group.split('_after_')[0]
-            if v32:
+            controls = _prices()['token_ordinary']['control'].get(group) if v32 else None
+            if v32 and tiles and tiles['count'] == 2 and group == 'reuse_after_token':
+                from .post_fragment_pipeline import covered_fragment_schedule
+                pipe = covered_fragment_schedule(target, base, tiles)
+                estimated[group] = _scenario(pipe['stages_us'], pipe['model'],
+                    'DT two-slot DMA schedule; limited paired geometry coverage')
+            elif tiles and tiles['count'] == 1 and controls and controls['processes'] >= 2:
                 estimated[group]=_token_scenario(shape,target,base,group)
             else:
-                estimated[group]=_scenario(phases[state],'occupancy_resource','Target FP32 Vector throughput unavailable')
-        if v32:
+                estimated[group]=_scenario(phases[state],'occupancy_resource',
+                    'No supported operand schedule for this predecessor, UB geometry or throughput')
+        if v32 and tiles:
             pipe=token_pipeline(shape,target,plan,'repeat',token_prices(),base['shared_floor_us'])
             estimated['repeat']=_scenario(pipe['stages_us'],'token_immediate_repeat','frozen v0.25 token schedule, DT/PR independent repeat shapes 12/10')
     if 'repeat' not in estimated:
-        estimated['repeat']=_scenario(phases['reuse'],'occupancy_resource','Target FP32 Vector throughput unavailable')
-    # Name alone cannot qualify edited clocks or resource counts as a measured 950 configuration.
-    outside=target not in (load_chip(REFERENCE_NAME),load_chip('Ascend950PR_957b'))
-    return PostHistory(shape,target.name,active,route,MappingProxyType(estimated),outside,target)
+        estimated['repeat']=_scenario(phases['reuse'],'occupancy_resource','Target vector throughput or usable UB fragment size unavailable')
+    return estimated
+
+
+def price_post(shape, target, attrs):
+    """Price a built-in Post call while retaining uncertainty about absent history.
+
+    With no predecessor, a single point minimizes worst relative loss at the
+    two modeled state extremes. A band of scenarios has no implied probability
+    or guaranteed coverage of CA time.
+    """
+    result = resource_post(shape, target, attrs)
+    if attrs.get('resident_aiv') is not None:
+        return result
+
+    _, aic, aiv, base = result
+    scenarios = _scenarios(shape, target, base)
+    state_times = {k:s.latency_us for k,s in scenarios.items()}
+    low_state, high_state = min(state_times, key=state_times.get), max(state_times, key=state_times.get)
+    low, high = state_times[low_state], state_times[high_state]
+    high_weight = low/(low+high)
+    point = 2*high*high_weight
+    # Different mechanisms use different stage names. Giving them a common
+    # fictitious timeline hides the uncertainty, so expose the two point contributions.
+    stages = {'lower_scenario_component': (1-high_weight)*low,
+              'upper_scenario_component': high_weight*high}
+    return point, aic, aiv, {**base, 'model':'post_unknown_dispatch', 'stages_us':stages,
+        'state_range_us':[low,high], 'state_scenarios_us':state_times,
+        'endpoint_states':[low_state,high_state],
+        'point_scope':'minimax relative error over modeled states; no execution-state probabilities',
+        'range_scope':'conditional model envelope; individual CA windows may lie outside'}

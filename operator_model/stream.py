@@ -29,20 +29,22 @@ class OperatorStream:
     Set track_sinkhorn_history=True to reconstruct the standalone FP32 Sinkhorn
     high-water mark from eligible launches on this stream. After a family switch
     or unknown prefix, only sufficient same-family coverage selects a warm call.
-    With track_post_history=True, an observed first launch or shape change can
+    By default, an observed first launch or shape change can
     select the frozen operand-issue schedule for a single-fragment token row.
-    experimental_post_fragments=True additionally enables the provisional
-    two-slot schedule for a covered token-to-token shape change.
+    A covered token-to-token change with two UB fragments uses the two-slot
+    schedule. Disable experimental_post_fragments to reproduce whole-row pricing.
     """
 
     def __init__(self, chip=REFERENCE_NAME, *, experimental_post_repeats=True,
-                 track_sinkhorn_history=False, track_post_history=False, experimental_post_fragments=False):
+                 track_sinkhorn_history=False, track_post_history=True, experimental_post_fragments=None):
         if not isinstance(experimental_post_repeats, bool):
             raise TypeError('experimental_post_repeats must be a boolean')
         if not isinstance(track_sinkhorn_history, bool):
             raise TypeError('track_sinkhorn_history must be a boolean')
         if not isinstance(track_post_history, bool):
             raise TypeError('track_post_history must be a boolean')
+        if experimental_post_fragments is None:
+            experimental_post_fragments = track_post_history
         if not isinstance(experimental_post_fragments, bool):
             raise TypeError('experimental_post_fragments must be a boolean')
         self._post_fragments = experimental_post_fragments

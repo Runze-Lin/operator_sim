@@ -33,11 +33,11 @@ class PostFragmentTest(unittest.TestCase):
         self.assertEqual(len(p['timeline']),2)
         self.assertGreater(p['us'],estimate_post_fragments(shape,**args)['us'])
 
-    def test_ordered_stream_opt_in_reuses_successful_dispatch_only(self):
+    def test_default_ordered_stream_reuses_successful_dispatch_only(self):
         shape=[65,4,5120];prev=[121,4,1216]
         def model(x):return x.projection['timing_diagnostics']['model']
-        legacy=OperatorStream(track_post_history=True)
-        new=OperatorStream(track_post_history=True,experimental_post_fragments=True)
+        legacy=OperatorStream(track_post_history=True,experimental_post_fragments=False)
+        new=OperatorStream()
         for s in (legacy,new):s.advance('mhc_post',prev)
         prior=new.preview('mhc_post',shape)
         self.assertEqual(model(prior),'post_two_fragment_slot_reuse')

@@ -166,3 +166,22 @@ PR 的模型与 CA 相差 -0.0872 µs。小 token、宽通道的首次、扩核�
 [总建模方法](../modeling-strategy.md) · [全部 shape 的误差](../error-analysis.md) · [970DT 配置与来源](../../configs/chips/Ascend970DT.json)
 
 同样的宽度，两次换形和紧邻重复的实测设备时间相差不到 0.3 µs。普通换形若使用已冻结的普通热态阶段价格和跨行重叠排程，[65,4,5120] 的开发回放由 DT +58.52% 降为 +10.75%、PR +57.22% 降为 +10.16%。现有队列将对其余符合条件的换形独立打分；这组候选单独保留。[相同实际窗口、预测输入和前序合同](../../results/v0.26/post/warm-schedule.md)
+
+## 从只有 shape 到有实际调度顺序
+
+内置四路 BF16 Post 对相同输入可以有多个真实耗时。950DT 的 `[9,4,3840]` 切给 36 个 AIV，每个核处理 960 列。换形复用时 CA 是 2.686 µs，紧邻重复时只有 2.128 µs。只给 shape 时，已知状态的模型范围是 2.627–5.157 µs，公共点是 3.480 µs，这个实测热窗甚至低于模型热端。跟踪末核的四路输出，发现四次 DMA 分别在首个向量加载后 0.306、0.492、0.677、0.862 µs 发起。随片宽增长，相邻写间隔增长，但首写可以提前；全组写的起讫不能简单按通道宽增大。报告列出了真实关键核、六个较窄计算片的物理参数，以及四写候选在全部形状上的误差。
+
+```python
+from operator_model import OperatorStream, estimate
+
+p = estimate("mhc_post", [9, 4, 3840], chip="Ascend950DT_9582")
+print(p.latency_us, p.projection["timing_diagnostics"]["state_range_us"])
+
+stream = OperatorStream("Ascend950DT_9582")
+stream.advance("mhc_post", [121, 4, 1216])
+wide = stream.advance("mhc_post", [65, 4, 5120])
+print(wide.latency_us, wide.projection["timing_diagnostics"]["model"])
+# 约 5.663 µs，post_two_fragment_slot_reuse
+```
+
+第二例是已知顺序的 token 换形，两个 UB 片交替使用槽，DT 完整 CA 为 5.433 µs。3 维接口对应安装包的 `aclnnMhcPost`；vLLM 的四维 `aclnnHcPost` 有独立的布局与时序。只给形状时，校准误差仍超过 25% WAPE 或 50% 最大值，调用方可以取返回的状态范围作敏感性分析。实际验证区间覆盖率、严格冷热配对的误差下界，以及 1024 行大形的测量进度都可逐项核查。[本轮完整算例、四次写回与误差](../../results/v0.32/post/report.md) · [原双槽模型和 CA 同轴对照图](../../results/v0.30/post/fragments-dt.png)

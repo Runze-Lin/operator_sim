@@ -1,0 +1,4259 @@
+{
+  "utc": "2026-11-20T07:24:52.399645+00:00",
+  "source_freeze_sha256": "34ae4415b01223e421b443ccb469178307d6c16194f1888a67ce6a4f74569b6c",
+  "supplemental_freeze_sha256": "3582d05aa6e733b828f050769dfef748798443d0bb676f6c19e88eee3416c221",
+  "groups": {
+    "Ascend950DT_9582": {
+      "all": {
+        "windows": 61,
+        "shapes": 59,
+        "old": {
+          "wape": 10.164140434918945,
+          "maximum": 31.99374388142595
+        },
+        "new": {
+          "wape": 3.65931555371824,
+          "maximum": 29.007481527306787
+        }
+      },
+      "development": {
+        "windows": 3,
+        "shapes": 3,
+        "old": {
+          "wape": 12.370101956290323,
+          "maximum": 31.99374388142595
+        },
+        "new": {
+          "wape": 0.886110835424676,
+          "maximum": 0.9006026736132933
+        }
+      },
+      "blind_complete": {
+        "windows": 0,
+        "shapes": 0,
+        "old": null,
+        "new": null
+      }
+    },
+    "Ascend950PR_957b": {
+      "all": {
+        "windows": 70,
+        "shapes": 70,
+        "old": {
+          "wape": 28.297497533611722,
+          "maximum": 43.5018955117052
+        },
+        "new": {
+          "wape": 5.202619156486942,
+          "maximum": 15.063213513837814
+        }
+      },
+      "development": {
+        "windows": 3,
+        "shapes": 3,
+        "old": {
+          "wape": 38.09833705671672,
+          "maximum": 43.5018955117052
+        },
+        "new": {
+          "wape": 4.48377548317019,
+          "maximum": 5.349805753781545
+        }
+      },
+      "blind_complete": {
+        "windows": 0,
+        "shapes": 0,
+        "old": null,
+        "new": null
+      }
+    }
+  },
+  "holdouts": [
+    {
+      "scenario": "Flash B8×64Ki",
+      "shape": [
+        524288,
+        128,
+        512
+      ],
+      "sku": "Ascend950DT_9582",
+      "role": "running before freeze; result blinded",
+      "old": 221.58975975501465,
+      "new": 167.56338366531685,
+      "future": 44.06737250079227,
+      "ca": null
+    },
+    {
+      "scenario": "Flash B8×64Ki",
+      "shape": [
+        524288,
+        128,
+        512
+      ],
+      "sku": "Ascend950PR_957b",
+      "role": "prediction before device acquisition",
+      "old": 577.5339944743513,
+      "new": 368.5290426420877,
+      "future": 44.06737250079227,
+      "ca": null
+    },
+    {
+      "scenario": "Flash B8×256Ki",
+      "shape": [
+        2097152,
+        128,
+        512
+      ],
+      "sku": "Ascend950DT_9582",
+      "role": "running before freeze; result blinded",
+      "old": 868.5730192198481,
+      "new": 892.683153090446,
+      "future": 180.82892021583118,
+      "ca": null
+    },
+    {
+      "scenario": "Flash B8×256Ki",
+      "shape": [
+        2097152,
+        128,
+        512
+      ],
+      "sku": "Ascend950PR_957b",
+      "role": "prediction before device acquisition",
+      "old": 2304.68846304578,
+      "new": 1806.822525840462,
+      "future": 180.82892021583118,
+      "ca": null
+    },
+    {
+      "scenario": "Kimi B8×4096 chunk",
+      "shape": [
+        32768,
+        3072,
+        512
+      ],
+      "sku": "Ascend950DT_9582",
+      "role": "running before freeze; result blinded",
+      "old": 267.3353991749602,
+      "new": 267.3353991749602,
+      "future": 70.03661103079813,
+      "ca": null
+    },
+    {
+      "scenario": "Kimi B8×4096 chunk",
+      "shape": [
+        32768,
+        3072,
+        512
+      ],
+      "sku": "Ascend950PR_957b",
+      "role": "prediction before device acquisition",
+      "old": 305.8004289187318,
+      "new": 305.8004289187318,
+      "future": 70.03661103079813,
+      "ca": null
+    },
+    {
+      "scenario": "Kimi B8×32Ki",
+      "shape": [
+        262144,
+        3072,
+        512
+      ],
+      "sku": "Ascend950DT_9582",
+      "role": "prediction before device acquisition",
+      "old": 2098.1953925125276,
+      "new": 2098.1953925125276,
+      "future": 522.7377522044047,
+      "ca": null
+    },
+    {
+      "scenario": "Kimi B8×32Ki",
+      "shape": [
+        262144,
+        3072,
+        512
+      ],
+      "sku": "Ascend950PR_957b",
+      "role": "prediction before device acquisition",
+      "old": 5754.503503045781,
+      "new": 5754.503503045781,
+      "future": 522.7377522044047,
+      "ca": null
+    },
+    {
+      "scenario": "Kimi MLA 独立头切分 · B8 不等长 chunk",
+      "shape": [
+        32760,
+        256,
+        512
+      ],
+      "sku": "Ascend950DT_9582",
+      "role": "prediction before device acquisition",
+      "old": 27.66642786182888,
+      "new": 26.720379102182008,
+      "future": 11.571588862452339,
+      "ca": null
+    },
+    {
+      "scenario": "Kimi MLA 独立头切分 · B8 不等长 chunk",
+      "shape": [
+        32760,
+        256,
+        512
+      ],
+      "sku": "Ascend950PR_957b",
+      "role": "prediction before device acquisition",
+      "old": 32.194647245700956,
+      "new": 29.92804332419956,
+      "future": 11.571588862452339,
+      "ca": null
+    },
+    {
+      "scenario": "DeepSeek-V4.1-Flash · dsa.wq_a decode",
+      "shape": [
+        81,
+        1280,
+        5120
+      ],
+      "sku": "Ascend950DT_9582",
+      "role": "prediction before device acquisition",
+      "old": 12.652929054263796,
+      "new": 12.652929054263796,
+      "future": 11.133441114349536,
+      "ca": null
+    },
+    {
+      "scenario": "DeepSeek-V4.1-Flash · dsa.wq_a decode",
+      "shape": [
+        81,
+        1280,
+        5120
+      ],
+      "sku": "Ascend950PR_957b",
+      "role": "prediction before device acquisition",
+      "old": 13.915734176967586,
+      "new": 13.915734176967586,
+      "future": 11.133441114349536,
+      "ca": null
+    },
+    {
+      "scenario": "DeepSeek-V4-Pro · dsa.wq_a decode",
+      "shape": [
+        16,
+        1536,
+        7168
+      ],
+      "sku": "Ascend950DT_9582",
+      "role": "prediction before device acquisition",
+      "old": 14.835400698574066,
+      "new": 14.835400698574066,
+      "future": 14.10462444311805,
+      "ca": null
+    },
+    {
+      "scenario": "DeepSeek-V4-Pro · dsa.wq_a decode",
+      "shape": [
+        16,
+        1536,
+        7168
+      ],
+      "sku": "Ascend950PR_957b",
+      "role": "prediction before device acquisition",
+      "old": 19.12287825376036,
+      "new": 19.12287825376036,
+      "future": 14.10462444311805,
+      "ca": null
+    },
+    {
+      "scenario": "Kimi-K3 · mla.kv_b_proj decode",
+      "shape": [
+        9,
+        3072,
+        512
+      ],
+      "sku": "Ascend950DT_9582",
+      "role": "prediction before device acquisition",
+      "old": 5.28044120609407,
+      "new": 5.28044120609407,
+      "future": 4.113264627590504,
+      "ca": null
+    },
+    {
+      "scenario": "Kimi-K3 · mla.kv_b_proj decode",
+      "shape": [
+        9,
+        3072,
+        512
+      ],
+      "sku": "Ascend950PR_957b",
+      "role": "prediction before device acquisition",
+      "old": 5.850616500371933,
+      "new": 5.850616500371933,
+      "future": 4.113264627590504,
+      "ca": null
+    },
+    {
+      "scenario": "DeepSeek Pro B8 · 每请求 4096-token 分块",
+      "shape": [
+        32768,
+        64,
+        7168
+      ],
+      "sku": "Ascend950DT_9582",
+      "role": "prediction before device acquisition",
+      "old": 193.3593574523974,
+      "new": 193.3593574523974,
+      "future": 52.49288548753489,
+      "ca": null
+    },
+    {
+      "scenario": "DeepSeek Pro B8 · 每请求 4096-token 分块",
+      "shape": [
+        32768,
+        64,
+        7168
+      ],
+      "sku": "Ascend950PR_957b",
+      "role": "prediction before device acquisition",
+      "old": 340.119786530704,
+      "new": 340.119786530704,
+      "future": 52.49288548753489,
+      "ca": null
+    },
+    {
+      "scenario": "DeepSeek Pro B8 · 每请求完整 32Ki",
+      "shape": [
+        262144,
+        64,
+        7168
+      ],
+      "sku": "Ascend950DT_9582",
+      "role": "running before freeze; result blinded",
+      "old": 1514.2835121930989,
+      "new": 1514.2835121930989,
+      "future": 382.5587586656286,
+      "ca": null
+    },
+    {
+      "scenario": "DeepSeek Pro B8 · 每请求完整 32Ki",
+      "shape": [
+        262144,
+        64,
+        7168
+      ],
+      "sku": "Ascend950PR_957b",
+      "role": "prediction before device acquisition",
+      "old": 2688.9099698057435,
+      "new": 2688.9099698057435,
+      "future": 382.5587586656286,
+      "ca": null
+    }
+  ],
+  "ratios": [
+    {
+      "shape": [
+        1,
+        32,
+        16
+      ],
+      "old": 1.0,
+      "new": 1.0,
+      "ca": 0.902380481150704,
+      "error_pct": 10.817999822515322
+    },
+    {
+      "shape": [
+        1,
+        64,
+        7168
+      ],
+      "old": 0.9784896163497974,
+      "new": 0.9784896163497974,
+      "ca": 0.9789473448571568,
+      "error_pct": -0.04675721424284296
+    },
+    {
+      "shape": [
+        1,
+        128,
+        128
+      ],
+      "old": 1.0,
+      "new": 1.0,
+      "ca": 0.9349946406024858,
+      "error_pct": 6.952484706824258
+    },
+    {
+      "shape": [
+        1,
+        128,
+        512
+      ],
+      "old": 1.0,
+      "new": 1.0,
+      "ca": 0.9685361385917909,
+      "error_pct": 3.2485996293288855
+    },
+    {
+      "shape": [
+        1,
+        256,
+        1024
+      ],
+      "old": 1.0,
+      "new": 1.0,
+      "ca": 0.997247657559785,
+      "error_pct": 0.27599387367325257
+    },
+    {
+      "shape": [
+        1,
+        2304,
+        1536
+      ],
+      "old": 1.000381672548474,
+      "new": 1.000381672548474,
+      "ca": 1.1218472086644455,
+      "error_pct": -10.827279791565891
+    },
+    {
+      "shape": [
+        2,
+        32,
+        32
+      ],
+      "old": 1.0,
+      "new": 1.0,
+      "ca": 0.8671773386384625,
+      "error_pct": 15.316666550590408
+    },
+    {
+      "shape": [
+        3,
+        64,
+        64
+      ],
+      "old": 1.0,
+      "new": 1.0,
+      "ca": 0.9321866179115256,
+      "error_pct": 7.274657325633327
+    },
+    {
+      "shape": [
+        4,
+        80,
+        48
+      ],
+      "old": 1.0,
+      "new": 1.0,
+      "ca": 0.9480563571947648,
+      "error_pct": 5.478961499602519
+    },
+    {
+      "shape": [
+        8,
+        96,
+        256
+      ],
+      "old": 1.0,
+      "new": 1.0,
+      "ca": 0.9640090406201248,
+      "error_pct": 3.7334669970235046
+    },
+    {
+      "shape": [
+        9,
+        64,
+        7168
+      ],
+      "old": 0.9871191868668523,
+      "new": 0.9871191868668523,
+      "ca": 0.8827633905676577,
+      "error_pct": 11.821491173539588
+    },
+    {
+      "shape": [
+        9,
+        128,
+        256
+      ],
+      "old": 1.0,
+      "new": 1.0,
+      "ca": 0.8945861016979514,
+      "error_pct": 11.783538566267659
+    },
+    {
+      "shape": [
+        9,
+        128,
+        512
+      ],
+      "old": 1.0,
+      "new": 1.0,
+      "ca": 0.9543160785744882,
+      "error_pct": 4.78708495551623
+    },
+    {
+      "shape": [
+        9,
+        1280,
+        5120
+      ],
+      "old": 1.1189608971495075,
+      "new": 1.1189608971495075,
+      "ca": 1.3355879595453783,
+      "error_pct": -16.219602823434307
+    },
+    {
+      "shape": [
+        11,
+        64,
+        7168
+      ],
+      "old": 0.9892594647197102,
+      "new": 0.9892594647197102,
+      "ca": 1.0254661286060804,
+      "error_pct": -3.53075180899306
+    },
+    {
+      "shape": [
+        11,
+        128,
+        512
+      ],
+      "old": 1.0,
+      "new": 1.0,
+      "ca": 0.9599212056972214,
+      "error_pct": 4.17521709749793
+    },
+    {
+      "shape": [
+        11,
+        1280,
+        5120
+      ],
+      "old": 1.1191336165133579,
+      "new": 1.1191336165133579,
+      "ca": 1.3375119486218932,
+      "error_pct": -16.32720607345165
+    },
+    {
+      "shape": [
+        11,
+        2304,
+        1536
+      ],
+      "old": 1.0029446327638707,
+      "new": 1.0029446327638707,
+      "ca": 1.0965149520225945,
+      "error_pct": -8.533428485049576
+    },
+    {
+      "shape": [
+        16,
+        64,
+        7168
+      ],
+      "old": 0.9945805634890446,
+      "new": 0.9945805634890446,
+      "ca": 0.9199325628103837,
+      "error_pct": 8.114507921168922
+    },
+    {
+      "shape": [
+        16,
+        128,
+        512
+      ],
+      "old": 1.0,
+      "new": 1.0,
+      "ca": 0.9577093329693979,
+      "error_pct": 4.415814441264665
+    },
+    {
+      "shape": [
+        16,
+        512,
+        5120
+      ],
+      "old": 1.003626968369895,
+      "new": 1.003626968369895,
+      "ca": 1.0287807802668503,
+      "error_pct": -2.445011841145661
+    },
+    {
+      "shape": [
+        17,
+        96,
+        128
+      ],
+      "old": 1.0,
+      "new": 1.0,
+      "ca": 0.9771030959808307,
+      "error_pct": 2.3433457649814304
+    },
+    {
+      "shape": [
+        17,
+        256,
+        1024
+      ],
+      "old": 1.0,
+      "new": 1.0,
+      "ca": 0.9883690820704173,
+      "error_pct": 1.1767788107271082
+    },
+    {
+      "shape": [
+        31,
+        64,
+        257
+      ],
+      "old": 1.0,
+      "new": 1.0,
+      "ca": 0.9291852315266927,
+      "error_pct": 7.621168101967735
+    },
+    {
+      "shape": [
+        32,
+        64,
+        64
+      ],
+      "old": 1.0,
+      "new": 1.0,
+      "ca": 0.9608113191235884,
+      "error_pct": 4.078707244223345
+    },
+    {
+      "shape": [
+        33,
+        128,
+        129
+      ],
+      "old": 1.0,
+      "new": 1.0,
+      "ca": 1.0021462424001388,
+      "error_pct": -0.21416459088831052
+    },
+    {
+      "shape": [
+        48,
+        128,
+        192
+      ],
+      "old": 1.0,
+      "new": 1.0,
+      "ca": 0.973724353001109,
+      "error_pct": 2.6984687111816674
+    },
+    {
+      "shape": [
+        64,
+        128,
+        512
+      ],
+      "old": 1.0,
+      "new": 1.0,
+      "ca": 0.9633929469581838,
+      "error_pct": 3.799804966125131
+    },
+    {
+      "shape": [
+        65,
+        128,
+        129
+      ],
+      "old": 1.0,
+      "new": 1.0,
+      "ca": 1.005878440686613,
+      "error_pct": -0.5844086570341855
+    },
+    {
+      "shape": [
+        81,
+        32,
+        5120
+      ],
+      "old": 0.9886133017808271,
+      "new": 0.9886133017808271,
+      "ca": 0.9763637695971414,
+      "error_pct": 1.2546074081323022
+    },
+    {
+      "shape": [
+        81,
+        128,
+        512
+      ],
+      "old": 1.0,
+      "new": 1.0,
+      "ca": 0.9743942439323121,
+      "error_pct": 2.627864052680784
+    },
+    {
+      "shape": [
+        99,
+        64,
+        7168
+      ],
+      "old": 0.9979144927007269,
+      "new": 0.9979144927007269,
+      "ca": 0.9762089113174393,
+      "error_pct": 2.223456591273565
+    },
+    {
+      "shape": [
+        99,
+        128,
+        512
+      ],
+      "old": 1.0,
+      "new": 1.0,
+      "ca": 0.9482552677006103,
+      "error_pct": 5.456835734207277
+    },
+    {
+      "shape": [
+        99,
+        2304,
+        1536
+      ],
+      "old": 1.0239989026916747,
+      "new": 1.0239989026916747,
+      "ca": 1.0467753169353395,
+      "error_pct": -2.175864665050342
+    },
+    {
+      "shape": [
+        127,
+        384,
+        256
+      ],
+      "old": 1.0006674648186953,
+      "new": 1.0006674648186953,
+      "ca": 0.9930180340455814,
+      "error_pct": 0.7703214353469434
+    },
+    {
+      "shape": [
+        128,
+        192,
+        256
+      ],
+      "old": 1.0003404939727323,
+      "new": 1.0003404939727323,
+      "ca": 1.0046281041788514,
+      "error_pct": -0.4267858114146317
+    },
+    {
+      "shape": [
+        128,
+        256,
+        512
+      ],
+      "old": 1.0031121171086823,
+      "new": 1.0031121171086823,
+      "ca": 0.9943440798069135,
+      "error_pct": 0.8817910700963161
+    },
+    {
+      "shape": [
+        128,
+        512,
+        512
+      ],
+      "old": 1.0128302033767522,
+      "new": 1.0128302033767522,
+      "ca": 1.0507606980970203,
+      "error_pct": -3.6098128516761308
+    },
+    {
+      "shape": [
+        129,
+        256,
+        256
+      ],
+      "old": 1.0,
+      "new": 1.0,
+      "ca": 0.984948643521251,
+      "error_pct": 1.528136170119443
+    },
+    {
+      "shape": [
+        144,
+        64,
+        7168
+      ],
+      "old": 1.004671037977614,
+      "new": 1.004671037977614,
+      "ca": 0.9936750534826999,
+      "error_pct": 1.1065976202557115
+    },
+    {
+      "shape": [
+        144,
+        128,
+        512
+      ],
+      "old": 1.0000313341871432,
+      "new": 1.0000313341871432,
+      "ca": 1.0113667008811844,
+      "error_pct": -1.120796906222532
+    },
+    {
+      "shape": [
+        192,
+        384,
+        256
+      ],
+      "old": 1.0009969044537497,
+      "new": 1.0009969044537497,
+      "ca": 1.0291802877626688,
+      "error_pct": -2.7384301510658404
+    },
+    {
+      "shape": [
+        225,
+        512,
+        256
+      ],
+      "old": 1.0356763368971404,
+      "new": 1.0356763368971404,
+      "ca": 1.000884114481318,
+      "error_pct": 3.4761489279757862
+    },
+    {
+      "shape": [
+        256,
+        512,
+        256
+      ],
+      "old": 1.0744781202527398,
+      "new": 1.0744781202527398,
+      "ca": 1.0114228185923406,
+      "error_pct": 6.234316697358788
+    },
+    {
+      "shape": [
+        449,
+        512,
+        256
+      ],
+      "old": 1.0141123774138445,
+      "new": 1.0141123774138445,
+      "ca": 1.053501921674532,
+      "error_pct": -3.738915273934973
+    },
+    {
+      "shape": [
+        512,
+        512,
+        256
+      ],
+      "old": 1.0170199854207826,
+      "new": 1.0170199854207826,
+      "ca": 0.9701982262851403,
+      "error_pct": 4.825999251196467
+    },
+    {
+      "shape": [
+        1024,
+        1792,
+        32
+      ],
+      "old": 1.0215391981647366,
+      "new": 1.0215391981647366,
+      "ca": 1.020486536206184,
+      "error_pct": 0.10315294922618179
+    },
+    {
+      "shape": [
+        1024,
+        2304,
+        16
+      ],
+      "old": 1.025824054912643,
+      "new": 1.025824054912643,
+      "ca": 1.037864703577349,
+      "error_pct": -1.160136636615916
+    },
+    {
+      "shape": [
+        1280,
+        2048,
+        16
+      ],
+      "old": 1.0283337401559878,
+      "new": 1.0283337401559878,
+      "ca": 1.0446904714608507,
+      "error_pct": -1.5657012054480002
+    },
+    {
+      "shape": [
+        1280,
+        2048,
+        512
+      ],
+      "old": 1.1267120241746706,
+      "new": 1.1267120241746706,
+      "ca": 1.081791561326222,
+      "error_pct": 4.152413871058358
+    },
+    {
+      "shape": [
+        1536,
+        1792,
+        16
+      ],
+      "old": 1.029548647257672,
+      "new": 1.029548647257672,
+      "ca": 1.022941367176137,
+      "error_pct": 0.6459099508092647
+    },
+    {
+      "shape": [
+        2048,
+        32,
+        5120
+      ],
+      "old": 1.3624629474572418,
+      "new": 1.3624629474572418,
+      "ca": 1.5988460140458212,
+      "error_pct": -14.784604928302048
+    },
+    {
+      "shape": [
+        4096,
+        32,
+        5120
+      ],
+      "old": 1.5501723952784285,
+      "new": 1.5501723952784285,
+      "ca": 1.546875487956668,
+      "error_pct": 0.21313333538666157
+    },
+    {
+      "shape": [
+        4096,
+        2304,
+        1536
+      ],
+      "old": 1.1369515084125539,
+      "new": 1.1369515084125539,
+      "ca": 1.1437627022475367,
+      "error_pct": -0.595507601497991
+    },
+    {
+      "shape": [
+        32768,
+        128,
+        512
+      ],
+      "old": 1.5046770566408714,
+      "new": 1.6673972042307488,
+      "ca": 1.7151145892901487,
+      "error_pct": -2.7821689208036626
+    },
+    {
+      "shape": [
+        262144,
+        128,
+        512
+      ],
+      "old": 1.8162679737020866,
+      "new": 2.0660523691389336,
+      "ca": 2.0345132759127074,
+      "error_pct": 1.55020336311531
+    },
+    {
+      "shape": [
+        1048576,
+        128,
+        512
+      ],
+      "old": 2.6415038124107744,
+      "new": 2.071801383087291,
+      "ca": 1.984303688818425,
+      "error_pct": 4.40949108555897
+    }
+  ],
+  "rows": [
+    {
+      "shape": [
+        1,
+        32,
+        16
+      ],
+      "chip": "Ascend950DT_9582",
+      "ca_us": 3.0296969696969698,
+      "hash": [
+        "4e806f4ef2a782006ac67eff2f54e1a42006b4f25509dfb140db3dc4ad6ee2e8"
+      ],
+      "kernel": "entry_kernel_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 3.090906715614348,
+      "old_us": 3.090906715614348,
+      "extrapolated_970dt_us": 2.8333294418136754,
+      "pct": 2.0203256804095737,
+      "old_pct": 2.0203256804095737,
+      "aic": 1,
+      "branch": "gemv",
+      "model_mmad": 1,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        1,
+        32,
+        16
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 2.7339394092559814,
+      "hash": [
+        "f82b0575845aad102547bde1aebebd920109135f22f4b8720ca01d81bb188387"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 3.090906715614348,
+      "old_us": 3.090906715614348,
+      "extrapolated_970dt_us": 2.8333294418136754,
+      "pct": 13.05688433144583,
+      "old_pct": 13.05688433144583,
+      "aic": 1,
+      "branch": "gemv",
+      "model_mmad": 1,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        1,
+        64,
+        7168
+      ],
+      "chip": "Ascend950DT_9582",
+      "ca_us": 5.58484823256731,
+      "hash": [
+        "631e24ac42c1819172bceefc8724588f36045a6f75f963d61e03a295e82c1a6b"
+      ],
+      "source": "results/v0.28/matmul/1-64-7168-dt-drain.json",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_4098_mix_aic",
+      "observed_mmad": 32,
+      "minute": 1.2023306343316411,
+      "new_us": 5.695051834150627,
+      "old_us": 5.695051834150627,
+      "extrapolated_970dt_us": 13.865446908686069,
+      "pct": 1.9732604538952092,
+      "old_pct": 1.9732604538952092,
+      "aic": 32,
+      "branch": "one_output_split_k",
+      "model_mmad": 32,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        1,
+        64,
+        7168
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 5.467272348701954,
+      "hash": [
+        "60fd5cabaf949d24f2660372f71b276e1fc69e8733ac280557144cba65c15e07"
+      ],
+      "source": "results/v0.28/matmul/1-64-7168-pr-drain.json",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_4098_mix_aic",
+      "observed_mmad": 28,
+      "minute": 1.301282049001505,
+      "new_us": 5.572549084290257,
+      "old_us": 5.572549084290257,
+      "extrapolated_970dt_us": 13.865446908686069,
+      "pct": 1.925580598034382,
+      "old_pct": 1.925580598034382,
+      "aic": 28,
+      "branch": "one_output_split_k",
+      "model_mmad": 28,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        1,
+        128,
+        128
+      ],
+      "chip": "Ascend950DT_9582",
+      "ca_us": 3.3563634157180786,
+      "hash": [
+        "828432bad7bbb134d1f17a190fbfb22db3843dd00a7b9178d3b5292858045c87"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 3.413634264874813,
+      "old_us": 3.413634264874813,
+      "extrapolated_970dt_us": 3.1291373161436153,
+      "pct": 1.7063363546548915,
+      "old_pct": 1.7063363546548915,
+      "aic": 2,
+      "branch": "gemv",
+      "model_mmad": 2,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        1,
+        128,
+        128
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 3.1381818056106567,
+      "hash": [
+        "26bbab6595405968c88fa31b7101cb3a63878c141ebf78a4c19dd2ab997de5df"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 3.413634264874813,
+      "old_us": 3.413634264874813,
+      "extrapolated_970dt_us": 3.1291373161436153,
+      "pct": 8.777453835583504,
+      "old_pct": 8.777453835583504,
+      "aic": 2,
+      "branch": "gemv",
+      "model_mmad": 2,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        1,
+        128,
+        512
+      ],
+      "chip": "Ascend950DT_9582",
+      "ca_us": 4.1606059074401855,
+      "hash": [
+        "2f96dacf09ca14ad74cd774881d034f47996a7385fee791a2f51d49762268d35"
+      ],
+      "source": "results/v0.30/matmul-dispatch/device/1-dt-retired.json",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "observed_mmad": 4,
+      "minute": 1.0010394555012074,
+      "new_us": 4.229767089266257,
+      "old_us": 4.229767089266257,
+      "extrapolated_970dt_us": 3.877231645177476,
+      "pct": 1.662286295906923,
+      "old_pct": 1.662286295906923,
+      "aic": 2,
+      "branch": "gemv",
+      "model_mmad": 4,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        1,
+        128,
+        512
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 4.0296971797943115,
+      "hash": [
+        "149e80d4350c212eb3a1b20d7595fd154f0a8faf3c7b63a34044259006607eb1"
+      ],
+      "source": "results/v0.30/matmul-dispatch/device/1-pr-retired.json",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "observed_mmad": 4,
+      "minute": 1.2672338586649858,
+      "new_us": 4.229767089266257,
+      "old_us": 4.229767089266257,
+      "extrapolated_970dt_us": 3.877231645177476,
+      "pct": 4.964886951683001,
+      "old_pct": 4.964886951683001,
+      "aic": 2,
+      "branch": "gemv",
+      "model_mmad": 4,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        1,
+        256,
+        1024
+      ],
+      "chip": "Ascend950DT_9582",
+      "ca_us": 4.624242544174194,
+      "hash": [
+        "a00d37638bacccd423af301be229e584dd2b20a0442050752a4f4f285d5e1b6b"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 5.1274979236754845,
+      "old_us": 5.1274979236754845,
+      "extrapolated_970dt_us": 4.700151576719267,
+      "pct": 10.88297974627892,
+      "old_pct": 10.88297974627892,
+      "aic": 4,
+      "branch": "gemv",
+      "model_mmad": 16,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        1,
+        256,
+        1024
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 4.611515045166016,
+      "hash": [
+        "5d7b4fc96d863240ab2e904dcd66792a9f0c05f0ea9677a57a5588b0f3da503a"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 5.1274979236754845,
+      "old_us": 5.1274979236754845,
+      "extrapolated_970dt_us": 4.700151576719267,
+      "pct": 11.189009977324993,
+      "old_pct": 11.189009977324993,
+      "aic": 4,
+      "branch": "gemv",
+      "model_mmad": 16,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        1,
+        2304,
+        1536
+      ],
+      "chip": "Ascend950DT_9582",
+      "ca_us": 6.679999828338623,
+      "hash": [
+        "4dd4e377ebce36551852fad85cb59e74fce3bf5d160cd96f4d0269f09a0b5dd4"
+      ],
+      "source": "results/v0.28/matmul/1-2304-1536-dt-drain.json",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "observed_mmad": 216,
+      "minute": 1.301701370498631,
+      "new_us": 8.617699544568074,
+      "old_us": 8.617699544568074,
+      "extrapolated_970dt_us": 5.633078002347877,
+      "pct": 29.007481527306787,
+      "old_pct": 29.007481527306787,
+      "aic": 18,
+      "branch": "gemv",
+      "model_mmad": 216,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        1,
+        2304,
+        1536
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 7.493939161300659,
+      "hash": [
+        "519680b1b6568e311ccdcf64b362ebe56bc79ed9bfbd4a3b9642398a2f4cbd96"
+      ],
+      "source": "results/v0.28/matmul/1-2304-1536-pr-drain.json",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "observed_mmad": 216,
+      "minute": 1.3673639876690382,
+      "new_us": 8.620988683915233,
+      "old_us": 8.620988683915233,
+      "extrapolated_970dt_us": 5.633078002347877,
+      "pct": 15.039480550292605,
+      "old_pct": 15.039480550292605,
+      "aic": 18,
+      "branch": "gemv",
+      "model_mmad": 216,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        2,
+        32,
+        32
+      ],
+      "chip": "Ascend950DT_9582",
+      "ca_us": 3.244242424242424,
+      "hash": [
+        "a3e613c08ecac75064cb2103c6de4958b956d67da5a05e06a3d26f13dc361452"
+      ],
+      "kernel": "entry_kernel_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 3.108963599236374,
+      "old_us": 3.108963599236374,
+      "extrapolated_970dt_us": 2.849879870967722,
+      "pct": -4.169812465159406,
+      "old_pct": -4.169812465159406,
+      "aic": 1,
+      "branch": "coarse_tile",
+      "model_mmad": 1,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        2,
+        32,
+        32
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 2.813333511352539,
+      "hash": [
+        "5b6d491cd6619c92a2985bea4a9c5511fbd08ed3b90652283d4da2202eefef0c"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 3.108963599236374,
+      "old_us": 3.108963599236374,
+      "extrapolated_970dt_us": 2.849879870967722,
+      "pct": 10.5081778143576,
+      "old_pct": 10.5081778143576,
+      "aic": 1,
+      "branch": "coarse_tile",
+      "model_mmad": 1,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        3,
+        64,
+        64
+      ],
+      "chip": "Ascend950DT_9582",
+      "ca_us": 3.065454363822937,
+      "hash": [
+        "d12219d0b342e4bb7c6f39c56415ad88bba50a5c402c7cb4815873b3468c76e4"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 3.216814840913626,
+      "old_us": 3.216814840913626,
+      "extrapolated_970dt_us": 2.948733224175009,
+      "pct": 4.937619651982916,
+      "old_pct": 4.937619651982916,
+      "aic": 1,
+      "branch": "dense",
+      "model_mmad": 1,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        3,
+        64,
+        64
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 2.857575535774231,
+      "hash": [
+        "dc7466ce339d83db3b93b938ec1c9304c87a744520bd68fbba8f01c1b60eb0fe"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 3.216814840913626,
+      "old_us": 3.216814840913626,
+      "extrapolated_970dt_us": 2.948733224175009,
+      "pct": 12.571471887341135,
+      "old_pct": 12.571471887341135,
+      "aic": 1,
+      "branch": "dense",
+      "model_mmad": 1,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        4,
+        80,
+        48
+      ],
+      "chip": "Ascend950DT_9582",
+      "ca_us": 3.5236363636363635,
+      "hash": [
+        "de49f371a08de16e9db979084532a91c942847b3c0b8f37c3bb909c108894e89"
+      ],
+      "kernel": "entry_kernel_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 3.2369859090937694,
+      "old_us": 3.2369859090937694,
+      "extrapolated_970dt_us": 2.9672267983390945,
+      "pct": -8.135074819320264,
+      "old_pct": -8.135074819320264,
+      "aic": 2,
+      "branch": "dense",
+      "model_mmad": 2,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        4,
+        80,
+        48
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 3.340605854988098,
+      "hash": [
+        "7dd25f093039d7d9b48fbad7e1215d0ae5333efe7d21918a99e9c566b683634f"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 3.2369859090937694,
+      "old_us": 3.2369859090937694,
+      "extrapolated_970dt_us": 2.9672267983390945,
+      "pct": -3.1018309370321684,
+      "old_pct": -3.1018309370321684,
+      "aic": 2,
+      "branch": "dense",
+      "model_mmad": 2,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        8,
+        96,
+        256
+      ],
+      "chip": "Ascend950DT_9582",
+      "ca_us": 3.7551515102386475,
+      "hash": [
+        "eb41334bdc67e8c06f17259f34ffca8ecc125068c8c7ff597bde9e71fe9d3a4f"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 3.7020543427723225,
+      "old_us": 3.7020543427723225,
+      "extrapolated_970dt_us": 3.393494960891369,
+      "pct": -1.4139820276639292,
+      "old_pct": -1.4139820276639292,
+      "aic": 2,
+      "branch": "dense",
+      "model_mmad": 2,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        8,
+        96,
+        256
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 3.6200000047683716,
+      "hash": [
+        "a179b545d6bc033493d227cdce306bfcc910157e67aea6c0f910777d4853afc9"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 3.7020543427723225,
+      "old_us": 3.7020543427723225,
+      "extrapolated_970dt_us": 3.393494960891369,
+      "pct": 2.266694417012882,
+      "old_pct": 2.266694417012882,
+      "aic": 2,
+      "branch": "dense",
+      "model_mmad": 2,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        9,
+        64,
+        7168
+      ],
+      "chip": "Ascend950DT_9582",
+      "ca_us": 6.079394057393074,
+      "hash": [
+        "76502414e7485d7354a1701e332fd49587887ccbbc15d4412999bf5f2f186e16"
+      ],
+      "source": "results/v0.28/matmul/9-64-7168-dt-drain.json",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_4098_mix_aic",
+      "observed_mmad": 32,
+      "minute": 1.0348389230008859,
+      "new_us": 5.731484314589841,
+      "old_us": 5.731484314589841,
+      "extrapolated_970dt_us": 13.869040682422016,
+      "pct": -5.722770057653104,
+      "old_pct": -5.722770057653104,
+      "aic": 32,
+      "branch": "one_output_split_k",
+      "model_mmad": 32,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        9,
+        64,
+        7168
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 5.3666665107011795,
+      "hash": [
+        "d3ba2922caa8808cfa6a5acb9bdb62715a8d45cbc0c584ea13e49c3da4fac941"
+      ],
+      "source": "results/v0.28/matmul/9-64-7168-pr-drain.json",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_4098_mix_aic",
+      "observed_mmad": 28,
+      "minute": 1.2013001240013788,
+      "new_us": 5.657658136158043,
+      "old_us": 5.657658136158043,
+      "extrapolated_970dt_us": 13.869040682422016,
+      "pct": 5.422204358639071,
+      "old_pct": 5.422204358639071,
+      "aic": 28,
+      "branch": "one_output_split_k",
+      "model_mmad": 28,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        9,
+        128,
+        256
+      ],
+      "chip": "Ascend950DT_9582",
+      "ca_us": 4.018787878787879,
+      "hash": [
+        "256b2edd0f809740496e3bad53c35fe8945401afd44bed7a1bd36297e47c0171"
+      ],
+      "kernel": "entry_kernel_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 3.7025444028272245,
+      "old_us": 3.7025444028272245,
+      "extrapolated_970dt_us": 3.3939441826083625,
+      "pct": -7.869125853341563,
+      "old_pct": -7.869125853341563,
+      "aic": 2,
+      "branch": "dense",
+      "model_mmad": 2,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        9,
+        128,
+        256
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 3.5951517820358276,
+      "hash": [
+        "058856b6694d0b60a9d4088679711901c7badae87dab561ef542c97ddba19a94"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 3.7025444028272245,
+      "old_us": 3.7025444028272245,
+      "extrapolated_970dt_us": 3.3939441826083625,
+      "pct": 2.9871512331694605,
+      "old_pct": 2.9871512331694605,
+      "aic": 2,
+      "branch": "dense",
+      "model_mmad": 2,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        9,
+        128,
+        512
+      ],
+      "chip": "Ascend950DT_9582",
+      "ca_us": 4.324848651885986,
+      "hash": [
+        "b3603bb0741dee5d35dd6ff549ad66c37d107d7e4d6c8925a0b13474386c3bac"
+      ],
+      "source": "results/v0.30/matmul-dispatch/device/9-dt-retired.json",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "observed_mmad": 4,
+      "minute": 2.2692340648345026,
+      "new_us": 4.233687569705471,
+      "old_us": 4.233687569705471,
+      "extrapolated_970dt_us": 3.880825418913422,
+      "pct": -2.10784444770713,
+      "old_pct": -2.10784444770713,
+      "aic": 2,
+      "branch": "dense",
+      "model_mmad": 4,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        9,
+        128,
+        512
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 4.127272605895996,
+      "hash": [
+        "8a4338fd4b38d2591f4056dfcf9627cebe36ef49e5b21374c43ecf89ada04352"
+      ],
+      "source": "results/v0.30/matmul-dispatch/device/9-pr-retired.json",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "observed_mmad": 4,
+      "minute": 1.0337690618354827,
+      "new_us": 4.233687569705471,
+      "old_us": 4.233687569705471,
+      "extrapolated_970dt_us": 3.880825418913422,
+      "pct": 2.5783362033672486,
+      "old_pct": 2.5783362033672486,
+      "aic": 2,
+      "branch": "dense",
+      "model_mmad": 4,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        9,
+        1280,
+        5120
+      ],
+      "chip": "Ascend950DT_9582",
+      "ca_us": 10.214545950293541,
+      "hash": [
+        "b8187017162fcd7ea3e6ac833b4de64bbae39fbaa25705c63bb290fb20b6a551"
+      ],
+      "source": "results/v0.28/matmul/9-1280-5120-dt-drain.json",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_4098_mix_aic",
+      "observed_mmad": 420,
+      "minute": 1.8361438523357114,
+      "new_us": 11.288222549769195,
+      "old_us": 11.288222549769195,
+      "extrapolated_970dt_us": 10.999249331729883,
+      "pct": 10.511251353710914,
+      "old_pct": 10.511251353710914,
+      "aic": 32,
+      "branch": "retiled_output_split_k",
+      "model_mmad": 420,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        9,
+        1280,
+        5120
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 13.642424583435059,
+      "hash": [
+        "b3b95d44cdd91cd126e12c8384859d5adc335401a808159f75f0bd13b4179daa"
+      ],
+      "source": "results/v0.28/matmul/9-1280-5120-pr-drain.json",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_4098_mix_aic",
+      "observed_mmad": 400,
+      "minute": 2.101609391668656,
+      "new_us": 12.631079631513039,
+      "old_us": 12.631079631513039,
+      "extrapolated_970dt_us": 10.999249331729883,
+      "pct": -7.413234691068171,
+      "old_pct": -7.413234691068171,
+      "aic": 28,
+      "branch": "retiled_output_split_k",
+      "model_mmad": 400,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        11,
+        64,
+        7168
+      ],
+      "chip": "Ascend950DT_9582",
+      "ca_us": 5.687878675758839,
+      "hash": [
+        "2d5f0225e5f7fd0ada0b18f54c7d1f9c11a3a1b91a1c67d659ae4624753009a0"
+      ],
+      "source": "results/v0.28/matmul/11-64-7168-dt-drain.json",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_4098_mix_aic",
+      "observed_mmad": 32,
+      "minute": 1.402233592836031,
+      "new_us": 5.7405924346996455,
+      "old_us": 5.7405924346996455,
+      "extrapolated_970dt_us": 13.869939125856002,
+      "pct": 0.9267736171213903,
+      "old_pct": 0.9267736171213903,
+      "aic": 32,
+      "branch": "one_output_split_k",
+      "model_mmad": 32,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        11,
+        64,
+        7168
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 5.832726925611496,
+      "hash": [
+        "f7f92e7c0361fb0ef88c856ed9dae279925624468fb5a212ad201a45c15a2761"
+      ],
+      "source": "results/v0.28/matmul/11-64-7168-pr-drain.json",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_4098_mix_aic",
+      "observed_mmad": 28,
+      "minute": 1.7359936619992369,
+      "new_us": 5.678935399124989,
+      "old_us": 5.678935399124989,
+      "extrapolated_970dt_us": 13.869939125856002,
+      "pct": -2.6367002681234486,
+      "old_pct": -2.6367002681234486,
+      "aic": 28,
+      "branch": "one_output_split_k",
+      "model_mmad": 28,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        11,
+        128,
+        512
+      ],
+      "chip": "Ascend950DT_9582",
+      "ca_us": 4.309697151184082,
+      "hash": [
+        "e38dd26202f3f1273c28783a681a1e91f7fdf4c9da94e851473403fa31d48d90"
+      ],
+      "source": "results/v0.30/matmul-dispatch/device/11-dt-retired.json",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "observed_mmad": 4,
+      "minute": 1.0678116828358422,
+      "new_us": 4.234667689815275,
+      "old_us": 4.234667689815275,
+      "extrapolated_970dt_us": 3.8817238623474086,
+      "pct": -1.740945099777902,
+      "old_pct": -1.740945099777902,
+      "aic": 2,
+      "branch": "dense",
+      "model_mmad": 4,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        11,
+        128,
+        512
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 4.136969685554504,
+      "hash": [
+        "640e15d5aa3e8ec66f748e168c3f263147a2881926e3f026c0281ccf8a51c320"
+      ],
+      "source": "results/v0.30/matmul-dispatch/device/11-pr-retired.json",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "observed_mmad": 4,
+      "minute": 1.3337696026661434,
+      "new_us": 4.234667689815275,
+      "old_us": 4.234667689815275,
+      "extrapolated_970dt_us": 3.8817238623474086,
+      "pct": 2.3615837602560363,
+      "old_pct": 2.3615837602560363,
+      "aic": 2,
+      "branch": "dense",
+      "model_mmad": 4,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        11,
+        1280,
+        5120
+      ],
+      "chip": "Ascend950DT_9582",
+      "ca_us": 10.15272718667984,
+      "hash": [
+        "7e67345c372e4b99375dbda4182b68a3991e15ec6cbb367e3530a322f64bd786"
+      ],
+      "source": "results/v0.31/matmul/device/11-1280-5120-dt.json",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_4098_mix_aic",
+      "observed_mmad": 420,
+      "minute": 11.047605366500404,
+      "new_us": 11.318366540950652,
+      "old_us": 11.318366540950652,
+      "extrapolated_970dt_us": 11.000147775163871,
+      "pct": 11.48104674574637,
+      "old_pct": 11.48104674574637,
+      "aic": 32,
+      "branch": "retiled_output_split_k",
+      "model_mmad": 420,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        11,
+        1280,
+        5120
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 13.579393923282623,
+      "hash": [
+        "af7db5ab94b96f34cd33e9c4c1fab4652aa0e926129f5632ea23a8d8a9f54c12"
+      ],
+      "source": "results/v0.31/matmul/device/11-1280-5120-pr.json",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_4098_mix_aic",
+      "observed_mmad": 400,
+      "minute": 46.91569548666788,
+      "new_us": 12.66676447999789,
+      "old_us": 12.66676447999789,
+      "extrapolated_970dt_us": 11.000147775163871,
+      "pct": -6.7206934892726,
+      "old_pct": -6.7206934892726,
+      "aic": 28,
+      "branch": "retiled_output_split_k",
+      "model_mmad": 400,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        11,
+        2304,
+        1536
+      ],
+      "chip": "Ascend950DT_9582",
+      "ca_us": 6.938788175582886,
+      "hash": [
+        "cf2144f15b49eba368933400fd565d19041c5860d56b25a9292de9b4bc346a18"
+      ],
+      "source": "results/v0.28/matmul/11-2304-1536-dt-drain.json",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "observed_mmad": 216,
+      "minute": 1.3016554080027467,
+      "new_us": 8.62750074566611,
+      "old_us": 8.62750074566611,
+      "extrapolated_970dt_us": 5.6375702195178095,
+      "pct": 24.337283792949414,
+      "old_pct": 24.337283792949414,
+      "aic": 18,
+      "branch": "coarse_tile",
+      "model_mmad": 216,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        11,
+        2304,
+        1536
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 7.608484983444214,
+      "hash": [
+        "26f7792e420110e1b3617c6bc3bbfbf87e6212858ecd0f95a1a315cdcab12c84"
+      ],
+      "source": "results/v0.28/matmul/11-2304-1536-pr-drain.json",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "observed_mmad": 216,
+      "minute": 1.3005907108347552,
+      "new_us": 8.652905567032118,
+      "old_us": 8.652905567032118,
+      "extrapolated_970dt_us": 5.6375702195178095,
+      "pct": 13.727050600224944,
+      "old_pct": 13.727050600224944,
+      "aic": 18,
+      "branch": "coarse_tile",
+      "model_mmad": 216,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        16,
+        64,
+        7168
+      ],
+      "chip": "Ascend950DT_9582",
+      "ca_us": 6.108484461903572,
+      "hash": [
+        "0537ce5c41d61fe241b83a12c1ccc64b30da5048bdef357992f391c2b7117feb"
+      ],
+      "source": "results/v0.28/matmul/16-64-7168-dt-drain.json",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_4098_mix_aic",
+      "observed_mmad": 32,
+      "minute": 1.2688264946647299,
+      "new_us": 5.763362734974153,
+      "old_us": 5.763362734974153,
+      "extrapolated_970dt_us": 13.872185234440968,
+      "pct": -5.649874843454528,
+      "old_pct": -5.649874843454528,
+      "aic": 32,
+      "branch": "one_output_split_k",
+      "model_mmad": 32,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        16,
+        64,
+        7168
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 5.619393765926361,
+      "hash": [
+        "fe38d59760007b801e4cc2861e2f44ac939e837ed7f103eb6549d2dfd89aad51"
+      ],
+      "source": "results/v0.28/matmul/16-64-7168-pr-drain.json",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_4098_mix_aic",
+      "observed_mmad": 28,
+      "minute": 1.234622535497571,
+      "new_us": 5.732128556542355,
+      "old_us": 5.732128556542355,
+      "extrapolated_970dt_us": 13.872185234440968,
+      "pct": 2.0061735360061395,
+      "old_pct": 2.0061735360061395,
+      "aic": 28,
+      "branch": "one_output_split_k",
+      "model_mmad": 28,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        16,
+        128,
+        512
+      ],
+      "chip": "Ascend950DT_9582",
+      "ca_us": 4.370909214019775,
+      "hash": [
+        "116c94b04a576f4b3b94b210a10514e24db739336736d21408002afc5b395a34"
+      ],
+      "source": "results/v0.30/matmul-dispatch/device/16-dt-retired.json",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "observed_mmad": 4,
+      "minute": 1.2013830786687323,
+      "new_us": 4.237117990089784,
+      "old_us": 4.237117990089784,
+      "extrapolated_970dt_us": 3.883969970932375,
+      "pct": -3.060947216676413,
+      "old_pct": -3.060947216676413,
+      "aic": 2,
+      "branch": "dense",
+      "model_mmad": 4,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        16,
+        128,
+        512
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 4.186060547828674,
+      "hash": [
+        "1a1244be456b3c61a54a3e3cca33e47c5e3584488f8f3432011f4d64d3260be1"
+      ],
+      "source": "results/v0.30/matmul-dispatch/device/16-pr-retired.json",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "observed_mmad": 4,
+      "minute": 1.1671234340018903,
+      "new_us": 4.237117990089784,
+      "old_us": 4.237117990089784,
+      "extrapolated_970dt_us": 3.883969970932375,
+      "pct": 1.2197014753547508,
+      "old_pct": 1.2197014753547508,
+      "aic": 2,
+      "branch": "dense",
+      "model_mmad": 4,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        16,
+        192,
+        384
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 3.7236361503601074,
+      "hash": [
+        "868dd62412165569a9b476df77b345b64307ad24007be9be14d68d10b20a24e0"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 4.039444570813979,
+      "old_us": 4.039444570813979,
+      "extrapolated_970dt_us": 3.7027967632545176,
+      "pct": 8.481183652256941,
+      "old_pct": 8.481183652256941,
+      "aic": 3,
+      "branch": "dense",
+      "model_mmad": 6,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        16,
+        512,
+        5120
+      ],
+      "chip": "Ascend950DT_9582",
+      "ca_us": 8.023030549287796,
+      "hash": [
+        "bfd43d395f16c5353a90d1d5c95b611f717801d06fbb0d5310a432478544e513"
+      ],
+      "source": "results/v0.28/matmul/16-512-5120-dt-drain.json",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_4098_mix_aic",
+      "observed_mmad": 160,
+      "minute": 1.5359453976658795,
+      "new_us": 8.314665564823759,
+      "old_us": 8.314665564823759,
+      "extrapolated_970dt_us": 10.935377431541148,
+      "pct": 3.634973265331154,
+      "old_pct": 3.634973265331154,
+      "aic": 32,
+      "branch": "retiled_output_split_k",
+      "model_mmad": 160,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        16,
+        512,
+        5120
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 8.253939628601074,
+      "hash": [
+        "776f9e879e53fe1d070de00d6870d51bdec2c7f4e306845ff209caffe54847c6"
+      ],
+      "source": "results/v0.28/matmul/16-512-5120-pr-drain.json",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_4098_mix_aic",
+      "observed_mmad": 168,
+      "minute": 1.567891569668427,
+      "new_us": 8.34482259383363,
+      "old_us": 8.34482259383363,
+      "extrapolated_970dt_us": 10.935377431541148,
+      "pct": 1.1010858974256799,
+      "old_pct": 1.1010858974256799,
+      "aic": 28,
+      "branch": "retiled_output_split_k",
+      "model_mmad": 168,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        16,
+        2304,
+        1536
+      ],
+      "chip": "Ascend950DT_9582",
+      "ca_us": 6.8399999141693115,
+      "hash": [
+        "c406a6a780d5deb64b3e8bff79ab0ceccaca036b4f8f9eae44adbd431b55fd13"
+      ],
+      "source": "results/v0.29/matmul/decode/16-2304-1536-dt.json",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "observed_mmad": 216,
+      "minute": 5.940342430999348,
+      "new_us": 8.632401346215127,
+      "old_us": 8.632401346215127,
+      "extrapolated_970dt_us": 5.639816328102776,
+      "pct": 26.20469962774108,
+      "old_pct": 26.20469962774108,
+      "aic": 18,
+      "branch": "coarse_tile",
+      "model_mmad": 216,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        17,
+        96,
+        128
+      ],
+      "chip": "Ascend950DT_9582",
+      "ca_us": 3.4939396381378174,
+      "hash": [
+        "6d0c0e2f370dcd065878251cb814d2a70f047cf4b1b73c9edd6742da2fcae9b5"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 3.4762898810127307,
+      "old_us": 3.4762898810127307,
+      "extrapolated_970dt_us": 3.1865716309367063,
+      "pct": -0.5051534643710553,
+      "old_pct": -0.5051534643710553,
+      "aic": 4,
+      "branch": "dense",
+      "model_mmad": 4,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        17,
+        96,
+        128
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 3.4139392375946045,
+      "hash": [
+        "718b4be231700098536bef4f45f1b4ccdf149516c96d5b8e7a2f553d648ee571"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 3.4762898810127307,
+      "old_us": 3.4762898810127307,
+      "extrapolated_970dt_us": 3.1865716309367063,
+      "pct": 1.826354808296382,
+      "old_pct": 1.826354808296382,
+      "aic": 4,
+      "branch": "dense",
+      "model_mmad": 4,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        17,
+        256,
+        1024
+      ],
+      "chip": "Ascend950DT_9582",
+      "ca_us": 4.741818428039551,
+      "hash": [
+        "de5799bbb96e976bd07d9cb2d8968595ae5991e30080cc79a522b89baa1cdb91"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 5.190153539813402,
+      "old_us": 5.190153539813402,
+      "extrapolated_970dt_us": 4.757585891512359,
+      "pct": 9.454919427592046,
+      "old_pct": 9.454919427592046,
+      "aic": 8,
+      "branch": "dense",
+      "model_mmad": 32,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        17,
+        256,
+        1024
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 4.68666672706604,
+      "hash": [
+        "71584145ac14b26724c657c667f3a5a393b1e28e582e20b52626fa021e55a9ae"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 5.190153539813402,
+      "old_us": 5.190153539813402,
+      "extrapolated_970dt_us": 4.757585891512359,
+      "pct": 10.742961726714384,
+      "old_pct": 10.742961726714384,
+      "aic": 8,
+      "branch": "dense",
+      "model_mmad": 32,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        31,
+        64,
+        257
+      ],
+      "chip": "Ascend950DT_9582",
+      "ca_us": 4.090909090909091,
+      "hash": [
+        "2f81d32ab7b4f49033fe78e918f340850213e042e095eb470ad293443b429633"
+      ],
+      "kernel": "entry_kernel_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 3.781141405167334,
+      "old_us": 3.781141405167334,
+      "extrapolated_970dt_us": 3.4660428597377693,
+      "pct": -7.572098984798492,
+      "old_pct": -7.572098984798492,
+      "aic": 2,
+      "branch": "k_tail",
+      "model_mmad": 4,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        31,
+        64,
+        257
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 3.8012123107910156,
+      "hash": [
+        "ff69c2ae8f49f174bd4a17b387b1619aed53f8da352055f9d3fd44ff1e24ec79"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 3.781141405167334,
+      "old_us": 3.781141405167334,
+      "extrapolated_970dt_us": 3.4660428597377693,
+      "pct": -0.5280132753096578,
+      "old_pct": -0.5280132753096578,
+      "aic": 2,
+      "branch": "k_tail",
+      "model_mmad": 4,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        32,
+        64,
+        64
+      ],
+      "chip": "Ascend950DT_9582",
+      "ca_us": 3.291515290737152,
+      "hash": [
+        "3d5e25291d60f21324179a9de4ef4e0e07bf3188be9163f0c74174597356bbe3"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 3.2784903369417404,
+      "old_us": 3.2784903369417404,
+      "extrapolated_970dt_us": 3.0052690955341137,
+      "pct": -0.3957129967485207,
+      "old_pct": -0.3957129967485207,
+      "aic": 2,
+      "branch": "dense",
+      "model_mmad": 2,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        32,
+        64,
+        64
+      ],
+      "chip": "Ascend950DT_9582",
+      "ca_us": 3.281212329864502,
+      "hash": [
+        "cae5bdf4da5b8dd0b9c78faf5ffc99ae162a0e9865175f3e40077d6be0311f0b"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 3.2784903369417404,
+      "old_us": 3.2784903369417404,
+      "extrapolated_970dt_us": 3.0052690955341137,
+      "pct": -0.08295692716947523,
+      "old_pct": -0.08295692716947523,
+      "aic": 2,
+      "branch": "dense",
+      "model_mmad": 2,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        32,
+        64,
+        64
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 3.15757554769516,
+      "hash": [
+        "445d10528c3df8fd316cd18cb03550f3b0a4983316ada6639ef0b1690eba43a7"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 3.2784903369417404,
+      "old_us": 3.2784903369417404,
+      "extrapolated_970dt_us": 3.0052690955341137,
+      "pct": 3.829355384223221,
+      "old_pct": 3.829355384223221,
+      "aic": 2,
+      "branch": "dense",
+      "model_mmad": 2,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        33,
+        128,
+        129
+      ],
+      "chip": "Ascend950DT_9582",
+      "ca_us": 3.670909285545349,
+      "hash": [
+        "383014db6dba8585bae63aecc2a465bbc0dd690208ab0dd75fcfe63e79e341fd"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 3.513143102839586,
+      "old_us": 3.513143102839586,
+      "extrapolated_970dt_us": 3.2203503226123704,
+      "pct": -4.297741252473508,
+      "old_pct": -4.297741252473508,
+      "aic": 6,
+      "branch": "k_tail",
+      "model_mmad": 6,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        33,
+        128,
+        129
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 3.67878794670105,
+      "hash": [
+        "b29ab2681a5b3609ca5b13867fdc578d8de1f1b15d82dbd7b8f7c4a524619e08"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 3.513143102839586,
+      "old_us": 3.513143102839586,
+      "extrapolated_970dt_us": 3.2203503226123704,
+      "pct": -4.502701603391024,
+      "old_pct": -4.502701603391024,
+      "aic": 6,
+      "branch": "k_tail",
+      "model_mmad": 6,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        48,
+        128,
+        192
+      ],
+      "chip": "Ascend950DT_9582",
+      "ca_us": 3.5751516819000244,
+      "hash": [
+        "2c9071ddfbfd3a5e779f2873d8d733c45a9c10ea3dc233277740d90b4f11f0c2"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 3.6511358943413077,
+      "old_us": 3.6511358943413077,
+      "extrapolated_970dt_us": 3.3468334298254203,
+      "pct": 2.125342340745151,
+      "old_pct": 2.125342340745151,
+      "aic": 6,
+      "branch": "dense",
+      "model_mmad": 6,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        48,
+        128,
+        192
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 3.4812122583389282,
+      "hash": [
+        "c733399ea1b09fb94c866a207e7fb33998c9102038a6a4e26bc5b4309ab5f2c5"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 3.6511358943413077,
+      "old_us": 3.6511358943413077,
+      "extrapolated_970dt_us": 3.3468334298254203,
+      "pct": 4.881162749997303,
+      "old_pct": 4.881162749997303,
+      "aic": 6,
+      "branch": "dense",
+      "model_mmad": 6,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        64,
+        128,
+        512
+      ],
+      "chip": "Ascend950DT_9582",
+      "ca_us": 4.436969696969697,
+      "hash": [
+        "67c470d000005e74948a2b8a480126f0d89fcd028a20c93fa3d5509a5394b58a"
+      ],
+      "kernel": "entry_kernel_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 4.347727420718567,
+      "old_us": 4.347727420718567,
+      "extrapolated_970dt_us": 3.9853619490087597,
+      "pct": -2.011333913596003,
+      "old_pct": -2.011333913596003,
+      "aic": 8,
+      "branch": "dense",
+      "model_mmad": 16,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        64,
+        128,
+        512
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 4.274545311927795,
+      "hash": [
+        "5786befbf742cba95ca9479688f9a508aa3d682f9293687ee9bb7f6167833a97"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 4.347727420718567,
+      "old_us": 4.347727420718567,
+      "extrapolated_970dt_us": 3.9853619490087597,
+      "pct": 1.7120442865949492,
+      "old_pct": 1.7120442865949492,
+      "aic": 8,
+      "branch": "dense",
+      "model_mmad": 16,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        65,
+        128,
+        129
+      ],
+      "chip": "Ascend950DT_9582",
+      "ca_us": 3.7115153074264526,
+      "hash": [
+        "8c0980c6d8125ec76fc31bd870a5096a46bfe8981068e6fa384ba2ee11a8f4de"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 3.5539007752214498,
+      "old_us": 3.5539007752214498,
+      "extrapolated_970dt_us": 3.2577115222957453,
+      "pct": -4.2466356501245865,
+      "old_pct": -4.2466356501245865,
+      "aic": 10,
+      "branch": "k_tail",
+      "model_mmad": 10,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        65,
+        128,
+        129
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 3.7333332300186157,
+      "hash": [
+        "8653f8ae82a8210285fce9850fbe6537c5a655a3701b5454827e3202d70e1f3a"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 3.5539007752214498,
+      "old_us": 3.5539007752214498,
+      "extrapolated_970dt_us": 3.2577115222957453,
+      "pct": -4.806226600786756,
+      "old_pct": -4.806226600786756,
+      "aic": 10,
+      "branch": "k_tail",
+      "model_mmad": 10,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        81,
+        32,
+        5120
+      ],
+      "chip": "Ascend950DT_9582",
+      "ca_us": 6.333332732319832,
+      "hash": [
+        "9f0240d7faf3456876a2f65fc8a8a4b7ff86e5510ea6044b0a64ae82e0c4c97c"
+      ],
+      "source": "results/v0.28/matmul/81-32-5120-dt-drain.json",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_4098_mix_aic",
+      "observed_mmad": 64,
+      "minute": 1.268633151500641,
+      "new_us": 5.819818938020083,
+      "old_us": 5.819818938020083,
+      "extrapolated_970dt_us": 7.04962320877333,
+      "pct": -8.108113311009546,
+      "old_pct": -8.108113311009546,
+      "aic": 32,
+      "branch": "retiled_output_split_k",
+      "model_mmad": 64,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        81,
+        32,
+        5120
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 6.183636620640755,
+      "hash": [
+        "829fee62e95d3cec75831665c94e4fe9d951a89974e0f0d21e6f4f61f0a870d2"
+      ],
+      "source": "results/v0.28/matmul/81-32-5120-pr-drain.json",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_4098_mix_aic",
+      "observed_mmad": 56,
+      "minute": 1.2009567150031217,
+      "new_us": 5.7535504160826205,
+      "old_us": 5.7535504160826205,
+      "extrapolated_970dt_us": 7.04962320877333,
+      "pct": -6.955230893136932,
+      "old_pct": -6.955230893136932,
+      "aic": 28,
+      "branch": "retiled_output_split_k",
+      "model_mmad": 56,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        81,
+        128,
+        512
+      ],
+      "chip": "Ascend950DT_9582",
+      "ca_us": 4.402424335479736,
+      "hash": [
+        "283ea4eb39bf71ddfede9733ca9b6bc758ca65c63a459f8c425ad26a4c706f4f"
+      ],
+      "source": "results/v0.30/matmul-dispatch/device/81-dt-retired.json",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "observed_mmad": 24,
+      "minute": 1.301700140000321,
+      "new_us": 4.380078605290545,
+      "old_us": 4.380078605290545,
+      "extrapolated_970dt_us": 4.015017201533072,
+      "pct": -0.5075778363549444,
+      "old_pct": -0.5075778363549444,
+      "aic": 12,
+      "branch": "dense",
+      "model_mmad": 24,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        81,
+        128,
+        512
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 4.289696931838989,
+      "hash": [
+        "b6dc1949149e459ef27a0247441a4ccb71b42ef9b0d9afaab07f6141990ab53d"
+      ],
+      "source": "results/v0.30/matmul-dispatch/device/81-pr-retired.json",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "observed_mmad": 24,
+      "minute": 1.2672453041692886,
+      "new_us": 4.380078605290545,
+      "old_us": 4.380078605290545,
+      "extrapolated_970dt_us": 4.015017201533072,
+      "pct": 2.1069477608248954,
+      "old_pct": 2.1069477608248954,
+      "aic": 12,
+      "branch": "dense",
+      "model_mmad": 24,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        81,
+        2304,
+        1536
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 9.008484840393066,
+      "hash": [
+        "2c45fea24d21ac9f6b120a9a6e992abfade99abc8e78723110df8cdcba7cab98"
+      ],
+      "source": "results/v0.29/matmul/decode/81-2304-1536-pr.json",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "observed_mmad": 216,
+      "minute": 1.6347426891676151,
+      "new_us": 9.252936941182769,
+      "old_us": 9.252936941182769,
+      "extrapolated_970dt_us": 5.787620897072405,
+      "pct": 2.713576202000212,
+      "old_pct": 2.713576202000212,
+      "aic": 18,
+      "branch": "coarse_tile",
+      "model_mmad": 216,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        99,
+        64,
+        7168
+      ],
+      "chip": "Ascend950DT_9582",
+      "ca_us": 7.05636328458786,
+      "hash": [
+        "398c26f393941583b4b8400dddcbafaffeb78afd80e5b6f6dd1ffba3eacd762f"
+      ],
+      "source": "results/v0.31/matmul/device/99-64-7168-dt.json",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_4098_mix_aic",
+      "observed_mmad": 64,
+      "minute": 8.944724020167875,
+      "new_us": 6.4747099523211284,
+      "old_us": 6.4747099523211284,
+      "extrapolated_970dt_us": 14.014506868795916,
+      "pct": -8.242961831870932,
+      "old_pct": -8.242961831870932,
+      "aic": 32,
+      "branch": "retiled_output_split_k",
+      "model_mmad": 64,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        99,
+        64,
+        7168
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 6.888484719907865,
+      "hash": [
+        "11631217c67e3ce99bd8e32b80d5d08d2b1c649d700458eeb3529f47d50c91f1"
+      ],
+      "source": "results/v0.31/matmul/device/99-64-7168-pr.json",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_4098_mix_aic",
+      "observed_mmad": 56,
+      "minute": 9.00568525600247,
+      "new_us": 6.461206897454886,
+      "old_us": 6.461206897454886,
+      "extrapolated_970dt_us": 14.014506868795916,
+      "pct": -6.202783918764265,
+      "old_pct": -6.202783918764265,
+      "aic": 28,
+      "branch": "retiled_output_split_k",
+      "model_mmad": 56,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        99,
+        128,
+        512
+      ],
+      "chip": "Ascend950DT_9582",
+      "ca_us": 4.567878484725952,
+      "hash": [
+        "9396180dddde36d1bf3eb3edffd75569ae15ac828ea23b0e4a72f25936add5cb"
+      ],
+      "source": "results/v0.30/matmul-dispatch/device/99-dt-retired.json",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "observed_mmad": 28,
+      "minute": 1.1680286783298166,
+      "new_us": 4.392377954840636,
+      "old_us": 4.392377954840636,
+      "extrapolated_970dt_us": 4.026291605287322,
+      "pct": -3.8420577620914,
+      "old_pct": -3.8420577620914,
+      "aic": 14,
+      "branch": "dense",
+      "model_mmad": 28,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        99,
+        128,
+        512
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 4.331514835357666,
+      "hash": [
+        "77e922722f4022f6c85049fa637ca4bad17b010915d7d702d3723d744670fd38"
+      ],
+      "source": "results/v0.30/matmul-dispatch/device/99-pr-retired.json",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "observed_mmad": 28,
+      "minute": 1.1338300630023392,
+      "new_us": 4.392377954840636,
+      "old_us": 4.392377954840636,
+      "extrapolated_970dt_us": 4.026291605287322,
+      "pct": 1.4051231912251883,
+      "old_pct": 1.4051231912251883,
+      "aic": 14,
+      "branch": "dense",
+      "model_mmad": 28,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        99,
+        2304,
+        1536
+      ],
+      "chip": "Ascend950DT_9582",
+      "ca_us": 9.40666675567627,
+      "hash": [
+        "97f27b18e23d934676c192122ef297cc141d0bd8e10cb4841f2f314fc22ab9a7"
+      ],
+      "source": "results/v0.28/matmul/99-2304-1536-dt-drain.json",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "observed_mmad": 216,
+      "minute": 1.5018149549995239,
+      "new_us": 9.168036803957584,
+      "old_us": 9.168036803957584,
+      "extrapolated_970dt_us": 5.865898342849382,
+      "pct": -2.5368173224026402,
+      "old_pct": -2.5368173224026402,
+      "aic": 18,
+      "branch": "coarse_tile",
+      "model_mmad": 216,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        99,
+        2304,
+        1536
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 9.84666657447815,
+      "hash": [
+        "48f8df7b58008b065bcd7a704dcffaf2be09b4225a1cf09a8c40882851998b97"
+      ],
+      "source": "results/v0.28/matmul/99-2304-1536-pr-drain.json",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "observed_mmad": 216,
+      "minute": 1.734063089832974,
+      "new_us": 9.388059627089454,
+      "old_us": 9.388059627089454,
+      "extrapolated_970dt_us": 5.865898342849382,
+      "pct": -4.657484275717949,
+      "old_pct": -4.657484275717949,
+      "aic": 18,
+      "branch": "coarse_tile",
+      "model_mmad": 216,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        127,
+        384,
+        256
+      ],
+      "chip": "Ascend950DT_9582",
+      "ca_us": 3.819394111633301,
+      "hash": [
+        "b0d3f5778b8f1052e19788265552deaf6449dc3ccbfc26fa50f6d8fec1dfaba0"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 3.953708068269137,
+      "old_us": 3.953708068269137,
+      "extrapolated_970dt_us": 3.6295279433043977,
+      "pct": 3.516629934227944,
+      "old_pct": 3.516629934227944,
+      "aic": 24,
+      "branch": "coarse_tile",
+      "model_mmad": 24,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        127,
+        384,
+        256
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 3.79272723197937,
+      "hash": [
+        "263721d2adbf6adfe9f273671ed74d32b6ca3cd46fe3c5e5ac1426bb74299af9"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 3.956347029308098,
+      "old_us": 3.956347029308098,
+      "extrapolated_970dt_us": 3.6295279433043977,
+      "pct": 4.314040723760049,
+      "old_pct": 4.314040723760049,
+      "aic": 24,
+      "branch": "coarse_tile",
+      "model_mmad": 24,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        128,
+        192,
+        256
+      ],
+      "chip": "Ascend950DT_9582",
+      "ca_us": 3.7975757575757574,
+      "hash": [
+        "02f9f3d9f7723fbd722dd438cd2c4fcbdb762753915f1aa0885f26954084c53e"
+      ],
+      "kernel": "entry_kernel_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 3.9057082837573525,
+      "old_us": 3.9057082837573525,
+      "extrapolated_970dt_us": 3.5788319542662053,
+      "pct": 2.8474093233263886,
+      "old_pct": 2.8474093233263886,
+      "aic": 24,
+      "branch": "dense",
+      "model_mmad": 24,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        128,
+        192,
+        256
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 3.815151333808899,
+      "hash": [
+        "178c621dbf8514bec29604389d9fccf85849963896de92aa114fdf46ab89fbaf"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 3.9070381538872225,
+      "old_us": 3.9070381538872225,
+      "extrapolated_970dt_us": 3.5788319542662053,
+      "pct": 2.408471172926907,
+      "old_pct": 2.408471172926907,
+      "aic": 24,
+      "branch": "dense",
+      "model_mmad": 24,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        128,
+        256,
+        512
+      ],
+      "chip": "Ascend950DT_9582",
+      "ca_us": 4.393333196640015,
+      "hash": [
+        "296b53296a9d02ca50e10b342254dc322b444fcc94a17a8bee0b586b377a9a0e"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 4.462908011681043,
+      "old_us": 4.462908011681043,
+      "extrapolated_970dt_us": 4.086753927085144,
+      "pct": 1.5836453081737423,
+      "old_pct": 1.5836453081737423,
+      "aic": 32,
+      "branch": "dense",
+      "model_mmad": 64,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        128,
+        256,
+        512
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 4.368484854698181,
+      "hash": [
+        "e3928e0edf34893421aa37e7943531f5a6287f1b1e0ac76122f66493ad1c29c3"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 4.476797104058671,
+      "old_us": 4.476797104058671,
+      "extrapolated_970dt_us": 4.086753927085144,
+      "pct": 2.4794008211795227,
+      "old_pct": 2.4794008211795227,
+      "aic": 16,
+      "branch": "coarse_tile",
+      "model_mmad": 32,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        128,
+        512,
+        512
+      ],
+      "chip": "Ascend950DT_9582",
+      "ca_us": 4.381818175315857,
+      "hash": [
+        "20eff520ec15be218ba112579feeeb7800946a10324486a56fcad4e52d38c33f"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 4.541244140040449,
+      "old_us": 4.541244140040449,
+      "extrapolated_970dt_us": 4.1374499161233365,
+      "pct": 3.638351897454073,
+      "old_pct": 3.638351897454073,
+      "aic": 32,
+      "branch": "coarse_tile",
+      "model_mmad": 64,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        128,
+        512,
+        512
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 4.604242324829102,
+      "hash": [
+        "d634eef7216deb0ae3450f63f0239e7acd0769770c0fa75cf11c30837c9f9d83"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 4.599509225940652,
+      "old_us": 4.599509225940652,
+      "extrapolated_970dt_us": 4.1374499161233365,
+      "pct": -0.10279864860555099,
+      "old_pct": -0.10279864860555099,
+      "aic": 24,
+      "branch": "coarse_tile",
+      "model_mmad": 48,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        129,
+        256,
+        256
+      ],
+      "chip": "Ascend950DT_9582",
+      "ca_us": 3.6642425060272217,
+      "hash": [
+        "abd6159bf8d28ad6cef5ad443b3f7e6bfac92fb346e912d0c6b18d73ae935b12"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 3.9363702198207378,
+      "old_us": 3.9363702198207378,
+      "extrapolated_970dt_us": 3.6084872067905187,
+      "pct": 7.426574888149462,
+      "old_pct": 7.426574888149462,
+      "aic": 20,
+      "branch": "coarse_tile",
+      "model_mmad": 20,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        129,
+        256,
+        256
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 3.6090906858444214,
+      "hash": [
+        "be7516bf5d360f863b26ce9bb3d815b6595cf8b839717f1f200de5bfaf2df207"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 3.9363702198207378,
+      "old_us": 3.9363702198207378,
+      "extrapolated_970dt_us": 3.6084872067905187,
+      "pct": 9.068199235335705,
+      "old_pct": 9.068199235335705,
+      "aic": 20,
+      "branch": "coarse_tile",
+      "model_mmad": 20,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        144,
+        64,
+        7168
+      ],
+      "chip": "Ascend950DT_9582",
+      "ca_us": 7.378182113170624,
+      "hash": [
+        "013b65092bc6e890890a2e20a3af51bb7f418825c048fea4fa4a31228fab8f88"
+      ],
+      "source": "results/v0.28/matmul/144-64-7168-dt-drain.json",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_4098_mix_aic",
+      "observed_mmad": 128,
+      "minute": 1.5357164351657653,
+      "new_us": 7.079971782551737,
+      "old_us": 7.079971782551737,
+      "extrapolated_970dt_us": 14.03288771756598,
+      "pct": -4.041785985284352,
+      "old_pct": -4.041785985284352,
+      "aic": 32,
+      "branch": "retiled_output_split_k",
+      "model_mmad": 128,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        144,
+        64,
+        7168
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 7.33151550590992,
+      "hash": [
+        "19050ff2303c3b2c254f23d978b209154ad5e5d75e4386ab325c3634da1c17bc"
+      ],
+      "source": "results/v0.28/matmul/144-64-7168-pr-drain.json",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_4098_mix_aic",
+      "observed_mmad": 112,
+      "minute": 1.5011033126696323,
+      "new_us": 7.113042599628471,
+      "old_us": 7.113042599628471,
+      "extrapolated_970dt_us": 14.03288771756598,
+      "pct": -2.9799146725576375,
+      "old_pct": -2.9799146725576375,
+      "aic": 28,
+      "branch": "retiled_output_split_k",
+      "model_mmad": 112,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        144,
+        128,
+        512
+      ],
+      "chip": "Ascend950DT_9582",
+      "ca_us": 4.478787899017334,
+      "hash": [
+        "2a1cedd43ee0f70ec5c6ef89fef7a6c7d2a634f2d20fb91b6622a349982528ff"
+      ],
+      "source": "results/v0.30/matmul-dispatch/device/144-dt-retired.json",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "observed_mmad": 36,
+      "minute": 1.2015664053343547,
+      "new_us": 4.412429789862523,
+      "old_us": 4.412429789862523,
+      "extrapolated_970dt_us": 4.044672454057386,
+      "pct": -1.4816086550865637,
+      "old_pct": -1.4816086550865637,
+      "aic": 18,
+      "branch": "dense",
+      "model_mmad": 36,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        144,
+        128,
+        512
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 4.529696941375732,
+      "hash": [
+        "b5c5460142ab5a5a4ef576a6b94977c24179ded471cac392b1159161087b6f9d"
+      ],
+      "source": "results/v0.30/matmul-dispatch/device/144-pr-retired.json",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "observed_mmad": 36,
+      "minute": 1.2672750191685433,
+      "new_us": 4.4125680497633155,
+      "old_us": 4.4125680497633155,
+      "extrapolated_970dt_us": 4.044672454057386,
+      "pct": -2.585799737340555,
+      "old_pct": -2.585799737340555,
+      "aic": 18,
+      "branch": "dense",
+      "model_mmad": 36,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        144,
+        2304,
+        1536
+      ],
+      "chip": "Ascend950DT_9582",
+      "ca_us": 10.96363639831543,
+      "hash": [
+        "2f3d0186549388bfeef0c4b39f4699817cfbf179269d951d41928b923bd69aed"
+      ],
+      "source": "results/v0.29/matmul/decode/144-2304-1536-dt.json",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "observed_mmad": 576,
+      "minute": 5.576255765499082,
+      "new_us": 11.876954489769464,
+      "old_us": 11.876954489769464,
+      "extrapolated_970dt_us": 5.866454100433705,
+      "pct": 8.33043032687919,
+      "old_pct": 8.33043032687919,
+      "aic": 24,
+      "branch": "coarse_tile",
+      "model_mmad": 576,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        192,
+        384,
+        256
+      ],
+      "chip": "Ascend950DT_9582",
+      "ca_us": 3.9254545454545453,
+      "hash": [
+        "40597425ade9625b1973fca3b18977afcd46a37e829582e38f7bd8c999004792"
+      ],
+      "kernel": "entry_kernel_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 4.00199876187183,
+      "old_us": 4.00199876187183,
+      "extrapolated_970dt_us": 3.6591831958287107,
+      "pct": 1.949945300116096,
+      "old_pct": 1.949945300116096,
+      "aic": 24,
+      "branch": "coarse_tile",
+      "model_mmad": 24,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        192,
+        384,
+        256
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 4.0400004386901855,
+      "hash": [
+        "c1ea832491917505c6bc82dcc050afe52946487827d26b82b5dade7757755c7b"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 4.005988372261441,
+      "old_us": 4.005988372261441,
+      "extrapolated_970dt_us": 3.6591831958287107,
+      "pct": -0.8418827409774288,
+      "old_pct": -0.8418827409774288,
+      "aic": 24,
+      "branch": "coarse_tile",
+      "model_mmad": 24,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        224,
+        512,
+        256
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 4.114545226097107,
+      "hash": [
+        "895c9785dceb06994f687ed117aa58a975eb18d9efa472c1386f062d10ce5fee"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 4.224817414960802,
+      "old_us": 4.224817414960802,
+      "extrapolated_970dt_us": 3.6919566552916137,
+      "pct": 2.680057765905164,
+      "old_pct": 2.680057765905164,
+      "aic": 24,
+      "branch": "coarse_tile",
+      "model_mmad": 48,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        225,
+        512,
+        256
+      ],
+      "chip": "Ascend950DT_9582",
+      "ca_us": 4.1127272844314575,
+      "hash": [
+        "7fae98c6029851a884d13b2d846c89b3ba31d1522a5f791bac5d2d437310e9f0"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 4.079497531671483,
+      "old_us": 4.079497531671483,
+      "extrapolated_970dt_us": 3.6970368480401934,
+      "pct": -0.8079736501314994,
+      "old_pct": -0.8079736501314994,
+      "aic": 32,
+      "branch": "coarse_tile",
+      "model_mmad": 32,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        225,
+        512,
+        256
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 4.1163634061813354,
+      "hash": [
+        "00f7ddf384985784e87d825153341abc7d471cb9e96aed520879d6cb4f920a7d"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 4.225039059982447,
+      "old_us": 4.225039059982447,
+      "extrapolated_970dt_us": 3.6970368480401934,
+      "pct": 2.64008891046692,
+      "old_pct": 2.64008891046692,
+      "aic": 24,
+      "branch": "coarse_tile",
+      "model_mmad": 48,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        255,
+        512,
+        256
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 4.1830302476882935,
+      "hash": [
+        "b7d155d437ba1a1b5a646139fc718d2c7e683d8590b625cf56a99dbf1a36c460"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 4.389569087083154,
+      "old_us": 4.389569087083154,
+      "extrapolated_970dt_us": 3.6933011764427115,
+      "pct": 4.937541140397017,
+      "old_pct": 4.937541140397017,
+      "aic": 24,
+      "branch": "coarse_tile",
+      "model_mmad": 48,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        256,
+        512,
+        256
+      ],
+      "chip": "Ascend950DT_9582",
+      "ca_us": 4.191515151515151,
+      "hash": [
+        "d71483ebc7cafbb5306c3de2f2703b41301e60bf651807754931a0d817a74a3f"
+      ],
+      "kernel": "entry_kernel_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 4.085509652883604,
+      "old_us": 4.085509652883604,
+      "extrapolated_970dt_us": 3.6933011764427115,
+      "pct": -2.5290496347896596,
+      "old_pct": -2.5290496347896596,
+      "aic": 32,
+      "branch": "coarse_tile",
+      "model_mmad": 32,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        256,
+        512,
+        256
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 4.2393940687179565,
+      "hash": [
+        "60a386ea4cb5cbe8be90d0bcaf11685e8760e1d2d13136756719cce1a6b0e291"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 4.389790732104799,
+      "old_us": 4.389790732104799,
+      "extrapolated_970dt_us": 3.6933011764427115,
+      "pct": 3.5475980989029265,
+      "old_pct": 3.5475980989029265,
+      "aic": 24,
+      "branch": "coarse_tile",
+      "model_mmad": 48,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        257,
+        512,
+        256
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 4.196969628334045,
+      "hash": [
+        "08dbcd80c16d7bc1bec60e0d6f1ddcf835b75ffe30e1f8fe423bf41e576ae6c4"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 4.390012377126444,
+      "old_us": 4.390012377126444,
+      "extrapolated_970dt_us": 3.7019156924531456,
+      "pct": 4.599574595182987,
+      "old_pct": 4.599574595182987,
+      "aic": 24,
+      "branch": "coarse_tile",
+      "model_mmad": 48,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        384,
+        512,
+        256
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 4.503636360168457,
+      "hash": [
+        "953a65edde9724ba7b14212e23cb6f68f1898a6e34612439a84b80d9bee21086"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 4.7339226477780745,
+      "old_us": 4.7339226477780745,
+      "extrapolated_970dt_us": 3.722956428967025,
+      "pct": 5.113341069148913,
+      "old_pct": 5.113341069148913,
+      "aic": 24,
+      "branch": "coarse_tile",
+      "model_mmad": 48,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        448,
+        512,
+        256
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 4.514545679092407,
+      "hash": [
+        "fc088f314d61b7fe316c8552f3ced9094b3dff22ecfe8915789e99c2d36215cb"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 4.760407278713446,
+      "old_us": 4.760407278713446,
+      "extrapolated_970dt_us": 3.735147471110823,
+      "pct": 5.445987638571559,
+      "old_pct": 5.445987638571559,
+      "aic": 28,
+      "branch": "coarse_tile",
+      "model_mmad": 56,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        449,
+        512,
+        256
+      ],
+      "chip": "Ascend950DT_9582",
+      "ca_us": 4.361212134361267,
+      "hash": [
+        "786885c1f998acca787c096e14059efde80259f05bd006d7e50d6b422837d192"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 4.758843278087587,
+      "old_us": 4.758843278087587,
+      "extrapolated_970dt_us": 3.740227663859402,
+      "pct": 9.11744559714145,
+      "old_pct": 9.11744559714145,
+      "aic": 32,
+      "branch": "coarse_tile",
+      "model_mmad": 64,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        449,
+        512,
+        256
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 4.594545364379883,
+      "hash": [
+        "d7368b159d597d07d8c8914a2fb8c0a0f49ddbe64f15e6344cea163a7a77a5a2"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 4.826001870481297,
+      "old_us": 4.826001870481297,
+      "extrapolated_970dt_us": 3.740227663859402,
+      "pct": 5.037636757182251,
+      "old_pct": 5.037636757182251,
+      "aic": 24,
+      "branch": "coarse_tile",
+      "model_mmad": 48,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        511,
+        512,
+        256
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 4.611515045166016,
+      "hash": [
+        "b1f6badf198f5e95ce8f1ef91e3863fd2ddce36fc1ffdfaa7836dc092af88da6"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 4.852043211373379,
+      "old_us": 4.852043211373379,
+      "extrapolated_970dt_us": 3.759325013369381,
+      "pct": 5.215816577666721,
+      "old_pct": 5.215816577666721,
+      "aic": 28,
+      "branch": "coarse_tile",
+      "model_mmad": 56,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        512,
+        384,
+        256
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 4.540605783462524,
+      "hash": [
+        "dbeebbb75c1b8953f1d7e0794518f53d151745a02d4578ec6f24775425a12e38"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 4.7339226477780745,
+      "old_us": 4.7339226477780745,
+      "extrapolated_970dt_us": 3.722956428967025,
+      "pct": 4.257512621325454,
+      "old_pct": 4.257512621325454,
+      "aic": 24,
+      "branch": "coarse_tile",
+      "model_mmad": 48,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        512,
+        512,
+        256
+      ],
+      "chip": "Ascend950DT_9582",
+      "ca_us": 4.79939393939394,
+      "hash": [
+        "539568a91fabe6a93c1f37144e3f74b02d358cdbbde5085914f8812588ec464f"
+      ],
+      "kernel": "entry_kernel_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 4.77106145990577,
+      "old_us": 4.77106145990577,
+      "extrapolated_970dt_us": 3.759325013369381,
+      "pct": -0.5903345265245608,
+      "old_pct": -0.5903345265245608,
+      "aic": 32,
+      "branch": "coarse_tile",
+      "model_mmad": 64,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        512,
+        512,
+        256
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 4.656363487243652,
+      "hash": [
+        "2d14da04d41d98c87c15f548559a337baa564ad437a445f82723a692efee9cc1"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 4.852264856395024,
+      "old_us": 4.852264856395024,
+      "extrapolated_970dt_us": 3.759325013369381,
+      "pct": 4.207175184842282,
+      "old_pct": 4.207175184842282,
+      "aic": 28,
+      "branch": "coarse_tile",
+      "model_mmad": 56,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        513,
+        384,
+        256
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 4.514545202255249,
+      "hash": [
+        "959c075c9d39f0e7db2d3dc70120a9a40ef6c406fbb347af8adfcbdc80e09362"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 4.743486535373872,
+      "old_us": 4.743486535373872,
+      "extrapolated_970dt_us": 3.727390444208301,
+      "pct": 5.07119372742697,
+      "old_pct": 5.07119372742697,
+      "aic": 27,
+      "branch": "coarse_tile",
+      "model_mmad": 54,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        768,
+        512,
+        128
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 4.06787896156311,
+      "hash": [
+        "3a77624a9348677f378822b78d9caaecc1767db0e3cabd50f453f959f1323dc6"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 4.311938807910617,
+      "old_us": 4.311938807910617,
+      "extrapolated_970dt_us": 3.7373315239108096,
+      "pct": 5.999683094152952,
+      "old_pct": 5.999683094152952,
+      "aic": 28,
+      "branch": "coarse_tile",
+      "model_mmad": 28,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        1024,
+        1792,
+        32
+      ],
+      "chip": "Ascend950DT_9582",
+      "ca_us": 4.259999990463257,
+      "hash": [
+        "98b1b6e8887f11c15d69acfc60b8a1581a83dfdd7cf5ee4d84833926bab0ea32"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 4.610058783875053,
+      "old_us": 4.610058783875053,
+      "extrapolated_970dt_us": 3.4770286772153614,
+      "pct": 8.217342586747955,
+      "old_pct": 8.217342586747955,
+      "aic": 28,
+      "branch": "coarse_tile",
+      "model_mmad": 28,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        1024,
+        1792,
+        32
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 4.347272634506226,
+      "hash": [
+        "83a59508f533a3c6ff20aa2ebf44a61e4789e9d458a813a33680b49af3274dde"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 4.709355753572023,
+      "old_us": 4.709355753572023,
+      "extrapolated_970dt_us": 3.4770286772153614,
+      "pct": 8.328971967200394,
+      "old_pct": 8.328971967200394,
+      "aic": 28,
+      "branch": "coarse_tile",
+      "model_mmad": 28,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        1024,
+        2048,
+        32
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 4.464242458343506,
+      "hash": [
+        "26eb782816cb16f82418e1ea7456764943a2ed687bbe4d84efa91f840a19ee86"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 4.822838004654274,
+      "old_us": 4.822838004654274,
+      "extrapolated_970dt_us": 3.5466483118318797,
+      "pct": 8.032618068056907,
+      "old_pct": 8.032618068056907,
+      "aic": 28,
+      "branch": "coarse_tile",
+      "model_mmad": 52,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        1024,
+        2304,
+        16
+      ],
+      "chip": "Ascend950DT_9582",
+      "ca_us": 4.257575869560242,
+      "hash": [
+        "248f935e6aabe25c98649556cd22f027bab1e0da85349773db72c80d18d32bd2"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 4.531176520149161,
+      "old_us": 4.531176520149161,
+      "extrapolated_970dt_us": 3.4499077773798397,
+      "pct": 6.426207282529983,
+      "old_pct": 6.426207282529983,
+      "aic": 32,
+      "branch": "coarse_tile",
+      "model_mmad": 64,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        1024,
+        2304,
+        16
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 4.418787717819214,
+      "hash": [
+        "6855795cf8f07bd9a9dd2a18883ae8866774c81ad92f4b5f88d9cb0e8b5123c9"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 4.648189871424371,
+      "old_us": 4.648189871424371,
+      "extrapolated_970dt_us": 3.4499077773798397,
+      "pct": 5.1915178608845425,
+      "old_pct": 5.1915178608845425,
+      "aic": 28,
+      "branch": "coarse_tile",
+      "model_mmad": 52,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        1280,
+        2048,
+        16
+      ],
+      "chip": "Ascend950DT_9582",
+      "ca_us": 4.472121357917786,
+      "hash": [
+        "4e2828712a8b135398e734dc0a1c2ed464d2fc717261e10eae9bfcd4047b7f48"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 4.630473489846131,
+      "old_us": 4.630473489846131,
+      "extrapolated_970dt_us": 3.481254925370024,
+      "pct": 3.540872871170775,
+      "old_pct": 3.540872871170775,
+      "aic": 32,
+      "branch": "coarse_tile",
+      "model_mmad": 64,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        1280,
+        2048,
+        16
+      ],
+      "chip": "Ascend950DT_9582",
+      "ca_us": 4.396969556808472,
+      "hash": [
+        "76030a38b582a1208b6aa0f6cca2bf4331628cd04166575f82675f5cb93e5cd2"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 4.630473489846131,
+      "old_us": 4.630473489846131,
+      "extrapolated_970dt_us": 3.481254925370024,
+      "pct": 5.3105651522215025,
+      "old_pct": 5.3105651522215025,
+      "aic": 32,
+      "branch": "coarse_tile",
+      "model_mmad": 64,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        1280,
+        2048,
+        16
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 4.632727384567261,
+      "hash": [
+        "29bb0aa3049d6a7bbe820bf4eb211537378ebe6ed4bf1cd19c94b9bcd4256357"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 4.761672122506622,
+      "old_us": 4.761672122506622,
+      "extrapolated_970dt_us": 3.481254925370024,
+      "pct": 2.783343962109819,
+      "old_pct": 2.783343962109819,
+      "aic": 28,
+      "branch": "coarse_tile",
+      "model_mmad": 52,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        1280,
+        2048,
+        512
+      ],
+      "chip": "Ascend950DT_9582",
+      "ca_us": 12.218787431716919,
+      "hash": [
+        "47c28890d2298730f34763ba429723d61acaf93f8848c9b969a5140afb4bcf6a"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 12.449142690111715,
+      "old_us": 12.449142690111715,
+      "extrapolated_970dt_us": 6.349537538318032,
+      "pct": 1.8852546513482338,
+      "old_pct": 1.8852546513482338,
+      "aic": 32,
+      "branch": "coarse_tile",
+      "model_mmad": 512,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        1280,
+        2048,
+        512
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 13.218181133270264,
+      "hash": [
+        "b4a056d90572665dc0f5690ae461cdc9adc8853b0a87366f7000cf76d0868885"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 14.026598759615077,
+      "old_us": 14.026598759615077,
+      "extrapolated_970dt_us": 6.349537538318032,
+      "pct": 6.115952098053934,
+      "old_pct": 6.115952098053934,
+      "aic": 28,
+      "branch": "coarse_tile",
+      "model_mmad": 416,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        1536,
+        1792,
+        16
+      ],
+      "chip": "Ascend950DT_9582",
+      "ca_us": 4.43818211555481,
+      "hash": [
+        "45140a8b3a82dce4878f7190f06e78c5836a26d868ddd9c8f1205c38cf66f221"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 4.680121974694616,
+      "old_us": 4.680121974694616,
+      "extrapolated_970dt_us": 3.4899930587033574,
+      "pct": 5.451327882464829,
+      "old_pct": 5.451327882464829,
+      "aic": 32,
+      "branch": "coarse_tile",
+      "model_mmad": 62,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        1536,
+        1792,
+        16
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 4.540000081062317,
+      "hash": [
+        "258c9a1f0064e7e1dd90979ee6fbf9792faa2af6ca5c83093d4ae9c9eeea6dda"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 4.818413248047747,
+      "old_us": 4.818413248047747,
+      "extrapolated_970dt_us": 3.4899930587033574,
+      "pct": 6.132448502518173,
+      "old_pct": 6.132448502518173,
+      "aic": 28,
+      "branch": "coarse_tile",
+      "model_mmad": 56,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        1536,
+        2048,
+        16
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 4.755151629447937,
+      "hash": [
+        "dc48d3cfa352145521a76fdb52beb0d6563a39dccd52cf99b86d9023fce642c6"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 4.96921855059705,
+      "old_us": 4.96921855059705,
+      "extrapolated_970dt_us": 3.540308734626026,
+      "pct": 4.50178959222729,
+      "old_pct": 4.50178959222729,
+      "aic": 28,
+      "branch": "coarse_tile",
+      "model_mmad": 56,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        2048,
+        32,
+        5120
+      ],
+      "chip": "Ascend950DT_9582",
+      "ca_us": 13.023029625415802,
+      "hash": [
+        "441c970de907145e3e0c511078227bbca0881e670f284a15ee83bac6741a6a7b"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_4098_mix_aic",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 13.621806074164303,
+      "old_us": 13.621806074164303,
+      "extrapolated_970dt_us": 7.286611466072963,
+      "pct": 4.597827586753889,
+      "old_pct": 4.597827586753889,
+      "aic": 32,
+      "branch": "retiled_output_split_k",
+      "model_mmad": 640,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        2048,
+        32,
+        5120
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 20.821819007396698,
+      "hash": [
+        "197753863d0de4a8a7086b85f804d4bc1fd55d04264db1df7a567699b34cac29"
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_4098_mix_aic",
+      "source": "results/v0.31/replay.json",
+      "observed_mmad": null,
+      "minute": null,
+      "new_us": 18.559206053496855,
+      "old_us": 18.559206053496855,
+      "extrapolated_970dt_us": 7.286611466072963,
+      "pct": -10.866547985534202,
+      "old_pct": -10.866547985534202,
+      "aic": 28,
+      "branch": "retiled_output_split_k",
+      "model_mmad": 648,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        4096,
+        32,
+        5120
+      ],
+      "chip": "Ascend950DT_9582",
+      "ca_us": 19.115757316350937,
+      "hash": [
+        "7079394da4488bf0c73aeb82696001ebdc78ba3b90375df059f5ecbdcc731853"
+      ],
+      "source": "results/v0.28/matmul/4096-32-5120-dt-drain.json",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_4098_mix_aic",
+      "observed_mmad": 1280,
+      "minute": 3.204672918166034,
+      "new_us": 21.94842524491063,
+      "old_us": 21.94842524491063,
+      "extrapolated_970dt_us": 9.509023181578597,
+      "pct": 14.81849702149509,
+      "old_pct": 14.81849702149509,
+      "aic": 32,
+      "branch": "retiled_output_split_k",
+      "model_mmad": 1280,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        4096,
+        32,
+        5120
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 29.5696964263916,
+      "hash": [
+        "8f48fcebe72173bf38a89c10965c79a03a9e9e703b3917dbbead0764491ba867"
+      ],
+      "source": "results/v0.28/matmul/4096-32-5120-pr-drain.json",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "observed_mmad": 2080,
+      "minute": 3.901714607665781,
+      "new_us": 34.02384293449264,
+      "old_us": 34.02384293449264,
+      "extrapolated_970dt_us": 9.509023181578597,
+      "pct": 15.063213513837814,
+      "old_pct": 15.063213513837814,
+      "aic": 26,
+      "branch": "coarse_tile",
+      "model_mmad": 2080,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        4096,
+        2304,
+        1536
+      ],
+      "chip": "Ascend950DT_9582",
+      "ca_us": 73.61454844474792,
+      "hash": [
+        "1aefd55156e9a04afcecbf5afac0045fb4e45b3899ddc19ac6f0f848089931bd"
+      ],
+      "source": "results/v0.28/matmul/4096-2304-1536-dt-drain.json",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "observed_mmad": 3840,
+      "minute": 17.587455968834306,
+      "new_us": 80.76014887769306,
+      "old_us": 80.76014887769306,
+      "extrapolated_970dt_us": 26.297192438432333,
+      "pct": 9.70677751057365,
+      "old_pct": 9.70677751057365,
+      "aic": 32,
+      "branch": "coarse_tile",
+      "model_mmad": 3840,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        4096,
+        2304,
+        1536
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 84.1975748538971,
+      "hash": [
+        "a27b253232f9e44db97c500a3d860f667810a9d191c2a2a00e2a5de8cd1649d5"
+      ],
+      "source": "results/v0.28/matmul/4096-2304-1536-pr-drain.json",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_2",
+      "observed_mmad": 3936,
+      "minute": 20.409270155833415,
+      "new_us": 91.82037308611554,
+      "old_us": 91.82037308611554,
+      "extrapolated_970dt_us": 26.297192438432333,
+      "pct": 9.053465311139686,
+      "old_pct": 9.053465311139686,
+      "aic": 28,
+      "branch": "coarse_tile",
+      "model_mmad": 3936,
+      "role": "archive replay on unchanged route"
+    },
+    {
+      "shape": [
+        32768,
+        128,
+        512
+      ],
+      "chip": "Ascend950DT_9582",
+      "ca_us": 15.561818957328796,
+      "hash": [
+        "81e827d49f13386159b40525752cbffcae51707ff214698d1e12e80d0b253bfe"
+      ],
+      "source": "results/v0.28/matmul/32768-128-512-dt-drain.json",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_131074",
+      "observed_mmad": 2048,
+      "minute": 3.937862123999124,
+      "new_us": 15.467022430774794,
+      "old_us": 19.15329092982998,
+      "extrapolated_970dt_us": 7.777499526780573,
+      "pct": -0.6091609651412755,
+      "old_pct": 23.078741516972777,
+      "aic": 32,
+      "branch": "b_resident_l1",
+      "model_mmad": 2048,
+      "role": "mechanism development"
+    },
+    {
+      "shape": [
+        32768,
+        128,
+        512
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 26.69030272960663,
+      "hash": [
+        "173500590bac9bfc981916e740c26367fffed324debbb7cd4950fb663ac59748"
+      ],
+      "source": "results/v0.28/matmul/32768-128-512-pr-drain.json",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_131074",
+      "observed_mmad": 2048,
+      "minute": 5.270114135664577,
+      "new_us": 25.789669958848172,
+      "old_us": 28.81951742128287,
+      "extrapolated_970dt_us": 7.777499526780573,
+      "pct": -3.374381998895104,
+      "old_pct": 7.977484231808196,
+      "aic": 28,
+      "branch": "b_resident_l1",
+      "model_mmad": 2048,
+      "role": "mechanism development"
+    },
+    {
+      "shape": [
+        262144,
+        128,
+        512
+      ],
+      "chip": "Ascend950DT_9582",
+      "ca_us": 85.99272429943085,
+      "hash": [
+        "409d3dbf0f63cd3e131236fd4dac41ac0ab1f92dcff4578e4d7b08344842f489"
+      ],
+      "source": "results/v0.28/matmul/262144-128-512-dt-drain.json",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_131074",
+      "observed_mmad": 16384,
+      "minute": 23.26759156016633,
+      "new_us": 85.24641637016873,
+      "old_us": 113.5050162684515,
+      "extrapolated_970dt_us": 25.616997821831117,
+      "pct": -0.8678733408461814,
+      "old_pct": 31.99374388142595,
+      "aic": 32,
+      "branch": "b_resident_l1",
+      "model_mmad": 16384,
+      "role": "mechanism development"
+    },
+    {
+      "shape": [
+        262144,
+        128,
+        512
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 174.95333921909332,
+      "hash": [
+        "46c3bd2755a7a8820fdd87d9985a50e3206f8e7a61c5cc8ca2470ce932cc1e2f"
+      ],
+      "source": "results/v0.28/matmul/262144-128-512-pr-drain.json",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_131074",
+      "observed_mmad": 16384,
+      "minute": 30.084883456335714,
+      "new_us": 176.12356050219108,
+      "old_us": 206.1555259029228,
+      "extrapolated_970dt_us": 25.616997821831117,
+      "pct": 0.6688762205517618,
+      "old_pct": 17.834576249359312,
+      "aic": 28,
+      "branch": "b_resident_l1",
+      "model_mmad": 16384,
+      "role": "mechanism development"
+    },
+    {
+      "shape": [
+        1048576,
+        128,
+        512
+      ],
+      "chip": "Ascend950DT_9582",
+      "ca_us": 405.6169761419296,
+      "hash": [
+        "e1e4e44bce5d8fb186bef22ad509cbbef07cafefde84ce215f7544010abc98e0"
+      ],
+      "source": "results/v0.28/matmul/long-prefill/131072-dt.json",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_131074",
+      "observed_mmad": 65536,
+      "minute": 98.19049011183282,
+      "new_us": 409.26997347369326,
+      "old_us": 437.2508462432924,
+      "extrapolated_970dt_us": 87.60848801049671,
+      "pct": 0.9006026736132933,
+      "old_pct": 7.798951218031314,
+      "aic": 32,
+      "branch": "b_resident_l1",
+      "model_mmad": 65536,
+      "role": "mechanism development"
+    },
+    {
+      "shape": [
+        1048576,
+        128,
+        512
+      ],
+      "chip": "Ascend950PR_957b",
+      "ca_us": 804.867262005806,
+      "hash": [
+        "bfd1670fdcfec53b76fc35e89744692a633bed0c813b8b03bed7e880b6725020"
+      ],
+      "source": "results/v0.28/matmul/long-prefill/131072-pr.json",
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_131074",
+      "observed_mmad": 65792,
+      "minute": 132.75840370383423,
+      "new_us": 847.9260970988965,
+      "old_us": 1154.9997773314942,
+      "extrapolated_970dt_us": 87.60848801049671,
+      "pct": 5.349805753781545,
+      "old_pct": 43.5018955117052,
+      "aic": 28,
+      "branch": "b_resident_l1",
+      "model_mmad": 65792,
+      "role": "mechanism development"
+    }
+  ]
+}

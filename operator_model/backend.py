@@ -77,7 +77,7 @@ def _price_resource(op, shape, target, call, dtype):
     from .model_v6 import Case
     from .quant_resource import resource_quant
     from .matmul_resource import resource_matmul
-    from .matmul_dispatch31 import resource_matmul_dispatch
+    from .matmul_supply32 import resource_matmul_dispatch
     from .fa_resource import resource_fa
 
     work = None
@@ -85,7 +85,7 @@ def _price_resource(op, shape, target, call, dtype):
         if op == 'mhc_pre_sinkhorn':
             from .mhc_pre_sink_resource import fused as price
         elif call.get('resident_aiv') is not None:
-            from .sink_history import price
+            from .sink_pipeline import price
         else:
             from .sink_unknown import price
         us, aic, aiv, diag = price(shape, target, call)
@@ -98,7 +98,7 @@ def _price_resource(op, shape, target, call, dtype):
         from .rmsnorm_pipeline import price_registered_rms
         us, aic, aiv, diag = price_registered_rms(shape, target, call)
     elif op == 'mhc_post':
-        from .post_resource import resource_post
+        from .post_history import price_post as resource_post
         us, aic, aiv, diag = resource_post(shape, target, call)
     elif op == 'addmm':
         if len(shape) != 3 or any(type(n) is not int or n <= 0 for n in shape):

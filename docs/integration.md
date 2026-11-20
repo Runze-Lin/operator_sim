@@ -138,23 +138,15 @@ elapsed_us = rms["us"]
 
 常规 `estimate("matmul", ...)` 已按输入与目标芯片比较单输出矩形的普通和分 K 排程。选中分 K 时，`work["implementation_work"]` 给出附加归约与中间传输，逻辑输入和输出字节仍对应应用张量。需要查看候选定价时可调用 `from operator_model import estimate_matmul_splitk`，返回普通与分 K 的耗时、活跃核数、归约工作量和选择理由。[前瞻几何与使用示例](../results/v0.28/matmul/streamk-analysis.md)
 
-对多波、窄 N 的连续 BF16 投影，系统还可选择“权重 B 常驻 L1”实现情景。用每次调用的实际 shape 和目标芯片判断适用域。选择后，同时使用该排程给出的时延、MMAD、波数与字节数。这样长 M 的读写重叠可带来较快的估计，是否成立可由独立窗口检验。[同一批 CA 的误差与方向](../results/v0.31/direction.md)
+多波、窄 N、B 可完整驻留 L1 的连续 BF16 投影由公共接口自动定价。调用者传入实际 rank 上的矩阵。输出可用于同时推进系统事件并累计运算、字节与核占用。下例还读取实际分块、尾波和波段定价，便于解释带宽或核数变化。
 
 ```python
-from operator_model import estimate, estimate_matmul_supply
+from operator_model import estimate
 
-shape = [262144, 128, 512]
-chip = "Ascend950DT_9582"
-supply = estimate_matmul_supply(shape, chip=chip)
-if supply["latency_us"] is not None:
-    latency_us = supply["latency_us"]
-    cube_ops = supply["cube_ops"]
-    traffic = supply["work"]
-else:
-    ordinary = estimate("matmul", shape, dtype="bf16", chip=chip)
-    latency_us = ordinary.latency_us
-    cube_ops = ordinary.work["cube_ops"]
-    traffic = ordinary.work
+r = estimate("matmul", [262144, 128, 512], dtype="bf16", chip="Ascend950DT_9582")
+print(r.latency_us, r.active_aic, r.work["cube_ops"], r.work["logical_read_bytes"])
+print(r.projection["target_plan"]["waves"], r.projection["target_plan"]["mmads_total"])
+print(r.projection["timing_diagnostics"]["service_segments"])
 ```
 
 对 Stream-K 与全输出分块识别尚不确定的 Matmul，应保留 `[M,N,K]`、dtype、转置及权重格式，分别统计真实库分支。四个 batch 取 1、9、11、16 时，普通 decode 的 M 为 1、9、11、16；同一 rank 全部请求同时校验 9 个 token 的 M 为 9、81、99、144。混合批次以调度器实际提交（含 padding）的行数为准。[三模型投影的输入和两端 CA](../results/v0.28/matmul/report.md)
@@ -336,19 +328,18 @@ print(r["tile"], r["waves"], r["cycles"]["per_aic_step"], r["latency_us"])
 以 Flash 的 BF16 独立 `indexer.wk` 为例。传入该卡本次调度实际发出的行数；相同的 M=9 可以来自一条请求校验九个 token，也可以来自九条普通 decode 请求。返回的设备时间、分核和逻辑工作都由这次调用确定。
 
 ```python
-from operator_model import estimate, estimate_matmul_supply
+from operator_model import estimate
 
 shape = [9, 128, 512]
 r = estimate("matmul", shape, chip="Ascend950DT_9582", dtype="bf16")
 print(r.latency_us, r.active_aic, r.work["cube_ops"])
 
 # B8 × 128Ki，调用方假设整个 batch 在同一次未切 chunk 的派发中。
-scenario = estimate_matmul_supply([8 * 131072, 128, 512], chip="Ascend970DT")
-if scenario["latency_us"] is not None:
-    print(scenario["latency_us"], scenario["waves"], scenario["segments"])
+scenario = estimate("matmul", [8 * 131072, 128, 512], dtype="bf16", chip="Ascend970DT")
+print(scenario.latency_us, scenario.active_aic, scenario.projection["target_plan"]["waves"])
 ```
 
-第一例在 DT 的预测为 4.234 µs、2 AIC，设备完整窗为 4.325 µs。第二例使用未来芯片情景，102.310 µs 是沿用 950 权重常驻实现时的条件外推。`input_mode="cold"` 可以关掉初始缓存供给，`mixed_efficiency` 可以传入已知的目标芯片读写混合效率。当前接口对超出已实现常驻分块条件的几何返回无时延并解释原因。[独立小形与双端速度比](../results/v0.30/matmul-dispatch/device/report.md) · [大形参数与资源分段](../results/v0.30/matmul/report.md)
+第一例在 DT 的预测为 4.234 µs、2 AIC，完整 CA 为 4.325 µs。第二例沿用 950 库策略，970DT 外推为 87.608 µs。初始缓存证据保存在目标芯片配置的 `details.matmul_initial_read_gbs`；省略时不抵扣初始 A 的片外读取。旧 `estimate_matmul_supply` 仍可用于复现旧假设。当前算例与报告采用公共 `estimate`。[同权重的 decode 及大形实测](../results/v0.32/matmul/report.md) · [大形参数与资源分段](../results/v0.32/matmul/method.md)
 
 ### 多个输出核沿 K 分工与多条 KDA 状态链
 

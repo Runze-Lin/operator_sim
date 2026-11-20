@@ -42,7 +42,7 @@ def price_ordered_token(forecast, shape, chip, previous_route):
 
 
 def price_ordered_fragments(forecast, shape, chip, resident_aiv, previous_shape):
-    """Optionally attach the estimated two-slot schedule after a successful different token Post."""
+    """Attach the estimated two-slot schedule after a successful different token Post."""
     diag=forecast.projection['timing_diagnostics']
     if diag['context']!='reuse' or diag['target_plan']['route']!='post_token' or not chip.vector_tops['32']:
         return None
@@ -58,5 +58,5 @@ def price_ordered_fragments(forecast, shape, chip, resident_aiv, previous_shape)
                      qualification=p['qualification'],fragment_costs_cycles=p['fragment_costs_cycles'])
     projection={**forecast.projection,'latency_us':us,'stages_us':p['stages_us'],'timing_diagnostics':diagnostics}
     return replace(forecast,latency_us=us,projection=projection,status='extrapolated',
-                   reason='Opt-in two-slot Post estimate for an observed token-to-token shape change',
+                   reason='Two-slot Post estimate for an observed token-to-token shape change',
                    rates=_rates(forecast.work,us,chip))

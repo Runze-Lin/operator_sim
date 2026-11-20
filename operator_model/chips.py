@@ -24,7 +24,8 @@ _DETAILS = {'ub_bytes', 'l1_bytes', 'l2_bytes', 'l0a_bytes', 'l0b_bytes', 'l0c_b
             'quant_fragment_vector_cycles', 'quant_fragment_grain_ii_cycles', 'quant_fragment_fabric_ii_cycles',
             'quant_write_latency_cycles', 'quant_end_cycles', 'fa_aiv_per_aic',
             'quant_prefetch_launch_cycles', 'quant_loop_work_ops', 'quant_output_retained_fraction',
-            'matmul_hbm_efficiency', 'matmul_l2_efficiency', 'matmul_output_retained_fraction'}
+            'matmul_hbm_efficiency', 'matmul_l2_efficiency', 'matmul_output_retained_fraction',
+            'matmul_initial_read_gbs'}
 
 
 def _number(x, label, *, integer=False):

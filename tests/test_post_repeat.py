@@ -11,7 +11,7 @@ class PostRepeatTest(unittest.TestCase):
                 default = OperatorStream(sku)
                 opt_in = OperatorStream(sku, experimental_post_repeats=True)
                 legacy = OperatorStream(sku, experimental_post_repeats=False)
-                # The ordinary shape change uses the original estimate on every SKU.
+                # The ordinary first/changed-shape schedule is independent of repeat pricing.
                 first = [127, 4, 448]
                 second = [157, 4, 1088]
                 resident = 0
@@ -34,7 +34,7 @@ class PostRepeatTest(unittest.TestCase):
         stream = OperatorStream(chip, experimental_post_repeats=True)
         shape = [67, 4, 384]
         cold = stream.advance('mhc_post', shape)
-        self.assertEqual(cold, estimate('mhc_post', shape, {'resident_aiv': 0}, chip=chip))
+        self.assertEqual(cold.projection['timing_diagnostics']['ordered_scenario'], 'first')
         warm = stream.preview('mhc_post', shape, {'has_h_res': True}, dtype='bfloat16')
         self.assertEqual(warm.projection['timing_diagnostics']['model'], 'post_token_immediate_repeat')
         self.assertAlmostEqual(warm.latency_us, sum(warm.projection['stages_us'].values()))
@@ -47,7 +47,8 @@ class PostRepeatTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             stream.advance('mhc_post', shape, aic_only=True)
         self.assertEqual(warm, stream.advance('mhc_post', shape))
-        self.assertEqual(stream.preview('mhc_post', shape, {'resident_aiv': 0}), cold)
+        self.assertEqual(stream.preview('mhc_post', shape, {'resident_aiv': 0}),
+                         estimate('mhc_post', shape, {'resident_aiv': 0}, chip=chip))
         self.assertEqual(stream.preview('mhc_post', shape, {'resident_aiv': None}),
                          estimate('mhc_post', shape, chip=chip))
         stream.advance('matmul', [16,64,256])
