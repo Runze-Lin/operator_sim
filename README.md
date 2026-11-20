@@ -10,6 +10,8 @@
 
 各算子在 DT、PR 上分别核验 WAPE 和最大误差；偏快、偏慢用同窗带符号偏差与偏快占比描述。Matmul 按目标 L1、输出几何和工作集自动选择分 K、普通多页或权重常驻的多波排程。[逐算子两端误差与方向](results/v0.32/acceptance.md)
 
+当前 KDA 验收包含 recurrent 单状态链与 chunk FLA V2。整套模型有 21 条验收路线，双端大 shape 覆盖按同一几何、同一实现的完整设备时间单列。[当前误差表](docs/error-analysis.md) · [逐算子大形覆盖](results/v0.33/large/report.md)
+
 单卡 B8 整批 prefill 的工作负载表按 32Ki、128Ki、256Ki 给出每个算子的输入、dtype、并行切分、两卡 CA 实测和 970DT 外推。矩阵投影、indexer 系数与全 hidden 激活各有自己的宽度。[DeepSeek V4.1 Flash](docs/workloads/deepseek-flash.md) · [DeepSeek V4 Pro](docs/workloads/deepseek-pro.md) · [Kimi K3](docs/workloads/kimi-k3.md)
 
 普通 decode 的每卡 B 为 1、9、11、16 时，M 分别为 1、9、11、16。同一批请求做 MTP8 主模型校验时，M 分别为 9、81、99、144。Flash、Pro 和 Kimi 的 N、K 取各自的投影宽度。同一几何复用设备证据，单卡 batch 和每请求 token 数分别保留。[三模型 decode 的 batch、投影与实测](results/v0.32/matmul/decode.md) · [大 prefill 的分块与实测](results/v0.32/matmul/report.md) · [32Ki 到 256Ki 的斜率](results/v0.32/matmul/scaling.md) · [安装库的 host 分支核验](results/v0.30/matmul-dispatch/report.md)

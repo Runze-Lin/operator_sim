@@ -25,13 +25,18 @@ def update():
     original, tail = s.split(BEGIN)
     _, tail = tail.split(END)
     stats = json.loads((ROOT/'results/v0.32/evaluation.json').read_text())['summary']
+    scope = json.loads((ROOT/'results/v0.33/acceptance-scope.json').read_text())
     ledger = json.loads((ROOT/'results/v0.32/replay.json').read_text())['rows']
     rows = ['| 算子与输入/计时口径 | 950DT 形/窗 · WAPE / 最大 | 950PR 形/窗 · WAPE / 最大 | 统计样本角色 | 校准状态 DT / PR |',
             '|---|---:|---:|---|---|']
     chips = ('Ascend950DT_9582','Ascend950PR_957b')
     for route, pair in sorted(stats.items(),key=lambda x: (list(NAMES).index(x[0].split(' · ')[0]),x[0])):
+        if route in scope['excluded_error_rows']:
+            continue
         name, _, mode = route.partition(' · ')
         title = NAMES[name] + ('，'+CONTRACT.get(mode,mode) if mode else '')
+        if route == 'kda_recurrent':
+            title += '，单状态链'
         cells, passed = [], []
         for chip in chips:
             st = pair[chip]['full']

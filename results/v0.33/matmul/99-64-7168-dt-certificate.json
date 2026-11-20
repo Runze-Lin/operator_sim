@@ -1,0 +1,806 @@
+{
+  "shape": [
+    99,
+    64,
+    7168
+  ],
+  "sku": "Ascend950DT_9582",
+  "reference": "results/v0.31/matmul/device/99-64-7168-dt.json",
+  "reference_sha256": "183ed32720d14b969c9381328cb54c0d605407c276364731e832fc0641145ab8",
+  "trace_sha256": "398c26f393941583b4b8400dddcbafaffeb78afd80e5b6f6dd1ffba3eacd762f",
+  "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_4098_mix_aic",
+  "elf": "e6899fbaa2659b7778bee81deb00b64b009dafcb7ad350f06576767fdeba2bf7",
+  "actual_golden_elements": 6336,
+  "timing_scope": "all X records, every active core physical END, earliest X start to latest X retire, firmware table matched to rounding",
+  "source_log_sha256": "e6a8b369f63a921baf6f7fdb54f3701525aeec90722a6a9727654bec4c7e376e",
+  "compact_us": 7.05636328458786,
+  "full_us": 7.05636328458786,
+  "all_mmad": 64,
+  "cores": {
+    "core0.cubecore0": {
+      "count": 1013,
+      "first_us": 3.574545383453369,
+      "retire_us": 7.455151319503784,
+      "end_marker_us": 5.72484827041626,
+      "mmad": 2,
+      "sha256": "1dd57d3ea440e7424b3d3237fa914ebc0c36f76fce09918a49856791c3a23d07"
+    },
+    "core0.veccore0": {
+      "count": 2514,
+      "first_us": 3.619393825531006,
+      "retire_us": 10.35515184700489,
+      "end_marker_us": 8.910303115844727,
+      "mmad": 0,
+      "sha256": "909074a4b724208fb5d7283cd73821a27419ee9ad12053568d7e49d337c8c9a8"
+    },
+    "core0.veccore1": {
+      "count": 2514,
+      "first_us": 3.7757575511932373,
+      "retire_us": 10.570909217000008,
+      "end_marker_us": 8.912727355957031,
+      "mmad": 0,
+      "sha256": "ad48b5afffb52bfdc26d4616cc1f01e854342aa8c75129423a7c01b965a35f1a"
+    },
+    "core1.cubecore0": {
+      "count": 1010,
+      "first_us": 3.6630303859710693,
+      "retire_us": 7.339999794960022,
+      "end_marker_us": 5.679999828338623,
+      "mmad": 2,
+      "sha256": "0dfcc60f01827cfa2aca4afe13ecf0f4e10965c004239e21a7e93822ad03b997"
+    },
+    "core1.veccore0": {
+      "count": 2514,
+      "first_us": 3.778181791305542,
+      "retire_us": 10.530908666551113,
+      "end_marker_us": 9.023636817932129,
+      "mmad": 0,
+      "sha256": "6508ddd3b64450cafc32a8fa75c69be66932fa2e0f181791399ba7d14138d5b8"
+    },
+    "core1.veccore1": {
+      "count": 2514,
+      "first_us": 3.7860605716705322,
+      "retire_us": 10.098788350820541,
+      "end_marker_us": 9.028485298156738,
+      "mmad": 0,
+      "sha256": "8237717ecbb2e62a7dabd75841febc0322ced75458b2d35f95ae56a54df274d0"
+    },
+    "core10.cubecore0": {
+      "count": 1010,
+      "first_us": 3.721818208694458,
+      "retire_us": 7.645454287528992,
+      "end_marker_us": 5.762424468994141,
+      "mmad": 2,
+      "sha256": "29211aa0bce45c5336a3f474211624d81b9c7c2b35b247831909d16a069c4d68"
+    },
+    "core10.veccore0": {
+      "count": 2514,
+      "first_us": 3.964242458343506,
+      "retire_us": 10.449696719646454,
+      "end_marker_us": 8.90848445892334,
+      "mmad": 0,
+      "sha256": "2049d29f9bee129f47b7b8e264e9dbb8729c384d8cd570d2ca9b500b8cd428ab"
+    },
+    "core10.veccore1": {
+      "count": 2514,
+      "first_us": 3.9709091186523438,
+      "retire_us": 10.62606018781662,
+      "end_marker_us": 8.909090995788574,
+      "mmad": 0,
+      "sha256": "0c68fe8a9f26647db81f78bd4c42d02de77c7b6bac8b5b5f73ccce67819bfab2"
+    },
+    "core11.cubecore0": {
+      "count": 1010,
+      "first_us": 3.7551515102386475,
+      "retire_us": 7.535151362419128,
+      "end_marker_us": 5.726666450500488,
+      "mmad": 2,
+      "sha256": "5b0d460b687f8f83d252374708c74cf5a77037ef458ad094cfa409d6eb104f93"
+    },
+    "core11.veccore0": {
+      "count": 2514,
+      "first_us": 4.099393844604492,
+      "retire_us": 10.504848569631577,
+      "end_marker_us": 9.028485298156738,
+      "mmad": 0,
+      "sha256": "53159a55725610d00382f94446f8117ddddd4cb2fbf50f6d0ad577656da973ba"
+    },
+    "core11.veccore1": {
+      "count": 2514,
+      "first_us": 4.18363618850708,
+      "retire_us": 10.284848779439926,
+      "end_marker_us": 9.027878761291504,
+      "mmad": 0,
+      "sha256": "99eeba7c2d96d1d4d510a41af07a0949ae2f5f40a8dad2021c146172a8144d67"
+    },
+    "core12.cubecore0": {
+      "count": 1010,
+      "first_us": 3.742424249649048,
+      "retire_us": 7.738181948661804,
+      "end_marker_us": 5.824848651885986,
+      "mmad": 2,
+      "sha256": "fd5b7edf851b99e72c328c160c90b287590504a6f658ca1385380ab140517b03"
+    },
+    "core12.veccore0": {
+      "count": 2514,
+      "first_us": 4.043636322021484,
+      "retire_us": 10.578787982463837,
+      "end_marker_us": 8.91333293914795,
+      "mmad": 0,
+      "sha256": "6ea89691b198a7fa7d6db38709a6c2c49c08791ca21f0dc6b87fd6035a286db6"
+    },
+    "core12.veccore1": {
+      "count": 2514,
+      "first_us": 4.092121124267578,
+      "retire_us": 10.563636004924774,
+      "end_marker_us": 8.915151596069336,
+      "mmad": 0,
+      "sha256": "35707730ce99ac31ca07b6ebe73e41fab08fce06e5d765ba9705b97c065f42ff"
+    },
+    "core13.cubecore0": {
+      "count": 1010,
+      "first_us": 3.7309091091156006,
+      "retire_us": 7.57272744178772,
+      "end_marker_us": 5.838788032531738,
+      "mmad": 2,
+      "sha256": "444738db3898d31615bb4191290d5f5b6bd2167ac3586d0ac68e12699823fa86"
+    },
+    "core13.veccore0": {
+      "count": 2514,
+      "first_us": 4.009696960449219,
+      "retire_us": 10.378787614405155,
+      "end_marker_us": 9.012121200561523,
+      "mmad": 0,
+      "sha256": "e0196ddbfb4e8b94c5536cde75d6e3a6f108a696c469d03c7e3a844f5a635d34"
+    },
+    "core13.veccore1": {
+      "count": 2514,
+      "first_us": 4.014545440673828,
+      "retire_us": 10.30484876036644,
+      "end_marker_us": 9.021818161010742,
+      "mmad": 0,
+      "sha256": "f1bb111eddcc01171a13c0afede7eca0a151b29dfa9947cac100a3d9e4013bd0"
+    },
+    "core14.cubecore0": {
+      "count": 1010,
+      "first_us": 3.795151472091675,
+      "retire_us": 7.56787896156311,
+      "end_marker_us": 5.8115153312683105,
+      "mmad": 2,
+      "sha256": "12ed0b58491de46ac3e89bab6a641df2fdb245e7e189ed854816826d7b39ad14"
+    },
+    "core14.veccore0": {
+      "count": 2514,
+      "first_us": 4.250909328460693,
+      "retire_us": 10.303636252880096,
+      "end_marker_us": 8.897575378417969,
+      "mmad": 0,
+      "sha256": "e27305c0e31c8857d8d2eab2d3b950b4c9dc022e15b079b39777e4978413817a"
+    },
+    "core14.veccore1": {
+      "count": 2514,
+      "first_us": 4.25939416885376,
+      "retire_us": 10.504848197102547,
+      "end_marker_us": 8.898181915283203,
+      "mmad": 0,
+      "sha256": "462984cab14e9899f77f0a994e3bdab0f15257bd9c148dd2c7e44d13fc4c70c1"
+    },
+    "core15.cubecore0": {
+      "count": 1010,
+      "first_us": 3.775151491165161,
+      "retire_us": 7.795151472091675,
+      "end_marker_us": 6.050302982330322,
+      "mmad": 2,
+      "sha256": "6ed26db16ba989d634f864c4a6a484e2476255775a9241b16e0207fdbc34c64c"
+    },
+    "core15.veccore0": {
+      "count": 2514,
+      "first_us": 4.124848365783691,
+      "retire_us": 10.383636064827442,
+      "end_marker_us": 9.032121658325195,
+      "mmad": 0,
+      "sha256": "3543ceb0b64413cc87914bb4d91903a199ead758c27f291e644377db0c6b0102"
+    },
+    "core15.veccore1": {
+      "count": 2514,
+      "first_us": 4.136363506317139,
+      "retire_us": 10.164848402142525,
+      "end_marker_us": 9.029090881347656,
+      "mmad": 0,
+      "sha256": "e2a2a3e4db22be51820a8e3ec43ddb40be40dce1f538d8f54a95e80774cc611e"
+    },
+    "core16.cubecore0": {
+      "count": 1010,
+      "first_us": 3.798787832260132,
+      "retire_us": 8.079393744468689,
+      "end_marker_us": 6.707878589630127,
+      "mmad": 2,
+      "sha256": "63a54f55b3f0cde8cf68d7d0528f386ae042e38eab46eaef0eadf131716802bc"
+    },
+    "core16.veccore0": {
+      "count": 2514,
+      "first_us": 4.166060447692871,
+      "retire_us": 10.242424562573433,
+      "end_marker_us": 9.029090881347656,
+      "mmad": 0,
+      "sha256": "0401a413bf9eea7d7d7fd7bfdca571d95e5f7c99a83f86e43b9e3affcb906e24"
+    },
+    "core16.veccore1": {
+      "count": 2514,
+      "first_us": 4.223636150360107,
+      "retire_us": 10.433939054608345,
+      "end_marker_us": 9.032121658325195,
+      "mmad": 0,
+      "sha256": "61c8506f5937ad8257f827ec01b45b1022e6da132d3c0822d4093efaaf75e87d"
+    },
+    "core17.cubecore0": {
+      "count": 1010,
+      "first_us": 3.8672726154327393,
+      "retire_us": 8.484242558479309,
+      "end_marker_us": 6.838788032531738,
+      "mmad": 2,
+      "sha256": "3c56e13e9b4b250516ddefa9dc0ff20b6e66cc2c8e11d12aa461b0c79ac80e79"
+    },
+    "core17.veccore0": {
+      "count": 2514,
+      "first_us": 3.8496968746185303,
+      "retire_us": 10.344848826527596,
+      "end_marker_us": 8.926060676574707,
+      "mmad": 0,
+      "sha256": "4a18319ed327d0db827527634dc1239e0586281885701bf1afe4acfd2c90f132"
+    },
+    "core17.veccore1": {
+      "count": 2514,
+      "first_us": 3.842424154281616,
+      "retire_us": 10.345454409718513,
+      "end_marker_us": 8.926666259765625,
+      "mmad": 0,
+      "sha256": "2ffdb01bd7cee128e6baeb3647a2ad91a3175cbe5b6132d4993a2957cec00fed"
+    },
+    "core18.cubecore0": {
+      "count": 1010,
+      "first_us": 3.7096970081329346,
+      "retire_us": 8.25151515007019,
+      "end_marker_us": 6.551515102386475,
+      "mmad": 2,
+      "sha256": "53b3100f933beeedfc33f24c4c2e298d9752e0cf99d27f64e68ed9c1e658ecd9"
+    },
+    "core18.veccore0": {
+      "count": 2514,
+      "first_us": 3.9696969985961914,
+      "retire_us": 10.164848417043686,
+      "end_marker_us": 9.016969680786133,
+      "mmad": 0,
+      "sha256": "dfe2e97dada254daa2dd384a8bd8ce2550d66d941cd3a82084b2309ce0555121"
+    },
+    "core18.veccore1": {
+      "count": 2514,
+      "first_us": 3.975757598876953,
+      "retire_us": 10.416363805532455,
+      "end_marker_us": 9.012121200561523,
+      "mmad": 0,
+      "sha256": "948589e00202e8d454ce68e19e77ee45043dabe2e9ce998a46aa90ca536aa492"
+    },
+    "core19.cubecore0": {
+      "count": 1010,
+      "first_us": 3.7381818294525146,
+      "retire_us": 8.507272601127625,
+      "end_marker_us": 6.646060466766357,
+      "mmad": 2,
+      "sha256": "4154a9c7f7358f493af62a3003e2ff2018407212554f0184822b8a3ea0e6b42d"
+    },
+    "core19.veccore0": {
+      "count": 2514,
+      "first_us": 4.026060581207275,
+      "retire_us": 10.368484675884247,
+      "end_marker_us": 8.881817817687988,
+      "mmad": 0,
+      "sha256": "2b9827ee7424682b2d4dcb564c42fa87bcb55363e682caf06cbe5187fb6fcc04"
+    },
+    "core19.veccore1": {
+      "count": 2514,
+      "first_us": 4.063636302947998,
+      "retire_us": 10.455151736736298,
+      "end_marker_us": 8.882424354553223,
+      "mmad": 0,
+      "sha256": "8d2d40343fbd8c89428a3edd98f6b8feb315914b32cb7b95eb71872ed876d5b2"
+    },
+    "core2.cubecore0": {
+      "count": 1010,
+      "first_us": 3.792121171951294,
+      "retire_us": 7.601211905479431,
+      "end_marker_us": 5.736363410949707,
+      "mmad": 2,
+      "sha256": "ff3207553d9f78ff17acd823c3b77761787875a8659a0b9dfb8b21184a8fb970"
+    },
+    "core2.veccore0": {
+      "count": 2514,
+      "first_us": 4.1993937492370605,
+      "retire_us": 10.330908954143524,
+      "end_marker_us": 8.92909049987793,
+      "mmad": 0,
+      "sha256": "5c548365645a01b0309be0d0c7bc477cc7e8bc069fe351a8ada934736bde010c"
+    },
+    "core2.veccore1": {
+      "count": 2514,
+      "first_us": 4.207272529602051,
+      "retire_us": 10.63090866804123,
+      "end_marker_us": 8.930909156799316,
+      "mmad": 0,
+      "sha256": "ae229a88faed1682bdfa8fa18d089e2775eb25e2c4772eb3fe7410eccd7068dc"
+    },
+    "core20.cubecore0": {
+      "count": 1010,
+      "first_us": 3.7981817722320557,
+      "retire_us": 8.404848337173462,
+      "end_marker_us": 6.690302848815918,
+      "mmad": 2,
+      "sha256": "33c93d0f51a2e8b5883de0f48ca7eb262cc5e1fbc6442c077da44c906e04fe95"
+    },
+    "core20.veccore0": {
+      "count": 2514,
+      "first_us": 4.133333206176758,
+      "retire_us": 10.256363943219185,
+      "end_marker_us": 8.992120742797852,
+      "mmad": 0,
+      "sha256": "8eec9c044779d6f00c7c16f405621ab3371ad38d457018543f03baae82839264"
+    },
+    "core20.veccore1": {
+      "count": 2514,
+      "first_us": 4.221211910247803,
+      "retire_us": 10.272727094590664,
+      "end_marker_us": 8.992727279663086,
+      "mmad": 0,
+      "sha256": "c49b0ae9e5041bf923772be19eeb4b416ea4ae49478972775a6beb1822fb7cdd"
+    },
+    "core21.cubecore0": {
+      "count": 1010,
+      "first_us": 3.859999895095825,
+      "retire_us": 8.376363515853882,
+      "end_marker_us": 6.686060428619385,
+      "mmad": 2,
+      "sha256": "11dbe637c3d2465bda8e60fe186fcb5e3e52f98a0e62ed9c9900021c00ca7770"
+    },
+    "core21.veccore0": {
+      "count": 2514,
+      "first_us": 3.7896969318389893,
+      "retire_us": 10.34727257490158,
+      "end_marker_us": 8.897575378417969,
+      "mmad": 0,
+      "sha256": "a7f12ce7dab923846b8bbc9e00a9d2dffcdfcc61971dd5b8ae199098533dadd3"
+    },
+    "core21.veccore1": {
+      "count": 2514,
+      "first_us": 3.852121114730835,
+      "retire_us": 10.426060855388641,
+      "end_marker_us": 8.898181915283203,
+      "mmad": 0,
+      "sha256": "92a8cf66c649fb57aa3d38537acd4f064a615b2cdde08c37e37b422d29f397ba"
+    },
+    "core22.cubecore0": {
+      "count": 1010,
+      "first_us": 3.7830302715301514,
+      "retire_us": 8.317575693130493,
+      "end_marker_us": 6.631515026092529,
+      "mmad": 2,
+      "sha256": "25a1afa86b42c87aacf4f78f5afe453ca3fd48b97a0297df66fa7dc7f9253a9c"
+    },
+    "core22.veccore0": {
+      "count": 2514,
+      "first_us": 4.06484842300415,
+      "retire_us": 10.144848428666592,
+      "end_marker_us": 8.986666679382324,
+      "mmad": 0,
+      "sha256": "eb73218dd1cdcd3238b745cc3a8ca37f460479eef13261715004a636d16fa0fe"
+    },
+    "core22.veccore1": {
+      "count": 2514,
+      "first_us": 4.09818172454834,
+      "retire_us": 10.168484762310982,
+      "end_marker_us": 8.992120742797852,
+      "mmad": 0,
+      "sha256": "d4a5e79e989a7bd6d8c18c578e95ceb6530bd107a66dc87bb2230cbe5b95f542"
+    },
+    "core23.cubecore0": {
+      "count": 1010,
+      "first_us": 3.9206061363220215,
+      "retire_us": 8.490302801132202,
+      "end_marker_us": 6.710302829742432,
+      "mmad": 2,
+      "sha256": "23db0c24b3e2ac1414d6a3373d7fb4cadde5ea4ec0776147f351aaf4a9b34c5b"
+    },
+    "core23.veccore0": {
+      "count": 2514,
+      "first_us": 3.8321211338043213,
+      "retire_us": 10.313939735293388,
+      "end_marker_us": 8.91333293914795,
+      "mmad": 0,
+      "sha256": "ebfc6cc2bc90db7927a47fba3f92cb4afda6356719d9b57a1edcc2ff6c1d5369"
+    },
+    "core23.veccore1": {
+      "count": 2514,
+      "first_us": 3.866060495376587,
+      "retire_us": 10.477575942873955,
+      "end_marker_us": 8.915151596069336,
+      "mmad": 0,
+      "sha256": "1d71a68a3220ca741b8eaffd3b8bd35e2fc31be94d5f30dfdf38d4430631bfa6"
+    },
+    "core24.cubecore0": {
+      "count": 1010,
+      "first_us": 3.8533332347869873,
+      "retire_us": 8.379394173622131,
+      "end_marker_us": 6.822424411773682,
+      "mmad": 2,
+      "sha256": "aee02bc36a748e6cae97e47d27205e2149834f5bbca68a781c945df23edbfffe"
+    },
+    "core24.veccore0": {
+      "count": 2514,
+      "first_us": 4.270909309387207,
+      "retire_us": 10.204848371446133,
+      "end_marker_us": 9.000606536865234,
+      "mmad": 0,
+      "sha256": "ab7809fe6ef57458cc12844e875f2474df080e1eb00efa6f101f8a63e132fc0d"
+    },
+    "core24.veccore1": {
+      "count": 2196,
+      "first_us": 4.279394149780273,
+      "retire_us": 10.206060491502285,
+      "end_marker_us": 9.004242897033691,
+      "mmad": 0,
+      "sha256": "cba936a9746526c4d43069eacb01f9e86bcd922422335949cf992afba135ca5e"
+    },
+    "core25.cubecore0": {
+      "count": 1010,
+      "first_us": 3.7806060314178467,
+      "retire_us": 8.18848466873169,
+      "end_marker_us": 6.651515007019043,
+      "mmad": 2,
+      "sha256": "4047bd2e34a3e916933cc5dac21d634b7ab6b2490efa1b4ae8a86c5e2786f4f4"
+    },
+    "core25.veccore0": {
+      "count": 409,
+      "first_us": 4.073333263397217,
+      "retire_us": 8.907272818498313,
+      "end_marker_us": 8.903030395507812,
+      "mmad": 0,
+      "sha256": "6e032618597e85dbdeab80184dbbc5d4ecff4aa331784da35068012afa537576"
+    },
+    "core25.veccore1": {
+      "count": 409,
+      "first_us": 4.1181817054748535,
+      "retire_us": 8.907878401689231,
+      "end_marker_us": 8.90363597869873,
+      "mmad": 0,
+      "sha256": "76a6c97926d7a4cbf29620611515462760ecb30c6c9fc02e3ef8b37af40da31a"
+    },
+    "core26.cubecore0": {
+      "count": 1010,
+      "first_us": 3.672121286392212,
+      "retire_us": 8.135757446289062,
+      "end_marker_us": 6.602424144744873,
+      "mmad": 2,
+      "sha256": "21c5cbfd2aa8e9176c7d6121d315b207ca14a024b385b228760615facedfeef1"
+    },
+    "core26.veccore0": {
+      "count": 409,
+      "first_us": 4.233333110809326,
+      "retire_us": 9.017575743608177,
+      "end_marker_us": 9.013333320617676,
+      "mmad": 0,
+      "sha256": "7ffe27e52648e8fab9c9a89a4c578819d739a62fb7d12bcd75dcc4a0ff6c68a2"
+    },
+    "core26.veccore1": {
+      "count": 409,
+      "first_us": 4.270909309387207,
+      "retire_us": 9.021212103776634,
+      "end_marker_us": 9.016969680786133,
+      "mmad": 0,
+      "sha256": "c37784be189efd8f82f9e1ca3a054ee8641466b526bc62850a67f1be59a70544"
+    },
+    "core27.cubecore0": {
+      "count": 1010,
+      "first_us": 3.909090995788574,
+      "retire_us": 8.397575736045837,
+      "end_marker_us": 6.598787784576416,
+      "mmad": 2,
+      "sha256": "cae785b9c07b5298e0e68019bfdfc0e6e25fe62b1531a33a12738bf3b6889e70"
+    },
+    "core27.veccore0": {
+      "count": 409,
+      "first_us": 3.8260605335235596,
+      "retire_us": 8.910302641801536,
+      "end_marker_us": 8.906060218811035,
+      "mmad": 0,
+      "sha256": "dd0129d05e03b26c4bb6d941febddb747fd1e79d78cc4995bdcf4db83a5ce3c8"
+    },
+    "core27.veccore1": {
+      "count": 409,
+      "first_us": 3.8993940353393555,
+      "retire_us": 8.91090917866677,
+      "end_marker_us": 8.90666675567627,
+      "mmad": 0,
+      "sha256": "00e9da0663f2d98fe6807991edf7336d745894860aff735c20008b35c83980ec"
+    },
+    "core28.cubecore0": {
+      "count": 1010,
+      "first_us": 3.8533332347869873,
+      "retire_us": 8.35454535484314,
+      "end_marker_us": 6.675151348114014,
+      "mmad": 2,
+      "sha256": "134661533cf24adffd67bb75ba905e5dc1f4e2a1d249b62cb88895965edec84c"
+    },
+    "core28.veccore0": {
+      "count": 409,
+      "first_us": 4.1109089851379395,
+      "retire_us": 9.007878783158958,
+      "end_marker_us": 9.003636360168457,
+      "mmad": 0,
+      "sha256": "31e56900751b4bc126b02ca8cb892005cdcb09a74a736c7e5a11cd9905e3b5de"
+    },
+    "core28.veccore1": {
+      "count": 409,
+      "first_us": 4.168484687805176,
+      "retire_us": 9.00727319996804,
+      "end_marker_us": 9.003030776977539,
+      "mmad": 0,
+      "sha256": "a074422c893e1c7ac575194dbdfcb5cb7786ca033da47c97a1673f85709f1de7"
+    },
+    "core29.cubecore0": {
+      "count": 1010,
+      "first_us": 3.7333333492279053,
+      "retire_us": 8.364848375320435,
+      "end_marker_us": 6.636363506317139,
+      "mmad": 2,
+      "sha256": "e9313295729525c266db11a906ce06ce126ec135b4e4cc04836a8f33486f698a"
+    },
+    "core29.veccore0": {
+      "count": 409,
+      "first_us": 3.932727336883545,
+      "retire_us": 8.976363661698997,
+      "end_marker_us": 8.972121238708496,
+      "mmad": 0,
+      "sha256": "9e1139c7341d1a008abe33a75bb0c8ba8b3cb06a1f78ad0adc86d791e6d2e60d"
+    },
+    "core29.veccore1": {
+      "count": 409,
+      "first_us": 3.9593939781188965,
+      "retire_us": 8.92242384236306,
+      "end_marker_us": 8.918181419372559,
+      "mmad": 0,
+      "sha256": "da2a144be233733cc18320252aff228272f9540b201f516b8bec34b4e8d4310f"
+    },
+    "core3.cubecore0": {
+      "count": 1010,
+      "first_us": 3.7193939685821533,
+      "retire_us": 7.657575488090515,
+      "end_marker_us": 5.7515153884887695,
+      "mmad": 2,
+      "sha256": "7a0406c4bcaefca247f7bdf6e621295a41c8d152b92c8a5e16cbd21fe69cb01d"
+    },
+    "core3.veccore0": {
+      "count": 2514,
+      "first_us": 3.9169697761535645,
+      "retire_us": 10.518787488341331,
+      "end_marker_us": 9.003030776977539,
+      "mmad": 0,
+      "sha256": "cc317d6af41fd080012fcab2a1d826052f945cb575fd6137e4946342b08d53bd"
+    },
+    "core3.veccore1": {
+      "count": 2514,
+      "first_us": 3.9248485565185547,
+      "retire_us": 10.124848946928978,
+      "end_marker_us": 9.0090913772583,
+      "mmad": 0,
+      "sha256": "de65c7c6b27cd40c7d13bc5d41f1902d2fde2934fe4f42e72f5ce6b635f05b93"
+    },
+    "core30.cubecore0": {
+      "count": 1010,
+      "first_us": 3.750303030014038,
+      "retire_us": 8.225454330444336,
+      "end_marker_us": 6.71999979019165,
+      "mmad": 2,
+      "sha256": "a9603bc4d3599a665d28eec4df6837a705963d010191ef2cdd05b0311847bfa8"
+    },
+    "core30.veccore0": {
+      "count": 409,
+      "first_us": 4.002424240112305,
+      "retire_us": 9.069696906022727,
+      "end_marker_us": 9.065454483032227,
+      "mmad": 0,
+      "sha256": "c396c837b2091af1939e517e1714cfb3f09fc406cd847aff7b212e9ed2d68309"
+    },
+    "core30.veccore1": {
+      "count": 409,
+      "first_us": 4.0193939208984375,
+      "retire_us": 9.022424223832786,
+      "end_marker_us": 9.018181800842285,
+      "mmad": 0,
+      "sha256": "bc84786460897af28262e2564f574839cdaf3990f61d019180ece0d47d8b143a"
+    },
+    "core31.cubecore0": {
+      "count": 1010,
+      "first_us": 3.7090909481048584,
+      "retire_us": 8.116363525390625,
+      "end_marker_us": 6.578787803649902,
+      "mmad": 2,
+      "sha256": "c57101c76aed99310359d04134510fd9050216eab1c45a4dbb15e462ae586bec"
+    },
+    "core31.veccore0": {
+      "count": 409,
+      "first_us": 3.9133334159851074,
+      "retire_us": 8.906666281633079,
+      "end_marker_us": 8.902423858642578,
+      "mmad": 0,
+      "sha256": "1bc563fa17b7ae8d55ae2a9f8a2aba63d29d5f493add5aa72a5a49beb45eddec"
+    },
+    "core31.veccore1": {
+      "count": 409,
+      "first_us": 3.92242431640625,
+      "retire_us": 8.906060698442161,
+      "end_marker_us": 8.90181827545166,
+      "mmad": 0,
+      "sha256": "9d598c2a8d996738d170ed4062a583fa53ed112133f4276669cb32595eb4644a"
+    },
+    "core4.cubecore0": {
+      "count": 1010,
+      "first_us": 3.767272710800171,
+      "retire_us": 7.5121214389801025,
+      "end_marker_us": 5.771515369415283,
+      "mmad": 2,
+      "sha256": "43b36c3392649ae68ba1b7f200110b1331214ab2c84881d917a7fb320d93a66b"
+    },
+    "core4.veccore0": {
+      "count": 2514,
+      "first_us": 4.06969690322876,
+      "retire_us": 10.330909416079521,
+      "end_marker_us": 8.897575378417969,
+      "mmad": 0,
+      "sha256": "975a492001865302b5516f0ec87fcc8670489ba6c2e68f4a88df56c96665d16f"
+    },
+    "core4.veccore1": {
+      "count": 2514,
+      "first_us": 4.18363618850708,
+      "retire_us": 10.47515170276165,
+      "end_marker_us": 8.898181915283203,
+      "mmad": 0,
+      "sha256": "f6d0fb3ce8361e069a0e47a49ce9111782614cd8530bfb53cae8096fad9682a1"
+    },
+    "core5.cubecore0": {
+      "count": 1010,
+      "first_us": 3.6812121868133545,
+      "retire_us": 7.401818037033081,
+      "end_marker_us": 5.71999979019165,
+      "mmad": 2,
+      "sha256": "22685582e303f4c3a0bbb829abbc2699a5860e54ad704a5c91ccbbccda27f456"
+    },
+    "core5.veccore0": {
+      "count": 2514,
+      "first_us": 3.823636293411255,
+      "retire_us": 10.386060796678066,
+      "end_marker_us": 8.993332862854004,
+      "mmad": 0,
+      "sha256": "5012f9c6f37edf09bc9fdf390e56b28822f074cc1590d110f5eaef00e1670ecd"
+    },
+    "core5.veccore1": {
+      "count": 2514,
+      "first_us": 3.8636362552642822,
+      "retire_us": 10.206060484051704,
+      "end_marker_us": 8.993939399719238,
+      "mmad": 0,
+      "sha256": "d287340351f672f71e806d7a9a6aa953eed1b52c41a2e66b293e6808a388f4c1"
+    },
+    "core6.cubecore0": {
+      "count": 1010,
+      "first_us": 3.672727346420288,
+      "retire_us": 7.5472729206085205,
+      "end_marker_us": 5.870303153991699,
+      "mmad": 2,
+      "sha256": "da60f50230258ac4f3791a61cd06433d27dec4eca81b5fa502fc2237ee7a4d28"
+    },
+    "core6.veccore0": {
+      "count": 2514,
+      "first_us": 3.8145453929901123,
+      "retire_us": 10.41999976336956,
+      "end_marker_us": 8.902423858642578,
+      "mmad": 0,
+      "sha256": "d5b3f27c7cb9554cc861ffee06e5d7de97b51b0ec98a92e20ff0b7b7719b399b"
+    },
+    "core6.veccore1": {
+      "count": 2514,
+      "first_us": 3.8224241733551025,
+      "retire_us": 10.446060344576836,
+      "end_marker_us": 8.903030395507812,
+      "mmad": 0,
+      "sha256": "6cdd1dfc72fbcca6cf786fb629ff663feaf11eac1312196caa09822993014da3"
+    },
+    "core7.cubecore0": {
+      "count": 1010,
+      "first_us": 3.759999990463257,
+      "retire_us": 7.732121467590332,
+      "end_marker_us": 5.798788070678711,
+      "mmad": 2,
+      "sha256": "5fb9f6f9cd3e2f1123afaa749bff3dd1ae17316850aacc43c0493f45bfa2d991"
+    },
+    "core7.veccore0": {
+      "count": 2514,
+      "first_us": 4.021212100982666,
+      "retire_us": 10.347272470593452,
+      "end_marker_us": 9.012121200561523,
+      "mmad": 0,
+      "sha256": "2864fdb2e16ea248f328bdff4b30fcb54433670c3f720700ff73355551853d35"
+    },
+    "core7.veccore1": {
+      "count": 2514,
+      "first_us": 4.1218180656433105,
+      "retire_us": 10.277576044201851,
+      "end_marker_us": 9.02060604095459,
+      "mmad": 0,
+      "sha256": "08a8f914ef4b4a7266d490f9ea54dc55c0cd28cd497550a95042f12a03f5643b"
+    },
+    "core8.cubecore0": {
+      "count": 1010,
+      "first_us": 3.7121212482452393,
+      "retire_us": 7.59636378288269,
+      "end_marker_us": 5.815151691436768,
+      "mmad": 2,
+      "sha256": "46dd8ae772a38a714bfe088842bce4aeaa0bd664fe1f43cbd659aebf12645324"
+    },
+    "core8.veccore0": {
+      "count": 2514,
+      "first_us": 3.947272777557373,
+      "retire_us": 10.475151225924492,
+      "end_marker_us": 8.909696578979492,
+      "mmad": 0,
+      "sha256": "e25bda17648155a5c7f669b3847dbb7f8005671064bd4821c692881247881442"
+    },
+    "core8.veccore1": {
+      "count": 2514,
+      "first_us": 3.954545497894287,
+      "retire_us": 10.590909168124199,
+      "end_marker_us": 8.909090995788574,
+      "mmad": 0,
+      "sha256": "2df638f53e56ae2d0246adcd5c774ef87143c0e7da2ffbe11573d553c212ec1c"
+    },
+    "core9.cubecore0": {
+      "count": 1010,
+      "first_us": 3.6854546070098877,
+      "retire_us": 7.5084850788116455,
+      "end_marker_us": 5.789091110229492,
+      "mmad": 2,
+      "sha256": "b7b0370623cba5d49c5a05692b231b4153ecd3153730484d6626aa080d4b5268"
+    },
+    "core9.veccore0": {
+      "count": 2514,
+      "first_us": 3.8672726154327393,
+      "retire_us": 10.45878753066063,
+      "end_marker_us": 9.024848937988281,
+      "mmad": 0,
+      "sha256": "9881fe4cdde8f4f0ba8068d272fca51636ec836ea23206af04514ca1d04483ef"
+    },
+    "core9.veccore1": {
+      "count": 2514,
+      "first_us": 3.876969814300537,
+      "retire_us": 10.11515150219202,
+      "end_marker_us": 9.030909538269043,
+      "mmad": 0,
+      "sha256": "d7696612aef38a96f7bd7cbcc1895d57f4ae7c3e765aad9e574db6b32f7a9f81"
+    }
+  },
+  "max_core_edge_cycles": 3,
+  "task_proxy_us_if_1ns": 9.183,
+  "task_ticks": [
+    1484,
+    10667
+  ],
+  "task_log_sha256": "b8d3eccc1086ee35bec5f7a6802bd2513599f6b5fe284e924b59658bb0e46301",
+  "longest_table_duration_us": 6.8,
+  "acquisition_wall_s": 536.6834412100725,
+  "wall_to_stars_dump_mtime_s": 506.9551510810852,
+  "wall_after_stars_dump_mtime_s": 29.72829508781433,
+  "peak_bytes": 258738989,
+  "shard_input_bytes": 62445639,
+  "global_file_bytes": 65806599,
+  "visualize_file_bytes": 69478548,
+  "observed_offline_reduce_s": 0.8380963199306279,
+  "provider_exit_to_original_receipt_s": 5.143704891204834
+}

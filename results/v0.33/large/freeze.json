@@ -1,0 +1,76 @@
+{
+  "utc": "2026-11-20T07:37:35.597877+00:00",
+  "cases": [
+    {
+      "shape": [
+        8192,
+        5120
+      ],
+      "chip": "Ascend950DT_9582",
+      "raw": "runs/sku20-rms/rmsnorm_8192_5120_Ascend950DT_9582",
+      "old_receipt_sha256": "97e86bc1b6dab45ddae1dba0d7458cc6d7cebf74f3d95b80e22faaddaa27beca",
+      "archived_v032_price_us": 39.37886486682083,
+      "archived_future_970dt_us": 21.58192540155308
+    },
+    {
+      "shape": [
+        8192,
+        5120
+      ],
+      "chip": "Ascend950PR_957b",
+      "raw": "runs/sku20-rms/rmsnorm_8192_5120_Ascend950PR_957b",
+      "old_receipt_sha256": "c0e90f3a9dec670d878984c8d8388da4a8ddb417c3e105394035e447b2bc0cfe",
+      "archived_v032_price_us": 61.6218146269688,
+      "archived_future_970dt_us": 21.58192540155308
+    },
+    {
+      "shape": [
+        32768,
+        1280
+      ],
+      "chip": "Ascend950DT_9582",
+      "raw": "runs/sku20-rms/rmsnorm_32768_1280_Ascend950DT_9582",
+      "old_receipt_sha256": "1540fe41b667bfd5267fbaaa39d79d7321060af36a62afcb6edfb90196d4a9f1",
+      "archived_v032_price_us": 39.39327781005304,
+      "archived_future_970dt_us": 21.43575091105675
+    },
+    {
+      "shape": [
+        32768,
+        1280
+      ],
+      "chip": "Ascend950PR_957b",
+      "raw": "runs/sku20-rms/rmsnorm_32768_1280_Ascend950PR_957b",
+      "old_receipt_sha256": "365c43a0da10cdeedf3d077274191fd9f4ae7cd83d2de17a533f68c470e87e53",
+      "archived_v032_price_us": 61.6163289124217,
+      "archived_future_970dt_us": 21.43575091105675
+    }
+  ],
+  "hashes": {
+    "results/v0.29/large/vector/freeze.json": "041f360a4369c955fa941edc8628db0bdf94667e2dccc9e7a3cf9a9e51838b3a",
+    "results/v0.32/model.json": "e87b3a0fc78fff3dbde74c11faabb541f6057471f09aa2da512826c632ef4826",
+    "results/v0.20/rms/freeze.json": "59d7a41984467a57b0b0f6252201e9a35ab6eae4e3e1d1d9eb6f5b0b101c4312",
+    "results/v0.20/rms/records.json": "702efe6eeae9a39f2f560ba1d535d76b4ba45ae1039d6264e775ffbd646c916a",
+    "smoke/large_vector.cpp": "82715927932e28ea6ec8436e85db2eaf02fc595d56a6c335927b0f6616ebbf7d",
+    "build/smoke/large_vector": "a2a780962fdacbe48e6403201dbae4f5fdfcfdb2f8b364a304cccbcc5f4b3ceb",
+    "toolchains/cann/9.2.1/cann-9.2.1/opp/built-in/op_impl/ai_core/tbe/kernel/ascend950/ops_nn/rms_norm/RmsNorm_normal_all_bf16_high_performance.o": "0926fe478e5f718ef49241c08ef00b665797690f0f7f22c67fdc25044e0cb54d",
+    "configs/models/DeepSeek-V4.1-Flash.json": "8be45ce0476004a3f529fd896115a4a2e800a129ad2d3ec05b16050f52e21879"
+  },
+  "historical_role": "Previously measured, visible endpoints; archive replay, never independent for v0.33.",
+  "large_criterion": "Exact match to the pre-existing v0.29 instruction-mode large case [8192,5120], actual Flash hidden, B4×2048 scheduled per request (or B8×1024 scheduled). Exact same v0.20 runner, dtype, epsilon and both tensors. [32768,1280] has the same elements and is a shape-sensitivity control, never substituted as a full-hidden or additional deployment validation.",
+  "production_target": {
+    "batch": 8,
+    "per_request_sequence": [
+      32768,
+      131072,
+      262144
+    ],
+    "nonchunked_rows": [
+      262144,
+      1048576,
+      2097152
+    ],
+    "width": 5120
+  },
+  "audit_budget": "No new CA. Reuse complete original launch records, merged SHA and official windows; recheck every physical shard END, core duration and both output byte volumes. Read bounded-memory from disk. Existing numbers were visible."
+}

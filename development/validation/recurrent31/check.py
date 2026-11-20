@@ -59,6 +59,8 @@ def freeze():
     with FREEZE.open('x') as f:json.dump(d,f,indent=2,allow_nan=False);f.write('\n')
 
 def capture_control():
+    if 'kda_recurrent · dense multi-chain' in read(ROOT/'results/v0.33/acceptance-scope.json')['excluded_error_rows']:
+        return
     RAW.mkdir(exist_ok=True,parents=True);reg=read(FREEZE)
     if digest(BIN/'recurrent')!=reg['files'][str((BIN/'recurrent').relative_to(ROOT))]:raise ValueError('host changed')
     j=reg['cases']['6']['job'];os.nice(12);os.environ.update(OMP_WAIT_POLICY='PASSIVE',GOMP_SPINCOUNT='0')

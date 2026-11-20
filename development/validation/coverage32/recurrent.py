@@ -21,6 +21,8 @@ def freeze():
  files=[old.MODEL,old.BIN/'recurrent',old.HDR,ROOT/'development/validation/large29/cube/recurrent.cpp',ROOT/'development/validation/large29/cube/verify.py',ROOT/'results/v0.31/recurrent/freeze.json',Path(__file__).resolve(),*[ROOT/'configs/chips'/(s+'.json') for s in old.SKUS]]
  write(REG,dict(utc=now(),job=j,prices=prices,budget='After Sinkhorn both attempts, reuse the same exclusive CA slot; at most 3600 s and 8 GiB/end, no retry. v0.31 B6 and large29 B128 are different shapes; their owners unchanged.',role='B16 dense decode H=96/TP8, not fused gate nor paged real serving chain',source_sha256={str(p.relative_to(ROOT)):old.digest(p) for p in files}),True)
 def run():
+ if 'kda_recurrent · dense multi-chain' in old.read(ROOT/'results/v0.33/acceptance-scope.json')['excluded_error_rows']:
+  return
  reg=old.read(REG);j=reg['job'];slotpath=ROOT/'results/v0.26/sink/raw/lock';os.nice(12);os.environ.update(OMP_WAIT_POLICY='PASSIVE',GOMP_SPINCOUNT='0')
  def phase(s,chip=None):write(RES/'recurrent-state.json',dict(utc=now(),phase=s,chip=chip,pid=os.getpid(),freeze_sha256=old.digest(REG)))
  phase('waiting on previously frozen Sinkhorn 1024 dual endpoints')

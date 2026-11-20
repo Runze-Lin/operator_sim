@@ -16,8 +16,14 @@ def report():
             for chip,tag in zip(CHIPS[:2],('dt','pr')):
                 p=OUT/f"{j['id']}-{tag}.json";r=read(p) if p.is_file() else {}
                 v=j['predictions'][o][chip];sc=v.get('independent_state_scenario',{}).get('scenario_us')
+                if r.get('disposition') == 'withdrawn_before_launch':
+                    status = '已撤销，未启动'
+                elif r:
+                    status = '已合格' if r['verdict']['qualified'] else '不合格'
+                else:
+                    status = '采集中' if (RAW/f"{j['id']}-{tag}"/'run.log').exists() else '已排队'
                 row=dict(op=o,shape=j['shape'],chip=chip,prediction_us=v['us'],state_scenario_us=sc,ca_us=None if not r else r['operators'][i]['ca_us'],
-                         status=('已合格' if r['verdict']['qualified'] else '不合格') if r else ('采集中' if (RAW/f"{j['id']}-{tag}"/'run.log').exists() else '已排队'),
+                         status=status,
                          signed_error_pct=None if not r else r['operators'][i]['signed_error_pct'],receipt=None if not r else str(p.relative_to(ROOT)),
                          wall_seconds=None if not r else r['cost']['seconds'],peak_bytes=None if not r else r['cost']['peak_bytes'])
                 rec.append(row);matrix.append(row)
