@@ -1,0 +1,87 @@
+{
+  "case_id": "fa-131072-Ascend950PR_957b",
+  "qualified": true,
+  "chip": "Ascend950PR_957b",
+  "shape": [
+    9,
+    131072,
+    64,
+    1,
+    1
+  ],
+  "stages": [
+    {
+      "kernel": "FlashAttentionScore_50348df09d0b3ee451d3693a6b2ab3f5_2328361008425599520_mix_aic",
+      "ca_us": 265.8933386830613,
+      "active_aic": 1,
+      "active_aiv": 2,
+      "windows": {
+        "core0.veccore1": [
+          0.1272728443145752,
+          265.8933386830613
+        ],
+        "core0.veccore0": [
+          0.09454560279846191,
+          265.8800025014207
+        ],
+        "core0.cubecore0": [
+          0.0,
+          265.6078815483488
+        ]
+      },
+      "trace": "runs/large29/fa/fa-131072-Ascend950PR_957b/profile/OPPROF_20261120115226_YXMIXDESOGMFMFXS/simulator/trace.json",
+      "trace_sha256": "7ac38bf20cced2ade1e5e43ab8a01ba7f6c1d80fca575e21e4005f6c5331c242",
+      "binary_sha256": "ac006aee669c8696aeab3bb3fe64fc29e5f3c8e2d172bf75f46db7176a2d4580",
+      "queue_events": {
+        "SCALAR": 859452,
+        "FLOWCTRL": 62489,
+        "MTE2": 2055,
+        "MTE3": 1032,
+        "PUSHQ": 8202,
+        "RVECLP": 10256,
+        "RVECSU": 22538,
+        "RVECEX": 264198,
+        "RVECLD": 109534,
+        "RVECST": 98298,
+        "MTE1": 3585,
+        "CUBE": 2048,
+        "FIXP": 2048
+      },
+      "mmad": 2048,
+      "total_events": 1445735
+    }
+  ],
+  "ca_us": 265.8933386830613,
+  "correctness": [
+    "correctness elements=576 bad=0 max_abs_error=1.26169927e-07 atol=0.002 rtol=0.01"
+  ],
+  "cost": {
+    "seconds": 4365.751141200075,
+    "started_utc": "2026-11-20T03:52:26.409207+00:00",
+    "finished_utc": "2026-11-20T05:05:12.160355+00:00",
+    "peak_bytes": 1942895635,
+    "stop_reason": null,
+    "exit_code": 0,
+    "command": [
+      "bash",
+      "/home/l00925865/operator_sim/scripts/cann-run.sh",
+      "msopprof",
+      "simulator",
+      "--soc-version=Ascend950PR_957b",
+      "--dump=false",
+      "--launch-count=1",
+      "--timeout=240",
+      "--output=/home/l00925865/operator_sim/runs/large29/fa/fa-131072-Ascend950PR_957b/profile",
+      "/home/l00925865/operator_sim/build/smoke/three_ops",
+      "fa",
+      "9",
+      "131072",
+      "64",
+      "1",
+      "1"
+    ]
+  },
+  "freeze_sha256": "5594710c48697eda977b293d265c453b239fcc89e6f59b0c3b3aa72541abd577",
+  "physical_core_count": 3,
+  "signed_pct": 3.4203788730938545
+}

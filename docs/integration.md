@@ -330,3 +330,19 @@ if scenario["latency_us"] is not None:
 ```
 
 第一例在 DT 的预测为 4.234 µs、2 AIC，设备完整窗为 4.325 µs。第二例使用未来芯片情景，102.310 µs 是沿用 950 权重常驻实现时的条件外推。`input_mode="cold"` 可以关掉初始缓存供给，`mixed_efficiency` 可以传入已知的目标芯片读写混合效率。当前接口对超出已实现常驻分块条件的几何返回无时延并解释原因。[独立小形与双端速度比](../results/v0.30/matmul-dispatch/device/report.md) · [大形参数与资源分段](../results/v0.30/matmul/report.md)
+
+### 多个输出核沿 K 分工与多条 KDA 状态链
+
+```python
+from operator_model import estimate
+
+projection = estimate("matmul", [99, 64, 7168], chip="Ascend950DT_9582")
+print(projection.latency_us, projection.active_aic, projection.active_aiv)
+print(projection.projection["target_plan"], projection.work["implementation_work"])
+
+# Kimi B128 普通 decode，TP8 后每卡 12 个头，BSND，FP32 K-first 状态。
+kda = estimate("kda_recurrent", [128, 1, 12, 12, 128, 128], chip="Ascend950PR_957b")
+print(kda.status, kda.latency_us, kda.projection["target_plan"])
+```
+
+Matmul 的 `active_aic` 表示启动的核，重分块时 `productive_aic` 表示实际承担部分积的核。`logical_read_bytes` 表示算子接口数据，`fp32_partial_read_bytes` 等额外工作属于库实现。KDA 的大形按目标 UB/核数重新分工，尚未取得多链 CA 时，普通调用标 `extrapolated`，`timing_mode="calibrated"` 给空时延。按块派发的 V1/V2、paged 或合并 gate 实现有各自的合同。[Matmul 独立设备窗](../results/v0.31/matmul/device/report.md) · [KDA 多链公式和适用域](examples/kda_recurrent.md)

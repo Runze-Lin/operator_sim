@@ -1,0 +1,288 @@
+{
+  "shape": [
+    99,
+    64,
+    7168
+  ],
+  "sku": "Ascend950DT_9582",
+  "model_us": 6.4747099523211284,
+  "ca_us": 7.05636328458786,
+  "model": [
+    {
+      "lane": 0,
+      "start_us": 0.0,
+      "end_us": 2.325814369829399,
+      "label": "launch & arrival budget"
+    },
+    {
+      "lane": 1,
+      "start_us": 2.325814369829399,
+      "end_us": 3.60711858339166,
+      "label": "initial GM page"
+    },
+    {
+      "lane": 2,
+      "start_us": 3.60711858339166,
+      "end_us": 3.7125580259520414,
+      "label": "L0 lead"
+    },
+    {
+      "lane": 3,
+      "start_us": 3.7125580259520414,
+      "end_us": 3.90783021450423,
+      "label": "MMAD budget, K=128"
+    },
+    {
+      "lane": 3,
+      "start_us": 3.90783021450423,
+      "end_us": 4.07033289463891,
+      "label": "MMAD budget, K=96"
+    },
+    {
+      "lane": 4,
+      "start_us": 4.07033289463891,
+      "end_us": 4.398764901816079,
+      "label": "partial write budget"
+    },
+    {
+      "lane": 6,
+      "start_us": 4.398764901816079,
+      "end_us": 6.474709952321129,
+      "label": "combined merge budget (MTE2, vector, writeback)",
+      "scope": "aggregate_merge",
+      "issue_budget_us": 1.7711450505050506,
+      "shared_traffic_budget_us": 0.3048000000000002
+    }
+  ],
+  "ca": [
+    {
+      "lane": 3,
+      "start_us": 4.294545650482178,
+      "end_us": 4.470909282565117,
+      "label": "MMAD",
+      "mmad_depth": 128,
+      "bytes": null
+    },
+    {
+      "lane": 3,
+      "start_us": 4.456364154815674,
+      "end_us": 4.573333851993084,
+      "label": "MMAD",
+      "mmad_depth": 96,
+      "bytes": null
+    },
+    {
+      "lane": 2,
+      "start_us": 4.169090747833252,
+      "end_us": 4.254545293748379,
+      "label": "LOAD_2Dv2",
+      "mmad_depth": null,
+      "bytes": 28672
+    },
+    {
+      "lane": 2,
+      "start_us": 4.170302867889404,
+      "end_us": 4.293333172798157,
+      "label": "LOAD_2Dv2",
+      "mmad_depth": null,
+      "bytes": 16384
+    },
+    {
+      "lane": 2,
+      "start_us": 4.171514987945557,
+      "end_us": 4.345454379916191,
+      "label": "LOAD_2Dv2",
+      "mmad_depth": null,
+      "bytes": 21504
+    },
+    {
+      "lane": 2,
+      "start_us": 4.172121047973633,
+      "end_us": 4.37454529106617,
+      "label": "LOAD_2Dv2",
+      "mmad_depth": null,
+      "bytes": 12288
+    },
+    {
+      "lane": 1,
+      "start_us": 2.7763638496398926,
+      "end_us": 4.011515378952026,
+      "label": "MOV_OUT_TO_L1_MULTI_ND2NZ",
+      "mmad_depth": null,
+      "bytes": 44352
+    },
+    {
+      "lane": 1,
+      "start_us": 2.7866668701171875,
+      "end_us": 4.167272925376892,
+      "label": "MOV_OUT_TO_L1_MULTI_ND2NZ",
+      "mmad_depth": null,
+      "bytes": 28672
+    },
+    {
+      "lane": 4,
+      "start_us": 3.032121181488037,
+      "end_us": 4.930909037590027,
+      "label": "FIX_L0C_TO_DST",
+      "mmad_depth": null,
+      "bytes": 25344
+    },
+    {
+      "lane": 6,
+      "start_us": 6.103636264801025,
+      "end_us": 6.844242334365845,
+      "label": "VF",
+      "mmad_depth": null,
+      "bytes": null
+    },
+    {
+      "lane": 6,
+      "start_us": 6.8121209144592285,
+      "end_us": 6.866666369140148,
+      "label": "VF",
+      "mmad_depth": null,
+      "bytes": null
+    },
+    {
+      "lane": 5,
+      "start_us": 5.164242267608643,
+      "end_us": 6.101818025112152,
+      "label": "MOV_SRC_TO_DST_ALIGNv2",
+      "mmad_depth": null,
+      "bytes": 16384
+    },
+    {
+      "lane": 7,
+      "start_us": 6.867878437042236,
+      "end_us": 7.05636328458786,
+      "label": "MOV_SRC_TO_DST_ALIGNv2",
+      "mmad_depth": null,
+      "bytes": 256
+    }
+  ],
+  "lanes": [
+    "Control / launch",
+    "MTE2 / A and B",
+    "MTE1 / L1 to L0",
+    "Cube / MMAD",
+    "FIXP / partial sums",
+    "MTE2 / reduction reads",
+    "Vector / reduction",
+    "MTE3 / final write"
+  ],
+  "origin": "Earliest instruction across all participating cores",
+  "productive_shards": [
+    {
+      "core": "core19.cubecore0",
+      "start_us": 0.1636364459991455,
+      "end_us": 4.930909037590027,
+      "file_sha256": "4154a9c7f7358f493af62a3003e2ff2018407212554f0184822b8a3ea0e6b42d",
+      "file": "runs/matmul31/device/99-64-7168-dt/profile/OPPROF_20261120132751_AYQIWRZRREQZILCB/simulator/core19.cubecore0/trace.json",
+      "global_origin_us": 3.574545383453369
+    },
+    {
+      "core": "core2.veccore1",
+      "start_us": 0.6327271461486816,
+      "end_us": 7.05636328458786,
+      "file_sha256": "ae229a88faed1682bdfa8fa18d089e2775eb25e2c4772eb3fe7410eccd7068dc",
+      "file": "runs/matmul31/device/99-64-7168-dt/profile/OPPROF_20261120132751_AYQIWRZRREQZILCB/simulator/core2.veccore1/trace.json",
+      "global_origin_us": 3.574545383453369
+    }
+  ],
+  "productive_core_distributions": {
+    "MTE2 / A and B": {
+      "cores": 32,
+      "first_issue_us": {
+        "min": 1.7278790473937988,
+        "median": 2.4921212196350098,
+        "max": 3.0975756645202637
+      },
+      "last_retire_us": {
+        "min": 3.0472729206085205,
+        "median": 3.621212273836136,
+        "max": 4.167272925376892
+      }
+    },
+    "MTE1 / L1 to L0": {
+      "cores": 32,
+      "first_issue_us": {
+        "min": 3.04909086227417,
+        "median": 3.623030424118042,
+        "max": 4.169090747833252
+      },
+      "last_retire_us": {
+        "min": 3.2545454055070877,
+        "median": 3.8284849673509598,
+        "max": 4.37454529106617
+      }
+    },
+    "Cube / MMAD": {
+      "cores": 32,
+      "first_issue_us": {
+        "min": 3.1745452880859375,
+        "median": 3.7484848499298096,
+        "max": 4.294545650482178
+      },
+      "last_retire_us": {
+        "min": 3.4533334895968437,
+        "median": 4.027272813022137,
+        "max": 4.573333851993084
+      }
+    },
+    "FIXP / partial sums": {
+      "cores": 32,
+      "first_issue_us": {
+        "min": 2.0660605430603027,
+        "median": 2.686969757080078,
+        "max": 3.224848747253418
+      },
+      "last_retire_us": {
+        "min": 3.763636350631714,
+        "median": 4.360909044742584,
+        "max": 4.930909037590027
+      }
+    },
+    "MTE2 / reduction reads": {
+      "cores": 50,
+      "first_issue_us": {
+        "min": 5.164242267608643,
+        "median": 5.164242267608643,
+        "max": 5.164242267608643
+      },
+      "last_retire_us": {
+        "min": 5.645454376935959,
+        "median": 5.827272564172745,
+        "max": 6.104242265224457
+      }
+    },
+    "Vector / reduction": {
+      "cores": 50,
+      "first_issue_us": {
+        "min": 5.64727258682251,
+        "median": 5.829090595245361,
+        "max": 6.10606050491333
+      },
+      "last_retire_us": {
+        "min": 6.430908732116222,
+        "median": 6.646667055785656,
+        "max": 6.869090609252453
+      }
+    },
+    "MTE3 / final write": {
+      "cores": 50,
+      "first_issue_us": {
+        "min": 6.432121753692627,
+        "median": 6.647879123687744,
+        "max": 6.870302677154541
+      },
+      "last_retire_us": {
+        "min": 6.524242967367172,
+        "median": 6.7872728779911995,
+        "max": 7.05636328458786
+      }
+    }
+  },
+  "last_core": "core2.veccore1",
+  "trace_sha256": "398c26f393941583b4b8400dddcbafaffeb78afd80e5b6f6dd1ffba3eacd762f",
+  "source_freeze_sha256": "57be8e2ae43835ca5cae83ac16721667a8610f7c185465cec39f7a992867a74e"
+}

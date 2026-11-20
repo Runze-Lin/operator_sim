@@ -1,0 +1,220 @@
+{
+  "freeze_sha256": "57be8e2ae43835ca5cae83ac16721667a8610f7c185465cec39f7a992867a74e",
+  "rows": [
+    {
+      "shape": [
+        99,
+        64,
+        7168
+      ],
+      "sku": "Ascend950DT_9582",
+      "scenarios": [
+        {
+          "model": "DeepSeek-V4-Pro",
+          "node": "indexer.weights_proj",
+          "phase": "decode",
+          "batch": 11,
+          "tokens_per_request": 9
+        }
+      ],
+      "old_us": 15.288612787759103,
+      "forecast_us": 6.4747099523211284,
+      "future_970dt_extrapolated_us": 14.014506868795916,
+      "expected_roster": [
+        32,
+        64
+      ],
+      "expected_productive_aic": 32,
+      "expected_groups": 1,
+      "expected_splits": 32,
+      "expected_mmad": 64,
+      "ca_us": 7.05636328458786,
+      "status": "qualified",
+      "cost_s": 536.6834412100725,
+      "peak_bytes": 258738989,
+      "receipt": "99-64-7168-dt.json",
+      "old_signed_pct": 116.66419614692587,
+      "signed_pct": -8.242961831870932,
+      "geometry_verified": true,
+      "checks": {
+        "k_spans": true,
+        "groups": true,
+        "productive_aic": true,
+        "active_aic": true,
+        "active_aiv": true,
+        "mmads": true
+      },
+      "actual_groups": 1,
+      "actual_splits": [
+        32
+      ],
+      "actual_productive_aic": 32,
+      "actual_mmad": 64,
+      "actual_roster": [
+        32,
+        64
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_4098_mix_aic",
+      "trace_sha256": "398c26f393941583b4b8400dddcbafaffeb78afd80e5b6f6dd1ffba3eacd762f",
+      "correctness": [
+        "correctness count=6336 bad=0"
+      ],
+      "terminal_roster": 96
+    },
+    {
+      "shape": [
+        99,
+        64,
+        7168
+      ],
+      "sku": "Ascend950PR_957b",
+      "scenarios": [
+        {
+          "model": "DeepSeek-V4-Pro",
+          "node": "indexer.weights_proj",
+          "phase": "decode",
+          "batch": 11,
+          "tokens_per_request": 9
+        }
+      ],
+      "old_us": 15.288612787759103,
+      "forecast_us": 6.461206897454886,
+      "future_970dt_extrapolated_us": 14.014506868795916,
+      "expected_roster": [
+        28,
+        56
+      ],
+      "expected_productive_aic": 28,
+      "expected_groups": 1,
+      "expected_splits": 28,
+      "expected_mmad": 56,
+      "ca_us": 6.888484719907865,
+      "status": "qualified",
+      "cost_s": 540.3411153601483,
+      "peak_bytes": 188357101,
+      "receipt": "99-64-7168-pr.json",
+      "old_signed_pct": 121.94449736637569,
+      "signed_pct": -6.202783918764265,
+      "geometry_verified": false,
+      "checks": null,
+      "actual_groups": null,
+      "actual_splits": null,
+      "actual_productive_aic": null,
+      "actual_mmad": 56,
+      "actual_roster": [
+        28,
+        56
+      ],
+      "kernel": "MatMulV3_ND_ND_ND_ND_BF16_BF16_BF16_BF16_high_performance_4098_mix_aic",
+      "trace_sha256": "11631217c67e3ce99bd8e32b80d5d08d2b1c649d700458eeb3529f47d50c91f1",
+      "correctness": [
+        "correctness count=6336 bad=0"
+      ],
+      "terminal_roster": 84
+    },
+    {
+      "shape": [
+        11,
+        1280,
+        5120
+      ],
+      "sku": "Ascend950DT_9582",
+      "scenarios": [
+        {
+          "model": "DeepSeek-V4.1-Flash",
+          "node": "dsa.wq_a",
+          "phase": "decode",
+          "batch": 11,
+          "tokens_per_request": 1
+        }
+      ],
+      "old_us": 12.000221049251415,
+      "forecast_us": 11.318366540950652,
+      "future_970dt_extrapolated_us": 11.000147775163871,
+      "expected_roster": [
+        32,
+        64
+      ],
+      "expected_productive_aic": 30,
+      "expected_groups": 5,
+      "expected_splits": 6,
+      "expected_mmad": 420,
+      "ca_us": null,
+      "status": "acquiring"
+    },
+    {
+      "shape": [
+        11,
+        1280,
+        5120
+      ],
+      "sku": "Ascend950PR_957b",
+      "scenarios": [
+        {
+          "model": "DeepSeek-V4.1-Flash",
+          "node": "dsa.wq_a",
+          "phase": "decode",
+          "batch": 11,
+          "tokens_per_request": 1
+        }
+      ],
+      "old_us": 13.01940729293724,
+      "forecast_us": 12.66676447999789,
+      "future_970dt_extrapolated_us": 11.000147775163871,
+      "expected_roster": [
+        28,
+        56
+      ],
+      "expected_productive_aic": 25,
+      "expected_groups": 5,
+      "expected_splits": 5,
+      "expected_mmad": 400,
+      "ca_us": null,
+      "status": "pending"
+    }
+  ],
+  "summary": {
+    "Ascend950DT_9582": {
+      "old": {
+        "windows": 1,
+        "wape": 116.66419614692587,
+        "maximum": 116.66419614692589
+      },
+      "new": {
+        "windows": 1,
+        "wape": 8.242961831870938,
+        "maximum": 8.242961831870936
+      },
+      "geometry_pass": 1
+    },
+    "Ascend950PR_957b": {
+      "old": {
+        "windows": 1,
+        "wape": 121.94449736637569,
+        "maximum": 121.94449736637569
+      },
+      "new": {
+        "windows": 1,
+        "wape": 6.202783918764266,
+        "maximum": 6.202783918764266
+      },
+      "geometry_pass": 0
+    }
+  },
+  "ratios": [
+    {
+      "shape": [
+        99,
+        64,
+        7168
+      ],
+      "pr_over_dt": 0.9762089113174393,
+      "old": 1.0,
+      "new": 0.9979144927007269,
+      "reuse_dt": 1.0,
+      "signed_pct": 2.223456591273565
+    }
+  ],
+  "total_ca_seconds": 1077.0245565702207,
+  "total_raw_peak_bytes": 447096090
+}

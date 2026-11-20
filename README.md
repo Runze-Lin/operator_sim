@@ -10,7 +10,9 @@
 
 单卡 B8 整批 prefill 的工作负载表按 32Ki、128Ki、256Ki 给出每个算子的输入、dtype、并行切分、两卡 CA 实测和 970DT 外推。矩阵投影、indexer 系数与全 hidden 激活各有自己的宽度。[DeepSeek V4.1 Flash](docs/workloads/deepseek-flash.md) · [DeepSeek V4 Pro](docs/workloads/deepseek-pro.md) · [Kimi K3](docs/workloads/kimi-k3.md)
 
-普通 decode 的每卡 M 为 1、9、11、16；同一批请求使用 MTP8 校验时 M 为 9、81、99、144。Flash、Pro 和 Kimi 的 N、K 来自各自的真实投影。38 个场景几何逐形列出默认预测和可用设备实测，另有 31 个几何/端做过安装库的 host 分支核验。[三模型 decode 与大形对照](results/v0.30/matmul-dispatch/report.md) · [其他实测 Matmul 投影](results/v0.29/matmul/workloads.md)
+普通 decode 的每卡 M 为 1、9、11、16；同一批请求使用 MTP8 校验时 M 为 9、81、99、144。Flash、Pro 和 Kimi 的 N、K 来自各自的真实投影。v0.30 的 38 个场景几何逐形列出当时的预测和可用设备实测，另有 31 个几何/端做过安装库的 host 分支核验。[三模型 decode 与大形对照](results/v0.30/matmul-dispatch/report.md) · [其他实测 Matmul 投影](results/v0.29/matmul/workloads.md)
+
+在 `estimate("matmul", [M,N,K], chip=...)` 中，窄输出、长 K 的投影可按目标核数重选输出块，再计算部分积与 FP32 归并。对 Pro 的 B11×9 校验，950DT 的预测 / CA 是 6.475 / 7.056 µs。对 Kimi 多头 recurrent decode，普通查询会给出独立状态链的目标 AIV 分配、工作量和条件时延，并标明外推状态。[Matmul 逐步计算与指令图](results/v0.31/matmul/device/example.md) · [Kimi 大形算例](docs/examples/kda_recurrent.md)
 
 Flash B8×128Ki 的 Matmul 有 1,048,576 行。950DT 完整 CA 为 405.617 µs，公开预测为 437.251 µs。需要检查大形缓存压力时，可调用 `estimate_matmul_supply(shape, chip=...)`。它在权重常驻 L1 的适用域内返回逐波资源约束，此例条件预测为 409.270 µs。这个数属于开发回放；未来芯片和未返回 CA 的长输入均单独列出。[完整计算与 CA 同轴图](results/v0.30/matmul/report.md) · [冻结的新形与实测](results/v0.30/matmul/comparison.md)
 
@@ -39,7 +41,7 @@ print(result.latency_us, result.work["cube_ops"], result.work["logical_read_byte
 
 维护 960、970、980 等架构情景时，每个目标使用一份 JSON，分别填写按位宽区分的两类算力、核数、频率、外存容量和带宽。内置 `Ascend970DT` 情景为 120 Cube / 120 Vector、1.8 GHz、288 GB、14.4 TB/s；其中 16 位 Vector 峰值 110.592 TOP/s 已含双发射。这些是架构假设。调用方通过 `extrapolated` 状态识别外推，并决定是否将其交给事件调度器。[970DT 配置及逐项来源](configs/chips/Ascend970DT.json) · [自定义芯片示例](configs/chips/scenario-example.json) · [字段、单位和返回合同](docs/integration.md)
 
-隔离安装的 v0.30 wheel 核对了 854 条历史记录和 1,522 个不同的公开查询，进程内单次 P95 为 0.695 ms，最大 3.518 ms。[查询开销](results/v0.30/wheel-check.json) · [按算子归档的双端误差](results/v0.30/acceptance.md)
+安装版实际 API 的逐输入墙钟、不同 shape 与完整 CA 窗口覆盖可在 v0.31 发布记录核对。时间按进程内首次遇到该组参数的一次调用统计。[查询开销](results/v0.31/wheel-check.json) · [按算子归档的双端误差](results/v0.31/acceptance.md)
 
 ## 可预测的算子
 

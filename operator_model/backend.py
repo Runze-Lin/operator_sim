@@ -77,7 +77,7 @@ def _price_resource(op, shape, target, call, dtype):
     from .model_v6 import Case
     from .quant_resource import resource_quant
     from .matmul_resource import resource_matmul
-    from .matmul_splitk import resource_matmul_dispatch
+    from .matmul_dispatch31 import resource_matmul_dispatch
     from .fa_resource import resource_fa
 
     work = None
@@ -260,6 +260,22 @@ def _evaluate(op, shape, attrs, soc, chip, dtype, timing_mode='auto'):
                                 diag['active_aiv'], 0, target.name, work, diag), raw
             return Estimate(us, 'extrapolated', 'Explicit experimental arch35 vLLM HcPost resource model',
                             diag['active_aiv'], 0, target.name, work, diag, _rates(work, us, target)), raw
+        if op == 'kda_recurrent' and len(shape) == 6 and (shape[0] != 1 or shape[3] != 1):
+            from .kda_recurrent_chains import estimate_recurrent_chains
+            chain = estimate_recurrent_chains(shape, call, chip=target)
+            us = chain['latency_us']
+            plan = {k: chain[k] for k in ('active_aic', 'active_aiv', 'chains',
+                                          'chains_per_busiest_aiv', 'tiling')}
+            work = chain['work']
+            reason = chain.get('reason') or chain.get('evidence')
+            diag = dict(method='dense_recurrent_chains', target_plan=plan,
+                        timing_diagnostics={k: v for k, v in chain.items() if k not in ('work', 'latency_us')},
+                        inherited_fields=list(target.inherited_fields))
+            if timing_mode == 'calibrated' or us is None:
+                return Estimate(None, 'unavailable', reason or 'No calibrated multi-chain timing',
+                                chain['active_aiv'], 0, target.name, work, diag), raw
+            return Estimate(us, 'extrapolated', reason, chain['active_aiv'], 0,
+                            target.name, work, dict(diag, latency_us=us), _rates(work, us, target)), raw
         if op == 'kda_chunk' and 'implementation' in call:
             from .kda_fla_v2 import IMPLEMENTATION, resource
             if call['implementation'] != IMPLEMENTATION:
