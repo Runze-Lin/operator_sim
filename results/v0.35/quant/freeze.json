@@ -1,0 +1,383 @@
+{
+  "utc": "2026-11-20T08:47:30.634310+00:00",
+  "source_freeze_sha256": "213f06cca540b7311b519d0499b77c98c82e6825d9bea82640c76d89e45cdff7",
+  "service_sha256": "c5fe5110ae4b378752eccbd30ba1e0b3e851a1311795a25d220ae43afa802664",
+  "shape": [
+    16384,
+    7168
+  ],
+  "predictions": {
+    "Ascend950DT_9582": {
+      "previous_us": 79.95762722202262,
+      "latency_us": 94.22689312332201,
+      "base_us": 79.95762722202262,
+      "old_resource_us": 73.3601689481783,
+      "active_aiv": 64,
+      "critical_local_us": {
+        "MTE2": 45.99082243327495,
+        "SIMD": 58.47887935963407,
+        "MTE3": 12.462413866985376
+      },
+      "plan": {
+        "active_aiv": 64,
+        "rows_per_core": 256,
+        "cols_per_core": 7168,
+        "slice_cols": 512,
+        "active_aic": 0,
+        "tile": [
+          5,
+          7168
+        ],
+        "iterations": 52,
+        "waves": 1,
+        "units": {
+          "read": 70.0,
+          "vector": 149
+        }
+      },
+      "live_bytes": 9175040,
+      "logical_read": 234881024,
+      "logical_write": 121110528,
+      "dirty_retained_bytes": 43665700.571428575,
+      "read_prefix_bytes": 84684995.04761904,
+      "read_mixed_bytes": 150196028.95238096,
+      "write_mixed_bytes": 77444827.42857143,
+      "prefix_us": 23.451854816057036,
+      "mixed_us": 70.77503830726498,
+      "mixed_bus_efficiency": 0.8041000818419384,
+      "wire_to_configured_bandwidth": 1.0
+    },
+    "Ascend950PR_957b": {
+      "previous_us": 178.66891393294014,
+      "latency_us": 271.7997599745191,
+      "base_us": 178.66891393294014,
+      "old_resource_us": 178.66891393294014,
+      "active_aiv": 56,
+      "critical_local_us": {
+        "MTE2": 52.5609399237428,
+        "SIMD": 68.84267930490869,
+        "MTE3": 14.242758705126144
+      },
+      "plan": {
+        "active_aiv": 56,
+        "rows_per_core": 2048,
+        "cols_per_core": 1024,
+        "slice_cols": 512,
+        "active_aic": 0,
+        "tile": [
+          38,
+          1024
+        ],
+        "iterations": 54,
+        "waves": 1,
+        "units": {
+          "read": 76.0,
+          "vector": 162
+        }
+      },
+      "live_bytes": 8716288,
+      "logical_read": 234881024,
+      "logical_write": 121110528,
+      "dirty_retained_bytes": 37917034.52575958,
+      "read_prefix_bytes": 73536066.95904888,
+      "read_mixed_bytes": 161344957.04095113,
+      "write_mixed_bytes": 83193493.47424042,
+      "prefix_us": 54.5751560465465,
+      "mixed_us": 217.2246039279726,
+      "mixed_bus_efficiency": 0.8041000818419384,
+      "wire_to_configured_bandwidth": 1.0
+    },
+    "Ascend970DT": {
+      "previous_us": 37.561175784785064,
+      "latency_us": 37.561175784785064,
+      "base_us": 37.561175784785064,
+      "old_resource_us": 37.561175784785064,
+      "active_aiv": 120,
+      "critical_local_us": {
+        "MTE2": 22.561253062156688,
+        "SIMD": 28.441742844869683,
+        "MTE3": 6.113560448420236
+      },
+      "plan": {
+        "active_aiv": 120,
+        "rows_per_core": 274,
+        "cols_per_core": 3584,
+        "slice_cols": 512,
+        "active_aic": 0,
+        "tile": [
+          11,
+          3584
+        ],
+        "iterations": 25,
+        "waves": 1,
+        "units": {
+          "read": 77.0,
+          "vector": 164
+        }
+      },
+      "live_bytes": 18923520,
+      "logical_read": 234881024,
+      "logical_write": 121110528,
+      "dirty_retained_bytes": 65061845.14460701,
+      "read_prefix_bytes": 126180548.15923783,
+      "read_mixed_bytes": 108700475.84076217,
+      "write_mixed_bytes": 56048682.85539299,
+      "prefix_us": 10.853093616253325,
+      "mixed_us": 14.228221158909227,
+      "mixed_bus_efficiency": 0.8041000818419384,
+      "wire_to_configured_bandwidth": 1.0
+    }
+  },
+  "status": "prospective; uses the previously registered capture, no new geometry",
+  "implementation_sources": {
+    "development/validation/quant35/freeze.py": "7be63b573ff65d6075990cc9b3b8f15858ccff5c06ca7ff5abfac6bc5db82bb4",
+    "operator_model/quant_stream_memory.py": "7de2253386b60d5b3f170dc843a554057f99043108031f6435ab994f95a590e7",
+    "operator_model/quant_resource.py": "036d730070e3b8cc1f9fe6a2484f1e2524e9e4d8ac81283b342bd9c6e762f129"
+  },
+  "previous_native_dataset": {
+    "completed_b8": {
+      "Ascend950DT_9582": {
+        "previous_us": 1200.4151724236067,
+        "latency_us": 1754.881973565682,
+        "base_us": 1200.4151724236067,
+        "old_resource_us": 1394.9861420541522,
+        "active_aiv": 64,
+        "critical_local_us": {
+          "MTE2": 735.8531589323992,
+          "SIMD": 934.5872841623786,
+          "MTE3": 199.398621871766
+        },
+        "plan": {
+          "active_aiv": 64,
+          "rows_per_core": 4096,
+          "cols_per_core": 7168,
+          "slice_cols": 512,
+          "active_aic": 0,
+          "tile": [
+            5,
+            7168
+          ],
+          "iterations": 820,
+          "waves": 1,
+          "units": {
+            "read": 70.0,
+            "vector": 149
+          }
+        },
+        "live_bytes": 9175040,
+        "logical_read": 3758096384,
+        "logical_write": 1937768448,
+        "dirty_retained_bytes": 42608931.43852856,
+        "read_prefix_bytes": 82635503.39593416,
+        "read_mixed_bytes": 3675460880.604066,
+        "write_mixed_bytes": 1895159516.5614715,
+        "prefix_us": 22.939481903135817,
+        "mixed_us": 1731.9424916625462,
+        "mixed_bus_efficiency": 0.8041000818419384,
+        "wire_to_configured_bandwidth": 1.0
+      },
+      "Ascend950PR_957b": {
+        "previous_us": 3992.8641139329397,
+        "latency_us": 5016.3016934541865,
+        "base_us": 3992.8641139329397,
+        "old_resource_us": 3992.8641139329397,
+        "active_aiv": 56,
+        "critical_local_us": {
+          "MTE2": 840.9750387798848,
+          "SIMD": 1101.3495899730422,
+          "MTE3": 227.8841392820183
+        },
+        "plan": {
+          "active_aiv": 56,
+          "rows_per_core": 32768,
+          "cols_per_core": 1024,
+          "slice_cols": 512,
+          "active_aic": 0,
+          "tile": [
+            38,
+            1024
+          ],
+          "iterations": 863,
+          "waves": 1,
+          "units": {
+            "read": 76.0,
+            "vector": 162
+          }
+        },
+        "live_bytes": 8716288,
+        "logical_read": 3758096384,
+        "logical_write": 1937768448,
+        "dirty_retained_bytes": 37045343.403726704,
+        "read_prefix_bytes": 71845514.47995482,
+        "read_mixed_bytes": 3686250869.5200453,
+        "write_mixed_bytes": 1900723104.5962734,
+        "prefix_us": 53.36761856147932,
+        "mixed_us": 4962.934074892707,
+        "mixed_bus_efficiency": 0.8041000818419384,
+        "wire_to_configured_bandwidth": 1.0
+      },
+      "Ascend970DT": {
+        "previous_us": 527.7790164159638,
+        "latency_us": 527.7790164159638,
+        "base_us": 527.7790164159638,
+        "old_resource_us": 527.7790164159638,
+        "active_aiv": 120,
+        "critical_local_us": {
+          "MTE2": 359.8272842395063,
+          "SIMD": 453.5676444166011,
+          "MTE3": 97.50459547297967
+        },
+        "plan": {
+          "active_aiv": 120,
+          "rows_per_core": 4370,
+          "cols_per_core": 3584,
+          "slice_cols": 512,
+          "active_aic": 0,
+          "tile": [
+            11,
+            3584
+          ],
+          "iterations": 398,
+          "waves": 1,
+          "units": {
+            "read": 77.0,
+            "vector": 164
+          }
+        },
+        "live_bytes": 18923520,
+        "logical_read": 3758096384,
+        "logical_write": 1937768448,
+        "dirty_retained_bytes": 61808687.167013474,
+        "read_prefix_bytes": 119871393.2936019,
+        "read_mixed_bytes": 3638224990.706398,
+        "write_mixed_bytes": 1875959760.8329864,
+        "prefix_us": 10.414957861695274,
+        "mixed_us": 476.22118848378847,
+        "mixed_bus_efficiency": 0.8041000818419384,
+        "wire_to_configured_bandwidth": 1.0
+      }
+    },
+    "partial_b4": {
+      "Ascend950DT_9582": {
+        "previous_us": 602.6137565428736,
+        "latency_us": 869.411527023878,
+        "base_us": 602.6137565428736,
+        "old_resource_us": 683.0030380541523,
+        "active_aiv": 64,
+        "critical_local_us": {
+          "MTE2": 367.9265794661996,
+          "SIMD": 467.2971755288736,
+          "MTE3": 99.699310935883
+        },
+        "plan": {
+          "active_aiv": 64,
+          "rows_per_core": 2048,
+          "cols_per_core": 7168,
+          "slice_cols": 512,
+          "active_aic": 0,
+          "tile": [
+            5,
+            7168
+          ],
+          "iterations": 410,
+          "waves": 1,
+          "units": {
+            "read": 70.0,
+            "vector": 149
+          }
+        },
+        "live_bytes": 9175040,
+        "logical_read": 1879048192,
+        "logical_write": 968884224,
+        "dirty_retained_bytes": 42677788.79379444,
+        "read_prefix_bytes": 82769044.93341953,
+        "read_mixed_bytes": 1796279147.0665803,
+        "write_mixed_bytes": 926206435.2062055,
+        "prefix_us": 22.972867287507157,
+        "mixed_us": 846.4386597363708,
+        "mixed_bus_efficiency": 0.8041000818419384,
+        "wire_to_configured_bandwidth": 1.0
+      },
+      "Ascend950PR_957b": {
+        "previous_us": 1958.6266739329403,
+        "latency_us": 2486.400833412227,
+        "base_us": 1958.6266739329403,
+        "old_resource_us": 1958.6266739329403,
+        "active_aiv": 56,
+        "critical_local_us": {
+          "MTE2": 420.4875193899424,
+          "SIMD": 550.7414344392695,
+          "MTE3": 113.94206964100916
+        },
+        "plan": {
+          "active_aiv": 56,
+          "rows_per_core": 16384,
+          "cols_per_core": 1024,
+          "slice_cols": 512,
+          "active_aic": 0,
+          "tile": [
+            38,
+            1024
+          ],
+          "iterations": 432,
+          "waves": 1,
+          "units": {
+            "read": 76.0,
+            "vector": 162
+          }
+        },
+        "live_bytes": 8716288,
+        "logical_read": 1879048192,
+        "logical_write": 968884224,
+        "dirty_retained_bytes": 37102207.31749879,
+        "read_prefix_bytes": 71955796.00969462,
+        "read_mixed_bytes": 1807092395.9903054,
+        "write_mixed_bytes": 931782016.6825012,
+        "prefix_us": 53.44639108272203,
+        "mixed_us": 2432.9544423295047,
+        "mixed_bus_efficiency": 0.8041000818419384,
+        "wire_to_configured_bandwidth": 1.0
+      },
+      "Ascend970DT": {
+        "previous_us": 265.9617107844046,
+        "latency_us": 265.9617107844046,
+        "base_us": 265.9617107844046,
+        "old_resource_us": 265.9617107844046,
+        "active_aiv": 120,
+        "critical_local_us": {
+          "MTE2": 179.91364211975315,
+          "SIMD": 226.78705717627335,
+          "MTE3": 48.75229773648984
+        },
+        "plan": {
+          "active_aiv": 120,
+          "rows_per_core": 2185,
+          "cols_per_core": 3584,
+          "slice_cols": 512,
+          "active_aic": 0,
+          "tile": [
+            11,
+            3584
+          ],
+          "iterations": 199,
+          "waves": 1,
+          "units": {
+            "read": 77.0,
+            "vector": 164
+          }
+        },
+        "live_bytes": 18923520,
+        "logical_read": 1879048192,
+        "logical_write": 968884224,
+        "dirty_retained_bytes": 62015409.37446791,
+        "read_prefix_bytes": 120272309.08987716,
+        "read_mixed_bytes": 1758775882.9101229,
+        "write_mixed_bytes": 906868814.6255322,
+        "prefix_us": 10.442799236436612,
+        "mixed_us": 230.212904197951,
+        "mixed_bus_efficiency": 0.8041000818419384,
+        "wire_to_configured_bandwidth": 1.0
+      }
+    }
+  }
+}

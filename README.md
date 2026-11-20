@@ -8,9 +8,9 @@
 | 某个算子为什么需要这么久？不同 shape 如何改变结果？ | [建模方法：Vector、Cube、CV 三类流程，含逐算子公式与算例](docs/modeling-strategy.md) |
 | 哪些算子、shape 和库实现实测过？偏差多大？预测有多快？ | [CA 校验与误差：逐算子摘要、逐 shape 数据及查询墙钟](docs/error-analysis.md) |
 
-各算子在 DT、PR 上分别核验 WAPE 和最大误差；偏快、偏慢用同窗带符号偏差与偏快占比描述。Matmul 按目标 L1、输出几何和工作集自动选择分 K、普通多页或权重常驻的多波排程。[逐算子两端误差与方向](results/v0.34/acceptance.md)
+各算子在 DT、PR 上分别核验 WAPE 和最大误差；偏快、偏慢用同窗带符号偏差与偏快占比描述。Matmul 按目标 L1、输出几何和工作集自动选择分 K、普通多页或权重常驻的多波排程。[逐算子两端误差与方向](results/v0.35/acceptance.md)
 
-当前 KDA 验收包含 recurrent 单状态链与 chunk FLA V2。整套模型有 21 条验收路线，双端大 shape 覆盖按同一几何、同一实现的完整设备时间单列。[当前误差表](docs/error-analysis.md) · [逐算子大形覆盖](results/v0.33/large/report.md)
+当前 KDA 验收包含 recurrent 单状态链与 chunk FLA V2。整套模型有 21 条验收路线，双端大 shape 覆盖按同一几何、同一实现的完整设备时间单列。[当前误差表](docs/error-analysis.md) · [逐算子大形覆盖](results/v0.35/large/report.md)
 
 短 query、长 KV 的 Lightning Indexer 按实际 query 分组、每页 MMAD 与每行 TopK 排程。真实 Kimi AttnResFwd 可按 UB 容量为驻留分支预测时延；大 prefill 的接口会标注当前证据为外推。[Indexer 流水算例](docs/examples/lightning_indexer.md) · [AttnRes 的输入、输出与适用层](docs/examples/attn_res_fwd.md)
 
@@ -47,7 +47,7 @@ print(result.latency_us, result.work["cube_ops"], result.work["logical_read_byte
 
 维护 960、970、980 等架构情景时，每个目标使用一份 JSON，分别填写按位宽区分的两类算力、核数、频率、外存容量和带宽。内置 `Ascend970DT` 情景为 120 Cube / 120 Vector、1.8 GHz、288 GB、14.4 TB/s；其中 16 位 Vector 峰值 110.592 TOP/s 已含双发射。这些是架构假设。调用方通过 `extrapolated` 状态识别外推，并决定是否将其交给事件调度器。[970DT 配置及逐项来源](configs/chips/Ascend970DT.json) · [自定义芯片示例](configs/chips/scenario-example.json) · [字段、单位和返回合同](docs/integration.md)
 
-安装版实际 API 的逐输入墙钟、不同 shape 与完整 CA 窗口覆盖可在 v0.32 发布记录核对。时间按进程内首次遇到该组参数的一次调用统计。[查询开销](results/v0.32/wheel-check.json) · [按算子归档的双端误差](results/v0.32/acceptance.md)
+安装版的 3,958 次进程内调用实测中位 0.174 ms，P95 为 3.692 ms，最大 18.382 ms。计时包含单次算子估计或有序流推进，进程启动与离线 CA 采集分别记录。[查询开销](results/v0.34/wheel-check.json) · [按算子归档的双端误差](results/v0.35/acceptance.md)
 
 ## 可预测的算子
 
