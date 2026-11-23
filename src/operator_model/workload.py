@@ -17,6 +17,8 @@ _MOE = {_GMM1, "gmm2", "moe_ffn"}
 def default_dtype(op):
     """Primary input storage dtype used in the reference kernel call."""
     op = ALIASES.get(op, op)
+    if op == 'routed_grouped_matmul':
+        return 'mxfp4'
     if op in _MOE:
         return "fp8_e4m3fn"
     return "fp32" if op in ("mhc_sinkhorn", "moe_gating_top_k", "sigmoid_fp32") else "bf16"
@@ -165,6 +167,23 @@ def account_work(op, shape, attrs=None):
     op = ALIASES.get(op, op)
     attrs = attrs or {}
     dtype = str(attrs.get("dtype", default_dtype(op))).lower()
+    if op in ('cache_load', 'candidate_filtered_indexer', 'routed_grouped_matmul'):
+        call = {key: value for key, value in attrs.items() if key != 'dtype'}
+        if op == 'routed_grouped_matmul':
+            from operator_model.operators.moe.routed_grouped_matmul import describe
+            return describe(shape, dtype, call)[0]
+        if op == 'cache_load':
+            from operator_model.operators.vector.cache_load import describe
+            return describe(shape, dtype, call)[0]
+        from operator_model.operators.attention.candidate_indexer import describe
+        if dtype not in ('bf16', 'bfloat16'):
+            raise ValueError('candidate_filtered_indexer requires BF16 scoring inputs')
+        return describe(shape, call)[0]
+    if op == "quant_mxfp4":
+        from operator_model.operators.quant.mxfp4 import mx4_work
+        if dtype not in ("bf16", "bfloat16"):
+            raise ValueError("quant_mxfp4 requires BF16 input")
+        return mx4_work(shape, {k: v for k, v in attrs.items() if k != "dtype"})
     if op == "mhc_post" and attrs.get("implementation") == "vllm_hc_post":
         if dtype != "bf16":
             raise ValueError("vLLM HcPost accounting expects BF16 activations and FP32 coefficients")

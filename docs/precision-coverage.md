@@ -6,8 +6,8 @@
 |---|---|---|---|
 | 稠密 Matmul | BF16；MX A4W4 原生和 MX A8W4 融合展开，均输出 BF16 | 两条 MX 路线均已逐元素验算，并核对实际派发 ELF 与 MMAD 输入 | 两端均有冻结独立窗，最新样本数及 WAPE 见[总误差表](error-analysis.md) |
 | 注意力 | `fa` 的 BF16 Q/K/V 路线 | A8C8 全量化推理；A4C4 有独立的块稀疏算子；分页稠密 A4C4、A8C4 需另找实现或建组合 | 低精度 FA 均 N/A |
-| 独立量化 / 反量化 | `quant` 的 BF16 → MXFP8 E4M3FN + E8M0，block32 | MXFP4、另一种 MXFP8、独立 AntiMX、普通整数动态量化等 | 表中已校准的 `quant` 以外均 N/A |
-| MoE | `grouped_matmul_swiglu_quant_v2`、`gmm2`、`moe_ffn` 的 MXFP8 × MXFP8；`moe_gating_top_k` 的 FP32 路由打分 | MX A4W4、MX A8W4 的专家 GMM1 融合和 GMM2；部分整数 GMM 可单测 | 新的 W4 专家、W4 整链均 N/A |
+| 独立量化 / 反量化 | `quant` 计时 BF16 → MXFP8 E4M3FN；`quant_mxfp4` 估计 BF16 → packed E2M1，均为 block32 E8M0 | 另一种 MXFP8、独立 AntiMX、普通整数动态量化。两种独立 cache 展开格式已可估算读写量 | FP4 已冻结并在两端各验证 4 个 shape，价格沿用 950 传输参数；独立 cache 展开耗时 N/A。[FP4 逐窗](errors/quant_mxfp4.md) · [CacheLoad](examples/cache_load.md) |
+| MoE | `grouped_matmul_swiglu_quant_v2`、`gmm2`、`moe_ffn` 的 MXFP8 × MXFP8；`moe_gating_top_k` 的 FP32 路由打分 | MX A4W4、MX A8W4 的专家 GMM1 融合和 GMM2；部分整数 GMM 可单测 | 路由 A4W4 单个投影可核算工作量，W4 专家和整链的 CA 耗时均 N/A |
 
 这里的「候选」表示能在本机找到接口或目标芯片的注册项，须再验证选定 shape 的 tiling、输出和完整指令窗。970DT 均为架构外推；表中 N/A 的路线尚无可声明的跨代误差。[调用契约](integration.md) · [双端实测误差](error-analysis.md) · [稠密 MX 收据](../calibration/reference/mx-matmul.json)
 
@@ -31,7 +31,7 @@
 
 | 方向 | 本机可核查的实现 | 建模和单测的主要区别 |
 |---|---|---|
-| BF16 / FP16 / FP32 → MXFP4 或 MXFP8 | `aclnnDynamicMxQuant` 的 12 个 OPP 对象覆盖三种源精度与 E2M1、E1M2、E4M3FN、E5M2 四种目的格式。发布模型仅计时 BF16 → E4M3FN。 | 动态 MX 要做每组归约、生成 E8M0、缩放与转换。FP4 每个字节打包两个值，Y 写回、scale 写回和尾块填充分别计数。相同 R/C 的 BF16→E2M1 与既有 E4M3FN case 可作低成本对照。 |
+| BF16 / FP16 / FP32 → MXFP4 或 MXFP8 | `aclnnDynamicMxQuant` 的 12 个 OPP 对象覆盖三种源精度与 E2M1、E1M2、E4M3FN、E5M2 四种目的格式。发布模型计时 BF16 → E4M3FN 和 BF16 → E2M1 两条末轴 block32 路线。E2M1 的启动与传输参数借自 FP8，已用独立 FP4 CA 核对。 | 动态 MX 要做每组归约、生成 E8M0、缩放与转换。FP4 每个字节打包两个值，Y 写回、scale 写回和尾块填充分别计数。相同 R/C 的 BF16→E2M1 与既有 E4M3FN case 可作低成本对照。 |
 | MXFP4 / MXFP8 + E8M0 → BF16 / FP16 / FP32 | `aclnnAntiMxQuant` 有上述四种源、三种目的的 12 个对象。FP4 最后一维要求偶数。 | 输入为载荷和已有 scale；操作包含解包、广播、缩放与高精度写回。输出更宽，需用自己的 MTE3 成本。用正负值、不同组的 scale 做逐元素独立 golden。 |
 | BF16 / FP16 → 整数或普通 8-bit 浮点 | `aclnnDynamicQuantV2` 文档涵盖 INT8、INT4、打包 INT32、E4M3FN、E5M2、HiF8；950 `dynamic_quant/` 中可见 BF16/FP16 的 INT4、INT8 及 8-bit 浮点对象。 | per-token 的 scale/可选 offset 与 MX 的 block scale 形状不同。INT32 容器可以存 8 个 INT4，应按存储格式计流量；分开验证对称/非对称、饱和及尾部。 |
 | 普通低精度 → 浮点 | 安装包 `AscendAntiQuant` 可见 INT8、HiF8、E4M3FN、E5M2 分别到 FP16/FP32 的对象。更广的跨产品文档列出 INT4/INT32，但本次未确认 950 的直接整数 4-bit 反量化派发。 | 确认 scale/offset、广播轴及输出类型；独立算子计入设备启动和 GM 写回，融合反量化按实际落点计 UB/L1 交接。权重常驻预处理另计。 |

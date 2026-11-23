@@ -7,7 +7,7 @@ from operator_model.workload import account_work, default_dtype
 class TestWorkloadAccounting(unittest.TestCase):
     def test_each_reference_route_counts_its_tensor_contract(self):
         shapes = {
-            "quant": (9, 128), "rmsnorm": (2, 6144), "matmul": (9, 128, 256),
+            "quant": (9, 128), "quant_mxfp4": (9, 128), "rmsnorm": (2, 6144), "matmul": (9, 128, 256),
             "addmm": (9, 128, 256), "fa": (9, 512, 64),
             "lightning_indexer": (1, 9, 1024, 8, 128), "mhc": (8, 4, 512),
             "mhc_pre": (8, 4, 512), "mhc_pre_sinkhorn": (8, 4, 4096),

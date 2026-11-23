@@ -2,11 +2,14 @@
 from operator_model.profiles.stage_model import align, ceildiv, quant_partition
 
 
-def quant_plan(shape, capacity, ub_bytes):
+def quant_plan(shape, capacity, ub_bytes, *, output_bits=8):
     rows, cols = shape
     core = quant_partition(rows, cols, capacity)
     # Reserve 2 KiB of UB then fit eight block32 groups per buffer quantum.
-    max_groups = ((ub_bytes-2048)//(256*6+8*2*5))*8
+    if output_bits not in (4, 8):
+        raise ValueError('Block32 quant tiling supports FP4 or FP8 output')
+    # Two BF16 inputs cost 4 B per element; two packed outputs cost 1 or 2 B.
+    max_groups = ((ub_bytes-2048)//(256*(4+output_bits//4)+8*2*5))*8
     if max_groups < 2:
         raise ValueError('UB capacity is insufficient for a quant tile')
     groups = ceildiv(core['cols_per_core'],32)

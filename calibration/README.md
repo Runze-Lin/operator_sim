@@ -68,6 +68,9 @@ python -m calibration.lookup matmul --shape 32768 128 512
 python -m calibration.lookup kda_chunk --contract fla_kda_v2
 python -m calibration.verify
 python -m calibration.verify --reprice
+python -m calibration.report_pages --check
 ```
 
 `verify` 从逐窗口重新计算全部合同的统计值。加上 `--reprice` 会调用已安装后端，为每个窗口分别运行该 950 SKU 和 970DT，并验证与记录中的预测同值。稠密 MX 两条精度路线的验证另有同一 V5 接口的[采集驱动与用法](mx_matmul/README.md)。239 个有序 mHC Post 样例带有真实启动前缀。设备真值、模型墙钟和 970 外推各自单列。原始 trace 可以留在外部证据存储，通过每个 stage 的 SHA-256 定位。[文件指纹与证据快照](reference/manifest.json) · [逐窗 JSONL](reference/windows.jsonl) · [统计](reference/summary.json) · [大形、部分证据与外推](reference/large-shapes.json) · [整体误差手册](../docs/error-analysis.md)
+
+逐合同页面从发布的窗口清单重建。执行 `python -m calibration.report_pages` 写入各 shape 的 950 CA、设备预测、纯 Roofline 等效利用率和 970DT 外推。两次 packed FP4 量化采集分别有预登记冻结，核对每个输出 nibble、每个 scale 槽、发射核数、trace 身份与最终退休时刻。[逐 shape 明细](../docs/errors/README.md) · [FP4 量化的采集命令](../docs/examples/quant-mxfp4.md)

@@ -1,0 +1,535 @@
+{
+  "freeze": {
+    "kind": "freeze",
+    "schema": 1,
+    "model_version": "1.4.0",
+    "package_sha256": "a2bd51d71f10955639fd098134377e891d8ba0126e6b897747c8cfac6a3c2a76",
+    "chips": {
+      "Ascend950DT_9582": {
+        "name": "Ascend950DT_9582",
+        "frequency_ghz": 1.65,
+        "cube_cores": 32,
+        "vector_cores": 64,
+        "cube_tops": {
+          "32": null,
+          "16": 432,
+          "8": 865,
+          "4": 1730
+        },
+        "vector_tops": {
+          "32": 27,
+          "16": 54,
+          "8": 54,
+          "4": null
+        },
+        "hbm_capacity_gb": 103.079215104,
+        "hbm_bandwidth_gbs": 4000,
+        "details": {
+          "ub_bytes": 253952,
+          "rms_output_retained_fraction": 1.0,
+          "l1_bytes": 524288,
+          "l2_bytes": 134217728,
+          "l0a_bytes": 65536,
+          "l0b_bytes": 65536,
+          "l0c_bytes": 262144,
+          "quant_launch_cycles": 4686.5,
+          "quant_prefetch_launch_cycles": 3747,
+          "quant_fragment_launch_cycles": 4686.5,
+          "quant_fragment_frontend_cycles": 1450.0,
+          "quant_vf_dependency_cycles": 23,
+          "quant_fragment_vector_cycles": 144.86792452830196,
+          "quant_read_latency_cycles": 1029.7401547091642,
+          "quant_loop_work_ops": 5962.692967409948,
+          "quant_arrival_log2_cycles": 219.92134595794607
+        },
+        "sources": {
+          "frequency_ghz,core_counts,capacity,buffer_sizes": "CANN 9.2.1 aarch64-linux/data/platform_config/Ascend950DT_9582.ini, SHA256 b8e7d61780056889e795639504530ecacb2b759ad1602e929b863d837fdf0099. Capacity in decimal GB computed from memory_size bytes.",
+          "cube_tops,vector_tops": "Huawei 950 NPU architecture white paper table 3-1, matched by core count. Cube 16=BF16/FP16, 8=FP8/INT8, 4=MXFP4. Vector 32=FP32, 16=FP16/BF16, 8=INT8. Unquoted formats are unknown (null). TF32 is distinct from strict FP32.",
+          "hbm_bandwidth_gbs": "DT family peak, white paper table 3-1, GB/s decimal.",
+          "white_paper": "https://public-download.obs.cn-east-2.myhuaweicloud.com/ascend/%E6%98%87%E8%85%BE950%20NPU%E6%9E%B6%E6%9E%84%E7%99%BD%E7%9A%AE%E4%B9%A6.pdf",
+          "details.rms_output_retained_fraction": "Scenario assumption. Dirty RMS outputs may remain in available L2 at kernel retirement. No direct writeback counter. Use 0 for forced external drain; 1 is capped by target spare L2 after active input buffers.",
+          "details.quant_*": "v0.19 stage calibration from archived Ascend950DT_9582 official CA. Earliest payload issue conditioned on single tile vs pipelined, response cycles and SIMD entry/exit clocks. quant_loop_work_ops is the common DT stage slope converted to peak-equivalent operations. These prices also include simulator dispatch behaviour."
+        },
+        "inherited_fields": [],
+        "kernel_overhead_us": 0.0
+      },
+      "Ascend970DT": {
+        "name": "Ascend970DT",
+        "frequency_ghz": 1.8,
+        "cube_cores": 120,
+        "vector_cores": 120,
+        "cube_tops": {
+          "32": null,
+          "16": 1770,
+          "8": 3540,
+          "4": 14160
+        },
+        "vector_tops": {
+          "32": 55.296,
+          "16": 110.592,
+          "8": 110.592,
+          "4": null
+        },
+        "hbm_capacity_gb": 288,
+        "hbm_bandwidth_gbs": 14400,
+        "details": {
+          "ub_bytes": 253952,
+          "rms_output_retained_fraction": 1.0,
+          "l1_bytes": 524288,
+          "l0a_bytes": 65536,
+          "l0b_bytes": 65536,
+          "l0c_bytes": 262144,
+          "quant_launch_cycles": 4686.5,
+          "quant_prefetch_launch_cycles": 3747,
+          "quant_fragment_launch_cycles": 4686.5,
+          "quant_fragment_frontend_cycles": 1450.0,
+          "quant_vf_dependency_cycles": 23,
+          "quant_fragment_vector_cycles": 144.86792452830196,
+          "quant_read_latency_cycles": 1029.7401547091642,
+          "quant_loop_work_ops": 5962.692967409948,
+          "quant_arrival_log2_cycles": 219.92134595794607,
+          "l2_bytes": 200000000,
+          "l2_bandwidth_gbs": 30000,
+          "fa_aiv_per_aic": 1
+        },
+        "sources": {
+          "scope": "User-provided prospective architecture scenario, one scheduling domain. All 970DT timings are extrapolations; no target CA or measurements used.",
+          "cube_tops": "User scenario: dense 4-bit 14160 TOP/s with 16:8:4-bit ratio 1:2:8. Strict FP32 unspecified. Availability of a kernel for a given dtype is a separate contract.",
+          "cube_cores,vector_cores,frequency_ghz": "User scenario: 120 AIC and 120 AIV at 1.8 GHz.",
+          "vector_tops.16": "Assumed unchanged 950 vector datapath. 120 cores * 1.8 GHz * 128 scalar MAC per issue * 2 issues/cycle * 2 ops/MAC = 110.592 TFLOP/s. Dual issue is counted once.",
+          "vector_tops.32,vector_tops.8": "Assume the DT FP32:FP16:INT8 vector peak ratios 1:2:2 carry over. The 8-bit field represents INT8, not evidence for FP8 vector arithmetic.",
+          "hbm_capacity_gb,hbm_bandwidth_gbs,details.l2_bytes,details.l2_bandwidth_gbs": "User scenario: 288 decimal GB, 14.4 decimal TB/s; 200 decimal MB and 30 decimal TB/s aggregate L2 bandwidth.",
+          "details.ub_bytes,details.l1_bytes,details.l0a_bytes,details.l0b_bytes,details.l0c_bytes": "Unspecified per-core capacities inherit 950DT from the chip loader (UB 248 KiB).",
+          "mte": "Unspecified MTE1/2/3 use the applicable resource model's 950 effective per-core bytes/cycle and latency/issue defaults. Shared L2 and off-chip limits come from this config. Other operators retain the documented DT phase projection.",
+          "details.fa_aiv_per_aic": "FA implementation scenario: at most one vector worker per active Cube worker. Hardware core counts alone do not establish kernel binding. Set to 2 for pooled workers."
+        },
+        "inherited_fields": [
+          "details.l0a_bytes",
+          "details.l0b_bytes",
+          "details.l0c_bytes",
+          "details.l1_bytes",
+          "details.quant_arrival_log2_cycles",
+          "details.quant_fragment_frontend_cycles",
+          "details.quant_fragment_launch_cycles",
+          "details.quant_fragment_vector_cycles",
+          "details.quant_launch_cycles",
+          "details.quant_loop_work_ops",
+          "details.quant_prefetch_launch_cycles",
+          "details.quant_read_latency_cycles",
+          "details.quant_vf_dependency_cycles",
+          "details.rms_output_retained_fraction",
+          "details.ub_bytes"
+        ],
+        "kernel_overhead_us": 0.0
+      },
+      "Ascend950PR_957b": {
+        "name": "Ascend950PR_957b",
+        "frequency_ghz": 1.65,
+        "cube_cores": 28,
+        "vector_cores": 56,
+        "cube_tops": {
+          "32": null,
+          "16": 378,
+          "8": 756,
+          "4": 1513
+        },
+        "vector_tops": {
+          "32": 23,
+          "16": 47,
+          "8": 47,
+          "4": null
+        },
+        "hbm_capacity_gb": 120.259084288,
+        "hbm_bandwidth_gbs": 1400,
+        "details": {
+          "rms_output_retained_fraction": 1.0,
+          "ub_bytes": 253952,
+          "l1_bytes": 524288,
+          "l2_bytes": 117440512,
+          "l0a_bytes": 65536,
+          "l0b_bytes": 65536,
+          "l0c_bytes": 262144,
+          "matmul_initial_read_gbs": 1562.3956990076115,
+          "quant_launch_cycles": 4253.0,
+          "quant_prefetch_launch_cycles": 3365.5,
+          "quant_fragment_launch_cycles": 4253.0,
+          "quant_fragment_frontend_cycles": 1099.5,
+          "quant_vf_dependency_cycles": 23.0,
+          "quant_fragment_vector_cycles": 208.18779342723013,
+          "quant_read_latency_cycles": 954.1200773545821,
+          "quant_loop_work_ops": 5962.692967409948,
+          "quant_arrival_log2_cycles": 227.76564103929616,
+          "rms_first_scalar_cycles": 2580.5,
+          "rms_first_payload_cycles": 2776.0
+        },
+        "sources": {
+          "details.matmul_initial_read_gbs": "Observed lower bound on logical GM read service, GB/s, from separate 950PR Cast/Sigmoid CA windows (matmul_supply parameter set). Used only for capacity-bounded initial operand read credit. Includes cache service; physical HBM bandwidth is configured separately.",
+          "frequency_ghz,core_counts,capacity,buffer_sizes": "CANN 9.2.1 aarch64-linux/data/platform_config/Ascend950PR_957b.ini, SHA256 afa39753ab256048cc190060b1fcc8ed73c5b086f93563f2a73560a2870a8da0. Capacity in decimal GB computed from memory_size bytes.",
+          "cube_tops,vector_tops": "Huawei 950 NPU architecture white paper table 3-1, matched by core count. Cube 16=BF16/FP16, 8=FP8/INT8, 4=MXFP4. Vector 32=FP32, 16=FP16/BF16, 8=INT8. Unquoted formats are unknown (null). TF32 is distinct from strict FP32.",
+          "hbm_bandwidth_gbs": "PR 112 GiB SKU tier inferred from package memory_size and spec table; bandwidth not independently measured, white paper table 3-1, GB/s decimal.",
+          "white_paper": "https://public-download.obs.cn-east-2.myhuaweicloud.com/ascend/%E6%98%87%E8%85%BE950%20NPU%E6%9E%B6%E6%9E%84%E7%99%BD%E7%9A%AE%E4%B9%A6.pdf",
+          "details.quant_*": "v0.19 stage calibration from archived Ascend950PR_957b official CA. Earliest payload issue conditioned on single tile vs pipelined, response cycles and SIMD entry/exit clocks. quant_loop_work_ops is the common DT stage slope converted to peak-equivalent operations. These prices also include simulator dispatch behaviour.",
+          "details.rms_first_scalar_cycles,details.rms_first_payload_cycles": "v0.19 paired RMSNorm isolated first launches in CANN 9.2.1. Seven archived v0.17/v0.18 DT/PR same-partition, identical-binary shapes. Median PR minus DT relative to DT phase price: exclusive terminal-AIV SCALAR -353 cycles; earliest input DMA issue -194 cycles at 1.65 GHz. Simulator and kernel dependent; no PR whole-window fit."
+        },
+        "inherited_fields": [
+          "details.rms_output_retained_fraction"
+        ],
+        "kernel_overhead_us": 0.0
+      }
+    },
+    "created_utc": "2026-11-23T09:19:58.465119+00:00",
+    "cases": [
+      {
+        "attrs": {
+          "group_size": 32,
+          "round_mode": "round"
+        },
+        "dtype": "bf16",
+        "prefix": null,
+        "contract": "quant_mxfp4",
+        "id": "quant4-9x128-dt",
+        "op": "quant_mxfp4",
+        "shape": [
+          9,
+          128
+        ],
+        "chip": "Ascend950DT_9582",
+        "api": "aclnnDynamicMxQuant",
+        "outputs": {
+          "Y": 1152,
+          "scale": 36
+        },
+        "predicted_us": 4.12904010780972,
+        "query_ms": 5.00411,
+        "extrapolated_970dt_us": 3.7849320266980513
+      },
+      {
+        "attrs": {
+          "group_size": 32,
+          "round_mode": "round"
+        },
+        "dtype": "bf16",
+        "prefix": null,
+        "contract": "quant_mxfp4",
+        "id": "quant4-9x128-pr",
+        "op": "quant_mxfp4",
+        "shape": [
+          9,
+          128
+        ],
+        "chip": "Ascend950PR_957b",
+        "api": "aclnnDynamicMxQuant",
+        "outputs": {
+          "Y": 1152,
+          "scale": 36
+        },
+        "predicted_us": 3.835652618936691,
+        "query_ms": 0.26243,
+        "extrapolated_970dt_us": 3.7849320266980513
+      }
+    ],
+    "sha256": "d1ee9dbb3daeeb08d987977bb28968203b4d42866129f7a936c198096f54064e"
+  },
+  "observations": [
+    {
+      "receipt": {
+        "schema": 1,
+        "kind": "ca-receipt",
+        "case": {
+          "id": "quant4-9x128-dt",
+          "op": "quant_mxfp4",
+          "contract": "quant_mxfp4",
+          "chip": "Ascend950DT_9582",
+          "shape": [
+            9,
+            128
+          ],
+          "attrs": {
+            "group_size": 32,
+            "round_mode": "round"
+          },
+          "dtype": "bf16",
+          "api": "aclnnDynamicMxQuant",
+          "outputs": {
+            "Y": 1152,
+            "scale": 36
+          },
+          "prefix": null
+        },
+        "provider": "CANN 9.2.1 ops-nn",
+        "timing": "all-core-instruction",
+        "complete": true,
+        "started_utc": "2026-11-23T09:22:35.458970+00:00",
+        "finished_utc": "2026-11-23T09:23:29.457940+00:00",
+        "run_log_sha256": "89bd505aacfbf58e07e5d3c62cb6edae9ccff73ef739bb3170dee67c520f1341",
+        "correctness": {
+          "Y": {
+            "checked": 1152,
+            "bad": 0
+          },
+          "scale": {
+            "checked": 36,
+            "bad": 0
+          }
+        },
+        "stages": [
+          {
+            "kernel": "DynamicMxQuant_bf16toe2m1_high_performance_33_mix_aiv",
+            "kernel_binary_sha256": "8dc1d6b7c996f735e54531cce19bb7a2af9ab4dc9574cca0dfb9a82693720107",
+            "physical_shard_sha256": {
+              "core0.veccore0": "8b457535c437d4d3e58d845e2002a8333a3d7d3fcb3f6204114c9dddf9587400",
+              "core0.veccore1": "004de4070f842c39d79dcaab241edb7b4f3ba22fbf32cc6713fa1fd58b400eaf",
+              "core1.veccore0": "a78e8a275811dd6876a8d32318344dfd238cfb90a855bd698948a484e5c0289c",
+              "core1.veccore1": "81be369d7458b5bd216040cd9bbeea2901416d7ebe0e2054872e43ddf1acf65f",
+              "core16.veccore0": "2612994cac6d406b602010e9c11d4efefc06bab2fc7e5c4dbd2f4118aba4ba27",
+              "core16.veccore1": "739f5a30d18e81e92ef3af724546122e8b3da4725c66c2c4a00666a99e3ae411",
+              "core17.veccore0": "f5db19a19007130042cdd9527799187fca161ce51b9949731fef33d3e569ace4",
+              "core17.veccore1": "3672ac0ff66afd2dc8204659d674af064e8a9c3f8e0b793bb041f16983777aa7",
+              "core2.veccore0": "54fa60c607278f4d3efd23820094a83d311a72d5e7dfab9d05c6567e0754e4f5"
+            },
+            "trace_sha256": "f0cb3a8d68592fefcbc9bef4cb46c650af7ef8c82c9700ab063bac5f5ea90967",
+            "ticks_per_us": 1650,
+            "launched_cores": [
+              "core0.veccore0",
+              "core0.veccore1",
+              "core1.veccore0",
+              "core1.veccore1",
+              "core16.veccore0",
+              "core16.veccore1",
+              "core17.veccore0",
+              "core17.veccore1",
+              "core2.veccore0"
+            ],
+            "cores": {
+              "core0.veccore0": {
+                "first_tick": 8349,
+                "end_tick": 13887,
+                "retire_tick": 13894,
+                "end_count": 1
+              },
+              "core0.veccore1": {
+                "first_tick": 8443,
+                "end_tick": 13737,
+                "retire_tick": 13744,
+                "end_count": 1
+              },
+              "core1.veccore0": {
+                "first_tick": 8458,
+                "end_tick": 13727,
+                "retire_tick": 13734,
+                "end_count": 1
+              },
+              "core1.veccore1": {
+                "first_tick": 8452,
+                "end_tick": 13298,
+                "retire_tick": 13305,
+                "end_count": 1
+              },
+              "core16.veccore0": {
+                "first_tick": 8808,
+                "end_tick": 14517,
+                "retire_tick": 14524,
+                "end_count": 1
+              },
+              "core16.veccore1": {
+                "first_tick": 8779,
+                "end_tick": 14651,
+                "retire_tick": 14658,
+                "end_count": 1
+              },
+              "core17.veccore0": {
+                "first_tick": 8623,
+                "end_tick": 14797,
+                "retire_tick": 14804,
+                "end_count": 1
+              },
+              "core17.veccore1": {
+                "first_tick": 8707,
+                "end_tick": 14370,
+                "retire_tick": 14377,
+                "end_count": 1
+              },
+              "core2.veccore0": {
+                "first_tick": 8415,
+                "end_tick": 14061,
+                "retire_tick": 14068,
+                "end_count": 1
+              }
+            }
+          }
+        ],
+        "freeze_sha256": "d1ee9dbb3daeeb08d987977bb28968203b4d42866129f7a936c198096f54064e"
+      },
+      "measurement": {
+        "schema": 1,
+        "kind": "measurement",
+        "freeze_sha256": "d1ee9dbb3daeeb08d987977bb28968203b4d42866129f7a936c198096f54064e",
+        "case_id": "quant4-9x128-dt",
+        "identity": [
+          "f0cb3a8d68592fefcbc9bef4cb46c650af7ef8c82c9700ab063bac5f5ea90967"
+        ],
+        "kernel": [
+          "DynamicMxQuant_bf16toe2m1_high_performance_33_mix_aiv"
+        ],
+        "provider": "CANN 9.2.1 ops-nn",
+        "receipt_sha256": "a6ab96d99cb389464292b1680c1a6210dc214d71c0c7c9dbca046964f666b145",
+        "data_role": "prospective",
+        "ca_us": 3.912121212121212,
+        "sha256": "e06109533589fae3dcec88face5f54704d826fde5849992149cb636632f23e01"
+      },
+      "wall_seconds": 53.99950609006919,
+      "probe_sha256": "6f8113cb6b97f8748dfbfa7a2fc41a674e105bb470afced4b45fed12b4975a8e",
+      "query_970_ms": 2.0246
+    },
+    {
+      "receipt": {
+        "schema": 1,
+        "kind": "ca-receipt",
+        "case": {
+          "id": "quant4-9x128-pr",
+          "op": "quant_mxfp4",
+          "contract": "quant_mxfp4",
+          "chip": "Ascend950PR_957b",
+          "shape": [
+            9,
+            128
+          ],
+          "attrs": {
+            "group_size": 32,
+            "round_mode": "round"
+          },
+          "dtype": "bf16",
+          "api": "aclnnDynamicMxQuant",
+          "outputs": {
+            "Y": 1152,
+            "scale": 36
+          },
+          "prefix": null
+        },
+        "provider": "CANN 9.2.1 ops-nn",
+        "timing": "all-core-instruction",
+        "complete": true,
+        "started_utc": "2026-11-23T09:22:55.923932+00:00",
+        "finished_utc": "2026-11-23T09:23:47.670673+00:00",
+        "run_log_sha256": "1ba54b0b09463f1a66c529bb67e8b3bc5fc9b77cf4292c84e2950f5c1d1bbc2a",
+        "correctness": {
+          "Y": {
+            "checked": 1152,
+            "bad": 0
+          },
+          "scale": {
+            "checked": 36,
+            "bad": 0
+          }
+        },
+        "stages": [
+          {
+            "kernel": "DynamicMxQuant_bf16toe2m1_high_performance_33_mix_aiv",
+            "kernel_binary_sha256": "8dc1d6b7c996f735e54531cce19bb7a2af9ab4dc9574cca0dfb9a82693720107",
+            "physical_shard_sha256": {
+              "core0.veccore0": "c9583e04de77a6205946e4cebde3cca112a9affffcacbc361c0280e98b1aee6a",
+              "core0.veccore1": "f80299e3573f70d9aa2ac270697fe8629724dce6f4834606e2cb1e7fd8bc479a",
+              "core1.veccore0": "d36c398a2ecfb57e1d088c1095c26a715be0c543da93b3db8b680fe90ad552c6",
+              "core1.veccore1": "b606cf62629e75fa153790c5cd181e919ab69b964fc10f803dd7f960b329b53d",
+              "core16.veccore0": "ad2d00997dd11b8a65df9d70fdc0e3200256094a41d3a24ffcab349e1f4a8ebf",
+              "core16.veccore1": "689044da7abc4e2892140c88700e491f752a85650e9f859f795613d052c329c1",
+              "core17.veccore0": "4cae623f58e3effa0334dbe97f57d8a20aedb3450a26e097cab2ce8f71c8d8ed",
+              "core17.veccore1": "9cae328b2695965a8225d83e1e1dcff6c5dc6c922d3b7d643aeb2012753b94fd",
+              "core2.veccore0": "91c4195f5e9f9604bababdfa40403892eaf670d3a9ba40a7beb0bbe195aa006d"
+            },
+            "trace_sha256": "a41bece15613fba5c0a2f41509c1e350027c1a04b3acd0d582d1283c1a36b776",
+            "ticks_per_us": 1650,
+            "launched_cores": [
+              "core0.veccore0",
+              "core0.veccore1",
+              "core1.veccore0",
+              "core1.veccore1",
+              "core16.veccore0",
+              "core16.veccore1",
+              "core17.veccore0",
+              "core17.veccore1",
+              "core2.veccore0"
+            ],
+            "cores": {
+              "core0.veccore0": {
+                "first_tick": 7272,
+                "end_tick": 13168,
+                "retire_tick": 13175,
+                "end_count": 1
+              },
+              "core0.veccore1": {
+                "first_tick": 7377,
+                "end_tick": 12495,
+                "retire_tick": 12502,
+                "end_count": 1
+              },
+              "core1.veccore0": {
+                "first_tick": 7354,
+                "end_tick": 12180,
+                "retire_tick": 12187,
+                "end_count": 1
+              },
+              "core1.veccore1": {
+                "first_tick": 7359,
+                "end_tick": 11945,
+                "retire_tick": 11952,
+                "end_count": 1
+              },
+              "core16.veccore0": {
+                "first_tick": 7612,
+                "end_tick": 12790,
+                "retire_tick": 12797,
+                "end_count": 1
+              },
+              "core16.veccore1": {
+                "first_tick": 7690,
+                "end_tick": 12922,
+                "retire_tick": 12929,
+                "end_count": 1
+              },
+              "core17.veccore0": {
+                "first_tick": 7715,
+                "end_tick": 13638,
+                "retire_tick": 13645,
+                "end_count": 1
+              },
+              "core17.veccore1": {
+                "first_tick": 7827,
+                "end_tick": 13479,
+                "retire_tick": 13486,
+                "end_count": 1
+              },
+              "core2.veccore0": {
+                "first_tick": 7330,
+                "end_tick": 12326,
+                "retire_tick": 12333,
+                "end_count": 1
+              }
+            }
+          }
+        ],
+        "freeze_sha256": "d1ee9dbb3daeeb08d987977bb28968203b4d42866129f7a936c198096f54064e"
+      },
+      "measurement": {
+        "schema": 1,
+        "kind": "measurement",
+        "freeze_sha256": "d1ee9dbb3daeeb08d987977bb28968203b4d42866129f7a936c198096f54064e",
+        "case_id": "quant4-9x128-pr",
+        "identity": [
+          "a41bece15613fba5c0a2f41509c1e350027c1a04b3acd0d582d1283c1a36b776"
+        ],
+        "kernel": [
+          "DynamicMxQuant_bf16toe2m1_high_performance_33_mix_aiv"
+        ],
+        "provider": "CANN 9.2.1 ops-nn",
+        "receipt_sha256": "365ff9e556bba21096e52a6cf052d8faa2ab12e0dcc4fb1852c65489842d1e74",
+        "data_role": "prospective",
+        "ca_us": 3.8624242424242423,
+        "sha256": "524ee99af5e749b8260aab6dd7eb1d6baded9a4e3b6b6ee96a71ab4e28475468"
+      },
+      "wall_seconds": 51.74722439004108,
+      "probe_sha256": "6f8113cb6b97f8748dfbfa7a2fc41a674e105bb470afced4b45fed12b4975a8e",
+      "query_970_ms": 0.28244
+    }
+  ]
+}

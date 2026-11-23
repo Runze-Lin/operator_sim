@@ -7,12 +7,13 @@ from operator_model.operators.quant.repeat import price as quant_time
 from operator_model.profiles.scalar_query import ReferencePricing
 from operator_model.scheduling.cases import Case
 
-VECTOR = {'quant', 'rmsnorm', 'mhc_sinkhorn', 'mhc_post', 'kda_recurrent', 'moe_gating_top_k', 'cast_bf16_fp32', 'attn_res_fwd', 'sigmoid_fp32'}
+VECTOR = {'quant', 'quant_mxfp4', 'rmsnorm', 'mhc_sinkhorn', 'mhc_post', 'kda_recurrent', 'moe_gating_top_k', 'cast_bf16_fp32', 'attn_res_fwd', 'sigmoid_fp32'}
 CUBE = {'matmul', 'addmm', 'gmm2'}
 FUSION = {'fa', 'lightning_indexer', 'mhc_pre', 'mhc_pre_sinkhorn', 'mhc',
           'kda_chunk', 'grouped_matmul_swiglu_quant_v2', 'moe_ffn'}
 ALIASES = {'rms_norm':'rmsnorm', 'lightening_indexer':'lightning_indexer',
-           'lightningindexer':'lightning_indexer', 'groupedmatmulswiglugmm':'moe_ffn'}
+           'lightningindexer':'lightning_indexer', 'groupedmatmulswiglugmm':'moe_ffn',
+           'inference::cache_load':'cache_load', 'inference::candidate_filtered_indexer':'candidate_filtered_indexer'}
 
 @lru_cache(maxsize=4)
 def _profile(path):
@@ -40,6 +41,12 @@ def predict(op, shape, attrs=None):
             case = Case(op,shape)
             us = quant_time(reference_prices(),case) if op=='quant' else reference_prices().predict_us(case)
             result = {'predicted_us':us}
+        elif op == 'quant_mxfp4':
+            from operator_model.chips import load_chip
+            from operator_model.operators.quant.mxfp4 import price
+            duration, _, diag = price(shape, load_chip(), attrs)
+            result = dict(predicted_us=duration, status='extrapolation', reason='Unfitted FP4 source schedule',
+                          predicted_active_aiv=diag['target_plan']['active_aiv'])
         elif op == 'attn_res_fwd':
             from operator_model.chips import load_chip
             from operator_model.operators.attention.residual_timing import resource_attention

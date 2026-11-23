@@ -1,9 +1,42 @@
 """Check all published windows and optionally reprice them with the installed backend."""
 from argparse import ArgumentParser
 from collections import defaultdict
+import gzip
 from math import isclose
 import json
 from .__main__ import HERE, digest, metrics, predict, require, sha_field, ingest, unseal
+from .__main__ import encoded
+
+
+def packed_quant_rows(path):
+    """Reconstruct the published windows from the pre-acquisition forecast and raw-source receipts."""
+    with (gzip.open(path, 'rt') if path.suffix == '.gz' else path.open()) as source:
+        archive = json.load(source)
+    frozen = unseal(archive['freeze'], 'freeze')
+    cases = {case['id']: case for case in frozen['cases']}
+    for observed in archive['observations']:
+        receipt = observed['receipt']
+        result = ingest(frozen, receipt)
+        require(result == observed['measurement'] and result['data_role'] == 'prospective',
+                'FP4 quant observation differs from its frozen collection')
+        case = cases.pop(result['case_id'])
+        require(case['contract'] == case['op'] == 'quant_mxfp4' and len(receipt['stages']) == 1,
+                'Unexpected FP4 quant contract or launch count')
+        stage, = receipt['stages']
+        shards = stage['physical_shard_sha256']
+        require(set(shards) == set(stage['launched_cores']) and all(sha_field(s) for s in shards.values())
+                and digest(encoded(shards)) == stage['trace_sha256'], 'Invalid physical trace identities')
+        r, c = case['shape']
+        require(case['outputs'] == {'Y': r*c, 'scale': 2*r*((c+63)//64)}
+                and sha_field(observed['probe_sha256']), 'Invalid packed output contract')
+        row = {k: case[k] for k in ('op','contract','chip','shape','dtype','attrs','prefix','api',
+                                    'predicted_us','query_ms','extrapolated_970dt_us')}
+        row.update({k: result[k] for k in ('case_id','freeze_sha256','receipt_sha256','ca_us','kernel','provider','identity')})
+        row.update(data_role='independent', query_970_ms=observed['query_970_ms'],
+                   acquisition_seconds=observed['wall_seconds'],
+                   signed_error_pct=100*(row['predicted_us']/row['ca_us']-1))
+        yield row
+    require(not cases, 'Frozen FP4 quant input missing a qualified receipt')
 
 
 def verify_mx_receipts(path, rows, replay_only=False):
@@ -73,6 +106,14 @@ def verify(reprice=False):
     summary=json.loads((folder/'summary.json').read_bytes())
     rows=[json.loads(line) for line in (folder/'windows.jsonl').read_text().splitlines()]
     require(len(rows)==manifest['protocol_windows'] and len(summary)==manifest['contracts'], 'Manifest counts differ from reference')
+    require(len({(r['chip'], tuple(r['identity'])) for r in rows}) == manifest['distinct_chip_and_stage_signatures'],
+            'Physical signature count differs from manifest')
+    receipts = [row for name in manifest['export_sha256'] if name.startswith('quant-mxfp4-')
+                for row in packed_quant_rows(folder / name)]
+    quant = [r for r in rows if r['contract'] == 'quant_mxfp4']
+    require(len({(r['chip'], tuple(r['shape'])) for r in receipts}) == len(receipts)
+            and sorted(quant,key=lambda r:r['case_id']) == sorted(receipts,key=lambda r:r['case_id']),
+            'FP4 quant windows or independent geometries differ from receipts')
     if 'mx-matmul.json' in manifest['export_sha256']:
         from .mx_matmul.compare import load_comparison, compare, version_pair
         campaigns = []

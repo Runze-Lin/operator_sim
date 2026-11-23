@@ -43,6 +43,12 @@ def _call_attrs(op, attrs, dtype):
     supplied = dict(attrs or {})
     declared = _dtype_name(supplied.pop('dtype')) if 'dtype' in supplied else None
     chosen = _dtype_name(dtype) if dtype is not None else declared or default_dtype(op)
+    if op == 'cache_load':
+        from operator_model.operators.vector.cache_load import canonical_dtype
+        chosen = canonical_dtype(chosen)
+        if declared is not None and canonical_dtype(declared) != chosen:
+            raise ValueError('dtype conflicts with attrs["dtype"]')
+        return supplied, chosen
     if op == 'matmul':
         from operator_model.operators.matmul.mx import canonical_dtype
         declared = canonical_dtype(declared)
@@ -65,7 +71,7 @@ def _rates(work, latency_us, chip):
     read, write = work['logical_read_bytes'], work['logical_write_bytes']
     logical = None if read is None or write is None else read + write
     bits = {'bf16': '16', 'fp16': '16', 'fp32': '32', 'fp8_e4m3fn': '8', 'mxfp4': '4'}
-    def peak_fraction(counts, peaks):
+    def compute_us(counts, peaks):
         ideal_us = 0.
         for dtype, count in counts.items():
             peak = peaks.get(bits.get(dtype))
@@ -73,14 +79,30 @@ def _rates(work, latency_us, chip):
                 return None
             if count:
                 ideal_us += count / (1e6 * peak)
-        return ideal_us / latency_us
+        return ideal_us
 
+    cube = compute_us(work['cube_ops_by_dtype'], chip.cube_tops)
+    vector = compute_us(work['vec_ops_by_dtype'], chip.vector_tops)
+    hbm = None if logical is None else logical / (1000 * chip.hbm_bandwidth_gbs)
+    ceilings = {'Cube': cube, 'Vector': vector, 'HBM': hbm}
+    missing = [name for name, time_us in ceilings.items() if time_us is None]
+    ideal = None if missing else max(ceilings.values())
+    # One common efficiency multiplies all three peaks. Logical tensor traffic
+    # can be served by L2, so the inferred ratio is deliberately uncapped.
+    roofline = {
+        'ideal_us': ideal,
+        'utilization': None if ideal is None else ideal / latency_us,
+        'bound': None if ideal is None else '/'.join(k for k, v in ceilings.items() if v == ideal),
+        'reason': 'Missing peak or logical byte count: ' + ', '.join(missing) if missing else None,
+        'cube_us': cube, 'vector_us': vector, 'hbm_us': hbm,
+    }
     return {
-        'cube_nominal_peak_fraction': peak_fraction(work['cube_ops_by_dtype'], chip.cube_tops),
-        'vector_nominal_peak_fraction': peak_fraction(work['vec_ops_by_dtype'], chip.vector_tops),
+        'cube_nominal_peak_fraction': None if cube is None else cube / latency_us,
+        'vector_nominal_peak_fraction': None if vector is None else vector / latency_us,
         'useful_cube_tops': work['cube_ops'] / latency_us / 1e6,
         'counted_vector_tops': work['vec_ops'] / latency_us / 1e6,
         'logical_io_gbs': None if logical is None else logical / latency_us / 1e3,
+        'roofline': roofline,
     }
 
 
@@ -233,9 +255,12 @@ def _price_resource(op, shape, target, call, dtype):
                     aiv,aic,target.name,work,projected,_rates(work,us,target))
 
 
+_WORK_ONLY = {'candidate_filtered_indexer', 'cache_load', 'routed_grouped_matmul'}
+
+
 def _evaluate(op, shape, attrs, soc, chip, dtype, timing_mode='auto'):
     try:
-        if not isinstance(op, str) or ALIASES.get(op, op) not in VECTOR | CUBE | FUSION:
+        if not isinstance(op, str) or ALIASES.get(op, op) not in VECTOR | CUBE | FUSION | _WORK_ONLY:
             raise ValueError(f'Unknown operator: {op}')
         if not isinstance(shape, Sequence) or isinstance(shape, (str, bytes)):
             raise ValueError('Expected an ordered shape of positive integers')
@@ -270,6 +295,33 @@ def _price_device(op, shape, attrs, target, dtype, timing_mode):
     call, chosen_dtype = _call_attrs(op, attrs, dtype)
     if timing_mode not in ('auto','resource','calibrated'):
         raise ValueError('timing_mode must be auto, resource or calibrated')
+    if op == 'candidate_filtered_indexer':
+        from operator_model.operators.attention.candidate_indexer import describe
+        work, plan = describe(shape, call)
+        return Estimate(None, 'unavailable', 'Missing a device implementation and CA timing for candidate scoring and selection',
+                        chip_name=target.name, work=work, projection=plan), raw
+    if op == 'cache_load':
+        from operator_model.operators.vector.cache_load import describe
+        work, plan = describe(shape, chosen_dtype, call)
+        return Estimate(None, 'unavailable', 'Materialized cache dequantization has no calibrated device schedule',
+                        chip_name=target.name, work=work, projection=plan), raw
+    if op == 'routed_grouped_matmul':
+        from operator_model.operators.moe.routed_grouped_matmul import describe
+        work, plan = describe(shape, chosen_dtype, call)
+        return Estimate(None, 'unavailable', 'Routed MXFP4 expert projection has no calibrated device schedule',
+                        chip_name=target.name, work=work, projection=plan), raw
+    if op == 'quant_mxfp4':
+        from operator_model.operators.quant.mxfp4 import contiguous_input, mx4_work, price
+        if 'input_stride' in call and not contiguous_input(shape, call['input_stride']):
+            return Estimate(None, 'unavailable', 'Strided BF16 input needs a gather or layout-conversion schedule',
+                            chip_name=target.name, work=mx4_work(shape, call)), raw
+        us, work, projection = price(shape, target, call)
+        active = projection['target_plan']['active_aiv']
+        reason = 'FP4 source-loop scenario; 950 transport parameters transferred from MXFP8, no FP4 timing fit'
+        if timing_mode == 'calibrated':
+            return Estimate(None, 'unavailable', reason, active, 0, target.name, work, projection), raw
+        return Estimate(us, 'extrapolated', reason, active, 0, target.name, work,
+                        projection, _rates(work, us, target)), raw
     if op == 'matmul' and chosen_dtype in ('mxfp4', 'fp8_e4m3fn'):
         from operator_model.operators.matmul.mx import price
         us, work, projection, reason = price(shape, target, chosen_dtype, call, timing_mode == 'calibrated')

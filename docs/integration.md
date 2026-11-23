@@ -30,7 +30,7 @@ if r.latency_us is not None:
 | `active_aic`、`active_aiv` | 活跃 Cube/Vector 核数估计，缺少证据可为 None。 |
 | `kernel_count`、`dispatch_overhead_us`、`scheduled_us` | 当前实现的物理发射次数、配置产生的总附加微秒、串行系统排程微秒。缺设备时间时三者为空。已单独模拟发射或异步队列的框架使用 `latency_us`。 |
 | `work` | `cube_ops` 和 `vec_ops` 为有用标量运算计数，另按 dtype、Vector 运算类型细分。`logical_read_bytes`、`logical_write_bytes` 按张量边界计数，实际 HBM 流量须另有证据。 |
-| `rates` | 工作量除以设备时间所得的 TOP/s 和逻辑 GB/s。名义峰值比例与芯片配置有关。 |
+| `rates` | 工作量除以设备时间所得的 TOP/s 和逻辑 GB/s。`rates["roofline"]` 给出纯 Roofline 的各项理想 µs、控制项和等效利用率（比例）。[公式和分母](error-analysis.md#纯-roofline-要用多少利用率) |
 | `projection` | 路线可提供分块方案、波数、阶段耗时、流水瓶颈及继承参数。诊断键随算子变化，通常调度只依赖上面的公共字段。 |
 
 ## 给出正确的本卡 shape
@@ -53,6 +53,10 @@ if r.latency_us is not None:
 | [kda_recurrent](examples/kda_recurrent.md)、[kda_chunk](examples/kda_chunk.md) | (B,S,Hq,Hv,K,V) | 递推有 CA 校准；分块默认 V1 仅工作量，显式 FLA V2 可估计三个设备窗 | recurrent / FLA V2 的 Q/K/V 为 BF16、状态 FP32；V1 接受 BF16/FP16 结构输入，计时 N/A |
 | [grouped_matmul_swiglu_quant_v2](examples/grouped_matmul_swiglu_quant_v2.md)、[gmm2](examples/gmm2.md)、[moe_ffn](examples/moe_ffn.md) | (M,K,F,E) | `expert_counts` 为 E 个本地专家各自收到的有效 token 数，总和为 M | MXFP8 E4M3FN × E4M3FN、E8M0 scale；GMM1 输出 MXFP8，GMM2/整链输出 BF16 |
 | [vLLM HcPost](examples/hc_post_vllm.md) | (B,S,N,D) | 调用 mhc_post 并传 implementation="vllm_hc_post"，使用与内置 Post 不同的 kernel 与布局。 | BF16 激活、FP32 系数 → BF16 |
+| [quant_mxfp4](examples/quant-mxfp4.md) | (...,D) | 末轴 block32，round，E8M0 成对存放。省略 `input_stride` 时按连续布局定价，可传真实元素步长，非连续视图仅返回工作量 | BF16 → packed MXFP4 E2M1、E8M0 |
+| [cache_load](examples/cache_load.md) | (...,D)，物化输出的逻辑维度 | 传实际存储 dtype；可校验物理 value、scale 形状。返回工作量，耗时 N/A | MXFP4/E8M0 或 FP8 E4M3FN/每行 FP32 → BF16 |
+| [routed_grouped_matmul](examples/routed-grouped-matmul.md) | (有效本地行 R, N, K) | 路由专家的单个投影。传 `expert_counts`，可提供 `dispatch_capacity_rows`。只返回工作量 | MXFP4 双侧 block32、成对 E8M0 → BF16 |
+| [candidate_filtered_indexer](examples/candidate-filtered-indexer.md) | (B,Q,H,D,L,C,K) | 默认全表打分；候选优先须传块大小，可传每查询有效 key 数。返回工作量，耗时 N/A | BF16 查询、key、头权重，INT64 位置、INT32 候选与输出 |
 
 MoE 的 MXFP8 接口传 `dtype="fp8_e4m3fn"`，两侧的 E8M0 scale 和输出格式由该实现固定。芯片配置里的 4-bit/8-bit 峰值表示资源能力。本表列出在线模型实际接入的组合。精度盘点另列出 FA 的 Q/KV cache、量化/反量化以及 MoE 权重格式对应的已安装实现和 CA 证据。[低精度路线清单](precision-coverage.md)
 
