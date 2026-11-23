@@ -31,6 +31,22 @@ print(result.work["logical_read_bytes"], result.work["logical_write_bytes"])
 | `post` | 3.334 |
 | **整窗** | **18.160** |
 
+## 本例各阶段怎样定价
+
+对每阶段 q 取目标成本 Tq=aq×fscalar + bq×Wq×fq。a 是在 950DT 拟合的固定阶段预算（µs），b 是每一工作单位增加的 µs，f 是目标的相对资源价。把 950DT 的 CA 分段拟合到 compute、vector、traffic、control 后，零斜率只说明在这些样本上没有分辨出独立增量。
+
+本例三个 kernel 有顺序依赖。表中 W 依次为计算块、Vector 工作单位、KiB 和控制轮次。
+
+| 子窗 | 工作如何形成 | 目标 PR 时长 |
+|---|---|---:|
+| Pre | MK 核内 K=256，W=(8,4,416,1)，分段代入见 [Pre](mhc_pre.md)。 | 9.24701 µs |
+| Sinkhorn | 一波 4×4 矩阵做 20 次归一化，W=(0,20×16,4×4×16/1024,1)=(0,320,0.25,1)。 | 5.57845 µs |
+| Post | 小 token 切 4 个通道片，W=(0,⌈1024/(64×4)⌉×20,4×4×4×1024/1024,1)=(0,80,64,1)。 | 3.33446 µs |
+
+这里的 Sink 和 Post 都使用拆分实现的独立预算。以 Post 为例，固定项为 0.99596+0.64987+1.13515 µs，Vector 增量为 0.0050101×80×1.02717，traffic 增量为 0.00219265×64×1.01035 µs。三窗相加得到 **18.15992 µs**。切换到独立 Sinkhorn 或 vLLM Post API 会改变实现和校准合同。
+
+[M/K 分块与各阶段单位](../../src/operator_model/operators/mhc/pre_dispatch.py) · [目标端定价](../../src/operator_model/scheduling/projection.py) · [分支系数与单位](../../src/operator_model/data/parameters/mhc_partition.json)
+
 ## 与完整 CA 核对
 
 | 目标 | 公开预测 µs | 完整 CA µs | 有符号误差 | 预测有效 AIC / AIV |

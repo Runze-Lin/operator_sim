@@ -7,6 +7,8 @@
 | [Matmul](examples/matmul.md) | 两个输出块、每块两个 K 页，模型关键路径与最后退休核的真实指令时间线 |
 | [稠密 MX Matmul](examples/mxfp4-design.md) | 同形 A4W4 与 A8W4 的阶段预算、FP4/FP8 MMAD、AIV 权重展开与 UB→L1 交接 |
 | [950PR A8W4 的 26 个行块](examples/mxfp4-design.md#为什么-950pr-上-2048128256-是-26-核) | 输出地址定位每个行块，比较两版分核、实际覆盖和 26 个核簇的权重交接 |
+| [A4W4 原生窄尾波](examples/mx-native-tail.md) | 对照两端预算和全片宽块、窄块的实际 MMAD 窗口 |
+| [A8W4 长 K 页交接](examples/mx-handoff.md) | 按 K 页对照 950DT/PR 模型与 CA 的 UB→L1 退休和首次 MMAD 发起；另附关键路径预算和指令区间 |
 | [Quant](examples/quant.md) | UB 块的读、量化、数据写和 scale 写 |
 | [RMSNorm](examples/rmsnorm.md) | 归约后写出和多块重叠 |
 | [FA](examples/fa.md) | 首块和 KV 循环的 Cube/Vector 阶段 |

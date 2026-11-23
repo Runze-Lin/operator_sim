@@ -42,6 +42,23 @@ print(result.work["logical_read_bytes"], result.work["logical_write_bytes"])
 | `other` | 1.526 |
 | **整窗** | **22.388** |
 
+## 本例各阶段怎样定价
+
+输入 [1,3,1,1,128,128] 是一条 FP32 状态链的三个串行更新。16,384 个状态元素作为单位，归一化工作 x=S×K×V/16384=3。950DT 的每段预算是 a+b×x；arrival 使用 log₂(活跃核)，搬运使用 x×log₂(1+活跃核)。本例只有一个核心，后者仍为 3。a 为 950DT 的阶段固定 µs，b 为每单位增量 µs，以有完整窗口的单链样本分段拟合。下表按目标每核 SIMD、传输或时钟倍率换算，展示参数可辨识的粒度。
+
+| 阶段 | (a+b×单位数)×PR 资源倍率，单位 µs |
+|---|---|
+| arrival | 0 |
+| SIMD | (4.302424+2.937403×3)×1.027174=13.47101 |
+| MTE3 | (0.241212+0.448225×3)×1.002861=1.59042 |
+| MTE2 | (1.414848+0.0260173×3)×1.002861=1.49717 |
+| SCALAR | (4.111818+0.0637662×3)×1=4.30312 |
+| other | 1.525859×1=1.52586 |
+
+合计 **22.38758 µs**。各段是关键核独占成本的近似，未能从它们反解每个 recurrent 除法或状态描述符的价格。多状态链缺少相同计时资格。
+
+[单链形状合同与工作量](../../src/operator_model/operators/vector/instructions.py) · [目标端定价](../../src/operator_model/scheduling/projection.py) · [阶段截距、单位价格](../../src/operator_model/data/parameters/vector_instructions.json)
+
 ## 与完整 CA 核对
 
 | 目标 | 公开预测 µs | 完整 CA µs | 有符号误差 | 预测有效 AIC / AIV |

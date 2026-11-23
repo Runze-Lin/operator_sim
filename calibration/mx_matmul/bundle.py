@@ -4,15 +4,18 @@ import gzip
 from pathlib import Path
 
 from calibration.__main__ import encoded, read, require
-from calibration.mx_matmul.compare import compare, VERSIONS
+from calibration.mx_matmul.compare import compare, version_pair
 
 
 def bundle(geometries, budget, old_timing, old_plans, new_timing, new_plans, raw):
     archive = {'geometries': read(geometries), 'budget': read(budget), 'observations': []}
-    for version, timing, schedule in zip(VERSIONS, (old_timing, new_timing), (old_plans, new_plans)):
-        archive[version] = {'freeze': read(timing), 'schedules': read(schedule)}
+    for timing, schedule in ((old_timing, old_plans), (new_timing, new_plans)):
+        freeze = read(timing)
+        version = 'v' + '.'.join(freeze['model_version'].split('.')[:2])
+        archive[version] = {'freeze': freeze, 'schedules': read(schedule)}
+    require(version_pair(archive)[-1] == version, 'Supply the older timing freeze first')
 
-    for case in archive[VERSIONS[-1]]['freeze']['cases']:
+    for case in archive[version]['freeze']['cases']:
         ident = case['id']
         require(Path(ident).name == ident and ident not in ('', '.', '..'), 'Invalid case directory')
         folder = raw / ident

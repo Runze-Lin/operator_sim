@@ -38,10 +38,10 @@ print(r.work["cube_ops"], r.work["logical_read_bytes"], r.work["logical_write_by
 | 从三种模型的 config 推导单卡 prefill shape | [工作负载示例](examples/workloads/) |
 | 开发新算子、重新校准、构建和测试 | [维护指南](CONTRIBUTING.md) · [CA 校准工具](calibration/) |
 
-单算子接口的 `latency_us` 可直接与 CA 比较。若系统需要为每次 kernel 发射增加外部开销，配置 `kernel_overhead_us` 后使用 `scheduled_us`。UB、L1、L2 容量可按设备设置。从 1.2.0 起，稠密 Matmul 可通过 `estimate` 选择原生 A4W4，或选择在核内展开权重的 A8W4。970DT 的设备耗时按目标配置外推。[芯片配置和精度支持表](docs/integration.md) · [MXFP4 Matmul 调用与算例](docs/examples/mxfp4-design.md)
+单算子接口的 `latency_us` 可直接与 CA 比较。若系统需要为每次 kernel 发射增加外部开销，配置 `kernel_overhead_us` 后使用 `scheduled_us`。UB、L1、L2 容量可按设备设置。从 1.2.0 起，稠密 Matmul 可通过 `estimate` 选择原生 A4W4，或选择在核内展开权重的 A8W4。970DT 的设备耗时按目标配置外推。[芯片配置和精度支持表](docs/integration.md) · [MXFP4 Matmul 调用与算例](docs/examples/mxfp4-design.md) · [原生窄尾波](docs/examples/mx-native-tail.md) · [混合精度多 K 页交接](docs/examples/mx-handoff.md)
 
 ## 如何解读预测
 
 950DT 和 950PR 用于 CA 校准；970DT 是按给定规格和继承的微架构参数进行的情景外推。改变核数、峰值吞吐、频率或可用带宽会改变资源定价，模型沿用已建模的实现策略。对接时请保留返回的 `status` 和 `reason`。含融合、量化、前序或布局约束的算子需要匹配实际调用合同。
 
-参考集含 28 项合同、2,036 个设备窗。稠密 A4W4、A8W4 各有 4 个开发回放几何和 10 个采前冻结的新投影几何，均在 950DT/PR 两端测量。覆盖 M=1–4096、N 至 8192、K 至 7168；耗时、活跃核数和 DT/PR 加速比分别统计。原有 26 项合同中有 24 项具备双端完整窗，其中 23 项在两端同时满足 WAPE ≤25%、最大相对误差 ≤50%。同一物理窗可以分别评价仅 shape 和有序流入口。内置 mHC Post 在仅给 shape 时会混合冷、热启动；已知顺序的系统可使用有序流。大 shape 的实测范围、缺失整窗及 970DT 外推均在误差手册内逐项标明。[逐算子汇总](docs/error-analysis.md)
+参考集含 28 项合同、2,076 个设备窗。稠密 A4W4、A8W4 各有 14 个开发回放几何和 10 个采前冻结的新投影几何，均在 950DT/PR 两端测量。覆盖 M=1–8192、N 至 8192、K 至 7168；耗时、活跃核数和 DT/PR 加速比分别统计。原有 26 项合同中有 24 项具备双端完整窗，其中 23 项在两端同时满足 WAPE ≤25%、最大相对误差 ≤50%。同一物理窗可以分别评价仅 shape 和有序流入口。内置 mHC Post 在仅给 shape 时会混合冷、热启动；已知顺序的系统可使用有序流。大 shape 的实测范围、缺失整窗及 970DT 外推均在误差手册内逐项标明。[逐算子汇总](docs/error-analysis.md)

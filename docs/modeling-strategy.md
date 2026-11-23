@@ -4,7 +4,7 @@
 
 输入包括算子、单卡 shape、dtype、必要的布局与属性、目标芯片。有状态的调用还可传前序信息。输出包括设备微秒、预计参加工作的 AIC/AIV、分精度 Cube/Vector 有用计算量、逻辑读写字节，以及该实现可解释的分块和阶段耗时。返回的状态和资格说明属于结果的一部分。在线常驻进程查询目标为 100 ms 以内，离线 CA、首次导入和 Python 进程启动单独计时。[工具入口](../README.md) · [逐算子误差和校准状态](error-analysis.md)
 
-AIC 指 Cube 计算核，AIV 指 Vector 计算核。下文用 MTE2 表示从全局内存读入 L1 或 UB，MTE1 表示从 L1 向 L0 装载，MTE3 表示从 UB 向全局内存写回。MMAD 执行矩阵乘累加，FIXP 负责输出转换与写出。这里的 GM（全局内存）请求可能命中 L2。
+AIC 指 Cube 计算核，AIV 指 Vector 计算核。下文用 MTE2 表示从全局内存读入 L1 或 UB，MTE1 表示从 L1 向 L0 装载，MTE3 表示从 UB 搬出，常见用途包括向全局内存写回，也包括 A8W4 将展开后的权重交接到 L1。MMAD 执行矩阵乘累加，FIXP 负责输出转换与写出。这里的 GM（全局内存）请求可能命中 L2。
 
 ## 三种流水怎样建
 
@@ -32,13 +32,28 @@ AIC 指 Cube 计算核，AIV 指 Vector 计算核。下文用 MTE2 表示从全�
 
 例如 FA 用 [Q=9,KV=131072,D=64,B=1,H=1] 时只有一个 query 任务。增加全片 AIC 数不产生更多 query 并行。512 页 KV 中，每页 QK 和 PV 各有两条 MMAD。当前 950DT 长循环主要受页发起控制约束，不能把所有 FA 都归为 Vector bound。[FA 长 KV 算例](examples/fa.md)
 
+### 精度如何改变分块、计算和输出
+
+系统需要分别指定 A、W、scale、累加器和 Y 的精度。选择库路径后才确定 tile，以及负责解包、乘加、归约和写回的硬件。设页中有 $u$ 个元素，存储位数为 $b$，紧密打包至少占 $\lceil ub/8\rceil$ B；实际占用还包括每行对齐、scale、临时展开结果和多缓冲。各缓冲中的字节数都必须小于对应容量。例如同一页的 FP4 权重搬入占半字节/值，若 AIV 将其展开成 FP8，交给 Cube 的这份数据占一字节/值。两份在 UB 中的同时存活时间会改变可选 K 页深。MXFP4 E2M1 和 MXFP8 使用每 32 个值一份 E8M0 尺度；块格式来自规范，页调度由内核实现选择。换输出精度也可能改变 FIXP 或 AIV 的工作，因而触发另一条库路径。[OCP MX 规范，表 1](https://www.opencompute.org/documents/ocp-microscaling-formats-mx-v1-0-spec-final-pdf)
+
+| 950 上实际建模的调用 | 片内工作与输出 | 系统应如何计时 |
+|---|---|---|
+| 稠密 A4W4 → BF16 | Cube 直接发射带 E8M0 尺度的 FP4×FP4 MMAD，累加后写 BF16。 | 一次 V3 设备窗。按 4-bit 峰值计算 Cube 工作，按打包字节计算搬入。 |
+| 稠密 A8W4 → BF16 | AIV 按页将 FP4 权重展开为 FP8，交接到 L1；Cube 发射 FP8×FP8 MMAD。两侧 scale 参与乘加。 | 一次 V4 设备窗，含片上展开和交接。参数 `weight_dtype="mxfp4"` 选择该实现。 |
+| 上述 BF16 结果再单独量化到 MXFP8 | 后继 DynamicMXQuant 逐组求幅值、形成 E8M0 scale、转换及打包输出，写数据和 scale 两个张量。 | 若图中确有两个串行 kernel，用两次 `estimate` 的设备窗之和。中间 BF16 的逻辑写与读分开计，实际 HBM 流量取决于 L2。 |
+| 已校准的 GMM1–SwiGLU–MXQuant | 从 gate/up 的累积结果计算 SwiGLU，核内按组量化激活，将 MXFP8 和 scale 一起交给 GMM2。 | 选择对应的融合模型；其设备窗已经包含输出量化。 |
+
+输出量化是否要找最大值，取决于 scale 来源。动态 block32 需对每个组的有效值求最大幅值，生成尺度，再缩放转换。若调用方给定静态尺度，工作是读取尺度并按其广播、缩放和转换。仅输出到 BF16 的数值舍入也和动态 MX 量化具有不同依赖。目前稠密两路接受 BF16 输出，要求它们直接融合输出 MXFP4/MXFP8 时返回 `unsupported`。只有匹配 dtype、分组轴、scale 格式和布局的独立量化才可拼接。
+
+例如 950DT A8W4 的 [9,128,256] 输出 BF16，若下游要求独立的 block32 E4M3FN 转换，`estimate("matmul",(9,128,256),{"weight_dtype":"mxfp4"},dtype="mxfp8")` 给 3.946 µs，`estimate("quant",(9,128),dtype="bf16")` 给 5.159 µs，两个串行设备窗合计 9.104 µs（使用未舍入数）。前者写 $2×9×128=2304$ B；后者读回 2304 B，写 $9×128=1152$ B 有效值及 $9×(128/32)=36$ B scale。这里是两次模型调用的组合，完整组合没有单独的 CA 误差。若部署使用融合输出，应按融合内核验证与计价。[支持的精度合同](precision-coverage.md) · [A4W4/A8W4 输入与流水](examples/mxfp4-design.md) · [融合输出量化](examples/grouped_matmul_swiglu_quant_v2.md)
+
 ## 怎样用目标芯片定价
 
 下文时间以 µs 计，周期以 tick 计，容量和流量以 B 计，十进制 GB/s 对应 1000 B/µs。KiB、MiB 分别表示 1024 B、1024² B。乘法与加法各算一次操作，FMA 算两次。
 
 | 量 | 计价方法与来源 |
 |---|---|
-| 芯片峰值 | 设峰值为 P TOP/s、对应类型有 C 个核、频率 f GHz。每核每周期能力 p=1000P/(Cf)，单位 ops/tick。若每核每周期有 m 个乘加，峰值为 C×m×2×f/1000 TOP/s。m 若已含双发射，不再乘二。输入数据类型决定选择哪一条峰值。 |
+| 芯片峰值 | 设峰值为 P TOP/s、对应类型有 C 个核、频率 f GHz。每核每周期能力 p=1000P/(Cf)，单位 ops/tick。若每核每周期有 m 个乘加，峰值为 C×m×2×f/1000 TOP/s。m 若已含双发射，不再乘二。实际参与算术的指令类型决定选择哪一条峰值。 |
 | 有效计算工作 | 有用工作来自数学定义。实际片段工作按 kernel 的对齐、padding、尾块和指令粒度计算。阶段成本可写为 a+n·j+F/p 个 tick。a 为一次启动等待，n 为发起次数，j 为每次额外发起成本，F 为该阶段实际算术工作。不同阶段中控制已由实测响应计入时不重复添加。 |
 | 单核读写 | 对 b B 的请求，响应近似 L+b/r。L 是首响应或固定路径延迟，r 是目标端口的有效 B/tick。响应时间涵盖在途等待，第二次发起时间受发起间隔、缓冲槽和带宽约束。MTE2 读和 MTE3 写的本地上限分别定价。 |
 | 芯片共享流量 | 设活动核数为 A、每核持续发起能力为 r、共享链路带宽为 B。有效总字节率上限为 min(A·r·1000f,1000B) B/µs。读写比例、缓存重用、并发窗口会进一步降低实际服务率。逻辑张量字节、实际 DMA 字节与片外控制器字节分别记录。 |
@@ -82,7 +97,7 @@ $$R=M\lceil Kb_A/8\rceil+N\lceil K/2\rceil+(M+N)\,2\lceil K/64\rceil.$$
 
 给定目标的整域稠密峰值 $P_b$（TOP/s）、AIC 数 $C$ 和主频 $f$（GHz），每核每周期的乘加工作价格为 $q_b=1000P_b/(Cf)$ 个标量算术操作。A4W4 用 $q_4$，A8W4 用 $q_8$。模型先用活动核数切分工作，再以忙核的实际分块定价。分块尾部造成的补齐工作计入执行服务，不改变 $2MNK$。每次传输在每核端口、共享 L2、片外接口分别计算“字节 ÷ 每周期字节”，取最慢约束；L2 中可复用的重复读和仍驻留的脏输出单列。运行时的 `work` 给出有用工作，`projection` 给出定价用的片上流量、启动、关键路径阶段和分核假设。
 
-**原生 A4W4 分块。** 950 V3 的模型从最大 256×256 的输出块开始，工作不足一波时沿长轴分核，再平衡块的长宽。块边长按 16 对齐，初始 K 页按 $\min(2048,64\lceil K/64\rceil)$ 取值，结合目标 L1/L0 容量逐步缩小。2048 是此 V3 近似的 K 页上限。模型在尾块按实际 M、N 计有效工作，在 Cube 峰值定价时按执行粒度补齐。[V3 MX 滑窗](https://gitcode.com/cann/ops-nn/blob/28d19e078fd2d4144a681eb20ed3261047256d0c/matmul/quant_batch_matmul_v3/op_host/op_tiling/arch35/adaptive_sliding_window_mx_basic_api_tiling.cpp)
+**原生 A4W4 分块。** V3 的基础块上限是 256×256，工作不足一波时按 AIC 预算重分长轴。$K_0$ 表示一个 L0 MMAD 片深。有足够的初始网格时使用库的默认 256（短 K 按 64 对齐），否则按 A/B 两条 L0 的双缓冲容量，以打包行的对齐粒度选择深度。$K_1$ 是 L1 页深，可包含多个 $K_0$。按 L1 可容纳的数据和 scale 窗口分组；单个 M 网格、跨 N 多轮且能驻留时复用 A。尾波还有 $r$ 个母块而可用 $C$ 个 AIC，驻 A 分支沿 N 把每块分为至多 $\lfloor C/r\rfloor$ 份，以真实列数计搬运，Cube 计算另作对齐。各核完成自己的前块后可继续，无需全片波间栅栏。例如 PR 的 [11,8192,1536] 首波 28 个 256 列块，剩余 4 个母块各分 7 份，得到 24 个 37 列、4 个 34 列的矩形。[V3 MX 滑窗](https://gitcode.com/cann/ops-nn/blob/28d19e078fd2d4144a681eb20ed3261047256d0c/matmul/quant_batch_matmul_v3/op_host/op_tiling/arch35/adaptive_sliding_window_mx_basic_api_tiling.cpp) · [矩形直方图、读服务与时间算例](examples/mx-native-tail.md)
 
 **混合 A8W4 分块。** 950 安装包的 ND、转置 W、MX 权重 prologue 对应 Blaze SWAT。模型复用 9.2.1 host 规则的整数计算：按最多 256×256 的母块先算输出网格。如果还不到一波，就沿较长轴按整数核预算分配，把候选边长向上对齐 16，再用实际对齐尺寸重算块数；根据长宽比例调整网格。随后按边缘合并、末波拆块、有效非空子块和 L0/L1/UB 容量生成工作矩形的频数表。设 $G$ 为该表所有矩形的个数，$C$ 为目标可用的 AIC 数，工作核数为 $\min(C,G)$，忙核轮数为 $\lceil G/\min(C,G)\rceil$。完整的重复波用计数定价，仅末波按核展开，预测开销随末波参与核数变化。[9.2.1 的 SWAT host solver](https://gitcode.com/cann/ops-nn/blob/28d19e078fd2d4144a681eb20ed3261047256d0c/matmul/quant_batch_matmul_v4/op_host/op_tiling/arch35/quant_batch_matmul_v4_weight_quant_mx_swat_tiling_solver.cpp) · [在线实现](../src/operator_model/operators/matmul/mx_swat.py)
 
@@ -90,13 +105,15 @@ $$R=M\lceil Kb_A/8\rceil+N\lceil K/2\rceil+(M+N)\,2\lceil K/64\rceil.$$
 
 **区分 L1 页、L0 片段和 AIV。** `l1_page_k` 是当前 L1 页的 K 深度，`mmad_k` 是 L0 乘加片段深度，两者之比决定一页内的片段数。混合路径的 host 规则先尝试两个 L1 槽的矩形方案，再检验四槽方案和最小块后备方案。检查分开的输入、scale、L1 固定分银行、L0 与 UB 展开缓冲的字节预算。两槽时 AIV 按页轮换，同一页的首发和展开由一位生产者支付；跨页可以并发。四槽时，若 N 切分后的第二个片段非空，两位 AIV 可以同时生产一页。`launched_aiv` 计发射的 AIV，`weight_producer_aiv` 计有展开工作的 AIV。970DT 采用 1:1 资源情景，由一位 AIV 承担相应工作。具体实现是否沿用该交接方式仍待目标芯片验证。
 
-**一页怎样计时。** 分别算读、展开、交接、L1→L0 和 Cube 的服务周期。若每核有 $U$ 个 FP4 值需展开，可用 $50+22U/V$ 估算一位生产者的转换周期；$V$ 是目标每 AIV 每周期的 8-bit 峰值等效操作数。50 是启动周期，22 是每值的峰值等效工作量，来自 950 开发 trace 中首次 Vector 到首次 UB→L1 的区间：4,096、8,192、16,384 个权重分别约 226、402、754 周期。这个等效工作量由两端的 950 Vector 峰值与实测权重/周期的比值得出。真实解包包括移位、掩码、交错和存储。L1 交接另付端口字节成本与约 158 周期的暴露延迟。把源与目标的这两项资源分开，970 的 4-bit Cube 峰值增长就只会直接加速原生路线的乘加。
+**混合路径只有一页时。** 分别算读、展开、交接、L1→L0 和 Cube 的服务周期。若每核有 $U$ 个 FP4 值需展开，可用 $50+22U/V$ 估算一位生产者的转换周期；$V$ 是目标每 AIV 每周期的 8-bit 峰值等效操作数。50 是启动周期，22 是每值的峰值等效工作量，来自 950 开发 trace 中首次 Vector 到首次 UB→L1 的区间：4,096、8,192、16,384 个权重分别约 226、402、754 周期。这个等效工作量由两端的 950 Vector 峰值与实测权重/周期的比值得出。真实解包包括移位、掩码、交错和存储。L1 交接另付端口字节成本与约 158 周期的暴露延迟。把源与目标的这两项资源分开，970 的 4-bit Cube 峰值增长就只会直接加速原生路线的乘加。
 
-**多页及核间流水。** 页发起间隔 $I$ 受读发起、可用槽摊销的读响应与服务、展开、交接、L0 装载和页内各 MMAD 片段发起及算术服务共同限制，取这些资源需求的最大值。令每块有 $P$ 页，有 $J$ 轮输出块；忙核的预算为核内首发与核间发起偏移，加末页依赖链和写尾，再加 $(P-1)I+(J-1)\max(PI,S_w)$，其中 $S_w$ 是单块写服务周期。若整次调用的共享链路总字节预算还要更久，只补暴露差额。所有周期除以 $1000f$ 得 µs。原生用 $\log_2 C_a$ 个到达层级、混合用 $C_a-1$ 个工作者间隔近似末核相对首核的 MMAD 发起偏移。这是基于开发样本的调度假设，多页交替与远高于 950 的核数仍待验证。
+**多页 A8W4。** 设页的有效宽、深为 $w,d$，目标每 AIV 每周期 FP8 等效操作数为 $V$。每个 256 B 寄存器可装 512 个 FP4 值，按行展开的预算为 $T_v=50+w\max(11,7.5\lceil d/512\rceil)\,512/V$ 个周期。11 是每行的发起成本，7.5 是每次寄存器重复的成本，512 是校准时的 950 每核峰值参考。先分别计算激活页、权重页的读取和 AIV 处理。交接要等本页展开结束、该 AIV 的传输端口可用，以及当前 L1 槽释放。槽在其上一页**最后一个 MMAD 发起**时可复用。随后算 $t_{\rm issue}=\max(t_{\rm Cube\ 可发起},\max(t_A,t_W)+L_0+D_0)$，其中 $t_A,t_W$ 是当前激活及展开权重在 L1 就绪的时间，$L_0,D_0$ 为首个 L0 片的固定延迟与字节服务。页内的后续 MMAD 受装载端口、Cube 服务和最短发起间隔的最大值约束。满占用时末核发起离散度的先验是 2680 tick，按 $(C_a-1)/\max(1,C-1)$ 缩放；$C_a$ 是活跃 AIC、$C$ 是目标 AIC 总数。首读之后，复用槽时的激活读响应采用 150 tick 的可见残余（受配置首响应上限约束）。两数来自已有 950 窗，跨代继承有不确定性。重复整环使用 max-plus 递推的精确幂，尾页按实际尺寸算，避免线性枚举所有页面。[逐事件递推、参数样本、芯片对照](examples/mx-handoff.md)
 
-校准只用 M=1、256 的 DT/PR 分阶段时间。原生从首次有载荷的 MTE2 开始分析，混合从生产 AIV 的第一次权重读取开始。用首 MTE1 或首 Vector 去除页服务估算读响应，用末 MMAD 核的装载至乘加、发起至退休分开估算装载和 Cube 固定延迟，用整窗结束减去末 MMAD 退休及写服务估算写尾。两个开发形在同一 SKU 取阶段周期的中位数；对未知芯片只转移两芯片合并后的周期先验，再按目标重新计算工作量、吞吐与频率。每核 MTE 价格与稳态发起间隔仍可由目标配置指定，缺省借用已有 Matmul 价格。N=128、K=256、1≤M≤2048 且资源与内置 950 完全一致时，公开接口可返回 `estimated`；这一条固定 N/K 线上实测了 M=1、9、256、2048 四个点。真实投影几何的独立实测覆盖和同集误差见总误差表。其他可定价几何与 970DT 返回 `extrapolated`。[逐参数周期价格](../src/operator_model/data/parameters/mx_matmul_phases.json) · [逐步算例、CA 与流水图](examples/mxfp4-design.md)
+**多页 A4W4。** 设主矩形全部读服务为 $R_T$、首 L1 页读服务为 $R_1$、全块及末片的 L0 搬运成本为 $D_T,D_e$。每输出块有 $q=\lceil K/K_0\rceil$ 条 MMAD，首片 Cube 成本 $F_1$，最短发起间隔 $I_c$。主要服务成本取 $\max(R_T,R_1+\max(D_T-D_e,(q-1)\max(F_1,I_c)))$。这允许后续页的传输和先到片段的乘加并发。成本按周期算，最后加首响应、装载、末次 MMAD 退休、写尾和不能被隐藏的共享链路预算。多页读的持续速度缺省 87.23 B/(AIC·tick)，取 7 个旧端点的相邻页退休间字节服务中位数；显式目标 MTE2 带宽可覆盖。后续窄尾块按其自身读、装载、乘加和写成本的最大值追加，驻留的 A 不再从 GM 重读。设备微秒为总周期除以 $1000f$，$f$ 的单位为 GHz。[完整数值与分阶段解释](examples/mx-native-tail.md)
 
-公开独立验证中，两路在 10 个新投影上的 DT/PR 计算核数都命中。A4W4 的宽 N 双波需要识别 V3 的尾波专用实现；A8W4 的多 K 页在忙核汇合、页交接与写尾上仍有偏差。使用预测值估算跨芯片加速比时，应同时查看同形比值和分阶段实测。[两版对照与逐芯片误差](error-analysis.md#稠密-mx-matmul--双端同形验证)
+小形状的首发、读响应、装载和写尾来自 N=128、K=256、M=1 或 256 的 DT/PR 开发窗；多页读服务、解包和槽复用另使用既有真实投影的分阶段 trace。原生从首次有载荷的 MTE2 开始分析，混合从生产 AIV 的第一次权重读取开始。用首 MTE1 或首 Vector 去除页服务估算读响应，用末 MMAD 核的装载至乘加、发起至退休分开估算装载和 Cube 固定延迟，用整窗结束减去末 MMAD 退休及写服务估算写尾。两个开发形在同一 SKU 取阶段周期的中位数；对未知芯片只转移两芯片合并后的周期先验，再按目标重新计算工作量、吞吐与频率。每核 MTE 价格与稳态发起间隔仍可由目标配置指定，缺省借用已有 Matmul 价格。N=128、K=256、1≤M≤2048 且资源与内置 950 完全一致时，公开接口可返回 `estimated`；这一条固定 N/K 线上实测了 M=1、9、256、2048 四个点。真实投影几何的独立实测覆盖和同集误差见总误差表。其他可定价几何与 970DT 返回 `extrapolated`。[逐参数周期价格](../src/operator_model/data/parameters/mx_matmul_phases.json) · [逐步算例、CA 与流水图](examples/mxfp4-design.md)
+
+旧投影用于验证上述几何和依赖，未用于本版调参的真实投影单独报告核数、两端耗时和配对加速比。不同精度的最差 shape 以及无法由本批观测唯一分解的等待均列在[冻结独立误差分析](error-analysis.md#稠密-mx-matmul--双端同形验证)。
 
 ### 注意力与状态递推
 
@@ -104,7 +121,7 @@ $$R=M\lceil Kb_A/8\rceil+N\lceil K/2\rceil+(M+N)\,2\lceil K/64\rceil.$$
 
 **LightningIndexer** 输入 [B,Q,L,G,D]，G 为索引头数、D 为头维。每个有效 query–key 对做 G 次点积、ReLU 和 head 加权归约，再从整行分数取 top-k。设 P 为 mask 后合法配对数，则有用 Cube 工作为 2PGD。单波稠密 BF16 路线每四 query 组成一组，每页 128 个 key，首先按实际可见 key 数算页数。页发起间隔取目标读端口和补齐后的 MMAD 服务两者较大者。组内向量排序一片最多 8192 个 key，另有 Cube→Vector 交接和末笔输出。多组可能共享缓存中的 K。多波与不同布局的证据另计。[Indexer 算例](examples/lightning_indexer.md)
 
-**单链 Recurrent KDA** 接收 [B,S,Hq,Hv,K,V]，S 为时间步数，K/V 分别为键宽和值宽。一条状态是 K×V 个 FP32 元素。每一步必须读取前态，做门控、键与状态收缩、秩一更新，再用 query 读出。每步主要计算随 KV 增长，共享状态使同链的 S 步串行。用单 AIV 的寄存器/VF 块数和初态读、末态写定价。已校准合同是 B=Hq=Hv=1、K=128、V=128/256、S≤8。多链情景与单链校准分开。[Recurrent 算例](examples/kda_recurrent.md)
+**单链 Recurrent KDA** 接收 [B,S,Hq,Hv,K,V]，S 为时间步数，K/V 分别为键宽和值宽。一条状态是 K×V 个 FP32 元素。每一步必须读取前态，做门控、键与状态收缩、秩一更新，再用 query 读出。每步主要计算随 KV 增长，共享状态使同链的 S 步串行。用单 AIV 上的状态更新工作单位 S·K·V/16384，按参考 CA 的 SIMD、MTE2、MTE3、Scalar 等独占阶段分别计固定项与单位增量。已校准合同是 B=Hq=Hv=1、K=128、V=128/256、S≤8。多链情景与单链校准分开。[Recurrent 算例](examples/kda_recurrent.md)
 
 **Chunk KDA（FLA 三段实现）** 以 64 token 为一块，块数 J=⌈S/64⌉。对每个头和长度 n 的块，因果块内的有序对数为 n(n+1)/2，末块用其真实长度。Prepare 生成块内系数和中间结果，FwdH 沿块序逐次更新 K×V 状态，Finalize 使用块内结果与入态生成输出。Prepare/Finalize 可跨头和块并行，FwdH 的同一头相邻块存在状态依赖。时延为三个已同步设备窗之和，按各阶段真实 tiling 重算排程。默认 dispatch 若选择另一个融合实现，该路径的正确性、同步和设备时钟须单独核验。[Chunk KDA 算例](examples/kda_chunk.md)
 
@@ -133,6 +150,19 @@ T 为本次 token 数，N 为残差流数，D 为每流宽度，I 为 Sinkhorn �
 **GroupedMatmulV5（GMM2）**。下投影 F→K，共 2TFK 个有用 Cube 操作，输出 TK 个 BF16。源、目标轴与 GMM1 对调，列块数为 ⌈K/128⌉，每个块的 K 向工作随 ⌈F/64⌉ 增加。MX MMAD 的有效维度从设备指令核对，不用“活跃核数×整块”替代尾块工作。底层库的专家碎片和同步仍限制跨代模板精度。[GMM2 算例](examples/gmm2.md)
 
 **MoE FFN 两段**。组合为 TFFN=TGMM1+TGMM2。前一段的量化输出和 scale 直接成为后一段输入。接口逻辑字节包含这些中间结果，实际去 HBM 的字节数要另有缓存或控制器证据。专家选择、token 分发/回收和卡间通信均由上层调度。[完整 FFN 算例](examples/moe_ffn.md)
+
+### 如何复算例页里的微秒数
+
+每页的“本例各阶段怎样定价”可与同页的 `estimate` 调用对照。先核对芯片、输入输出 dtype、shape 和实现属性，再按下面的预算类型解读阶段字段。同一算子家族的不同合同可能采用不同方法。
+
+| 预算类型 | 在算例里复算什么 | 算子 |
+|---|---|---|
+| 本地块、依赖和共享端口 | 从有效字节、补齐操作数和描述符次数得到首发、持续间隔与退休。每核峰值管计算，配置的总线与缓存管共享下界。资源并发取最大就绪时间。 | [DynamicMxQuant](examples/quant.md) · [RMSNorm](examples/rmsnorm.md) · [BF16 Matmul](examples/matmul.md) · [Addmm](examples/addmm.md) · [FA](examples/fa.md) · [LightningIndexer](examples/lightning_indexer.md) · [vLLM Post](examples/hc_post_vllm.md) · [FLA V2 Chunk KDA](examples/kda_chunk.md) |
+| 关键阶段与完成标记 | 由 tile、VF 组或行数乘阶段价格，再执行该实现的重叠规则。部分固定项合并了标量发起与数据等待，参数链接给出来源和单位。 | [Cast](examples/cast_bf16_fp32.md) · [Sigmoid](examples/sigmoid_fp32.md) · [Router Top-k](examples/moe_gating_top_k.md) · [AttnResFwd](examples/attn_res_fwd.md) · [融合 PreSinkhorn](examples/mhc_pre_sinkhorn.md) · [独立 Sinkhorn](examples/mhc_sinkhorn.md) |
+| 分段经验价格、模板或未知状态 | 单链 KDA 和拆分 Pre 使用阶段固定项和工作单位斜率。GMM 的单窗由代表核上的互斥资源组合伸缩。仅有 shape 的 mHC Post 对几种可能的历史分别排程，再根据端点产生点估计。 | [Recurrent KDA](examples/kda_recurrent.md) · [mHC Pre](examples/mhc_pre.md) · [mHC Post](examples/mhc_post.md) · [GMM1](examples/grouped_matmul_swiglu_quant_v2.md) · [GMM2](examples/gmm2.md) |
+| 明确依赖的多个 kernel | 展开每次设备调用、输入输出和串行依赖，将组件窗口相加。 | [拆分 mHC](examples/mhc.md) · [MoE FFN](examples/moe_ffn.md) |
+
+对同一状态内的物理时间线，可以逐条比较首发、持续间隔、尾部和整窗。遇到阶段回归或多模板聚合，只能核对该模型实际给出的阶段预算与整窗；用未知历史计算的点估计也应随同可能范围一起读。每页同时列出具体库实现、完整 CA 参照或缺测说明。改变精度时先核对 [精度与实现合同](precision-coverage.md)。
 
 ## 校准范围、查询与解释
 

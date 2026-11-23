@@ -18,15 +18,29 @@ PROJECTIONS = (
     ('DeepSeek-V4.1-Flash', 'indexer.weights_proj', 'prefill', 8, 2048),
     ('DeepSeek-V4.1-Flash', 'indexer.wk', 'prefill', 8, 4096),
 )
+# A disjoint set for testing tail waves, long K and wide output projections.
+PROJECTIONS_14 = (
+    ('DeepSeek-V4-Pro', 'dsa.wq_b', 'decode', 1, 1),
+    ('DeepSeek-V4.1-Flash', 'dsa.wq_b', 'decode', 1, 9),
+    ('Kimi-K3', 'mla.kv_b_proj', 'decode', 1, 11),
+    ('Kimi-K3', 'moe.shared_down', 'decode', 16, 1),
+    ('DeepSeek-V4-Pro', 'indexer.compressor.gate', 'prefill', 8, 96),
+    ('DeepSeek-V4-Pro', 'indexer.weights_proj', 'prefill', 8, 384),
+    ('DeepSeek-V4.1-Flash', 'indexer.weights_proj', 'prefill', 8, 768),
+    ('DeepSeek-V4.1-Flash', 'dsa.wkv', 'prefill', 8, 256),
+    ('DeepSeek-V4-Pro', 'indexer.weights_proj', 'prefill', 8, 1024),
+    ('DeepSeek-V4.1-Flash', 'indexer.wk', 'prefill', 8, 8192),
+)
 SKUS = ('Ascend950DT_9582', 'Ascend950PR_957b')
 
 
-def manifests():
+def manifests(version="1.4"):
+    projections, prefix = {"1.3": (PROJECTIONS, "p"), "1.4": (PROJECTIONS_14, "q")}[version]
     from examples.workloads.prefill import MODELS_DIR, Scenario, contracts
 
     sources = {s['repo'].split('/')[-1]: s for s in protocol.read(MODELS_DIR/'sources.json')}
     cases, shapes = [], []
-    for index, (model, op, phase, batch, extent) in enumerate(PROJECTIONS, 1):
+    for index, (model, op, phase, batch, extent) in enumerate(projections, 1):
         # Linear projection width and row geometry are independent of the
         # cache history. Nonlinear attention itself cannot use this shortcut.
         m = batch * extent if phase == 'decode' else extent
@@ -41,7 +55,7 @@ def manifests():
         if rows != m:
             raise ValueError(f'Projection does not consume the requested token rows: {model} {op}')
         geometry = [m, n, k]
-        tag = f'p{index:02d}'
+        tag = f'{prefix}{index:02d}'
         shapes.append(dict(id=tag, model=model, projection=op, shape=geometry, scenario=scenario,
                            tp=8, source=sources[model], evidence='rank-local projection geometry; both MX precision policies tested as scenarios'))
         for route, dtype, attrs in [('native','mxfp4',{}), ('mixed','fp8_e4m3fn',{'weight_dtype':'mxfp4'})]:
@@ -49,7 +63,7 @@ def manifests():
                 cases.append(dict(id=f'{route}-{tag}-{suffix}',op='matmul',contract='matmul_mx_'+route,
                                   chip=chip, shape=geometry, attrs=attrs, dtype=dtype, prefix=None,
                                   api='aclnnQuantMatmulV5',outputs={'Y':m*n}))
-    if len({tuple(s['shape']) for s in shapes})!=len(PROJECTIONS):
+    if len({tuple(s['shape']) for s in shapes})!=len(projections):
         raise ValueError('Projection geometries must be distinct')
     return dict(schema=1,cases=cases),shapes
 
@@ -58,9 +72,11 @@ if __name__=='__main__':
     import argparse
     cli=argparse.ArgumentParser(description=__doc__)
     cli.add_argument('output_dir',type=Path)
-    directory=cli.parse_args().output_dir
+    cli.add_argument("--version", choices=("1.3", "1.4"), default="1.4")
+    args=cli.parse_args()
+    directory=args.output_dir
     directory.mkdir(parents=True,exist_ok=True)
-    cases, shapes = manifests()
+    cases, shapes = manifests(args.version)
     for name,data in [('cases',cases),('geometries',shapes)]:
         with (directory/f'{name}.json').open('x') as dest:
             json.dump(data,dest,indent=2)

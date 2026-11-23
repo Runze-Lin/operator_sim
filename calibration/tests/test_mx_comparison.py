@@ -56,6 +56,18 @@ class MxComparisonTests(unittest.TestCase):
             with self.subTest(field=field), self.assertRaisesRegex(ValueError,'reference differs'):
                 verify_mx_projection_rows(observed,[dict(rows[0],**{field:value}),*rows[1:]],set())
 
+    def test_campaign_version_pair_comes_from_bound_freezes(self):
+        for before, after in (('v1.3','v1.4'), ('v1.2','v1.3')):
+            entry = self.archive.pop(before)
+            frozen = reseal(dict(entry['freeze'], model_version=after[1:]+'.0'))
+            schedule = reseal(dict(entry['schedules'], freeze_sha256=frozen['sha256']))
+            self.archive[after] = dict(freeze=frozen, schedules=schedule)
+        for item in self.archive['observations']:
+            item['receipt']['freeze_sha256'] = self.archive['v1.4']['freeze']['sha256']
+        result, _ = compare(self.archive)
+        for versions in result['summary'].values():
+            self.assertEqual(set(versions), {'v1.3','v1.4'})
+
     def test_wrong_runtime_kernel_or_matrix_input(self):
         observations=self.archive['observations']
         native=next(o for o in observations if o['receipt']['case']['dtype']=='mxfp4')

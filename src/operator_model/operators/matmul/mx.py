@@ -6,7 +6,7 @@ from operator_model.chips import load_chip
 from operator_model.resources import load_parameters
 
 from operator_model.operators.matmul.resources import _costs
-from operator_model.operators.matmul import mx_swat
+from operator_model.operators.matmul import mx_native, mx_swat
 from operator_model.workload import _counts
 
 FP4 = 'mxfp4'
@@ -117,9 +117,7 @@ def _native_tile(shape, chip, core_budget):
     m, n, k = shape
     bm, bn = _native_output(m, n, core_budget)
     bm, bn = min(bm, 256), min(bn, 256)
-    # Large K fragments come directly from the double-buffered L0 A/B budget.
-    # Cap page depth at 2048 as a conservative scenario for unobserved K loops.
-    bk = min(2048, _align(k, 64))
+    bk = mx_native.fragment_k(shape,(bm,bn),core_budget,chip.details)
     while True:
         footprint = _footprint(bm, bn, bk)
         if all(size <= (chip.details.get(key) or 0) for key, size in footprint.items() if size):
@@ -144,6 +142,7 @@ def price(shape, chip, dtype, attrs, calibrated_only=False):
     launched = min(2, max(1, chip.vector_cores // chip.cube_cores)) if mixed else 0
     budget = min(chip.cube_cores, chip.vector_cores // launched) if mixed else chip.cube_cores
     swat = None
+    native = None
     if mixed:
         if any(dim > 2**32-1 for dim in shape):
             raise ValueError('The A8W4 SWAT tiling ABI uses unsigned 32-bit dimensions')
@@ -168,14 +167,16 @@ def price(shape, chip, dtype, attrs, calibrated_only=False):
         histogram = swat['rectangles']
         plan['swat'] = swat
     else:
-        def axis(length, size):
-            full, tail = divmod(length, size)
-            return [(extent, count) for extent, count in ((size, full), (tail, 1)) if count and extent]
-        histogram = [(h,w,mc*nc) for h,mc in axis(m,bm) for w,nc in axis(n,bn)]
+        native = mx_native.geometry(shape,tile,budget,chip.details)
+        plan['native_asw'] = native
+        histogram = native['rectangles']
+        footprint['l1_bytes'] = native['l1_payload_buffer_bytes']
+        if footprint['l1_bytes']>chip.details['l1_bytes']:
+            return None, work, diag, 'Insufficient L1 for native operand and E8M0 buffers'
     tiles = sum(count for _,_,count in histogram)
     active = min(tiles, budget)
     waves = _div(tiles, active)
-    page_k = swat['l1_k'] if swat else bk
+    page_k = swat['l1_k'] if swat else native['l1_k']
     pages = _div(k, page_k)
     if swat and swat['l1_slots'] == 4:
         # Each subblock owns one N slice, if nonempty. The packed-output
@@ -198,6 +199,8 @@ def price(shape, chip, dtype, attrs, calibrated_only=False):
                                   'split the page along N where the second slice is nonempty')
         plan['mmad_k'] = bk
         plan['l1_page_k'] = page_k
+    else:
+        plan.update(mmad_k=bk,l1_page_k=page_k)
     plan.update(weight_producer_aiv=producer_cores, launched_aiv=active*launched, tile=list(tile), tile_grid=[mt, nt], active_aic=active, active_aiv=active*launched,
                 output_tiles=tiles, busiest_core_tiles=waves, pages_per_tile=pages,
                 busiest_core_pages=waves*pages, last_wave_tiles=(tiles-1)%active+1)
@@ -235,6 +238,8 @@ def price(shape, chip, dtype, attrs, calibrated_only=False):
     # upper traffic scenario repeats inputs for each consumer output tile.
     ab = work['operand_bytes']
     dispatched_rows = sum(h*count for h,_,count in histogram)
+    if native and native['resident_a']:
+        dispatched_rows=m*active
     dispatched_columns = sum(w*count for _,w,count in histogram)
     l2_reads = (dispatched_rows*((ab['activation']+ab['activation_scale'])//m)
                 + dispatched_columns*((ab['weight']+ab['weight_scale'])//n))
@@ -253,7 +258,7 @@ def price(shape, chip, dtype, attrs, calibrated_only=False):
         'weight_values_expanded': dispatched_columns*k if mixed else 0,
         'ub_to_l1_expanded_bytes': dispatched_columns*k if mixed else 0,
         'unpack_peak_equivalents_per_weight': unpack_ops if mixed else 0,
-        'candidate_cube_k_fragments': tiles*_div(k,bk) if mixed else None,
+        'candidate_cube_k_fragments': tiles*_div(k,bk),
         'dynamic_instruction_counts': None}
     h,w,_ = max(histogram,key=lambda rect: _align(rect[0],16)*_align(rect[1],16))
     # The complete histogram above determines replicated traffic, while the
@@ -299,6 +304,39 @@ def price(shape, chip, dtype, attrs, calibrated_only=False):
     # The busiest core processes ceil(tiles/cores) rectangles. Use a full
     # rectangle envelope for its waves; shared-link totals below use exact tails.
     stages['additional_waves'] = (waves-1)*max(pages*ii, out_service)
+    if swat and pages > 1:
+        from operator_model.operators.matmul import mx_handoff
+        rates = dict(aiv=launched, mte2=mte2, mte3=mte3, mte1=mte1, cube=cube,
+                     shared_per_byte=max(active/l2, active*hbm_reads/l2_reads/hbm),
+                     read_lat=read_latency, load_lat=load_latency, cube_lat=cube_latency,
+                     handoff_lat=phases['handoff_latency_cycles'], setup=phases['unpack_setup_cycles'],
+                     vector_scale=512/(unpack*unpack_ops), mmad_ii=cube_issue)
+        stages['core_arrival_spread'] = mx_handoff.FULL_OCCUPANCY_ISSUE_SPREAD*(active-1)/max(1,chip.cube_cores-1)
+        stages.update(mx_handoff.schedule(k,h,w,waves,swat,rates))
+        first['unpack'] = mx_handoff.vf_service(producer_width,first_k,rates['vector_scale'])
+        last['unpack'] = mx_handoff.vf_service(producer_width,(k-1)%page_k+1,rates['vector_scale'])
+        unpack = producer_width*first_k/first['unpack']
+        ii = None  # A single initiation interval cannot represent interleaved L1 credits.
+        work['implementation_work']['unpack_peak_equivalents_per_weight'] = None
+        plan['page_schedule'] = 'per-lane VF release, finite reusable L1 slots and L0 fragment issue'
+        plan['vf_row_issue_cycles_950'] = mx_handoff.VF_ROW_CYCLES
+        plan['vf_packed_repeat_issue_cycles_950'] = mx_handoff.VF_REPEAT_CYCLES
+        plan['vf_register_bytes_950'] = mx_handoff.VF_REGISTER_BYTES
+    if native:
+        native_mte2 = mte2 if pages==1 or details.get('mte2_bandwidth_gbs') else mx_native.STREAM_BYTES_PER_CYCLE
+        native['mte2_payload_bytes_per_cycle'] = native_mte2
+        def native_page(height,width,depth,cached_a):
+            row=(_div(depth,2)+2*_div(depth,64))
+            transferred=(width+(0 if cached_a else height))*row
+            read=max(transferred/native_mte2,active*transferred/l2,active*transferred*hbm_reads/l2_reads/hbm)
+            return dict(read=read,load=(height+width)*row/mte1,
+                        cube=2*_align(height,16)*_align(width,16)*_align(depth,64)/cube)
+        def native_write(height,width):
+            size=2*height*width
+            return max(size/mte3,size*active/l2,size*active*hbm_write/write/hbm)
+        native['resource_schedule_cycles']=mx_native.wave_cycles(native,k,active,dict(write=native_write,read_latency=read_latency,
+            load_latency=load_latency,cube_latency=cube_latency,mmad_issue=cube_issue,
+            drain=details.get('matmul_drain_cycles') or prices['drain_cycles']),native_page,stages)
     bus_floor = max((hbm_reads+hbm_write)/hbm, (l2_reads+write)/l2)
     stages['exposed_shared_traffic'] = max(0, bus_floor-(sum(stages.values())-stages['launch']))
     stage_us = {key: value/(1000*ghz) for key, value in stages.items()}
@@ -316,5 +354,10 @@ def price(shape, chip, dtype, attrs, calibrated_only=False):
                 price_sources={'peaks': 'target chip cube_tops, vector_tops, core counts and frequency',
                                'vector': 'weight prologue service in 950 INT8 peak equivalents per value; not a dynamic instruction count',
                                'ports_and_phase_cycles': 'target detail overrides, MX DT/PR development phase prices and inherited BF16 MTE bytes/cycle/steady issue',
-                               'tiling': 'ops-nn v9.2.1 Blaze SWAT host geometry and ND weight prologue' if mixed else 'V3 source-based output rebalance; K from double-buffer capacities'})
+                               'tiling': 'ops-nn v9.2.1 Blaze SWAT host geometry and ND weight prologue' if mixed else 'ops-nn v9.2.1 native V3 ASW: L0 fragments, L1 grouping, retained A and final-window subdivision'})
+    if native:
+        diag['prices']['mte2_bytes_per_cycle_core']=native_mte2
+        diag['price_sources']['native_stream']='Target MTE2 override or 950 paired-page payload retirement service (B/AIC cycle)'
+        if native['resource_schedule_cycles']:
+            diag['page_service_cycles']=native['resource_schedule_cycles']
     return us, work, diag, reason

@@ -1,0 +1,109 @@
+{
+  "title": "A4W4 main and tail MMAD waves    |    11 \u00d7 8192 \u00d7 1536",
+  "runs": [
+    {
+      "chip": "Ascend950DT_9582",
+      "shape": [
+        11,
+        8192,
+        1536
+      ],
+      "kernel": "QuantBatchMatmulV3_ND_ND_mxfp4e2m1_mxfp4e2m1_float8_e8m0_bf16_high_performance_131092",
+      "ca": 6.258787634316832,
+      "model": 5.927540618058826,
+      "stages": {
+        "launch": 2.4384848484848485,
+        "core_arrival_spread": 0.31606060606060604,
+        "read_fill": 1.7911716363636363,
+        "inline_unpack": 0.0,
+        "ub_to_l1": 0.0,
+        "l1_to_l0": 0.14515891473398246,
+        "cube_tail": 0.10363973571553688,
+        "write_tail": 0.5239272727272727,
+        "page_intervals": 0.6090976039729428,
+        "additional_waves": 0.0,
+        "exposed_shared_traffic": 0.0
+      },
+      "events": {
+        "MMAD \u00b7 N=256": [
+          [
+            4.53697,
+            6.053333
+          ]
+        ]
+      },
+      "cluster": "all AICs",
+      "trace_sha256": "1db9cde62817d0809d9239b72bbdc2a606d2a468f4d10db775716c2b7d22a0e5"
+    },
+    {
+      "chip": "Ascend950PR_957b",
+      "shape": [
+        11,
+        8192,
+        1536
+      ],
+      "kernel": "QuantBatchMatmulV3_ND_ND_mxfp4e2m1_mxfp4e2m1_float8_e8m0_bf16_high_performance_131348",
+      "ca": 8.531514885369688,
+      "model": 8.918169682864043,
+      "stages": {
+        "launch": 2.333939393939394,
+        "core_arrival_spread": 0.507394460409898,
+        "read_fill": 1.989971064242424,
+        "inline_unpack": 0.0,
+        "ub_to_l1": 0.0,
+        "l1_to_l0": 0.14515891473398246,
+        "cube_tail": 0.10365896468985959,
+        "write_tail": 0.4518484848484849,
+        "page_intervals": 2.80345728,
+        "additional_waves": 0.58274112,
+        "exposed_shared_traffic": 0.0
+      },
+      "events": {
+        "MMAD \u00b7 N=256": [
+          [
+            4.761212,
+            5.671515
+          ],
+          [
+            5.689091,
+            7.886667
+          ]
+        ],
+        "MMAD \u00b7 N=37": [
+          [
+            7.04606,
+            7.068485
+          ],
+          [
+            7.101818,
+            8.149091
+          ],
+          [
+            8.158788,
+            8.243031
+          ]
+        ],
+        "MMAD \u00b7 N=34": [
+          [
+            7.144242,
+            7.226667
+          ],
+          [
+            7.277576,
+            7.352728
+          ],
+          [
+            7.536363,
+            7.907273
+          ],
+          [
+            7.909091,
+            8.009697
+          ]
+        ]
+      },
+      "cluster": "all AICs",
+      "trace_sha256": "3b7766617a931c793708e3ec8caf8eca3189ede6dee66e96e56504394a681533"
+    }
+  ]
+}

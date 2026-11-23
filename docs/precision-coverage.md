@@ -11,6 +11,8 @@
 
 这里的「候选」表示能在本机找到接口或目标芯片的注册项，须再验证选定 shape 的 tiling、输出和完整指令窗。970DT 均为架构外推；表中 N/A 的路线尚无可声明的跨代误差。[调用契约](integration.md) · [双端实测误差](error-analysis.md) · [稠密 MX 收据](../calibration/reference/mx-matmul.json)
 
+稠密 A4W4 和 A8W4 均以 BF16 为最终输出。已支持的两次串行调用与 MoE 内融合的输出量化，分别在[精度、分块与输出算例](modeling-strategy.md#精度如何改变分块计算和输出)中说明。
+
 ## FA 的 A 和 C 分别代表什么
 
 本文的 **A** 是传入注意力的 query（Q）激活，**C** 是实际存储的 K/V cache。prefill 没有分页 cache 时，C 指此次传入的 K/V。网络线性层的输入激活、KV 投影权重、注意力读到的 Q/K/V 可以各用不同精度。P 指 softmax 输出送入第二次矩阵乘的数据，中间累加、online softmax、跨块 rescale、最终 Y 也可各自选择格式。FP8 E4M3FN 配逐 head 的 FP32 scale 与采用 E8M0 分组 scale 的 MXFP8 要作为两份契约处理。

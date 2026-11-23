@@ -30,6 +30,14 @@ print(result.work["logical_read_bytes"], result.work["logical_write_bytes"])
 | `upper_scenario_component` | 2.380 |
 | **整窗** | **4.760** |
 
+## 本例各阶段怎样定价
+
+196 行、4 路和 1536 个通道按每核 4 行分给 49 个 AIV。对每个前序状态先做 MTE2 → VF → MTE3 的行流水，在当前行等输入、跨行允许读写与计算重叠，最后与共享链路下界取大。本例冷读 3,026,240 B / (1400×1000 B/µs) = 2.162 µs。以“上一轮按通道切分，本轮扩核”为例，排程后的各段为到达 0.40121、Scalar 1.22182、MTE2 2.50623、SIMD 2.21092、MTE3 0.53820、退休 0.01005 µs，合计 6.88843 µs。
+
+调用方只给 shape，前序内核与状态未知。按首次、已驻留且前序按通道或按行、扩核且前序按通道或按行、连续重复计算，六种设备时间分别为 5.70178、5.03981、4.44922、6.88843、5.48767、3.63665 µs。令最短 L=3.63665、最长 H=6.88843；点估计 2LH/(L+H)=**4.76021 µs**，使两个端点的相对误差上界相等。公共表中的两个 2.38010 µs 是这个点的代数分账。真实核上六种路径互斥，只有选定状态后才能解释相应流水。状态转移采用已校准的 950 行或通道分支；局部 DMA/VF 价由参考核窗口约束，分核数和字节数由目标分块给出。
+
+[状态区间与点估计](../../src/operator_model/operators/mhc/history.py) · [行流水](../../src/operator_model/operators/mhc/token_pipeline.py) · [历史状态参数](../../src/operator_model/data/parameters/post_history.json) · [读写与 VF 参数](../../src/operator_model/data/parameters/post_token.json)
+
 ## 与完整 CA 核对
 
 | 目标 | 公开预测 µs | 完整 CA µs | 有符号误差 | 预测有效 AIC / AIV |

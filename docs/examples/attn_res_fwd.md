@@ -20,7 +20,7 @@ print(result.work["logical_read_bytes"], result.work["logical_write_bytes"])
 
 公开工作量统计为 Cube **0**、Vector **163,866** 个有用标量等效操作。逻辑读 **73,728 B**、写 **65,536 B**。片外实际流量取决于重用与缓存。
 
-校准把读权重和计算得分时段展开成固定项加 64 通道向量组项。例如 bank_scores 的参考价格为 918.05 tick 加每组 5.84 tick，weighted_norm_write 为 1486.71 tick 加每组 49.21 tick。有效残差数和输出合同决定参与各段的组数。 [参数及单位](../../src/operator_model/data/parameters/attention_residual.json)
+校准把读权重和计算得分时段展开成固定项加 64 通道向量组项。例如 bank_scores 的参考价格为 918.05 tick 加每组 5.84 tick。本例的 resident 路线使用下文按归一化组数和混合组数分别计价的 weighted_norm_write。有效残差数和输出合同决定参与各段的组数。 [参数及单位](../../src/operator_model/data/parameters/attention_residual.json)
 
 下表取 950PR 的公开阶段分账。各段已处理模型可辨识的重叠，数值保留三位小数。
 
@@ -33,6 +33,22 @@ print(result.work["logical_read_bytes"], result.work["logical_write_bytes"])
 | `weighted_norm_write` | 2.502 |
 | `exposed_transfer_floor` | 0.000 |
 | **整窗** | **8.643** |
+
+## 本例各阶段怎样定价
+
+令 L=⌈4096/64⌉=64 个 FP32 向量块，s=255.682/248.918=1.02717 为参考/目标每核峰值比，r=48.363 B/周期是本核读端口。一份权重的字节服务 u=8192/r=169.39 周期。该 resident 分支从 950 分段 CA 提取固定周期与每块周期。以周期代入后，各段再除 1650。
+
+| 阶段 | 固定项 + 向量块 + 搬运 |
+|---|---|
+| dispatch | 4527 |
+| score_weights | 1746.59 + 4.30855×64s + 2u |
+| prefix_add_write | 1249.04 + 2.69742×64s + 2u |
+| bank_scores | 918.05 + 5.83947×64s + u，本例有效 bank 数为 1 |
+| weighted_norm_write | 2347.99 + (20.30835×64+2.09691×128)s + u；归一化一次，混合两组块 |
+
+全片冷输入公共带宽下界为 0.053 µs；额外暴露 max(0,下界−上述阶段之和)=0。逐段得到 2.744+1.436+1.070+0.892+2.502 ≈ **8.643 µs**，保留全精度求和。write_idx/materialize 的改动影响写回和调度分支。
+
+[resident 阶段公式](../../src/operator_model/operators/attention/residual_timing.py) · [打分与写回价格](../../src/operator_model/data/parameters/attention_residual.json)
 
 ## 与完整 CA 核对
 

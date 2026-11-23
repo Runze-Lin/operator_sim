@@ -29,6 +29,14 @@ K 向远长于 M 向，PR 投影划分到 16 个 AIC，4 个 AIV 处理对应系
 | `pre` | 9.247 |
 | **整窗** | **9.247** |
 
+## 本例各阶段怎样定价
+
+对每阶段 q 取目标成本 Tq=aq×fscalar + bq×Wq×fq。a 是在 950DT 拟合的固定阶段预算（µs），b 是每一工作单位增加的 µs，f 是目标的相对资源价。把 950DT 的 CA 分段拟合到 compute、vector、traffic、control 后，零斜率只说明在这些样本上没有分辨出独立增量。
+
+本例 [4,4,1024] 需要 N²+2N=24 个投影，K=4×1024=4096。参考实现选 MK，核内 K=256，一次 16 行分块需 256/32=8 个 MMAD 单位。Vector 有 ⌈4/64⌉×⌈1024/256⌉=4 个通道片，traffic 为 (4×4096×24 + 2×4×4096)/1024=416 KiB，control 为 1 个 M 分块。代入 PR 的 traffic 倍率 1.02189、固定项倍率 1，得到 compute=0，vector=0.99802，traffic=2.31409+0.00231156×416×1.02189=3.297，control=3.69964+1.25261=4.95225 µs，合计 **9.24701 µs**。尽管 compute 的独占预算为零，实现仍需在 Cube 上发起投影。
+
+[M/K 分块与各阶段单位](../../src/operator_model/operators/mhc/pre_dispatch.py) · [目标端定价](../../src/operator_model/scheduling/projection.py) · [分支系数与单位](../../src/operator_model/data/parameters/mhc_partition.json)
+
 ## 与完整 CA 核对
 
 | 目标 | 公开预测 µs | 完整 CA µs | 有符号误差 | 预测有效 AIC / AIV |

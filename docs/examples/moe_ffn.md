@@ -30,6 +30,14 @@ GMM1 输出的 FP8 tensor 和 E8M0 scales 随后作为 GMM2 输入。两次真�
 | `gmm2` | 3.701 |
 | **整窗** | **13.666** |
 
+## 本例各阶段怎样定价
+
+相同专家分布 [1,7] 贯穿两个顺序下发的设备 kernel。每个组件独立用 950DT 的重叠资源区间和目标资源倍率找到最慢核，再取可用模板的中位数。第一段的输入是 256 列激活，在 SwiGLU 前形成两组 128 列输出，做 2×8×256×256 个 Cube 操作；第二段以量化的 128 列为输入，做 2×8×128×256 个 Cube 操作。两段之间有真实数据依赖。
+
+950PR 首段中间两模板给 (8.92982+10.99889)/2 = 9.96436 µs。第二段给 (3.69999+3.70293)/2 = 3.70146 µs。完整设备工作之和为 **13.66582 µs**。该口径要求同一组专家、顺序执行；外层路由、通信、宿主下发间隙应在系统仿真里单列。每个掩码的价格、单位和来由见 [融合 GMM1](grouped_matmul_swiglu_quant_v2.md) 与 [GMM2](gmm2.md)。
+
+[每种资源的工作单位](../../src/operator_model/operators/fused/templates.py) · [目标端定价](../../src/operator_model/scheduling/projection.py) · [950DT 每个模板的重叠区间](../../src/operator_model/data/parameters/fusion_overlap.json)
+
 ## 与完整 CA 核对
 
 | 目标 | 公开预测 µs | 完整 CA µs | 有符号误差 | 预测有效 AIC / AIV |

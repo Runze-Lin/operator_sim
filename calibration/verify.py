@@ -48,7 +48,7 @@ def verify_mx_receipts(path, rows, replay_only=False):
     return historical
 
 
-def verify_mx_projection_rows(endpoints, rows, historical):
+def verify_mx_projection_rows(endpoints, rows, historical, version='v1.3', replay=False):
     relevant=[r for r in rows if r['contract'] in ('matmul_mx_native','matmul_mx_mixed')]
     published={r.get('case_id'):r for r in relevant}
     require(len(published)==len(relevant) and not historical.intersection(endpoints)
@@ -57,10 +57,11 @@ def verify_mx_projection_rows(endpoints, rows, historical):
     for ident,e in endpoints.items():
         row=published[ident]
         case=e['case']
-        require((case['contract'],tuple(case['shape'])) not in historical_geometry and row['data_role']=='independent'
+        require((case['contract'],tuple(case['shape'])) not in historical_geometry and row['data_role']==('replay' if replay else 'independent')
                 and all(row[k]==case[k] for k in ('op','contract','chip','shape','dtype','attrs','api'))
                 and all(row[k]==e['measurement'][k] for k in ('ca_us','provider','identity','kernel','freeze_sha256','receipt_sha256'))
-                and row['predicted_us']==e['v1.3']['us'] and row['extrapolated_970dt_us']==e['v1.3_970dt']['us'],
+                and (replay or (row['predicted_us']==e[version]['us']
+                                and row['extrapolated_970dt_us']==e[version+'_970dt']['us'])),
                 'MX projection reference differs from its case, receipt, forecast or role')
 
 
@@ -73,14 +74,22 @@ def verify(reprice=False):
     rows=[json.loads(line) for line in (folder/'windows.jsonl').read_text().splitlines()]
     require(len(rows)==manifest['protocol_windows'] and len(summary)==manifest['contracts'], 'Manifest counts differ from reference')
     if 'mx-matmul.json' in manifest['export_sha256']:
-        paired='mx-projections.json.gz' in manifest['export_sha256']
-        historical=verify_mx_receipts(folder/'mx-matmul.json', rows, replay_only=paired)
-        if paired:
-            from .mx_matmul.compare import load_comparison, compare
-            _, endpoints=compare(load_comparison(folder/'mx-projections.json.gz'))
-            verify_mx_projection_rows(endpoints, rows, historical)
-        else:
-            verify_mx_projection_rows({}, rows, historical)
+        from .mx_matmul.compare import load_comparison, compare, version_pair
+        campaigns = []
+        for name in manifest['export_sha256']:
+            if name.startswith('mx-projections') and name.endswith('.json.gz'):
+                archive = load_comparison(folder/name)
+                latest = version_pair(archive)[-1]
+                _, endpoints = compare(archive)
+                campaigns.append((tuple(map(int, latest[1:].split('.'))), latest, endpoints))
+        campaigns.sort(key=lambda entry: entry[0])
+        historical = verify_mx_receipts(folder/'mx-matmul.json', rows, replay_only=bool(campaigns))
+        for index, (_, version, endpoints) in enumerate(campaigns):
+            scope = historical.union(endpoints)
+            selected = [r for r in rows if r.get('case_id') in scope]
+            verify_mx_projection_rows(endpoints, selected, historical, version, replay=index+1<len(campaigns))
+            historical.update(endpoints)
+        verify_mx_projection_rows({}, rows, historical)
     groups=defaultdict(list)
     ids=set()
     if reprice:

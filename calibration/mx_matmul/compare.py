@@ -10,8 +10,14 @@ from calibration.__main__ import CASE_FIELDS, digest, encoded, ingest, integer, 
 from .collect import OBJECT
 from .projection_cases import SKUS
 
-DEFAULT_ARCHIVE = Path(__file__).resolve().parents[1]/'reference/mx-projections.json.gz'
-VERSIONS = ('v1.2', 'v1.3')
+DEFAULT_ARCHIVE = Path(__file__).resolve().parents[1]/'reference/mx-projections-1.4.json.gz'
+
+
+def version_pair(archive):
+    versions = sorted((v for v in archive if re.fullmatch(r'v\d+\.\d+', v)),
+                      key=lambda v: tuple(map(int, v[1:].split('.'))))
+    require(len(versions) == 2, 'Expected two distinct frozen model versions')
+    return versions
 
 
 def load_comparison(path=DEFAULT_ARCHIVE):
@@ -78,23 +84,24 @@ def validate_schedule(plan, chip):
 
 
 def compare(archive):
+    versions = version_pair(archive)
     plans={}
     frozen={}
-    for version in VERSIONS:
+    for version in versions:
         frozen[version]=unseal(archive[version]['freeze'], 'freeze')
         require(re.fullmatch(re.escape(version[1:])+r'\.\d+', frozen[version]['model_version'])
                 and sha_field(frozen[version]['package_sha256']), 'Pricing version or source fingerprint mismatch')
         schedule=unseal(archive[version]['schedules'], 'mx-plan-freeze')
         require(schedule['freeze_sha256']==frozen[version]['sha256'], 'Timing and core freezes differ')
         plans[version]=schedule['plans']
-    old, new = ([{key:c[key] for key in CASE_FIELDS} for c in frozen[v]['cases']] for v in VERSIONS)
-    require(frozen[VERSIONS[0]]['package_sha256']!=frozen[VERSIONS[-1]]['package_sha256'],
+    old, new = ([{key:c[key] for key in CASE_FIELDS} for c in frozen[v]['cases']] for v in versions)
+    require(frozen[versions[0]]['package_sha256']!=frozen[versions[-1]]['package_sha256'],
             'Different pricing versions cannot use the same frozen source')
-    require(old==new and frozen[VERSIONS[0]]['chips']==frozen[VERSIONS[-1]]['chips'],
+    require(old==new and frozen[versions[0]]['chips']==frozen[versions[-1]]['chips'],
             'Frozen inputs or chip resource definitions differ')
     cases={c['id']:c for c in new}
-    by_id={v:{c['id']:c for c in frozen[v]['cases']} for v in VERSIONS}
-    require(len(cases)==len(new) and cases and all(set(plans[v])==set(cases) for v in VERSIONS),
+    by_id={v:{c['id']:c for c in frozen[v]['cases']} for v in versions}
+    require(len(cases)==len(new) and cases and all(set(plans[v])==set(cases) for v in versions),
             'Duplicate or missing frozen case or schedule')
     geometries=archive['geometries']
     declared={tuple(g['shape']):g['id'] for g in geometries}
@@ -111,16 +118,16 @@ def compare(archive):
     physical_ids=set()
     for rec in archive['observations']:
         receipt=rec['receipt']
-        measurement=ingest(frozen[VERSIONS[-1]],receipt)
+        measurement=ingest(frozen[versions[-1]],receipt)
         ident=measurement['case_id']
         require(ident not in seen and measurement['data_role']=='prospective'
                 and all(stamp(frozen[v]['created_utc'])<=stamp(archive[v]['schedules']['created_utc'])
-                        <stamp(receipt['started_utc']) for v in VERSIONS),
+                        <stamp(receipt['started_utc']) for v in versions),
                 'Duplicate or nonprospective observation')
         seen.add(ident)
         phases=rec['phases']
         validate_evidence(receipt,phases,measurement)
-        target_chip=frozen[VERSIONS[-1]]['chips'][cases[ident]['chip']]
+        target_chip=frozen[versions[-1]]['chips'][cases[ident]['chip']]
         require(receipt['stages'][0]['ticks_per_us']==1000*target_chip['frequency_ghz'],
                 'Receipt clock differs from the frozen chip')
         require(not physical_ids.intersection(measurement['identity']), 'Physical trace counted twice')
@@ -131,7 +138,7 @@ def compare(archive):
         row={'case_id':ident,'ca_us':measurement['ca_us'],'aic':phases['active_mmad_aics'],
              'producer_aiv':phases['active_vector_instruction_aivs'],'measurement':measurement,
              'case':case}
-        for version in VERSIONS:
+        for version in versions:
             target=plans[version][ident]['target']
             future=plans[version][ident]['970dt']
             target_case=by_id[version][ident]
@@ -151,14 +158,14 @@ def compare(archive):
         dt,pr=(by_chip[s] for s in skus)
         ratio=dt['ca_us']/pr['ca_us']
         pair={'contract':contract,'shape':shape,'id':declared[shape],'ca_dt_over_pr':ratio}
-        for version in VERSIONS:
+        for version in versions:
             pred=dt[version]['us']/pr[version]['us']
             pair[version]=dict(dt_over_pr=pred,absolute_relative_error_pct=100*abs(pred/ratio-1))
         pairs.append(pair)
     summary={}
     for contract in sorted({key[0] for key in groups}):
         summary[contract]={}
-        for version in VERSIONS:
+        for version in versions:
             by_sku={}
             for sku in skus:
                 rows=[v[sku] for key,v in groups.items() if key[0]==contract]

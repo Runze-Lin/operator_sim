@@ -29,6 +29,18 @@ print(result.work["logical_read_bytes"], result.work["logical_write_bytes"])
 | `grouped_matmul_swiglu_quant_v2` | 9.964 |
 | **整窗** | **9.964** |
 
+## 本例各阶段怎样定价
+
+模型保留 950DT 开发 CA 中各代表核的互斥时间区间。每段带有同时工作的资源集合 S，如 CUBE+MTE2。对模板 j 的核心 c、区间 s，重定价为
+
+$$t_{jcs}=t^0_{jcs} \max_{q\in S}[(W_q/W^0_{jq})f_q],\quad T=\operatorname{median}_j\max_c\sum_s t_{jcs}.$$
+
+旧时长单位为 µs。W 是当前分块的阶段工作单位，W⁰ 是该模板分块对应的同种单位。f 是参考与目标的每核运算吞吐、时钟或共享带宽比，含目标核数产生的波次变化。MTE 的 f 在局部端口和 HBM 比例之间按压力 p 插值，p=min(1,逻辑字节/(1000×参考带宽 GB/s×参考时长 µs))。由此能重定价同时忙的两个引擎，尚不能从这些互斥区间恢复每条指令的起止。
+
+8 个 token 按 [1,7] 放在两个专家，hidden=256，SwiGLU 后通道数 F=128。融合层先产生 2F 列，再门控和量化。工作单位 (Cube,MTE1,FIXP,SIMD,MTE2,MTE3,SCALAR,IDLE)=(4,4,1,1,4,1,1,1)。950PR 对应的 Cube、SIMD、读写倍率约为 1.00116、1.02717、1.00646；发起控制与时钟倍率为 1。四个 DT 模板经上式各取最慢核后得 10.99889、11.13200、8.69526、8.92982 µs；排序后中间两项平均 (8.92982+10.99889)/2 = **9.96436 µs**。本页合同是路由完成后包含激活和量化的 GMM1。
+
+[每种资源的工作单位](../../src/operator_model/operators/fused/templates.py) · [目标端定价](../../src/operator_model/scheduling/projection.py) · [950DT 每个模板的重叠区间](../../src/operator_model/data/parameters/fusion_overlap.json)
+
 ## 与完整 CA 核对
 
 | 目标 | 公开预测 µs | 完整 CA µs | 有符号误差 | 预测有效 AIC / AIV |
