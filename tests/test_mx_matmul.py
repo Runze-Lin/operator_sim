@@ -63,13 +63,41 @@ class MxMatmulTests(unittest.TestCase):
         grid = r.projection['target_plan']['tile_grid']
         self.assertGreater(grid[0]*grid[1], r.active_aic)
         iw = r.work['implementation_work']
-        self.assertEqual(iw['ub_to_l1_expanded_bytes'], grid[0]*shape[1]*shape[2])
+        swat = r.projection['target_plan']['swat']
+        self.assertEqual(iw['ub_to_l1_expanded_bytes'], sum(w*count*shape[2] for _,w,count in swat['rectangles']))
+        self.assertEqual(sum(h*w*count for h,w,count in swat['rectangles']), shape[0]*shape[1])
         self.assertEqual(iw['weight_values_expanded'], iw['ub_to_l1_expanded_bytes'])
         self.assertEqual(r.work['logical_write_bytes'], native.work['logical_write_bytes'])
         self.assertAlmostEqual(native.projection['prices']['cube_ops_per_cycle_per_aic'],
                                4*r.projection['prices']['cube_ops_per_cycle_per_aic'])
         self.assertGreater(r.projection['stages_us']['inline_unpack'], 0)
         self.assertEqual(native.projection['stages_us']['inline_unpack'], 0)
+
+    def test_swat_grid_matches_prefill_and_explains_non_dyadic_core_count(self):
+        r = estimate('matmul', (2048,128,256), self.attrs, dtype='mxfp8', chip='Ascend950PR_957b')
+        p = r.projection['target_plan']
+        self.assertEqual((r.active_aic,r.active_aiv,p['weight_producer_aiv']), (26,52,26))
+        self.assertEqual(p['swat']['rectangles'], [(48,128,1),(80,128,25)])
+        self.assertEqual(p['swat']['l1_slots'],2)
+        self.assertEqual(r.work['implementation_work']['ub_to_l1_expanded_bytes'],851968)
+
+    def test_multiframe_local_capacity_and_first_page_dependence(self):
+        # Two successive L1 pages go to separate producers. Each individual
+        # page still traverses one AIV before its dependent FP8 MMAD.
+        r = estimate('matmul', (9,4096,7168), self.attrs, dtype='mxfp8', chip='Ascend950PR_957b')
+        p = r.projection['target_plan']
+        self.assertEqual(p['weight_producer_aiv'],2*r.active_aic)
+        self.assertGreater(p['l1_page_k'],p['mmad_k'])
+        self.assertGreater(p['pages_per_tile'],1)
+        self.assertEqual(p['swat']['l1_slots'],2)
+        service = r.projection['page_service_cycles']['first']
+        _,w,_ = max(p['swat']['rectangles'],key=lambda row:row[0]*row[1])
+        self.assertAlmostEqual(service['unpack'], w*p['l1_page_k']/r.projection['prices']['weights_per_cycle_per_aiv'])
+        huge = estimate('matmul', ((1<<31)+1,(1<<31)+3,7168), self.attrs, dtype='mxfp8')
+        rects = huge.projection['target_plan']['swat']['rectangles']
+        self.assertEqual(sum(h*w*count for h,w,count in rects), ((1<<31)+1)*((1<<31)+3))
+        self.assertLess(len(rects),128)
+        self.assertEqual(estimate('matmul',(1<<32,128,256),self.attrs,dtype='mxfp8').status,'unsupported')
 
     def test_extrapolated_only_and_resource_limits(self):
         for chip in (self.config, 'Ascend950PR_957b', 'Ascend970DT'):

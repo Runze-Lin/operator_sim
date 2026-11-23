@@ -4,6 +4,7 @@ from collections import Counter, defaultdict
 import json
 from pathlib import Path
 from statistics import median
+from calibration.mx_matmul.shards import trace_events
 
 
 def summarize(raw):
@@ -20,9 +21,8 @@ def summarize(raw):
     earliest, latest = float('inf'), float('-inf')
     for path in files:
         core = path.parent.name
-        events = json.loads(path.read_bytes())['traceEvents']
         work = defaultdict(list)
-        for event in events:
+        for event in trace_events(path):
             if event['ph'] != 'X':
                 continue
             start = event['ts']

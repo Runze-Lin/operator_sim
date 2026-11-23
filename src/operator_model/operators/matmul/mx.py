@@ -6,10 +6,13 @@ from operator_model.chips import load_chip
 from operator_model.resources import load_parameters
 
 from operator_model.operators.matmul.resources import _costs
+from operator_model.operators.matmul import mx_swat
 from operator_model.workload import _counts
 
 FP4 = 'mxfp4'
 FP8 = 'fp8_e4m3fn'
+
+
 @lru_cache(maxsize=1)
 def _mx_prices():
     return load_parameters('mx_matmul_phases')
@@ -75,13 +78,13 @@ def mx_work(shape, dtype, attrs):
     return work
 
 
-def _footprint(bm, bn, bk, mixed):
+def _footprint(bm, bn, bk):
     # Reserve two aligned operand pages locally and one FP32 accumulator tile.
-    a = _payload(bm, bk, 8 if mixed else 4)
-    b = _payload(bn, bk, 8 if mixed else 4)
+    a = _payload(bm, bk, 4)
+    b = _payload(bn, bk, 4)
     scales = (bm + bn) * 2 * _div(bk, 64)
     return {'l1_bytes': 2*(a+b+scales), 'l0a_bytes': 2*a, 'l0b_bytes': 2*b,
-            'l0c_bytes': 4*bm*bn, 'ub_bytes': 2*(b + _payload(bn, bk, 4)) if mixed else 0}
+            'l0c_bytes': 4*bm*bn, 'ub_bytes': 0}
 
 
 def _native_output(m, n, budget):
@@ -110,34 +113,15 @@ def _native_output(m, n, budget):
     return bm, bn
 
 
-def _mixed_output(m, n, budget):
-    # Bounded approximation to the V4 solver. Try dyadic subgrids and prefer
-    # fuller grids, balanced rectangles and reuse of the wider FP8 activation.
-    def powers(length):
-        value = 1
-        while value <= min(budget, _div(length, 16)):
-            yield value
-            value *= 2
-    candidates = []
-    for mc in powers(m):
-        for nc in powers(n):
-            if mc*nc <= budget:
-                bm, bn = _align(_div(m, mc), 16), _align(_div(n, nc), 16)
-                active = _div(m, bm)*_div(n, bn)
-                candidates.append(((-active, max(bm, bn)/min(bm, bn), nc), bm, bn))
-    _, bm, bn = min(candidates)
-    return min(256, bm), min(256, bn)
-
-
-def _tile(shape, chip, mixed, core_budget):
+def _native_tile(shape, chip, core_budget):
     m, n, k = shape
-    bm, bn = (_mixed_output if mixed else _native_output)(m, n, core_budget)
+    bm, bn = _native_output(m, n, core_budget)
     bm, bn = min(bm, 256), min(bn, 256)
     # Large K fragments come directly from the double-buffered L0 A/B budget.
     # Cap page depth at 2048 as a conservative scenario for unobserved K loops.
     bk = min(2048, _align(k, 64))
     while True:
-        footprint = _footprint(bm, bn, bk, mixed)
+        footprint = _footprint(bm, bn, bk)
         if all(size <= (chip.details.get(key) or 0) for key, size in footprint.items() if size):
             return (bm, bn, bk), footprint
         if bk > 64:
@@ -159,7 +143,15 @@ def price(shape, chip, dtype, attrs, calibrated_only=False):
     name = 'a8w4_inline_dequant' if mixed else 'a4w4_native'
     launched = min(2, max(1, chip.vector_cores // chip.cube_cores)) if mixed else 0
     budget = min(chip.cube_cores, chip.vector_cores // launched) if mixed else chip.cube_cores
-    tile, footprint = _tile(shape, chip, mixed, budget)
+    swat = None
+    if mixed:
+        if any(dim > 2**32-1 for dim in shape):
+            raise ValueError('The A8W4 SWAT tiling ABI uses unsigned 32-bit dimensions')
+        swat = mx_swat.plan(shape, chip, budget)
+        tile = swat['base_tile'] if swat else None
+        footprint = swat['required_buffer_bytes'] if swat else None
+    else:
+        tile, footprint = _native_tile(shape, chip, budget)
     plan = {'route': name, 'layout': 'ND A[M,K], transposed physical ND W[N,K], ND Y[M,N]',
             'weight_dtype': FP4, 'cube_dtype': work['dtype'], 'accumulator_dtype': 'fp32',
             'output_dtype': 'bf16', 'scale_shapes': [[m, _div(k, 64), 2], [n, _div(k, 64), 2]],
@@ -169,22 +161,44 @@ def price(shape, chip, dtype, attrs, calibrated_only=False):
     diag = {'method': 'mx_matmul_page_pipeline', 'target_plan': plan, 'latency_us': None,
             'inherited_fields': list(chip.inherited_fields), 'timing_qualification': 'extrapolated'}
     if tile is None:
-        return None, work, diag, 'No 16x16 output tile with a 64-value K page fits the target local buffers'
+        return None, work, diag, 'No feasible local buffer plan for the selected Matmul implementation'
     bm, bn, bk = tile
     mt, nt = _div(m, bm), _div(n, bn)
-    tiles = mt * nt
+    if swat:
+        histogram = swat['rectangles']
+        plan['swat'] = swat
+    else:
+        def axis(length, size):
+            full, tail = divmod(length, size)
+            return [(extent, count) for extent, count in ((size, full), (tail, 1)) if count and extent]
+        histogram = [(h,w,mc*nc) for h,mc in axis(m,bm) for w,nc in axis(n,bn)]
+    tiles = sum(count for _,_,count in histogram)
     active = min(tiles, budget)
     waves = _div(tiles, active)
-    pages = _div(k, bk)
-    # Observed small K fragments go to veccore0; the paired veccore1 executes
-    # control. Outside single-page coverage allow producers to alternate pages.
-    producers = min(launched, pages)
+    page_k = swat['l1_k'] if swat else bk
+    pages = _div(k, page_k)
+    if swat and swat['l1_slots'] == 4:
+        # Each subblock owns one N slice, if nonempty. The packed-output
+        # scenario on a 1:1 target assumes the sole AIV handles both halves.
+        dual_jobs = sum(count for _,w,count in histogram if w > swat['ub_n'])
+        producer_cores = active + min(dual_jobs,active) if launched == 2 else active
+    elif mixed and launched == 2:
+        # With two slots the subblock index follows the L1 page parity, which
+        # persists across output tiles assigned to the same pair.
+        producer_cores = 2*active if pages > 1 else active + min(tiles-active,active)
+    else:
+        producer_cores = active if mixed else 0
     sku = next((name for name in ('Ascend950DT_9582', 'Ascend950PR_957b') if chip == load_chip(name)), None)
     covered = bool(sku and 1 <= m <= 2048 and (n, k) == (128, 256))
     diag['calibration_scope'] = {'covered': covered, 'development_m': [1, 256],
                                  'm_range': [1, 2048], 'n': 128, 'k': 256,
                                  'hardware_equivalent_sku': sku, 'method': 'MX phase calibration'}
-    plan.update(weight_producer_aiv=active*producers, launched_aiv=active*launched, tile=list(tile), tile_grid=[mt, nt], active_aic=active, active_aiv=active*launched,
+    if swat:
+        plan['weight_handoff'] = ('alternate whole L1 pages' if swat['l1_slots']==2 else
+                                  'split the page along N where the second slice is nonempty')
+        plan['mmad_k'] = bk
+        plan['l1_page_k'] = page_k
+    plan.update(weight_producer_aiv=producer_cores, launched_aiv=active*launched, tile=list(tile), tile_grid=[mt, nt], active_aic=active, active_aiv=active*launched,
                 output_tiles=tiles, busiest_core_tiles=waves, pages_per_tile=pages,
                 busiest_core_pages=waves*pages, last_wave_tiles=(tiles-1)%active+1)
     peak = chip.cube_tops[str(bits)]
@@ -220,8 +234,11 @@ def price(shape, chip, dtype, attrs, calibrated_only=False):
     # Traffic on shared links. When the live K slice does not fit L2, the
     # upper traffic scenario repeats inputs for each consumer output tile.
     ab = work['operand_bytes']
-    l2_reads = nt*(ab['activation']+ab['activation_scale']) + mt*(ab['weight']+ab['weight_scale'])
-    first_k = min(bk, k)
+    dispatched_rows = sum(h*count for h,_,count in histogram)
+    dispatched_columns = sum(w*count for _,w,count in histogram)
+    l2_reads = (dispatched_rows*((ab['activation']+ab['activation_scale'])//m)
+                + dispatched_columns*((ab['weight']+ab['weight_scale'])//n))
+    first_k = min(page_k, k)
     live = (_payload(m, first_k, bits) + _payload(n, first_k, 4)
             + 2*_div(first_k, 64)*(m+n))
     l2_size = details.get('l2_bytes') or 0
@@ -230,18 +247,20 @@ def price(shape, chip, dtype, attrs, calibrated_only=False):
     retention = details.get('matmul_output_retained_fraction')
     retention = 1.0 if retention is None else retention
     hbm_write = write - min(write, max(0, l2_size-live))*retention
-    def axis(length, size):
-        full, tail = divmod(length, size)
-        return [(extent, count) for extent, count in ((size, full), (tail, 1)) if count and extent]
-    histogram = [(h, w, rows*cols) for h, rows in axis(m, bm) for w, cols in axis(n, bn)]
     physical_ops = sum(2*_align(h, 16)*_align(w, 16)*_align(k, 64)*count for h,w,count in histogram)
     work['implementation_work'] = {
         'padded_cube_ops_candidate': physical_ops, 'logical_k_pages': tiles*pages,
-        'weight_values_expanded': mt*n*k if mixed else 0,
-        'ub_to_l1_expanded_bytes': mt*n*k if mixed else 0,
+        'weight_values_expanded': dispatched_columns*k if mixed else 0,
+        'ub_to_l1_expanded_bytes': dispatched_columns*k if mixed else 0,
         'unpack_peak_equivalents_per_weight': unpack_ops if mixed else 0,
+        'candidate_cube_k_fragments': tiles*_div(k,bk) if mixed else None,
         'dynamic_instruction_counts': None}
-    h, w = min(bm, m), min(bn, n)
+    h,w,_ = max(histogram,key=lambda rect: _align(rect[0],16)*_align(rect[1],16))
+    # The complete histogram above determines replicated traffic, while the
+    # largest rectangle approximates the critical worker.
+    split_n = bool(swat and swat['l1_slots'] == 4 and launched == 2 and w > swat['ub_n'])
+    producer_width = max(swat['ub_n'],w-swat['ub_n']) if split_n else w
+    steady_producers = min(launched,pages*waves) if swat and swat['l1_slots'] == 2 else 1
     def page(depth):
         scales = 2*_div(depth, 64)
         a = _payload(h, depth, bits) + h*scales
@@ -249,29 +268,33 @@ def price(shape, chip, dtype, attrs, calibrated_only=False):
         expanded = w*depth if mixed else 0
         # Independent AIC and AIV readers in mixed mode. Include shared
         # cache/HBM contention as well as the individual core-port limits.
-        local = max(a, b/producers) if mixed else a+b
+        local = max(a, _payload(producer_width,depth,4)+w*scales) if mixed else a+b
         rd = max(local/mte2, active*(a+b)/l2, active*(a+b)*hbm_reads/l2_reads/hbm)
-        convert = expanded/(producers*unpack) if mixed else 0
-        handoff = expanded/(producers*mte3) if mixed else 0
+        convert = producer_width*depth/unpack if mixed else 0
+        handoff = producer_width*depth/mte3 if mixed else 0
         ld = (a + b + (expanded-_payload(w, depth, 4) if mixed else 0))/mte1
         compute = 2*_align(h, 16)*_align(w, 16)*_align(depth, 64)/cube
         return {'read': rd, 'unpack': convert, 'handoff': handoff, 'load': ld, 'cube': compute}
 
-    first, last = page(first_k), page((k-1)%bk+1)
+    first, last = page(first_k), page((k-1)%page_k+1)
     # Two pages can be in flight. The read response and Cube completion
     # latency are paid on the dependent edge; steady issue obeys the ports.
     read_latency = details.get('matmul_read_latency_cycles') or prices['read_latency_cycles']
     load_latency = details.get('matmul_l0_latency_cycles') or phases['l0_latency_cycles']
     cube_latency = details.get('matmul_mmad_latency_cycles') or phases['cube_latency_cycles']
-    ii = max(clocks('read_ii_cycles'), first['read'], (read_latency+first['read'])/2,
-             first['unpack'] + phases.get('unpack_setup_cycles', 0), first['handoff'], first['load'], clocks('mmad_ii_cycles')+first['cube'])
+    fragments_first = _div(first_k,bk)
+    fragments_last = _div((k-1)%page_k+1,bk)
+    cube_issue = clocks('mmad_ii_cycles')
+    ii = max(clocks('read_ii_cycles'), first['read'], (read_latency+first['read'])/(swat['l1_slots'] if swat else 2),
+             (first['unpack'] + phases.get('unpack_setup_cycles', 0))/steady_producers,
+             first['handoff']/steady_producers, first['load'], fragments_first*cube_issue+first['cube'])
     out_service = max(2*h*w/mte3, 2*h*w*active/l2, 2*h*w*active*hbm_write/write/hbm)
     spread = prices['spread_cycles'] * (active-1 if mixed else log2(active))
     stages = {'launch': details.get('matmul_launch_cycles') or prices['launch_cycles'],
               'core_arrival_spread': spread,
               'read_fill': read_latency+last['read'], 'inline_unpack': last['unpack'] + phases.get('unpack_setup_cycles', 0),
               'ub_to_l1': last['handoff'] + phases.get('handoff_latency_cycles', 0), 'l1_to_l0': load_latency+last['load'],
-              'cube_tail': cube_latency+last['cube'], 'write_tail': (details.get('matmul_drain_cycles') or prices['drain_cycles'])+out_service,
+              'cube_tail': cube_latency+last['cube']+(fragments_last-1)*cube_issue, 'write_tail': (details.get('matmul_drain_cycles') or prices['drain_cycles'])+out_service,
               'page_intervals': (pages-1)*ii}
     # The busiest core processes ceil(tiles/cores) rectangles. Use a full
     # rectangle envelope for its waves; shared-link totals below use exact tails.
@@ -293,5 +316,5 @@ def price(shape, chip, dtype, attrs, calibrated_only=False):
                 price_sources={'peaks': 'target chip cube_tops, vector_tops, core counts and frequency',
                                'vector': 'weight prologue service in 950 INT8 peak equivalents per value; not a dynamic instruction count',
                                'ports_and_phase_cycles': 'target detail overrides, MX DT/PR development phase prices and inherited BF16 MTE bytes/cycle/steady issue',
-                               'tiling': 'V3 source-based output rebalance; V4 candidate dyadic subgrid; K from double-buffer capacities'})
+                               'tiling': 'ops-nn v9.2.1 Blaze SWAT host geometry and ND weight prologue' if mixed else 'V3 source-based output rebalance; K from double-buffer capacities'})
     return us, work, diag, reason

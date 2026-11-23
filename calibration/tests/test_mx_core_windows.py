@@ -4,11 +4,24 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from calibration.mx_matmul.collect import core_windows
+from calibration.mx_matmul.shards import trace_events
 
 
 class MxPhysicalWindowTests(unittest.TestCase):
+    def test_multi_chunk_shard_and_truncated_footer(self):
+        events = [dict(name='escaped " { ]', ts=i, ph='X', dur=.01) for i in range(64)]
+        with tempfile.TemporaryDirectory() as folder, patch('calibration.mx_matmul.shards.CHUNK', 64):
+            shard = Path(folder)/'trace.json'
+            source = json.dumps({'traceEvents':events})
+            shard.write_text(source)
+            self.assertEqual(list(trace_events(shard)), events)
+            shard.write_text(source[:-1])
+            with self.assertRaisesRegex(ValueError, 'footer'):
+                list(trace_events(shard))
+
     def test_sync_retirement_and_roster(self):
         with tempfile.TemporaryDirectory() as folder:
             simulator = Path(folder)

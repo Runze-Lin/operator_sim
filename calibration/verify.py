@@ -6,30 +6,38 @@ import json
 from .__main__ import HERE, digest, metrics, predict, require, sha_field, ingest, unseal
 
 
-def verify_mx_receipts(path, rows):
+def verify_mx_receipts(path, rows, replay_only=False):
     """Check native output/retirement evidence and independent forecast equality."""
     archive = json.loads(path.read_bytes())
-    published = {r['case_id']: r for r in rows
-                 if r['contract'] in ('matmul_mx_native', 'matmul_mx_mixed')}
+    from .mx_matmul.compare import validate_evidence
+    require(set(archive)=={'development','independent'}, 'Missing historical MX phase')
+    historical = {c['id'] for item in archive.values() for c in item['freeze']['cases']}
+    published = {r['case_id']: r for r in rows if r.get('case_id') in historical}
+    require(sum(len(item['freeze']['cases']) for item in archive.values())==len(historical)
+            and set(published)==historical, 'Missing historical MX reference or repeated case id')
     seen_geometry = set()
     for phase, role in (('development', 'replay'), ('independent', 'independent')):
         item = archive[phase]
         frozen = unseal(item['freeze'], 'freeze')
         cases = {c['id']: c for c in frozen['cases']}
+        require(set(cases)==set(item['phase_counts']) and len(item['receipts'])==len(cases)
+                and {r['case']['id'] for r in item['receipts']}==set(cases),
+                'Historical MX freeze, phase counts and receipts disagree')
         for receipt in item['receipts']:
             observation = ingest(frozen, receipt)
+            validate_evidence(receipt,item['phase_counts'][observation['case_id']],observation,physical=False)
             row = published.pop(observation['case_id'])
             case = cases[observation['case_id']]
-            require(row['data_role']==role and observation['data_role']=='prospective'
+            require(row['data_role']==('replay' if replay_only else role) and observation['data_role']=='prospective'
                     and row['receipt_sha256']==observation['receipt_sha256']
                     and row['identity']==observation['identity']
                     and row['freeze_sha256']==frozen['sha256']
                     and all(row[k]==case[k] for k in ('dtype','op','contract','chip','attrs','shape','api'))
-                    and row['kernel']==observation['kernel']
+                    and row['kernel']==observation['kernel'] and row['provider']==observation['provider']
                     and abs(item['phase_counts'][case['id']]['full_window_us']-row['ca_us'])<.001
                     and row['ca_us']==observation['ca_us'], 'MX receipt/role mismatch')
             geometry = row['contract'], tuple(row['shape'])
-            if phase == 'development':
+            if phase == 'development' or replay_only:
                 seen_geometry.add(geometry)
             else:
                 require(geometry not in seen_geometry
@@ -37,6 +45,23 @@ def verify_mx_receipts(path, rows):
                         and row['extrapolated_970dt_us']==case['extrapolated_970dt_us'],
                         'Independent shape or pricing differs from its freeze')
     require(not published, 'Missing MX receipt')
+    return historical
+
+
+def verify_mx_projection_rows(endpoints, rows, historical):
+    relevant=[r for r in rows if r['contract'] in ('matmul_mx_native','matmul_mx_mixed')]
+    published={r.get('case_id'):r for r in relevant}
+    require(len(published)==len(relevant) and not historical.intersection(endpoints)
+            and set(published)==historical.union(endpoints),'MX window or role not bound to its campaign')
+    historical_geometry={(published[i]['contract'],tuple(published[i]['shape'])) for i in historical}
+    for ident,e in endpoints.items():
+        row=published[ident]
+        case=e['case']
+        require((case['contract'],tuple(case['shape'])) not in historical_geometry and row['data_role']=='independent'
+                and all(row[k]==case[k] for k in ('op','contract','chip','shape','dtype','attrs','api'))
+                and all(row[k]==e['measurement'][k] for k in ('ca_us','provider','identity','kernel','freeze_sha256','receipt_sha256'))
+                and row['predicted_us']==e['v1.3']['us'] and row['extrapolated_970dt_us']==e['v1.3_970dt']['us'],
+                'MX projection reference differs from its case, receipt, forecast or role')
 
 
 def verify(reprice=False):
@@ -48,7 +73,14 @@ def verify(reprice=False):
     rows=[json.loads(line) for line in (folder/'windows.jsonl').read_text().splitlines()]
     require(len(rows)==manifest['protocol_windows'] and len(summary)==manifest['contracts'], 'Manifest counts differ from reference')
     if 'mx-matmul.json' in manifest['export_sha256']:
-        verify_mx_receipts(folder/'mx-matmul.json', rows)
+        paired='mx-projections.json.gz' in manifest['export_sha256']
+        historical=verify_mx_receipts(folder/'mx-matmul.json', rows, replay_only=paired)
+        if paired:
+            from .mx_matmul.compare import load_comparison, compare
+            _, endpoints=compare(load_comparison(folder/'mx-projections.json.gz'))
+            verify_mx_projection_rows(endpoints, rows, historical)
+        else:
+            verify_mx_projection_rows({}, rows, historical)
     groups=defaultdict(list)
     ids=set()
     if reprice:

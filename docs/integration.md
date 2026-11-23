@@ -54,7 +54,7 @@ if r.latency_us is not None:
 | [grouped_matmul_swiglu_quant_v2](examples/grouped_matmul_swiglu_quant_v2.md)、[gmm2](examples/gmm2.md)、[moe_ffn](examples/moe_ffn.md) | (M,K,F,E) | `expert_counts` 为 E 个本地专家各自收到的有效 token 数，总和为 M | MXFP8 E4M3FN × E4M3FN、E8M0 scale；GMM1 输出 MXFP8，GMM2/整链输出 BF16 |
 | [vLLM HcPost](examples/hc_post_vllm.md) | (B,S,N,D) | 调用 mhc_post 并传 implementation="vllm_hc_post"，使用与内置 Post 不同的 kernel 与布局。 | BF16 激活、FP32 系数 → BF16 |
 
-MoE 的 MXFP8 接口传 `dtype="fp8_e4m3fn"`，两侧的 E8M0 scale 和输出格式由该实现固定。芯片配置里的 4-bit/8-bit 峰值表示资源能力；每种可计时的精度组合列在本表。
+MoE 的 MXFP8 接口传 `dtype="fp8_e4m3fn"`，两侧的 E8M0 scale 和输出格式由该实现固定。芯片配置里的 4-bit/8-bit 峰值表示资源能力。本表列出在线模型实际接入的组合。精度盘点另列出 FA 的 Q/KV cache、量化/反量化以及 MoE 权重格式对应的已安装实现和 CA 证据。[低精度路线清单](precision-coverage.md)
 
 例如 TP 切 head 后传入本卡 H；普通 decode 每请求 1 行，MTP 推 8 个 token、主模型同时校验时每请求可有 9 行。对于 MoE，EP 大小给出专家所在的卡，实际 token 路由决定本地的 expert_counts。可按模型配置和指定并行方式导出 prefill 几何，再与框架实际调度的张量对照。[三模型示例](../examples/workloads/README.md)
 

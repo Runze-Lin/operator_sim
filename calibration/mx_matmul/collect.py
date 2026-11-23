@@ -12,6 +12,7 @@ from time import monotonic
 
 from calibration.__main__ import CASE_FIELDS, digest, encoded, ingest, read, require, unseal
 from calibration.msopprof import CORE, sha
+from calibration.mx_matmul.shards import trace_events
 
 OBJECT = {
     'a4w4': ('quant_batch_matmul_v3',
@@ -97,18 +98,20 @@ def core_windows(simulator, roster):
     require(set(shards) == set(roster), 'Physical-core shards differ from launched roster')
     cores, hashes = {}, {}
     for name, path in sorted(shards.items()):
-        source = path.read_bytes()
-        events = [e for e in json.loads(source)['traceEvents'] if e['ph'] == 'X']
-        require(events and all(e['ts'] >= 0 and e['dur'] >= 0 for e in events),
-                f'Invalid device duration on {name}')
-        lo = min(e['ts'] for e in events)
-        hi = max(e['ts'] + e['dur'] for e in events)
-        ends = [e['ts'] for e in events if e['name'] == 'END']
+        lo, hi, ends = float('inf'), 0, []
+        for event in trace_events(path):
+            if event['ph'] != 'X':
+                continue
+            start, duration = event['ts'], event['dur']
+            require(start >= 0 and duration >= 0, f'Invalid device duration on {name}')
+            lo, hi = min(lo, start), max(hi, start + duration)
+            if event['name'] == 'END':
+                ends.append(start)
         require(len(ends) == 1 and abs(hi-lo-roster[name]) < .011,
                 f'Physical END or vendor per-core duration mismatch on {name}')
         cores[name] = dict(first_tick=round(lo*1650), end_tick=round(ends[0]*1650),
                            retire_tick=round(hi*1650), end_count=1)
-        hashes[name] = digest(source)
+        hashes[name] = sha(path)
     return cores, hashes
 
 
