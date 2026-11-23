@@ -255,12 +255,31 @@ def _price_resource(op, shape, target, call, dtype):
                     aiv,aic,target.name,work,projected,_rates(work,us,target))
 
 
-_WORK_ONLY = {'candidate_filtered_indexer', 'cache_load', 'routed_grouped_matmul'}
+_STRUCTURAL_OPS = {'candidate_filtered_indexer', 'cache_load', 'routed_grouped_matmul'}
+
+
+# Qualified elapsed-time evidence, never used to choose a price or schedule.
+_FP4_QUANT_GEOMETRIES = {
+    (9, 128), (9, 288), (9, 7168), (576, 128),
+    (2, 3584), (9, 512), (9, 1536), (9, 12288), (144, 288),
+    (144, 384), (144, 7168), (576, 288), (576, 7168), (576, 12288),
+}
+
+
+def _native_alternative(us, work, projection, target, mode):
+    """Price an explicitly selected library dispatch for a system graph node."""
+    plan = projection['target_plan']
+    status = projection['timing_qualification']
+    reason = projection.get('reason') or 'Explicit library implementation; see measured scope for this contract'
+    aiv, aic = plan.get('active_aiv'), plan.get('active_aic')
+    if us is None or (mode == 'calibrated' and status != 'estimated'):
+        return Estimate(None, 'unavailable', reason, aiv, aic, target.name, work, projection)
+    return Estimate(us, status, reason, aiv, aic, target.name, work, projection, _rates(work, us, target))
 
 
 def _evaluate(op, shape, attrs, soc, chip, dtype, timing_mode='auto'):
     try:
-        if not isinstance(op, str) or ALIASES.get(op, op) not in VECTOR | CUBE | FUSION | _WORK_ONLY:
+        if not isinstance(op, str) or ALIASES.get(op, op) not in VECTOR | CUBE | FUSION | _STRUCTURAL_OPS:
             raise ValueError(f'Unknown operator: {op}')
         if not isinstance(shape, Sequence) or isinstance(shape, (str, bytes)):
             raise ValueError('Expected an ordered shape of positive integers')
@@ -300,28 +319,53 @@ def _price_device(op, shape, attrs, target, dtype, timing_mode):
         work, plan = describe(shape, call)
         return Estimate(None, 'unavailable', 'Missing a device implementation and CA timing for candidate scoring and selection',
                         chip_name=target.name, work=work, projection=plan), raw
+    if op == 'cache_load' and call.get('implementation') == 'aclnnAntiMxQuant' and chosen_dtype == 'mxfp4':
+        from operator_model.operators.vector.cache_load import price
+        us, work, plan = price(shape, target, call)
+        return _native_alternative(us, work, plan, target, timing_mode), raw
     if op == 'cache_load':
         from operator_model.operators.vector.cache_load import describe
-        work, plan = describe(shape, chosen_dtype, call)
-        return Estimate(None, 'unavailable', 'Materialized cache dequantization has no calibrated device schedule',
+        fp8_native = chosen_dtype == 'fp8_e4m3fn' and call.get('implementation') == 'aclnnAscendAntiQuant'
+        attrs = {k:v for k,v in call.items() if k != 'implementation'} if fp8_native else call
+        work, plan = describe(shape, chosen_dtype, attrs)
+        if fp8_native:
+            plan['implementation'] = 'aclnnAscendAntiQuant'
+        reason = ('The FP8 per-row native route has measured timing evidence and no predictive schedule.'
+                  if fp8_native else 'Cache load needs a selected implementation for device timing.')
+        return Estimate(None, 'unavailable', reason,
                         chip_name=target.name, work=work, projection=plan), raw
+    if op == 'routed_grouped_matmul' and call.get('implementation') == 'aclnnGroupedMatmulV5':
+        from operator_model.operators.moe.routed_grouped_matmul import price
+        us, work, plan = price(shape, chosen_dtype, call, target)
+        if plan['timing_qualification'] == 'estimated' and (
+                target not in (reference, load_chip('Ascend950PR_957b'))
+                or shape[0] > 34 or max(call['expert_counts']) > 23):
+            plan['timing_qualification'] = 'extrapolated'
+            plan['reason'] = 'Resource configuration or expert row counts extend beyond the grouped development range.'
+        return _native_alternative(us, work, plan, target, timing_mode), raw
     if op == 'routed_grouped_matmul':
         from operator_model.operators.moe.routed_grouped_matmul import describe
         work, plan = describe(shape, chosen_dtype, call)
-        return Estimate(None, 'unavailable', 'Routed MXFP4 expert projection has no calibrated device schedule',
+        return Estimate(None, 'unavailable', 'Select the matching routed expert implementation to price device time',
                         chip_name=target.name, work=work, projection=plan), raw
+    if op == 'quant_token_fp8':
+        from operator_model.operators.quant.token_fp8 import price
+        us, work, plan = price(shape, target, call)
+        return _native_alternative(us, work, plan, target, timing_mode), raw
     if op == 'quant_mxfp4':
         from operator_model.operators.quant.mxfp4 import contiguous_input, mx4_work, price
         if 'input_stride' in call and not contiguous_input(shape, call['input_stride']):
             return Estimate(None, 'unavailable', 'Strided BF16 input needs a gather or layout-conversion schedule',
                             chip_name=target.name, work=mx4_work(shape, call)), raw
         us, work, projection = price(shape, target, call)
-        active = projection['target_plan']['active_aiv']
-        reason = 'FP4 source-loop scenario; 950 transport parameters transferred from MXFP8, no FP4 timing fit'
-        if timing_mode == 'calibrated':
-            return Estimate(None, 'unavailable', reason, active, 0, target.name, work, projection), raw
-        return Estimate(us, 'extrapolated', reason, active, 0, target.name, work,
-                        projection, _rates(work, us, target)), raw
+        projection['target_plan']['active_aic'] = 0
+        measured = (target in (reference, load_chip('Ascend950PR_957b')) and
+                    shape in _FP4_QUANT_GEOMETRIES)
+        projection['timing_qualification'] = 'estimated' if measured else 'extrapolated'
+        projection['reason'] = ('Contiguous block32 FP4 wave and output queues calibrated on 950DT/950PR. '
+                                + ('A qualified CA window covers this geometry.' if measured
+                                   else 'Unmeasured geometry or target configuration.'))
+        return _native_alternative(us, work, projection, target, timing_mode), raw
     if op == 'matmul' and chosen_dtype in ('mxfp4', 'fp8_e4m3fn'):
         from operator_model.operators.matmul.mx import price
         us, work, projection, reason = price(shape, target, chosen_dtype, call, timing_mode == 'calibrated')

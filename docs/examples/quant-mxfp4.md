@@ -1,81 +1,89 @@
 # DynamicMxQuant · BF16 → packed MXFP4 E2M1
 
-Kimi-K3.1 的 128k decode 模拟账单中，单卡 batch=1、TP8/EP32、主模型每次校验 9 个 token，`NpuDynamicMxQuant` 的 `[9,128]` 输入在一轮 target 中出现 69 次。捕获的该张量是行步长 6,288 的视图。下面用同一维度的连续输入展示模型和两端独立 CA；给实际视图传 `attrs={"input_stride":[6288,1]}` 会返回工作量、设备时间 N/A。入口固定连续 BF16、末轴 32 元素一组、`round`、OCP (`scale_alg=0`)。账单给出了两张输出的形状与 dtype，系统的 `quantize_mxfp4` 设置了分组和舍入。OCP 是本例对系统未记录属性的显式选择。系统账单的时间来自系统模拟器；下文写作 CA 的时间均来自独立原生派发。
+一份 `[9,288]` 的 decode 输入只含 2,592 个值。950DT 的实现把每行分给两个 AIV，其中一个仅处理 32 列。这个小核最后退休，原因有两处：为了补齐 scale，它在装入输入前清零 UB；写回时，它的 2 B scale 与其他核的输出共用一个 32 B 区间。下面从工作量算到这一个核，再与完整的 CA 窗口核对。该形状在 DeepSeek-V4.1-Flash 的系统捕获中有实际连续输入。[系统形状清单](../system-quant-shapes.md)
 
 ```python
 from operator_model import estimate
 
-e = estimate("quant_mxfp4", [9, 128], {"group_size": 32, "round_mode": "round"},
+q = estimate("quant_mxfp4", [9, 288], {"group_size": 32, "round_mode": "round"},
              dtype="bf16", chip="Ascend950DT_9582")
-print(e.status, e.latency_us, e.active_aiv)      # extrapolated, 4.129040…, 9
-print(e.work["packed_shape"], e.work["scale_shape"])  # [9, 64], [9, 2, 2]
+print(q.latency_us, q.active_aiv, q.active_aic)       # 4.640306…, 18, 0
+print(q.work["packed_shape"], q.work["scale_shape"])  # [9, 144], [9, 5, 2]
+print(q.projection["critical_wave"]["cols"])           # 32
 ```
 
-此入口接受 1–7 维，末维为 ≥32 的偶数。系统如提前 padding，传本次算子实际收到的 shape，padding 自身另算。原 `quant` 仍为 BF16 → MXFP8 E4M3FN。FP4 输出精度与循环独立核算，当前阶段价格的一部分迁自 950 的 MXFP8 数据。三种芯片均返回 `extrapolated`，`timing_mode="calibrated"` 返回 `unavailable` 并保留工作量。
+接口接收连续 BF16，1–7 维，末维为 ≥32 的偶数。该实现取末轴、每组 32、`round`、OCP (`scale_alg=0`)。系统导出提供了分组、舍入与输出精度；其未记录的 `scale_alg` 按 OCP 解释。FP8 输出使用单独的 `quant`。设备时间以最早设备指令为零点；可配的 `kernel_overhead_us` 只进入系统调度时间。
 
-## 从一行数据算到整窗
+## 从输入算到 [9,288] 的 4.640 µs
 
-1. **接口字节与数学工作**。将前导维相乘得行数 R，保留实际行宽 C，X=RC，G=R×ceil(C/32)。读 2X 字节 BF16，写 X/2 字节 packed E2M1 和 2R×ceil(C/64) 字节 E8M0。最后一组仅有半对时，scale 张量仍保留补齐槽。对本例，这三项为 2304、576、36 B，G=36。按单元素归属统计，指数提取、组内最大值比较、缩放乘法、转换四项合计 X+(X−G)+X+X=4572 次。位域和转换归入 BF16 输入宽度；每类速度可以不同。
-2. **分核与 UB**。host 先按 512 列片计任务；若 R×ceil(C/512)≤0.75×AIV 核数，则改用 256 列片，再枚举行列切分、优先减小尾块空洞。本例 9≤48，一个 AIV 分到一行 128 列，9 个 AIV、0 个 AIC。UB 容纳的 block32 组数为 8×floor((UB−2048)/(256×5+8×2×5))。分母首项来自双槽 BF16 输入和 packed 输出，每个逻辑元素合计 5 B；第二项是最大指数、scale、倒数缓冲的预算。950DT 的 253952 B UB 可放 1480 组，本例每核只需一块。列块按组数补偶，小组和大行均以此规划。
-3. **Vector 工作**。某 UB tile 的行数 h、有效宽 w，对应补偶组数 g=h×2×ceil(w/64)。BF16 OCP 源码每处理 256 个输入，求块内最大指数的内层有 6 个 Reg 调用，缩放、cast 并打包的内层有 9 个；每处理 128 个 scale，生成 E8M0 和倒数的内层有 16 个。因此内层源码调用数为 15×ceil(g/8)+16×ceil(g/128)。本例 h=1、w=128、g=4，得到 31 个源码调用。发起成本假设为 950DT 每周期 1 调用，其他芯片按「16 bit Vector 峰值 / AIV 核数 / 频率」相对 DT 伸缩，峰值未知则保留 1。加 23 周期依赖，共 54 周期。本口径排除了循环外初始化、标量控制，也没有假设一个源码调用固定编译为一条指令。
-4. **搬运与调度**。DT 单块的 MTE2 服务为 1029.740+256/48.363=1035.033 周期，发起间隔单列为 256/68.913=3.715 周期。MTE3 合并价格为 242.510+81.000+(64+4)/92.027=324.249 周期。上述「固定延迟 + 字节数 / 每核字节吞吐」来自 950 参考 quant 的读响应、发起、写服务和 scale 暴露尾部，在这里是迁移假设。多块按读→Vector→写排序，同资源与双槽复用施加等待。实现用 max-plus 的重复平方法处理长循环。全芯片还计算共享外存和 L2 约束，只有超出核内流水的部分增加总时长。此例共享时间均可隐藏。[原始价格](../../src/operator_model/data/parameters/quant_resources.json) · [目标芯片覆盖值](../../src/operator_model/data/chips/Ascend950DT_9582.json) · [多核流量规则](../../src/operator_model/scheduling/memory.py)
-5. **合成设备时间**。从所有核的最早指令计时，套用同 SKU quant 首读参数 4686.5 周期，加各核到达跨度 219.921×log₂(9)=697.134 周期，末尾另有 16 周期。总计 (4686.5+697.134+1035.033+54+324.249+16)/1650=4.129040 µs；1650 是 1.65 GHz 对应的 cycles/µs。多块使用该芯片的 prefetch 首发价。系统配置的 `kernel_overhead_us` 只进入 `scheduled_us`。[FP4 调度](../../src/operator_model/operators/quant/mxfp4.py) · [固定版本 host 划分](https://gitcode.com/cann/ops-nn/blob/602e4ad985da00aad28c16432841e9c5069e10de/quant/dynamic_mx_quant/op_host/arch35/dynamic_mx_quant_tail_axis_tiling_arch35.cpp) · [FP4 内层循环](https://gitcode.com/cann/ops-nn/blob/602e4ad985da00aad28c16432841e9c5069e10de/quant/dynamic_mx_quant/op_kernel/arch35/dynamic_mx_quant_tail_axis.h)
+下列带宽为单核 **B/cycle**，时间先用 **cycle**，950DT 的每微秒有 1,650 个周期。所有公式先随目标芯片重新分核，再按当前核价、芯片频率和共享带宽重算。
 
-## 同一设备零点下的实测
+| 步骤 | 公式、含义与本例代入 |
+|---|---|
+| 逻辑张量 | `R=前导各维乘积，C=末维，X=R×C，G=R×ceil(C/32)`。输入 `2X=5184 B`， packed 输出 `X/2=1296 B`，E8M0 输出 `2R×ceil(C/64)=90 B`。每行 9 个有效组和 1 个补位；`G=81`。指数提取、组内比较、缩放和转换共 `4X−G=10287` 次有用 lane 操作。 |
+| 行列归属 | host 用 `R×ceil(C/512)` 与 `0.75×AIV数` 选 256/512 列的候选粒度，再枚举行列切分减少空洞。`9≤48`，得到每行 `256+32`，共 18 个 AIV。UB 能放 `8×floor((253952−2048)/1360)=1480` 个 block32；1360 B 包含 256 个位置的双槽输入/packed 输出 `256×5` 和 8 个组的两槽中间量 `8×2×5`。每个活跃核一轮。 |
+| 清零与读 | 某核的块高 `h`、宽 `w`，读 `B=2hw`。`clear=odd×1029.5×UB组数/1480÷v`，`odd=ceil(w/32) mod 2`，`v` 为每周期可发起源码 Reg 调用数（DT 假设 1）。64–256 B 之间对小描述符响应系数 `f` 从 0.365 线性上升至 1，两端夹紧。`read=clear+0.956×SKU读延迟×f+B/读带宽`；发起间隔另为 `B/发起带宽`。尾片 `h=1,w=32,B=64`，合计 `1029.5+0.956×1029.740×0.365+64/48.363=1390.141`，发起间隔 `64/68.913=0.929`。 |
+| Vector | 补偶组数 `g=2h×ceil(w/64)`。归约和打包每 256 输入有 `6+9` 个内层 Reg 调用，计算 scale/倒数每 128 个 scale 有 16 个。`calls=15×ceil(g/8)+16×ceil(g/128)`；尾核 `g=2`，共 31。`vector=134.5+31/v=165.5`。未来 SKU 的 `v` 由每 AIV、每周期的 16 bit 峰值相对 DT 伸缩。源码调用数与 CA 解码出的 RVECEX 条数口径不同。 |
+| 两张输出 | `payload=hw/2=16 B`，`scale=g=2 B`。各自就绪后的服务为 `242.510+16/92.027=242.684` 和 `560+2/92.027=560.022`。按每行实际内存 pitch 枚举边界上的 32 B 区间，多个核写同一区间时，`本次scale退休=max(本核scale就绪,前一请求退休+II)`。通常 `II=172`；当 packed 流也共享边界区间时，`II=310`，本地首次等待再加 310。最后这个附加项是竞争假设。第 11 号逻辑 owner 的 scale 队列另占 `884.156` 周期。 |
+| 合成 | 首发 `0.781×4686.5=3660.157`。到达跨度 `1.13×219.921×log₂(18)` 按 owner 序号分配，第 11 号到达偏移 `670.529`。排完 18 个核，选择最后退休者，输出取 `max(packed退休,scale退休)`。DT 总时间 `(3660.157+670.529+1390.141+165.500+560.022+310+884.156+16)/1650=4.640306 µs`。此例全芯片 HBM/L2 下限均可隐藏。 |
 
-安装包 CANN 9.2.1 的 `aclnnDynamicMxQuant` 发起一个 `DynamicMxQuant_bf16toe2m1_high_performance_33_mix_aiv`。两端加载的 ELF 均与各自安装目录的 FP4 对象 SHA256 一致，均有 9 个核和完整 END。输入包含逐组正负 FP4 值与可变 2 的幂；独立 golden 对比了全部 1152 个 nibble 和 36 个 scale，均通过。以下每个区间表示最后完成核 `core17.veccore0` 上的首发与末退休，原点取所有核最早指令，单位 µs。[紧凑冻结及收据](../../calibration/reference/quant-mxfp4-smoke.json)
+若最忙核每轮只用一个 UB 块，上述排程比较主核和尾核。多 UB 块时，重复读→Vector→写，输入发起间隔和读响应分别限制发起与消费，双缓冲的复用依赖限制已占槽位。以 max-plus 重复平方法合并长循环；当前多轮路径使用最忙核的规则块拓扑，没有逐轮构造全芯片跨核 scale 队列。最后取核内流水与有效 HBM/L2 服务下限的较大值。增加核数可能改变切块、竞争模式、利用率和内存下限。[FP4 分核与调度代码](../../src/operator_model/operators/quant/mxfp4.py) · [单轮退休规则](../../src/operator_model/operators/quant/fp4_wave.py) · [多核带宽与共享资源](../../src/operator_model/scheduling/memory.py)
 
-| 端点、阶段 | 950DT | 950PR |
-|---|---:|---:|
-| 256 B 输入 MTE2 描述符 | 2.563–3.026 | 2.571–2.999 |
-| RVECEX 区间，均为 64 个事件 | 3.040–3.121 | 3.013–3.094 |
-| 64 B packed 数据 MTE3 描述符 | 3.136–3.461 | 3.109–3.368 |
-| 4 B scale MTE3 描述符 | 3.137–3.902 | 3.110–3.853 |
-| 全核 CA / 冻结模型 | 3.912 / 4.129 | 3.862 / 3.836 |
-| 有符号相对误差 | +5.54% | −0.69% |
+## 哪些参数来自哪里
 
-模型在 DT 将末核输入发起置于 (4686.5+697.134)/1650=3.263 µs，比 CA 晚 0.700 µs。模型写服务为 0.197 µs，CA 两个输出的描述符从首次发起到最后退休跨 0.766 µs。两种偏差部分抵消。系统调用者若只看整窗，会高估当前模型区分读、算、写的能力；描述符区间本身含等待，不能用 4 B 除以整个窗口推断写口带宽。本例两端首轮 CA 分别耗费 54.0 s 与 51.7 s。离线解析另计。
+- **实现与芯片配置**。block32、paired E8M0、UB 预算、奇数组清零与 V→MTE2 等待、两次输出拷贝和 Reg 循环来自 ops-nn arch35 源码。芯片配置提供 AIV 数、UB 容量和频率；每核 MTE 吞吐已知时用显式配置，否则沿用 950 的读/写斜率。950DT 的 `48.363/68.913/92.027 B/cycle` 分别为读响应、读发起、写吞吐，来自已有量化校准。[host 划分](https://gitcode.com/cann/ops-nn/blob/602e4ad985da00aad28c16432841e9c5069e10de/quant/dynamic_mx_quant/op_host/arch35/dynamic_mx_quant_tail_axis_tiling_arch35.cpp) · [FP4 kernel 循环](https://gitcode.com/cann/ops-nn/blob/602e4ad985da00aad28c16432841e9c5069e10de/quant/dynamic_mx_quant/op_kernel/arch35/dynamic_mx_quant_tail_axis.h) · [参考斜率与周期](../../src/operator_model/data/parameters/quant_resources.json) · [DT 配置](../../src/operator_model/data/chips/Ascend950DT_9582.json)
+- **阶段观测**。开发集是四个几何 `[9,128]`、`[9,288]`、`[9,7168]`、`[576,128]` 在 DT 和 PR 的 8 个完整窗口。对每个物理 AIV 区分 160 B 的 tiling 读取、BF16 输入读取、packed 和 scale 两个写描述符，读取真实地址、指令类别及首发/退休 tick。例：`[9,288]` 尾核中 `RV_PLT` 有 742 条，规则核少于 100 条；同一形状中两类核的 payload 首读取中位时刻之差为 DT 1029、PR 1030 个周期，取中位得清零代理 `1029.5`。这包含调度和同步，代表可见延迟。[逐核提取](../../calibration/quant_update/phases.py)
+- **阶段统计**。每 shape/SKU 按未清零的核提取最早 payload 读、最迟和最早之差、描述符响应扣除传输量，以及 `packed写发起−输入读退休−源码调用数/v`。先按 shape 等权汇总，再取两 SKU 中位数。首发比 `(0.76315+0.79920)/2→0.781`，到达跨度比 `(1.21167+1.04675)/2→1.13`，读响应比 `(1.00708+0.90527)/2→0.956`，Vector 剩余周期 `(138.5+130.5)/2=134.5`。64 B 尾读的响应比为 0.3632，发布取 0.365，线性插值属假设。写 scale 的低竞争样本扣除字节输运得到 `560.457→560` 周期。在至多 8 B 的短 scale 描述符中，按起始 32 B 区间将不同核的退休时刻排序，相邻差中位数 `171.5→172`、`310.5→310`。这些值未分离 cache coherence、队列、公平性和实际内存事务。970DT 继承的服务成本会随假设变动。[可执行统计规则](../../calibration/quant_update/fit.py) · [输入观测及冻结收据](../../calibration/quant_update/calibration.json.gz)
 
-## 冻结后的三组追加验证
+## CA 对照与误差定位
 
-在相同模型和探测器上预先冻结了六个新窗口。各端分别报告冻结预测 / CA（µs）、测到的 AIV；四种 shape 的分核数在两端均命中。下面不含首轮 [9,128]。[追加冻结、数值与全核收据、逐端终核事件和预算](../../calibration/reference/quant-mxfp4-followup.json.gz)
+单个连续输入实际调用 CANN 9.2.1 `aclnnDynamicMxQuant`。执行的 `DynamicMxQuant_bf16toe2m1_high_performance_33_mix_aiv` 与安装包中 `ops_nn/dynamic_mx_quant/DynamicMxQuant_bf16toe2m1_high_performance.o` 的 SHA256 一致。计时检查全物理核 roster、各核唯一 END 与退休 tick，并核对工具的核级时长。独立 CPU golden 校验每个输出 nibble 和每个 scale。图中上栏为算法的末退休逻辑分块，下栏是 CA 真实末核，两栏使用同一个横轴刻度，各自从全核最早指令起算。
 
-| BF16 shape | 为什么选 | DT，预测 / CA，核数 | PR，预测 / CA，核数 | 970DT 外推 µs |
-|---|---|---|---|---:|
-| [9,7168] | Kimi B1/TP8；宽行被多个核平分 | 4.556 / 4.453，63 | 4.225 / 3.760，35 | 4.176 |
-| [9,288] | V4.1-Flash B1/TP8；256+32 列，尾片只有一个 block32 | 4.266 / 5.034，18 | 3.977 / 4.890，18 | 3.910 |
-| [576,128] | Kimi B64；多行在有限核上划分 | 4.572 / 4.390，64 | 4.271 / 4.193，53 | 4.266 |
+![950DT 32列尾核模型与实测的读、Vector、packed和scale双输出时间线](../../calibration/quant_update/tail-timeline.svg)
 
-最大误差出现在 [9,288]，DT 低估 15.26%，PR 低估 18.66%。实际最后完成的是 32 列尾核。仅 2 B 的 scale 描述符在 DT 的窗口是 3.279–5.024 µs，在 PR 为 3.201–4.880 µs；另一份 16 B packed 写几乎同时发起，早约 1.6 µs 退休。尾核各有 808 个 RVECEX 事件；源码中奇数个 block32 时还需将整个输入 UB 缓冲区填零并等 V→MTE2。模型目前用主块调度和聚合写回定价，遗漏了尾核清零与晚退休。这些观察尚不能从描述符窗口分离存储事务、排队与同步的各自占比。
+`[9,288]` DT 的 `core0.veccore1` 发起 64 B 读的时刻为 `4856/1650=2.943 µs`，读退休 3.168 µs。packed 写 `5410–5563` tick，scale 写 `5411–8290` tick，几乎同时开始。2 B scale 描述符的 2879 周期内含等待；最后 16 周期退休，全核窗 `8306/1650=5.034 µs`。模型将尾核清零、短读、两张输出和等待分开后，预测 4.640 µs，仍低估 7.82%。CA 浅色 Vector 条是首条到末条 RVECEX 的包络，包含间隙。模型的清零代理也包含进入对应阶段的等待。两条 Vector 横条的长度不能用于计算指令吞吐。[重绘脚本](../../calibration/quant_update/plot.py)
 
-首轮与补充合计，每端 4 个独立 shape；DT WAPE 7.14%、PR 8.87%。未按这些结果重新调参。追加实验同时最多两路，从首例启动至末例完成共 272.2 s，六个进程墙钟相加 360.0 s，均在各自 120 s 限时内成功。真实场景的输入规模仍大于此组 CA 覆盖。
-
-四个独立 CA 几何中，[9,7168] 与 [9,288] 在捕获中确有连续输入。Kimi 的 [9,128] 与 [576,128] 在这些 run 中均为非连续视图，连续 CA 只验证同形的紧凑布局。系统可传元素步长 `input_stride` 核查，省略时默认连续。[全部捕获 shape 和匹配结果](../system-quant-shapes.md)
-
-## 系统中更大的实际输入
-
-| 真实模拟账单的单卡 BF16 输入 | 每轮 target 次数 | 逻辑读 / 写（B） | 950DT / 950PR / 970DT 分析外推（µs） |
+| 开发几何（连续） | 950DT 旧预测 → 当前 / CA，µs | 950PR 旧预测 → 当前 / CA，µs | 970DT 外推，µs |
 |---|---:|---:|---:|
-| DeepSeek-V4-Pro B16 · 16×32770×512 | 30 | 536903680 / 142615040 | 207.88 / 469.81 / 100.48 |
-| Kimi-K3.1 B16 · 16×131081×576 | 24 | 2416084992 / 641772576 | 1290.22 / 2168.63 / 632.77 |
+| [9,128] | 4.129 → 3.997 / 3.912 | 3.836 → 3.748 / 3.862 | 3.664 |
+| [9,288] | 4.266 → 4.640 / 5.034 | 3.977 → 4.399 / 4.890 | 4.254 |
+| [9,7168] | 4.556 → 4.218 / 4.453 | 4.225 → 3.869 / 3.760 | 3.866 |
+| [576,128] | 4.572 → 4.323 / 4.390 | 4.271 → 4.060 / 4.193 | 4.133 |
 
-两行均为系统模拟的 128k decode 配置。量化的输入包括该调用完整处理的张量；只把当前校验 9 个 token 代入会丢失缓存物化产生的大张量。此处缺大规模 FP4 CA，瓶颈还受 L2 驻留、读写竞争、每核轮次影响；970DT 的片内成本沿用 950 默认场景。
+以上 8 条原始收据用于阶段校准，计入开发回放，DT WAPE 4.39%、PR 5.06%。原先同集分别为 7.14%、8.87%。`[9,7168]` 的 DT 和 `[9,128]` 的 PR 仍可看到整窗或局部误差变大的情况。冻结后的不同输入单独列出。[逐形状误差与独立验证](../errors/quant_mxfp4.md)
 
-## 重放检查
+## 同一形状的连续张量与真实视图
 
-紧凑档内保存全部冻结输入、定价、核 roster、END 与退休 tick、各物理 shard 指纹、加载 ELF 指纹和逐输出校验数。以下代码在仓根重算 8 个全核窗口并验证其收据与冻结关联。
+在 Kimi-K3.1 的 128Ki decode 系统模拟中，单卡 batch=1、TP8/EP32、校验长度 9 的 `[9,128]` 捕获视图，其元素 stride=`[6288,1]`、storage offset=`6144`，背后分配 `9×6288×2=113184 B`。上述 `[9,128]` 的连续校准只验证紧凑布局。把真实 offset 与 stride 交给原生 BF16 ACL descriptor，并采集该 API 的所有设备 launch 后，得到如下时段。连续与视图输出均用全量数值校验。
 
-```python
-import gzip, json
-from pathlib import Path
-from calibration.__main__ import ingest
+| 视图 SKU | 实际先后执行 | Slice 窗，µs | 量化窗，µs | 两者间隔，µs | 全设备跨度，µs |
+|---|---|---:|---:|---:|---:|
+| 950DT | ops_math `Slice`（3 AIV）→ ops_nn `DynamicMxQuant`（9 AIV） | 2.808 | 3.366 | 0.928 | 7.103 |
+| 950PR | ops_math `Slice`（3 AIV）→ ops_nn `DynamicMxQuant`（9 AIV） | 2.736 | 3.384 | 0.860 | 6.980 |
 
-root = Path("calibration/reference")
-for name in ("quant-mxfp4-smoke.json", "quant-mxfp4-followup.json.gz"):
-    data = (root / name).read_bytes()
-    doc = json.loads(gzip.decompress(data) if name.endswith(".gz") else data)
-    for row in doc["observations"]:
-        assert ingest(doc["freeze"], row["receipt"]) == row["measurement"]
+两段的计时单位来自同一次 CA 运行的共同设备时钟，最后一列包含两次 launch 之间可见的空档，排除 API 调用之前和最后退休之后的 host 开销。单独相加会漏掉空档。原生输出 1152 个 FP4 值与 36 个 E8M0 均通过。首次 DT 探测只采到首个 Slice，耗时 61.0 s，该次为部分证据，以上数字来自记录全部 launch 的重采。`estimate(..., attrs={"input_stride":[6288,1]})` 对该路仍返回逻辑工作量、设备时间 N/A；推广到不同 stride/offset 需要为 Slice 与跨 kernel 调度建立独立价格。[视图 DT 收据](../../calibration/quant_update/strided-950dt.json) · [视图采集、共同零点和 OPP 核验](../../calibration/quant_update/view_receipt.py)
+
+## 远大于 CA 验证范围的单卡实例
+
+| 实际系统账单的连续输入 | 每轮 target 次数 | 逻辑读 / 写（B） | DT / PR / 970DT 资源外推（µs） |
+|---|---:|---:|---:|
+| DeepSeek-V4-Pro B16 · 16×32770×512 | 30 | 536903680 / 142615040 | 207.39 / 469.37 / 100.02 |
+| Kimi-K3.1 B16 · 16×131081×576 | 24 | 2416084992 / 641772576 | 1337.48 / 2168.18 / 655.26 |
+
+两行来自 128Ki decode 的缓存物化。随行数增大，固定几何的 tile 重复，steady state 可逐步接近线性；当切块、有效带宽或缓存层次改变时斜率会变。第一行 DT 的核内流水和到达跨度为 169.85 µs，共享搬运额外暴露 35.75 µs。第二行 DT 的核内流水占 1335.70 µs，PR 的共享搬运额外暴露 632.78 µs。这两种大张量都缺同几何 CA。970DT 没有本地 CA；所有 970 数值均采用其配置和明示的片内继承假设。
+
+## 重放、拟合和查询成本
+
+在系统导出的 102 个连续几何上，对 DT、PR、970DT 的公共 `estimate` 各调用 3 次。先预热模块和芯片配置，保留完整的在线分核与价格计算。918 次调用的主机墙钟中位数 1.26 ms，P99 为 16.84 ms，最大 18.16 ms（970DT `[1232,3072]`）；同机任务和解释器会影响这些数值。
+
+在仓根执行下列命令可重放完整窗口。`independent` 行绑定到采集之前的冻结，`development` 行保留原采集和本次重放的两个指纹。归档包括每条数值检查、分核/END、trace/ELF 指纹、末核阶段、采集墙钟、外推与查询开销。原始指令 shard 留在本地 `runs/`。真实设备微秒数与模拟器的分钟级墙钟分开统计。
+
+```bash
+python -m calibration.quant_update.bundle --rows development
+python -m calibration.quant_update.bundle --rows independent
+python -m calibration.quant_update.plot
 ```
 
-离线探测器使用 CANN 的标准逻辑 FP4 descriptor，底层缓冲按两值一字节分配。输入每组最大绝对值设置为 6×2 的已知次幂，对比正负两条 nibble 与有符号组指数。使用现有校准清单冻结 rank-2 输入及全部 `Y`、`scale` 个数后，调用 `python -m calibration.quant_mxfp4 --help` 查看采集命令。探测器按 Matmul 编译示例将源文件换成 `calibration/quant_mxfp4.cpp`；仅有模拟器的开发机可给链接器补 `-Wl,-rpath-link,"$ASCEND_HOME_PATH/aarch64-linux/devlib/linux/aarch64"`。[数值探测器](../../calibration/quant_mxfp4.cpp) · [全核计时校验](../../calibration/quant_mxfp4.py) · [构建示例](../../calibration/mx_matmul/README.md)
+有旧 raw 时，执行 `python -m calibration.quant_update.phases runs/quant4-system /tmp/fp4-cores.json`，再执行 `python -m calibration.quant_update.fit /tmp/fp4-cores.json`，可重算上述阶段参数。数值探测器用逻辑 FP4 tensor descriptor，底层两值一字节。输入每组含不同符号和已知的二次幂尺度，依照 CPU 计算验证所有输出。探测器沿用仓内示例的编译和链接参数，把输入源改为 `calibration/quant_mxfp4.cpp`。[C++ 探测器](../../calibration/quant_mxfp4.cpp) · [完整连续窗口校验](../../calibration/quant_mxfp4.py) · [构建示例](../../calibration/mx_matmul/README.md)
+
+10 个冻结后的连续新形在 DT/PR 各测一窗，范围包含 [2,3584]、[144,288]、[576,7168] 和 [576,12288]。同集旧价 WAPE 11.29%/10.69%，当前 7.85%/9.70%。[逐形计分与最大误差](../errors/quant_mxfp4.md) · [真实视图的双端收据](../errors/measured-only.md)

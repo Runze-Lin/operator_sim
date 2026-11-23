@@ -228,11 +228,13 @@ T 为本次 token 数，N 为残差流数，D 为每流宽度，I 为 Sinkhorn �
 
 ## 由 128Ki decode 账单补充的调用
 
-- **BF16 → MXFP4 动态量化**用行和 block32 分配 AIV，按 UB 容量切块。对每块计算 BF16 输入流量、求幅值和尺度的等价工作、E2M1 压缩及两路写回。末轴 D 的值存储为每行 `⌈D/2⌉` B，成对 E8M0 scale 占 `2×⌈D/64⌉` B；此路线要求连续 BF16 输入、1 至 7 维、D 为不小于 32 的偶数，采用 round 舍入。传输与启动的基准来自 950 的已有量化模型，FP4 的排程和两端新 CA 的差异见算例。连续输入的资源预测报告 `extrapolated`。若给出非连续元素步长，返回数学工作量，收集或连续化成本待测。[量化算法、流水和实测](examples/quant-mxfp4.md)
-- **CacheLoad**展开一个已量化的连续 cache slab，物化 BF16 输出。FP4/E8M0 要分别计算成对 scale 和打包值的字节，FP8/E4M3FN 路线要读取每行 FP32 scale。两者都要写 `2×有效元素数` B。张量可确定这些工作量。一次独立 kernel 的分块、转换管线和实际 HBM 服务量仍待确认。[两种 cache 格式的完整算例](examples/cache_load.md)
-- **CandidateFilteredIndexer**分清整个 key 表的大小、候选块个数与实际打分的 key 个数。全表打分时，点积为 `2×B×Q×H×D×L` ops。候选优先时，将 `B×Q×L` 替换为各查询实际参与的 key 数之和。两种路线都返回工作量；执行单元、top-k 实现与设备时延还需原生证据。[Flash 的五个输入与两种打分方案](examples/candidate-filtered-indexer.md)
-
-- **路由专家 A4W4 单投影**用每个本地专家的有效行数计工作。设第 e 个专家有 mₑ 行、输出宽 N、归约宽 K，则有效乘加为 `2×N×K×Σmₑ` ops。dispatch 预留行数单列。激活按有效行、专家权重按参与的专家统计一次逻辑读取，E8M0 scale 和 BF16 输出单列。在不同核上重读同一权重的次数取决于分块与调度。[Pro 的 gate/up 与 down 投影](examples/routed-grouped-matmul.md)
+| 实际计算与发布入口 | 工作量、分块与资源时间 | 校准边界与算例 |
+|---|---|---|
+| 连续 BF16 → MXFP4，`quant_mxfp4` | R 行、每行 D 个元素，输入 2RD B，值和 scale 共写 R(D/2+2⌈D/64⌉) B。按 AIV/UB 将行和末轴分块，奇数个 block32 需要先清 UB。对每个单波块求「到达＋读＋Vector＋max(值写退休, scale 写退休)」，取最后完成的核；共享 32 B 边界的部分写要排队。多波按两级缓冲和共享带宽组合。 | 延迟、发起、清零和写回间隔由 8 个旧窗的核级事件取得；新样本在冻结后采集。实图 strided 输入会引入独立 Slice 和核间隙，保留数值与指令证据。[参数、公式和算例](examples/quant-mxfp4.md) |
+| 连续 BF16 → 每行 FP8，`quant_token_fp8` | 最大核负荷 h=⌈R/min(R,AIV)⌉ 行。每块 n 个值读 2n B，写 n B 加每行 4 B。首块将读、算、两路写回的关键路径相加，双缓冲后续块取最大服务需求；再检查共享内存下界。 | 用三个开发几何的 DT/PR 末核阶段差估读写 B/cycle、向量 cycles/元素和发起/等待的核数项。两端独立验证该 `aclnnDynamicQuantV2` 实现。[全部系数与 9×1024 算例](examples/quant-token-fp8.md) |
+| 连续 cache 解包并写 BF16，`cache_load` | 每行 FP4 读 D/2 B 值和 2⌈D/64⌉ B scale，输出 2D B。选 `aclnnAntiMxQuant` 后，按行和 512 列块分核，划 UB 双缓冲。时间取最慢核读/算/写流水与全片共享带宽约束，再加首发和尾部。FP8 路线的读取为 D+4 B/行。 | FP4 的描述符响应、向量迭代和发起离散从 DT/PR 末核 trace 分离。FP8 的 `aclnnAscendAntiQuant` 在一个实图几何上有双端全窗，仍缺可跨 shape 的阶段价。省略实现时只返回工作量。[两种格式、分块和实测](examples/cache_load.md) |
+| 路由专家 A4W4 单个投影，`routed_grouped_matmul` | 给定各专家有效行 mₑ、输出 N、归约 K，有效工作为 2NKΣmₑ ops。显式选择单次 V5 时，按各专家的输出块和 K 分片分配 AIC，计有效 MMAD、两侧载荷和 E8M0。取关键 AIC、全片外存、L2 三个约束最大值，再加控制、首个依赖和尾部。 | 需提供真实本地行直方图，使用匹配的转置权重和 scale 布局。独立验证涵盖有空专家、负载不均及真实 Flash down 投影。系统若采用其他布局或融合，默认入口保留逻辑工作量。[工作量、分核、参数和实例](examples/routed-grouped-matmul.md) |
+| 带候选块的 Flash Indexer，`candidate_filtered_indexer` | 全表手段为 2BQHDL ops。候选优先以各 query 实际参与的 key 数之和替代 BQL，计入 ID 读取和候选筛选。 | CANN 9.2.1 的 950 普通 Indexer 不消费候选列表，固定版本的稀疏前向也不支持这两款 SKU。设备时间尚无定价。[Flash 的五个输入与两种打分方案](examples/candidate-filtered-indexer.md) |
 
 ## 校准范围、查询与解释
 

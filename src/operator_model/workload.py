@@ -173,12 +173,19 @@ def account_work(op, shape, attrs=None):
             from operator_model.operators.moe.routed_grouped_matmul import describe
             return describe(shape, dtype, call)[0]
         if op == 'cache_load':
-            from operator_model.operators.vector.cache_load import describe
+            from operator_model.operators.vector.cache_load import canonical_dtype, describe
+            if canonical_dtype(dtype) == "fp8_e4m3fn" and call.get("implementation") == "aclnnAscendAntiQuant":
+                call.pop("implementation")
             return describe(shape, dtype, call)[0]
         from operator_model.operators.attention.candidate_indexer import describe
         if dtype not in ('bf16', 'bfloat16'):
             raise ValueError('candidate_filtered_indexer requires BF16 scoring inputs')
         return describe(shape, call)[0]
+    if op == "quant_token_fp8":
+        if dtype not in ("bf16","bfloat16"):
+            raise ValueError("quant_token_fp8 requires BF16 input")
+        from operator_model.operators.quant.token_fp8 import work_for
+        return work_for(shape, {k:v for k,v in attrs.items() if k != "dtype"})
     if op == "quant_mxfp4":
         from operator_model.operators.quant.mxfp4 import mx4_work
         if dtype not in ("bf16", "bfloat16"):

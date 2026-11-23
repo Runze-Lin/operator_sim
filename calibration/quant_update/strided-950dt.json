@@ -1,0 +1,166 @@
+{
+  "schema": 1,
+  "kind": "layout-observation",
+  "contract": {
+    "schema": 1,
+    "kind": "layout-capability",
+    "created_utc": "2026-11-23T10:17:48.795319+00:00",
+    "api": "aclnnDynamicMxQuant",
+    "chip": "Ascend950DT_9582",
+    "shape": [
+      9,
+      128
+    ],
+    "stride": [
+      6288,
+      1
+    ],
+    "storage_offset": 6144,
+    "backing_bytes": 113184,
+    "group_size": 32,
+    "round_mode": "round",
+    "scale_alg": 0,
+    "outputs": {
+      "Y": 1152,
+      "scale": 36
+    },
+    "predicted_us": null,
+    "timeout_seconds": 180,
+    "sha256": "1531e27c99b7955d30a08bd86107c8e88c0dbe35230b6a4e6c64e1f60cd09748"
+  },
+  "started_utc": "2026-11-23T10:17:48.796765+00:00",
+  "finished_utc": "2026-11-23T10:18:53.916448+00:00",
+  "wall_seconds": 65.11986073991284,
+  "probe_sha256": "db880bed053aafa36c2da25f10b83e8f6a0349aeb070d8638f5b3815c51ab3ac",
+  "run_log_sha256": "33a72898d0cfa0f0467dfe669230afb4053110ff6c85ced334b67ba242b16e6b",
+  "provider": "CANN 9.2.1 ops_math and ops_nn",
+  "stages": [
+    {
+      "kernel": "Slice_ee29dafe4fe21e12bb8d56ae91626cba_high_performance_150",
+      "library_object": "ops_math/slice_apt/Slice_ee29dafe4fe21e12bb8d56ae91626cba_high_performance.o",
+      "object_sha256": "ca1a0952d3c49ff06a7a5d0eed0d6c784e30b005b2acc80a1278541b5690ec20",
+      "cores": {
+        "core0.veccore0": {
+          "first_tick": 11243,
+          "end_tick": 15727,
+          "retire_tick": 15734,
+          "end_count": 1
+        },
+        "core0.veccore1": {
+          "first_tick": 11283,
+          "end_tick": 15715,
+          "retire_tick": 15722,
+          "end_count": 1
+        },
+        "core16.veccore0": {
+          "first_tick": 11426,
+          "end_tick": 15870,
+          "retire_tick": 15877,
+          "end_count": 1
+        }
+      },
+      "shard_sha256": {
+        "core0.veccore0": "0091d3463a0aa821f6beadcef16286813dc4e6ae0200dac10c3597cd9c672d0b",
+        "core0.veccore1": "d252426b7137da2ad32d094457abea452eeb815772f14894ad9cb1c9677c4814",
+        "core16.veccore0": "3c9e243c8319a1546a9a4532b5b958bb0e2c4aa08d2636cbbd9d7b66426f9c82"
+      },
+      "trace_sha256": "71de40c0cd6d089ccdd4a48b0ec8644a660f71184d694a397eca2f54b70ce391",
+      "first_tick": 11243,
+      "retire_tick": 15877,
+      "window_us": 2.8084848484848486
+    },
+    {
+      "kernel": "DynamicMxQuant_bf16toe2m1_high_performance_33_mix_aiv",
+      "library_object": "ops_nn/dynamic_mx_quant/DynamicMxQuant_bf16toe2m1_high_performance.o",
+      "object_sha256": "8dc1d6b7c996f735e54531cce19bb7a2af9ab4dc9574cca0dfb9a82693720107",
+      "cores": {
+        "core0.veccore0": {
+          "first_tick": 17409,
+          "end_tick": 21572,
+          "retire_tick": 21579,
+          "end_count": 1
+        },
+        "core0.veccore1": {
+          "first_tick": 17456,
+          "end_tick": 21737,
+          "retire_tick": 21744,
+          "end_count": 1
+        },
+        "core1.veccore0": {
+          "first_tick": 17758,
+          "end_tick": 22257,
+          "retire_tick": 22264,
+          "end_count": 1
+        },
+        "core1.veccore1": {
+          "first_tick": 17789,
+          "end_tick": 22416,
+          "retire_tick": 22423,
+          "end_count": 1
+        },
+        "core16.veccore0": {
+          "first_tick": 17719,
+          "end_tick": 21086,
+          "retire_tick": 21093,
+          "end_count": 1
+        },
+        "core16.veccore1": {
+          "first_tick": 17634,
+          "end_tick": 21958,
+          "retire_tick": 21965,
+          "end_count": 1
+        },
+        "core17.veccore0": {
+          "first_tick": 17844,
+          "end_tick": 22956,
+          "retire_tick": 22963,
+          "end_count": 1
+        },
+        "core17.veccore1": {
+          "first_tick": 17887,
+          "end_tick": 22797,
+          "retire_tick": 22804,
+          "end_count": 1
+        },
+        "core2.veccore0": {
+          "first_tick": 17750,
+          "end_tick": 22575,
+          "retire_tick": 22582,
+          "end_count": 1
+        }
+      },
+      "shard_sha256": {
+        "core0.veccore0": "903b505ccecd8a616d956d2a52f1c63ebace64cd250ffca79edfe787cd5695fd",
+        "core0.veccore1": "96061dde8686a7647b0162aa7c144edaf2574d523c08057ffe187bc56b000af0",
+        "core1.veccore0": "b23d3382bec78b8f62a0dba18c5e32f7e62bf3e7c159be7335a37bf8c04e0323",
+        "core1.veccore1": "56a981ef8078282750c5c3ad7c9df2518d06ec5f1c78b7118930452b2ce6255b",
+        "core16.veccore0": "421b1008bf3d4f3549b967088abf7255bdb4a5944f78747c296abe840d6daa12",
+        "core16.veccore1": "98b00c3162b3ef5294f07011c7ace6d6fc1e3eca7e80a9148b56a1d890282b09",
+        "core17.veccore0": "8358d242b3a6540eea77f9489e8872bdf343797e61b1beb281002edbb3501ced",
+        "core17.veccore1": "87eb77e015e96a64a11cfdb28cd0039b9dbe622a080c57db89419042631933a1",
+        "core2.veccore0": "2a5f17f5f23f3e02f88e824c0d8d11b4cc27e2efd73e442d0b911d29d010f0d4"
+      },
+      "trace_sha256": "c1d2bf24947e23feee293ec15f458b5d64ee1be7a4423a347a75414876b3b570",
+      "first_tick": 17409,
+      "retire_tick": 22963,
+      "window_us": 3.366060606060606
+    }
+  ],
+  "ticks_per_us": 1650,
+  "interkernel_idle_us": 0.9284848484848485,
+  "device_span_us": 7.1030303030303035,
+  "sum_kernel_windows_us": 6.174545454545455,
+  "correctness": {
+    "Y": {
+      "checked": 1152,
+      "bad": 0
+    },
+    "scale": {
+      "checked": 36,
+      "bad": 0
+    }
+  },
+  "status": "measured-layout-only",
+  "predicted_us": null,
+  "sha256": "10ffd376eb88415c362f261e6784e91d88770c4ea59512cea970ea4c422ec79f"
+}

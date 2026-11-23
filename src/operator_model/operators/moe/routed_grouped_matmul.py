@@ -16,7 +16,9 @@ def describe(shape, dtype, attrs):
         raise ValueError('Require nonnegative valid_rows, positive N and positive even packed K')
     if not isinstance(attrs, Mapping):
         raise ValueError('Provide rank-local expert_counts for routed_grouped_matmul')
-    if set(attrs) - {'expert_counts', 'dispatch_capacity_rows'}:
+    if 'implementation' in attrs and attrs['implementation'] != 'aclnnGroupedMatmulV5':
+        raise ValueError('Only the transposed native aclnnGroupedMatmulV5 implementation is recognized')
+    if set(attrs) - {'expert_counts', 'dispatch_capacity_rows', 'implementation'}:
         raise ValueError('Only expert_counts and optional dispatch_capacity_rows are supported')
     counts = attrs.get('expert_counts')
     if (not isinstance(counts, Sequence) or isinstance(counts, (str, bytes)) or len(counts) == 0
@@ -76,3 +78,15 @@ def describe(shape, dtype, attrs):
         'latency_us': None,
     }
     return work, projection
+
+
+def price(shape, dtype, attrs, chip):
+    from operator_model.operators.moe.routed_schedule import schedule
+    work, projection = describe(shape, dtype, attrs)
+    us, plan = schedule(*shape, projection['expert_counts'], work, chip)
+    covered = (us is not None and chip.name in ('Ascend950DT_9582', 'Ascend950PR_957b')
+               and 2 <= len(projection['expert_counts']) <= 4 and shape[1] <= 512 and shape[2] <= 1024)
+    projection.update(implementation='aclnnGroupedMatmulV5', target_plan=plan, latency_us=us,
+                      qualification='native_resource_schedule' if us is not None else 'work_only',
+                      timing_qualification=('estimated' if covered else 'extrapolated') if us is not None else 'unavailable')
+    return us,work,projection

@@ -5,7 +5,10 @@
 | 算子与输入合同（逐窗） | 主输入 → 输出精度 | 计分集 · 开发/独立窗数 | 950DT 形/窗 · WAPE / 最大 | 950PR 形/窗 · WAPE / 最大 | 等效 Roofline U（DT / PR） | 最大查询 ms | 验证状态 DT / PR |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | [DynamicMXQuant](errors/quant.md) | BF16 → MXFP8 | 回放 · 112/0 | 58/59 · 4.74% / 13.61% | 53/53 · 7.71% / 16.83% | 16.341% / 35.715% | 1.879 | 达标 / 达标 |
-| [DynamicMXQuant，MXFP4](errors/quant_mxfp4.md) | BF16 → E2M1、E8M0 scale | 独立 · 0/8 | 4/4 · 7.14% / 15.26% | 4/4 · 8.87% / 18.66% | 0.513% / 1.574% | 5.004 | 初验 / 初验 |
+| [DynamicMXQuant，MXFP4](errors/quant_mxfp4.md) | BF16 → E2M1、E8M0 scale | 独立 · 8/20 | 10/10 · 7.85% / 15.00% | 10/10 · 9.70% / 18.56% | 15.073% / 42.096% | 3.800 | 达标 / 达标 |
+| [逐 token FP8 量化](errors/quant_token_fp8.md) | BF16 → E4M3FN、每行 FP32 scale | 独立 · 6/20 | 10/10 · 7.43% / 22.77% | 10/10 · 8.54% / 21.29% | 1.584% / 4.532% | 11.770 | 达标 / 达标 |
+| [CacheLoad，显式 AntiMxQuant](errors/cache_load_mxfp4_antimx.md) | E2M1、E8M0 → BF16 | 独立 · 4/20 | 10/10 · 9.93% / 21.86% | 10/10 · 11.87% / 26.53% | 0.252% / 0.727% | 1.644 | 达标 / 达标 |
+| [路由专家，显式 GroupedMatmulV5](errors/routed_grouped_matmul_mxfp4_v5.md) | E2M1 × E2M1、双侧 E8M0 → BF16 | 独立 · 6/20 | 10/10 · 9.82% / 21.07% | 10/10 · 6.30% / 10.59% | 15.676% / 35.287% | 4.503 | 达标 / 达标 |
 | [Matmul](errors/matmul.md) | BF16 × BF16 → BF16 | 回放 · 131/0 | 59/61 · 3.66% / 29.01% | 70/70 · 5.20% / 15.06% | 59.767% / 94.568% | 0.614 | 达标 / 达标 |
 | [Matmul，原生 A4W4](errors/matmul_mx_native.md) | MXFP4 × MXFP4 → BF16 | 独立 · 28/20 | 10/10 · 3.89% / 13.59% | 10/10 · 6.87% / 14.50% | 13.002% / 32.742% | 2.553 | 达标 / 达标 |
 | [Matmul，展开 A8W4](errors/matmul_mx_mixed.md) | MXFP8 × MXFP4 → BF16 | 独立 · 28/20 | 10/10 · 8.80% / 35.73% | 10/10 · 11.32% / 56.67% | 12.113% / 30.025% | 0.449 | 达标 / 超限 |
@@ -37,12 +40,16 @@
 | [Kimi AttnResFwd，UB 驻留推理 prefill](errors/attn_res_fwd-resident-inference-prefill.md) | BF16 激活 → BF16 | 待测 · 0/0 | 0/0 · N/A | 0/0 · N/A | N/A / N/A | N/A | 待测 / 待测 |
 | [CacheLoad，MXFP4](errors/cache_load_mxfp4.md) | packed E2M1、E8M0 scale → BF16 | 待测 · 0/0 | 0/0 · N/A | 0/0 · N/A | N/A / N/A | N/A | 待测 / 待测 |
 | [CacheLoad，FP8](errors/cache_load_fp8.md) | E4M3FN、逐行 FP32 scale → BF16 | 待测 · 0/0 | 0/0 · N/A | 0/0 · N/A | N/A / N/A | N/A | 待测 / 待测 |
+| [CacheLoad，显式 AscendAntiQuant](errors/measured-only.md) | E4M3FN、FP32 → BF16 | 仅实测 · 各 1 窗 | 1/1 · N/A | 1/1 · N/A | N/A / N/A | N/A | 待建价格 / 待建价格 |
+| [动态 MXFP4 量化，行跨步视图](errors/measured-only.md) | BF16 → E2M1、E8M0 | 仅实测 · 各 1 窗 | 1/1 · N/A | 1/1 · N/A | N/A / N/A | N/A | 待建价格 / 待建价格 |
+| [残差加](errors/measured-only.md) | BF16 → BF16 | 仅实测 · 各 1 窗 | 1/1 · N/A | 1/1 · N/A | N/A / N/A | N/A | 待建价格 / 待建价格 |
+| [按行广播乘](errors/measured-only.md) | FP32 → FP32 | 仅实测 · 各 1 窗 | 1/1 · N/A | 1/1 · N/A | N/A / N/A | N/A | 待建价格 / 待建价格 |
 
-**怎么读表。** 共 33 个输入与计时合同、2,084 个完整合同窗，其中 2,036 个开发回放、48 个冻结独立。每行优先采用冻结后的独立集计算两端误差和等效利用率 U；该合同没有独立窗时采用开发回放。“开发/独立窗数”相加两端，“形/窗”是该端计分集的不同输入维度数与完整窗数。同形的不同属性、前序与重复运行各占一窗；同一物理 trace 也可分别核验仅 shape 和有序流两个入口。要查某一行用了哪个库内核、实测多少微秒，点击算子名即可看到全部 shape、调用属性、前序、模型/CA 耗时、有符号误差和 970DT 外推。[合同与可比窗口数索引](errors/README.md) · [逐窗收据字段](../calibration/reference/windows.jsonl) · [按角色与芯片的误差统计](../calibration/reference/summary.json)
+**怎么读表。** 共 36 个发布合同、2,180 个可对照预测的完整窗，其中 2,060 个开发回放、120 个冻结独立。每行优先采用冻结后的独立集计算两端误差和等效利用率 U；该合同没有独立窗时采用开发回放。“开发/独立窗数”相加两端，“形/窗”是该端计分集的不同输入维度数与完整窗数。同形的不同属性、前序与重复运行各占一窗；同一物理 trace 也可分别核验仅 shape 和有序流两个入口。要查某一行用了哪个库内核、实测多少微秒，点击算子名即可看到全部 shape、调用属性、前序、模型/CA 耗时、有符号误差和 970DT 外推。[合同与可比窗口数索引](errors/README.md) · [逐窗收据字段](../calibration/reference/windows.jsonl) · [按角色与芯片的误差统计](../calibration/reference/summary.json) 此外有 8 个只有 CA 的完整调用、2 个同几何换专家直方图的冻结窗口，各有独立的证据入口。
 
-**覆盖与误差。** 27 个合同有双端完整窗。24 个在表中选定的数据集上两端均满足每端至少 10 个不同 shape、WAPE ≤25%、最大绝对相对误差 ≤50%。其中仅原生 A4W4 已在双端各 10 个冻结独立 shape 满足三项条件，其余 23 个依靠开发回放评估。内置 mHC Post 只给 shape 时两端均超限；展开式 A8W4 在 PR 单个投影高估 56.67%。新增 MXFP4 量化每端 4 个独立 shape，标“初验”。RMSNorm 的 compact CA 仅有 DT 窗。UB 驻留 AttnRes、有候选块的 Indexer、两种 CacheLoad 及路由专家 A4W4 合同均缺合格整窗。
+**覆盖与误差。** 30 项发布合同有双端可计分窗。28 项在所列数据集满足两端各至少 10 个几何、WAPE ≤25%、最大绝对误差 ≤50%，其中 5 项由冻结后的双端新几何验证。mHC Post 仅 shape 的两端误差超限，稠密 A8W4 在 PR 有一个投影高估 56.67%。RMSNorm compact 只有 DT；UB 驻留 AttnRes、候选块 Indexer 和未指定实现的图节点仍缺可比价格与完整窗。
 
-**设备与查询。** 设备耗时和 CA 误差统一以 µs 计。最后的时间列统计本合同归档的 950/970 在线查询 CPU 墙钟，包括参数解析、分核和计算设备时间。全部 4,168 次查询的中位为 0.177 ms，P95 为 3.231 ms（最近秩），最大 18.910 ms。离线 CA、库加载和重建样例前序的耗时另计。970DT 的耗时与 U 均为目标配置外推，实测误差为 N/A。系统调度附加的 kernel overhead 单列。
+**设备与查询。** 模型和 CA 时间单位为 µs。4,360 次归档 CPU 查询的中位数 0.173 ms、P95 3.058 ms、最大 18.910 ms。离线 CA 耗时按运行另列。970DT 无 CA 真值；所有有价格的 970DT 结果均为架构外推。
 
 表中的 MXFP8 值为 E4M3FN，块长 32，块 scale 为 E8M0；FP4 值为 E2M1。BF16 表示张量接口，内部乘加、归约、softmax 和输出统计可使用其他精度。FP16 chunk KDA V1 仅有结构工作量。[支持的输入与计算精度](integration.md#给出正确的本卡-shape)
 
@@ -73,9 +80,32 @@
 
 **缺参数的例子。** PR 的 mHC Pre [1,4,512] 计入 98,304 个 FP32 类 Cube 操作，配置缺该精度峰值。该窗仍可按已定价的模型阶段比较 8.7223 µs 与 CA 7.8758 µs，但 t_C、t_ideal 与 U 均为 N/A。mHC Pre、PreSinkhorn 和含 Pre 的拆分链合计有 112 个这样的完整窗。[mHC Pre 原始窗](../calibration/reference/windows.jsonl#L440) · [公共返回值的计算](../src/operator_model/backend.py)
 
-## MXFP4 量化 · 四个独立 shape
+## 系统捕获算子的双端独立校准
 
-950DT 与 950PR 的 `aclnnDynamicMxQuant` 实际执行 CANN 9.2.1 ops-nn 的 `DynamicMxQuant_bf16toe2m1_high_performance_33_mix_aiv`。全部八窗都给连续输入，覆盖 [9,128]、[9,7168]、[9,288]、[576,128]。两端最差的 [9,288] 均低估，DT 4.266 / 5.034 µs，PR 3.977 / 4.890 µs（模型 / CA），970DT 外推 3.910 µs。两端均用了预测的 18 AIV，但最后退休的核只处理尾部 32 列，2 B scale 写描述符的发起至退休约 1.7 µs，含依赖与排队。主块的聚合读写模型未展开窄尾块的 UB 清零和晚退休。系统账本记录的 17,748 次 `npu::npu_dynamic_mx_quant` 中，14,400 次输入连续，3,348 次是带步长的视图；Kimi 同形 [9,128] 可以有行步长 6,288。连续输入的证据尚不能给出这类视图或真实大张量的误差。[八个完整窗及查询墙钟](errors/quant_mxfp4.md) · [尾核事件与量化算例](examples/quant-mxfp4.md) · [系统捕获范围](system-workload-coverage.md) 连续输入中，1,245 个系统节点与现有 CA 的形状和布局相符，属于 [9,7168] 和 [9,288] 两形。账单里的 [9,128] 和 [576,128] 全是非连续视图。[全部 135 个系统 shape 与几何、布局匹配结果](system-quant-shapes.md)
+四条路线各留出 10 个未参与阶段定价的几何，在两个 SKU 上用冻结预测计分。相同 shape、精度、布局和属性两端配对，实测加速比为 DT 时间除以 PR 时间，每形的预测比也按同样次序计算。下表的 WAPE 为加速比绝对差之和除以实测比值之和。单端 WAPE 来自开头 Summary。每次设备窗口要求所有有效输出通过独立 golden、实际 ELF 对上安装包、每个物理核完整退休。不同路线可同时做离线采集。
+
+| 实现 | 新 shape / 每端 | DT/PR 加速比 WAPE | 每个 CA 窗用时范围，秒（含开发） | 预测误差明细 |
+| --- | --- | --- | --- | --- |
+| DynamicMXQuant，MXFP4 | 10 | 7.85% | 51.1–209.4 | [全部 shape](errors/quant_mxfp4.md) |
+| 逐 token FP8 量化 | 10 | 4.25% | 47.8–76.6 | [全部 shape](errors/quant_token_fp8.md) |
+| CacheLoad，显式 AntiMxQuant | 10 | 4.47% | 54.8–71.5 | [全部 shape](errors/cache_load_mxfp4_antimx.md) |
+| 路由专家，显式 GroupedMatmulV5 | 10 | 4.54% | 56.1–208.0 | [全部 shape](errors/routed_grouped_matmul_mxfp4_v5.md) |
+
+- **BF16 → packed MXFP4。** 四个历史几何的八窗用于提取奇尾清 UB、首读和两路部分写队列，改列开发回放。同一批新形上，旧模型 WAPE 为 DT 11.29%、PR 10.69%，当前为 **7.85% / 9.70%**。PR 最大误差从 16.63% 升至 18.56%，出现在多轮 [576,7168]；[2,3584] 的短 scale 写到退休也有未解释的排队。135 个真实几何里，4,782 次连续调用与双端 CA 的形状和布局相符。账单中 3,348 次输入为非连续视图。[全部系统几何](system-quant-shapes.md) · [量化阶段和部分写](examples/quant-mxfp4.md)
+- **逐 token FP8。** DT 的 [28,3584] 低估 22.77%，PR 的 [576,512] 高估 21.29%。开发样本以 9 行与 144 行估末核到达及 scale 的等待；不同核数和多行负载之间仍有偏差。图的动态量化参考节点可选择这个独立库实现，前提是逐行对称 E4M3FN、FP32 scale 均匹配。[单核流水与参数](examples/quant-token-fp8.md)
+- **独立 FP4 cache 展开。** 最大误差同为 [1,15,128]，DT/PR 分别高估 21.86%/26.53%。模型依据单核和 56 核开发样本估算终核到达和输出等待；少行时两项预算不能直接分辨。Kimi 的超大缓存和需重排的视图仍在验证范围外。[独立实现的时窗及大形外推](examples/cache_load.md)
+- **路由专家 A4W4。** Flash DEP64/B1 的真实 down 投影 [54,5120,2304]，6 个本地专家各 9 行。DT 模型/CA 为 **14.789/18.737 µs**，PR 为 **32.534/29.418 µs**，970DT 外推 **7.452 µs**。两端各检查 276,480 个 BF16 值。模型正确给出 DT 更快，实际 DT/PR=0.637，模型=0.455；大工作量时 DT 低估、PR 高估，现有共享内存服务假设夸大卡间差异。控制和端口参数取自小规模开发窗。另有两次 [8,256,512] 的新路由直方图实测，几何已在开发出现，只列入原始归档。该算子有两次采集的离线用时按日志创建至末次写入估算。[算例与原生分核](examples/routed-grouped-matmul.md) · [含额外路由的全部收据](../calibration/routed_gmm/reference.json.gz)
+
+## 已实测但尚无通用价格
+
+| 设备调用与真实输入 | 950DT CA µs | 950PR CA µs | 误差与 970DT |
+|---|---:|---:|---|
+| E4M3FN → BF16 CacheLoad [1,128,512]，每行 FP32 scale | 4.549 | 4.042 | N/A |
+| Kimi 非连续 BF16 → MXFP4 [9,128]，stride [6288,1]，offset 6144 | 7.103 | 6.980 | N/A |
+| BF16 残差加 [9,7168]+[9,7168] | 2.841 | 2.534 | N/A |
+| FP32 广播乘 [9,4]×[9,1] | 3.720 | 3.381 | N/A |
+
+Kimi 视图在两端均触发 Slice 和 DynamicMxQuant。两段设备窗口之和分别为 6.175/6.120 µs，段间空闲为 0.928/0.860 µs，表中取同一设备时钟上的首发到末退。以上四项每端各一个几何，只供实现与窗口核验。[全部 8 个样例、实际 kernel、启动核数和原始收据](errors/measured-only.md) · [全部系统调用的 CA 能力清单](system-workload-coverage.md)
 
 ## 稠密 MX Matmul · 双端同形验证
 
@@ -216,7 +246,10 @@ DT、PR 的时间、活跃 AIC 与配对加速比依次列 **v1.3 / v1.4 / CA**�
 | 合同 | SKU | 本卡 shape | 实际 API | 预测 / CA µs | 有符号误差 | 970DT 外推 µs |
 |---|---|---|---|---:|---:|---:|
 | DynamicMXQuant | PR | 513×5504 | `aclnnDynamicMxQuant` | 6.845 / 8.230 | -16.83% | 6.009 |
-| DynamicMXQuant，MXFP4 | PR | 9×288 | `aclnnDynamicMxQuant` | 3.977 / 4.890 | -18.66% | 3.910 |
+| DynamicMXQuant，MXFP4 | PR | 576×7168 | `aclnnDynamicMxQuant` | 7.501 / 9.210 | -18.56% | 6.140 |
+| 逐 token FP8 量化 | DT | 28×3584 | `aclnnDynamicQuantV2` | 4.339 / 5.618 | -22.77% | 3.977 |
+| CacheLoad，显式 AntiMxQuant | PR | 1×15×128 | `aclnnAntiMxQuant` | 4.149 / 3.279 | +26.53% | 3.803 |
+| 路由专家，显式 GroupedMatmulV5 | DT | 54×5120×2304 | `aclnnGroupedMatmulV5` | 14.789 / 18.737 | -21.07% | 7.452 |
 | Matmul | DT | 1×2304×1536 | `aclnnMatmul` | 8.618 / 6.680 | +29.01% | 5.633 |
 | 原生 A4W4 | PR | 16×7168×768 | `aclnnQuantMatmulV5` | 6.490 / 5.668 | +14.50% | 4.259 |
 | 展开 A8W4 | PR | 8192×128×512 | `aclnnQuantMatmulV5` | 13.312 / 8.497 | +56.67% | 8.978 |

@@ -110,10 +110,18 @@ def verify(reprice=False):
             'Physical signature count differs from manifest')
     receipts = [row for name in manifest['export_sha256'] if name.startswith('quant-mxfp4-')
                 for row in packed_quant_rows(folder / name)]
-    quant = [r for r in rows if r['contract'] == 'quant_mxfp4']
-    require(len({(r['chip'], tuple(r['shape'])) for r in receipts}) == len(receipts)
-            and sorted(quant,key=lambda r:r['case_id']) == sorted(receipts,key=lambda r:r['case_id']),
-            'FP4 quant windows or independent geometries differ from receipts')
+    old_ids = {r['case_id'] for r in receipts}
+    quant = {r['case_id']:r for r in rows if r.get('case_id') in old_ids}
+    require(len({(r['chip'],tuple(r['shape'])) for r in receipts}) == len(receipts)
+            and set(quant) == old_ids,'Missing historical FP4 quant receipt')
+    for historical in receipts:
+        row = quant[historical['case_id']]
+        require(all(row[k] == historical[k] for k in ('dtype','chip','shape','attrs','prefix','ca_us',
+                    'provider','identity','kernel','freeze_sha256','receipt_sha256'))
+                and row['data_role']=='replay' and row['previous_us']==historical['predicted_us'],
+                'Historical FP4 quant receipt, geometry or original price changed')
+    from .system_reference import check_origin
+    check_origin(rows)
     if 'mx-matmul.json' in manifest['export_sha256']:
         from .mx_matmul.compare import load_comparison, compare, version_pair
         campaigns = []

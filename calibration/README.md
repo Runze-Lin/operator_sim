@@ -74,3 +74,17 @@ python -m calibration.report_pages --check
 `verify` 从逐窗口重新计算全部合同的统计值。加上 `--reprice` 会调用已安装后端，为每个窗口分别运行该 950 SKU 和 970DT，并验证与记录中的预测同值。稠密 MX 两条精度路线的验证另有同一 V5 接口的[采集驱动与用法](mx_matmul/README.md)。239 个有序 mHC Post 样例带有真实启动前缀。设备真值、模型墙钟和 970 外推各自单列。原始 trace 可以留在外部证据存储，通过每个 stage 的 SHA-256 定位。[文件指纹与证据快照](reference/manifest.json) · [逐窗 JSONL](reference/windows.jsonl) · [统计](reference/summary.json) · [大形、部分证据与外推](reference/large-shapes.json) · [整体误差手册](../docs/error-analysis.md)
 
 逐合同页面从发布的窗口清单重建。执行 `python -m calibration.report_pages` 写入各 shape 的 950 CA、设备预测、纯 Roofline 等效利用率和 970DT 外推。两次 packed FP4 量化采集分别有预登记冻结，核对每个输出 nibble、每个 scale 槽、发射核数、trace 身份与最终退休时刻。[逐 shape 明细](../docs/errors/README.md) · [FP4 量化的采集命令](../docs/examples/quant-mxfp4.md)
+
+## 系统捕获算子的 950 原生验证
+
+从仓根执行 `python -m calibration.verify --reprice` 会检查原生收据、预冻结预测、数据角色和当前发布价。运行 `python -m calibration.lookup quant_token_fp8 --shape 9 1024` 查询可定价窗口；`python -m calibration.lookup aten.mul.Tensor --shape 9 4` 查询无预测的广播乘实测。视图、多 kernel 边界和 FP8 cache 解包的诊断可在同一入口查询。原始指令和剖析目录保存在 Git 之外。[窗口口径](../docs/errors/README.md) · [仅实测的设备窗](../docs/errors/measured-only.md)
+
+| 计算 | 原生探针或采集器 | 离线重算 |
+|---|---|---|
+| 动态 MXFP4 | [新形和真实元素步长](quant_update/campaign.py) | `python -m calibration.quant_update.bundle --rows independent` |
+| 逐 token FP8 | [带两个输出 golden 的驱动](token_quant/native.cpp) · [核级阶段提取](token_quant/collect.py) | 从开发归档的 terminal_phases 复算[单位价格](token_quant/fit.py)，或用 [独立归档](token_quant/independent.json.gz) 重绘[算例](token_quant/plot.py) |
+| FP4/FP8 CacheLoad | [重现说明](cache_load/README.md) | `python -m calibration.cache_load.lookup --dtype fp8_e4m3fn --chip 950PR --shape 1 128 512` |
+| 路由专家 GMM | [原生 ABI 与采集说明](routed_gmm/README.md) | `python -m calibration.routed_gmm.bundle --windows` 会附带重复几何但新直方图的两窗，系统新形 WAPE 单列这组 |
+| 等形残差加和行广播乘 | [驱动](elementwise/probe.cpp) · [输出、ELF 和退休核验](elementwise/collect.py) | `python -m calibration.lookup aten.add.Tensor --shape 9 7168` |
+
+更新本批压缩收据后，依次运行 `python -m calibration.system_reference --refresh` 与 `python -m calibration.report_pages` 重建参考索引和逐 shape 误差页。其他合同的数值留在各自的校准归档。

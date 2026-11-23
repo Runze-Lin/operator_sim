@@ -58,3 +58,28 @@ class RoutedGroupedMatmulTests(unittest.TestCase):
                 result = estimate('routed_grouped_matmul', shape, attrs, dtype=dtype)
                 self.assertEqual(result.status, 'unsupported', result.reason)
                 self.assertIsNone(result.latency_us)
+
+
+class RoutedGroupedNativeScheduleTests(unittest.TestCase):
+    def test_last_expert_spreads_over_free_cores(self):
+        shape=(3,128,256)
+        attrs={'expert_counts':[1,2],'implementation':'aclnnGroupedMatmulV5'}
+        native=estimate('routed_grouped_matmul',shape,attrs,chip='Ascend950DT_9582')
+        logical=estimate('routed_grouped_matmul',shape,{'expert_counts':[1,2]},chip='Ascend950DT_9582')
+        self.assertEqual(native.work,logical.work)
+        self.assertEqual((native.active_aic,native.active_aiv,native.kernel_count),(17,0,1))
+        self.assertGreater(native.latency_us,0)
+        self.assertEqual(native.projection['target_plan']['base_output_tiles'],2)
+        self.assertIsNone(logical.latency_us)
+
+    def test_unpriced_geometry_and_new_chip_qualification(self):
+        options={'expert_counts':[1,0,2],'implementation':'aclnnGroupedMatmulV5'}
+        for dims in ((3,96,32),(3,96,2)):
+            result=estimate('routed_grouped_matmul',dims,options)
+            self.assertEqual(result.status,'unavailable')
+            self.assertIsNone(result.latency_us)
+        future=estimate('routed_grouped_matmul',(3,128,256),options,chip='Ascend970DT')
+        self.assertEqual(future.status,'extrapolated')
+        self.assertGreater(future.latency_us,0)
+        strict=estimate('routed_grouped_matmul',(3,128,256),options,chip='Ascend970DT',timing_mode='calibrated')
+        self.assertIsNone(strict.latency_us)

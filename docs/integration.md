@@ -54,8 +54,9 @@ if r.latency_us is not None:
 | [grouped_matmul_swiglu_quant_v2](examples/grouped_matmul_swiglu_quant_v2.md)、[gmm2](examples/gmm2.md)、[moe_ffn](examples/moe_ffn.md) | (M,K,F,E) | `expert_counts` 为 E 个本地专家各自收到的有效 token 数，总和为 M | MXFP8 E4M3FN × E4M3FN、E8M0 scale；GMM1 输出 MXFP8，GMM2/整链输出 BF16 |
 | [vLLM HcPost](examples/hc_post_vllm.md) | (B,S,N,D) | 调用 mhc_post 并传 implementation="vllm_hc_post"，使用与内置 Post 不同的 kernel 与布局。 | BF16 激活、FP32 系数 → BF16 |
 | [quant_mxfp4](examples/quant-mxfp4.md) | (...,D) | 末轴 block32，round，E8M0 成对存放。省略 `input_stride` 时按连续布局定价，可传真实元素步长，非连续视图仅返回工作量 | BF16 → packed MXFP4 E2M1、E8M0 |
-| [cache_load](examples/cache_load.md) | (...,D)，物化输出的逻辑维度 | 传实际存储 dtype；可校验物理 value、scale 形状。返回工作量，耗时 N/A | MXFP4/E8M0 或 FP8 E4M3FN/每行 FP32 → BF16 |
-| [routed_grouped_matmul](examples/routed-grouped-matmul.md) | (有效本地行 R, N, K) | 路由专家的单个投影。传 `expert_counts`，可提供 `dispatch_capacity_rows`。只返回工作量 | MXFP4 双侧 block32、成对 E8M0 → BF16 |
+| [quant_token_fp8](examples/quant-token-fp8.md) | (...,D) | 对称逐行量化，全行驻留 UB；连续输入，无 offset/smoothing | BF16 → E4M3FN、每行一个 FP32 scale |
+| [cache_load](examples/cache_load.md) | (...,D)，物化输出的逻辑维度 | 传实际存储 dtype；可校验物理 value、scale 形状。连续 FP4 显式选 `implementation="aclnnAntiMxQuant"` 可计时。FP8 逐行参考可查离线 CA；默认仅工作量 | MXFP4/E8M0 或 FP8 E4M3FN/每行 FP32 → BF16 |
+| [routed_grouped_matmul](examples/routed-grouped-matmul.md) | (有效本地行 R, N, K) | 路由专家的单个投影。传 `expert_counts`，可提供 `dispatch_capacity_rows`。匹配转置权重和 scale 时传 `implementation="aclnnGroupedMatmulV5"` 计时，默认仅工作量 | MXFP4 双侧 block32、成对 E8M0 → BF16 |
 | [candidate_filtered_indexer](examples/candidate-filtered-indexer.md) | (B,Q,H,D,L,C,K) | 默认全表打分；候选优先须传块大小，可传每查询有效 key 数。返回工作量，耗时 N/A | BF16 查询、key、头权重，INT64 位置、INT32 候选与输出 |
 
 MoE 的 MXFP8 接口传 `dtype="fp8_e4m3fn"`，两侧的 E8M0 scale 和输出格式由该实现固定。芯片配置里的 4-bit/8-bit 峰值表示资源能力。本表列出在线模型实际接入的组合。精度盘点另列出 FA 的 Q/KV cache、量化/反量化以及 MoE 权重格式对应的已安装实现和 CA 证据。[低精度路线清单](precision-coverage.md)

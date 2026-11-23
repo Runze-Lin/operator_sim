@@ -4,6 +4,8 @@
 
 | 算例 | 可以对照什么 |
 |---|---|
+| [逐 token FP8 量化](examples/quant-token-fp8.md) | 9×1024 的最慢核，逐项比较首读、整行归约、写载荷和 scale 退休 |
+| [FP4 CacheLoad](examples/cache_load.md) | 同一缓存形状在双端的模型阶段与末核事件 |
 | [Matmul](examples/matmul.md) | 两个输出块、每块两个 K 页，模型关键路径与最后退休核的真实指令时间线 |
 | [稠密 MX Matmul](examples/mxfp4-design.md) | 同形 A4W4 与 A8W4 的阶段预算、FP4/FP8 MMAD、AIV 权重展开与 UB→L1 交接 |
 | [950PR A8W4 的 26 个行块](examples/mxfp4-design.md#为什么-950pr-上-2048128256-是-26-核) | 输出地址定位每个行块，比较两版分核、实际覆盖和 26 个核簇的权重交接 |

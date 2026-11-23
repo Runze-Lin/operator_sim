@@ -1,18 +1,28 @@
 {
   "schema": 1,
-  "scope": "Qualified 950 CA windows and work-only contracts. 970DT is extrapolated. Dense MX Matmul and packed dynamic MX quantization have prospective independent reference windows.",
-  "protocol_windows": 2084,
-  "distinct_chip_and_stage_signatures": 1639,
-  "contracts": 33,
+  "scope": "Modeled contracts and complete 950 CA windows. Additional measured-only diagnostics are listed separately. 970DT is an extrapolation.",
+  "protocol_windows": 2180,
+  "distinct_chip_and_stage_signatures": 1735,
+  "contracts": 36,
   "export_sha256": {
     "large-shapes.json": "bbb99d7d9bda51a2f46e012322bea7edabda7aac3a8dc9cbad9d439d50d5df94",
-    "summary.json": "cd59eb2622f44852b6acce74fdc4c4a502780a8d29e4ba52e76e702c8cb83e17",
-    "windows.jsonl": "45086a93aa3ae03047fad2d09567eeff3d8d35a0b691706a8edfe201373dd8e4",
+    "summary.json": "de45cb92ef12081adf9590292cd6c3651a2c4d71b6374895a8e766af1761df04",
+    "windows.jsonl": "8cc77bc20fabb7e4ecb7ef95e3dd9d2e8719dd544f972bde53b77bfe0eec63f8",
     "mx-matmul.json": "c60a38a0fafb89f397e73765c7c6268bdf128bc6a82026cdd1297357b16c12b7",
     "mx-projections.json.gz": "269a987d26536b6994cf234716411a57d85d793e3f6038fead5aa69861ea7030",
     "mx-projections-1.4.json.gz": "f3e8067f2516055f169763c052bda15533b15464a313f6f2741c786c231873a6",
     "quant-mxfp4-smoke.json": "bbd8b03b5a299c03b19a7238f94592b6af68ed024833cd46b9a370b3fe561bbb",
-    "quant-mxfp4-followup.json.gz": "bd4e408ca033161f16cb856e9ce1b81dc8802b31d87febcdbe9d674e34135465"
+    "quant-mxfp4-followup.json.gz": "bd4e408ca033161f16cb856e9ce1b81dc8802b31d87febcdbe9d674e34135465",
+    "../quant_update/calibration.json.gz": "252896e818560f41100e609f7fbcc02174edb237f02e889450271955dda8c35b",
+    "../routed_gmm/reference.json.gz": "b1f331dc047088b70f3d51acfd2b3cd1739147ab0283825d870009043df9e880",
+    "../cache_load/fp8-smoke.json.gz": "50bb0aa9387babb0c540cee5bed03354bd0a2854cb450fd15421839416b927d9",
+    "../elementwise/reference.json.gz": "2ba70222f664466af65e44b5e0f935a1bc194825e01a10542a33088897c572d5",
+    "../quant_update/strided-950dt.json": "a2d4e12f1843b43986fa7e66e25d3e605cb86882c451241348848eb88c9f5d5f",
+    "../quant_update/strided-950pr.json": "44ab72d83fdc22619e626e9a92b2a29212dde2e7d28ee294b74a87b1390d2f14",
+    "../token_quant/development.json.gz": "98dbf6c1e316e751cf0021104e57988dd466f66bb6952706d6a96911237448ff",
+    "../token_quant/independent.json.gz": "83cef696d932d4b67087bafd82127cf3e855b10f0bf149d5cd1b2b8a65260fcd",
+    "../cache_load/fp4-development.json.gz": "bb23427a62be8d80fb8ccf969d9840280e9641568c163d379165aec124e5808a",
+    "../cache_load/fp4-independent.json.gz": "142e7946780e08b1909a68a9d87b42a0a82447cef7261b1203f8494d28e44389"
   },
   "evidence_snapshot_sha256": {
     "archived_measured_windows": "e47b160b6a166fdeef1c359ecea4be493633c0e5cc050dc4228f8cf9add2cf94",
@@ -33,6 +43,9 @@
   "pricing_by_scope": {
     "archived_1_0_contracts": "0.34.0",
     "matmul_mx_native_and_mixed": "1.4.0",
-    "quant_mxfp4": "1.5.0 (frozen pre-release source; both 950 endpoints checked without refitting)"
+    "quant_mxfp4": "1.6.0",
+    "quant_token_fp8": "1.6.0",
+    "cache_load_mxfp4_antimx": "1.6.0",
+    "routed_grouped_matmul_mxfp4_v5": "1.6.0"
   }
 }

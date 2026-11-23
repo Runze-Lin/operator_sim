@@ -4,6 +4,7 @@ from collections.abc import Sequence
 from math import log2, prod
 
 from operator_model.operators.quant.repeat import NEG, compose, repeat
+from operator_model.operators.quant.fp4_wave import single_wave
 from operator_model.profiles.stage_model import ceildiv
 from operator_model.resources import load_parameters
 from operator_model.scheduling.memory import stream_memory
@@ -83,6 +84,9 @@ def price(shape, chip, attrs):
     # on a 950DT-class datapath; scale this scenario by per-AIV peak per clock.
     peak = chip.vector_tops['16']
     vf_issue = (peak/(chip.vector_cores*chip.frequency_ghz))/(54/(64*1.65)) if peak else 1.
+    # Physical-stage calibration from the eight historical 950 DT/PR windows.
+    # calibration/quant_update/ phases and the example document the estimator.
+    ub_groups = 8*((int(chip.details.get('ub_bytes') or 253952)-2048)//1360)
 
     def service(height, width):
         padded_groups = height*2*ceildiv(width, 64)
@@ -90,14 +94,23 @@ def price(shape, chip, attrs):
         source_calls = (6+9)*x_iters + 16*scale_iters
         read_bytes = 2*height*width
         write_bytes = height*width//2+padded_groups
-        read = cycles('read_latency_cycles')+read_bytes/read_rate
-        vector = cycles('vf_dependency_cycles')+source_calls/vf_issue
-        # Value and scale descriptors issue in order. Only exposed retirement
-        # and their combined byte service are priced on the single write port.
-        write = cycles('write_latency_cycles')+transport['scale_tail_cycles']+write_bytes/write_rate
+        # An odd group count causes CopyIn to clear the *full allocated UB input*
+        # before its V->MTE2 flag. Charge it once per tile, even on a tiny column tail.
+        odd = ceildiv(width,32)%2
+        clear = odd*1029.5*ub_groups/1480/vf_issue
+        # Small descriptors show a shorter response. Interpolate measured 64-B and
+        # ordinary >=256-B responses; the transfer slope is a separate service.
+        response = cycles('read_latency_cycles')*.956
+        short = min(1.,max(0.,(read_bytes-64)/192))
+        read = clear+response*(.365+.635*short)+read_bytes/read_rate
+        vector = 134.5+source_calls/vf_issue
+        data_write = cycles('write_latency_cycles')+(write_bytes-padded_groups)/write_rate
+        scale_write = 560.+padded_groups/write_rate
+        write = max(data_write,scale_write,write_bytes/write_rate)
         return dict(read_cycles=read, read_issue_cycles=read_bytes/issue_rate,
                     vector_cycles=vector, write_cycles=write, vector_source_calls=source_calls,
-                    x_loop_iterations=x_iters, scale_loop_iterations=scale_iters)
+                    x_loop_iterations=x_iters, scale_loop_iterations=scale_iters,
+                    ub_clear_cycles=clear, data_write_cycles=data_write, scale_write_cycles=scale_write)
 
     def transition(height, width):
         tile = service(height, width)
@@ -124,12 +137,17 @@ def price(shape, chip, attrs):
     launch = cycles('launch_cycles')
     if plan['iterations'] > 1:
         launch = chip.details.get('quant_prefetch_launch_cycles') or launch
-    spread = cycles('arrival_log2_cycles')*log2(active)
-    stages = {'first_issue': launch/clock, 'critical_core_and_arrival': (spread+core_cycles)/clock,
-              'exposed_shared_transfer': max(0., shared-spread-core_cycles)/clock,
+    launch *= .781
+    spread = 1.13*cycles('arrival_log2_cycles')*log2(active)
+    wave_cycles=spread+core_cycles
+    critical=None
+    if plan['iterations']==1:
+        wave_cycles,critical=single_wave(rows,cols,plan,spread,service)
+    stages = {'first_issue': launch/clock, 'critical_core_and_arrival': wave_cycles/clock,
+              'exposed_shared_transfer': max(0., shared-wave_cycles)/clock,
               'drain': cycles('end_cycles')/clock}
     diag = dict(method='arch35_mxfp4_block32_source_schedule', target_plan=plan, stages_us=stages,
                 first_tile=service(min(h, tile_h), min(w, tile_w)), source_calls_per_cycle=vf_issue,
                 critical_core_cycles=core_cycles, arrival_spread_cycles=spread,
-                mixed_stream=memory, inherited_fields=list(chip.inherited_fields))
+                mixed_stream=memory, critical_wave=critical, inherited_fields=list(chip.inherited_fields))
     return sum(stages.values()), work, diag

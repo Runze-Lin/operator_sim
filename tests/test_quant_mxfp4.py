@@ -34,7 +34,8 @@ class MXFP4QuantTest(unittest.TestCase):
         for shape in ((9, 31), (64, 65), (True, 64), (), (1,)*7+(128,)):
             self.assertEqual(estimate('quant_mxfp4', shape).status, 'unsupported')
         self.assertEqual(estimate('quant_mxfp4', [9, 128], dtype='fp16').status, 'unsupported')
-        unpriced = estimate('quant_mxfp4', [9, 128], timing_mode='calibrated')
+        self.assertEqual(estimate('quant_mxfp4', [9, 128], timing_mode='calibrated').status,'estimated')
+        unpriced = estimate('quant_mxfp4', [10, 130], timing_mode='calibrated')
         self.assertIsNone(unpriced.latency_us)
         self.assertIsNotNone(unpriced.work)
         self.assertEqual(unpriced.status, 'unavailable')
@@ -53,3 +54,26 @@ class MXFP4QuantTest(unittest.TestCase):
         slow = replace(load_chip(), hbm_bandwidth_gbs=10)
         self.assertGreater(estimate('quant_mxfp4', [16, 131081, 576], chip=slow).latency_us, huge.latency_us)
         self.assertGreater(estimate('quant_mxfp4', [9, 128], chip='Ascend970DT').latency_us, 0)
+
+    def test_last_scale_can_retire_on_a_short_column_owner(self):
+        out = estimate('quant_mxfp4', [9, 288])
+        model = out.projection
+        self.assertEqual(model['target_plan']['cols_per_core'], 256)
+        tail = model['critical_wave']
+        self.assertEqual(tail['cols'], 32)
+        self.assertEqual(model['first_tile']['ub_clear_cycles'], 0)
+        self.assertGreater(tail['tile']['ub_clear_cycles'], 0)
+        self.assertTrue(tail['shared_packed_grain'])
+        self.assertGreater(tail['scale_queue_cycles'], 0)
+        # A 384-column source has a 128-column tail with four complete scale groups.
+        aligned = estimate('quant_mxfp4', [9, 384])
+        self.assertEqual(aligned.projection['critical_wave']['tile']['ub_clear_cycles'], 0)
+
+    def test_odd_input_buffer_clear_scales_with_ub_capacity(self):
+        chip = load_chip()
+        small = replace(chip, details={**chip.details,'ub_bytes':131072})
+        # A single core with one odd group selects the same phase on both chips.
+        large_ticks = estimate('quant_mxfp4', [1, 32], chip=chip).projection['first_tile']['ub_clear_cycles']
+        small_ticks = estimate('quant_mxfp4', [1, 32], chip=small).projection['first_tile']['ub_clear_cycles']
+        self.assertLess(small_ticks, large_ticks)
+        self.assertGreater(small_ticks, 0)

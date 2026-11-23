@@ -92,7 +92,7 @@ def render_index(groups):
                 '[总误差与计时口径](../error-analysis.md) · [建模方法](../modeling-strategy.md) · [逐窗原始数据](../../calibration/reference/windows.jsonl)']
     for role, title in ROLES.items():
         sections += [f'## {title}', index_table(groups, role)]
-    sections += ['## 其它精度与实现',
+    sections += ['## 只有 CA 实测的输入', '[FP8 cache 解包、非连续 FP4 量化、残差加和广播乘的双端整窗](measured-only.md)。这些输入还没有可独立评价的价格。', '## 其它精度与实现',
                 '表内合同以参考数据的当前登记为准。表外精度与实现（如 A8W4 专家 GMM 或低精度 FA）应按其各自的完整窗确定 CA 误差与等效利用率，缺少匹配证据时为 N/A。[精度与实现覆盖](../precision-coverage.md)']
     sections += ['## 复算与更新',
                  '在安装了本仓库包的环境，从仓库根目录执行 `python -m calibration.report_pages --check` 可重算全部页面并检查归档耗时。更新参考记录后，执行 `python -m calibration.report_pages` 重新生成。[生成工具](../../calibration/report_pages.py)']
@@ -123,9 +123,9 @@ def render_contract(contract, rows):
         evidence = {
             'attn_res_fwd · resident inference prefill': '此为 UB 驻留的推理 prefill，物化输出的样本列在另一个合同。[AttnResFwd 算例与证据边界](../examples/attn_res_fwd.md)',
             'candidate_filtered_indexer': '系统捕获了候选块索引及其形状。算例分别核算全表打分与候选优先的工作量。[候选 Indexer 算例](../examples/candidate-filtered-indexer.md)',
-            'cache_load_mxfp4': '系统捕获了 packed E2M1 值、按 32 元素分组并补齐的 E8M0 scale 和 BF16 物化输出。[缓存读取算例](../examples/cache_load.md)',
-            'cache_load_fp8': '系统捕获了 E4M3FN 值、逐行 FP32 scale 和 BF16 物化输出。[缓存读取算例](../examples/cache_load.md)',
-            'routed_grouped_matmul_mxfp4': '系统捕获了路由专家的 A4W4 分组乘法，工作量取决于专家行分布。稠密 Matmul 的 CA 窗属于另一合同。[路由专家 GMM 算例](../examples/routed-grouped-matmul.md)',
+            'cache_load_mxfp4': '显式 AntiMxQuant 有[独立双端校准](cache_load_mxfp4_antimx.md)。系统捕获了 packed E2M1 值、按 32 元素分组并补齐的 E8M0 scale 和 BF16 物化输出。[缓存读取算例](../examples/cache_load.md)',
+            'cache_load_fp8': '默认调用没有派发身份。显式 AscendAntiQuant 有原生实测，[FP8 的双端设备时间](measured-only.md)。系统捕获了 E4M3FN 值、逐行 FP32 scale 和 BF16 物化输出。[缓存读取算例](../examples/cache_load.md)',
+            'routed_grouped_matmul_mxfp4': '显式 GroupedMatmulV5 有[双端校准](routed_grouped_matmul_mxfp4_v5.md)。系统捕获了路由专家的 A4W4 分组乘法，工作量取决于专家行分布。稠密 Matmul 的 CA 窗属于另一合同。[路由专家 GMM 算例](../examples/routed-grouped-matmul.md)',
         }
         if contract in evidence:
             sections.append(evidence[contract])
@@ -198,6 +198,8 @@ def report(output, check=False):
     pages = {page_name(name): render_contract(name, items) for name, items in groups.items()}
     if len(pages) != len(groups) or 'README.md' in pages:
         raise ValueError('Ambiguous contract filenames')
+    from calibration.diagnostics import render as measured_only
+    pages['measured-only.md'] = measured_only()
     pages['README.md'] = render_index(groups)
     if check:
         for filename, content in pages.items():

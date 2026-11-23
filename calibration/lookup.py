@@ -18,4 +18,10 @@ if __name__=='__main__':
                 not args.contract or row['contract']==args.contract) and (not args.chip or row['chip']==args.chip):
                 print(line.rstrip())
                 matches+=1
+    from .diagnostics import rows as measured_only
+    for row in measured_only():
+        if row['op']==args.op and (not args.shape or row['shape']==args.shape) and (
+            not args.contract or row['contract']==args.contract) and (not args.chip or row['chip']==args.chip):
+            print(json.dumps(row,ensure_ascii=False))
+            matches+=1
     if matches==0:cli.exit(1,'No qualified matching CA window.\n')

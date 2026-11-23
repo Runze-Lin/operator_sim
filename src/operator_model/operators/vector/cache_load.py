@@ -35,7 +35,7 @@ def describe(shape, dtype, attrs):
         raise ValueError('cache_load requires [...,D] with a row dimension and a positive width')
     attrs = {} if attrs is None else attrs
     supported = {'storage_shape', 'scale_shape', 'scale_dtype', 'output_dtype', 'group_size',
-                 'storage_precision', 'materialize'}
+                 'storage_precision', 'materialize', 'implementation'}
     if set(attrs) - supported:
         raise ValueError('Unsupported cache_load attributes: ' + str(sorted(set(attrs) - supported)))
     if 'storage_precision' in attrs and canonical_dtype(attrs['storage_precision']) != dtype:
@@ -47,6 +47,11 @@ def describe(shape, dtype, attrs):
 
     rows, width = prod(dims[:-1]), dims[-1]
     fp4 = dtype == 'mxfp4'
+    impl = attrs.get('implementation')
+    if 'implementation' in attrs and impl != 'aclnnAntiMxQuant':
+        raise ValueError('The supported explicit cache_load implementation is aclnnAntiMxQuant')
+    if impl and (not fp4 or width % 2 or not rows or len(dims) > 7):
+        raise ValueError('aclnnAntiMxQuant cache model requires nonempty contiguous ND E2M1, even width and rank 2..7')
     group = attrs.get('group_size', 32)
     if type(group) is not int or group < 1 or (fp4 and group != 32):
         raise ValueError('cache_load expects positive group_size; E2M1 currently requires group_size=32')
@@ -67,12 +72,14 @@ def describe(shape, dtype, attrs):
     values = rows*width
     # One mathematical scale application per valid output. The actual operation
     # precision/sequence is unspecified by the producer (E8M0 may use exponent logic).
-    work = _counts(dtype, value_bytes+scale_bytes, 2*values, vec={'unspecified': values},
+    work = _counts(dtype, value_bytes+scale_bytes, 2*values, vec={'bf16' if impl else 'unspecified': values},
                    classes={'scale_application': values}, notes=[
                        'Scale applications count logical results, not issued SIMD instructions. '
                        'Decode, narrowing and unpacking are listed separately without adding ISA counts.',
                        'Logical reads count the full supplied scale tensor including its paired padding. '
                        'Physical off-chip traffic and on-chip temporary storage are unknown.'])
+    if impl:
+        work['notes'].append('AntiMxQuant casts each FP4 value and group scale to BF16, then multiplies in BF16.')
     work.update(cache_value_bytes=value_bytes, cache_scale_bytes=scale_bytes, valid_values=values,
                 logical_scale_values=used_scales, scale_storage_slots=scale_slots,
                 unused_scale_slots=scale_slots-used_scales, input_value_decodes=values,
@@ -84,3 +91,18 @@ def describe(shape, dtype, attrs):
                       valid_rows=rows, scale_mode='block32_paired' if fp4 else 'per_row',
                       latency_us=None)
     return work, projection
+
+
+def price(shape, chip, attrs):
+    """Price the named compatible implementation of an E2M1 cache load."""
+    if not attrs or attrs.get('implementation') != 'aclnnAntiMxQuant':
+        raise ValueError('Timed cache_load requires explicit implementation=aclnnAntiMxQuant')
+    work, projection = describe(shape, 'mxfp4', attrs)
+    from .cache_load_antimx import schedule
+    us, plan, status = schedule(projection['valid_rows'], shape[-1], work, chip)
+    projection.update(method='aclnnAntiMxQuant_E2M1_BF16', qualification='explicit_implementation',
+                      timing_qualification=status, target_plan=plan, latency_us=us,
+                      calibration_scope='Contiguous even-width E2M1 ND + paired block32 E8M0, BF16 output. '
+                                        '950DT/PR at 1..128 folded rows with width 64/128/512/576; '
+                                        'the software capture alone does not identify a kernel.')
+    return us, work, projection

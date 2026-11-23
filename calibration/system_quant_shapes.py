@@ -64,7 +64,7 @@ def render(groups):
         body.append(['×'.join(map(str,shape)), counter[True], counter[False], *prices, *reference])
     return '\n\n'.join(['# 128Ki decode 系统中的全部 packed FP4 量化形状',
         f'27 个常规 run 的 rank 0 共调用 {dense+views:,} 次，覆盖 {len(groups)} 个不同的原始 shape。按输入的元素 stride 核对，其中 {dense:,} 次连续，{views:,} 次读取非连续视图。连续输入中有 {matched:,} 次与双端 CA 的维度和布局相符；计数按系统调用次数加权，同一 CA 值只代表该几何的一次实测。系统没有记录 scale_alg，映射时假设 OCP（0）。',
-        '时间单位为设备 µs。表中的预测和 CA 只适用于同一行的连续调用。非连续视图的时间均为 N/A。未取得完整 CA 的连续 shape 给出资源外推；970DT 全部为外推。相同算子在系统账本上的时间来自系统后端，未用作真值。单维长度为 1 时该轴 stride 可任取，其他轴必须满足行主序连续性。',
+        '时间单位为设备 µs。表中的预测和 CA 只适用于同一行的连续调用。非连续视图的预测仍为 N/A，真实步长 [6288,1]、偏移 6144 的 [9,128] 已在[多 kernel 实测页](errors/measured-only.md) 单列。未取得完整 CA 的连续 shape 给出资源外推；970DT 全部为外推。相同算子在系统账本上的时间来自系统后端，未用作真值。单维长度为 1 时该轴 stride 可任取，其他轴必须满足行主序连续性。',
         table(['本卡 BF16 输入 shape','连续调用','视图调用','950DT 预测','950PR 预测','970DT 外推','950DT CA','950PR CA'], body),
         '执行 `python -m calibration.system_quant_shapes "$EXPORT"` 可从导出的 `modeling-inputs.csv.gz` 复算本页。另一个 history=131198 的边界样例单独保留。[算子覆盖盘点](system-workload-coverage.md) · [逐 CA 窗与 Roofline 利用率](errors/quant_mxfp4.md) · [模型和校准算例](examples/quant-mxfp4.md)']) + '\n'
 
