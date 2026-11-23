@@ -4,7 +4,7 @@
 
 ## 安装与调用
 
-从本仓库根目录安装，或下载发布页中的 wheel 后用 pip 安装到系统框架的 Python 环境。[v1.0.0 发布页](https://github.com/Runze-Lin/operator_sim/releases/tag/v1.0.0)
+从本仓库根目录安装当前源码。使用已发布的 wheel 时，在系统框架的 Python 环境中安装对应版本。可配置的发射开销和 `scheduled_us` 接口从 1.1.0 开始提供。[已发布安装包](https://github.com/Runze-Lin/operator_sim/releases)
 
 ```sh
 python -m pip install .
@@ -36,6 +36,8 @@ print(r.work["cube_ops"], r.work["logical_read_bytes"], r.work["logical_write_by
 | 各算子的耗时误差、逐 shape 真值、验证边界 | [误差分析](docs/error-analysis.md) · [可复算的参考数据](calibration/reference/) |
 | 从三种模型的 config 推导单卡 prefill shape | [工作负载示例](examples/workloads/) |
 | 开发新算子、重新校准、构建和测试 | [维护指南](CONTRIBUTING.md) · [CA 校准工具](calibration/) |
+
+单算子接口的 `latency_us` 可直接与 CA 比较。若系统需要为每次 kernel 发射增加外部开销，配置 `kernel_overhead_us` 后使用 `scheduled_us`。UB、L1、L2 容量可按设备设置。现有计时按实际精度区分，未来 MXFP4 实现可从相同的资源模型推导候选排程。[芯片配置和精度支持表](docs/integration.md) · [没有现成 kernel 时的建模算例](docs/examples/mxfp4-design.md)
 
 ## 如何解读预测
 

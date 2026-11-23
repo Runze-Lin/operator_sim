@@ -22,7 +22,8 @@ def main():
     output = dict(raw) if estimated.projection is None and raw else {}
     output.update(op=args.op, shape=args.shape, soc_version=estimated.chip_name,
                   predicted_us=estimated.latency_us, estimate_status=estimated.status,
-                  reason=estimated.reason, work=estimated.work, rates=estimated.rates,
+                  kernel_count=estimated.kernel_count, dispatch_overhead_us=estimated.dispatch_overhead_us,
+                  scheduled_us=estimated.scheduled_us, reason=estimated.reason, work=estimated.work, rates=estimated.rates,
                   active_aic=estimated.active_aic, active_aiv=estimated.active_aiv,
                   projection=estimated.projection)
     output.setdefault('status', estimated.status)

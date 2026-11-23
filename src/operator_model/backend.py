@@ -1,5 +1,5 @@
 """System simulator interface. Chip files are read locally and require no CANN."""
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from math import ceil
 from typing import Literal, Mapping, Optional, Sequence
 
@@ -20,6 +20,15 @@ class Estimate:
     work: Optional[dict] = None
     projection: Optional[dict] = None
     rates: Optional[dict] = None
+    kernel_count: Optional[int] = None
+    dispatch_overhead_us: Optional[float] = None
+
+    @property
+    def scheduled_us(self) -> Optional[float]:
+        """Serial call duration with the configured overhead outside the device window."""
+        if self.latency_us is None or self.dispatch_overhead_us is None:
+            return None
+        return self.latency_us + self.dispatch_overhead_us
 
 
 def _dtype_name(value):
@@ -219,7 +228,6 @@ def _price_resource(op, shape, target, call, dtype):
 
 
 def _evaluate(op, shape, attrs, soc, chip, dtype, timing_mode='auto'):
-    raw = {}
     try:
         if not isinstance(op, str) or ALIASES.get(op, op) not in VECTOR | CUBE | FUSION:
             raise ValueError(f'Unknown operator: {op}')
@@ -229,154 +237,170 @@ def _evaluate(op, shape, attrs, soc, chip, dtype, timing_mode='auto'):
             raise ValueError('Expected an operator attribute mapping')
         if chip is not None and soc != REFERENCE_NAME:
             raise ValueError('Specify either chip or soc')
-        reference = load_chip()
         target = load_chip(chip if chip is not None else soc)
-        same = target == reference
         op = ALIASES.get(op, op)
-        shape = tuple(shape)
-        if op == 'fa' and len(shape) == 3:
-            shape += (1, 1)
-        call, chosen_dtype = _call_attrs(op, attrs, dtype)
-        if timing_mode not in ('auto','resource','calibrated'):
-            raise ValueError('timing_mode must be auto, resource or calibrated')
-        if op == 'lightning_indexer' and timing_mode in ('auto','resource'):
-            from operator_model.operators.attention.indexer import applies, schedule
-            if applies(shape,call,target):
-                duration, plan, diag = schedule(shape,target)
-                work = account_work(op,shape,{**call,'dtype':chosen_dtype})
-                # Coverage is metadata only. None of these extents price an instruction.
-                q, length = shape[1:3]
-                in_archive = ((same and ((q <= 1 and length <= 8192) or (q <= 9 and length <= 4096)))
-                              or (target == load_chip('Ascend950PR_957b') and
-                                  ((q <= 2 and length <= 3072) or (q <= 8 and length <= 1536))))
-                reason = ('Single-wave BF16 query-group schedule within archived Q/KV bounds for this SKU'
-                          if in_archive else 'Single-wave BF16 query-group schedule extrapolated from measured DT stages')
-                projected = dict(method='query_group_kv_pipeline',target_plan=plan,latency_us=duration,
-                                 timing_diagnostics=diag,stages_us=diag['stages_us'],
-                                 inherited_fields=list(target.inherited_fields))
-                return Estimate(duration,'estimated' if in_archive else 'extrapolated',reason,
-                                plan['active_aiv'],plan['active_aic'],target.name,work,projected,
-                                _rates(work,duration,target)), raw
-        if op == 'mhc_sinkhorn' and 'resident_aiv' in call and call['resident_aiv'] is None:
-            # An explicitly unknown history has the same semantics as omitting H.
-            del call['resident_aiv']
-        if (op in ('mhc_pre_sinkhorn', 'mhc_sinkhorn') or
-                (op == 'attn_res_fwd' and timing_mode == 'calibrated' and call.get('optimize_prefill')
-                 and call.get('write_idx', -1) == -1 and not call.get('materialize'))):
-            result = _price_resource(op, shape, target, call, chosen_dtype)
-            if timing_mode == 'calibrated' and result.status == 'extrapolated':
-                return Estimate(None, 'unavailable', result.reason, result.active_aiv, result.active_aic,
-                                target.name, result.work, {**result.projection, 'latency_us': None}), raw
-            return result, raw
-        if op == 'mhc_post' and call.get('implementation') == 'vllm_hc_post':
-            if timing_mode == 'calibrated':
-                from operator_model.operators.mhc.post_layout import layout
-                work, plan = layout(shape, target, call)
-                projection = {'implementation': 'vllm_hc_post', 'qualification': 'structural', 'target_plan': plan}
-                return Estimate(None, 'unavailable', 'The vLLM HcPost schedule is experimental',
-                                plan['active_aiv'], 0, target.name, work, projection), raw
-            from operator_model.operators.mhc.vllm_post import resource_hc_post
-            us, work, diag = resource_hc_post(shape, target, call)
-            diag['implementation'] = 'vllm_hc_post'
-            if us is None:
-                return Estimate(None, 'unavailable', ' '.join(diag['warnings']),
-                                diag['active_aiv'], 0, target.name, work, diag), raw
-            return Estimate(us, 'extrapolated', 'Explicit experimental arch35 vLLM HcPost resource model',
-                            diag['active_aiv'], 0, target.name, work, diag, _rates(work, us, target)), raw
-        if op == 'kda_recurrent' and len(shape) == 6 and (shape[0] != 1 or shape[3] != 1):
-            from operator_model.operators.kda.recurrent_chains import estimate_recurrent_chains
-            chain = estimate_recurrent_chains(shape, call, chip=target)
-            us = chain['latency_us']
-            plan = {k: chain[k] for k in ('active_aic', 'active_aiv', 'chains',
-                                          'chains_per_busiest_aiv', 'tiling')}
-            work = chain['work']
-            reason = chain.get('reason') or chain.get('evidence')
-            diag = dict(method='dense_recurrent_chains', target_plan=plan,
-                        timing_diagnostics={k: v for k, v in chain.items() if k not in ('work', 'latency_us')},
-                        inherited_fields=list(target.inherited_fields))
-            if timing_mode == 'calibrated' or us is None:
-                return Estimate(None, 'unavailable', reason or 'No calibrated multi-chain timing',
-                                chain['active_aiv'], 0, target.name, work, diag), raw
-            return Estimate(us, 'extrapolated', reason, chain['active_aiv'], 0,
-                            target.name, work, dict(diag, latency_us=us), _rates(work, us, target)), raw
-        if op == 'kda_chunk' and 'implementation' in call:
-            from operator_model.operators.kda.fla import IMPLEMENTATION, resource
-            if call['implementation'] != IMPLEMENTATION:
-                raise ValueError('Unknown explicit chunk KDA implementation')
-            if timing_mode == 'calibrated':
-                raise ValueError('The FLA 26.9.1 V2 experimental route has no qualified calibration policy')
-            us, aic, aiv, work, projected = resource(shape, target, call)
-            return Estimate(us, 'extrapolated', 'Explicit experimental FLA 26.9.1 V2 resource model',
-                            aiv, aic, target.name, work, projected, _rates(work, us, target)), raw
-        # A batch contains multiple request contexts. The reference surrogate's
-        # historical dimension limit does not bound the aggregate token axis.
-        large_quant = op == 'quant' and len(shape) == 2 and type(shape[0]) is int and shape[0] > 1048576
-        auto_resource = (op in _RESOURCE_ONLY or op in ('fa', 'matmul', 'addmm', 'mhc_post', 'rmsnorm') or large_quant
-                         or (not same and op in _RESOURCE_OPS))
-        use_resource = timing_mode == 'resource' or (timing_mode == 'auto' and auto_resource)
-        if use_resource or (timing_mode == 'calibrated' and same and op in _RESOURCE_ONLY):
-            if op not in _RESOURCE_OPS:
-                raise ValueError(f'{op} has no target resource schedule yet')
-            return _price_resource(op, shape, target, call, chosen_dtype), raw
-        if timing_mode == 'calibrated' and not same and (
-                op not in {'quant', 'matmul', 'fa'} or target != load_chip('Ascend950PR_957b')):
-            raise ValueError('No calibration route for this operator and target configuration')
-        # Residency is counted on the target. Translate only routes that use it.
-        resident = None
-        if not same and op in ('mhc_post', 'rmsnorm') and 'resident_aiv' in call:
-            resident = call.pop('resident_aiv')
-            if type(resident) is not int or not 0 <= resident <= target.vector_cores:
-                raise ValueError('resident_aiv must be within the target Vector core count')
-        raw = predict(op, shape, call)
-        if raw.get('status') == 'unsupported':
-            return Estimate(None, 'unsupported', raw.get('reason'), chip_name=target.name), raw
-        work = account_work(op, shape, {**call, 'dtype': chosen_dtype})
-        duration = raw['predicted_us']
-        if duration is None:
-            return Estimate(None, 'unavailable', raw.get('reason') or raw['status'],
-                            chip_name=target.name, work=work), raw
-        reason = raw.get('reason') if raw['status'] == 'extrapolation' else None
-        if same and op == 'quant':
-            cache_bytes = target.details.get('l2_bytes')
-            logical_bytes = work['logical_read_bytes'] + work['logical_write_bytes']
-            if cache_bytes and logical_bytes > cache_bytes:
-                reason = 'Quant working set exceeds L2; this streaming regime lacks full instruction-window calibration'
-        if op == 'fa' and shape[1] > 131072:
-            reason = 'KV length exceeds the longest complete 950DT FA reference'
-        if same:
-            plan = raw.get('plan', {})
-            if op in ('fa', 'matmul', 'quant'):
-                from operator_model.profiles.tile_model import plan as reference_plan
-                from operator_model.scheduling.cases import Case
-                plan = reference_plan(Case(op, shape))
-            aic = raw.get('predicted_active_aic', plan.get('active_aic'))
-            aiv = raw.get('predicted_active_aiv', plan.get('active_aiv') or None)
-            return Estimate(duration, 'extrapolated' if reason else 'estimated', reason,
-                            aiv, aic, target.name, work, rates=_rates(work, duration, target)), raw
-
-        from operator_model.scheduling.projection import project
-        projected = project(op, shape, call, raw, work, reference, target)
-        if resident is not None and projected['active_aiv']:
-            target_active = projected['active_aiv']
-            reference_active = raw['predicted_active_aiv']
-            mapped = min(reference_active, ceil(resident * reference_active / target_active))
-            if 0 < resident < target_active and reference_active > 1:
-                mapped = min(reference_active - 1, mapped)
-            call['resident_aiv'] = mapped
-            raw = predict(op, shape, call)
-            projected = project(op, shape, call, raw, work, reference, target)
-            projected['resident_aiv_mapping'] = {'target': resident, 'reference': mapped}
-        projected['inherited_fields'] = list(target.inherited_fields)
-        why = 'Same implementation and tiling policy assumed from ' + reference.name
-        if reason:
-            why += '. ' + reason
-        if projected['latency_us'] is None:
-            return Estimate(None, 'unavailable', why, chip_name=target.name,
-                            work=work, projection=projected), raw
-        return Estimate(projected['latency_us'], 'extrapolated', why, projected['active_aiv'],
-                        projected['active_aic'], target.name, work, projected, _rates(work, projected['latency_us'], target)), raw
+        result, raw = _price_device(op, shape, attrs, target, dtype, timing_mode)
+        if result.latency_us is not None:
+            # Counts of physical launches for the priced implementations.
+            # FLA V2 is the only priced chunk KDA and has three main launches.
+            count = _COMPOSITE_KERNEL_COUNTS.get(op, 1)
+            result = replace(result, kernel_count=count,
+                             dispatch_overhead_us=count * target.kernel_overhead_us)
+        return result, raw
     except (ValueError, TypeError, OSError) as exc:
-        return Estimate(None, 'unsupported', str(exc)), raw
+        return Estimate(None, 'unsupported', str(exc)), {}
+
+
+_COMPOSITE_KERNEL_COUNTS = {'mhc': 3, 'moe_ffn': 2, 'kda_chunk': 3}
+
+
+def _price_device(op, shape, attrs, target, dtype, timing_mode):
+    reference = load_chip()
+    raw = {}
+    same = target == reference
+    shape = tuple(shape)
+    if op == 'fa' and len(shape) == 3:
+        shape += (1, 1)
+    call, chosen_dtype = _call_attrs(op, attrs, dtype)
+    if timing_mode not in ('auto','resource','calibrated'):
+        raise ValueError('timing_mode must be auto, resource or calibrated')
+    if op == 'lightning_indexer' and timing_mode in ('auto','resource'):
+        from operator_model.operators.attention.indexer import applies, schedule
+        if applies(shape,call,target):
+            duration, plan, diag = schedule(shape,target)
+            work = account_work(op,shape,{**call,'dtype':chosen_dtype})
+            # Coverage is metadata only. None of these extents price an instruction.
+            q, length = shape[1:3]
+            in_archive = ((same and ((q <= 1 and length <= 8192) or (q <= 9 and length <= 4096)))
+                          or (target == load_chip('Ascend950PR_957b') and
+                              ((q <= 2 and length <= 3072) or (q <= 8 and length <= 1536))))
+            reason = ('Single-wave BF16 query-group schedule within archived Q/KV bounds for this SKU'
+                      if in_archive else 'Single-wave BF16 query-group schedule extrapolated from measured DT stages')
+            projected = dict(method='query_group_kv_pipeline',target_plan=plan,latency_us=duration,
+                             timing_diagnostics=diag,stages_us=diag['stages_us'],
+                             inherited_fields=list(target.inherited_fields))
+            return Estimate(duration,'estimated' if in_archive else 'extrapolated',reason,
+                            plan['active_aiv'],plan['active_aic'],target.name,work,projected,
+                            _rates(work,duration,target)), raw
+    if op == 'mhc_sinkhorn' and 'resident_aiv' in call and call['resident_aiv'] is None:
+        # An explicitly unknown history has the same semantics as omitting H.
+        del call['resident_aiv']
+    if (op in ('mhc_pre_sinkhorn', 'mhc_sinkhorn') or
+            (op == 'attn_res_fwd' and timing_mode == 'calibrated' and call.get('optimize_prefill')
+             and call.get('write_idx', -1) == -1 and not call.get('materialize'))):
+        result = _price_resource(op, shape, target, call, chosen_dtype)
+        if timing_mode == 'calibrated' and result.status == 'extrapolated':
+            return Estimate(None, 'unavailable', result.reason, result.active_aiv, result.active_aic,
+                            target.name, result.work, {**result.projection, 'latency_us': None}), raw
+        return result, raw
+    if op == 'mhc_post' and call.get('implementation') == 'vllm_hc_post':
+        if timing_mode == 'calibrated':
+            from operator_model.operators.mhc.post_layout import layout
+            work, plan = layout(shape, target, call)
+            projection = {'implementation': 'vllm_hc_post', 'qualification': 'structural', 'target_plan': plan}
+            return Estimate(None, 'unavailable', 'The vLLM HcPost schedule is experimental',
+                            plan['active_aiv'], 0, target.name, work, projection), raw
+        from operator_model.operators.mhc.vllm_post import resource_hc_post
+        us, work, diag = resource_hc_post(shape, target, call)
+        diag['implementation'] = 'vllm_hc_post'
+        if us is None:
+            return Estimate(None, 'unavailable', ' '.join(diag['warnings']),
+                            diag['active_aiv'], 0, target.name, work, diag), raw
+        return Estimate(us, 'extrapolated', 'Explicit experimental arch35 vLLM HcPost resource model',
+                        diag['active_aiv'], 0, target.name, work, diag, _rates(work, us, target)), raw
+    if op == 'kda_recurrent' and len(shape) == 6 and (shape[0] != 1 or shape[3] != 1):
+        from operator_model.operators.kda.recurrent_chains import estimate_recurrent_chains
+        chain = estimate_recurrent_chains(shape, call, chip=target)
+        us = chain['latency_us']
+        plan = {k: chain[k] for k in ('active_aic', 'active_aiv', 'chains',
+                                      'chains_per_busiest_aiv', 'tiling')}
+        work = chain['work']
+        reason = chain.get('reason') or chain.get('evidence')
+        diag = dict(method='dense_recurrent_chains', target_plan=plan,
+                    timing_diagnostics={k: v for k, v in chain.items() if k not in ('work', 'latency_us')},
+                    inherited_fields=list(target.inherited_fields))
+        if timing_mode == 'calibrated' or us is None:
+            return Estimate(None, 'unavailable', reason or 'No calibrated multi-chain timing',
+                            chain['active_aiv'], 0, target.name, work, diag), raw
+        return Estimate(us, 'extrapolated', reason, chain['active_aiv'], 0,
+                        target.name, work, dict(diag, latency_us=us), _rates(work, us, target)), raw
+    if op == 'kda_chunk' and 'implementation' in call:
+        from operator_model.operators.kda.fla import IMPLEMENTATION, resource
+        if call['implementation'] != IMPLEMENTATION:
+            raise ValueError('Unknown explicit chunk KDA implementation')
+        if timing_mode == 'calibrated':
+            raise ValueError('The FLA 26.9.1 V2 experimental route has no qualified calibration policy')
+        us, aic, aiv, work, projected = resource(shape, target, call)
+        return Estimate(us, 'extrapolated', 'Explicit experimental FLA 26.9.1 V2 resource model',
+                        aiv, aic, target.name, work, projected, _rates(work, us, target)), raw
+    # A batch contains multiple request contexts. The reference surrogate's
+    # historical dimension limit does not bound the aggregate token axis.
+    large_quant = op == 'quant' and len(shape) == 2 and type(shape[0]) is int and shape[0] > 1048576
+    auto_resource = (op in _RESOURCE_ONLY or op in ('fa', 'matmul', 'addmm', 'mhc_post', 'rmsnorm') or large_quant
+                     or (not same and op in _RESOURCE_OPS))
+    use_resource = timing_mode == 'resource' or (timing_mode == 'auto' and auto_resource)
+    if use_resource or (timing_mode == 'calibrated' and same and op in _RESOURCE_ONLY):
+        if op not in _RESOURCE_OPS:
+            raise ValueError(f'{op} has no target resource schedule yet')
+        return _price_resource(op, shape, target, call, chosen_dtype), raw
+    if timing_mode == 'calibrated' and not same and (
+            op not in {'quant', 'matmul', 'fa'} or target != load_chip('Ascend950PR_957b')):
+        raise ValueError('No calibration route for this operator and target configuration')
+    # Residency is counted on the target. Translate only routes that use it.
+    resident = None
+    if not same and op in ('mhc_post', 'rmsnorm') and 'resident_aiv' in call:
+        resident = call.pop('resident_aiv')
+        if type(resident) is not int or not 0 <= resident <= target.vector_cores:
+            raise ValueError('resident_aiv must be within the target Vector core count')
+    raw = predict(op, shape, call)
+    if raw.get('status') == 'unsupported':
+        return Estimate(None, 'unsupported', raw.get('reason'), chip_name=target.name), raw
+    work = account_work(op, shape, {**call, 'dtype': chosen_dtype})
+    duration = raw['predicted_us']
+    if duration is None:
+        return Estimate(None, 'unavailable', raw.get('reason') or raw['status'],
+                        chip_name=target.name, work=work), raw
+    reason = raw.get('reason') if raw['status'] == 'extrapolation' else None
+    if same and op == 'quant':
+        cache_bytes = target.details.get('l2_bytes')
+        logical_bytes = work['logical_read_bytes'] + work['logical_write_bytes']
+        if cache_bytes and logical_bytes > cache_bytes:
+            reason = 'Quant working set exceeds L2; this streaming regime lacks full instruction-window calibration'
+    if op == 'fa' and shape[1] > 131072:
+        reason = 'KV length exceeds the longest complete 950DT FA reference'
+    if same:
+        plan = raw.get('plan', {})
+        if op in ('fa', 'matmul', 'quant'):
+            from operator_model.profiles.tile_model import plan as reference_plan
+            from operator_model.scheduling.cases import Case
+            plan = reference_plan(Case(op, shape))
+        aic = raw.get('predicted_active_aic', plan.get('active_aic'))
+        aiv = raw.get('predicted_active_aiv', plan.get('active_aiv') or None)
+        return Estimate(duration, 'extrapolated' if reason else 'estimated', reason,
+                        aiv, aic, target.name, work, rates=_rates(work, duration, target)), raw
+
+    from operator_model.scheduling.projection import project
+    projected = project(op, shape, call, raw, work, reference, target)
+    if resident is not None and projected['active_aiv']:
+        target_active = projected['active_aiv']
+        reference_active = raw['predicted_active_aiv']
+        mapped = min(reference_active, ceil(resident * reference_active / target_active))
+        if 0 < resident < target_active and reference_active > 1:
+            mapped = min(reference_active - 1, mapped)
+        call['resident_aiv'] = mapped
+        raw = predict(op, shape, call)
+        projected = project(op, shape, call, raw, work, reference, target)
+        projected['resident_aiv_mapping'] = {'target': resident, 'reference': mapped}
+    projected['inherited_fields'] = list(target.inherited_fields)
+    why = 'Same implementation and tiling policy assumed from ' + reference.name
+    if reason:
+        why += '. ' + reason
+    if projected['latency_us'] is None:
+        return Estimate(None, 'unavailable', why, chip_name=target.name,
+                        work=work, projection=projected), raw
+    return Estimate(projected['latency_us'], 'extrapolated', why, projected['active_aiv'],
+                    projected['active_aic'], target.name, work, projected, _rates(work, projected['latency_us'], target)), raw
+
 
 
 def estimate(op: str, shape: Sequence[int], attrs: Optional[Mapping] = None, *,

@@ -3,11 +3,11 @@ from operator_model import Estimate, OperatorStream
 
 
 def duration_seconds(result: Estimate, *, allow_extrapolation: bool) -> float:
-    if result.latency_us is None:
+    if result.scheduled_us is None:
         raise ValueError(f"Cannot schedule this operator: {result.status} ({result.reason})")
     if result.status == "extrapolated" and not allow_extrapolation:
         raise ValueError("This simulation requires a calibrated target")
-    return result.latency_us * 1e-6
+    return result.scheduled_us * 1e-6
 
 
 def main():

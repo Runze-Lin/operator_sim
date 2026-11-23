@@ -28,28 +28,31 @@ if r.latency_us is not None:
 |---|---|
 | `latency_us`、`chip_name`、`status`、`reason` | 微秒、解析后的芯片与有效性说明。 |
 | `active_aic`、`active_aiv` | 活跃 Cube/Vector 核数估计，缺少证据可为 None。 |
+| `kernel_count`、`dispatch_overhead_us`、`scheduled_us` | 当前实现的物理发射次数、配置产生的总附加微秒、串行系统排程微秒。缺设备时间时三者为空。已单独模拟发射或异步队列的框架使用 `latency_us`。 |
 | `work` | `cube_ops` 和 `vec_ops` 为有用标量运算计数，另按 dtype、Vector 运算类型细分。`logical_read_bytes`、`logical_write_bytes` 按张量边界计数，实际 HBM 流量须另有证据。 |
 | `rates` | 工作量除以设备时间所得的 TOP/s 和逻辑 GB/s。名义峰值比例与芯片配置有关。 |
 | `projection` | 路线可提供分块方案、波数、阶段耗时、流水瓶颈及继承参数。诊断键随算子变化，通常调度只依赖上面的公共字段。 |
 
 ## 给出正确的本卡 shape
 
-| 算子 | 维度顺序 | 输入约束 |
-|---|---|---|
-| [quant](examples/quant.md) | (R,C) | dynamicMXquant，BF16 输入、block32 |
-| [moe_gating_top_k](examples/moe_gating_top_k.md) | (T,E,K) | FP32 logits，单分组 sigmoid 加 bias，挑选 K 个专家 |
-| [sigmoid_fp32](examples/sigmoid_fp32.md) | (T,H_local) | 独立连续 FP32 Sigmoid；Kimi KDA 的 beta 宽是本地 head 数，TP8 时为 12 |
-| [cast_bf16_fp32](examples/cast_bf16_fp32.md) | (T,D) | 连续 BF16 输入、FP32 输出 |
-| [attn_res_fwd](examples/attn_res_fwd.md) | (T,H,S,N) | Kimi BF16 prefix/addend、S 个 bank slot、N 个有效历史行 |
-| [rmsnorm](examples/rmsnorm.md) | (R,C) | BF16，输出含 rstd |
-| [matmul](examples/matmul.md)、[addmm](examples/addmm.md) | (M,N,K) | BF16；Addmm 的 bias=[N] 且 α=β=1 |
-| [fa](examples/fa.md) | (Q,KV,D,B,H) | 普通非因果 SBH；Q 是本次校验长度，H 是本卡头数 |
-| [lightning_indexer](examples/lightning_indexer.md) | (B,Q,L,G,D) | BSND，G=8、D=128、top-512 |
-| [mhc_pre](examples/mhc_pre.md)、[mhc_post](examples/mhc_post.md)、[mhc_pre_sinkhorn](examples/mhc_pre_sinkhorn.md)、[mhc](examples/mhc.md) | (T,N,D) | N=4；mhc 代表 Pre、Sinkhorn、Post 三段，外部层单独调度 |
-| [mhc_sinkhorn](examples/mhc_sinkhorn.md) | (T,N) | N=4，`num_iters` 为实际迭代数 |
-| [kda_recurrent](examples/kda_recurrent.md)、[kda_chunk](examples/kda_chunk.md) | (B,S,Hq,Hv,K,V) | 递推有 CA 校准；分块默认 V1 仅工作量，显式 FLA V2 可估计三个设备窗 |
-| [grouped_matmul_swiglu_quant_v2](examples/grouped_matmul_swiglu_quant_v2.md)、[gmm2](examples/gmm2.md)、[moe_ffn](examples/moe_ffn.md) | (M,K,F,E) | `expert_counts` 为 E 个本地专家各自收到的有效 token 数，总和为 M |
-| [vLLM HcPost](examples/hc_post_vllm.md) | (B,S,N,D) | 调用 mhc_post 并传 implementation="vllm_hc_post"，使用与内置 Post 不同的 kernel 与布局。 |
+| 算子 | 维度顺序 | 输入约束 | 主输入、计算与输出精度 |
+|---|---|---|---|
+| [quant](examples/quant.md) | (R,C) | dynamicMXquant，BF16 输入、block32 | BF16 → E4M3FN + E8M0 scale |
+| [moe_gating_top_k](examples/moe_gating_top_k.md) | (T,E,K) | FP32 logits，单分组 sigmoid 加 bias，挑选 K 个专家 | FP32 → FP32 权重、INT32 索引 |
+| [sigmoid_fp32](examples/sigmoid_fp32.md) | (T,H_local) | 独立连续 FP32 Sigmoid；Kimi KDA 的 beta 宽是本地 head 数，TP8 时为 12 | FP32 → FP32 |
+| [cast_bf16_fp32](examples/cast_bf16_fp32.md) | (T,D) | 连续 BF16 输入、FP32 输出 | BF16 → FP32 |
+| [attn_res_fwd](examples/attn_res_fwd.md) | (T,H,S,N) | Kimi BF16 prefix/addend、S 个 bank slot、N 个有效历史行 | BF16，评分/归一化按 FP32 计；输出 BF16 |
+| [rmsnorm](examples/rmsnorm.md) | (R,C) | BF16，输出含 rstd | BF16，FP32 归约 → BF16 Y、FP32 rstd |
+| [matmul](examples/matmul.md)、[addmm](examples/addmm.md) | (M,N,K) | BF16；Addmm 的 bias=[N] 且 α=β=1 | BF16 A/B（Addmm 含 BF16 bias）→ BF16 |
+| [fa](examples/fa.md) | (Q,KV,D,B,H) | 普通非因果 SBH；Q 是本次校验长度，H 是本卡头数 | BF16 Q/K/V，FP32 softmax → BF16、FP32 统计 |
+| [lightning_indexer](examples/lightning_indexer.md) | (B,Q,L,G,D) | BSND，G=8、D=128、top-512 | BF16 Q/K/权重 → INT32 |
+| [mhc_pre](examples/mhc_pre.md)、[mhc_post](examples/mhc_post.md)、[mhc_pre_sinkhorn](examples/mhc_pre_sinkhorn.md)、[mhc](examples/mhc.md) | (T,N,D) | N=4；mhc 代表 Pre、Sinkhorn、Post 三段，外部层单独调度 | BF16 激活、FP32 参数；Post 输出 BF16，Pre 还返回 FP32 系数 |
+| [mhc_sinkhorn](examples/mhc_sinkhorn.md) | (T,N) | N=4，`num_iters` 为实际迭代数 | FP32 → FP32 |
+| [kda_recurrent](examples/kda_recurrent.md)、[kda_chunk](examples/kda_chunk.md) | (B,S,Hq,Hv,K,V) | 递推有 CA 校准；分块默认 V1 仅工作量，显式 FLA V2 可估计三个设备窗 | recurrent / FLA V2 的 Q/K/V 为 BF16、状态 FP32；V1 接受 BF16/FP16 结构输入，计时 N/A |
+| [grouped_matmul_swiglu_quant_v2](examples/grouped_matmul_swiglu_quant_v2.md)、[gmm2](examples/gmm2.md)、[moe_ffn](examples/moe_ffn.md) | (M,K,F,E) | `expert_counts` 为 E 个本地专家各自收到的有效 token 数，总和为 M | MXFP8 E4M3FN × E4M3FN、E8M0 scale；GMM1 输出 MXFP8，GMM2/整链输出 BF16 |
+| [vLLM HcPost](examples/hc_post_vllm.md) | (B,S,N,D) | 调用 mhc_post 并传 implementation="vllm_hc_post"，使用与内置 Post 不同的 kernel 与布局。 | BF16 激活、FP32 系数 → BF16 |
+
+MoE 的 MXFP8 接口传 `dtype="fp8_e4m3fn"`，两侧的 E8M0 scale 和输出格式由该实现固定。芯片配置里的 4-bit/8-bit 峰值表示资源能力；每种可计时的精度组合列在本表。
 
 例如 TP 切 head 后传入本卡 H；普通 decode 每请求 1 行，MTP 推 8 个 token、主模型同时校验时每请求可有 9 行。对于 MoE，EP 大小给出专家所在的卡，实际 token 路由决定本地的 expert_counts。可按模型配置和指定并行方式导出 prefill 几何，再与框架实际调度的张量对照。[三模型示例](../examples/workloads/README.md)
 
@@ -76,3 +79,43 @@ repeat = stream.advance("mhc_post", shape)     # 同一流的紧邻复跑
 ```sh
 operator-sim --op fa --shape 9 32768 64 1 1 --dtype bf16 --chip examples/chip.json
 ```
+
+## 每次发射的额外开销和片上容量
+
+这四项都可省略。容量位于 JSON 的 `details`，`kernel_overhead_us` 位于顶层。以下为 Python 等价示例，保留示例中指定 SKU 的其余参数。在自己的完整 JSON 文件中填同名字段，即可用 `--chip 路径.json` 调用。
+
+```python
+from dataclasses import replace
+from operator_model import estimate, load_chip
+
+base = load_chip("Ascend950DT_9582")
+# 这里保留 DT 自身容量，只演示一次发射额外暴露 1.5 µs 的系统假设。
+chip = replace(base, kernel_overhead_us=1.5)
+r = estimate("matmul", (1280, 2048, 512), dtype="bf16", chip=chip)
+print(r.kernel_count, r.latency_us, r.dispatch_overhead_us, r.scheduled_us)
+# 1, 12.4491…, 1.5, 13.9491… µs
+```
+
+| 配置字段 | 单位和作用范围 | 缺省与依据 |
+|---|---|---|
+| `kernel_overhead_us` | 每个实际发射的 kernel，在 CA 指令设备窗之外、串行暴露的固定微秒数。可设为零 | 默认 0。由系统的 dispatch 实测或情景假设给定。CA 核内启动、首读和收尾继续由算子模型计价。 |
+| `details.ub_bytes` | 字节 / AIV，用于 Quant、RMSNorm、Cast 等的核内切块或驻留判断 | DT 253,952 B（248 KiB） |
+| `details.l1_bytes` | 字节 / AIC，用于支持该参数的 Matmul 页深和操作数常驻判断 | DT 524,288 B（512 KiB） |
+| `details.l2_bytes` | 字节 / 芯片调度域，用于工作集驻留、输出回写及共享传输估计 | DT 134,217,728 B（128 MiB），PR 内置配置为 112 MiB |
+
+同一调度域上，配置的附加时间为 `kernel_count × kernel_overhead_us`。已计时实现中，普通 Matmul、融合 PreSinkhorn 各发射 1 次，MoE FFN 发射 2 次，拆分 mHC 与 FLA V2 的三个主体 kernel 各计 3 次。tile、波次和参与的核数不增加发射次数。设置附加时间不会改变设备工作量、峰值利用率、校准资格或 CA 误差。设备窗内如需调整可辨识的启动阶段，Matmul、Quant 部分资源路线另有 `details.matmul_launch_cycles`、`details.quant_launch_cycles` 等周期价格，各分支的首发或预取参数见对应算例。
+
+例如，下面是一份芯片 JSON 中需要合并的字段（其余必填规格沿用该文件原值）。
+
+```json
+{
+  "kernel_overhead_us": 1.5,
+  "details": {
+    "ub_bytes": 253952,
+    "l1_bytes": 524288,
+    "l2_bytes": 134217728
+  }
+}
+```
+
+使用完整自定义芯片 JSON 时，只需在原 `details` 中修改希望改变的容量并保留其他已知项。新 JSON 省略的细项由加载器继承 950DT；从 PR 配置做敏感性分析时复制 PR 原始配置及其细项，以保留 PR 自身的 L2。固定实现（例如当前稠密 FA）沿用其已有块策略，尚无证据根据任意 UB/L1 容量重排所有算子。[配置示例](../examples/chip.json) · [资源变化的数值算例](modeling-strategy.md#容量如何改变一次预测)

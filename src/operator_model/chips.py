@@ -50,7 +50,14 @@ class ChipConfig:
     sources: Mapping = field(compare=False)
     inherited_fields: tuple = field(default=(), compare=False)
 
+    # Scheduling policy outside the CA device window. Hardware equivalence
+    # selects a device schedule even if a caller changes its dispatch cost.
+    kernel_overhead_us: float = field(default=0.0, compare=False)
+
     def __post_init__(self):
+        overhead = self.kernel_overhead_us
+        if type(overhead) not in (int, float) or not math.isfinite(overhead) or overhead < 0:
+            raise ValueError('kernel_overhead_us must be finite and nonnegative')
         if not isinstance(self.name, str) or not self.name.strip():
             raise ValueError('Chip name must be a non-empty string')
         for field in ('cube_cores', 'vector_cores', 'frequency_ghz', 'hbm_capacity_gb', 'hbm_bandwidth_gbs'):
