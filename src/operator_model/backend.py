@@ -43,12 +43,18 @@ def _call_attrs(op, attrs, dtype):
     supplied = dict(attrs or {})
     declared = _dtype_name(supplied.pop('dtype')) if 'dtype' in supplied else None
     chosen = _dtype_name(dtype) if dtype is not None else declared or default_dtype(op)
+    if op == 'matmul':
+        from operator_model.operators.matmul.mx import canonical_dtype
+        declared = canonical_dtype(declared)
+        chosen = canonical_dtype(chosen)
     if declared is not None and declared != chosen:
         raise ValueError('dtype conflicts with attrs["dtype"]')
     if op == 'kda_chunk':
         supplied['dtype'] = chosen
         if 'beta_dtype' in supplied and not isinstance(supplied['beta_dtype'], str):
             raise ValueError('Expected a string beta_dtype')
+    elif op == 'matmul' and chosen in ('mxfp4', 'fp8_e4m3fn'):
+        pass  # Validate these mixed-precision contracts at their own entry point.
     elif chosen != default_dtype(op):
         raise ValueError(f'{op} timing requires {default_dtype(op)} input, received {chosen}')
     return supplied, chosen
@@ -58,7 +64,7 @@ def _rates(work, latency_us, chip):
     """Useful work per predicted device window, in decimal units."""
     read, write = work['logical_read_bytes'], work['logical_write_bytes']
     logical = None if read is None or write is None else read + write
-    bits = {'bf16': '16', 'fp16': '16', 'fp32': '32', 'fp8_e4m3fn': '8'}
+    bits = {'bf16': '16', 'fp16': '16', 'fp32': '32', 'fp8_e4m3fn': '8', 'mxfp4': '4'}
     def peak_fraction(counts, peaks):
         ideal_us = 0.
         for dtype, count in counts.items():
@@ -264,6 +270,13 @@ def _price_device(op, shape, attrs, target, dtype, timing_mode):
     call, chosen_dtype = _call_attrs(op, attrs, dtype)
     if timing_mode not in ('auto','resource','calibrated'):
         raise ValueError('timing_mode must be auto, resource or calibrated')
+    if op == 'matmul' and chosen_dtype in ('mxfp4', 'fp8_e4m3fn'):
+        from operator_model.operators.matmul.mx import price
+        us, work, projection, reason = price(shape, target, chosen_dtype, call, timing_mode == 'calibrated')
+        plan = projection['target_plan']
+        return Estimate(us, projection['timing_qualification'] if us is not None else 'unavailable', reason,
+                        plan.get('active_aiv'), plan.get('active_aic'), target.name, work, projection,
+                        _rates(work, us, target) if us is not None else None), raw
     if op == 'lightning_indexer' and timing_mode in ('auto','resource'):
         from operator_model.operators.attention.indexer import applies, schedule
         if applies(shape,call,target):

@@ -1,0 +1,50 @@
+{
+  "a4w4_native": {
+    "l0_latency_cycles": 38.51,
+    "cube_latency_cycles": 107.0,
+    "pooled": {
+      "launch_cycles": 3959.0,
+      "read_latency_cycles": 1004.1,
+      "spread_cycles": 134.48,
+      "drain_cycles": 731.3
+    },
+    "Ascend950DT_9582": {
+      "launch_cycles": 4023.5,
+      "read_latency_cycles": 1114.68,
+      "spread_cycles": 104.3,
+      "drain_cycles": 808.16
+    },
+    "Ascend950PR_957b": {
+      "launch_cycles": 3851.0,
+      "read_latency_cycles": 970.6,
+      "spread_cycles": 174.15,
+      "drain_cycles": 689.23
+    }
+  },
+  "a8w4_inline_dequant": {
+    "l0_latency_cycles": 35.82,
+    "cube_latency_cycles": 82.99,
+    "pooled": {
+      "launch_cycles": 3405.0,
+      "read_latency_cycles": 1166.33,
+      "spread_cycles": 48.78,
+      "drain_cycles": 685.16
+    },
+    "unpack_peak_equivalents_per_weight": 22,
+    "unpack_setup_cycles": 50,
+    "handoff_latency_cycles": 157.81,
+    "Ascend950DT_9582": {
+      "launch_cycles": 3709.0,
+      "read_latency_cycles": 1201.33,
+      "spread_cycles": 39.36,
+      "drain_cycles": 699.16
+    },
+    "Ascend950PR_957b": {
+      "launch_cycles": 3315.0,
+      "read_latency_cycles": 1089.62,
+      "spread_cycles": 55.63,
+      "drain_cycles": 545.96
+    }
+  },
+  "source": "CANN 9.2.1 verified full-window MX DT/PR traces, M=1,256 N=128 K=256 only. Terminal arrival is MMAD issue spread. Prices in device cycles. SKU fields are medians of two stage observations; pooled fields transfer the median of all four. Cold HBM traffic remains a capacity scenario."
+}

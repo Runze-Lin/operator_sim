@@ -44,6 +44,8 @@ if r.latency_us is not None:
 | [attn_res_fwd](examples/attn_res_fwd.md) | (T,H,S,N) | Kimi BF16 prefix/addend、S 个 bank slot、N 个有效历史行 | BF16，评分/归一化按 FP32 计；输出 BF16 |
 | [rmsnorm](examples/rmsnorm.md) | (R,C) | BF16，输出含 rstd | BF16，FP32 归约 → BF16 Y、FP32 rstd |
 | [matmul](examples/matmul.md)、[addmm](examples/addmm.md) | (M,N,K) | BF16；Addmm 的 bias=[N] 且 α=β=1 | BF16 A/B（Addmm 含 BF16 bias）→ BF16 |
+| [Matmul，原生 A4W4](examples/mxfp4-design.md) | (M,N,K) | 传 `dtype="mxfp4"`，稠密 ND，W 已按 [N,K] 打包，沿 K 每 32 值共享 E8M0，目标为无 bias 的 BF16 输出 | A/W 均为 MXFP4 E2M1，FP32 累加 → BF16 |
+| [Matmul，权重解包 A8W4](examples/mxfp4-design.md) | (M,N,K) | 与上行相同，传 `dtype="fp8_e4m3fn"` 和 `attrs={"weight_dtype":"mxfp4"}` | MXFP8 E4M3FN × MXFP4 E2M1，权重在核内展开，FP32 累加 → BF16 |
 | [fa](examples/fa.md) | (Q,KV,D,B,H) | 普通非因果 SBH；Q 是本次校验长度，H 是本卡头数 | BF16 Q/K/V，FP32 softmax → BF16、FP32 统计 |
 | [lightning_indexer](examples/lightning_indexer.md) | (B,Q,L,G,D) | BSND，G=8、D=128、top-512 | BF16 Q/K/权重 → INT32 |
 | [mhc_pre](examples/mhc_pre.md)、[mhc_post](examples/mhc_post.md)、[mhc_pre_sinkhorn](examples/mhc_pre_sinkhorn.md)、[mhc](examples/mhc.md) | (T,N,D) | N=4；mhc 代表 Pre、Sinkhorn、Post 三段，外部层单独调度 | BF16 激活、FP32 参数；Post 输出 BF16，Pre 还返回 FP32 系数 |

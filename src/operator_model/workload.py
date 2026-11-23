@@ -191,6 +191,9 @@ def account_work(op, shape, attrs=None):
         return _chain(dtype, children)
     if op in _MOE:
         return _moe(op, shape, attrs)
+    if op == "matmul" and (dtype not in ("bf16", "bfloat16") or "weight_dtype" in attrs):
+        from operator_model.operators.matmul.mx import mx_work
+        return mx_work(shape, dtype, {k: v for k, v in attrs.items() if k != "dtype"})
     if op in ("addmm", "matmul"):
         m, n, k = shape
         read = 2*(m*k+k*n)

@@ -53,7 +53,7 @@ class ReceiptTests(unittest.TestCase):
             with self.assertRaises(ValueError):boundaries(Path(f.name),{'core0.cubecore0':1})
 
     def test_reference_summary(self):
-        self.assertEqual(verify()['windows'],1980)
+        self.assertEqual(verify()['windows'],read(HERE/'reference/manifest.json')['protocol_windows'])
 
 if __name__=='__main__':
     unittest.main()

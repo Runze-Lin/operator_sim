@@ -33,7 +33,7 @@ class DispatchBudgetTests(unittest.TestCase):
         for value in (-1, float('nan'), float('inf'), True, '2', None):
             with self.subTest(value=value), self.assertRaises(ValueError):
                 load_chip({**self.config, "kernel_overhead_us": value})
-        for op, shape, opts in [('matmul', (1, 64, 64), {'dtype': 'mxfp4'}),
+        for op, shape, opts in [('matmul', (1, 64, 64), {'dtype': 'int4'}),
                                 ('kda_chunk', (1, 64, 1, 1, 128, 128), {})]:
             r = estimate(op, shape, chip={**self.config, "kernel_overhead_us": 2}, **opts)
             self.assertIsNone(r.kernel_count)
