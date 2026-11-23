@@ -1,10 +1,22 @@
 """Regressions for reporting repeated, stateful windows and missing Roofline evidence."""
 import unittest
 
-from calibration.report_pages import DT, render_contract, utilization
+from calibration.report_pages import DT, PR, render_contract, summary_ranges, utilization
 
 
 class ErrorPageTests(unittest.TestCase):
+    def test_main_summary_spans_all_comparable_windows_on_each_chip(self):
+        header = '| 算子与输入合同（逐窗） | 等效 Roofline U 范围（DT / PR） | WAPE |\n|---|---|---|\n'
+        body = ('| [A](errors/a.md) | OLD | 2% |\n'
+                '| [B](errors/b.md) | OLD | N/A |\n'
+                '| [C](errors/measured-only.md) | OLD | N/A |\n')
+        rows = [dict(shape=[9], chip=chip, data_role=role, roofline={'utilization': u})
+                for chip, role, u in [(DT, 'replay', 1.5), (DT, 'independent', .125),
+                                      (DT, 'independent', None), (PR, 'replay', 0)]]
+        rendered = summary_ranges(header + body, {'a': rows, 'b': []})
+        self.assertEqual(rendered, header + body.replace('OLD', '12.500%-150.000% / 0.000%-0.000%', 1)
+                         .replace('OLD', 'N/A / N/A'))
+
     def test_duplicate_geometry_preserves_history_and_trace_rows(self):
         price = {'ideal_us': 1, 'bound': 'HBM', 'utilization': .25, 'reason': None}
         base = dict(op='mhc_post', shape=[8, 4, 256], input_dtype='bf16', attrs=None,

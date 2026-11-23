@@ -70,6 +70,41 @@ def utilization(rows):
     return len(eligible), ideal / modeled if modeled else None
 
 
+def summary_ranges(markdown, groups):
+    """Refresh only the Roofline column of the main error table, across both data roles."""
+    ranges = {}
+    for contract, rows in groups.items():
+        limits = []
+        for chip in (DT, PR):
+            values = [r['roofline']['utilization'] for r in rows
+                      if r['chip'] == chip and r['roofline']['utilization'] is not None]
+            limits.append(f'{percent(min(values))}-{percent(max(values))}' if values else NA)
+        ranges[page_name(contract)] = ' / '.join(limits)
+
+    lines = markdown.splitlines(keepends=True)
+    start = next(i for i, line in enumerate(lines) if line.startswith('| 算子与输入合同（逐窗） |'))
+    column = lines[start].split('|').index(' 等效 Roofline U 范围（DT / PR） ')
+    seen = set()
+    for i in range(start + 2, len(lines)):
+        if not lines[i].startswith('|'):
+            break
+        cells = lines[i].split('|')
+        link = re.fullmatch(r'\s*\[[^\]]+\]\(errors/([^/)]+\.md)\)\s*', cells[1])
+        if not link:
+            raise ValueError(f'Missing contract link in error summary: {cells[1]}')
+        name = link[1]
+        if name == 'measured-only.md':
+            value = f'{NA} / {NA}'
+        else:
+            value = ranges[name]
+            seen.add(name)
+        cells[column] = f' {value} '
+        lines[i] = '|'.join(cells)
+    if seen != ranges.keys():
+        raise ValueError(f'Contracts missing from error summary: {sorted(ranges.keys() - seen)}')
+    return ''.join(lines)
+
+
 def index_table(groups, role):
     body = []
     combined = []
@@ -201,14 +236,19 @@ def report(output, check=False):
     from calibration.diagnostics import render as measured_only
     pages['measured-only.md'] = measured_only()
     pages['README.md'] = render_index(groups)
+    files = {output / filename: content for filename, content in pages.items()}
+    docs = HERE.parent / 'docs'
+    if output.resolve() == (docs / 'errors').resolve():
+        summary = docs / 'error-analysis.md'
+        files[summary] = summary_ranges(summary.read_text(encoding='utf-8'), groups)
     if check:
-        for filename, content in pages.items():
-            if not (output / filename).is_file() or (output / filename).read_text(encoding='utf-8') != content:
-                raise ValueError(f'Missing or stale report: {filename}')
+        for path, content in files.items():
+            if not path.is_file() or path.read_text(encoding='utf-8') != content:
+                raise ValueError(f'Missing or stale report: {path}')
     else:
         output.mkdir(exist_ok=True, parents=True)
-        for filename, content in pages.items():
-            (output / filename).write_text(content, encoding='utf-8')
+        for path, content in files.items():
+            path.write_text(content, encoding='utf-8')
 
 
 if __name__ == '__main__':
