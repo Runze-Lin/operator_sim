@@ -50,6 +50,14 @@ PR 按 56 个 AIV 分发，关键核有 224,768 个元素。UB 单块 15,872 个
 
 **排到最后一块。** 首发 F=3012+193log₂56=4132.819，来自 950DT 单核与多核末核的首次有效读。尾读发起 t=F+14×4190.208=62795.731，上一个满块起点 z=t−4190.208=58605.523。尾 VF 等待 max(t+1342.964,z+4190.208+1095.995)=64138.695；尾写等待 max(64138.695+241.386+17,z+4190.208+1095.995+17+1152.132)=65060.858。17 是计算到写的依赖，10 是最终退休。整窗 (65060.858+319.183+10)/1650=**39.630 µs**。单块预算为 F+4190.208+1095.995+17+1152.132+10，超出的后续块只暴露 33.207 µs。[首发、端口与末块递推](../../src/operator_model/operators/vector/sigmoid.py) · [缓存留存与公共带宽](../../src/operator_model/scheduling/memory.py) · [PR 资源](../../src/operator_model/data/chips/Ascend950PR_957b.json)
 
+## 如何从 CA 得到这些参数
+
+**三组 950DT 开发形状。** FP32 输入/输出字节、每片寄存器工作和队列次序是实现量。以全核最早指令为零，在最迟完成核剔除首个 64 B 元数据，依次记首次有效读、读退休、末个 Vector store 退休、输出写发起/退休、核退休。[1,12] core0.veccore0（1 核）的首读在 3012 周期；[3072,96] core17.veccore0（64 核）为 4170，得 (4170−3012)/log₂64=193 周期。另一个开发点 [300,12] core16.veccore0（4 核）实际 3328，公式给 3398。
+
+**首块定价。** [1,12] 的 48 B 输入只占一组，读完到 VST 完成实测 79 周期，VST 后 17 周期发起写，写 159 周期，末写后 10 周期返回。对于 16 组与 72 组的另外两次调用，同一向量段为 141、366 周期，(141−79)/15=4.13、(366−79)/71=4.04，持续价圆整为 4 周期/组。读截距 1159 可用 [300,12] 的 4096 B、1233 周期描述符核对，1233−4×18.39635=1159.41。159 是小写近似固定响应，较长写再加 16.01826 周期/KiB；三条长度并未共同回归出独立端口斜率。
+
+**外推范围。** UB 和核数来自目标配置。端口 KiB 价借自 DT 的 RMSNorm，混合上限 30 B/周期/AIV 借自流式控制器证据。均匀保留输出、双输入/双输出槽的半驻留约束和用 FP32 峰值比外推 exp/div 均属假设；没有对特殊函数单独测得峰值。[三形状的原始列、核编号与 SHA](https://github.com/Runze-Lin/operator_sim/blob/2059edce197af60ddee6cfbc7c78d40c715ed76f/results/v0.20/newop/development-phases.json) · [末核、读写与 Vector 事件选取](https://github.com/Runze-Lin/operator_sim/blob/2059edce197af60ddee6cfbc7c78d40c715ed76f/development/validation/sigmoid20/figure.py) · [完整开发窗口](https://github.com/Runze-Lin/operator_sim/blob/2059edce197af60ddee6cfbc7c78d40c715ed76f/results/v0.20/newop/development.json) · [混合带宽参照](https://github.com/Runze-Lin/operator_sim/blob/2059edce197af60ddee6cfbc7c78d40c715ed76f/results/cast-capacity/report.md)
+
 ## 与完整 CA 核对
 
 | 目标 | 公开预测 µs | 完整 CA µs | 有符号误差 | 预测有效 AIC / AIV |

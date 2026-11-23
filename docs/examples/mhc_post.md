@@ -67,6 +67,16 @@ print(result.work["logical_read_bytes"], result.work["logical_write_bytes"])
 
 只有 shape 时，令六个整窗的最小值 L=3.636645、最大值 H=6.888428。令点估计相对两个端点偏差相等，即 x/L−1=1−x/H，解得 x=2LH/(L+H)=**4.76021 µs**。返回的两个 2.38010 µs 是端点加权贡献；物理时间线只能在指定前序后解释。此范围也不保证覆盖所有 CA 窗口。[读、VF、写的行调度](../../src/operator_model/operators/mhc/token_pipeline.py) · [描述符和依赖价格](../../src/operator_model/data/parameters/post_token.json) · [前序的控制、曲线及样本数](../../src/operator_model/data/parameters/post_history.json) · [回退独占预算系数](../../src/operator_model/data/parameters/post_occupancy.json) · [状态选择](../../src/operator_model/operators/mhc/history.py)
 
+## 如何从 CA 得到这些参数
+
+**实现、规格、估算。** token/通道两种分块、输入四个描述符大小及输出 8D 字节是实现工作量。频率、核数及算力来自芯片配置。L2 带宽代理、用 L/H 调和中心代表未知前序，以及目标沿用参考局部端口均为假设。六种前序由两种不同类型的阶段记录支持。
+
+**五种有行级时序的前序。** 旧 DT/PR 开发窗口共 31 个：first 6、expand 4、reuse 16、repeat 5。在每个末完成核的 DMA 序列中先排除 96 B tiling，再将四笔 64/16/2D/8D 读与下一笔 8D 写配成一行。以 y=(写发起−四读最晚退休)×本地周期/µs 为目标，x=⌈D/64⌉×单核 Vector 时间倍率，按历史和首行/后续行设不同固定项，共用非负斜率。重拟这 31 窗得到 31.77539716 周期/组。按同组取读描述符“持续周期−字节×18.39635/1024”的中位数作为固定响应；相邻发起差分三项取中位数。写用最后一行的持续时间减字节服务，退出取全窗退休减最后一行写退休。[保留的末核 DMA 序列](https://github.com/Runze-Lin/operator_sim/blob/2059edce197af60ddee6cfbc7c78d40c715ed76f/results/post-candidate/phase-evidence.json) · [目标列、回归及状态中位数](https://github.com/Runze-Lin/operator_sim/blob/2059edce197af60ddee6cfbc7c78d40c715ed76f/development/validation/post25/calibrate.py) · [冻结参数](https://github.com/Runze-Lin/operator_sim/blob/2059edce197af60ddee6cfbc7c78d40c715ed76f/results/v0.25/post/prices.json)
+
+**从旧窗核对两个参数。** PR [69,4,640] 的重复调用，首行 64、16、1280、5120 B 四读的发起间隔约 0.09757614、0.15151405、0.02969742 µs（即约 161、250、49 周期）。首个 64 B 读贡献的固定响应样本为 0.113939397×1650−64×18.39635/1024=186.85 周期；五个重复调用按首行分组的中位数为 156.85。该 PR 窗退出 0.00606103×1650≈10.001 周期。全部重复调用的中位退出样本为 DT [257,4,832]，读得 10.000149 周期，对应发布表的 10。这次重算的行级参数和发布文件相符。[DT 顺序调用的逐次收据](https://github.com/Runze-Lin/operator_sim/blob/2059edce197af60ddee6cfbc7c78d40c715ed76f/results/v0.24/post/receipts/rows-Ascend950DT_9582.json) · [PR 顺序调用的逐次收据](https://github.com/Runze-Lin/operator_sim/blob/2059edce197af60ddee6cfbc7c78d40c715ed76f/results/v0.24/post/receipts/rows-Ascend950PR_957b.json)
+
+**前序细分和第六种回退。** 进一步按前一核的 token/通道路由分组。“到达至首操作数”的观测周期取各组中位数，至少两次不同进程才启用。以同核相邻行读/写发起差为 y，用 max(最小间隔,向量工作+固定尾项) 估计形状曲线，非负 soft-L1 转折尺度 70 周期。首到次的间隔依前序分别拟合，普通后续行有共用曲线。第六种“扩核、前序按通道”缺合格的细粒度前序分组，回到已冻结的 DT 互斥阶段截距和各工作单位斜率。只有该 fallback 的阶段级时间可解释。[前序分类和间隔拟合](https://github.com/Runze-Lin/operator_sim/blob/2059edce197af60ddee6cfbc7c78d40c715ed76f/development/validation/post27/issue.py) · [分组估值与样本数](https://github.com/Runze-Lin/operator_sim/blob/2059edce197af60ddee6cfbc7c78d40c715ed76f/results/v0.27/post/parameters.json) · [独占阶段回退的参数](https://github.com/Runze-Lin/operator_sim/blob/2059edce197af60ddee6cfbc7c78d40c715ed76f/results/v0.12/post/profile.json) · [回退口径与估价规则](https://github.com/Runze-Lin/operator_sim/blob/2059edce197af60ddee6cfbc7c78d40c715ed76f/results/v0.12/post/method.md)
+
 ## 与完整 CA 核对
 
 | 目标 | 公开预测 µs | 完整 CA µs | 有符号误差 | 预测有效 AIC / AIV |

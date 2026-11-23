@@ -16,6 +16,10 @@ python -m calibration score "$cal_dir/freeze.json" "$cal_dir/measurement.json"
 
 预期模型为 15.467022 µs，CA 为 15.561818 µs，有符号误差 −0.6092%。两次公开查询分别对应 950DT 与 970DT，后者 7.777500 µs 是外推。本例采集早于当前冻结，数据角色是 `replay`。[输入清单](examples/cases.json) · [真实逐核收据](examples/matmul-ca.json)
 
+## 从 CA 事件复算 FA 参数
+
+在仓库根目录运行 `python3 calibration/examples/replay_fa.py`。它用 950DT 的 10 个开发窗复算 7 项通用价格或基准量、短页与宽页各 9 项首尾参数，并与发布参数逐项核对。输入节选含原始数据库指纹、按页排序的 K/V 发起时刻、按核合并后的队列忙周期，以及首轮和尾轮的事件差。整窗误差、970DT 外推和目标形状的预测都没有参与这次复算。[参数与事件的逐项推导](../docs/examples/fa.md#这些速率和固定周期从哪里来) · [事件节选](examples/fa-950dt.json) · [复算脚本](examples/replay_fa.py)
+
 ## 给新 shape 采前冻结
 
 复制并修改输入清单的 `cases` 数组，按芯片分别登记。同一组 case ID 必须唯一。每次冻结都用一个新文件名。每个 case 含以下字段。

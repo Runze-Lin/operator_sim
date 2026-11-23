@@ -30,7 +30,7 @@ print(result.work["logical_read_bytes"], result.work["logical_write_bytes"])
 
 单链用工作单位 u=S×K×V/16384，本例为 3。参考时钟上的每段价格由启动 µs 加单位工作量的斜率给出，DMA 段还乘 log₂(1+活动核数)。阶段是关键核时间轴上互斥的区间。 [参数及单位](../../src/operator_model/data/parameters/vector_instructions.json)
 
-**按一个位置展开。** 状态衰减 $KV$ 次乘，读取状态得到预测 $2KV$，沿当前键作秩一更新 $2KV$，查询更新后的状态 $2KV$；修正和缩放 value 另计 $2V$。按 FMA=2 的运算量约定，三步合计 $3(7×128×128+2×128)=344832$。该数覆盖主体递推。输入包括 BF16 的 Q、K、V（$2×3×(2×128+128)=2304$ B）、FP32 预激活 gate 和 beta（$3(4×128+4)=1548$ B）及初始状态（65536 B），共 69388 B。返回 BF16 输出 $2×3×128=768$ B 和最终状态 65536 B，共 66304 B。[状态与递推口径](../../src/operator_model/extensions/kda_moe.py)
+**按一个位置展开。** 状态衰减 `KV` 次乘，读取状态得到预测 `2KV`，沿当前键作秩一更新 `2KV`，查询更新后的状态 `2KV`；修正和缩放 value 另计 `2V`。按 FMA=2 的运算量约定，三步合计 `3(7×128×128+2×128)=344832`。该数覆盖主体递推。输入包括 BF16 的 Q、K、V（`2×3×(2×128+128)=2304` B）、FP32 预激活 gate 和 beta（`3(4×128+4)=1548` B）及初始状态（65536 B），共 69388 B。返回 BF16 输出 `2×3×128=768` B 和最终状态 65536 B，共 66304 B。[状态与递推口径](../../src/operator_model/extensions/kda_moe.py)
 
 下表取 950PR 的公开阶段分账。各段已处理模型可辨识的重叠，数值保留三位小数。
 
@@ -59,9 +59,9 @@ print(result.work["logical_read_bytes"], result.work["logical_write_bytes"])
 
 合计 **22.38758 µs**。各段是关键核独占成本的近似，未能从它们反解每个 recurrent 除法或状态描述符的价格。多状态链缺少相同计时资格。
 
-这组系数可从三份 DT 开发窗独立核对。选择最晚结束的 AIV，先取到达偏移，再依次把重叠区间归到 SIMD、MTE3、MTE2、SCALAR，剩余时间归 other。取 $S=1,2,4$ 的阶段时长如下，单位 µs。对每行以 $x=S$ 作非负直线拟合 $a+bx$；例如 SIMD 的 $b=\sum(x-\bar x)(y-\bar y)/\sum(x-\bar x)^2=2.937403$，$a=\bar y-b\bar x=4.302424$。other 的原始趋势向下，非负斜率取 0，截距取三个时长的平均。
+这组系数可从三份 DT 开发窗独立核对。选择最晚结束的 AIV，先取到达偏移，再依次把重叠区间归到 SIMD、MTE3、MTE2、SCALAR，剩余时间归 other。取 `S=1,2,4` 的阶段时长如下，单位 µs。对每行以 `x=S` 作非负直线拟合 `a+bx`；例如 SIMD 的 `b = sum((x − mean(x)) × (y − mean(y))) / sum((x − mean(x))²) = 2.937403`，`a = mean(y) − b × mean(x) = 4.302424`。other 的原始趋势向下，非负斜率取 0，截距取三个时长的平均。
 
-| 阶段 | $S=1$ | $S=2$ | $S=4$ |
+| 阶段 | `S=1` | `S=2` | `S=4` |
 |---|---:|---:|---:|
 | arrival | 0 | 0 | 0 |
 | SIMD | 7.29333 | 10.09697 | 16.07879 |
@@ -72,7 +72,13 @@ print(result.work["logical_read_bytes"], result.work["logical_write_bytes"])
 
 [单链形状合同与工作量](../../src/operator_model/operators/vector/instructions.py) · [目标端定价](../../src/operator_model/scheduling/projection.py) · [阶段截距、单位价格](../../src/operator_model/data/parameters/vector_instructions.json)
 
-**PR 倍率如何得到。** 单链两端均一波，标量倍率 $1.65/1.65=1$，每核 FP32 Vector 时间比 $(27/64)/(23/56)=1.027174$。搬运比例是投影模型对本地端口和片外带宽的线性混合。令 $p=(69388+66304)/(4000×1000×22.022395)\approx0.00154$，分母是 DT 以 HBM 峰值持续服务整个参考窗能传的字节数，$p$ 是逻辑字节压力代理。DT/PR 没有独立 MTE 端口价，本地比例回退到时钟和波数（本例为 1）。因此 $f_{MTE}=(1-p)×1+p×(4000/1400)=1.002861$。这个比例不能观测出实际缓存命中率。固定项与工作斜率按最晚核心的互斥阶段校准，模型没有单指令地址或索引高低位对应的价格。
+**PR 倍率如何得到。** 单链两端均一波，标量倍率 `1.65/1.65=1`，每核 FP32 Vector 时间比 `(27/64)/(23/56)=1.027174`。搬运比例是投影模型对本地端口和片外带宽的线性混合。令 `p=(69388+66304)/(4000×1000×22.022395)≈0.00154`，分母是 DT 以 HBM 峰值持续服务整个参考窗能传的字节数，`p` 是逻辑字节压力代理。DT/PR 没有独立 MTE 端口价，本地比例回退到时钟和波数（本例为 1）。因此 `f_MTE=(1−p)×1+p×(4000/1400)=1.002861`。这个比例不能观测出实际缓存命中率。固定项与工作斜率按最晚核心的互斥阶段校准，模型没有单指令地址或索引高低位对应的价格。
+
+## CA 标定样本与参数复算
+
+三个 DT 开发窗均为单 batch、单头、128×128 状态、FP32 预激活 gate，最后完成核均为 `CoreTypeId=2, ExecInstrCoreId=0`。S=1、2、4 时绝对首/末 tick 分别为 5605/30717、5959/36430、6045/48004，DB SHA-256 前缀分别为 `358db35f9382`、`8d4a34f54870`、`93bf1b2864ae`。例如 S=1 的互斥区间总和为 `(30717−5605)/1650=15.219394 µs`。按 `ExecInstrIsDurationExcluded=0` 的指令区间划分队列占用，空闲和未分类时间归 other；arrival 另取临界核相对全核的到达偏移。
+
+每行以上表的三个时长作 y，取 `x=[1,2,4]` 拟合非负截距与斜率。例如 MTE2 的 `x̄=7/3`、`ȳ=(1.5278788+1.3363636+1.5624242)/3=1.475556`，中心化乘积和除以横轴离差平方和 `14/3` 得 `b=0.0260173`，`a=ȳ−b×7/3=1.414848` µs。三个窗本身均无 arrival 偏移。PR 倍率来自芯片规格和上节的逻辑流量假设。档案 `v0.8/vector/profile.json → kda_recurrent.source` 保存源 DB 摘要和各阶段值。[阶段价格](../../src/operator_model/data/parameters/vector_instructions.json) · [逐窗索引](../../calibration/reference/windows.jsonl) [S=1、2、4 的分阶段观测](https://github.com/Runze-Lin/operator_sim/blob/2059edce197af60ddee6cfbc7c78d40c715ed76f/results/v0.8/vector/profile.json) · [关键核分账和拟合代码](https://github.com/Runze-Lin/operator_sim/blob/2059edce197af60ddee6cfbc7c78d40c715ed76f/scripts/vector-v8-freeze.py)
 
 ## 与完整 CA 核对
 

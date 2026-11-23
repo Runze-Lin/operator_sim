@@ -52,6 +52,14 @@ print(result.work["logical_read_bytes"], result.work["logical_write_bytes"])
 
 首块与后续局部阶段合计 48901.43 周期，因此 shared_io=max(0,90553.24−48901.43)/1650=25.244 µs。整窗 max(48901.43,90553.24)/1650=**54.881 µs**。本例的留存是缓存占用估计，实际外存流量需用控制器数据辨识。[Cast 分块、价格来由与周转](../../src/operator_model/operators/vector/cast.py) · [共享缓存及发行限制](../../src/operator_model/scheduling/memory.py) · [芯片配置](../../src/operator_model/data/chips/Ascend950PR_957b.json)
 
+## 如何从 CA 得到这些参数
+
+**规格和假设。** 2 B→4 B 和寄存器组来自 Cast；2048 元素的最小分核粒度由 16384 元素实际启用 8 AIV 反推。UB、总线和峰值读目标配置。18.39635/16.01826 周期/KiB 沿用 RMSNorm 对多种长短 DMA 的参数，Cast 的固定响应则来自本身的终止核。
+
+**从一个 950DT 窗口重算首块。** [64,4096]，64 个 AIV，选 retire 最晚者，剔除同步/等待和头部元数据。该核 8192 B 读 [1.45575738,2.04060584] µs，持续×1650=965 周期；16384 B 写 [2.61696982,2.89272740] 给 455 周期。扣除持续服务，得 965−8×18.39635=817.8292 和 455−16×16.01826=198.70784 周期。尾核起点 0.62727284×1650=1035；全片首个 payload 发起 1.06242442×1650=1753；尾核启动至有效读 (1.45575738−0.62727284)×1650=1367。64 组向量的 SIMD 并集 0.06848481×1650=113。读就绪至写发起扣除此并集，(2.61696982−2.04060584)×1650−113=838 周期。控制/依赖是这些事件之间的剩余时间。[终止核描述符与 trace 摘要](https://github.com/Runze-Lin/operator_sim/blob/2059edce197af60ddee6cfbc7c78d40c715ed76f/results/v0.19/workloads/cast-phases.json) · [终止核筛选及 SIMD 并集](https://github.com/Runze-Lin/operator_sim/blob/2059edce197af60ddee6cfbc7c78d40c715ed76f/development/workloads/cast_phases.py)
+
+**双槽与缓存。** 950DT [262144,32] 末核满块读/写描述符在途中位数约 1.3755/1.8197 µs，除以相同满块的原模型读/写服务 0.95556/0.92134 µs，得发布比值 1.43942 和 1.97505。外存混合发起 30 B/周期/AIV 是 DT 控制器流量与满块发起间隔折算的圆整上限。PR 压力留存公式、额外给脏输出腾出缓存以及向量峰值重定价是推断；本算例的外存字节数应当按该假设解释。[原始在途/服务及实际控制器口径](https://github.com/Runze-Lin/operator_sim/blob/2059edce197af60ddee6cfbc7c78d40c715ed76f/results/cast-capacity/report.md) · [冻结比值和训练 shape](https://github.com/Runze-Lin/operator_sim/blob/2059edce197af60ddee6cfbc7c78d40c715ed76f/results/cast-capacity/two-slot-freeze.json) · [控制器按区间字节数](https://github.com/Runze-Lin/operator_sim/blob/2059edce197af60ddee6cfbc7c78d40c715ed76f/results/cast-capacity/controller-periods.json)
+
 ## 与完整 CA 核对
 
 | 目标 | 公开预测 µs | 完整 CA µs | 有符号误差 | 预测有效 AIC / AIV |

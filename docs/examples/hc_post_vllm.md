@@ -46,6 +46,16 @@ print(result.work["logical_read_bytes"], result.work["logical_write_bytes"])
 
 最后加 10 周期返回。共享下界为 (153840+max(0,122880−117440512))×1.65/1400=181.311 周期，PR 缺 L2 带宽时不另计 L2 时间下界。整窗为 max(8464.237+10,181.311)/1650=**5.13590 µs**。若改变 dtype 或 UB 不能支持固定模板，应先检查该 ELF 对应的执行合同。[分核与逻辑流量](../../src/operator_model/operators/mhc/post_layout.py) · [槽位与时序递推](../../src/operator_model/operators/mhc/vllm_post.py) · [冻结的 DMA、VF 标价](../../src/operator_model/data/parameters/vllm_hc_post.json)
 
+## 如何从 CA 得到这些参数
+
+**分清数据和假设。** 4 路混合及 4096 列切片来自实现。UB、每核 Vector 峰值和频率取芯片配置。按峰值比缩放 VF、全片输出留在 L2 和多行时按周期延拓是资源假设。下面的估计量仅对指令里可识别的区间标定。
+
+**从一个 950DT 核读出固定时序。** [1,1,4,1024] 的 core0.veccore0，96 B 元数据后两笔系数读在 3145、3192 周期发起，x 在 3274 发起，得到 3192−3145=47、3274−3145=129。x/res 分别 4469/4471 退休，第一条算术 VF 在 4474 发起，故 input_ready=4474−max(4469,4471)=3。cast 在 [4944,5363]，输出写在 [5367,5730]，核于 5740 退休，故 cast_to_write=4、return_after_write=10。单条 cast 为 419 周期，所有开发块的 cast 时长中位才是发布值 418。47、129、3、4、10 和跨块/行的 12、2、232、20、386 等为标定脚本直接登记的指令位置价，脚本对这些常量没有另行求解。[这次调用的原始事件及 PC](https://github.com/Runze-Lin/operator_sim/blob/2059edce197af60ddee6cfbc7c78d40c715ed76f/results/v0.23/hc-timing/primitives/Ascend950DT_9582-1-1024.json) · [如何将各读、VF、写匹配到块](https://github.com/Runze-Lin/operator_sim/blob/2059edce197af60ddee6cfbc7c78d40c715ed76f/development/validation/hc_post_timing23/extract.py)
+
+**首发与 VF 的训练集。** DT/PR 各包含 [1,1,4,1024]、[1,3,4,5120]、[1,5,4,7168]，另加 DT [1,2,4,16448] 和两端 [1,65,4,256]，共 9 窗。每窗取首次执行 RV 最晚的核做首发 cohort。≤5 核的 7 窗中，post 首发为 3145、3186、3183、3227、3144、3348、3180，中位数 3183。大扇出两窗为 (64 核,4183)、(56 核,4142)，斜率 median((4183−3183)/63,(4142−3183)/55)=16.65469 周期/核。“首条 RV−首个算术 VF 发起”同法给 18 和 11.97547。对每个组数取首块“算术 VF 退休−首 RV”中位数，4、16、64 组分别为 183、505、1797。按组数两点斜率中位及残差中位得 26.9 周期/组、75.4 周期固定项。取后续算术残差中位为 46，跨 VF 重叠多窗中位为 52、47，隔两块的槽释放为 2。
+
+**DMA 例。** 以描述符实际字节 x、“退休−发起”周期 y 建五组（普通 x/res/write、首块 x/res）。先按相同字节量取中位数，再对不同字节的 y 中位点求两两斜率的中位数 b，取 a=median(y−bx)。写回在 512、2048、8192、24576、32768 B 五点的中位数为 313.5、340、366.5、542、1071。十个两点斜率的中位数=0.013982137 周期/B，截距 306.341146 周期，与发布的写价相同；全精度估计及九个训练文件均可复算。[九窗及各长度的中位点](https://github.com/Runze-Lin/operator_sim/blob/2059edce197af60ddee6cfbc7c78d40c715ed76f/results/v0.23/hc-timing/parameters.json) · [时间、扇出、描述符拟合脚本](https://github.com/Runze-Lin/operator_sim/blob/2059edce197af60ddee6cfbc7c78d40c715ed76f/development/validation/hc_post_timing23/calibrate.py)
+
 ## 与完整 CA 核对
 
 | 目标 | 公开预测 µs | 完整 CA µs | 有符号误差 | 预测有效 AIC / AIV |

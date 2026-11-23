@@ -47,6 +47,16 @@ PR 这条资源模型的先验来自 DT 局部 DMA 观测。参考首读固定�
 
 在线返回 dispatch=5503.855/1650，ub_pipeline=max(1701.937,0)/1650，drain=16/1650，合计 **4.377 µs**。PR 特有的首读、派发、向量入口和准入值来自同芯片 CA 的对应事件；持续 DMA 速率、scale 的并发粒度及其尾部沿用归档 950 价格。目标有 MTE 规格时可用其 GB/s÷GHz 替换相应 B/周期。[分核与 UB](../../src/operator_model/scheduling/tiling.py) · [流水与共享下界](../../src/operator_model/operators/quant/resources.py) · [DMA、VF 参数](../../src/operator_model/data/parameters/quant_resources.json) · [写粒度价格](../../src/operator_model/data/parameters/quant_fragments.json) · [PR 阶段标定来源](../../src/operator_model/data/chips/Ascend950PR_957b.json)
 
+## 如何从 CA 得到这些参数
+
+**工作量、规格和假设。** 32 元素一组、两槽 UB、输入及两输出的字节量来自实现。56 AIV、1.65 GHz、47 TOPS、1400 GB/s 来自 PR 配置。脏输出允许留在 L2、按等效核数分配共享端口是排程假设。实际计价的本地响应、发起间隔与循环价格分几批取得。
+
+**派发。** 旧 v0.17/v0.18 的 39 个完整窗口覆盖 19 个 DT、20 个 PR 观测。去除缺数据/scale 两次写的核心，所有时刻以全核最早指令为零，乘 1650 转周期。read[0] 为元数据，read[1] 是首笔有效输入。对每个单 tile 调用取所有核最早的 read[1] 发起，再对调用取中位数：PR 排序中间两项为 [9,4096] core3.veccore0 的 4247 和 [57,3200] 同名核的 4259，故发布值 (4247+4259)/2=4253。多 tile 组同法得到 3365.5。每窗以 (最晚−最早首笔发起)/log₂(有效核数) 计到达展宽，例如 PR [3,1920] 得 (4785−4061)/log₂24，全组中位 227.76564。[各核数据、VF、输出的原始时刻与 SHA](https://github.com/Runze-Lin/operator_sim/blob/2059edce197af60ddee6cfbc7c78d40c715ed76f/results/v0.19/quant-dma-samples.json) · [逐核提取及单位](https://github.com/Runze-Lin/operator_sim/blob/2059edce197af60ddee6cfbc7c78d40c715ed76f/development/validation/sku19/quant_phases.py) · [可直接重算的标定脚本](https://github.com/Runze-Lin/operator_sim/blob/2059edce197af60ddee6cfbc7c78d40c715ed76f/development/validation/sku19/quant_prices.py)
+
+**首读、VF 与循环斜率。** 只用 scale 描述符≤32 B 的样本，先在核间、再在形状间取中位数。“首笔有效读退休−发起−字节/48.36296”得 PR 首读截距 954.12008 周期；“首 SIMD−首有效读发起”得前端 1099.5。对每个形状取最小“首 SIMD−首有效读退休”，跨形状中位为 23。用各核“第一笔数据写发起−首 SIMD”为 y、由有效读的字节换算的循环数为 x。每形状取 (x,y) 中位数，对不同 x 的两点斜率取中位数，随后取 median(y−bx)。PR 的 VF 截距为 208.18779。发布的 5962.69297 等效 ops/循环统一使用 DT 的 b×511.363636，PR 单独拟合这一项为 5670.61460。复算 19/20 个存档重现上述系数。
+
+**端口与 scale。** 另取 DT tile 中实际读及两笔写的起止与字节量。读响应率取至少 16 KiB 首块的最大 B/(时长−参考首读延迟)，为 48.36296 B/周期；连续发起价来自相邻读发起间隔。以实际数据写时长对字节数做非负直线拟合，得 242.50966 周期截距、92.02712 B/周期。只由一个核写的粒度中，≤64 B scale 的持续时长中位数为 307 周期，scale 相对数据写的时长差正部中位数为 81，写发起差中位数约 1。另以 DT 短形、各 shape 等权，从共享粒度相邻返回提取额外 344.74992 周期。末退休用末次有效输出和终点之差。[实际 tile 及完整观测列](https://github.com/Runze-Lin/operator_sim/blob/2059edce197af60ddee6cfbc7c78d40c715ed76f/results/v0.17/quant-dt-evidence.json) · [常规读及两笔写的拟合](https://github.com/Runze-Lin/operator_sim/blob/2059edce197af60ddee6cfbc7c78d40c715ed76f/development/validation/sku17/quant_dma_calibrate.py) · [相邻发起与最后退休](https://github.com/Runze-Lin/operator_sim/blob/2059edce197af60ddee6cfbc7c78d40c715ed76f/development/validation/sku16/quant_dt_calibrate.py) · [短写粒度标定及过滤](https://github.com/Runze-Lin/operator_sim/blob/2059edce197af60ddee6cfbc7c78d40c715ed76f/development/validation/sku18/quant_calibrate.py)
+
 ## 与完整 CA 核对
 
 | 目标 | 公开预测 µs | 完整 CA µs | 有符号误差 | 预测有效 AIC / AIV |

@@ -54,6 +54,16 @@ DT 每个 AIV 分到 128 行，按 5 行/块得到 25 个满块和 3 行尾块�
 
 三种状态各段相加为 F=61.60837、E=61.64893、H=60.88386 µs。未知前序在已启动流中假设前一批使用的核数均匀落在 1…56，需扩核的权重 p=(56−1)/56，运行中 R=pE+(1−p)H=61.63527 µs。点估计为 2FR/(F+R)=**61.62181 µs**；公共表逐阶段使用相同权重。缓存留存比例与未知前序规则都会影响跨代解释。[双缓冲写窗](../../src/operator_model/operators/rmsnorm/writeback.py) · [归约及 DMA 价格](../../src/operator_model/data/parameters/rms_writeback.json) · [状态截距](../../src/operator_model/data/parameters/vector_wide_rows.json) · [首发与流状态](../../src/operator_model/operators/rmsnorm/dispatch.py) · [PR 两项首发校准](../../src/operator_model/data/chips/Ascend950PR_957b.json)
 
+## 如何从 CA 得到这些参数
+
+**来源边界。** 行分块、y/rstd 大小和同步来自该 BF16 实现。缓存与频率来自芯片配置；脏输出留存、未知前序核数均匀分布、两端点调和中心属于估算假设。
+
+**DT 本地价。** 隔离首次调用以全核最早指令为零，最后完成核的起点除以 (活跃核−1)，9 个有效样本的中位数给 14.625 周期/核。取各个只含单笔 x 读的核：有效 MTE2 并集减按 KiB 计的传输服务，再取中位数得首读截距 1388.65374 周期。对 9 笔单次输入读和 28 笔未被 rstd 明显遮挡的 y 写，分别枚举 (KiB,持续周期) 的两点斜率，仅留 KiB 距离在上半部分的形状对，再取中位数得 18.39635262、16.01826484 周期/KiB。8 个单写者 rstd 的描述符时长中位为 133 周期，5 个有邻居形状的 (时长−133)/邻居数中位为 147.58824。128 B 是统计写者的有效共享粒度。[DT 首发、互斥队列记录](https://github.com/Runze-Lin/operator_sim/blob/2059edce197af60ddee6cfbc7c78d40c715ed76f/results/v0.19/rms-startup.json) · [rstd、y 描述符数据库摘录](https://github.com/Runze-Lin/operator_sim/blob/2059edce197af60ddee6cfbc7c78d40c715ed76f/results/v0.12/rms/development-evidence.json) · [逐项所得样本数与估计量](https://github.com/Runze-Lin/operator_sim/blob/2059edce197af60ddee6cfbc7c78d40c715ed76f/development/validation/sku19/rms_calibrate.py)
+
+**PR 首次派发为何是 2580.5 和 2776。** DT 尾核互斥 Scalar、全片首次 x/gamma payload 发起的中位数分别为 2933.49976、2969.99992 周期。11 对 DT/PR 中，仅 7 对的有效核、每核行数、UB 列表相同且二进制一致。以 [1,5504] 为例，末核 Scalar 的 PR−DT=(1.74484833−1.85393990)×1650=−180 周期，最早输入发起的差=(1.86909056−1.98666668)×1650≈−194。7 个 Scalar 差为 −180、−26、−478、−353、−366、−331、−408；读发起差为 −194、127、−246、−277、−118、71、−322。于是 2933.5+median(Scalar差)=2580.5，2970+median(发起差)=2776。[双端核、时刻和 SHA](https://github.com/Runze-Lin/operator_sim/blob/2059edce197af60ddee6cfbc7c78d40c715ed76f/results/v0.19/rms-followup/old-paired-phases.json) · [筛选和七组形状](https://github.com/Runze-Lin/operator_sim/blob/2059edce197af60ddee6cfbc7c78d40c715ed76f/results/v0.19/rms-followup/evidence.md)
+
+**归约与历史。** 43 个旧 DT 关键 AIV 时间线的输入列为 UB tile 行数、归约组数与前序状态。目标分别为互斥 SIMD 周期、同块 rstd→y 发起差（normalize）、单 tile 的剩余 SIMD（reduce），以及可分开辨认的 y 写时间。用非负 soft-L1、转折尺度 80 周期拟合，得到 11.287692 周期/组及三态 SIMD 截距，和 normalize/reduce 两条固定项/斜率。发布版本对 y 持续价格、rstd 固定项及相邻写者部分使用上面的端口复核值。扩核和复用基础到达/Scalar/MTE2/退休截距来自历史分类的互斥阶段拟合；复用输入能提前 228 周期来自 19 个已驻留关键核的暴露读时剩余量中位数，作用于复用分支。[归约与写窗目标列及拟合](https://github.com/Runze-Lin/operator_sim/blob/2059edce197af60ddee6cfbc7c78d40c715ed76f/development/validation/rms12/freeze.py) · [各价格训练数](https://github.com/Runze-Lin/operator_sim/blob/2059edce197af60ddee6cfbc7c78d40c715ed76f/results/v0.12/rms/profile.json) · [历史分组截距](https://github.com/Runze-Lin/operator_sim/blob/2059edce197af60ddee6cfbc7c78d40c715ed76f/scripts/wide-v10-freeze.py) · [复用读开发诊断](https://github.com/Runze-Lin/operator_sim/blob/2059edce197af60ddee6cfbc7c78d40c715ed76f/results/rms-unknown23/resource-diagnostic.json)
+
 ## 与完整 CA 核对
 
 | 目标 | 公开预测 µs | 完整 CA µs | 有符号误差 | 预测有效 AIC / AIV |
