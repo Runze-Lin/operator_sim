@@ -18,7 +18,7 @@ python -m calibration score "$cal_dir/freeze.json" "$cal_dir/measurement.json"
 
 ## 从 CA 事件复算 FA 参数
 
-在仓库根目录运行 `python3 calibration/examples/replay_fa.py`。它用 950DT 的 10 个开发窗复算 7 项通用价格或基准量、短页与宽页各 9 项首尾参数，并与发布参数逐项核对。输入节选含原始数据库指纹、按页排序的 K/V 发起时刻、按核合并后的队列忙周期，以及首轮和尾轮的事件差。整窗误差、970DT 外推和目标形状的预测都没有参与这次复算。[参数与事件的逐项推导](../docs/examples/fa.md#这些速率和固定周期从哪里来) · [事件节选](examples/fa-950dt.json) · [复算脚本](examples/replay_fa.py)
+在仓库根目录运行 `python3 calibration/examples/replay_fa.py`。它用 950DT 的 10 个开发窗复算 7 项通用价格或基准量、短页与宽页各 9 项首尾参数，并与发布参数逐项核对。输入节选含原始数据库指纹、按页排序的 K/V 发起时刻、按核合并后的队列忙周期，以及首轮和尾轮的事件差。整窗误差、970DT 外推和目标形状的预测都没有参与这次复算。[参数与事件的逐项推导](../docs/examples/fa.md#这些速率和固定开销从哪里来) · [事件节选](examples/fa-950dt.json) · [复算脚本](examples/replay_fa.py)
 
 ## 给新 shape 采前冻结
 

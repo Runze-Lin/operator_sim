@@ -37,7 +37,7 @@ print(result.work["logical_read_bytes"], result.work["logical_write_bytes"])
 
 **资源倍率来自芯片和参考窗。** FP8 Cube 每核速度的时间倍率是 `(865/32)/(756/28)=1.001157`；FP32 SIMD 是 `(27/64)/(23/56)=1.027174`。分子、分母分别是 DT、PR 的整片峰值除以相应核数。两芯片均 1.65 GHz，控制倍率和缺省本地端口倍率为 1。参考模型先算出该输入在 DT 的 `T_0=9.940909` µs，由此 `p=(137296+1056)/(4000×1000×T_0)=0.003479`，MTE2/3 跨芯片倍率为 `(1-p)×1+p×4000/1400=1.006462`。此 `p` 是逻辑读写量占参考窗内 HBM 带宽预算的比例；集合内哪个引擎实际等待、物理 HBM 字节占几成，无法只靠整窗分别测出。
 
-每份模板对 CA 中的每类核取最后退休的一个核。由全片首条指令起，对该核全部计时指令的起止排序，相邻边界之间记录活跃资源，完全空闲的间隔记为 IDLE。同一资源集合的周期相加再除以 1650 得到 `t_ref`（µs）。[原始参数提取程序](https://github.com/Runze-Lin/operator_sim/blob/e99f2eb6e645de0e6e187379ba7f9d89d05d3297/scripts/fusion-v8-freeze.py)
+每份模板对 CA 中的每类核取最后退休的一个核。由全片首条指令起，对该核全部计时指令的起止排序，相邻边界之间记录活跃资源，完全空闲的间隔记为 IDLE。同一资源集合的 cycles 相加再除以 1650 得到 `t_ref`（µs）。[原始参数提取程序](https://github.com/Runze-Lin/operator_sim/blob/e99f2eb6e645de0e6e187379ba7f9d89d05d3297/scripts/fusion-v8-freeze.py)
 
 对模板 `j`、代表核 `c` 和集合 `S`，取
 
@@ -54,7 +54,7 @@ print(result.work["logical_read_bytes"], result.work["logical_write_bytes"])
 
 ### 每份时间模板用的是哪一次观测
 
-四份参考窗全部来自 950DT 的真实双 kernel 调用中的第一个 kernel。下面左列为 [T,D,F,E] 和各专家 token 数。ID 是指令数据库 SHA-256 的前 12 位。每个类型单独保留最后退休的核，每格是从全片零点到该代表核结束的 ticks。它们是同一段工作并发的三个视角，取最大预测窗；三个核窗不相加。
+四份参考窗全部来自 950DT 的真实双 kernel 调用中的第一个 kernel。下面左列为 [T,D,F,E] 和各专家 token 数。ID 是指令数据库 SHA-256 的前 12 位。每个类型单独保留最后退休的核，每格是从全片零点到该代表核结束的 cycles。它们是同一段工作并发的三个视角，取最大预测窗；三个核窗不相加。
 
 | shape / counts | 数据库 ID | 代表核窗（AIC、AIV 类型 2、类型 3） |
 |---|---|---:|
@@ -63,7 +63,7 @@ print(result.work["logical_read_bytes"], result.work["logical_write_bytes"])
 | [4,128,64,2] / [1,3] | `fcdcf6d69b84` | 12150、12135、11968 |
 | [6,128,128,2] / [1,5] | `b2fafc5ae696` | 12193、12178、12038 |
 
-第 1 份的 AIC 是 CoreTypeId=1、core_id=0。按起止事件扫描其指令数据库，仅保留 `ExecInstrIsDurationExcluded=0`。从全片最早指令开始，每遇到指令开始或结束便更新活跃队列计数；仅 SCALAR 和 MTE2 同时活跃的 1273 段总共 1639 ticks，最早三段为 [7814,7815)、[7815,7816)、[7816,7817)。因此归档的该项为 1639/1650=0.993333 µs。若第三个引擎同期活跃，归入三引擎的另一组。不同核在同一时段并行执行，统计时分别保留。形状归一化里的 16 行、128 列、K64 和向量 256 元素是模型的任务单位，缺少证据把这些数解读成该二进制的精确 tile；5 次有用 Vector 操作来自算术记账。投影给 PR 的倍率取芯片配置，四份 DT 模板对本例的预测再等权取中位。第 4 份在更早一轮命名为 holdout，自用于建模起属于开发证据。[含 shape 和数据库指纹的冻结模板](https://github.com/Runze-Lin/operator_sim/blob/e99f2eb6e645de0e6e187379ba7f9d89d05d3297/results/v0.8/fusion/model.json) · [按指令边界提取不重叠区间](https://github.com/Runze-Lin/operator_sim/blob/e99f2eb6e645de0e6e187379ba7f9d89d05d3297/scripts/fusion-v8-freeze.py)
+第 1 份的 AIC 是 CoreTypeId=1、core_id=0。按起止事件扫描其指令数据库，仅保留 `ExecInstrIsDurationExcluded=0`。从全片最早指令开始，每遇到指令开始或结束便更新活跃队列计数；仅 SCALAR 和 MTE2 同时活跃的 1273 段总共 1639 cycles，最早三段为 [7814,7815)、[7815,7816)、[7816,7817)。因此归档的该项为 1639/1650=0.993333 µs。若第三个引擎同期活跃，归入三引擎的另一组。不同核在同一时段并行执行，统计时分别保留。形状归一化里的 16 行、128 列、K64 和向量 256 元素是模型的任务单位，缺少证据把这些数解读成该二进制的精确 tile；5 次有用 Vector 操作来自算术记账。投影给 PR 的倍率取芯片配置，四份 DT 模板对本例的预测再等权取中位。第 4 份在更早一轮命名为 holdout，自用于建模起属于开发证据。[含 shape 和数据库指纹的冻结模板](https://github.com/Runze-Lin/operator_sim/blob/e99f2eb6e645de0e6e187379ba7f9d89d05d3297/results/v0.8/fusion/model.json) · [按指令边界提取不重叠区间](https://github.com/Runze-Lin/operator_sim/blob/e99f2eb6e645de0e6e187379ba7f9d89d05d3297/scripts/fusion-v8-freeze.py)
 
 ## 与完整 CA 核对
 

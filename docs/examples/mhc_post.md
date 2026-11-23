@@ -20,7 +20,7 @@ print(result.work["logical_read_bytes"], result.work["logical_write_bytes"])
 
 公开工作量统计为 Cube **0**、Vector **12,042,240** 个有用标量等效操作。逻辑读 **3,026,240 B**、写 **2,408,448 B**。片外实际流量取决于重用与缓存。
 
-行内切通道与 token 分核分开校准。连续通道段的参考相邻发起约 63 tick，数据交接约 26 tick。同核连续 token 上紧邻的下一行改用该分支的读/写返回与首次间隔。前一次使用过的核数是独立输入。 [参数及单位](../../src/operator_model/data/parameters/post_history.json)
+行内切通道与 token 分核分开校准。连续通道段的参考相邻发起约 63 cycles，数据交接约 26 cycles。同核连续 token 上紧邻的下一行改用该分支的读/写返回与首次间隔。前一次使用过的核数是独立输入。 [参数及单位](../../src/operator_model/data/parameters/post_history.json)
 
 下表取 950PR 的公开阶段分账。各段已处理模型可辨识的重叠，数值保留三位小数。
 
@@ -34,11 +34,11 @@ print(result.work["logical_read_bytes"], result.work["logical_write_bytes"])
 
 **哪一个核决定时间。** 本例 [T,N,D]=[196,4,1536] 满足 2T≥56，按 token 分核，每核 r=⌈196/56⌉=4 行，实际 a=⌈196/4⌉=49 个 AIV。对于本实现，UB 给系数留 320 B，每列的双缓冲及中间量共 52 B，可以连续处理 16⌊(253952−321)/(52×16)⌋=4864 列，本例每行只需一个分片。逻辑输入 I=2TD(N+1)+4TN(N+1)=3,026,240 B，输出 O=2TND=2,408,448 B，L2=117,440,512 B 足以暂留全部输出。共享下界 max(I/1400000,(I+O)/9240000)=2.1616 µs。后者是未给 L2 带宽时该实现按 100×56×1.65=9240 GB/s 的代理值。
 
-**一行的本地资源。** 四个读描述符依次是组合系数、门控系数、主输入、四路残差，字节量 B=(64,16,2D,8D)=(64,16,3072,12288)，写 8D=12288 B。每组 64 元素，g=24。令 s=(27/64)/(23/56)=1.027174；P=23000/(56×1.65)=248.918 FP32 ops/核/周期。每行有用运算下界 36D/P=222.15 周期，单行读服务 ΣB×18.39635/1024=277.38 周期，写服务 12288×16.01826/1024=192.219 周期。开发样本的“输入已就绪到可写”斜率为 31.775397 周期/组，得到 V=31.775397×24×s=783.333 周期。四种需求取最大值，得到最短可持续行间隔 783.333 周期。以下除以 1650 即 µs。
+**一行的本地资源。** 四个读描述符依次是组合系数、门控系数、主输入、四路残差，字节量 B=(64,16,2D,8D)=(64,16,3072,12288)，写 8D=12288 B。每组 64 元素，g=24。令 s=(27/64)/(23/56)=1.027174；P=23000/(56×1.65)=248.918 FP32 ops/核/cycle。每行有用运算下界 36D/P=222.15 cycles，单行读服务 ΣB×18.39635/1024=277.38 cycles，写服务 12288×16.01826/1024=192.219 cycles。开发样本的“输入已就绪到可写”斜率为 31.775397 cycles/组，得到 V=31.775397×24×s=783.333 cycles。四种需求取最大值，得到最短可持续行间隔 783.333 cycles。以下除以 1650 即 µs。
 
-**算出四行如何退休。** 设同一行的四个读发起相对时刻为 (0,d₁,d₁+d₂,d₁+d₂+d₃)，l 为四个描述符的固定响应。该行从首读到可以写的时间为 Q=maxⱼ(相对发起ⱼ+lⱼ+Bⱼ×18.39635/1024)+c+V，c 为数据齐备后的发起固定价。首行 Q₁ 与后续 Qₛ 分别取下面的真实阶段价格。所有系数是从同状态参考 CA 描述符的发起/退休和写发起拟合得到的周期，表格按两位小数显示。
+**算出四行如何退休。** 设同一行的四个读发起相对时刻为 (0,d₁,d₁+d₂,d₁+d₂+d₃)，l 为四个描述符的固定响应。该行从首读到可以写的时间为 Q=maxⱼ(相对发起ⱼ+lⱼ+Bⱼ×18.39635/1024)+c+V，c 为数据齐备后的发起固定价。首行 Q₁ 与后续 Qₛ 分别取下面的真实阶段价格。所有系数是从同状态参考 CA 描述符的发起/退休和写发起拟合得到的 cycles，表格按两位小数显示。
 
-| 状态与行类型 | 三个发起间隔 d | 四个固定响应 l | c | Q（周期） |
+| 状态与行类型 | 三个发起间隔 d | 四个固定响应 l | c | Q（cycles） |
 |---|---|---|---:|---:|
 | 首次，首行 | 154,253.5,49 | 689.85,541.71,610.40,671.81 | 123.72 | 2256.12 |
 | 首次，后续 | 54,123,49 | 198.85,173.21,633.50,593.52 | 125.93 | 1949.54 |
@@ -49,13 +49,13 @@ print(result.work["logical_read_bytes"], result.work["logical_write_bytes"])
 | 紧邻重复，首行 | 159.01,250,49 | 156.85,162.71,180.00,137.42 | 124.81 | 1724.32 |
 | 紧邻重复，后续 | 54,123,49 | 156.35,167.71,205.11,122.92 | 126.97 | 1479.99 |
 
-例如重复首行的第四个数据最晚到，需 159.01+250+49+137.42+12×18.39635=816.19 周期，再加 124.81+783.33，约为 1724.32。各状态按以下约束生成四行的首读 R₁…R₄ 及写发起 W₁…W₄：
+例如重复首行的第四个数据最晚到，需 159.01+250+49+137.42+12×18.39635=816.19 cycles，再加 124.81+783.33，约为 1724.32。各状态按以下约束生成四行的首读 R₁…R₄ 及写发起 W₁…W₄：
 
 - R₁=A log₂49+C，W₁=R₁+Q₁。A 是到达随活跃核数增长的系数，C 是到达后至首操作数的控制时间。
-- R₂=R₁+r₁，W₂=max(W₁+w₁,R₂+Qₛ)。R₄=R₂+2r，W₄=max(W₂+2w,R₄+Qₛ)。r₁/r 和 w₁/w 分别为首次、稳态读写间隔，至少要容纳上述 783.333 周期需求。历史标定还给出状态相关的发起间隔下界。例如首次调用 r₁=max(783.333,1436.23,50+783.333)=1436.23；非重复稳态 r=max(783.333,554.63,189.01+783.333)=972.35。其余曲线的最低值和截距保存在历史参数中。
+- R₂=R₁+r₁，W₂=max(W₁+w₁,R₂+Qₛ)。R₄=R₂+2r，W₄=max(W₂+2w,R₄+Qₛ)。r₁/r 和 w₁/w 分别为首次、稳态读写间隔，至少要容纳上述 783.333 cycles 需求。历史标定还给出状态相关的发起间隔下界。例如首次调用 r₁=max(783.333,1436.23,50+783.333)=1436.23；非重复稳态 r=max(783.333,554.63,189.01+783.333)=972.35。其余曲线的最低值和截距保存在历史参数中。
 - T=max(共享下界,(W₄+写固定响应+192.219+设备退休)/1650)。表内圆整值可复算整窗，参数文件保留全精度。
 
-| 前序 | A / C | r₁ / r | w₁ / w | 写固定响应 / 设备退休 | W₄（周期） | 整窗（µs） |
+| 前序 | A / C | r₁ / r | w₁ / w | 写固定响应 / 设备退休 | W₄（cycles） | 整窗（µs） |
 |---|---:|---:|---:|---:|---:|---:|
 | 首次 | 97.12 / 3024.00 | 1436.23 / 972.35 | 1083.71 / 895.19 | 305.95 / 10 | 8899.78 | 5.70178 |
 | 已驻留，前序按通道 | 119.17 / 1636.50 | 1663.31 / 972.35 | 1346.98 / 895.19 | 274.94 / 7 | 7841.54 | 5.03981 |
@@ -71,11 +71,11 @@ print(result.work["logical_read_bytes"], result.work["logical_write_bytes"])
 
 **实现、规格、估算。** token/通道两种分块、输入四个描述符大小及输出 8D 字节是实现工作量。频率、核数及算力来自芯片配置。L2 带宽代理、用 L/H 调和中心代表未知前序，以及目标沿用参考局部端口均为假设。六种前序由两种不同类型的阶段记录支持。
 
-**五种有行级时序的前序。** 旧 DT/PR 开发窗口共 31 个：first 6、expand 4、reuse 16、repeat 5。在每个末完成核的 DMA 序列中先排除 96 B tiling，再将四笔 64/16/2D/8D 读与下一笔 8D 写配成一行。以 y=(写发起−四读最晚退休)×本地周期/µs 为目标，x=⌈D/64⌉×单核 Vector 时间倍率，按历史和首行/后续行设不同固定项，共用非负斜率。重拟这 31 窗得到 31.77539716 周期/组。按同组取读描述符“持续周期−字节×18.39635/1024”的中位数作为固定响应；相邻发起差分三项取中位数。写用最后一行的持续时间减字节服务，退出取全窗退休减最后一行写退休。[保留的末核 DMA 序列](https://github.com/Runze-Lin/operator_sim/blob/2059edce197af60ddee6cfbc7c78d40c715ed76f/results/post-candidate/phase-evidence.json) · [目标列、回归及状态中位数](https://github.com/Runze-Lin/operator_sim/blob/2059edce197af60ddee6cfbc7c78d40c715ed76f/development/validation/post25/calibrate.py) · [冻结参数](https://github.com/Runze-Lin/operator_sim/blob/2059edce197af60ddee6cfbc7c78d40c715ed76f/results/v0.25/post/prices.json)
+**五种有行级时序的前序。** 旧 DT/PR 开发窗口共 31 个：first 6、expand 4、reuse 16、repeat 5。在每个末完成核的 DMA 序列中先排除 96 B tiling，再将四笔 64/16/2D/8D 读与下一笔 8D 写配成一行。以 y=(写发起−四读最晚退休)×本地 cycles/µs 为目标，x=⌈D/64⌉×单核 Vector 时间倍率，按历史和首行/后续行设不同固定项，共用非负斜率。重拟这 31 窗得到 31.77539716 cycles/组。按同组取读描述符“持续时长−字节×18.39635/1024”的中位数作为固定响应；相邻发起差分三项取中位数。写用最后一行的持续时间减字节服务，退出取全窗退休减最后一行写退休。[保留的末核 DMA 序列](https://github.com/Runze-Lin/operator_sim/blob/2059edce197af60ddee6cfbc7c78d40c715ed76f/results/post-candidate/phase-evidence.json) · [目标列、回归及状态中位数](https://github.com/Runze-Lin/operator_sim/blob/2059edce197af60ddee6cfbc7c78d40c715ed76f/development/validation/post25/calibrate.py) · [冻结参数](https://github.com/Runze-Lin/operator_sim/blob/2059edce197af60ddee6cfbc7c78d40c715ed76f/results/v0.25/post/prices.json)
 
-**从旧窗核对两个参数。** PR [69,4,640] 的重复调用，首行 64、16、1280、5120 B 四读的发起间隔约 0.09757614、0.15151405、0.02969742 µs（即约 161、250、49 周期）。首个 64 B 读贡献的固定响应样本为 0.113939397×1650−64×18.39635/1024=186.85 周期；五个重复调用按首行分组的中位数为 156.85。该 PR 窗退出 0.00606103×1650≈10.001 周期。全部重复调用的中位退出样本为 DT [257,4,832]，读得 10.000149 周期，对应发布表的 10。这次重算的行级参数和发布文件相符。[DT 顺序调用的逐次收据](https://github.com/Runze-Lin/operator_sim/blob/2059edce197af60ddee6cfbc7c78d40c715ed76f/results/v0.24/post/receipts/rows-Ascend950DT_9582.json) · [PR 顺序调用的逐次收据](https://github.com/Runze-Lin/operator_sim/blob/2059edce197af60ddee6cfbc7c78d40c715ed76f/results/v0.24/post/receipts/rows-Ascend950PR_957b.json)
+**从旧窗核对两个参数。** PR [69,4,640] 的重复调用，首行 64、16、1280、5120 B 四读的发起间隔约 0.09757614、0.15151405、0.02969742 µs（即约 161、250、49 cycles）。首个 64 B 读贡献的固定响应样本为 0.113939397×1650−64×18.39635/1024=186.85 cycles；五个重复调用按首行分组的中位数为 156.85。该 PR 窗退出 0.00606103×1650≈10.001 cycles。全部重复调用的中位退出样本为 DT [257,4,832]，读得 10.000149 cycles，对应发布表的 10。这次重算的行级参数和发布文件相符。[DT 顺序调用的逐次收据](https://github.com/Runze-Lin/operator_sim/blob/2059edce197af60ddee6cfbc7c78d40c715ed76f/results/v0.24/post/receipts/rows-Ascend950DT_9582.json) · [PR 顺序调用的逐次收据](https://github.com/Runze-Lin/operator_sim/blob/2059edce197af60ddee6cfbc7c78d40c715ed76f/results/v0.24/post/receipts/rows-Ascend950PR_957b.json)
 
-**前序细分和第六种回退。** 进一步按前一核的 token/通道路由分组。“到达至首操作数”的观测周期取各组中位数，至少两次不同进程才启用。以同核相邻行读/写发起差为 y，用 max(最小间隔,向量工作+固定尾项) 估计形状曲线，非负 soft-L1 转折尺度 70 周期。首到次的间隔依前序分别拟合，普通后续行有共用曲线。第六种“扩核、前序按通道”缺合格的细粒度前序分组，回到已冻结的 DT 互斥阶段截距和各工作单位斜率。只有该 fallback 的阶段级时间可解释。[前序分类和间隔拟合](https://github.com/Runze-Lin/operator_sim/blob/2059edce197af60ddee6cfbc7c78d40c715ed76f/development/validation/post27/issue.py) · [分组估值与样本数](https://github.com/Runze-Lin/operator_sim/blob/2059edce197af60ddee6cfbc7c78d40c715ed76f/results/v0.27/post/parameters.json) · [独占阶段回退的参数](https://github.com/Runze-Lin/operator_sim/blob/2059edce197af60ddee6cfbc7c78d40c715ed76f/results/v0.12/post/profile.json) · [回退口径与估价规则](https://github.com/Runze-Lin/operator_sim/blob/2059edce197af60ddee6cfbc7c78d40c715ed76f/results/v0.12/post/method.md)
+**前序细分和第六种回退。** 进一步按前一核的 token/通道路由分组。“到达至首操作数”的观测 cycles 取各组中位数，至少两次不同进程才启用。以同核相邻行读/写发起差为 y，用 max(最小间隔,向量工作+固定尾项) 估计形状曲线，非负 soft-L1 转折尺度 70 cycles。首到次的间隔依前序分别拟合，普通后续行有共用曲线。第六种“扩核、前序按通道”缺合格的细粒度前序分组，回到已冻结的 DT 互斥阶段截距和各工作单位斜率。只有该 fallback 的阶段级时间可解释。[前序分类和间隔拟合](https://github.com/Runze-Lin/operator_sim/blob/2059edce197af60ddee6cfbc7c78d40c715ed76f/development/validation/post27/issue.py) · [分组估值与样本数](https://github.com/Runze-Lin/operator_sim/blob/2059edce197af60ddee6cfbc7c78d40c715ed76f/results/v0.27/post/parameters.json) · [独占阶段回退的参数](https://github.com/Runze-Lin/operator_sim/blob/2059edce197af60ddee6cfbc7c78d40c715ed76f/results/v0.12/post/profile.json) · [回退口径与估价规则](https://github.com/Runze-Lin/operator_sim/blob/2059edce197af60ddee6cfbc7c78d40c715ed76f/results/v0.12/post/method.md)
 
 ## 与完整 CA 核对
 

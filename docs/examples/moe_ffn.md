@@ -47,7 +47,7 @@ GMM2 依赖 GMM1 的量化结果，故设备工作之和为 **13.66582 µs**。�
 
 ### 串行组合是否还需要拟合一个开销
 
-组合器的两个权数都是 1，来自数据依赖。早期的 950DT 开发几何 [2,64,64,1]、[2,64,128,1]、[4,128,64,2]、[6,128,128,2] 各含两份独立的 kernel 指令数据库。按顺序取各 stage 的最后退休代表核，对同一 kernel 的重叠只算一次。以第一种形状（1 个专家，2 个 token）为例，GMM1 的三类核结束于 11558、11382、11112 ticks，得到 11558/1650=7.00485 µs；GMM2 的末核为 5359 ticks，即 3.24788 µs。按两窗和的统一口径，实测设备工作为 (11558+5359)/1650=10.25273 µs。两份数据库的指纹分别以 `13cae4827228`、`5d807ce297ef` 开头。其余三对样本同样分别进入两个组件的模板训练。跨 kernel 数据必须先写后读，接口默认的 host gap 为零；这些各自归零的 CA 窗无法校准真实应用中相邻 kernel 之间的 host 间隔。前文 PR 输出用各组件先完成资源重定价与中位聚合的窗，最后相加。[含 shape 和数据库指纹的冻结模板](https://github.com/Runze-Lin/operator_sim/blob/e99f2eb6e645de0e6e187379ba7f9d89d05d3297/results/v0.8/fusion/model.json) · [按指令边界提取不重叠区间](https://github.com/Runze-Lin/operator_sim/blob/e99f2eb6e645de0e6e187379ba7f9d89d05d3297/scripts/fusion-v8-freeze.py)
+组合器的两个权数都是 1，来自数据依赖。早期的 950DT 开发几何 [2,64,64,1]、[2,64,128,1]、[4,128,64,2]、[6,128,128,2] 各含两份独立的 kernel 指令数据库。按顺序取各 stage 的最后退休代表核，对同一 kernel 的重叠只算一次。以第一种形状（1 个专家，2 个 token）为例，GMM1 的三类核结束于 11558、11382、11112 cycles，得到 11558/1650=7.00485 µs；GMM2 的末核为 5359 cycles，即 3.24788 µs。按两窗和的统一口径，实测设备工作为 (11558+5359)/1650=10.25273 µs。两份数据库的指纹分别以 `13cae4827228`、`5d807ce297ef` 开头。其余三对样本同样分别进入两个组件的模板训练。跨 kernel 数据必须先写后读，接口默认的 host gap 为零；这些各自归零的 CA 窗无法校准真实应用中相邻 kernel 之间的 host 间隔。前文 PR 输出用各组件先完成资源重定价与中位聚合的窗，最后相加。[含 shape 和数据库指纹的冻结模板](https://github.com/Runze-Lin/operator_sim/blob/e99f2eb6e645de0e6e187379ba7f9d89d05d3297/results/v0.8/fusion/model.json) · [按指令边界提取不重叠区间](https://github.com/Runze-Lin/operator_sim/blob/e99f2eb6e645de0e6e187379ba7f9d89d05d3297/scripts/fusion-v8-freeze.py)
 
 ## 与完整 CA 核对
 

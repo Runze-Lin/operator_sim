@@ -76,7 +76,7 @@ print(result.work["logical_read_bytes"], result.work["logical_write_bytes"])
 
 ## CA 标定样本与参数复算
 
-三个 DT 开发窗均为单 batch、单头、128×128 状态、FP32 预激活 gate，最后完成核均为 `CoreTypeId=2, ExecInstrCoreId=0`。S=1、2、4 时绝对首/末 tick 分别为 5605/30717、5959/36430、6045/48004，DB SHA-256 前缀分别为 `358db35f9382`、`8d4a34f54870`、`93bf1b2864ae`。例如 S=1 的互斥区间总和为 `(30717−5605)/1650=15.219394 µs`。按 `ExecInstrIsDurationExcluded=0` 的指令区间划分队列占用，空闲和未分类时间归 other；arrival 另取临界核相对全核的到达偏移。
+三个 DT 开发窗均为单 batch、单头、128×128 状态、FP32 预激活 gate，最后完成核均为 `CoreTypeId=2, ExecInstrCoreId=0`。S=1、2、4 时绝对首/末 cycles 分别为 5605/30717、5959/36430、6045/48004，DB SHA-256 前缀分别为 `358db35f9382`、`8d4a34f54870`、`93bf1b2864ae`。例如 S=1 的互斥区间总和为 `(30717−5605)/1650=15.219394 µs`。按 `ExecInstrIsDurationExcluded=0` 的指令区间划分队列占用，空闲和未分类时间归 other；arrival 另取临界核相对全核的到达偏移。
 
 每行以上表的三个时长作 y，取 `x=[1,2,4]` 拟合非负截距与斜率。例如 MTE2 的 `x̄=7/3`、`ȳ=(1.5278788+1.3363636+1.5624242)/3=1.475556`，中心化乘积和除以横轴离差平方和 `14/3` 得 `b=0.0260173`，`a=ȳ−b×7/3=1.414848` µs。三个窗本身均无 arrival 偏移。PR 倍率来自芯片规格和上节的逻辑流量假设。档案 `v0.8/vector/profile.json → kda_recurrent.source` 保存源 DB 摘要和各阶段值。[阶段价格](../../src/operator_model/data/parameters/vector_instructions.json) · [逐窗索引](../../calibration/reference/windows.jsonl) [S=1、2、4 的分阶段观测](https://github.com/Runze-Lin/operator_sim/blob/2059edce197af60ddee6cfbc7c78d40c715ed76f/results/v0.8/vector/profile.json) · [关键核分账和拟合代码](https://github.com/Runze-Lin/operator_sim/blob/2059edce197af60ddee6cfbc7c78d40c715ed76f/scripts/vector-v8-freeze.py)
 

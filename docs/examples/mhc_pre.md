@@ -49,7 +49,7 @@ Traffic 的 416 KiB 是权重与输入工作特征，另用全输入输出字节
 
 校准取 950DT 拆分 mHC 调用中的第一个 kernel（Pre），与本页独立 Pre 的六输出合同一致。按每个 core type 选最晚退休核，再取其中整窗最长者；将共同原点到最后指令的时间片按 Cube、SIMD、搬运、其余控制的优先级唯一归属。以下 11 个窗口均为 N=4 的 MK 路线。核以数据库的 CoreTypeId/CoreId 标识。
 
-| T,D | 核 | 共同原点→末 tick | Cube / Vector / 搬运 / 控制（周期） | 计算块 / 向量片 / 输入KiB / 控制块 |
+| T,D | 核 | 共同原点→末 cycles | Cube / Vector / 搬运 / 控制（cycles） | 计算块 / 向量片 / 输入KiB / 控制块 |
 | --- | --- | --- | --- | --- |
 | (1, 128) | 2/0 | 5676→19005 | 0 / 1800 / 4262 / 7267 | 8 / 1 / 49 / 1 |
 | (8, 128) | 3/0 | 5649→19271 | 0 / 1603 / 4637 / 7382 | 8 / 1 / 56 / 1 |
@@ -63,7 +63,7 @@ Traffic 的 416 KiB 是权重与输入工作特征，另用全输入输出字节
 | (16, 512) | 3/2 | 5286→20772 | 0 / 1900 / 4524 / 9062 | 8 / 2 / 256 / 1 |
 | (32, 1024) | 3/4 | 5626→24384 | 0 / 1593 / 6927 / 10238 | 16 / 4 / 640 / 2 |
 
-每段取该资源的工作单位作 x、互斥 tick/1650 作 y。11 个窗的独占 Cube 均为 0。Vector 原始斜率为 −0.002660 µs/片，按非负约束取 0，截距为时长平均 0.998017 µs。Traffic 均点是 (212.54545 KiB,2.805399 µs)，中心化求斜率 `Σ[(x−x̄)(y−ȳ)]/Σ(x−x̄)²=0.002311555` µs/KiB，截距 `2.805399−212.54545×0.002311555=2.314089` µs。Control 以 1 或 2 个 M 块为横轴，同理得斜率 1.252606 µs/块，截距 `5.066116−1.090909×1.252606=3.699636` µs。PR 的 1.02189 只作用在流量斜率项，由前文的逻辑字节压力和两芯片 HBM 峰值给出。原 DB 摘要列在 `v0.9/mhc/freeze.json → training_db.pre_mk`，上表已列出复算所需的全部点。[MK 价格](../../src/operator_model/data/parameters/mhc_partition.json) · [分块实现](../../src/operator_model/operators/mhc/pre_dispatch.py) [拆分 mHC 的分支与训练库指纹](https://github.com/Runze-Lin/operator_sim/blob/2059edce197af60ddee6cfbc7c78d40c715ed76f/results/v0.9/mhc/freeze.json) · [分支的训练程序](https://github.com/Runze-Lin/operator_sim/blob/2059edce197af60ddee6cfbc7c78d40c715ed76f/scripts/mhc-v9-freeze.py)
+每段取该资源的工作单位作 x、互斥 cycles/1650 作 y。11 个窗的独占 Cube 均为 0。Vector 原始斜率为 −0.002660 µs/片，按非负约束取 0，截距为时长平均 0.998017 µs。Traffic 均点是 (212.54545 KiB,2.805399 µs)，中心化求斜率 `Σ[(x−x̄)(y−ȳ)]/Σ(x−x̄)²=0.002311555` µs/KiB，截距 `2.805399−212.54545×0.002311555=2.314089` µs。Control 以 1 或 2 个 M 块为横轴，同理得斜率 1.252606 µs/块，截距 `5.066116−1.090909×1.252606=3.699636` µs。PR 的 1.02189 只作用在流量斜率项，由前文的逻辑字节压力和两芯片 HBM 峰值给出。原 DB 摘要列在 `v0.9/mhc/freeze.json → training_db.pre_mk`，上表已列出复算所需的全部点。[MK 价格](../../src/operator_model/data/parameters/mhc_partition.json) · [分块实现](../../src/operator_model/operators/mhc/pre_dispatch.py) [拆分 mHC 的分支与训练库指纹](https://github.com/Runze-Lin/operator_sim/blob/2059edce197af60ddee6cfbc7c78d40c715ed76f/results/v0.9/mhc/freeze.json) · [分支的训练程序](https://github.com/Runze-Lin/operator_sim/blob/2059edce197af60ddee6cfbc7c78d40c715ed76f/scripts/mhc-v9-freeze.py)
 
 ## 与完整 CA 核对
 
