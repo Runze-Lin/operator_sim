@@ -1,0 +1,78 @@
+--- a/operator-performance-models/src/operator_performance_models/backends.py
++++ b/operator-performance-models/src/operator_performance_models/backends.py
+@@ -16,6 +16,19 @@
+         from operator_performance_models.models.roofline.base._defaults import build_backend
+
+         return build_backend(utilization_csv=utilization_csv)
++    if name == "operator_sim":
++        if utilization_csv is not None:
++            raise ValueError("operator_sim does not consume the roofline utilization CSV")
++        from importlib import import_module
++        from typing import cast
++
++        try:
++            plugin = import_module("operator_model.sim_backend")
++        except ModuleNotFoundError as exc:
++            if exc.name not in {"operator_model", "operator_model.sim_backend"}:
++                raise
++            raise ImportError("Install ascend-operator-model with sim-workspace support") from exc
++        return cast(Backend, plugin.OperatorSimBackend())
+     if name == "communication_v1":
+         if utilization_csv is not None:
+             raise ValueError("communication_v1 does not consume the roofline utilization CSV")
+--- a/operator-performance-models/src/operator_performance_models/details.py
++++ b/operator-performance-models/src/operator_performance_models/details.py
+@@ -13,11 +13,11 @@
+     cube_flops: int
+     read_bytes: int
+     write_bytes: int
+-    cube_us: float
+-    memory_us: float
+-    overhead_us: float
+-    cube_ratio: float
+-    hbm_ratio: float
++    cube_us: float | None
++    memory_us: float | None
++    overhead_us: float | None
++    cube_ratio: float | None
++    hbm_ratio: float | None
+     cube_peak_flops_per_second: float | None
+     cube_effective_flops_per_second: float | None
+     hbm_peak_bytes_per_second: float
+@@ -32,7 +32,7 @@
+     grouping_source: str | None = None
+     group_axis: str | None = None
+     vec_flops: float = 0.0
+-    vec_us: float = 0.0
++    vec_us: float | None = 0.0
+     model_parameters: ModelParameters = ()
+     cube_compute_dtype: str | None = None
+     hardware_name: str | None = None
+--- a/operator-performance-models/src/operator_performance_models/result.py
++++ b/operator-performance-models/src/operator_performance_models/result.py
+@@ -187,7 +187,8 @@
+         )
+     elif details.cube_compute_dtype is not None:
+         cube_flops = {details.cube_compute_dtype: details.cube_flops}
+-        cube_time = {details.cube_compute_dtype: details.cube_us}
++        if details.cube_us is not None:
++            cube_time = {details.cube_compute_dtype: details.cube_us}
+     elif details.cube_peak_flops_per_second == 0:
+         cube_flops, cube_time = {}, {}
+
+--- a/sim-platform/src/sim_platform/backend/prediction.py
++++ b/sim-platform/src/sim_platform/backend/prediction.py
+@@ -354,6 +354,13 @@
+         raise ValueError("Prediction compute_bits must be a positive integer or None")
+     for name in ("cube_us", "memory_us", "overhead_us", "vec_flops", "vec_us"):
+         value = getattr(details, name)
++        if (
++            value is None
++            and details.schema_version == "resource-schedule-v1"
++            and name != "vec_flops"
++        ):
++            # A complete device schedule can have unknown per-engine busy windows.
++            continue
+         if (
+             isinstance(value, bool)
+             or not isinstance(value, (int, float))

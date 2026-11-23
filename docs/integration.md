@@ -2,6 +2,8 @@
 
 在系统分析框架中，每个待调度的计算节点提供一张卡上的实际输入。算子耗时包括模型覆盖的设备流水和核间尾部，系统层负责宿主发起、通信、跨卡同步和跨流资源争用。原先给 Roofline 传全局张量的接入点，需要先应用 TP/EP 分片、batch 打包和 chunk 调度。
 
+SIMPlatform 通过任务的 `prediction.backends` 选择精细模型和原 Roofline 的优先顺序。适配器直接读取捕获图给出的本卡张量。[SIMPlatform 接入及端到端对比](sim-platform.md)
+
 ## 一次查询
 
 ```python
