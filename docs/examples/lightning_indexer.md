@@ -26,6 +26,8 @@ print(result.work["logical_read_bytes"], result.work["logical_write_bytes"])
 
 参考首次 MMAD 为 4587 tick，页到页的读发起间隔为 416 tick，score 到 histogram 接力为 1160 tick，三者分别由首次、稳态和交接事件得到。目标若有已知 MTE2 带宽，用每页 32768 B 的实际端口服务与补齐乘加服务重新比较。 [参数及单位](../../src/operator_model/data/parameters/indexer.json)
 
+**从张量到账面工作。** 稀疏掩码在 $Q=1$ 时保留全部 $P=8192$ 对。每对有 $G=8$ 次 ReLU 比较、8 次乘权重和 $G-1=7$ 次加法，Vector 有用工作 $P(2G+G-1)=188416$，数据相关的 top-k 比较次数未计入。逻辑读 $2(QGD+LD+QG)=2(1024+1048576+8)=2099216$ B，逻辑写 $4Q×512=2048$ B。物理 Cube 运算以 16 行对齐，单页发出的 $2×16×128×128$ ops 是有用工作的两倍。最多四个 query 分一组，由一个 AIC 和最多两个排序 AIV 协作；本例一个排序 AIV 有有效行。每核 BF16 的 8181.818 ops/周期来自 $432×1000/(32×1.65)$，DT 每核 FP32 的 255.682 来自 $27×1000/(64×1.65)$。
+
 下表取 950DT 的公开阶段分账。各段已处理模型可辨识的重叠，数值保留三位小数。
 
 | 阶段字段 | 暴露时间 µs |
@@ -53,6 +55,8 @@ print(result.work["logical_read_bytes"], result.work["logical_write_bytes"])
 合计 **(4587+26208+130.96+1160+4001)/1650=21.87088 µs**；HBM 下界约 0.525 µs 已被流水覆盖。页间隔包含高速本地读取与发起节奏，端口明确时以目标服务率重算；首发、尾部和 histogram 响应来自 950DT 分段 CA。超过 8192 key 时需要在同一行重复扫描，目前按行间交接作代理。
 
 [键页与 histogram 计数](../../src/operator_model/operators/attention/indexer.py) · [页和扫描边界价格](../../src/operator_model/data/parameters/indexer.json)
+
+**把观测换成周期价。** 采用 DT 的 $(Q,L)=(1,1024),(1,8192),(4,1024),(4,4096)$ 四窗。首发取第一次 MMAD 相对整窗起点的中位数 $\mathrm{med}(4608,4566,4490,4679)=4587$；末 MMAD 到首 histogram 发起的中位数为 $\mathrm{med}(1236,931,1214,1106)=1160$。416 是在三页循环缓冲的稳态范围取 $\mathrm{med}[(t_{i+3}-t_i)/3]$ 得到的每页发起周期；66.88053 是各窗 MMAD 时长中位数扣除对应 $2MNK/r_{cube}$ 后再跨窗取中位数的响应周期。每个 256-key 块对应 8 条 histogram 指令，$8192/256×8=256$。单行 4 块和 32 块的 histogram 首发至末次退休跨度为 735、2100 周期，故拟合斜率 $(2100-735)/(32-4)=48.75$、截距 $735-4×48.75=540$；末次 histogram 到整窗结束为 794、1901 周期，同理得斜率 39.5357、截距 635.857。这些是算子库路径的有效价格。DT 配置无独立 MTE2/L2 带宽，页间隔使用 416，L2 带宽下界不激活；2 MiB 的 key 可容入 128 MiB L2，冷流量下界 $(2099216+2048)/(4000×1000)=0.525316$ µs。[分组与资源下界实现](../../src/operator_model/operators/attention/indexer.py)
 
 ## 与完整 CA 核对
 

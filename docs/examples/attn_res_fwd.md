@@ -22,6 +22,10 @@ print(result.work["logical_read_bytes"], result.work["logical_write_bytes"])
 
 校准把读权重和计算得分时段展开成固定项加 64 通道向量组项。例如 bank_scores 的参考价格为 918.05 tick 加每组 5.84 tick。本例的 resident 路线使用下文按归一化组数和混合组数分别计价的 weighted_norm_write。有效残差数和输出合同决定参与各段的组数。 [参数及单位](../../src/operator_model/data/parameters/attention_residual.json)
 
+**逐项核算。** 一行 BF16 占 $R=2D=8192$ B。PR 有 56 个 AIV，启动 $A=\min(T,56)=2$ 个，忙核轮数 $\lceil T/A\rceil=1$。按实现预留固定工作区和 prefix 行，UB 可驻留的行数为 $\lfloor(253952-22D-32768)/(2D+4)\rfloor=15$，本例需 $N+1=2$ 行，选择 key 40020。读去重后为 $R[2(1+1+1)+(2+1)]=73728$ B，括号内依次是两行 prefix、addend、有效 bank 及共享的两行评分权重和一行归一化权重。DMA 量按发起核展开为 $R[2(1+1)+2+2A+2]=98304$ B。每 token 写输出、更新 prefix、写 bank、另存 materialized 张量各一行，$4TR=65536$ B。
+
+四行参与点积（$T(N+1)=4$），连同输出共有六行做 RMS。FP32 基本操作依次为 RMS $6(2D+1)$、归一化点积 $4(3D-1)$、加权累加 $4(2D)$、softmax 的比较/移位/求和 $2(3×2-2)$ 及缩放 $2×2$、输出归一化 $2DT$、按核处理权重 $AD$，合计 155662。再计入 $TD=8192$ 次 BF16 加、4 次 exp、6 次 rsqrt、2 次倒数，得到 163866。[工作量与 UB 判定](../../src/operator_model/operators/attention/residual_work.py)
+
 下表取 950PR 的公开阶段分账。各段已处理模型可辨识的重叠，数值保留三位小数。
 
 | 阶段字段 | 暴露时间 µs |
@@ -49,6 +53,8 @@ print(result.work["logical_read_bytes"], result.work["logical_write_bytes"])
 全片冷输入公共带宽下界为 0.053 µs；额外暴露 max(0,下界−上述阶段之和)=0。逐段得到 2.744+1.436+1.070+0.892+2.502 ≈ **8.643 µs**，保留全精度求和。write_idx/materialize 的改动影响写回和调度分支。
 
 [resident 阶段公式](../../src/operator_model/operators/attention/residual_timing.py) · [打分与写回价格](../../src/operator_model/data/parameters/attention_residual.json)
+
+**价格怎样取得。** 64 来自一个 256 B 向量寄存器容纳的 64 个 FP32。DT 每核峰值为 $27×1000/(64×1.65)=255.682$ ops/周期，PR 为 $23×1000/(56×1.65)=248.918$，所以只对向量块乘 $s=1.027174$。两端本例未配置 MTE2 端口带宽，使用 DT 已校准的 $r=48.362956$ B/周期。首发、评分、前缀、bank 的界标依次是全核起点、首个权重读、前缀读、首个 bank 读和 gamma 读发起。用相邻发起差减去对应的 $n_{read}R/r$，再以每重复的向量块数作横轴求斜率和固定项。例如 DT 的 $D=256,N=1$ 与 $D=7168,N=2$ 两次评分窗口分别为 1785、2822 周期；取 $x=\lceil D/64\rceil=4,112$，扣除两行 BF16 的读取后，$y=1785-1024/r,\;2822-28672/r$，斜率 $(y_2-y_1)/(112-4)=4.30855$，截距 $y_1-4×4.30855=1746.59$。前缀窗口为 1281、2144 周期，横轴和两次读同上；bank 窗口为 952、3737 周期，每个样本先除以 N 再扣除一行读。较宽样本只提供已发起的 DMA 边界间隔。最后一段在当前实现中单独拆成固定、一次归一化和随混合深度增长的三项，上表使用实现中的三个有效系数；发布参数 JSON 还保留旧的单斜率尾段。公开资料能复算当前尾段的结果，未提供这三个系数各自独立的一组回归观测。共享带宽项本例取去重输入 $73728/(1400×1000)=0.05266$ µs。
 
 ## 与完整 CA 核对
 

@@ -117,7 +117,20 @@ $$R=M\lceil Kb_A/8\rceil+N\lceil K/2\rceil+(M+N)\,2\lceil K/64\rceil.$$
 
 ### 注意力与状态递推
 
-**稠密 FA** 的轴为 [Q,L,D,B,H]，依次为查询长度、KV 长度、头维、batch 和本地头数。QK 与 PV 各算 2BHQLD 次操作。按 batch、head 和 query 行块分 AIC，同一任务遍历 L。q、n 是一页的有效查询行和 KV 长度，Cube 阶段按 2·pad(q,16)·pad(n,16)·pad(D,16) 及片段发起成本计价。对每页分开计算 K/V 首响应、QK 完成、softmax 就绪和 PV 完成，稳态 II 取 Cube、Vector、MTE1、K/V 搬运、FIXP、控制发起需求的最大值。尾页只计真实长度和相应对齐。本路线为 BF16 稠密非因果 SBH、D=64/128。压缩稀疏注意力和分页 KV 是其他合同。[FA 算例](examples/fa.md)
+**稠密 FA** 的轴为 [Q,L,D,B,H]，依次为查询长度、KV 长度、头维、batch 和本地头数。QK 与 PV 各算 $2BHQLD$ 次有效操作。按 batch、head 和 query 行块分 AIC，同一任务遍历 KV 页。本路线覆盖 BF16 稠密非因果 SBH、D=64/128。
+
+一页有 $m$ 行 query、$n$ 个 KV、头维 $d$。记 $\hat x=16\lceil x/16\rceil$，每种矩阵乘工作 $F=2\hat m\hat n\hat d$，每种乘法的指令片段数 $u=\lceil n/128\rceil$。设最忙 AIV 处理 $r$ 行，$P_C,P_V$ 分别为每 AIC 的 Cube op/周期与每 AIV 的 Vector 等价 op/周期，$R,R_1,R_F$ 分别为读、片上装载、结果搬出的有效 B/周期。六项周期需求为
+
+| 资源 | 每页周期 | 物理或观测口径 |
+|---|---|---|
+| Cube | $2F/P_C+u(h_Q+h_P)$ | 两次矩阵乘共享 Cube。$h_Q,h_P$ 是每个 QK、PV 片段在理想运算之外的实测残余周期。 |
+| Vector | $(5rn+3rd)/P_V$ | 繁忙 AIV 的 score 处理与输出更新，按两类工作的等价单位计价。 |
+| K/V 读 | $4nd/R$ | 两个 $n×d$ 的 BF16 张量。Q 在首轮单独搬入。 |
+| MTE1 | $2[2\hat n d+\hat m(d+\hat n)]/R_1$ | 两次乘法各自要装载两个操作数，使用片上布局字节。 |
+| FIX | $4\hat m(\hat n+d)/R_F$ | 两个 FP32 中间结果，由各自输出矩形得到字节量。 |
+| 发起控制 | $Ju/2$ | $J$ 是开发 trace 的 256 位置双片段持续发起间隔，由 K、V 页首发时刻随页号的斜率得到。 |
+
+同一资源内的工作相加，可以并发的资源取最大，给出页启动间隔 $I$。首张页分别等 Q/K 就绪、QK 与 softmax 完成、V 到达，再启动 PV。首轮后只增加后续页的间隔，最后单计向量更新和写回。950PR 的 [9,131072,64,1,1] 有 512 张满页，六项中发起控制给出 853.405 周期/页，511 次续发占 264.297 µs。逐项代入、工作来源、吞吐价格的提取与最后的全窗核对见[FA 算例](examples/fa.md#一页里有多少工作)。
 
 **LightningIndexer** 输入 [B,Q,L,G,D]，G 为索引头数、D 为头维。每个有效 query–key 对做 G 次点积、ReLU 和 head 加权归约，再从整行分数取 top-k。设 P 为 mask 后合法配对数，则有用 Cube 工作为 2PGD。单波稠密 BF16 路线每四 query 组成一组，每页 128 个 key，首先按实际可见 key 数算页数。页发起间隔取目标读端口和补齐后的 MMAD 服务两者较大者。组内向量排序一片最多 8192 个 key，另有 Cube→Vector 交接和末笔输出。多组可能共享缓存中的 K。多波与不同布局的证据另计。[Indexer 算例](examples/lightning_indexer.md)
 
@@ -153,10 +166,11 @@ T 为本次 token 数，N 为残差流数，D 为每流宽度，I 为 Sinkhorn �
 
 ### 如何复算例页里的微秒数
 
-每页的“本例各阶段怎样定价”可与同页的 `estimate` 调用对照。先核对芯片、输入输出 dtype、shape 和实现属性，再按下面的预算类型解读阶段字段。同一算子家族的不同合同可能采用不同方法。
+读算例时可沿一个中间量往回查。先看模型把 shape 切成多少任务、哪一核或哪一页决定完成时间。然后在该核上计算工作量 $W$（字节、补齐后的运算或发起次数），找与单位匹配的价格：若是吞吐 $R$，周期为 $W/R$；若是每次发起的价格 $c$，周期为 $Wc$。芯片配置给出的峰值、trace 测出的有效速度、从阶段时刻扣除已知服务后得到的残差，物理含义各不相同。最后依照依赖取和或最大，将暴露在关键路径上的周期除以 $1000f_{\rm GHz}$ 转成 µs。对直接以 µs 拟合的阶段保留其原有单位。下面的算例按实际使用的预算方法分组。
 
 | 预算类型 | 在算例里复算什么 | 算子 |
 |---|---|---|
+| 精度改变的块、页和交接 | 从打包张量与 scale 算每页进出字节、解包和 MMAD 服务。按缓冲槽可复用时刻、每核有效尾块和末次退休计算重叠。 | [A4W4 与 A8W4 单页对照](examples/mxfp4-design.md) · [A8W4 多 K 页](examples/mx-handoff.md) · [A4W4 窄尾波](examples/mx-native-tail.md) |
 | 本地块、依赖和共享端口 | 从有效字节、补齐操作数和描述符次数得到首发、持续间隔与退休。每核峰值管计算，配置的总线与缓存管共享下界。资源并发取最大就绪时间。 | [DynamicMxQuant](examples/quant.md) · [RMSNorm](examples/rmsnorm.md) · [BF16 Matmul](examples/matmul.md) · [Addmm](examples/addmm.md) · [FA](examples/fa.md) · [LightningIndexer](examples/lightning_indexer.md) · [vLLM Post](examples/hc_post_vllm.md) · [FLA V2 Chunk KDA](examples/kda_chunk.md) |
 | 关键阶段与完成标记 | 由 tile、VF 组或行数乘阶段价格，再执行该实现的重叠规则。部分固定项合并了标量发起与数据等待，参数链接给出来源和单位。 | [Cast](examples/cast_bf16_fp32.md) · [Sigmoid](examples/sigmoid_fp32.md) · [Router Top-k](examples/moe_gating_top_k.md) · [AttnResFwd](examples/attn_res_fwd.md) · [融合 PreSinkhorn](examples/mhc_pre_sinkhorn.md) · [独立 Sinkhorn](examples/mhc_sinkhorn.md) |
 | 分段经验价格、模板或未知状态 | 单链 KDA 和拆分 Pre 使用阶段固定项和工作单位斜率。GMM 的单窗由代表核上的互斥资源组合伸缩。仅有 shape 的 mHC Post 对几种可能的历史分别排程，再根据端点产生点估计。 | [Recurrent KDA](examples/kda_recurrent.md) · [mHC Pre](examples/mhc_pre.md) · [mHC Post](examples/mhc_post.md) · [GMM1](examples/grouped_matmul_swiglu_quant_v2.md) · [GMM2](examples/gmm2.md) |
