@@ -8,6 +8,7 @@ from pathlib import Path
 import re
 
 import operator_model
+from operator_model.roofline import cold_io_window
 from calibration.__main__ import FUTURE, HERE, encoded, metrics, predict, read
 
 DT = 'Ascend950DT_9582'
@@ -29,7 +30,10 @@ def number(value, digits=4, signed=False):
 
 
 def percent(fraction):
-    return NA if fraction is None else number(100*fraction, 3) + '%'
+    if fraction is None:
+        return NA
+    value = 100 * fraction
+    return (format(value, '.3g') if 0 < abs(value) < .01 else number(value, 3)) + '%'
 
 
 def table(headings, body):
@@ -42,8 +46,16 @@ def table(headings, body):
 def reprice(case_bytes, sku):
     chip = operator_model.load_chip(sku)
     result = predict(operator_model, json.loads(case_bytes), chip)
-    return (result.latency_us, result.work['dtype'], result.rates['roofline'],
-            result.rates['physical_roofline'])
+    rates = result.rates['logical_roofline']
+    logical = dict(ideal_us=rates['reference_us'], utilization=rates['time_factor'],
+                   hbm_us=rates['logical_io_us'], cube_us=rates['cube_us'], vector_us=rates['vector_us'],
+                   bound=rates['bound'], reason=rates['reason'])
+    # Use the exact deployment policy after replaying the original stream history;
+    # a stateless estimate here would silently change the calibrated schedule.
+    cold = None
+    if sku != FUTURE and logical['hbm_us'] is not None:
+        cold = cold_io_window(result.latency_us, result.work, chip)
+    return result.latency_us, result.work['dtype'], logical, result.rates['physical_roofline'], cold
 
 
 def load_windows(path):
@@ -54,39 +66,48 @@ def load_windows(path):
             case = encoded({k: row.get(k) for k in ('op', 'shape', 'attrs', 'dtype', 'prefix')})
             for sku, field, destination in [(row['chip'], 'predicted_us', 'roofline'),
                                              (FUTURE, 'extrapolated_970dt_us', 'future_roofline')]:
-                current, dtype, roofline, physical = reprice(case, sku)
+                current, dtype, roofline, physical, cold = reprice(case, sku)
                 if not isclose(current, row[field], abs_tol=1e-7, rel_tol=1e-10):
                     raise ValueError(f'Archived prediction differs on line {index} for {sku}: {row[field]} vs {current}')
                 row[destination] = roofline
                 if sku == row['chip']:
                     row['physical_roofline'] = physical
+                    row['cold_us'] = None if cold is None else cold['duration_us']
+                    row['cold_u'] = (roofline['ideal_us'] / cold['duration_us']
+                                     if cold is not None and roofline['ideal_us'] is not None else None)
                 row['input_dtype'] = dtype
             row['line'] = index
             groups[row['contract']].append(row)
     return groups
 
 
-def utilization(rows):
-    eligible = [row for row in rows if row['roofline']['utilization'] is not None]
-    ideal = sum(row['roofline']['ideal_us'] for row in eligible)
-    modeled = sum(row['predicted_us'] for row in eligible)
-    return len(eligible), ideal / modeled if modeled else None
+def metric_range(values):
+    values = [v for v in values if v is not None]
+    return f'{percent(min(values))}-{percent(max(values))}' if values else NA
+
+
+def window_ranges(rows):
+    return [metric_range(r['roofline']['utilization'] for r in rows),
+            metric_range(r['cold_u'] for r in rows)]
 
 
 def summary_ranges(markdown, groups):
-    """Refresh only the Roofline column of the main error table, across both data roles."""
+    """Refresh both logical ranges without changing the CA validation scores."""
     ranges = {}
-    for contract, rows in groups.items():
-        limits = []
+    for name, rows in groups.items():
+        per_chip = []
         for chip in (DT, PR):
-            values = [r['roofline']['utilization'] for r in rows
-                      if r['chip'] == chip and r['roofline']['utilization'] is not None]
-            limits.append(f'{percent(min(values))}-{percent(max(values))}' if values else NA)
-        ranges[page_name(contract)] = ' / '.join(limits)
+            cohort = [r for r in rows if r['chip'] == chip]
+            factors = [r['roofline']['utilization'] for r in cohort if r['roofline']['utilization'] is not None]
+            factor_range = f'{min(factors):.4g}–{max(factors):.4g}×' if factors else NA
+            per_chip.append((factor_range, metric_range(r['cold_u'] for r in cohort)))
+        ranges[page_name(name)] = [' / '.join(pair) for pair in zip(*per_chip)]
 
     lines = markdown.splitlines(keepends=True)
     start = next(i for i, line in enumerate(lines) if line.startswith('| 算子与输入合同（逐窗） |'))
-    column = lines[start].split('|').index(' 逻辑 Roofline 系数范围（DT / PR） ')
+    headings = lines[start].split('|')
+    columns = [headings.index(' 原 CA 窗逻辑时间系数（倍，DT / PR） '),
+               headings.index(' 冷读写逻辑 U 范围（DT / PR） ')]
     seen = set()
     for i in range(start + 2, len(lines)):
         if not lines[i].startswith('|'):
@@ -97,15 +118,43 @@ def summary_ranges(markdown, groups):
             raise ValueError(f'Missing contract link in error summary: {cells[1]}')
         name = link[1]
         if name == 'measured-only.md':
-            value = f'{NA} / {NA}'
+            values = [f'{NA} / {NA}'] * len(columns)
         else:
-            value = ranges[name]
+            values = ranges[name]
             seen.add(name)
-        cells[column] = f' {value} '
+        for column, value in zip(columns, values):
+            cells[column] = f' {value} '
         lines[i] = '|'.join(cells)
     if seen != ranges.keys():
         raise ValueError(f'Contracts missing from error summary: {sorted(ranges.keys() - seen)}')
     return ''.join(lines)
+
+
+def policy_audit(groups):
+    body = []
+    for sku, label in [(DT, '950DT'), (PR, '950PR')]:
+        cohort = [r for rows in groups.values() for r in rows if r['chip'] == sku]
+        eligible = [r for r in cohort if r['cold_u'] is not None]
+        original_over = [r for r in eligible if r['roofline']['utilization'] > 1]
+        def exceed(engine):
+            return sum(r['roofline'][engine] is not None and r['roofline'][engine] > r['predicted_us']
+                       for r in cohort)
+        body.append([label, f'{len(eligible):,} / {len(cohort):,}',
+                     *window_ranges(eligible), len(original_over),
+                     sum(r['roofline']['ideal_us'] > r['ca_us'] for r in original_over),
+                     f"{exceed('cube_us')} / {exceed('vector_us')} / {exceed('hbm_us')}",
+                     sum(r['cold_u'] > 1 for r in eligible),
+                     sum(r['roofline']['cube_us'] is None for r in cohort)])
+    return table(['芯片', '逻辑 U 可比 / 全部', '原窗 U 范围', '冷读写 U 范围',
+                  '原窗 U >100%', '其中换 CA 分母仍 >100%', '各项越线 Cube / Vector / HBM',
+                  '冷读写 U >100%', '缺 Cube 峰值'], body)
+
+
+def refresh_policy_audit(markdown, groups):
+    start, end = '<!-- roofline-policy-audit:start -->', '<!-- roofline-policy-audit:end -->'
+    before, rest = markdown.split(start)
+    _, after = rest.split(end)
+    return f'{before}{start}\n\n{policy_audit(groups)}\n\n{end}{after}'
 
 
 def index_table(groups, role):
@@ -117,10 +166,10 @@ def index_table(groups, role):
         cells = [f'[{name}]({page_name(name)})' if name else '**全部合同窗**']
         for chip in (DT, PR):
             selected = [r for r in rows if r['chip'] == chip and r['data_role'] == role]
-            count, value = utilization(selected)
-            cells += [f'{count}/{len(selected)}', percent(value)]
+            count = sum(r['roofline']['utilization'] is not None for r in selected)
+            cells += [f'{count}/{len(selected)}', *window_ranges(selected)]
         body.append(cells)
-    return table(['合同', 'DT 可比/完整窗', 'DT 逻辑系数', 'PR 可比/完整窗', 'PR 逻辑系数'], body)
+    return table(['合同', 'DT 可比/完整窗', 'DT 原窗 U 范围', 'DT 冷读写 U 范围', 'PR 可比/完整窗', 'PR 原窗 U 范围', 'PR 冷读写 U 范围'], body)
 
 
 def render_index(groups):
@@ -130,7 +179,7 @@ def render_index(groups):
     below_model = sum(row['physical_roofline']['below_known_bound'] for _, row in known)
     below_ca = sum(row['ca_us'] < floor * (1 - 1e-12) for floor, row in known)
     sections = ['# 按合同查阅 CA 完整窗', f'共 {len(groups)} 个输入与计时合同、{count:,} 条记录。选合同可查看每次调用的本卡 shape、输入精度和前序、模型与 CA 设备耗时、查询耗时及 970DT 外推。同一 shape 的不同运行各占一行。',
-                '可比窗指能够同时取得逻辑 Roofline 基准时间和同一输入完整模型时间的窗口。合同汇总按 `Σ逻辑基准时间 / Σ模型时间` 计算，分子和分母取完全相同的可比窗。单次占比可超过 100%，例如来自 L2 的数据也可能计入逻辑搬运量。这里的分母是设备预测，CA 用于校验预测误差。970DT 列只有外推。',
+                '可比窗指能够同时取得逻辑 Roofline 基准时间和同一输入完整模型时间的窗口。下表分芯片与角色取全部可比窗的最小值和最大值。两个 U 使用同一个逻辑基准；原窗的分母是默认排程时间，冷读写的分母是所有逻辑读写都经过 HBM 时的场景预测。CA 误差只对原窗计分；970DT 只有外推。',
                 '[总误差与计时口径](../error-analysis.md) · [建模方法](../modeling-strategy.md) · [逐窗原始数据](../../calibration/reference/windows.jsonl)']
     sections.append(f'已知物理下界覆盖 {len(known):,}/{count:,} 个窗口，其中模型低于下界 {below_model} 窗、CA 低于下界 {below_ca} 窗。当前可核实的项为稠密 Cube 乘加。完整物理利用率还需要同窗 HBM 计数及适用的 Vector 指令吞吐。')
     for role, title in ROLES.items():
@@ -175,7 +224,7 @@ def render_contract(contract, rows):
         if contract in evidence:
             sections.append(evidence[contract])
         return '\n\n'.join(sections) + '\n'
-    sections.append('模型和 CA 均为设备微秒（µs）。有符号误差为 `100 × (模型 / CA − 1)`。逻辑系数 U 等于按逻辑张量流量和名义峰值折算的基准时间除以模型设备时间。这里没有同窗 HBM 控制器流量，物理利用率为 N/A。表内同时列出逻辑基准的控制项；合同汇总只对可比窗按 `Σ逻辑基准时间 / Σ模型时间` 聚合。查询列为归档 CPU 墙钟毫秒（ms），顺序为 950 / 970。970DT 的时间与 U 都是外推。')
+    sections.append('模型和 CA 均为设备微秒（µs）。有符号误差为 `100 × (模型 / CA − 1)`。原窗逻辑 U 的分子是 `max(Cube、Vector、逻辑 HBM 的峰值时间)`，分母是默认排程设备耗时。冷读写列保留同一排程与分子，把分母换成 `max(原窗 µs, (逻辑读字节 + 逻辑写字节) / HBM 带宽)`，假设冷读且输出写回并充分重叠。冷读写没有对应的 CA 真值，只用于场景比较。物理利用率需要同窗 HBM 控制器流量，本页所有记录均为 N/A。两个逻辑 U 都未截断。查询列为归档 CPU 墙钟毫秒（ms），顺序为 950 / 970。970DT 两列均为原窗策略的外推。')
 
     attributes = dictionary(encoded(r['attrs']) for r in rows if r['attrs'])
     histories = dictionary(encoded(r['prefix']) for r in rows if r.get('prefix'))
@@ -193,10 +242,10 @@ def render_contract(contract, rows):
         for role, label in ROLES.items():
             selected = [r for r in rows if r['chip'] == chip and r['data_role'] == role]
             error = metrics(selected)
-            count, value = utilization(selected)
+            count = sum(r['roofline']['utilization'] is not None for r in selected)
             summary.append([chip, label, error['shapes'], len(selected), number(error['wape_pct'],2),
-                            number(error['max_pct'],2), count, percent(value)])
-    sections += ['## 完整窗与误差', table(['芯片','数据角色','不同 shape','完整窗','WAPE %','最大绝对误差 %','U 可比窗','汇总逻辑系数'],summary),
+                            number(error['max_pct'],2), count, *window_ranges(selected)])
+    sections += ['## 完整窗与误差', table(['芯片','数据角色','不同 shape','完整窗','WAPE %','最大绝对误差 %','U 可比窗','原窗 U 范围','冷读写 U 范围'],summary),
                  '下表的行号链接到 JSONL 原记录，其中包含全长 trace 指纹和已归档的收据字段。A、H、K 分别链接到本页的属性、前序和实现。前序列的“未传”表示本次调用未提供流历史，“空流”表示已知从空的 OperatorStream 开始；显式 resident_aiv 归在属性内。']
     for chip in (DT, PR):
         for role, label in ROLES.items():
@@ -218,9 +267,9 @@ def render_contract(contract, rows):
                 floor = row.get('physical_roofline', {}).get('known_lower_bound_us')
                 body.append([ref,'×'.join(map(str,row['shape'])),row['input_dtype'],f'{attr} / {history}',link_id('K', kernels[implementation(row)]),
                              number(row['predicted_us']),number(row['ca_us']),number(row['signed_error_pct'],2,True),
-                             f'{lower} / {bound}',fraction,number(floor),number(row['extrapolated_970dt_us']),fu,
+                             f'{lower} / {bound}',fraction,number(row['cold_us']),percent(row['cold_u']),number(floor),number(row['extrapolated_970dt_us']),fu,
                              f"{number(row['query_ms'],3)} / {number(row['query_970_ms'],3)}"])
-            sections += [f'## {chip} · {label}',table(['原始行','本卡 shape','主输入 dtype','属性 / 前序','实现','模型 µs','CA µs','误差 %','逻辑基准 µs / 控制项','逻辑系数','已知物理下界 µs','970 外推 µs','970 外推逻辑系数','查询 ms（950 / 970）'],body)]
+            sections += [f'## {chip} · {label}',table(['原始行','本卡 shape','主输入 dtype','属性 / 前序','实现','原窗模型 µs','CA µs','原窗误差 %','逻辑基准 µs / 控制项','原窗逻辑 U','冷读写模型 µs','冷读写逻辑 U','已知物理下界 µs','970 原窗外推 µs','970 原窗逻辑 U','查询 ms（950 / 970）'],body)]
     sections += ['## 实际调用的库实现', table(['编号','ACLNN 接口','实现提供方','设备 kernel，按执行顺序'],
                                   ((link_id('K', i, anchor=True),api,provider,' → '.join(f'`{name}`' for name in stages))
                                    for (api,provider,stages),i in kernels.items()))]
@@ -251,7 +300,8 @@ def report(output, check=False):
     docs = HERE.parent / 'docs'
     if output.resolve() == (docs / 'errors').resolve():
         summary = docs / 'error-analysis.md'
-        files[summary] = summary_ranges(summary.read_text(encoding='utf-8'), groups)
+        overview = summary_ranges(summary.read_text(encoding='utf-8'), groups)
+        files[summary] = refresh_policy_audit(overview, groups)
     if check:
         for path, content in files.items():
             if not path.is_file() or path.read_text(encoding='utf-8') != content:

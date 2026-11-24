@@ -245,7 +245,7 @@ def _candidate(features, sem):
              and sem.get("kv_source") == 20 and layer in (24,28,32,36)
              and sem.get("component") == f"model.layers.{layer}.self_attn" and sem.get("causal") is True
              and sem.get("index_topk") == k and sem.get("candidate_block_size", 8) == 8,
-             "Only the published Flash latest-pinned eight-key block / contiguous decode suffix is modeled")
+             "Only the published Flash latest-pinned eight-key block / contiguous causal suffix is modeled")
     for t, dt, shape in ((query,BF16,(rows,h,d)), (key,BF16,(b,length,d)), (weights,BF16,(rows,h)),
                          (positions,"int64",(rows,)), (candidates,"int32",(rows,slots)), (out,"int32",(rows,k))):
         _layout(t,dt,shape)
@@ -280,7 +280,7 @@ _LOWERINGS = {
 }
 
 
-def estimate_features(features, *, chip):
+def estimate_features(features, *, chip, include_schedule=False):
     """Use one published lowering with latency in microseconds, or give the fallback reason.
 
     This is a prediction of the selected implementation. Capture does not identify an ELF.
@@ -301,4 +301,14 @@ def estimate_features(features, *, chip):
     except _Mismatch as error:
         return NodeEstimate(None, "unsupported", reason=str(error))
     priced = estimate(op, shape, attrs, chip=chip, dtype=dtype)
-    return NodeEstimate(contract, priced.status, priced.latency_us, priced.reason, priced.work)
+    work = priced.work
+    if include_schedule and work is not None and priced.latency_us is not None:
+        projection = priced.projection or {}
+        # Keep scalar tiling metadata; full per-wave traces belong in offline diagnostics.
+        plan = {key: value for key, value in (projection.get("target_plan") or {}).items()
+                if type(value) in (int, float, bool, str) or
+                (isinstance(value, (tuple, list)) and len(value) <= 4 and all(type(x) is int for x in value))}
+        work = {**work, "schedule": {**(work.get("schedule") or {}), "active_aic": priced.active_aic,
+                "active_aiv": priced.active_aiv, "target_plan": plan,
+                **{k: projection[k] for k in ("waves","query_tile","query_groups","kv_page") if k in projection}}}
+    return NodeEstimate(contract, priced.status, priced.latency_us, priced.reason, work)

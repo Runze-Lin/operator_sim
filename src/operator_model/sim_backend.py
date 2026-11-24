@@ -147,16 +147,28 @@ class FullOperatorSimBackend(OperatorSimBackend):
     name = "operator_sim_full"
     prices_metadata = True
 
-    def __init__(self, *, chips=None, fabric=None):
+    def __init__(self, *, chips=None, fabric=None, memory_policy="cold_io"):
         from operator_model.system_routes.communication import FabricScenario
         super().__init__(chips=chips)
         self.fabric = fabric if fabric is not None else FabricScenario()
         if not isinstance(self.fabric, FabricScenario):
             raise TypeError("fabric must be a FabricScenario")
-        self.configuration += (("fabric_gbs", self.fabric.injection_gbs), ("fabric_step_us", self.fabric.step_us))
+        if memory_policy not in ("cold_io", "ca_window"):
+            raise ValueError("memory_policy must be cold_io or ca_window")
+        self.memory_policy = memory_policy
+        self.configuration += (("fabric_gbs", self.fabric.injection_gbs), ("fabric_step_us", self.fabric.step_us),
+                               ("memory_policy", memory_policy))
 
     def _estimate(self, features, target, hardware):
         from operator_model.system_routes import estimate_full_features, communication
         if features.raw_name in communication.NAMES and hardware.topology is not None:
             raise UnsupportedOperator("Configured topology needs an explicit topology-aware communication backend")
-        return estimate_full_features(features,chip=target,fabric=self.fabric)
+        from operator_model.roofline import cold_io_window
+        result = estimate_full_features(features,chip=target,fabric=self.fabric)
+        if (self.memory_policy == "ca_window" or result.latency_us is None or
+                result.status == "structural" or features.raw_name in communication.NAMES):
+            return result
+        io = cold_io_window(result.latency_us, result.work, target)
+        schedule = {**(result.work.get("schedule") or {}), "memory_window":io}
+        status = "extrapolated" if io["exposed_io_us"] > 0 else result.status
+        return replace(result, status=status, latency_us=io["duration_us"], work={**result.work, "schedule":schedule})

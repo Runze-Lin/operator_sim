@@ -14,7 +14,7 @@ STRUCTURAL = VIEWS | {"aten.empty.memory_format"}
 
 def estimate_full_features(features, *, chip, fabric=None):
     """Price a complete operator or return an explicit unsupported result for a new contract."""
-    from . import attention, cube, vector
+    from . import attention, cube, prefill, vector
     chip = load_chip(chip)
     name = features.raw_name
     if name in STRUCTURAL:
@@ -24,10 +24,10 @@ def estimate_full_features(features, *, chip, fabric=None):
                                  logical_read_bytes=0, logical_write_bytes=0))
     if name in communication.NAMES:
         return communication.price(features, chip, fabric or communication.FabricScenario())
-    strict = estimate_features(features, chip=chip)
+    strict = estimate_features(features, chip=chip, include_schedule=True)
     if strict.latency_us is not None:
         return strict
-    for family in (attention, cube, vector):
+    for family in (attention, cube, prefill, vector):
         if name in family.NAMES:
             devices = {t.device for t in (*features.inputs, *features.outputs)}
             if len(devices) != 1 or any(d.split(":")[0] not in ("meta", "npu", "privateuseone") for d in devices):

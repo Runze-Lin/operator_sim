@@ -64,6 +64,37 @@ def describe(shape, attrs):
 PIPELINE = 'li_pipeline_projection'
 
 
+def _clipped_ramp(start, count, limit):
+    """Sum min(start+i,limit) over i=1..count."""
+    rising = min(count,max(0,limit-start))
+    return rising*start+rising*(rising+1)//2+(count-rising)*limit
+
+
+def _candidate_prefix(visible, slots, span, limit=None):
+    """Sum retained counts for causal prefix lengths 1..visible.
+
+    Before C*S every visible key fits. Afterwards the pinned partial block
+    contributes 1..S keys per period, alongside C-1 complete blocks.
+    """
+    cap = slots*span
+    dense = min(visible,cap)
+    whole, tail = divmod(visible-dense,span)
+    if limit is None:
+        limit = cap
+    return (_clipped_ramp(0,dense,limit) + whole*_clipped_ramp(cap-span,span,limit)
+            + _clipped_ramp(cap-span,tail,limit))
+
+
+def _tail_visits(lane, steps, groups, common, inverse):
+    """Hits on the last group along lane+t*stride, independently of batch size."""
+    delta = groups-1-lane
+    if delta % common:
+        return 0
+    period = groups//common
+    first = ((delta//common)*inverse) % period
+    return (steps+period-1-first)//period
+
+
 def _geometry(shape, attrs):
     if len(shape) != 7 or any(type(d) is not int or d < 1 for d in shape):
         raise ValueError('Expected positive B,Q,H,D,L,C,K for candidate_filtered_indexer')
@@ -74,8 +105,15 @@ def _geometry(shape, attrs):
     policy, span = attrs.get('score_policy', 'full_scan'), attrs.get('block_size')
     if policy not in ('full_scan', 'candidate_first') or type(span) is not int or span < 1:
         raise ValueError('Expected full_scan or candidate_first and a positive block_size')
-    if h not in (8, 32) or d != 128 or k != 512 or q > 17 or length < q:
-        raise ValueError('Projection requires BF16 H=8/32, D=128, K=512, causal suffix Q=1..17 of L keys')
+    if h not in (8, 32) or d != 128 or k != 512 or length < q or (q > 17 and policy != 'full_scan'):
+        raise ValueError('Projection requires BF16 H=8/32, D=128, K=512 and Q<=L; candidate_first supports Q<=17')
+    if q > 17:
+        if length < k:
+            raise ValueError('Long full_scan needs a key table with L>=K for a K-wide masked top-k')
+        # A row near the start of the sequence may have fewer than K visible
+        # keys. It still scores L positions and writes a K-wide padded output.
+        pairs = _candidate_prefix(length,slots,span) - _candidate_prefix(length-q,slots,span)
+        return policy,span,None,None,pairs
     # One document per batch row; target and draft both verify its FINAL Q consecutive positions.
     visible = tuple(range(length-q+1, length+1))
     # Distinct source-selected blocks with the newest block pinned: if the last
@@ -83,14 +121,14 @@ def _geometry(shape, attrs):
     kept = tuple(min(v, slots*span - (-v % span)) for v in visible)
     if min(kept) < k:
         raise ValueError('Fewer than top-k valid scores: padding/tie semantics need a separate contract')
-    return policy, span, visible, kept
+    return policy, span, visible, kept, sum(kept)
 
 
 def projected_work(shape, attrs):
-    policy, span, visible, kept = _geometry(shape, attrs)
+    policy, span, visible, kept, kept_per_request = _geometry(shape, attrs)
     b, q, h, d, length, slots, k = shape
     rows = b*q
-    pairs = rows*length if policy == 'full_scan' else b*sum(kept)
+    pairs = rows*length if policy == 'full_scan' else b*kept_per_request
     cube, vec = 2*h*d*pairs, (3*h-1)*pairs
     read = 2*rows*h*(d+1) + 8*rows + 4*rows*slots
     read += 2*d*(b*length if policy == 'full_scan' else pairs)
@@ -112,7 +150,7 @@ def price(shape, chip, attrs):
     """
     from math import gcd
     from operator_model.operators.attention.indexer import _ceil, _prices, _sort_row
-    policy, span, visible, kept = _geometry(shape, attrs)
+    policy, span, visible, kept, kept_per_request = _geometry(shape, attrs)
     work = projected_work(shape, attrs)
     b, q, h, d, length, slots, k = shape
     p = _prices()
@@ -136,9 +174,14 @@ def price(shape, chip, attrs):
               'histogram_and_store','position_order_and_map')
     prototypes = []
     key_local = 0
-    for j in range(0,q,group_q):
-        vals = kept[j:j+group_q]; nr = len(vals); av = min(nr, partners)
-        n = length if policy == 'full_scan' else vals[0]
+    long_scan = q > 17
+    # Long full scans price a full query tile and (if present) a final
+    # partial tile once, regardless of the size of Q or of the KV table.
+    starts = (0, q-q%group_q) if long_scan and q%group_q else (0,)
+    for j in (starts if long_scan else range(0,q,group_q)):
+        nr = min(group_q,q-j)
+        av = min(nr, partners)
+        n = length if policy == 'full_scan' else kept[j]
         # ServiceCube aligns query-head rows to 2*G in L1 (including a
         # one-query tail); MmadParams then aligns the physical M to 16.
         m = 16*_ceil(2*h*_ceil(nr,2),16)
@@ -168,15 +211,23 @@ def price(shape, chip, attrs):
                            p['mmad_fixed_cycles']+2*m*tail*d/rc+vector_cycles(tail),
                            p['sort_handoff_cycles'],max(aiv_load),_ceil(nr,av)*output_ops/rv))
     ng = b*groups; live = min(lanes, ng); period = groups//gcd(groups,lanes)
+    common = gcd(groups,lanes)
+    inverse = pow(lanes//common,-1,period) if long_scan and period>1 else 0
+    if long_scan:
+        key_local = groups*length*d*2
     critical = None
     for lane in range(live):
         visits = 1+(ng-1-lane)//lanes
-        rounds, rest = divmod(visits,period)
-        totals = [0.]*len(stages)
-        for t in range(min(visits,period)):
-            weights = rounds + int(t<rest)
-            for i, ticks in enumerate(prototypes[(lane+t*lanes)%groups]):
-                totals[i] += weights*ticks
+        if long_scan:
+            tails = _tail_visits(lane,visits,groups,common,inverse) if q%group_q else 0
+            totals = [(visits-tails)*full + tails*tail for full,tail in zip(prototypes[0],prototypes[-1])]
+        else:
+            rounds, rest = divmod(visits,period)
+            totals = [0.]*len(stages)
+            for t in range(min(visits,period)):
+                weights = rounds + int(t<rest)
+                for i, ticks in enumerate(prototypes[(lane+t*lanes)%groups]):
+                    totals[i] += weights*ticks
         if critical is None or sum(totals)>sum(critical): critical = totals
     # Shared bandwidth can only hide behind the schedule up to its total local
     # time. Distinct tables are consumed per request. Reread when the concurrently
@@ -192,13 +243,31 @@ def price(shape, chip, attrs):
     costs = {s:v/(1000*ghz) for s,v in zip(stages,critical)}
     local = sum(costs.values()); us = max(local,hbm,l2)
     costs['additional_shared_service'] = us-local
+    # Keep decode's per-row diagnostics. Long scans expose a reproducible
+    # arithmetic progression / block-period and tile histogram without Q objects.
+    def cube_m(nr):
+        return 16*_ceil(2*h*_ceil(nr,2),16)
+    valid_output = (_candidate_prefix(length,slots,span,k)-_candidate_prefix(length-q,slots,span,k)
+                    if long_scan else q*k)
+    full_groups, tail_rows = divmod(q,group_q)
+    tile_runs = [(cube_m(group_q),full_groups)] if full_groups else []
+    if tail_rows:
+        tile_runs.append((cube_m(tail_rows),1))
+    shape_facts = dict(
+        query_rows_per_request=q,
+        visibility_first_last=(length-q+1,length),
+        retained_count_rule='min(v, C*S - ((-v) mod S))',
+        padded_output_slots=b*(q*k-valid_output),
+        mmads_m_group_runs_per_request=tile_runs,
+    )
     return us,work,{'timing_qualification':'extrapolated','implementation':PIPELINE,
         'reason':'Hypothetical BF16 LI-style fused schedule; candidate consumer has no qualified native 950 CA window.',
         'score_policy':policy,'block_size':span,'visible_keys_per_request':visible,
-        'candidate_keys_per_request':kept,'candidate_key_pairs':b*sum(kept),
-        'scored_query_key_pairs':b*q*length if policy=='full_scan' else b*sum(kept),
+        'candidate_keys_per_request':kept,'candidate_key_pairs':b*kept_per_request,
+        'scored_query_key_pairs':b*q*length if policy=='full_scan' else b*kept_per_request,
         'query_tile':group_q,'kv_page':128,'query_groups':ng,'waves':_ceil(ng,lanes),
-        'mmad_m_per_request_group':[16*_ceil(2*h*_ceil(min(group_q,q-j),2),16) for j in range(0,q,group_q)],
+        'mmad_m_per_request_group':None if long_scan else [cube_m(min(group_q,q-j)) for j in range(0,q,group_q)],
+        **shape_facts,
         'stages_us':costs,'assumed_hbm_bytes':hbm_keys+metadata,'hbm_service_us':hbm,'l2_service_us':l2,
         'target_plan':{'active_aic':live,'active_aiv':sum(min(partners, min(group_q, q-(i%groups)*group_q)) for i in range(live))},
         'assumptions':['Uniform contiguous suffix, distinct blocks and latest visible block pinned.',

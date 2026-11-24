@@ -33,7 +33,7 @@ for policy in ("full_scan", "candidate_first"):
 | 调用选择 | 返回值及资格 |
 |---|---|
 | 只传 shape，或 `candidate_first` 只传 block_size | 兼容旧用法：返回结构工作量或上界，无时延；候选数未知时可用 `scored_keys_per_query` 传真实计数。 |
-| `li_pipeline_projection` + `block_size` | 全扫描；选 `candidate_first` 才改为先收集。一律 `extrapolated`，`timing_mode="calibrated"` 无时延。支持 H=8/32、D=128、K=512、Q=1…17 及每行至少 512 个有效位置。 |
+| `li_pipeline_projection` + `block_size` | 全扫描；选 `candidate_first` 才改为先收集。一律 `extrapolated`，`timing_mode="calibrated"` 无时延。支持 H=8/32、D=128、K=512。短后缀 Q≤17 每行需有至少 512 个有效位置；长 Q 全扫支持 L≥max(Q,512)，按组周期和尾块汇总，起始块允许掩码填充。candidate_first 保留短后缀约束。[长 prefill 算例](prefill-routes.md) |
 | 系统 `estimate_features` | 仅匹配已知 Flash 来源、层位、dtype、布局、shape 与因果语义；默认用 `full_scan`。只凭这些 meta 无法检测调用者私下替换块策略或改用不等长历史，遇到这种图不能沿用此 preset。 |
 
 ## 用流水推到设备时间

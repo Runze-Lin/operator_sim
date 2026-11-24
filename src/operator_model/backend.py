@@ -97,6 +97,13 @@ def _rates(work, latency_us, chip):
         'reason': 'Missing peak or logical byte count: ' + ', '.join(missing) if missing else None,
         'cube_us': cube, 'vector_us': vector, 'hbm_us': hbm,
     }
+    physical = physical_roofline(
+        latency_us, chip.hbm_bandwidth_gbs,
+        cube_us=cube if work.get('required_dense_cube_fma') else None,
+        vector_us=0. if work.get('no_vector_engine') else None,
+        physical_hbm_bytes=work.get('physical_hbm_bytes'))
+    physical_terms = physical['terms_us']
+    known_ideal = physical['ideal_us']
     return {
         'cube_nominal_peak_fraction': None if cube is None else cube / latency_us,
         'vector_nominal_peak_fraction': None if vector is None else vector / latency_us,
@@ -106,13 +113,15 @@ def _rates(work, latency_us, chip):
         'logical_roofline': {'reference_us': ideal, 'time_factor': roofline['utilization'],
                              'bound': roofline['bound'], 'reason': roofline['reason'],
                              'cube_us': cube, 'vector_us': vector, 'logical_io_us': hbm},
-        'physical_roofline': physical_roofline(
-            latency_us, chip.hbm_bandwidth_gbs,
-            cube_us=cube if work.get('required_dense_cube_fma') else None,
-            vector_us=0. if work.get('no_vector_engine') else None,
-            physical_hbm_bytes=work.get('physical_hbm_bytes')),
-        # Historical names refer to the logical full-tensor traffic scenario.
-        'roofline': roofline,
+        'physical_roofline': physical,
+        'roofline': {'scope': 'ca_window', 'ideal_us': physical['ideal_us'],
+                     'utilization': physical['utilization'], 'missing': physical['missing'],
+                     'cube_us': physical_terms['Cube'], 'vector_us': physical_terms['Vector'],
+                     'hbm_us': physical_terms['HBM'],
+                     'bound': None if known_ideal is None else '/'.join(
+                         k for k,v in physical_terms.items() if v == known_ideal),
+                     'reason': 'Missing same-window evidence: ' + ', '.join(physical['missing'])
+                               if physical['missing'] else None},
     }
 
 
@@ -528,8 +537,31 @@ def _price_device(op, shape, attrs, target, dtype, timing_mode):
 
 
 
+def _memory_window(result, target, policy):
+    if policy not in ('ca_window', 'cold_io'):
+        raise ValueError('memory_policy must be ca_window or cold_io')
+    if policy == 'ca_window' or result.latency_us is None:
+        return result
+    from operator_model.roofline import cold_io_window
+    io = cold_io_window(result.latency_us, result.work, target)
+    us = io['duration_us']
+    rates = _rates(result.work, us, target)
+    logical = rates['logical_roofline']
+    rates.update(memory_window=io, roofline={'scope': 'cold_io', 'ideal_us': logical['reference_us'],
+                 'utilization': logical['time_factor'], 'bound': logical['bound'], 'reason': logical['reason'],
+                 'cube_us': logical['cube_us'], 'vector_us': logical['vector_us'], 'hbm_us': logical['logical_io_us']})
+    status = 'extrapolated' if io['exposed_io_us'] > 0 else result.status
+    return replace(result, status=status, latency_us=us, projection={**(result.projection or {}), 'memory_window':io},
+                   rates=rates)
+
+
 def estimate(op: str, shape: Sequence[int], attrs: Optional[Mapping] = None, *,
              soc: str = REFERENCE_NAME, chip=None, dtype: Optional[str] = None,
-             timing_mode: str = 'auto') -> Estimate:
+             timing_mode: str = 'auto', memory_policy: str = 'ca_window') -> Estimate:
     """Estimate one local dispatch. chip accepts a config, mapping, JSON file or SKU."""
-    return _evaluate(op, shape, attrs, soc, chip, dtype, timing_mode)[0]
+    if memory_policy not in ('ca_window', 'cold_io'):
+        raise ValueError('memory_policy must be ca_window or cold_io')
+    result = _evaluate(op, shape, attrs, soc, chip, dtype, timing_mode)[0]
+    if memory_policy == 'ca_window' or result.latency_us is None:
+        return result
+    return _memory_window(result, load_chip(chip if chip is not None else soc), memory_policy)

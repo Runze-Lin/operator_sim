@@ -1,3 +1,4 @@
+from unittest.mock import patch
 import unittest
 
 from operator_model import estimate
@@ -65,6 +66,55 @@ class CandidateIndexerTests(unittest.TestCase):
         self.assertEqual(other.projection['candidate_key_pairs'],147421)
         for sku in ('Ascend950DT_9582','Ascend950PR_957b','Ascend970DT'):
             self.assertIsNone(estimate('candidate_filtered_indexer',tiny,attrs,chip=sku,timing_mode='calibrated').latency_us)
-        for bad in ((1,18,32,128,131081,2048,512),(1,1,32,128,800,60,512)):
+        for bad in ((1,18,32,128,17,2048,512),(1,1,32,128,800,60,512)):
             self.assertIsNone(estimate('candidate_filtered_indexer',bad,attrs).latency_us)
         self.assertIsNone(estimate('candidate_filtered_indexer',tiny,attrs,dtype='fp32').latency_us)
+
+
+    def test_prefill_mask_and_padding_match_enumerated_rows(self):
+        attrs = dict(implementation='li_pipeline_projection',block_size=8)
+        for b,q,length,slots in ((8,4096,4096,2048),(2,4096,32768,2048),
+                                 (1,613,800,64),(3,66,555,65)):
+            result=estimate('candidate_filtered_indexer',(b,q,32,128,length,slots,512),attrs)
+            self.assertEqual(result.status,'extrapolated')
+            rows=[min(v,(slots-1)*8+1+(v-1)%8) for v in range(length-q+1,length+1)]
+            self.assertEqual(result.projection['candidate_key_pairs'],b*sum(rows))
+            self.assertEqual(result.projection['padded_output_slots'],b*sum(max(0,512-c) for c in rows))
+            self.assertEqual(result.projection['scored_query_key_pairs'],b*q*length)
+            self.assertEqual(result.work['cube_ops'],2*32*128*b*q*length)
+            self.assertEqual(result.work['vec_ops'],(3*32-1)*b*q*length)
+            self.assertEqual(result.projection['visibility_first_last'],(length-q+1,length))
+            self.assertEqual(result.work['logical_write_bytes'],4*b*q*512)
+            self.assertIsNone(estimate('candidate_filtered_indexer',(b,q,32,128,length,slots,512),
+                                dict(attrs,score_policy='candidate_first')).latency_us)
+
+    def test_prefill_closed_schedule_matches_explicit_round_robin(self):
+        from operator_model import load_chip
+        attrs=dict(implementation='li_pipeline_projection',block_size=8)
+        for sku in ('Ascend950DT_9582','Ascend950PR_957b','Ascend970DT'):
+            chip=load_chip(sku)
+            for b,q in ((8,18),(19,126),(3,128),(70,157)):
+                group_types=[min(4,q-j) for j in range(0,q,4)]
+                group_times={}
+                for nr in set(group_types):
+                    plan=estimate('candidate_filtered_indexer',(1,nr,32,128,20991,2048,512),
+                                  attrs,chip=chip).projection
+                    group_times[nr]=sum(t for s,t in plan['stages_us'].items() if s!='additional_shared_service')
+                lanes=[0.]*chip.cube_cores
+                for i,nr in enumerate(b*group_types):
+                    lanes[i%len(lanes)]+=group_times[nr]
+                result=estimate('candidate_filtered_indexer',(b,q,32,128,20991,2048,512),attrs,chip=chip)
+                local=sum(t for s,t in result.projection['stages_us'].items() if s!='additional_shared_service')
+                self.assertAlmostEqual(local,max(lanes),places=8)
+                self.assertAlmostEqual(sum(result.projection['stages_us'].values()),result.latency_us)
+
+    def test_prefill_long_table_has_constant_number_of_geometry_evaluations(self):
+        from operator_model.operators.attention import indexer
+        q=(1<<20)-1
+        with patch.object(indexer,'_sort_row',wraps=indexer._sort_row) as sort:
+            r=estimate('candidate_filtered_indexer',(8,q,32,128,1<<20,2048,512),
+                       dict(implementation='li_pipeline_projection',block_size=8))
+        self.assertEqual(r.status,'extrapolated')
+        self.assertLessEqual(sort.call_count,8)
+        self.assertIsNone(r.projection['candidate_keys_per_request'])
+        self.assertEqual(r.projection['mmads_m_group_runs_per_request'],[(128,q//4),(128,1)])

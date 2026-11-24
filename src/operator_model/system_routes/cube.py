@@ -34,7 +34,8 @@ def _dense(f, sem):
     n = _shape(b.shape, 2)[0 if trans else 1]
     dtype = _dtype(a)
     _require(dtype in (BF16, F32), 'Expected BF16 or strict FP32 dense product')
-    _layout(a, dtype, (m, k))
+    row_pitch = a.stride[0] if len(a.stride) == 2 else 0
+    _layout(a, dtype, (m, k), strides=(row_pitch, 1) if not trans and row_pitch >= k else None)
     _layout(b, dtype, (n, k) if trans else (k, n), strides=None if trans else (1, k))
     output = _dtype(f.outputs[0])
     if trans:
@@ -270,5 +271,21 @@ def price(features, chip):
                 'to native 950DT/PR router CA. Other workloads/projected chips use the same resource rules.')
     work.update(schedule=schedule,evidence=evidence,logical_shape_MNK=(sum(rows),n,k),
                 evidence_detail=note)
+    if features.raw_name in _NATIVES:
+        a = features.inputs[-2]
+        if a.shape[0] > 1 and a.stride[0] > k:
+            # Last-token activations are contiguous within each request but their
+            # base addresses are a whole prefill chunk apart. Pack just those rows.
+            from .vector import Tiles, _schedule as vector_schedule
+            count = sum(rows)*k
+            size = count*(4 if mode == 'dense32' else 2)
+            pack = vector_schedule(Tiles("pack_strided_activation_rows",count,k,size,size,0,setup="slice"),chip)
+            work["logical_read_bytes"] += size
+            work["logical_write_bytes"] += size
+            schedule.update(row_pitch_elements=a.stride[0],pack_us=pack.latency_us,
+                            pack_active_aiv=pack.work["schedule"]["active_aiv"])
+            note = "Proposed materialization of selected activation rows before the dense kernel; no matched composed CA window."
+            work.update(evidence="analytical_design",evidence_detail=note)
+            return NodeEstimate(contract+"/pack_rows","extrapolated",t+pack.latency_us,note,work)
     stock = chip.name in ('Ascend950DT_9582','Ascend950PR_957b')
     return NodeEstimate(contract,'estimated' if stock and measured_family else 'extrapolated',t,note,work)

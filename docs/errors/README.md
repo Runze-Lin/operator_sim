@@ -2,7 +2,7 @@
 
 共 36 个输入与计时合同、2,180 条记录。选合同可查看每次调用的本卡 shape、输入精度和前序、模型与 CA 设备耗时、查询耗时及 970DT 外推。同一 shape 的不同运行各占一行。
 
-可比窗指能够同时取得逻辑 Roofline 基准时间和同一输入完整模型时间的窗口。合同汇总按 `Σ逻辑基准时间 / Σ模型时间` 计算，分子和分母取完全相同的可比窗。单次占比可超过 100%，例如来自 L2 的数据也可能计入逻辑搬运量。这里的分母是设备预测，CA 用于校验预测误差。970DT 列只有外推。
+可比窗指能够同时取得逻辑 Roofline 基准时间和同一输入完整模型时间的窗口。下表分芯片与角色取全部可比窗的最小值和最大值。两个 U 使用同一个逻辑基准；原窗的分母是默认排程时间，冷读写的分母是所有逻辑读写都经过 HBM 时的场景预测。CA 误差只对原窗计分；970DT 只有外推。
 
 [总误差与计时口径](../error-analysis.md) · [建模方法](../modeling-strategy.md) · [逐窗原始数据](../../calibration/reference/windows.jsonl)
 
@@ -10,87 +10,87 @@
 
 ## 开发回放
 
-| 合同 | DT 可比/完整窗 | DT 逻辑系数 | PR 可比/完整窗 | PR 逻辑系数 |
-| --- | --- | --- | --- | --- |
-| [quant](quant.md) | 59/59 | 16.341% | 53/53 | 35.715% |
-| [matmul](matmul.md) | 61/61 | 59.767% | 70/70 | 94.568% |
-| [fa](fa.md) | 43/43 | 1.763% | 45/45 | 5.466% |
-| [lightning_indexer](lightning_indexer.md) | 14/14 | 1.518% | 10/10 | 3.362% |
-| [addmm](addmm.md) | 34/34 | 1.644% | 20/20 | 5.941% |
-| [rmsnorm · compact CA](rmsnorm-compact-ca.md) | 57/57 | 7.340% | 0/0 | N/A |
-| [rmsnorm · msopprof](rmsnorm-msopprof.md) | 126/126 | 28.625% | 136/136 | 65.821% |
-| [rmsnorm · visible stream](rmsnorm-visible-stream.md) | 60/60 | 7.239% | 60/60 | 20.695% |
-| [mhc_pre](mhc_pre.md) | 0/24 | N/A | 0/10 | N/A |
-| [mhc_sinkhorn](mhc_sinkhorn.md) | 74/74 | 0.075% | 46/46 | 0.288% |
-| [mhc_sinkhorn · known history](mhc_sinkhorn-known-history.md) | 50/50 | 0.106% | 36/36 | 0.349% |
-| [mhc_pre_sinkhorn](mhc_pre_sinkhorn.md) | 0/24 | N/A | 0/20 | N/A |
-| [mhc_post · shape](mhc_post-shape.md) | 151/151 | 8.732% | 88/88 | 31.538% |
-| [mhc_post · stream](mhc_post-stream.md) | 151/151 | 7.855% | 88/88 | 28.059% |
-| [mhc](mhc.md) | 0/24 | N/A | 0/10 | N/A |
-| [vllm_hc_post](vllm_hc_post.md) | 15/15 | 2.820% | 15/15 | 59.923% |
-| [kda_recurrent](kda_recurrent.md) | 14/14 | 0.160% | 10/10 | 0.438% |
-| [fla_kda_v2](fla_kda_v2.md) | 18/18 | 0.384% | 17/17 | 1.120% |
-| [gmm2](gmm2.md) | 15/15 | 0.293% | 10/10 | 0.456% |
-| [grouped_matmul_swiglu_quant_v2](grouped_matmul_swiglu_quant_v2.md) | 15/15 | 0.241% | 10/10 | 0.387% |
-| [moe_ffn](moe_ffn.md) | 15/15 | 0.257% | 10/10 | 0.409% |
-| [moe_gating_top_k](moe_gating_top_k.md) | 12/12 | 0.152% | 10/10 | 0.502% |
-| [cast_bf16_fp32](cast_bf16_fp32.md) | 33/33 | 109.093% | 32/32 | 163.149% |
-| [sigmoid_fp32](sigmoid_fp32.md) | 23/23 | 79.042% | 20/20 | 131.887% |
-| [attn_res_fwd](attn_res_fwd.md) | 21/21 | 0.272% | 21/21 | 0.774% |
-| [attn_res_fwd · resident inference prefill](attn_res_fwd-resident-inference-prefill.md) | 0/0 | N/A | 0/0 | N/A |
-| [matmul_mx_native](matmul_mx_native.md) | 14/14 | 9.519% | 14/14 | 24.765% |
-| [matmul_mx_mixed](matmul_mx_mixed.md) | 14/14 | 9.433% | 14/14 | 25.145% |
-| [quant_mxfp4](quant_mxfp4.md) | 4/4 | 0.523% | 4/4 | 1.597% |
-| [candidate_filtered_indexer](candidate_filtered_indexer.md) | 0/0 | N/A | 0/0 | N/A |
-| [cache_load_mxfp4](cache_load_mxfp4.md) | 0/0 | N/A | 0/0 | N/A |
-| [cache_load_fp8](cache_load_fp8.md) | 0/0 | N/A | 0/0 | N/A |
-| [routed_grouped_matmul_mxfp4](routed_grouped_matmul_mxfp4.md) | 0/0 | N/A | 0/0 | N/A |
-| [quant_token_fp8](quant_token_fp8.md) | 3/3 | 1.310% | 3/3 | 3.756% |
-| [cache_load_mxfp4_antimx](cache_load_mxfp4_antimx.md) | 2/2 | 0.235% | 2/2 | 0.673% |
-| [routed_grouped_matmul_mxfp4_v5](routed_grouped_matmul_mxfp4_v5.md) | 3/3 | 1.344% | 3/3 | 3.839% |
-| **全部合同窗** | 1101/1173 | 22.119% | 847/887 | 57.999% |
+| 合同 | DT 可比/完整窗 | DT 原窗 U 范围 | DT 冷读写 U 范围 | PR 可比/完整窗 | PR 原窗 U 范围 | PR 冷读写 U 范围 |
+| --- | --- | --- | --- | --- | --- | --- |
+| [quant](quant.md) | 59/59 | 0.00115%-68.911% | 0.00115%-68.911% | 53/53 | 0.00386%-127.306% | 0.00386%-100.000% |
+| [matmul](matmul.md) | 61/61 | 0.00906%-98.443% | 0.00906%-98.443% | 70/70 | 0.026%-136.136% | 0.026%-100.000% |
+| [fa](fa.md) | 43/43 | 0.048%-3.051% | 0.048%-3.051% | 45/45 | 0.138%-8.717% | 0.138%-8.717% |
+| [lightning_indexer](lightning_indexer.md) | 14/14 | 0.658%-2.402% | 0.658%-2.402% | 10/10 | 1.875%-5.284% | 1.875%-5.284% |
+| [addmm](addmm.md) | 34/34 | 0.00545%-6.509% | 0.00545%-6.509% | 20/20 | 0.016%-15.438% | 0.016%-15.438% |
+| [rmsnorm · compact CA](rmsnorm-compact-ca.md) | 57/57 | 0.010%-46.796% | 0.010%-46.796% | 0/0 | N/A | N/A |
+| [rmsnorm · msopprof](rmsnorm-msopprof.md) | 126/126 | 0.051%-106.557% | 0.051%-100.000% | 136/136 | 0.029%-194.644% | 0.029%-100.000% |
+| [rmsnorm · visible stream](rmsnorm-visible-stream.md) | 60/60 | 0.032%-51.210% | 0.032%-51.210% | 60/60 | 0.097%-128.472% | 0.097%-100.000% |
+| [mhc_pre](mhc_pre.md) | 0/24 | N/A | N/A | 0/10 | N/A | N/A |
+| [mhc_sinkhorn](mhc_sinkhorn.md) | 74/74 | 0.000905%-1.618% | 0.000905%-1.618% | 46/46 | 0.00164%-4.250% | 0.00164%-4.250% |
+| [mhc_sinkhorn · known history](mhc_sinkhorn-known-history.md) | 50/50 | 0.000802%-1.569% | 0.000802%-1.569% | 36/36 | 0.00146%-4.118% | 0.00146%-4.118% |
+| [mhc_pre_sinkhorn](mhc_pre_sinkhorn.md) | 0/24 | N/A | N/A | 0/20 | N/A | N/A |
+| [mhc_post · shape](mhc_post-shape.md) | 151/151 | 0.012%-41.582% | 0.012%-41.582% | 88/88 | 0.034%-101.512% | 0.034%-100.000% |
+| [mhc_post · stream](mhc_post-stream.md) | 151/151 | 0.00657%-37.884% | 0.00657%-37.884% | 88/88 | 0.019%-106.745% | 0.019%-100.000% |
+| [mhc](mhc.md) | 0/24 | N/A | N/A | 0/10 | N/A | N/A |
+| [vllm_hc_post](vllm_hc_post.md) | 15/15 | 0.073%-17.000% | 0.073%-17.000% | 15/15 | 0.208%-127.658% | 0.208%-100.000% |
+| [kda_recurrent](kda_recurrent.md) | 14/14 | 0.091%-0.356% | 0.091%-0.356% | 10/10 | 0.255%-1.002% | 0.255%-1.002% |
+| [fla_kda_v2](fla_kda_v2.md) | 18/18 | 0.155%-0.787% | 0.155%-0.787% | 17/17 | 0.442%-2.240% | 0.442%-2.240% |
+| [gmm2](gmm2.md) | 15/15 | 0.032%-0.933% | 0.032%-0.933% | 10/10 | 0.093%-1.404% | 0.093%-1.404% |
+| [grouped_matmul_swiglu_quant_v2](grouped_matmul_swiglu_quant_v2.md) | 15/15 | 0.030%-0.941% | 0.030%-0.941% | 10/10 | 0.084%-0.992% | 0.084%-0.992% |
+| [moe_ffn](moe_ffn.md) | 15/15 | 0.030%-0.938% | 0.030%-0.938% | 10/10 | 0.087%-1.103% | 0.087%-1.103% |
+| [moe_gating_top_k](moe_gating_top_k.md) | 12/12 | 0.00711%-0.434% | 0.00711%-0.434% | 10/10 | 0.051%-1.228% | 0.051%-1.228% |
+| [cast_bf16_fp32](cast_bf16_fp32.md) | 33/33 | 0.0049%-157.680% | 0.0049%-100.000% | 32/32 | 0.014%-287.266% | 0.014%-100.000% |
+| [sigmoid_fp32](sigmoid_fp32.md) | 23/23 | 0.000892%-127.615% | 0.000892%-100.000% | 20/20 | 0.060%-181.433% | 0.060%-100.000% |
+| [attn_res_fwd](attn_res_fwd.md) | 21/21 | 0.019%-0.847% | 0.019%-0.847% | 21/21 | 0.055%-2.405% | 0.055%-2.405% |
+| [attn_res_fwd · resident inference prefill](attn_res_fwd-resident-inference-prefill.md) | 0/0 | N/A | N/A | 0/0 | N/A | N/A |
+| [matmul_mx_native](matmul_mx_native.md) | 14/14 | 0.113%-28.991% | 0.113%-28.991% | 14/14 | 0.336%-55.055% | 0.336%-55.055% |
+| [matmul_mx_mixed](matmul_mx_mixed.md) | 14/14 | 0.114%-28.297% | 0.114%-28.297% | 14/14 | 0.355%-71.790% | 0.355%-71.790% |
+| [quant_mxfp4](quant_mxfp4.md) | 4/4 | 0.018%-1.079% | 0.018%-1.079% | 4/4 | 0.056%-3.283% | 0.056%-3.283% |
+| [candidate_filtered_indexer](candidate_filtered_indexer.md) | 0/0 | N/A | N/A | 0/0 | N/A | N/A |
+| [cache_load_mxfp4](cache_load_mxfp4.md) | 0/0 | N/A | N/A | 0/0 | N/A | N/A |
+| [cache_load_fp8](cache_load_fp8.md) | 0/0 | N/A | N/A | 0/0 | N/A | N/A |
+| [routed_grouped_matmul_mxfp4](routed_grouped_matmul_mxfp4.md) | 0/0 | N/A | N/A | 0/0 | N/A | N/A |
+| [quant_token_fp8](quant_token_fp8.md) | 3/3 | 0.094%-2.376% | 0.094%-2.376% | 3/3 | 0.268%-6.867% | 0.268%-6.867% |
+| [cache_load_mxfp4_antimx](cache_load_mxfp4_antimx.md) | 2/2 | 0.00266%-0.386% | 0.00266%-0.386% | 2/2 | 0.00761%-1.104% | 0.00761%-1.104% |
+| [routed_grouped_matmul_mxfp4_v5](routed_grouped_matmul_mxfp4_v5.md) | 3/3 | 0.168%-2.444% | 0.168%-2.444% | 3/3 | 0.480%-6.983% | 0.480%-6.983% |
+| **全部合同窗** | 1101/1173 | 0.000802%-157.680% | 0.000802%-100.000% | 847/887 | 0.00146%-287.266% | 0.00146%-100.000% |
 
 ## 冻结独立
 
-| 合同 | DT 可比/完整窗 | DT 逻辑系数 | PR 可比/完整窗 | PR 逻辑系数 |
-| --- | --- | --- | --- | --- |
-| [quant](quant.md) | 0/0 | N/A | 0/0 | N/A |
-| [matmul](matmul.md) | 0/0 | N/A | 0/0 | N/A |
-| [fa](fa.md) | 0/0 | N/A | 0/0 | N/A |
-| [lightning_indexer](lightning_indexer.md) | 0/0 | N/A | 0/0 | N/A |
-| [addmm](addmm.md) | 0/0 | N/A | 0/0 | N/A |
-| [rmsnorm · compact CA](rmsnorm-compact-ca.md) | 0/0 | N/A | 0/0 | N/A |
-| [rmsnorm · msopprof](rmsnorm-msopprof.md) | 0/0 | N/A | 0/0 | N/A |
-| [rmsnorm · visible stream](rmsnorm-visible-stream.md) | 0/0 | N/A | 0/0 | N/A |
-| [mhc_pre](mhc_pre.md) | 0/0 | N/A | 0/0 | N/A |
-| [mhc_sinkhorn](mhc_sinkhorn.md) | 0/0 | N/A | 0/0 | N/A |
-| [mhc_sinkhorn · known history](mhc_sinkhorn-known-history.md) | 0/0 | N/A | 0/0 | N/A |
-| [mhc_pre_sinkhorn](mhc_pre_sinkhorn.md) | 0/0 | N/A | 0/0 | N/A |
-| [mhc_post · shape](mhc_post-shape.md) | 0/0 | N/A | 0/0 | N/A |
-| [mhc_post · stream](mhc_post-stream.md) | 0/0 | N/A | 0/0 | N/A |
-| [mhc](mhc.md) | 0/0 | N/A | 0/0 | N/A |
-| [vllm_hc_post](vllm_hc_post.md) | 0/0 | N/A | 0/0 | N/A |
-| [kda_recurrent](kda_recurrent.md) | 0/0 | N/A | 0/0 | N/A |
-| [fla_kda_v2](fla_kda_v2.md) | 0/0 | N/A | 0/0 | N/A |
-| [gmm2](gmm2.md) | 0/0 | N/A | 0/0 | N/A |
-| [grouped_matmul_swiglu_quant_v2](grouped_matmul_swiglu_quant_v2.md) | 0/0 | N/A | 0/0 | N/A |
-| [moe_ffn](moe_ffn.md) | 0/0 | N/A | 0/0 | N/A |
-| [moe_gating_top_k](moe_gating_top_k.md) | 0/0 | N/A | 0/0 | N/A |
-| [cast_bf16_fp32](cast_bf16_fp32.md) | 0/0 | N/A | 0/0 | N/A |
-| [sigmoid_fp32](sigmoid_fp32.md) | 0/0 | N/A | 0/0 | N/A |
-| [attn_res_fwd](attn_res_fwd.md) | 0/0 | N/A | 0/0 | N/A |
-| [attn_res_fwd · resident inference prefill](attn_res_fwd-resident-inference-prefill.md) | 0/0 | N/A | 0/0 | N/A |
-| [matmul_mx_native](matmul_mx_native.md) | 10/10 | 13.002% | 10/10 | 32.742% |
-| [matmul_mx_mixed](matmul_mx_mixed.md) | 10/10 | 12.113% | 10/10 | 30.025% |
-| [quant_mxfp4](quant_mxfp4.md) | 10/10 | 15.073% | 10/10 | 42.096% |
-| [candidate_filtered_indexer](candidate_filtered_indexer.md) | 0/0 | N/A | 0/0 | N/A |
-| [cache_load_mxfp4](cache_load_mxfp4.md) | 0/0 | N/A | 0/0 | N/A |
-| [cache_load_fp8](cache_load_fp8.md) | 0/0 | N/A | 0/0 | N/A |
-| [routed_grouped_matmul_mxfp4](routed_grouped_matmul_mxfp4.md) | 0/0 | N/A | 0/0 | N/A |
-| [quant_token_fp8](quant_token_fp8.md) | 10/10 | 1.584% | 10/10 | 4.532% |
-| [cache_load_mxfp4_antimx](cache_load_mxfp4_antimx.md) | 10/10 | 0.252% | 10/10 | 0.727% |
-| [routed_grouped_matmul_mxfp4_v5](routed_grouped_matmul_mxfp4_v5.md) | 10/10 | 15.676% | 10/10 | 35.287% |
-| **全部合同窗** | 60/60 | 10.701% | 60/60 | 27.372% |
+| 合同 | DT 可比/完整窗 | DT 原窗 U 范围 | DT 冷读写 U 范围 | PR 可比/完整窗 | PR 原窗 U 范围 | PR 冷读写 U 范围 |
+| --- | --- | --- | --- | --- | --- | --- |
+| [quant](quant.md) | 0/0 | N/A | N/A | 0/0 | N/A | N/A |
+| [matmul](matmul.md) | 0/0 | N/A | N/A | 0/0 | N/A | N/A |
+| [fa](fa.md) | 0/0 | N/A | N/A | 0/0 | N/A | N/A |
+| [lightning_indexer](lightning_indexer.md) | 0/0 | N/A | N/A | 0/0 | N/A | N/A |
+| [addmm](addmm.md) | 0/0 | N/A | N/A | 0/0 | N/A | N/A |
+| [rmsnorm · compact CA](rmsnorm-compact-ca.md) | 0/0 | N/A | N/A | 0/0 | N/A | N/A |
+| [rmsnorm · msopprof](rmsnorm-msopprof.md) | 0/0 | N/A | N/A | 0/0 | N/A | N/A |
+| [rmsnorm · visible stream](rmsnorm-visible-stream.md) | 0/0 | N/A | N/A | 0/0 | N/A | N/A |
+| [mhc_pre](mhc_pre.md) | 0/0 | N/A | N/A | 0/0 | N/A | N/A |
+| [mhc_sinkhorn](mhc_sinkhorn.md) | 0/0 | N/A | N/A | 0/0 | N/A | N/A |
+| [mhc_sinkhorn · known history](mhc_sinkhorn-known-history.md) | 0/0 | N/A | N/A | 0/0 | N/A | N/A |
+| [mhc_pre_sinkhorn](mhc_pre_sinkhorn.md) | 0/0 | N/A | N/A | 0/0 | N/A | N/A |
+| [mhc_post · shape](mhc_post-shape.md) | 0/0 | N/A | N/A | 0/0 | N/A | N/A |
+| [mhc_post · stream](mhc_post-stream.md) | 0/0 | N/A | N/A | 0/0 | N/A | N/A |
+| [mhc](mhc.md) | 0/0 | N/A | N/A | 0/0 | N/A | N/A |
+| [vllm_hc_post](vllm_hc_post.md) | 0/0 | N/A | N/A | 0/0 | N/A | N/A |
+| [kda_recurrent](kda_recurrent.md) | 0/0 | N/A | N/A | 0/0 | N/A | N/A |
+| [fla_kda_v2](fla_kda_v2.md) | 0/0 | N/A | N/A | 0/0 | N/A | N/A |
+| [gmm2](gmm2.md) | 0/0 | N/A | N/A | 0/0 | N/A | N/A |
+| [grouped_matmul_swiglu_quant_v2](grouped_matmul_swiglu_quant_v2.md) | 0/0 | N/A | N/A | 0/0 | N/A | N/A |
+| [moe_ffn](moe_ffn.md) | 0/0 | N/A | N/A | 0/0 | N/A | N/A |
+| [moe_gating_top_k](moe_gating_top_k.md) | 0/0 | N/A | N/A | 0/0 | N/A | N/A |
+| [cast_bf16_fp32](cast_bf16_fp32.md) | 0/0 | N/A | N/A | 0/0 | N/A | N/A |
+| [sigmoid_fp32](sigmoid_fp32.md) | 0/0 | N/A | N/A | 0/0 | N/A | N/A |
+| [attn_res_fwd](attn_res_fwd.md) | 0/0 | N/A | N/A | 0/0 | N/A | N/A |
+| [attn_res_fwd · resident inference prefill](attn_res_fwd-resident-inference-prefill.md) | 0/0 | N/A | N/A | 0/0 | N/A | N/A |
+| [matmul_mx_native](matmul_mx_native.md) | 10/10 | 5.010%-28.554% | 5.010%-28.554% | 10/10 | 13.751%-53.927% | 13.751%-53.927% |
+| [matmul_mx_mixed](matmul_mx_mixed.md) | 10/10 | 3.516%-20.527% | 3.516%-20.527% | 10/10 | 9.544%-55.846% | 9.544%-55.846% |
+| [quant_mxfp4](quant_mxfp4.md) | 10/10 | 0.072%-49.597% | 0.072%-49.597% | 10/10 | 0.220%-109.246% | 0.220%-100.000% |
+| [candidate_filtered_indexer](candidate_filtered_indexer.md) | 0/0 | N/A | N/A | 0/0 | N/A | N/A |
+| [cache_load_mxfp4](cache_load_mxfp4.md) | 0/0 | N/A | N/A | 0/0 | N/A | N/A |
+| [cache_load_fp8](cache_load_fp8.md) | 0/0 | N/A | N/A | 0/0 | N/A | N/A |
+| [routed_grouped_matmul_mxfp4](routed_grouped_matmul_mxfp4.md) | 0/0 | N/A | N/A | 0/0 | N/A | N/A |
+| [quant_token_fp8](quant_token_fp8.md) | 10/10 | 0.186%-4.677% | 0.186%-4.677% | 10/10 | 0.531%-13.349% | 0.531%-13.349% |
+| [cache_load_mxfp4_antimx](cache_load_mxfp4_antimx.md) | 10/10 | 0.00133%-0.864% | 0.00133%-0.864% | 10/10 | 0.00381%-2.528% | 0.00381%-2.528% |
+| [routed_grouped_matmul_mxfp4_v5](routed_grouped_matmul_mxfp4_v5.md) | 10/10 | 0.064%-64.608% | 0.064%-64.608% | 10/10 | 0.182%-83.912% | 0.182%-83.912% |
+| **全部合同窗** | 60/60 | 0.00133%-64.608% | 0.00133%-64.608% | 60/60 | 0.00381%-109.246% | 0.00381%-100.000% |
 
 ## 只有 CA 实测的输入
 

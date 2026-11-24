@@ -1,5 +1,8 @@
 # 在 SIMPlatform 中切换算子后端
 
+950DT 的长上下文场景已覆盖三个模型的 prefill 与推测 decode。全图后端默认要求冷读写在本节点内付费，原有 Roofline 后端仍可用同一份任务运行。[各配置的两阶段时延、资源约束和复算方式](context-sweep.md)
+
+
 | 任务 TOML 中的 `prediction.backends` | 计时范围 |
 |---|---|
 | `["operator_sim_full"]` | 对 27 个 decode 模板的全部原始调用独立定价，含设备、网络和视图。新合同缺失会在系统账本显示 miss。 |

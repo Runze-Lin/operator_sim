@@ -1,0 +1,169 @@
+{
+  "v41-flash-1048576-b1-tp8ep32-prefill-kv1044480-q4096": {
+    "legacy_us": 15176233.893167062,
+    "full_us": 870933.2203432692,
+    "restore": [
+      {
+        "name": "inference::candidate_filtered_indexer",
+        "nodes": 4,
+        "serial_delta_us": 14232726.523620011,
+        "full_with_legacy_price_us": 15103659.743963312,
+        "example_input_shapes": [
+          [
+            4096,
+            32,
+            128
+          ],
+          [
+            1,
+            1048576,
+            128
+          ],
+          [
+            4096,
+            32
+          ],
+          [
+            4096
+          ],
+          [
+            4096,
+            2048
+          ]
+        ]
+      },
+      {
+        "name": "inference::lightning_indexer",
+        "nodes": 4,
+        "serial_delta_us": 134484.40093989315,
+        "full_with_legacy_price_us": 1005417.6212831629,
+        "example_input_shapes": [
+          [
+            4096,
+            32,
+            128
+          ],
+          [
+            1,
+            524288,
+            128
+          ],
+          [
+            4096,
+            32
+          ],
+          [
+            4096
+          ]
+        ]
+      },
+      {
+        "name": "npu::npu_grouped_matmul",
+        "nodes": 120,
+        "serial_delta_us": 25571.618577287343,
+        "full_with_legacy_price_us": 895993.9981406529,
+        "example_input_shapes": [
+          [
+            4096,
+            4096
+          ],
+          [
+            1,
+            2048,
+            1024
+          ],
+          [
+            1,
+            64,
+            1024,
+            2
+          ],
+          [
+            4096
+          ]
+        ]
+      }
+    ]
+  },
+  "kimi-k31-131072-b32-tp8ep64-decode-kv131072-q1": {
+    "stage": "target",
+    "node": "202",
+    "raw_name": "npu::npu_dynamic_mx_quant",
+    "contract": "quant_mxfp4",
+    "input_shapes": [
+      [
+        32,
+        131081,
+        576
+      ]
+    ],
+    "time_us": 4561.320118595426,
+    "plan": {
+      "active_aic": 0,
+      "active_aiv": 64,
+      "cols_per_core": 512,
+      "iterations": 1425,
+      "rows_per_core": 131081,
+      "slice_cols": 512,
+      "tile": [
+        92,
+        512
+      ],
+      "waves": 1
+    }
+  },
+  "kimi-k31-131072-b32-tp8ep64-decode-kv131583-q1": {
+    "stage": "target",
+    "node": "202",
+    "raw_name": "npu::npu_dynamic_mx_quant",
+    "contract": "quant_mxfp4",
+    "input_shapes": [
+      [
+        32,
+        131592,
+        576
+      ]
+    ],
+    "time_us": 2583.6098482737975,
+    "plan": {
+      "active_aic": 0,
+      "active_aiv": 64,
+      "cols_per_core": 576,
+      "iterations": 803,
+      "rows_per_core": 65796,
+      "slice_cols": 512,
+      "tile": [
+        82,
+        576
+      ],
+      "waves": 1
+    }
+  },
+  "kimi-k31-131072-b32-tp8ep64-decode-kv132094-q1": {
+    "stage": "target",
+    "node": "202",
+    "raw_name": "npu::npu_dynamic_mx_quant",
+    "contract": "quant_mxfp4",
+    "input_shapes": [
+      [
+        32,
+        132103,
+        576
+      ]
+    ],
+    "time_us": 4596.832736330679,
+    "plan": {
+      "active_aic": 0,
+      "active_aiv": 64,
+      "cols_per_core": 512,
+      "iterations": 1436,
+      "rows_per_core": 132103,
+      "slice_cols": 512,
+      "tile": [
+        92,
+        512
+      ],
+      "waves": 1
+    }
+  }
+}

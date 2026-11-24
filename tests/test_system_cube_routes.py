@@ -22,6 +22,18 @@ class SystemCubeTests(unittest.TestCase):
         self.assertIsNone(estimate_full_features(replace(f,inputs=(f.inputs[0],tensor(F32,(5120,384)))),
                                                 chip=self.chip).latency_us)
 
+    def test_prefill_last_token_matmul_packs_only_selected_rows(self):
+        m,n,k=16,16160,7168
+        def price(pitch):
+            f=Features('aten.mm.default',(tensor(BF16,(m,k),(pitch,1)),tensor(BF16,(k,n),(1,k))),
+                       (tensor(BF16,(m,n)),))
+            return estimate_full_features(f,chip=self.chip)
+        packed, dense = price(4096*k), price(k)
+        self.assertEqual(packed.contract,dense.contract+'/pack_rows')
+        self.assertEqual(packed.work['logical_read_bytes']-dense.work['logical_read_bytes'],2*m*k)
+        self.assertAlmostEqual(packed.latency_us-dense.latency_us,packed.work['schedule']['pack_us'])
+        self.assertIsNone(price(k-1).latency_us)
+
     def test_router_fp32_retains_native_split_k(self):
         m,n,k = 9,896,7168
         f = Features('inference::matmul_rhs_transposed',(tensor(BF16,(m,k)),tensor(BF16,(n,k))),

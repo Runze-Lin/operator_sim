@@ -27,7 +27,7 @@ print(r.work["cube_ops"], r.work["logical_read_bytes"], r.work["logical_write_by
 
 批量仿真在同一进程复用模型和芯片配置。已知 kernel 发起顺序时，为每卡每条流建立一个 `OperatorStream`，让 RMSNorm 和 mHC Post 等算子看到同流前序。系统框架负责跨流并发和设备间调度；全图入口还可给 TP/EP 通信提供本卡价格。[接入契约](docs/integration.md) · [可运行的调度器示例](examples/system_sim.py)
 
-在 SIMPlatform 的任务 TOML 中设置 `[prediction]` 下的 `backends = ["operator_sim_full"]`，即可对本仓核对过的 27 组 decode 图全量定价。该入口覆盖 80 个原始调用名，包括有 dtype/布局要求的计算、跨卡路由、零设备时间的视图及分配。原 Roofline 或按原生合同选择的混合后端仍可单独运行。[三种后端的选法](docs/sim-platform.md) · [27 组比较和逐算子账本](docs/system-full-comparison.md)
+在 SIMPlatform 的任务 TOML 中设置 `[prediction]` 下的 `backends = ["operator_sim_full"]`，即可按实际 shape、精度、并行切分和开销估计每张图。当前已核对原 27 组 decode，以及三个模型、四种上下文长度的 prefill 与 decode。新增矩阵覆盖 86 个原始调用名，包括有 dtype/布局要求的计算、跨卡路由、零设备时间的视图及分配。原 Roofline 或按原生合同选择的混合后端仍可单独运行。[三种后端的选法](docs/sim-platform.md) · [27 组比较和逐算子账本](docs/system-full-comparison.md)
 
 ## 从哪里读代码
 
@@ -40,14 +40,14 @@ print(r.work["cube_ops"], r.work["logical_read_bytes"], r.work["logical_write_by
 | 各算子的耗时误差、逐 shape 真值、验证边界 | [误差分析、逻辑 Roofline 系数与物理下界](docs/error-analysis.md) · [每个算子的全部 shape](docs/errors/README.md) · [可复算的参考数据](calibration/reference/) |
 | FA 的低位 KV cache、量化/反量化与 MoE 不同权重精度 | [精度组合、库入口与验证状态](docs/precision-coverage.md) |
 | 三种模型在 128Ki decode、三种并行配置和 B=1/16/64 的实际系统算子覆盖 | [全部调用、几何、证据与定价](docs/system-full-comparison.md) |
-| 在 SIMPlatform 启用精细算子后端，查看 27 组 decode 的时延差 | [安装与后端选择](docs/sim-platform.md) · [精度对齐后的 Roofline、逐节点与端到端核查](docs/roofline-audit.md) · [原后端对比](docs/system-full-comparison.md) |
+| 32Ki–1Mi 输入、1Ki 输出的 prefill/decode 对比，以及原 27 组 decode 复算 | [长上下文端到端结果、容量和分核](docs/context-sweep.md) · [安装与后端选择](docs/sim-platform.md) · [原 27 组审计](docs/roofline-audit.md) |
 | 从三种模型的 config 推导单卡 prefill shape | [工作负载示例](examples/workloads/) |
 | 开发新算子、重新校准、构建和测试 | [维护指南](CONTRIBUTING.md) · [CA 校准工具](calibration/) |
 
-单算子接口的 `latency_us` 可直接与 CA 比较。若系统需要为每次 kernel 发射增加外部开销，配置 `kernel_overhead_us` 后使用 `scheduled_us`。UB、L1、L2 容量可按设备设置。从 1.2.0 起，稠密 Matmul 可通过 `estimate` 选择原生 A4W4，或选择在核内展开权重的 A8W4。970DT 的设备耗时按目标配置外推。[芯片配置和精度支持表](docs/integration.md) · [MXFP4 Matmul 调用与算例](docs/examples/mxfp4-design.md) · [原生窄尾波](docs/examples/mx-native-tail.md) · [混合精度多 K 页交接](docs/examples/mx-handoff.md)
+单算子默认 `memory_policy="ca_window"`，设备时间可与相同计时口径的 CA 比较。系统全图默认 `cold_io`，按冷读并物化写回后的设备时间调度。若系统需要为每次 kernel 发射增加外部开销，配置 `kernel_overhead_us` 后使用 `scheduled_us`。UB、L1、L2 容量可按设备设置。从 1.2.0 起，稠密 Matmul 可通过 `estimate` 选择原生 A4W4，或选择在核内展开权重的 A8W4。970DT 的设备耗时按目标配置外推。[芯片配置和精度支持表](docs/integration.md) · [MXFP4 Matmul 调用与算例](docs/examples/mxfp4-design.md) · [原生窄尾波](docs/examples/mx-native-tail.md) · [混合精度多 K 页交接](docs/examples/mx-handoff.md)
 
 ## 如何解读预测
 
 950DT 和 950PR 用于 CA 校准；970DT 是按给定规格和继承的微架构参数进行的情景外推。改变核数、峰值吞吐、频率或可用带宽会改变资源定价，模型沿用已建模的实现策略。对接时请保留返回的 `status` 和 `reason`。含融合、量化、前序或布局约束的算子需要匹配实际调用合同。
 
-参考集登记 36 个合同、2,180 个模型与 CA 对照窗。连续 FP4 量化、逐 token FP8 量化、显式 FP4 cache 展开、原生路由 A4W4 专家乘均在 950DT/PR 各验证 10 个新的独立 shape。稠密 Matmul 和其他已校准算子的误差、未匹配的精度、额外的实测和 970DT 外推可逐项查询。三个模型的 80 个原始调用名在系统覆盖表中逐条列出。[逐算子误差](docs/error-analysis.md) · [系统图到设备实现的对应关系](docs/system-workload-coverage.md)
+参考集登记 36 个合同、2,180 个模型与 CA 对照窗。连续 FP4 量化、逐 token FP8 量化、显式 FP4 cache 展开、原生路由 A4W4 专家乘均在 950DT/PR 各验证 10 个新的独立 shape。稠密 Matmul 和其他已校准算子的误差、未匹配的精度、额外的实测和 970DT 外推可逐项查询。长上下文捕获的 86 个原始调用名和覆盖次数有单独账单。[长上下文覆盖账单](calibration/reference/context-950dt/coverage.csv)[逐算子误差](docs/error-analysis.md) · [系统图到设备实现的对应关系](docs/system-workload-coverage.md)

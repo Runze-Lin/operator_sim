@@ -35,8 +35,11 @@ if r.latency_us is not None:
 | `active_aic`、`active_aiv` | 活跃 Cube/Vector 核数估计，缺少证据可为 None。 |
 | `kernel_count`、`dispatch_overhead_us`、`scheduled_us` | 当前实现的物理发射次数、配置产生的总附加微秒、串行系统排程微秒。缺设备时间时三者为空。已单独模拟发射或异步队列的框架使用 `latency_us`。 |
 | `work` | `cube_ops` 和 `vec_ops` 为有用标量运算计数，另按 dtype、Vector 运算类型细分。`logical_read_bytes`、`logical_write_bytes` 按张量边界计数，实际 HBM 流量须另有证据。 |
-| `rates` | 工作量除以设备时间所得的 TOP/s 和逻辑 GB/s。`logical_roofline.time_factor` 给出按整张量读写计算的时间系数（旧字段为 `roofline.utilization`）。`physical_roofline` 给出可核实的耗时下界、缺失项及边界检查；完整物理利用率缺同窗控制器字节时返回 null。[公式和分母](error-analysis.md#纯-roofline-要用多少利用率) |
+| `rates` | 工作量除以设备时间所得的 TOP/s 和逻辑 GB/s。`logical_roofline.time_factor` 给出按整张量读写计算的时间系数；1.10 起 `roofline.utilization` 按所选内存策略返回 U。`physical_roofline` 给出可核实的耗时下界、缺失项及边界检查；完整物理利用率缺同窗控制器字节时返回 null。[公式和分母](error-analysis.md#纯-roofline-要用多少利用率) |
 | `projection` | 路线可提供分块方案、波数、阶段耗时、流水瓶颈及继承参数。诊断键随算子变化，通常调度只依赖上面的公共字段。 |
+
+
+`estimate`、CLI 的 `--memory-policy` 与 `OperatorStream(memory_policy=...)` 支持两种设备窗。`ca_window` 保留校准窗口，完整物理证据缺失时 `rates["roofline"]["utilization"]` 为 null。`cold_io` 假设所有逻辑输入冷读、逻辑输出写回；数值是该场景的等效 U，实际控制器利用率仍按独立证据给出。SIMPlatform 的 `operator_sim_full` 默认采用后者；注入 `FullOperatorSimBackend(memory_policy="ca_window")` 可以重放前者。需要 1.9.1 的原逻辑比值时读取 `rates["logical_roofline"]["time_factor"]`。
 
 ## 给出正确的本卡 shape
 

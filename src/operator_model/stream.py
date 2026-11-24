@@ -2,7 +2,7 @@
 from collections.abc import Mapping
 from dataclasses import replace
 
-from operator_model.backend import estimate
+from operator_model.backend import _memory_window, estimate
 from operator_model.chips import REFERENCE_NAME, load_chip
 from operator_model.scheduling.reference import ALIASES
 from operator_model.operators.rmsnorm.history import estimate_rms_history_band
@@ -36,7 +36,8 @@ class OperatorStream:
     """
 
     def __init__(self, chip=REFERENCE_NAME, *, experimental_post_repeats=True,
-                 track_sinkhorn_history=False, track_post_history=True, experimental_post_fragments=None):
+                 track_sinkhorn_history=False, track_post_history=True, experimental_post_fragments=None,
+                 memory_policy="ca_window"):
         if not isinstance(experimental_post_repeats, bool):
             raise TypeError('experimental_post_repeats must be a boolean')
         if not isinstance(track_sinkhorn_history, bool):
@@ -47,6 +48,9 @@ class OperatorStream:
             experimental_post_fragments = track_post_history
         if not isinstance(experimental_post_fragments, bool):
             raise TypeError('experimental_post_fragments must be a boolean')
+        if memory_policy not in ("ca_window", "cold_io"):
+            raise ValueError("memory_policy must be ca_window or cold_io")
+        self.memory_policy = memory_policy
         self._post_fragments = experimental_post_fragments
         self._post_repeats = experimental_post_repeats
         self._track_sinkhorn = track_sinkhorn_history
@@ -151,7 +155,7 @@ class OperatorStream:
 
     def preview(self, op, shape, attrs=None, *, dtype=None):
         """Price a candidate without changing the next call."""
-        return self._dispatch(op, shape, attrs, dtype)[0]
+        return _memory_window(self._dispatch(op, shape, attrs, dtype)[0], self.chip, self.memory_policy)
 
     def _preview_existing(self, family, op, shape, attrs, dtype):
         if family not in _STATEFUL or (attrs is not None and not isinstance(attrs, Mapping)):
@@ -207,4 +211,4 @@ class OperatorStream:
         track_post = family == 'mhc_post' and (self._post_repeats or track_route)
         self._last_post = (self.chip, tuple(shape)) if track_post else None
         self._post_route = result.projection['target_plan']['route'] if track_route and track_post else None
-        return result
+        return _memory_window(result,self.chip,self.memory_policy)
