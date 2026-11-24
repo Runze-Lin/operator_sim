@@ -1,6 +1,7 @@
 """Compare full rank-0 inference tasks against their archived per-node Roofline ledgers."""
 import argparse
 import csv
+import gzip
 from collections import Counter, defaultdict
 from concurrent.futures import ProcessPoolExecutor
 from hashlib import sha256
@@ -22,7 +23,7 @@ def cases(matrix):
                 yield matrix / (model + label + suffix), model, layout, batch
 
 
-def capture(job):
+def capture(job, *, ledger=False):
     # Import in the worker so the summary and merge step need only the standard library.
     from sim_platform.api.inference import run_inference
 
@@ -47,6 +48,7 @@ def capture(job):
     status = Counter()
     digest = sha256()
     old_total = new_total = 0.
+    paired_nodes = []
     for index, ((stage, _, repeats), evaluation) in enumerate(
         zip(stat.stage_durations_us, result.evaluations, strict=True)
     ):
@@ -74,6 +76,8 @@ def capture(job):
             if prediction and state == 'success':
                 state = prediction.backend_name
             status[state] += 1
+            if ledger:
+                paired_nodes.append((stage, node.ref.node_id, node.raw_name, state, value, previous))
             if state == 'operator_sim':
                 counts = assigned[node.raw_name]
                 counts[0] += 1
@@ -96,6 +100,11 @@ def capture(job):
         'graph_sha256': digest.hexdigest(), 'task_sha256': sha256((case / 'task.toml').read_bytes()).hexdigest(),
     }
     (output / 'comparison.json').write_text(json.dumps(summary, indent=2) + '\n')
+    if ledger:
+        with gzip.open(output / 'nodes.csv.gz', 'wt', newline='') as stream:
+            writer = csv.writer(stream, lineterminator='\n')
+            writer.writerow(('stage', 'id', 'raw', 'source', 'us', 'roofline_us'))
+            writer.writerows(paired_nodes)
     return case.name, stat.duration_us
 
 

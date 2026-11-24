@@ -6,7 +6,7 @@ from calibration.report_pages import DT, PR, render_contract, summary_ranges, ut
 
 class ErrorPageTests(unittest.TestCase):
     def test_main_summary_spans_all_comparable_windows_on_each_chip(self):
-        header = '| 算子与输入合同（逐窗） | 等效 Roofline U 范围（DT / PR） | WAPE |\n|---|---|---|\n'
+        header = '| 算子与输入合同（逐窗） | 逻辑 Roofline 系数范围（DT / PR） | WAPE |\n|---|---|---|\n'
         body = ('| [A](errors/a.md) | OLD | 2% |\n'
                 '| [B](errors/b.md) | OLD | N/A |\n'
                 '| [C](errors/measured-only.md) | OLD | N/A |\n')

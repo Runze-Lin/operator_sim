@@ -42,7 +42,8 @@ def table(headings, body):
 def reprice(case_bytes, sku):
     chip = operator_model.load_chip(sku)
     result = predict(operator_model, json.loads(case_bytes), chip)
-    return result.latency_us, result.work['dtype'], result.rates['roofline']
+    return (result.latency_us, result.work['dtype'], result.rates['roofline'],
+            result.rates['physical_roofline'])
 
 
 def load_windows(path):
@@ -53,10 +54,12 @@ def load_windows(path):
             case = encoded({k: row.get(k) for k in ('op', 'shape', 'attrs', 'dtype', 'prefix')})
             for sku, field, destination in [(row['chip'], 'predicted_us', 'roofline'),
                                              (FUTURE, 'extrapolated_970dt_us', 'future_roofline')]:
-                current, dtype, roofline = reprice(case, sku)
+                current, dtype, roofline, physical = reprice(case, sku)
                 if not isclose(current, row[field], abs_tol=1e-7, rel_tol=1e-10):
                     raise ValueError(f'Archived prediction differs on line {index} for {sku}: {row[field]} vs {current}')
                 row[destination] = roofline
+                if sku == row['chip']:
+                    row['physical_roofline'] = physical
                 row['input_dtype'] = dtype
             row['line'] = index
             groups[row['contract']].append(row)
@@ -83,7 +86,7 @@ def summary_ranges(markdown, groups):
 
     lines = markdown.splitlines(keepends=True)
     start = next(i for i, line in enumerate(lines) if line.startswith('| 算子与输入合同（逐窗） |'))
-    column = lines[start].split('|').index(' 等效 Roofline U 范围（DT / PR） ')
+    column = lines[start].split('|').index(' 逻辑 Roofline 系数范围（DT / PR） ')
     seen = set()
     for i in range(start + 2, len(lines)):
         if not lines[i].startswith('|'):
@@ -117,18 +120,23 @@ def index_table(groups, role):
             count, value = utilization(selected)
             cells += [f'{count}/{len(selected)}', percent(value)]
         body.append(cells)
-    return table(['合同', 'DT 可比/完整窗', 'DT 等效利用率', 'PR 可比/完整窗', 'PR 等效利用率'], body)
+    return table(['合同', 'DT 可比/完整窗', 'DT 逻辑系数', 'PR 可比/完整窗', 'PR 逻辑系数'], body)
 
 
 def render_index(groups):
     count = sum(len(rows) for rows in groups.values())
+    known = [(row['physical_roofline']['known_lower_bound_us'], row) for rows in groups.values()
+             for row in rows if row['physical_roofline']['known_lower_bound_us'] is not None]
+    below_model = sum(row['physical_roofline']['below_known_bound'] for _, row in known)
+    below_ca = sum(row['ca_us'] < floor * (1 - 1e-12) for floor, row in known)
     sections = ['# 按合同查阅 CA 完整窗', f'共 {len(groups)} 个输入与计时合同、{count:,} 条记录。选合同可查看每次调用的本卡 shape、输入精度和前序、模型与 CA 设备耗时、查询耗时及 970DT 外推。同一 shape 的不同运行各占一行。',
-                '可比窗指能够同时取得等效 Roofline 理想时间和同一输入完整模型时间的窗口。合同汇总按 `Σ理想时间 / Σ模型时间` 计算，分子和分母取完全相同的可比窗。单次占比可超过 100%，例如来自 L2 的数据也可能计入逻辑搬运量。这里的分母是设备预测，CA 用于校验预测误差。970DT 列只有外推。',
+                '可比窗指能够同时取得逻辑 Roofline 基准时间和同一输入完整模型时间的窗口。合同汇总按 `Σ逻辑基准时间 / Σ模型时间` 计算，分子和分母取完全相同的可比窗。单次占比可超过 100%，例如来自 L2 的数据也可能计入逻辑搬运量。这里的分母是设备预测，CA 用于校验预测误差。970DT 列只有外推。',
                 '[总误差与计时口径](../error-analysis.md) · [建模方法](../modeling-strategy.md) · [逐窗原始数据](../../calibration/reference/windows.jsonl)']
+    sections.append(f'已知物理下界覆盖 {len(known):,}/{count:,} 个窗口，其中模型低于下界 {below_model} 窗、CA 低于下界 {below_ca} 窗。当前可核实的项为稠密 Cube 乘加。完整物理利用率还需要同窗 HBM 计数及适用的 Vector 指令吞吐。')
     for role, title in ROLES.items():
         sections += [f'## {title}', index_table(groups, role)]
     sections += ['## 只有 CA 实测的输入', '[FP8 cache 解包、非连续 FP4 量化、残差加和广播乘的双端整窗](measured-only.md)。这些输入还没有可独立评价的价格。', '## 其它精度与实现',
-                '表内合同以参考数据的当前登记为准。表外精度与实现（如 A8W4 专家 GMM 或低精度 FA）应按其各自的完整窗确定 CA 误差与等效利用率，缺少匹配证据时为 N/A。[精度与实现覆盖](../precision-coverage.md)']
+                '表内合同以参考数据的当前登记为准。表外精度与实现（如 A8W4 专家 GMM 或低精度 FA）应按其各自的完整窗确定 CA 误差与逻辑时间系数，缺少匹配证据时为 N/A。[精度与实现覆盖](../precision-coverage.md)']
     sections += ['## 复算与更新',
                  '在安装了本仓库包的环境，从仓库根目录执行 `python -m calibration.report_pages --check` 可重算全部页面并检查归档耗时。更新参考记录后，执行 `python -m calibration.report_pages` 重新生成。[生成工具](../../calibration/report_pages.py)']
     return '\n\n'.join(sections) + '\n'
@@ -154,10 +162,12 @@ def implementation(row):
 def render_contract(contract, rows):
     sections = [f'# {contract} · 逐窗误差', '[全部合同](README.md) · [总误差分析](../error-analysis.md) · [原始逐窗记录](../../calibration/reference/windows.jsonl)']
     if not rows:
-        sections += ['950DT、950PR 均有 0 个合格完整窗。模型对照、CA 误差和等效利用率为 N/A，970DT 无对应校准窗。']
+        sections += [('950DT、950PR 当前均有 0 个匹配系统融合排程的实测窗。该排程的 CA 误差为 N/A，三款芯片的资源预测均标为外推。'
+                      if contract == 'candidate_filtered_indexer' else
+                      '950DT、950PR 均有 0 个合格完整窗。模型对照、完整窗误差和物理利用率为 N/A，970DT 无对应校准窗。')]
         evidence = {
             'attn_res_fwd · resident inference prefill': '此为 UB 驻留的推理 prefill，物化输出的样本列在另一个合同。[AttnResFwd 算例与证据边界](../examples/attn_res_fwd.md)',
-            'candidate_filtered_indexer': '系统捕获了候选块索引及其形状。算例分别核算全表打分与候选优先的工作量。[候选 Indexer 算例](../examples/candidate-filtered-indexer.md)',
+            'candidate_filtered_indexer': '系统捕获了候选块索引及其形状。系统按官方全表打分、候选掩码和 top-k 的顺序定价。原生候选算子的完整 CA 窗尚缺。两种显式分解有双端 CA，逐个 kernel 可查。[分解实测与核身份](../../calibration/candidate_indexer/README.md) · [候选 Indexer 算例](../examples/candidate-filtered-indexer.md)',
             'cache_load_mxfp4': '显式 AntiMxQuant 有[独立双端校准](cache_load_mxfp4_antimx.md)。系统捕获了 packed E2M1 值、按 32 元素分组并补齐的 E8M0 scale 和 BF16 物化输出。[缓存读取算例](../examples/cache_load.md)',
             'cache_load_fp8': '默认调用没有派发身份。显式 AscendAntiQuant 有原生实测，[FP8 的双端设备时间](measured-only.md)。系统捕获了 E4M3FN 值、逐行 FP32 scale 和 BF16 物化输出。[缓存读取算例](../examples/cache_load.md)',
             'routed_grouped_matmul_mxfp4': '显式 GroupedMatmulV5 有[双端校准](routed_grouped_matmul_mxfp4_v5.md)。系统捕获了路由专家的 A4W4 分组乘法，工作量取决于专家行分布。稠密 Matmul 的 CA 窗属于另一合同。[路由专家 GMM 算例](../examples/routed-grouped-matmul.md)',
@@ -165,7 +175,7 @@ def render_contract(contract, rows):
         if contract in evidence:
             sections.append(evidence[contract])
         return '\n\n'.join(sections) + '\n'
-    sections.append('模型和 CA 均为设备微秒（µs）。有符号误差为 `100 × (模型 / CA − 1)`。等效 Roofline 利用率 U 为同一输入的理想时间除以模型设备时间。表内同时列出理想时间的控制项；合同汇总只对可比窗按 `Σ理想时间 / Σ模型时间` 聚合。查询列为归档 CPU 墙钟毫秒（ms），顺序为 950 / 970。970DT 的时间与 U 都是外推。')
+    sections.append('模型和 CA 均为设备微秒（µs）。有符号误差为 `100 × (模型 / CA − 1)`。逻辑系数 U 等于按逻辑张量流量和名义峰值折算的基准时间除以模型设备时间。这里没有同窗 HBM 控制器流量，物理利用率为 N/A。表内同时列出逻辑基准的控制项；合同汇总只对可比窗按 `Σ逻辑基准时间 / Σ模型时间` 聚合。查询列为归档 CPU 墙钟毫秒（ms），顺序为 950 / 970。970DT 的时间与 U 都是外推。')
 
     attributes = dictionary(encoded(r['attrs']) for r in rows if r['attrs'])
     histories = dictionary(encoded(r['prefix']) for r in rows if r.get('prefix'))
@@ -186,7 +196,7 @@ def render_contract(contract, rows):
             count, value = utilization(selected)
             summary.append([chip, label, error['shapes'], len(selected), number(error['wape_pct'],2),
                             number(error['max_pct'],2), count, percent(value)])
-    sections += ['## 完整窗与误差', table(['芯片','数据角色','不同 shape','完整窗','WAPE %','最大绝对误差 %','U 可比窗','汇总 U'],summary),
+    sections += ['## 完整窗与误差', table(['芯片','数据角色','不同 shape','完整窗','WAPE %','最大绝对误差 %','U 可比窗','汇总逻辑系数'],summary),
                  '下表的行号链接到 JSONL 原记录，其中包含全长 trace 指纹和已归档的收据字段。A、H、K 分别链接到本页的属性、前序和实现。前序列的“未传”表示本次调用未提供流历史，“空流”表示已知从空的 OperatorStream 开始；显式 resident_aiv 归在属性内。']
     for chip in (DT, PR):
         for role, label in ROLES.items():
@@ -205,11 +215,12 @@ def render_contract(contract, rows):
                 fu = percent(future['utilization'])
                 if future['utilization'] is None and future.get('reason'):
                     fu += f"（原因 {reasons[future['reason']]}）"
+                floor = row.get('physical_roofline', {}).get('known_lower_bound_us')
                 body.append([ref,'×'.join(map(str,row['shape'])),row['input_dtype'],f'{attr} / {history}',link_id('K', kernels[implementation(row)]),
                              number(row['predicted_us']),number(row['ca_us']),number(row['signed_error_pct'],2,True),
-                             f'{lower} / {bound}',fraction,number(row['extrapolated_970dt_us']),fu,
+                             f'{lower} / {bound}',fraction,number(floor),number(row['extrapolated_970dt_us']),fu,
                              f"{number(row['query_ms'],3)} / {number(row['query_970_ms'],3)}"])
-            sections += [f'## {chip} · {label}',table(['原始行','本卡 shape','主输入 dtype','属性 / 前序','实现','模型 µs','CA µs','误差 %','理想 µs / 控制项','U','970 外推 µs','970 外推 U','查询 ms（950 / 970）'],body)]
+            sections += [f'## {chip} · {label}',table(['原始行','本卡 shape','主输入 dtype','属性 / 前序','实现','模型 µs','CA µs','误差 %','逻辑基准 µs / 控制项','逻辑系数','已知物理下界 µs','970 外推 µs','970 外推逻辑系数','查询 ms（950 / 970）'],body)]
     sections += ['## 实际调用的库实现', table(['编号','ACLNN 接口','实现提供方','设备 kernel，按执行顺序'],
                                   ((link_id('K', i, anchor=True),api,provider,' → '.join(f'`{name}`' for name in stages))
                                    for (api,provider,stages),i in kernels.items()))]

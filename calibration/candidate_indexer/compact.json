@@ -1,0 +1,202 @@
+[
+  {
+    "mode": "compact",
+    "chip": "Ascend950DT_9582",
+    "memory_model": "hbm3_8000M.ini",
+    "blocks": 100,
+    "selected": 75,
+    "compressed_keys": 800,
+    "candidate_keys": 600,
+    "heads": 32,
+    "query_rows": 1,
+    "head_dim": 128,
+    "correct_ordered_global_indices": 512,
+    "wrong": 0,
+    "stages": [
+      {
+        "api": "aclnnGatherV2",
+        "kernel": "GatherV2_f4ec6d07b1e1efd35b648bd61be613bf_high_precision_1000000299",
+        "object": "ops_nn/gather_v2/GatherV2_f4ec6d07b1e1efd35b648bd61be613bf_high_precision.o",
+        "elf_sha256": "4a17990062bd7e92b48e970de389120ea50ede0b3b21f402da81ab24304d81fa",
+        "physical_shards_sha256": "45dd66b2bb7c830b11adb5857d9f8aca63bb2864233c12798eb7404309f19a8c",
+        "aic": 0,
+        "aiv": 64,
+        "cycles": 6053,
+        "window_us": 3.668485
+      },
+      {
+        "api": "aclnnGatherV2",
+        "kernel": "GatherV2_afad89624cdeac6ff17930004c7a0534_high_precision_2000000008",
+        "object": "ops_nn/gather_v2/GatherV2_afad89624cdeac6ff17930004c7a0534_high_precision.o",
+        "elf_sha256": "ce2373570751c0670b32914f5572a14fd2aa302945a3c2e935245c1c1efe548d",
+        "physical_shards_sha256": "325939e1b1dd18c2f66be5fe503ca1d4e30e251a2a7d20d84a3d3a6d348409d6",
+        "aic": 0,
+        "aiv": 3,
+        "cycles": 3574,
+        "window_us": 2.166061
+      },
+      {
+        "api": "aclnnLightningIndexer",
+        "kernel": "LightningIndexer_2517851d7f53b28f971ff94bfa4b7037_203547_mix_aic",
+        "object": "ops_transformer/lightning_indexer/LightningIndexer_2517851d7f53b28f971ff94bfa4b7037.o",
+        "elf_sha256": "4940c25dd5f72cce57bf18c30df8568ecce22d0f472c513235a0dc03db905ca6",
+        "physical_shards_sha256": "0fab564814afe12246a411981ccaeec8f68468d6cf091a1d9682377935930591",
+        "aic": 32,
+        "aiv": 64,
+        "cycles": 9045,
+        "window_us": 5.481818,
+        "mmad": [
+          {
+            "core": "core0.cubecore0",
+            "m_n_k_count": [
+              [
+                64,
+                88,
+                128,
+                1
+              ],
+              [
+                64,
+                128,
+                128,
+                4
+              ]
+            ],
+            "issue_intervals_cycles": [
+              627,
+              740,
+              300,
+              665
+            ]
+          }
+        ]
+      },
+      {
+        "api": "aclnnGatherV2",
+        "kernel": "GatherV2_afad89624cdeac6ff17930004c7a0534_high_precision_2000000004",
+        "object": "ops_nn/gather_v2/GatherV2_afad89624cdeac6ff17930004c7a0534_high_precision.o",
+        "elf_sha256": "ce2373570751c0670b32914f5572a14fd2aa302945a3c2e935245c1c1efe548d",
+        "physical_shards_sha256": "5263f42e369c5441d32d0013edb819e0536dc11ea6445857d1f1fc65a120d876",
+        "aic": 0,
+        "aiv": 4,
+        "cycles": 3019,
+        "window_us": 1.829697
+      },
+      {
+        "api": "aclnnSort",
+        "kernel": "Sort_int32_int64_high_performance_257",
+        "object": "ops_math/sort_apt/Sort_int32_int64_high_performance.o",
+        "elf_sha256": "dd012e74b094015812a0d05980992000d28a269f25f627fead2c07b6babd8466",
+        "physical_shards_sha256": "9abcea8af569e58cc571a3683bbfd79c191e7f6688d03cf24ce85aa166ecbbd1",
+        "aic": 0,
+        "aiv": 1,
+        "cycles": 6512,
+        "window_us": 3.946667
+      }
+    ],
+    "sum_kernel_windows_us": 17.092727,
+    "log_sha256": "2cd9e2eb22e575799ff5b4ef9b8ef0da0bd9ee7f77f80ba5fff600ab97fb4f24",
+    "probe_sha256": "5f0a67bbe68331a6ffaa4467bbf278107a5f22a24dee772d97c3742f822b9ef6",
+    "acquisition_wall_s": 113.84
+  },
+  {
+    "mode": "compact",
+    "chip": "Ascend950PR_957b",
+    "memory_model": "lpddr5_6400M_bailu.ini",
+    "blocks": 100,
+    "selected": 75,
+    "compressed_keys": 800,
+    "candidate_keys": 600,
+    "heads": 32,
+    "query_rows": 1,
+    "head_dim": 128,
+    "correct_ordered_global_indices": 512,
+    "wrong": 0,
+    "stages": [
+      {
+        "api": "aclnnGatherV2",
+        "kernel": "GatherV2_f4ec6d07b1e1efd35b648bd61be613bf_high_precision_1000000299",
+        "object": "ops_nn/gather_v2/GatherV2_f4ec6d07b1e1efd35b648bd61be613bf_high_precision.o",
+        "elf_sha256": "4a17990062bd7e92b48e970de389120ea50ede0b3b21f402da81ab24304d81fa",
+        "physical_shards_sha256": "6a031473b8f402127588266cce0fae037e8dd280c5c0accd7ebcd6fc52c63ea1",
+        "aic": 0,
+        "aiv": 56,
+        "cycles": 5660,
+        "window_us": 3.430303
+      },
+      {
+        "api": "aclnnGatherV2",
+        "kernel": "GatherV2_afad89624cdeac6ff17930004c7a0534_high_precision_2000000008",
+        "object": "ops_nn/gather_v2/GatherV2_afad89624cdeac6ff17930004c7a0534_high_precision.o",
+        "elf_sha256": "ce2373570751c0670b32914f5572a14fd2aa302945a3c2e935245c1c1efe548d",
+        "physical_shards_sha256": "f3b3ab813e4d336898048547d62cf6a58c24ddb4a247d17e8db575476c83f17f",
+        "aic": 0,
+        "aiv": 3,
+        "cycles": 3516,
+        "window_us": 2.130909
+      },
+      {
+        "api": "aclnnLightningIndexer",
+        "kernel": "LightningIndexer_2517851d7f53b28f971ff94bfa4b7037_203547_mix_aic",
+        "object": "ops_transformer/lightning_indexer/LightningIndexer_2517851d7f53b28f971ff94bfa4b7037.o",
+        "elf_sha256": "4940c25dd5f72cce57bf18c30df8568ecce22d0f472c513235a0dc03db905ca6",
+        "physical_shards_sha256": "ad098839f373b54fb83453478758748436d760c23f908b4f8fe63de72f602510",
+        "aic": 28,
+        "aiv": 56,
+        "cycles": 9073,
+        "window_us": 5.498788,
+        "mmad": [
+          {
+            "core": "core0.cubecore0",
+            "m_n_k_count": [
+              [
+                64,
+                88,
+                128,
+                1
+              ],
+              [
+                64,
+                128,
+                128,
+                4
+              ]
+            ],
+            "issue_intervals_cycles": [
+              585,
+              750,
+              300,
+              785
+            ]
+          }
+        ]
+      },
+      {
+        "api": "aclnnGatherV2",
+        "kernel": "GatherV2_afad89624cdeac6ff17930004c7a0534_high_precision_2000000004",
+        "object": "ops_nn/gather_v2/GatherV2_afad89624cdeac6ff17930004c7a0534_high_precision.o",
+        "elf_sha256": "ce2373570751c0670b32914f5572a14fd2aa302945a3c2e935245c1c1efe548d",
+        "physical_shards_sha256": "9cdbcd5914f6a0f378d5b8a11c9ea30d5408e11e2e782631c2a91fa74b484540",
+        "aic": 0,
+        "aiv": 4,
+        "cycles": 2998,
+        "window_us": 1.81697
+      },
+      {
+        "api": "aclnnSort",
+        "kernel": "Sort_int32_int64_high_performance_257",
+        "object": "ops_math/sort_apt/Sort_int32_int64_high_performance.o",
+        "elf_sha256": "dd012e74b094015812a0d05980992000d28a269f25f627fead2c07b6babd8466",
+        "physical_shards_sha256": "f9ae862b44b008d4fc47e68c982cdbea307011bbf48e5e41ec14c80c56450076",
+        "aic": 0,
+        "aiv": 1,
+        "cycles": 6690,
+        "window_us": 4.054545
+      }
+    ],
+    "sum_kernel_windows_us": 16.931515,
+    "log_sha256": "4ab1baab3d7890becb6472f15ca553969338acc8bed8b22c9467739bc3f40ef3",
+    "probe_sha256": "5f0a67bbe68331a6ffaa4467bbf278107a5f22a24dee772d97c3742f822b9ef6",
+    "acquisition_wall_s": 129.22
+  }
+]

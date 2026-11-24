@@ -35,7 +35,7 @@
 
 | 次序 | 捕获合同与基线预算 | 建模与校准边界 |
 |---|---|---|
-| 1 | Flash 候选过滤 54 次，1,467,808.02 µs。每个 Flash run 的 target 有第 24/28/32/36 层四次，draft 的第 36 层出现两次。B1 节点有 BF16 Q[9,32,128]、K[1,131081,128]、头权重[9,32]、计数[9]、INT32 block IDs[9,2048] → INT32[9,512]。 | `candidate_filtered_indexer` 提供工作量。系统参考的打分量为 2×T×H×K×D，另加 T×C 比较量；其中 K 是每请求 key 行数，C=2048 是 block 个数。上游 `candidate_blocks` 的 block_size=8，若先筛候选，应按去重后的有效 block 覆盖行数算工作。实际值依赖 ID、有效长度和因果截断；2048 个 block 不能直接当作 2048 行。两种顺序及全窗时间均需实际 kernel 证据。 |
+| 1 | Flash 候选过滤 54 次，1,467,808.02 µs。每个 Flash run 的 target 有第 24/28/32/36 层四次，draft 两次。B1 target 输入 BF16 Q[9,32,128]、K[1,131081,128]、权重[9,32]、查询位置[9]、INT32 block IDs[9,2048]，输出 INT32[9,512]。 | 混合后端按全表打分、候选掩码、top-512 的参考顺序定价。层 20 另行生产候选，这个消费者只读取既有块。 | 原生候选融合整窗 N/A；独立的组件组合实测与系统实现假设见[算例](examples/candidate-filtered-indexer.md)。 |
 | 2 | GroupedMatmul 共 4,545 次，848,425.21 µs。3,582 次为路由专家 A4W4（812,778 µs），963 次为按输出头分组的投影 A8W4（35,647 µs）。 | `routed_grouped_matmul` 提供专家支路单投影的工作量，逐条关联本地专家行数与分发容量。3,582 个节点均有上游直方图，全部 963 个 head 分组仍需独立合同，A 用逐 token FP32 scale。显式选择转置 ND 权重和 E8M0 的 `aclnnGroupedMatmulV5` 已在两端独立验证，包括 Flash 的真实投影。图导出未记录原生派发。[专家投影算例](examples/routed-grouped-matmul.md) |
 | 3 | FP4 动态 MX 量化共 17,748 次，791,696.08 µs。如 Pro 的 BF16[9,7168] → FP4[9,7168] 与 E8M0[9,112,2]，每 32 元素一 scale。 | 对应 `quant_mxfp4`，输出载荷、打包和单独 scale 写回按 FP4 模型核算。另有 **8,253 次**名称含 dynamic_mx_quant 的 FP8 参考节点，总计 23,599.76 µs，实际输出 E4M3 与逐 token **FP32** scale；不能归到原 BF16→MXFP8 E8M0 的验证集。27 个 run 的 FP4 量化共有 135 个形状，14,400 个输入连续，3,348 个是非连续视图。连续与视图分别统计，双端已匹配的调用次数随新增实测在下页更新。逐 token FP8 可明确选择单独的 `quant_token_fp8` 计时。[全部 135 个 shape 与双端结果](system-quant-shapes.md) · [设备误差表](error-analysis.md) |
 | 4 | CacheLoad 共 3,213 次，763,472.87 µs。其中 FP4→BF16 2,295 次／758,698 µs，FP8→BF16 918 次／4,775 µs。Kimi B1 中 FP4[1,131081,576] 配 E8M0[1,131081,9,2]；Pro 的小窗 FP8[1,128,512] 配 FP32[1,128]。 | 独立 `cache_load` 工作量入口分别描述 MXFP4/block32 与 FP8/per-row 的公开物化合同。连续 FP4 可显式选 AntiMxQuant，并有双端独立校准；FP8 显式 AscendAntiQuant 已跑通一个实图几何。27 个常规 run 的 FP4/FP8 调用中分别有 636/186 次涉及非连续输入或输出。[两种格式与实测](examples/cache_load.md) |
@@ -56,7 +56,7 @@
 
 | # | raw_name | 节点数 | 基线 µs | 一例首入 → 首出 | operator-sim 接入条件 | 950 CA 证据 |
 |---:|---|---:|---:|---|---|---|
-| 1 | `inference::candidate_filtered_indexer` | 54 | 1,467,808.02 | `BF16[9,32,128] → I32[9,512]` | 两种筛选顺序的工作量；完整 CA 待测 | 本版 950 无候选消费前向；普通 LI 的 blockTable 不接受候选集合 |
+| 1 | `inference::candidate_filtered_indexer` | 54 | 1,467,808.02 | `BF16[9,32,128] → I32[9,512]` | 全表打分、候选过滤的资源时间；候选优先另核算 | 950 包中未找到匹配的原生整窗；组合证据见算例 |
 | 2 | `npu::npu_grouped_matmul` | 4,545 | 848,425.21 | `E4M3[18,4096] → BF16[18,1024]` | A4W4 专家投影可选 V5 计时；head 分组 A8W4 待建 | A4W4 专家 V5 已实跑；A8W4 输出头待匹配 |
 | 3 | `npu::npu_dynamic_mx_quant` | 17,748 | 791,696.08 | `BF16[9,7168] → E2M1[9,7168]` | BF16→MXFP4 + E8M0，独立精度入口 | 连续 FP4 已实跑；strided 另有两次派发 |
 | 4 | `inference::cache_load` | 3,213 | 763,472.87 | `E4M3[1,128,512] → BF16[1,128,512]` | 按存储精度、scale 和布局选择，FP4 显式可定价 | 两种格式均已实跑；FP8 逐行只核验 [1,128,512] |

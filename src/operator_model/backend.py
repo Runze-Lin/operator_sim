@@ -68,6 +68,7 @@ def _call_attrs(op, attrs, dtype):
 
 def _rates(work, latency_us, chip):
     """Useful work per predicted device window, in decimal units."""
+    from operator_model.roofline import physical_roofline
     read, write = work['logical_read_bytes'], work['logical_write_bytes']
     logical = None if read is None or write is None else read + write
     bits = {'bf16': '16', 'fp16': '16', 'fp32': '32', 'fp8_e4m3fn': '8', 'mxfp4': '4'}
@@ -102,6 +103,15 @@ def _rates(work, latency_us, chip):
         'useful_cube_tops': work['cube_ops'] / latency_us / 1e6,
         'counted_vector_tops': work['vec_ops'] / latency_us / 1e6,
         'logical_io_gbs': None if logical is None else logical / latency_us / 1e3,
+        'logical_roofline': {'reference_us': ideal, 'time_factor': roofline['utilization'],
+                             'bound': roofline['bound'], 'reason': roofline['reason'],
+                             'cube_us': cube, 'vector_us': vector, 'logical_io_us': hbm},
+        'physical_roofline': physical_roofline(
+            latency_us, chip.hbm_bandwidth_gbs,
+            cube_us=cube if work.get('required_dense_cube_fma') else None,
+            vector_us=0. if work.get('no_vector_engine') else None,
+            physical_hbm_bytes=work.get('physical_hbm_bytes')),
+        # Historical names refer to the logical full-tensor traffic scenario.
         'roofline': roofline,
     }
 
@@ -196,6 +206,9 @@ def _price_resource(op, shape, target, call, dtype):
         us, aic, aiv, diag = price(shape, target)
     if work is None:
         work = account_work(op, shape, {'dtype': dtype})
+    if op in ('matmul', 'addmm') and aic:
+        work['required_dense_cube_fma'] = True
+        work['no_vector_engine'] = aiv == 0
     if op == 'matmul' and 'internal_work' in diag:
         work['implementation_work'] = diag['internal_work'].copy()
     projected = dict(method='target_resource_schedule', latency_us=us, active_aic=aic,
@@ -315,7 +328,10 @@ def _price_device(op, shape, attrs, target, dtype, timing_mode):
     if timing_mode not in ('auto','resource','calibrated'):
         raise ValueError('timing_mode must be auto, resource or calibrated')
     if op == 'candidate_filtered_indexer':
-        from operator_model.operators.attention.candidate_indexer import describe
+        from operator_model.operators.attention.candidate_indexer import PIPELINE, describe, price
+        if call.get('implementation') == PIPELINE:
+            us, work, plan = price(shape, target, call)
+            return _native_alternative(us, work, plan, target, timing_mode), raw
         work, plan = describe(shape, call)
         return Estimate(None, 'unavailable', 'Missing a device implementation and CA timing for candidate scoring and selection',
                         chip_name=target.name, work=work, projection=plan), raw

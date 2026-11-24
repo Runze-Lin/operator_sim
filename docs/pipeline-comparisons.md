@@ -4,6 +4,7 @@
 
 | 算例 | 可以对照什么 |
 |---|---|
+| [Flash 候选 Indexer](examples/candidate-filtered-indexer.md) | 同一个 800-key 输入的融合预算、全表分解与候选优先分解，按累计设备时间同轴展示，融合整窗 CA 为 N/A |
 | [逐 token FP8 量化](examples/quant-token-fp8.md) | 9×1024 的最慢核，逐项比较首读、整行归约、写载荷和 scale 退休 |
 | [FP4 CacheLoad](examples/cache_load.md) | 同一缓存形状在双端的模型阶段与末核事件 |
 | [Matmul](examples/matmul.md) | 两个输出块、每块两个 K 页，模型关键路径与最后退休核的真实指令时间线 |

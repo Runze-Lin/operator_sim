@@ -148,3 +148,22 @@ class SystemAdapterTests(unittest.TestCase):
             self.declines(bad)
         self.matches(Features('aten.sigmoid.default', (y,), (y,)), 'sigmoid_fp32', (9,512), 'fp32')
         self.declines(Features('aten.sigmoid.default', (replace(y,device='cpu'),), (replace(y,device='cpu'),)))
+
+
+class FlashCandidateTests(unittest.TestCase):
+    def test_full_scan_only_for_known_flash_consumer(self):
+        q, length = 9, 131081
+        sem = dict(index_topk=512,kv_source=20,index_source=24,causal=True,
+                   component='model.layers.24.self_attn',
+                   reference='vllm_ascend/models/deepseek_v41/model.py:DeepseekV41Attention')
+        inp = (tensor(BF16,(q,32,128)), tensor(BF16,(1,length,128)),tensor(BF16,(q,32)),
+               tensor('int64',(q,)),tensor('int32',(q,2048)))
+        f = Features('inference::candidate_filtered_indexer',inp,(tensor('int32',(q,512)),),attributes(sem))
+        def get(node): return estimate_features(node,chip=load_chip())
+        e = get(f)
+        self.assertEqual(e.status,'extrapolated')
+        self.assertEqual(e.work['cube_ops'],2*32*128*q*length)
+        self.assertIn('/full_scan/',e.contract)
+        for changes in (dict(causal=False),dict(kv_source=18),dict(candidate_block_size=16),dict(reference='unknown')):
+            self.assertIsNone(get(replace(f,attributes=attributes({**sem,**changes}))).latency_us)
+        self.assertIsNone(get(replace(f,inputs=(*inp[:4],tensor('int64',(q,2048))))).latency_us)

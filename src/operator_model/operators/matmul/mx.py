@@ -135,6 +135,8 @@ def _native_tile(shape, chip, core_budget):
 
 def price(shape, chip, dtype, attrs, calibrated_only=False):
     work = mx_work(shape, dtype, attrs)
+    work['required_dense_cube_fma'] = True
+    work['no_vector_engine'] = work['dtype'] == FP4
     m, n, k = shape
     mixed = work['dtype'] == FP8
     bits = 8 if mixed else 4

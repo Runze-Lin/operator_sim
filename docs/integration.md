@@ -32,7 +32,7 @@ if r.latency_us is not None:
 | `active_aic`、`active_aiv` | 活跃 Cube/Vector 核数估计，缺少证据可为 None。 |
 | `kernel_count`、`dispatch_overhead_us`、`scheduled_us` | 当前实现的物理发射次数、配置产生的总附加微秒、串行系统排程微秒。缺设备时间时三者为空。已单独模拟发射或异步队列的框架使用 `latency_us`。 |
 | `work` | `cube_ops` 和 `vec_ops` 为有用标量运算计数，另按 dtype、Vector 运算类型细分。`logical_read_bytes`、`logical_write_bytes` 按张量边界计数，实际 HBM 流量须另有证据。 |
-| `rates` | 工作量除以设备时间所得的 TOP/s 和逻辑 GB/s。`rates["roofline"]` 给出纯 Roofline 的各项理想 µs、控制项和等效利用率（比例）。[公式和分母](error-analysis.md#纯-roofline-要用多少利用率) |
+| `rates` | 工作量除以设备时间所得的 TOP/s 和逻辑 GB/s。`logical_roofline.time_factor` 给出按整张量读写计算的时间系数（旧字段为 `roofline.utilization`）。`physical_roofline` 给出可核实的耗时下界、缺失项及边界检查；完整物理利用率缺同窗控制器字节时返回 null。[公式和分母](error-analysis.md#纯-roofline-要用多少利用率) |
 | `projection` | 路线可提供分块方案、波数、阶段耗时、流水瓶颈及继承参数。诊断键随算子变化，通常调度只依赖上面的公共字段。 |
 
 ## 给出正确的本卡 shape
@@ -59,7 +59,7 @@ if r.latency_us is not None:
 | [quant_token_fp8](examples/quant-token-fp8.md) | (...,D) | 对称逐行量化，全行驻留 UB；连续输入，无 offset/smoothing | BF16 → E4M3FN、每行一个 FP32 scale |
 | [cache_load](examples/cache_load.md) | (...,D)，物化输出的逻辑维度 | 传实际存储 dtype；可校验物理 value、scale 形状。连续 FP4 显式选 `implementation="aclnnAntiMxQuant"` 可计时。FP8 逐行参考可查离线 CA；默认仅工作量 | MXFP4/E8M0 或 FP8 E4M3FN/每行 FP32 → BF16 |
 | [routed_grouped_matmul](examples/routed-grouped-matmul.md) | (有效本地行 R, N, K) | 路由专家的单个投影。传 `expert_counts`，可提供 `dispatch_capacity_rows`。匹配转置权重和 scale 时传 `implementation="aclnnGroupedMatmulV5"` 计时，默认仅工作量 | MXFP4 双侧 block32、成对 E8M0 → BF16 |
-| [candidate_filtered_indexer](examples/candidate-filtered-indexer.md) | (B,Q,H,D,L,C,K) | 默认全表打分；候选优先须传块大小，可传每查询有效 key 数。返回工作量，耗时 N/A | BF16 查询、key、头权重，INT64 位置、INT32 候选与输出 |
+| [candidate_filtered_indexer](examples/candidate-filtered-indexer.md) | (B,Q,H,D,L,C,K) | 仅 shape 返回工作量。`implementation="li_pipeline_projection", block_size=8` 返回外推设备时间。系统适配器为匹配 Flash 合同的张量显式选择全表打分、候选掩码和 top-k 的资源排程。候选优先的算量取决于逐查询有效 key 数。定价入口与证据见算例 | BF16 查询、key、头权重，INT64 位置、INT32 候选与输出 |
 
 MoE 的 MXFP8 接口传 `dtype="fp8_e4m3fn"`，两侧的 E8M0 scale 和输出格式由该实现固定。芯片配置里的 4-bit/8-bit 峰值表示资源能力。本表列出在线模型实际接入的组合。精度盘点另列出 FA 的 Q/KV cache、量化/反量化以及 MoE 权重格式对应的已安装实现和 CA 证据。[低精度路线清单](precision-coverage.md)
 

@@ -20,7 +20,8 @@ r = estimate("matmul", (1280, 2048, 512), dtype="bf16", chip="Ascend950DT_9582")
 if r.latency_us is None:
     raise ValueError(f"{r.status}: {r.reason}")
 print(r.status, r.latency_us, r.active_aic)
-print(r.rates["roofline"]["utilization"])  # 0.4991，即等效利用率 49.91%
+print(r.rates["logical_roofline"]["time_factor"])  # 约 0.499，相对逻辑 Roofline 基准
+print(r.rates["physical_roofline"]["known_lower_bound_us"])  # 可核实的计算下界，µs
 print(r.work["cube_ops"], r.work["logical_read_bytes"], r.work["logical_write_bytes"])
 ```
 
@@ -34,10 +35,10 @@ print(r.work["cube_ops"], r.work["logical_read_bytes"], r.work["logical_write_by
 | Matmul、FA、quant、RMSNorm、mHC、KDA、MoE 等具体算子的公式与实现 | [按算子族组织的源码](src/operator_model/operators/) · [建模方法与逐算子算例](docs/modeling-strategy.md) |
 | 同流前序、分核和流水调度、工作量与速率 | [stream.py](src/operator_model/stream.py) · [scheduling/](src/operator_model/scheduling/) · [workload.py](src/operator_model/workload.py) |
 | 添加芯片或检查校准参数 | [芯片配置](src/operator_model/data/chips/) · [模型参数](src/operator_model/data/parameters/) · [自定义芯片示例](examples/chip.json) |
-| 各算子的耗时误差、逐 shape 真值、验证边界 | [误差分析与等效 Roofline 利用率](docs/error-analysis.md) · [每个算子的全部 shape](docs/errors/README.md) · [可复算的参考数据](calibration/reference/) |
+| 各算子的耗时误差、逐 shape 真值、验证边界 | [误差分析、逻辑 Roofline 系数与物理下界](docs/error-analysis.md) · [每个算子的全部 shape](docs/errors/README.md) · [可复算的参考数据](calibration/reference/) |
 | FA 的低位 KV cache、量化/反量化与 MoE 不同权重精度 | [精度组合、库入口与验证状态](docs/precision-coverage.md) |
 | 三种模型在 128Ki decode、三种并行配置和 B=1/16/64 的实际系统算子覆盖 | [逐节点账单核查与建模缺口](docs/system-workload-coverage.md) |
-| 在 SIMPlatform 启用精细算子后端，查看九组 decode 配置与原 Roofline 的时延差 | [安装、后端选择及端到端对比](docs/sim-platform.md) |
+| 在 SIMPlatform 启用精细算子后端，查看九组 decode 配置与原 Roofline 的时延差 | [安装与后端选择](docs/sim-platform.md) · [27 组三方端到端对比与回退排名](docs/system-candidate-comparison.md) |
 | 从三种模型的 config 推导单卡 prefill shape | [工作负载示例](examples/workloads/) |
 | 开发新算子、重新校准、构建和测试 | [维护指南](CONTRIBUTING.md) · [CA 校准工具](calibration/) |
 

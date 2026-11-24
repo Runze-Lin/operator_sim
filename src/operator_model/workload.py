@@ -177,9 +177,11 @@ def account_work(op, shape, attrs=None):
             if canonical_dtype(dtype) == "fp8_e4m3fn" and call.get("implementation") == "aclnnAscendAntiQuant":
                 call.pop("implementation")
             return describe(shape, dtype, call)[0]
-        from operator_model.operators.attention.candidate_indexer import describe
+        from operator_model.operators.attention.candidate_indexer import PIPELINE, describe, projected_work
         if dtype not in ('bf16', 'bfloat16'):
             raise ValueError('candidate_filtered_indexer requires BF16 scoring inputs')
+        if call.get('implementation') == PIPELINE:
+            return projected_work(shape, call)
         return describe(shape, call)[0]
     if op == "quant_token_fp8":
         if dtype not in ("bf16","bfloat16"):

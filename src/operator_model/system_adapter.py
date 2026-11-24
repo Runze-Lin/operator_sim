@@ -11,7 +11,7 @@ from operator_model.backend import estimate
 from operator_model.operators.quant.mxfp4 import contiguous_input
 
 
-ADAPTER_VERSION = "1"
+ADAPTER_VERSION = "2"
 BF16 = "bfloat16"
 F32 = "float32"
 FP4 = "float4_e2m1fn_x2"
@@ -227,6 +227,32 @@ def _hc_post(features, sem):
     return "mhc_post", (b,s,4,d), "bf16", {"implementation":"vllm_hc_post"}, "mhc_post/vllm_hc_post"
 
 
+
+def _candidate(features, sem):
+    """Published Flash candidate preset; meta tensors do not contain block IDs or positions."""
+    from operator_model.operators.attention.candidate_indexer import PIPELINE
+    _arity(features, 5, 1)
+    query, key, weights, positions, candidates = features.inputs
+    out, = features.outputs
+    rows,h,d = _shape(query.shape, 3)
+    b,length,key_d = _shape(key.shape, 3)
+    _,slots = _shape(candidates.shape, 2)
+    _,k = _shape(out.shape, 2)
+    _require(rows % b == 0 and key_d == d and h == 32 and d == 128 and slots == 2048 and k == 512,
+             "Expected DeepSeek-V4.1-Flash rank-local BF16 shared-head key table and 2048 block slots")
+    layer = sem.get("index_source")
+    _require(sem.get("reference") == "vllm_ascend/models/deepseek_v41/model.py:DeepseekV41Attention"
+             and sem.get("kv_source") == 20 and layer in (24,28,32,36)
+             and sem.get("component") == f"model.layers.{layer}.self_attn" and sem.get("causal") is True
+             and sem.get("index_topk") == k and sem.get("candidate_block_size", 8) == 8,
+             "Only the published Flash latest-pinned eight-key block / contiguous decode suffix is modeled")
+    for t, dt, shape in ((query,BF16,(rows,h,d)), (key,BF16,(b,length,d)), (weights,BF16,(rows,h)),
+                         (positions,"int64",(rows,)), (candidates,"int32",(rows,slots)), (out,"int32",(rows,k))):
+        _layout(t,dt,shape)
+    return ("candidate_filtered_indexer", (b,rows//b,h,d,length,slots,k), "bf16",
+            {"implementation":PIPELINE,"block_size":8,"score_policy":"full_scan"},
+            "candidate_filtered_indexer/full_scan/li_pipeline_projection")
+
 def _mm(features, sem):
     _arity(features, 2, 1)
     x,w = features.inputs
@@ -240,6 +266,7 @@ def _mm(features, sem):
 
 
 _LOWERINGS = {
+    "inference::candidate_filtered_indexer": _candidate,
     "npu::npu_dynamic_mx_quant": _quant,
     "inference::dynamic_mx_quant_fp8_reference": _quant,
     "inference::cache_load": _cache,
