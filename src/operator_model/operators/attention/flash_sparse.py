@@ -4,6 +4,7 @@ Geometry follows arenanet_kernels' QSLI. Coefficients borrowed from other
 kernels price an uncalibrated fused device window. No cache slab is scanned.
 """
 from bisect import bisect_right
+from collections import Counter
 from functools import lru_cache
 from math import isfinite
 
@@ -19,9 +20,18 @@ RECORD = 544  # eight packed D128 keys and 4 E8M0 scale bytes per key
 
 
 def options(call):
-    if set(call) - {"implementation", "pa_block_size", "table_pages", "scalar_lookup_cycles", "candidate_limit"}:
+    if set(call) - {"implementation", "pa_block_size", "table_pages", "scalar_lookup_cycles", "candidate_limit", "candidate_order_overlap"}:
         raise ValueError("Unknown A5 QSLI option")
+    _order_overlap(call.get("candidate_order_overlap"))
     return {k:v for k,v in call.items() if k != "implementation"}
+
+
+def _order_overlap(value):
+    if value is None:
+        return 0.5
+    if type(value) not in (int,float) or not isfinite(value) or not 0 <= value <= 1:
+        raise ValueError("candidate_order_overlap must be a finite fraction in [0,1]")
+    return value
 
 
 def _geometry(shape, candidate_limit=None):
@@ -99,11 +109,13 @@ def work_for(shape, candidate_limit=None):
     return _work(shape, shape[0]*ends[-1], useful)
 
 
-def price(shape, chip, *, pa_block_size=128, table_pages=None, scalar_lookup_cycles=None, candidate_limit=None):
+def price(shape, chip, *, pa_block_size=128, table_pages=None, scalar_lookup_cycles=None,
+          candidate_limit=None, candidate_order_overlap=None):
     """Price packed Q, folded K and QSLI. PA page-table width can exceed current L."""
     if type(pa_block_size) is not int or pa_block_size <= 0 or pa_block_size % BLOCK:
         raise ValueError("PA block size must be a positive multiple of eight")
     b,q,h,d,length,capacity,topk = shape
+    overlap = _order_overlap(candidate_order_overlap)
     groups, ends, row_ends, useful = _geometry(shape,candidate_limit)
     required = _ceil(length,pa_block_size)
     if table_pages is None:
@@ -159,12 +171,14 @@ def price(shape, chip, *, pa_block_size=128, table_pages=None, scalar_lookup_cyc
     vec_scale = hist["vector_ops_cycle"]*2/vec_rate
     # A cut through the linear (document,row,key tile) stream may split a
     # row across teams. Map just the endpoints, without constructing B*Q rows.
-    def row_at(tile):
+    def position(tile):
         doc, offset = divmod(tile,ends[-1])
         i = bisect_right(ends,offset)
         base = ends[i-1] if i else 0
         before = row_ends[i-1] if i else 0
-        return doc*q+before+(offset-base)//groups[i][0]
+        width = groups[i][0]
+        row, rank = divmod(offset-base,width)
+        return doc*q+before+row, rank, width
 
     # Source ASC scheduler recomputes the cost target after every assignment.
     # Full 512-key tiles cost 128 scheduling units; their half-tile tolerance
@@ -182,14 +196,22 @@ def price(shape, chip, *, pa_block_size=128, table_pages=None, scalar_lookup_cyc
         remaining_lanes = live-lane
         n = max(1, (2*(tiles-first_tile)+remaining_lanes)//(2*remaining_lanes))
         stop = first_tile+n
-        first_row, last_row = row_at(first_tile), row_at(stop-1)
+        first_row, first_rank, first_width = position(first_tile)
+        last_row, last_rank, last_width = position(stop-1)
         fragments = last_row-first_row+1
-        left_split = first_tile > 0 and row_at(first_tile-1) == first_row
-        right_split = stop < tiles and row_at(stop) == last_row
+        left_split = first_rank > 0
+        right_split = last_rank+1 < last_width
         partials = int(left_split) + int(right_split and (not left_split or first_row != last_row))
         if right_split:
             split_rows[last_row] = split_rows.get(last_row,1)+1
-        owners.append((n,fragments,partials))
+        doc_changes = last_row//q-first_row//q
+        # The next-row gather is prefetched inside a document. The first
+        # fragment in every new document has to fill its own slots again.
+        first_gaps = min(n,first_width-first_rank)-1 + doc_changes*(groups[0][0]-1)
+        if doc_changes and last_row%q == 0:
+            first_gaps -= last_width-last_rank-1
+        owners.append((first_tile,n,fragments,partials,first_gaps,doc_changes,
+                       min(n,last_rank+1),right_split))
         first_tile = stop
 
     native = _native_rates()["split_row"]
@@ -200,10 +222,48 @@ def price(shape, chip, *, pa_block_size=128, table_pages=None, scalar_lookup_cyc
     # A larger fragment retains its extra per-tile histogram work.
     ordinary_tail = fix + vector + (hist_fixed+2*hist_per256)*vec_scale
     drain_extra = max(0., native["one_tile_score_drain_cycles"] - ordinary_tail)
-    for n, fragments, partials in owners:
-        price_cycles = ((n-fragments)*interval + fragments*sum(stages.values())
-                        + (fragments*hist_fixed + 2*n*hist_per256)*vec_scale
-                        + partials*drain_extra)
+    wave = scalar and use_measured_issue and q>1 and live>1 and tiles>live
+    phase_fraction = 0.
+    first_interval = carry_interval = interval
+    handoff = 0.
+    if wave:
+        # Compare lock-step *logical* issue positions. Different requests have
+        # different KV; equal rank alone does not create a shared record.
+        # Three bounded samples also cover ragged and multi-document owners.
+        common = min(owner[1] for owner in owners)
+        samples = {0,(common-1)//2,common-1}
+        for step in samples:
+            phases = Counter()
+            for first, *_ in owners:
+                row, rank, _ = position(first+step)
+                phases[(row//q,rank)] += 1
+            phase_fraction += sum(n*(n-1) for n in phases.values())/(live*(live-1))
+        phase_fraction /= len(samples)
+        pressure = phase_fraction*overlap
+        wave_rates = _native_rates()["parallel_row_issue"]
+        floor = max(publish,cube_read,cube,fix,vector)
+        first_interval = max(floor, (1-pressure)*wave_rates["first_disperse_cycles"]
+                             + pressure*wave_rates["first_aligned_cycles"])
+        carry_interval = max(floor, (1-pressure)*wave_rates["carry_disperse_cycles"]
+                             + pressure*wave_rates["sustained_aligned_cycles"])
+        interval = first_interval
+        handoff = max(gather+publish+cube_read,
+                      (hist_fixed+2*hist_per256)*vec_scale, wave_rates["same_document_handoff_cycles"])
+        startup = wave_rates["first_control_cycles"]
+    for _, n, fragments, partials, first_gaps, doc_changes, final_tiles, right_split in owners:
+        if wave:
+            carry_gaps = n-fragments-first_gaps
+            joins = fragments-1-doc_changes
+            # The measured last-MMAD -> next-first issue already includes
+            # local selection and the next-row fill. Charge that tail once.
+            price_cycles = (sum(stages.values()) + first_gaps*first_interval + carry_gaps*carry_interval
+                            + joins*handoff + doc_changes*(handoff+gather+publish+cube_read)
+                            + (hist_fixed+2*final_tiles*hist_per256)*vec_scale
+                            + int(right_split or (fragments==1 and partials))*drain_extra)
+        else:
+            price_cycles = ((n-fragments)*interval + fragments*sum(stages.values())
+                            + (fragments*hist_fixed + 2*n*hist_per256)*vec_scale
+                            + partials*drain_extra)
         slow = max(slow,price_cycles)
     merge = 0.
     passes, entries, merge_read, merge_select, merge_write = 0, 0, 0., 0., 0.
@@ -233,7 +293,13 @@ def price(shape, chip, *, pa_block_size=128, table_pages=None, scalar_lookup_cyc
                 pa_block_size=pa_block_size, table_pages=table_pages, address_path="scalar" if scalar else "UB",
                 scalar_lookup_cycles=scalar_lookup_cycles,
                 tile_service_cycles=stages, interval_cycles=interval, resource_interval_cycles=resource_interval,
-                interval_source="DT consecutive MMAD_MX issues" if scalar and use_measured_issue else "resource schedule",
+                interval_source=("multi-team first / carried same-AIC MMAD issue cycles" if wave else
+                                 "DT consecutive MMAD_MX issues" if scalar and use_measured_issue else "resource schedule"),
+                parallel_row_issue=wave, candidate_order_overlap=overlap,
+                order_overlap_source="unknown: endpoint midpoint" if candidate_order_overlap is None else "caller",
+                team_phase_pair_fraction=phase_fraction, ordered_record_pressure=phase_fraction*overlap,
+                first_fragment_interval_cycles=first_interval, carried_fragment_interval_cycles=carry_interval,
+                same_document_handoff_cycles=handoff,
                 stages_us=dict(startup=startup/clock, critical_team=slow/clock, merge=merge/clock,
                                shared_service=us-local), io_us=io, l2_us=ring,
                 unpriced=["AICPU metadata", "prepare_indexer_indices", "upstream Q quantization and folded K production"])

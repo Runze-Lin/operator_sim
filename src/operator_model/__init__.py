@@ -10,9 +10,11 @@ from operator_model.operators.rmsnorm.pipeline import RmsGeometry, rmsnorm_pipel
 from operator_model.operators.mhc.history import PostHistory, estimate_post_history
 from operator_model.operators.kda.prefill import plan_kimi_kda_prefill
 from operator_model.operators.kda.recurrent_chains import estimate_recurrent_chains
+from operator_model.operators.attention.candidate_layout import summarize_candidate_layout
 
-__version__ = '1.12.0'
+__version__ = '1.13.0'
 __all__ = ['ChipConfig', 'load_chip', 'Estimate', 'estimate', 'OperatorStream', 'physical_roofline',
            'RmsHistoryBand', 'estimate_rms_history_band', 'plan_kimi_kda_prefill',
            'PostHistory', 'estimate_post_history', 'RmsGeometry', 'rmsnorm_pipeline',
-           'estimate_matmul_splitk', 'estimate_matmul_supply', 'estimate_recurrent_chains']
+           'estimate_matmul_splitk', 'estimate_matmul_supply', 'estimate_recurrent_chains',
+           'summarize_candidate_layout']
