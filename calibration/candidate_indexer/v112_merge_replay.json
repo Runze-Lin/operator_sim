@@ -1,0 +1,180 @@
+{
+  "role": "development replay of stage fitting traces. Not held-out validation.",
+  "source_correction": "For the PR 1Mi trace-qualified replay, ipc.log records 28 workers and 28 FD parts; prior unprofiled 32-worker IPC attempt only passed arithmetic. The top-level prose and runtime_default_workers in long-row-results.json had conflated the attempts; that frozen artifact is preserved. Correct schedule confirmed from native LD source load counts (28) and 4 writebacks.",
+  "records": [
+    {
+      "sku": "Ascend950DT_9582",
+      "case": "static",
+      "L": 1024,
+      "table_width": 8,
+      "candidate_count": 81,
+      "v111_us": 6.830955824966427,
+      "v112_us": 10.933621782037132,
+      "ca_us": 11.087878787878788,
+      "v111_signed_pct": -38.392582065074585,
+      "v112_signed_pct": -1.3912219712420404,
+      "split_rows": 1,
+      "parts": 2,
+      "passes": 1,
+      "stages": {
+        "startup": 6.70596606060606,
+        "critical_team": 2.339192350218952,
+        "merge": 1.888463371212121,
+        "shared_service": 0.0
+      },
+      "merge_service_cycles": {
+        "read": 305.164375,
+        "radix_and_remap": 1491.8,
+        "write": 190.0001875,
+        "barrier": 1129.0
+      },
+      "warm_price_p50_ms": 0.052465,
+      "warm_price_max_ms": 0.605
+    },
+    {
+      "sku": "Ascend950PR_957b",
+      "case": "static",
+      "L": 1024,
+      "table_width": 8,
+      "candidate_count": 81,
+      "v111_us": 6.835573779154059,
+      "v112_us": 10.938469395369403,
+      "ca_us": 11.483030303030302,
+      "v111_signed_pct": -40.47238752517972,
+      "v112_signed_pct": -4.742310115799253,
+      "split_rows": 1,
+      "parts": 2,
+      "passes": 1,
+      "stages": {
+        "startup": 6.70596606060606,
+        "critical_team": 2.339230808167598,
+        "merge": 1.8932725265957444,
+        "shared_service": 0.0
+      },
+      "merge_service_cycles": {
+        "read": 305.164375,
+        "radix_and_remap": 1499.7351063829785,
+        "write": 190.0001875,
+        "barrier": 1129.0
+      },
+      "warm_price_p50_ms": 0.051045,
+      "warm_price_max_ms": 0.07668
+    },
+    {
+      "sku": "Ascend950DT_9582",
+      "case": "wide",
+      "L": 1024,
+      "table_width": 8201,
+      "candidate_count": 81,
+      "v111_us": 8.07216794617855,
+      "v112_us": 12.174833903249256,
+      "ca_us": 11.352121212121212,
+      "v111_signed_pct": -28.892866845365404,
+      "v112_signed_pct": 7.247215526994144,
+      "split_rows": 1,
+      "parts": 2,
+      "passes": 1,
+      "stages": {
+        "startup": 6.70596606060606,
+        "critical_team": 3.5804044714310734,
+        "merge": 1.888463371212121,
+        "shared_service": 0.0
+      },
+      "merge_service_cycles": {
+        "read": 305.164375,
+        "radix_and_remap": 1491.8,
+        "write": 190.0001875,
+        "barrier": 1129.0
+      },
+      "warm_price_p50_ms": 0.05368,
+      "warm_price_max_ms": 0.08073
+    },
+    {
+      "sku": "Ascend950PR_957b",
+      "case": "wide",
+      "L": 1024,
+      "table_width": 8201,
+      "candidate_count": 81,
+      "v111_us": 8.076785900366179,
+      "v112_us": 12.179681516581525,
+      "ca_us": 11.225454545454545,
+      "v111_signed_pct": -28.049364347240058,
+      "v112_signed_pct": 8.500564206670536,
+      "split_rows": 1,
+      "parts": 2,
+      "passes": 1,
+      "stages": {
+        "startup": 6.70596606060606,
+        "critical_team": 3.580442929379719,
+        "merge": 1.8932725265957444,
+        "shared_service": 0.0
+      },
+      "merge_service_cycles": {
+        "read": 305.164375,
+        "radix_and_remap": 1499.7351063829785,
+        "write": 190.0001875,
+        "barrier": 1129.0
+      },
+      "warm_price_p50_ms": 0.05427,
+      "warm_price_max_ms": 0.08983
+    },
+    {
+      "sku": "Ascend950DT_9582",
+      "case": "ipc",
+      "L": 1048576,
+      "table_width": 8201,
+      "candidate_count": 2048,
+      "v111_us": 11.390349764360368,
+      "v112_us": 18.106837009309864,
+      "ca_us": 21.63030303030303,
+      "v111_signed_pct": -47.340775816210126,
+      "v112_signed_pct": -16.289489870100095,
+      "split_rows": 1,
+      "parts": 32,
+      "passes": 5,
+      "stages": {
+        "startup": 6.70596606060606,
+        "critical_team": 3.5804044714310734,
+        "merge": 7.820466477272728,
+        "shared_service": 0.0
+      },
+      "merge_service_cycles": {
+        "read": 2523.36875,
+        "radix_and_remap": 8301.4,
+        "write": 950.0009375000001,
+        "barrier": 1129.0
+      },
+      "warm_price_p50_ms": 0.22505999999999998,
+      "warm_price_max_ms": 0.29866
+    },
+    {
+      "sku": "Ascend950PR_957b",
+      "case": "ipc",
+      "L": 1048576,
+      "table_width": 8201,
+      "candidate_count": 2048,
+      "v111_us": 12.987820924596123,
+      "v112_us": 18.99686880386756,
+      "ca_us": 21.092121212121214,
+      "v111_signed_pct": -38.423353469387955,
+      "v112_signed_pct": -9.933815509506715,
+      "split_rows": 1,
+      "parts": 28,
+      "passes": 4,
+      "stages": {
+        "startup": 6.70596606060606,
+        "critical_team": 5.78168588397717,
+        "merge": 6.509216859284332,
+        "shared_service": 0.0
+      },
+      "merge_service_cycles": {
+        "read": 2103.1028125000003,
+        "radix_and_remap": 6748.104255319148,
+        "write": 760.00075,
+        "barrier": 1129.0
+      },
+      "warm_price_p50_ms": 0.194845,
+      "warm_price_max_ms": 0.24744
+    }
+  ]
+}

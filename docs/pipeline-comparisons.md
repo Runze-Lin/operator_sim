@@ -20,4 +20,4 @@
 各算子的覆盖和全量误差另见[逐算子校准表](error-analysis.md)。
 
 
-Flash A5 QSLI 的补充图只比较相邻 MMAD 的发起间隔。32 个 tile 的 31 段均保留真实时间戳，图中的两条线分别为原先验和校准的全行平均值。[间隔图与完整算例](examples/flash-a5-qsli.md)
+Flash A5 QSLI 的算例含两张图。单团队图显示 32 个 tile 的 31 个 MMAD 发起间隔；单行跨核图将 950DT 和 950PR 的真实首发、局部写完到归并、各轮归并及最后退休，与两版整窗预测对照。[间隔图与完整算例](examples/flash-a5-qsli.md)

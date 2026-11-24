@@ -138,4 +138,4 @@ print(r.kernel_count, r.latency_us, r.dispatch_overhead_us, r.scheduled_us)
 
 ## 选择 Flash A5 候选消费层
 
-传入 `FullOperatorSimBackend(candidate_implementation="a5_qsli_projection", candidate_options={"pa_block_size":128,"table_pages":8201})` 可在已匹配的 Flash 第 24、28、32、36 层，把参考 BF16 节点映射为“Q 已打包、折叠 KV 已就绪”的 A5 消费层。预留页数按实际配置填写，省略时采用覆盖当前 L 的最小值。实现与选项参与预测缓存键。默认 `capture` 继续按捕获合同重放。其他节点继续使用原有后端与调度。设备返回值为外推；上游 Q/K 转换、AICPU metadata、后处理边界和系统预留容量的解释见[具体例子](examples/flash-a5-qsli.md)及[33 组同图比较](../calibration/candidate_indexer/context-sensitivity.md)。
+传入 `FullOperatorSimBackend(candidate_implementation="a5_qsli_projection", candidate_options={"pa_block_size":128,"table_pages":8201})` 可在已匹配的 Flash 第 24、28、32、36 层，把参考 BF16 节点映射为“Q 已打包、折叠 KV 已就绪”的 A5 消费层。预留页数按实际配置填写，省略时采用覆盖当前 L 的最小值。实现与选项参与预测缓存键。默认 `capture` 继续按捕获合同重放。其他节点继续使用原有后端与调度。设备返回值为外推；上游 Q/K 转换、AICPU metadata、后处理边界和系统预留容量的解释见[具体例子](examples/flash-a5-qsli.md)及[33 组同图比较](context-sweep.md)。

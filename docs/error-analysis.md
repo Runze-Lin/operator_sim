@@ -17,9 +17,10 @@
 | [FA](errors/fa.md) | BF16 Q/K/V → BF16，FP32 统计 | 回放 · 88/0 | 38/43 · 1.84% / 12.43% | 45/45 · 5.05% / 17.72% | 0.0004847–0.03051× / 0.001385–0.08717× | 0.048%-3.051% / 0.138%-8.717% | 0.496 | 达标 / 达标 |
 | [Lightning Indexer](errors/lightning_indexer.md) | BF16 Q/K/权重 → INT32 索引 | 回放 · 24/0 | 13/14 · 5.87% / 15.67% | 10/10 · 4.14% / 10.88% | 0.006577–0.02402× / 0.01875–0.05284× | 0.658%-2.402% / 1.875%-5.284% | 0.833 | 达标 / 达标 |
 | [候选块 Indexer，BF16 参考](errors/candidate_filtered_indexer.md) | BF16 Q/K/权重、INT64 位置、INT32 候选块 → INT32 | 原生融合 · 0/0；显式组合另表 | 0/0 · N/A | 0/0 · N/A | N/A / N/A | N/A / N/A | 2.12¹ | 资源外推 / 资源外推 |
-| [Flash A5 QSLI 含 metadata、前后的完整调用](errors/flash-a5-qsli.md) | MXFP4 Q/K、E8M0 scale、FP32 权重、BF16 头归约 → INT32 位置 | 部署整窗 · 0/0；普通 QLI 对照另表 | 0/0 · N/A | 0/0 · N/A | N/A / N/A | N/A / N/A | 6.18 | 完整调用外推 / 完整调用外推 |
-| [Flash A5 QSLI，原生 kernel 固定分核表](errors/flash-a5-qsli.md) | MXFP4、E8M0 → INT32 | 单行核窗回放（含窄表/宽表），间隔取另一强制分核诊断 | 2/3 · 40.34% / 47.34% | 2/3 · 36.30% / 40.47% | 0.0025–0.0247× / 0.0073–0.0620× | 0.2545–2.4728% / 0.7268–6.1962% | 6.18 | 核窗实测 / 核窗实测 |
-| [Flash A5 QSLI，32-query 并发 prefill](errors/flash-a5-qsli.md) | MXFP4、E8M0 → INT32 | DT 强制单团队间隔开发 1 窗，冻结后默认 32 团队独立 1 窗 | 1/1 · 10.54% / 10.54% | 0/0 · N/A | 0.1188× / N/A | 11.882% / N/A | 6.18（合同抽样） | 单波独立实测 / 待测 |
+| [Flash A5 QSLI 含 metadata、前后的完整调用](errors/flash-a5-qsli.md) | MXFP4 Q/K、E8M0 scale、FP32 权重、BF16 头归约 → INT32 位置 | 部署整窗 · 0/0；普通 QLI 对照另表 | 0/0 · N/A | 0/0 · N/A | N/A / N/A | N/A / N/A | N/A（仅 kernel 有报价） | 完整调用未计时 / 完整调用未计时 |
+| [Flash A5 QSLI，原生 kernel 固定分核表](errors/flash-a5-qsli.md) | MXFP4、E8M0 → INT32 | 原生拆行开发回放 6/0（每端 2 个几何、3 个窗） | 2/3 · 10.21% / 16.29% | 2/3 · 8.21% / 9.93% | 0.0017–0.0156× / 0.0048–0.0424× | 0.169%–1.556% / 0.482%–4.236% | 8.20（合同抽样） | 核窗实测 / 核窗实测 |
+| [Flash A5 QSLI，32-query 并发 prefill](errors/flash-a5-qsli.md) | MXFP4、E8M0 → INT32 | DT 回放 v1.11 留出 1 窗；PR 新独立 1 窗 | 1/1 · 10.54% / 10.54% | 1/1 · 56.19% / 56.19% | 0.1188× / 0.2768× | 11.882% / 27.679% | 8.20（合同抽样） | 回放 / 独立超限 |
+| [Flash A5 QSLI，64-query 行间候选页变化](errors/flash-a5-qsli.md) | MXFP4、E8M0 → INT32 | 冻结后 DT 新独立 1 窗 | 1/1 · 82.84% / 82.84% | 0/0 · N/A | 0.1230× / N/A | 12.303% / N/A | 8.20（合同抽样） | 独立超限 / 待测 |
 | [Addmm](errors/addmm.md) | BF16 矩阵和 bias → BF16 | 回放 · 54/0 | 33/34 · 5.67% / 12.82% | 20/20 · 5.71% / 13.61% | 5.45e-05–0.06509× / 0.0001557–0.1544× | 0.00545%-6.509% / 0.016%-15.438% | 0.594 | 达标 / 达标 |
 | [RMSNorm，compact CA](errors/rmsnorm-compact-ca.md) | BF16 → BF16 Y、FP32 rstd | 回放 · 57/0 | 53/57 · 19.03% / 46.64% | 0/0 · N/A | 0.0001001–0.468× / N/A | 0.010%-46.796% / N/A | 14.858 | 达标 / 待测 |
 | [RMSNorm，msopprof](errors/rmsnorm-msopprof.md) | BF16 → BF16 Y、FP32 rstd | 回放 · 262/0 | 90/126 · 17.94% / 49.86% | 98/136 · 18.55% / 49.61% | 0.0005079–1.066× / 0.0002894–1.946× | 0.051%-100.000% / 0.029%-100.000% | 18.910 | 达标 / 达标 |
@@ -52,7 +53,7 @@
 
 **怎么读表。** 共 36 个发布合同、2,180 个可对照预测的完整窗，其中 2,060 个开发回放、120 个冻结独立。WAPE 和最大误差优先使用冻结独立集，缺少独立窗时使用开发回放。U 范围覆盖该算子逐窗页中开发与独立两组的全部可比 shape。DT、PR 各列一个最小值到最大值，同形状的不同前序和属性逐窗参与取值。“开发/独立窗数”相加两端，“形/窗”是该端计分集的不同输入维度数与完整窗数。同形的不同属性、前序与重复运行各占一窗；同一物理 trace 也可分别核验仅 shape 和有序流两个入口。要查某一行用了哪个库内核、实测多少微秒，点击算子名即可看到全部 shape、调用属性、前序、模型/CA 耗时、有符号误差和 970DT 外推。[合同与可比窗口数索引](errors/README.md) · [逐窗收据字段](../calibration/reference/windows.jsonl) · [按角色与芯片的误差统计](../calibration/reference/summary.json) 此外有 8 个只有 CA 的完整调用、2 个同几何换专家直方图的冻结窗口，各有独立的证据入口。
 
-**覆盖与误差。** 原发布校准集中有 30 项合同具备双端可计分窗。下文新增的 A5 QSLI 固定 metadata 设备窗另列。28 项在所列数据集满足两端各至少 10 个几何、WAPE ≤25%、最大绝对误差 ≤50%，其中 5 项由冻结后的双端新几何验证。mHC Post 仅 shape 的两端误差超限，稠密 A8W4 在 PR 有一个投影高估 56.67%。RMSNorm compact 只有 DT；UB 驻留 AttnRes 与未指定实现的部分节点仍缺可比价格与完整窗。Flash 候选 Indexer 已接入系统资源定价，固定 metadata 的原生核窗已在双端实测，DT 另有一个 32-query 并发留出；含设备侧 metadata 与返回后整理的完整调用仍待测。显式 ACLNN 组合的资格单列于[候选 Indexer 算例](examples/candidate-filtered-indexer.md)。
+**覆盖与误差。** 原发布校准集中有 30 项合同具备双端可计分窗。下文新增的 A5 QSLI 固定 metadata 设备窗另列。28 项在所列数据集满足两端各至少 10 个几何、WAPE ≤25%、最大绝对误差 ≤50%，其中 5 项由冻结后的双端新几何验证。mHC Post 仅 shape 的两端误差超限，稠密 A8W4 在 PR 有一个投影高估 56.67%。RMSNorm compact 只有 DT；UB 驻留 AttnRes 与未指定实现的部分节点仍缺可比价格与完整窗。Flash 候选 Indexer 已接入系统资源定价，固定 metadata 的原生核窗已在双端实测，另有双端 32-query 并发窗及 DT 的 64-query 两波独立留出；含设备侧 metadata 与返回后整理的完整调用仍待测。显式 ACLNN 组合的资格单列于[候选 Indexer 算例](examples/candidate-filtered-indexer.md)。
 
 ¹ 候选 Indexer 独立计时 48 次公共 API 调用，包含首次载入参数，芯片取 DT/PR/970DT，覆盖 B1/16/64 两个 decode 阶段与组件几何，CPU 墙钟中位数 0.371 ms，最大 2.119 ms。
 
@@ -238,7 +239,7 @@ API 分开提供计时条件与证据：
 
 ## Flash 候选 Indexer 的设备证据
 
-A5 的公开 950 wheel 包含 MXFP4 的候选优先融合实现。实现先 gather、再用 Cube 点积，AIV 做 ReLU、乘权重、头归约和 top-k。系统的 BF16 全扫描时长是另一份合同。窄表、宽表和满候选单行在 DT/PR 上均取得原厂 AOT 融合窗。三个额外 shape 在 DT/PR 上完成紧凑 MXFP4 普通 Indexer 的独立组件验证，WAPE 为 44.51% / 35.75%，没有将该 WAPE 填入部署整窗。1Mi 的 0.481 s 是同图替换四个候选消费层后的 DES 情景值。[新组件的逐 shape 对照与证据边界](errors/flash-a5-qsli.md) · [33 组修订结果](../calibration/candidate_indexer/context-sensitivity.md)
+A5 的公开 950 wheel 包含 MXFP4 的候选优先融合实现。实现先 gather、再用 Cube 点积，AIV 做 ReLU、乘权重、头归约和 top-k。系统的 BF16 全扫描时长是另一份合同。窄表、宽表和满候选单行均取得双端 AOT 融合窗；当前拆行模型对六个开发窗的 DT/PR WAPE 为 10.21% / 8.21%。新留出 PR Q32 和 DT Q64 分别高估 56.19% 和 82.84%。逐窗工作量通过校验，并发循环间隔和有效供数速度仍有迁移误差。三个额外 shape 在 DT/PR 上完成紧凑 MXFP4 普通 Indexer 的独立组件验证，WAPE 为 44.51% / 35.75%，没有将该 WAPE 填入部署整窗。1Mi 的 0.481 s 是同图替换四个候选消费层后的 DES 情景值。[新组件的逐 shape 对照与证据边界](errors/flash-a5-qsli.md) · [33 组修订结果](../calibration/candidate_indexer/context-sensitivity.md)
 
 下表是早期 BF16 显式分解对照。
 

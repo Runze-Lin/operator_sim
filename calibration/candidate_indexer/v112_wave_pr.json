@@ -1,0 +1,397 @@
+{
+  "sku": "Ascend950PR_957b",
+  "shape": [
+    1,
+    32,
+    32,
+    128,
+    1048576,
+    2048,
+    512
+  ],
+  "attrs": {
+    "implementation": "a5_qsli_projection",
+    "table_pages": 8201,
+    "pa_block_size": 128,
+    "candidate_limit": 2048
+  },
+  "role": "independent holdout for v1.12 and v1.11",
+  "status": "qualified device window",
+  "device_us": 59.56787878787879,
+  "elapsed_cycles": 98287,
+  "first_tick": 8532,
+  "last_retire_tick": 106819,
+  "v112_us": 93.03861954538733,
+  "v111_us": 87.55652395438975,
+  "v112_signed_error_pct": 56.189243999602276,
+  "v111_signed_error_pct": 46.98613705245158,
+  "golden_positions": 16384,
+  "golden_sha256": "7e86436eae01d84261eb8dd34d5b6b85c3dcad9224129d00fc8faef6b34ca5a9",
+  "memory_model": "lpddr5_6400M_bailu.ini",
+  "fixture_file": "v112_wave_pr_fixture.json",
+  "fixture_sha256": "d6f16538ffa90e93304e8aff3dd8144fb5c8fa526d72f9cc4dea11bebffea8cd",
+  "metadata_sha256": "8900c21410f4a8348db98a0e43ee7555b68cbe8b1ba8f7725f0e5c59cf007d18",
+  "metadata_workers_arg": 28,
+  "logical_rows": 32,
+  "physical_aic_roster": 28,
+  "physical_aiv_roster": 56,
+  "mmad_issuing_aic": 28,
+  "mmad_count": 1024,
+  "metadata_fd_records": 27,
+  "fd_partial_pair_read_counts": 54,
+  "fd_output_pair_count": 27,
+  "fd_first_partial_read_cycles": 94585,
+  "fd_last_output_retire_cycles": 98280,
+  "active_mmad_peak_cores": 10,
+  "peak_concurrent_gather_aivs": 56,
+  "first_mmad_cycles": 15596,
+  "last_mmad_cycles": 88713,
+  "median_same_core_issue_gap_cycles": 1228.5,
+  "last_finishing_core": "core7.veccore1",
+  "folded_candidate_source": {
+    "descriptor": "OUT \u2192 UB MOV_SRC_TO_DST_ALIGNv2, burst_len=544",
+    "requested_bytes": 35651584,
+    "observed_bytes": 35651584,
+    "expected_unique_bytes": 1114112,
+    "observed_unique_bytes": 1114112,
+    "unique_address_extent_matches": true,
+    "every_logical_team_multiset_matches": true,
+    "note": "GM operand bytes from physical instruction descriptors. HBM miss traffic is not directly observed."
+  },
+  "all_mov_src_to_dst_alignv2_bytes": {
+    "OUT \u2192 UB": 39215872,
+    "UB \u2192 OUT": 37145600
+  },
+  "physical_teams": [
+    {
+      "physical": "core0.cubecore0",
+      "tiles": 37,
+      "first_mmad_cycles": 16169,
+      "last_mmad_cycles": 87029,
+      "candidate_reads": 2368,
+      "source_address_multiset_sha256": "d4f9288b88772e504359135a1fba2037638c53ea54be09b7be66bb89a3ec1770",
+      "matching_logical_teams": [
+        0
+      ]
+    },
+    {
+      "physical": "core1.cubecore0",
+      "tiles": 37,
+      "first_mmad_cycles": 15596,
+      "last_mmad_cycles": 85280,
+      "candidate_reads": 2368,
+      "source_address_multiset_sha256": "2e63474541adee9f19fe60c00c7b690c298137d69d3c184923977c7a64ad468e",
+      "matching_logical_teams": [
+        1,
+        22
+      ]
+    },
+    {
+      "physical": "core10.cubecore0",
+      "tiles": 37,
+      "first_mmad_cycles": 17544,
+      "last_mmad_cycles": 86272,
+      "candidate_reads": 2368,
+      "source_address_multiset_sha256": "067cfc43530959c9492d5340c6dc4fe2a2df4eb70bc2fe99061b60e5904757ee",
+      "matching_logical_teams": [
+        3,
+        10
+      ]
+    },
+    {
+      "physical": "core11.cubecore0",
+      "tiles": 36,
+      "first_mmad_cycles": 17149,
+      "last_mmad_cycles": 84290,
+      "candidate_reads": 2304,
+      "source_address_multiset_sha256": "c29597f32ee10a4b15c9bac7e6c65f128174d0a25bb86e38802cf08c11fdfdb5",
+      "matching_logical_teams": [
+        11
+      ]
+    },
+    {
+      "physical": "core12.cubecore0",
+      "tiles": 37,
+      "first_mmad_cycles": 18859,
+      "last_mmad_cycles": 85643,
+      "candidate_reads": 2368,
+      "source_address_multiset_sha256": "c0948b72259191fba56dbc62fc0508d7b8df574e526beee10aa19b680d61b965",
+      "matching_logical_teams": [
+        12
+      ]
+    },
+    {
+      "physical": "core13.cubecore0",
+      "tiles": 36,
+      "first_mmad_cycles": 16901,
+      "last_mmad_cycles": 87383,
+      "candidate_reads": 2304,
+      "source_address_multiset_sha256": "42c230dfa1e1e1184090f4fb6759a27bd9659044f851bb151a175bf8cf7fdbbe",
+      "matching_logical_teams": [
+        13
+      ]
+    },
+    {
+      "physical": "core16.cubecore0",
+      "tiles": 37,
+      "first_mmad_cycles": 17661,
+      "last_mmad_cycles": 88320,
+      "candidate_reads": 2368,
+      "source_address_multiset_sha256": "c4b9cf7d0ca8142d3d6c700499551ca46c507225ee88833a5e490fb1612725e4",
+      "matching_logical_teams": [
+        14
+      ]
+    },
+    {
+      "physical": "core17.cubecore0",
+      "tiles": 36,
+      "first_mmad_cycles": 18293,
+      "last_mmad_cycles": 87232,
+      "candidate_reads": 2304,
+      "source_address_multiset_sha256": "51dfc896c24c7ba7815b819333d29d7d88121883208c065facbd0fc5f4e1fd43",
+      "matching_logical_teams": [
+        15
+      ]
+    },
+    {
+      "physical": "core18.cubecore0",
+      "tiles": 37,
+      "first_mmad_cycles": 18035,
+      "last_mmad_cycles": 87499,
+      "candidate_reads": 2368,
+      "source_address_multiset_sha256": "a41006225207ba1c138de849cd50e57df84bc8fdda3357616b35b696f213764b",
+      "matching_logical_teams": [
+        2,
+        16
+      ]
+    },
+    {
+      "physical": "core19.cubecore0",
+      "tiles": 36,
+      "first_mmad_cycles": 18284,
+      "last_mmad_cycles": 86584,
+      "candidate_reads": 2304,
+      "source_address_multiset_sha256": "bc6dd13bf6ae5d555aba31e497ff49f332267a827654c658a8e3654267a68550",
+      "matching_logical_teams": [
+        17
+      ]
+    },
+    {
+      "physical": "core2.cubecore0",
+      "tiles": 37,
+      "first_mmad_cycles": 16512,
+      "last_mmad_cycles": 85418,
+      "candidate_reads": 2368,
+      "source_address_multiset_sha256": "a41006225207ba1c138de849cd50e57df84bc8fdda3357616b35b696f213764b",
+      "matching_logical_teams": [
+        2,
+        16
+      ]
+    },
+    {
+      "physical": "core20.cubecore0",
+      "tiles": 37,
+      "first_mmad_cycles": 18960,
+      "last_mmad_cycles": 87230,
+      "candidate_reads": 2368,
+      "source_address_multiset_sha256": "4203023d7ee3844eadf7c7fe7d0a85cacbd5c3cd3e266f048263582e417c1f63",
+      "matching_logical_teams": [
+        18
+      ]
+    },
+    {
+      "physical": "core21.cubecore0",
+      "tiles": 36,
+      "first_mmad_cycles": 18797,
+      "last_mmad_cycles": 83594,
+      "candidate_reads": 2304,
+      "source_address_multiset_sha256": "42ace3c1e23026779af47dcad75ff7eff8215363304d75a71307d89f67948bac",
+      "matching_logical_teams": [
+        19
+      ]
+    },
+    {
+      "physical": "core22.cubecore0",
+      "tiles": 37,
+      "first_mmad_cycles": 18136,
+      "last_mmad_cycles": 88713,
+      "candidate_reads": 2368,
+      "source_address_multiset_sha256": "07bfcfc969e2a764ca622255e6f7b02233f656506a4d2a30c9b24292372a15f2",
+      "matching_logical_teams": [
+        20
+      ]
+    },
+    {
+      "physical": "core23.cubecore0",
+      "tiles": 36,
+      "first_mmad_cycles": 17653,
+      "last_mmad_cycles": 86436,
+      "candidate_reads": 2304,
+      "source_address_multiset_sha256": "2010127bcd992b3d7a0efc927d1e34f00a803ffc7ca9e88031ba4defc9377dd6",
+      "matching_logical_teams": [
+        21
+      ]
+    },
+    {
+      "physical": "core24.cubecore0",
+      "tiles": 37,
+      "first_mmad_cycles": 18853,
+      "last_mmad_cycles": 88038,
+      "candidate_reads": 2368,
+      "source_address_multiset_sha256": "2e63474541adee9f19fe60c00c7b690c298137d69d3c184923977c7a64ad468e",
+      "matching_logical_teams": [
+        1,
+        22
+      ]
+    },
+    {
+      "physical": "core25.cubecore0",
+      "tiles": 36,
+      "first_mmad_cycles": 18056,
+      "last_mmad_cycles": 85866,
+      "candidate_reads": 2304,
+      "source_address_multiset_sha256": "b2452789ab538a8271b37622c9b990bcb64cc4489fca6b98577ebad8116b1154",
+      "matching_logical_teams": [
+        23
+      ]
+    },
+    {
+      "physical": "core26.cubecore0",
+      "tiles": 37,
+      "first_mmad_cycles": 19158,
+      "last_mmad_cycles": 87231,
+      "candidate_reads": 2368,
+      "source_address_multiset_sha256": "6f7f6c5e3d080a690fc154987ad59cc23877b6915eec6dc9a6e3c9c8ec1af5a0",
+      "matching_logical_teams": [
+        24
+      ]
+    },
+    {
+      "physical": "core27.cubecore0",
+      "tiles": 36,
+      "first_mmad_cycles": 18879,
+      "last_mmad_cycles": 85769,
+      "candidate_reads": 2304,
+      "source_address_multiset_sha256": "0445af29bffe53f75d4e693ed05f7ae3f17a71098c88dece668528ee51f25a8e",
+      "matching_logical_teams": [
+        25
+      ]
+    },
+    {
+      "physical": "core28.cubecore0",
+      "tiles": 37,
+      "first_mmad_cycles": 18340,
+      "last_mmad_cycles": 84940,
+      "candidate_reads": 2368,
+      "source_address_multiset_sha256": "643a4681968ac3cb68ba82f18f9ab6a15f86c5dfff08c48319f78c1e5fbcfb1c",
+      "matching_logical_teams": [
+        26
+      ]
+    },
+    {
+      "physical": "core29.cubecore0",
+      "tiles": 36,
+      "first_mmad_cycles": 18149,
+      "last_mmad_cycles": 84541,
+      "candidate_reads": 2304,
+      "source_address_multiset_sha256": "928b53b9150aa89465431d67572cee4dadc00daeb6e7bf45c264d04f72951cd3",
+      "matching_logical_teams": [
+        27
+      ]
+    },
+    {
+      "physical": "core3.cubecore0",
+      "tiles": 37,
+      "first_mmad_cycles": 17395,
+      "last_mmad_cycles": 86878,
+      "candidate_reads": 2368,
+      "source_address_multiset_sha256": "067cfc43530959c9492d5340c6dc4fe2a2df4eb70bc2fe99061b60e5904757ee",
+      "matching_logical_teams": [
+        3,
+        10
+      ]
+    },
+    {
+      "physical": "core4.cubecore0",
+      "tiles": 37,
+      "first_mmad_cycles": 17064,
+      "last_mmad_cycles": 85529,
+      "candidate_reads": 2368,
+      "source_address_multiset_sha256": "56da94ae9f498759839d58278ca75eb1f4e6de93ffb0a9b6ebe7e63f3426ddfe",
+      "matching_logical_teams": [
+        4
+      ]
+    },
+    {
+      "physical": "core5.cubecore0",
+      "tiles": 36,
+      "first_mmad_cycles": 16600,
+      "last_mmad_cycles": 81799,
+      "candidate_reads": 2304,
+      "source_address_multiset_sha256": "215a58efc1bdd0a5a9f224c88d0c28007c4add5b6bc814b87359f5135eef7508",
+      "matching_logical_teams": [
+        5
+      ]
+    },
+    {
+      "physical": "core6.cubecore0",
+      "tiles": 37,
+      "first_mmad_cycles": 16984,
+      "last_mmad_cycles": 87974,
+      "candidate_reads": 2368,
+      "source_address_multiset_sha256": "ceb236b8e8dab7e1018f53d5c95f04319126b4438737ad3511cb069c5a7c50c6",
+      "matching_logical_teams": [
+        6
+      ]
+    },
+    {
+      "physical": "core7.cubecore0",
+      "tiles": 36,
+      "first_mmad_cycles": 16780,
+      "last_mmad_cycles": 85526,
+      "candidate_reads": 2304,
+      "source_address_multiset_sha256": "8c98bacd844d3f915f9046325023953816c1b9c866385d3d4d5054952c51633b",
+      "matching_logical_teams": [
+        7
+      ]
+    },
+    {
+      "physical": "core8.cubecore0",
+      "tiles": 37,
+      "first_mmad_cycles": 17733,
+      "last_mmad_cycles": 87575,
+      "candidate_reads": 2368,
+      "source_address_multiset_sha256": "ebfb3fb0f2f888095fe05f2afabb49f73e1b631d2f45e63ce74df3374b7c9675",
+      "matching_logical_teams": [
+        8
+      ]
+    },
+    {
+      "physical": "core9.cubecore0",
+      "tiles": 36,
+      "first_mmad_cycles": 18587,
+      "last_mmad_cycles": 86856,
+      "candidate_reads": 2304,
+      "source_address_multiset_sha256": "c9ee7052fa4f0d2437f86d7a0d941d5fe937ac487b96700158e166be8c5c5dc3",
+      "matching_logical_teams": [
+        9
+      ]
+    }
+  ],
+  "physical_shard_count": 84,
+  "end_count": 84,
+  "trace_set_sha256": "f0deecbcecf4942c534f13dba9727018bb74ef83b6327c4dcfbe73bc70b56916",
+  "kernel": "_Z36kernel_QuantSparseLightningIndexer_0l26KernelArgTensor_uint8_t_3dl24KernelArgTensor_float_2d29KernelArgTensor_fp8_e8m0_t_3d26KernelArgTensor_int32_t_3d26KernelArgTensor_int32_t_2d26KernelArgTensor_int32_t_1dS3_S3_S4_S3_S3_26KernelArgTensor_uint8_t_2d31KernelArgTensor_fp4x2_e2m1_t_2dS5_S1_27KernelArgTensor_uint16_t_2dlS3_llllllS3_llllli",
+  "native_aot_key": "400228d98408fad5510dc0ff2580bb878c30b3f8dd4457e2ee349b2300d4e3de",
+  "provider_sha256": "6f071b48df79d0410a146a482938c4cee44771c85cd3defcea003b963d384a1d",
+  "device_sha256": "b3a854470fe46368ac752ccccd7ed0bb7ffb087b658373c2ac97bfce027ae4ff",
+  "device_elf_inside_provider_at": 443904,
+  "wall_s": 800.749,
+  "golden_observed_s": 620.205,
+  "trace_export_after_golden_s": 180.54399999999998,
+  "simulator_exit_code": null,
+  "cost_record_source": "Original cost monitor terminated; CA and msOpProf continued in their existing process group. Simulator return code unobserved. Duration uses log birth (1s precision) to last modification. Adopted poll interval 3s.",
+  "probe_sha256": "e71f2c75ebc4635777675f701510afba5acb717df85d66d47f24187b45da9890",
+  "log_sha256": "29fe47f375f4e429c30aefdbaca7024808b014161219216f695fe66544196c3c",
+  "host_annotation_warning": true
+}
