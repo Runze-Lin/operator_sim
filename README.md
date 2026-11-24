@@ -1,6 +1,6 @@
 # operator-sim
 
-**operator-sim** 是面向系统仿真的昇腾算子建模后端。输入一张卡实际执行的算子、shape、dtype 和芯片配置，返回设备耗时、Cube / Vector 工作量、逻辑访存量与活跃核数。模型根据库实现推导分核、分块和流水重叠。在线预测只依赖 Python 3.10+ 标准库，可在没有昇腾硬件和 CANN 的系统仿真主机使用。
+**operator-sim** 是面向系统仿真的昇腾算子建模后端。输入一张卡实际执行的算子、shape、dtype 和芯片配置，返回设备耗时、Cube / Vector 工作量、逻辑访存量与活跃核数。能匹配库实现的路径用 CA 校准；捕获图中的研究算子按明确的分核、分块和流水推演。在线预测只依赖 Python 3.10+ 标准库，可在没有昇腾硬件和 CANN 的系统仿真主机使用。
 
 ## 安装与调用
 
@@ -25,20 +25,22 @@ print(r.rates["physical_roofline"]["known_lower_bound_us"])  # 可核实的计�
 print(r.work["cube_ops"], r.work["logical_read_bytes"], r.work["logical_write_bytes"])
 ```
 
-批量仿真在同一进程复用模型和芯片配置。已知 kernel 发起顺序时，为每卡每条流建立一个 `OperatorStream`，让 RMSNorm 和 mHC Post 等算子看到同流前序。框架继续负责通信、跨流并发和设备间调度。[接入契约](docs/integration.md) · [可运行的调度器示例](examples/system_sim.py)
+批量仿真在同一进程复用模型和芯片配置。已知 kernel 发起顺序时，为每卡每条流建立一个 `OperatorStream`，让 RMSNorm 和 mHC Post 等算子看到同流前序。系统框架负责跨流并发和设备间调度；全图入口还可给 TP/EP 通信提供本卡价格。[接入契约](docs/integration.md) · [可运行的调度器示例](examples/system_sim.py)
+
+在 SIMPlatform 的任务 TOML 中设置 `[prediction]` 下的 `backends = ["operator_sim_full"]`，即可对本仓核对过的 27 组 decode 图全量定价。该入口覆盖 80 个原始调用名，包括有 dtype/布局要求的计算、跨卡路由、零设备时间的视图及分配。原 Roofline 或按原生合同选择的混合后端仍可单独运行。[三种后端的选法](docs/sim-platform.md) · [27 组比较和逐算子账本](docs/system-full-comparison.md)
 
 ## 从哪里读代码
 
 | 你要找的内容 | 入口 |
 |---|---|
 | 一次预测如何选择实现、计算时间并组装返回值 | [backend.py](src/operator_model/backend.py) |
-| Matmul、FA、quant、RMSNorm、mHC、KDA、MoE 等具体算子的公式与实现 | [按算子族组织的源码](src/operator_model/operators/) · [建模方法与逐算子算例](docs/modeling-strategy.md) |
+| Matmul、FA、quant、RMSNorm、mHC、KDA、MoE 等具体算子的公式与实现 | [独立算子源码](src/operator_model/operators/) · [系统捕获算子的分族实现](src/operator_model/system_routes/) · [建模方法与逐算子算例](docs/modeling-strategy.md) |
 | 同流前序、分核和流水调度、工作量与速率 | [stream.py](src/operator_model/stream.py) · [scheduling/](src/operator_model/scheduling/) · [workload.py](src/operator_model/workload.py) |
 | 添加芯片或检查校准参数 | [芯片配置](src/operator_model/data/chips/) · [模型参数](src/operator_model/data/parameters/) · [自定义芯片示例](examples/chip.json) |
 | 各算子的耗时误差、逐 shape 真值、验证边界 | [误差分析、逻辑 Roofline 系数与物理下界](docs/error-analysis.md) · [每个算子的全部 shape](docs/errors/README.md) · [可复算的参考数据](calibration/reference/) |
 | FA 的低位 KV cache、量化/反量化与 MoE 不同权重精度 | [精度组合、库入口与验证状态](docs/precision-coverage.md) |
-| 三种模型在 128Ki decode、三种并行配置和 B=1/16/64 的实际系统算子覆盖 | [逐节点账单核查与建模缺口](docs/system-workload-coverage.md) |
-| 在 SIMPlatform 启用精细算子后端，查看九组 decode 配置与原 Roofline 的时延差 | [安装与后端选择](docs/sim-platform.md) · [27 组三方端到端对比与回退排名](docs/system-candidate-comparison.md) |
+| 三种模型在 128Ki decode、三种并行配置和 B=1/16/64 的实际系统算子覆盖 | [全部调用、几何、证据与定价](docs/system-full-comparison.md) |
+| 在 SIMPlatform 启用精细算子后端，查看九组 decode 配置与原 Roofline 的时延差 | [安装与后端选择](docs/sim-platform.md) · [27 组原 Roofline、v1.8 和完整后端对比](docs/system-full-comparison.md) |
 | 从三种模型的 config 推导单卡 prefill shape | [工作负载示例](examples/workloads/) |
 | 开发新算子、重新校准、构建和测试 | [维护指南](CONTRIBUTING.md) · [CA 校准工具](calibration/) |
 

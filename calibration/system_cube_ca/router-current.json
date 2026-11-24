@@ -1,0 +1,237 @@
+{
+  "model_sha256": "a7026179e04721f57f294ae4899b22a01927f33208c5d932d23be9d043caf54c",
+  "development": {
+    "Ascend950DT_9582": {
+      "shape_MNK": [
+        9,
+        896,
+        7168
+      ],
+      "dtype": "BF16_FP32",
+      "predicted_us": 10.279612121212121,
+      "schedule": {
+        "tile_mnk": [
+          16,
+          224,
+          64
+        ],
+        "output_tiles": 4,
+        "split_k": 8,
+        "active_aic": 32,
+        "active_aiv": null,
+        "waves": 1,
+        "k_pages_per_split": 14,
+        "core_ops_per_cycle": 8181.818181818182,
+        "resource_cycles": {
+          "first_issue": 2900.0,
+          "cube": 1232.9756444444445,
+          "hbm": 5365.1136,
+          "panel_mte2": 3262.0,
+          "vector": 0.0,
+          "drain": 3736.0
+        },
+        "body_cycles": 10325.36,
+        "groups": 1,
+        "read_to_first_mmad_cycles": 2886.0,
+        "arrival_spread_cycles": 3264.0,
+        "local_panel_cycles": 4175.36,
+        "partial_workspace_bytes": 258048,
+        "merge_l2_cycles": 106.44479999999999
+      }
+    },
+    "Ascend950PR_957b": {
+      "shape_MNK": [
+        9,
+        896,
+        7168
+      ],
+      "dtype": "BF16_FP32",
+      "predicted_us": 13.312058181818182,
+      "schedule": {
+        "tile_mnk": [
+          16,
+          224,
+          64
+        ],
+        "output_tiles": 4,
+        "split_k": 7,
+        "active_aic": 28,
+        "active_aiv": null,
+        "waves": 1,
+        "k_pages_per_split": 16,
+        "core_ops_per_cycle": 8181.818181818183,
+        "resource_cycles": {
+          "first_issue": 2900.0,
+          "cube": 1409.1150222222223,
+          "hbm": 15328.895999999999,
+          "panel_mte2": 3728.0,
+          "vector": 0.0,
+          "drain": 3736.0
+        },
+        "body_cycles": 15328.895999999999,
+        "groups": 1,
+        "read_to_first_mmad_cycles": 2886.0,
+        "arrival_spread_cycles": 3264.0,
+        "local_panel_cycles": 4771.84,
+        "partial_workspace_bytes": 225792,
+        "merge_l2_cycles": 266.11199999999997
+      }
+    },
+    "Ascend970DT": {
+      "shape_MNK": [
+        9,
+        896,
+        7168
+      ],
+      "dtype": "BF16_FP32",
+      "predicted_us": 7.722077777777778,
+      "schedule": {
+        "tile_mnk": [
+          16,
+          224,
+          64
+        ],
+        "output_tiles": 4,
+        "split_k": 30,
+        "active_aic": 120,
+        "active_aiv": null,
+        "waves": 1,
+        "k_pages_per_split": 4,
+        "core_ops_per_cycle": 8194.444444444445,
+        "resource_cycles": {
+          "first_issue": 2900.0,
+          "cube": 337.0626169491525,
+          "hbm": 1625.7920000000001,
+          "panel_mte2": 870.109375,
+          "vector": 0.0,
+          "drain": 3736.0
+        },
+        "body_cycles": 7263.74,
+        "groups": 1,
+        "read_to_first_mmad_cycles": 2886.0,
+        "arrival_spread_cycles": 3264.0,
+        "local_panel_cycles": 1113.74,
+        "partial_workspace_bytes": 967680,
+        "merge_l2_cycles": 116.1216
+      }
+    }
+  },
+  "independent": {
+    "Ascend950DT_9582": {
+      "shape_MNK": [
+        144,
+        896,
+        7168
+      ],
+      "dtype": "BF16_FP32",
+      "predicted_us": 15.904006249158249,
+      "schedule": {
+        "tile_mnk": [
+          128,
+          224,
+          64
+        ],
+        "output_tiles": 8,
+        "split_k": 4,
+        "active_aic": 32,
+        "active_aiv": null,
+        "waves": 1,
+        "k_pages_per_split": 28,
+        "core_ops_per_cycle": 8181.818181818182,
+        "resource_cycles": {
+          "first_issue": 2900.0,
+          "cube": 13455.610311111112,
+          "hbm": 6363.0336,
+          "panel_mte2": 9856.0,
+          "vector": 0.0,
+          "drain": 3736.0
+        },
+        "body_cycles": 19605.61031111111,
+        "groups": 1,
+        "read_to_first_mmad_cycles": 2886.0,
+        "arrival_spread_cycles": 3264.0,
+        "local_panel_cycles": 12615.68,
+        "partial_workspace_bytes": 2064384,
+        "merge_l2_cycles": 851.5583999999999
+      }
+    },
+    "Ascend950PR_957b": {
+      "shape_MNK": [
+        144,
+        896,
+        7168
+      ],
+      "dtype": "BF16_FP32",
+      "predicted_us": 18.345008484848485,
+      "schedule": {
+        "tile_mnk": [
+          128,
+          224,
+          64
+        ],
+        "output_tiles": 8,
+        "split_k": 3,
+        "active_aic": 24,
+        "active_aiv": null,
+        "waves": 1,
+        "k_pages_per_split": 38,
+        "core_ops_per_cycle": 8181.818181818183,
+        "resource_cycles": {
+          "first_issue": 2900.0,
+          "cube": 17966.819555555554,
+          "hbm": 18180.095999999998,
+          "panel_mte2": 13145.0,
+          "vector": 0.0,
+          "drain": 3736.0
+        },
+        "body_cycles": 23633.264,
+        "groups": 1,
+        "read_to_first_mmad_cycles": 2886.0,
+        "arrival_spread_cycles": 2780.4444444444443,
+        "local_panel_cycles": 16825.6,
+        "partial_workspace_bytes": 1548288,
+        "merge_l2_cycles": 1824.7679999999998
+      }
+    },
+    "Ascend970DT": {
+      "shape_MNK": [
+        144,
+        896,
+        7168
+      ],
+      "dtype": "BF16_FP32",
+      "predicted_us": 9.10388992843691,
+      "schedule": {
+        "tile_mnk": [
+          128,
+          224,
+          64
+        ],
+        "output_tiles": 8,
+        "split_k": 15,
+        "active_aic": 120,
+        "active_aiv": null,
+        "waves": 1,
+        "k_pages_per_split": 8,
+        "core_ops_per_cycle": 8194.444444444445,
+        "resource_cycles": {
+          "first_issue": 2900.0,
+          "cube": 3601.0018711864404,
+          "hbm": 1928.192,
+          "panel_mte2": 2629.0,
+          "vector": 0.0,
+          "drain": 3736.0
+        },
+        "body_cycles": 9751.00187118644,
+        "groups": 1,
+        "read_to_first_mmad_cycles": 2886.0,
+        "arrival_spread_cycles": 3264.0,
+        "local_panel_cycles": 3365.12,
+        "partial_workspace_bytes": 7741440,
+        "merge_l2_cycles": 928.9728
+      }
+    }
+  },
+  "metadata_note": "The measured 950 split-K binary uses AIV sum reduction; its participating count is unknown online. Corrected reporting for the frozen schedule without changing numerical prices.",
+  "current_source_sha256": "ec84af7a8ab88a855f0360ac0f21ab0fb559e1e4e252302eae4fff7f80a12f0c"
+}

@@ -38,7 +38,8 @@ def _target(name, capabilities, base):
         hbm_bandwidth_gbs=1000 * capabilities.hbm.bandwidth_tb_per_second,
     )
     if scenario != base:
-        scenario = replace(scenario, name=f"{name}-system")
+        scenario = replace(scenario, name=f"{name}-system",
+                           sources={**base.sources, "timing_template": base.name})
     return scenario
 
 
@@ -90,14 +91,17 @@ class OperatorSimBackend:
             )
         return _target(name, capabilities, self._templates[name])
 
+    def _estimate(self, features, target, hardware):
+        return estimate_features(features, chip=target)
+
     def predict(self, features, hardware):
         target = self._target_chip(hardware.name, hardware.chip)
-        result = estimate_features(features, chip=target)
+        result = self._estimate(features, target, hardware)
         if result.latency_us is None:
             raise UnsupportedOperator(result.reason or f"No qualified {features.raw_name} contract")
         work = result.work
         calibrated_target = target in (load_chip("Ascend950DT_9582"), load_chip("Ascend950PR_957b"))
-        status = result.status if calibrated_target else "extrapolated"
+        status = result.status if calibrated_target or result.status == "structural" else "extrapolated"
         details = PredictionDetails(
             model_name=result.contract,
             model_version=self.version,
@@ -119,13 +123,40 @@ class OperatorSimBackend:
             adaptor_name=self.name,
             adaptor_version=ADAPTER_VERSION,
             schema_version="resource-schedule-v1",
+            model_parameters=tuple(sorted(
+                (key, value if type(value) in (int,float,str) else json.dumps(value, sort_keys=True))
+                for key,value in (work.get("schedule") or {}).items() if value is not None
+            )) if self.name == "operator_sim_full" else (),
+            communication_access=work.get("communication_access"), communication_us=work.get("communication_us"),
             assumptions=(
                 status, f"SKU template: {self._templates[hardware.name].name}",
                 "Clock, core counts, buffers and stage prices from the SKU template.",
                 "Cube/Vector peaks and HBM capacity/bandwidth from system hardware.",
-                "Device launch included; no additional Roofline head/tail or utilization factor.",
+                "Zero device window for metadata." if result.status == "structural" else
+                "Device schedule includes its modeled startup.",
                 "Work counts useful operations and logical tensor bytes.",
                 *((result.reason,) if result.reason else ()),
             ),
         )
         return Estimate(result.latency_us, details=details)
+
+
+class FullOperatorSimBackend(OperatorSimBackend):
+    """Rank-local device and interconnect schedules, including structural zero-time operations."""
+
+    name = "operator_sim_full"
+    prices_metadata = True
+
+    def __init__(self, *, chips=None, fabric=None):
+        from operator_model.system_routes.communication import FabricScenario
+        super().__init__(chips=chips)
+        self.fabric = fabric if fabric is not None else FabricScenario()
+        if not isinstance(self.fabric, FabricScenario):
+            raise TypeError("fabric must be a FabricScenario")
+        self.configuration += (("fabric_gbs", self.fabric.injection_gbs), ("fabric_step_us", self.fabric.step_us))
+
+    def _estimate(self, features, target, hardware):
+        from operator_model.system_routes import estimate_full_features, communication
+        if features.raw_name in communication.NAMES and hardware.topology is not None:
+            raise UnsupportedOperator("Configured topology needs an explicit topology-aware communication backend")
+        return estimate_full_features(features,chip=target,fabric=self.fabric)

@@ -11,7 +11,7 @@ from operator_model.operators.mhc.history import PostHistory, estimate_post_hist
 from operator_model.operators.kda.prefill import plan_kimi_kda_prefill
 from operator_model.operators.kda.recurrent_chains import estimate_recurrent_chains
 
-__version__ = '1.8.0'
+__version__ = '1.9.0'
 __all__ = ['ChipConfig', 'load_chip', 'Estimate', 'estimate', 'OperatorStream', 'physical_roofline',
            'RmsHistoryBand', 'estimate_rms_history_band', 'plan_kimi_kda_prefill',
            'PostHistory', 'estimate_post_history', 'RmsGeometry', 'rmsnorm_pipeline',

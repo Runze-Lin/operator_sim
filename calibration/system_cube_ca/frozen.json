@@ -1,0 +1,859 @@
+{
+  "model_sha256": "38e319a62dffb43039c6b6737db703d02d66954cfb876f66a9ec21ea0477e408",
+  "development": {
+    "Ascend950DT_9582": [
+      {
+        "shape_MNK": [
+          9,
+          4,
+          20480
+        ],
+        "dtype": "FP32",
+        "api": "aclnnMm",
+        "predicted_us": 5.839757575757576,
+        "model_query_us": 67.34,
+        "schedule": {
+          "tile_mnk": [
+            16,
+            16,
+            512
+          ],
+          "output_tiles": 1,
+          "split_k": 32,
+          "active_aic": 32,
+          "active_aiv": 0,
+          "waves": 1,
+          "k_pages_per_split": 2,
+          "core_ops_per_cycle": 512.0,
+          "resource_cycles": {
+            "first_issue": 4273,
+            "cube": 2027.6,
+            "hbm": 439.3554,
+            "panel_mte2": 260.0,
+            "vector": 0.0,
+            "drain": 3335
+          },
+          "body_cycles": 2027.6,
+          "groups": 1
+        }
+      },
+      {
+        "shape_MNK": [
+          9,
+          384,
+          5120
+        ],
+        "dtype": "FP32",
+        "api": "aclnnMm",
+        "predicted_us": 7.08969696969697,
+        "model_query_us": 31.97,
+        "schedule": {
+          "tile_mnk": [
+            16,
+            192,
+            32
+          ],
+          "output_tiles": 2,
+          "split_k": 16,
+          "active_aic": 32,
+          "active_aiv": 0,
+          "waves": 1,
+          "k_pages_per_split": 10,
+          "core_ops_per_cycle": 512.0,
+          "resource_cycles": {
+            "first_issue": 4273,
+            "cube": 4090.0,
+            "hbm": 3325.7664,
+            "panel_mte2": 2010.0,
+            "vector": 0.0,
+            "drain": 3335
+          },
+          "body_cycles": 4090.0,
+          "groups": 1
+        }
+      },
+      {
+        "shape_MNK": [
+          8,
+          1,
+          7680
+        ],
+        "dtype": "FP32",
+        "api": "aclnnAddmm",
+        "predicted_us": 2.9930909090909092,
+        "model_query_us": 25.09,
+        "schedule": {
+          "tile_mnk": [
+            16,
+            16,
+            512
+          ],
+          "output_tiles": 1,
+          "split_k": 32,
+          "active_aic": 32,
+          "active_aiv": 64,
+          "waves": 1,
+          "k_pages_per_split": 1,
+          "core_ops_per_cycle": 512.0,
+          "resource_cycles": {
+            "first_issue": 1932,
+            "cube": 766.5999999999999,
+            "hbm": 114.06285,
+            "panel_mte2": 67.5,
+            "vector": 0.00024444444444444443,
+            "drain": 2240
+          },
+          "body_cycles": 766.5999999999999,
+          "groups": 1
+        }
+      },
+      {
+        "shape_MNK": [
+          9,
+          128,
+          512
+        ],
+        "dtype": "BF16",
+        "api": "aclnnMm",
+        "predicted_us": 1.5236363636363637,
+        "model_query_us": 27.45,
+        "schedule": {
+          "tile_mnk": [
+            16,
+            16,
+            512
+          ],
+          "output_tiles": 8,
+          "split_k": 1,
+          "active_aic": 8,
+          "active_aiv": 0,
+          "waves": 1,
+          "k_pages_per_split": 1,
+          "core_ops_per_cycle": 8181.818181818182,
+          "resource_cycles": {
+            "first_issue": 1794,
+            "cube": 64.03982222222223,
+            "hbm": 139.25,
+            "panel_mte2": 200.0,
+            "vector": 0.0,
+            "drain": 520
+          },
+          "body_cycles": 200.0,
+          "groups": 1
+        }
+      }
+    ],
+    "Ascend950PR_957b": [
+      {
+        "shape_MNK": [
+          9,
+          4,
+          20480
+        ],
+        "dtype": "FP32",
+        "api": "aclnnMm",
+        "predicted_us": 6.012048484848486,
+        "model_query_us": 274.63,
+        "schedule": {
+          "tile_mnk": [
+            16,
+            16,
+            512
+          ],
+          "output_tiles": 1,
+          "split_k": 28,
+          "active_aic": 28,
+          "active_aiv": 0,
+          "waves": 1,
+          "k_pages_per_split": 2,
+          "core_ops_per_cycle": 512.0000000000001,
+          "resource_cycles": {
+            "first_issue": 4273,
+            "cube": 2311.88,
+            "hbm": 1255.3011428571428,
+            "panel_mte2": 297.375,
+            "vector": 0.0,
+            "drain": 3335
+          },
+          "body_cycles": 2311.88,
+          "groups": 1
+        }
+      },
+      {
+        "shape_MNK": [
+          9,
+          384,
+          5120
+        ],
+        "dtype": "FP32",
+        "api": "aclnnMm",
+        "predicted_us": 10.369811948051947,
+        "model_query_us": 28.48,
+        "schedule": {
+          "tile_mnk": [
+            16,
+            192,
+            32
+          ],
+          "output_tiles": 2,
+          "split_k": 14,
+          "active_aic": 28,
+          "active_aiv": 0,
+          "waves": 1,
+          "k_pages_per_split": 12,
+          "core_ops_per_cycle": 512.0000000000001,
+          "resource_cycles": {
+            "first_issue": 4273,
+            "cube": 4691.999999999999,
+            "hbm": 9502.189714285714,
+            "panel_mte2": 2298.9375,
+            "vector": 0.0,
+            "drain": 3335
+          },
+          "body_cycles": 9502.189714285714,
+          "groups": 1
+        }
+      },
+      {
+        "shape_MNK": [
+          8,
+          1,
+          7680
+        ],
+        "dtype": "FP32",
+        "api": "aclnnAddmm",
+        "predicted_us": 3.0586363636363636,
+        "model_query_us": 23.95,
+        "schedule": {
+          "tile_mnk": [
+            16,
+            16,
+            512
+          ],
+          "output_tiles": 1,
+          "split_k": 28,
+          "active_aic": 28,
+          "active_aiv": 56,
+          "waves": 1,
+          "k_pages_per_split": 1,
+          "core_ops_per_cycle": 512.0000000000001,
+          "resource_cycles": {
+            "first_issue": 1932,
+            "cube": 874.75,
+            "hbm": 325.89385714285714,
+            "panel_mte2": 77.34375,
+            "vector": 0.0002808510638297872,
+            "drain": 2240
+          },
+          "body_cycles": 874.75,
+          "groups": 1
+        }
+      },
+      {
+        "shape_MNK": [
+          9,
+          128,
+          512
+        ],
+        "dtype": "BF16",
+        "api": "aclnnMm",
+        "predicted_us": 1.5236363636363637,
+        "model_query_us": 30.47,
+        "schedule": {
+          "tile_mnk": [
+            16,
+            16,
+            512
+          ],
+          "output_tiles": 8,
+          "split_k": 1,
+          "active_aic": 8,
+          "active_aiv": 0,
+          "waves": 1,
+          "k_pages_per_split": 1,
+          "core_ops_per_cycle": 8181.818181818183,
+          "resource_cycles": {
+            "first_issue": 1794,
+            "cube": 64.03982222222223,
+            "hbm": 168.05485714285714,
+            "panel_mte2": 200.0,
+            "vector": 0.0,
+            "drain": 520
+          },
+          "body_cycles": 200.0,
+          "groups": 1
+        }
+      }
+    ],
+    "Ascend970DT": [
+      {
+        "shape_MNK": [
+          9,
+          4,
+          20480
+        ],
+        "dtype": "FP32",
+        "api": "aclnnMm",
+        "predicted_us": 4.534105555555556,
+        "model_query_us": 33.83,
+        "schedule": {
+          "tile_mnk": [
+            16,
+            16,
+            512
+          ],
+          "output_tiles": 1,
+          "split_k": 120,
+          "active_aic": 120,
+          "active_aiv": 0,
+          "waves": 1,
+          "k_pages_per_split": 1,
+          "core_ops_per_cycle": 512.7901234567902,
+          "resource_cycles": {
+            "first_issue": 4273,
+            "cube": 553.39,
+            "hbm": 133.138,
+            "panel_mte2": 69.46875,
+            "vector": 0.0,
+            "drain": 3335
+          },
+          "body_cycles": 553.39,
+          "groups": 1
+        }
+      },
+      {
+        "shape_MNK": [
+          9,
+          384,
+          5120
+        ],
+        "dtype": "FP32",
+        "api": "aclnnMm",
+        "predicted_us": 4.840783256291731,
+        "model_query_us": 24.99,
+        "schedule": {
+          "tile_mnk": [
+            16,
+            192,
+            32
+          ],
+          "output_tiles": 2,
+          "split_k": 60,
+          "active_aic": 120,
+          "active_aiv": 0,
+          "waves": 1,
+          "k_pages_per_split": 3,
+          "core_ops_per_cycle": 512.7901234567902,
+          "resource_cycles": {
+            "first_issue": 4273,
+            "cube": 1105.4098613251153,
+            "hbm": 1007.8080000000001,
+            "panel_mte2": 540.1875,
+            "vector": 0.0,
+            "drain": 3335
+          },
+          "body_cycles": 1105.4098613251153,
+          "groups": 1
+        }
+      },
+      {
+        "shape_MNK": [
+          8,
+          1,
+          7680
+        ],
+        "dtype": "FP32",
+        "api": "aclnnAddmm",
+        "predicted_us": 2.4415333333333336,
+        "model_query_us": 23.09,
+        "schedule": {
+          "tile_mnk": [
+            16,
+            16,
+            512
+          ],
+          "output_tiles": 1,
+          "split_k": 120,
+          "active_aic": 120,
+          "active_aiv": 120,
+          "waves": 1,
+          "k_pages_per_split": 1,
+          "core_ops_per_cycle": 512.7901234567902,
+          "resource_cycles": {
+            "first_issue": 1932,
+            "cube": 222.76,
+            "hbm": 34.5645,
+            "panel_mte2": 18.0,
+            "vector": 0.00013020833333333333,
+            "drain": 2240
+          },
+          "body_cycles": 222.76,
+          "groups": 1
+        }
+      },
+      {
+        "shape_MNK": [
+          9,
+          128,
+          512
+        ],
+        "dtype": "BF16",
+        "api": "aclnnMm",
+        "predicted_us": 1.3966666666666667,
+        "model_query_us": 23.81,
+        "schedule": {
+          "tile_mnk": [
+            16,
+            16,
+            512
+          ],
+          "output_tiles": 8,
+          "split_k": 1,
+          "active_aic": 8,
+          "active_aiv": 0,
+          "waves": 1,
+          "k_pages_per_split": 1,
+          "core_ops_per_cycle": 8194.444444444445,
+          "resource_cycles": {
+            "first_issue": 1794,
+            "cube": 63.990454237288134,
+            "hbm": 139.25,
+            "panel_mte2": 200.0,
+            "vector": 0.0,
+            "drain": 520
+          },
+          "body_cycles": 200.0,
+          "groups": 1
+        }
+      }
+    ]
+  },
+  "independent": {
+    "Ascend950DT_9582": [
+      {
+        "shape_MNK": [
+          9,
+          4,
+          28672
+        ],
+        "dtype": "FP32",
+        "api": "aclnnMm",
+        "predicted_us": 6.319175757575757,
+        "model_query_us": 23.2,
+        "schedule": {
+          "tile_mnk": [
+            16,
+            16,
+            512
+          ],
+          "output_tiles": 1,
+          "split_k": 32,
+          "active_aic": 32,
+          "active_aiv": 0,
+          "waves": 1,
+          "k_pages_per_split": 2,
+          "core_ops_per_cycle": 512.0,
+          "resource_cycles": {
+            "first_issue": 4273,
+            "cube": 2818.64,
+            "hbm": 615.0737999999999,
+            "panel_mte2": 364.0,
+            "vector": 0.0,
+            "drain": 3335
+          },
+          "body_cycles": 2818.64,
+          "groups": 1
+        }
+      },
+      {
+        "shape_MNK": [
+          9,
+          384,
+          7168
+        ],
+        "dtype": "FP32",
+        "api": "aclnnMm",
+        "predicted_us": 8.081212121212122,
+        "model_query_us": 23.06,
+        "schedule": {
+          "tile_mnk": [
+            16,
+            192,
+            32
+          ],
+          "output_tiles": 2,
+          "split_k": 16,
+          "active_aic": 32,
+          "active_aiv": 0,
+          "waves": 1,
+          "k_pages_per_split": 14,
+          "core_ops_per_cycle": 512.0,
+          "resource_cycles": {
+            "first_issue": 4273,
+            "cube": 5726.0,
+            "hbm": 4653.792,
+            "panel_mte2": 2814.0,
+            "vector": 0.0,
+            "drain": 3335
+          },
+          "body_cycles": 5726.0,
+          "groups": 1
+        }
+      },
+      {
+        "shape_MNK": [
+          128,
+          1,
+          5376
+        ],
+        "dtype": "FP32",
+        "api": "aclnnAddmm",
+        "predicted_us": 3.3884848484848487,
+        "model_query_us": 22.55,
+        "schedule": {
+          "tile_mnk": [
+            128,
+            16,
+            64
+          ],
+          "output_tiles": 1,
+          "split_k": 32,
+          "active_aic": 32,
+          "active_aiv": 64,
+          "waves": 1,
+          "k_pages_per_split": 3,
+          "core_ops_per_cycle": 512.0,
+          "resource_cycles": {
+            "first_issue": 1932,
+            "cube": 1419.0,
+            "hbm": 1144.49445,
+            "panel_mte2": 677.25,
+            "vector": 0.003911111111111111,
+            "drain": 2240
+          },
+          "body_cycles": 1419.0,
+          "groups": 1
+        }
+      },
+      {
+        "shape_MNK": [
+          144,
+          128,
+          512
+        ],
+        "dtype": "BF16",
+        "api": "aclnnMm",
+        "predicted_us": 2.1006060606060606,
+        "model_query_us": 23.05,
+        "schedule": {
+          "tile_mnk": [
+            128,
+            16,
+            128
+          ],
+          "output_tiles": 16,
+          "split_k": 1,
+          "active_aic": 16,
+          "active_aiv": 0,
+          "waves": 1,
+          "k_pages_per_split": 4,
+          "core_ops_per_cycle": 8181.818181818182,
+          "resource_cycles": {
+            "first_issue": 1794,
+            "cube": 384.31857777777776,
+            "hbm": 154.0,
+            "panel_mte2": 1152.0,
+            "vector": 0.0,
+            "drain": 520
+          },
+          "body_cycles": 1152.0,
+          "groups": 1
+        }
+      }
+    ],
+    "Ascend950PR_957b": [
+      {
+        "shape_MNK": [
+          9,
+          4,
+          28672
+        ],
+        "dtype": "FP32",
+        "api": "aclnnMm",
+        "predicted_us": 6.5588848484848485,
+        "model_query_us": 22.06,
+        "schedule": {
+          "tile_mnk": [
+            16,
+            16,
+            512
+          ],
+          "output_tiles": 1,
+          "split_k": 28,
+          "active_aic": 28,
+          "active_aiv": 0,
+          "waves": 1,
+          "k_pages_per_split": 2,
+          "core_ops_per_cycle": 512.0000000000001,
+          "resource_cycles": {
+            "first_issue": 4273,
+            "cube": 3214.16,
+            "hbm": 1757.353714285714,
+            "panel_mte2": 416.0,
+            "vector": 0.0,
+            "drain": 3335
+          },
+          "body_cycles": 3214.16,
+          "groups": 1
+        }
+      },
+      {
+        "shape_MNK": [
+          9,
+          384,
+          7168
+        ],
+        "dtype": "FP32",
+        "api": "aclnnMm",
+        "predicted_us": 12.669423376623376,
+        "model_query_us": 24.94,
+        "schedule": {
+          "tile_mnk": [
+            16,
+            192,
+            32
+          ],
+          "output_tiles": 2,
+          "split_k": 14,
+          "active_aic": 28,
+          "active_aiv": 0,
+          "waves": 1,
+          "k_pages_per_split": 16,
+          "core_ops_per_cycle": 512.0000000000001,
+          "resource_cycles": {
+            "first_issue": 4273,
+            "cube": 6543.999999999999,
+            "hbm": 13296.548571428571,
+            "panel_mte2": 3216.0,
+            "vector": 0.0,
+            "drain": 3335
+          },
+          "body_cycles": 13296.548571428571,
+          "groups": 1
+        }
+      },
+      {
+        "shape_MNK": [
+          128,
+          1,
+          5376
+        ],
+        "dtype": "FP32",
+        "api": "aclnnAddmm",
+        "predicted_us": 4.5102934199134195,
+        "model_query_us": 21.33,
+        "schedule": {
+          "tile_mnk": [
+            128,
+            16,
+            64
+          ],
+          "output_tiles": 1,
+          "split_k": 28,
+          "active_aic": 28,
+          "active_aiv": 56,
+          "waves": 1,
+          "k_pages_per_split": 3,
+          "core_ops_per_cycle": 512.0000000000001,
+          "resource_cycles": {
+            "first_issue": 1932,
+            "cube": 1610.9999999999995,
+            "hbm": 3269.9841428571426,
+            "panel_mte2": 774.0,
+            "vector": 0.004493617021276595,
+            "drain": 2240
+          },
+          "body_cycles": 3269.9841428571426,
+          "groups": 1
+        }
+      },
+      {
+        "shape_MNK": [
+          144,
+          128,
+          512
+        ],
+        "dtype": "BF16",
+        "api": "aclnnMm",
+        "predicted_us": 2.1006060606060606,
+        "model_query_us": 25.5,
+        "schedule": {
+          "tile_mnk": [
+            128,
+            16,
+            128
+          ],
+          "output_tiles": 16,
+          "split_k": 1,
+          "active_aic": 16,
+          "active_aiv": 0,
+          "waves": 1,
+          "k_pages_per_split": 4,
+          "core_ops_per_cycle": 8181.818181818183,
+          "resource_cycles": {
+            "first_issue": 1794,
+            "cube": 384.31857777777776,
+            "hbm": 371.712,
+            "panel_mte2": 1152.0,
+            "vector": 0.0,
+            "drain": 520
+          },
+          "body_cycles": 1152.0,
+          "groups": 1
+        }
+      }
+    ],
+    "Ascend970DT": [
+      {
+        "shape_MNK": [
+          9,
+          4,
+          28672
+        ],
+        "dtype": "FP32",
+        "api": "aclnnMm",
+        "predicted_us": 4.650838888888889,
+        "model_query_us": 21.78,
+        "schedule": {
+          "tile_mnk": [
+            16,
+            16,
+            512
+          ],
+          "output_tiles": 1,
+          "split_k": 120,
+          "active_aic": 120,
+          "active_aiv": 0,
+          "waves": 1,
+          "k_pages_per_split": 1,
+          "core_ops_per_cycle": 512.7901234567902,
+          "resource_cycles": {
+            "first_issue": 4273,
+            "cube": 763.51,
+            "hbm": 186.386,
+            "panel_mte2": 97.09375,
+            "vector": 0.0,
+            "drain": 3335
+          },
+          "body_cycles": 763.51,
+          "groups": 1
+        }
+      },
+      {
+        "shape_MNK": [
+          9,
+          384,
+          7168
+        ],
+        "dtype": "FP32",
+        "api": "aclnnMm",
+        "predicted_us": 5.080989556582777,
+        "model_query_us": 22.0,
+        "schedule": {
+          "tile_mnk": [
+            16,
+            192,
+            32
+          ],
+          "output_tiles": 2,
+          "split_k": 60,
+          "active_aic": 120,
+          "active_aiv": 0,
+          "waves": 1,
+          "k_pages_per_split": 4,
+          "core_ops_per_cycle": 512.7901234567902,
+          "resource_cycles": {
+            "first_issue": 4273,
+            "cube": 1537.781201848998,
+            "hbm": 1410.24,
+            "panel_mte2": 753.75,
+            "vector": 0.0,
+            "drain": 3335
+          },
+          "body_cycles": 1537.781201848998,
+          "groups": 1
+        }
+      },
+      {
+        "shape_MNK": [
+          128,
+          1,
+          5376
+        ],
+        "dtype": "FP32",
+        "api": "aclnnAddmm",
+        "predicted_us": 2.5313585002568058,
+        "model_query_us": 22.14,
+        "schedule": {
+          "tile_mnk": [
+            128,
+            16,
+            64
+          ],
+          "output_tiles": 1,
+          "split_k": 120,
+          "active_aic": 120,
+          "active_aiv": 120,
+          "waves": 1,
+          "k_pages_per_split": 1,
+          "core_ops_per_cycle": 512.7901234567902,
+          "resource_cycles": {
+            "first_issue": 1932,
+            "cube": 384.4453004622496,
+            "hbm": 346.8165,
+            "panel_mte2": 181.40625,
+            "vector": 0.0020833333333333333,
+            "drain": 2240
+          },
+          "body_cycles": 384.4453004622496,
+          "groups": 1
+        }
+      },
+      {
+        "shape_MNK": [
+          144,
+          128,
+          512
+        ],
+        "dtype": "BF16",
+        "api": "aclnnMm",
+        "predicted_us": 1.9255555555555555,
+        "model_query_us": 22.89,
+        "schedule": {
+          "tile_mnk": [
+            128,
+            16,
+            128
+          ],
+          "output_tiles": 16,
+          "split_k": 1,
+          "active_aic": 16,
+          "active_aiv": 0,
+          "waves": 1,
+          "k_pages_per_split": 4,
+          "core_ops_per_cycle": 8194.444444444445,
+          "resource_cycles": {
+            "first_issue": 1794,
+            "cube": 383.92363389830507,
+            "hbm": 154.0,
+            "panel_mte2": 1152.0,
+            "vector": 0.0,
+            "drain": 520
+          },
+          "body_cycles": 1152.0,
+          "groups": 1
+        }
+      }
+    ]
+  }
+}

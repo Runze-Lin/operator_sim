@@ -1,10 +1,10 @@
 --- a/operator-performance-models/src/operator_performance_models/backends.py
 +++ b/operator-performance-models/src/operator_performance_models/backends.py
-@@ -16,6 +16,19 @@
+@@ -16,6 +16,20 @@
          from operator_performance_models.models.roofline.base._defaults import build_backend
 
          return build_backend(utilization_csv=utilization_csv)
-+    if name == "operator_sim":
++    if name in {"operator_sim", "operator_sim_full"}:
 +        if utilization_csv is not None:
 +            raise ValueError("operator_sim does not consume the roofline utilization CSV")
 +        from importlib import import_module
@@ -16,7 +16,8 @@
 +            if exc.name not in {"operator_model", "operator_model.sim_backend"}:
 +                raise
 +            raise ImportError("Install ascend-operator-model with sim-workspace support") from exc
-+        return cast(Backend, plugin.OperatorSimBackend())
++        backend = plugin.FullOperatorSimBackend if name == "operator_sim_full" else plugin.OperatorSimBackend
++        return cast(Backend, backend())
      if name == "communication_v1":
          if utilization_csv is not None:
              raise ValueError("communication_v1 does not consume the roofline utilization CSV")
@@ -60,19 +61,109 @@
      elif details.cube_peak_flops_per_second == 0:
          cube_flops, cube_time = {}, {}
 
+--- a/sim-platform/src/sim_platform/backend/evaluation.py
++++ b/sim-platform/src/sim_platform/backend/evaluation.py
+@@ -27,7 +27,7 @@
+     validate_estimate,
+ )
+ from sim_platform.backend.transfer import TransferTimeModel, predict_offload_transfer
+-from sim_platform.graph.ir import L1Graph, NodeRef
++from sim_platform.graph.ir import L1Graph, NodeRef, OperatorNode
+ from sim_platform.graph.moe_segments import MoeSegmentProfile
+ from sim_platform.graph.queries import validate_graph
+
+@@ -49,7 +49,8 @@
+
+     @property
+     def prediction_coverage(self) -> PredictionCoverage:
+-        categories = Counter(node.category for node in self.graph.nodes)
++        priced = {ref for ref, _ in self.predictions}
++        categories = Counter(node.category for node in self.graph.nodes if node.ref not in priced)
+         return prediction_coverage(
+             (prediction for _, prediction in self.predictions),
+             skipped_zero=categories["zero"],
+@@ -181,11 +182,16 @@
+         len(graph.nodes),
+         dict(Counter(node.category for node in graph.nodes)),
+     )
++    def skipped(node: OperatorNode) -> bool:
++        return node.category == "control" or (
++            node.category == "zero" and not predictor.prices_metadata(backend_overrides.get(node.ref))
++        )
++
+     batch = predictor.predict_many(
+         tuple(
+             (node, hardware_overrides.get(node.ref, hardware), backend_overrides.get(node.ref))
+             for node in graph.nodes
+-            if node.category not in {"control", "zero"}
++            if not skipped(node)
+             and (node.offload_transfer is None or node.raw_name == "simulator::engram_h2d")
+         )
+     )
+@@ -193,7 +199,7 @@
+     costs: dict[NodeRef, NodeCost] = {}
+     for node in graph.nodes:
+         category = node.category
+-        if category in {"control", "zero"}:
++        if skipped(node):
+             costs[node.ref] = NodeCost(0.0, node.resource_requirements, category)
+             continue
+         if node.offload_transfer is not None and node.raw_name != "simulator::engram_h2d":
 --- a/sim-platform/src/sim_platform/backend/prediction.py
 +++ b/sim-platform/src/sim_platform/backend/prediction.py
-@@ -354,6 +354,13 @@
-         raise ValueError("Prediction compute_bits must be a positive integer or None")
+@@ -355,6 +355,13 @@
      for name in ("cube_us", "memory_us", "overhead_us", "vec_flops", "vec_us"):
          value = getattr(details, name)
-+        if (
+         if (
 +            value is None
 +            and details.schema_version == "resource-schedule-v1"
 +            and name != "vec_flops"
 +        ):
 +            # A complete device schedule can have unknown per-engine busy windows.
 +            continue
-         if (
++        if (
              isinstance(value, bool)
              or not isinstance(value, (int, float))
+             or not math.isfinite(value)
+@@ -610,6 +617,11 @@
+         self._topology_identities: OrderedDict[int, tuple[TopologyCapabilities, str]] = (
+             OrderedDict()
+         )
++
++    def prices_metadata(self, backend_names: tuple[str, ...] | None = None) -> bool:
++        names = self._default_backends if backend_names is None else backend_names
++        backends = self._router.resolve(names)
++        return bool(backends and getattr(backends[0], "prices_metadata", False))
+
+     def clear_cache(self) -> None:
+         self._cache.clear()
+--- a/sim-platform/src/sim_platform/frontend/inference.py
++++ b/sim-platform/src/sim_platform/frontend/inference.py
+@@ -208,11 +208,17 @@
+
+
+ def _attributes(
+-    node: object, inputs: tuple[TensorDescriptor, ...], outputs: tuple[TensorDescriptor, ...]
++    node: object, inputs: tuple[TensorDescriptor, ...], outputs: tuple[TensorDescriptor, ...], *, rank: int | None = None
+ ) -> Attributes:
+     attrs = _mapping(_field(node, "attributes"))
+     ids = _ids(_field(node, "inputs"))
+     semantic = _mapping(attrs.pop("semantic", {}))
++    # Legacy combine captures omit the local index but preserve the ordered EP group.
++    if rank is not None and _field(node, "name") == "npu::npu_moe_distribute_combine_v2" and "group" in semantic:
++        group = _ids(semantic["group"])
++        if rank not in group or semantic.get("ep_rank_id", group.index(rank)) != group.index(rank):
++            raise InferenceAdapterError("MoE combine rank disagrees with ordered EP group")
++        semantic["ep_rank_id"] = group.index(rank)
+     result: dict[str, Attribute] = {}
+     used: dict[int, int] = {}
+     for key in ("args", "kwargs", "arguments"):
+@@ -389,7 +395,7 @@
+                 normalize_operator_name(raw),
+                 inputs,
+                 outputs,
+-                _attributes(node, inputs, outputs),
++                _attributes(node, inputs, outputs, rank=rank),
+                 index,
+                 module_path=_text(_field(node, "scope")) or None,
+                 call_scope=_text(_field(node, "call_scope")) or None,

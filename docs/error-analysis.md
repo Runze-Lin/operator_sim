@@ -59,6 +59,97 @@
 
 系数如何得到，可以从逐算子算例中的开发窗查起；这里的 WAPE 按完整设备窗统计。例如 FA 用 950DT 的 32Ki 指令时刻求稳态发起间隔，再比较 DT、PR 的 128Ki 预测与各自 CA 整窗。拟合斜率用的 112 个页号属于同一条 trace，在样本统计中只算一个开发 shape。[校准参数的来源](modeling-strategy.md#公式中的数怎样得到) · [FA 页发起时刻与校准](examples/fa.md#这些速率和固定开销从哪里来)
 
+## Summary · 27 组系统图中的完整调用
+
+原始名可以对应多条实现。下表的误差只属于已列合同及其代表 shape。列数为双端合计窗口数；先选冻结独立结果，无该组则报告预留尺寸回放，再无则给开发回放。两个芯片均使用同一数据角色。未配对的库组件、设计和结构零成本用 N/A。普通算子独立留出仍见上表；这里也列出本轮新增的矩阵、卷积、路由和基础操作。
+
+| 原始调用 | 可计分的代表合同 | 回放 / 留尺寸 / 冻结独立窗 | 本表计分集 | 950DT WAPE / 最大 | 950PR WAPE / 最大 |
+|---|---|---:|---|---:|---:|
+| `npu::npu_dynamic_mx_quant` | quant_mxfp4 | 8 / 0 / 20 | 冻结后 | 7.9% / 15.0% | 9.7% / 18.6% |
+| `inference::cache_load` | cache_load_mxfp4_antimx | 8 / 0 / 20 | 冻结后 | 9.9% / 21.9% | 11.9% / 26.5% |
+| `npu::npu_grouped_matmul` | routed_grouped_matmul_mxfp4_v5 | 6 / 0 / 20 | 冻结后 | 9.8% / 21.1% | 6.3% / 10.6% |
+| `inference::kimi_dsa_indexer_score` | 见路径证据，整窗 N/A | 0 / 0 / 0 | N/A | N/A | N/A |
+| `vllm_ascend::quant_lightning_indexer_reference` | 见路径证据，整窗 N/A | 0 / 0 / 0 | N/A | N/A | N/A |
+| `npu::npu_quant_matmul` | matmul_mx_native | 28 / 0 / 20 | 冻结后 | 3.9% / 13.6% | 6.9% / 14.5% |
+| `aten.mm.default` | aclnnMm BF16、aclnnMm FP32 | 6 / 0 / 6 | 冻结后 | 12.6% / 22.7% | 18.7% / 22.4% |
+| `collective::all_reduce` | 见路径证据，整窗 N/A | 0 / 0 / 0 | N/A | N/A | N/A |
+| `inference::dynamic_mx_quant_fp8_reference` | quant_token_fp8 | 6 / 0 / 20 | 冻结后 | 7.4% / 22.8% | 8.5% / 21.3% |
+| `inference::mixed_precision_matmul` | 见路径证据，整窗 N/A | 0 / 0 / 0 | N/A | N/A | N/A |
+| `_C_ascend::npu_hc_pre_v2` | mhc_pre_sinkhorn | 0 / 0 / 2 | 冻结后 | 3.5% / 3.5% | 3.1% / 3.1% |
+| `npu::npu_fused_infer_attention_score` | fia BF16 | 2 / 0 / 2 | 冻结后 | 10.7% / 10.7% | 7.3% / 7.3% |
+| `inference::candidate_filtered_indexer` | 见路径证据，整窗 N/A | 0 / 0 / 0 | N/A | N/A | N/A |
+| `vllm_ascend::recurrent_kda_reference` | 见路径证据，整窗 N/A | 0 / 0 / 0 | N/A | N/A | N/A |
+| `inference::lightning_indexer` | 见路径证据，整窗 N/A | 0 / 0 / 0 | N/A | N/A | N/A |
+| `npu::npu_rms_norm` | rmsnorm · msopprof | 262 / 0 / 0 | 开发/复用回放 | 17.9% / 49.9% | 18.6% / 49.6% |
+| `npu::npu_moe_distribute_combine_v2` | 见路径证据，整窗 N/A | 0 / 0 / 0 | N/A | N/A | N/A |
+| `_C_ascend::npu_hc_post` | vllm_hc_post | 30 / 0 / 0 | 开发/复用回放 | 2.3% / 5.3% | 8.5% / 17.8% |
+| `vllm_ascend::sparse_attn_sharedkv_reference` | 见路径证据，整窗 N/A | 0 / 0 / 0 | N/A | N/A | N/A |
+| `collective::all_gather` | 见路径证据，整窗 N/A | 0 / 0 / 0 | N/A | N/A | N/A |
+| `npu::npu_moe_distribute_dispatch_v2` | 见路径证据，整窗 N/A | 0 / 0 / 0 | N/A | N/A | N/A |
+| `inference::attention_residual` | 见路径证据，整窗 N/A | 0 / 0 / 0 | N/A | N/A | N/A |
+| `aten.add.Tensor` | add | 4 / 0 / 0 | 开发/复用回放 | 0.4% / 0.4% | 36.3% / 47.0% |
+| `_C_ascend::compressor` | 见路径证据，整窗 N/A | 0 / 0 / 0 | N/A | N/A | N/A |
+| `inference::matmul_rhs_transposed` | aclnnMm BF16_FP32 | 2 / 0 / 2 | 冻结后 | 12.5% / 12.5% | 4.4% / 4.4% |
+| `_C_ascend::inplace_partial_rotary_mul` | rope | 2 / 0 / 0 | 开发/复用回放 | 1.1% / 1.1% | 2.7% / 2.7% |
+| `aten.clone.default` | 见路径证据，整窗 N/A | 0 / 0 / 0 | N/A | N/A | N/A |
+| `inference::situ` | 见路径证据，整窗 N/A | 0 / 0 / 0 | N/A | N/A | N/A |
+| `inference::kimi_gated_dsa_attention` | 见路径证据，整窗 N/A | 0 / 0 / 0 | N/A | N/A | N/A |
+| `npu::npu_swiglu` | swiglu | 2 / 0 / 0 | 开发/复用回放 | 2.3% / 2.3% | 2.8% / 2.8% |
+| `vllm_ascend::causal_conv1d_update_reference` | conv BF16 | 2 / 0 / 2 | 冻结后 | 34.7% / 34.7% | 22.4% / 22.4% |
+| `_C_ascend::moe_gating_top_k` | moe_gating_top_k | 22 / 0 / 0 | 开发/复用回放 | 7.7% / 16.2% | 5.7% / 11.0% |
+| `inference::cache_store` | 见路径证据，整窗 N/A | 0 / 0 / 0 | N/A | N/A | N/A |
+| `aten._to_copy.default` | aclnnCast | 67 / 2 / 0 | 留尺寸 | 8.3% / 8.3% | 16.8% / 16.8% |
+| `_C_ascend::moe_gating_top_k_hash` | moe_gating_top_k_hash | 2 / 0 / 2 | 冻结后 | 5.4% / 5.4% | 5.9% / 5.9% |
+| `aten.mean.dim` | aclnnMean | 2 / 2 / 0 | 留尺寸 | 17.2% / 17.2% | 17.9% / 17.9% |
+| `aten.index.Tensor` | aclnnGatherV2 | 2 / 2 / 0 | 留尺寸 | 13.5% / 13.5% | 16.5% / 16.5% |
+| `inference::grouped_gated_rms_norm_reference` | 见路径证据，整窗 N/A | 0 / 0 / 0 | N/A | N/A | N/A |
+| `aten.constant_pad_nd.default` | aclnnConstantPadNd | 2 / 2 / 0 | 留尺寸 | 21.5% / 21.5% | 20.2% / 20.2% |
+| `inference::quantized_batched_matmul` | 见路径证据，整窗 N/A | 0 / 0 / 0 | N/A | N/A | N/A |
+| `aten.sigmoid.default` | sigmoid_fp32 | 43 / 0 / 0 | 开发/复用回放 | 6.0% / 12.9% | 16.4% / 27.0% |
+| `aten.neg.default` | aclnnNeg | 2 / 2 / 0 | 留尺寸 | 9.5% / 9.5% | 3.7% / 3.7% |
+| `npu::npu_rotary_mul` | 见路径证据，整窗 N/A | 0 / 0 / 0 | N/A | N/A | N/A |
+| `inference::kimi_dsa_indexer_query_quant` | 见路径证据，整窗 N/A | 0 / 0 / 0 | N/A | N/A | N/A |
+| `inference::mla_output_gate` | 见路径证据，整窗 N/A | 0 / 0 / 0 | N/A | N/A | N/A |
+| `inference::state_update` | 见路径证据，整窗 N/A | 0 / 0 / 0 | N/A | N/A | N/A |
+| `aten.cat.default` | aclnnCat | 2 / 2 / 0 | 留尺寸 | 26.4% / 26.4% | 22.7% / 22.7% |
+| `aten.mul.Tensor` | mul | 4 / 0 / 0 | 开发/复用回放 | 1.7% / 2.8% | 8.0% / 9.5% |
+| `aten.pow.Tensor_Scalar` | aclnnPowTensorScalar | 2 / 2 / 0 | 留尺寸 | 17.7% / 17.7% | 25.0% / 25.0% |
+| `_C_ascend::compressor_metadata` | 见路径证据，整窗 N/A | 0 / 0 / 0 | N/A | N/A | N/A |
+| `aten.sum.dim_IntList` | aclnnReduceSum | 2 / 2 / 0 | 留尺寸 | 5.7% / 5.7% | 7.3% / 7.3% |
+| `aten.embedding.default` | aclnnEmbedding | 2 / 2 / 0 | 留尺寸 | 13.6% / 13.6% | 13.8% / 13.8% |
+| `inference::engram_gate` | 见路径证据，整窗 N/A | 0 / 0 / 0 | N/A | N/A | N/A |
+| `aten.lt.Scalar` | aclnnLtScalar | 2 / 2 / 0 | 留尺寸 | 8.7% / 8.7% | 0.0% / 0.0% |
+| `aten.masked_fill_.Scalar` | aclnnInplaceMaskedFillScalar | 2 / 2 / 0 | 留尺寸 | 0.9% / 0.9% | 6.5% / 6.5% |
+| `inference::engram_dequantize` | 见路径证据，整窗 N/A | 0 / 0 / 0 | N/A | N/A | N/A |
+| `aten.ge.Scalar` | aclnnGeScalar | 2 / 2 / 0 | 留尺寸 | 0.6% / 0.6% | 2.8% / 2.8% |
+| `aten.masked_fill.Scalar` | 见路径证据，整窗 N/A | 0 / 0 / 0 | N/A | N/A | N/A |
+| `aten.sub.Tensor` | aclnnSubs | 2 / 2 / 0 | 留尺寸 | 59.8% / 59.8% | 64.0% / 64.0% |
+| `inference::engram_lookup` | 见路径证据，整窗 N/A | 0 / 0 / 0 | N/A | N/A | N/A |
+| `inference::c2_ring_compressor` | 见路径证据，整窗 N/A | 0 / 0 / 0 | N/A | N/A | N/A |
+| `aten.bitwise_or.Tensor` | aclnnBitwiseOrTensor | 2 / 2 / 0 | 留尺寸 | 1.5% / 1.5% | 2.8% / 2.8% |
+| `inference::candidate_blocks` | 见路径证据，整窗 N/A | 0 / 0 / 0 | N/A | N/A | N/A |
+| `inference::compressor_source_positions` | 见路径证据，整窗 N/A | 0 / 0 / 0 | N/A | N/A | N/A |
+| `aten.rsqrt.default` | aclnnRsqrt | 2 / 2 / 0 | 留尺寸 | 14.0% / 14.0% | 21.2% / 21.2% |
+| `aten.addmm.default` | aclnnAddmm FP32 | 2 / 0 / 2 | 冻结后 | 32.4% / 32.4% | 5.7% / 5.7% |
+| `inference::engram_hash` | 见路径证据，整窗 N/A | 0 / 0 / 0 | N/A | N/A | N/A |
+| `aten.view.default` | 见路径证据，整窗 N/A | 0 / 0 / 0 | N/A | N/A | N/A |
+| `aten.unsqueeze.default` | 见路径证据，整窗 N/A | 0 / 0 / 0 | N/A | N/A | N/A |
+| `aten.expand.default` | 见路径证据，整窗 N/A | 0 / 0 / 0 | N/A | N/A | N/A |
+| `aten.select.int` | 见路径证据，整窗 N/A | 0 / 0 / 0 | N/A | N/A | N/A |
+| `aten.alias.default` | 见路径证据，整窗 N/A | 0 / 0 / 0 | N/A | N/A | N/A |
+| `aten.empty.memory_format` | 见路径证据，整窗 N/A | 0 / 0 / 0 | N/A | N/A | N/A |
+| `aten.transpose.int` | 见路径证据，整窗 N/A | 0 / 0 / 0 | N/A | N/A | N/A |
+| `aten.slice.Tensor` | 见路径证据，整窗 N/A | 0 / 0 / 0 | N/A | N/A | N/A |
+| `aten.permute.default` | 见路径证据，整窗 N/A | 0 / 0 / 0 | N/A | N/A | N/A |
+| `aten._unsafe_view.default` | 见路径证据，整窗 N/A | 0 / 0 / 0 | N/A | N/A | N/A |
+| `aten.squeeze.dim` | 见路径证据，整窗 N/A | 0 / 0 / 0 | N/A | N/A | N/A |
+| `aten.t.default` | 见路径证据，整窗 N/A | 0 / 0 / 0 | N/A | N/A | N/A |
+| `aten.split_with_sizes.default` | 见路径证据，整窗 N/A | 0 / 0 / 0 | N/A | N/A | N/A |
+
+同一名称的多种精度、布局及组合计时边界见逐合同例页。小样本的一次冻结命中不能建立整个 dtype 或长上下文的精度保证。预留尺寸一列汇总 144 行同族验证；其中一部分采集发生在参数冻结之前，其余在冻结后补采。CA 为安装包与列明探针的完整设备窗，系统 950DT-system 与 970DT 的配置变化依然属于外推。
+
+[逐 shape 的模型时间和 CA 真值 CSV](../calibration/reference/system-full-ca.csv) · [80 个调用的精度、证据及最大查询墙钟](system-full-evidence.md) · [全部图 shape 定价](../calibration/reference/system-full-shapes.csv.gz) · [全量端到端对比](system-full-comparison.md)
+
 ## 设备窗与指标
 
 单次内核测量从全部活动核的第一条指令开始，到最后一个活动描述符退休为止。每核必须确认结束。多个串行 kernel 取各自设备窗之和，宿主发起间隙另算。核名册、宿主数值检查、运行时 SKU、计时来源与库身份属于一次测量同一份证据。SQLite compact CA 可能只存生成的入口名（例如 `entry_kernel_1388`）；逐窗保留这个真实名字。msopprof 的记录保留实际发布内核名。有些 compact 记录只能校对执行到的机器码，证据强度低于整份 ELF 一致。

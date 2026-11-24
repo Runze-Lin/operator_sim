@@ -1,5 +1,8 @@
 # 系统仿真接入
 
+在 SIMPlatform 中，全图入口为 `operator_sim_full`。在其他系统直接集成时，可将相同的 rank-local 张量和语义适配为 OpFeatures，调用 `operator_model.system_routes.estimate_full_features(features, chip=chip)`。返回设备或通信微秒、按精度的计算量、张量字节和该实现可辨识的排程参数。对缺失合同检查 `latency_us is None`。直接调用 `estimate` 适用于已列出的独立算子合同。[全图路由选择](sim-platform.md) · [80 个调用和实测边界](system-full-comparison.md)
+
+
 在系统分析框架中，每个待调度的计算节点提供一张卡上的实际输入。算子耗时包括模型覆盖的设备流水和核间尾部，系统层负责宿主发起、通信、跨卡同步和跨流资源争用。原先给 Roofline 传全局张量的接入点，需要先应用 TP/EP 分片、batch 打包和 chunk 调度。
 
 SIMPlatform 通过任务的 `prediction.backends` 选择精细模型和原 Roofline 的优先顺序。适配器直接读取捕获图给出的本卡张量。[SIMPlatform 接入及端到端对比](sim-platform.md)
