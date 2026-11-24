@@ -1,0 +1,82 @@
+{
+  "utc": "2026-11-24T04:13:47.130567+00:00",
+  "scope": "One 950DT CA kernel, 900s wall watchdog; forced one team owns every tile of one ending query row: not a normal Q1 split or full chunk.",
+  "shape": [
+    1,
+    1,
+    32,
+    128,
+    1048576,
+    2048,
+    512
+  ],
+  "model_sha256": "66140fff2888736bcc49f01ff5e1fcfcfbe35c76eef025e23fa795a815bfb2dc",
+  "metadata_nonzero": {
+    "0": [
+      1,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0
+    ]
+  },
+  "metadata_contract": "All 128x8 int32 words outside the owner row zero. One AIC + its two AIV perform useful work; SKU-wide launcher may still issue inactive workers. No split or LD. 32 512-key tiles; 2048 distinct 8-position blocks; cmp_ratio 1 and 8201 page columns of size 128.",
+  "model_us": 52.02085639314825,
+  "plan": {
+    "implementation": "a5_qsli_projection",
+    "timing_qualification": "extrapolated",
+    "reason": "A5 QSLI source geometry; stage rates are proxies. Packed consumer device projection.",
+    "score_policy": "candidate_first",
+    "target_plan": {
+      "active_aic": 1,
+      "active_aiv": 2
+    },
+    "query_tile": 1,
+    "kv_page": 512,
+    "candidate_block_size": 8,
+    "effective_candidate_limit": 2048,
+    "candidate_key_pairs": 16384,
+    "scored_query_key_pairs": 16384,
+    "tile_runs_per_request": [
+      [
+        32,
+        1
+      ]
+    ],
+    "query_groups": 1,
+    "candidate_tiles": 32,
+    "split_rows": 0,
+    "largest_row_shards": 1,
+    "pa_block_size": 128,
+    "table_pages": 8201,
+    "address_path": "scalar",
+    "scalar_lookup_cycles": 64,
+    "tile_service_cycles": {
+      "gather": 2265.4140625,
+      "publish": 217.4140625,
+      "cube_read": 434.828125,
+      "cube": 128.01112786127166,
+      "fix": 284.85,
+      "vector": 48.059733333333334
+    },
+    "interval_cycles": 2265.4140625,
+    "stages_us": {
+      "startup": 5.192727272727272,
+      "critical_team": 46.828129120420975,
+      "merge": 0.0,
+      "shared_service": 0.0
+    },
+    "io_us": 0.281665,
+    "l2_us": 0.0,
+    "unpriced": [
+      "AICPU metadata",
+      "prepare_indexer_indices",
+      "upstream Q quantization and folded K production"
+    ]
+  },
+  "scoring": "Check golden512, 32 MMADs per active AIC (or account for instruction multiplicity), intervals including first/last separately, end after last MMAD, known selector-phase boundary or upper bound, complete launch END; do not derive fused guarantees from a single row.",
+  "scenario_method": "For same 1Mi/B1/Q4096 last prefill block sensitivity substitute only 31 adjacent-tile launch intervals per row in the frozen pipeline. Each of 32 teams owns 128 complete rows; retain row fill, drain, histogram and other stage prices. Keep four graph consumers, report single-node and phase (not measured) unchanged background; no automatic updates to main matrix."
+}

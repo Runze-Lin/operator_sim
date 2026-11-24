@@ -1,0 +1,199 @@
+{
+  "freeze_utc": "2026-11-24T03:54:40.979636+00:00",
+  "role": "Superseded by MX controls before hardware acquisition; no BF16 campaign executed.",
+  "probe_launches_per_sku": 29,
+  "limits": {
+    "simulator_timeout_minutes_per_sku": 20,
+    "processes": 2,
+    "max_total_new_skus_times_shapes": 6,
+    "note": "One combined process per SKU. No long-context capture."
+  },
+  "sha256": {
+    "probe.cpp": "bff18bfc98c712c8152529462611d873bf43b174b77858dfd84fff19d42a893f",
+    "ordinary_fixture.hpp": "a6bec7602762b038a7763ac391e1ec31a950161cfd95dec48b0060d51d9302bf",
+    "candidate_indexer.py": "cab7c16edb4a7014c61764e711b75cb657ebfb9238de4a34b889fc80fe41ce87",
+    "indexer.py": "342f2963f158c4337ac618e2127c93ad918ef0fc3117535e6b1ca758fb4f8871",
+    "indexer.json": "d7d5245b024bd97116137240020d47a795adeeb581a8b16c94b232f11a7be365",
+    "candidate-v20-component-controls": "f45b3a53b435fe2ff0530cdc491d4ae9ee9b504614d91c0be31c26157d6139e9"
+  },
+  "cases": [
+    {
+      "Q": 1,
+      "L": 1024,
+      "C": 81,
+      "H": 32,
+      "D": 128,
+      "topk": 512,
+      "block_size": 8,
+      "launches": [
+        "dense13",
+        "aclnnLightningIndexer"
+      ],
+      "predictions": {
+        "Ascend950DT_9582": {
+          "candidate_model_us": 6.484888888888889,
+          "candidate_stages_us": {
+            "candidate_setup": 0.0006874074074074074,
+            "first_mmad": 2.78,
+            "page_intervals": 1.7648484848484849,
+            "last_mmad_reduce": 0.22530876767676766,
+            "sort_handoff": 0.703030303030303,
+            "histogram_and_store": 0.9266666666666666,
+            "position_order_and_map": 0.08434725925925926,
+            "additional_shared_service": 0.0
+          },
+          "expected_mmad_M": [
+            64
+          ],
+          "expected_kv_pages_per_group": 8,
+          "expected_active_aic": 1,
+          "full_scored_pairs": 1024,
+          "candidate_pairs": 648,
+          "ordinary_li_resource_schedule_us": 6.2927514074074065,
+          "ordinary_li_proxy_with_h32_packing_us": 6.399854222222222
+        },
+        "Ascend950PR_957b": {
+          "candidate_model_us": 6.502708559717255,
+          "candidate_stages_us": {
+            "candidate_setup": 0.0007060869565217391,
+            "first_mmad": 2.78,
+            "page_intervals": 1.7648484848484849,
+            "last_mmad_reduce": 0.22610851002781435,
+            "sort_handoff": 0.703030303030303,
+            "histogram_and_store": 0.9413758705063051,
+            "position_order_and_map": 0.08663930434782607,
+            "additional_shared_service": 0.0
+          },
+          "expected_mmad_M": [
+            64
+          ],
+          "expected_kv_pages_per_group": 8,
+          "expected_active_aic": 1,
+          "full_scored_pairs": 1024,
+          "candidate_pairs": 648,
+          "ordinary_li_resource_schedule_us": 6.307460611247045,
+          "ordinary_li_proxy_with_h32_packing_us": 6.415363168412907
+        }
+      }
+    },
+    {
+      "Q": 1,
+      "L": 2056,
+      "C": 81,
+      "H": 32,
+      "D": 128,
+      "topk": 512,
+      "block_size": 8,
+      "launches": [
+        "dense13",
+        "aclnnLightningIndexer"
+      ],
+      "predictions": {
+        "Ascend950DT_9582": {
+          "candidate_model_us": 8.848591376623377,
+          "candidate_stages_us": {
+            "candidate_setup": 0.000993185185185185,
+            "first_mmad": 2.78,
+            "page_intervals": 4.033939393939394,
+            "last_mmad_reduce": 0.05208210101010102,
+            "sort_handoff": 0.703030303030303,
+            "histogram_and_store": 1.1941991341991343,
+            "position_order_and_map": 0.08434725925925926,
+            "additional_shared_service": 0.0
+          },
+          "expected_mmad_M": [
+            64
+          ],
+          "expected_kv_pages_per_group": 17,
+          "expected_active_aic": 1,
+          "full_scored_pairs": 2056,
+          "candidate_pairs": 648,
+          "ordinary_li_resource_schedule_us": 8.756557006253006,
+          "ordinary_li_proxy_with_h32_packing_us": 8.763250932178932
+        },
+        "Ascend950PR_957b": {
+          "candidate_model_us": 8.872939502185416,
+          "candidate_stages_us": {
+            "candidate_setup": 0.0010201739130434781,
+            "first_mmad": 2.78,
+            "page_intervals": 4.033939393939394,
+            "last_mmad_reduce": 0.05213208490704144,
+            "sort_handoff": 0.703030303030303,
+            "histogram_and_store": 1.2161782420478071,
+            "position_order_and_map": 0.08663930434782607,
+            "additional_shared_service": 0.0
+          },
+          "expected_mmad_M": [
+            64
+          ],
+          "expected_kv_pages_per_group": 17,
+          "expected_active_aic": 1,
+          "full_scored_pairs": 2056,
+          "candidate_pairs": 648,
+          "ordinary_li_resource_schedule_us": 8.778536114101678,
+          "ordinary_li_proxy_with_h32_packing_us": 8.785280023924546
+        }
+      }
+    },
+    {
+      "Q": 5,
+      "L": 2056,
+      "C": 81,
+      "H": 32,
+      "D": 128,
+      "topk": 512,
+      "block_size": 8,
+      "launches": [
+        "aclnnLightningIndexer"
+      ],
+      "predictions": {
+        "Ascend950DT_9582": {
+          "candidate_model_us": 11.07676696873497,
+          "candidate_stages_us": {
+            "candidate_setup": 0.00198637037037037,
+            "first_mmad": 2.78,
+            "page_intervals": 4.971026962962963,
+            "last_mmad_reduce": 0.06363054545454547,
+            "sort_handoff": 0.703030303030303,
+            "histogram_and_store": 2.3883982683982685,
+            "position_order_and_map": 0.16869451851851852,
+            "additional_shared_service": 0.0
+          },
+          "expected_mmad_M": [
+            128,
+            64
+          ],
+          "expected_kv_pages_per_group": 17,
+          "expected_active_aic": 2,
+          "full_scored_pairs": 10280,
+          "candidate_pairs": 3230,
+          "ordinary_li_resource_schedule_us": 11.118107120731121,
+          "ordinary_li_proxy_with_h32_packing_us": 10.906086079846082
+        },
+        "Ascend950PR_957b": {
+          "candidate_model_us": 11.125463219859045,
+          "candidate_stages_us": {
+            "candidate_setup": 0.0020403478260869563,
+            "first_mmad": 2.78,
+            "page_intervals": 4.971026962962963,
+            "last_mmad_reduce": 0.06373051324842631,
+            "sort_handoff": 0.703030303030303,
+            "histogram_and_store": 2.4323564840956142,
+            "position_order_and_map": 0.17327860869565215,
+            "additional_shared_service": 0.0
+          },
+          "expected_mmad_M": [
+            128,
+            64
+          ],
+          "expected_kv_pages_per_group": 17,
+          "expected_active_aic": 2,
+          "full_scored_pairs": 10280,
+          "candidate_pairs": 3230,
+          "ordinary_li_resource_schedule_us": 11.163159351109437,
+          "ordinary_li_proxy_with_h32_packing_us": 10.950144263337306
+        }
+      }
+    }
+  ]
+}

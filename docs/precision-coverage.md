@@ -13,7 +13,7 @@
 
 稠密 A4W4 和 A8W4 均以 BF16 为最终输出。已支持的两次串行调用与 MoE 内融合的输出量化，分别在[精度、分块与输出算例](modeling-strategy.md#精度如何改变分块计算和输出)中说明。
 
-**Flash 的候选 Indexer。** 系统张量是 BF16 Q、K 和头权重，INT32 块 ID 与输出位置。官方示例对 Q/K 模拟量化后以浮点打分；SIMPlatform 表达的本卡资源实现与此舍入、跨卡归约的关系，以及两种显式 950 组件链的证据，见[工作量与实测边界](examples/candidate-filtered-indexer.md)。
+**Flash 的候选 Indexer。** 捕获参考有 BF16 Q/K/权重；A5 部署的 Q/K 是 MXFP4 E2M1 和 E8M0 scale。Cube 的点积累加为 FP32，FIX 后的 ReLU、权重归约在 BF16 Vector 上，输出为 INT32 位置。层 20 的全表索引与其四个稀疏消费层独立定价。[实现、运行证据与形状](errors/flash-a5-qsli.md) · [完整算例](examples/flash-a5-qsli.md)
 
 ## FA 的 A 和 C 分别代表什么
 

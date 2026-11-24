@@ -40,7 +40,7 @@ print(r.work["cube_ops"], r.work["logical_read_bytes"], r.work["logical_write_by
 | 各算子的耗时误差、逐 shape 真值、验证边界 | [误差分析、逻辑 Roofline 系数与物理下界](docs/error-analysis.md) · [每个算子的全部 shape](docs/errors/README.md) · [可复算的参考数据](calibration/reference/) |
 | FA 的低位 KV cache、量化/反量化与 MoE 不同权重精度 | [精度组合、库入口与验证状态](docs/precision-coverage.md) |
 | 三种模型在 128Ki decode、三种并行配置和 B=1/16/64 的实际系统算子覆盖 | [全部调用、几何、证据与定价](docs/system-full-comparison.md) |
-| 32Ki–1Mi 输入、1Ki 输出的 prefill/decode 对比，以及原 27 组 decode 复算 | [长上下文端到端结果、容量和分核](docs/context-sweep.md) · [安装与后端选择](docs/sim-platform.md) · [原 27 组审计](docs/roofline-audit.md) |
+| 32Ki–1Mi 输入、1Ki 输出的 prefill/decode 对比，以及原 27 组 decode 复算 | [Flash A5 候选实现与 33 组对照](calibration/candidate_indexer/context-sensitivity.md) · [长上下文原图、容量和分核](docs/context-sweep.md) · [安装与后端选择](docs/sim-platform.md) · [原 27 组审计](docs/roofline-audit.md) |
 | 从三种模型的 config 推导单卡 prefill shape | [工作负载示例](examples/workloads/) |
 | 开发新算子、重新校准、构建和测试 | [维护指南](CONTRIBUTING.md) · [CA 校准工具](calibration/) |
 

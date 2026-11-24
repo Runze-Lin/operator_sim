@@ -1,0 +1,130 @@
+{
+  "utc": "2026-11-24T04:11:53.177145+00:00",
+  "scope": "One causal QSLI row, genuine 1Mi logical history, 2048 populated candidate blocks, 1x32x128 scoring. Small physical KV backing for sparse fixture. Includes unsplit or LD merge as assigned by original metadata. Separates actual kernel window from 4096-row chunk and AICPU generation.",
+  "shape": [
+    1,
+    1,
+    32,
+    128,
+    1048576,
+    2048,
+    512
+  ],
+  "attrs": {
+    "implementation": "a5_qsli_projection",
+    "table_pages": 8201
+  },
+  "sha256": "66140fff2888736bcc49f01ff5e1fcfcfbe35c76eef025e23fa795a815bfb2dc",
+  "predictions": {
+    "Ascend950DT_9582": {
+      "us": 11.390349764360368,
+      "plan": {
+        "implementation": "a5_qsli_projection",
+        "timing_qualification": "extrapolated",
+        "reason": "A5 QSLI source geometry; stage rates are proxies. Packed consumer device projection.",
+        "score_policy": "candidate_first",
+        "target_plan": {
+          "active_aic": 32,
+          "active_aiv": 64
+        },
+        "query_tile": 1,
+        "kv_page": 512,
+        "candidate_block_size": 8,
+        "effective_candidate_limit": 2048,
+        "candidate_key_pairs": 16384,
+        "scored_query_key_pairs": 16384,
+        "tile_runs_per_request": [
+          [
+            32,
+            1
+          ]
+        ],
+        "query_groups": 1,
+        "candidate_tiles": 32,
+        "split_rows": 1,
+        "largest_row_shards": 32,
+        "pa_block_size": 128,
+        "table_pages": 8201,
+        "address_path": "scalar",
+        "scalar_lookup_cycles": 64.0,
+        "tile_service_cycles": {
+          "gather": 2265.4140625,
+          "publish": 217.4140625,
+          "cube_read": 434.828125,
+          "cube": 128.01112786127166,
+          "fix": 284.85,
+          "vector": 48.059733333333334
+        },
+        "interval_cycles": 2265.4140625,
+        "stages_us": {
+          "startup": 5.192727272727272,
+          "critical_team": 2.4339861279967305,
+          "merge": 3.7636363636363637,
+          "shared_service": 0.0
+        },
+        "io_us": 0.281665,
+        "l2_us": 0.0,
+        "unpriced": [
+          "AICPU metadata",
+          "prepare_indexer_indices",
+          "upstream Q quantization and folded K production"
+        ]
+      }
+    },
+    "Ascend950PR_957b": {
+      "us": 12.21896141213278,
+      "plan": {
+        "implementation": "a5_qsli_projection",
+        "timing_qualification": "extrapolated",
+        "reason": "A5 QSLI source geometry; stage rates are proxies. Packed consumer device projection.",
+        "score_policy": "candidate_first",
+        "target_plan": {
+          "active_aic": 28,
+          "active_aiv": 56
+        },
+        "query_tile": 1,
+        "kv_page": 512,
+        "candidate_block_size": 8,
+        "effective_candidate_limit": 2048,
+        "candidate_key_pairs": 16384,
+        "scored_query_key_pairs": 16384,
+        "tile_runs_per_request": [
+          [
+            32,
+            1
+          ]
+        ],
+        "query_groups": 1,
+        "candidate_tiles": 32,
+        "split_rows": 1,
+        "largest_row_shards": 28,
+        "pa_block_size": 128,
+        "table_pages": 8201,
+        "address_path": "scalar",
+        "scalar_lookup_cycles": 64.0,
+        "tile_service_cycles": {
+          "gather": 2265.4140625,
+          "publish": 217.4140625,
+          "cube_read": 434.828125,
+          "cube": 128.07458347653667,
+          "fix": 284.85,
+          "vector": 48.31537021276595
+        },
+        "interval_cycles": 2265.4140625,
+        "stages_us": {
+          "startup": 5.192727272727272,
+          "critical_team": 3.8686180852469017,
+          "merge": 3.157616054158607,
+          "shared_service": 0.0
+        },
+        "io_us": 0.8047571428571428,
+        "l2_us": 0.0,
+        "unpriced": [
+          "AICPU metadata",
+          "prepare_indexer_indices",
+          "upstream Q quantization and folded K production"
+        ]
+      }
+    }
+  }
+}

@@ -1,5 +1,8 @@
 # Flash 候选过滤 Indexer 的 950 CA 证据
 
+A5 vLLM 的部署包另含按候选 gather 的 MXFP4 QSLI。下面的 ACLNN 盘点指 CANN 标准安装包，历史 dense/compact 指 BF16 组件实验。发布 wheel 的原生合同与新 MXFP4 计时可从[部署源码审计](source-audit.md)、[组件和融合验证](../../docs/errors/flash-a5-qsli.md)及[同图系统重放](context-sensitivity.md)复核。
+
+
 ## 哪个库实现与模型相符
 
 Flash 的共享 source 层先对压缩位置打分，分别取 8 个压缩位置内的最大分作为块分，强制纳入最新可见块，按配置再取至多 2048 个块。consumer 层复用这些块号，用**本层**的 Q、K 和头权重计算位置分，选位置级 top-512 并按位置升序输出。参考实现先遍历完整可见的压缩 K，再用候选掩码筛分；当 index heads 跨卡时，各卡的局部 head 加权分还需要先做 all-reduce。这里测量的输入从 consumer 的 Q/K/权重/候选块号开始。上游投影、旋转、假量化、块选择及 HCCL 都在探针边界之外。[DeepSeek 参考实现，固定版本](https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/blob/12b5c3a462cdaf73dfced279a50adc7c2bb4a9c1/inference/model.py)

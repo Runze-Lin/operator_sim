@@ -1,0 +1,183 @@
+{
+  "scope": "One held-out full-candidate row per 950 SKU; actual published AOT fused QSLI only. Source host interpreter supplies metadata, excluding AICPU device generation. Full 4096-row prefill and 1Mi request remain projections.",
+  "shape_freeze": "qsli-1mi-row-freeze.json",
+  "fixture_freeze": "long-row-fixture-freeze.json",
+  "fixture_driver": "long_row_probe.py",
+  "model_code_sha256_in_prediction_freeze": "66140fff2888736bcc49f01ff5e1fcfcfbe35c76eef025e23fa795a815bfb2dc",
+  "wheel_binary_key": "400228d98408fad5510dc0ff2580bb878c30b3f8dd4457e2ee349b2300d4e3de",
+  "provider_sha256": "6f071b48df79d0410a146a482938c4cee44771c85cd3defcea003b963d384a1d",
+  "official_metadata": "The source metadata_kernel.run_host uses the default Cube worker count returned by torch under msOpProf, 32 on both SoC profiles. 32 single-tile groups, one final merge worker. PR executes all 32 tasks on the 28 physical AICs in its CA roster. This verifies this schedule on this PR simulator; the runtime property of a deployed PR is not observed.",
+  "work": "Q=1, cache-visible L=1048576, PA=128, 8201 table columns, 2048 different candidate blocks of 8 each, 256 unique pages assigned to distinct physical backing plus a distractor page. Table entries outside selected pages are legal aliases. Physical PA/placement synthetic; no dense 1Mi backing reads.",
+  "qualified_roi": "Earliest issue to latest retirement across all physical AIC/AIV, 1650 ticks/us. Each physical trace has exactly one END and matches the vendor-reported per-core duration within 0.011us. Merged AIC/AIV execution includes local score, index map, global sync, final radix merge; startup and teardown outside the window, Q packing AICPU metadata and chronological output reorder are outside.",
+  "source_map": "See source-audit.md. Wheel ops/quant_sparse_lightning_indexer_dsl.py:480\u2013526 partitions 32 local lists into groups of at most 7 plus an optional preceding carry. One AIV performs 5 sequential rank selections, with input lengths 3584,4096,4096,4096,2560. Last-MMAD-to-retirement is a landmark interval containing score/selection/remap/barriers/merge/writes, not isolated merge time.",
+  "speedup_DT_time_over_PR_time": {
+    "predicted": 0.9321864093171089,
+    "measured": 1.0255157749554622,
+    "signed_error_pct": -9.100724524925663
+  },
+  "records": [
+    {
+      "histogram_instruction": "RV_CHISTv2",
+      "after_last_mmad_histograms_per_aiv": {
+        "core0.veccore0": 296,
+        "core1.veccore0": 8,
+        "core10.veccore0": 8,
+        "core11.veccore0": 8,
+        "core12.veccore0": 8,
+        "core13.veccore0": 4,
+        "core14.veccore0": 8,
+        "core15.veccore0": 8,
+        "core16.veccore0": 8,
+        "core17.veccore0": 8,
+        "core18.veccore0": 8,
+        "core19.veccore0": 8,
+        "core2.veccore0": 8,
+        "core20.veccore0": 8,
+        "core21.veccore0": 8,
+        "core22.veccore0": 8,
+        "core23.veccore0": 8,
+        "core24.veccore0": 8,
+        "core25.veccore0": 8,
+        "core26.veccore0": 8,
+        "core27.veccore0": 8,
+        "core28.veccore0": 8,
+        "core29.veccore0": 8,
+        "core3.veccore0": 8,
+        "core30.veccore0": 8,
+        "core31.veccore0": 8,
+        "core4.veccore0": 8,
+        "core5.veccore0": 8,
+        "core6.veccore0": 8,
+        "core7.veccore0": 8,
+        "core8.veccore0": 8,
+        "core9.veccore0": 8
+      },
+      "last_histogram_retire_from_start_us": 21.153333333333332,
+      "last_rv_retiring_aiv": "core0.veccore0",
+      "chip": "Ascend950DT_9582",
+      "status": "complete",
+      "sku_memory_model": "hbm3_8000M.ini",
+      "ca_us": 21.63030303030303,
+      "model_us": 11.390349764360368,
+      "signed_error_pct": -47.340775816210126,
+      "cycles": 35690,
+      "first_tick": 10595,
+      "last_retire_tick": 46285,
+      "first_mmad_tick": 27061,
+      "last_mmad_finish_tick": 29334,
+      "post_last_mmad_us": 10.273333333333333,
+      "last_finishing_cores": [
+        "core0.veccore0"
+      ],
+      "kernel": "_Z36kernel_QuantSparseLightningIndexer_0l26KernelArgTensor_uint8_t_3dl24KernelArgTensor_float_2d29KernelArgTensor_fp8_e8m0_t_3d26KernelArgTensor_int32_t_3d26KernelArgTensor_int32_t_2d26KernelArgTensor_int32_t_1dS3_S3_S4_S3_S3_26KernelArgTensor_uint8_t_2d31KernelArgTensor_fp4x2_e2m1_t_2dS5_S1_27KernelArgTensor_uint16_t_2dlS3_llllllS3_llllli",
+      "device_elf_sha256": "b3a854470fe46368ac752ccccd7ed0bb7ffb087b658373c2ac97bfce027ae4ff",
+      "byte_offset_in_provider": 443904,
+      "physical_core_roster": {
+        "aic": 32,
+        "aiv": 64
+      },
+      "aics_issuing_mmad_mx": 32,
+      "mmad_mx_count_by_tile_shape": {
+        "32x512x128": 32
+      },
+      "mmad_count_histogram_per_active_aic": {
+        "1": 32
+      },
+      "metadata_workers_arg": 32,
+      "metadata_active_teams": 32,
+      "metadata_final_merge_parts": 32,
+      "metadata_sha256": "2bb563d10eec42994b21f4971732228ccf52943454d4189cf93c0675c63feb77",
+      "probe_worker_override": false,
+      "runtime_default_workers": 32,
+      "kernel_scope": "AOT QSLI only; official AICPU metadata program evaluated on host; input packing and output chronological sorting excluded",
+      "golden_count": 512,
+      "sorted_golden_sha256": "9e6f45edff9a7d371b54e1c6d9257caddf1e9c5dbadf6129a39a2e890d73407a",
+      "torch": "2.14.0+cpu",
+      "torch_npu": "2.14.0.dev20260918",
+      "host_range_pop_after_enqueue": true,
+      "shard_hash_set_sha256": "2013d11c108d71646a518dcf55a320e983adb6f3d13f3045d1f25ac2ad7990d6",
+      "log_sha256": "30805fbdc14c8fdd118c22a533db503a44a92351b174ff7cdd0d0dc0d953b2d3",
+      "raw_directory": "runs/candidate-v20-long-row/Ascend950DT_9582-ipc",
+      "wall_seconds": 149.91,
+      "histograms_on_final_merge_aiv_after_last_mmad": 296,
+      "mmad_first_issue_relative_us": 9.979393939393939,
+      "last_mmad_retire_relative_us": 11.356969696969697,
+      "attempt_without_profiler_ipc": {
+        "wall_s": 141.21,
+        "checked_global_indices": 512,
+        "device_duration_us": null,
+        "reason": "Sandbox Unix DomainSocket error, kernel executed and matched CPU golden but no device trace was collected."
+      },
+      "total_acquisition_wall_s_including_first_attempt": 291.12
+    },
+    {
+      "histogram_instruction": "RV_CHISTv2",
+      "after_last_mmad_histograms_per_aiv": {
+        "core0.veccore0": 248,
+        "core17.veccore0": 1,
+        "core22.veccore0": 16,
+        "core24.veccore0": 16,
+        "core26.veccore0": 16,
+        "core28.veccore0": 16
+      },
+      "last_histogram_retire_from_start_us": 20.541212121212123,
+      "last_rv_retiring_aiv": "core0.veccore0",
+      "chip": "Ascend950PR_957b",
+      "status": "complete",
+      "sku_memory_model": "lpddr5_6400M_bailu.ini",
+      "ca_us": 21.092121212121214,
+      "model_us": 12.21896141213278,
+      "signed_error_pct": -42.06859855749933,
+      "cycles": 34802,
+      "first_tick": 8173,
+      "last_retire_tick": 42975,
+      "first_mmad_tick": 23844,
+      "last_mmad_finish_tick": 28301,
+      "post_last_mmad_us": 8.893333333333333,
+      "last_finishing_cores": [
+        "core0.veccore0"
+      ],
+      "kernel": "_Z36kernel_QuantSparseLightningIndexer_0l26KernelArgTensor_uint8_t_3dl24KernelArgTensor_float_2d29KernelArgTensor_fp8_e8m0_t_3d26KernelArgTensor_int32_t_3d26KernelArgTensor_int32_t_2d26KernelArgTensor_int32_t_1dS3_S3_S4_S3_S3_26KernelArgTensor_uint8_t_2d31KernelArgTensor_fp4x2_e2m1_t_2dS5_S1_27KernelArgTensor_uint16_t_2dlS3_llllllS3_llllli",
+      "device_elf_sha256": "b3a854470fe46368ac752ccccd7ed0bb7ffb087b658373c2ac97bfce027ae4ff",
+      "byte_offset_in_provider": 443904,
+      "physical_core_roster": {
+        "aic": 28,
+        "aiv": 56
+      },
+      "aics_issuing_mmad_mx": 28,
+      "mmad_mx_count_by_tile_shape": {
+        "32x512x128": 32
+      },
+      "mmad_count_histogram_per_active_aic": {
+        "1": 24,
+        "2": 4
+      },
+      "metadata_workers_arg": 28,
+      "metadata_active_teams": 28,
+      "metadata_final_merge_parts": 28,
+      "metadata_sha256": "a83a53d3f182ac4eac6fe4dbb768228459bb5467f4ce3dbb0df1bedd5d489341",
+      "probe_worker_override": false,
+      "runtime_default_workers": 32,
+      "kernel_scope": "AOT QSLI only; official AICPU metadata program evaluated on host; input packing and output chronological sorting excluded",
+      "golden_count": 512,
+      "sorted_golden_sha256": "9e6f45edff9a7d371b54e1c6d9257caddf1e9c5dbadf6129a39a2e890d73407a",
+      "torch": "2.14.0+cpu",
+      "torch_npu": "2.14.0.dev20260918",
+      "host_range_pop_after_enqueue": true,
+      "shard_hash_set_sha256": "75b9eb9b1b8f39aa0f889edb41e55f96eb98baffc0d1704e28e7af4b28f51076",
+      "log_sha256": "aea617b167989f822bdbdc8796ee64131029b481c6eca8c59c040f5eb100d74e",
+      "raw_directory": "runs/candidate-v20-long-row/Ascend950PR_957b-ipc",
+      "wall_seconds": 152.74,
+      "histograms_on_final_merge_aiv_after_last_mmad": 248,
+      "mmad_first_issue_relative_us": 9.497575757575758,
+      "last_mmad_retire_relative_us": 12.19878787878788,
+      "attempt_without_profiler_ipc": {
+        "wall_s": 146.19,
+        "checked_global_indices": 512,
+        "device_duration_us": null,
+        "reason": "Sandbox Unix DomainSocket error, kernel executed and matched CPU golden but no device trace was collected."
+      },
+      "total_acquisition_wall_s_including_first_attempt": 298.93
+    }
+  ]
+}

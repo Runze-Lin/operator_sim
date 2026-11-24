@@ -134,3 +134,8 @@ print(r.kernel_count, r.latency_us, r.dispatch_overhead_us, r.scheduled_us)
 ```
 
 使用完整自定义芯片 JSON 时，只需在原 `details` 中修改希望改变的容量并保留其他已知项。新 JSON 省略的细项由加载器继承 950DT；从 PR 配置做敏感性分析时复制 PR 原始配置及其细项，以保留 PR 自身的 L2。固定实现（例如当前稠密 FA）沿用其已有块策略，尚无证据根据任意 UB/L1 容量重排所有算子。[配置示例](../examples/chip.json) · [资源变化的数值算例](modeling-strategy.md#容量如何改变一次预测)
+
+
+## 选择 Flash A5 候选消费层
+
+传入 `FullOperatorSimBackend(candidate_implementation="a5_qsli_projection", candidate_options={"pa_block_size":128,"table_pages":8201})` 可在已匹配的 Flash 第 24、28、32、36 层，把参考 BF16 节点映射为“Q 已打包、折叠 KV 已就绪”的 A5 消费层。预留页数按实际配置填写，省略时采用覆盖当前 L 的最小值。实现与选项参与预测缓存键。默认 `capture` 继续按捕获合同重放。其他节点继续使用原有后端与调度。设备返回值为外推；上游 Q/K 转换、AICPU metadata、后处理边界和系统预留容量的解释见[具体例子](examples/flash-a5-qsli.md)及[33 组同图比较](../calibration/candidate_indexer/context-sensitivity.md)。

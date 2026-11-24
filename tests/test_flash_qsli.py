@@ -37,3 +37,17 @@ class FlashPackedCandidate(unittest.TestCase):
         opts = {"implementation":IMPLEMENTATION}
         self.assertEqual(estimate("candidate_filtered_indexer",s,opts,dtype="bf16").status,"unsupported")
         self.assertEqual(estimate("candidate_filtered_indexer",s,opts,dtype="mxfp4",timing_mode="calibrated").status,"unavailable")
+
+    def test_loop_price_changes_only_between_tiles_in_a_fragment(self):
+        chip = load_chip()
+        opts = {"table_pages":8201}
+        for shape,changes in [((1,1,32,128,1024,2048,512),False),
+                              ((1,4096,32,128,1048576,2048,512),True)]:
+            current,_,plan = price(shape,chip,**opts)
+            frozen,_,_ = price(shape,chip,scalar_lookup_cycles=64.,**opts)
+            self.assertAlmostEqual(plan["interval_cycles"],109555/31)
+            if changes:
+                extra_intervals = 128*31
+                self.assertAlmostEqual(current-frozen,extra_intervals*(109555/31-plan["resource_interval_cycles"])/1650)
+            else:
+                self.assertEqual(current,frozen)

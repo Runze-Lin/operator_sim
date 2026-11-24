@@ -1,0 +1,39 @@
+{
+  "frozen_at": "2026-11-24T04:14:03.364048+00:00",
+  "scope": "One 1Mi-visible row, 2048 candidate blocks, auto LD ownership by official host metadata, one native compute launch per SKU, 15 min per SKU. Kernel-only; page addresses representative, fixture has no dense 1Mi K allocations.",
+  "probe_sha256": "04ea4da65d151f9940520e4c2b372c90c0a221e724a033d5a470a9d7b445093d",
+  "prediction_freeze": "qsli-1mi-row-freeze.json",
+  "fixture": {
+    "B": 1,
+    "Q": 1,
+    "L": 1048576,
+    "C": 2048,
+    "topk": 512,
+    "H": 32,
+    "D": 128,
+    "logical_pages_visible": 8192,
+    "table_width": 8201,
+    "selected_pages": 256,
+    "distinct_physical_pages_total": 257,
+    "candidate_positions": 16384,
+    "uncached_lookup_path": "scalar",
+    "sha256": {
+      "blocks": "6ef1f795a6417b926006cc70fae2234bf150b624f5d5f71462aa607a1a3846df",
+      "folded": "5d8b59c15244f084d12fb5637caed64340be7b4d222fa646a4e7a2e8df1a20c1",
+      "table": "c98138cb612e334c3fed66607989b498ef9361014fa37a9255f3449ca51bc552",
+      "sorted_golden": "9e6f45edff9a7d371b54e1c6d9257caddf1e9c5dbadf6129a39a2e890d73407a"
+    }
+  },
+  "expected": {
+    "unique_ids": 512,
+    "max_nonwinner_score": 0.75,
+    "min_winner_score": 1.5,
+    "score_reference": "independent CPU E2M1 decode, E8M0 scale, ReLU, FP32 head-weight reduction; strict score gap prevents ties at the topk boundary."
+  },
+  "qualify": [
+    "512 identical global IDs",
+    "native installed_hit 400228d9... and matched embedded device ELF",
+    "all emitted cores with unique END and official duration match",
+    "same frozen chip prediction and fixture hash"
+  ]
+}

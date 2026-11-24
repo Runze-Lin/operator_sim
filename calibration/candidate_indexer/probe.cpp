@@ -186,13 +186,30 @@ static void run(bool full_scan,int blocks,int selected,int heads,aclrtStream str
     if(bad) throw std::runtime_error("incorrect top-k global positions");
 }
 
+#include "ordinary_fixture.hpp"
+#include "mx_controls.hpp"
+
 int main(int argc,char** argv) {
     std::setvbuf(stdout,nullptr,_IONBF,0);
-    if(argc!=5 || (std::string(argv[1])!="compact" && std::string(argv[1])!="dense")) return 2;
+    bool controls = argc==2 && std::string(argv[1])=="controls";
+    bool mx = argc==2 && std::string(argv[1])=="mx-controls";
+    if(!controls && !mx && (argc!=5 || (std::string(argv[1])!="compact" && std::string(argv[1])!="dense"))) return 2;
     try {
         CHECK(aclInit(nullptr)); CHECK(aclrtSetDevice(0)); aclrtStream s=nullptr;CHECK(aclrtCreateStream(&s));
         std::printf("runtime_soc=%s\n",aclrtGetSocName());
-        run(std::string(argv[1])=="dense",std::stoi(argv[2]),std::stoi(argv[3]),std::stoi(argv[4]),s);
+        if(mx) {
+            mx_control(1,128,81,s);
+            mx_control(1,257,81,s);
+            mx_control(4,257,81,s);
+        } else if(controls) {
+            for(int blocks : {128,257}) {
+                run(true,blocks,81,32,s);
+                ordinary_control(1,blocks*8,s);
+            }
+            ordinary_control(5,2056,s);
+        } else {
+            run(std::string(argv[1])=="dense",std::stoi(argv[2]),std::stoi(argv[3]),std::stoi(argv[4]),s);
+        }
         CHECK(aclrtDestroyStream(s)); CHECK(aclrtResetDevice(0)); CHECK(aclFinalize());
         std::puts("SMOKE_PASS");std::_Exit(EXIT_SUCCESS);
     } catch(const std::exception& e) {std::fprintf(stderr,"SMOKE_FAIL %s\n",e.what());return 1;}

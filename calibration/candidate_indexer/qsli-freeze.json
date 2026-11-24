@@ -1,0 +1,130 @@
+{
+  "utc": "2026-11-24T04:06:38.731365+00:00",
+  "scope": "PA128 Q1 static 81 populated candidate blocks in 2048 slots, B1 H32 D128 top512, 1024 compressed keys. Packed fusion excluding AICPU metadata. For an ending Q1 and aligned full cache page the ratio2 fixture and ratio1 have the same visible keys. Model allocates two active teams.",
+  "shape": [
+    1,
+    1,
+    32,
+    128,
+    1024,
+    2048,
+    512
+  ],
+  "attrs": {
+    "implementation": "a5_qsli_projection",
+    "candidate_limit": 81
+  },
+  "sha256": "66140fff2888736bcc49f01ff5e1fcfcfbe35c76eef025e23fa795a815bfb2dc",
+  "predictions": {
+    "Ascend950DT_9582": {
+      "us": 6.830955824966427,
+      "plan": {
+        "implementation": "a5_qsli_projection",
+        "timing_qualification": "extrapolated",
+        "reason": "A5 QSLI source geometry; stage rates are proxies. Packed consumer device projection.",
+        "score_policy": "candidate_first",
+        "target_plan": {
+          "active_aic": 2,
+          "active_aiv": 4
+        },
+        "query_tile": 1,
+        "kv_page": 512,
+        "candidate_block_size": 8,
+        "effective_candidate_limit": 81,
+        "candidate_key_pairs": 648,
+        "scored_query_key_pairs": 1024,
+        "tile_runs_per_request": [
+          [
+            2,
+            1
+          ]
+        ],
+        "query_groups": 1,
+        "candidate_tiles": 2,
+        "split_rows": 1,
+        "largest_row_shards": 2,
+        "pa_block_size": 128,
+        "table_pages": 8,
+        "address_path": "UB",
+        "scalar_lookup_cycles": 64.0,
+        "tile_service_cycles": {
+          "gather": 217.4140625,
+          "publish": 217.4140625,
+          "cube_read": 434.828125,
+          "cube": 128.01112786127166,
+          "fix": 284.85,
+          "vector": 48.059733333333334
+        },
+        "interval_cycles": 434.828125,
+        "stages_us": {
+          "startup": 5.192727272727272,
+          "critical_team": 1.192774006784609,
+          "merge": 0.44545454545454544,
+          "shared_service": 0.0
+        },
+        "io_us": 0.020545,
+        "l2_us": 0.0,
+        "unpriced": [
+          "AICPU metadata",
+          "prepare_indexer_indices",
+          "upstream Q quantization and folded K production"
+        ]
+      }
+    },
+    "Ascend950PR_957b": {
+      "us": 6.835573779154059,
+      "plan": {
+        "implementation": "a5_qsli_projection",
+        "timing_qualification": "extrapolated",
+        "reason": "A5 QSLI source geometry; stage rates are proxies. Packed consumer device projection.",
+        "score_policy": "candidate_first",
+        "target_plan": {
+          "active_aic": 2,
+          "active_aiv": 4
+        },
+        "query_tile": 1,
+        "kv_page": 512,
+        "candidate_block_size": 8,
+        "effective_candidate_limit": 81,
+        "candidate_key_pairs": 648,
+        "scored_query_key_pairs": 1024,
+        "tile_runs_per_request": [
+          [
+            2,
+            1
+          ]
+        ],
+        "query_groups": 1,
+        "candidate_tiles": 2,
+        "split_rows": 1,
+        "largest_row_shards": 2,
+        "pa_block_size": 128,
+        "table_pages": 8,
+        "address_path": "UB",
+        "scalar_lookup_cycles": 64.0,
+        "tile_service_cycles": {
+          "gather": 217.4140625,
+          "publish": 217.4140625,
+          "cube_read": 434.828125,
+          "cube": 128.07458347653667,
+          "fix": 284.85,
+          "vector": 48.31537021276595
+        },
+        "interval_cycles": 434.828125,
+        "stages_us": {
+          "startup": 5.192727272727272,
+          "critical_team": 1.1950225219006734,
+          "merge": 0.4478239845261121,
+          "shared_service": 0.0
+        },
+        "io_us": 0.0587,
+        "l2_us": 0.0,
+        "unpriced": [
+          "AICPU metadata",
+          "prepare_indexer_indices",
+          "upstream Q quantization and folded K production"
+        ]
+      }
+    }
+  }
+}

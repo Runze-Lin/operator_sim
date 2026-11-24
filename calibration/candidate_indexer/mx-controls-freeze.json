@@ -1,0 +1,88 @@
+{
+  "freeze_utc": "2026-11-24T03:56:39.180997+00:00",
+  "scope": "Native MXFP4 ordinary score+top512 component after gathered candidate blocks, static one-AIC BSND; candidate-consuming folded PA_BBND and automatic FD metadata have no matching CA",
+  "budget": "Two hardware simulator sessions, 3 distinct shapes per SKU, six kernels per shape, 20 minute watchdog per SKU",
+  "scenarios": [
+    {
+      "Q": 1,
+      "L": 1024,
+      "C": 81,
+      "compact_keys": 648,
+      "H": 32,
+      "D": 128,
+      "topk": 512,
+      "predictions": {
+        "Ascend950DT_9582": {
+          "ordinary_qli_proxy_us": 8.986594150148887,
+          "hypothesis": "Same first MMAD arrival, steady issue floor and per-row retirement as measured old top2048 ordinary component; adjust physical M, 6-page K and initial 1/2 AIV row parallelism",
+          "expected_mmad_m": 64,
+          "expected_mmad_count": 6,
+          "logical_qk_ops": 5308416
+        },
+        "Ascend950PR_957b": {
+          "ordinary_qli_proxy_us": 7.6975044428688735,
+          "hypothesis": "Same first MMAD arrival, steady issue floor and per-row retirement as measured old top2048 ordinary component; adjust physical M, 6-page K and initial 1/2 AIV row parallelism",
+          "expected_mmad_m": 64,
+          "expected_mmad_count": 6,
+          "logical_qk_ops": 5308416
+        }
+      }
+    },
+    {
+      "Q": 1,
+      "L": 2056,
+      "C": 81,
+      "compact_keys": 648,
+      "H": 32,
+      "D": 128,
+      "topk": 512,
+      "predictions": {
+        "Ascend950DT_9582": {
+          "ordinary_qli_proxy_us": 8.986594150148887,
+          "hypothesis": "Same first MMAD arrival, steady issue floor and per-row retirement as measured old top2048 ordinary component; adjust physical M, 6-page K and initial 1/2 AIV row parallelism",
+          "expected_mmad_m": 64,
+          "expected_mmad_count": 6,
+          "logical_qk_ops": 5308416
+        },
+        "Ascend950PR_957b": {
+          "ordinary_qli_proxy_us": 7.6975044428688735,
+          "hypothesis": "Same first MMAD arrival, steady issue floor and per-row retirement as measured old top2048 ordinary component; adjust physical M, 6-page K and initial 1/2 AIV row parallelism",
+          "expected_mmad_m": 64,
+          "expected_mmad_count": 6,
+          "logical_qk_ops": 5308416
+        }
+      }
+    },
+    {
+      "Q": 4,
+      "L": 2056,
+      "C": 81,
+      "compact_keys": 648,
+      "H": 32,
+      "D": 128,
+      "topk": 512,
+      "predictions": {
+        "Ascend950DT_9582": {
+          "ordinary_qli_proxy_us": 11.785382239691716,
+          "hypothesis": "Same first MMAD arrival, steady issue floor and per-row retirement as measured old top2048 ordinary component; adjust physical M, 6-page K and initial 1/2 AIV row parallelism",
+          "expected_mmad_m": 128,
+          "expected_mmad_count": 6,
+          "logical_qk_ops": 21233664
+        },
+        "Ascend950PR_957b": {
+          "ordinary_qli_proxy_us": 10.04174827967714,
+          "hypothesis": "Same first MMAD arrival, steady issue floor and per-row retirement as measured old top2048 ordinary component; adjust physical M, 6-page K and initial 1/2 AIV row parallelism",
+          "expected_mmad_m": 128,
+          "expected_mmad_count": 6,
+          "logical_qk_ops": 21233664
+        }
+      }
+    }
+  ],
+  "sha256": {
+    "probe.cpp": "855c67dfa4c674596df11dbb573cfb3fa55be8b934c4a7f4dc39e4bf8f0d3e9f",
+    "mx_controls.hpp": "d34cff0e039e47e18a87cb42cfbcafaea827e1d00b86d41969a7bfc7761f1ebe",
+    "candidate-v20-mx-controls": "6f3bbe056c8c0b192e366a0603231cb3b3a02bd851280eb32fde18fa1732e017",
+    "mxindexer-static.json": "b2af311eeb2e13c79fb78b7d0bc64332956d64a9eeff6717f99e50340e05e7d5"
+  }
+}

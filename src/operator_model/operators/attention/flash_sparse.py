@@ -72,12 +72,18 @@ def _attention_rates():
     return load_parameters("attention_resources")
 
 
+@lru_cache(maxsize=1)
+def _wide_issue_interval():
+    measured = load_parameters("flash_qsli")
+    return measured["wide_table_team_issue_span_cycles"] / measured["adjacent_issues"]
+
+
 def work_for(shape, candidate_limit=None):
     _, ends, _, useful = _geometry(shape,candidate_limit)
     return _work(shape, shape[0]*ends[-1], useful)
 
 
-def price(shape, chip, *, pa_block_size=128, table_pages=None, scalar_lookup_cycles=64., candidate_limit=None):
+def price(shape, chip, *, pa_block_size=128, table_pages=None, scalar_lookup_cycles=None, candidate_limit=None):
     """Price packed Q, folded K and QSLI. PA page-table width can exceed current L."""
     if type(pa_block_size) is not int or pa_block_size <= 0 or pa_block_size % BLOCK:
         raise ValueError("PA block size must be a positive multiple of eight")
@@ -88,6 +94,9 @@ def price(shape, chip, *, pa_block_size=128, table_pages=None, scalar_lookup_cyc
         table_pages = required
     if type(table_pages) is not int or table_pages < required:
         raise ValueError("Page table must cover the key extent")
+    use_measured_issue = scalar_lookup_cycles is None
+    if use_measured_issue:
+        scalar_lookup_cycles = 64.  # unmeasured address/fill budget on the first tile
     if not isinstance(scalar_lookup_cycles,(int,float)) or not isfinite(scalar_lookup_cycles) or scalar_lookup_cycles < 0:
         raise ValueError("Expected a nonnegative finite scalar lookup price")
     tiles = b*ends[-1]
@@ -117,7 +126,13 @@ def price(shape, chip, *, pa_block_size=128, table_pages=None, scalar_lookup_cyc
     # Shared read port on each core, independent Cube and AIV DMA engines.
     stages = dict(gather=gather, publish=publish, cube_read=cube_read, cube=cube,
                   fix=fix, vector=vector)
-    interval = max(stages.values())
+    resource_interval = max(stages.values())
+    interval = resource_interval
+    if scalar and use_measured_issue:
+        # The measured interval already includes address handling and pipeline
+        # waits. Avoid adding the scalar-address allowance a second time.
+        interval = max(_wide_issue_interval(), payload/(2*read_rate),
+                       publish, cube_read, cube, fix, vector)
     # Adjacent ordinary QLI MX kernel DT first MMAD (8,568 cycles);
     # apply once to the window, not once per query row. A SKU clock converts cycles.
     startup = 8568
@@ -144,7 +159,7 @@ def price(shape, chip, *, pa_block_size=128, table_pages=None, scalar_lookup_cyc
         first_row, last_row = row_at(first_tile), row_at(stop-1)
         fragments = last_row-first_row+1
         # Histogram on AIV0, register pipeline with fill/drain per fragment.
-        price_cycles = (n*interval + fragments*(sum(stages.values())-interval)
+        price_cycles = ((n-fragments)*interval + fragments*sum(stages.values())
                         + (fragments*hist_fixed + 2*n*hist_per256)*vec_scale)
         slow = max(slow,price_cycles)
         if stop < tiles and row_at(stop) == last_row:
@@ -171,7 +186,8 @@ def price(shape, chip, *, pa_block_size=128, table_pages=None, scalar_lookup_cyc
                 split_rows=len(split_rows), largest_row_shards=max(split_rows.values(),default=1),
                 pa_block_size=pa_block_size, table_pages=table_pages, address_path="scalar" if scalar else "UB",
                 scalar_lookup_cycles=scalar_lookup_cycles,
-                tile_service_cycles=stages, interval_cycles=interval,
+                tile_service_cycles=stages, interval_cycles=interval, resource_interval_cycles=resource_interval,
+                interval_source="DT consecutive MMAD_MX issues" if scalar and use_measured_issue else "resource schedule",
                 stages_us=dict(startup=startup/clock, critical_team=slow/clock, merge=merge/clock,
                                shared_service=us-local), io_us=io, l2_us=ring,
                 unpriced=["AICPU metadata", "prepare_indexer_indices", "upstream Q quantization and folded K production"])

@@ -18,3 +18,6 @@
 | [GMM1–SwiGLU–MXQuant](examples/grouped_matmul_swiglu_quant_v2.md) | 计算与搬运重叠、融合阶段和设备窗口径 |
 
 各算子的覆盖和全量误差另见[逐算子校准表](error-analysis.md)。
+
+
+Flash A5 QSLI 的补充图只比较相邻 MMAD 的发起间隔。32 个 tile 的 31 段均保留真实时间戳，图中的两条线分别为原先验和校准的全行平均值。[间隔图与完整算例](examples/flash-a5-qsli.md)

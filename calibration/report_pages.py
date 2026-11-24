@@ -211,12 +211,12 @@ def implementation(row):
 def render_contract(contract, rows):
     sections = [f'# {contract} · 逐窗误差', '[全部合同](README.md) · [总误差分析](../error-analysis.md) · [原始逐窗记录](../../calibration/reference/windows.jsonl)']
     if not rows:
-        sections += [('950DT、950PR 当前均有 0 个匹配系统融合排程的实测窗。该排程的 CA 误差为 N/A，三款芯片的资源预测均标为外推。'
+        sections += [('BF16 全表融合参考排程在两端均缺完整 CA。A5 的 MXFP4 原生消费层另有固定 metadata 的完整设备窗；包含 AICPU、准备输入和后处理的部署端到端时间仍为外推。'
                       if contract == 'candidate_filtered_indexer' else
                       '950DT、950PR 均有 0 个合格完整窗。模型对照、完整窗误差和物理利用率为 N/A，970DT 无对应校准窗。')]
         evidence = {
             'attn_res_fwd · resident inference prefill': '此为 UB 驻留的推理 prefill，物化输出的样本列在另一个合同。[AttnResFwd 算例与证据边界](../examples/attn_res_fwd.md)',
-            'candidate_filtered_indexer': '系统捕获了候选块索引及其形状。系统按官方全表打分、候选掩码和 top-k 的顺序定价。原生候选算子的完整 CA 窗尚缺。两种显式分解有双端 CA，逐个 kernel 可查。[分解实测与核身份](../../calibration/candidate_indexer/README.md) · [候选 Indexer 算例](../examples/candidate-filtered-indexer.md)',
+            'candidate_filtered_indexer': 'BF16 图按 Hugging Face 参考的全表打分、候选掩码和 top-k 定价。A5 发布的 MXFP4 QSLI 先收集候选再用 Cube 打分。A5 的证据见[融合实现与组件对照](flash-a5-qsli.md)。两种显式分解有双端 CA，逐个 kernel 可查。[分解实测与核身份](../../calibration/candidate_indexer/README.md) · [候选 Indexer 算例](../examples/candidate-filtered-indexer.md)',
             'cache_load_mxfp4': '显式 AntiMxQuant 有[独立双端校准](cache_load_mxfp4_antimx.md)。系统捕获了 packed E2M1 值、按 32 元素分组并补齐的 E8M0 scale 和 BF16 物化输出。[缓存读取算例](../examples/cache_load.md)',
             'cache_load_fp8': '默认调用没有派发身份。显式 AscendAntiQuant 有原生实测，[FP8 的双端设备时间](measured-only.md)。系统捕获了 E4M3FN 值、逐行 FP32 scale 和 BF16 物化输出。[缓存读取算例](../examples/cache_load.md)',
             'routed_grouped_matmul_mxfp4': '显式 GroupedMatmulV5 有[双端校准](routed_grouped_matmul_mxfp4_v5.md)。系统捕获了路由专家的 A4W4 分组乘法，工作量取决于专家行分布。稠密 Matmul 的 CA 窗属于另一合同。[路由专家 GMM 算例](../examples/routed-grouped-matmul.md)',
