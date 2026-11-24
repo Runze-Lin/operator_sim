@@ -164,6 +164,15 @@ class FlashCandidateTests(unittest.TestCase):
         self.assertEqual(e.status,'extrapolated')
         self.assertEqual(e.work['cube_ops'],2*32*128*q*length)
         self.assertIn('/full_scan/',e.contract)
+        def packed(node):
+            return estimate_features(node,chip=load_chip(),include_schedule=True,
+                                     candidate_implementation='a5_qsli_projection',candidate_options={'table_pages':9000})
+        e4 = packed(f)
+        self.assertEqual(e4.status,'extrapolated')
+        self.assertIn('mxfp4',e4.work['cube_ops_by_dtype'])
+        self.assertEqual(e4.work['schedule']['address_path'],'scalar')
+        self.assertLess(e4.work['cube_ops'],e.work['cube_ops'])
+        self.assertIsNone(packed(replace(f,attributes=attributes({**sem,'kv_source':18}))).latency_us)
         for changes in (dict(causal=False),dict(kv_source=18),dict(candidate_block_size=16),dict(reference='unknown')):
             self.assertIsNone(get(replace(f,attributes=attributes({**sem,**changes}))).latency_us)
         self.assertIsNone(get(replace(f,inputs=(*inp[:4],tensor('int64',(q,2048))))).latency_us)

@@ -178,8 +178,14 @@ def account_work(op, shape, attrs=None):
                 call.pop("implementation")
             return describe(shape, dtype, call)[0]
         from operator_model.operators.attention.candidate_indexer import PIPELINE, describe, projected_work
+        from operator_model.operators.attention import flash_sparse
+        if call.get('implementation') == flash_sparse.IMPLEMENTATION:
+            if dtype != 'mxfp4':
+                raise ValueError('A5 QSLI requires MXFP4 scoring inputs')
+            flash_sparse.options(call)
+            return flash_sparse.work_for(shape,call.get("candidate_limit"))
         if dtype not in ('bf16', 'bfloat16'):
-            raise ValueError('candidate_filtered_indexer requires BF16 scoring inputs')
+            raise ValueError('candidate_filtered_indexer reference requires BF16 scoring inputs')
         if call.get('implementation') == PIPELINE:
             return projected_work(shape, call)
         return describe(shape, call)[0]

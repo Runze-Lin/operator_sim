@@ -59,6 +59,9 @@ def _call_attrs(op, attrs, dtype):
         supplied['dtype'] = chosen
         if 'beta_dtype' in supplied and not isinstance(supplied['beta_dtype'], str):
             raise ValueError('Expected a string beta_dtype')
+    elif op == 'candidate_filtered_indexer' and supplied.get('implementation') == 'a5_qsli_projection':
+        if chosen != 'mxfp4':
+            raise ValueError('A5 QSLI requires packed MXFP4 Q/K and their E8M0 scales')
     elif op == 'matmul' and chosen in ('mxfp4', 'fp8_e4m3fn'):
         pass  # Validate these mixed-precision contracts at their own entry point.
     elif chosen != default_dtype(op):
@@ -338,6 +341,11 @@ def _price_device(op, shape, attrs, target, dtype, timing_mode):
         raise ValueError('timing_mode must be auto, resource or calibrated')
     if op == 'candidate_filtered_indexer':
         from operator_model.operators.attention.candidate_indexer import PIPELINE, describe, price
+        from operator_model.operators.attention import flash_sparse
+        if call.get('implementation') == flash_sparse.IMPLEMENTATION:
+            options = flash_sparse.options(call)
+            us, work, plan = flash_sparse.price(shape, target, **options)
+            return _native_alternative(us, work, plan, target, timing_mode), raw
         if call.get('implementation') == PIPELINE:
             us, work, plan = price(shape, target, call)
             return _native_alternative(us, work, plan, target, timing_mode), raw

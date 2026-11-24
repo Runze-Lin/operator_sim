@@ -12,7 +12,7 @@ VIEWS = frozenset({
 STRUCTURAL = VIEWS | {"aten.empty.memory_format"}
 
 
-def estimate_full_features(features, *, chip, fabric=None):
+def estimate_full_features(features, *, chip, fabric=None, candidate_implementation="capture", candidate_options=None):
     """Price a complete operator or return an explicit unsupported result for a new contract."""
     from . import attention, cube, prefill, vector
     chip = load_chip(chip)
@@ -24,7 +24,8 @@ def estimate_full_features(features, *, chip, fabric=None):
                                  logical_read_bytes=0, logical_write_bytes=0))
     if name in communication.NAMES:
         return communication.price(features, chip, fabric or communication.FabricScenario())
-    strict = estimate_features(features, chip=chip, include_schedule=True)
+    strict = estimate_features(features, chip=chip, include_schedule=True,
+                               candidate_implementation=candidate_implementation, candidate_options=candidate_options)
     if strict.latency_us is not None:
         return strict
     for family in (attention, cube, prefill, vector):

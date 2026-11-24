@@ -1,5 +1,6 @@
 """Optional prediction backend for the sim-workspace BackendRouter."""
 from collections.abc import Mapping
+from types import MappingProxyType
 from dataclasses import fields, replace
 from functools import lru_cache
 from hashlib import sha256
@@ -147,7 +148,8 @@ class FullOperatorSimBackend(OperatorSimBackend):
     name = "operator_sim_full"
     prices_metadata = True
 
-    def __init__(self, *, chips=None, fabric=None, memory_policy="cold_io"):
+    def __init__(self, *, chips=None, fabric=None, memory_policy="cold_io",
+                 candidate_implementation="capture", candidate_options=None):
         from operator_model.system_routes.communication import FabricScenario
         super().__init__(chips=chips)
         self.fabric = fabric if fabric is not None else FabricScenario()
@@ -155,6 +157,17 @@ class FullOperatorSimBackend(OperatorSimBackend):
             raise TypeError("fabric must be a FabricScenario")
         if memory_policy not in ("cold_io", "ca_window"):
             raise ValueError("memory_policy must be cold_io or ca_window")
+        from operator_model.operators.attention.flash_sparse import IMPLEMENTATION
+        if candidate_implementation not in ("capture", IMPLEMENTATION):
+            raise ValueError(f"candidate_implementation must be capture or {IMPLEMENTATION}")
+        self.candidate_implementation = candidate_implementation
+        from operator_model.operators.attention.flash_sparse import options
+        packed_options = options(dict(candidate_options or {}))
+        self.candidate_options = MappingProxyType(packed_options)
+        if self.candidate_options and candidate_implementation == "capture":
+            raise ValueError("PA options require the packed A5 candidate implementation")
+        self.configuration += (("candidate_implementation",candidate_implementation),
+                               ("candidate_options",json.dumps(packed_options,sort_keys=True,allow_nan=False)))
         self.memory_policy = memory_policy
         self.configuration += (("fabric_gbs", self.fabric.injection_gbs), ("fabric_step_us", self.fabric.step_us),
                                ("memory_policy", memory_policy))
@@ -164,7 +177,9 @@ class FullOperatorSimBackend(OperatorSimBackend):
         if features.raw_name in communication.NAMES and hardware.topology is not None:
             raise UnsupportedOperator("Configured topology needs an explicit topology-aware communication backend")
         from operator_model.roofline import cold_io_window
-        result = estimate_full_features(features,chip=target,fabric=self.fabric)
+        result = estimate_full_features(features,chip=target,fabric=self.fabric,
+                                        candidate_implementation=self.candidate_implementation,
+                                        candidate_options=self.candidate_options)
         if (self.memory_policy == "ca_window" or result.latency_us is None or
                 result.status == "structural" or features.raw_name in communication.NAMES):
             return result

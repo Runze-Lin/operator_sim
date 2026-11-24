@@ -280,7 +280,7 @@ _LOWERINGS = {
 }
 
 
-def estimate_features(features, *, chip, include_schedule=False):
+def estimate_features(features, *, chip, include_schedule=False, candidate_implementation="capture", candidate_options=None):
     """Use one published lowering with latency in microseconds, or give the fallback reason.
 
     This is a prediction of the selected implementation. Capture does not identify an ELF.
@@ -300,6 +300,13 @@ def estimate_features(features, *, chip, include_schedule=False):
         op, shape, dtype, attrs, contract = lower(features, sem)
     except _Mismatch as error:
         return NodeEstimate(None, "unsupported", reason=str(error))
+    if op == "candidate_filtered_indexer" and candidate_implementation != "capture":
+        from operator_model.operators.attention.flash_sparse import IMPLEMENTATION
+        if candidate_implementation != IMPLEMENTATION:
+            return NodeEstimate(None, "unsupported", reason="Unknown Flash candidate deployment")
+        # Only substitute after the complete model/layer/layout contract above
+        # matches. Keep the BF16 capture available as a separate scenario.
+        dtype, attrs, contract = "mxfp4", {**(candidate_options or {}),"implementation":IMPLEMENTATION}, "candidate_filtered_indexer/" + IMPLEMENTATION
     priced = estimate(op, shape, attrs, chip=chip, dtype=dtype)
     work = priced.work
     if include_schedule and work is not None and priced.latency_us is not None:
@@ -310,5 +317,5 @@ def estimate_features(features, *, chip, include_schedule=False):
                 (isinstance(value, (tuple, list)) and len(value) <= 4 and all(type(x) is int for x in value))}
         work = {**work, "schedule": {**(work.get("schedule") or {}), "active_aic": priced.active_aic,
                 "active_aiv": priced.active_aiv, "target_plan": plan,
-                **{k: projection[k] for k in ("waves","query_tile","query_groups","kv_page") if k in projection}}}
+                **{k: projection[k] for k in ("waves","query_tile","query_groups","kv_page","candidate_tiles","address_path","unpriced") if k in projection}}}
     return NodeEstimate(contract, priced.status, priced.latency_us, priced.reason, work)
