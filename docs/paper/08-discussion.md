@@ -32,4 +32,4 @@
 2. A. Parashar et al. Timeloop: A Systematic Approach to DNN Accelerator Evaluation. ISPASS, 2019. [研究项目与论文入口](https://timeloop.csail.mit.edu/)
 3. T. Dao et al. FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness. NeurIPS, 2022. [论文](https://arxiv.org/abs/2205.14135)
 4. THU-NICS. Uni3Sim, Ascend 910B microbenchmarks, revision 52ffdb18. [固定版本的微基准](https://github.com/thu-nics/uni3sim/tree/52ffdb18aef705b03e27534ddd999312a9ec5ca2/microbench/ascend_910b)
-5. operator-sim v1.13.1. [全量建模方法](../modeling-strategy.md) · [参数、资格与误差](../error-analysis.md) · [可重绘流水图](../pipeline-comparisons.md) · [系统请求清单](../../calibration/candidate_indexer/v113_context_requests.csv)
+5. operator-sim v2.0.0，含 v1.13.1 冻结实验档案。 [全量建模方法](../modeling-strategy.md) · [参数、资格与误差](../error-analysis.md) · [可重绘流水图](../pipeline-comparisons.md) · [系统请求清单](../../calibration/candidate_indexer/v113_context_requests.csv)

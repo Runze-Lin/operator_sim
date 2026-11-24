@@ -1,6 +1,6 @@
 # 昇腾算子性能建模：论文正文与复算指南
 
-[完整中文 PDF](../operator-sim-report-zh.pdf) 以同一个 FA 长循环贯穿阶段定价、流水合成、指令校准和跨芯片检验。模型版本 v1.13.1。微秒表示设备时间，CPU 查询开销单列。970DT 的所有数字均为假设资源配置下的外推。
+[完整中文 PDF](../operator-sim-report-zh.pdf) 以同一个 FA 长循环贯穿阶段定价、流水合成、指令校准和跨芯片检验。本报告对应 operator-sim v2.0.0，校准与系统结果沿用 v1.13.1 冻结时生成的记录。微秒表示设备时间，CPU 查询开销单列。970DT 的所有数字均为假设资源配置下的外推。
 
 | 章节 | 在这里可以复核什么 |
 |---|---|
@@ -17,12 +17,14 @@
 
 ## 构建 PDF
 
-在仓库根目录使用含中文字体（如 Droid Sans Fallback）、Pango 与 HarfBuzz 的环境。下列 Python 依赖只供排版、绘图，在线预测器可独立安装。PDF 的证据链接相对于仓库中的 PDF 所在目录解析，单独分发 PDF 时仍可阅读全部正文、图表与附录。PDF 编译使用已归档图表，无需原始大 trace 或 CANN。可用自有虚拟环境执行：
+在仓库根目录使用具备 Pango、HarfBuzz 和 Noto CJK 简体中文字体的环境。中文正文使用 Noto Serif CJK SC，标题和表格使用 Noto Sans CJK SC。若字体未注册到系统，可把 NotoSerifCJKsc-Regular.otf 与 NotoSansCJKsc-Regular.otf 放在同一目录，再用下方的参数指定该目录。PDF 会嵌入用到的字体，证据链接相对于 PDF 所在目录解析。构建只需要归档图表与下列排版依赖。
 
 ~~~bash
 python -m pip install -e .
 python -m pip install 'weasyprint==66.0' 'markdown-it-py==3.0.0' matplotlib numpy
-python -m calibration.performance_report
+python -m calibration.performance_report --font-dir /path/to/fonts
 ~~~
+
+正文行内公式用单个美元符号标记，独立公式用成对的双美元符号各占一行。排版脚本用 Matplotlib MathText 将 TeX 语法转为矢量公式，并为独立公式按章编号。PDF 中的公式可以缩放，TeX 源式仍保留在 Markdown 中。
 
 更新算例数据时，可先运行[附录 D 的重绘命令](12-reproduce.md)。系统图与附录 B/C 由同一脚本从发布清单生成。FA 图可仅用压缩时间戳重绘；持有原始开发窗数据库时，可用脚本的可选参数对照 SHA256 和每一条发起时刻。[FA 重绘与原始校验](../../calibration/examples/paper_fa_figures.py) · [迁移情景重算](../../calibration/examples/paper_transfer_sensitivity.py) · [系统图和结果表](../../calibration/examples/paper_system_results.py)

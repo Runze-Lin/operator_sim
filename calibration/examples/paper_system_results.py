@@ -60,14 +60,15 @@ def system_results():
 
 def evidence_table():
     table = ["# 附录 B　逐合同的双端误差与精度", "",
-             "DT、PR 栏分别给出不同形状数/窗口数，以及 WAPE/最大绝对误差。开发和独立窗数跨两端合计。冻结独立优先，未有独立数据的合同按开发回放展示。N/A 表示该问题缺可比证据。点击合同名称可查每个 shape 的 CA、预测、970DT 外推和冷读写 U 范围。", ""]
+             "每个芯片栏上行是形状数 / 窗口数，下行是 WAPE / 最大绝对误差。开发和独立窗数跨两端合计。冻结独立优先，其余按开发回放展示。N/A 表示缺少可比证据。点击合同名称可查逐 shape 的 CA、预测、970DT 外推和冷读写 U 范围。", ""]
     rows = []
     for line in (DOC / "error-analysis.md").read_text().splitlines():
         cells = [c.strip() for c in line.strip("|").split("|")]
         if not line.startswith("| [") or len(cells) != 9 or "](errors/" not in cells[0]:
             continue
-        rows.append([cells[0].replace("](errors/", "](../errors/"), *cells[1:5]])
-    table.extend(["| 执行合同 | 主精度 → 输出 | 数据角色 | 950DT | 950PR |", "|---|---|---|---|---|"])
+        scores = [cell.replace(" · ", "<br>", 1) for cell in cells[3:5]]
+        rows.append([cells[0].replace("](errors/", "](../errors/"), *cells[1:3], *scores])
+    table.extend(["| 执行合同 | 主精度 → 输出 | 计分集 | 950DT | 950PR |", "|---|---|---|---:|---:|"])
     table.extend("| " + " | ".join(row) + " |" for row in rows)
     table.append("")
     table.append("[完整证据、各合同 U 范围与计分定义](../error-analysis.md)")

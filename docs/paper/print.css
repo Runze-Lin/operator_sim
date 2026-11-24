@@ -1,43 +1,169 @@
 @page {
   size: A4;
-  margin: 20mm 20mm 19mm;
-  @top-left { content: "OPERATOR-SIM　 /　 性能建模研究报告"; color: #33676c; font-size: 8.3pt; }
-  @top-right { content: "v1.13.1"; color: #617482; font-size: 8.3pt; }
-  @bottom-left { content: string(chapter); font-size: 8pt; color: #5a6c79; }
-  @bottom-right { content: counter(page); font-size: 9pt; color: #12666a; }
+  margin: 19mm 19mm 20mm;
+  @top-left {
+    content: "OPERATOR-SIM  /  研究报告";
+    border-bottom: .55pt solid #c3d0d3;
+    margin-bottom: 4mm;
+    color: #375e6d;
+    font: 8.2pt "Noto Sans CJK SC", "Droid Sans Fallback", sans-serif;
+    vertical-align: bottom;
+    padding-bottom: 2mm;
+  }
+  @top-right {
+    content: string(release);
+    border-bottom: .55pt solid #c3d0d3;
+    margin-bottom: 4mm;
+    color: #526a77;
+    font-size: 8.2pt;
+    vertical-align: bottom;
+    padding-bottom: 2mm;
+  }
+  @bottom-left {
+    content: string(chapter);
+    border-top: .55pt solid #c3d0d3;
+    margin-top: 4mm;
+    color: #526a77;
+    font: 8pt "Noto Sans CJK SC", "Droid Sans Fallback", sans-serif;
+    vertical-align: top;
+    padding-top: 2mm;
+  }
+  @bottom-right {
+    content: counter(page, decimal-leading-zero);
+    border-top: .55pt solid #c3d0d3;
+    margin-top: 4mm;
+    color: #166167;
+    font: bold 9.2pt "Nimbus Sans", sans-serif;
+    vertical-align: top;
+    padding-top: 2mm;
+  }
 }
-@page:first { @top-left { content: none } @top-right { content: none } @bottom-left { content: none } @bottom-right { content: none } }
-html { font-family: "Nimbus Sans","Droid Sans Fallback","Droid Sans",sans-serif; font-size: 11.4pt; color: #152c3c; }
-body { margin: 0; line-height: 1.72 }
-p { margin: 0 0 3.8mm; orphans: 2; widows: 2; overflow-wrap: anywhere; }
-h1, h2, h3 { break-after: avoid; line-height: 1.3; }
-h1 { font-size: 21pt; margin: 3mm 0 8mm; border-bottom: 1pt solid #267579; padding-bottom: 4mm; color: #143f49; string-set: chapter content() }
-h2 { font-size: 15pt; color: #146269; margin: 7mm 0 3mm; }
-h3 { font-size: 12.2pt; color: #34506a; margin: 4mm 0 2mm; }
+@page:first {
+  @top-left { content: none }
+  @top-right { content: none }
+  @bottom-left { content: none }
+  @bottom-right { content: none }
+}
+:root {
+  --ink: #172a36;
+  --accent: #176871;
+  --line: #c5d5d8;
+  --sans: "Nimbus Sans", "Noto Sans CJK SC", "Droid Sans Fallback", "Droid Sans", sans-serif;
+}
+html {
+  font-family: "Nimbus Roman", "Noto Serif CJK SC", "Droid Sans Fallback", "Droid Sans", serif;
+  font-size: 11.2pt;
+  color: var(--ink);
+}
+body { margin: 0; line-height: 1.65; }
+p { margin: 0 0 3.4mm; orphans: 2; widows: 2; }
+h1, h2, h3 { break-after: avoid; font-family: var(--sans); line-height: 1.32; }
+h1 {
+  font-size: 21pt;
+  margin: 1mm 0 6mm;
+  border-bottom: .85pt solid var(--accent);
+  padding-bottom: 3mm;
+  color: #143e49;
+  string-set: chapter content();
+}
+h2 { font-size: 14.5pt; color: var(--accent); margin: 5.2mm 0 2.6mm; }
+h3 { font-size: 12pt; color: #33566b; margin: 3.8mm 0 2mm; }
+li { orphans: 2; widows: 2; }
 section, nav { break-before: page }
-nav li { margin: 3.5mm 0; list-style: none }
-nav ol { padding: 0 }
-nav a::after { content: leader(dotted) target-counter(attr(href), page); }
-a { color: #146969; text-decoration: none; }
-img { display: block; max-width: 100%; max-height: 119mm; margin: 4mm auto 1mm; object-fit: contain; }
-p:has(>img) { break-inside: avoid; }
-p:has(>img) + p { margin-top: 2mm; }
-table { border-collapse: collapse; width: 100%; margin: 3mm 0 5mm; font-size: 9.2pt; line-height: 1.47; }
-thead { display: table-header-group; }
-tr { break-inside: avoid }
-th, td { padding: 1.6mm 1.9mm; text-align: left; vertical-align: top; overflow-wrap: anywhere; border-bottom: .4pt solid #cad8da; }
-th { background: #215b65; color: white; font-weight: bold; }
-tbody tr:nth-child(even) { background: #f1f6f5; }
-code { font-family: "Droid Sans Mono","Droid Sans Fallback",monospace; font-size: .83em; overflow-wrap: anywhere; }
-pre { background: #edf4f4; padding: 3.5mm; white-space: pre-wrap; break-inside: avoid; line-height: 1.5; }
-.cover { padding-top: 35mm; color: #123f49; }
-.cover .kicker { font-size: 12pt; letter-spacing: 1pt; color: #177579; }
-.cover h1 { font-size: 37pt; margin: 15mm 0 5mm; padding: 0; border: 0; }
-.cover .subtitle { font-size: 22pt; }
-.cover .deck { border-top: 2pt solid #267579; margin: 15mm 0; padding-top: 7mm; font-size: 14pt; line-height: 1.8; }
-.coverfoot { margin-top: 32mm; color: #536971; font-size: 11pt; }
+nav li { list-style: none; font-family: var(--sans); padding: 2.5mm 0; border-bottom: .4pt solid #dce5e8; }
+nav ol { padding: 0; margin: 0; }
+nav a { display: block; color: #1c4554; }
+nav a::after { content: leader("  ·  ") target-counter(attr(href), page); color: #44636e; }
+a { color: #12636a; text-decoration: none; }
 
+figure { margin: 4mm 0 5mm; break-inside: avoid; }
+figure > img { display: block; max-width: 100%; max-height: 121mm; margin: 0 auto; }
+figcaption {
+  font: 9.3pt/1.55 var(--sans);
+  margin: 2.3mm 0 0;
+  padding: 1.9mm 2.7mm;
+  background: #eff5f5;
+  border-left: 1.4pt solid var(--accent);
+  color: #335768;
+}
+
+.math-inline { display: inline-block; white-space: nowrap; }
+.math-inline img { max-width: 100%; }
+.equation {
+  margin: 2.3mm 0 3.6mm;
+  padding: 2.3mm 0;
+  background: #f3f7f8;
+  border-left: 1.4pt solid #46858c;
+  position: relative;
+  break-inside: avoid;
+  break-before: avoid;
+}
+.equation-lines { margin: 0 12mm; text-align: center; }
+.equation-lines img { display: block; max-width: 100%; margin: 0.6mm auto; }
+.equation-number {
+  position: absolute;
+  right: 2.8mm;
+  bottom: 2.1mm;
+  color: #446671;
+  font: 8.3pt var(--sans);
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 3mm 0 4.8mm;
+  font: 9.4pt/1.46 var(--sans);
+  break-before: avoid;
+}
+thead { display: table-header-group; }
+tr { break-inside: avoid; }
+th, td {
+  padding: 1.45mm 1.75mm;
+  text-align: left;
+  vertical-align: top;
+  overflow-wrap: anywhere;
+}
+th { background: #dcebed; color: #174956; font-weight: bold; border-bottom: .75pt solid #64949b; }
+td { border-bottom: .37pt solid #d4dfe2; }
+tbody tr:nth-child(even) { background: #f3f7f8; }
+tbody tr:last-child td { border-bottom: .75pt solid #87a8ae; }
+td strong { color: #125e66; }
+#chapter-02 table th:nth-child(1) { width: 18%; }
+#chapter-02 table th:nth-child(2) { width: 33%; }
+#chapter-03 td:not(:first-child), #chapter-11 td:not(:first-child) { white-space: nowrap; }
+#chapter-05 table th:first-child { width: 38%; }
+#chapter-06 table:nth-of-type(1) th:nth-child(1) { width: 27%; }
+#chapter-06 table:nth-of-type(1) th:nth-child(4) { width: 39%; }
+#chapter-06 table:nth-of-type(1) td:nth-child(2),
+#chapter-06 table:nth-of-type(1) td:nth-child(3) { white-space: nowrap; }
+#chapter-09 th:first-child { width: 28%; }
+#chapter-09 th, #chapter-09 td { padding-top: 1.02mm; padding-bottom: 1.02mm; }
+#chapter-10 th:nth-child(1) { width: 24%; }
+#chapter-10 th:nth-child(2) { width: 22%; }
+#chapter-10 th:nth-child(3) { width: 20%; }
+#chapter-10 th:nth-child(n+4) { width: 17%; }
+#chapter-10 td:nth-child(n+4) { text-align: right; white-space: nowrap; }
+#chapter-11 th, #chapter-11 td { padding-top: 1.15mm; padding-bottom: 1.15mm; }
+#chapter-11 h2 { break-before: auto; }
+#chapter-12 th:first-child { width: 27%; }
+
+code { font: .84em "Droid Sans Mono", "Noto Sans CJK SC", monospace; overflow-wrap: anywhere; }
+pre { background: #eff4f5; padding: 3.5mm; white-space: pre-wrap; break-inside: avoid; line-height: 1.5; }
+.cover {
+  padding: 15mm 10mm 15mm;
+  margin-top: 18mm;
+  background: #eef4f3;
+  border-top: 3.5mm solid #1d6770;
+  font-family: var(--sans);
+  color: #143e49;
+}
+.kicker { font-size: 11pt; font-weight: bold; letter-spacing: 1.1pt; color: #216771; }
+.kicker span { border-left: .7pt solid #8cadb2; margin-left: 3.4mm; padding-left: 3.4mm; letter-spacing: .15pt; font-weight: normal; }
+.cover h1 { font-size: 35pt; margin: 29mm 0 3mm; padding: 0; border: 0; }
+.cover .subtitle { font-size: 20pt; color: #1f626d; }
+.cover .deck { border-top: .9pt solid #83a9ab; margin: 13mm 0 0; padding-top: 6mm; font-size: 13pt; line-height: 1.75; }
+.coverfoot { margin: 36mm 0 0; color: #375766; font-size: 10pt; }
+.coverfoot dt { display: inline-block; padding-right: 2mm; color: #406b74; }
+.coverfoot dd { display: inline-block; margin: 0 7mm 0 0; }
+.coverfoot .release { string-set: release content(); }
 #chapter-00 h2 { break-before: page; }
-#chapter-01, #chapter-04 { font-size: 11.1pt; line-height: 1.65; }
-#chapter-09 td, #chapter-09 th { padding-top: 1.25mm; padding-bottom: 1.25mm; }
-#chapter-12 pre { font-size: 10.7pt; }
