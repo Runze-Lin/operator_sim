@@ -112,6 +112,14 @@ def _batched(f, sem):
     return (m,)*g,n,k,'batch_mx',reads,2*g*m*n,{'unpack': elements,'scale_bf16': elements}
 
 
+def _vector_work(mode, classes):
+    if mode == 'token_mx':
+        return {'fp8_e4m3fn': classes['unpack_weight'],
+                'fp32': classes['token_rescale'] + classes['output_cast']}
+    dtype = 'bf16' if mode == 'batch_mx' else 'fp32'
+    return {dtype: sum(classes.values())} if classes else {}
+
+
 def _schedule(rows, n, k, mode, reads, writes, classes, chip, add_bias):
     rows = tuple(c for c in rows if c)
     groups, total = len(rows), sum(rows)
@@ -160,14 +168,20 @@ def _schedule(rows, n, k, mode, reads, writes, classes, chip, add_bias):
     panel_bytes = waves*(min(max(rows),bm)+min(n,bn))*local_k*element
     panel_cycles = panel_bytes/min(128, (chip.details.get('mte2_bandwidth_gbs') or 128*f)/f)
     vactive = min(vec, max(1,ceil(active*vec/cores)))
-    vrate = (chip.vector_tops['16'] or 54)*1000/(vec*f)
-    vector = sum(classes.values())/(vrate*vactive)
+    issued = _vector_work(mode, classes)
     if mode == 'token_mx':
         # Distinct output M tiles may repeat unpacking of the W panel in UB.
-        vector += (sum(ceil(r/bm) for r in rows)-groups)*n*k/(vrate*vactive)
+        issued['fp8_e4m3fn'] += (sum(ceil(r/bm) for r in rows)-groups)*n*k
     if mode == 'batch_mx':
         repeats = (ceil(n/bn)-1)*total*k + (sum(ceil(r/bm) for r in rows)-groups)*n*k
-        vector += 2*repeats/(vrate*vactive)
+        issued['bf16'] += 2*repeats
+    vector_cycles = {}
+    for precision, count in issued.items():
+        width = {'fp8_e4m3fn':'8', 'bf16':'16', 'fp32':'32'}[precision]
+        peak = chip.vector_tops.get(width)
+        _require(peak, f'Missing {width}-bit Vector peak for {precision} service')
+        vector_cycles[precision] = count * vec*f / (peak*1000*vactive)
+    vector = sum(vector_cycles.values())
     if mode == 'dense32':
         # Distinct launch/retirement mechanisms: beta=1 broadcasts a vector
         # bias, while un-biased transposed Stream-K has an extra rendezvous.
@@ -209,6 +223,7 @@ def _schedule(rows, n, k, mode, reads, writes, classes, chip, add_bias):
                     k_pages_per_split=pages,core_ops_per_cycle=rate,
                     resource_cycles=dict(first_issue=front,cube=cube,hbm=hbm,
                                          panel_mte2=panel_cycles,vector=vector,drain=drain),
+                    vector_issued_ops_by_dtype=issued, vector_cycles_by_dtype=vector_cycles,
                     body_cycles=body, groups=groups, **router_stages)
     return (front+body+drain)/unit, schedule
 
@@ -224,10 +239,10 @@ def price(features, chip):
             parsed = _mixed(features, sem)
         else:
             return NodeEstimate(None,'unsupported',reason='Unregistered product')
+        rows,n,k,mode,reads,writes,classes = parsed
+        t,schedule = _schedule(*parsed,chip,features.raw_name == 'aten.addmm.default')
     except _Mismatch as err:
         return NodeEstimate(None,'unsupported',reason=str(err))
-    rows,n,k,mode,reads,writes,classes = parsed
-    t,schedule = _schedule(*parsed,chip,features.raw_name == 'aten.addmm.default')
     dtype = {'dense32':'fp32','dense16':'bf16','router16':'bf16','token_mx':'fp8_e4m3fn','batch_mx':'bf16'}[mode]
     contract = {'aten.mm.default':'matmul/transposed_weight_'+dtype,
                 'aten.addmm.default':'addmm/transposed_weight_fp32',
@@ -242,11 +257,7 @@ def price(features, chip):
         classes = dict(classes, split_k_combine=(schedule['split_k']-1)*sum(rows)*n)
         schedule['active_aiv'] = None  # exact set depends on the reduction partition
         schedule['split_k_merge'] = 'FP32 partial sums; AIV subset, priced in retirement'
-    if mode == 'token_mx':
-        vector_ops = {'fp8_e4m3fn':classes['unpack_weight'],
-                      'fp32':classes['token_rescale']+classes['output_cast']}
-    else:
-        vector_ops = {'bf16' if mode=='batch_mx' else 'fp32':sum(classes.values())} if classes else {}
+    vector_ops = _vector_work(mode, classes)
     work = _counts(dtype,reads,writes,{dtype: 2*sum(rows)*n*k},vector_ops,classes=classes)
     measured_family = features.raw_name in (*_NATIVES,_TRANS)
     evidence = ('native_development_ca' if measured_family else 'analytical_design')

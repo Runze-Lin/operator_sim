@@ -11,7 +11,7 @@
 backends = ["operator_sim_full"]
 ```
 
-三种模式共享单卡捕获、图依赖、并发策略与显存预算。全量比较工具逐节点验证成功状态；新模型接入时也应检查 miss/fail 和节点级来源。跨设备用显式互连情景，芯片 HBM 配置继续用于本地搬运。[最新 27 组测算](system-full-comparison.md) · [通信推导及调参](examples/system-communication.md)
+三种模式共享单卡捕获、图依赖、并发策略与显存预算。全量比较工具逐节点验证成功状态；新模型接入时也应检查 miss/fail 和节点级来源。跨设备用显式互连情景，芯片 HBM 配置继续用于本地搬运。[27 组同精度 Roofline 与当前完整后端](roofline-audit.md) · [通信推导及调参](examples/system-communication.md)
 
 ## 安装到其他同版本的平台
 
@@ -61,4 +61,4 @@ result = run_inference(
 
 ## 重放 27 个任务
 
-同一比较矩阵使用原预置、128 Ki 历史、目标输出 1,024 tokens、8 个候选、接受 6 个候选，每轮按 7 个输出 token 归一。TP8/EP8、TP8/EP32、DEP64 的 (TP,DP,EP) 分别为 (8,1,8)、(8,4,32)、(1,64,64)。每组单卡 batch 取 1、16、64。复算器逐节点检查调用、原价和完整路由，逐任务核对显存峰值与图指纹，再生成 27 组对比和所有 shape 明细。[当前结果和可执行命令](system-full-comparison.md) · [v1.8 混合后端归档比较](system-candidate-comparison.md)
+同一比较矩阵使用原预置、128 Ki 历史、目标输出 1,024 tokens、8 个候选、接受 6 个候选，每轮按 7 个输出 token 归一。TP8/EP8、TP8/EP32、DEP64 的 (TP,DP,EP) 分别为 (8,1,8)、(8,4,32)、(1,64,64)。每组单卡 batch 取 1、16、64。复算器逐节点检查调用、原价和完整路由，逐任务核对显存峰值与图指纹，再生成 27 组对比和所有 shape 明细。[v1.9.1 的对照与复算命令](roofline-audit.md) · [原始 27 组账单](system-full-comparison.md) · [v1.8 混合后端归档比较](system-candidate-comparison.md)

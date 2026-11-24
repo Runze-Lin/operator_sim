@@ -65,5 +65,16 @@ class SystemCubeTests(unittest.TestCase):
         self.assertEqual(p.work['vec_ops_by_class']['unpack_weight'],g*k*n)
         self.assertEqual(p.work['cube_ops_by_dtype'],{'fp8_e4m3fn': 2*m*n*k})
         self.assertEqual(p.work['schedule']['groups'],g)
+        peaks = dict(self.chip.vector_tops)
+        peaks.update({'8': 24, '16': 1, '32': 12})
+        target = replace(self.chip, vector_tops=peaks)
+        schedule = estimate_full_features(f, chip=target).work['schedule']
+        active = schedule['active_aiv']
+        per_cycle = 1000 * active / (target.frequency_ghz * target.vector_cores)
+        expected = {'fp8_e4m3fn': g*k*n / (24*per_cycle),
+                    'fp32': 2*m*n / (12*per_cycle)}
+        for dtype, cycles in expected.items():
+            self.assertAlmostEqual(schedule['vector_cycles_by_dtype'][dtype], cycles)
+        self.assertAlmostEqual(schedule['resource_cycles']['vector'], sum(expected.values()))
         self.assertIsNone(estimate_full_features(replace(f,attributes=attributes(dict(sem,group_counts=(9,8)))),
                                                 chip=self.chip).latency_us)

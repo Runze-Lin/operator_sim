@@ -79,7 +79,7 @@ def main():
         "数据来自 3 个模型 × 3 种并行 × 每卡 B=1、16、64，均为 rank 0。target/draft 的调用、张量、依赖、任务配置和显存峰值逐对核对。128Ki 个历史 token，推测长度 8，每轮校验 9 个输入，统计口径为原任务的接受长度 7。这里的毫秒是 DES 预测的单轮时长。","",
         f"精细后端命中 **{len(ops)} 个调用名、{int(total(rows,'nodes')):,} 次调用**，含 {int(total(rows,'zero_duration')):,} 个零设备时间节点。每组只配置一个后端；校验器会拒绝任何一个未成功定价的节点。原始已计费预算覆盖率由 v1.8 的 67.63% 达到 100%。",
         "",f"27 组时长求和为原 Roofline {original:.3f} ms、v1.8 混合 {hybrid:.3f} ms、全量 {current:.3f} ms。求和用于跨配置比较，单个请求的时延要看所在行。"
-        f"相对原方案变化 {(current/original-1)*100:+.2f}%，相对 v1.8 变化 {(current/hybrid-1)*100:+.2f}%。只有与标明精度和布局匹配的代表 CA 窗可用于评价算子误差；尚无这 27 组的整机时延真值。",
+        f"相对原方案变化 {(current/original-1)*100:+.2f}%，相对 v1.8 变化 {(current/hybrid-1)*100:+.2f}%。只有与标明精度和布局匹配的代表 CA 窗可用于评价算子误差；尚无这 27 组的整机时延真值。该表保留 v1.9.0 完整后端，后续结果见[当前同精度 Roofline 和端到端重放](roofline-audit.md)。",
         "", "| 模型（9 组求和） | 原 Roofline ms | v1.8 ms | 完整后端 ms | 相对原方案 |","|---|---:|---:|---:|---:|"]
     for key,label in MODELS.items():
         subset=[r for r in rows if r["model"]==key]
