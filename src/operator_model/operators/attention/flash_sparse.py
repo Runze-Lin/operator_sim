@@ -73,9 +73,25 @@ def _attention_rates():
 
 
 @lru_cache(maxsize=1)
+def _native_rates():
+    return load_parameters("flash_qsli")
+
+
 def _wide_issue_interval():
-    measured = load_parameters("flash_qsli")
+    measured = _native_rates()
     return measured["wide_table_team_issue_span_cycles"] / measured["adjacent_issues"]
+
+
+def _merge_service(parts, topk, read_rate, vec_scale):
+    """Wheel LD owner streams at most seven new lists plus one carry per pass."""
+    prices = _native_rates()["split_row"]
+    passes = _ceil(parts,7)
+    entries = (parts + passes - 1)*topk
+    read = passes*prices["read_latency_cycles"] + 6*entries/read_rate
+    select = (passes*prices["select_fixed_cycles"]
+              + _ceil(topk,256)*(parts+passes-1)*prices["select_cycles_per_256"])*vec_scale
+    write = passes*(prices["write_latency_cycles"] + 6*topk/read_rate)
+    return passes, entries, read, select, write
 
 
 def work_for(shape, candidate_limit=None):
@@ -150,27 +166,53 @@ def price(shape, chip, *, pa_block_size=128, table_pages=None, scalar_lookup_cyc
         before = row_ends[i-1] if i else 0
         return doc*q+before+(offset-base)//groups[i][0]
 
+    # Source ASC scheduler recomputes the cost target after every assignment.
+    # Full 512-key tiles cost 128 scheduling units; their half-tile tolerance
+    # rounds the remaining target to nearest (ties up). Ragged per-row final
+    # tiles can have smaller source weights; this path approximates those
+    # boundaries with the same full-tile unit. Always force one tile.
+    weighted_tail = (min(_ceil(length-q+1,BLOCK), capacity if candidate_limit is None else candidate_limit)
+                     % (TILE//BLOCK) != 0 or
+                     (q > 1 and length-q+1 < (capacity if candidate_limit is None else candidate_limit)*BLOCK))
     slow = 0.
     split_rows = {}
     first_tile = 0
+    owners = []
     for lane in range(live):
-        stop = (tiles*(lane+1)+live//2)//live
-        n = stop-first_tile
+        remaining_lanes = live-lane
+        n = max(1, (2*(tiles-first_tile)+remaining_lanes)//(2*remaining_lanes))
+        stop = first_tile+n
         first_row, last_row = row_at(first_tile), row_at(stop-1)
         fragments = last_row-first_row+1
-        # Histogram on AIV0, register pipeline with fill/drain per fragment.
-        price_cycles = ((n-fragments)*interval + fragments*sum(stages.values())
-                        + (fragments*hist_fixed + 2*n*hist_per256)*vec_scale)
-        slow = max(slow,price_cycles)
-        if stop < tiles and row_at(stop) == last_row:
+        left_split = first_tile > 0 and row_at(first_tile-1) == first_row
+        right_split = stop < tiles and row_at(stop) == last_row
+        partials = int(left_split) + int(right_split and (not left_split or first_row != last_row))
+        if right_split:
             split_rows[last_row] = split_rows.get(last_row,1)+1
+        owners.append((n,fragments,partials))
         first_tile = stop
-    merge = 0.
+
+    native = _native_rates()["split_row"]
     if split_rows:
-        # At most 8 partial lists plus streaming carry in the LD merge pass.
-        parts = max(split_rows.values())
-        passes = _ceil(parts-1,7)
-        merge = (passes*hist_fixed + (parts+passes-1)*_ceil(topk,256)*hist_per256)*vec_scale
+        startup = native["startup_control_cycles"]
+    # The native drain landmark covers one tile's Fix/Vector/local selection
+    # and public partial write. Credit service already present in the fragment.
+    # A larger fragment retains its extra per-tile histogram work.
+    ordinary_tail = fix + vector + (hist_fixed+2*hist_per256)*vec_scale
+    drain_extra = max(0., native["one_tile_score_drain_cycles"] - ordinary_tail)
+    for n, fragments, partials in owners:
+        price_cycles = ((n-fragments)*interval + fragments*sum(stages.values())
+                        + (fragments*hist_fixed + 2*n*hist_per256)*vec_scale
+                        + partials*drain_extra)
+        slow = max(slow,price_cycles)
+    merge = 0.
+    passes, entries, merge_read, merge_select, merge_write = 0, 0, 0., 0., 0.
+    if split_rows:
+        # Metadata assigns each split row to a final AIV; multiple rows may
+        # merge concurrently. Its longest chain sets the local FD critical path.
+        passes, entries, merge_read, merge_select, merge_write = _merge_service(
+            max(split_rows.values()),topk,read_rate,vec_scale)
+        merge = native["barrier_setup_cycles"] + merge_read + merge_select + merge_write
     local = (startup+slow+merge)/clock
     io = (work["logical_read_bytes"]+work["logical_write_bytes"])/(1000*chip.hbm_bandwidth_gbs)
     l2_bw = chip.details.get("l2_bandwidth_gbs")
@@ -184,6 +226,10 @@ def price(shape, chip, *, pa_block_size=128, table_pages=None, scalar_lookup_cyc
                 candidate_key_pairs=useful, scored_query_key_pairs=tiles*TILE,
                 tile_runs_per_request=groups, query_groups=rows, candidate_tiles=tiles,
                 split_rows=len(split_rows), largest_row_shards=max(split_rows.values(),default=1),
+                team_partition="remaining cost, half-tile tolerance" if not weighted_tail else "remaining cost, full-tile approximation to unequal tail weights",
+                merge_passes=passes, merge_scored_entries=entries,
+                merge_service_cycles=dict(read=merge_read, radix_and_remap=merge_select, write=merge_write,
+                                          barrier=native["barrier_setup_cycles"] if split_rows else 0.),
                 pa_block_size=pa_block_size, table_pages=table_pages, address_path="scalar" if scalar else "UB",
                 scalar_lookup_cycles=scalar_lookup_cycles,
                 tile_service_cycles=stages, interval_cycles=interval, resource_interval_cycles=resource_interval,

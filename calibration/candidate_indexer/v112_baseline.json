@@ -1,0 +1,1401 @@
+{
+  "version": "1.11.0",
+  "utc": "2026-11-24T04:43:11.787449+00:00",
+  "sha256": {
+    "operators/attention/flash_sparse.py": "48a8ee3a0e6988893d9590e1ac394a5d39f3a5915605620da121c8e9010fdc9c",
+    "operators/attention/indexer.py": "342f2963f158c4337ac618e2127c93ad918ef0fc3117535e6b1ca758fb4f8871",
+    "operators/attention/candidate_indexer.py": "cab7c16edb4a7014c61764e711b75cb657ebfb9238de4a34b889fc80fe41ce87",
+    "data/parameters/flash_qsli.json": "15b3fe3f69a37aaf2b7ea8b469ebd93033d74cba0824ecec20cc5e9a30cc0293",
+    "data/chips/Ascend950DT_9582.json": "edb8916f3516ef7a726eb5ebc3b8d23f6c608ba0feea402d47689c60de6c5b91",
+    "data/chips/Ascend950PR_957b.json": "5709b825d2151d1f7bfef8f81a2328e18707370caca8e02c3f6856eb2bf8da5d",
+    "data/chips/Ascend970DT.json": "837796ec9f3b39888950cfe6f703b63c4bf9ced22a366b66f300f1389a8006f2"
+  },
+  "prices": [
+    {
+      "case": "small",
+      "sku": "Ascend950DT_9582",
+      "role": "previously observed small table",
+      "shape": [
+        1,
+        1,
+        32,
+        128,
+        1024,
+        2048,
+        512
+      ],
+      "attrs": {
+        "implementation": "a5_qsli_projection",
+        "table_pages": 8,
+        "pa_block_size": 128,
+        "candidate_limit": 81
+      },
+      "latency_us": 6.830955824966427,
+      "stages": {
+        "implementation": "a5_qsli_projection",
+        "timing_qualification": "extrapolated",
+        "reason": "A5 QSLI source geometry; stage rates are proxies. Packed consumer device projection.",
+        "score_policy": "candidate_first",
+        "target_plan": {
+          "active_aic": 2,
+          "active_aiv": 4
+        },
+        "query_tile": 1,
+        "kv_page": 512,
+        "candidate_block_size": 8,
+        "effective_candidate_limit": 81,
+        "candidate_key_pairs": 648,
+        "scored_query_key_pairs": 1024,
+        "tile_runs_per_request": [
+          [
+            2,
+            1
+          ]
+        ],
+        "query_groups": 1,
+        "candidate_tiles": 2,
+        "split_rows": 1,
+        "largest_row_shards": 2,
+        "pa_block_size": 128,
+        "table_pages": 8,
+        "address_path": "UB",
+        "scalar_lookup_cycles": 64.0,
+        "tile_service_cycles": {
+          "gather": 217.4140625,
+          "publish": 217.4140625,
+          "cube_read": 434.828125,
+          "cube": 128.01112786127166,
+          "fix": 284.85,
+          "vector": 48.059733333333334
+        },
+        "interval_cycles": 434.828125,
+        "resource_interval_cycles": 434.828125,
+        "interval_source": "resource schedule",
+        "stages_us": {
+          "startup": 5.192727272727272,
+          "critical_team": 1.192774006784609,
+          "merge": 0.44545454545454544,
+          "shared_service": 0.0
+        },
+        "io_us": 0.020545,
+        "l2_us": 0.0,
+        "unpriced": [
+          "AICPU metadata",
+          "prepare_indexer_indices",
+          "upstream Q quantization and folded K production"
+        ]
+      },
+      "logical_time_factor": 0.0030076318053339156,
+      "cold_U_pct": 0.30076318053339157
+    },
+    {
+      "case": "small",
+      "sku": "Ascend950PR_957b",
+      "role": "previously observed small table",
+      "shape": [
+        1,
+        1,
+        32,
+        128,
+        1024,
+        2048,
+        512
+      ],
+      "attrs": {
+        "implementation": "a5_qsli_projection",
+        "table_pages": 8,
+        "pa_block_size": 128,
+        "candidate_limit": 81
+      },
+      "latency_us": 6.835573779154059,
+      "stages": {
+        "implementation": "a5_qsli_projection",
+        "timing_qualification": "extrapolated",
+        "reason": "A5 QSLI source geometry; stage rates are proxies. Packed consumer device projection.",
+        "score_policy": "candidate_first",
+        "target_plan": {
+          "active_aic": 2,
+          "active_aiv": 4
+        },
+        "query_tile": 1,
+        "kv_page": 512,
+        "candidate_block_size": 8,
+        "effective_candidate_limit": 81,
+        "candidate_key_pairs": 648,
+        "scored_query_key_pairs": 1024,
+        "tile_runs_per_request": [
+          [
+            2,
+            1
+          ]
+        ],
+        "query_groups": 1,
+        "candidate_tiles": 2,
+        "split_rows": 1,
+        "largest_row_shards": 2,
+        "pa_block_size": 128,
+        "table_pages": 8,
+        "address_path": "UB",
+        "scalar_lookup_cycles": 64.0,
+        "tile_service_cycles": {
+          "gather": 217.4140625,
+          "publish": 217.4140625,
+          "cube_read": 434.828125,
+          "cube": 128.07458347653667,
+          "fix": 284.85,
+          "vector": 48.31537021276595
+        },
+        "interval_cycles": 434.828125,
+        "resource_interval_cycles": 434.828125,
+        "interval_source": "resource schedule",
+        "stages_us": {
+          "startup": 5.192727272727272,
+          "critical_team": 1.1950225219006732,
+          "merge": 0.4478239845261121,
+          "shared_service": 0.0
+        },
+        "io_us": 0.0587,
+        "l2_us": 0.0,
+        "unpriced": [
+          "AICPU metadata",
+          "prepare_indexer_indices",
+          "upstream Q quantization and folded K production"
+        ]
+      },
+      "logical_time_factor": 0.008587428341277367,
+      "cold_U_pct": 0.8587428341277367
+    },
+    {
+      "case": "small",
+      "sku": "Ascend970DT",
+      "role": "extrapolation only",
+      "shape": [
+        1,
+        1,
+        32,
+        128,
+        1024,
+        2048,
+        512
+      ],
+      "attrs": {
+        "implementation": "a5_qsli_projection",
+        "table_pages": 8,
+        "pa_block_size": 128,
+        "candidate_limit": 81
+      },
+      "latency_us": 6.225156267413275,
+      "stages": {
+        "implementation": "a5_qsli_projection",
+        "timing_qualification": "extrapolated",
+        "reason": "A5 QSLI source geometry; stage rates are proxies. Packed consumer device projection.",
+        "score_policy": "candidate_first",
+        "target_plan": {
+          "active_aic": 2,
+          "active_aiv": 4
+        },
+        "query_tile": 1,
+        "kv_page": 512,
+        "candidate_block_size": 8,
+        "effective_candidate_limit": 81,
+        "candidate_key_pairs": 648,
+        "scored_query_key_pairs": 1024,
+        "tile_runs_per_request": [
+          [
+            2,
+            1
+          ]
+        ],
+        "query_groups": 1,
+        "candidate_tiles": 2,
+        "split_rows": 1,
+        "largest_row_shards": 2,
+        "pa_block_size": 128,
+        "table_pages": 8,
+        "address_path": "UB",
+        "scalar_lookup_cycles": 64.0,
+        "tile_service_cycles": {
+          "gather": 217.4140625,
+          "publish": 217.4140625,
+          "cube_read": 434.828125,
+          "cube": 63.98090847457627,
+          "fix": 284.85,
+          "vector": 48.0
+        },
+        "interval_cycles": 434.828125,
+        "resource_interval_cycles": 434.828125,
+        "interval_source": "resource schedule",
+        "stages_us": {
+          "startup": 4.76,
+          "critical_team": 1.0573304506519112,
+          "merge": 0.4078258167613636,
+          "shared_service": 0.0
+        },
+        "io_us": 0.005706944444444444,
+        "l2_us": 0.0069632,
+        "unpriced": [
+          "AICPU metadata",
+          "prepare_indexer_indices",
+          "upstream Q quantization and folded K production"
+        ]
+      },
+      "logical_time_factor": 0.0009167552105187294,
+      "cold_U_pct": 0.09167552105187295
+    },
+    {
+      "case": "small_wide",
+      "sku": "Ascend950DT_9582",
+      "role": "previously observed wide table",
+      "shape": [
+        1,
+        1,
+        32,
+        128,
+        1024,
+        2048,
+        512
+      ],
+      "attrs": {
+        "implementation": "a5_qsli_projection",
+        "table_pages": 8201,
+        "pa_block_size": 128,
+        "candidate_limit": 81
+      },
+      "latency_us": 8.07216794617855,
+      "stages": {
+        "implementation": "a5_qsli_projection",
+        "timing_qualification": "extrapolated",
+        "reason": "A5 QSLI source geometry; stage rates are proxies. Packed consumer device projection.",
+        "score_policy": "candidate_first",
+        "target_plan": {
+          "active_aic": 2,
+          "active_aiv": 4
+        },
+        "query_tile": 1,
+        "kv_page": 512,
+        "candidate_block_size": 8,
+        "effective_candidate_limit": 81,
+        "candidate_key_pairs": 648,
+        "scored_query_key_pairs": 1024,
+        "tile_runs_per_request": [
+          [
+            2,
+            1
+          ]
+        ],
+        "query_groups": 1,
+        "candidate_tiles": 2,
+        "split_rows": 1,
+        "largest_row_shards": 2,
+        "pa_block_size": 128,
+        "table_pages": 8201,
+        "address_path": "scalar",
+        "scalar_lookup_cycles": 64.0,
+        "tile_service_cycles": {
+          "gather": 2265.4140625,
+          "publish": 217.4140625,
+          "cube_read": 434.828125,
+          "cube": 128.01112786127166,
+          "fix": 284.85,
+          "vector": 48.059733333333334
+        },
+        "interval_cycles": 3534.032258064516,
+        "resource_interval_cycles": 2265.4140625,
+        "interval_source": "DT consecutive MMAD_MX issues",
+        "stages_us": {
+          "startup": 5.192727272727272,
+          "critical_team": 2.4339861279967305,
+          "merge": 0.44545454545454544,
+          "shared_service": 0.0
+        },
+        "io_us": 0.020545,
+        "l2_us": 0.0,
+        "unpriced": [
+          "AICPU metadata",
+          "prepare_indexer_indices",
+          "upstream Q quantization and folded K production"
+        ]
+      },
+      "logical_time_factor": 0.0025451650829101274,
+      "cold_U_pct": 0.25451650829101274
+    },
+    {
+      "case": "small_wide",
+      "sku": "Ascend950PR_957b",
+      "role": "previously observed wide table",
+      "shape": [
+        1,
+        1,
+        32,
+        128,
+        1024,
+        2048,
+        512
+      ],
+      "attrs": {
+        "implementation": "a5_qsli_projection",
+        "table_pages": 8201,
+        "pa_block_size": 128,
+        "candidate_limit": 81
+      },
+      "latency_us": 8.076785900366179,
+      "stages": {
+        "implementation": "a5_qsli_projection",
+        "timing_qualification": "extrapolated",
+        "reason": "A5 QSLI source geometry; stage rates are proxies. Packed consumer device projection.",
+        "score_policy": "candidate_first",
+        "target_plan": {
+          "active_aic": 2,
+          "active_aiv": 4
+        },
+        "query_tile": 1,
+        "kv_page": 512,
+        "candidate_block_size": 8,
+        "effective_candidate_limit": 81,
+        "candidate_key_pairs": 648,
+        "scored_query_key_pairs": 1024,
+        "tile_runs_per_request": [
+          [
+            2,
+            1
+          ]
+        ],
+        "query_groups": 1,
+        "candidate_tiles": 2,
+        "split_rows": 1,
+        "largest_row_shards": 2,
+        "pa_block_size": 128,
+        "table_pages": 8201,
+        "address_path": "scalar",
+        "scalar_lookup_cycles": 64.0,
+        "tile_service_cycles": {
+          "gather": 2265.4140625,
+          "publish": 217.4140625,
+          "cube_read": 434.828125,
+          "cube": 128.07458347653667,
+          "fix": 284.85,
+          "vector": 48.31537021276595
+        },
+        "interval_cycles": 3534.032258064516,
+        "resource_interval_cycles": 2265.4140625,
+        "interval_source": "DT consecutive MMAD_MX issues",
+        "stages_us": {
+          "startup": 5.192727272727272,
+          "critical_team": 2.436234643112795,
+          "merge": 0.4478239845261121,
+          "shared_service": 0.0
+        },
+        "io_us": 0.0587,
+        "l2_us": 0.0,
+        "unpriced": [
+          "AICPU metadata",
+          "prepare_indexer_indices",
+          "upstream Q quantization and folded K production"
+        ]
+      },
+      "logical_time_factor": 0.007267742481243524,
+      "cold_U_pct": 0.7267742481243524
+    },
+    {
+      "case": "small_wide",
+      "sku": "Ascend970DT",
+      "role": "extrapolation only",
+      "shape": [
+        1,
+        1,
+        32,
+        128,
+        1024,
+        2048,
+        512
+      ],
+      "attrs": {
+        "implementation": "a5_qsli_projection",
+        "table_pages": 8201,
+        "pa_block_size": 128,
+        "candidate_limit": 81
+      },
+      "latency_us": 7.362934045191052,
+      "stages": {
+        "implementation": "a5_qsli_projection",
+        "timing_qualification": "extrapolated",
+        "reason": "A5 QSLI source geometry; stage rates are proxies. Packed consumer device projection.",
+        "score_policy": "candidate_first",
+        "target_plan": {
+          "active_aic": 2,
+          "active_aiv": 4
+        },
+        "query_tile": 1,
+        "kv_page": 512,
+        "candidate_block_size": 8,
+        "effective_candidate_limit": 81,
+        "candidate_key_pairs": 648,
+        "scored_query_key_pairs": 1024,
+        "tile_runs_per_request": [
+          [
+            2,
+            1
+          ]
+        ],
+        "query_groups": 1,
+        "candidate_tiles": 2,
+        "split_rows": 1,
+        "largest_row_shards": 2,
+        "pa_block_size": 128,
+        "table_pages": 8201,
+        "address_path": "scalar",
+        "scalar_lookup_cycles": 64.0,
+        "tile_service_cycles": {
+          "gather": 2265.4140625,
+          "publish": 217.4140625,
+          "cube_read": 434.828125,
+          "cube": 63.98090847457627,
+          "fix": 284.85,
+          "vector": 48.0
+        },
+        "interval_cycles": 3534.032258064516,
+        "resource_interval_cycles": 2265.4140625,
+        "interval_source": "DT consecutive MMAD_MX issues",
+        "stages_us": {
+          "startup": 4.76,
+          "critical_team": 2.195108228429689,
+          "merge": 0.4078258167613636,
+          "shared_service": 0.0
+        },
+        "io_us": 0.005706944444444444,
+        "l2_us": 0.0069632,
+        "unpriced": [
+          "AICPU metadata",
+          "prepare_indexer_indices",
+          "upstream Q quantization and folded K production"
+        ]
+      },
+      "logical_time_factor": 0.0007750910723112911,
+      "cold_U_pct": 0.07750910723112911
+    },
+    {
+      "case": "split_row",
+      "sku": "Ascend950DT_9582",
+      "role": "DT and PR development trace",
+      "shape": [
+        1,
+        1,
+        32,
+        128,
+        1048576,
+        2048,
+        512
+      ],
+      "attrs": {
+        "implementation": "a5_qsli_projection",
+        "table_pages": 8201,
+        "pa_block_size": 128,
+        "candidate_limit": 2048
+      },
+      "latency_us": 11.390349764360368,
+      "stages": {
+        "implementation": "a5_qsli_projection",
+        "timing_qualification": "extrapolated",
+        "reason": "A5 QSLI source geometry; stage rates are proxies. Packed consumer device projection.",
+        "score_policy": "candidate_first",
+        "target_plan": {
+          "active_aic": 32,
+          "active_aiv": 64
+        },
+        "query_tile": 1,
+        "kv_page": 512,
+        "candidate_block_size": 8,
+        "effective_candidate_limit": 2048,
+        "candidate_key_pairs": 16384,
+        "scored_query_key_pairs": 16384,
+        "tile_runs_per_request": [
+          [
+            32,
+            1
+          ]
+        ],
+        "query_groups": 1,
+        "candidate_tiles": 32,
+        "split_rows": 1,
+        "largest_row_shards": 32,
+        "pa_block_size": 128,
+        "table_pages": 8201,
+        "address_path": "scalar",
+        "scalar_lookup_cycles": 64.0,
+        "tile_service_cycles": {
+          "gather": 2265.4140625,
+          "publish": 217.4140625,
+          "cube_read": 434.828125,
+          "cube": 128.01112786127166,
+          "fix": 284.85,
+          "vector": 48.059733333333334
+        },
+        "interval_cycles": 3534.032258064516,
+        "resource_interval_cycles": 2265.4140625,
+        "interval_source": "DT consecutive MMAD_MX issues",
+        "stages_us": {
+          "startup": 5.192727272727272,
+          "critical_team": 2.4339861279967305,
+          "merge": 3.7636363636363637,
+          "shared_service": 0.0
+        },
+        "io_us": 0.281665,
+        "l2_us": 0.0,
+        "unpriced": [
+          "AICPU metadata",
+          "prepare_indexer_indices",
+          "upstream Q quantization and folded K production"
+        ]
+      },
+      "logical_time_factor": 0.024728389015876467,
+      "cold_U_pct": 2.4728389015876466
+    },
+    {
+      "case": "split_row",
+      "sku": "Ascend950PR_957b",
+      "role": "DT and PR development trace",
+      "shape": [
+        1,
+        1,
+        32,
+        128,
+        1048576,
+        2048,
+        512
+      ],
+      "attrs": {
+        "implementation": "a5_qsli_projection",
+        "table_pages": 8201,
+        "pa_block_size": 128,
+        "candidate_limit": 2048
+      },
+      "latency_us": 12.987820924596123,
+      "stages": {
+        "implementation": "a5_qsli_projection",
+        "timing_qualification": "extrapolated",
+        "reason": "A5 QSLI source geometry; stage rates are proxies. Packed consumer device projection.",
+        "score_policy": "candidate_first",
+        "target_plan": {
+          "active_aic": 28,
+          "active_aiv": 56
+        },
+        "query_tile": 1,
+        "kv_page": 512,
+        "candidate_block_size": 8,
+        "effective_candidate_limit": 2048,
+        "candidate_key_pairs": 16384,
+        "scored_query_key_pairs": 16384,
+        "tile_runs_per_request": [
+          [
+            32,
+            1
+          ]
+        ],
+        "query_groups": 1,
+        "candidate_tiles": 32,
+        "split_rows": 1,
+        "largest_row_shards": 28,
+        "pa_block_size": 128,
+        "table_pages": 8201,
+        "address_path": "scalar",
+        "scalar_lookup_cycles": 64.0,
+        "tile_service_cycles": {
+          "gather": 2265.4140625,
+          "publish": 217.4140625,
+          "cube_read": 434.828125,
+          "cube": 128.07458347653667,
+          "fix": 284.85,
+          "vector": 48.31537021276595
+        },
+        "interval_cycles": 3534.032258064516,
+        "resource_interval_cycles": 2265.4140625,
+        "interval_source": "DT consecutive MMAD_MX issues",
+        "stages_us": {
+          "startup": 5.192727272727272,
+          "critical_team": 4.6374775977102445,
+          "merge": 3.157616054158607,
+          "shared_service": 0.0
+        },
+        "io_us": 0.8047571428571428,
+        "l2_us": 0.0,
+        "unpriced": [
+          "AICPU metadata",
+          "prepare_indexer_indices",
+          "upstream Q quantization and folded K production"
+        ]
+      },
+      "logical_time_factor": 0.06196244524230442,
+      "cold_U_pct": 6.196244524230441
+    },
+    {
+      "case": "split_row",
+      "sku": "Ascend970DT",
+      "role": "extrapolation only",
+      "shape": [
+        1,
+        1,
+        32,
+        128,
+        1048576,
+        2048,
+        512
+      ],
+      "attrs": {
+        "implementation": "a5_qsli_projection",
+        "table_pages": 8201,
+        "pa_block_size": 128,
+        "candidate_limit": 2048
+      },
+      "latency_us": 10.400820231270599,
+      "stages": {
+        "implementation": "a5_qsli_projection",
+        "timing_qualification": "extrapolated",
+        "reason": "A5 QSLI source geometry; stage rates are proxies. Packed consumer device projection.",
+        "score_policy": "candidate_first",
+        "target_plan": {
+          "active_aic": 32,
+          "active_aiv": 64
+        },
+        "query_tile": 1,
+        "kv_page": 512,
+        "candidate_block_size": 8,
+        "effective_candidate_limit": 2048,
+        "candidate_key_pairs": 16384,
+        "scored_query_key_pairs": 16384,
+        "tile_runs_per_request": [
+          [
+            32,
+            1
+          ]
+        ],
+        "query_groups": 1,
+        "candidate_tiles": 32,
+        "split_rows": 1,
+        "largest_row_shards": 32,
+        "pa_block_size": 128,
+        "table_pages": 8201,
+        "address_path": "scalar",
+        "scalar_lookup_cycles": 64.0,
+        "tile_service_cycles": {
+          "gather": 2265.4140625,
+          "publish": 217.4140625,
+          "cube_read": 434.828125,
+          "cube": 63.98090847457627,
+          "fix": 284.85,
+          "vector": 48.0
+        },
+        "interval_cycles": 3534.032258064516,
+        "resource_interval_cycles": 2265.4140625,
+        "interval_source": "DT consecutive MMAD_MX issues",
+        "stages_us": {
+          "startup": 4.76,
+          "critical_team": 2.195108228429689,
+          "merge": 3.4457120028409096,
+          "shared_service": 0.0
+        },
+        "io_us": 0.07824027777777778,
+        "l2_us": 0.1114112,
+        "unpriced": [
+          "AICPU metadata",
+          "prepare_indexer_indices",
+          "upstream Q quantization and folded K production"
+        ]
+      },
+      "logical_time_factor": 0.007522510344188469,
+      "cold_U_pct": 0.7522510344188469
+    },
+    {
+      "case": "shared_wave",
+      "sku": "Ascend950DT_9582",
+      "role": "DT previous holdout, PR new holdout",
+      "shape": [
+        1,
+        32,
+        32,
+        128,
+        1048576,
+        2048,
+        512
+      ],
+      "attrs": {
+        "implementation": "a5_qsli_projection",
+        "table_pages": 8201,
+        "pa_block_size": 128,
+        "candidate_limit": 2048
+      },
+      "latency_us": 75.85550127951188,
+      "stages": {
+        "implementation": "a5_qsli_projection",
+        "timing_qualification": "extrapolated",
+        "reason": "A5 QSLI source geometry; stage rates are proxies. Packed consumer device projection.",
+        "score_policy": "candidate_first",
+        "target_plan": {
+          "active_aic": 32,
+          "active_aiv": 64
+        },
+        "query_tile": 1,
+        "kv_page": 512,
+        "candidate_block_size": 8,
+        "effective_candidate_limit": 2048,
+        "candidate_key_pairs": 524176,
+        "scored_query_key_pairs": 524288,
+        "tile_runs_per_request": [
+          [
+            32,
+            32
+          ]
+        ],
+        "query_groups": 32,
+        "candidate_tiles": 1024,
+        "split_rows": 0,
+        "largest_row_shards": 1,
+        "pa_block_size": 128,
+        "table_pages": 8201,
+        "address_path": "scalar",
+        "scalar_lookup_cycles": 64.0,
+        "tile_service_cycles": {
+          "gather": 2265.4140625,
+          "publish": 217.4140625,
+          "cube_read": 434.828125,
+          "cube": 128.01112786127166,
+          "fix": 284.85,
+          "vector": 48.059733333333334
+        },
+        "interval_cycles": 3534.032258064516,
+        "resource_interval_cycles": 2265.4140625,
+        "interval_source": "DT consecutive MMAD_MX issues",
+        "stages_us": {
+          "startup": 5.192727272727272,
+          "critical_team": 70.66277400678462,
+          "merge": 0.0,
+          "shared_service": 0.0
+        },
+        "io_us": 9.01328,
+        "l2_us": 0.0,
+        "unpriced": [
+          "AICPU metadata",
+          "prepare_indexer_indices",
+          "upstream Q quantization and folded K production"
+        ]
+      },
+      "logical_time_factor": 0.11882170505719712,
+      "cold_U_pct": 11.882170505719712
+    },
+    {
+      "case": "shared_wave",
+      "sku": "Ascend950PR_957b",
+      "role": "DT previous holdout, PR new holdout",
+      "shape": [
+        1,
+        32,
+        32,
+        128,
+        1048576,
+        2048,
+        512
+      ],
+      "attrs": {
+        "implementation": "a5_qsli_projection",
+        "table_pages": 8201,
+        "pa_block_size": 128,
+        "candidate_limit": 2048
+      },
+      "latency_us": 87.55652395438975,
+      "stages": {
+        "implementation": "a5_qsli_projection",
+        "timing_qualification": "extrapolated",
+        "reason": "A5 QSLI source geometry; stage rates are proxies. Packed consumer device projection.",
+        "score_policy": "candidate_first",
+        "target_plan": {
+          "active_aic": 28,
+          "active_aiv": 56
+        },
+        "query_tile": 1,
+        "kv_page": 512,
+        "candidate_block_size": 8,
+        "effective_candidate_limit": 2048,
+        "candidate_key_pairs": 524176,
+        "scored_query_key_pairs": 524288,
+        "tile_runs_per_request": [
+          [
+            32,
+            32
+          ]
+        ],
+        "query_groups": 32,
+        "candidate_tiles": 1024,
+        "split_rows": 24,
+        "largest_row_shards": 2,
+        "pa_block_size": 128,
+        "table_pages": 8201,
+        "address_path": "scalar",
+        "scalar_lookup_cycles": 64.0,
+        "tile_service_cycles": {
+          "gather": 2265.4140625,
+          "publish": 217.4140625,
+          "cube_read": 434.828125,
+          "cube": 128.07458347653667,
+          "fix": 284.85,
+          "vector": 48.31537021276595
+        },
+        "interval_cycles": 3534.032258064516,
+        "resource_interval_cycles": 2265.4140625,
+        "interval_source": "DT consecutive MMAD_MX issues",
+        "stages_us": {
+          "startup": 5.192727272727272,
+          "critical_team": 81.91597269713635,
+          "merge": 0.4478239845261121,
+          "shared_service": 0.0
+        },
+        "io_us": 25.75222857142857,
+        "l2_us": 0.0,
+        "unpriced": [
+          "AICPU metadata",
+          "prepare_indexer_indices",
+          "upstream Q quantization and folded K production"
+        ]
+      },
+      "logical_time_factor": 0.2941211849027208,
+      "cold_U_pct": 29.412118490272082
+    },
+    {
+      "case": "shared_wave",
+      "sku": "Ascend970DT",
+      "role": "extrapolation only",
+      "shape": [
+        1,
+        32,
+        32,
+        128,
+        1048576,
+        2048,
+        512
+      ],
+      "attrs": {
+        "implementation": "a5_qsli_projection",
+        "table_pages": 8201,
+        "pa_block_size": 128,
+        "candidate_limit": 2048
+      },
+      "latency_us": 41.891351176981466,
+      "stages": {
+        "implementation": "a5_qsli_projection",
+        "timing_qualification": "extrapolated",
+        "reason": "A5 QSLI source geometry; stage rates are proxies. Packed consumer device projection.",
+        "score_policy": "candidate_first",
+        "target_plan": {
+          "active_aic": 60,
+          "active_aiv": 120
+        },
+        "query_tile": 1,
+        "kv_page": 512,
+        "candidate_block_size": 8,
+        "effective_candidate_limit": 2048,
+        "candidate_key_pairs": 524176,
+        "scored_query_key_pairs": 524288,
+        "tile_runs_per_request": [
+          [
+            32,
+            32
+          ]
+        ],
+        "query_groups": 32,
+        "candidate_tiles": 1024,
+        "split_rows": 32,
+        "largest_row_shards": 3,
+        "pa_block_size": 128,
+        "table_pages": 8201,
+        "address_path": "scalar",
+        "scalar_lookup_cycles": 64.0,
+        "tile_service_cycles": {
+          "gather": 2265.4140625,
+          "publish": 217.4140625,
+          "cube_read": 434.828125,
+          "cube": 63.98090847457627,
+          "fix": 284.85,
+          "vector": 48.0
+        },
+        "interval_cycles": 3534.032258064516,
+        "resource_interval_cycles": 2265.4140625,
+        "interval_source": "DT consecutive MMAD_MX issues",
+        "stages_us": {
+          "startup": 4.76,
+          "critical_team": 36.66942601718033,
+          "merge": 0.4619251598011364,
+          "shared_service": 0.0
+        },
+        "io_us": 2.503688888888889,
+        "l2_us": 3.5651584,
+        "unpriced": [
+          "AICPU metadata",
+          "prepare_indexer_indices",
+          "upstream Q quantization and folded K production"
+        ]
+      },
+      "logical_time_factor": 0.059766248128673885,
+      "cold_U_pct": 5.976624812867389
+    },
+    {
+      "case": "varied_two_waves",
+      "sku": "Ascend950DT_9582",
+      "role": "DT new holdout with row-dependent pages",
+      "shape": [
+        1,
+        64,
+        32,
+        128,
+        1048576,
+        2048,
+        512
+      ],
+      "attrs": {
+        "implementation": "a5_qsli_projection",
+        "table_pages": 8201,
+        "pa_block_size": 128,
+        "candidate_limit": 2048
+      },
+      "latency_us": 146.5182752862965,
+      "stages": {
+        "implementation": "a5_qsli_projection",
+        "timing_qualification": "extrapolated",
+        "reason": "A5 QSLI source geometry; stage rates are proxies. Packed consumer device projection.",
+        "score_policy": "candidate_first",
+        "target_plan": {
+          "active_aic": 32,
+          "active_aiv": 64
+        },
+        "query_tile": 1,
+        "kv_page": 512,
+        "candidate_block_size": 8,
+        "effective_candidate_limit": 2048,
+        "candidate_key_pairs": 1048352,
+        "scored_query_key_pairs": 1048576,
+        "tile_runs_per_request": [
+          [
+            32,
+            64
+          ]
+        ],
+        "query_groups": 64,
+        "candidate_tiles": 2048,
+        "split_rows": 0,
+        "largest_row_shards": 1,
+        "pa_block_size": 128,
+        "table_pages": 8201,
+        "address_path": "scalar",
+        "scalar_lookup_cycles": 64.0,
+        "tile_service_cycles": {
+          "gather": 2265.4140625,
+          "publish": 217.4140625,
+          "cube_read": 434.828125,
+          "cube": 128.01112786127166,
+          "fix": 284.85,
+          "vector": 48.059733333333334
+        },
+        "interval_cycles": 3534.032258064516,
+        "resource_interval_cycles": 2265.4140625,
+        "interval_source": "DT consecutive MMAD_MX issues",
+        "stages_us": {
+          "startup": 5.192727272727272,
+          "critical_team": 141.32554801356923,
+          "merge": 0.0,
+          "shared_service": 0.0
+        },
+        "io_us": 18.02656,
+        "l2_us": 0.0,
+        "unpriced": [
+          "AICPU metadata",
+          "prepare_indexer_indices",
+          "upstream Q quantization and folded K production"
+        ]
+      },
+      "logical_time_factor": 0.12303284327348331,
+      "cold_U_pct": 12.303284327348331
+    },
+    {
+      "case": "varied_two_waves",
+      "sku": "Ascend950PR_957b",
+      "role": "DT new holdout with row-dependent pages",
+      "shape": [
+        1,
+        64,
+        32,
+        128,
+        1048576,
+        2048,
+        512
+      ],
+      "attrs": {
+        "implementation": "a5_qsli_projection",
+        "table_pages": 8201,
+        "pa_block_size": 128,
+        "candidate_limit": 2048
+      },
+      "latency_us": 169.4724966515261,
+      "stages": {
+        "implementation": "a5_qsli_projection",
+        "timing_qualification": "extrapolated",
+        "reason": "A5 QSLI source geometry; stage rates are proxies. Packed consumer device projection.",
+        "score_policy": "candidate_first",
+        "target_plan": {
+          "active_aic": 28,
+          "active_aiv": 56
+        },
+        "query_tile": 1,
+        "kv_page": 512,
+        "candidate_block_size": 8,
+        "effective_candidate_limit": 2048,
+        "candidate_key_pairs": 1048352,
+        "scored_query_key_pairs": 1048576,
+        "tile_runs_per_request": [
+          [
+            32,
+            64
+          ]
+        ],
+        "query_groups": 64,
+        "candidate_tiles": 2048,
+        "split_rows": 24,
+        "largest_row_shards": 2,
+        "pa_block_size": 128,
+        "table_pages": 8201,
+        "address_path": "scalar",
+        "scalar_lookup_cycles": 64.0,
+        "tile_service_cycles": {
+          "gather": 2265.4140625,
+          "publish": 217.4140625,
+          "cube_read": 434.828125,
+          "cube": 128.07458347653667,
+          "fix": 284.85,
+          "vector": 48.31537021276595
+        },
+        "interval_cycles": 3534.032258064516,
+        "resource_interval_cycles": 2265.4140625,
+        "interval_source": "DT consecutive MMAD_MX issues",
+        "stages_us": {
+          "startup": 5.192727272727272,
+          "critical_team": 163.8319453942727,
+          "merge": 0.4478239845261121,
+          "shared_service": 0.0
+        },
+        "io_us": 51.50445714285714,
+        "l2_us": 0.0,
+        "unpriced": [
+          "AICPU metadata",
+          "prepare_indexer_indices",
+          "upstream Q quantization and folded K production"
+        ]
+      },
+      "logical_time_factor": 0.3039104170912286,
+      "cold_U_pct": 30.391041709122863
+    },
+    {
+      "case": "varied_two_waves",
+      "sku": "Ascend970DT",
+      "role": "extrapolation only",
+      "shape": [
+        1,
+        64,
+        32,
+        128,
+        1048576,
+        2048,
+        512
+      ],
+      "attrs": {
+        "implementation": "a5_qsli_projection",
+        "table_pages": 8201,
+        "pa_block_size": 128,
+        "candidate_limit": 2048
+      },
+      "latency_us": 76.1339119917827,
+      "stages": {
+        "implementation": "a5_qsli_projection",
+        "timing_qualification": "extrapolated",
+        "reason": "A5 QSLI source geometry; stage rates are proxies. Packed consumer device projection.",
+        "score_policy": "candidate_first",
+        "target_plan": {
+          "active_aic": 60,
+          "active_aiv": 120
+        },
+        "query_tile": 1,
+        "kv_page": 512,
+        "candidate_block_size": 8,
+        "effective_candidate_limit": 2048,
+        "candidate_key_pairs": 1048352,
+        "scored_query_key_pairs": 1048576,
+        "tile_runs_per_request": [
+          [
+            32,
+            64
+          ]
+        ],
+        "query_groups": 64,
+        "candidate_tiles": 2048,
+        "split_rows": 56,
+        "largest_row_shards": 2,
+        "pa_block_size": 128,
+        "table_pages": 8201,
+        "address_path": "scalar",
+        "scalar_lookup_cycles": 64.0,
+        "tile_service_cycles": {
+          "gather": 2265.4140625,
+          "publish": 217.4140625,
+          "cube_read": 434.828125,
+          "cube": 63.98090847457627,
+          "fix": 284.85,
+          "vector": 48.0
+        },
+        "interval_cycles": 3534.032258064516,
+        "resource_interval_cycles": 2265.4140625,
+        "interval_source": "DT consecutive MMAD_MX issues",
+        "stages_us": {
+          "startup": 4.76,
+          "critical_team": 70.96608617502133,
+          "merge": 0.4078258167613636,
+          "shared_service": 0.0
+        },
+        "io_us": 5.007377777777778,
+        "l2_us": 7.1303168,
+        "unpriced": [
+          "AICPU metadata",
+          "prepare_indexer_indices",
+          "upstream Q quantization and folded K production"
+        ]
+      },
+      "logical_time_factor": 0.06577066180860686,
+      "cold_U_pct": 6.577066180860686
+    },
+    {
+      "case": "last_chunk",
+      "sku": "Ascend950DT_9582",
+      "role": "extrapolation only",
+      "shape": [
+        1,
+        4096,
+        32,
+        128,
+        1048576,
+        2048,
+        512
+      ],
+      "attrs": {
+        "implementation": "a5_qsli_projection",
+        "table_pages": 8201,
+        "pa_block_size": 128,
+        "candidate_limit": 2048
+      },
+      "latency_us": 9050.027800141157,
+      "stages": {
+        "implementation": "a5_qsli_projection",
+        "timing_qualification": "extrapolated",
+        "reason": "A5 QSLI source geometry; stage rates are proxies. Packed consumer device projection.",
+        "score_policy": "candidate_first",
+        "target_plan": {
+          "active_aic": 32,
+          "active_aiv": 64
+        },
+        "query_tile": 1,
+        "kv_page": 512,
+        "candidate_block_size": 8,
+        "effective_candidate_limit": 2048,
+        "candidate_key_pairs": 67094528,
+        "scored_query_key_pairs": 67108864,
+        "tile_runs_per_request": [
+          [
+            32,
+            4096
+          ]
+        ],
+        "query_groups": 4096,
+        "candidate_tiles": 131072,
+        "split_rows": 0,
+        "largest_row_shards": 1,
+        "pa_block_size": 128,
+        "table_pages": 8201,
+        "address_path": "scalar",
+        "scalar_lookup_cycles": 64.0,
+        "tile_service_cycles": {
+          "gather": 2265.4140625,
+          "publish": 217.4140625,
+          "cube_read": 434.828125,
+          "cube": 128.01112786127166,
+          "fix": 284.85,
+          "vector": 48.059733333333334
+        },
+        "interval_cycles": 3534.032258064516,
+        "resource_interval_cycles": 2265.4140625,
+        "interval_source": "DT consecutive MMAD_MX issues",
+        "stages_us": {
+          "startup": 5.192727272727272,
+          "critical_team": 9044.83507286843,
+          "merge": 0.0,
+          "shared_service": 0.0
+        },
+        "io_us": 1153.69984,
+        "l2_us": 0.0,
+        "unpriced": [
+          "AICPU metadata",
+          "prepare_indexer_indices",
+          "upstream Q quantization and folded K production"
+        ]
+      },
+      "logical_time_factor": 0.1274802537050776,
+      "cold_U_pct": 12.74802537050776
+    },
+    {
+      "case": "last_chunk",
+      "sku": "Ascend950PR_957b",
+      "role": "extrapolation only",
+      "shape": [
+        1,
+        4096,
+        32,
+        128,
+        1048576,
+        2048,
+        512
+      ],
+      "attrs": {
+        "implementation": "a5_qsli_projection",
+        "table_pages": 8201,
+        "pa_block_size": 128,
+        "candidate_limit": 2048
+      },
+      "latency_us": 10346.638834582785,
+      "stages": {
+        "implementation": "a5_qsli_projection",
+        "timing_qualification": "extrapolated",
+        "reason": "A5 QSLI source geometry; stage rates are proxies. Packed consumer device projection.",
+        "score_policy": "candidate_first",
+        "target_plan": {
+          "active_aic": 28,
+          "active_aiv": 56
+        },
+        "query_tile": 1,
+        "kv_page": 512,
+        "candidate_block_size": 8,
+        "effective_candidate_limit": 2048,
+        "candidate_key_pairs": 67094528,
+        "scored_query_key_pairs": 67108864,
+        "tile_runs_per_request": [
+          [
+            32,
+            4096
+          ]
+        ],
+        "query_groups": 4096,
+        "candidate_tiles": 131072,
+        "split_rows": 24,
+        "largest_row_shards": 2,
+        "pa_block_size": 128,
+        "table_pages": 8201,
+        "address_path": "scalar",
+        "scalar_lookup_cycles": 64.0,
+        "tile_service_cycles": {
+          "gather": 2265.4140625,
+          "publish": 217.4140625,
+          "cube_read": 434.828125,
+          "cube": 128.07458347653667,
+          "fix": 284.85,
+          "vector": 48.31537021276595
+        },
+        "interval_cycles": 3534.032258064516,
+        "resource_interval_cycles": 2265.4140625,
+        "interval_source": "DT consecutive MMAD_MX issues",
+        "stages_us": {
+          "startup": 5.192727272727272,
+          "critical_team": 10340.998283325533,
+          "merge": 0.4478239845261121,
+          "shared_service": 0.0
+        },
+        "io_us": 3296.285257142857,
+        "l2_us": 0.0,
+        "unpriced": [
+          "AICPU metadata",
+          "prepare_indexer_indices",
+          "upstream Q quantization and folded K production"
+        ]
+      },
+      "logical_time_factor": 0.3185851279669003,
+      "cold_U_pct": 31.85851279669003
+    },
+    {
+      "case": "last_chunk",
+      "sku": "Ascend970DT",
+      "role": "extrapolation only",
+      "shape": [
+        1,
+        4096,
+        32,
+        128,
+        1048576,
+        2048,
+        512
+      ],
+      "attrs": {
+        "implementation": "a5_qsli_projection",
+        "table_pages": 8201,
+        "pa_block_size": 128,
+        "candidate_limit": 2048
+      },
+      "latency_us": 4425.555757930856,
+      "stages": {
+        "implementation": "a5_qsli_projection",
+        "timing_qualification": "extrapolated",
+        "reason": "A5 QSLI source geometry; stage rates are proxies. Packed consumer device projection.",
+        "score_policy": "candidate_first",
+        "target_plan": {
+          "active_aic": 60,
+          "active_aiv": 120
+        },
+        "query_tile": 1,
+        "kv_page": 512,
+        "candidate_block_size": 8,
+        "effective_candidate_limit": 2048,
+        "candidate_key_pairs": 67094528,
+        "scored_query_key_pairs": 67108864,
+        "tile_runs_per_request": [
+          [
+            32,
+            4096
+          ]
+        ],
+        "query_groups": 4096,
+        "candidate_tiles": 131072,
+        "split_rows": 56,
+        "largest_row_shards": 2,
+        "pa_block_size": 128,
+        "table_pages": 8201,
+        "address_path": "scalar",
+        "scalar_lookup_cycles": 64.0,
+        "tile_service_cycles": {
+          "gather": 2265.4140625,
+          "publish": 217.4140625,
+          "cube_read": 434.828125,
+          "cube": 63.98090847457627,
+          "fix": 284.85,
+          "vector": 48.0
+        },
+        "interval_cycles": 3534.032258064516,
+        "resource_interval_cycles": 2265.4140625,
+        "interval_source": "DT consecutive MMAD_MX issues",
+        "stages_us": {
+          "startup": 4.76,
+          "critical_team": 4420.387932114095,
+          "merge": 0.4078258167613636,
+          "shared_service": 0.0
+        },
+        "io_us": 320.4721777777778,
+        "l2_us": 456.3402752,
+        "unpriced": [
+          "AICPU metadata",
+          "prepare_indexer_indices",
+          "upstream Q quantization and folded K production"
+        ]
+      },
+      "logical_time_factor": 0.07241399618646151,
+      "cold_U_pct": 7.241399618646151
+    }
+  ]
+}

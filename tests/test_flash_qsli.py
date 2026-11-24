@@ -38,6 +38,28 @@ class FlashPackedCandidate(unittest.TestCase):
         self.assertEqual(estimate("candidate_filtered_indexer",s,opts,dtype="bf16").status,"unsupported")
         self.assertEqual(estimate("candidate_filtered_indexer",s,opts,dtype="mxfp4",timing_mode="calibrated").status,"unavailable")
 
+    def test_source_ld_streaming_carry_boundaries(self):
+        chip = load_chip()
+        shape = (1,1,32,128,1 << 20,2048,512)
+        for parts in (2,7,8,14,15,21,22,28,29,32):
+            with self.subTest(parts=parts):
+                _, _, plan = price(shape,chip,candidate_limit=parts*64)
+                self.assertEqual(plan["largest_row_shards"],parts)
+                passes = len(range(0,parts,7))
+                self.assertEqual(plan["merge_passes"],passes)
+                self.assertEqual(plan["merge_scored_entries"],512*(parts+passes-1))
+                self.assertAlmostEqual(sum(plan["merge_service_cycles"].values())/1650,
+                                       plan["stages_us"]["merge"])
+
+    def test_compiled_metadata_remaining_work_and_no_ld(self):
+        shape = (1,32,32,128,1 << 20,2048,512)
+        _, _, pr = price(shape,load_chip("Ascend950PR_957b"))
+        self.assertEqual((pr["split_rows"],pr["largest_row_shards"],pr["merge_passes"]),(27,2,1))
+        _, _, dt = price(shape,load_chip())
+        self.assertEqual(dt["split_rows"],0)
+        self.assertEqual(sum(dt["merge_service_cycles"].values()),0)
+        self.assertEqual(dt["merge_scored_entries"],0)
+
     def test_loop_price_changes_only_between_tiles_in_a_fragment(self):
         chip = load_chip()
         opts = {"table_pages":8201}

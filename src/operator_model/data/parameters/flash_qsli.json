@@ -2,5 +2,15 @@
   "wide_table_team_issue_span_cycles": 109555,
   "adjacent_issues": 31,
   "source": "950DT, official PA_BBND QSLI provider, one active AIC with two AIVs, 32 consecutive 512-key tiles, PA table width 8201. Span from first to last MMAD_MX issue. calibration/candidate_indexer/qsli-one-team.json",
-  "scope": "Effective team loop issue interval in cycles including gather, ring and dependencies. Used only between tiles of the same row fragment on the scalar address path. Not a memory-load latency. Other SKUs inherit this control rate subject to their resource floors."
+  "scope": "Effective team loop issue interval in cycles including gather, ring and dependencies. Used only between tiles of the same row fragment on the scalar address path. Not a memory-load latency. Other SKUs inherit this control rate subject to their resource floors.",
+  "split_row": {
+    "startup_control_cycles": 11064.844,
+    "one_tile_score_drain_cycles": 2862.0,
+    "barrier_setup_cycles": 1129.0,
+    "read_latency_cycles": 228.43,
+    "select_fixed_cycles": 1427.0,
+    "select_cycles_per_256": 16.2,
+    "write_latency_cycles": 151.633
+  },
+  "split_row_source": "Pooled 950DT + PR compiled QSLI stage landmarks, not window regression. See calibration/candidate_indexer/v112_merge.json and its trace decoder. Durations in cycles, input count per radix group 256, full partial list top512."
 }

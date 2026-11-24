@@ -1,0 +1,193 @@
+{
+  "role": "development replay only; two SKUs with two-way splits plus saturated split rows; no Q32/Q64 holdout input",
+  "units": "CA cycles at 1.65GHz; read/select/write measured at the FD owner AIV",
+  "device_sha256": "b3a854470fe46368ac752ccccd7ed0bb7ffb087b658373c2ac97bfce027ae4ff",
+  "records": {
+    "Ascend950DT_9582-static": {
+      "parts": 2,
+      "wide_table": false,
+      "first_mmad_issue": 11244,
+      "startup_residual": 10374.34375,
+      "last_mmad_to_local_write": 2875,
+      "local_write_to_merge": 1130,
+      "passes": [
+        {
+          "lists": 2,
+          "scored_items": 1024,
+          "start": 25593,
+          "read": 239,
+          "select": 1497,
+          "write": 362,
+          "end": 27691
+        }
+      ]
+    },
+    "Ascend950DT_9582-wide": {
+      "parts": 2,
+      "wide_table": true,
+      "first_mmad_issue": 12265,
+      "startup_residual": 9347.34375,
+      "last_mmad_to_local_write": 2878,
+      "local_write_to_merge": 1128,
+      "passes": [
+        {
+          "lists": 2,
+          "scored_items": 1024,
+          "start": 26154,
+          "read": 224,
+          "select": 1571,
+          "write": 334,
+          "end": 28283
+        }
+      ]
+    },
+    "Ascend950DT_9582-ipc": {
+      "parts": 32,
+      "wide_table": true,
+      "first_mmad_issue": 16466,
+      "startup_residual": 13548.34375,
+      "last_mmad_to_local_write": 2849,
+      "local_write_to_merge": 1488,
+      "passes": [
+        {
+          "lists": 7,
+          "scored_items": 3584,
+          "start": 33671,
+          "read": 497,
+          "select": 1666,
+          "write": 357,
+          "end": 36191
+        },
+        {
+          "lists": 7,
+          "scored_items": 4096,
+          "start": 36196,
+          "read": 506,
+          "select": 1677,
+          "write": 190,
+          "end": 38569
+        },
+        {
+          "lists": 7,
+          "scored_items": 4096,
+          "start": 38574,
+          "read": 919,
+          "select": 1687,
+          "write": 181,
+          "end": 41361
+        },
+        {
+          "lists": 7,
+          "scored_items": 4096,
+          "start": 41366,
+          "read": 911,
+          "select": 1676,
+          "write": 179,
+          "end": 44132
+        },
+        {
+          "lists": 4,
+          "scored_items": 2560,
+          "start": 44137,
+          "read": 663,
+          "select": 1299,
+          "write": 179,
+          "end": 46278
+        }
+      ]
+    },
+    "Ascend950PR_957b-static": {
+      "parts": 2,
+      "wide_table": false,
+      "first_mmad_issue": 12625,
+      "startup_residual": 11755.34375,
+      "last_mmad_to_local_write": 2845,
+      "local_write_to_merge": 1066,
+      "passes": [
+        {
+          "lists": 2,
+          "scored_items": 1024,
+          "start": 24720,
+          "read": 226,
+          "select": 1329,
+          "write": 344,
+          "end": 26619
+        }
+      ]
+    },
+    "Ascend950PR_957b-wide": {
+      "parts": 2,
+      "wide_table": true,
+      "first_mmad_issue": 12146,
+      "startup_residual": 9228.34375,
+      "last_mmad_to_local_write": 2807,
+      "local_write_to_merge": 1065,
+      "passes": [
+        {
+          "lists": 2,
+          "scored_items": 1024,
+          "start": 24999,
+          "read": 225,
+          "select": 1495,
+          "write": 343,
+          "end": 27062
+        }
+      ]
+    },
+    "Ascend950PR_957b-ipc": {
+      "parts": 28,
+      "wide_table": true,
+      "first_mmad_issue": 15671,
+      "startup_residual": 12753.34375,
+      "last_mmad_to_local_write": 2942,
+      "local_write_to_merge": 1203,
+      "passes": [
+        {
+          "lists": 7,
+          "scored_items": 3584,
+          "start": 32446,
+          "read": 498,
+          "select": 1664,
+          "write": 345,
+          "end": 34953
+        },
+        {
+          "lists": 7,
+          "scored_items": 4096,
+          "start": 34958,
+          "read": 518,
+          "select": 1677,
+          "write": 172,
+          "end": 37325
+        },
+        {
+          "lists": 7,
+          "scored_items": 4096,
+          "start": 37330,
+          "read": 948,
+          "select": 1688,
+          "write": 170,
+          "end": 40136
+        },
+        {
+          "lists": 7,
+          "scored_items": 4096,
+          "start": 40141,
+          "read": 956,
+          "select": 1700,
+          "write": 171,
+          "end": 42968
+        }
+      ]
+    }
+  },
+  "parameters": {
+    "startup_control_cycles": 11064.844,
+    "one_tile_score_drain_cycles": 2862.0,
+    "barrier_setup_cycles": 1129.0,
+    "read_latency_cycles": 228.43,
+    "select_fixed_cycles": 1427.0,
+    "select_cycles_per_256": 16.2,
+    "write_latency_cycles": 151.633
+  }
+}

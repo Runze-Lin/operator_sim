@@ -1,0 +1,12 @@
+{
+  "scope": "Released A5 quant_sparse_lightning_indexer packed consumer kernel with static metadata from its own host reference. Compare against v1.11 on identical inputs. No CA acquisition for the 33 request graphs.",
+  "training_evidence": ["long-row-results.json", "fused-qsli.json", "qsli-one-team.json", "retained per-core traces and matching original launch logs"],
+  "holdouts": [
+    {"sku":"Ascend950PR_957b","Q":32,"candidate_pages":"Identical to the existing DT shared-page Q32 fixture; the source computes metadata with the number of workers exposed on this run.","checks":"16384 CPU-verified global top-k indices; all physical core traces; logical splits, active workers and observed MX instructions"},
+    {"sku":"Ascend950DT_9582","Q":64,"candidate_pages":"Each row selects a distinct 256-page set including the causal tail. Adjacent rows overlap on 208 pages by construction. Fully backed 1Mi KV table, PA=128.","checks":"32768 CPU-verified global top-k indices; page sets, intersection and physical bytes; all physical core traces and MMAD counts"}
+  ],
+  "common":{"batch":1,"index_heads":32,"dim":128,"context":1048576,"populated_candidate_blocks":2048,"keys_per_block":8,"topk":512,"pa_block":128,"allocated_table_columns":8201,"Q_and_K":"MXFP4 E2M1 with E8M0 scales","weights":"FP32"},
+  "scope_and_budget":"One release AOT launch per holdout, only after the versioned model and predictions are frozen. Offline watchdogs including export PR 25 minutes, DT 38 minutes. Never treat dispatch-only wall, a truncated trace or unverified golden as a qualified complete device window.",
+  "end_to_end":"Reprice all 33 unchanged request graphs for model changes. Independently replay the 4096-row last chunk with the observed DT Q64 price repeated 64 times, and separately with the model startup proxy credited between repetitions. Compare with the original Q32 replay. Treat these as locality and scheduling scenarios, not confidence bounds; do not fit a new constant to either holdout.",
+  "exclusions":"AICPU metadata cost, caller index preparation, production cache placement and the full 4096-row kernel are unmeasured. No additional performance parameters identified from holdouts."
+}
