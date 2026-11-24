@@ -16,10 +16,9 @@
   "parallel_row_issue": {
     "first_disperse_cycles": 1737.983870967742,
     "first_aligned_cycles": 3645.967741935484,
-    "carry_disperse_cycles": 1343.6129032258063,
-    "sustained_aligned_cycles": 2534.0,
+    "prefetched_row_cycles": 1343.6129032258063,
     "same_document_handoff_cycles": 5334.75,
     "first_control_cycles": 14536.34375
   },
-  "parallel_row_issue_source": "v113_mechanism.json, per-AIC MMAD intervals in device cycles. DT shared full first row; DT dispersed first and carried rows. Sustained aligned proxy is the last four (ring-depth) intervals of DT shared row. Handoff averages the DT/PR trace medians. First control is the median of three earliest native MMAD offsets less the modeled initial gather, publish and Cube read. Causal contributions of cache and bank conflicts are unidentified."
+  "parallel_row_issue_source": "v113_mechanism.json, per-AIC MMAD intervals in device cycles. First-fragment endpoints use the original DT shared and dispersed first rows. The prefetched same-document row interval uses only the original dispersed DT second row and is subject to target resource floors. Handoff averages the DT/PR trace medians. First control is the median of three earliest native MMAD offsets less the modeled initial gather, publish and Cube read. Causal contributions of cache and bank conflicts are unidentified."
 }

@@ -244,8 +244,9 @@ def price(shape, chip, *, pa_block_size=128, table_pages=None, scalar_lookup_cyc
         floor = max(publish,cube_read,cube,fix,vector)
         first_interval = max(floor, (1-pressure)*wave_rates["first_disperse_cycles"]
                              + pressure*wave_rates["first_aligned_cycles"])
-        carry_interval = max(floor, (1-pressure)*wave_rates["carry_disperse_cycles"]
-                             + pressure*wave_rates["sustained_aligned_cycles"])
+        # A team starts the following row's gather before its previous local
+        # select. Consecutive MMADs after that handoff use the primed-row rate.
+        carry_interval = max(floor,wave_rates["prefetched_row_cycles"])
         interval = first_interval
         handoff = max(gather+publish+cube_read,
                       (hist_fixed+2*hist_per256)*vec_scale, wave_rates["same_document_handoff_cycles"])
