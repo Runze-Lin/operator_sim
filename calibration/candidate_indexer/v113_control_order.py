@@ -22,7 +22,12 @@ def main():
         for team in team_ranges(md,ROWS):
             shards = tiled[team['first_tile']:team['end_tile_exclusive']]
             digests.append([sha256(shards[:,start:start+32].flatten().astype('<u4').tobytes()).hexdigest() for start in (0,32)])
-        output[arm] = dict(candidate_sha256=checksum(ids),ordered_lane_sha256_by_logical_team=digests)
+        # Native _copy_pa_pair accepts forward gaps whose encoded spacing fits 39 bits.
+        pairs = physical.reshape(-1,2).astype('int64')
+        gap = (pairs[:,1]-pairs[:,0])*544
+        double = int(np.count_nonzero((gap>=544) & (gap-544<=2**39-1)))
+        output[arm] = dict(candidate_sha256=checksum(ids),ordered_lane_sha256_by_logical_team=digests,
+                           source_expected_descriptors_by_burst_count={'1':physical.size-2*double,'2':double})
     (base/'v113_control_order.json').write_text(json.dumps(output,indent=2)+'\n')
 
 

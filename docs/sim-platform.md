@@ -62,6 +62,22 @@ result = run_inference(
 | 系统已有 Roofline 预测 | 本次 950DT 预置的 Cube、Vector 和片外带宽利用率分别是 0.6、0.6、0.8。通用基类取受这些效率折减后的计算、访存、通信时间的最大值，再加设定的首尾开销。特定算子可采用专门公式。这个预测可高于或低于精细模型。 |
 | 误差表的逻辑系数 U | 用逻辑张量字节和有用算量折算的参考时间除以精细预测。四个实际窗口的复算展示了小 shape、模型低估和片外流量口径对它的影响。[单算子误差、逻辑系数与物理下界](error-analysis.md#为什么有些-u-很小有些超过-100) |
 
+### 传入 Flash 的候选页顺序
+
+系统图通常只有形状、精度和并行切分。选择 MXFP4 候选优先路径时，模型利用这些信息计算每个团队的工作量和起始 tile。若能采样同一请求中各行的候选 ID 与 PA 页表，可在采样阶段调用 `summarize_candidate_layout`（先去掉 padding），把结果中的 `candidate_order_overlap` 传给后端。这个数随工作负载和页布局变化；要比较不同情景，为各次重放分别构造后端。配置会进入报价缓存键。
+
+```python
+from operator_model.sim_backend import FullOperatorSimBackend
+
+backend = FullOperatorSimBackend(
+    candidate_implementation="a5_qsli_projection",
+    candidate_options={"pa_block_size": 128, "table_pages": 8201,
+                       "candidate_order_overlap": 0.5},
+)
+```
+
+上例 8201 为 1Mi 实验预留的页表列数，用于选择寻址路径。填入实际部署的页表宽度。顺序未知时可省略比例，默认取 0.5；显式 0 与 1 给出两种页序情景。predicted device time 和离线统计候选地址所花的主机时间分别计量。[候选统计与逐步算例](examples/flash-a5-qsli.md) · [33 组的系统比较](context-sweep.md)
+
 ## 重放 27 个任务
 
 同一比较矩阵使用原预置、128 Ki 历史、目标输出 1,024 tokens、8 个候选、接受 6 个候选，每轮按 7 个输出 token 归一。TP8/EP8、TP8/EP32、DEP64 的 (TP,DP,EP) 分别为 (8,1,8)、(8,4,32)、(1,64,64)。每组单卡 batch 取 1、16、64。复算器逐节点检查调用、原价和完整路由，逐任务核对显存峰值与图指纹，再生成 27 组对比和所有 shape 明细。[v1.9.1 的对照与复算命令](roofline-audit.md) · [原始 27 组账单](system-full-comparison.md) · [v1.8 混合后端归档比较](system-candidate-comparison.md)
