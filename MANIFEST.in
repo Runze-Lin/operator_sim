@@ -1,9 +1,12 @@
 include README.md CONTRIBUTING.md
 recursive-include src/operator_model *.py *.json
 recursive-include docs *.md *.png *.svg *.json *.csv
+include docs/operator-sim-report-zh.pdf docs/paper/print.css
 recursive-include examples *.md *.py *.json
 recursive-include calibration *.md *.py *.json *.json.gz *.jsonl *.cpp *.hpp *.svg *.png
-include calibration/reference/system-*.csv
+recursive-include calibration/reference *.csv *.csv.gz
+include calibration/candidate_indexer/*.csv
+include results/v2.0/changes.md
 include integrations/sim-platform/0.1.0-preview.1.patch
 recursive-include tests *.py
 global-exclude __pycache__ *.py[cod]
