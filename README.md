@@ -2,7 +2,7 @@
 
 **operator-sim** 是面向系统仿真的昇腾算子建模后端。输入一张卡实际执行的算子、shape、dtype 和芯片配置，返回设备耗时、Cube / Vector 工作量、逻辑访存量与活跃核数。能匹配库实现的路径用 CA 校准；捕获图中的研究算子按明确的分核、分块和流水推演。在线预测只依赖 Python 3.10+ 标准库，可在没有昇腾硬件和 CANN 的系统仿真主机使用。
 
-[中文技术报告（PDF）](docs/operator-sim-report-zh.pdf) 汇总建模原理、逐核算例、双芯片误差、970DT 外推假设和 33 组端到端结果。
+[论文版技术报告（PDF）](docs/operator-sim-report-zh.pdf) 从指令时标推导阶段价格与整窗，给出 950DT/PR 的验证、970DT 外推的敏感性和 33 组系统结果。[分章正文与复算指南](docs/paper/README.md)
 
 ## 安装与调用
 
