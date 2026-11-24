@@ -16,11 +16,12 @@ def summarize_candidate_layout(rows, *, pa_block_size=128, page_table=None):
         raise ValueError("pa_block_size must be a positive multiple of eight")
     blocks_per_page = page_size // 8
     rank_counts = []
-    rank_totals = []
+    row_lengths = Counter()
     matching = comparable = row_count = candidate_count = 0
     distinct_pages = set()
     for row in rows:
         row_count += 1
+        length = 0
         for rank, value in enumerate(row):
             block = index(value)
             if block < 0:
@@ -33,15 +34,24 @@ def summarize_candidate_layout(rows, *, pa_block_size=128, page_table=None):
                 if page < 0:
                     raise ValueError("selected page has no physical mapping")
             if rank == len(rank_counts):
-                rank_counts.append(Counter())
-                rank_totals.append(0)
+                rank_counts.append({})
             record = page * blocks_per_page + offset
-            matching += rank_counts[rank][record]
-            comparable += rank_totals[rank]
-            rank_counts[rank][record] += 1
-            rank_totals[rank] += 1
-            candidate_count += 1
+            counts = rank_counts[rank]
+            previous = counts.get(record, 0)
+            matching += previous
+            counts[record] = previous + 1
+            length = rank + 1
             distinct_pages.add(page)
+        row_lengths[length] += 1
+        candidate_count += length
+    # Across each interval of ranks the same rows are valid. Every two
+    # active rows contribute exactly one comparable pair per rank.
+    active = row_count
+    first = 0
+    for stop, ending in sorted(row_lengths.items()):
+        comparable += (stop - first) * active * (active - 1) // 2
+        active -= ending
+        first = stop
     return dict(candidate_order_overlap=matching / comparable if comparable else None,
                 matching_pairs=matching, comparable_pairs=comparable,
                 queries=row_count, valid_candidates=candidate_count,

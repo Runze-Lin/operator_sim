@@ -19,6 +19,16 @@ class CandidateLayoutTest(unittest.TestCase):
         self.assertEqual(result["candidate_order_overlap"], 0.5)
         self.assertEqual(result["distinct_pages"], 2)
 
+    def test_multiple_length_boundaries_with_empty_and_repeated_rows(self):
+        rows = [[], [2, 7, 8], [2], [], [2, 6, 8], [2, 7]]
+        result = summarize_candidate_layout(map(iter, rows))
+        pairs = [(a, b) for i, row in enumerate(rows) for other in rows[:i]
+                 for a, b in zip(row, other)]
+        self.assertEqual(result["comparable_pairs"], len(pairs))
+        self.assertEqual(result["matching_pairs"], sum(a == b for a, b in pairs))
+        self.assertEqual(result["valid_candidates"], sum(map(len, rows)))
+        self.assertEqual(result["queries"], len(rows))
+
     def test_no_comparable_pair_and_invalid_inputs(self):
         self.assertIsNone(summarize_candidate_layout([[], [3]])["candidate_order_overlap"])
         for ids, attrs in (([[-1]], {}), ([[16]], {"page_table": [0]}),

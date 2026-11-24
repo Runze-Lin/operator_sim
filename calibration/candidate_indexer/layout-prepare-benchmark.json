@@ -1,0 +1,24 @@
+{
+  "scope": "CPU-only prepare-time microbenchmark. One process, Python 3.12, 1 warmup then 10 measured calls per method per layout, alternating order. Generated inputs and page table outside timed section. 64 queries; actual 950 device timing unchanged.",
+  "baseline_commit": "75fd7ff",
+  "shape": "rows i=0..63, length 2048 for shared/rotated or 2048-13*i for ragged",
+  "formula": "block=(37*j+offset)%2048; offset=0 for shared and 19*i otherwise; PA128 table maps page p to (31*p+1)%128",
+  "parity": "300 seeded random ragged inputs, each with and without physical page table, full return dictionary equal",
+  "rows": [
+    {
+      "layout": "同序",
+      "baseline_median_ms": 111.918785,
+      "optimized_median_ms": 74.817445
+    },
+    {
+      "layout": "错序",
+      "baseline_median_ms": 149.8484,
+      "optimized_median_ms": 76.81839500000001
+    },
+    {
+      "layout": "不等长",
+      "baseline_median_ms": 121.94847999999999,
+      "optimized_median_ms": 63.438505
+    }
+  ]
+}

@@ -60,7 +60,7 @@ attrs = {"implementation": "a5_qsli_projection", "table_pages": 8201,
          "candidate_order_overlap": layout["candidate_order_overlap"]}
 ```
 
-只有一个有效 query 时，比例无定义，返回 `None`。不传 PA 表时返回逻辑地址口径；有物理别名的部署应带上 PA 映射。离线统计工作量与有效候选数成正比。用 64 行×2048 个逻辑块、8 次独立提取在本机复核，候选统计中位 159 ms。这是采样阶段的离线成本。线上 `estimate` 只接收一个数，按少量 tile 分段和活动核计算。[公开预测入口与实现](../../src/operator_model/operators/attention/flash_sparse.py) · [离线统计实现](../../src/operator_model/operators/attention/candidate_layout.py)
+只有一个有效 query 时，比例无定义，返回 `None`。不传 PA 表时返回逻辑地址口径；有物理别名的部署应带上 PA 映射。离线统计工作量与有效候选数成正比。优化后的离线统计按有效行数变化分段累计可比较行对。64 行、每行 2048 个候选块并查 PA 表时，同序和错序样例的提取中位分别为 74.82、76.82 ms。[新旧 CPU 同集对照](../../calibration/candidate_indexer/layout-prepare-benchmark.json)。线上 `estimate` 只接收一个数，按少量 tile 分段和活动核计算。[公开预测入口与实现](../../src/operator_model/operators/attention/flash_sparse.py) · [离线统计实现](../../src/operator_model/operators/attention/candidate_layout.py)
 
 ## 旧实验如何定位循环问题
 
