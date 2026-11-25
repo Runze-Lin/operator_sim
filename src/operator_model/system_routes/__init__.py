@@ -6,6 +6,7 @@ from . import communication
 
 VIEWS = frozenset({
     "aten.view.default", "aten.unsqueeze.default", "aten.expand.default", "aten.select.int",
+    "aten.split.Tensor", "inference::qkv_parallel_layout", "inference::reuse_sparse_indices",
     "aten.alias.default", "aten.transpose.int", "aten.slice.Tensor", "aten.permute.default",
     "aten._unsafe_view.default", "aten.squeeze.dim", "aten.t.default", "aten.split_with_sizes.default",
 })
@@ -30,9 +31,14 @@ def estimate_full_features(features, *, chip, fabric=None, candidate_implementat
 
 def _full(features, chip, fabric, candidate_implementation, candidate_options, vector_model):
     """Price a complete operator or return an explicit unsupported result for a new contract."""
-    from . import attention, cube, prefill, vector
+    from . import attention, catalog_vector, cube, prefill, vector
     chip = load_chip(chip)
     name = features.raw_name
+    if name in {"inference::qkv_parallel_layout", "inference::reuse_sparse_indices"}:
+        if not (len(features.inputs)==len(features.outputs)==1 and
+                all(getattr(features.inputs[0], k, None)==getattr(features.outputs[0], k, None)
+                    for k in ("shape","stride","dtype","device","storage_offset"))):
+            return NodeEstimate(None, "unsupported", reason="Expected an identity view of the local buffer")
     if name in STRUCTURAL:
         kind = "allocator_reservation" if name == "aten.empty.memory_format" else "strided_view"
         return NodeEstimate(kind, "structural", 0., "Metadata only in the captured device graph.",
@@ -44,7 +50,7 @@ def _full(features, chip, fabric, candidate_implementation, candidate_options, v
                                candidate_implementation=candidate_implementation, candidate_options=candidate_options, vector_model=vector_model)
     if strict.latency_us is not None:
         return strict
-    for family in (attention, cube, prefill, vector):
+    for family in (attention, cube, prefill, vector, catalog_vector):
         if name in family.NAMES:
             devices = {t.device for t in (*features.inputs, *features.outputs)}
             if len(devices) != 1 or any(d.split(":")[0] not in ("meta", "npu", "privateuseone") for d in devices):

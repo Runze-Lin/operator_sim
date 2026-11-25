@@ -13,6 +13,8 @@ from operator_model.system_adapter import (
 from operator_model.workload import _counts
 
 NAMES = frozenset({
+    'inference::quant_matmul', 'aten.bmm.default', 'inference::quantized_transpose_batched_matmul',
+    'npu::npu_transpose_batchmatmul', 'inference::fused_grouped_mlp',
     'aten.mm.default', 'aten.addmm.default', 'npu::npu_quant_matmul',
     'npu::npu_grouped_matmul', 'inference::mixed_precision_matmul',
     'inference::matmul_rhs_transposed', 'inference::quantized_batched_matmul',
@@ -118,7 +120,7 @@ def _vector_work(mode, classes):
     if mode == 'token_mx':
         return {'fp8_e4m3fn': classes['unpack_weight'],
                 'fp32': classes['token_rescale'] + classes['output_cast']}
-    dtype = 'bf16' if mode == 'batch_mx' else 'fp32'
+    dtype = 'bf16' if mode in ('batch_mx', 'batch_row8') else 'fp32'
     return {dtype: sum(classes.values())} if classes else {}
 
 
@@ -127,7 +129,7 @@ def _schedule(rows, n, k, mode, reads, writes, classes, chip, add_bias):
     groups, total = len(rows), sum(rows)
     f = chip.frequency_ghz
     cores, vec = chip.cube_cores, chip.vector_cores
-    bits = '32' if mode == 'dense32' else ('8' if mode == 'token_mx' else '16')
+    bits = '4' if mode == 'native4' else '32' if mode == 'dense32' else ('8' if mode in ('token_mx','native8') else '16')
     rates = chip.cube_tops
     rate16 = (rates['16'] or 432) * 1000 / (cores*f)
     if mode == 'dense32':
@@ -151,12 +153,12 @@ def _schedule(rows, n, k, mode, reads, writes, classes, chip, add_bias):
         bn = min(128,max(16,_align(ceil(n/max(1,cores//mtiles)),16)))
     bm = min(bm, max(16, (l0c//(4*bn*16))*16))
     jobs = sum(ceil(r/bm) for r in rows)*ceil(n/bn)
-    element = int(bits)//8
+    element = 0.5 if bits == "4" else int(bits)//8
     k_align = 16 if mode == 'dense32' else 32
     limits = [l0a//(2*bm*element),l0b//(2*bn*element),l1//(2*(bm+bn)*element)]
-    if mode in ('batch_mx','token_mx'):
+    if mode in ('batch_mx','batch_row8','token_mx'):
         limits.append(ub//(4*(bm+bn)*element))
-    page_k = min(k,max(k_align,(min(limits)//k_align)*k_align))
+    page_k = int(min(k,max(k_align,(min(limits)//k_align)*k_align)))
     split = min(max(1, cores//jobs),max(1,k//k_align)) if mode in ('dense32','router16') else 1
     active = min(cores,jobs*split)
     waves = ceil(jobs*split/cores)
@@ -174,7 +176,7 @@ def _schedule(rows, n, k, mode, reads, writes, classes, chip, add_bias):
     if mode == 'token_mx':
         # Distinct output M tiles may repeat unpacking of the W panel in UB.
         issued['fp8_e4m3fn'] += (sum(ceil(r/bm) for r in rows)-groups)*n*k
-    if mode == 'batch_mx':
+    if mode in ('batch_mx', 'batch_row8'):
         repeats = (ceil(n/bn)-1)*total*k + (sum(ceil(r/bm) for r in rows)-groups)*n*k
         issued['bf16'] += 2*repeats
     vector_cycles = {}
@@ -187,7 +189,7 @@ def _schedule(rows, n, k, mode, reads, writes, classes, chip, add_bias):
         count=issued[precision]/vactive
         if mode=='token_mx' and precision=='fp8_e4m3fn':
             recipe=dict(load=count,permute=count,convert=count,store=count)
-        elif mode=='batch_mx':
+        elif mode in ('batch_mx','batch_row8'):
             recipe=dict(load=count,permute=count/2,convert=count/2,arithmetic=count/2,store=count/2)
         elif mode=='token_mx':
             recipe=dict(load=count,arithmetic=count/2,convert=count/2,store=count/2)
@@ -203,7 +205,7 @@ def _schedule(rows, n, k, mode, reads, writes, classes, chip, add_bias):
     else:
         front, drain = 1794,520  # measured BF16 transposed first MMAD/retire
     transfer = max(hbm,panel_cycles)
-    if mode in ('batch_mx','token_mx'):
+    if mode in ('batch_mx','batch_row8','token_mx'):
         # Dependency chain for the first panel; the next panels double buffer.
         steps = max(1,pages*waves)
         stages = (transfer, vector, cube)
@@ -252,9 +254,29 @@ def _schedule(rows, n, k, mode, reads, writes, classes, chip, add_bias):
 
 
 def price(features, chip):
+    from . import catalog_cube
     try:
         sem = _fields(dict(features.attributes).get('semantic', ()))
-        if features.raw_name in (*_NATIVES, _TRANS):
+        if features.raw_name == 'inference::quant_matmul' or (features.raw_name=='npu::npu_grouped_matmul' and sem.get('weight_precision')=='fp8'):
+            return catalog_cube.token_channel(features,sem,chip)
+        if features.raw_name=='npu::npu_grouped_matmul' and sem.get('activation_precision')=='fp4' and sem.get('gemm_grouping')=='output_head_groups':
+            return catalog_cube.head_group_mx(features,sem,chip)
+        if features.raw_name == 'inference::fused_grouped_mlp':
+            return catalog_cube.grouped_mlp(features, sem, chip)
+        if features.raw_name == 'npu::npu_quant_matmul' and sem.get('padding') not in (None, (0,0)):
+            return catalog_cube.padded_mx(features, sem, chip)
+        if features.raw_name == 'aten.mm.default' and features.inputs and features.inputs[0].shape[:1] == (0,):
+            _arity(features, 2, 1)
+            a,w = features.inputs
+            _require(len(a.shape)==2 and len(w.shape)==2 and a.shape[1]==w.shape[0], 'Invalid empty MM')
+            _layout(features.outputs[0], _dtype(a), (0,w.shape[1]))
+            _require(_dtype(a)==_dtype(w)==BF16, 'Expected BF16 empty product')
+            return NodeEstimate('matmul/empty_rows','structural',0.,'No local output rows; assumed empty dispatch.',_counts('bf16',0,0))
+        if features.raw_name in ('aten.bmm.default', 'npu::npu_transpose_batchmatmul',
+                                 'inference::quantized_transpose_batched_matmul') or (
+                features.raw_name == _BATCH and sem.get('compute_precision') == 'fp8'):
+            parsed = catalog_cube.capture_bmm(features, sem)
+        elif features.raw_name in (*_NATIVES, _TRANS):
             parsed = _dense(features, sem)
         elif features.raw_name == _BATCH:
             parsed = _batched(features, sem)
@@ -266,13 +288,15 @@ def price(features, chip):
         t,schedule = _schedule(*parsed,chip,features.raw_name == 'aten.addmm.default')
     except _Mismatch as err:
         return NodeEstimate(None,'unsupported',reason=str(err))
-    dtype = {'dense32':'fp32','dense16':'bf16','router16':'bf16','token_mx':'fp8_e4m3fn','batch_mx':'bf16'}[mode]
+    dtype = {'dense32':'fp32','dense16':'bf16','router16':'bf16','token_mx':'fp8_e4m3fn','batch_mx':'bf16','batch16':'bf16','batch_row8':'bf16'}[mode]
     contract = {'aten.mm.default':'matmul/transposed_weight_'+dtype,
                 'aten.addmm.default':'addmm/transposed_weight_fp32',
                 _TRANS:'matmul/router_bf16_to_fp32',
                 _BATCH:'batch_matmul/last_axis_mxfp4_to_bf16'}.get(
                     features.raw_name,'grouped_matmul/token_fp8_mxfp4' if len(rows)>1 or
                     features.raw_name=='npu::npu_grouped_matmul' else 'matmul/token_fp8_mxfp4')
+    if features.raw_name=='aten.bmm.default' or mode in ('batch16', 'batch_row8') or features.raw_name=='inference::quantized_transpose_batched_matmul':
+        contract = 'batch_matmul/'+{'dense32':'fp32','batch16':'bf16', 'batch_row8':'row_fp8_to_bf16', 'batch_mx':'last_axis_mxfp4_to_bf16'}[mode]
     if schedule['split_k'] > 1:
         # 950 Stream-K shards show RV_VADD on a subset of the launched AIVs.
         # Count intermediate partial-sum additions; their communication and

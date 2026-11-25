@@ -230,7 +230,7 @@ def reprice(op, shape, attrs, target, dtype, result):
                 "vector_model_scope": "unpriced contract; no timing synthesized",
             },
         )
-    if op in ("addmm", "gmm2", "routed_grouped_matmul") or (op == "matmul" and chosen != "fp8_e4m3fn"):
+    if op in ("addmm", "gmm2", "routed_grouped_matmul") or (op == "matmul" and (chosen != "fp8_e4m3fn" or work.get("no_vector_engine"))):
         return replace(
             result,
             projection={

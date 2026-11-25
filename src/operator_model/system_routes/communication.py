@@ -86,7 +86,7 @@ def _moe(f, chip, fabric):
     combine = f.raw_name.endswith("combine_v2")
     if (phase != ("combine" if combine else "dispatch") or
         (combine and (s["codec"] != "fp8_token" or not s["weighted_finalize_inside_boundary"])) or
-        (not combine and s["codec"] != "mxfp4")):
+        (not combine and s["codec"] not in ("mxfp4", "fp8_token", "none"))):
         raise ValueError("Unexpected transport precision or finalize boundary")
     group = s["group"]
     self_index = s["ep_rank_id"]
@@ -105,7 +105,7 @@ def _moe(f, chip, fabric):
     peers = sum(1 for i,(a,b) in enumerate(zip(outgoing,incoming)) if i!=self_index and (a or b))
     sent, received = sum(outgoing)-outgoing[self_index], sum(incoming)-incoming[self_index]
     # AIVs distribute row slices across peers. Peer notifications may run concurrently.
-    width = f.outputs[0].shape[-1] if combine else f.inputs[0].shape[-1]*2
+    width = f.outputs[0].shape[-1] if combine else f.inputs[0].shape[-1]*(2 if s["codec"]=="mxfp4" else 1)
     elements = rows_in*width if combine else 0
     ops = 3*elements if combine else 0  # dequantize, multiply gate and accumulate
     reads = sum(outgoing) + (sum(incoming) if combine else 0) + (rows_in if combine else rows_out)*8

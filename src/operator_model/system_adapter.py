@@ -134,10 +134,14 @@ def _mx_matmul(features, sem):
     _arity(features, 4, 1)
     _, _, sw, sx = features.inputs
     y, = features.outputs
-    _require(sem.get("activation_scale_layout") == "mx_e8m0" and sem.get("weight_precision") == "fp4"
-             and sem.get("activation_precision") == "fp4" and sem.get("group_size") == 32
+    formats = (sem.get("activation_precision"), sem.get("weight_precision"))
+    native8 = not grouped and formats in (("mxfp8","mxfp8"), ("fp8","fp8"))
+    _require(sem.get("activation_scale_layout") == "mx_e8m0"
+             and (formats == ("fp4","fp4") or native8) and sem.get("group_size") == 32
              and sem.get("padding") == (0, 0) and sem.get("accumulator_dtype") == "float32",
-             "Expected A4W4 with two block32 MX scales, zero padding and FP32 accumulation")
+             "Expected two K-block32 MX sources, zero padding and FP32 accumulation")
+    if native8:
+        _require(sem.get("scale_layout","mx_e8m0")=="mx_e8m0","Expected paired E8M0 weight scales")
     tensor_semantics = _fields(dict(features.attributes).get("tensor_semantics", ()))
     records = tensor_semantics.get("inputs", ())
     _require(isinstance(records, tuple), "Expected indexed MX input roles")
@@ -147,6 +151,15 @@ def _mx_matmul(features, sem):
     m, k = _shape(sem.get("logical_input_shape"), 2)
     weights = _shape(sem.get("logical_weight_shape"), 3 if grouped else 2)
     batch, n = weights[:-2], weights[-2]
+    if native8:
+        _require(weights[-1]==k,"MXFP8 reduction dimensions differ")
+        g=(k+63)//64
+        _layout(features.inputs[0],FP8,(m,k))
+        _layout(features.inputs[1],FP8,(k,n),strides=(1,k))
+        _layout(sw,E8,(g,n,2),strides=(2,2*g,1))
+        _layout(sx,E8,(m,g,2))
+        _layout(y,BF16,(m,n))
+        return "matmul",(m,n,k),"mxfp8",{"weight_dtype":"mxfp8"},"matmul/A8W8_MX"
     _require(weights[-1] == k and k % 2 == 0, "Reduction dimension differs or is unpackable")
     g = (k+63)//64
     _packed(features, "inputs", 0, (m, k))
@@ -271,6 +284,7 @@ _LOWERINGS = {
     "inference::dynamic_mx_quant_fp8_reference": _quant,
     "inference::cache_load": _cache,
     "npu::npu_quant_matmul": _mx_matmul,
+    "inference::quant_matmul": _mx_matmul,
     "npu::npu_grouped_matmul": _mx_matmul,
     "aten.sigmoid.default": _unary,
     "aten._to_copy.default": _unary,

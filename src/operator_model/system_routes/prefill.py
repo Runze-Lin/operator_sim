@@ -19,7 +19,7 @@ BF16 = "bfloat16"
 FP32 = "float32"
 FP4 = "float4_e2m1fn_x2"
 E8 = "float8_e8m0fnu"
-_BYTES = {BF16: 2, FP32: 4, FP4: 1, E8: 1, "uint8": 1, "int64": 8}
+_BYTES = {"float8_e4m3fn": 1, BF16: 2, FP32: 4, FP4: 1, E8: 1, "uint8": 1, "int64": 8}
 
 
 def _require(ok, reason):
@@ -117,13 +117,14 @@ def _insert(f, chip, sem):
     rows, depth = key.shape
     _require(
         sem.get("key_norm") == "layernorm"
-        and sem.get("storage_precision") == "fp4"
+        and sem.get("storage_precision") in ("fp4","fp8")
         and sem.get("writes") == "current query positions only"
         and depth == sem["logical_head_dim"]
         and depth % 32 == 0,
         "Expected fused LayerNorm, block32 FP4 and current-row insertion",
     )
-    record = depth // 2 + depth // 32
+    fp4 = sem["storage_precision"] == "fp4"
+    record = depth // 2 + depth // 32 if fp4 else depth + 4
     _require(
         len(cache.shape) == 3
         and cache.shape[-1] == record == sem["row_bytes"]
@@ -138,11 +139,11 @@ def _insert(f, chip, sem):
     _tensor(cache, "uint8", out.shape)
     read = _bytes(key) + _bytes(gamma) + _bytes(bias) + _bytes(positions)
     # FP32 mean, squared deviations + variance, scale/shift, max/quantize/pack.
-    ops = rows * (11 * depth + 5 * _ceil(depth, 32) + 4)
+    ops = rows * (11 * depth + 5 * (_ceil(depth, 32) if fp4 else 1) + 4)
     return _vector(
         chip,
         Tiles(
-            "indexer/key_layernorm_mx4_insert",
+            "indexer/key_layernorm_mx4_insert" if fp4 else "indexer/key_layernorm_fp8_insert",
             rows * depth,
             depth,
             read,
@@ -217,14 +218,15 @@ def _chunk(f, chip, s):
     batch, heads, v, k = final.shape
     _, total, yh, yv = y.shape
     lengths = tuple(s["query_lens"])
+    bits = {"bf16":16,"fp8":8,"fp4":4}[s["compute_precision"]]
+    base = 3 if bits == 16 else 6
     _require(
-        len(f.inputs) == 11
-        and s.get("compute_precision") == "fp4"
-        and s.get("accumulator_dtype") == FP32
+        len(f.inputs) == base+5
+        and s.get("accumulator_dtype",FP32) == FP32
         and s.get("algorithm") == "chunk"
         and s.get("state_layout") == "BHVK"
         and s.get("qk_normalization_location") == "before_chunk"
-        and s.get("group_size") == 32
+        and (bits != 4 or s.get("group_size") == 32)
         and len(lengths) == batch
         and sum(lengths) == total
         and all(n > 0 for n in lengths)
@@ -237,13 +239,19 @@ def _chunk(f, chip, s):
     _tensor(y, BF16, (1, total, heads, v))
     _tensor(final, FP32, (batch, heads, v, k))
     for i, d in enumerate((k, k, v)):
-        _tensor(f.inputs[i], FP4, (1, total, heads, d // 2))
-        _tensor(f.inputs[i + 3], E8, (1, total, heads, d // 64, 2))
-    _tensor(f.inputs[6], BF16, (1, total, heads, k))
-    _tensor(f.inputs[7], FP32, (1, total, heads))
-    _tensor(f.inputs[8], FP32, (heads,))
-    _tensor(f.inputs[9], FP32, (heads * k,))
-    _tensor(f.inputs[10], FP32, final.shape)
+        if bits == 4:
+            _tensor(f.inputs[i], FP4, (1,total,heads,d//2))
+            _tensor(f.inputs[i+3], E8, (1,total,heads,d//64,2))
+        elif bits == 8:
+            _tensor(f.inputs[i], "float8_e4m3fn", (1,total,heads,d))
+            _tensor(f.inputs[i+3], FP32, (1,total,heads))
+        else:
+            _tensor(f.inputs[i], BF16, (1,total,heads,d))
+    _tensor(f.inputs[base], BF16, (1,total,heads,k))
+    _tensor(f.inputs[base+1], FP32, (1,total,heads))
+    _require(_dtype(f.inputs[base+2]) == FP32 and f.inputs[base+2].shape in ((heads,), (1,1,heads,1)), "Expected broadcastable per-head gate bias")
+    _tensor(f.inputs[base+3], FP32, (heads*k,))
+    _tensor(f.inputs[base+4], FP32, final.shape)
     chunks = [_ceil(n, c) for n in lengths]
     chunk_heads = sum(chunks) * heads
     rows = total * heads
@@ -258,7 +266,9 @@ def _chunk(f, chip, s):
     # FP32; BF16 operands are rounded before using 16-bit MMAD in the state products.
     vector_prepare = rows * (10 * k + 3 * v) + cubic // 3
     vector_chain = rows * v + 2 * chunk_heads * k * v
-    cube = {"mxfp4": dot4, "bf16": wy16 + chain16 + out16}
+    dtype = {16:"bf16",8:"fp8_e4m3fn",4:"mxfp4"}[bits]
+    cube = {"bf16":wy16+chain16+out16}
+    cube[dtype] = cube.get(dtype,0)+dot4
     vec = vector_prepare + vector_chain
     # Split (request,head) across V stripes. A given stripe processes the chunks in order.
     vt = min(64, v, max(1, (chip.details["ub_bytes"] - 8192) // (12 * k)))
@@ -281,7 +291,7 @@ def _chunk(f, chip, s):
     chain=vf.stage(chip,'kda/chunk_state',unit*vector_us(vector_chain,chain_lanes),vector_chain/chain_lanes,
                    load=vector_chain/chain_lanes,arithmetic=vector_chain/chain_lanes,store=(rows*v+chunk_heads*k*v)/chain_lanes)/unit
     prep = max(
-        matrix_us(dot4, "4", independent) + matrix_us(wy16, "16", independent),
+        matrix_us(dot4,str(bits),independent) + matrix_us(wy16, "16", independent),
         pre,
     )
     # Explicit critical chain bound matters for ragged tails as well as B=1.
@@ -298,10 +308,10 @@ def _chunk(f, chip, s):
     hbm = (read + write) / (1000 * chip.hbm_bandwidth_gbs)
     stages = 3
     setup = stages * 4587 / (1000 * chip.frequency_ghz)
-    work = _counts("mxfp4", read, write, cube, {"fp32": vec})
+    work = _counts(dtype, read, write, cube, {"fp32": vec})
     work["schedule"] = {
         "algorithm": "three-stage chunked gated delta rule",
-        "evidence": "Resource extrapolation of packed FP4 Kimi capture; BF16 FLA algebra, no matching MXFP4 CA window.",
+        "evidence": f"Resource projection of {dtype} Kimi chunk KDA; BF16 state products; no same-contract CA window.",
         "active_aic": independent,
         "active_aiv": lanes,
         "state_phase_aic": ordered,
@@ -316,12 +326,13 @@ def _chunk(f, chip, s):
         "shared_hbm_floor_us": hbm,
         "initial_state_bytes": _bytes(f.inputs[-1]),
         "scratch_assumption": "on-chip forwarding and tiled reuse; off-chip scratch unknown",
-        "cube_fp4_dot_ops": dot4,
+        "cube_input_dot_ops": dot4,
+        "cube_fp4_dot_ops": dot4 if bits==4 else 0,
         "cube_bf16_state_ops": chain16,
         "state_accumulator": "fp32",
     }
     return NodeEstimate(
-        "kda/mxfp4_chunk_prefill",
+        f"kda/{dtype}_chunk_prefill",
         "extrapolated",
         setup + max(prep + recur + finish, hbm) + stages * chip.kernel_overhead_us,
         work["schedule"]["evidence"],

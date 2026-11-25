@@ -85,6 +85,7 @@ _PRIMITIVE_API = {
 }
 # First launch/last retire residual after removing the modeled payload on 9 rows (DT, PR cycles).
 _PRIMITIVE_CONTROL = {
+    "aclnnAddRmsNorm": (6506.0, 6327.0),
     "aclnnMoeGatingTopKV2/hash": (8632.873797, 8021.299883),
     "aclnnLtScalar": (4818.159516, 4353.157603),
     "aclnnGeScalar": (2306.159516, 2123.157603),
@@ -329,6 +330,8 @@ def _propose(f, sem, chip):
         rows = prod(x.shape[:-1])
         logical = sem["logical_cache_shape"]
         d = logical[-1]
+        if sem.get("layout") == "K/V,B,capacity,local_kv_heads,head_dim":
+            rows *= 2
         read = sum(_size(t,distinct=True) for t in payload_inputs)
         if sem["storage_precision"]=="fp4":
             payload = ceil(d/2)+2*ceil(d/64)
@@ -336,9 +339,29 @@ def _propose(f, sem, chip):
             payload = d+4
         else:
             raise ValueError("Unsupported cache-store codec")
+        if sem.get("verify_state_strategy") == "paired encoded value/scale prefix snapshots":
+            axis = sem["snapshot_query_axis"]
+            steps = sem["snapshot_query_len"]
+            bases = xs[-len(ys):]
+            if any(y.shape != (*base.shape[:axis],steps,*base.shape[axis:])
+                   for base,y in zip(bases,ys)):
+                raise ValueError("Invalid encoded prefix snapshot extent")
+            # The reference materializes one complete image per prefix. Charge
+            # base bytes once logically, and stream the unmodified slots again
+            # as needed. Encoding only visits the newly supplied elements.
+            base_bytes = sum(_size(t) for t in bases)
+            visits = dict(load=rows*d,arithmetic=2*rows*d,reduce=rows*d,
+                          divide=rows,convert=rows*d,store=rows*d)
+            return Tiles("materialize_encoded_prefix_states",write,512,read+base_bytes,
+                         write,4*rows*d,class_visits=visits,
+                         traffic_read=max(0,write-base_bytes-rows*payload),
+                         work_source="capture materializes each encoded prefix; unchanged base slots are streamed into snapshots")
         return Tiles("quantize_scatter_current_rows", rows*d, d, read, rows*payload,
                      4*rows*d, setup="dequant")
     if name=="inference::state_update":
+        if "row_bytes" not in sem:
+            from .catalog_vector import state_rows
+            return state_rows(f, sem)
         rows = prod(x.shape[:-1])
         return Tiles("layernorm_mx4_scatter_current_rows", rows*width, width,
                      sum(_size(t,distinct=True) for t in xs[:-1]), rows*sem["row_bytes"],

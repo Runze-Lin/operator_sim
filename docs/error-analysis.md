@@ -55,13 +55,29 @@
 
 **列说明**　首列链接到该实现的逐形记录。精度依次列输入、输出和必要的累积格式。计分集给出使用的数据角色以及开发窗数/冻结后独立窗数。每芯片“形/窗”是不同形状数/完整设备窗数，WAPE = Σ|预测−CA|/ΣCA，最大是单窗最大绝对百分误差。原窗系数是理想逻辑工作时间/原模型设备窗；冷读写 U 使用带冷读写下界的分母，两列均给出各芯片全部可比形状的最小至最大。最大查询 ms 是历史单次 CPU 墙钟。末列按芯片标记验收或证据状态，N/A 表示缺少相应证据。
 
+## 扩展文本模型目录的逐算子结果
+
+| 新增实现合同 | 输入与输出 | 开发 / 冻结对照（两端合计） | 950DT WAPE / 最大 | 950PR WAPE / 最大 | 证据与逐形明细 |
+|---|---|---:|---:|---:|---|
+| AddRmsNorm | BF16 X、残差、gamma → BF16 Y、残差和、FP32 逆标准差 | 6 / 20 | 17.88% / 36.03% | 15.88% / 34.04% | [每端十种独立 shape，完整核窗](examples/catalog-ca.md) |
+| Indexer LayerNorm | 跨步或连续 BF16 输入、BF16 仿射参数 → BF16 Y | 0 / 10 | 51.76% / 66.76% | 49.03% / 66.31% | [每端四种逻辑 shape、五组含 stride 的输入，完整核窗之和](examples/catalog-layer-norm-ca.md) |
+| 原生 MXFP8 × MXFP8 Matmul | 双侧 E8M0/K32 scale → BF16 | 0 / 1 | 67.80% / 67.80% | N/A | [DT 一窗；PR 采集超时](examples/catalog-cube.md) |
+| 按头 BatchMatMul | 转置 BF16 权重与 BF16 激活 → BF16 | 0 / 0 | N/A | N/A | [双端数值正确，性能采集缺完整 BMM 窗](examples/catalog-cube.md) |
+| MLA、QSA、GDN、池化 Indexer 新合同 | 取对应签名的 Q/K/V、状态和 scale 类型 | 0 / 0 | N/A | N/A | [工作量、分块和适用精度](examples/catalog-attention.md) |
+| 分组 SwiGLU / SiTU 新合同、补齐 K 及 FP8 行/通道投影 | BF16、普通 FP8 或分组 MXFP4，按实际 scale 签名区分 | 0 / 0 | N/A | N/A | [分组、布局与精度推导](examples/catalog-cube.md) |
+| HC、PLE、n-gram、状态更新 / 快照、布局和 ATen 原语新合同 | BF16/FP32、索引整型及相应存储类型 | 0 / 0 | N/A | N/A | [逐类推导与工作量算例](examples/catalog-vector.md) |
+
+每项的开发 / 冻结对照数计合格设备样本，WAPE 和最大绝对百分误差只使用冻结对照。LayerNorm 行采用多 kernel 活跃窗之和，不含核间间隙；若只取三个实际 GLM 布局，两端 WAPE 分别为 48.07% 和 44.78%。原生 MXFP8 Matmul 的百分数只代表一次 DT 小 M 观测。无对应实测的精度与融合实现不继承同名算子的 CA 指标。970DT 的报价在各算例中标为外推。
+
+**按模型和调用名核查。** 13 个模型预设的 183 张前向图覆盖 119 个原始调用名。三策略逐项通过 122,383 个不同输入签名。116 个调用名各有至少十种物理 shape；另三个 RoPE 初始化算子在源预设中宽度固定。按调用名汇总的三策略差异是相同图、相同设备资源下的预测对比；缺少 CA 时只列报价和工作量。默认 API 的并发墙钟中位 0.226 ms，P99 为 21.200 ms，最大 265.545 ms；80 个慢签名串行各复测五次，单次最大 16.714 ms。[119 项三策略对照](../results/v2.4/catalog/method-comparison.csv) · [各模型精度与大小 shape](../results/v2.4/catalog/shape-index.md) · [逐签名报价与复核说明](../results/v2.4/catalog/README.md)
+
 ## 单算子误差与端到端预测差如何对应
 
 逐窗 WAPE 使用 CA 计时作参照。三模型系统实验在完全相同的图上更换节点定价，再执行 DES，得到 **两个模型预测值的相对差**。系统表列出历史 Roofline、同精度资源参照和三种精细模式；同名节点的时间账及单独替换该节点后的重排结果帮助解释差异。当前没有三模型端到端的设备真值，无法把该差异换算成端到端准确率。[33 组完整请求](system-vector-e2e.md) · [27 组 128Ki decode 单轮](decode-vector-comparison.md)
 
 ## 同一算子、同一设备窗，两种 Vector 方法差多少
 
-原生算子见下表。系统捕获的 **86 个原始调用名**（含新精度、视图与通信）另逐名展示原法、指令法的同签名耗时差及可配对的 CA 误差；已知原生 A5 QSLI 使用专门的补充档案。不同来源包含相同合同，窗数不跨表相加。[系统逐算子误差与报价差](system-vector-methods.md) · [QSLI 和显式组件逐窗对照](../results/v2.3/candidate-methods.csv) · [仅实测、无完整本地预测的合同](errors/measured-only.md)
+原生算子见下表。v2.3 三模型实验捕获的 **86 个原始调用名**（含新精度、视图与通信）另逐名展示原法、指令法的同签名耗时差及可配对的 CA 误差；已知原生 A5 QSLI 使用专门的补充档案。不同来源包含相同合同，窗数不跨表相加。[系统逐算子误差与报价差](system-vector-methods.md) · [QSLI 和显式组件逐窗对照](../results/v2.3/candidate-methods.csv) · [仅实测、无完整本地预测的合同](errors/measured-only.md)
 
 <!-- vector-methods:start -->
 

@@ -18,6 +18,7 @@
 | [附录 F　指令建模与跨芯片迁移](14-vector-transfer.md) | FA 新窗、三个 Vector 算子、查询成本与 970DT 敏感性 |
 | [附录 G　全算子指令类别法](15-vector-methods.md) | 相同 CA 窗上的逐家族收益、回退与跨代限制 |
 | [附录 H　本轮系统明细](16-system-comparison.md) | 按模型查看 33 组整请求秒数、27 组单轮毫秒数及相应 Roofline |
+| [附录 I　文本模型目录](17-catalog.md) | 13 个预设的 shape 与精度覆盖、布局物化与 MXFP8 首发误差 |
 
 ## 构建 PDF
 

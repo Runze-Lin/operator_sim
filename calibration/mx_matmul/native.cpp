@@ -17,7 +17,8 @@ static uint16_t bf16(float value) {
     return bits>>16;
 }
 
-static void run(bool mixed,int m,int n,int k,aclrtStream stream) {
+static void run(const std::string& route,int m,int n,int k,aclrtStream stream) {
+    const bool activation8=route!="a4w4", weight8=route=="a8w8";
     if (m<=0 || n<=0 || k<=0 || k%64) throw std::runtime_error("Use positive dimensions and K aligned to 64");
     // Sign patterns and scales vary across rows, columns and K groups. The
     // magnitude of each product is 1 before application of both E8M0 scales.
@@ -25,13 +26,13 @@ static void run(bool mixed,int m,int n,int k,aclrtStream stream) {
     auto b_sign=[](int j,int t){return ((j%5+t%7)%3)==0 ? -1 : 1;};
     auto a_exp=[](int i,int g){return (i+g)%2;};
     auto b_exp=[](int j,int g){return (j+g/2)%2;};
-    std::vector<uint8_t> a(size_t(m)*k/(mixed?1:2)), b(size_t(n)*k/2);
+    std::vector<uint8_t> a(size_t(m)*k/(activation8?1:2)), b(size_t(n)*k/(weight8?1:2));
     std::vector<uint8_t> as(size_t(m)*k/32),bs(size_t(n)*k/32);
     for(int i=0;i<m;++i) {
         for(int t=0;t<k;++t) {
             size_t pos=size_t(i)*k+t;
             bool neg=a_sign(i,t)<0;
-            if(mixed) a[pos]=neg?0xb8:0x38; // E4M3FN -1/+1
+            if(activation8) a[pos]=neg?0xb8:0x38; // E4M3FN -1/+1
             else a[pos/2]|=(neg?0xa:0x2)<<((pos%2)*4); // E2M1 -1/+1
         }
         for(int g=0;g<k/32;++g) as[size_t(i)*k/32+g]=127+a_exp(i,g);
@@ -39,12 +40,13 @@ static void run(bool mixed,int m,int n,int k,aclrtStream stream) {
     for(int j=0;j<n;++j) {
         for(int t=0;t<k;++t) {
             size_t pos=size_t(j)*k+t;
-            b[pos/2]|=(b_sign(j,t)<0?0xa:0x2)<<((pos%2)*4);
+            if(weight8) b[pos]=b_sign(j,t)<0?0xb8:0x38;
+            else b[pos/2]|=(b_sign(j,t)<0?0xa:0x2)<<((pos%2)*4);
         }
         for(int g=0;g<k/32;++g) bs[size_t(j)*k/32+g]=127+b_exp(j,g);
     }
-    Tensor x({m,k},mixed?ACL_FLOAT8_E4M3FN:ACL_FLOAT4_E2M1,a);
-    Tensor w({n,k},ACL_FLOAT4_E2M1,b);
+    Tensor x({m,k},activation8?ACL_FLOAT8_E4M3FN:ACL_FLOAT4_E2M1,a);
+    Tensor w({n,k},weight8?ACL_FLOAT8_E4M3FN:ACL_FLOAT4_E2M1,b);
     Tensor sa({m,k/64,2},ACL_FLOAT8_E8M0,as),sb({n,k/64,2},ACL_FLOAT8_E8M0,bs);
     Tensor y({m,n},ACL_BF16,std::vector<uint8_t>(size_t(m)*n*2,0xff));
     uint64_t ws=0; aclOpExecutor *executor=nullptr;
@@ -52,7 +54,7 @@ static void run(bool mixed,int m,int n,int k,aclrtStream stream) {
     CHECK(aclnnQuantMatmulV5GetWorkspaceSize(x.desc,w.desc,sa.desc,sb.desc,nullptr,nullptr,nullptr,nullptr,
                                               nullptr,false,true,group,y.desc,&ws,&executor));
     std::printf("case=matmul api=aclnnQuantMatmulV5 route=%s M=%d N=%d K=%d layout=ND_NDT scales=E8M0 group=32 out=BF16 workspace=%llu\n",
-                mixed?"a8w4":"a4w4",m,n,k,static_cast<unsigned long long>(ws));
+                route.c_str(),m,n,k,static_cast<unsigned long long>(ws));
     Buffer workspace(ws);
     CHECK(aclnnQuantMatmulV5(workspace.ptr,ws,executor,stream));
     CHECK(aclrtSynchronizeStream(stream));
@@ -81,12 +83,12 @@ static void run(bool mixed,int m,int n,int k,aclrtStream stream) {
 
 int main(int argc,char** argv) {
     std::setvbuf(stdout,nullptr,_IONBF,0);
-    if(argc!=5 || (std::string(argv[1])!="a4w4" && std::string(argv[1])!="a8w4")) return 2;
+    if(argc!=5 || (std::string(argv[1])!="a4w4" && std::string(argv[1])!="a8w4" && std::string(argv[1])!="a8w8")) return 2;
     try {
         CHECK(aclInit(nullptr)); CHECK(aclrtSetDevice(0));
         std::printf("runtime_soc=%s\n",aclrtGetSocName());
         aclrtStream stream=nullptr; CHECK(aclrtCreateStream(&stream));
-        run(std::string(argv[1])=="a8w4",std::stoi(argv[2]),std::stoi(argv[3]),std::stoi(argv[4]),stream);
+        run(argv[1],std::stoi(argv[2]),std::stoi(argv[3]),std::stoi(argv[4]),stream);
         CHECK(aclrtDestroyStream(stream)); CHECK(aclrtResetDevice(0)); CHECK(aclFinalize());
         std::puts("SMOKE_PASS"); return 0;
     } catch(const std::exception& e) { std::fprintf(stderr,"SMOKE_FAIL %s\n",e.what()); return 1; }

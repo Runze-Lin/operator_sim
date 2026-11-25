@@ -33,7 +33,7 @@ def receipt(path, opp):
         return [(round(e['ts']*1650),round((e['ts']+e['dur'])*1650)) for e in events
                 if e.get('ph')=='X' and names.get(e['pid'])==pipe and e['name'].startswith('MOV_SRC_TO_DST')]
     reads,writes=windows('MTE2'),windows('MTE3')
-    op,shape=next((v,list(map(int,command[i+1:]))) for i,v in enumerate(command) if v in ('add','mul','cache_load_fp8','rope','swiglu','mhc_pre_sinkhorn','moe_gating_top_k_hash'))
+    op,shape=next((v,list(map(int,command[i+1:]))) for i,v in enumerate(command) if v in ('add','add_rms_norm','mul','cache_load_fp8','rope','swiglu','mhc_pre_sinkhorn','moe_gating_top_k_hash'))
     return dict(op=op,shape=shape,chip=sku,measured_us=(hi-lo)/1650,
                 active_aiv=sum('.veccore' in core for core,_ in roster),
                 active_aic=sum('.cubecore' in core for core,_ in roster),kernel=kernel,installed=str(obj.relative_to(opp)),elf_sha256=elf,

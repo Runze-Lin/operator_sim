@@ -2,7 +2,9 @@
 
 **operator-sim** 是面向系统仿真的昇腾算子建模后端。输入一张卡实际执行的算子、shape、dtype 和芯片配置，返回设备耗时、Cube / Vector 工作量、逻辑访存量与活跃核数。能匹配库实现的路径用 CA 校准；捕获图中的研究算子按明确的分核、分块和流水推演。在线预测只依赖 Python 3.10+ 标准库，可在没有昇腾硬件和 CANN 的系统仿真主机使用。
 
-当前源码为 v2.3。已有库实现默认沿用原时序模型；已登记的新精度或新实现，有 Vector 工作时可按指令类别估计。系统接口提供 `auto`、`calibrated` 和 `instruction_classes` 三种选择。纯 Cube、视图和纯搬运共享各自的建模路径。逐算子对照页列出每个合同可选的方法及其 CA 证据。[建模方法](docs/modeling-strategy.md) · [误差分析](docs/error-analysis.md) · [逐算子两法对照](docs/vector-method-comparison.md) · [系统调用对照](docs/system-vector-methods.md)
+当前源码为 v2.4。已有库实现默认沿用原时序模型；已登记的新精度或新实现，有 Vector 工作时可按指令类别估计。系统接口提供 `auto`、`calibrated` 和 `instruction_classes` 三种选择。纯 Cube、视图和纯搬运共享各自的建模路径。逐算子对照页列出每个合同可选的方法及其 CA 证据。[建模方法](docs/modeling-strategy.md) · [误差分析](docs/error-analysis.md) · [逐算子两法对照](docs/vector-method-comparison.md) · [系统调用对照](docs/system-vector-methods.md)
+
+文本模型目录覆盖 DeepSeek V3/V3.2/V4 Flash/V4 Pro/V4.1 Flash、Kimi K3/K3.1 Pro、Qwen3.5 27B/397B-A17B、Qwen3.8 Flash Next、GLM-5.2/5.3 Flash，以及块扩散源预设。可按模型查询实际算子、物理与逻辑精度、大小 shape 及每个签名的 950DT 报价。MXFP8 的 E8M0 分组 scale 与普通 FP8 的 FP32 行 scale 分别建模。[工作负载与精度](results/v2.4/catalog/README.md) · [按模型查算子与 shape](results/v2.4/catalog/shape-index.md) · [新增 CA 对照](docs/examples/catalog-ca.md) · [并入系统 Roofline 后端仓的评估](docs/operator-performance-models-integration.md)
 
 研究报告从 CA 指令时间戳推导阶段耗时与流水重叠，比较 950DT/PR 上的实测误差，并说明迁移到 970DT 所需的假设。第 7 章在三个模型的同一批捕获图上比较原法、默认策略、指令法与 Roofline。[完整报告（PDF）](docs/operator-sim-report-zh.pdf) · [分章正文与复算指南](docs/paper/README.md)
 
@@ -33,7 +35,7 @@ print(r.work["cube_ops"], r.work["logical_read_bytes"], r.work["logical_write_by
 
 批量仿真在同一进程复用模型和芯片配置。已知 kernel 发起顺序时，为每卡每条流建立一个 `OperatorStream`，让 RMSNorm 和 mHC Post 等算子看到同流前序。系统框架负责跨流并发和设备间调度；全图入口还可给 TP/EP 通信提供本卡价格。[接入契约](docs/integration.md) · [可运行的调度器示例](examples/system_sim.py)
 
-在 SIMPlatform 的任务 TOML 中设置 `[prediction]` 下的 `backends = ["operator_sim_full"]`，即可按实际 shape、精度、并行切分和开销估计每张图。当前已核对原 27 组 decode，以及三个模型、四种上下文长度的 prefill 与 decode。新增矩阵覆盖 86 个原始调用名，包括有 dtype/布局要求的计算、跨卡路由、零设备时间的视图及分配。原 Roofline 或按原生合同选择的混合后端仍可单独运行。[三种后端的选法](docs/sim-platform.md) · [27 组比较和逐算子账本](docs/system-full-comparison.md)
+在 SIMPlatform 的任务 TOML 中设置 `[prediction]` 下的 `backends = ["operator_sim_full"]`，即可按实际 shape、精度、并行切分和开销估计每张图。当前已核对原 27 组 decode，以及三个模型、四种上下文长度的 prefill 与 decode。该三模型端到端矩阵覆盖 86 个原始调用名，包括有 dtype/布局要求的计算、跨卡路由、零设备时间的视图及分配。原 Roofline 或按原生合同选择的混合后端仍可单独运行。[三种后端的选法](docs/sim-platform.md) · [27 组比较和逐算子账本](docs/system-full-comparison.md)
 
 ## 从哪里读代码
 

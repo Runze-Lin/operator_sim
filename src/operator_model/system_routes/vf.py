@@ -110,6 +110,7 @@ _PROGS = {
     "quantize_last_axis": "load arithmetic reduce divide convert store",
     "mx4_query_and_head_weights": "load arithmetic reduce divide convert permute store",
     "quantize_scatter_current_rows": "load arithmetic reduce divide convert permute store",
+    "indexer/key_layernorm_fp8_insert": "load load load reduce arithmetic arithmetic reduce divide arithmetic arithmetic arithmetic reduce divide convert store",
     "indexer/key_layernorm_mx4_insert": "load load load reduce arithmetic arithmetic reduce divide arithmetic arithmetic arithmetic reduce divide convert permute store",
     "layernorm_mx4_scatter_current_rows": "load reduce arithmetic arithmetic reduce divide arithmetic arithmetic reduce divide convert permute store",
     "engram_norm_dot_sigmoid_mix": "load load arithmetic reduce divide arithmetic arithmetic reduce exp arithmetic divide arithmetic arithmetic store",
@@ -144,7 +145,7 @@ def panel(chip, p, size, old_cycles):
         )
     elif tag == "router_score_topk_merge":
         visits = dict(load=n, exp=n, arithmetic=4 * n, divide=n, compare=max(n, ops - 6 * n), store=n)
-    elif tag.startswith("prefix_bank_"):
+    elif p.class_visits is not None:
         visits = {k: v * size / p.elements for k, v in p.class_visits.items()}
     elif tag == "mhc_weighted_residual_mix":
         visits = dict(load=ops, arithmetic=ops / 2, store=n)

@@ -36,7 +36,8 @@ def contract(shape, dtype, attrs):
         raise ValueError('Dense MX Matmul expects positive integer M,N,K')
     dtype = canonical_dtype(dtype)
     weight_dtype = attrs.get('weight_dtype', FP4 if dtype == FP4 else None)
-    if not isinstance(weight_dtype, str) or canonical_dtype(weight_dtype.lower()) != FP4:
+    native8 = dtype == FP8 and isinstance(weight_dtype,str) and weight_dtype.lower() == 'mxfp8'
+    if not native8 and (not isinstance(weight_dtype, str) or canonical_dtype(weight_dtype.lower()) != FP4):
         raise ValueError('Dense MX Matmul expects explicit weight_dtype=mxfp4 for an FP8 activation')
     if dtype not in (FP4, FP8):
         raise ValueError('Dense MX Matmul expects MXFP4 E2M1 or FP8 E4M3FN activation')
@@ -55,7 +56,7 @@ def contract(shape, dtype, attrs):
     k = shape[2]
     if dtype == FP4 and (k % 2 or k <= 2):
         raise ValueError('Native packed MXFP4 ND input requires even K greater than 2')
-    if dtype == FP8 and k % 8:
+    if dtype == FP8 and not native8 and k % 8:
         raise ValueError('A8W4 FP4 weight prologue requires K divisible by 8')
     return dtype
 
@@ -69,7 +70,8 @@ def mx_work(shape, dtype, attrs):
     m, n, k = shape
     bits = 4 if dtype == FP4 else 8
     scales = 2 * _div(k, 64)
-    operands = {'activation': _payload(m, k, bits), 'weight': _payload(n, k, 4),
+    weight_bits = 8 if str(attrs.get('weight_dtype','')).lower()=='mxfp8' else 4
+    operands = {'activation': _payload(m, k, bits), 'weight': _payload(n, k, weight_bits),
                 'activation_scale': m * scales, 'weight_scale': n * scales}
     work = _counts(dtype, sum(operands.values()), 2*m*n, {dtype: 2*m*n*k},
                    notes=['Both E8M0 scale tensors use pairs per 64 K values. '
@@ -137,6 +139,10 @@ def price(shape, chip, dtype, attrs, calibrated_only=False, *, programs=None):
     work = mx_work(shape, dtype, attrs)
     work['required_dense_cube_fma'] = True
     work['no_vector_engine'] = work['dtype'] == FP4
+    if str(attrs.get('weight_dtype','')).lower()=='mxfp8':
+        from . import mx8_native
+        work['no_vector_engine'] = True
+        return mx8_native.price(shape,chip,work,calibrated_only)
     m, n, k = shape
     mixed = work['dtype'] == FP8
     bits = 8 if mixed else 4

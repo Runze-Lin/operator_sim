@@ -352,19 +352,30 @@ def reprice(op, shape, attrs, target, dtype, result):
         ref = load_chip()
         # The alternative team layout has no isolated SIMD-only CA window. Use the
         # existing K-split work plan as an explicit implementation hypothesis.
-        cost, units = _cost(shape, target, plan, ref)
+        # The L1/L0 fragment calculation consumes one busy-core M panel.
+        # Reserve the same 128-row panel bound as the extended system schedule.
+        # Launch and the separate post team are paid once outside this loop.
+        local_rows = ceil(t / plan["m_blocks"])
+        panels, tail = divmod(local_rows, 128)
+        cube_us = cast_us = 0.0
+        rd = target.details.get("mte2_bandwidth_gbs")
+        for count, height in ((panels, 128), (int(tail > 0), tail)):
+            if count:
+                cost, units = _cost((height, n, d), target, plan, ref)
+                elements = units["critical_aiv_stage1_elements"]
+                cube_us += count * cost["projection"]
+                cast_us += count * max(vf("pre_cast", 1, elements) / clock,
+                                       2 * elements / (rd * 1000) if rd else 0.0)
         if "dispatch_and_handoff" not in st:
             st = {
                 "dispatch_and_handoff": fused((1, 4, 4096), ref, {})[3]["stages_us"]["dispatch_and_handoff"]
                 * ref.frequency_ghz
                 / target.frequency_ghz
             }
-        e = units["critical_aiv_stage1_elements"]
         rows = plan["rows_per_aiv"]
-        rd = target.details.get("mte2_bandwidth_gbs")
         st.update(
-            stage1_cube=cost["projection"],
-            stage1_cast=max(vf("pre_cast", 1, e) / clock, 2 * e / (rd * 1000) if rd else 0.0),
+            stage1_cube=cube_us,
+            stage1_cast=cast_us,
             stage2_rows=(
                 vf("pre_mix", rows, d, n) + 2 * attrs.get("num_iters", 20) * vf("sink_normalize", rows, n)
             )

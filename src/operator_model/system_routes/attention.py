@@ -1,10 +1,11 @@
 """Per-device schedules for the attention and sequence-state nodes in the decode graph."""
 
-from math import ceil, prod
+from math import ceil
 
 from operator_model.operators.attention.indexer import _prices
-from . import vf
-from operator_model.system_adapter import NodeEstimate
+from . import vf, catalog_attention
+
+from .attention_resources import BYTES, _check, _rate, _schedule, divup, nbytes
 
 
 NAMES = frozenset(
@@ -24,17 +25,6 @@ NAMES = frozenset(
         "vllm_ascend::recurrent_kda_reference",
     }
 )
-BYTES = {
-    "bfloat16": 2,
-    "float32": 4,
-    "float8_e4m3fn": 1,
-    "float8_e8m0fnu": 1,
-    "float4_e2m1fn_x2": 1,
-    "int64": 8,
-    "int32": 4,
-    "uint8": 1,
-}
-DTYPE = {4: "mxfp4", 8: "fp8_e4m3fn", 16: "bf16"}
 INDEXERS = {
     "quant_lightning_indexer_reference",
     "lightning_indexer",
@@ -42,96 +32,19 @@ INDEXERS = {
 }
 
 
-def divup(n, d):
-    return (n + d - 1) // d
-
-
-def nbytes(t):
-    # Packed storage dimensions from SIMPlatform, not capture's separate logical_shape.
-    return prod(t.shape) * BYTES[t.dtype.removeprefix("torch.")]
-
-
-def _check(condition, reason):
-    if not condition:
-        raise ValueError(reason)
-
-
-def _rate(tops, cores, clock):
-    """One core's operations/cycle from a full chip peak in TOP/s."""
-    return tops * 1000 / (cores * clock)
-
-
-def _schedule(
-    chip,
-    name,
-    cube,
-    vec,
-    bits,
-    reads,
-    writes,
-    tiles,
-    tile,
-    pipeline,
-    launch,
-    evidence,
-    *,
-    cv=True,
-    phases=None,
-    hbm=None,
-    status="extrapolated",
-    active=None,
-):
-    clock = chip.frequency_ghz
-    cores = chip.cube_cores if cv else chip.vector_cores
-    available = min(cores, chip.vector_cores) if cv else cores
-    live = min(available, tiles) if active is None else active
-    waves = divup(tiles, live)
-    total_bytes = reads + writes if hbm is None else hbm
-    hbm_us = total_bytes / (chip.hbm_bandwidth_gbs * 1000)
-    local = waves * pipeline / (clock * 1000)
-    startup = launch / (clock * 1000)
-    duration = chip.kernel_overhead_us + startup + max(local, hbm_us)
-    work = {
-        "cube_ops": cube,
-        "vec_ops": vec,
-        "cube_ops_by_dtype": {DTYPE[bits]: cube} if cube else {},
-        "vec_ops_by_dtype": {"fp32": vec} if vec else {},
-        "logical_read_bytes": reads,
-        "logical_write_bytes": writes,
-        "physical_hbm_bytes": None,
-        "schedule": {
-            "tile": tile,
-            "tiles": tiles,
-            "waves_on_critical_core": waves,
-            "active_aic": live if cv else 0,
-            "active_aiv": min(
-                chip.vector_cores,
-                live
-                * (min(2, max(1, chip.vector_cores // chip.cube_cores)) if cv else 1),
-            ),
-            "dependency_path_cycles_per_wave": pipeline,
-            "launch_us": startup,
-            "additional_kernel_overhead_us": chip.kernel_overhead_us,
-            "local_pipeline_us": local,
-            "assumed_shared_hbm_us": hbm_us,
-            "stage_budget": phases or {},
-            "evidence": evidence,
-        },
-    }
-    return NodeEstimate("system_attention/" + name, status, duration, evidence, work)
-
-
 def _index(f, chip, sem, name):
-    q, key = f.inputs[0], f.inputs[2 if name == "kimi_dsa_indexer_score" else 1]
+    q = f.inputs[0]
+    alternate_order = name == "lightning_indexer" and f.inputs[1].dtype.endswith("float32")
+    key = f.inputs[2 if name == "kimi_dsa_indexer_score" or alternate_order else 1]
     rows, heads, logical_d = q.shape
     packed = name == "kimi_dsa_indexer_score"
-    bits = 4 if packed else 16
+    bits = {"fp4": 4, "fp8": 8, "bf16": 16}[sem["storage_precision"]] if packed else 16
     d = sem["index_head_dim"] if packed else logical_d
     if packed:
         _check(
-            q.dtype.endswith("uint8")
-            and sem["storage_precision"] == "fp4"
-            and q.shape[-1] * 2 == d,
+            ((bits == 4 and q.dtype.endswith("uint8") and q.shape[-1]*2 == d)
+             or (bits == 8 and q.dtype.endswith("float8_e4m3fn") and q.shape[-1] == d)
+             or (bits == 16 and q.dtype.endswith("bfloat16") and q.shape[-1] == d)),
             "Expected packed MXFP4 query with separate E8M0 scale",
         )
     else:
@@ -171,7 +84,7 @@ def _index(f, chip, sem, name):
     m = 2 * heads * divup(r, 2)
     length = max(lens)
     pages = divup(length, 128)
-    read_row = (d // 2 + divup(d, 32)) if packed else 2 * d
+    read_row = key.shape[-1] * BYTES[key.dtype.removeprefix("torch.")] if packed else 2 * d
     dma = chip.details.get("mte2_bandwidth_gbs")
     read_page = (
         128 * read_row * chip.frequency_ghz / dma
@@ -231,7 +144,7 @@ def _index(f, chip, sem, name):
         vector_work += nq * sum(length + 9 * divup(length, 8) for length in lens)
     read = sum(nbytes(x) for x in f.inputs if x is not key) + sum(lens) * read_row
     # The final input in Kimi is a reusable output/scratch for top-k, not keys to score.
-    if packed:
+    if packed or alternate_order:
         read -= nbytes(f.inputs[-1])
     write = sum(nbytes(x) for x in f.outputs)
     ev = "Ordinary 950 BF16 LightningIndexer H8/H32 and H64/top1024 kernel evidence; long-K loop, low-bit extension and optional block selection projected."
@@ -286,7 +199,7 @@ def _attention(f, chip, sem, name):
         "Attention pair count exceeds valid local K rows",
     )
     _check(
-        dense and bits == 16 or not dense and bits in (4, 8),
+        dense and bits == 16 or not dense and bits in (4, 8, 16),
         "Unexpected attention precision",
     )
     keys = divup(pairs, rows)
@@ -338,14 +251,16 @@ def _attention(f, chip, sem, name):
         (sum(sem["kv_lens"]) * kvheads if dense else pairs) * key_bytes
     )
     if kimi:
-        read += sum(nbytes(f.inputs[i]) for i in (1, 3, 4, -1))
+        read += sum(nbytes(f.inputs[i]) for i in ((1, -1) if bits == 16 else (1, 3, 4, -1)))
     if not dense and not kimi:
         read += sum(
             nbytes(t)
             for t in f.inputs
             if t.dtype.endswith("int32") or t.dtype.endswith("int64")
         )
-    if not dense and not kimi:
+    if not dense and not kimi and bits == 16:
+        read += nbytes(f.inputs[-1])
+    if not dense and not kimi and bits < 16:
         read += nbytes(f.inputs[sem["operand_count"]]) + nbytes(
             f.inputs[-1]
         )  # query scales and head sink
@@ -555,23 +470,25 @@ def _compress(f, chip, sem, name):
     _check(
         w1.shape == w2.shape
         and n == coff * d
-        and sem.get("activation_precision") == "fp8",
+        and sem.get("activation_precision") in ("bf16", "fp8", "fp4"),
         "Unsupported compressor fusion contract",
     )
-    bits = 8
+    bits = {"fp4":4, "fp8":8, "bf16":16}[sem["activation_precision"]]
+    wbits = {"fp4":4, "fp8":8, "bf16":16}[sem["weight_precision"]]
+    _check(wbits <= bits,"Invalid compressor precision pair")
     # Two projections share each input tile, independent output column stripes.
     bm, bn, bk = 16, 64, 128
-    rc = _rate(chip.cube_tops["8"], chip.cube_cores, chip.frequency_ghz)
+    rc = _rate(chip.cube_tops[str(bits)], chip.cube_cores, chip.frequency_ghz)
     rv = _rate(chip.vector_tops["32"], chip.vector_cores, chip.frequency_ghz)
     groups = divup(m, bm) * divup(n, bn)
     npage = divup(k, bk)
     expand = 2 * bn * bk / rv
     expand=vf.stage(chip,'compressor/unpack_weight',expand,2*bn*bk,load=2*bn*bk,permute=2*bn*bk,
-                    convert=2*bn*bk,store=2*bn*bk,bits=8)
+                    convert=2*bn*bk,store=2*bn*bk,bits=bits) if wbits < bits else 0
     mac = 4 * bm * bn * bk / rc
     pool = pooled * d * (8 * ratio * coff + 8)
-    u=pooled*d/groups; a=m*k/groups
-    pool_cycles=vf.stage(chip,'compressor/pool_rope',(pool+3*m*k)/(rv*groups),u+a,load=2*u*ratio*coff+a,
+    u=pooled*d/groups; a=m*k/groups if bits<16 else 0
+    pool_cycles=vf.stage(chip,'compressor/pool_rope',(pool/groups+3*a)/rv,u+a,load=2*u*ratio*coff+a,
                          exp=u*ratio*coff,reduce=2*u*ratio*coff,arithmetic=5*u*ratio*coff+6*u+2*a,
                          convert=a,divide=u,permute=u,store=u+a)
     cycles = (
@@ -582,7 +499,7 @@ def _compress(f, chip, sem, name):
     )
     read = (
         nbytes(x)
-        + n * k
+        + 2 * n * k * wbits // 8
         + sum(nbytes(x) for x in f.inputs[-2:])
         + pooled * ratio * 2 * n * 4
     )
@@ -595,7 +512,7 @@ def _compress(f, chip, sem, name):
         chip,
         name,
         4 * m * n * k,
-        2 * n * k + pool + 3 * m * k,
+        (2 * n * k if wbits < bits else 0) + pool + (3*m*k if bits<16 else 0),
         bits,
         read,
         write,
@@ -603,15 +520,20 @@ def _compress(f, chip, sem, name):
         {"m": bm, "n": bn, "k": bk, "reduction": ratio, "completed_rows": pooled},
         cycles,
         4587,
-        "Configured fused A8W4 dual projection with inline weight expansion, rolling state, pooled RMSNorm and RoPE. No matching low-bit compressor ELF.",
+        "Configured fused dual projection with precision-dependent weight expansion, rolling state, pooled RMSNorm and RoPE. No matching low-bit compressor ELF.",
         phases={"expand_cycles": expand, "dual_matmul_cycles": mac, "k_pages": npage},
     )
+
+
+NAMES |= frozenset(("vllm_ascend::" if n in catalog_attention.GDN else "npu::" if n.startswith("npu_") else "inference::") + n for n in catalog_attention.NAMES)
 
 
 def price(features, chip):
     name = features.raw_name.split("::")[-1]
     _check(features.raw_name in NAMES, "No matching attention route")
     sem = dict(dict(features.attributes).get("semantic", ()))
+    if name in catalog_attention.NAMES or (name == "npu_fused_infer_attention_score" and "num_kv_heads" not in sem):
+        return catalog_attention.price(features, chip, sem, name)
     if name in INDEXERS:
         return _index(features, chip, sem, name)
     if name in (
