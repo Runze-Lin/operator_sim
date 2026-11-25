@@ -61,7 +61,25 @@ def price(shape, chip, work, calibrated_only):
         * freq
         / min(chip.hbm_bandwidth_gbs, active * port * freq)
     )
-    cycles = 1794 + max(cube, panel, hbm) + 520
+    # The installed MX program posts two sideband-scale descriptors before the
+    # value panels. First-fragment readiness is a latency; do not multiply it
+    # by pages or waves. The closed-form interval below never expands the DAG.
+    first_k = min(k, bk)
+    first_bytes = (min(m, bm) + min(n, bn)) * (first_k + 2 * ceil(first_k / 64))
+    first_service = first_bytes / port
+    first_compute = 2 * bm * bn * (32 * ceil(first_k / 32)) / core_rate + 32
+    later = max(0, panel - first_service, cube - first_compute)
+    # Launch spread, scalar setup, DMA response beyond payload, L1->L0,
+    # MMAD response beyond service and retirement: measured in 950 core cycles.
+    # Spread cannot be identified beyond the observed launch fanout.
+    launch_spread = 525 * min(1, (active - 1) / 15)
+    scalar_setup = 4964
+    first_dma = 959 + first_service
+    operand_ready = 56
+    first_mmad = 73 + first_compute
+    drain = 586
+    local = first_dma + operand_ready + first_mmad + later
+    cycles = launch_spread + scalar_setup + max(local, hbm) + drain
     us = cycles / (1000 * freq)
     plan.update(
         active_aic=active,
@@ -71,7 +89,18 @@ def price(shape, chip, work, calibrated_only):
         scale_shapes=((m, ceil(k / 64), 2), (n, ceil(k / 64), 2)),
         cube_ops_per_cycle=core_rate,
         l1_double_buffer_bytes=2 * (bm + bn) * (bk + 2 * ceil(bk / 64)),
-        cycles=dict(first_issue=1794, drain=520, cube=cube, panel_mte2=panel, hbm=hbm),
+        cycles=dict(
+            core_start_spread=launch_spread,
+            scalar_setup=scalar_setup,
+            first_dma=first_dma,
+            operand_ready=operand_ready,
+            first_mmad=first_mmad,
+            remaining_overlap=later,
+            drain=drain,
+            cube=cube,
+            panel_mte2=panel,
+            hbm=hbm,
+        ),
     )
     diag["latency_us"] = us
     return (

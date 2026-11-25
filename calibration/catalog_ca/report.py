@@ -9,9 +9,14 @@ from operator_model import load_chip
 
 
 def main():
+    from operator_model import __version__
+    if not __version__.startswith("2.4."):
+        raise ValueError("Use the archived v2.4 estimator to rebuild its development and 970DT forecasts")
     groups = defaultdict(dict)
     out = [
-        "# 目录新增算子的 CA 对照",
+        "# v2.4 目录新增算子的 CA 对照",
+        "",
+        "以下是 v2.4 的冻结预测。当前模型把这些窗口作为开发证据，v2.5 独立误差见[新的冻结对照](add-rms-refinement.md)。",
         "",
         "## BF16 AddRmsNorm",
         "",

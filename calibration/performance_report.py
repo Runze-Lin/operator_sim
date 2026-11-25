@@ -181,7 +181,7 @@ def build(font_dir=None):
     <div class="subtitle">从单核指令流水到长上下文推理</div>
     <p class="deck">基于 950DT 与 950PR 的 CA 校准<br>及面向 970DT 的架构外推</p>
     <dl class="coverfoot">
-      <dt>报告版本</dt><dd class="release">v2.4</dd>
+      <dt>报告版本</dt><dd class="release">v2.5</dd>
       <dt>系统实验</dt><dd>三模型端到端 · 13 个文本预设的算子覆盖</dd>
       <dt>对照维度</dt><dd>原法、指令类别法与默认策略</dd>
       <dt>成稿日期</dt><dd>2026 年 11 月</dd>

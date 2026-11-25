@@ -103,6 +103,27 @@ def _plan(f, sem):
         )
     x = xs[0]
     n, width = prod(y.shape), y.shape[-1] if y.shape else 1
+    if name == "inference::indexer_layer_norm":
+        _check(
+            len(xs) == 3
+            and xs[1].shape == xs[2].shape == (width,)
+            and x.shape == y.shape,
+            "LayerNorm needs last-axis affine weights and bias",
+        )
+        # Missing stride metadata permits logical bytes but no physical-layout claim.
+        read = sum(_size(t, distinct=bool(getattr(t, "stride", ()))) for t in xs)
+        rows = prod(y.shape[:-1])
+        visits = dict(load=3 * n, arithmetic=6 * n, reduce=2 * n, rsqrt=rows, store=n)
+        return Tiles(
+            "indexer_affine_layer_norm",
+            n,
+            width,
+            read,
+            _size(y),
+            8 * n + 3 * rows,
+            class_visits=visits,
+            work_source="Affine LayerNorm generic projection; no matching layout and precision CA",
+        )
     read = sum(_size(t, distinct=True) for t in xs)
     write = sum(_size(t) for t in ys)
     if name == "inference::mla_cache_write":
@@ -244,24 +265,6 @@ def _plan(f, sem):
             setup="aclnnAddRmsNorm",
             class_visits=visits,
         )
-    if name == "inference::indexer_layer_norm":
-        _check(
-            len(xs) == 3
-            and xs[1].shape == xs[2].shape == (width,)
-            and x.shape == y.shape,
-            "LayerNorm needs last-axis affine weights and bias",
-        )
-        rows = prod(y.shape[:-1])
-        visits = dict(load=3 * n, arithmetic=6 * n, reduce=2 * n, rsqrt=rows, store=n)
-        return Tiles(
-            "indexer_affine_layer_norm",
-            n,
-            width,
-            read,
-            write,
-            8 * n + 3 * rows,
-            class_visits=visits,
-        )
     if name == "aten._softmax.default":
         axis = int(dict(f.attributes)["dim"])
         _check(
@@ -351,6 +354,40 @@ def _plan(f, sem):
 
 def price(f, chip):
     try:
-        return _schedule(_plan(f, dict(dict(f.attributes).get("semantic", ()))), chip)
+        if f.raw_name == "inference::indexer_layer_norm":
+            qualified = (
+                len(f.inputs) == 3
+                and len(f.outputs) == 1
+                and len(f.inputs[0].shape) == 2
+                and min(f.inputs[0].shape) > 0
+                and all(_d(t) == "bfloat16" for t in (*f.inputs, *f.outputs))
+                and len(getattr(f.inputs[0], "stride", ()) or ()) == 2
+                and f.inputs[0].stride[1] == 1
+                and f.inputs[0].stride[0] >= f.inputs[0].shape[1]
+                and getattr(f.outputs[0], "stride", None) == (f.inputs[0].shape[1], 1)
+                and all(getattr(t, "stride", None) == (1,) for t in f.inputs[1:])
+                and 16 * f.inputs[0].shape[1] + 8192
+                <= (chip.details.get("ub_bytes") or 253952)
+                and chip.vector_tops.get("32")
+            )
+            if qualified:
+                from .layer_norm import price as layer_norm
+
+                return layer_norm(f, chip)
+        sem = dict(dict(f.attributes).get("semantic", ()))
+        tile = _plan(f, sem)
+        estimate = _schedule(tile, chip)
+        if f.raw_name == "npu::npu_add_rms_norm" and tile.elements and estimate.latency_us is not None:
+            # The BF16 calibration covers ordinary gamma and a full resident row.
+            # Leave room for staging two inputs and two outputs (double-buffered)
+            # and FP32 temporaries. Split-D and alternate contracts retain their prior schedule.
+            if (
+                all(_d(t) == "bfloat16" for t in (*f.inputs, f.outputs[0], f.outputs[2]))
+                and not sem.get("gemma_weight_offset")
+                and 24 * tile.grain + 1024 <= (chip.details.get("ub_bytes") or 253952)
+            ):
+                from .add_rms import full_rows
+                return full_rows(estimate, chip, tile.elements // tile.grain)
+        return estimate
     except (TypeError, ValueError, KeyError, IndexError) as exc:
         return NodeEstimate(None, "unsupported", reason=f"{f.raw_name}: {exc}")

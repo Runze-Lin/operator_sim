@@ -11,7 +11,7 @@ from calibration.msopprof import CORE, sha
 from calibration.mx_matmul.collect import MEMORY_CONFIG, core_windows
 
 
-def score(case, directory, opp):
+def score(case, directory, opp, *, freeze=FREEZE):
     cost = json.loads((directory / "cost.json").read_text())
     raw = (directory / "run.log").read_text()
     sku = case["chip"]
@@ -23,7 +23,7 @@ def score(case, directory, opp):
         and f"runtime_soc={sku}" in raw
         and MEMORY_CONFIG[sku] in raw
         and f"correctness Y count={rows * width} bad=0" in raw
-        and (directory / "freeze.sha256").read_text().strip() == sha(FREEZE)
+        and (directory / "freeze.sha256").read_text().strip() == sha(freeze)
     ):
         raise ValueError(f"Incomplete {directory}")
     kernels = re.findall(r"Start profiling on kernel: (\S+)", raw)
@@ -80,7 +80,7 @@ def score(case, directory, opp):
         wall_s=cost["wall_seconds"],
         probe_sha256=cost["probe_sha256"],
         log_sha256=sha(directory / "run.log"),
-        freeze_sha256=sha(FREEZE),
+        freeze_sha256=sha(freeze),
     )
 
 

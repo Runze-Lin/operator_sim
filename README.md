@@ -2,9 +2,9 @@
 
 **operator-sim** 是面向系统仿真的昇腾算子建模后端。输入一张卡实际执行的算子、shape、dtype 和芯片配置，返回设备耗时、Cube / Vector 工作量、逻辑访存量与活跃核数。能匹配库实现的路径用 CA 校准；捕获图中的研究算子按明确的分核、分块和流水推演。在线预测只依赖 Python 3.10+ 标准库，可在没有昇腾硬件和 CANN 的系统仿真主机使用。
 
-当前源码为 v2.4。已有库实现默认沿用原时序模型；已登记的新精度或新实现，有 Vector 工作时可按指令类别估计。系统接口提供 `auto`、`calibrated` 和 `instruction_classes` 三种选择。纯 Cube、视图和纯搬运共享各自的建模路径。逐算子对照页列出每个合同可选的方法及其 CA 证据。[建模方法](docs/modeling-strategy.md) · [误差分析](docs/error-analysis.md) · [逐算子两法对照](docs/vector-method-comparison.md) · [系统调用对照](docs/system-vector-methods.md)
+当前源码为 v2.5。已有库实现默认沿用原时序模型；已登记的新精度或新实现，有 Vector 工作时可按指令类别估计。系统接口提供 `auto`、`calibrated` 和 `instruction_classes` 三种选择。纯 Cube、视图和纯搬运共享各自的建模路径。逐算子对照页列出每个合同可选的方法及其 CA 证据。[建模方法](docs/modeling-strategy.md) · [误差分析](docs/error-analysis.md) · [逐算子两法对照](docs/vector-method-comparison.md) · [系统调用对照](docs/system-vector-methods.md)
 
-文本模型目录覆盖 DeepSeek V3/V3.2/V4 Flash/V4 Pro/V4.1 Flash、Kimi K3/K3.1 Pro、Qwen3.5 27B/397B-A17B、Qwen3.8 Flash Next、GLM-5.2/5.3 Flash，以及块扩散源预设。可按模型查询实际算子、物理与逻辑精度、大小 shape 及每个签名的 950DT 报价。MXFP8 的 E8M0 分组 scale 与普通 FP8 的 FP32 行 scale 分别建模。[工作负载与精度](results/v2.4/catalog/README.md) · [按模型查算子与 shape](results/v2.4/catalog/shape-index.md) · [新增 CA 对照](docs/examples/catalog-ca.md) · [并入系统 Roofline 后端仓的评估](docs/operator-performance-models-integration.md)
+文本模型目录覆盖 DeepSeek V3/V3.2/V4 Flash/V4 Pro/V4.1 Flash、Kimi K3/K3.1 Pro、Qwen3.5 27B/397B-A17B、Qwen3.8 Flash Next、GLM-5.2/5.3 Flash，以及块扩散源预设。可按模型查询实际算子、物理与逻辑精度、大小 shape 及每个签名的 950DT 报价。MXFP8 的 E8M0 分组 scale 与普通 FP8 的 FP32 行 scale 分别建模。[工作负载与精度](results/v2.4/catalog/README.md) · [按模型查算子与 shape](results/v2.4/catalog/shape-index.md) · [冻结新 shape 的 CA 对照](docs/error-analysis.md#扩展文本模型目录的逐算子结果) · [并入系统 Roofline 后端仓的评估](docs/operator-performance-models-integration.md)
 
 研究报告从 CA 指令时间戳推导阶段耗时与流水重叠，比较 950DT/PR 上的实测误差，并说明迁移到 970DT 所需的假设。第 7 章在三个模型的同一批捕获图上比较原法、默认策略、指令法与 Roofline。[完整报告（PDF）](docs/operator-sim-report-zh.pdf) · [分章正文与复算指南](docs/paper/README.md)
 

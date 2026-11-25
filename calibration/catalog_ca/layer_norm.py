@@ -23,7 +23,7 @@ SHAPES = [
 ]
 
 
-def forecast(sku, dimensions):
+def layer_features(dimensions):
     rows, width, stride = dimensions
     x = tensor((rows, width), "bfloat16")
     x.stride = (stride, 1)
@@ -41,6 +41,11 @@ def forecast(sku, dimensions):
         outputs=(y,),
         attributes=(("semantic", (("epsilon", 1e-6), ("normalized_shape", (width,)))),),
     )
+    return f
+
+
+def forecast(sku, dimensions):
+    f = layer_features(dimensions)
     return {
         m: estimate_full_features(f, chip=sku, vector_model=m).latency_us
         for m in ("auto", "instruction_classes", "calibrated")

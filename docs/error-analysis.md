@@ -59,17 +59,29 @@
 
 | 新增实现合同 | 输入与输出 | 开发 / 冻结对照（两端合计） | 950DT WAPE / 最大 | 950PR WAPE / 最大 | 证据与逐形明细 |
 |---|---|---:|---:|---:|---|
-| AddRmsNorm | BF16 X、残差、gamma → BF16 Y、残差和、FP32 逆标准差 | 6 / 20 | 17.88% / 36.03% | 15.88% / 34.04% | [每端十种独立 shape，完整核窗](examples/catalog-ca.md) |
-| Indexer LayerNorm | 跨步或连续 BF16 输入、BF16 仿射参数 → BF16 Y | 0 / 10 | 51.76% / 66.76% | 49.03% / 66.31% | [每端四种逻辑 shape、五组含 stride 的输入，完整核窗之和](examples/catalog-layer-norm-ca.md) |
-| 原生 MXFP8 × MXFP8 Matmul | 双侧 E8M0/K32 scale → BF16 | 0 / 1 | 67.80% / 67.80% | N/A | [DT 一窗；PR 采集超时](examples/catalog-cube.md) |
+| AddRmsNorm | BF16 激活、残差和 gamma → BF16 Y、残差和及 FP32 rstd | 26 / 20 | 11.12% / 17.07% | 9.53% / 17.36% | [逐形与核窗](examples/add-rms-refinement.md) |
+| Indexer LayerNorm | BF16 输入及仿射权重 → BF16 Y，区分 stride | 10 / 20 | 8.92% / 26.31% | 5.76% / 25.41% | [逐形与核窗](examples/catalog-layer-norm-ca.md) |
+| MXFP8 Matmul | E4M3FN × E4M3FN，双侧 K32/E8M0 → BF16 | 1 / 20 | 7.73% / 18.25% | 7.90% / 15.42% | [逐形与核窗](examples/catalog-cube.md) |
 | 按头 BatchMatMul | 转置 BF16 权重与 BF16 激活 → BF16 | 0 / 0 | N/A | N/A | [双端数值正确，性能采集缺完整 BMM 窗](examples/catalog-cube.md) |
 | MLA、QSA、GDN、池化 Indexer 新合同 | 取对应签名的 Q/K/V、状态和 scale 类型 | 0 / 0 | N/A | N/A | [工作量、分块和适用精度](examples/catalog-attention.md) |
 | 分组 SwiGLU / SiTU 新合同、补齐 K 及 FP8 行/通道投影 | BF16、普通 FP8 或分组 MXFP4，按实际 scale 签名区分 | 0 / 0 | N/A | N/A | [分组、布局与精度推导](examples/catalog-cube.md) |
 | HC、PLE、n-gram、状态更新 / 快照、布局和 ATen 原语新合同 | BF16/FP32、索引整型及相应存储类型 | 0 / 0 | N/A | N/A | [逐类推导与工作量算例](examples/catalog-vector.md) |
 
-每项的开发 / 冻结对照数计合格设备样本，WAPE 和最大绝对百分误差只使用冻结对照。LayerNorm 行采用多 kernel 活跃窗之和，不含核间间隙；若只取三个实际 GLM 布局，两端 WAPE 分别为 48.07% 和 44.78%。原生 MXFP8 Matmul 的百分数只代表一次 DT 小 M 观测。无对应实测的精度与融合实现不继承同名算子的 CA 指标。970DT 的报价在各算例中标为外推。
+每项开发 / 冻结对照数按两端合格样本合计。三项 v2.5 模型均用 v2.4 的旧窗作开发；每个新版合同在每端独立测试十个不同 shape。Indexer LayerNorm 计 Slice 和 LayerNormV4 各自活跃窗之和，核间启动空隙另计。未匹配的精度与融合实现继续标 N/A。
 
-**按模型和调用名核查。** 13 个模型预设的 183 张前向图覆盖 119 个原始调用名。三策略逐项通过 122,383 个不同输入签名。116 个调用名各有至少十种物理 shape；另三个 RoPE 初始化算子在源预设中宽度固定。按调用名汇总的三策略差异是相同图、相同设备资源下的预测对比；缺少 CA 时只列报价和工作量。默认 API 的并发墙钟中位 0.226 ms，P99 为 21.200 ms，最大 265.545 ms；80 个慢签名串行各复测五次，单次最大 16.714 ms。[119 项三策略对照](../results/v2.4/catalog/method-comparison.csv) · [各模型精度与大小 shape](../results/v2.4/catalog/shape-index.md) · [逐签名报价与复核说明](../results/v2.4/catalog/README.md)
+| 算子 | 950DT v2.4 → v2.5 WAPE | 950PR v2.4 → v2.5 WAPE | 950DT / PR 新版最大误差 | 冷读写等效 U 范围（DT / PR） | DT/PR 加速比 WAPE，v2.4 → v2.5 |
+|---|---:|---:|---:|---|---:|
+| AddRmsNorm | 19.47% → 11.12% | 17.45% → 9.53% | 17.07% / 17.36% | 0.39%–12.80% / 1.18%–36.89% | 8.96% → 6.38% |
+| Indexer LayerNorm | 55.49% → 8.92% | 51.89% → 5.76% | 26.31% / 25.41% | 0.01%–2.08% / 0.02%–5.79% | 7.84% → 4.47% |
+| MXFP8 Matmul | 63.77% → 7.73% | 53.80% → 7.90% | 18.25% / 15.42% | 0.05%–28.83% / 0.15%–56.54% | 14.29% → 7.06% |
+
+WAPE 用绝对微秒误差之和除以实测微秒之和。最大误差为最差单窗的绝对相对误差。冷读写 U 为同精度有用运算与逻辑读写两项峰值时间的最大值，除以包含该下界的预测。DT/PR 加速比取同形状的 DT 耗时除以 PR 耗时，再对配对比值计算 WAPE。三算子分开统计，原始计时分别为单 kernel 的全设备活跃窗或顺序多 kernel 的活跃窗之和，包含多核指令的最早发起和最晚退休。 [每个新 shape 的 v2.4、v2.5、CA、970DT 外推与逻辑 U](../results/v2.5/paired-errors.csv) · [指标明细](../results/v2.5/accuracy.json)
+
+按 DT/PR 比值是否高于或低于 1 判定方向，预测等速单列为未命中。十个同形配对里，v2.5 对 AddRmsNorm 判对 8 个、Indexer LayerNorm 判对 3 个、MXFP8 Matmul 判对 1 个。每端平均耗时误差下降后，两芯片的小幅差异仍可能被首发或写回误差盖住。MXFP8 的 [9,896,7168] 是尺寸取自 Kimi 路由器、精度改成双 MXFP8 的试验；实测每核 7 条 MMAD_MX，模型排了 14 个传输页，预测 DT/PR 比为 0.686，实测 0.829。
+
+**按模型和调用名核查。** 13 个模型预设的 183 张前向图覆盖 119 个原始调用名。三策略逐项通过 122,383 个不同输入签名。116 个调用名各有至少十种物理 shape；另三个 RoPE 初始化算子在源预设中宽度固定。按调用名汇总的三策略差异是相同图、相同设备资源下的预测对比；缺少 CA 时只列报价和工作量。v2.4 默认 API 的并发墙钟中位 0.226 ms，P99 为 21.200 ms，最大 265.545 ms；80 个慢签名串行各复测五次，单次最大 16.714 ms。[119 项三策略对照](../results/v2.4/catalog/method-comparison.csv) · [各模型精度与大小 shape](../results/v2.4/catalog/shape-index.md) · [逐签名报价与复核说明](../results/v2.4/catalog/README.md)
+
+本次 v2.5 默认策略回放同一批签名，3,679 项设备报价变化。三种策略均通过全部签名的同精度下界审计。端到端速度仍须依赖系统调度与实测。查询开销和范围见[版本对照](../results/v2.5/changes.md)。
 
 ## 单算子误差与端到端预测差如何对应
 
