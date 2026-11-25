@@ -144,7 +144,7 @@ def build(font_dir=None):
     <dl class="coverfoot">
       <dt>正文基线</dt><dd class="release">v2.0.0</dd>
       <dt>实验冻结版</dt><dd>v1.13.1</dd>
-      <dt>附录 E</dt><dd>v2.1 FA 试验</dd>
+      <dt>附录 E / F</dt><dd>v2.1 / v2.2 指令建模试验</dd>
       <dt>成稿日期</dt><dd>2026 年 11 月</dd>
     </dl>
     </header>"""

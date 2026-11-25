@@ -12,7 +12,7 @@ from operator_model.operators.kda.prefill import plan_kimi_kda_prefill
 from operator_model.operators.kda.recurrent_chains import estimate_recurrent_chains
 from operator_model.operators.attention.candidate_layout import summarize_candidate_layout
 
-__version__ = '2.1.0'
+__version__ = '2.2.0'
 __all__ = ['ChipConfig', 'load_chip', 'Estimate', 'estimate', 'OperatorStream', 'physical_roofline',
            'RmsHistoryBand', 'estimate_rms_history_band', 'plan_kimi_kda_prefill',
            'PostHistory', 'estimate_post_history', 'RmsGeometry', 'rmsnorm_pipeline',

@@ -41,7 +41,7 @@ def _ub_rows(width, capacity):
     return min(255,available//(11*aligned)), False
 
 
-def price(shape,chip,attrs):
+def price(shape,chip,attrs, *, instruction_classes=False):
     work = work_for(shape,attrs)
     rows, width = prod(shape[:-1]), shape[-1]
     active = min(rows,chip.vector_cores)
@@ -63,10 +63,17 @@ def price(shape,chip,attrs):
     lane_scale = ref/(peak*1000/(chip.vector_cores*chip.frequency_ghz)) if peak else 1.
     rd = (chip.details.get('mte2_bandwidth_gbs') or p['read_B_per_cycle']*chip.frequency_ghz)/chip.frequency_ghz
     wr = (chip.details.get('mte3_bandwidth_gbs') or p['write_B_per_cycle']*chip.frequency_ghz)/chip.frequency_ghz
+    vf_info = {}
     def service(h):
         n = h*width
         read = p['read_setup_cycles']+2*n/rd
         vec = p['vector_setup_cycles']+(p['vector_cycles_per_element']*n)*lane_scale
+        if instruction_classes:
+            from operator_model.operators.vector.instruction_classes import tile_service
+            core, detail = tile_service('token_quant',n,chip,rows=h)
+            vec = p['vector_setup_cycles'] + core
+            if not vf_info:
+                vf_info.update(detail)
         write = max(p['payload_setup_cycles']+n/wr,p['scale_retirement_cycles'] + p['scale_arrival_cycles']*log2(active) + 4*h/wr)
         return read,vec,write
     first = service(tile_rows)
@@ -84,4 +91,7 @@ def price(shape,chip,attrs):
     plan.update(tiles=tiles,tile_rows=tile_rows,memory=memory)
     info.update(timing_qualification=status,stages_us={k:v/clock for k,v in stages.items()},
                 reason='Explicit CANN per-token standalone implementation; timing scope is contiguous full-load rows.')
+    if instruction_classes:
+        info.update(first_tile_instruction_classes=vf_info,timing_qualification='extrapolated',
+                    reason='Experimental contiguous rowwise instruction-class schedule')
     return sum(stages.values())/clock, work, info

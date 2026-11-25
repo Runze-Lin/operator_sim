@@ -21,7 +21,7 @@ def sigmoid_work(shape):
                    notes=['Each transcendental/divide counts once per element. Dense FMA peak is not its instruction rate.'])
 
 
-def resource_sigmoid(shape, chip):
+def resource_sigmoid(shape, chip, *, instruction_classes=False):
     from operator_model.operators.rmsnorm.resources import READ_PER_KIB, WRITE_PER_KIB
     n = _elements(shape)
     potential = min(chip.vector_cores, _ceil(n, 1024))  # Minimum 4 KiB input per block.
@@ -46,6 +46,8 @@ def resource_sigmoid(shape, chip):
     # terminal core: 4170 cycles from the earliest core. This includes arrival.
     front = 3012 + 193 * log2(active)
 
+    vf_info = {}
+
     def service(amount):
         data = 4 * amount
         local_read = data * f / read_port
@@ -53,6 +55,14 @@ def resource_sigmoid(shape, chip):
         read = max(1159 + local_read, data * active * f / chip.hbm_bandwidth_gbs)
         groups = _ceil(amount, 64)
         vector = (79 + 4*(groups-1)) * simd_factor
+        if instruction_classes:
+            from .instruction_classes import tile_service
+            core, detail = tile_service('sigmoid', amount, chip)
+            # In the one-register DT development window the arithmetic service
+            # is five cycles. Retain the remaining launch and dependency time.
+            vector = 74 + core
+            if not vf_info:
+                vf_info.update(detail)
         write = 159 + local_write
         return read, vector, write, max(local_read, local_write, amount * active * per_element_cycles, vector,
                                        (read+vector)/2, (vector+write)/2)
@@ -86,4 +96,4 @@ def resource_sigmoid(shape, chip):
                     last_write=lw/factor)
     return end/factor, 0, active, dict(target_plan=plan, stages_us=stages, schedule_us=schedule,
                                        port_read_gbs=read_port, port_write_gbs=write_port, shared_gbs=memory['effective_external_gbs'], **memory,
-                                       special_function_rate_scale=simd_factor)
+                                       special_function_rate_scale=simd_factor, **({'first_tile_instruction_classes':vf_info} if instruction_classes else {}))

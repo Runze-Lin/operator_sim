@@ -177,15 +177,19 @@ def _price_resource(op, shape, target, call, dtype):
             raise ValueError('Addmm requires contiguous BF16 ND, column bias, alpha=beta=1, cubeMathType=0')
         us, aic, aiv, diag = resource_matmul(shape, target, column_bias=True)
     elif op == 'sigmoid_fp32':
+        from operator_model.operators.vector.instruction_classes import select_class_model
+        classes = select_class_model(call)
         if call:
             raise ValueError('Sigmoid expects contiguous FP32 input without attributes')
         from operator_model.operators.vector.sigmoid import resource_sigmoid
-        us, aic, aiv, diag = resource_sigmoid(shape, target)
+        us, aic, aiv, diag = resource_sigmoid(shape, target, instruction_classes=classes)
     elif op == 'cast_bf16_fp32':
+        from operator_model.operators.vector.instruction_classes import select_class_model
+        classes = select_class_model(call)
         if call:
             raise ValueError('Cast expects a contiguous BF16 to FP32 conversion')
         from operator_model.operators.vector.cast import resource_cast
-        us, aic, aiv, diag = resource_cast(shape, target, pressure_retention=True)
+        us, aic, aiv, diag = resource_cast(shape, target, pressure_retention=True, instruction_classes=classes)
         # The kernel can issue its first two reads to different UB slots before
         # either retires. These are issue markers, separate from bandwidth time.
         stages = diag['stages_us']
@@ -271,6 +275,9 @@ def _price_resource(op, shape, target, call, dtype):
     if op == 'addmm' and target == load_chip() and max(shape) <= 512:
         return Estimate(us, 'estimated', 'DT-calibrated MatMulV3 and fused bias transfer', aiv, aic,
                         target.name, work, projected, _rates(work, us, target))
+    if op in ('cast_bf16_fp32','sigmoid_fp32') and classes:
+        return Estimate(us, 'extrapolated', 'Experimental contiguous instruction-class schedule',
+                        aiv, aic, target.name, work, projected, _rates(work,us,target))
     if op == 'sigmoid_fp32' and target == load_chip() and 12 <= shape[0]*shape[1] <= 3072*96:
         return Estimate(us, 'estimated', 'DT stage calibration range', aiv, aic, target.name,
                         work, projected, _rates(work, us, target))
@@ -354,6 +361,10 @@ def _price_device(op, shape, attrs, target, dtype, timing_mode):
     call, chosen_dtype = _call_attrs(op, attrs, dtype)
     if timing_mode not in ('auto','resource','calibrated'):
         raise ValueError('timing_mode must be auto, resource or calibrated')
+    if (op in ('cast_bf16_fp32', 'sigmoid_fp32') and timing_mode == 'calibrated'
+            and call.get('vector_model') == 'instruction_classes'):
+        return Estimate(None, 'unavailable', 'Instruction-class route has no dedicated calibration',
+                        chip_name=target.name), raw
     if op == 'fa' and timing_mode == 'calibrated':
         if chosen_dtype == 'fp16' or call.get('vector_model') == 'instruction_classes' or call.get('fa_port_model') == 'probe':
             return Estimate(None, 'unavailable', 'Experimental FA has no dedicated calibrated route',
@@ -406,7 +417,9 @@ def _price_device(op, shape, attrs, target, dtype, timing_mode):
                         chip_name=target.name, work=work, projection=plan), raw
     if op == 'quant_token_fp8':
         from operator_model.operators.quant.token_fp8 import price
-        us, work, plan = price(shape, target, call)
+        from operator_model.operators.vector.instruction_classes import select_class_model
+        classes = select_class_model(call)
+        us, work, plan = price(shape, target, call, instruction_classes=classes)
         return _native_alternative(us, work, plan, target, timing_mode), raw
     if op == 'quant_mxfp4':
         from operator_model.operators.quant.mxfp4 import contiguous_input, mx4_work, price

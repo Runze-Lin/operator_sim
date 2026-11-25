@@ -214,7 +214,7 @@ def implementation(row):
 def render_contract(contract, rows):
     sections = [f'# {contract} · 逐窗误差', '[全部合同](README.md) · [总误差分析](../error-analysis.md) · [原始逐窗记录](../../calibration/reference/windows.jsonl)']
     if contract == 'fa':
-        sections.append('以下为 v2.0 默认 BF16 归档。新增两种 Vector 定价的逐窗对照、独立新形及 FP16 结果见[附录 E](../paper/13-fa-vector-pilot.md)与[两种模型的逐窗账本](../../results/v2.1/fa-vector-windows.csv)。')
+        sections.append('以下为 v2.0 默认 BF16 归档。新增两种 Vector 定价的逐窗对照、独立新形及 FP16 结果见[附录 E](../paper/13-fa-vector-pilot.md)与[两种模型的逐窗账本](../../results/v2.1/fa-vector-windows.csv)。v2.2 修订后的方法见[八个双端验证窗](../../results/v2.2/fa-validation/README.md)。')
     if not rows:
         sections += [('BF16 全表融合参考排程在两端均缺完整 CA。A5 的 MXFP4 原生消费层另有固定 metadata 的完整设备窗；包含 AICPU、准备输入和后处理的部署端到端时间仍为外推。'
                       if contract == 'candidate_filtered_indexer' else

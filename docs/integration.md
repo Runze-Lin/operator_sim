@@ -162,3 +162,17 @@ print(diag["vector_model"], diag["wave_types"][0]["first"]["vf"]["phases"])
 ```sh
 operator-sim --op fa --shape 9 32768 64 1 1 --chip Ascend950PR_957b --dtype bf16 --attrs-json '{"vector_model":"instruction_classes","fa_port_model":"probe"}'
 ```
+
+## 独立 Vector 算子的指令类别试验
+
+`cast_bf16_fp32`、`sigmoid_fp32` 和 `quant_token_fp8` 可通过与 FA 相同的属性在原法和类别法之间选择。原法为三者默认。工作精度依次为 BF16→FP32、FP32→FP32 和 BF16→逐行 FP8＋FP32 scale。
+
+```python
+from operator_model import estimate
+
+for opts in ({}, {"vector_model":"instruction_classes"}):
+    result = estimate("sigmoid_fp32", (16384, 48), opts, dtype="fp32", chip="Ascend950PR_957b")
+    print(result.status, result.latency_us)
+```
+
+这三个连续 Vector 程序的 `vf_<类别>_ii_cycles`、`vf_issue_width`、`vf_ub_ports`、`vf_alu_lanes` 属于芯片 details；FA 的专用 `fa_vf_*` 参数独立。类模型输出按实验估计标记。不同 dtype、数据布局或寄存器宽度可能需要另一个程序。[类别、指令工作量与误差](nonfa-vector-classes.md) · [迁移条件与 CPU 查询成本](paper/14-vector-transfer.md)

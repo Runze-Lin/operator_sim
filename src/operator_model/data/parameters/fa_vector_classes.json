@@ -1,26 +1,50 @@
 {
-  "profile": "fa-vf-nd-row-950-v1",
+  "profile": "fa-vf-nd-row-950-v2",
   "scope": "Dense unmasked attention with FP32 softmax and accumulation. One busy AIV, ND row-program hypothesis. Full DN layouts, compiler allocation, spill selection and instruction-cache effects are not reconstructed.",
   "reference": {
     "throughput": "https://asc.gitcode.com/api/appendix/reg_vector_compute_interface_theoretical_perf_summary.html",
     "issue": "https://asc.gitcode.com/api/appendix/reg_vector_compute_interface_instruction_single_dual_issue_summary.html",
     "reviewed_reference": "https://github.com/ZhanluModelSim/operator-performance-models/blob/5da9553d6931c4334b69946bf9fd477c12445ce3/src/operator_performance_models/models/instruction/arch35_timings.py",
-    "interpretation": "256-byte register, 64 FP32 lanes. Arithmetic, row reduction and cast use nominal 64 lanes/cycle, expdiff/div use 16. Load/store represent one contiguous register transaction. FP32-to-FP16 cast, register-result latency and mixed-pipe capacities are design assumptions here. No kernel-window regression."
+    "interpretation": "256-byte register, 64 FP32 lanes. Arithmetic, row reduction and cast use nominal 64 lanes/cycle, expdiff/div use 16. Load/store represent one contiguous register transaction. FP32-to-FP16 cast, register-result latency and mixed-pipe capacities are design assumptions here. No kernel-window regression.",
+    "execution": "950DT [9,32768,64,1,1], core0 AIV type 2: median positive RV instruction spans, SHA256 9220bb8932f4f4464a75c005fdc9dd1fd485928938c1be3d2bc916dd37f0c220. Load/store=9, max=16, sum=22, mul=8, add=7, expdiff=18, divide=17, convert=7, smem_bar=9 cycles. Producer-chain latency proxies only; issue intervals remain independent. Packed statistic from one rescale PC per noninitial page per AIV in 3 prior windows. 64 FP32 lanes is a template capacity assumption."
   },
   "classes": {
-    "arithmetic": {"ii_cycles": 1, "latency_cycles": 2},
-    "reduce": {"ii_cycles": 1, "latency_cycles": 4},
-    "exp": {"ii_cycles": 4, "latency_cycles": 4},
-    "divide": {"ii_cycles": 4, "latency_cycles": 4},
-    "convert": {"ii_cycles": 1, "latency_cycles": 2},
-    "load": {"ii_cycles": 1, "latency_cycles": 2},
-    "store": {"ii_cycles": 1, "latency_cycles": 2}
+    "arithmetic": {
+      "ii_cycles": 1,
+      "latency_cycles": 7
+    },
+    "reduce": {
+      "ii_cycles": 1,
+      "latency_cycles": 16
+    },
+    "exp": {
+      "ii_cycles": 4,
+      "latency_cycles": 18
+    },
+    "divide": {
+      "ii_cycles": 4,
+      "latency_cycles": 17
+    },
+    "convert": {
+      "ii_cycles": 1,
+      "latency_cycles": 7
+    },
+    "load": {
+      "ii_cycles": 1,
+      "latency_cycles": 9
+    },
+    "store": {
+      "ii_cycles": 1,
+      "latency_cycles": 9
+    }
   },
   "capacities": {
     "issue_width": 2,
     "alu_lanes": 2,
     "ub_ports": 2,
     "ub_store_ports": 1,
-    "writeback_ports": 2
+    "writeback_ports": 2,
+    "store_fence_cycles": 9,
+    "sum_reduce_extra_cycles": 6
   }
 }

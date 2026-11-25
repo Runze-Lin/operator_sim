@@ -1,0 +1,167 @@
+{
+  "timer": "perf_counter_ns, public estimate incl work and diagnostic assembly; CPU wall time",
+  "steady": "15 rounds of shuffled distinct archive chip+shape, alternating order, preloaded chips",
+  "first": "9 fresh interpreters, DT config and module import before timing, one representative shape",
+  "python": "3.12.16",
+  "cpu": "aarch64",
+  "results": [
+    {
+      "op": "cast_bf16_fp32",
+      "mode": "original",
+      "cases": 65,
+      "steady": {
+        "p50_us": 63.07,
+        "p95_us": 68.17,
+        "n": 975
+      },
+      "first_shape": [
+        2097152,
+        32
+      ],
+      "first_dt": {
+        "p50_us": 2212.36,
+        "p95_us": 2266.79,
+        "n": 9
+      }
+    },
+    {
+      "op": "cast_bf16_fp32",
+      "mode": "classes",
+      "cases": 65,
+      "steady": {
+        "p50_us": 78.56,
+        "p95_us": 87.13,
+        "n": 975
+      },
+      "first_shape": [
+        2097152,
+        32
+      ],
+      "first_dt": {
+        "p50_us": 2275.9,
+        "p95_us": 2302.38,
+        "n": 9
+      }
+    },
+    {
+      "op": "fa",
+      "mode": "original",
+      "cases": 83,
+      "steady": {
+        "p50_us": 92.93,
+        "p95_us": 101.02,
+        "n": 1245
+      },
+      "first_shape": [
+        3,
+        192,
+        64,
+        1,
+        2
+      ],
+      "first_dt": {
+        "p50_us": 1900.77,
+        "p95_us": 2017.65,
+        "n": 9
+      }
+    },
+    {
+      "op": "fa",
+      "mode": "classes",
+      "cases": 83,
+      "steady": {
+        "p50_us": 226.41,
+        "p95_us": 237.08,
+        "n": 1245
+      },
+      "first_shape": [
+        3,
+        192,
+        64,
+        1,
+        2
+      ],
+      "first_dt": {
+        "p50_us": 2274.83,
+        "p95_us": 2418.36,
+        "n": 9
+      }
+    },
+    {
+      "op": "sigmoid_fp32",
+      "mode": "original",
+      "cases": 43,
+      "steady": {
+        "p50_us": 62.56,
+        "p95_us": 66.13,
+        "n": 645
+      },
+      "first_shape": [
+        1572864,
+        12
+      ],
+      "first_dt": {
+        "p50_us": 2183.77,
+        "p95_us": 2346.1,
+        "n": 9
+      }
+    },
+    {
+      "op": "sigmoid_fp32",
+      "mode": "classes",
+      "cases": 43,
+      "steady": {
+        "p50_us": 82.22,
+        "p95_us": 86.44,
+        "n": 645
+      },
+      "first_shape": [
+        1572864,
+        12
+      ],
+      "first_dt": {
+        "p50_us": 2271.67,
+        "p95_us": 2310.38,
+        "n": 9
+      }
+    },
+    {
+      "op": "quant_token_fp8",
+      "mode": "original",
+      "cases": 26,
+      "steady": {
+        "p50_us": 55.725,
+        "p95_us": 61.97,
+        "n": 390
+      },
+      "first_shape": [
+        9,
+        512
+      ],
+      "first_dt": {
+        "p50_us": 1731.11,
+        "p95_us": 1785.9,
+        "n": 9
+      }
+    },
+    {
+      "op": "quant_token_fp8",
+      "mode": "classes",
+      "cases": 26,
+      "steady": {
+        "p50_us": 67.405,
+        "p95_us": 76.05,
+        "n": 390
+      },
+      "first_shape": [
+        9,
+        512
+      ],
+      "first_dt": {
+        "p50_us": 1757.4,
+        "p95_us": 1863.38,
+        "n": 9
+      }
+    }
+  ]
+}

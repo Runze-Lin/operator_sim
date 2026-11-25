@@ -22,7 +22,7 @@ def cast_work(shape):
                    notes=['One exact widening conversion per element. This lane-operation count describes conversions, not dense FP32 multiply-adds.'])
 
 
-def resource_cast(shape, chip, *, pressure_retention=False):
+def resource_cast(shape, chip, *, pressure_retention=False, instruction_classes=False):
     n = _elements(shape)
     # 2048-element minimum grid grain inferred from a 16384-element launch of
     # eight active AIVs. Above saturation, share 32-byte aligned input blocks.
@@ -55,13 +55,21 @@ def resource_cast(shape, chip, *, pressure_retention=False):
     # reference trace. Dense peak pricing assumes similar target issue width.
     groups = (first+63)//64
     simd = 113*groups/64*vec_price
+    vf_info = {}
+    if instruction_classes:
+        from .instruction_classes import tile_service
+        simd, vf_info = tile_service('cast', first, chip)
     stages = {'arrival':arrival,'control_to_read':1367.,
               'read':read_fixed+2*first/1024*rprice,
               'vector':simd,'dependency_to_write':838.,
               'write':write_fixed+4*first/1024*wprice}
     remaining = local-first
-    stages['steady_tiles'] = max(2*remaining/1024*rprice,4*remaining/1024*wprice,
-                                 (113/64)*((remaining+63)//64)*vec_price)
+    remaining_compute = (113/64)*((remaining+63)//64)*vec_price
+    if instruction_classes and remaining:
+        full, tail = divmod(remaining,cap)
+        tail_service = tile_service('cast',tail,chip)[0] if tail else 0
+        remaining_compute = full*simd+tail_service
+    stages['steady_tiles'] = max(2*remaining/1024*rprice,4*remaining/1024*wprice,remaining_compute)
     input_slot_ii = output_slot_ii = None
     if remaining:
         # The next tile can reuse an input slot once compute consumed it,
@@ -86,4 +94,4 @@ def resource_cast(shape, chip, *, pressure_retention=False):
                                             input_slot_ii_cycles=input_slot_ii,
                                             output_slot_ii_cycles=output_slot_ii,
                                             read_cycles_per_kib=rprice,write_cycles_per_kib=wprice,
-                                            standalone_first_launch=True, **memory)
+                                            standalone_first_launch=True, **({'first_tile_instruction_classes':vf_info} if instruction_classes else {}), **memory)

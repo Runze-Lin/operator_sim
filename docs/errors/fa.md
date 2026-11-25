@@ -2,7 +2,7 @@
 
 [全部合同](README.md) · [总误差分析](../error-analysis.md) · [原始逐窗记录](../../calibration/reference/windows.jsonl)
 
-以下为 v2.0 默认 BF16 归档。新增两种 Vector 定价的逐窗对照、独立新形及 FP16 结果见[附录 E](../paper/13-fa-vector-pilot.md)与[两种模型的逐窗账本](../../results/v2.1/fa-vector-windows.csv)。
+以下为 v2.0 默认 BF16 归档。新增两种 Vector 定价的逐窗对照、独立新形及 FP16 结果见[附录 E](../paper/13-fa-vector-pilot.md)与[两种模型的逐窗账本](../../results/v2.1/fa-vector-windows.csv)。v2.2 修订后的方法见[八个双端验证窗](../../results/v2.2/fa-validation/README.md)。
 
 模型和 CA 均为设备微秒（µs）。有符号误差为 `100 × (模型 / CA − 1)`。原窗逻辑 U 的分子是 `max(Cube、Vector、逻辑 HBM 的峰值时间)`，分母是默认排程设备耗时。冷读写列保留同一排程与分子，把分母换成 `max(原窗 µs, (逻辑读字节 + 逻辑写字节) / HBM 带宽)`，假设冷读且输出写回并充分重叠。冷读写没有对应的 CA 真值，只用于场景比较。物理利用率需要同窗 HBM 控制器流量，本页所有记录均为 N/A。两个逻辑 U 都未截断。查询列为归档 CPU 墙钟毫秒（ms），顺序为 950 / 970。970DT 两列均为原窗策略的外推。
 
