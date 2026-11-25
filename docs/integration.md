@@ -139,3 +139,26 @@ print(r.kernel_count, r.latency_us, r.dispatch_overhead_us, r.scheduled_us)
 ## 选择 Flash A5 候选消费层
 
 传入 `FullOperatorSimBackend(candidate_implementation="a5_qsli_projection", candidate_options={"pa_block_size":128,"table_pages":8201})` 可在已匹配的 Flash 第 24、28、32、36 层，把参考 BF16 节点映射为“Q 已打包、折叠 KV 已就绪”的 A5 消费层。预留页数按实际配置填写，省略时采用覆盖当前 L 的最小值。实现与选项参与预测缓存键。默认 `capture` 继续按捕获合同重放。其他节点继续使用原有后端与调度。设备返回值为外推；上游 Q/K 转换、AICPU metadata、后处理边界和系统预留容量的解释见[具体例子](examples/flash-a5-qsli.md)及[33 组同图比较](context-sweep.md)。
+
+## 稠密 FA 的 Vector 选项
+
+```python
+from operator_model import estimate
+
+shape = (9, 32768, 64, 1, 1)  # Q、KV、D、本卡 batch、本卡头数
+bf = estimate("fa", shape, dtype="bf16")
+trial = estimate("fa", shape, {"vector_model": "instruction_classes"}, dtype="bf16")
+half = estimate("fa", shape, dtype="fp16", chip="Ascend970DT")
+diag = trial.projection["timing_diagnostics"]
+print(diag["vector_model"], diag["wave_types"][0]["first"]["vf"]["phases"])
+```
+
+`vector_model="auto"` 是默认值。已有 BF16 合同选择 `calibrated`，新加入的 FP16 合同选择 `instruction_classes`。BF16 上可显式选择任一方法。类别法的 FA 程序假设连续稠密、无 mask、16 位 Q/K/V 与输出、FP32 softmax 和累积，支持头宽 64 或 128。要研究这一数据流的新实现，用 `attrs={"implementation":"dense_nd_row"}` 指明按行处理的设计程序。即使 dtype 是 BF16，auto 也会选择类别法。原库合同名为 `dense_sbh`。可在芯片配置中更换每类指令的价格。具有新算法、尾块策略或张量布局的实现要先登记对应的 VF 程序；此入口不会从未知 kernel 名推导指令。`timing_mode="calibrated"` 要求专用校准报价，与请求实验定价互斥。公开结果可在 `status`、`reason` 与上述逐阶段诊断中核查。
+
+独立的 `fa_port_model="probe"` 可与任一 BF16 方法组合。适用于标称 1.65 GHz 的 950DT_9582/950PR_957b，B=H=1、D=64、Q∈{9,16,32,64}、KV>1024、每 AIC 配两颗 AIV。未覆盖的末页宽度回用默认页约束，逐页诊断 `read_timing` 标出来源。超出硬件或调用合同的显式请求返回原因。970DT 的正常调用使用目标配置与继承假设。逐类可配字段采用 `fa_vf_<类别>_ii_cycles` 与 `fa_vf_<类别>_latency_cycles`，FP16 转换可单设 `fa_vf_fp16_convert_ii_cycles` 和 `fa_vf_fp16_convert_latency_cycles`。[全部类别与端口假设](../src/operator_model/data/parameters/fa_vector_classes.json) · [950 搬运探针来源](../src/operator_model/data/parameters/fa_port_scenarios.json)
+
+命令行可直接复算同一个比较点。
+
+```sh
+operator-sim --op fa --shape 9 32768 64 1 1 --chip Ascend950PR_957b --dtype bf16 --attrs-json '{"vector_model":"instruction_classes","fa_port_model":"probe"}'
+```

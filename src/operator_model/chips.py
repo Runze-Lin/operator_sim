@@ -1,5 +1,6 @@
 """Versioned chip scenarios. The online backend only reads portable JSON."""
 from operator_model.resources import chip_file
+from operator_model.operators.attention.vector_classes import VF_CHIP_FIELDS
 from collections.abc import Mapping
 from dataclasses import dataclass, field
 from functools import lru_cache
@@ -25,7 +26,7 @@ _DETAILS = {'ub_bytes', 'l1_bytes', 'l2_bytes', 'l0a_bytes', 'l0b_bytes', 'l0c_b
             'quant_write_latency_cycles', 'quant_end_cycles', 'fa_aiv_per_aic',
             'quant_prefetch_launch_cycles', 'quant_loop_work_ops', 'quant_output_retained_fraction',
             'matmul_hbm_efficiency', 'matmul_l2_efficiency', 'matmul_output_retained_fraction',
-            'matmul_initial_read_gbs'}
+            'matmul_initial_read_gbs'} | VF_CHIP_FIELDS
 
 
 def _number(x, label, *, integer=False):

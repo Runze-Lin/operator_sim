@@ -1,0 +1,26 @@
+{
+  "profile": "fa-vf-nd-row-950-v1",
+  "scope": "Dense unmasked attention with FP32 softmax and accumulation. One busy AIV, ND row-program hypothesis. Full DN layouts, compiler allocation, spill selection and instruction-cache effects are not reconstructed.",
+  "reference": {
+    "throughput": "https://asc.gitcode.com/api/appendix/reg_vector_compute_interface_theoretical_perf_summary.html",
+    "issue": "https://asc.gitcode.com/api/appendix/reg_vector_compute_interface_instruction_single_dual_issue_summary.html",
+    "reviewed_reference": "https://github.com/ZhanluModelSim/operator-performance-models/blob/5da9553d6931c4334b69946bf9fd477c12445ce3/src/operator_performance_models/models/instruction/arch35_timings.py",
+    "interpretation": "256-byte register, 64 FP32 lanes. Arithmetic, row reduction and cast use nominal 64 lanes/cycle, expdiff/div use 16. Load/store represent one contiguous register transaction. FP32-to-FP16 cast, register-result latency and mixed-pipe capacities are design assumptions here. No kernel-window regression."
+  },
+  "classes": {
+    "arithmetic": {"ii_cycles": 1, "latency_cycles": 2},
+    "reduce": {"ii_cycles": 1, "latency_cycles": 4},
+    "exp": {"ii_cycles": 4, "latency_cycles": 4},
+    "divide": {"ii_cycles": 4, "latency_cycles": 4},
+    "convert": {"ii_cycles": 1, "latency_cycles": 2},
+    "load": {"ii_cycles": 1, "latency_cycles": 2},
+    "store": {"ii_cycles": 1, "latency_cycles": 2}
+  },
+  "capacities": {
+    "issue_width": 2,
+    "alu_lanes": 2,
+    "ub_ports": 2,
+    "ub_store_ports": 1,
+    "writeback_ports": 2
+  }
+}

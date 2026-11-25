@@ -64,6 +64,16 @@ def _call_attrs(op, attrs, dtype):
             raise ValueError('A5 QSLI requires packed MXFP4 Q/K and their E8M0 scales')
     elif op == 'matmul' and chosen in ('mxfp4', 'fp8_e4m3fn'):
         pass  # Validate these mixed-precision contracts at their own entry point.
+    elif op == 'fa':
+        if chosen not in ('bf16', 'fp16'):
+            raise ValueError('Dense FA supports BF16 and the FP16 design scenario')
+        implementation = supplied.pop('implementation', 'dense_sbh')
+        if implementation == 'dense_nd_row':
+            if supplied.get('vector_model', 'auto') not in ('auto', 'instruction_classes'):
+                raise ValueError('The dense_nd_row design has an instruction-class VF program only')
+            supplied['vector_model'] = 'instruction_classes'
+        elif implementation != 'dense_sbh':
+            raise ValueError('FA implementation must be dense_sbh or dense_nd_row')
     elif chosen != default_dtype(op):
         raise ValueError(f'{op} timing requires {default_dtype(op)} input, received {chosen}')
     return supplied, chosen
@@ -203,18 +213,20 @@ def _price_resource(op, shape, target, call, dtype):
             raise ValueError('Router expects the fixed sigmoid/bias, one-group contract')
         from operator_model.operators.vector.router import resource_router
         us, aic, aiv, diag = resource_router(shape, target)
+    elif op == 'fa':
+        Case(op, shape)
+        if set(call) - {'vector_model', 'fa_port_model'}:
+            raise ValueError('Dense noncausal FA accepts vector_model and fa_port_model')
+        us, aic, aiv, diag = resource_fa(shape, target, dtype=dtype, **call)
     else:
         if call:
             raise ValueError('This validated route has fixed attributes')
-        if op == 'fa':
-            Case(op, shape)  # Dense noncausal SBH proxy retains its original contract.
-        else:
-            rank = 2 if op == 'quant' else 3
-            if len(shape) != rank or any(type(x) is not int or x <= 0 for x in shape):
-                raise ValueError(f'{op} requires {rank} positive integer dimensions')
-            if op == 'quant' and (shape[1] % 64 or shape[1] > 65536):
-                raise ValueError('Quant cols must be a multiple of 64, at most 65536')
-        price = {'quant': resource_quant, 'matmul': resource_matmul_dispatch, 'fa': resource_fa}[op]
+        rank = 2 if op == 'quant' else 3
+        if len(shape) != rank or any(type(x) is not int or x <= 0 for x in shape):
+            raise ValueError(f'{op} requires {rank} positive integer dimensions')
+        if op == 'quant' and (shape[1] % 64 or shape[1] > 65536):
+            raise ValueError('Quant cols must be a multiple of 64, at most 65536')
+        price = resource_quant if op == 'quant' else resource_matmul_dispatch
         us, aic, aiv, diag = price(shape, target)
     if work is None:
         work = account_work(op, shape, {'dtype': dtype})
@@ -270,6 +282,9 @@ def _price_resource(op, shape, target, call, dtype):
         return Estimate(us, 'estimated' if inside else 'extrapolated',
                         'DT-calibrated stage schedule' if inside else 'Outside DT timing coverage', aiv, aic,
                         target.name, work, projected, _rates(work, us, target))
+    if op == 'fa' and (diag['vector_model'] == 'instruction_classes' or diag['fa_port_model'] == 'probe'):
+        return Estimate(us, 'extrapolated', 'Experimental FA stage schedule; see per-stage assumptions',
+                        aiv, aic, target.name, work, projected, _rates(work, us, target))
     if op == 'fa' and shape[1] > 131072:
         return Estimate(us, 'extrapolated', 'KV length exceeds the longest complete 950DT FA reference',
                         aiv, aic, target.name, work, projected, _rates(work, us, target))
@@ -339,6 +354,14 @@ def _price_device(op, shape, attrs, target, dtype, timing_mode):
     call, chosen_dtype = _call_attrs(op, attrs, dtype)
     if timing_mode not in ('auto','resource','calibrated'):
         raise ValueError('timing_mode must be auto, resource or calibrated')
+    if op == 'fa' and timing_mode == 'calibrated':
+        if chosen_dtype == 'fp16' or call.get('vector_model') == 'instruction_classes' or call.get('fa_port_model') == 'probe':
+            return Estimate(None, 'unavailable', 'Experimental FA has no dedicated calibrated route',
+                            chip_name=target.name), raw
+        if call.get('vector_model') in ('auto', 'calibrated'):
+            call.pop('vector_model')
+        if call.get('fa_port_model') == 'default':
+            call.pop('fa_port_model')
     if op == 'candidate_filtered_indexer':
         from operator_model.operators.attention.candidate_indexer import PIPELINE, describe, price
         from operator_model.operators.attention import flash_sparse

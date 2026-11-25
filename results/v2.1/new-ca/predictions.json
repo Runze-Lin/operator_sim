@@ -1,0 +1,135 @@
+{
+  "utc": "2026-11-25T03:45:16.172599+00:00",
+  "shape": [
+    9,
+    4097,
+    64,
+    1,
+    1
+  ],
+  "dtype": "bf16",
+  "contract": "dense SBH ACLNN FlashAttentionScoreV2 original library",
+  "forecasts": {
+    "Ascend950DT_9582": {
+      "baseline": {
+        "us": 18.707093461570523,
+        "status": "estimated",
+        "reason": "Dense BF16 FA resource prices calibrated on 950DT",
+        "aic": 1,
+        "aiv": 2
+      },
+      "classes": {
+        "us": 18.693420866050104,
+        "status": "extrapolated",
+        "reason": "Experimental FA stage schedule; see per-stage assumptions",
+        "aic": 1,
+        "aiv": 2
+      },
+      "probe": {
+        "us": 18.185503075237108,
+        "status": "extrapolated",
+        "reason": "Experimental FA stage schedule; see per-stage assumptions",
+        "aic": 1,
+        "aiv": 2
+      },
+      "both": {
+        "us": 18.047851560085594,
+        "status": "extrapolated",
+        "reason": "Experimental FA stage schedule; see per-stage assumptions",
+        "aic": 1,
+        "aiv": 2
+      }
+    },
+    "Ascend950PR_957b": {
+      "baseline": {
+        "us": 18.70787672544748,
+        "status": "extrapolated",
+        "reason": "Target resource schedule with inherited 950 phase defaults",
+        "aic": 1,
+        "aiv": 2
+      },
+      "classes": {
+        "us": 18.693420866050104,
+        "status": "extrapolated",
+        "reason": "Experimental FA stage schedule; see per-stage assumptions",
+        "aic": 1,
+        "aiv": 2
+      },
+      "probe": {
+        "us": 17.249387189202853,
+        "status": "extrapolated",
+        "reason": "Experimental FA stage schedule; see per-stage assumptions",
+        "aic": 1,
+        "aiv": 2
+      },
+      "both": {
+        "us": 17.105730650994683,
+        "status": "extrapolated",
+        "reason": "Experimental FA stage schedule; see per-stage assumptions",
+        "aic": 1,
+        "aiv": 2
+      }
+    },
+    "Ascend970DT": {
+      "baseline": {
+        "us": 17.16919272233676,
+        "status": "extrapolated",
+        "reason": "Target resource schedule with inherited 950 phase defaults",
+        "aic": 1,
+        "aiv": 1
+      },
+      "classes": {
+        "us": 17.146692051673778,
+        "status": "extrapolated",
+        "reason": "Experimental FA stage schedule; see per-stage assumptions",
+        "aic": 1,
+        "aiv": 1
+      },
+      "probe": {
+        "us": null,
+        "status": "unsupported",
+        "reason": "FA probe requires 950DT_9582 or 950PR_957b at 1.65 GHz with native BF16",
+        "aic": null,
+        "aiv": null
+      },
+      "both": {
+        "us": null,
+        "status": "unsupported",
+        "reason": "FA probe requires 950DT_9582 or 950PR_957b at 1.65 GHz with native BF16",
+        "aic": null,
+        "aiv": null
+      }
+    }
+  },
+  "hashes": {
+    "build/smoke/three_ops": "2cf2c77e48233383ef4619ad61f136cc51a1462ae0d5ea63f226e64b4d2bd0e8",
+    "smoke/three_ops.cpp": "8cb30ce4d1099871194ac57aba39e343cfcd8bdbafed3f2bab106fdb50e4abd5",
+    "src/operator_model/backend.py": "68338ced958bfce81a1e7bf126ca1e3a6f8618ce351090f58b16b0cdb0989289",
+    "src/operator_model/operators/attention/resources.py": "4bb97dfdc82bef5a5f681a152add35bf7fc89405503917aadb08b7d17ff1ee5a",
+    "src/operator_model/operators/attention/vector_classes.py": "3b1d23c6224339335743f0ca84ef00715997329230b96695a3572e9d8466c2fa",
+    "src/operator_model/operators/attention/fa_ports.py": "a2c185d08a3b22e8c6e41188b03498892cac47c4aa194a86a32701c0cd412ea2",
+    "src/operator_model/data/parameters/fa_vector_classes.json": "17e43ee23327126b1348ab978772e64df5773e644df5fdc42cd8e2af2b23d34a",
+    "src/operator_model/data/parameters/fa_port_scenarios.json": "e2ba16368cec1886e1fc0671e06098a0d902990a63b8559754cd248726d15157",
+    "src/operator_model/data/parameters/attention_resources.json": "74e5010eeb242a6757db1947576c3d8800aa7c4941cbc401c370d875ad8f215b"
+  },
+  "fp16_shape": [
+    9,
+    257,
+    64,
+    1,
+    1
+  ],
+  "fp16_forecasts": {
+    "Ascend950DT_9582": 9.225571380912658,
+    "Ascend950PR_957b": 9.225571380912658,
+    "Ascend970DT": 8.467857450289417
+  },
+  "fp16_host_sha256": "c97b18a8004a54a77bab73878a8b79825db7f4fa18ea8760c88d38a587d08033",
+  "fp16_source_sha256": "99ec2f975a7a6ae58a14b69975fb7b6626eb2dfbda5f09c5f199a6b2dda43c29",
+  "budget": {
+    "wall_s_per_CA": 300,
+    "max_attempts": 3,
+    "mib_per_CA": 750
+  },
+  "scope": "One unseen geometry paired across DT/PR. Freezes prior to both CA calls. 970DT extrapolation."
+}

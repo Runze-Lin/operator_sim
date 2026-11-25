@@ -2,7 +2,7 @@
 
 **operator-sim** 是面向系统仿真的昇腾算子建模后端。输入一张卡实际执行的算子、shape、dtype 和芯片配置，返回设备耗时、Cube / Vector 工作量、逻辑访存量与活跃核数。能匹配库实现的路径用 CA 校准；捕获图中的研究算子按明确的分核、分块和流水推演。在线预测只依赖 Python 3.10+ 标准库，可在没有昇腾硬件和 CANN 的系统仿真主机使用。
 
-[v2.0.0 发布包](https://github.com/Runze-Lin/operator_sim/releases/tag/v2.0.0) 含系统接入用的 Python wheel 和源码包。论文版报告从指令时标推导阶段价格与整窗，给出 950DT/PR 验证、970DT 外推的敏感性和 33 组系统结果。报告对应 operator-sim v2.0.0，实验沿用 v1.13.1 冻结时生成的记录。[论文版报告（PDF）](docs/operator-sim-report-zh.pdf) · [分章正文与复算指南](docs/paper/README.md)
+[v2.0.0 发布包](https://github.com/Runze-Lin/operator_sim/releases/tag/v2.0.0) 含系统接入用的 Python wheel 和源码包。论文版报告从指令时标推导阶段价格与整窗，给出 950DT/PR 验证、970DT 外推的敏感性和 33 组系统结果。主体保留 v2.0.0 报告与 v1.13.1 冻结记录。当前源码增加了 FA 两种 Vector 定价的同窗对照及独立小样本验证，详见[论文附录 E](docs/paper/13-fa-vector-pilot.md)。[论文版报告（PDF）](docs/operator-sim-report-zh.pdf) · [分章正文与复算指南](docs/paper/README.md)
 
 ## 安装与调用
 

@@ -15,6 +15,8 @@
 
 **Flash 的候选 Indexer。** 捕获参考有 BF16 Q/K/权重；A5 部署的 Q/K 是 MXFP4 E2M1 和 E8M0 scale。Cube 的点积累加为 FP32，FIX 后的 ReLU、权重归约在 BF16 Vector 上，输出为 INT32 位置。层 20 的全表索引与其四个稀疏消费层独立定价。[实现、运行证据与形状](errors/flash-a5-qsli.md) · [完整算例](examples/flash-a5-qsli.md)
 
+新增稠密 FP16 Q/K/V、FP32 softmax、FP16 输出合同，默认采用指令类别推演。FP16 两个字节的存储和 FP32 内部计算分别计价。转换吞吐可显式覆盖。独立小形状及适用范围见[FA 试验报告](paper/13-fa-vector-pilot.md)。
+
 ## FA 的 A 和 C 分别代表什么
 
 本文的 **A** 是传入注意力的 query（Q）激活，**C** 是实际存储的 K/V cache。prefill 没有分页 cache 时，C 指此次传入的 K/V。网络线性层的输入激活、KV 投影权重、注意力读到的 Q/K/V 可以各用不同精度。P 指 softmax 输出送入第二次矩阵乘的数据，中间累加、online softmax、跨块 rescale、最终 Y 也可各自选择格式。FP8 E4M3FN 配逐 head 的 FP32 scale 与采用 E8M0 分组 scale 的 MXFP8 要作为两份契约处理。

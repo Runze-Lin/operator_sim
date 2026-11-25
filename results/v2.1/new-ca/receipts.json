@@ -1,0 +1,784 @@
+{
+  "freeze_sha256": "dcb2139e233ffe01a527ab2aeac3758fe749fbbc42745e048849053d23e0cea2",
+  "rows": [
+    {
+      "chip": "Ascend950DT_9582",
+      "shape": [
+        9,
+        4097,
+        64,
+        1,
+        1
+      ],
+      "dtype": "bf16",
+      "api": "aclnnFlashAttentionScoreV2",
+      "provider": "CANN 9.2.1 ops-transformer",
+      "cost": {
+        "seconds": 96.09371580998413,
+        "raw_bytes": 179940970,
+        "cpu_seconds": 2020.05,
+        "exit_code": 0,
+        "stop_reason": null,
+        "started_utc": "2026-11-25T03:45:39.188462+00:00",
+        "finished_utc": "2026-11-25T03:47:15.282738+00:00"
+      },
+      "run_log_sha256": "8ef3d8e847fa891ca33d7feb938b4fcc884c5553e85cd9b6b27ae13c4d45da23",
+      "status": "qualified",
+      "correctness": [
+        "correctness elements=576 bad=0 max_abs_error=5.22857128e-06 atol=0.002 rtol=0.01"
+      ],
+      "kernel": "FlashAttentionScore_50348df09d0b3ee451d3693a6b2ab3f5_2328361008425599520_mix_aic",
+      "binary_sha256": "ac006aee669c8696aeab3bb3fe64fc29e5f3c8e2d172bf75f46db7176a2d4580",
+      "trace_sha256": "07c65435dd8cc0497011c7ddd6e8420d7de3f4564f52b6015d4bc92e20b97493",
+      "ca_us": 18.102424623910338,
+      "windows_us": {
+        "core0.veccore1": [
+          0.2545452117919922,
+          18.010303023271263
+        ],
+        "core0.veccore0": [
+          0.20606040954589844,
+          17.992726805619895
+        ],
+        "core0.cubecore0": [
+          0.0,
+          18.102424623910338
+        ]
+      },
+      "terminal_END": [
+        "core0.cubecore0",
+        "core0.veccore0",
+        "core0.veccore1"
+      ],
+      "mmad": 66,
+      "active_aic": 1,
+      "active_aiv": 2,
+      "trace_mmad_workload": [
+        {
+          "a_dtype": "bf16",
+          "b_dtype": "bf16",
+          "c_dtype": "f32",
+          "m": 9,
+          "n": 1,
+          "k": 64,
+          "count": 1
+        },
+        {
+          "a_dtype": "bf16",
+          "b_dtype": "bf16",
+          "c_dtype": "f32",
+          "m": 9,
+          "n": 128,
+          "k": 64,
+          "count": 32
+        },
+        {
+          "a_dtype": "bf16",
+          "b_dtype": "bf16",
+          "c_dtype": "f32",
+          "m": 9,
+          "n": 64,
+          "k": 1,
+          "count": 1
+        },
+        {
+          "a_dtype": "bf16",
+          "b_dtype": "bf16",
+          "c_dtype": "f32",
+          "m": 9,
+          "n": 64,
+          "k": 128,
+          "count": 16
+        },
+        {
+          "a_dtype": "unreported",
+          "b_dtype": "unreported",
+          "c_dtype": "unreported",
+          "m": "unreported",
+          "n": "unreported",
+          "k": "unreported",
+          "count": 16
+        }
+      ],
+      "rvec_positive_duration_opcode_counts_by_aiv": {
+        "core0.veccore1": {
+          "RV_SMOV": 102,
+          "RV_PSET": 68,
+          "RV_VBR": 16,
+          "RV_PLT": 56,
+          "RV_VLD": 662,
+          "RV_VMULS": 260,
+          "RV_VSEL": 128,
+          "RV_VMAX": 208,
+          "RV_VST": 330,
+          "RV_VCMAX": 68,
+          "RV_VSTUI": 136,
+          "RV_VSTAI": 34,
+          "RV_SMEM_BAR": 33,
+          "RV_VEXPDIF": 276,
+          "RV_SEND": 156,
+          "RV_VADD": 272,
+          "RV_VCVT_F2F": 264,
+          "RV_VOR": 128,
+          "RV_VSSTB": 132,
+          "RV_VCADD": 68,
+          "RV_VLDI": 96,
+          "RV_VSTI": 64,
+          "RV_VMUL": 80,
+          "RV_VDINTLV": 4,
+          "RV_VDIV": 4
+        },
+        "core0.veccore0": {
+          "RV_SMOV": 102,
+          "RV_PSET": 68,
+          "RV_VBR": 16,
+          "RV_PLT": 57,
+          "RV_VLD": 827,
+          "RV_VMULS": 325,
+          "RV_VSEL": 160,
+          "RV_VMAX": 256,
+          "RV_VST": 412,
+          "RV_VCMAX": 85,
+          "RV_VSTUI": 170,
+          "RV_VSTAI": 34,
+          "RV_SMEM_BAR": 33,
+          "RV_VEXPDIF": 341,
+          "RV_VADD": 336,
+          "RV_VCVT_F2F": 330,
+          "RV_VOR": 160,
+          "RV_VSSTB": 165,
+          "RV_SEND": 156,
+          "RV_VCADD": 85,
+          "RV_VLDI": 96,
+          "RV_VSTI": 64,
+          "RV_VMUL": 96,
+          "RV_VDINTLV": 5,
+          "RV_VDIV": 5
+        }
+      },
+      "rvec_zero_duration_opcode_records_by_aiv": {
+        "core0.veccore1": {
+          "RV_VAG": 72,
+          "RV_SMOV": 102,
+          "RV_SMOVI": 36,
+          "RV_PSET": 68,
+          "RV_VBR": 16,
+          "RV_PLT": 56,
+          "RV_VLOOPv2": 106,
+          "RV_VLD": 662,
+          "RV_VMULS": 260,
+          "RV_VSEL": 128,
+          "RV_VST": 330,
+          "RV_VMAX": 208,
+          "RV_VCMAX": 68,
+          "RV_VSTUI": 136,
+          "RV_VSTAI": 34,
+          "RV_SMEM_BAR": 33,
+          "RV_VEXPDIF": 276,
+          "RV_VADD": 272,
+          "RV_VCVT_F2F": 264,
+          "RV_VOR": 128,
+          "RV_VCADD": 68,
+          "RV_VSSTB": 132,
+          "RV_SEND": 52,
+          "RV_VLDI": 96,
+          "RV_VSTI": 64,
+          "RV_VMUL": 80,
+          "RV_VDINTLV": 4,
+          "RV_VDIV": 4
+        },
+        "core0.veccore0": {
+          "RV_VAG": 72,
+          "RV_SMOV": 102,
+          "RV_SMOVI": 36,
+          "RV_PSET": 68,
+          "RV_VBR": 16,
+          "RV_PLT": 57,
+          "RV_VLOOPv2": 106,
+          "RV_VLD": 827,
+          "RV_VMULS": 325,
+          "RV_VSEL": 160,
+          "RV_VST": 412,
+          "RV_VMAX": 256,
+          "RV_VCMAX": 85,
+          "RV_VSTUI": 170,
+          "RV_VSTAI": 34,
+          "RV_SMEM_BAR": 33,
+          "RV_VEXPDIF": 341,
+          "RV_VADD": 336,
+          "RV_VCVT_F2F": 330,
+          "RV_VOR": 160,
+          "RV_VCADD": 85,
+          "RV_VSSTB": 165,
+          "RV_SEND": 52,
+          "RV_VLDI": 96,
+          "RV_VSTI": 64,
+          "RV_VMUL": 96,
+          "RV_VDINTLV": 5,
+          "RV_VDIV": 5
+        }
+      },
+      "rvec_count_definition": "Only positive-duration X events represent execution for this comparison. RVEC zero-duration marker records are shown separately. No sum across these two populations.",
+      "collection": {
+        "method": "CANN msprof op simulator, complete trace",
+        "raw_path": "runs/fa-vector-v21-local-ipc/Ascend950DT_9582-bf16",
+        "installed_kernel_evidence": "binary SHA256 plus kernel name from local OPP host trace; package source line identity unavailable"
+      },
+      "template_all_aiv_instruction_classes": {
+        "load": 2637,
+        "arithmetic": 2169,
+        "reduce": 306,
+        "store": 2070,
+        "exp": 729,
+        "convert": 594,
+        "divide": 9
+      },
+      "class_check": {
+        "convert": {
+          "modeled": 594,
+          "ca_execution": 594,
+          "positive_duration_opcodes": [
+            "RV_VCVT_F2F"
+          ]
+        },
+        "reduce": {
+          "modeled": 306,
+          "ca_execution": 306,
+          "positive_duration_opcodes": [
+            "RV_VCMAX",
+            "RV_VCADD"
+          ]
+        },
+        "exp": {
+          "modeled": 729,
+          "ca_execution": 617,
+          "positive_duration_opcodes": [
+            "RV_VEXPDIF"
+          ]
+        },
+        "divide": {
+          "modeled": 9,
+          "ca_execution": 9,
+          "positive_duration_opcodes": [
+            "RV_VDIV"
+          ]
+        }
+      }
+    },
+    {
+      "chip": "Ascend950PR_957b",
+      "shape": [
+        9,
+        4097,
+        64,
+        1,
+        1
+      ],
+      "dtype": "bf16",
+      "api": "aclnnFlashAttentionScoreV2",
+      "provider": "CANN 9.2.1 ops-transformer",
+      "cost": {
+        "seconds": 100.02668852987699,
+        "raw_bytes": 179874688,
+        "cpu_seconds": 1908.77,
+        "exit_code": 0,
+        "stop_reason": null,
+        "started_utc": "2026-11-25T03:47:16.136309+00:00",
+        "finished_utc": "2026-11-25T03:48:56.163387+00:00"
+      },
+      "run_log_sha256": "e2c5852ddda7081b83a5272afb63d0fe9aa4edba672f8cdd374341ec0deab8b8",
+      "status": "qualified",
+      "correctness": [
+        "correctness elements=576 bad=0 max_abs_error=5.22857128e-06 atol=0.002 rtol=0.01"
+      ],
+      "kernel": "FlashAttentionScore_50348df09d0b3ee451d3693a6b2ab3f5_2328361008425599520_mix_aic",
+      "binary_sha256": "ac006aee669c8696aeab3bb3fe64fc29e5f3c8e2d172bf75f46db7176a2d4580",
+      "trace_sha256": "4c69b7a2881c361c8ec549071e1d4f7df4136ba0738d43295bc3a4859bc05606",
+      "ca_us": 17.067877772264183,
+      "windows_us": {
+        "core0.veccore0": [
+          0.08424234390258789,
+          17.058180811814964
+        ],
+        "core0.cubecore0": [
+          0.0,
+          17.045453550759703
+        ],
+        "core0.veccore1": [
+          0.12121200561523438,
+          17.067877772264183
+        ]
+      },
+      "terminal_END": [
+        "core0.cubecore0",
+        "core0.veccore0",
+        "core0.veccore1"
+      ],
+      "mmad": 66,
+      "active_aic": 1,
+      "active_aiv": 2,
+      "trace_mmad_workload": [
+        {
+          "a_dtype": "bf16",
+          "b_dtype": "bf16",
+          "c_dtype": "f32",
+          "m": 9,
+          "n": 1,
+          "k": 64,
+          "count": 1
+        },
+        {
+          "a_dtype": "bf16",
+          "b_dtype": "bf16",
+          "c_dtype": "f32",
+          "m": 9,
+          "n": 128,
+          "k": 64,
+          "count": 32
+        },
+        {
+          "a_dtype": "bf16",
+          "b_dtype": "bf16",
+          "c_dtype": "f32",
+          "m": 9,
+          "n": 64,
+          "k": 1,
+          "count": 1
+        },
+        {
+          "a_dtype": "bf16",
+          "b_dtype": "bf16",
+          "c_dtype": "f32",
+          "m": 9,
+          "n": 64,
+          "k": 128,
+          "count": 16
+        },
+        {
+          "a_dtype": "unreported",
+          "b_dtype": "unreported",
+          "c_dtype": "unreported",
+          "m": "unreported",
+          "n": "unreported",
+          "k": "unreported",
+          "count": 16
+        }
+      ],
+      "rvec_positive_duration_opcode_counts_by_aiv": {
+        "core0.veccore0": {
+          "RV_SMOV": 102,
+          "RV_PSET": 68,
+          "RV_VBR": 16,
+          "RV_PLT": 57,
+          "RV_VLD": 827,
+          "RV_VMULS": 325,
+          "RV_VSEL": 160,
+          "RV_VMAX": 256,
+          "RV_VST": 412,
+          "RV_VCMAX": 85,
+          "RV_VSTUI": 170,
+          "RV_VSTAI": 34,
+          "RV_SMEM_BAR": 33,
+          "RV_VEXPDIF": 341,
+          "RV_VADD": 336,
+          "RV_VCVT_F2F": 330,
+          "RV_VOR": 160,
+          "RV_VSSTB": 165,
+          "RV_SEND": 156,
+          "RV_VCADD": 85,
+          "RV_VLDI": 96,
+          "RV_VSTI": 64,
+          "RV_VMUL": 96,
+          "RV_VDINTLV": 5,
+          "RV_VDIV": 5
+        },
+        "core0.veccore1": {
+          "RV_SMOV": 102,
+          "RV_PSET": 68,
+          "RV_VBR": 16,
+          "RV_PLT": 56,
+          "RV_VLD": 662,
+          "RV_VMULS": 260,
+          "RV_VSEL": 128,
+          "RV_VMAX": 208,
+          "RV_VST": 330,
+          "RV_VCMAX": 68,
+          "RV_VSTUI": 136,
+          "RV_VSTAI": 34,
+          "RV_SMEM_BAR": 33,
+          "RV_VEXPDIF": 276,
+          "RV_SEND": 156,
+          "RV_VADD": 272,
+          "RV_VCVT_F2F": 264,
+          "RV_VOR": 128,
+          "RV_VSSTB": 132,
+          "RV_VCADD": 68,
+          "RV_VLDI": 96,
+          "RV_VSTI": 64,
+          "RV_VMUL": 80,
+          "RV_VDINTLV": 4,
+          "RV_VDIV": 4
+        }
+      },
+      "rvec_zero_duration_opcode_records_by_aiv": {
+        "core0.veccore0": {
+          "RV_VAG": 72,
+          "RV_SMOV": 102,
+          "RV_SMOVI": 36,
+          "RV_PSET": 68,
+          "RV_VBR": 16,
+          "RV_PLT": 57,
+          "RV_VLOOPv2": 106,
+          "RV_VLD": 827,
+          "RV_VMULS": 325,
+          "RV_VSEL": 160,
+          "RV_VST": 412,
+          "RV_VMAX": 256,
+          "RV_VCMAX": 85,
+          "RV_VSTUI": 170,
+          "RV_VSTAI": 34,
+          "RV_SMEM_BAR": 33,
+          "RV_VEXPDIF": 341,
+          "RV_VADD": 336,
+          "RV_VCVT_F2F": 330,
+          "RV_VOR": 160,
+          "RV_VCADD": 85,
+          "RV_VSSTB": 165,
+          "RV_SEND": 52,
+          "RV_VLDI": 96,
+          "RV_VSTI": 64,
+          "RV_VMUL": 96,
+          "RV_VDINTLV": 5,
+          "RV_VDIV": 5
+        },
+        "core0.veccore1": {
+          "RV_VAG": 72,
+          "RV_SMOV": 102,
+          "RV_SMOVI": 36,
+          "RV_PSET": 68,
+          "RV_VBR": 16,
+          "RV_PLT": 56,
+          "RV_VLOOPv2": 106,
+          "RV_VLD": 662,
+          "RV_VMULS": 260,
+          "RV_VSEL": 128,
+          "RV_VST": 330,
+          "RV_VMAX": 208,
+          "RV_VCMAX": 68,
+          "RV_VSTUI": 136,
+          "RV_VSTAI": 34,
+          "RV_SMEM_BAR": 33,
+          "RV_VEXPDIF": 276,
+          "RV_VADD": 272,
+          "RV_VCVT_F2F": 264,
+          "RV_VOR": 128,
+          "RV_VCADD": 68,
+          "RV_VSSTB": 132,
+          "RV_SEND": 52,
+          "RV_VLDI": 96,
+          "RV_VSTI": 64,
+          "RV_VMUL": 80,
+          "RV_VDINTLV": 4,
+          "RV_VDIV": 4
+        }
+      },
+      "rvec_count_definition": "Only positive-duration X events represent execution for this comparison. RVEC zero-duration marker records are shown separately. No sum across these two populations.",
+      "collection": {
+        "method": "CANN msprof op simulator, complete trace",
+        "raw_path": "runs/fa-vector-v21-local-ipc/Ascend950PR_957b-bf16",
+        "installed_kernel_evidence": "binary SHA256 plus kernel name from local OPP host trace; package source line identity unavailable"
+      },
+      "template_all_aiv_instruction_classes": {
+        "load": 2637,
+        "arithmetic": 2169,
+        "reduce": 306,
+        "store": 2070,
+        "exp": 729,
+        "convert": 594,
+        "divide": 9
+      },
+      "class_check": {
+        "convert": {
+          "modeled": 594,
+          "ca_execution": 594,
+          "positive_duration_opcodes": [
+            "RV_VCVT_F2F"
+          ]
+        },
+        "reduce": {
+          "modeled": 306,
+          "ca_execution": 306,
+          "positive_duration_opcodes": [
+            "RV_VCMAX",
+            "RV_VCADD"
+          ]
+        },
+        "exp": {
+          "modeled": 729,
+          "ca_execution": 617,
+          "positive_duration_opcodes": [
+            "RV_VEXPDIF"
+          ]
+        },
+        "divide": {
+          "modeled": 9,
+          "ca_execution": 9,
+          "positive_duration_opcodes": [
+            "RV_VDIV"
+          ]
+        }
+      }
+    },
+    {
+      "chip": "Ascend950DT_9582",
+      "shape": [
+        9,
+        257,
+        64,
+        1,
+        1
+      ],
+      "dtype": "fp16",
+      "api": "aclnnFlashAttentionScoreV2",
+      "provider": "CANN 9.2.1 ops-transformer",
+      "cost": {
+        "seconds": 70.06518579996191,
+        "raw_bytes": 106092663,
+        "cpu_seconds": 1175.42,
+        "exit_code": 0,
+        "stop_reason": null,
+        "started_utc": "2026-11-25T03:48:56.997257+00:00",
+        "finished_utc": "2026-11-25T03:50:07.062911+00:00"
+      },
+      "run_log_sha256": "b62d9569d20ca9ee90ed153a8b375f05d66c8c65a4247b23aac6b1c8db8adb1f",
+      "status": "qualified",
+      "correctness": [
+        "correctness output=FP16 elements=576 max_abs=5.36706e-06 bad=0"
+      ],
+      "kernel": "FlashAttentionScore_236874ba12878eb501b11f3f4feb2ce4_2328361008425337376_mix_aic",
+      "binary_sha256": "13b8818d8157e37c22584fcab3fc080d166da7e72e0151f16cfda7b8b49efb07",
+      "trace_sha256": "bcbc41d19de347086c283316dd3fef9366a9d98b3683ce5e6e58913e429d2abe",
+      "ca_us": 9.370302679948509,
+      "windows_us": {
+        "core0.veccore1": [
+          0.1527271270751953,
+          9.261818411760032
+        ],
+        "core0.cubecore0": [
+          0.0,
+          8.768485071603209
+        ],
+        "core0.veccore0": [
+          0.11272716522216797,
+          9.370302679948509
+        ]
+      },
+      "terminal_END": [
+        "core0.cubecore0",
+        "core0.veccore0",
+        "core0.veccore1"
+      ],
+      "mmad": 6,
+      "active_aic": 1,
+      "active_aiv": 2,
+      "trace_mmad_workload": [
+        {
+          "a_dtype": "f16",
+          "b_dtype": "f16",
+          "c_dtype": "f32",
+          "m": 9,
+          "n": 1,
+          "k": 64,
+          "count": 1
+        },
+        {
+          "a_dtype": "f16",
+          "b_dtype": "f16",
+          "c_dtype": "f32",
+          "m": 9,
+          "n": 128,
+          "k": 64,
+          "count": 2
+        },
+        {
+          "a_dtype": "f16",
+          "b_dtype": "f16",
+          "c_dtype": "f32",
+          "m": 9,
+          "n": 64,
+          "k": 1,
+          "count": 1
+        },
+        {
+          "a_dtype": "f16",
+          "b_dtype": "f16",
+          "c_dtype": "f32",
+          "m": 9,
+          "n": 64,
+          "k": 128,
+          "count": 2
+        }
+      ],
+      "rvec_positive_duration_opcode_counts_by_aiv": {
+        "core0.veccore1": {
+          "RV_SMOV": 12,
+          "RV_PSET": 12,
+          "RV_VLD": 78,
+          "RV_VMULS": 20,
+          "RV_VMAX": 10,
+          "RV_VST": 34,
+          "RV_VCMAX": 12,
+          "RV_VSTUI": 24,
+          "RV_SEND": 30,
+          "RV_VSTAI": 6,
+          "RV_SMEM_BAR": 5,
+          "RV_VEXPDIF": 22,
+          "RV_VADD": 18,
+          "RV_VCVT_F2F": 24,
+          "RV_VOR": 8,
+          "RV_VSSTB": 12,
+          "RV_VCADD": 12,
+          "RV_VLDI": 12,
+          "RV_VSTI": 8,
+          "RV_VMUL": 10,
+          "RV_PLT": 7,
+          "RV_VDINTLV": 4,
+          "RV_VDIV": 4
+        },
+        "core0.veccore0": {
+          "RV_SMOV": 12,
+          "RV_PSET": 12,
+          "RV_VLD": 97,
+          "RV_VMULS": 25,
+          "RV_VMAX": 12,
+          "RV_VST": 42,
+          "RV_VCMAX": 15,
+          "RV_VSTUI": 30,
+          "RV_SEND": 30,
+          "RV_VSTAI": 6,
+          "RV_SMEM_BAR": 5,
+          "RV_VEXPDIF": 27,
+          "RV_VADD": 22,
+          "RV_VCVT_F2F": 30,
+          "RV_VOR": 10,
+          "RV_VSSTB": 15,
+          "RV_VCADD": 15,
+          "RV_VLDI": 12,
+          "RV_VSTI": 8,
+          "RV_VMUL": 12,
+          "RV_PLT": 8,
+          "RV_VDINTLV": 5,
+          "RV_VDIV": 5
+        }
+      },
+      "rvec_zero_duration_opcode_records_by_aiv": {
+        "core0.veccore1": {
+          "RV_VAG": 16,
+          "RV_PSET": 12,
+          "RV_SMOV": 12,
+          "RV_VLOOPv2": 22,
+          "RV_VLD": 78,
+          "RV_VMULS": 20,
+          "RV_VST": 34,
+          "RV_VMAX": 10,
+          "RV_VCMAX": 12,
+          "RV_VSTUI": 24,
+          "RV_VSTAI": 6,
+          "RV_SMEM_BAR": 5,
+          "RV_VEXPDIF": 22,
+          "RV_VADD": 18,
+          "RV_VCVT_F2F": 24,
+          "RV_VOR": 8,
+          "RV_VCADD": 12,
+          "RV_VSSTB": 12,
+          "RV_SEND": 10,
+          "RV_VLDI": 12,
+          "RV_VSTI": 8,
+          "RV_VMUL": 10,
+          "RV_SMOVI": 2,
+          "RV_PLT": 7,
+          "RV_VDINTLV": 4,
+          "RV_VDIV": 4
+        },
+        "core0.veccore0": {
+          "RV_VAG": 16,
+          "RV_PSET": 12,
+          "RV_SMOV": 12,
+          "RV_VLOOPv2": 22,
+          "RV_VLD": 97,
+          "RV_VMULS": 25,
+          "RV_VST": 42,
+          "RV_VMAX": 12,
+          "RV_VCMAX": 15,
+          "RV_VSTUI": 30,
+          "RV_VSTAI": 6,
+          "RV_SMEM_BAR": 5,
+          "RV_VEXPDIF": 27,
+          "RV_VADD": 22,
+          "RV_VCVT_F2F": 30,
+          "RV_VOR": 10,
+          "RV_VCADD": 15,
+          "RV_VSSTB": 15,
+          "RV_SEND": 10,
+          "RV_VLDI": 12,
+          "RV_VSTI": 8,
+          "RV_VMUL": 12,
+          "RV_SMOVI": 2,
+          "RV_PLT": 8,
+          "RV_VDINTLV": 5,
+          "RV_VDIV": 5
+        }
+      },
+      "rvec_count_definition": "Only positive-duration X events represent execution for this comparison. RVEC zero-duration marker records are shown separately. No sum across these two populations.",
+      "collection": {
+        "method": "CANN msprof op simulator, complete trace",
+        "raw_path": "runs/fa-vector-v21-local-ipc/Ascend950DT_9582-fp16",
+        "installed_kernel_evidence": "binary SHA256 plus kernel name from local OPP host trace; package source line identity unavailable"
+      },
+      "template_all_aiv_instruction_classes": {
+        "load": 261,
+        "arithmetic": 171,
+        "reduce": 54,
+        "store": 216,
+        "exp": 63,
+        "convert": 54,
+        "divide": 9
+      },
+      "class_check": {
+        "convert": {
+          "modeled": 54,
+          "ca_execution": 54,
+          "positive_duration_opcodes": [
+            "RV_VCVT_F2F"
+          ]
+        },
+        "reduce": {
+          "modeled": 54,
+          "ca_execution": 54,
+          "positive_duration_opcodes": [
+            "RV_VCMAX",
+            "RV_VCADD"
+          ]
+        },
+        "exp": {
+          "modeled": 63,
+          "ca_execution": 49,
+          "positive_duration_opcodes": [
+            "RV_VEXPDIF"
+          ]
+        },
+        "divide": {
+          "modeled": 9,
+          "ca_execution": 9,
+          "positive_duration_opcodes": [
+            "RV_VDIV"
+          ]
+        }
+      }
+    }
+  ],
+  "collection_notes": [
+    "Initial sandbox attempt lacked local CANN IPC. All reported CA sessions were collected with simulator IPC enabled.",
+    "Windows span the earliest instruction to latest END across all launched cores. MMAD precision and tile dimensions come from the trace detail payload. Correctness compares every attentionOut element to the host reference."
+  ]
+}

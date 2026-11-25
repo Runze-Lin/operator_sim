@@ -1,0 +1,111 @@
+{
+  "units": "950 cycles at 1.65 GHz; ND2NZ columns are [continuous start-to-start interval, isolated return latency]",
+  "source": {
+    "nd2nz": "Published CANN 9.2 single-AIC contiguous [N,64] BF16 probes; middle 48 of 64 continuous starts, last 15 per-request-drained responses. https://github.com/ZhanluModelSim/operator-performance-models/blob/5da9553d6931c4334b69946bf9fd477c12445ce3/src/operator_performance_models/models/instruction/arch35_resources.py",
+    "fa": "Local CANN 9.2.1 aclnnFlashAttentionScoreV2 [9,8191,64,1,1] SBH qualified msopprof. Shape is development for this probe option. All times relative to first valid device instruction. On each lane filter ph=X and is_duration_excluded=0. First Q/K/V are ND2NZ at PCs ending 9034/7a20/8624. First VF marker is RV_VLD on both AIVs, first P copy MOV_UB_TO_L1 at f37c, first PV is MMAD at 87ac. Absolute V-to-K median among adjacent descriptors with source PC suffix 8624 followed by 7a20. Other Q counts and page counts inherit this compact template as a scenario. Probe-limited read intervals plus control give a steady lower bound and omit occasional longer waits; terminal P visibility approximated by recorded store retirement."
+  },
+  "skus": {
+    "Ascend950DT_9582": {
+      "first_q_issue": 10705,
+      "first_k_v_offsets": [
+        92,
+        1857
+      ],
+      "first_response": [
+        1221,
+        1389,
+        1212
+      ],
+      "first_softmax_load_latest": 15787,
+      "first_p_store_span": 62,
+      "latest_p_retire_to_pv": 129,
+      "v_to_k_regular": 479,
+      "nd2nz": {
+        "9": [
+          160.6458,
+          638
+        ],
+        "16": [
+          161.2083,
+          659
+        ],
+        "32": [
+          165.9167,
+          672
+        ],
+        "64": [
+          193.4792,
+          706
+        ],
+        "128": [
+          214.2708,
+          768
+        ],
+        "255": [
+          360.125,
+          917
+        ],
+        "256": [
+          360.1875,
+          924
+        ]
+      },
+      "trace_sha256": {
+        "core0.cubecore0": "61a71085a7366d6ed1e5f9ead163f15ca4d1882d485f36aa76b3bad65c07f25b",
+        "core0.veccore0": "85e345a01452e9798d2bd8961f9a55d61d1e709404a184630069f9702dd10ec3",
+        "core0.veccore1": "99a1162eeea4f165982832771e999bcc1b680d5443c04b7e90e4ba43b3ac5879"
+      }
+    },
+    "Ascend950PR_957b": {
+      "first_q_issue": 9660,
+      "first_k_v_offsets": [
+        92,
+        1773
+      ],
+      "first_response": [
+        1157,
+        1325,
+        1200
+      ],
+      "first_softmax_load_latest": 14591,
+      "first_p_store_span": 63,
+      "latest_p_retire_to_pv": 127,
+      "v_to_k_regular": 479,
+      "nd2nz": {
+        "9": [
+          155.3958,
+          620
+        ],
+        "16": [
+          165.9375,
+          607
+        ],
+        "32": [
+          162.375,
+          647
+        ],
+        "64": [
+          173.6667,
+          687
+        ],
+        "128": [
+          200.75,
+          762
+        ],
+        "255": [
+          336.3958,
+          891
+        ],
+        "256": [
+          336.3542,
+          898
+        ]
+      },
+      "trace_sha256": {
+        "core0.cubecore0": "88ba10b74f668972b905b1d94ee71405d83fc0333402910c33469e7e4eef4754",
+        "core0.veccore0": "4302d46347e3bcbacc9be49e018f2a5cb1072cfca39627795d4621d8fdb8dc80",
+        "core0.veccore1": "4a5fa52df858c849c592bdd9494de2564ab35b3776adfe0038464103fd0e43e1"
+      }
+    }
+  }
+}
