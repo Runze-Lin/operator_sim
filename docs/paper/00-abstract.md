@@ -1,14 +1,14 @@
 # 摘要
 
-更换芯片会同时改变可用核数、每核算力、片上搬运能力和可并发的任务数。一个在 950DT 上测得的利用率，很难回答“同一层在更多 Cube 核、更少相对 Vector 资源的芯片上要跑多久”。本文面向大模型系统仿真，把一次算子调用还原为本卡实际执行的工作。由本卡张量、数据格式和算子语义决定工作量，由实现策略决定 tile、分核和重复的轮数，由目标芯片决定计算和搬运的阶段时间，最后沿数据依赖合成设备时间。在线只计算决定完成时刻的工作单元和重复间隔，以尽可能低的查询开销支持整网排程。
+芯片换代会改变核数、每核吞吐和存储带宽。950DT 上的一个利用率，无法说明相同算子在另一种 Cube 与 Vector 配比下为什么会变慢。本文从本卡张量和精度计算工作量，由实现规则选择分块与分核，再用目标芯片资源给各阶段定价，按依赖求出设备完成时间。在线用稳态间隔概括重复块，以尽可能低的查询开销服务于整网仿真。
 
-我们用三个可以手工复算的例子解释方法。动态量化说明为何每核的有效负载、scale 写回和启动影响小张量。矩阵乘说明为何尾波的块数与形状会改变跨核重叠。融合注意力贯穿校准与验证。在 950DT 的 32Ki 上下文 CA 指令记录中，按页配对 K/V 描述符，分别求首响应、持续服务率和后续页发起间隔。将参数用于 950PR 上 128Ki 单头验证，预测 274.988 µs，对应完整 CA 窗为 265.893 µs，相差 +3.42%。进一步将同一算法映射到假设的 970DT，得到 252.093 µs。最后一个数值取决于控制节拍、搬运与实现的继承假设。
+我们用动态量化解释核间负载与 scale 写回，用矩阵乘解释尾波分块与跨核重叠，用融合注意力演示如何校准。按页配对 950DT 的 32Ki CA 指令记录中的 K/V 描述符，可分别估计首次响应、服务速率和后续发起间隔。对 950PR 的 128Ki 单头样例，预测 274.988 µs，完整 CA 窗 265.893 µs，偏差 +3.42%。沿用该实现映射到假设的 970DT 得 252.093 µs；这只是继承控制与搬运参数的外推。
 
-基础校准集含 36 项执行合同的 2,180 条可比记录。30 项可在两种 950 芯片上计分，28 项达到项目门槛，其中 5 项有双端冻结后新形状验证。误差较大的两项说明了两种不同的问题。mHC Post 的本卡形状没有描述前序驻留，补充有序调用后，同一批 CA 窗上的误差显著降低。A8W4 Matmul 在 950PR 的总体加权误差较小，但一个独立形状仍高估 56.67%。我们给出逐项结果、最差形状及推断的适用边界。
+基础档案含 36 个执行合同、2,180 条可比记录。30 个合同可在两种 950 芯片上计分，28 个达项目门槛，其中 5 个有双端冻结后新形状验证。mHC Post 暴露了仅给 shape 时无法辨别前序驻留的问题，A8W4 Matmul 在 950PR 的一个独立形状上仍高估 56.67%。
 
-三个模型的 33 组系统情景涵盖 32Ki 至 1Mi 输入以及 prefill、推测 decode 两个阶段。18 组精细预测快于历史 Roofline；把计算引擎、精度、内存口径和依赖对齐后，没有一组快于对应峰值参考。端到端数字是系统仿真的结果。本文将 CA 设备实测、已有输入的开发回放、冻结验证及无目标实现的外推分别标明，为将来选择微基准和更新芯片配置提供依据。
+对有 Vector 计算的实现，保留两种计价方法：一种由已有库内核的资源与循环记录约束服务时间，另一种把算法展开为按类别计数的寄存器程序。前者需要足够接近的实现，后者可用于新精度，但依赖指令映射和发射能力的假设。按相同 CA 窗对照，两种方法各有胜负。为检查局部差异会不会传到请求，本文在三个模型上比较原法、指令法与默认混用策略，分别考察 27 组 128Ki 单轮 decode 和 33 组 32Ki 至 1Mi 的 prefill 加 decode 请求。在 33 组中，默认策略相对原法的请求时间变化是 −5.52% 至 +1.30%，强制指令法是 −22.77% 至 −2.78%。三种策略都不短于同精度峰值参考的配置有 33/33 组。这些是整网离散事件仿真（DES）结果。
 
-**版本口径**　本文对应 operator-sim v2.0.0，校准与系统实验沿用 v1.13.1 冻结时生成的记录。
+**版本口径**　工具与本轮系统实验对应 v2.3。基础 CA 校准、各次独立验证和 v1.13.1 历史系统冻结分别标明；本轮未增采 CA，没有整网实机计时。
 
 **关键词**　算子性能建模；昇腾；指令流水；校准；跨芯片外推；大模型系统仿真
 
@@ -18,4 +18,4 @@ A system simulator needs a prediction for a particular invocation on a particula
 
 We work through vector quantization, matrix multiplication and fused attention. In the attention case, K/V issue timestamps in an archived 32 Ki-token Ascend 950DT run identify a steady page interval distinct from individual descriptor latency. For a 128 Ki-token 950PR run, the resulting estimate is 274.988 µs against 265.893 µs in the complete CA window. Applying the same implementation hypothesis to a prospective 970DT yields 252.093 µs. Sensitivity experiments identify which inherited parameters can change that extrapolation.
 
-The base evaluation contains 2,180 comparable records. Of 30 contracts scored on both 950 variants, 28 meet the study thresholds on their respective evaluation sets, including five with dual-device held-out validation. A shape-only mHC case and an A8W4 projection expose limitations of input observability and tail prediction. Across 33 simulated system configurations, 18 predictions are faster than the historical Roofline backend, while all respect the precision- and implementation-aligned peak reference at request level. The results distinguish measured CA windows, validation on unseen shapes and cross-generation extrapolations.
+The base evaluation contains 2,180 comparable records. Of 30 contracts scored on both 950 variants, 28 meet the study thresholds on their respective evaluation sets, including five with dual-device held-out validation. A shape-only mHC case and an A8W4 projection expose limitations of input observability and tail prediction. Two Vector pricing rules are evaluated on matching device windows: a mechanism calibrated against an implementation's loop timing, and an explicit count of instruction classes priced by resource. To test how differences propagate, we replay 27 speculative decode configurations and 33 prefill-plus-decode requests across three models. We compare both forced pricing policies, the per-implementation default, the historical Roofline backend and a precision-matched peak reference. Across the 33 requests, the default changes predicted duration by −5.52% to +1.30% relative to the original rule, and forcing instruction pricing changes it by −22.77% to −2.78%. All three predictions respect the matched peak reference for 33 of 33 requests. The system figures are discrete-event predictions; neither policy has been validated against full-request device timings.

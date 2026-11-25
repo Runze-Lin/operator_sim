@@ -15,6 +15,12 @@ AIC 指 Cube 计算核，AIV 指 Vector 计算核。下文用 MTE2 表示从全�
 
 显式选择使用 `attrs={"vector_model":"calibrated"}` 或 `attrs={"vector_model":"instruction_classes"}`。新芯片沿用同一算法的条件是编译路径、操作精度和缓冲结构仍成立。换代可以替换每类服务周期、端口与每核资源，按新核数、频率重排；970DT 尚无独立 CA 真值。当前这组已有库实现均继续默认原法，分算子证据见[同窗比较](vector-method-comparison.md)。
 
+## 从 Vector 定价到整批请求耗时
+
+在同一张 rank 0 图上分别使用 `calibrated`、`auto`、`instruction_classes` 给所有节点报价。模式只选择有实现程序的 VF 阶段；原生 A4W4 Matmul、视图及纯搬运沿用各自的资源模型。有明确语义与分块的研究实现可以用指令类别建模。输入、输出、累积精度、逻辑读写、冷读写约束和设备资源在三个情景之间逐节点对齐。DES 再按照图依赖、计算/通信资源和容量决定何时可以开始下一个节点。
+
+对一个 prompt，prefill 累加分块的 DES 完成时间。进一步生成至 1,024 个输出 token 时，首次输出由 prefill 产生；在本次历史试验设定下每轮净推进 7 个 token，decode 共 147 轮，每轮串联 target 和 draft 两张图。对未逐轮回放的位置，各模式都用同一组已回放位置的阶段图耗时进行插值。1Mi 请求的后续 decode 超出本次模型预设，单列为外推。单节点的时间变化可能被别的工作遮蔽，也可能改变临界路。因此还可以固定其它节点，只替换某一原始调用名并重排 DES，得到该组替换的整图影响。[采样、对照与适用范围](system-vector-e2e.md) · [历史 128Ki 单轮比较](decode-vector-comparison.md)
+
 ## 系统捕获图的全量建模
 
 一次调用先根据原始名称、每卡物理与逻辑形状、dtype、stride、权重与 scale 角色匹配实现。同名操作可能选择不同路径。例如 MXFP4 激活及权重走原生 GMM；FP8 token scale 配 FP4 权重的 grouped-head 合同另建权重展开和输出重缩放。公开算子名只能确定候选实现，不能识别当时运行的 ELF。完整库窗、子阶段校准和设计预测分别列入误差页。

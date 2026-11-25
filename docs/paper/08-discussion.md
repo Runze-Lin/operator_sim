@@ -26,10 +26,12 @@
 
 本文最清晰的一条证据链是单头 FA。它从 DT 的 256 个 K/V 发起点出发，经每页工作量和间隔估计，走到 PR 的 512 页整窗，再走到 970DT 的假设资源。沿这条链，读者既能复算预测为何接近，也能看到它没有解释的一部分跨卡速度差。给出这个可检查的剩余误差，比单独给一个整网速度或一个利用率更有利于下一轮架构取舍。
 
+第 7 章当前回放提供了另一种选点方法。先定位一个模型在哪种序列长度、并行或阶段上对 Vector 定价敏感，再回到该处的本卡算子，检查它是否有同精度、同布局、同一计时边界的 CA 窗。批量图的 DES 对比可帮助决定下一次测什么；若没有整网设备结果，它不能决定哪种方法在该部署上更准确。
+
 ## 参考文献与工程资料
 
 1. S. Williams, A. Waterman, D. Patterson. Roofline: An Insightful Visual Performance Model for Multicore Architectures. Communications of the ACM, 2009. [出版记录](https://doi.org/10.1145/1498765.1498785)
 2. A. Parashar et al. Timeloop: A Systematic Approach to DNN Accelerator Evaluation. ISPASS, 2019. [研究项目与论文入口](https://timeloop.csail.mit.edu/)
 3. T. Dao et al. FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness. NeurIPS, 2022. [论文](https://arxiv.org/abs/2205.14135)
 4. THU-NICS. Uni3Sim, Ascend 910B microbenchmarks, revision 52ffdb18. [固定版本的微基准](https://github.com/thu-nics/uni3sim/tree/52ffdb18aef705b03e27534ddd999312a9ec5ca2/microbench/ascend_910b)
-5. operator-sim v2.0.0，含 v1.13.1 冻结实验档案。 [全量建模方法](../modeling-strategy.md) · [参数、资格与误差](../error-analysis.md) · [可重绘流水图](../pipeline-comparisons.md) · [系统请求清单](../../calibration/candidate_indexer/v113_context_requests.csv)
+5. operator-sim，全算子双方法与系统回放版；基础校准及历史账单保留原冻结身份。 [全量建模方法](../modeling-strategy.md) · [参数、资格与误差](../error-analysis.md) · [可重绘流水图](../pipeline-comparisons.md) · [系统请求清单](../../calibration/candidate_indexer/v113_context_requests.csv)

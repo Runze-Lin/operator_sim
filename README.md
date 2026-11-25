@@ -2,9 +2,11 @@
 
 **operator-sim** 是面向系统仿真的昇腾算子建模后端。输入一张卡实际执行的算子、shape、dtype 和芯片配置，返回设备耗时、Cube / Vector 工作量、逻辑访存量与活跃核数。能匹配库实现的路径用 CA 校准；捕获图中的研究算子按明确的分核、分块和流水推演。在线预测只依赖 Python 3.10+ 标准库，可在没有昇腾硬件和 CANN 的系统仿真主机使用。
 
-[v2.0.0 发布包](https://github.com/Runze-Lin/operator_sim/releases/tag/v2.0.0) 含系统接入用的 Python wheel 和源码包。论文版报告从指令时标推导阶段价格与整窗，给出 950DT/PR 验证、970DT 外推的敏感性和 33 组系统结果。主体保留 v2.0.0 报告与 v1.13.1 冻结记录。当前源码增加了 FA 两种 Vector 定价的同窗对照及独立小样本验证，首轮结果见[附录 E](docs/paper/13-fa-vector-pilot.md)。v2.2 增加了 FA 忙核诊断、冻结新形双端验证，以及 Cast、Sigmoid、逐 token FP8 量化两种方法的阶段误差、迁移性与查询成本比较。[附录 F 与实验结果](docs/paper/14-vector-transfer.md)。[论文版报告（PDF）](docs/operator-sim-report-zh.pdf) · [分章正文与复算指南](docs/paper/README.md)
+当前源码为 v2.3。已有库实现默认沿用原时序模型；已登记的新精度或新实现，有 Vector 工作时可按指令类别估计。系统接口提供 `auto`、`calibrated` 和 `instruction_classes` 三种选择。纯 Cube、视图和纯搬运共享各自的建模路径。逐算子对照页列出每个合同可选的方法及其 CA 证据。[建模方法](docs/modeling-strategy.md) · [误差分析](docs/error-analysis.md) · [逐算子两法对照](docs/vector-method-comparison.md) · [系统调用对照](docs/system-vector-methods.md)
 
-已有库算子默认沿用原有时序模型，可显式切换 Vector 指令类别定价；已登记的新精度或设计程序可直接用指令类别预测。[建模方法](docs/modeling-strategy.md) · [全量误差和表头解释](docs/error-analysis.md) · [逐算子两法对照](docs/vector-method-comparison.md) · [系统调用对照](docs/system-vector-methods.md)
+研究报告从 CA 指令时间戳推导阶段耗时与流水重叠，比较 950DT/PR 上的实测误差，并说明迁移到 970DT 所需的假设。第 7 章在三个模型的同一批捕获图上比较原法、默认策略、指令法与 Roofline。[完整报告（PDF）](docs/operator-sim-report-zh.pdf) · [分章正文与复算指南](docs/paper/README.md)
+
+三模型端到端试验包括 **33 组完整请求**（32Ki～1Mi 输入，1Ki 输出，分列 prefill 与 decode）和 **27 组 128Ki 单轮 decode**（三种并行布局）。两组都保留历史 Roofline 和精度对齐的峰值下界；完整请求另给出按任务配置利用率计算的 Roofline。[33 组完整请求](docs/system-vector-e2e.md) · [27 组单轮 decode](docs/decode-vector-comparison.md)
 
 ## 安装与调用
 
@@ -44,7 +46,7 @@ print(r.work["cube_ops"], r.work["logical_read_bytes"], r.work["logical_write_by
 | 各算子的耗时误差、逐 shape 真值、验证边界 | [误差分析、逻辑 Roofline 系数与物理下界](docs/error-analysis.md) · [每个算子的全部 shape](docs/errors/README.md) · [可复算的参考数据](calibration/reference/) |
 | FA 的低位 KV cache、量化/反量化与 MoE 不同权重精度 | [精度组合、库入口与验证状态](docs/precision-coverage.md) |
 | 三种模型在 128Ki decode、三种并行配置和 B=1/16/64 的实际系统算子覆盖 | [全部调用、几何、证据与定价](docs/system-full-comparison.md) |
-| 32Ki–1Mi 输入、1Ki 输出的 prefill/decode 对比，以及原 27 组 decode 复算 | [33 组请求与长上下文结果](docs/context-sweep.md) · [Flash 候选页序、团队流水与逐窗 CA](docs/errors/flash-a5-qsli.md) · [安装与后端选择](docs/sim-platform.md) · [原 27 组审计](docs/roofline-audit.md) |
+| 32Ki–1Mi 输入、1Ki 输出的 prefill/decode 对比，以及原 27 组 decode 复算 | [历史版的长上下文采样与候选页序研究](docs/context-sweep.md) · [Flash 候选页序、团队流水与逐窗 CA](docs/errors/flash-a5-qsli.md) · [安装与后端选择](docs/sim-platform.md) · [原 27 组审计](docs/roofline-audit.md) |
 | 按候选 ID 与 PA 表估算 Flash 原生 MXFP4 Indexer，或只传 shape | [输入、公式与末块算例](docs/examples/flash-a5-qsli.md) · [同形同芯片的地址实验](calibration/candidate_indexer/v113_control.md) |
 | 从三种模型的 config 推导单卡 prefill shape | [工作负载示例](examples/workloads/) |
 | 开发新算子、重新校准、构建和测试 | [维护指南](CONTRIBUTING.md) · [CA 校准工具](calibration/) |

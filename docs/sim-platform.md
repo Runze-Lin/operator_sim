@@ -1,5 +1,7 @@
 # 在 SIMPlatform 中切换算子后端
 
+当前 950DT 部署可比较三种 Vector 策略。完整请求与单轮 decode 对应不同的统计单位。[33 组完整请求](system-vector-e2e.md) · [27 组单轮](decode-vector-comparison.md)
+
 950DT 的长上下文场景已覆盖三个模型的 prefill 与推测 decode。全图后端默认要求冷读写在本节点内付费，原有 Roofline 后端仍可用同一份任务运行。[各配置的两阶段时延、资源约束和复算方式](context-sweep.md)
 
 

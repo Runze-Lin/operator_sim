@@ -29,7 +29,7 @@ for sku in ("Ascend950DT_9582", "Ascend950PR_957b", "Ascend970DT"):
 
 1. 在仓库根目录运行下面的复算命令。FA 脚本只读版本化时标，给出中段斜率和其它阶段参数；第 4 章的图生成脚本可加 `--db /path/to/32ki.sqlite`，在本地核对原始数据库的 SHA-256 和 256 个发起时刻。数据库无需随发布包分发。
 2. 调查新算子时，先在逐窗页确认 kernel 身份、输入属性、是否有序流及完整结束标记，再区分用于标定与用于揭盲的输入。得到一个总时间后不能唯一回推出所有阶段参数。
-3. 重放系统情景时，先确定配置采用哪一套峰值、分片和冷读写政策。附录 C 的 CSV 同时含基线、两次冻结、不同页布局及 phase 分解，方便把差异定位到具体阶段。
+3. 重放系统情景时，先确定配置采用哪一套峰值、分片和冷读写政策。第 7 章本轮实验逐图替换 Vector 价格，三种模式保持同一条件，读取各阶段的完成时间。附录 C 的历史 CSV 含基线、两次冻结、不同页布局及 phase 分解，方便把差异定位到具体阶段。
 
 ~~~bash
 python calibration/examples/replay_fa.py
@@ -38,5 +38,7 @@ python calibration/examples/paper_transfer_sensitivity.py
 python calibration/examples/paper_system_results.py
 python -m calibration.performance_report
 ~~~
+
+本轮实验先在相同任务和图上分别切换 `vector_model="calibrated"`、`"instruction_classes"` 与 `"auto"`，然后重排依赖。27 组以一轮 target 加 draft 完成为止；33 组先按历史位置估计 prefill/decode 各步，再按相同采样协议合成为秒。逐表的源文件、运行命令和预算见[原始 27 组 decode 复现](../decode-vector-comparison.md)与[33 组长上下文复现](../system-vector-e2e.md)。单独绘 PDF 不必重新捕获模型图或运行 CA。
 
 生成报告需要可用的中文字体、Python 排版依赖和绘图库，具体版本与入口见[论文源稿索引](README.md)。运行在线估计不需要上述 PDF 工具。原始大 trace 可单独保存；版本化数据和图已足够重建本报告的图表。[逐窗档案](../errors/README.md) · [FA 压缩时标](../../calibration/examples/fa-950dt.json) · [运行时公共接口](../integration.md)

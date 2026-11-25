@@ -1,6 +1,6 @@
 # 昇腾算子性能建模：论文正文与复算指南
 
-[完整中文 PDF](../operator-sim-report-zh.pdf) 以同一个 FA 长循环贯穿阶段定价、流水合成、指令校准和跨芯片检验。主体对应 v2.0.0，校准与系统结果沿用 v1.13.1 冻结记录；附录 E、F、G 依次报告 FA 试点、独立验证与全算子双方法比较。微秒表示设备时间，CPU 查询开销单列。970DT 的所有数字均为假设资源配置下的外推。
+[完整中文 PDF](../operator-sim-report-zh.pdf) 以同一个 FA 长循环贯穿阶段定价、流水合成、指令校准和跨芯片检验。阶段校准沿用有版本的 950 指令记录。第 7 章区分 v1.13.1 历史账单和 v2.3 三模型双方法系统回放；附录 E、F、G 分别报告 FA 试点、独立验证与全算子同窗对照。微秒表示设备时间，CPU 查询开销单列。970DT 的所有数字均为假设资源配置下的外推。
 
 | 章节 | 在这里可以复核什么 |
 |---|---|
@@ -11,12 +11,13 @@
 | [4　CA 指令校准](04-calibration.md) | 从 DT 32Ki 的 256 个原始发起点估计价格，检查残差 |
 | [5　跨芯片迁移](05-transfer.md) | 950 双端检验、970DT 假设、瓶颈翻转与灵敏度 |
 | [6　误差及查询开销](06-validation.md) | 开发与留出的区别、mHC 配对、A8W4 最差点、Flash 可控布局 |
-| [7　系统结果](07-system.md) | 三个模型与 33 组请求、1Mi 末块及重放误差 |
+| [7　系统结果](07-system.md) | 27 组 decode 图与 33 组整请求；两法与 auto、Roofline 的区别 |
 | [8　讨论与文献](08-discussion.md) | 可证实的机制、主要不确定性与最有区分力的测量 |
-| [附录 A](09-contracts.md) · [B](10-evidence.md) · [C](11-requests.md) · [D](12-reproduce.md) | 逐算子公式与算例、逐合同误差、33 组明细、复现方法 |
+| [附录 A](09-contracts.md) · [B](10-evidence.md) · [C](11-requests.md) · [D](12-reproduce.md) | 逐算子公式与算例、逐合同误差、历史 33 组冻结明细、复现方法 |
 | [附录 E　FA 指令类别试验](13-fa-vector-pilot.md) | 同窗比较两种 VF、独立搬运探针、忙核指令和新精度 |
 | [附录 F　指令建模与跨芯片迁移](14-vector-transfer.md) | FA 新窗、三个 Vector 算子、查询成本与 970DT 敏感性 |
 | [附录 G　全算子指令类别法](15-vector-methods.md) | 相同 CA 窗上的逐家族收益、回退与跨代限制 |
+| [附录 H　本轮系统明细](16-system-comparison.md) | 按模型查看 33 组整请求秒数、27 组单轮毫秒数及相应 Roofline |
 
 ## 构建 PDF
 
@@ -25,9 +26,9 @@
 ~~~bash
 python -m pip install -e .
 python -m pip install 'weasyprint==66.0' 'markdown-it-py==3.0.0' matplotlib numpy
-python -m calibration.performance_report --font-dir /path/to/fonts
+python -m calibration.performance_report --refresh-request-tables --font-dir /path/to/fonts
 ~~~
 
 正文行内公式用单个美元符号标记，独立公式用成对的双美元符号各占一行。排版脚本用 Matplotlib MathText 将 TeX 语法转为矢量公式，并为独立公式按章编号。PDF 中的公式可以缩放，TeX 源式仍保留在 Markdown 中。
 
-更新算例数据时，可先运行[附录 D 的重绘命令](12-reproduce.md)。系统图与附录 B/C 由同一脚本从发布清单生成。FA 图可仅用压缩时间戳重绘；持有原始开发窗数据库时，可用脚本的可选参数对照 SHA256 和每一条发起时刻。[FA 重绘与原始校验](../../calibration/examples/paper_fa_figures.py) · [迁移情景重算](../../calibration/examples/paper_transfer_sensitivity.py) · [系统图和结果表](../../calibration/examples/paper_system_results.py)
+更新算例数据时，可先运行[附录 D 的重绘命令](12-reproduce.md)。历史系统图与附录 B/C 由同一脚本从发布清单生成。FA 图可仅用压缩时间戳重绘；持有原始开发窗数据库时，可用脚本的可选参数对照 SHA256 和每一条发起时刻。[FA 重绘与原始校验](../../calibration/examples/paper_fa_figures.py) · [迁移情景重算](../../calibration/examples/paper_transfer_sensitivity.py) · [系统图和结果表](../../calibration/examples/paper_system_results.py)

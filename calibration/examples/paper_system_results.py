@@ -16,8 +16,8 @@ def system_results():
     with (DOC.parent / "calibration/candidate_indexer/v113_context_requests.csv").open() as f:
         rows = sorted(csv.DictReader(f), key=lambda r: tuple(int(r[k]) for k in ("prompt", "batch", "ep")))
     fig, axes = plt.subplots(3, 1, figsize=(7.75, 6.1), sharex=True, sharey=True, layout="constrained")
-    appendix = ["# 附录 C　33 组系统预测（整批秒数）", "",
-                "下表按本卡 B、EP 和输入长度排序。所有配置 TP=8，输出 1024 个 token。峰值与精细共用精度和冷读写假设，历史为原后端。1Mi 组的 decode 及总量含超位置范围外推。", ""]
+    appendix = ["# 附录 C　历史 v1.13.1：33 组系统预测（秒）", "",
+                "本附录保留历史冻结版，供第 7 章追溯 1Mi 末块和请求逐次修订。v2.3 同图重排的三种方法见[附录 H](16-system-comparison.md)。下表按本卡 B、EP 和输入长度排序。所有配置 TP=8，输出 1024 个 token。峰值与精细共用精度和冷读写假设，历史为原后端。1Mi 组的 decode 及总量含超位置范围外推。", ""]
     keys = list(dict.fromkeys(r["model"] for r in rows))
     if len(keys) != 3 or len(rows) != 33:
         raise ValueError("Unexpected system experiment coverage")

@@ -1,5 +1,6 @@
 """Typeset the Chinese research report; report-only dependencies are documented in docs/paper."""
 import argparse
+import csv
 from base64 import b64encode
 from functools import lru_cache
 from html import escape
@@ -86,6 +87,8 @@ def render_chapter(path, sections):
             element = token.children[0]
             if element.type == "image" and tokens[index - 1].type == "paragraph_open":
                 tokens[index - 1].tag = tokens[index + 1].tag = "figure"
+                if element.attrGet("src").endswith("/system-vector-e2e.png"):
+                    tokens[index - 1].attrSet("class", "system-comparison")
                 caption = md.renderer.renderInline(element.children, md.options, {})
                 token.children.append(Token("html_inline", "", 0, content=f"<figcaption>{caption}</figcaption>"))
         for child in token.children or ():
@@ -126,6 +129,42 @@ def relative_evidence_links(document, pdf):
             action["URI"] = String(path + ("#" + uri.fragment if uri.fragment else ""))
 
 
+def request_appendix():
+    """Generate the compact, standalone paper tables from the released DES ledger."""
+    ledger = DOC.parent / "results/v2.3/system-e2e/requests.csv"
+    with ledger.open(encoding="utf-8", newline="") as f:
+        rows = list(csv.DictReader(f))
+    names = {"v4-pro": "DeepSeek-V4 Pro", "v41-flash": "DeepSeek-V4.1 Flash", "kimi-k31": "Kimi K3.1 Pro"}
+    with ledger.with_name("original27.csv").open(encoding="utf-8", newline="") as f:
+        rounds = list(csv.DictReader(f))
+    if (len(rounds) != 27 or len({(r["model"], r["layout"], r["batch"]) for r in rounds}) != 27
+            or any(sum(r["model"] == m for r in rounds) != 9 for m in names)):
+        raise ValueError("Expected nine distinct decode rounds per model")
+    keys = {(r["model"], r["prompt"], r["batch"], r["ep"]) for r in rows}
+    if len(keys) != 33 or len(rows) != 33 or any(sum(r["model"] == m for r in rows) != 11 for m in names):
+        raise ValueError(f"{ledger}: expected 11 distinct configurations for each of the three models")
+    out = ["# 附录 H　当前三种策略：33 组整批请求与 27 组单轮 decode", "",
+           "以下均为 950DT rank 0 的 DES 预测。每个模型的第一张表以秒描述整批请求（TP=8，至 1,024 个输出 token），第二张以毫秒描述原始 128Ki 图中一个推测轮次。两张表使用不同的配置，不逐行配对。带 † 的 1Mi 输入，其后 decode 超出位置预置，含域外推算。", ""]
+    modes = ("legacy", "peak", "effective", "calibrated", "auto", "instruction_classes")
+    for key, title in names.items():
+        out += [f"## {title}", "", "**整批请求（秒）**", "", "| 输入 / B / EP | 历史 | 峰值 | 原效率 | 原法 | 默认 | 指令法 |",
+                "|---|---:|---:|---:|---:|---:|---:|"]
+        for r in sorted((r for r in rows if r["model"] == key), key=lambda r: tuple(int(r[k]) for k in ("prompt", "batch", "ep"))):
+            length = "1Mi†" if int(r["prompt"]) == 1048576 else f"{int(r['prompt']) // 1024}Ki"
+            numbers = " | ".join(f"{float(r[f'request_{m}_s']):.3f}" for m in modes)
+            out.append(f"| {length} / {r['batch']} / {r['ep']} | {numbers} |")
+        out += ["", "表头说明：B 为本卡 batch，EP 为专家并行度。历史是原始系统 Roofline；峰值和原效率采用相同执行精度与工作量，后者另含系统原效率系数。右三列只改 Vector 定价，依次为强制原法、逐合同默认、强制指令类别法。", ""]
+        out += ["**单轮 target + draft（毫秒）**", "", "| 并行 / B | 显存 GB | 历史 | 峰值 | 原法 | 默认 | 指令法 |",
+                "|---|---:|---:|---:|---:|---:|---:|"]
+        for r in sorted((r for r in rounds if r["model"] == key), key=lambda r: (r["layout"], int(r["batch"]))):
+            values = " | ".join(f"{float(r[m + '_us']) / 1000:.3f}" for m in ("historical", "peak", "calibrated", "auto", "instruction_classes"))
+            gb = float(r["peak_gb"])
+            out.append(f"| {r['layout']} / {r['batch']} | {gb:.2f}{'‡' if gb > 144 else ''} | {values} |")
+        out += ["", "表头说明：B 为本卡 batch，显存为该行静态峰值；‡ 表示超过 144 GB，这一行仅作容量外比较。历史、峰值为两种 Roofline；最后三列是同一个 decode 轮次的三次重排，不含 prefill。", ""]
+    out += ["[含 prefill、decode、请求的原始 CSV](../../results/v2.3/system-e2e/requests.csv) · [逐阶段图与归因](../system-vector-e2e.md) · [另一个计时边界：原始 27 个 decode 单轮](../decode-vector-comparison.md)", ""]
+    return "\n".join(out)
+
+
 def build(font_dir=None):
     sources = sorted(PAPER.glob("[0-9][0-9]-*.md"))
     chapters = {p: "chapter-" + p.stem.split("-")[0] for p in sources}
@@ -142,9 +181,9 @@ def build(font_dir=None):
     <div class="subtitle">从单核指令流水到长上下文推理</div>
     <p class="deck">基于 950DT 与 950PR 的 CA 校准<br>及面向 970DT 的架构外推</p>
     <dl class="coverfoot">
-      <dt>正文基线</dt><dd class="release">v2.0.0</dd>
-      <dt>实验冻结版</dt><dd>v1.13.1</dd>
-      <dt>附录 E / F / G</dt><dd>FA 机制、独立验证与全算子对照</dd>
+      <dt>报告版本</dt><dd class="release">v2.3</dd>
+      <dt>系统实验</dt><dd>27 组 decode 图 · 33 组请求</dd>
+      <dt>对照维度</dt><dd>原法、指令类别法与默认策略</dd>
       <dt>成稿日期</dt><dd>2026 年 11 月</dd>
     </dl>
     </header>"""
@@ -169,4 +208,8 @@ def build(font_dir=None):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--font-dir", type=Path, help="directory with the two Noto CJK Regular OTF files")
-    build(parser.parse_args().font_dir)
+    parser.add_argument("--refresh-request-tables", action="store_true", help="regenerate Appendix H from the versioned system request ledger before typesetting")
+    args = parser.parse_args()
+    if args.refresh_request_tables:
+        (PAPER / "16-system-comparison.md").write_text(request_appendix(), encoding="utf-8")
+    build(args.font_dir)
