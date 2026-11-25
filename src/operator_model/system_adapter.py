@@ -11,7 +11,7 @@ from operator_model.backend import estimate
 from operator_model.operators.quant.mxfp4 import contiguous_input
 
 
-ADAPTER_VERSION = "2"
+ADAPTER_VERSION = "3"
 BF16 = "bfloat16"
 F32 = "float32"
 FP4 = "float4_e2m1fn_x2"
@@ -280,12 +280,14 @@ _LOWERINGS = {
 }
 
 
-def estimate_features(features, *, chip, include_schedule=False, candidate_implementation="capture", candidate_options=None):
+def estimate_features(features, *, chip, include_schedule=False, candidate_implementation="capture", candidate_options=None, vector_model="auto"):
     """Use one published lowering with latency in microseconds, or give the fallback reason.
 
     This is a prediction of the selected implementation. Capture does not identify an ELF.
     Pass sim-platform OpFeatures (immutable tuples for shapes, strides and attributes).
     """
+    from operator_model.system_routes.vf import validate
+    validate(vector_model)
     lower = _LOWERINGS.get(features.raw_name)
     if lower is None:
         return NodeEstimate(None, "unsupported", reason="No matched standalone operator-model contract")
@@ -307,7 +309,7 @@ def estimate_features(features, *, chip, include_schedule=False, candidate_imple
         # Only substitute after the complete model/layer/layout contract above
         # matches. Keep the BF16 capture available as a separate scenario.
         dtype, attrs, contract = "mxfp4", {**(candidate_options or {}),"implementation":IMPLEMENTATION}, "candidate_filtered_indexer/" + IMPLEMENTATION
-    priced = estimate(op, shape, attrs, chip=chip, dtype=dtype)
+    priced = estimate(op, shape, {**attrs, "vector_model": vector_model}, chip=chip, dtype=dtype)
     work = priced.work
     if include_schedule and work is not None and priced.latency_us is not None:
         projection = priced.projection or {}
@@ -317,5 +319,9 @@ def estimate_features(features, *, chip, include_schedule=False, candidate_imple
                 (isinstance(value, (tuple, list)) and len(value) <= 4 and all(type(x) is int for x in value))}
         work = {**work, "schedule": {**(work.get("schedule") or {}), "active_aic": priced.active_aic,
                 "active_aiv": priced.active_aiv, "target_plan": plan,
+                "vector_model": (projection.get("vector_model") or
+                    ("not_applicable" if not work.get("vec_ops") else
+                    "calibrated" if vector_model == "auto" else vector_model)),
+                **{k:projection[k] for k in ("vector_model", "vector_model_selected", "vector_model_requested") if k in projection},
                 **{k: projection[k] for k in ("waves","query_tile","query_groups","kv_page","candidate_tiles","address_path","unpriced") if k in projection}}}
     return NodeEstimate(contract, priced.status, priced.latency_us, priced.reason, work)

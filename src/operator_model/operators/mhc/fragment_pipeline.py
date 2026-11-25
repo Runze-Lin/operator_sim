@@ -33,7 +33,7 @@ def _advance_rows(pair, first, tail, repeat):
     return x, y
 
 
-def estimate_post_fragments(shape, *, chip, resident_aiv, previous_shape, inspect_rows=()):
+def estimate_post_fragments(shape, *, chip, resident_aiv, previous_shape, inspect_rows=(), vf_price=None):
     """Conditional BF16 N=4 resource hypothesis; no target CA or hardware runtime.
 
     Inputs describe a known same-family high-water mark and the immediately
@@ -53,10 +53,10 @@ def estimate_post_fragments(shape, *, chip, resident_aiv, previous_shape, inspec
             or plan['route']!='post_token' or prev['target_plan']['route']!='post_token'
             or not tiles or tiles['count']!=2):
         raise ValueError('Requires a covered changed token shape with two UB fragments')
-    return covered_fragment_schedule(target, diag, tiles, inspect_rows)
+    return covered_fragment_schedule(target, diag, tiles, inspect_rows, vf_price=vf_price)
 
 
-def covered_fragment_schedule(target, diag, tiles, inspect_rows=()):
+def covered_fragment_schedule(target, diag, tiles, inspect_rows=(), vf_price=None):
     """Two-slot costs conditional on a covered, changed token-to-token predecessor.
 
     The individual previous tensor dimensions do not enter the critical path
@@ -81,6 +81,8 @@ def covered_fragment_schedule(target, diag, tiles, inspect_rows=()):
     def fragment(width, previous_width, includes_coeff):
         groups = ceil(width/64)
         vf = max(36*width/target_ops_per_cycle,shared['ready_to_write_per_group']*groups*ref_ops_per_cycle/target_ops_per_cycle)
+        if vf_price:
+            vf=vf_price('post_mix',1,width,4)
         # Previous payload can hold the single write port. Each first fragment of
         # a new row needs 80 B of coefficients in addition to data.
         ii = max(vf+p['write_gap_over_vec'], (10*width+80*includes_coeff)*read/1024,

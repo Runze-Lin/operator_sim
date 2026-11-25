@@ -3,6 +3,7 @@
 from dataclasses import replace
 from math import prod
 
+from . import vf
 from operator_model.system_adapter import NodeEstimate
 from operator_model.system_routes.vector import Tiles, _schedule
 from operator_model.workload import _counts
@@ -273,14 +274,20 @@ def _chunk(f, chip, s):
     def vector_us(ops, live):
         return ops / (1e6 * chip.vector_tops["32"] * live / chip.vector_cores)
 
+    unit=1000*chip.frequency_ghz
+    pre=vf.stage(chip,'kda/chunk_prepare',unit*vector_us(vector_prepare,lanes),rows*k/lanes,
+                 load=(3*rows*k+cubic/3)/lanes,convert=3*rows*k/lanes,exp=rows*k/lanes,
+                 arithmetic=(6*rows*k+3*rows*v+cubic/3)/lanes,store=(rows*k+rows*v)/lanes)/unit
+    chain=vf.stage(chip,'kda/chunk_state',unit*vector_us(vector_chain,chain_lanes),vector_chain/chain_lanes,
+                   load=vector_chain/chain_lanes,arithmetic=vector_chain/chain_lanes,store=(rows*v+chunk_heads*k*v)/chain_lanes)/unit
     prep = max(
         matrix_us(dot4, "4", independent) + matrix_us(wy16, "16", independent),
-        vector_us(vector_prepare, lanes),
+        pre,
     )
     # Explicit critical chain bound matters for ragged tails as well as B=1.
     chain_share = max(chunks) * batch / sum(chunks)
     recur = (
-        max(matrix_us(chain16, "16", ordered), vector_us(vector_chain, chain_lanes))
+        max(matrix_us(chain16, "16", ordered), chain)
         * chain_share
     )
     finish = matrix_us(out16, "16", independent)

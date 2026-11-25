@@ -176,3 +176,17 @@ for opts in ({}, {"vector_model":"instruction_classes"}):
 ```
 
 这三个连续 Vector 程序的 `vf_<类别>_ii_cycles`、`vf_issue_width`、`vf_ub_ports`、`vf_alu_lanes` 属于芯片 details；FA 的专用 `fa_vf_*` 参数独立。类模型输出按实验估计标记。不同 dtype、数据布局或寄存器宽度可能需要另一个程序。[类别、指令工作量与误差](nonfa-vector-classes.md) · [迁移条件与 CPU 查询成本](paper/14-vector-transfer.md)
+
+### 为一个系统仿真选择 Vector 方法
+
+本地调用对每个算子接受同一个选择器，系统插件通过构造参数一次选定。两者都保留原有精度与实现约束。例如比较 AIV 行归约与整个 RMSNorm 的预测时，可以从同一 shape 开始。
+
+```python
+from operator_model import estimate
+
+for method in ("calibrated", "instruction_classes"):
+    result = estimate("rmsnorm", [64, 2048], {"vector_model": method}, dtype="bf16")
+    print(method, result.latency_us, result.active_aiv, result.status)
+```
+
+`calibrated` 在这里表示**选原来的阶段定价**；CA 资格由结果的 status、实现身份与验证表决定。工作量合同仍可能缺少整窗。新设计在登记模型时提供相应的指令程序和依赖图；相同 dtype 并不能自动复用另一实现的归约或反量化程序。通过系统插件可选择 `FullOperatorSimBackend(vector_model="instruction_classes")`，或者使用默认的 `auto`。选择器属于缓存身份，两个情景可运行于同一系统框架。[系统签名与实际默认选择](system-vector-methods.md) · [本地算子的两法误差](vector-method-comparison.md) · [独立读写端口的芯片配置和回放示例](examples/transfer-stream.md)

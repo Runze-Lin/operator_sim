@@ -62,7 +62,7 @@ def _run_tile(height, width, k, plan, rates, fast):
         per_byte = max(1/rates['mte2'],rates['shared_per_byte'])
         # The VF row loop and its inner 256-B packed register repeats have
         # independent issue constraints. Both prices describe the 950 ISA.
-        vf = rates['setup'] + vf_service(producer_n,depth,rates['vector_scale'])
+        vf = rates['setup'] + (rates['vf_service'](producer_n, depth) if 'vf_service' in rates else vf_service(producer_n,depth,rates['vector_scale']))
         hand = rates['handoff_lat'] + producer_n*depth/rates['mte3']
         def fragment(d):
             ld = (height+width)*(d+2*_div(d,64))/rates['mte1']

@@ -15,6 +15,8 @@
 | quant_mxfp4 | BF16 → E2M1 + E8M0 | 9×128 | Ascend950DT_9582 | `aclnnDynamicMxQuant` | `Slice_ee29dafe4fe21e12bb8d56ae91626cba_high_performance_150` → `DynamicMxQuant_bf16toe2m1_high_performance_33_mix_aiv` | 3 / 9 | 7.1030 | 65.12 | [收据](../../calibration/quant_update/strided-950dt.json) |
 | quant_mxfp4 | BF16 → E2M1 + E8M0 | 9×128 | Ascend950PR_957b | `aclnnDynamicMxQuant` | `Slice_ee29dafe4fe21e12bb8d56ae91626cba_high_performance_150` → `DynamicMxQuant_bf16toe2m1_high_performance_33_mix_aiv` | 3 / 9 | 6.9800 | 56.84 | [收据](../../calibration/quant_update/strided-950pr.json) |
 
+**列说明**　调用、精度、主输入描述测量合同；芯片、ACLNN 和实际 kernel 标明 SKU、入口与执行身份；AIV 是各阶段活跃向量核数，CA µs 是设备窗，离线秒为采集墙钟，证据列指向原始记录。
+
 Add 的两输入都是连续 [9,7168]，alpha=1；Mul 的另一路为 [9,1]，沿末轴广播。FP8 缓存的每行配一个 FP32 scale，按 [128,1] 传入，输出 BF16。FP4 量化输入是 stride=[6288,1]、起始偏移 6144 个 BF16 元素的 Kimi 视图。单独运行时的 Slice 可能由系统的上游物化或融合消掉。输入变化应重新核对派发。
 
 从仓根运行 `python -m calibration.lookup cache_load --contract cache_load_fp8_antiquant --shape 1 128 512` 可读取 CA、源收据、数值与布局。

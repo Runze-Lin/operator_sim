@@ -13,7 +13,7 @@ def _prices():
     return load_parameters(_PROFILE)
 
 
-def _epochs(chip, prices, phase, plan, iterations):
+def _epochs(chip, prices, phase, plan, iterations, vf=None):
     """Issue and retirement epochs relative to the first instruction, in µs."""
     active = plan['active_aiv']
     local_rows = plan['rows_per_core']
@@ -43,6 +43,10 @@ def _epochs(chip, prices, phase, plan, iterations):
     first_row = first_col + prices['first_col_to_row'] * groups / rate
     first_pair = prices['first_pair'] * groups / rate
     steady_pair = prices['steady_pair'] * groups / rate
+    if vf:
+        single=vf('sink_normalize',local_rows,4)
+        first_row=first_col+single
+        first_pair=steady_pair=2*single
     scatter = first_row + (first_pair + max(0, iterations-2) * steady_pair if iterations >= 2 else 0.)
     write = scatter + phase_cost['write_gap'] * groups / rate
     write_end = write + max(phase_cost['write_wait'], write_floor)
@@ -55,7 +59,7 @@ def _epochs(chip, prices, phase, plan, iterations):
     return {name: cycles / clock for name, cycles in epochs.items()}
 
 
-def price(shape, chip, attrs):
+def price(shape, chip, attrs, *, vf=None):
     """Price one explicit first/expanded/resident same-family launch; never infer H."""
     if (len(shape) != 2 or any(type(x) is not int for x in shape) or shape[0] <= 0 or shape[1] != 4
             or set(attrs) - {'resident_aiv', 'num_iters', 'return_intermediates'}
@@ -94,7 +98,7 @@ def price(shape, chip, attrs):
         qualification = 'Iteration count outside the 2..32 measured range; steady issue period extrapolated'
     else:
         qualification = 'Explicit same-family H: ten independent T<=256 geometries on each 950 SKU'
-    epoch = _epochs(chip, prices, prices['phase_prices'][state], plan, iterations)
+    epoch = _epochs(chip, prices, prices['phase_prices'][state], plan, iterations,vf)
     # Adjacent boundaries make the additive stages telescope to the whole end.
     marks = [('tiling_and_setup', 'setup_vf'), ('input_and_softmax_issue', 'softmax_vf'),
              ('first_column', 'first_col_vf'), ('normalization_loop', 'scatter_vf'),

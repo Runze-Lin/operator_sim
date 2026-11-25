@@ -5,6 +5,7 @@ implementable design; none claims that a capture identified a binary.
 """
 from math import ceil
 
+from . import vf
 from operator_model.system_adapter import (
     BF16, E8, F32, FP8, NodeEstimate, _Mismatch, _arity, _dtype, _fields, _layout,
     _packed, _require, _shape,
@@ -182,6 +183,18 @@ def _schedule(rows, n, k, mode, reads, writes, classes, chip, add_bias):
         peak = chip.vector_tops.get(width)
         _require(peak, f'Missing {width}-bit Vector peak for {precision} service')
         vector_cycles[precision] = count * vec*f / (peak*1000*vactive)
+    for precision, old in tuple(vector_cycles.items()):
+        count=issued[precision]/vactive
+        if mode=='token_mx' and precision=='fp8_e4m3fn':
+            recipe=dict(load=count,permute=count,convert=count,store=count)
+        elif mode=='batch_mx':
+            recipe=dict(load=count,permute=count/2,convert=count/2,arithmetic=count/2,store=count/2)
+        elif mode=='token_mx':
+            recipe=dict(load=count,arithmetic=count/2,convert=count/2,store=count/2)
+        else:
+            recipe=dict(load=2*count,arithmetic=count,store=count)
+        vector_cycles[precision]=vf.stage(chip,'gemm/'+mode+'/'+precision,old,count,bits={'fp8_e4m3fn':8,'bf16':16,'fp32':32}[precision],
+                                          known=mode.startswith('dense'),**recipe)
     vector = sum(vector_cycles.values())
     if mode == 'dense32':
         # Distinct launch/retirement mechanisms: beta=1 broadcasts a vector
@@ -197,6 +210,13 @@ def _schedule(rows, n, k, mode, reads, writes, classes, chip, add_bias):
         body = max(stages) + (sum(stages)-max(stages))/steps
     else:
         body = max(transfer,cube,vector)
+    if mode=='dense32' and split>1:
+        # Stream-K output reduction on AIV; native drain contains its normal
+        # small-shape service. Keep this floor and expose a larger merge only
+        # when the issued reduction itself becomes limiting.
+        merge=(split-1)*total*n/max(1,vactive)
+        merge_cycles=vf.stage(chip,'gemm/split_k_merge',0.,merge,known=True,load=2*merge,arithmetic=merge,store=merge)
+        drain=max(drain,merge_cycles)
     router_stages = {}
     if mode == 'router16':
         # First/last timestamps in the 950 BF16-input FP32-output Stream-K
@@ -213,7 +233,9 @@ def _schedule(rows, n, k, mode, reads, writes, classes, chip, add_bias):
         merge_l2 = 2*partial_bytes*f/(chip.details.get('l2_bandwidth_gbs') or
                                       2*chip.hbm_bandwidth_gbs)
         merge_rate = (chip.vector_tops['32'] or 0.5*(chip.vector_tops['16'] or 54))*1000/f
-        drain = max(drain,merge_l2,merge_ops/merge_rate)
+        per=merge_ops/max(1,vec)
+        merge=vf.stage(chip,'gemm/partial_reduction',merge_ops/merge_rate,per,known=True,load=2*per,arithmetic=per,store=per)
+        drain = max(drain,merge_l2,merge)
         body = max(hbm,read_to_mmad+spread+max(local_stream,cube))
         router_stages = dict(read_to_first_mmad_cycles=read_to_mmad,
                              arrival_spread_cycles=spread,local_panel_cycles=local_stream,

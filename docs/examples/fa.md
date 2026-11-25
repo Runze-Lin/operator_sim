@@ -123,3 +123,5 @@ DT 首个 QK 模型 7.558 µs、CA 7.315 µs。末页模型 271.855 µs、CA 273
 以中间满页为例，行最大值段含 22 读、46 算术、5 归约、26 写，归约和写在该模板独占发起槽。发起需求为 5+26+(22+46)/2=65 cycles，高于该段最长输入依赖的 55 cycles。随后两道存储屏障按开发 trace 各取 9 cycles，合计 83。概率发布阶段的发起下界为 62.5，共享 ALU 下界为 65，故该页的 P 在 83+65=148 cycles 时可交给 PV。行和分支因依赖取 9+18+2×7+22+9=72 cycles。跨行状态更新的关键链为读、指数、写回并重读、两次算术、再写，需 9+18+9+9+2×7+9=68 cycles。这样整段 softmax 需 83+72+68=223 cycles。前页输出更新需 32 cycles，与本页共享 AIV，常规满页需求共 255 cycles。延迟和屏障取自 DT 开发窗，PR 同类指令沿用；发起节拍与指令执行跨度分别定价。[实现](../../src/operator_model/operators/attention/vector_classes.py) · [参考价格](../../src/operator_model/data/parameters/fa_vector_classes.json)
 
 本例的页发起约束仍为 853.405 cycles，超过 255 cycles 的向量需求，所以稳态为 264.297 µs。发起、首张、稳态、排空分别为 6.479、3.877、264.297、0.339 µs，全窗 **274.992 µs**。原方法为 274.988 µs。显著改变忙核 VF 却几乎不改变整窗，原因是这一 shape 的瓶颈在别处。独立测试另选 Q 更多的 shape，以便观察 Vector 改变整窗的情形。[新窗与 CPU 开销](../paper/14-vector-transfer.md) · [v2.1 旧模板的冻结对照](../paper/13-fa-vector-pilot.md)
+
+全算子对照还列出了这条 BF16 稠密路线在常规和 softmax 较重样本上的两法表现。比较时沿用同一段 Q/KV、分核与芯片；读探针中的连续发起间隔和单请求返回延迟在子流水示例中分别代入。[两种定价的完整窗比较](../vector-method-comparison.md) · [发起与返回的数值示例](transfer-stream.md)

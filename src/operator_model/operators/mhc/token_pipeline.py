@@ -7,7 +7,7 @@ def _native_price(chip, name, fallback):
     return 1024 * chip.frequency_ghz / bandwidth if bandwidth else fallback
 
 
-def token_pipeline(shape, chip, plan, state, model, shared_floor_us=0., inspect_rows=()):
+def token_pipeline(shape, chip, plan, state, model, shared_floor_us=0., inspect_rows=(), *, vf_price=None):
     """Cost a named dispatch state. An optional bounded list exposes actual row predictions."""
     tokens, streams, width = shape
     if plan['route'] != 'post_token' or streams != 4 or state not in ('first', 'expand', 'reuse', 'repeat'):
@@ -22,7 +22,8 @@ def token_pipeline(shape, chip, plan, state, model, shared_floor_us=0., inspect_
     phases = model['by_state'][state]
     size = [64, 16, 2 * width, 8 * width]
     out_bytes = 8 * width
-    work = max(36 * width / vector_per_cycle, model['ready_to_write_per_group'] * groups * vector_ratio, sum(size) * read_price / 1024, out_bytes * write_price / 1024)
+    body = (vf_price('post_mix',1,width,streams) if vf_price else model['ready_to_write_per_group'] * groups * vector_ratio)
+    work = max(body, 0 if vf_price else 36 * width / vector_per_cycle, sum(size) * read_price / 1024, out_bytes * write_price / 1024)
     arrival = phases['arrival_per_log2_aiv'] * log2(plan['active_aiv'])
     first_read = arrival + phases['control_to_operand']
     wr_service = out_bytes * write_price / 1024
@@ -34,7 +35,7 @@ def token_pipeline(shape, chip, plan, state, model, shared_floor_us=0., inspect_
             issue.append(issue[-1] + gap)
         latency = [f + read_price*b/1024 for f,b in zip(p['fixed'], size)]
         ready = max(a+l for a,l in zip(issue, latency))
-        after = p['ready_to_write_fixed'] + model['ready_to_write_per_group'] * groups * vector_ratio
+        after = p['ready_to_write_fixed'] + body
         response[label] = dict(issue=issue, latency=latency, ready=ready, to_write=ready+after)
     first_write = first_read + response['first']['to_write']
     gaps = {key:max(work, phases[key]) for key in ('read_gap_first','read_ii','write_gap_first','write_ii')}

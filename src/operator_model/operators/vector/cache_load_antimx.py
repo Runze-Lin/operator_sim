@@ -47,7 +47,7 @@ def _lengths(extent, count, normal):
     return ([(normal,count-1)] if count>1 else [])+[(last,1)]
 
 
-def _resource_service(core_rows, core_width, capacity, rd, wr, vector_scale, rates):
+def _resource_service(core_rows, core_width, capacity, rd, wr, vector_scale, rates, vf=None):
     blocks = up(core_width,32)
     col_chunks = up(blocks,capacity)
     col_groups = 2*up(up(blocks,col_chunks),2)
@@ -75,6 +75,8 @@ def _resource_service(core_rows, core_width, capacity, rd, wr, vector_scale, rat
             write=rates['write_response_cycles']+writes/wr
             vector=rates['handoff_cycles']+vector_scale*(rates['vf_base_cycles']*scale_iterations+
                                                         rates['vf_data_cycles']*data_iterations)
+            if vf:
+                vector=rates['handoff_cycles']+vf('antimx',r,w)
             total_read+=n*read
             total_write+=n*write
             total_vector+=n*vector
@@ -93,7 +95,7 @@ RATES=dict(front_cycles=3413.5,arrival_log2_cycles=749/log2(56),
            tail_cycles=23.,outlier_wait_log2_cycles=1966/log2(56))
 
 
-def schedule(rows, width, work, chip):
+def schedule(rows, width, work, chip, *, vf=None):
     rg,cg,r,c=core_grid(rows,width,chip.vector_cores)
     active=rg*cg
     capacity=((chip.details.get('ub_bytes') or 253952)//2624)*16
@@ -110,7 +112,7 @@ def schedule(rows, width, work, chip):
     candidates=[]
     for rr,_ in _lengths(rows,rg,r):
         for cc,_ in _lengths(width,cg,c):
-            time,counts,stages=_resource_service(rr,cc,capacity,rd,wr,vector_scale,RATES)
+            time,counts,stages=_resource_service(rr,cc,capacity,rd,wr,vector_scale,RATES,vf)
             candidates.append((time,rr,cc,counts,stages))
     local,rr,cc,counts,stages=max(candidates,key=lambda x:x[0])
     memory=stream_memory(chip,active,work['logical_read_bytes'],work['logical_write_bytes'])

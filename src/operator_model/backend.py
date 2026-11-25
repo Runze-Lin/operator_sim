@@ -324,6 +324,24 @@ def _native_alternative(us, work, projection, target, mode):
     return Estimate(us, status, reason, aiv, aic, target.name, work, projection, _rates(work, us, target))
 
 
+def _transfer_window(result, target, program):
+    """Apply the per-worker resource floor after any residency-dependent rescheduling."""
+    from operator_model.scheduling.transfer_pipeline import stream_bound
+    if result.latency_us is None:
+        return result
+    try:
+        bound = stream_bound(target, program)
+    except (TypeError, ValueError) as exc:
+        return Estimate(None, 'unsupported', str(exc), chip_name=target.name)
+    duration = max(result.latency_us, bound['bound_us'])
+    bound.update(base_window_us=result.latency_us, exposed_us=duration-result.latency_us)
+    return replace(result, latency_us=duration, status='extrapolated',
+                   reason='Explicit critical-worker transfer scenario',
+                   rates=_rates(result.work, duration, target),
+                   projection={**(result.projection or {}), 'latency_us': duration,
+                               'transfer_pipeline': bound})
+
+
 def _evaluate(op, shape, attrs, soc, chip, dtype, timing_mode='auto'):
     try:
         if not isinstance(op, str) or ALIASES.get(op, op) not in VECTOR | CUBE | FUSION | _STRUCTURAL_OPS:
@@ -336,7 +354,29 @@ def _evaluate(op, shape, attrs, soc, chip, dtype, timing_mode='auto'):
             raise ValueError('Specify either chip or soc')
         target = load_chip(chip if chip is not None else soc)
         op = ALIASES.get(op, op)
-        result, raw = _price_device(op, shape, attrs, target, dtype, timing_mode)
+        options = dict(attrs or {})
+        mode = options.pop('vector_model', 'auto')
+        if mode not in ('auto', 'calibrated', 'instruction_classes'):
+            raise ValueError('vector_model must be auto, calibrated or instruction_classes')
+        transfer = options.pop('transfer_pipeline', None)
+        integrated = op in ('fa', 'quant_token_fp8', 'sigmoid_fp32', 'cast_bf16_fp32')
+        if integrated and mode != 'auto':
+            options['vector_model'] = mode
+        result, raw = _price_device(op, shape, options, target, dtype, timing_mode)
+        if mode == 'instruction_classes' and not integrated and result.latency_us is not None:
+            normalized, chosen = _call_attrs(op, options, dtype)
+            from operator_model.operators.vector.family_programs import SUPPORTED_OPS
+            if op in SUPPORTED_OPS:
+                from operator_model.operators.vector.family_programs import reprice
+            else:
+                from operator_model.operators.fused.family_programs import reprice
+            result = reprice(op, tuple(shape), normalized, target, chosen, result)
+        if transfer is not None:
+            result = _transfer_window(result, target, transfer)
+        if (timing_mode == 'calibrated' and result.latency_us is not None and
+                ((mode == 'instruction_classes' and result.status == 'extrapolated') or transfer is not None)):
+            return replace(result, latency_us=None, rates=None, status='unavailable',
+                           reason='Experimental resource program has no dedicated calibrated price'), raw
         if result.latency_us is not None:
             # Counts of physical launches for the priced implementations.
             # FLA V2 is the only priced chunk KDA and has three main launches.

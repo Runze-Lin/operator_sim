@@ -47,9 +47,10 @@ class TestUnknownSinkhorn(unittest.TestCase):
         self.assertIsNone(unpriced.latency_us)
         missing=replace(c,name='unknown-vector',vector_tops={**c.vector_tops,'32':None})
         self.assertIsNone(estimate(OP,[67,4],chip=missing).latency_us)
-        # The chip schema currently admits only the installed layout.
-        with self.assertRaisesRegex(ValueError, 'Unknown chip detail'):
-            replace(c,name='new-vreg',details={**c.details,'vector_register_bytes':512})
+        # Other register widths are valid design scenarios. The native template
+        # still requires its measured 256-byte layout for this schedule.
+        wide=replace(c,name='new-vreg',details={**c.details,'vector_register_bytes':512})
+        self.assertIsNone(estimate(OP,[67,4],chip=wide).latency_us)
         self.assertEqual(estimate(OP,[257,4],chip=c,timing_mode='calibrated').status,'unavailable')
         self.assertEqual(estimate(OP,[67,4],{'return_intermediates':True}).status,'unsupported')
         self.assertEqual(estimate(OP,[67,4],dtype='bf16').status,'unsupported')

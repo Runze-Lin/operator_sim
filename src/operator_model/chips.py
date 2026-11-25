@@ -1,5 +1,6 @@
 """Versioned chip scenarios. The online backend only reads portable JSON."""
 from operator_model.resources import chip_file
+from operator_model.scheduling.transfer_pipeline import TransferProfile
 from operator_model.operators.attention.vector_classes import VF_CHIP_FIELDS
 from collections.abc import Mapping
 from dataclasses import dataclass, field
@@ -12,7 +13,7 @@ from types import MappingProxyType
 REFERENCE_NAME = 'Ascend950DT_9582'
 _BUILTINS = (REFERENCE_NAME, 'Ascend950PR_957b', 'Ascend970DT')
 _BITS = {'32', '16', '8', '4'}
-_DETAILS = {'ub_bytes', 'l1_bytes', 'l2_bytes', 'l0a_bytes', 'l0b_bytes', 'l0c_bytes',
+_DETAILS = {'vector_register_bytes', 'ub_bytes', 'l1_bytes', 'l2_bytes', 'l0a_bytes', 'l0b_bytes', 'l0c_bytes',
             'l2_bandwidth_gbs', 'mte1_bandwidth_gbs', 'mte2_bandwidth_gbs', 'mte3_bandwidth_gbs',
             'rms_first_scalar_cycles', 'rms_first_payload_cycles', 'rms_output_retained_fraction',
             'cast_initial_read_pair_cycles',
@@ -27,7 +28,8 @@ _DETAILS = {'ub_bytes', 'l1_bytes', 'l2_bytes', 'l0a_bytes', 'l0b_bytes', 'l0c_b
             'quant_prefetch_launch_cycles', 'quant_loop_work_ops', 'quant_output_retained_fraction',
             'matmul_hbm_efficiency', 'matmul_l2_efficiency', 'matmul_output_retained_fraction',
             'matmul_initial_read_gbs'} | VF_CHIP_FIELDS | {'vf_issue_width', 'vf_ub_ports', 'vf_alu_lanes'} | {
-                f'vf_{name}_ii_cycles' for name in ('exp','divide','convert','arithmetic','reduce','load','store','predicate')}
+                f'vf_{name}_{field}' for name in ('exp', 'divide', 'convert', 'arithmetic', 'reduce',
+                    'load', 'store', 'predicate', 'rsqrt', 'permute', 'compare', 'logical', 'log') for field in ('ii_cycles', 'latency_cycles')}
 
 
 def _number(x, label, *, integer=False):
@@ -56,7 +58,17 @@ class ChipConfig:
     # selects a device schedule even if a caller changes its dispatch cost.
     kernel_overhead_us: float = field(default=0.0, compare=False)
 
+    transfer_profiles: Mapping = field(default_factory=dict, compare=False)
+
     def __post_init__(self):
+        if not isinstance(self.transfer_profiles, Mapping):
+            raise ValueError('transfer_profiles must map geometry names to descriptors')
+        profiles = {}
+        for name, entry in self.transfer_profiles.items():
+            if not isinstance(name, str) or not name or not isinstance(entry, (Mapping, TransferProfile)):
+                raise ValueError('invalid transfer profile')
+            profiles[name] = entry if isinstance(entry, TransferProfile) else TransferProfile(**entry)
+        object.__setattr__(self, 'transfer_profiles', MappingProxyType(profiles))
         overhead = self.kernel_overhead_us
         if type(overhead) not in (int, float) or not math.isfinite(overhead) or overhead < 0:
             raise ValueError('kernel_overhead_us must be finite and nonnegative')
@@ -80,6 +92,8 @@ class ChipConfig:
                         raise ValueError(f'{field} must be in [0,1]')
                 else:
                     _number(value, field, integer=field.endswith('_bytes') or field == 'fa_aiv_per_aic')
+                if field == 'vector_register_bytes' and value % 4:
+                    raise ValueError('vector_register_bytes must be a multiple of four')
                 if field.endswith('_efficiency') and value > 1:
                     raise ValueError(f'{field} must be in (0,1]')
                 if field == 'fa_aiv_per_aic' and value > 2:

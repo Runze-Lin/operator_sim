@@ -301,12 +301,13 @@ def report(output, check=False):
     from calibration.diagnostics import render as measured_only
     pages['measured-only.md'] = measured_only()
     pages['README.md'] = render_index(groups)
-    files = {output / filename: content for filename, content in pages.items()}
+    from calibration.table_notes import notes
+    files = {output / filename: notes(content, detailed=True) for filename, content in pages.items()}
     docs = HERE.parent / 'docs'
     if output.resolve() == (docs / 'errors').resolve():
         summary = docs / 'error-analysis.md'
         overview = summary_ranges(summary.read_text(encoding='utf-8'), groups)
-        files[summary] = refresh_policy_audit(overview, groups)
+        files[summary] = notes(refresh_policy_audit(overview, groups))
     if check:
         for path, content in files.items():
             if not path.is_file() or path.read_text(encoding='utf-8') != content:

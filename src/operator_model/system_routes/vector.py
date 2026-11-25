@@ -3,9 +3,10 @@
 Each route chooses operands, storage boundary, arithmetic and an independent
 work unit before the scheduler is given a chip. Packed shapes use byte slots.
 """
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from math import ceil, log2, prod
 
+from . import vf
 from operator_model.backend import estimate
 from operator_model.chips import load_chip
 from operator_model.operators.attention.residual_work import attention_residual_work
@@ -59,6 +60,9 @@ class Tiles:
     setup: str = "stream"
     transaction_read: int = 0     # extra overfetch for indirect accesses
     traffic_read: int = 0         # repeated DMA beyond distinct tensor bytes
+    register_bits: int = 0
+    class_visits: dict = None
+    known_precision: bool = False
     work_source: str = "capture semantics; proposed arch35 register/UB implementation"
 
 
@@ -129,7 +133,7 @@ def _schedule(p, chip):
     wr = (chip.details.get("mte3_bandwidth_gbs") or 32*chip.frequency_ghz) / chip.frequency_ghz
     item = min(panel, per_core)
     read = payload_read/n/rd
-    vec = p.ops/n/lanes
+    vec = vf.panel(chip,p,item,item*p.ops/n/lanes)/item
     write = p.write/n/wr
     # Overlap the three resources between pages. Equal full pages have a
     # max-stage initiation interval. A proportionate tail is an approximation.
@@ -156,17 +160,38 @@ def _schedule(p, chip):
 
 
 def _anchor(op, shape, chip, attrs=None, *, qualifier):
-    result = estimate(op, shape, attrs or {}, chip=chip)
+    result = estimate(op, shape, vf.native_attrs(attrs), chip=chip)
     if result.latency_us is None:
         return None
     work = dict(result.work)
     work["schedule"] = {"algorithm": op, "active_aiv": result.active_aiv,
                         "active_aic": result.active_aic, "evidence": qualifier,
+                        "vector_model": (result.projection or {}).get("vector_model") or vf.selected(True),
                         "target_plan": (result.projection or {}).get("target_plan", {})}
     return NodeEstimate(op, "extrapolated", result.latency_us, reason=qualifier, work=work)
 
 
+# Input/output storage types of the archived complete system-window fixtures.
+# A new dtype under the same ATen spelling is a different implementation prior.
+_KNOWN_INPUT = {
+    'aclnnLtScalar':'int64','aclnnGeScalar':'int64','aclnnBitwiseOrTensor':'bool',
+    'aclnnSubs':'int64','aclnnInplaceMaskedFillScalar':'int64','aclnnNeg':'bfloat16',
+    'aclnnPowTensorScalar':'float32','aclnnReduceSum':'float32','aclnnMean':'float32',
+    'aclnnRsqrt':'float32','aclnnEmbedding':'bfloat16','aclnnGatherV2':'bfloat16',
+    'aclnnCast':'bfloat16','aclnnCat':'bfloat16','aclnnConstantPadNd':'bfloat16',
+    'aten.add.Tensor':'bfloat16','aten.mul.Tensor':'float32'}
+
+
 def _primitive(f):
+    p=_primitive_plan(f)
+    api=_PRIMITIVE_API.get(f.raw_name,f.raw_name)
+    ref=_KNOWN_INPUT.get(api); src=f.inputs[0].dtype.removeprefix('torch.')
+    dst=f.outputs[0].dtype.removeprefix('torch.')
+    ref_dst={'aclnnCast':'float32','aclnnLtScalar':'bool','aclnnGeScalar':'bool'}.get(api,ref)
+    return replace(p,known_precision=src==ref and dst==ref_dst)
+
+
+def _primitive_plan(f):
     name = f.raw_name
     inputs, out = f.inputs, f.outputs[0]
     n = prod(out.shape)
@@ -192,7 +217,7 @@ def _primitive(f):
     if name == "aten.constant_pad_nd.default":
         grain = max(1,32//_WIDTH[out.dtype.removeprefix("torch.")])
     return Tiles(name.removeprefix("aten."), n, grain, read, write, ops, precision,
-                 "broadcast" if broadcast else setup)
+                 "broadcast" if broadcast else setup, register_bits=8*_WIDTH[out.dtype.removeprefix("torch.") if name not in ("aten.lt.Scalar","aten.ge.Scalar") else inputs[0].dtype.removeprefix("torch.")])
 
 
 def _activation(f, sem, n, read, write):
@@ -213,7 +238,7 @@ def _activation(f, sem, n, read, write):
         # exp, sign, add, reciprocal, gate multiply and up multiply. The
         # optional gate ceiling and two-sided up clamp add three comparisons.
         return Tiles("swiglu_clipped" if limit is not None else "swiglu", n, 4096, read, write,
-                     (6+3*int(limit is not None))*n, setup="swiglu")
+                     (6+3*int(limit is not None))*n, setup="swiglu", known_precision=limit is None and f.inputs[0].dtype.endswith("bfloat16"))
     return Tiles("situ_gate_and_linear_branch", n, 2048, read, write, 10*n, setup="swiglu")
 
 
@@ -239,10 +264,17 @@ def _project_hc_pre(shape, sem, chip, read, write):
     cast = projection = 0.
     for count, m in ((panels,128),(int(tail>0),tail)):
         if count:
-            stage,_ = _cost((m,n,d),chip,plan,ref)
-            cast += count*stage["cast"]
+            stage,info = _cost((m,n,d),chip,plan,ref)
+            elements=info["critical_aiv_stage1_elements"]
+            clock=1000*chip.frequency_ghz
+            cast_us=vf.stage(chip,'mhc/partition_cast_reduce',stage["cast"]*clock,elements,known=True,
+                             load=elements,convert=elements,arithmetic=elements,reduce=elements,store=elements)/clock
+            dma=chip.details.get("mte2_bandwidth_gbs")
+            cast += count*max(cast_us,2*elements/(1000*dma) if dma else 0)
             projection += count*stage["projection"]
-    sink = stage["post"]
+    rows=plan["rows_per_aiv"]; cells=rows*n*n; payload=rows*n*d
+    sink = vf.stage(chip,'mhc/sinkhorn_mix',stage["post"]*clock,payload,known=True,load=payload+cells*(2*iters+1),
+                    exp=cells,reduce=2*iters*cells,divide=2*iters*cells,arithmetic=2*payload,store=rows*d+cells)/clock
     k=n*d
     c=n*n+2*n
     groups=t*n*n
@@ -279,7 +311,7 @@ def _propose(f, sem, chip):
         write = n*_WIDTH[x.dtype.removeprefix("torch.")]
         return Tiles("rope_interleaved_pair" if "partial" in name else "rope_pair",
                      n, rot*2, write+sum(_size(t,distinct=True) for t in xs[1:]),
-                     write, 3*n, "bf16", "rope")
+                     write, 3*n, "bf16", "rope", known_precision="partial" in name and x.dtype.endswith("bfloat16"))
     if name == "inference::cache_load":
         fp4 = sem["storage_precision"]=="fp4"
         if sem["storage_precision"] not in ("fp4","fp8"):
@@ -287,7 +319,7 @@ def _propose(f, sem, chip):
         # Reading valid rows of sliced batches may skip rows between batches.
         # Coalesced within each row; no copy of the whole cache allocation.
         return Tiles("mx4_cache_unpack" if fp4 else "fp8_cache_dequant", n,
-                     ys[0].shape[-1], read, write, n*(3 if fp4 else 2), setup="dequant")
+                     ys[0].shape[-1], read, write, n*(3 if fp4 else 2), setup="dequant", known_precision=not fp4 and x.dtype.endswith("float8_e4m3fn") and ys[0].dtype.endswith("bfloat16"))
     if name == "inference::cache_store":
         # Position IDs precede aliased cache value/scale tensors. Output tensors
         # describe backing capacity, not the number of updated slots.
@@ -351,14 +383,16 @@ def _propose(f, sem, chip):
         if len(xs)==2 and sem.get("topk_method")=="topk_bias":
             # This use of the same extension symbol has no token IDs or table.
             # It scores and ranks all experts with a bias as the normal router does.
-            anchor=_anchor("moe_gating_top_k",(rows,width,k),chip,
-                           qualifier="sqrtsoftplus full-row bias Top-K with sigmoid native ranking-stage proxy")
-            if anchor is not None:
-                work=dict(anchor.work)
-                work["schedule"]={**work["schedule"], "algorithm":"sqrtsoftplus_bias_rank",
-                                  "score_rows":rows,"experts_per_row":width,"selected_per_row":k}
-                return NodeEstimate("sqrtsoftplus_bias_rank","extrapolated",anchor.latency_us,
-                                    reason=anchor.reason,work=work)
+            base=estimate('moe_gating_top_k',(rows,width,k),{'vector_model':'calibrated'},chip=chip)
+            if base.latency_us is not None:
+                projection=base.projection; plan=projection['target_plan']; stages=dict(projection['stages_us'])
+                clk=1000*chip.frequency_ghz; local=plan['rows_per_busy_core']; visits=local*width; levels=ceil(log2(k+1))
+                stages['rank_and_normalize']=vf.stage(chip,'sqrtsoftplus_bias_rank',clk*stages['rank_and_normalize'],visits,
+                        load=3*visits,exp=visits,log=visits,rsqrt=visits,arithmetic=3*visits,
+                        compare=levels*visits,permute=levels*visits,store=2*local*k)/clk
+                work=dict(base.work); evidence='Native router startup/read/write proxy; proposed biased sqrt(softplus) scoring/ranking, no matched ELF.'
+                work['schedule']={**plan, 'algorithm':'sqrtsoftplus_bias_rank','stages_us':stages,'evidence':evidence}
+                return NodeEstimate('sqrtsoftplus_bias_rank','extrapolated',sum(stages.values()),reason=evidence,work=work)
         if len(xs)!=3:
             raise ValueError("Hash routing requires token IDs and tid2eid")
         selected = rows*k
@@ -368,7 +402,7 @@ def _propose(f, sem, chip):
         # 7 lanes/logit account for the exponent/log/sqrt handling and scale.
         route=Tiles("score_full_row_then_hash_gather",visits,width,
                     _size(x)+_size(xs[1])+selected*4,selected*8+(4*visits if full else 0),
-                    7*visits+2*selected,setup="aclnnMoeGatingTopKV2/hash",
+                    7*visits+2*selected,setup="aclnnMoeGatingTopKV2/hash", known_precision=x.dtype.endswith("float32"),
                     transaction_read=rows*((-4*k)%32),
                     work_source="arch35 HashCompute, native aclnnMoeGatingTopKV2 complete DT/PR windows")
         result=_schedule(route,chip)
@@ -403,6 +437,7 @@ def _propose(f, sem, chip):
         ops=counts["fp32_basic_ops"]+counts["exp_elements"]+counts["rsqrt_elements"]+counts["reciprocal_elements"]
         return Tiles("prefix_bank_resident_mix" if counts["resident"] else "prefix_bank_two_pass_mix",
                      rows*d,d,counts["distinct_input_bytes"],counts["dma_write_bytes"],ops,
+                     class_visits=dict(arithmetic=counts["fp32_basic_ops"], exp=counts["exp_elements"], divide=counts["rsqrt_elements"]+counts["reciprocal_elements"], load=counts["dma_read_bytes"]//2,store=counts["dma_write_bytes"]//2),
                      traffic_read=max(0,counts["dma_read_bytes"]-counts["distinct_input_bytes"]),
                      work_source="AttnResFwd arch35 bank reads and valid prefix; inference normalization is a separate node")
     if name=="inference::engram_lookup":

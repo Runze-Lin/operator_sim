@@ -19,7 +19,7 @@ REFERENCE_FP32_PER_AIV_CYCLE = 27_000 / (64 * 1.65)
 REFERENCE_MTE2_BYTES_PER_CYCLE = 48.3629559884
 
 
-def resident_inference_price(shape, chip, work):
+def resident_inference_price(shape, chip, work, *, vf=None):
     """Charge a resident row bank and the one-entry output queue in closed form."""
     _, hidden, _, valid = shape
     fp32, bf16 = chip.vector_tops['32'], chip.vector_tops['16']
@@ -47,6 +47,11 @@ def resident_inference_price(shape, chip, work):
     prefix = PREFIX_FIXED + PREFIX_GROUP * group_work + 2 * read
     score = SCORE_FIXED + SCORE_PER_ROW * bank + SCORE_GROUP_ROW * group_work * bank + valid * read
     norm = NORM_FIXED + NORM_GROUP * group_work
+    if vf:
+        weights = WEIGHT_FIXED + vf('att_weights',1,hidden) + 2*read
+        prefix = PREFIX_FIXED + vf('att_prefix',1,hidden) + 2*read
+        score = SCORE_FIXED + SCORE_PER_ROW*bank + vf('att_score',1,hidden,bank) + valid*read
+        norm = NORM_FIXED + sum(vf(k,1,hidden) for k in ('rms_reduce','rms_stat','rms_norm'))
     # 40021 reads output gamma into its own UB row in Init. 40020 can
     # issue the one-row gamma read while scoring, as seen in the physical traces.
     init_gamma = gamma + hidden / bf16_per_cycle if cache else 0.

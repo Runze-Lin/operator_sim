@@ -80,7 +80,12 @@ class SystemCubeTests(unittest.TestCase):
         peaks = dict(self.chip.vector_tops)
         peaks.update({'8': 24, '16': 1, '32': 12})
         target = replace(self.chip, vector_tops=peaks)
-        schedule = estimate_full_features(f, chip=target).work['schedule']
+        proposal = estimate_full_features(f, chip=target)
+        explicit = estimate_full_features(f, chip=target, vector_model='instruction_classes')
+        self.assertEqual(proposal.latency_us, explicit.latency_us)
+        self.assertTrue(all(stage['method']=='instruction_classes' for stage in proposal.work['schedule']['vector_stages']))
+        self.assertIn('permute',proposal.work['schedule']['vector_stages'][0]['counts'])
+        schedule = estimate_full_features(f, chip=target, vector_model='calibrated').work['schedule']
         active = schedule['active_aiv']
         per_cycle = 1000 * active / (target.frequency_ghz * target.vector_cores)
         expected = {'fp8_e4m3fn': g*k*n / (24*per_cycle),

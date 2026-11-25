@@ -89,6 +89,22 @@ class OperatorStream:
 
     def _partial_rms(self, shape, options, dtype, forecast, resident):
         """Restrict a shape-only point to times allowed by the observed prefix."""
+        if (forecast.projection or {}).get('vector_model') == 'instruction_classes':
+            # Only a lower bound on predecessor residency is known. Evaluate two
+            # physical endpoints with the requested graph; no legacy CA band is
+            # a bound on this alternative. Intermediate prefixes may lie outside.
+            endpoints = [estimate('rmsnorm', shape, {**options, 'resident_aiv': h},
+                                  chip=self.chip, dtype=dtype) for h in (resident,forecast.active_aiv)]
+            if any(e.latency_us is None for e in endpoints):
+                return forecast
+            lo,hi=sorted(e.latency_us for e in endpoints)
+            point=2*lo*hi/(lo+hi)
+            from operator_model.backend import _rates
+            context=dict(minimum_resident_aiv=resident, sampled_prefixes=[resident,forecast.active_aiv],
+                         sampled_endpoint_range_us=[lo,hi], point_rule='relative minimax of two modeled endpoints')
+            projections=dict(forecast.projection,latency_us=point,partial_history=context,
+                             stages_us={'partial_history_center':point},timing_diagnostics={'partial_history':context})
+            return replace(forecast,latency_us=point,projection=projections,rates=_rates(forecast.work,point,self.chip))
         band = estimate_rms_history_band(shape, chip=self.chip, dtype=dtype)
         times = band.by_resident_aiv_us[resident:]
         lower, upper = min(times), max(times)
@@ -106,19 +122,27 @@ class OperatorStream:
     def _with_history(self, family, op, shape, options, dtype, *, infer_post=False):
         result = estimate(op, shape, options, chip=self.chip, dtype=dtype)
         if family == 'mhc_post' and result.latency_us is not None:
+            from operator_model.operators.vector.family_programs import Pricer
+            vf=Pricer(self.chip) if (result.projection or {}).get('vector_model')=='instruction_classes' else None
+            def finalize(priced):
+                if vf is None or not vf.samples:
+                    return priced
+                d=dict(priced.projection.get('timing_diagnostics',{}),vector_model='instruction_classes',instruction_samples=vf.samples)
+                return replace(priced,projection=dict(priced.projection,timing_diagnostics=d,instruction_samples=vf.samples),
+                               reason='Observed Post history, with instruction-class SIMD service on the ordered schedule')
             if self._last_post == (self.chip, tuple(shape)):
                 if self._post_repeats:
                     from operator_model.operators.mhc.repeat import price_repeat
-                    return price_repeat(result, shape, self.chip)
+                    return finalize(price_repeat(result, shape, self.chip,vf))
             elif infer_post:
                 if self._post_fragments and self._post_route == 'post_token':
                     from operator_model.operators.mhc.ordered import price_ordered_fragments
-                    priced = price_ordered_fragments(result, shape, self.chip, options['resident_aiv'], self._last_post[1])
+                    priced = price_ordered_fragments(result, shape, self.chip, options['resident_aiv'], self._last_post[1],vf)
                     if priced is not None:
-                        return priced
+                        return finalize(priced)
                 if self._track_post:
                     from operator_model.operators.mhc.ordered import price_ordered_token
-                    return price_ordered_token(result, shape, self.chip, self._post_route)
+                    return finalize(price_ordered_token(result, shape, self.chip, self._post_route,vf))
         return result
 
     def _sink_dispatch(self, op, shape, attrs, dtype):
@@ -148,6 +172,12 @@ class OperatorStream:
         return fallback, 'mhc_sinkhorn' if compatible else 'untracked_sinkhorn'
 
     def _dispatch(self, op, shape, attrs, dtype):
+        if isinstance(attrs, Mapping) and 'transfer_pipeline' in attrs:
+            from operator_model.backend import _transfer_window
+            options = dict(attrs)
+            program = options.pop('transfer_pipeline')
+            result, family = self._dispatch(op, shape, options, dtype)
+            return (_transfer_window(result, self.chip, program) if program is not None else result), family
         family = _kernel_family(op, attrs)
         if self._track_sinkhorn and family == 'mhc_sinkhorn' and (attrs is None or isinstance(attrs, Mapping)):
             return self._sink_dispatch(op, shape, attrs, dtype)

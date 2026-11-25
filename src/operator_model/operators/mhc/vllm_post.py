@@ -39,7 +39,7 @@ def _repeated_rows(history):
     return 0, 0.
 
 
-def _schedule(rows, widths, rank, prices, dma, vec_scale):
+def _schedule(rows, widths, rank, prices, dma, vec_scale, vf_price=None):
     def transfer(kind, size):
         fixed, per_byte = dma[kind]
         return fixed + per_byte * size
@@ -48,7 +48,7 @@ def _schedule(rows, widths, rank, prices, dma, vec_scale):
     first_admission = prices['first_vf_admission'] + rank * prices['admission_fanout_per_aiv']
     body = prices['arith_body']
     coeff_service = transfer('x', 64)
-    cast_ticks = prices['cast_body'] * vec_scale
+    cast_ticks = vf_price('cast_out',1,16384) if vf_price else prices['cast_body'] * vec_scale
     history = deque(maxlen=9)
     # Only these six clocks survive a row boundary with both slots occupied.
     last_x = coeff = cast_end = write = older_write = write_end = 0.
@@ -84,6 +84,8 @@ def _schedule(rows, widths, rank, prices, dma, vec_scale):
                 vf = max(vf, cast_end - min(cast_ticks, prices['next_head_overlap']))
             groups = (width + 63) // 64
             arithmetic = (body['setup'] + body['ticks_per_unit'] * groups) * vec_scale
+            if vf_price:
+                arithmetic = vf_price('post_mix',1,width,4)
             admission = prices['warm_dispatch'] if issued else first_admission
             # A target with a much faster vector datapath cannot overlap more
             # descriptor time than the producing stage actually occupies.
@@ -115,7 +117,7 @@ def _schedule(rows, widths, rank, prices, dma, vec_scale):
                 final_write_issue_tick=write, final_write_retire_tick=write_end)
 
 
-def resource_hc_post(shape, chip, attrs):
+def resource_hc_post(shape, chip, attrs, *, vf_price=None):
     """Return (latency_us or None, logical work, projection) for an explicit HcPost dispatch."""
     attrs = dict(attrs or {})
     if attrs.pop('dtype', 'bf16') != 'bf16':
@@ -153,7 +155,7 @@ def resource_hc_post(shape, chip, attrs):
     cohorts = [(rows, active - 1)]
     if extra:
         cohorts.append((rows + 1, extra - 1))
-    critical = max((_schedule(n, widths, rank, prices, dma, vec_scale) for n, rank in cohorts),
+    critical = max((_schedule(n, widths, rank, prices, dma, vec_scale, vf_price) for n, rank in cohorts),
                    key=lambda result: result['core_ticks'])
     read, write = work['logical_read_bytes'], work['logical_write_bytes']
     freq = chip.frequency_ghz

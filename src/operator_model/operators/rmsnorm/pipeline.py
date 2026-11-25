@@ -52,7 +52,7 @@ def _cycles(prices, key, *work):
     return base + sum(coef * units for coef, units in zip(service, work))
 
 
-def _per_tile_dag(shape, chip, previous, repeated, diag, prices, geometry, inspect):
+def _per_tile_dag(shape, chip, previous, repeated, diag, prices, geometry, inspect, vf=None):
     tokens, width = shape
     plan = diag['target_plan']
     active = plan['active_aiv']
@@ -62,11 +62,19 @@ def _per_tile_dag(shape, chip, previous, repeated, diag, prices, geometry, inspe
         # The fitted issue graph has up to two payload blocks. The original
         # multi-round model supports steady-state overlap on larger inputs.
         latency, _, _, state = price_rms(shape, chip, {'resident_aiv': previous})
+        if vf:
+            from operator_model.operators.vector.family_programs import phase_alternative
+            r=plan['rows_per_core']; body=sum(vf(k,r,width) for k in ('rms_reduce','rms_stat','rms_norm'))
+            stages=phase_alternative(state['stages_us'], body/vf.clock, state['shared_io_floor_cycles']/vf.clock)
+            return dict(us=sum(stages.values()),route='steady multi-UB instruction budget',stages_us=stages)
         return {'us': latency, 'route': 'steady multi-UB', 'stages': None,
                 'stages_us': state['stages_us']}
 
     def cycles(key, *work):
         return _cycles(prices, key, *work)
+
+    def vf_cost(key,name,rows,*work):
+        return prices[key][0]+vf(name,rows,width) if vf else cycles(key,*work)
 
     read = diag['read_cycles_per_kib']
     write = diag['write_cycles_per_kib']
@@ -127,10 +135,10 @@ def _per_tile_dag(shape, chip, previous, repeated, diag, prices, geometry, inspe
             if tile:
                 reduce = max(reduce, previous_norm_end - cycles('vector_reissue'))
             work = [term * vec for term in geometry.vector_work(width, local)]
-            statistic = reduce + cycles('reduce_to_rstd_vf', *work)
+            statistic = reduce + vf_cost('reduce_to_rstd_vf','rms_reduce',local,*work)
             norm = statistic + cycles('rstd_to_normalize_issue', local)
-            statistic_end = statistic + cycles('rstd_vf_response', local)
-            norm_end = norm + cycles('normalize_response', *work)
+            statistic_end = statistic + vf_cost('rstd_vf_response','rms_stat',local,local)
+            norm_end = norm + vf_cost('normalize_response','rms_norm',local,*work)
             previous_norm_end = norm_end
             write_stat = statistic_end + cycles('issue_rstd')
             write_y = norm_end + cycles('issue_y')
@@ -174,8 +182,8 @@ def _per_tile_dag(shape, chip, previous, repeated, diag, prices, geometry, inspe
         # response is unknown, so only work common to every first tile is added.
         shortest = min(tile_height, min(lane_rows))
         work = [term * vec for term in geometry.vector_work(width, shortest)]
-        after = (cycles('read_to_vf') + cycles('reduce_to_rstd_vf', *work)
-                 + cycles('rstd_to_normalize_issue', shortest) + cycles('normalize_response', *work)
+        after = (cycles('read_to_vf') + vf_cost('reduce_to_rstd_vf','rms_reduce',shortest,*work)
+                 + cycles('rstd_to_normalize_issue', shortest) + vf_cost('normalize_response','rms_norm',shortest,*work)
                  + cycles('issue_y'))
         link_afterwork = earliest_x + round_bytes[0] * chip.frequency_ghz / chip.hbm_bandwidth_gbs + after
         floors.append(min(cycles('gamma_' + state, active - 1) for state in counts)

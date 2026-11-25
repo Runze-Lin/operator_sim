@@ -4,6 +4,8 @@
 
 [v2.0.0 发布包](https://github.com/Runze-Lin/operator_sim/releases/tag/v2.0.0) 含系统接入用的 Python wheel 和源码包。论文版报告从指令时标推导阶段价格与整窗，给出 950DT/PR 验证、970DT 外推的敏感性和 33 组系统结果。主体保留 v2.0.0 报告与 v1.13.1 冻结记录。当前源码增加了 FA 两种 Vector 定价的同窗对照及独立小样本验证，首轮结果见[附录 E](docs/paper/13-fa-vector-pilot.md)。v2.2 增加了 FA 忙核诊断、冻结新形双端验证，以及 Cast、Sigmoid、逐 token FP8 量化两种方法的阶段误差、迁移性与查询成本比较。[附录 F 与实验结果](docs/paper/14-vector-transfer.md)。[论文版报告（PDF）](docs/operator-sim-report-zh.pdf) · [分章正文与复算指南](docs/paper/README.md)
 
+已有库算子默认沿用原有时序模型，可显式切换 Vector 指令类别定价；已登记的新精度或设计程序可直接用指令类别预测。[建模方法](docs/modeling-strategy.md) · [全量误差和表头解释](docs/error-analysis.md) · [逐算子两法对照](docs/vector-method-comparison.md) · [系统调用对照](docs/system-vector-methods.md)
+
 ## 安装与调用
 
 从本仓库根目录安装当前源码。使用已发布的 wheel 时，在系统框架的 Python 环境中安装对应版本。可配置的发射开销和 `scheduled_us` 接口从 1.1.0 开始提供。[已发布安装包](https://github.com/Runze-Lin/operator_sim/releases)

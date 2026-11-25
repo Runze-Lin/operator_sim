@@ -92,8 +92,11 @@ def freeze(manifest, chip_files=()):
         custom[config.name] = config
     rows, chips = [], {}
     def describe(chip):
-        return {name: dict(value) if hasattr(value,'items') else value
-                for name,value in vars(chip).items()}
+        from dataclasses import asdict
+        fields = {name: dict(value) if hasattr(value,'items') else value
+                  for name,value in vars(chip).items()}
+        fields['transfer_profiles'] = {key: asdict(profile) for key,profile in chip.transfer_profiles.items()}
+        return fields
     for item in manifest['cases']:
         c = dict(attrs={}, dtype=None, prefix=None, contract=item['op'])
         c.update(item)

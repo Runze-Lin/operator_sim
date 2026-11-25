@@ -12,7 +12,7 @@ def _prices():
     return load_parameters('attention_residual')['stage_prices']
 
 
-def resource_attention(shape, chip, attrs):
+def resource_attention(shape, chip, attrs, *, vf=None):
     attrs=dict(attrs or {})
     dtype=attrs.pop('dtype','bf16')
     if dtype!='bf16' or len(shape)!=4:
@@ -34,7 +34,7 @@ def resource_attention(shape, chip, attrs):
             attrs.get('addend',False) and attrs.get('mix',True) and attrs.get('output_norm',True) and
             attrs.get('optimize_prefill',False) and not attrs.get('materialize',False) and attrs.get('write_idx',-1)==-1):
         from operator_model.operators.attention.resident import resident_inference_price
-        forecast=resident_inference_price(shape,chip,d)
+        forecast=resident_inference_price(shape,chip,d,vf=vf)
         if forecast is not None:
             diagnostics.update(forecast)
         return diagnostics['latency_us'],work,diagnostics
@@ -64,6 +64,12 @@ def resource_attention(shape, chip, attrs):
             # DT gamma-issue-to-final-instruction phase, cycles per 64 FP32
             # elements. Prices come from the reference-device stage windows.
             cycles = 2347.99163 + (20.3083544*lanes + 2.09690792*chunks)*reference_peak/target_peak + 2*h/read_rate
+        if vf and name!='dispatch':
+            cost = {'score_weights': lambda:vf('att_weights',1,h), 'prefix_add_write':lambda:vf('att_prefix',1,h),
+                    'bank_scores':lambda:vf('att_score',1,h,n),
+                    'weighted_norm_write':lambda:vf('pre_mix',1,h,n+1)+sum(vf(k,1,h) for k in ('rms_reduce','rms_stat','rms_norm'))}[name]()
+            fixed = 2347.99163 if name=='weighted_norm_write' else prices['fixed_cycles']*repeats
+            cycles=fixed+cost+reads*2*h/read_rate
         times[name]=cycles/clock
     transfer=d['cold_input_hbm_floor_us']
     if chip.details.get('l2_bandwidth_gbs'):

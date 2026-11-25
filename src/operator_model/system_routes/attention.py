@@ -3,6 +3,7 @@
 from math import ceil, prod
 
 from operator_model.operators.attention.indexer import _prices
+from . import vf
 from operator_model.system_adapter import NodeEstimate
 
 
@@ -180,10 +181,13 @@ def _index(f, chip, sem, name):
     # H64 Q4 emits two M128 MMADs per K page (verified on the ordinary LI ELF).
     mma_m = min(m, 128)
     mmads_per_page = divup(m, mma_m)
+    visits = divup(r, partners)*128*heads
+    weighted = vf.stage(chip,'indexer/weighted_relu_reduce',divup(r,partners)*128*(3*heads-1)/rv,visits,
+                       known=bits==16,load=2*visits,compare=visits,arithmetic=visits,reduce=visits,store=visits/heads)
     page = max(
         read_page,
         mmads_per_page * 2 * mma_m * 128 * d / rc,
-        divup(r, partners) * 128 * (3 * heads - 1) / rv,
+        weighted,
     )
     scans = divup(length, 8192)
     blocks = divup(length, 256) + (scans - 1) * divup(k, 256)
@@ -196,6 +200,8 @@ def _index(f, chip, sem, name):
         + max(0, blocks - divup(min(length, 8192) + k, 256)) * gg
     )
     rank *= p["vector_ops_cycle"] / rv
+    rank = vf.stage(chip,'indexer/histogram_rank',rank,length,known=bits==16,load=8*blocks*256,
+                    compare=8*blocks*256,logical=8*blocks*256,reduce=8*blocks*256,store=k)
     sort = divup(r, partners) * rank
     producer = 0.0
     # A side-output of the full candidate-source layer, published separately.
@@ -206,6 +212,9 @@ def _index(f, chip, sem, name):
             (length + num_blocks) / rv
             + (sf + divup(num_blocks, 256) * sg) * p["vector_ops_cycle"] / rv
         )
+    if source:
+        producer=vf.stage(chip,'indexer/source_block_rank',producer,length,load=length,reduce=length,
+                          compare=8*num_blocks,store=num_blocks)
     cycles = (
         pages * page
         + p["mmad_fixed_cycles"]
@@ -306,6 +315,10 @@ def _attention(f, chip, sem, name):
     qk = 2 * padded * kvtile * dk / rc
     pv = 2 * padded * kvtile * dout / rc
     soft = (vector_per_pair * useful * kvtile + 3 * useful * dout) / rv
+    visits=useful*kvtile/partners; acc=useful*dout/partners
+    soft=vf.stage(chip,'attention/softmax',soft,visits,known=dense,load=visits+acc,exp=visits,
+                  reduce=2*visits,arithmetic=2*visits+3*acc,convert=2*visits if bits<16 else 0,
+                  divide=visits if bits<16 else 0,store=visits+acc)
     drow = dk + dout if dense else dk
     key_bytes = drow * bits / 8 + (
         divup(drow, 32) if bits == 4 else (4 if bits == 8 else 0)
@@ -318,6 +331,9 @@ def _attention(f, chip, sem, name):
     local_pages = divup(pages, splits)
     cycles = fetch + qk + soft + pv + (local_pages - 1) * max(fetch, qk + pv, soft)
     merge = 0 if splits == 1 else 2 * (splits - 1) * useful * (dout + 2) / rv
+    if splits>1:
+        count=(splits-1)*useful*(dout+2)/partners
+        merge=vf.stage(chip,'attention/split_merge',merge,count,known=dense,load=2*count,arithmetic=2*count,store=count)
     read = nbytes(f.inputs[0]) + int(
         (sum(sem["kv_lens"]) * kvheads if dense else pairs) * key_bytes
     )
@@ -389,9 +405,11 @@ def _state(f, chip, sem, name):
         )  # unpack/dequantize and norm
         tileops = q * (7 * vt * k + 8 * k + 4 * vt)
         setup = 4 * vt * k * ticks_per_byte
+        recur=vf.stage(chip,'kda/recurrent_step',tileops/(q*rv),vt*k,load=3*vt*k+3*k,
+                      convert=3*k,reduce=2*vt*k+k,arithmetic=5*vt*k+4*k+4*vt,store=vt*k+vt)
         cycles = (
             2 * setup
-            + q * max(tileops / (q * rv), 2 * (3 * k + vt) * ticks_per_byte)
+            + q * max(recur, 2 * (3 * k + vt) * ticks_per_byte)
             + q * 2 * ceil(k / 64).bit_length() * 8
         )
         return _schedule(
@@ -428,6 +446,9 @@ def _state(f, chip, sem, name):
         vec = rows * d * (2 * w + 4)
         move = 2 * ct * (q + w + w - 1 + q + min(state, q + w - 1)) * ticks_per_byte
         issue = q * ct * (2 * w + 4) / rv
+        visits=q*ct
+        issue=vf.stage(chip,'conv/causal_silu',issue,visits,known=True,load=2*w*visits,arithmetic=(w+2)*visits,
+                       exp=visits,divide=visits,store=visits)
         # One core services each 512-channel stripe in the two-SKU fixture.
         return _schedule(
             chip,
@@ -456,8 +477,10 @@ def _state(f, chip, sem, name):
         channels = min(128, d)
         tiles = groups * divup(d, channels)
         per = divup(rows, b)
+        ring=vf.stage(chip,'ring_compress/pair',8*channels/rv,channels,load=4*channels,arithmetic=4*channels,
+                      exp=2*channels,divide=2*channels,store=2*channels)
         cycles = (
-            per * max(8 * channels / rv, 16 * channels * ticks_per_byte)
+            per * max(ring, 16 * channels * ticks_per_byte)
             + 2 * channels * ticks_per_byte
         )
         return _schedule(
@@ -501,7 +524,10 @@ def _state(f, chip, sem, name):
         vec = count * d
         label = "Block maxima + latest pin + block top-k charged to source layer 20 LI while logits are live. This node only publishes its side output."
     tiles = max(1, count)
-    cycles = max((read + write) * ticks_per_byte / tiles, vec / (rv * tiles)) + 64
+    visits=vec/tiles
+    meta=vf.stage(chip,name,visits/rv,visits,load=(read/4)/tiles,arithmetic=0 if name=='candidate_blocks' else visits,
+                  store=(write/4)/tiles,bits=32)
+    cycles = max((read + write) * ticks_per_byte / tiles, meta) + 64
     return _schedule(
         chip,
         name,
@@ -540,13 +566,19 @@ def _compress(f, chip, sem, name):
     groups = divup(m, bm) * divup(n, bn)
     npage = divup(k, bk)
     expand = 2 * bn * bk / rv
+    expand=vf.stage(chip,'compressor/unpack_weight',expand,2*bn*bk,load=2*bn*bk,permute=2*bn*bk,
+                    convert=2*bn*bk,store=2*bn*bk,bits=8)
     mac = 4 * bm * bn * bk / rc
     pool = pooled * d * (8 * ratio * coff + 8)
+    u=pooled*d/groups; a=m*k/groups
+    pool_cycles=vf.stage(chip,'compressor/pool_rope',(pool+3*m*k)/(rv*groups),u+a,load=2*u*ratio*coff+a,
+                         exp=u*ratio*coff,reduce=2*u*ratio*coff,arithmetic=5*u*ratio*coff+6*u+2*a,
+                         convert=a,divide=u,permute=u,store=u+a)
     cycles = (
         expand
         + (npage - 1) * max(mac, expand)
         + mac
-        + (pool + 3 * m * k) / (rv * groups)
+        + pool_cycles
     )
     read = (
         nbytes(x)

@@ -12,7 +12,23 @@ VIEWS = frozenset({
 STRUCTURAL = VIEWS | {"aten.empty.memory_format"}
 
 
-def estimate_full_features(features, *, chip, fabric=None, candidate_implementation="capture", candidate_options=None):
+def estimate_full_features(features, *, chip, fabric=None, candidate_implementation="capture", candidate_options=None, vector_model="auto"):
+    from .vf import selection
+    from dataclasses import replace
+    with selection(vector_model) as stages:
+        result = _full(features, chip, fabric, candidate_implementation, candidate_options, vector_model)
+    if result.work is None:
+        return result
+    schedule = dict(result.work.get('schedule') or {})
+    if stages:
+        modes = sorted({row['method'] for row in stages})
+        schedule.update(vector_model=modes[0] if len(modes)==1 else '+'.join(modes), vector_stages=stages)
+    elif not result.work.get('vec_ops'):
+        schedule.setdefault('vector_model','not_applicable')
+    return replace(result,work={**result.work, 'schedule': dict(schedule,vector_model_requested=vector_model)})
+
+
+def _full(features, chip, fabric, candidate_implementation, candidate_options, vector_model):
     """Price a complete operator or return an explicit unsupported result for a new contract."""
     from . import attention, cube, prefill, vector
     chip = load_chip(chip)
@@ -25,7 +41,7 @@ def estimate_full_features(features, *, chip, fabric=None, candidate_implementat
     if name in communication.NAMES:
         return communication.price(features, chip, fabric or communication.FabricScenario())
     strict = estimate_features(features, chip=chip, include_schedule=True,
-                               candidate_implementation=candidate_implementation, candidate_options=candidate_options)
+                               candidate_implementation=candidate_implementation, candidate_options=candidate_options, vector_model=vector_model)
     if strict.latency_us is not None:
         return strict
     for family in (attention, cube, prefill, vector):

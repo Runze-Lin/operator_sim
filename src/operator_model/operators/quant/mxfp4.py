@@ -59,7 +59,7 @@ def _transport():
     return load_parameters('quant_resources')['parameters']
 
 
-def price(shape, chip, attrs):
+def price(shape, chip, attrs, *, vf=None):
     work = mx4_work(shape, attrs)
     if 'input_stride' in attrs and not contiguous_input(shape, attrs['input_stride']):
         raise ValueError('Packed FP4 quantization timing requires a contiguous BF16 input')
@@ -103,7 +103,7 @@ def price(shape, chip, attrs):
         response = cycles('read_latency_cycles')*.956
         short = min(1.,max(0.,(read_bytes-64)/192))
         read = clear+response*(.365+.635*short)+read_bytes/read_rate
-        vector = 134.5+source_calls/vf_issue
+        vector = 134.5+(vf('mx4',height,width) if vf else source_calls/vf_issue)
         data_write = cycles('write_latency_cycles')+(write_bytes-padded_groups)/write_rate
         scale_write = 560.+padded_groups/write_rate
         write = max(data_write,scale_write,write_bytes/write_rate)

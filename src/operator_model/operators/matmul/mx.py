@@ -133,7 +133,7 @@ def _native_tile(shape, chip, core_budget):
             return None, footprint
 
 
-def price(shape, chip, dtype, attrs, calibrated_only=False):
+def price(shape, chip, dtype, attrs, calibrated_only=False, *, programs=None):
     work = mx_work(shape, dtype, attrs)
     work['required_dense_cube_fma'] = True
     work['no_vector_engine'] = work['dtype'] == FP4
@@ -277,7 +277,7 @@ def price(shape, chip, dtype, attrs, calibrated_only=False):
         # cache/HBM contention as well as the individual core-port limits.
         local = max(a, _payload(producer_width,depth,4)+w*scales) if mixed else a+b
         rd = max(local/mte2, active*(a+b)/l2, active*(a+b)*hbm_reads/l2_reads/hbm)
-        convert = producer_width*depth/unpack if mixed else 0
+        convert = (programs.unpack(producer_width, depth) if programs else producer_width*depth/unpack) if mixed else 0
         handoff = producer_width*depth/mte3 if mixed else 0
         ld = (a + b + (expanded-_payload(w, depth, 4) if mixed else 0))/mte1
         compute = 2*_align(h, 16)*_align(w, 16)*_align(depth, 64)/cube
@@ -314,9 +314,11 @@ def price(shape, chip, dtype, attrs, calibrated_only=False):
                      handoff_lat=phases['handoff_latency_cycles'], setup=phases['unpack_setup_cycles'],
                      vector_scale=512/(unpack*unpack_ops), mmad_ii=cube_issue)
         stages['core_arrival_spread'] = mx_handoff.FULL_OCCUPANCY_ISSUE_SPREAD*(active-1)/max(1,chip.cube_cores-1)
+        if programs:
+            rates['vf_service'] = programs.unpack
         stages.update(mx_handoff.schedule(k,h,w,waves,swat,rates))
-        first['unpack'] = mx_handoff.vf_service(producer_width,first_k,rates['vector_scale'])
-        last['unpack'] = mx_handoff.vf_service(producer_width,(k-1)%page_k+1,rates['vector_scale'])
+        first['unpack'] = programs.unpack(producer_width,first_k) if programs else mx_handoff.vf_service(producer_width,first_k,rates['vector_scale'])
+        last['unpack'] = programs.unpack(producer_width,(k-1)%page_k+1) if programs else mx_handoff.vf_service(producer_width,(k-1)%page_k+1,rates['vector_scale'])
         unpack = producer_width*first_k/first['unpack']
         ii = None  # A single initiation interval cannot represent interleaved L1 credits.
         work['implementation_work']['unpack_peak_equivalents_per_weight'] = None

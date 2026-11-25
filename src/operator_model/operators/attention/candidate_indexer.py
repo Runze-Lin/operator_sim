@@ -141,7 +141,7 @@ def projected_work(shape, attrs):
                      'Interface reads do not measure HBM traffic.']}
 
 
-def price(shape, chip, attrs):
+def price(shape, chip, attrs, *, programs=None):
     """Query-tile resource schedule; only ordinary 950 LI supplied timing anchors.
 
     A persistent AIC with one or two AIVs owns a group. Request groups never
@@ -193,13 +193,19 @@ def price(shape, chip, attrs):
         # multiply/add pair per slot to derive source addresses (no dense mask).
         setup = _ceil(nr,av)*(blocks+2*slots)/rv
         ops_per_score = 3*h-1+(2 if policy == 'full_scan' else 0)
-        def vector_cycles(width): return _ceil(nr,av)*width*ops_per_score/rv
+        def vector_cycles(width):
+            if programs: return programs.score(width,h,_ceil(nr,av),policy=='full_scan')
+            return _ceil(nr,av)*width*ops_per_score/rv
+        if programs:
+            g=_ceil(blocks+2*slots,programs.fp32)
+            setup=_ceil(nr,av)*programs.phase('candidate setup',dict(load=g,arithmetic=2*g,store=g),dict(load=1,arithmetic=2,store=1))
         interval = max(page_service, 2*m*128*d/rc, vector_cycles(128))
         # One AIV processes a row's histogram passes; different rows on its
         # AIC may run on separate partners. _sort_row accounts for 512 carry-in.
         aiv_load = [0.]*av
         for row in range(nr):
             sort, last_blocks, _ = _sort_row(n,p,p['vector_ops_cycle']/rv)
+            if programs: sort=programs.sort_row(n)
             c0,c1 = p['store_drain']
             aiv_load[row%av] += sort + c0 + c1*last_blocks*p['vector_ops_cycle']/rv
         # Position order (ascending) is independent of score ranking. Exact
@@ -209,7 +215,7 @@ def price(shape, chip, attrs):
         output_ops = k*(4 if policy == 'candidate_first' else 2) + 3*swaps
         prototypes.append((setup,p['first_issue_cycles'],(pages-1)*interval,
                            p['mmad_fixed_cycles']+2*m*tail*d/rc+vector_cycles(tail),
-                           p['sort_handoff_cycles'],max(aiv_load),_ceil(nr,av)*output_ops/rv))
+                           p['sort_handoff_cycles'],max(aiv_load),_ceil(nr,av)*(programs.sort_map(k,policy=='candidate_first') if programs else output_ops/rv)))
     ng = b*groups; live = min(lanes, ng); period = groups//gcd(groups,lanes)
     common = gcd(groups,lanes)
     inverse = pow(lanes//common,-1,period) if long_scan and period>1 else 0

@@ -38,7 +38,7 @@ def _sort_row(length, prices, vector_scale):
     return hist+gaps, last_blocks, 8*blocks
 
 
-def schedule(shape, chip):
+def schedule(shape, chip, *, programs=None):
     _, queries, length, heads, depth = shape
     p = _prices()
     clk = chip.frequency_ghz * 1000
@@ -66,6 +66,8 @@ def schedule(shape, chip):
             if count:
                 geometry[(m,n)] = geometry.get((m,n),0)+count
         cube_interval = max(page_service, 2*m*128*depth/cube_rate)
+        if programs:
+            cube_interval=max(cube_interval, programs.score(128,heads,_ceil(rows,2)))
         stages = {'first_mmad':p['first_issue_cycles'], 'page_intervals':(pages-1)*cube_interval,
                   'last_mmad':p['mmad_fixed_cycles']+2*m*last_n*depth/cube_rate,
                   'score_to_histogram':p['sort_handoff_cycles']}
@@ -80,12 +82,16 @@ def schedule(shape, chip):
             for j in lane_rows:
                 row_len = length-queries+start+j+1
                 span, blocks, count = _sort_row(row_len,p,vec_scale)
+                if programs:
+                    span=programs.sort_row(row_len)  # retain distinct store/handoff below
                 histograms += count
                 lane_cycles += span
                 costs = p['store_drain'] if j==lane_rows.stop-1 else p['histogram_gap']
                 lane_cycles += costs[0]+costs[1]*blocks*vec_scale
             slowest_lane = max(slowest_lane,lane_cycles)
         stages['histogram_and_output'] = slowest_lane
+        if programs:
+            stages['last_score'] = programs.score(last_n,heads,half)
         stage_sum = sum(stages.values())
         if stage_sum>critical_cycles:
             critical_cycles, critical, critical_group = stage_sum, stages, start//4

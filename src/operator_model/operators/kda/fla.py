@@ -56,7 +56,8 @@ def vf_estimate(family, i, n, chip):
 
 
 class Tile:
-    def __init__(self, chip, family, active):
+    def __init__(self, chip, family, active, programs=None):
+        self.programs = programs
         self.chip = chip
         self.family = family
         self.active = active
@@ -105,7 +106,7 @@ class Tile:
         return clocks
 
     def vec(self, i, n):
-        t, counts = vf_estimate(self.family, i, n, self.chip)
+        t, counts = self.programs.fla(self.family, i, n) if self.programs else vf_estimate(self.family, i, n, self.chip)
         self.vf.update(counts)
         return t
 
@@ -113,11 +114,11 @@ class Tile:
         self.legs.append((name, _sum_cycles(steps)))
 
 
-def prepare(n, chip, a):
+def prepare(n, chip, a, programs=None):
     j = div(n, 16)
     m = 32 if n <= 32 else 64
     v = 256 * n
-    z = Tile(chip, FAMILIES[0], a)
+    z = Tile(chip, FAMILIES[0], a, programs)
     z.leg(
         "V0 gate and prefix",
         z.dma("OUT->UB", v, v, v, 4 * n, 512, 4),
@@ -162,8 +163,8 @@ def prepare(n, chip, a):
     return z
 
 
-def recurrence(n, chip, a, first, last):
-    z = Tile(chip, FAMILIES[1], a)
+def recurrence(n, chip, a, first, last, programs=None):
+    z = Tile(chip, FAMILIES[1], a, programs)
     v = 256 * n
     p = 16 * div(n, 16)
     if first:
@@ -250,7 +251,7 @@ def weighted(hist, tiles, attr):
     return dict(sorted(out.items()))
 
 
-def schedule(shape, chip):
+def schedule(shape, chip, *, programs=None):
     if len(shape) != 6 or any(type(x) is not int or x < 1 for x in shape):
         raise ValueError("Expected positive integer B,S,Hq,Hv,K,V")
     b, s, hq, h, k, v = shape
@@ -320,9 +321,9 @@ def schedule(shape, chip):
         phase = {}
         for key in total:
             if i == 0:
-                phase[key] = prepare(key, chip, act)
+                phase[key] = prepare(key, chip, act, programs)
             elif i == 1:
-                phase[key] = recurrence(key[0], chip, act, key[1], key[2])
+                phase[key] = recurrence(key[0], chip, act, key[1], key[2], programs)
             else:
                 phase[key] = final(key, chip, act, mover)
         # Retired small-case front end up to first data-bearing MTE2 command; metadata
@@ -333,7 +334,7 @@ def schedule(shape, chip):
             # Each active group owns one identical state chain. Input DMA for
             # the next chunk can advance independently of the recurrent H edge.
             critical_cycles, timeline = fwdh_schedule.schedule_chain(
-                s, startup, Tile(chip, f, act)
+                s, startup, Tile(chip, f, act, programs)
             )
             critical = 0
             prefetch = dict(
@@ -423,7 +424,7 @@ def schedule(shape, chip):
                 mmads=mm,
                 dma_bytes=dma,
                 dma_descriptors=desc,
-                estimated_rvec_subqueue_records=vec,
+                **({"instruction_class_counts":vec} if programs else {"estimated_rvec_subqueue_records":vec}),
                 first_payload_cycles=startup,
                 max_core_head_chunks=max(sum(x.values()) for x in histograms),
                 device_us=est,
@@ -533,12 +534,12 @@ def _normalize_contract(shape, attrs):
     return b, s, hq, h, k, v
 
 
-def resource(shape, chip, attrs):
+def resource(shape, chip, attrs, *, programs=None):
     """Package-facing resource estimate and one-call logical tensor accounting."""
     from operator_model.workload import _counts
 
     logical = _normalize_contract(shape, attrs)
-    result = schedule(logical, chip)
+    result = schedule(logical, chip, programs=programs)
     b, s, _, h, k, v = logical
     chunks, tail = divmod(s, 64)
     squares = b * h * (chunks * 64**2 + tail**2)

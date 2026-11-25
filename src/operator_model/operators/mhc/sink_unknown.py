@@ -5,9 +5,9 @@ from operator_model.chips import load_chip
 from operator_model.operators.mhc.sink_pipeline import price as history_price
 
 
-def price(shape, chip, attrs):
+def price(shape, chip, attrs, *, vf=None):
     """Use all reachable launch states; no observed CA time or stream history is an input."""
-    cold, aic, active, initial = history_price(shape, chip, {**attrs, 'resident_aiv': 0})
+    cold, aic, active, initial = history_price(shape, chip, {**attrs, 'resident_aiv': 0},vf=vf)
     plan = dict(initial['target_plan'])
     del plan['resident_aiv'], plan['history_state']
     result = dict(target_plan=plan, schedule='sinkhorn_unknown_history',
@@ -21,8 +21,8 @@ def price(shape, chip, attrs):
     # A=1 admits first and resident. No integer H can satisfy 0<H<A.
     states = {'first': initial}
     if active > 1:
-        states['expand'] = history_price(shape, chip, {**attrs, 'resident_aiv': 1})[3]
-    states['resident'] = history_price(shape, chip, {**attrs, 'resident_aiv': active})[3]
+        states['expand'] = history_price(shape, chip, {**attrs, 'resident_aiv': 1},vf=vf)[3]
+    states['resident'] = history_price(shape, chip, {**attrs, 'resident_aiv': active},vf=vf)[3]
     prices = {key: state['issue_epochs_us']['end'] for key,state in states.items()}
     low, high = min(prices.values()), max(prices.values())
     stages = {key:fmean(s['stages_us'][key] for s in states.values()) for key in initial['stages_us']}

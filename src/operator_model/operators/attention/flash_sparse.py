@@ -110,7 +110,7 @@ def work_for(shape, candidate_limit=None):
 
 
 def price(shape, chip, *, pa_block_size=128, table_pages=None, scalar_lookup_cycles=None,
-          candidate_limit=None, candidate_order_overlap=None):
+          candidate_limit=None, candidate_order_overlap=None, programs=None):
     """Price packed Q, folded K and QSLI. PA page-table width can exceed current L."""
     if type(pa_block_size) is not int or pa_block_size <= 0 or pa_block_size % BLOCK:
         raise ValueError("PA block size must be a positive multiple of eight")
@@ -150,7 +150,7 @@ def price(shape, chip, *, pa_block_size=128, table_pages=None, scalar_lookup_cyc
     cube_read = payload/read_rate
     cube = 2*h*TILE*d/cube_rate
     fix = 2*h*TILE/params["fix_bytes_per_cycle"]
-    vector = 3*h*TILE/(2*vec_rate)
+    vector = programs.score(TILE//2,h) if programs else 3*h*TILE/(2*vec_rate)
     # Shared read port on each core, independent Cube and AIV DMA engines.
     stages = dict(gather=gather, publish=publish, cube_read=cube_read, cube=cube,
                   fix=fix, vector=vector)
@@ -220,6 +220,11 @@ def price(shape, chip, *, pa_block_size=128, table_pages=None, scalar_lookup_cyc
     # The native drain landmark covers one tile's Fix/Vector/local selection
     # and public partial write. Credit service already present in the fragment.
     # A larger fragment retains its extra per-tile histogram work.
+    if programs:
+        # One fixed producer-chain response plus throughput for full radix groups.
+        hist_per256 = (programs.hist(8192)-programs.hist(4096))/16
+        hist_fixed = max(0.,programs.hist(256)-hist_per256)
+        vec_scale = 1.0
     ordinary_tail = fix + vector + (hist_fixed+2*hist_per256)*vec_scale
     drain_extra = max(0., native["one_tile_score_drain_cycles"] - ordinary_tail)
     wave = scalar and use_measured_issue and q>1 and live>1 and tiles>live
@@ -273,6 +278,8 @@ def price(shape, chip, *, pa_block_size=128, table_pages=None, scalar_lookup_cyc
         # merge concurrently. Its longest chain sets the local FD critical path.
         passes, entries, merge_read, merge_select, merge_write = _merge_service(
             max(split_rows.values()),topk,read_rate,vec_scale)
+        if programs:
+            merge_select = passes*programs.sort_map(topk,True) + programs.hist(entries)
         merge = native["barrier_setup_cycles"] + merge_read + merge_select + merge_write
     local = (startup+slow+merge)/clock
     io = (work["logical_read_bytes"]+work["logical_write_bytes"])/(1000*chip.hbm_bandwidth_gbs)

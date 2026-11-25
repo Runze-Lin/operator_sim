@@ -2,6 +2,7 @@
 from dataclasses import dataclass
 from math import ceil, isfinite, prod
 
+from . import vf
 from operator_model.system_adapter import NodeEstimate
 
 NAMES = frozenset({"collective::all_reduce", "collective::all_gather",
@@ -35,6 +36,10 @@ def _quote(chip, fabric, name, group, rounds, sent, received, reads, writes, ops
     link = payload / (1000 * fabric.injection_gbs)
     memory = (reads+writes) / (1000 * chip.hbm_bandwidth_gbs * active/chip.vector_cores)
     vector = ops / (1e6 * rate * active/chip.vector_cores) if ops else 0.
+    if ops:
+        combine=name=='ep_weighted_combine'; n=ops/active/(3 if combine else 1); clk=1000*chip.frequency_ghz
+        vector=vf.stage(chip,name,vector*clk,n,load=2*n,arithmetic=(2 if combine else 1)*n,
+                        convert=n if combine else 0, store=n,bits=32 if dtype=='float32' else 16)/clk
     pipeline = max(link, memory, vector)
     duration = (rounds*fabric.step_us + pipeline + chip.kernel_overhead_us) if (rounds or pipeline) else 0.
     schedule = dict(algorithm=name, group_ranks=len(group), serial_steps=rounds, remote_send_bytes=sent,

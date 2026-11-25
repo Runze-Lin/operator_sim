@@ -26,7 +26,7 @@ def channel_tiles(width, chip):
                 ub_bytes=ub, inherited_ub=not bool(chip.details.get('ub_bytes')))
 
 
-def price_repeat(forecast, shape, chip):
+def price_repeat(forecast, shape, chip, vf=None):
     """The caller has already confirmed the full identity of the preceding stream launch."""
     if forecast.latency_us is None or not chip.vector_tops['32']:
         return forecast
@@ -38,7 +38,7 @@ def price_repeat(forecast, shape, chip):
     tiles = channel_tiles(shape[2], chip)
     if tiles is None:
         return forecast
-    pipe = token_pipeline(shape, chip, plan, 'repeat', _prices(), diag['shared_floor_us'])
+    pipe = token_pipeline(shape, chip, plan, 'repeat', _prices(), diag['shared_floor_us'],vf_price=vf)
     us = pipe['us']
     diagnostics = dict(model='post_token_immediate_repeat', context='reuse',
                        dispatch_condition='same_successful_builtin_post', target_plan=plan,

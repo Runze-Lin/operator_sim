@@ -1,7 +1,7 @@
 """Optional prediction backend for the sim-workspace BackendRouter."""
 from collections.abc import Mapping
 from types import MappingProxyType
-from dataclasses import fields, replace
+from dataclasses import asdict, fields, is_dataclass, replace
 from functools import lru_cache
 from hashlib import sha256
 from importlib.resources import files
@@ -56,6 +56,14 @@ def _resource_digest():
     return digest.hexdigest()
 
 
+def _plain_config(value):
+    if is_dataclass(value):
+        return _plain_config(asdict(value))
+    if isinstance(value, Mapping):
+        return {key: _plain_config(item) for key, item in value.items()}
+    return value
+
+
 def _typed_work(values):
     return tuple(sorted((_DTYPES.get(dtype, dtype), work) for dtype, work in values.items()))
 
@@ -66,7 +74,9 @@ class OperatorSimBackend:
     name = "operator_sim"
     version = f"1/{__version__}/{ADAPTER_VERSION}"
 
-    def __init__(self, *, chips=None):
+    def __init__(self, *, chips=None, vector_model="auto"):
+        from operator_model.system_routes.vf import validate
+        self.vector_model = validate(vector_model)
         # User-supplied templates are resolved once. Include their effective
         # contents in the platform's persistent-cache identity, not their paths.
         self._templates = {name: load_chip(sku) for name, sku in _TEMPLATES.items()}
@@ -78,10 +88,10 @@ class OperatorSimBackend:
             self._templates[name] = template
             values = {f.name: getattr(template, f.name) for f in fields(template)}
             overrides[name] = {
-                k: dict(v) if isinstance(v, Mapping) else v for k, v in values.items()
+                k: _plain_config(v) for k, v in values.items()
             }
         overrides_json = json.dumps(overrides, sort_keys=True, allow_nan=False).encode()
-        self.configuration = (("resource_sha256", _resource_digest()),
+        self.configuration = (("vector_model", self.vector_model), ("resource_sha256", _resource_digest()),
                               ("template_sha256", sha256(overrides_json).hexdigest()))
         self._target_chip = lru_cache(maxsize=32)(self._resolve_chip)
 
@@ -93,7 +103,7 @@ class OperatorSimBackend:
         return _target(name, capabilities, self._templates[name])
 
     def _estimate(self, features, target, hardware):
-        return estimate_features(features, chip=target)
+        return estimate_features(features, chip=target, vector_model=self.vector_model)
 
     def predict(self, features, hardware):
         target = self._target_chip(hardware.name, hardware.chip)
@@ -149,9 +159,9 @@ class FullOperatorSimBackend(OperatorSimBackend):
     prices_metadata = True
 
     def __init__(self, *, chips=None, fabric=None, memory_policy="cold_io",
-                 candidate_implementation="capture", candidate_options=None):
+                 candidate_implementation="capture", candidate_options=None, vector_model="auto"):
         from operator_model.system_routes.communication import FabricScenario
-        super().__init__(chips=chips)
+        super().__init__(chips=chips, vector_model=vector_model)
         self.fabric = fabric if fabric is not None else FabricScenario()
         if not isinstance(self.fabric, FabricScenario):
             raise TypeError("fabric must be a FabricScenario")
@@ -179,7 +189,7 @@ class FullOperatorSimBackend(OperatorSimBackend):
         from operator_model.roofline import cold_io_window
         result = estimate_full_features(features,chip=target,fabric=self.fabric,
                                         candidate_implementation=self.candidate_implementation,
-                                        candidate_options=self.candidate_options)
+                                        candidate_options=self.candidate_options, vector_model=self.vector_model)
         if (self.memory_policy == "ca_window" or result.latency_us is None or
                 result.status == "structural" or features.raw_name in communication.NAMES):
             return result

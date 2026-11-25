@@ -15,7 +15,7 @@ def _costs():
     return load_parameters('quant_resources')['parameters']
 
 
-def resource_quant(shape, chip, *, explain_tiles=False):
+def resource_quant(shape, chip, *, explain_tiles=False, vf=None):
     p = _costs()
     d = chip.details
     f = chip.frequency_ghz
@@ -62,7 +62,7 @@ def resource_quant(shape, chip, *, explain_tiles=False):
         wave_tail = max(0., payload/share - arrival_span)
         read_window = max(local_read,wave_tail)
         ready_to_compute = max(frontend, read_window+cycles('vf_dependency_cycles'))
-        compute = vf_overhead+loops*loop_work/peak
+        compute = vf_overhead+(vf('mx8',h,w) if vf else loops*loop_work/peak)
         data_bytes = h*w
         data_write = cycles('write_latency_cycles')+data_bytes/write
         # Data and scale have different descriptors. Small interleaved scale
@@ -75,7 +75,7 @@ def resource_quant(shape, chip, *, explain_tiles=False):
         return dict(read_bytes=payload, write_bytes=h*w+scale_bytes, scale_bytes=scale_bytes, groups=groups, loops=loops,
                     read_latency=read_window, local_read_cycles=local_read,
                     shared_read_floor_cycles=wave_tail, read_ii=payload/issue,
-                    simd_ready=ready_to_compute, dependency_cycles=cycles('vf_dependency_cycles'), compute_cycles=compute,
+                    simd_ready=ready_to_compute, dependency_cycles=cycles('vf_dependency_cycles'), compute_cycles=compute, **({'instruction_body_cycles':compute-vf_overhead} if vf else {}),
                     vector=ready_to_compute-read_window+compute,
                     write=write_window, data_write_cycles=data_write, scale_write_cycles=scale_write,
                     scale_issue_gap_cycles=p['scale_issue_gap_cycles'])

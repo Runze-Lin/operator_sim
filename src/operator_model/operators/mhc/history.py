@@ -94,7 +94,7 @@ def _scenario(stages,method,evidence):
     return PostScenario(fsum(stages.values()),MappingProxyType(dict(stages)),method,evidence)
 
 
-def _channel_repeat(plan,chip,shared_floor):
+def _channel_repeat(plan,chip,shared_floor,vf=None):
     """Two read descriptors at distinct issue times on the verified channel-split path."""
     p=_prices()['channel_repeat'];ref_clock=1.65/chip.frequency_ghz
     phase=p['phase'];port=p['port'];c_per_us=1000*chip.frequency_ghz
@@ -106,6 +106,8 @@ def _channel_repeat(plan,chip,shared_floor):
         'control':ref_clock*phase['control']['base_us'],
         'body':ref_clock*phase['body']['base_us']+phase['body']['slopes'][0]*groups*vec/32,
         'retire':ref_clock*phase['retire']['base_us']}
+    if vf:
+        stages['body']=ref_clock*phase['body']['base_us']+vf('post_mix',1,d,4)/c_per_us
     per_kib=READ_PER_KIB
     if chip.details.get('mte2_bandwidth_gbs'):
         per_kib=1024*chip.frequency_ghz/chip.details['mte2_bandwidth_gbs']
@@ -117,7 +119,7 @@ def _channel_repeat(plan,chip,shared_floor):
     return _scenario(stages,'channel_repeat_operand_response','v0.24 pre-CA channel-repeat schedule; distinct DT/PR shapes 8/7')
 
 
-def _token_scenario(shape,chip,base,group):
+def _token_scenario(shape,chip,base,group,vf=None):
     previous=token_prices()
     state=group.split('_after_')[0]
     stage=dict(previous['by_state'][state])
@@ -132,7 +134,7 @@ def _token_scenario(shape,chip,base,group):
             if line:
                 stage[k]=max(line['minimum'],line['fixed_compute_tail']+group_work)
     prices={**previous,'by_state':{state:stage}}
-    pipe=token_pipeline(shape,chip,base['target_plan'],state,prices,base['shared_floor_us'])
+    pipe=token_pipeline(shape,chip,base['target_plan'],state,prices,base['shared_floor_us'],vf_price=vf)
     evidence=('v0.27 pre-CA ordinary token issue curves; small forward cohort'
               if control else 'shared steady-state curve and earlier state prices; previous entry lacks calibration')
     return _scenario(pipe['stages_us'],'token_operand_issue',evidence)
@@ -157,7 +159,7 @@ def estimate_post_history(shape,*,chip=REFERENCE_NAME,dtype=None) -> PostHistory
     return PostHistory(shape,target.name,active,route,MappingProxyType(estimated),outside,target)
 
 
-def _scenarios(shape, target, base):
+def _scenarios(shape, target, base,vf=None):
     """Conditional prices derived from shape, hardware and declared state contracts."""
     plan=base['target_plan'];route=plan['route']
     active=plan['active_aiv']
@@ -168,7 +170,7 @@ def _scenarios(shape, target, base):
             if s!='expand' or active>1:
                 estimated[s]=_scenario(phases[s],'channel_resource','950 state-specific resource phases')
         if v32:
-            estimated['repeat']=_channel_repeat(plan,target,base['shared_floor_us'])
+            estimated['repeat']=_channel_repeat(plan,target,base['shared_floor_us'],vf)
     else:
         groups=['first','reuse_after_channel','reuse_after_token']
         if active>1:groups.append('expand_after_channel')
@@ -179,16 +181,16 @@ def _scenarios(shape, target, base):
             controls = _prices()['token_ordinary']['control'].get(group) if v32 else None
             if v32 and tiles and tiles['count'] == 2 and group == 'reuse_after_token':
                 from operator_model.operators.mhc.fragment_pipeline import covered_fragment_schedule
-                pipe = covered_fragment_schedule(target, base, tiles)
+                pipe = covered_fragment_schedule(target, base, tiles,vf_price=vf)
                 estimated[group] = _scenario(pipe['stages_us'], pipe['model'],
                     'DT two-slot DMA schedule; limited paired geometry coverage')
             elif tiles and tiles['count'] == 1 and controls and controls['processes'] >= 2:
-                estimated[group]=_token_scenario(shape,target,base,group)
+                estimated[group]=_token_scenario(shape,target,base,group,vf)
             else:
                 estimated[group]=_scenario(phases[state],'occupancy_resource',
                     'No supported operand schedule for this predecessor, UB geometry or throughput')
         if v32 and tiles:
-            pipe=token_pipeline(shape,target,plan,'repeat',token_prices(),base['shared_floor_us'])
+            pipe=token_pipeline(shape,target,plan,'repeat',token_prices(),base['shared_floor_us'],vf_price=vf)
             estimated['repeat']=_scenario(pipe['stages_us'],'token_immediate_repeat','frozen v0.25 token schedule, DT/PR independent repeat shapes 12/10')
     if 'repeat' not in estimated:
         estimated['repeat']=_scenario(phases['reuse'],'occupancy_resource','Target vector throughput or usable UB fragment size unavailable')

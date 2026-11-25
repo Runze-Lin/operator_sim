@@ -12,14 +12,14 @@ def _register_prices():
     return load_parameters(PROFILE)
 
 
-def _block(chip, plan, rows, chip_rows):
+def _block(chip, plan, rows, chip_rows, vf=None):
     """One kernel-loop body on the critical AIV, with its concurrent chip traffic."""
     single = _prices()
     g = (rows + 7) // 8
     state = single['phase_prices'][plan['history_state']]
     work = dict(plan, rows_per_core=rows, register_passes=g, logical_read_bytes=64*chip_rows)
-    e = _epochs(chip, single, state, work, plan['iterations'])
-    if g == 1:
+    e = _epochs(chip, single, state, work, plan['iterations'],vf)
+    if g == 1 or vf:
         return e
     p = _register_prices()
     clock = 1000 * chip.frequency_ghz
@@ -49,9 +49,9 @@ def _block(chip, plan, rows, chip_rows):
     return e
 
 
-def price(shape, chip, attrs):
+def price(shape, chip, attrs, *, vf=None):
     """Conditional on an explicit same-family resident AIV high-water mark."""
-    old = single_register_price(shape, chip, attrs)
+    old = single_register_price(shape, chip, attrs,vf=vf)
     latency, aic, active, diag = old
     plan = dict(diag['target_plan'])
     if plan['register_passes'] == 1 and latency is not None:
@@ -78,7 +78,7 @@ def price(shape, chip, attrs):
     for left, right in zip(bounds,bounds[1:]):
         nr = min(rows-left*tile,tile)
         tail = max(0,min(tile,last_core_rows-left*tile))
-        epochs = _block(chip, plan, nr, (active-1)*nr+tail)
+        epochs = _block(chip, plan, nr, (active-1)*nr+tail,vf)
         if left == 0:
             first = epochs
         # The repeated body is priced from existing mask/setup to its write
